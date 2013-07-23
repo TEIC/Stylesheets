@@ -21,7 +21,7 @@
   <!--
  Convert TEI documents into RDF files.
  -->
-  <import file="../common2/teianttasks.xml"/>
+  <import file="../common/teianttasks.xml"/>
 
   <target name="dist">
     <buildgeneric type="rdf" xsl="${profiledir}/${profile}/rdf/to.xsl" in="${inputFile}" out="${outputFile}"/>

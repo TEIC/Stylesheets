@@ -22,7 +22,7 @@
  Convert odt files to TEI documents.
  -->
 
-  <import file="../common2/teianttasks.xml"/>
+  <import file="../common/teianttasks.xml"/>
   <property name="odttotei" value="${profiledir}/${profile}/odt/from.xsl"/>
   <target name="dist" depends="setup,convert,mediadir.check,picturecopy,cleanup"/>
   <target name="convert">

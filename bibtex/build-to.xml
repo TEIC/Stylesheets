@@ -21,7 +21,7 @@
   <!--
  Convert TEI documents into BIBTEX files.
  -->
-  <import file="../common2/teianttasks.xml"/>
+  <import file="../common/teianttasks.xml"/>
 
   <target name="dist">
     <buildgeneric type="bibtex" xsl="${profiledir}/${profile}/bibtex/to.xsl" in="${inputFile}" out="${outputFile}"/>

@@ -21,7 +21,7 @@
   <!--
  Convert TEI documents into JSON files.
  -->
-  <import file="../common2/teianttasks.xml"/>
+  <import file="../common/teianttasks.xml"/>
 
   <target name="dist">
     <buildgeneric type="json" xsl="${profiledir}/${profile}/json/to.xsl" in="${inputFile}" out="${outputFile}"/>

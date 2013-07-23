@@ -240,7 +240,7 @@ TEI conversion: from tei to html
         <div>
           <head>Importing the XSL into your own stylesheet</head>
           <p>If, for example, you want to write a customization of the HTML conversion
-you can simply refer to the specification <code>xhtml2/tei.xsl</code>
+you can simply refer to the specification <code>html/tei.xsl</code>
 directly with your XSL processor, or install it locally on your own
 server.  For more flexibility, you may prefer to reference the
 specifications from an XSL wrapper of your own. The minimal
@@ -248,7 +248,7 @@ specification would look like this:
 <eg><![CDATA[
 <xsl:stylesheet 
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-  <xsl:import href="xhtml2/tei.xsl"/>
+  <xsl:import href="html/tei.xsl"/>
 </xsl:stylesheet>
 ]]></eg>
 You can customize the result by adding to this wrapper file.  The normal result will be a single stream of HTML
@@ -261,9 +261,9 @@ multiple output files, one per top-level <gi>div</gi> or <gi>div1</gi>.
         <head>File structure and customization</head>
         <p>The stylesheets files consist of a number of scripts, and seven 
 main directories where most of the work is done:
-<list type="gloss"><label>common2</label><item>templates which are independent of output
-type, used by the other transformations</item><label>xhtml2</label><item>templates for making HTML output (also used
-for ePub)</item><label>latex2</label><item>templates for making LaTeX output</item><label>docx</label><item>conversion to and from Word OOXML format</item><label>odt</label><item>conversion to and from OpenOffice ODF format</item><label>fo2</label><item>templates for making XSL FO output</item><label>odds2</label><item>processing of TEI ODD files</item></list>
+<list type="gloss"><label>common</label><item>templates which are independent of output
+type, used by the other transformations</item><label>html</label><item>templates for making HTML output (also used
+for ePub)</item><label>latex</label><item>templates for making LaTeX output</item><label>docx</label><item>conversion to and from Word OOXML format</item><label>odt</label><item>conversion to and from OpenOffice ODF format</item><label>fo2</label><item>templates for making XSL FO output</item><label>odds2</label><item>processing of TEI ODD files</item></list>
 Within each directory there is usually a separate file for the templates
 which implement each of the TEI modules (eg
 <ident>textstructure.xsl</ident>,
@@ -271,7 +271,7 @@ which implement each of the TEI modules (eg
 are included by a master file <ident>tei.xsl</ident>. This also
 includes a parameterization layer in the file
 <ident>tei-param.xsl</ident>, and the parameterization file from
-the <ident>common2</ident> directory. The <ident>tei.xsl</ident> does
+the <ident>common</ident> directory. The <ident>tei.xsl</ident> does
 any necessary declaration of constants and XSL keys.</p>
         <p>There are further directories  for other conversions, some which
 are built on top of the xhtml one above:

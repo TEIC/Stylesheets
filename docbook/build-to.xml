@@ -21,7 +21,7 @@
   <!--
  Convert TEI documents into DOCBOOK files.
  -->
-  <import file="../common2/teianttasks.xml"/>
+  <import file="../common/teianttasks.xml"/>
 
   <target name="dist" unless="processODD">
     <buildgeneric type="docbook" xsl="${profiledir}/${profile}/docbook/to.xsl" in="${inputFile}" out="${outputFile}"/>
