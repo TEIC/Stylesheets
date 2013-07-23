@@ -16,7 +16,7 @@
                 version="2.0">
    <xsl:import href="../../../html/tei.xsl"/>
    <xsl:import href="../../../html/oddprocessing.xsl"/>
-   <xsl:import href="../../../odds2/teiodds.xsl"/>
+   <xsl:import href="../../../odds/teiodds.xsl"/>
    <xsl:import href="../isoutils.xsl"/>
    <xsl:import href="../isotei-schema.xsl"/>
    <xsl:import href="web.xsl"/>
