@@ -1,11 +1,13 @@
 #!/usr/bin/make -f
 export DH_COMPAT=5
 
-DESTDIR = $(CURDIR)/debian/tei-xsl-common/usr
+DESTDIR = $(CURDIR)/debian/tei-xsl/usr
 
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
+	# Add here commands to configure the package.
+
 	touch configure-stamp
 
 
@@ -13,6 +15,8 @@ build: build-stamp
 
 build-stamp: configure-stamp 
 	dh_testdir
+
+	# Add here commands to compile the package.
 	touch build-stamp
 
 clean:
@@ -26,14 +30,19 @@ install: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-	(cd ..; make PREFIX=$(DESTDIR) doc oxygendoc installcommon)
-	perl -p -i -e 's+http://www.tei-c.org/release+/usr/share+' $(DESTDIR)/share/doc/tei-xsl-common/style.xml
-	perl -p -i -e 's+.ID=+#+' $(DESTDIR)/share/doc/tei-xsl-common/style.xml
+	(cd ..; make PREFIX=$(DESTDIR) install )
+        (cd ..; make PREFIX=$(DESTDIR) doc oxygendoc )
+        perl -p -i -e 's+http://www.tei-c.org/release+/usr/share+' $(DESTDIR)/share/doc/tei-xsl-common/style.xml
+        perl -p -i -e 's+.ID=+#+' $(DESTDIR)/share/doc/tei-xsl-common/style.xml
+
 
 # Build architecture-independent files here.
 binary-indep: build install
 	dh_testdir
 	dh_testroot
+#	dh_installexamples config-dist.php
+#	dh_installinit
+#	dh_installcron
 	dh_installchangelogs 
 	dh_compress  --exclude=.xml --exclude=.xsl
 	dh_fixperms

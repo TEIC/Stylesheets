@@ -149,21 +149,17 @@ installcommon: doc common
 	(cd release/common/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 	(cd release/common/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
-install: installp5 installprofiles installcommon 
+install: doc installp5 installprofiles installcommon 
 
 debversion:
-	sh ./mydch debian-tei-xsl-common/debian/changelog
-	sh ./mydch debian-tei-p5-xsl2/debian/changelog
-	sh ./mydch debian-tei-p5-xslprofiles/debian/changelog
+	sh ./mydch debian-tei-xsl/debian/changelog
 
 deb: debversion
 	@echo BUILD Make Debian packages
 	rm -f tei*xsl*_*deb
 	rm -f tei*xsl*_*changes
 	rm -f tei*xsl*_*build
-	(cd debian-tei-xsl-common; debclean;debuild --no-lintian  -nc -b -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-xsl2;    debclean;debuild --no-lintian  -nc -b -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-xslprofiles;    debclean;debuild --no-lintian  -nc -b -i.svn -I.svn -uc -us)
+	(cd debian-tei-xsl; debclean;debuild --no-lintian  -nc -b -i.svn -I.svn -uc -us)
 
 sfupload:
 	rsync -e ssh tei-xsl-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
