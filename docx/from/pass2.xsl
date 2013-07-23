@@ -36,7 +36,7 @@ theory of liability, whether in contract, strict liability, or tort
 of this software, even if advised of the possibility of such damage.
 </p>
       <p>Author: See AUTHORS</p>
-      <p>Id: $Id$</p>
+      <p>Id: $Id: pass2.xsl 12235 2013-06-10 11:44:57Z rahtz $</p>
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
@@ -83,7 +83,6 @@ of this software, even if advised of the possibility of such damage.
           <xsl:copy-of select="@*"/>
           <xsl:variable name="me" select="generate-id()"/>
           <xsl:apply-templates mode="pass2"/>
-          <!-- find following sibling lists and notes -->
           <xsl:for-each select="following-sibling::tei:list[preceding-sibling::tei:item[1][generate-id()=$me]]">
             <list>
               <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
@@ -175,10 +174,6 @@ of this software, even if advised of the possibility of such damage.
       <p>  Gloss list from tei to docx</p>
     </desc>
   </doc>
-  <!-- <GLOSSITEM>
-	 <hi rend="bold">100</hi>
-	 <lb/>first item </GLOSSITEM>
-    -->
   <xsl:template match="tei:GLOSSITEM" mode="pass2">
     <label>
       <xsl:for-each select="tei:hi">
@@ -216,15 +211,6 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template match="tei:gloss//tei:g[@ref='x:tab']" mode="pass2"/>
-  <!-- removed 2010-03-15, seems to screw up formulae
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>A tab in a &lt;formula&gt;? no. </p>
-      </desc>
-    </doc>
-
-    <xsl:template match="tei:formula//tei:g[@ref='x:tab']" mode="pass2"/>
-    -->
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>A tab in a &lt;head&gt;? no. </p>
@@ -285,6 +271,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:hi[not(@rend) and not(*) and string-length(.)=0]" mode="pass2">
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Clean up by merging adjacent &lt;hi&gt;s with the same rend
     value into one.</desc>
@@ -297,13 +284,14 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="parent::tei:head and .=' '"/>
       <xsl:when test="not(*) and string-length(.)=0"/>
-      <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']         and tei:g[@ref='x:tab']"/>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]">
-      </xsl:when>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and   preceding-sibling::node()[2][self::tei:hi[@rend=$r]]">
-      </xsl:when>
+      <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']  and tei:g[@ref='x:tab']"/>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]"/>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and   preceding-sibling::node()[2][self::tei:hi[@rend=$r]]"/>
       <xsl:when test="@rend='bold' and .=' '">
         <xsl:text> </xsl:text>
+	<xsl:call-template name="nextHi">
+	  <xsl:with-param name="r" select="$r"/>
+	</xsl:call-template>
       </xsl:when>
       <xsl:when test="@rend='italic' and .=' '">
         <xsl:text> </xsl:text>
@@ -351,6 +339,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
+
   <xsl:template match="tei:div[tei:head/tei:ANCHOR]" mode="pass2">
     <xsl:copy>
       <xsl:attribute name="xml:id" select="tei:head/tei:ANCHOR[1]/@xml:id"/>
