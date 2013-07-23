@@ -178,16 +178,14 @@ clean:
 	rm -f tei-xsl-*.zip	
 	rm -rf tei-p5-xsl2_*
 	rm -rf tei-xsl-common_*
-	rm -f doc/stylebear doc/style.xml doc/customize.xml teixsl.html
+	rm -f doc/stylebear doc/style.xml doc/customize.xml doc/teixsl.html
 	rm -rf release dist
 	(cd Test; make clean)
 	rm -rf tei-p5-xsl_*
 	rm -rf tei-p5-xsl2_*
 	rm -rf tei-xsl-common_*
-	-(cd debian-tei-xsl-common/debian;  rm -rf tei-xsl-common)
-	-(cd debian-tei-p5-xsl2/debian;     rm -rf tei-p5-xsl2)
+	-(cd debian-tei-xsl/debian;  rm -rf tei-xsl)
 	rm -f teioo.jar
-	rm doc/index.xml doc/stylebear doc/style.xml
 	rm -rf docx/ImageInfo/bin
 
 tags:
