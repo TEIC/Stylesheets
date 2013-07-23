@@ -191,6 +191,7 @@ clean:
 	-(cd debian-tei-xsl-common/debian;  rm -rf tei-xsl-common)
 	-(cd debian-tei-p5-xsl2/debian;     rm -rf tei-p5-xsl2)
 	rm -f teioo.jar
+	rm doc/index.xml doc/stylebear doc/style.xml
 	rm -rf docx/ImageInfo/bin
 
 tags:
