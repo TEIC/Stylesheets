@@ -3,7 +3,7 @@
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="classatts.xsl"/>
   <xsl:import href="../html5/tei.xsl"/>
-  <xsl:import href="../xhtml2/oddprocessing.xsl"/>
+  <xsl:import href="../html/oddprocessing.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>

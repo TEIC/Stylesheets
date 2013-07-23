@@ -12,8 +12,8 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="#all"
                 version="2.0">
-  <xsl:import href="../common2/tei.xsl"/>
-  <xsl:import href="../common2/verbatim.xsl"/>
+  <xsl:import href="../common/tei.xsl"/>
+  <xsl:import href="../common/verbatim.xsl"/>
   <xsl:import href="tei-param.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

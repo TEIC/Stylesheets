@@ -7,8 +7,8 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     exclude-result-prefixes="#all"
     version="2.0">
-<xsl:import href="../common2/verbatim.xsl"/>
-<xsl:import href="../common2/functions.xsl"/>
+<xsl:import href="../common/verbatim.xsl"/>
+<xsl:import href="../common/functions.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

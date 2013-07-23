@@ -5,8 +5,8 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="s xs tei"
                 version="2.0">
-  <xsl:import href="../common2/tei.xsl"/>
-  <xsl:import href="../common2/verbatim.xsl"/>
+  <xsl:import href="../common/tei.xsl"/>
+  <xsl:import href="../common/verbatim.xsl"/>
   <xsl:import href="core.xsl"/>
   <xsl:import href="corpus.xsl"/>
   <xsl:import href="drama.xsl"/>

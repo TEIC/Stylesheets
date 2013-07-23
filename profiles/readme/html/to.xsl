@@ -8,7 +8,7 @@
     version="2.0">
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../xhtml2/tei.xsl"/>
+    <xsl:import href="../../../html/tei.xsl"/>
 
   <xsl:param name="feedbackURL">http://www.tei-c.org/About/contact.xml</xsl:param>
   <xsl:param name="institution">TEI Consortium</xsl:param>
