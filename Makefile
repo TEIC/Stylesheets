@@ -4,7 +4,7 @@ TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
 
-DIRS=bibtex common2 docx dtd docbook epub epub3 fo2 html html5 json latex latex2 nlm odd odds2 odt pdf profiles/default rdf relaxng rnc slides tbx tcp tite tools txt xhtml2 xsd xlsx pdf
+DIRS=bibtex common docx dtd docbook epub epub3 fo html html5 json latex latex nlm odd odds odt pdf profiles/default rdf relaxng rnc slides tbx tcp tite tools txt html xsd xlsx pdf
 
 SCRIPTS=docbooktotei docxtotei odttotei transformtei tcptotei xlsxtotei \
 	teitodocx 	teitodtd 	teitoepub \
@@ -16,13 +16,13 @@ SCRIPTS=docbooktotei docxtotei odttotei transformtei tcptotei xlsxtotei \
 PREFIX=/usr
 OXY=/usr/share/oxygen
 DOCTARGETS= \
-	latex2/tei.xsl \
-	xhtml2/tei.xsl \
-	fo2/tei.xsl \
+	latex/tei.xsl \
+	html/tei.xsl \
+	fo/tei.xsl \
 	tcp/tcp2tei.xsl \
-	odds2/odd2odd.xsl \
-	odds2/odd2relax.xsl \
-	odds2/odd2dtd.xsl \
+	odds/odd2odd.xsl \
+	odds/odd2relax.xsl \
+	odds/odd2dtd.xsl \
 	slides/teihtml-slides.xsl \
 	slides/teilatex-slides.xsl \
 	profiles/default/csv/from.xsl		\

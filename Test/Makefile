@@ -35,97 +35,97 @@ schema:
 	../teitorelaxng --odd test.odd test.rng
 
 test-html:
-	$(SAXON)  test.xml ../xhtml2/tei.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
+	$(SAXON)  test.xml ../html/tei.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
 	diff test.html expected-results/test.html
 	$(SAXON) test.html checklinks.xsl
-	$(SAXON) test.xml ../xhtml2/tei.xsl cssFile=../tei.css pageLayout=CSS  $(SAXONOPT)  | xmllint --format - > test-css.html
+	$(SAXON) test.xml ../html/tei.xsl cssFile=../tei.css pageLayout=CSS  $(SAXONOPT)  | xmllint --format - > test-css.html
 	diff test-css.html expected-results/test-css.html
 	../teitohtml5 test.xml test.html5
 	xmllint --encode utf-8 --format test.html5 | perl cleanup.pl > test.temp
 	mv test.temp test.html5
 	diff test.html5 expected-results/test.html5
-	$(SAXON) -o:test20.html  test20.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test20.html  test20.xml ../html/tei.xsl $(SAXONOPT)
 	diff test20.html expected-results/test20.html
-	$(SAXON) -o:test3.html -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	$(SAXON) -o:test4.html -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test3.html -versionmsg:off  test3.xml ../html/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test4.html -versionmsg:off  test4.xml ../html/tei.xsl $(SAXONOPT)
 	diff test4.html test3.html
-	$(SAXON) test5.xml ../xhtml2/tei.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > test5.xhtml
+	$(SAXON) test5.xml ../html/tei.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > test5.xhtml
 	diff test5.xhtml expected-results/test5.xhtml
 	jing -c xhtml.rnc test5.xhtml
-	$(SAXON) -o:test6.html test6.xml ../xhtml2/tei.xsl  autoBlockQuote=true $(SAXONOPT)
+	$(SAXON) -o:test6.html test6.xml ../html/tei.xsl  autoBlockQuote=true $(SAXONOPT)
 	diff test6.html expected-results/test6.html
 	jing -c xhtml.rnc test6.html
-	$(SAXON) -o:test22.html test22.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test22.html test22.xml ../html/tei.xsl $(SAXONOPT)
 	diff test22.html expected-results/test22.html
-	$(SAXON) -o:test23.html test23.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test23.html test23.xml ../html/tei.xsl $(SAXONOPT)
 	diff test23.html expected-results/test23.html
-	(mkdir files; cd files; saxon ../testnotes1.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
+	(mkdir files; cd files; saxon ../testnotes1.xml ../../html/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/two.html > x ; mv x files/two.html
 	xmllint --format files/three.html > x ; mv x files/three.html
-	diff -r -x .svn files expected-results/testnotes
+	diff -r  files expected-results/testnotes
 	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../tei.css)
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/tei.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/three.html > x ; mv x files/three.html
-	diff -r -x .svn files expected-results/testnotes2
+	diff -r  files expected-results/testnotes2
 	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/two.html > x ; mv x files/two.html
 	xmllint --format files/three.html > x ; mv x files/three.html
-	diff -r -x .svn files expected-results/testnotes3
-	$(SAXON) -o:test24.html test24.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff -r  files expected-results/testnotes3
+	$(SAXON) -o:test24.html test24.xml ../html/tei.xsl $(SAXONOPT)
 	diff test24.html expected-results/test24.html
-	$(SAXON) -o:test25.html test25.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test25.html test25.xml ../html/tei.xsl $(SAXONOPT)
 	diff test25.html expected-results/test25.html
-	$(SAXON) test27.xml ../xhtml2/tei.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../msdescription.css  | xmllint --format - > test27.html
+	$(SAXON) test27.xml ../html/tei.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../msdescription.css  | xmllint --format - > test27.html
 	diff test27.html expected-results/test27.html
 	rm -rf files
-	$(SAXON) test28.xml ../xhtml2/tei.xsl splitLevel=0  STDOUT=false $(SAXONOPT) 
+	$(SAXON) test28.xml ../html/tei.xsl splitLevel=0  STDOUT=false $(SAXONOPT) 
 	diff index.html expected-results/test28.html
 
 testsplit:
-	$(SAXON) test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
+	$(SAXON) test6.xml ../html/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
 
 
 test-latex:
-	$(SAXON) -o:test.tex test.xml ../latex2/tei.xsl  $(SAXONOPT)
+	$(SAXON) -o:test.tex test.xml ../latex/tei.xsl  $(SAXONOPT)
 	diff test.tex expected-results/test.tex
-	$(SAXON) -o:testnotes1.tex testnotes1.xml ../latex2/tei.xsl  $(SAXONOPT)
+	$(SAXON) -o:testnotes1.tex testnotes1.xml ../latex/tei.xsl  $(SAXONOPT)
 	diff testnotes1.tex expected-results/testnotes1.tex
-	$(SAXON) -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
+	$(SAXON) -o:test5.tex test5.xml ../latex/tei.xsl  $(SAXONOPT)
 	diff test5.tex expected-results/test5.tex
 	$(SAXON) -o:test6.tex test6.xml ../slides/teilatex-slides.xsl $(SAXONOPT)
 	diff test6.tex expected-results/test6.tex
-	$(SAXON) -o:test23.tex test23.xml ../latex2/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test23.tex test23.xml ../latex/tei.xsl $(SAXONOPT)
 	diff test23.tex expected-results/test23.tex
-	$(SAXON) -o:test24.tex test24.xml ../latex2/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test24.tex test24.xml ../latex/tei.xsl $(SAXONOPT)
 	diff test24.tex expected-results/test24.tex
-	$(SAXON) -o:test25.tex test25.xml ../latex2/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test25.tex test25.xml ../latex/tei.xsl $(SAXONOPT)
 	diff test25.tex expected-results/test25.tex
-	$(SAXON) -o:test27.tex test27.xml ../latex2/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test27.tex test27.xml ../latex/tei.xsl $(SAXONOPT)
 	diff test27.tex expected-results/test27.tex
 
 test-fo:
-	$(SAXON) -o:test.fo test.xml ../fo2/tei.xsl  $(SAXONOPT)
+	$(SAXON) -o:test.fo test.xml ../fo/tei.xsl  $(SAXONOPT)
 	jing fo.xsd test.fo
 	diff test.fo expected-results/test.fo
-	$(SAXON)  test5.xml ../fo2/tei.xsl  $(SAXONOPT)  | xmllint --format - > test5.fo
+	$(SAXON)  test5.xml ../fo/tei.xsl  $(SAXONOPT)  | xmllint --format - > test5.fo
 	jing fo.xsd test5.fo
 	diff test5.fo expected-results/test5.fo
-	$(SAXON) testnotes1.xml ../fo2/tei.xsl  $(SAXONOPT)   | xmllint --format - > testnotes1.fo
+	$(SAXON) testnotes1.xml ../fo/tei.xsl  $(SAXONOPT)   | xmllint --format - > testnotes1.fo
 	jing fo.xsd testnotes1.fo
 	diff testnotes1.fo expected-results/testnotes1.fo 
-	$(SAXON) -o:test24.fo test24.xml ../fo2/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test24.fo test24.xml ../fo/tei.xsl $(SAXONOPT)
 	jing fo.xsd test24.fo 
 	diff test24.fo expected-results/test24.fo
-	$(SAXON) -o:test25.fo test25.xml ../fo2/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test25.fo test25.xml ../fo/tei.xsl $(SAXONOPT)
 	diff test25.fo expected-results/test25.fo
-	$(SAXON) -o:test27.fo test27.xml ../fo2/tei.xsl $(SAXONOPT)
+	$(SAXON) -o:test27.fo test27.xml ../fo/tei.xsl $(SAXONOPT)
 	diff test27.fo expected-results/test27.fo
 
 test-epub:
@@ -277,8 +277,8 @@ pureant:
 	-DinputFile=`pwd`/test29.docx -Dprofile=default 
 
 profile:
-	$(SAXON) -o:/dev/null	-TP test.xml ../xhtml2/tei.xsl >& profile1.html
-	$(SAXON) -o:/dev/null	-TP test.xml ../latex2/tei.xsl >& profile2.html
+	$(SAXON) -o:/dev/null	-TP test.xml ../html/tei.xsl >& profile1.html
+	$(SAXON) -o:/dev/null	-TP test.xml ../latex/tei.xsl >& profile2.html
 	$(SAXON) test.odd ../odds2/odd2odd.xsl > test.odd2odd
 	$(SAXON) -o:/dev/null -TP test.odd2odd ../odds2/odd2relax.xsl >& profile3.html
 
@@ -297,4 +297,11 @@ clean:
 	rm -f test.xml.docx.core
 	rm -f test7.docx
 	rm -f test.html5
-	rm -rf media charts embeddings
+	rm -f A54031.xml
+	rm -f content.xml.odt
+	rm -f dcr.result
+	rm -f test-rtf2tei.xml
+	rm -f test29.xml
+	rm -f test30.rnc
+	rm -f xml.result
+
