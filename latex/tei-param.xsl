@@ -715,6 +715,29 @@ capable of dealing with UTF-8 directly.
       <xsl:copy-of select="$content"/>
     <xsl:text>}</xsl:text>
   </xsl:template>
-  
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] the content of a list item</desc>
+  </doc>
+  <xsl:template name="makeItem">
+      <xsl:text>&#10;\item</xsl:text>
+      <xsl:if test="@n">[<xsl:value-of select="@n"/>]</xsl:if>
+      <xsl:text> </xsl:text>
+      <xsl:if test="@xml:id">
+         <xsl:text>\hypertarget{</xsl:text>
+         <xsl:value-of select="@xml:id"/>
+         <xsl:text>}{}</xsl:text>
+      </xsl:if>
+      <xsl:call-template name="rendering"/>
+  </xsl:template>  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] the content of a list item in a gloss list</desc>
+  </doc>
+  <xsl:template name="makeLabelItem">
+      <xsl:text>&#10;\item</xsl:text>
+      <xsl:if test="@n">[<xsl:value-of select="@n"/>]</xsl:if>
+      <xsl:text> </xsl:text>
+      <xsl:call-template name="rendering"/>
+  </xsl:template>  
 
 </xsl:stylesheet>

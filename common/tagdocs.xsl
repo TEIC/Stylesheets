@@ -1211,26 +1211,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element item</desc>
-  </doc>
-  <xsl:template match="tei:item">
-    <xsl:choose>
-      <xsl:when test="parent::tei:list[@type='gloss'] or preceding-sibling::tei:label">
-        <xsl:element namespace="{$outputNS}" name="{$ddName}">
-          <xsl:apply-templates/>
-        </xsl:element>
-      </xsl:when>
-      <xsl:when test="parent::tei:list[@type='elementlist']">
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:element namespace="{$outputNS}" name="{$itemName}">
-          <xsl:apply-templates/>
-        </xsl:element>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element macroSpec</desc>
   </doc>
   <xsl:template match="tei:macroSpec">

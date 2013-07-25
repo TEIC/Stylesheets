@@ -501,37 +501,6 @@ of this software, even if advised of the possibility of such damage.
     </dd>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element item</desc>
-  </doc>
-  <xsl:template match="tei:item">
-    <li>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:choose>
-        <xsl:when test="@xml:id">
-          <xsl:call-template name="makeAnchor"/>
-        </xsl:when>
-        <xsl:when test="$generateParagraphIDs='true'">
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name">
-              <xsl:value-of select="generate-id()"/>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:when>
-      </xsl:choose>
-      <xsl:apply-templates/>
-    </li>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element item</desc>
-  </doc>
-  <xsl:template match="tei:item" mode="inline">
-    <xsl:if test="preceding-sibling::tei:item">, </xsl:if>
-    <xsl:if test="not(following-sibling::tei:item) and preceding-sibling::tei:item">
-      and </xsl:if>
-    <xsl:text>• </xsl:text>
-    <xsl:apply-templates/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element item/tei:label</desc>
   </doc>
   <xsl:template match="tei:item/tei:label">
@@ -688,7 +657,7 @@ of this software, even if advised of the possibility of such damage.
       <p>
         <p xmlns="http://www.w3.org/1999/xhtml">Lists. Depending on the value of the 'type' attribute, various HTML
         lists are generated: <dl><dt>bibl</dt><dd>Items are processed in mode 'bibl'</dd><dt>catalogue</dt><dd>A gloss list is created, inside a paragraph</dd><dt>gloss</dt><dd>A gloss list is created, expecting alternate label and item
-            elements</dd><dt>glosstable</dt><dd>Label and item pairs are laid out in a two-column table</dd><dt>inline</dt><dd>A comma-separate inline list</dd><dt>runin</dt><dd>An inline list with bullets between items</dd><dt>unordered</dt><dd>A simple unordered list</dd><dt>ordered</dt><dd>A simple ordered list</dd><dt>valList</dt><dd>(Identical to glosstable)</dd></dl>
+            elements</dd><dt>glosstable</dt><dd>Label and item pairs are laid out in a two-column table</dd><dt>inline</dt><dd>A comma-separate inline list</dd><dt>inline</dt><dd>An inline list with bullets between items</dd><dt>unordered</dt><dd>A simple unordered list</dd><dt>ordered</dt><dd>A simple ordered list</dd><dt>valList</dt><dd>(Identical to glosstable)</dd></dl>
             </p>
       </p>
     </desc>
@@ -759,9 +728,9 @@ of this software, even if advised of the possibility of such damage.
         <!--<xsl:if test="not(tei:item)">None</xsl:if>-->
         <xsl:apply-templates mode="inline" select="tei:item"/>
       </xsl:when>
-      <xsl:when test="@type='runin'">
+      <xsl:when test="@type='inline' or @type='runin'">
         <p>
-          <xsl:apply-templates mode="runin" select="tei:item"/>
+          <xsl:apply-templates mode="inline" select="tei:item"/>
         </p>
       </xsl:when>
       <xsl:when test="tei:isUnorderedList(.)">

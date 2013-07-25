@@ -459,7 +459,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:when>
          <xsl:when test="@type='runin'">
             <block>
-               <xsl:apply-templates mode="runin"/>
+               <xsl:apply-templates mode="inline"/>
             </block>
          </xsl:when>
          <xsl:otherwise>
@@ -893,108 +893,6 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="calculateFootnoteNumber">
       <xsl:number from="tei:text" level="any" count="tei:note[@place='foot']"/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[fo] </desc>
-   </doc>
-  <xsl:template name="makeItem">
-<!-- item behaviour depends on the type attribute of our parent:
-simple, bullets, ordered, gloss, unordered, or bibliography
--->
-    <xsl:variable name="listdepth" select="count(ancestor::tei:list)"/>
-      <list-item>
-         <xsl:if test="not(parent::tei:note[tei:isEndNote(.) or tei:isFootNote(.)])">
-            <xsl:attribute name="space-before.optimum">
-               <xsl:value-of select="$listItemsep"/>
-            </xsl:attribute>
-         </xsl:if>
-         <list-item-label end-indent="label-end()">
-            <xsl:if test="@xml:id">
-               <xsl:attribute name="id">
-                  <xsl:value-of select="@xml:id"/>
-               </xsl:attribute>
-            </xsl:if>
-            <xsl:text>&#10;</xsl:text>
-            <block>
-               <xsl:choose>
-                  <xsl:when test="@n">
-                     <xsl:attribute name="text-align">end</xsl:attribute>
-                     <xsl:value-of select="@n"/>
-                  </xsl:when>
-                  <xsl:when test="../@type='bibliography'">
-                     <xsl:attribute name="text-align">end</xsl:attribute>
-                     <xsl:apply-templates mode="xref" select="."/>
-                  </xsl:when>
-                  <xsl:when test="tei:isOrderedList(..) or self::tei:bibl">
-                     <xsl:attribute name="text-align">end</xsl:attribute>
-                     <xsl:apply-templates mode="xref" select="."/>
-                     <xsl:text>.</xsl:text>
-                  </xsl:when>
-                  <xsl:when test="tei:isGlossList(..)">
-                     <xsl:attribute name="text-align">start</xsl:attribute>
-                     <xsl:attribute name="font-weight">bold</xsl:attribute>
-                     <xsl:choose>
-		       <xsl:when test="tei:label">
-			 <xsl:apply-templates mode="print" select="tei:label"/>
-		       </xsl:when>
-		       <xsl:otherwise>
-			 <xsl:apply-templates mode="print" select="preceding-sibling::tei:*[1]"/>
-		       </xsl:otherwise>
-                     </xsl:choose>
-                  </xsl:when>
-                  <xsl:when test="tei:isOrderedList(..) or
-				  self::tei:biblStruct or self::tei:bibl">
-		    <xsl:attribute name="text-align">end</xsl:attribute>
-                     <xsl:number/>
-                     <xsl:text>.</xsl:text>
-                  </xsl:when>
-                  <xsl:otherwise>
-		    <xsl:attribute name="text-align">end</xsl:attribute>
-		    <xsl:choose>
-		      <xsl:when test="$listdepth=0">
-			<xsl:value-of select="$bulletOne"/>
-		      </xsl:when>
-		      <xsl:when test="$listdepth=1">
-			<xsl:value-of select="$bulletOne"/>
-		      </xsl:when>
-		      <xsl:when test="$listdepth=2">
-			<xsl:value-of select="$bulletTwo"/>
-		      </xsl:when>
-		      <xsl:when test="$listdepth=3">
-			<xsl:value-of select="$bulletThree"/>
-		      </xsl:when>
-		      <xsl:when test="$listdepth=4">
-			<xsl:value-of select="$bulletFour"/>
-		      </xsl:when>
-		    </xsl:choose>
-                  </xsl:otherwise>
-               </xsl:choose>
-            </block>
-         </list-item-label>
-         <list-item-body start-indent="body-start()">
-	   <xsl:choose>
-	     <xsl:when test="* and tei:list">
-	       <xsl:for-each select="*">
-		 <xsl:choose>
-		   <xsl:when test="self::tei:list">
-		     <xsl:apply-templates select="."/>
-		   </xsl:when>
-		   <xsl:otherwise>
-		     <block font-weight="normal">
-		       <xsl:apply-templates/>
-		     </block>
-		   </xsl:otherwise>
-		 </xsl:choose>
-	       </xsl:for-each>
-	     </xsl:when>
-	     <xsl:otherwise>
-	       <block font-weight="normal">
-		 <xsl:apply-templates/>
-	       </block>
-	     </xsl:otherwise>
-	   </xsl:choose>
-         </list-item-body>
-      </list-item>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[fo] <param name="defaultvalue">defaultvalue</param>

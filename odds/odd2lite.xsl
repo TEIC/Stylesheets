@@ -576,5 +576,17 @@ of this software, even if advised of the possibility of such damage.
     </p>
   </xsl:template>
 
+  <xsl:template name="makeItem">
+    <item>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates/>
+    </item>
+  </xsl:template>
+  <xsl:template name="makeLabelItem">
+    <item>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates/>
+    </item>
+  </xsl:template>
 
 </xsl:stylesheet>

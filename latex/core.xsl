@@ -361,16 +361,6 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element item</desc>
    </doc>
-  <xsl:template match="tei:item"> 
-      <xsl:text>
-\item</xsl:text>
-      <xsl:if test="@n">[<xsl:value-of select="@n"/>]</xsl:if>
-      <xsl:text> </xsl:text>
-      <xsl:call-template name="rendering"/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element item</desc>
-   </doc>
   <xsl:template match="tei:item" mode="gloss"> 
       <xsl:text>
 \item[</xsl:text>
