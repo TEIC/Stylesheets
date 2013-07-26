@@ -12,8 +12,9 @@
 
   <xsl:param name="feedbackURL">http://www.tei-c.org/About/contact.xml</xsl:param>
   <xsl:param name="institution">TEI Consortium</xsl:param>
-  <xsl:template name="copyrightStatement">released under the Creative
-  Commons Attribution-ShareAlike 3.0 license</xsl:template>
+  <xsl:template name="copyrightStatement">released under the
+Creative Commons Attribution 3.0 Unported License 
+http://creativecommons.org/licenses/by/3.0/</xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
