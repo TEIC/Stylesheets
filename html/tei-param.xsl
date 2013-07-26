@@ -578,13 +578,13 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
    </doc>
   <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
-      <desc>     <p>The style of HTML (Simple, CSS or Table) which creates the layout for generated pages.</p>
+      <desc>     <p>The style of HTML (Simple or Complex) which creates the layout for generated pages.</p>
          <p>The choice is between
 <ul xmlns="http://www.w3.org/1999/xhtml">
                <li>
                   <b>Simple</b>: A linear presentation is created</li>
                <li>
-                  <b>CSS</b>: The page is created as a series of nested
+                  <b>Complex</b>: The page is created as a series of nested
  &lt;div&gt;s which can be arranged using CSS into a multicolumn
 layout</li>
                <li>

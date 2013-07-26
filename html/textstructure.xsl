@@ -109,7 +109,7 @@ of this software, even if advised of the possibility of such damage.
      <xsl:choose>
        <!-- there are various choices of how to proceed, driven by
 	    
-	    $pageLayout: Simple, CSS
+	    $pageLayout: Simple, Complex
 	    
 	    $STDOUT: true or false
 	    
@@ -118,7 +118,7 @@ of this software, even if advised of the possibility of such damage.
 	    $requestedID: requests a particular page
        -->
        <!-- we are making a composite layout and there is a TEI or teiCorpus element -->
-       <xsl:when test="($pageLayout = 'CSS') and (tei:TEI or
+       <xsl:when test="($pageLayout = 'Complex') and (tei:TEI or
 		       tei:teiCorpus or tei:text)">
 	 <xsl:if test="$verbose='true'">
 	   <xsl:message>case 1: pageLayout <xsl:value-of select="$pageLayout"/>
@@ -313,7 +313,7 @@ of this software, even if advised of the possibility of such damage.
                      <xsl:with-param name="style" select="'toclist'"/>
                   </xsl:call-template>
                </xsl:when>
-               <xsl:when test="starts-with(local-name(),'div')   or      $pageLayout='CSS'">
+               <xsl:when test="starts-with(local-name(),'div')   or      $pageLayout='Complex'">
                   <xsl:call-template name="doDivBody">
 		    <xsl:with-param name="Depth">2</xsl:with-param>
 		    <xsl:with-param name="nav">true</xsl:with-param>
@@ -699,8 +699,8 @@ of this software, even if advised of the possibility of such damage.
 			   href="{$outName}"
 			   method="{$outputMethod}">	     
 	<xsl:choose>
-	  <xsl:when test="$pageLayout='CSS'">
-	    <xsl:call-template name="pageLayoutCSS">
+	  <xsl:when test="$pageLayout='Complex'">
+	    <xsl:call-template name="pageLayoutComplex">
 	      <xsl:with-param name="currentID">
 		<xsl:apply-templates mode="ident" select="."/>
 	      </xsl:with-param>
@@ -1039,7 +1039,7 @@ of this software, even if advised of the possibility of such damage.
      </xsl:variable>
      <xsl:choose>
        <xsl:when test="$STDOUT='true'">
-	 <xsl:call-template name="pageLayoutCSS">
+	 <xsl:call-template name="pageLayoutComplex">
 	   <xsl:with-param name="currentID" select="$currentID"/>
 	 </xsl:call-template>
        </xsl:when>
@@ -1066,7 +1066,7 @@ of this software, even if advised of the possibility of such damage.
 			      encoding="{$outputEncoding}"
 			      href="{$outName}"
 			      method="{$outputMethod}">
-	   <xsl:call-template name="pageLayoutCSS">
+	   <xsl:call-template name="pageLayoutComplex">
 	     <xsl:with-param name="currentID" select="$currentID"/>
 	   </xsl:call-template>
 	 </xsl:result-document>	
@@ -1714,10 +1714,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="$outputSuffix"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] Make a new page using CSS layout <param name="currentID">current ID</param>
+      <desc>[html] Make a new page using multicolumn layout <param name="currentID">current ID</param>
       </desc>
    </doc>
-  <xsl:template name="pageLayoutCSS">
+  <xsl:template name="pageLayoutComplex">
       <xsl:param name="currentID"/>
       <html>
          <xsl:call-template name="addLangAtt"/>

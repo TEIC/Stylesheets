@@ -167,7 +167,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="pageLayoutCSS">
+  <xsl:template name="pageLayoutComplex">
       <xsl:param name="currentID"/>
       <xsl:result-document encoding="{$outputEncoding}"
 			   href="#main" method="ixsl:replace-content">
