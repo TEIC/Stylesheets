@@ -18,8 +18,8 @@
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../common/i18n.xsl"/>
   <xsl:import href="../common/functions.xsl"/>
-  <xsl:import href="../common/tagdocs.xsl"/>
-  <xsl:import href="../common/tei-param.xsl"/>
+  <xsl:import href="../common/common_tagdocs.xsl"/>
+  <xsl:import href="../common/common_param.xsl"/>
   <xsl:namespace-alias stylesheet-prefix="gen" result-prefix="xsl"/>
   <xsl:param name="cellName">cell</xsl:param>
   <xsl:param name="codeName">code</xsl:param>

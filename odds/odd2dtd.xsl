@@ -13,7 +13,7 @@
   <xsl:import href="classatts.xsl"/>
   <xsl:import href="../common/i18n.xsl"/>
   <xsl:import href="../common/functions.xsl"/>
-  <xsl:import href="../common/tei-param.xsl"/>
+  <xsl:import href="../common/common_param.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

@@ -119,7 +119,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text>../</xsl:text>
     <xsl:value-of select="$Type"/>
   </xsl:variable>
-  <xsl:for-each select="document(concat($Path,'/tei-param.xsl'))">
+  <xsl:for-each select="document(concat($Path,'/',$Path,'_param.xsl'))">
     <xsl:if test="count(key('XDS',$I))&gt;0">
       <list type="gloss">
 	<xsl:for-each select="key('XDS',$I)">
@@ -159,7 +159,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:value-of select="$Type"/>
 	</xsl:variable>
 
-    <xsl:for-each select="document(concat($Path,'/tei-param.xsl'))">
+    <xsl:for-each select="document(concat($Path,'/',$Path,'_param.xsl'))">
       <xsl:for-each select="key('XDS',$I)">
 	<xsl:if test="not(following-sibling::xsl:*[1]/self::xsl:template)">
 	  <xsl:variable name="row">

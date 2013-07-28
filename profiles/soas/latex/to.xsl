@@ -7,7 +7,7 @@
                 version="2.0">
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../latex/tei.xsl"/>
+    <xsl:import href="../../../latex/latex.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
 

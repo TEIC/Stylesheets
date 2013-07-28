@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-    xmlns:m="http://www.w3.org/1998/Math/MathML"
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xmlns:fotex="http://www.tug.org/fotex"
-    xmlns="http://www.w3.org/1999/XSL/Format"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="tei fotex m xs"
-    version="2.0">
-  <xsl:import href="../common/tei.xsl"/>
-  <xsl:import href="../common/verbatim.xsl"/>
-  <xsl:import href="tei-param.xsl"/>
+<xsl:stylesheet xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                xmlns:s="http://www.ascc.net/xml/schematron"
+                xmlns:fotex="http://www.tug.org/fotex"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="s tei fotex xsi sch fo"
+                version="2.0">
+  <xsl:import href="common_param.xsl"/>
+  <xsl:import href="common_core.xsl"/>
+  <xsl:import href="common_textstructure.xsl"/>
+  <xsl:import href="common_header.xsl"/>
+  <xsl:import href="common_linking.xsl"/>
+  <xsl:import href="common_msdescription.xsl"/>
+  <xsl:import href="common_figures.xsl"/>
+  <xsl:import href="common_textcrit.xsl"/>
+  <xsl:import href="i18n.xsl"/>
+  <xsl:import href="functions.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
-         <p>
-    TEI stylesheet making XSL-FO output.
-      </p>
+         <p> TEI stylesheet definitions common for all of HTML, FO and LaTeX
+      outputs </p>
          <p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
@@ -53,24 +60,6 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
-      <desc>Stylesheet constant for the input document.</desc>
-   </doc>
-  <xsl:variable name="top" select="/"/>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
-      <desc>Stylesheet constant for table specifications</desc>
-   </doc>
-  <xsl:variable name="tableSpecs">
-      <xsl:choose>
-         <xsl:when test="$readColSpecFile">
-            <xsl:copy-of select="document($readColSpecFile,$top)/Info"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <Info/>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:variable>
-  <xsl:output indent="no" encoding="utf-8"/>
  <xsl:strip-space elements="tei:additional tei:address tei:adminInfo
 			    tei:altGrp tei:altIdentifier tei:analytic
 			    tei:app tei:appInfo tei:application
@@ -98,7 +87,7 @@ of this software, even if advised of the possibility of such damage.
 			    tei:floatingText tei:forest tei:front
 			    tei:fs tei:fsConstraints tei:fsDecl
 			    tei:fsdDecl tei:fvLib tei:gap tei:glyph
-			    tei:graph tei:graphic tei:group
+			    tei:graph tei:graphic tei:medua tei:group
 			    tei:handDesc tei:handNotes tei:history
 			    tei:hom tei:hyphenation tei:iNode tei:if
 			    tei:imprint tei:incident tei:index
@@ -148,101 +137,104 @@ of this software, even if advised of the possibility of such damage.
 			    tei:vMerge tei:vNot tei:vRange tei:valItem
 			    tei:valList tei:vocal"/>
 
-  <xsl:key name="DIVS"
-            match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5"
-            use="'1'"/>
-  <xsl:include href="tei-makecolspec.xsl"/>
-  <xsl:include href="core.xsl"/>
-  <xsl:include href="corpus.xsl"/>
-  <xsl:include href="drama.xsl"/>
-  <xsl:include href="figures.xsl"/>
-  <xsl:include href="header.xsl"/>
-  <xsl:include href="linking.xsl"/>
-  <xsl:include href="namesdates.xsl"/>
-  <xsl:include href="tagdocs.xsl"/>
-  <xsl:include href="textcrit.xsl"/>
-  <xsl:include href="textstructure.xsl"/>
-  <xsl:include href="transcr.xsl"/>
-  <xsl:include href="verse.xsl"/>
+  <xsl:key name="APP" match="tei:app" use="1"/>
+  <xsl:key name="TAGREND" match="tei:tagUsage[@render]" use="@gi"/>
 
-  <xsl:template name="makeBlock">
-    <xsl:param name="style"/>
-      <block font-size="{tei:fontSize($style)}"
-	     font-style="{tei:fontStyle($style)}"
-	     font-weight="{tei:fontWeight($style)}">
-	<xsl:if test="@xml:id">
-	  <xsl:attribute name="id">
-	    <xsl:value-of select="@xml:id"/>
-	  </xsl:attribute>
-	</xsl:if>
-	<xsl:apply-templates/>
-      </block>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
+      <desc> Name of XSLT processor.</desc>
+   </doc>
+  <xsl:variable name="processor">
+      <xsl:value-of select="system-property('xsl:vendor')"/>
+  </xsl:variable>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] turn names into quote characters<param name="quote">quote</param>
+      </desc>
+   </doc>
+  <xsl:template name="getQuote">
+      <xsl:param name="quote"/>
+      <xsl:choose>
+         <xsl:when test="$quote='laquo'">«</xsl:when>
+         <xsl:when test="$quote='ldquo'">“</xsl:when>
+         <xsl:when test="$quote='ldquor'">„</xsl:when>
+         <xsl:when test="$quote='lsaquo'">‹</xsl:when>
+         <xsl:when test="$quote='lsquo'">‘</xsl:when>
+         <xsl:when test="$quote='lsquor'">‚</xsl:when>
+         <xsl:when test="$quote='mdash'">—</xsl:when>
+         <xsl:when test="$quote='raquo'">»</xsl:when>
+         <xsl:when test="$quote='rdquo'">”</xsl:when>
+         <xsl:when test="$quote='rdquor'">‟</xsl:when>
+         <xsl:when test="$quote='rsaquo'">›</xsl:when>
+         <xsl:when test="$quote='rsquo'">’</xsl:when>
+         <xsl:when test="$quote='rsquor'">‛</xsl:when>
+         <xsl:otherwise><xsl:value-of select="$quote"/></xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
   
-  <xsl:template name="makeSection">
-      <xsl:param name="level"/>
-      <xsl:param name="heading"/>
-      <xsl:param name="implicitBlock">false</xsl:param>
-      <xsl:variable name="temp">
-	<tei:head><xsl:value-of select="$heading"/></tei:head>
-      </xsl:variable>
-      <xsl:for-each select="$temp">
-	<xsl:call-template name="NumberedHeading">
-	  <xsl:with-param name="level" select="$level"/>
-	</xsl:call-template>       
-      </xsl:for-each>
-      <block>
-	<xsl:apply-templates/>
-      </block>
-    </xsl:template>
-    
-    <xsl:template name="makeWithLabel">
-      <xsl:param name="before"/>
-      <i>
-         <xsl:value-of select="$before"/>
-      </i>
-      <xsl:text>: </xsl:text>
-      <xsl:value-of select="normalize-space(.)"/>
-    </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] work out the date and time, unless we have been
+      told not to</desc>
+   </doc>
+  <xsl:template name="whatsTheDate">
+    <xsl:choose>
+      	<xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of
+	      select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
+	</xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
 
-  <xsl:template name="makeInline">
-    <xsl:param name="before"/>
-    <xsl:param name="after"/>
-    <xsl:param name="style"/>
-    <xsl:value-of select="$before"/>
-      <inline font-style="{tei:fontStyle($style)}" font-weight="{tei:fontWeight($style)}">
-	<xsl:apply-templates/>
-      </inline>
-    <xsl:value-of select="$after"/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] whether to put quotes around something. check the
+      quotation element, @rend, @rendition etc</desc>
+   </doc>
+   <xsl:template name="makeQuote">
+     <xsl:choose>
+       <xsl:when
+	   test="/*/tei:teiHeader//tei:editorialDecl/tei:quotation[@marks='all']">
+	 <xsl:apply-templates/>
+       </xsl:when>
+       <xsl:when test="@rend='inline'">
+	 <xsl:value-of select="$preQuote"/>
+	 <xsl:apply-templates/>
+	 <xsl:value-of select="$postQuote"/>
+       </xsl:when>
+       <xsl:when test="$outputTarget='latex'">
+	 <xsl:value-of select="$preQuote"/>
+	 <xsl:apply-templates/>
+	 <xsl:value-of select="$postQuote"/>
+       </xsl:when>
+       <xsl:when test="@rend or @rendition or
+		       key('TAGREND',local-name(.))">
+	 <xsl:apply-templates/>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:value-of select="$preQuote"/>
+	 <xsl:apply-templates/>
+	 <xsl:value-of select="$postQuote"/>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template>
+   
+  <xsl:template name="makeText">
+    <xsl:param name="letters"/>
+    <xsl:value-of select="$letters"/>
   </xsl:template>
 
+  <xsl:template name="makeSection">
+    <xsl:param name="heading"/>
+    <xsl:param name="level"/>
+    <xsl:param name="implicitBlock"/>
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template name="makeWithLabel">
+    <xsl:param name="before"/>
+    <xsl:value-of select="$before"/>
+    <xsl:text>: </xsl:text>
+    <xsl:apply-templates/>
+  </xsl:template>
 
-  <xsl:function name="tei:fontSize" as="xs:string">
-    <xsl:param name="style"/>
-    <xsl:choose>
-      <xsl:when test="$style='docAuthor'">14pt</xsl:when>
-      <xsl:when test="$style='docTitle'">16pt</xsl:when>
-      <xsl:when test="$style='titlePart'">16pt</xsl:when>
-      <xsl:when test="$style='docDate'">14pt</xsl:when>
-      <xsl:otherwise>12pt</xsl:otherwise>
-    </xsl:choose>
-  </xsl:function>
-
-  <xsl:function name="tei:fontStyle" as="xs:string">
-    <xsl:param name="style"/>
-    <xsl:choose>
-      <xsl:when test="$style='docAuthor'">italic</xsl:when>
-      <xsl:when test="$style='titlem'">italic</xsl:when>
-      <xsl:otherwise>normal</xsl:otherwise>
-    </xsl:choose>
-  </xsl:function>
-
-  <xsl:function name="tei:fontWeight" as="xs:string">
-    <xsl:param name="style"/>
-    <xsl:choose>
-      <xsl:when test="$style='docTitle'">bold</xsl:when>
-      <xsl:when test="$style='titlePart'">bold</xsl:when>
-      <xsl:otherwise>normal</xsl:otherwise>
-    </xsl:choose>
-  </xsl:function>
 </xsl:stylesheet>

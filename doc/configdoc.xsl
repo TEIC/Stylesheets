@@ -15,9 +15,9 @@ will construct a XSL file for you, with all the variables configured.
   <TargetDirectory path="./xsltdoc/"/>
   <SourceDirectory path="../"/>
   <RootStylesheets>
-    <File href="html/tei.xsl"/>
-    <File href="fo/tei.xsl"/>
-    <File href="latex/tei.xsl"/>
+    <File href="html/html.xsl"/>
+    <File href="fo/fo.xsl"/>
+    <File href="latex/latex.xsl"/>
     <File href="slides/teilatex-slides.xsl"/>
   </RootStylesheets>
 <!--
