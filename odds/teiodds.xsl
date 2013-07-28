@@ -73,6 +73,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="outputDir"/>
   <xsl:param name="outputSuffix">.html</xsl:param>
   <xsl:param name="patternPrefix"/>
+  <xsl:param name="outputEncoding">utf-8</xsl:param>
   <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
@@ -1845,7 +1846,7 @@ select="$makeDecls"/></xsl:message>
         <xsl:copy-of select="$body"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:result-document href="{$outputDir}/{@ident}{$suffix}" method="{$method}">
+        <xsl:result-document encoding="{$outputEncoding}" href="{$outputDir}/{@ident}{$suffix}" method="{$method}">
           <xsl:copy-of select="$body"/>
         </xsl:result-document>
       </xsl:otherwise>
