@@ -11,7 +11,7 @@
 		version="2.0" exclude-result-prefixes="#all"
 		xpath-default-namespace="http://www.tei-c.org/ns/1.0"
 >
-  <xsl:import href="../html5/tei.xsl"/>
+  <xsl:import href="../html5/html5.xsl"/>
   <xsl:import href="../epub/epub-common.xsl"/>
   <xsl:import href="../epub/epub-preflight.xsl"/>
   <xsl:output method="xml" encoding="utf-8" doctype-system="" indent="no"/>

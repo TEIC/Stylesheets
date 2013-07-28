@@ -7,7 +7,7 @@
 
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../html5/tei.xsl"/>
+    <xsl:import href="../../../html5/html5.xsl"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
