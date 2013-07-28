@@ -41,17 +41,31 @@
       <label xmlns="http://www.w3.org/2000/01/rdf-schema#">(geographical name) identifies a name associated with some geographical feature such as Windrush Valley or Mount Sinai. [13.2.3. ]</label>
       <P127_has_broader_term rdf:resource="http://www.tei-c.org/type/place"/>
    </E55_Type>
-   <P102_has_title xmlns="http://purl.org/NET/crm-owl#">
-      <E35_Title>
-         <rdf:value>Test data for CIDOC CRM / TEI mapping</rdf:value>
-      </E35_Title>
-   </P102_has_title>
+   <F24_Publication_Expression xmlns="http://purl.org/NET/crm-owl#">
+      <R24i_was_created_through>
+         <P102_has_title>
+            <E35_Title>
+               <rdf:value>Test data for CIDOC CRM / TEI mapping</rdf:value>
+            </E35_Title>
+         </P102_has_title>
+         <F30_Publication_Event>
+            <R24i_was_created_through/>
+         </F30_Publication_Event>
+      </R24i_was_created_through>
+   </F24_Publication_Expression>
    <E31_Document xmlns="http://purl.org/NET/crm-owl#" rdf:about="http://www.example.com1">
-      <P102_has_title>
-         <E35_Title>
-            <rdf:value>Test data for CIDOC CRM / TEI mapping</rdf:value>
-         </E35_Title>
-      </P102_has_title>
+      <F24_Publication_Expression>
+         <R24i_was_created_through>
+            <P102_has_title>
+               <E35_Title>
+                  <rdf:value>Test data for CIDOC CRM / TEI mapping</rdf:value>
+               </E35_Title>
+            </P102_has_title>
+            <F30_Publication_Event>
+               <R24i_was_created_through/>
+            </F30_Publication_Event>
+         </R24i_was_created_through>
+      </F24_Publication_Expression>
    </E31_Document>
    <E21_Person xmlns="http://purl.org/NET/crm-owl#"
                rdf:about="http://www.example.com/person/ArnMag01">

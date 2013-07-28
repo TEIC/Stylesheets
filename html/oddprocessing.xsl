@@ -159,9 +159,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="$name"/>
                 <xsl:text> </xsl:text>
-                <xsl:call-template name="makeGloss">
-                  <xsl:with-param name="langs" select="$langs"/>
-                </xsl:call-template>
+                <xsl:sequence select="tei:makeGloss(.,$langs)"/>
               </title>
               <xsl:call-template name="metaHTML">
                 <xsl:with-param name="title">
@@ -169,10 +167,8 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:text> </xsl:text>
                   <xsl:value-of select="@ident"/>
                   <xsl:text> </xsl:text>
-                  <xsl:call-template name="makeGloss">
-                    <xsl:with-param name="langs" select="$langs"/>
-                  </xsl:call-template>
-                  <xsl:text> - </xsl:text>
+		  <xsl:sequence select="tei:makeGloss(.,$langs)"/>
+		  <xsl:text> - </xsl:text>
                   <xsl:sequence select="tei:generateTitle(.)"/>
                 </xsl:with-param>
               </xsl:call-template>
@@ -406,7 +402,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:sort select="lower-case(@ident)"/>
             <tr>
               <td id="{@ident}"><a href="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html"><xsl:value-of select="@ident"/></a>:
-		     <xsl:call-template name="makeDescription"/></td>
+		     <xsl:sequence select="tei:makeDescription(.,true())"/></td>
             </tr>
           </xsl:for-each>
         </table>
@@ -716,7 +712,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:text>[</xsl:text>
               <xsl:value-of select="@ident"/>
               <xsl:text>] </xsl:text>
-              <xsl:call-template name="makeDescription"/>
+              <xsl:sequence select="tei:makeDescription(.,true())"/>
             </xsl:for-each>
           </h3>
           <xsl:for-each select="key('MACRO-MODULE',@module)">
@@ -767,7 +763,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:text>[</xsl:text>
                 <xsl:value-of select="@ident"/>
                 <xsl:text>] </xsl:text>
-                <xsl:call-template name="makeDescription"/>
+                <xsl:sequence select="tei:makeDescription(.,true())"/>
               </xsl:for-each>
             </h3>
             <xsl:for-each select="key('ELEMENT-MODULE',@module)">
@@ -846,7 +842,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:text>[</xsl:text>
                 <xsl:value-of select="@ident"/>
                 <xsl:text>] </xsl:text>
-                <xsl:call-template name="makeDescription"/>
+                <xsl:sequence select="tei:makeDescription(.,true())"/>
               </xsl:for-each>
             </h3>
             <xsl:for-each select="key('MODEL-CLASS-MODULE',@module)">
@@ -899,7 +895,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:text>[</xsl:text>
                 <xsl:value-of select="@ident"/>
                 <xsl:text>] </xsl:text>
-                <xsl:call-template name="makeDescription"/>
+                <xsl:sequence select="tei:makeDescription(.,true())"/>
               </xsl:for-each>
             </h3>
             <xsl:for-each

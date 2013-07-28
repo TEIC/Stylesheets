@@ -467,7 +467,7 @@ of this software, even if advised of the possibility of such damage.
 		       <xsl:value-of select="@ident"/>
 		     </ref>
 		     </hi>:
-		   <xsl:call-template name="makeDescription"/>
+		   <xsl:sequence select="tei:makeDescription(.,true())"/>
 		 </cell>
 	       </row>
 	     </xsl:for-each>

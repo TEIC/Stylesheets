@@ -309,7 +309,7 @@
     <attribute name="in"/>
     <attribute name="out"/>
     <sequential>
-      <echo level="info">XSLT generate HTML files</echo>
+      <echo level="info">XSLT generate HTML files (language ${lang})</echo>
       <xslt force="yes" style="${teitohtml}" in="@{in}" out="@{out}">
         <xmlcatalog>
           <catalogpath>
@@ -386,6 +386,7 @@
           </catalogpath>
         </xmlcatalog>
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        <param name="lang" expression="${lang}" if="lang"/>
         <param name="summaryDoc" expression="${summaryDoc}" if="summaryDoc"/>
         <param name="displayMode" expression="rnc"/>
       </xslt>

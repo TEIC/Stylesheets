@@ -501,7 +501,7 @@ of this software, even if advised of the possibility of such damage.
     </dd>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element item/tei:label</desc>
+    <desc>Process element item/label</desc>
   </doc>
   <xsl:template match="tei:item/tei:label">
     <span>
@@ -518,7 +518,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element label</desc>
+    <desc>Process element label in print mode</desc>
   </doc>
   <xsl:template match="tei:label" mode="print">
     <span>

@@ -149,7 +149,7 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:call-template name="showDate"/>
                   <xsl:text>. </xsl:text>
                   <xsl:call-template name="makeTEIVersion"/>
-                  <xsl:call-template name="makeDescription"/>
+                  <xsl:sequence select="tei:makeDescription(.,true())"/>
                   <xsl:text>&#10;</xsl:text>
                </xsl:comment>
 	       <xsl:comment>
@@ -238,7 +238,7 @@ of this software, even if advised of the possibility of such damage.
                            <xsl:call-template name="showDate"/>
                            <xsl:call-template name="makeTEIVersion"/>
 			   <xsl:call-template name="copyright"/>
-                           <xsl:call-template name="makeDescription"/>
+                           <xsl:sequence select="tei:makeDescription(.,true())"/>
                         </xsl:comment>
                         <xsl:call-template name="moduleSpec-body"/>
                      </grammar>

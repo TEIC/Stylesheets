@@ -14,8 +14,6 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
   version="2.0">
-  <xsl:import href="../common/odds.xsl"/>
-
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -59,20 +57,26 @@ of this software, even if advised of the possibility of such damage.
   </doc>
 
   <xsl:include href="RngToRnc.xsl"/>
-  <xsl:param name="idPrefix"/>
-  <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="STDOUT">true</xsl:param>
-  <xsl:param name="outputSuffix">.html</xsl:param>
-  <xsl:param name="outputDir"/>
-  <xsl:param name="splitLevel">-1</xsl:param>
-  <xsl:param name="localsource"/>
-  <xsl:param name="lang"/>
-  <xsl:param name="patternPrefix"/>
   <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="autoGlobal">false</xsl:param>
+  <xsl:param name="configDirectory"/>
+  <xsl:param name="currentDirectory"/>
+  <xsl:param name="defaultSource"></xsl:param>
+  <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
+  <xsl:param name="defaultTEIVersion">current</xsl:param>
+  <xsl:param name="idPrefix"/>
+  <xsl:param name="lang"/>
+  <xsl:param name="localsource"/>
   <xsl:param name="lookupDatabase">false</xsl:param>
-  <xsl:param name="verbose">false</xsl:param>
+  <xsl:param name="oddmode">tei</xsl:param>
+  <xsl:param name="outputDir"/>
+  <xsl:param name="outputSuffix">.html</xsl:param>
+  <xsl:param name="patternPrefix"/>
   <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/</xsl:param>
+  <xsl:param name="splitLevel">-1</xsl:param>
+  <xsl:param name="verbose">false</xsl:param>
+
   <xsl:key match="tei:*" name="LOCALIDENTS" use="@ident"/>
   <xsl:key match="tei:macroSpec" name="MACROS" use="@ident"/>
   <xsl:key match="tei:elementSpec" name="ELEMENTS" use="@ident"/>
@@ -115,6 +119,24 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:macroSpec[@predeclare='true']" name="PredeclareMacros" use="@ident"/>
   <xsl:key match="tei:macroSpec[@predeclare='true']" name="PredeclareMacrosModule" use="@module"/>
   <xsl:key match="tei:macroSpec[@predeclare='true']" name="PredeclareAllMacros" use="1"/>
+
+
+  <xsl:variable name="DEFAULTSOURCE">
+    <xsl:choose>
+      <xsl:when test="$defaultSource != ''">
+        <xsl:value-of select="$defaultSource"/>
+      </xsl:when>
+      <xsl:when test="$configDirectory != ''">
+        <xsl:value-of select="$configDirectory"/>
+        <xsl:text>odd/p5subset.xml</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$defaultTEIServer"/>
+        <xsl:value-of select="$defaultTEIVersion"/>
+	<xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
 
   <xsl:variable name="BASE" select="base-uri(/tei:TEI)"/>
 
@@ -876,10 +898,7 @@ select="$makeDecls"/></xsl:message>
                   </xsl:if>
                   <xsl:if test="not($oddmode='tei')">
                     <a:documentation>
-                      <xsl:call-template name="makeDescription">
-                        <xsl:with-param name="includeValList">true</xsl:with-param>
-                        <xsl:with-param name="coded">false</xsl:with-param>
-                      </xsl:call-template>
+		      <xsl:sequence select="tei:makeDescription(.,true())"/>
                     </a:documentation>
                   </xsl:if>
                   <xsl:choose>
@@ -1043,10 +1062,7 @@ select="$makeDecls"/></xsl:message>
         </value>
         <xsl:if test="not($oddmode='tei')">
           <a:documentation>
-            <xsl:call-template name="makeDescription">
-              <xsl:with-param name="includeValList">true</xsl:with-param>
-              <xsl:with-param name="coded">false</xsl:with-param>
-            </xsl:call-template>
+	    <xsl:sequence select="tei:makeDescription(.,true())"/>
           </a:documentation>
         </xsl:if>
       </xsl:for-each>
@@ -1405,10 +1421,7 @@ select="$makeDecls"/></xsl:message>
             </value>
             <xsl:if test="not($oddmode='tei')">
               <a:documentation>
-                <xsl:call-template name="makeDescription">
-                  <xsl:with-param name="includeValList">true</xsl:with-param>
-                  <xsl:with-param name="coded">false</xsl:with-param>
-                </xsl:call-template>
+		<xsl:sequence select="tei:makeDescription(.,true())"/>
               </a:documentation>
             </xsl:if>
           </xsl:for-each>
@@ -1432,10 +1445,7 @@ select="$makeDecls"/></xsl:message>
             </value>
             <xsl:if test="not($oddmode='tei')">
               <a:documentation>
-                <xsl:call-template name="makeDescription">
-                  <xsl:with-param name="includeValList">true</xsl:with-param>
-                  <xsl:with-param name="coded">false</xsl:with-param>
-                </xsl:call-template>
+		<xsl:sequence select="tei:makeDescription(.,true())"/>
               </a:documentation>
             </xsl:if>
           </xsl:for-each>
@@ -1487,10 +1497,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:if>
       <xsl:if test="not($oddmode='tei')">
         <a:documentation>
-          <xsl:call-template name="makeDescription">
-            <xsl:with-param name="includeValList">true</xsl:with-param>
-            <xsl:with-param name="coded">false</xsl:with-param>
-          </xsl:call-template>
+	  <xsl:sequence select="tei:makeDescription(.,true())"/>
         </a:documentation>
       </xsl:if>
       <!-- ************************************ -->
@@ -2009,6 +2016,120 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
+  <xsl:function name="tei:workOutSource" as="xs:string*">
+    <xsl:param name="e"/>
+    <xsl:variable name="loc">
+      <xsl:choose>
+	<xsl:when test="$e/@source">
+	  <xsl:value-of select="$e/@source"/>
+	</xsl:when>
+	<xsl:when test="$e/ancestor::tei:schemaSpec/@source">
+	  <xsl:value-of select="$e/ancestor::tei:schemaSpec/@source"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$DEFAULTSOURCE"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="source">
+      <xsl:choose>
+	<xsl:when test="starts-with($loc,'/')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'file:')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'http:')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'https:')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'tei:')">
+	  <xsl:value-of
+	      select="replace($loc,'tei:',$defaultTEIServer)"/>
+	  <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$currentDirectory"/>
+	  <xsl:value-of select="$loc"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="not(doc-available($source))">
+	<xsl:call-template name="die">
+	  <xsl:with-param name="message">
+	    <xsl:text>Source </xsl:text>
+	   <xsl:value-of select='$source'/>
+	   <xsl:text> not readable</xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Setting source document to <xsl:value-of
+	  select="$source"/></xsl:message>
+	</xsl:if>
+	<xsl:sequence select="$source"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="tei:message" as="xs:string">
+    <xsl:param name="message"/>
+    <xsl:message><xsl:copy-of select="$message"/></xsl:message>
+    <xsl:text/>
+  </xsl:function>
+
+  <xsl:function name="tei:uniqueName" as="xs:string">
+    <xsl:param name="e"/>
+    <xsl:for-each select="$e">
+      <xsl:sequence select="concat(
+	if (@ns='http://www.tei-c.org/ns/1.0') then ''
+	else if (@ns) then @ns
+	else if (ancestor::tei:schemaSpec/@ns) then
+	ancestor::tei:schemaSpec/@ns else '',@ident)"/>
+    </xsl:for-each>
+  </xsl:function>
+
+
+  <xsl:template name="die">
+    <xsl:param name="message"/>
+    <xsl:message terminate="yes">
+      <xsl:text>Error: odd2odd.xsl: </xsl:text> 
+      <xsl:value-of select="$message"/>
+    </xsl:message>
+  </xsl:template>
+
+   <xsl:template match="@*|text()" mode="justcopy">
+      <xsl:copy-of select="."/>
+   </xsl:template>
+
+   <xsl:template match="processing-instruction()" mode="justcopy">
+      <xsl:copy-of select="."/>
+   </xsl:template>
+
+   <xsl:template match="*" mode="justcopy">
+     <xsl:copy>
+         <xsl:apply-templates
+	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+     </xsl:copy>
+   </xsl:template>
+
+   <xsl:template match="a:*" mode="justcopy">
+      <xsl:element  xmlns="http://relaxng.org/ns/compatibility/annotations/1.0" name="{name()}">
+         <xsl:apply-templates
+	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+      </xsl:element>
+   </xsl:template>
+
+   <xsl:template match="rng:*" mode="justcopy">
+     <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{local-name()}">
+       <xsl:apply-templates
+	   select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+     </xsl:element>
+   </xsl:template>
 
 
 </xsl:stylesheet>

@@ -266,19 +266,19 @@ att.fragmentable.attribute.part =
   [ a:defaultValue = "N" ]
   attribute part {
     
-    ##  (yes) the element is fragmented in some (unspecified) respect
+    ## (yes) the element is fragmented in some (unspecified) respect
     "Y"
     | 
-      ##  (no) either the element is not fragmented, or no claim is made as to its completeness.
+      ## (no) either the element is not fragmented, or no claim is made as to its completeness.
       "N"
     | 
-      ##  (initial) this is the initial part of a fragmented element
+      ## (initial) this is the initial part of a fragmented element
       "I"
     | 
-      ##  (medial) this is a medial part of a fragmented element
+      ## (medial) this is a medial part of a fragmented element
       "M"
     | 
-      ##  (final) this is the final part of a fragmented element
+      ## (final) this is the final part of a fragmented element
       "F"
   }?
 att.divLike.attributes =
@@ -741,7 +741,7 @@ att.edition.attribute.ed =
   }?
 att.edition.attribute.edRef =
   
-  ##  (edition reference) provides a pointer to the source edition in which the associated feature (for example, a page, column, or line break) occurs at this point in the text.
+  ## (edition reference) provides a pointer to the source edition in which the associated feature (for example, a page, column, or line break) occurs at this point in the text.
   attribute edRef {
     list { data.pointer+ }
   }?
@@ -1213,7 +1213,7 @@ model.profileDescPart = creation | langUsage | textClass | calendarDesc
 att.source.attributes = att.source.attribute.source
 att.source.attribute.source =
   
-  ##  (pointer to a bibliographical source reference) provides a pointer to the bibliographical source from which a quotation or citation is drawn.
+  ## (pointer to a bibliographical source reference) provides a pointer to the bibliographical source from which a quotation or citation is drawn.
   attribute source {
     list { data.pointer+ }
   }?
@@ -1947,7 +1947,7 @@ milestone =
   }
 gb =
   
-  ##  (gathering begins) marks the point in a transcribed codex at which a new gathering or quire begins. [3.10.3. ]
+  ## (gathering begins) marks the point in a transcribed codex at which a new gathering or quire begins. [3.10.3. ]
   element gb {
     empty,
     att.global.attributes,
@@ -2157,7 +2157,7 @@ biblScope =
     }?,
     
     ## identifies the type of information conveyed by the element, e.g. columns, pages, volume.
-    ## Suggested values include: 1] vol(volume) ; 2] issue; 3] pp(pages) ; 4] ll (lines) ; 5] chap(chapter) ; 6] part
+    ## Suggested values include: 1] vol(volume) ; 2] issue; 3] pp(pages) ; 4] ll(lines) ; 5] chap(chapter) ; 6] part
     attribute type {
       
       ## (volume) the element contains a volume number.
@@ -2169,7 +2169,7 @@ biblScope =
         ## (pages) the element contains a page number or page range.
         "pp"
       | 
-        ##  (lines) the element contains a line number or line range.
+        ## (lines) the element contains a line number or line range.
         "ll"
       | 
         ## (chapter) the element contains a chapter indication (number and/or title)
@@ -2189,7 +2189,7 @@ biblScope =
   }
 citedRange =
   
-  ##  (cited range) defines the range of cited content, often represented by pages or other units [3.11.2.4. ]
+  ## (cited range) defines the range of cited content, often represented by pages or other units [3.11.2.4. ]
   element citedRange {
     macro.phraseSeq,
     att.global.attributes,
@@ -2907,7 +2907,7 @@ rendition =
   }
 styleDefDecl =
   
-  ##  (style definition language declaration) specifies the name of the formal language in which style or renditional information is supplied elsewhere in the document. The specific version of the scheme may also be supplied. [2.3.5. ]
+  ## (style definition language declaration) specifies the name of the formal language in which style or renditional information is supplied elsewhere in the document. The specific version of the scheme may also be supplied. [2.3.5. ]
   element styleDefDecl {
     model.pLike*,
     att.global.attributes,
@@ -2946,7 +2946,7 @@ att.patternReplacement.attribute.replacementPattern =
   attribute replacementPattern { data.replacement }
 prefixDef =
   
-  ##  (prefixing scheme used in data.pointer values) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. ]
+  ## (prefixing scheme used in data.pointer values) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. ]
   element prefixDef {
     model.pLike*,
     att.global.attributes,
@@ -2958,7 +2958,7 @@ prefixDef =
   }
 listPrefixDef =
   
-  ##  (list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. ]
+  ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. ]
   element listPrefixDef {
     (prefixDef | listPrefixDef)+, att.global.attributes, empty
   }
@@ -3263,7 +3263,7 @@ floatingText =
   }
 \div =
   
-  ##  (divisionette) contains a subdivision of the front, body, or back of a text. [4.1. ]
+  ## (divisionette) contains a subdivision of the front, body, or back of a text. [4.1. ]
   element div {
     ((model.divTop | model.global)*,
      ((((model.divLike | model.divGenLike), model.global*)+

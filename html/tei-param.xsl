@@ -884,19 +884,9 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
   <xsl:template name="makeLabelItem">
     <dd>
       <xsl:call-template name="makeRendition"/>
-      <xsl:choose>
-	<xsl:when test="@xml:id">
-	  <xsl:call-template name="makeAnchor"/>
-	</xsl:when>
-	<xsl:when test="$generateParagraphIDs='true'">
-	  <xsl:call-template name="makeAnchor">
-	    <xsl:with-param name="name">
-	      <xsl:value-of select="generate-id()"/>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:when>
-      </xsl:choose>
-      <xsl:apply-templates/>
+      <xsl:if test="@xml:id">
+	<xsl:call-template name="makeAnchor"/>
+      </xsl:if>
       <xsl:apply-templates/>
     </dd>
   </xsl:template>

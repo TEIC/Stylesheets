@@ -38,7 +38,7 @@ test-html:
 	$(SAXON)  test.xml ../html/tei.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
 	diff test.html expected-results/test.html
 	$(SAXON) test.html checklinks.xsl
-	$(SAXON) test.xml ../html/tei.xsl cssFile=../tei.css pageLayout=CSS  $(SAXONOPT)  | xmllint --format - > test-css.html
+	$(SAXON) test.xml ../html/tei.xsl cssFile=../tei.css pageLayout=Complex  $(SAXONOPT)  | xmllint --format - > test-css.html
 	diff test-css.html expected-results/test-css.html
 	../teitohtml5 test.xml test.html5
 	xmllint --encode utf-8 --format test.html5 | perl cleanup.pl > test.temp
@@ -211,7 +211,7 @@ test-to-docx:
 	rm testnotes1.xml.docx.document
 
 oddity:
-	../teitohtml5 --summaryDoc --profile=tei --odd test15.odd test.odd.html
+	../teitohtml5 --summaryDoc --lang=es --profile=tei --odd test15.odd test.odd.html
 	xmllint --format test.odd.html | perl cleanup.pl> x ; mv x test.odd.html
 	diff test.odd.html expected-results/test.odd.html
 	$(SAXON) -it:main -o:oddbyexample.odd  -xsl:../tools/oddbyexample.xsl corpus=`pwd`/bare 

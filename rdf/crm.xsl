@@ -514,6 +514,14 @@
     </F24_Publication_Expression>
   </xsl:template>
 
+  <xsl:template name="F30">
+    <F30_Publication_Event   xmlns="http://purl.org/NET/crm-owl#" >
+      <R24i_was_created_through>
+	<xsl:apply-templates/>
+      </R24i_was_created_through>
+    </F30_Publication_Event>
+  </xsl:template>
+
   <!-- general templates -->
 
   <xsl:template name="calc-date-value">

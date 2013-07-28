@@ -295,9 +295,7 @@
               <xsl:text>: &lt;</xsl:text>
               <xsl:value-of select="$me"/>
               <xsl:text>&gt; </xsl:text>
-              <xsl:call-template name="makeGloss">
-                <xsl:with-param name="langs" select="$langs"/>
-              </xsl:call-template>
+	      <xsl:sequence select="tei:makeGloss(.,$langs)"/>
             </title>
             <xsl:call-template name="includeCSS"/>
             <meta content="Text Encoding Initiative Consortium XSLT
@@ -308,9 +306,7 @@
                 <xsl:text>: </xsl:text>
                 <xsl:value-of select="$me"/>
                 <xsl:text> </xsl:text>
-                <xsl:call-template name="makeGloss">
-                  <xsl:with-param name="langs" select="$langs"/>
-                </xsl:call-template>
+                <xsl:sequence select="tei:makeGloss(.,$langs)"/>
 	      </xsl:with-param>
 	    </xsl:call-template>
             <xsl:call-template name="includeJavascript"/>
@@ -323,9 +319,7 @@
                 <xsl:text>: &lt;</xsl:text>
                 <xsl:value-of select="$me"/>
                 <xsl:text>&gt; </xsl:text>
-                <xsl:call-template name="makeGloss">
-                  <xsl:with-param name="langs" select="$langs"/>
-                </xsl:call-template>
+                <xsl:sequence select="tei:makeGloss(.,$langs)"/>
               </xsl:with-param>
             </xsl:call-template>
             <div class="main-content">
@@ -335,9 +329,7 @@
                 <xsl:text>: &lt;</xsl:text>
                 <xsl:value-of select="$me"/>
                 <xsl:text>&gt; </xsl:text>
-                <xsl:call-template name="makeGloss">
-                  <xsl:with-param name="langs" select="$langs"/>
-                </xsl:call-template>
+                <xsl:sequence select="tei:makeGloss(.,$langs)"/>
               </h3>
               <p>These search results reproduce every example of the
 	      use of <xsl:text>&lt;</xsl:text>

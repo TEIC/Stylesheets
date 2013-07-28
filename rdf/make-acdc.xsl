@@ -3,11 +3,12 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/TransformAlias" 
     xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-    exclude-result-prefixes="rdf"
+    xmlns:tei="http://www.tei-c.org/ns/1.0" 
+    exclude-result-prefixes="tei rdf"
     version="2.0"
 >
 
-  <XSL:import href="../common/odds.xsl"/>
+
   <XSL:import href="../common/i18n.xsl"/>
   <XSL:import href="../common/functions.xsl"/>
 
@@ -73,7 +74,7 @@
       <XSL:for-each select="key('MEMBERS','model.placeNamePart')">
 	<E55_Type rdf:about="http://www.tei-c.org/type/place/{@ident}" xmlns="http://purl.org/NET/crm-owl#" >
 	<label xmlns="http://www.w3.org/2000/01/rdf-schema#" >
-	  <XSL:call-template name="makeDescription"/>
+	  <XSL:sequence select="tei:makeDescription(.,true())"/>
 	</label>
 	<P127_has_broader_term rdf:resource="http://www.tei-c.org/type/place"/>
       </E55_Type>

@@ -33,6 +33,7 @@ echo "  --debug              # be verbose, do not delete intermediate files"
 echo "  --apphome=$APPHOME   # where to find app directory"
 echo "  --profiledir=$profiledir    # where to find profile directory"
 echo "  --profile=$profile    # which transformation profile to use"
+echo "  --lang=$lang    # which language to use
 echo "  --oxygenlib=$oxygenlib    # where is oxygenlib"
 case $format in
       teitorelaxng) ;;
@@ -73,6 +74,7 @@ echo "Stylesheet family version: $version"
 #-------------------------------------------------
 fileperpage=
 debug=
+lang=en
 profile=default
 odd=false
 verbose=false
@@ -117,6 +119,7 @@ while test $# -gt 0; do
     --css=*)        cssFile=-DcssFile=`echo $1 | sed 's/.*=//'`;;
     --fileperpage)  splitLevel="-DsplitLevel=-1"; fileperpage="-DfilePerPage=true";;
     --odd)          odd=true;;
+    --lang=*)    lang=`echo $1 | sed 's/.*=//'`;;
     --localsource=*)   TEISOURCE="`echo $1 | sed 's/.*=//'`";;
     --mediaoverlay) mediaoverlay="-Dmediaoverlay=true";;
        --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
@@ -216,6 +219,7 @@ ant $antflag -f $APPHOME/$format/build-$direction.xml \
         -Dprofile=$profile \
 	-Dpublisher=$publisher \
 	-Duid=$uid \
+	-Dlang=$lang \
 	-Dsubject=$subject \
 	-Dcoverimage=$coverimage \
 	-Doxygenlib=$oxygenlib

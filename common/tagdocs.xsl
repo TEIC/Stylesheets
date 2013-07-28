@@ -133,7 +133,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
-        <xsl:call-template name="makeDescription"/>
+        <xsl:sequence select="tei:makeDescription(.,true())"/>
         <xsl:apply-templates select="valList"/>
       </xsl:element>
     </xsl:element>
@@ -196,9 +196,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
-        <xsl:call-template name="makeDescription">
-	  <xsl:with-param name="showListRef">false</xsl:with-param>
-	</xsl:call-template>
+	<xsl:sequence select="tei:makeDescription(.,false())"/>
         <xsl:apply-templates select="valList"/>
       </xsl:element>
     </xsl:element>
@@ -234,7 +232,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
-        <xsl:call-template name="makeDescription"/>
+        <xsl:sequence select="tei:makeDescription(.,true())"/>
         <xsl:element namespace="{$outputNS}" name="{$tableName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>attDef</xsl:text>
@@ -488,7 +486,7 @@ of this software, even if advised of the possibility of such damage.
               </xsl:with-param>
             </xsl:call-template>
             <xsl:text>&#160;</xsl:text>
-            <xsl:call-template name="makeDescription"/>
+            <xsl:sequence select="tei:makeDescription(.,true())"/>
           </xsl:element>
         </xsl:element>
         <xsl:if test="@generate">
@@ -697,7 +695,7 @@ of this software, even if advised of the possibility of such damage.
               </xsl:choose>
               <xsl:text>&gt; </xsl:text>
             </xsl:element>
-            <xsl:call-template name="makeDescription"/>
+            <xsl:sequence select="tei:makeDescription(.,true())"/>
           </xsl:element>
         </xsl:element>
 	<xsl:call-template name="validUntil"/>
@@ -921,7 +919,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:attribute name="{$rendName}">
           <xsl:text>wovenodd-col2</xsl:text>
         </xsl:attribute>
-        <xsl:call-template name="makeDescription"/>
+        <xsl:sequence select="tei:makeDescription(.,true())"/>
         <xsl:for-each select="tei:constraint">
           <xsl:element namespace="{$outputNS}" name="{$divName}">
             <xsl:attribute name="{$rendName}">
@@ -1000,9 +998,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:element>
     </xsl:element>
     <xsl:call-template name="showSpace"/>
-    <xsl:call-template name="makeDescription">
-      <xsl:with-param name="showListRef">false</xsl:with-param>
-    </xsl:call-template>
+    <xsl:sequence select="tei:makeDescription(.,false())"/>
     <xsl:choose>
       <xsl:when test="self::tei:classSpec and @type='model'">
 	<xsl:if test="key('CLASSMEMBERS-CLASSES',@ident)">
@@ -1135,7 +1131,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:element>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
-        <xsl:call-template name="makeDescription"/>
+        <xsl:sequence select="tei:makeDescription(.,true())"/>
       </xsl:element>
     </xsl:element>
   </xsl:template>
@@ -1265,7 +1261,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="$name"/>
             </xsl:element>
             <xsl:text>&#160;</xsl:text>
-            <xsl:call-template name="makeDescription"/>
+            <xsl:sequence select="tei:makeDescription(.,true())"/>
           </xsl:element>
         </xsl:element>
 	<xsl:call-template name="validUntil"/>
@@ -1379,7 +1375,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:value-of select="$spaceCharacter"/>
         <xsl:value-of select="@ident"/>
         <xsl:text>: </xsl:text>
-        <xsl:call-template name="makeDescription"/>
+        <xsl:sequence select="tei:makeDescription(.,true())"/>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$ddName}">
         <xsl:element namespace="{$outputNS}" name="{$ulName}">
@@ -1703,7 +1699,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$rendName}">
             <xsl:text>odd_value</xsl:text>
           </xsl:attribute>
-          <xsl:call-template name="makeDescription"/>
+          <xsl:sequence select="tei:makeDescription(.,true())"/>
           <xsl:if test="@ident=../../tei:defaultVal">
             <xsl:element namespace="{$outputNS}" name="{$hiName}">
               <xsl:attribute name="{$rendName}">

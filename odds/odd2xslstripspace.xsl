@@ -41,8 +41,6 @@
   <xsl:param name="ulName"/>
   <xsl:param name="urlName"/>
   <xsl:param name="xrefName"/>
-  <xsl:param name="coded">false</xsl:param>
-  <xsl:param name="showListRef">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making JSON from ODD </p>
