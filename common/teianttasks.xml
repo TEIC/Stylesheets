@@ -261,6 +261,8 @@
         <param name="viewPortWidth" expression="${viewPortWidth}" if="viewPortWidth"/>
         <!-- supply name of language-->
         <param name="lang" expression="${lang}" if="lang"/>
+        <param name="doclang" expression="${lang}" if="lang"/>
+        <param name="documentationLanguage" expression="${lang}" if="lang"/>
         <!-- emit some diagnostics"-->
         <param name="debug" expression="${debug}" if="debug"/>
         <!-- be verbose-->
@@ -309,7 +311,7 @@
     <attribute name="in"/>
     <attribute name="out"/>
     <sequential>
-      <echo level="info">XSLT generate HTML files (language ${lang})</echo>
+      <echo>XSLT generate HTML files (language ${lang})</echo>
       <xslt force="yes" style="${teitohtml}" in="@{in}" out="@{out}">
         <xmlcatalog>
           <catalogpath>
@@ -327,6 +329,8 @@
         <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
         <!-- supply name of language-->
         <param name="lang" expression="${lang}" if="lang"/>
+        <param name="doclang" expression="${lang}" if="lang"/>
+        <param name="documentationLanguage" expression="${lang}" if="lang"/>
         <!-- emit some diagnostics"-->
         <param name="debug" expression="${debug}" if="debug"/>
         <!-- be verbose-->
@@ -353,6 +357,8 @@
         <param name="inputDir" expression="${inputDir}/"/>
         <!-- supply name of language-->
         <param name="lang" expression="${lang}" if="lang"/>
+        <param name="doclang" expression="${lang}" if="lang"/>
+        <param name="documentationLanguage" expression="${lang}" if="lang"/>
         <!-- emit some diagnostics"-->
         <param name="debug" expression="${debug}" if="debug"/>
         <!-- be verbose-->
@@ -387,6 +393,8 @@
         </xmlcatalog>
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="lang" expression="${lang}" if="lang"/>
+        <param name="doclang" expression="${lang}" if="lang"/>
+        <param name="documentationLanguage" expression="${lang}" if="lang"/>
         <param name="summaryDoc" expression="${summaryDoc}" if="summaryDoc"/>
         <param name="displayMode" expression="rnc"/>
       </xslt>

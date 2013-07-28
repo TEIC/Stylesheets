@@ -14,6 +14,7 @@
     <xsl:param name="doctypePublic"/>
     <xsl:param name="divOffset">1</xsl:param>
     <xsl:param name="langAttributeName">lang</xsl:param>
+    <xsl:param name="doclang"/>
     <xsl:template match="/">
 	<xsl:call-template name="processTEI"/>
     </xsl:template>
