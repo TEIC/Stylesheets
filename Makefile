@@ -178,7 +178,7 @@ clean:
 	rm -f tei-xsl-*.zip	
 	rm -rf tei-p5-xsl2_*
 	rm -rf tei-xsl-common_*
-	rm -f doc/stylebear doc/style.xml doc/customize.xml doc/teixsl.html
+	rm -f doc/stylebear doc/style.xml doc/customize.xml doc/teixsl.html doc/index.xml
 	rm -rf release dist
 	(cd Test; make clean)
 	rm -rf tei-p5-xsl_*
