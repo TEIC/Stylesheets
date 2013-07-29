@@ -232,7 +232,8 @@
     <sequential>
       <mkdir dir="${outputTempDir}"/>
       <!-- The transformation for EPUB output. -->
-      <echo level="info">XSLT generate ePub files in ${outputTempDir}</echo>
+      <echo level="info">XSLT generate ePub files in  ${outputTempDir}</echo>
+      <!--<basename property="coverfile" file="${coverimage}"/>-->
       <xslt force="yes" style="${teitoepub}" in="@{in}" out="${outputTempDir}/OPS/index.html">
         <factory name="net.sf.saxon.TransformerFactoryImpl">
           <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
@@ -279,6 +280,7 @@
         <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
         <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
       </xslt>
+      <!--<copy todir="${outputTempDir}/OPS" file="${coverfile}"/>-->
       <echo level="info">Copy image files</echo>
       <ant antfile="${outputTempDir}/copy.xml"/>
       <echo level="info">ZIP: put files from ${outputTempDir} together into @{out}</echo>
