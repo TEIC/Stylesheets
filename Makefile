@@ -16,9 +16,9 @@ SCRIPTS=docbooktotei docxtotei odttotei transformtei tcptotei xlsxtotei \
 PREFIX=/usr
 OXY=/usr/share/oxygen
 DOCTARGETS= \
-	latex/tei.xsl \
-	html/tei.xsl \
-	fo/tei.xsl \
+	latex/latex.xsl \
+	html/html.xsl \
+	fo/fo.xsl \
 	tcp/tcp2tei.xsl \
 	odds/odd2odd.xsl \
 	odds/odd2relax.xsl \
