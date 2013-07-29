@@ -207,7 +207,7 @@ case $format in
 esac
 
 echo Convert $infile to $outdir/$outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
-echo ant $antflag -f $APPHOME/$format/build-$direction.xml \
+ant $antflag -f $APPHOME/$format/build-$direction.xml \
 	-lib ${SAXONJAR} $debug \
     $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress $localsource \
         -Dodd=$odd \
