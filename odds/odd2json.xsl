@@ -15,8 +15,8 @@
     exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
     version="2.0">
   <xsl:import href="teiodds.xsl"/>
-  <xsl:import href="../common/tagdocs.xsl"/>
-  <xsl:import href="../common/tei-param.xsl"/>
+  <xsl:import href="../common/common_tagdocs.xsl"/>
+  <xsl:import href="../common/common_param.xsl"/>
   <xsl:import href="../common/functions.xsl"/>
   <xsl:import href="../common/i18n.xsl"/>
   <xsl:param name="cellName">cell</xsl:param>

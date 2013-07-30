@@ -12,9 +12,9 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="#all"
                 version="2.0">
-  <xsl:import href="../common/tei.xsl"/>
+  <xsl:import href="../common/common.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>
-  <xsl:import href="tei-param.xsl"/>
+  <xsl:import href="html_param.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p>
@@ -57,19 +57,19 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
-  <xsl:include href="core.xsl"/>
-  <xsl:include href="corpus.xsl"/>
-  <xsl:include href="dictionaries.xsl"/>
-  <xsl:include href="drama.xsl"/>
-  <xsl:include href="figures.xsl"/>
-  <xsl:include href="header.xsl"/>
-  <xsl:include href="linking.xsl"/>
-  <xsl:include href="namesdates.xsl"/>
-  <xsl:include href="tagdocs.xsl"/>
-  <xsl:include href="textstructure.xsl"/>
-  <xsl:include href="textcrit.xsl"/>
-  <xsl:include href="transcr.xsl"/>
-  <xsl:include href="verse.xsl"/>
+  <xsl:include href="html_core.xsl"/>
+  <xsl:include href="html_corpus.xsl"/>
+  <xsl:include href="html_dictionaries.xsl"/>
+  <xsl:include href="html_drama.xsl"/>
+  <xsl:include href="html_figures.xsl"/>
+  <xsl:include href="html_header.xsl"/>
+  <xsl:include href="html_linking.xsl"/>
+  <xsl:include href="html_namesdates.xsl"/>
+  <xsl:include href="html_tagdocs.xsl"/>
+  <xsl:include href="html_textstructure.xsl"/>
+  <xsl:include href="html_textcrit.xsl"/>
+  <xsl:include href="html_transcr.xsl"/>
+  <xsl:include href="html_verse.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
       <desc>Stylesheet constant setting the name of the main output file.</desc>

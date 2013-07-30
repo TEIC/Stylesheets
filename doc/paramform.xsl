@@ -7,7 +7,7 @@
     xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
     version="2.0">
 
-<xsl:import href="../html/tei.xsl"/>
+<xsl:import href="../html/html.xsl"/>
 
 <doc scope="stylesheet" xmlns="http://www.oxygenxml.com/ns/doc/xsl" >
     <desc>
@@ -70,10 +70,10 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:for-each select="TEI/text/body/div[@xml:id]">
   <xsl:call-template name="listcgi">
-    <xsl:with-param name="File">common/tei-param.xsl</xsl:with-param>
+    <xsl:with-param name="File">common/common_param.xsl</xsl:with-param>
   </xsl:call-template>
   <xsl:call-template name="listcgi">
-    <xsl:with-param name="File">html/tei-param.xsl</xsl:with-param>
+    <xsl:with-param name="File">html/html_param.xsl</xsl:with-param>
   </xsl:call-template>
 </xsl:for-each>
 <xsl:text disable-output-escaping="yes">
@@ -110,7 +110,7 @@ END
 #          }
 print "&lt;xsl:import href=\"";
 print $HOME;
-print "/tei/stylesheet/html/tei.xsl\"/>\n";
+print "/tei/stylesheet/html/html.xsl\"/>\n";
 foreach $key (keys %Default) {
 my $Passed=$query->param($key);
 my $D=$Default{$key};
@@ -173,11 +173,11 @@ return "";
        <table>
 	 <xsl:call-template name="list">
 	   <xsl:with-param
-	       name="File">common/tei-param.xsl</xsl:with-param>
+	       name="File">common/common_param.xsl</xsl:with-param>
 	 </xsl:call-template>
 	 <xsl:call-template name="list">
 	   <xsl:with-param
-	       name="File">html/tei-param.xsl</xsl:with-param>
+	       name="File">html/html_param.xsl</xsl:with-param>
 	 </xsl:call-template>
        </table>
    </xsl:for-each>

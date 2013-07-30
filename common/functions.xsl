@@ -968,7 +968,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="showListRef"/>
     <xsl:variable name="D">
     <xsl:for-each select="$context">
-      <xsl:variable name="langs" select="tei:generateDocumentationLang(.)"/>
+      <xsl:variable name="langs"
+		    select="tei:generateDocumentationLang(.)"/>
       <xsl:variable name="firstLang" select="($langs)[1]"/>
       <!-- first the gloss -->
       <xsl:sequence select="tei:makeGloss(.,$langs)"/>

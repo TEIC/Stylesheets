@@ -232,7 +232,8 @@
     <sequential>
       <mkdir dir="${outputTempDir}"/>
       <!-- The transformation for EPUB output. -->
-      <echo level="info">XSLT generate ePub files in ${outputTempDir}</echo>
+      <basename property="coverfile" file="${coverimage}"/>
+      <echo level="info">XSLT generate ePub files in  ${outputTempDir}</echo>
       <xslt force="yes" style="${teitoepub}" in="@{in}" out="${outputTempDir}/OPS/index.html">
         <factory name="net.sf.saxon.TransformerFactoryImpl">
           <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
@@ -261,6 +262,8 @@
         <param name="viewPortWidth" expression="${viewPortWidth}" if="viewPortWidth"/>
         <!-- supply name of language-->
         <param name="lang" expression="${lang}" if="lang"/>
+        <param name="doclang" expression="${lang}" if="lang"/>
+        <param name="documentationLanguage" expression="${lang}" if="lang"/>
         <!-- emit some diagnostics"-->
         <param name="debug" expression="${debug}" if="debug"/>
         <!-- be verbose-->
@@ -273,6 +276,8 @@
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="outputDir" expression="${outputTempDir}"/>
         <param name="inputDir" expression="@{inDir}"/>
+        <param name="coverimage" expression="${coverimage}" if="coverimage"/>
+        <param name="coverDir" expression="${outputTempDir}/OPS" if="coverimage"/>
         <param name="mediaDir" expression="OPS/media"/>
         <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
         <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
@@ -309,7 +314,7 @@
     <attribute name="in"/>
     <attribute name="out"/>
     <sequential>
-      <echo level="info">XSLT generate HTML files (language ${lang})</echo>
+      <echo>XSLT generate HTML files (language ${lang})</echo>
       <xslt force="yes" style="${teitohtml}" in="@{in}" out="@{out}">
         <xmlcatalog>
           <catalogpath>
@@ -327,6 +332,8 @@
         <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
         <!-- supply name of language-->
         <param name="lang" expression="${lang}" if="lang"/>
+        <param name="doclang" expression="${lang}" if="lang"/>
+        <param name="documentationLanguage" expression="${lang}" if="lang"/>
         <!-- emit some diagnostics"-->
         <param name="debug" expression="${debug}" if="debug"/>
         <!-- be verbose-->
@@ -353,6 +360,8 @@
         <param name="inputDir" expression="${inputDir}/"/>
         <!-- supply name of language-->
         <param name="lang" expression="${lang}" if="lang"/>
+        <param name="doclang" expression="${lang}" if="lang"/>
+        <param name="documentationLanguage" expression="${lang}" if="lang"/>
         <!-- emit some diagnostics"-->
         <param name="debug" expression="${debug}" if="debug"/>
         <!-- be verbose-->
@@ -387,6 +396,8 @@
         </xmlcatalog>
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="lang" expression="${lang}" if="lang"/>
+        <param name="doclang" expression="${lang}" if="lang"/>
+        <param name="documentationLanguage" expression="${lang}" if="lang"/>
         <param name="summaryDoc" expression="${summaryDoc}" if="summaryDoc"/>
         <param name="displayMode" expression="rnc"/>
       </xslt>
@@ -439,4 +450,5 @@
     <delete  file="${outputDir}/${basefile}-handout.tex"/>
     <delete  file="${outputDir}/${outputDir}/_slidelogo.png"/>
   </target>
+
 </project>

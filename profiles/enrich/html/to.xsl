@@ -8,8 +8,8 @@
                 version="2.0">
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../html/tei.xsl"/>
-    <xsl:import href="../../../common/msdescription.xsl"/>
+    <xsl:import href="../../../html/html.xsl"/>
+    <xsl:import href="../../../common/common_msdescription.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
 

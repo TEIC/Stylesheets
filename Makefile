@@ -16,9 +16,9 @@ SCRIPTS=docbooktotei docxtotei odttotei transformtei tcptotei xlsxtotei \
 PREFIX=/usr
 OXY=/usr/share/oxygen
 DOCTARGETS= \
-	latex/tei.xsl \
-	html/tei.xsl \
-	fo/tei.xsl \
+	latex/latex.xsl \
+	html/html.xsl \
+	fo/fo.xsl \
 	tcp/tcp2tei.xsl \
 	odds/odd2odd.xsl \
 	odds/odd2relax.xsl \
@@ -87,17 +87,17 @@ profiles:
 	tar cf - --exclude .svn profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
 
 doc: oxygendoc
-	test -d release/common/doc/tei-xsl-common || mkdir -p release/common/doc/tei-xsl-common
+	test -d release/common/doc/tei-xsl || mkdir -p release/common/doc/tei-xsl
 	saxon -o:doc/index.xml doc/teixsl.xml doc/param.xsl 
 	saxon -o:doc/style.xml doc/teixsl.xml  doc/paramform.xsl 
-	saxon -o:release/common/doc/tei-xsl-common/index.html doc/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
-	saxon -o:release/common/doc/tei-xsl-common/style.html doc/style.xml  profiles/default/html/to.xsl 
-	cp doc/*.png doc/teixsl.xml doc/style.xml release/common/doc/tei-xsl-common
-	cp VERSION tei.css ChangeLog LICENCE release/common/doc/tei-xsl-common
+	saxon -o:release/common/doc/tei-xsl/index.html doc/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
+	saxon -o:release/common/doc/tei-xsl/style.html doc/style.xml  profiles/default/html/to.xsl 
+	cp doc/*.png doc/teixsl.xml doc/style.xml release/common/doc/tei-xsl
+	cp VERSION tei.css ChangeLog LICENCE release/common/doc/tei-xsl
 
 oxygendoc:
 	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh
-	-test -f $(OXY)/stylesheetDocumentation.sh && for i in ${DOCTARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY}/stylesheetDocumentation.sh $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
+	-test -f $(OXY)/stylesheetDocumentation.sh && for i in ${DOCTARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl/`dirname $$i`; ${OXY}/stylesheetDocumentation.sh $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
 teioo.jar:
 	(cd odt;  mkdir TEIP5; saxon -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
@@ -176,14 +176,12 @@ clean:
 	rm -f profile1.html profile2.html profile.xml
 	find . -name "*~"  | xargs rm
 	rm -f tei-xsl-*.zip	
-	rm -rf tei-p5-xsl2_*
-	rm -rf tei-xsl-common_*
-	rm -f doc/stylebear doc/style.xml doc/customize.xml doc/teixsl.html
+	rm -rf tei-xsl_*
+	rm -f doc/stylebear doc/style.xml doc/customize.xml doc/teixsl.html doc/index.xml
 	rm -rf release dist
 	(cd Test; make clean)
 	rm -rf tei-p5-xsl_*
 	rm -rf tei-p5-xsl2_*
-	rm -rf tei-xsl-common_*
 	-(cd debian-tei-xsl/debian;  rm -rf tei-xsl)
 	rm -f teioo.jar
 	rm -rf docx/ImageInfo/bin

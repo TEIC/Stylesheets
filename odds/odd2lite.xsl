@@ -16,8 +16,8 @@
   <xsl:import href="../common/verbatim.xsl"/>
   <xsl:import href="teiodds.xsl"/> 
   <xsl:import href="classatts.xsl"/>
-  <xsl:import href="../common/tei.xsl"/>
-  <xsl:include href="../common/tagdocs.xsl"/>
+  <xsl:import href="../common/common.xsl"/>
+  <xsl:include href="../common/common_tagdocs.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making TEI Lite XML from ODD </p>
@@ -61,29 +61,29 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="summaryDoc">false</xsl:param>
 
   <xsl:param name="cellName">cell</xsl:param>
-  <xsl:param name="xrefName">ref</xsl:param>
-  <xsl:param name="urlName">target</xsl:param>
-  <xsl:param name="ulName">list</xsl:param>
-  <xsl:param name="dlName">list</xsl:param>
   <xsl:param name="codeName">code</xsl:param>
   <xsl:param name="colspan">cols</xsl:param>
   <xsl:param name="ddName">item</xsl:param>
+  <xsl:param name="displayMode">rnc</xsl:param>
+  <xsl:param name="divName">ab</xsl:param>
+  <xsl:param name="dlName">list</xsl:param>
   <xsl:param name="dtName">label</xsl:param>
   <xsl:param name="hiName">hi</xsl:param>
+  <xsl:param name="idPrefix">TEI.</xsl:param>
   <xsl:param name="itemName">item</xsl:param>
   <xsl:param name="labelName">label</xsl:param>
+  <xsl:param name="oddmode">tei</xsl:param>
+  <xsl:param name="outputNS">http://www.tei-c.org/ns/1.0</xsl:param>
   <xsl:param name="rendName">rend</xsl:param>
   <xsl:param name="rowName">row</xsl:param>
-  <xsl:param name="tableName">table</xsl:param>
   <xsl:param name="sectionName">div</xsl:param>
-  <xsl:param name="divName">ab</xsl:param>
   <xsl:param name="segName">seg</xsl:param>
-  <xsl:param name="outputNS">http://www.tei-c.org/ns/1.0</xsl:param>
   <xsl:param name="spaceCharacter">&#160;</xsl:param>
-  <xsl:param name="oddmode">tei</xsl:param>
-  <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
-  <xsl:param name="idPrefix">TEI.</xsl:param>
+  <xsl:param name="tableName">table</xsl:param>
+  <xsl:param name="ulName">list</xsl:param>
+  <xsl:param name="urlName">target</xsl:param>
+  <xsl:param name="xrefName">ref</xsl:param>
 
 
   <xsl:template match="/">

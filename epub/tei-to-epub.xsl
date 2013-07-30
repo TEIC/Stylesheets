@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:smil="http://www.w3.org/ns/SMIL" xmlns:opf="http://www.idpf.org/2007/opf" xmlns:iso="http://www.iso.org/ns/1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/" version="2.0" exclude-result-prefixes="iso tei teix dc              html opf ncx smil">
-  <xsl:import href="../html/tei.xsl"/>
+  <xsl:import href="../html/html.xsl"/>
   <xsl:import href="epub-common.xsl"/>
   <xsl:import href="epub-preflight.xsl"/>
   <xsl:output method="xml" encoding="utf-8" indent="no"/>
@@ -113,7 +113,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:for-each>
           </xsl:when>
           <xsl:when test="not($coverimage='')">
-            <xsl:value-of select="$coverimage"/>
+            <xsl:value-of select="tokenize($coverimage,'/')[last()]"/>
           </xsl:when>
         </xsl:choose>
       </xsl:variable>
@@ -127,7 +127,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:for-each>
           </xsl:when>
           <xsl:when test="not($coverimage='')">
-            <xsl:value-of select="$coverimage"/>
+            <xsl:value-of select="tokenize($coverimage,'/')[last()]"/>
           </xsl:when>
         </xsl:choose>
       </xsl:variable>
@@ -324,9 +324,6 @@ height: </xsl:text>
               </xsl:if>
               <xsl:if test="not($coverImageOutside='')">
                 <item href="{$coverImageOutside}" id="cover-image" media-type="image/jpeg"/>
-              </xsl:if>
-              <xsl:if test="not($coverimage='') and not($coverimage=$coverImageOutside)">
-                <item href="{$coverimage}" id="cover-image-extra" media-type="image/jpeg"/>
               </xsl:if>
               <xsl:for-each select="tokenize($javascriptFiles,',')">
                 <xsl:variable name="name" select="tokenize(normalize-space(.),'/')[last()]"/>

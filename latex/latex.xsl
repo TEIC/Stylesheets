@@ -5,21 +5,21 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="s xs tei"
                 version="2.0">
-  <xsl:import href="../common/tei.xsl"/>
+  <xsl:import href="../common/common.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>
-  <xsl:import href="core.xsl"/>
-  <xsl:import href="corpus.xsl"/>
-  <xsl:import href="drama.xsl"/>
-  <xsl:import href="figures.xsl"/>
-  <xsl:import href="header.xsl"/>
-  <xsl:import href="linking.xsl"/>
-  <xsl:import href="namesdates.xsl"/>
-  <xsl:import href="tagdocs.xsl"/>
-  <xsl:import href="textstructure.xsl"/>
-  <xsl:import href="transcr.xsl"/>
-  <xsl:import href="verse.xsl"/>
-  <xsl:import href="textcrit.xsl"/>
-  <xsl:import href="tei-param.xsl"/>
+  <xsl:import href="latex_core.xsl"/>
+  <xsl:import href="latex_corpus.xsl"/>
+  <xsl:import href="latex_drama.xsl"/>
+  <xsl:import href="latex_figures.xsl"/>
+  <xsl:import href="latex_header.xsl"/>
+  <xsl:import href="latex_linking.xsl"/>
+  <xsl:import href="latex_namesdates.xsl"/>
+  <xsl:import href="latex_tagdocs.xsl"/>
+  <xsl:import href="latex_textstructure.xsl"/>
+  <xsl:import href="latex_transcr.xsl"/>
+  <xsl:import href="latex_verse.xsl"/>
+  <xsl:import href="latex_textcrit.xsl"/>
+  <xsl:import href="latex_param.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

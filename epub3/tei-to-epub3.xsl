@@ -11,7 +11,7 @@
 		version="2.0" exclude-result-prefixes="#all"
 		xpath-default-namespace="http://www.tei-c.org/ns/1.0"
 >
-  <xsl:import href="../html5/tei.xsl"/>
+  <xsl:import href="../html5/html5.xsl"/>
   <xsl:import href="../epub/epub-common.xsl"/>
   <xsl:import href="../epub/epub-preflight.xsl"/>
   <xsl:output method="xml" encoding="utf-8" doctype-system="" indent="no"/>
@@ -127,7 +127,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:for-each>
           </xsl:when>
           <xsl:when test="not($coverimage='')">
-            <xsl:value-of select="$coverimage"/>
+            <xsl:value-of select="tokenize($coverimage,'/')[last()]"/>
           </xsl:when>
         </xsl:choose>
       </xsl:variable>
@@ -141,7 +141,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:for-each>
           </xsl:when>
           <xsl:when test="not($coverimage='')">
-            <xsl:value-of select="$coverimage"/>
+            <xsl:value-of select="tokenize($coverimage,'/')[last()]"/>
           </xsl:when>
         </xsl:choose>
       </xsl:variable>
@@ -342,9 +342,6 @@ height: </xsl:text>
               </xsl:if>
               <xsl:if test="not($coverImageOutside='')">
                 <item href="{$coverImageOutside}" id="cover-image" media-type="image/jpeg"/>
-              </xsl:if>
-              <xsl:if test="not($coverimage='') and not($coverimage=$coverImageOutside)">
-                <item href="{$coverimage}" id="cover-image-extra" media-type="image/jpeg"/>
               </xsl:if>
               <xsl:for-each select="tokenize($javascriptFiles,',')">
                 <xsl:variable name="name" select="tokenize(normalize-space(.),'/')[last()]"/>
