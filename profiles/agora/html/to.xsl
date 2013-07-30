@@ -24,7 +24,7 @@
       License along with this library; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
          <p>Author: See AUTHORS</p>
-         <p>Id: $Id$</p>
+         <p>Id: $Id: to.xsl 12482 2013-07-28 18:39:41Z louburnard $</p>
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
@@ -48,6 +48,12 @@
   <xsl:param name="feedbackURL"></xsl:param>
    <xsl:param name="homeWords">AGORA</xsl:param>
  
+
+<!-- dont wrap quotes in quotes -->
+<xsl:param name="preQuote"/>
+<xsl:param name="postQuote"/>
+
+
 <xsl:template name="copyrightStatement">
 This page is made available under the Creative Commons General Public License "Attribution, Non-Commercial, Share-Alike", version 3.0 (CCPL BY-NC-SA) 
 </xsl:template>
@@ -98,21 +104,12 @@ This page is made available under the Creative Commons General Public License "A
 </ul></xsl:template>
 
 
-<!-- allow for @rend on head -->
-<xsl:template match="tei:head[@rend]">
-
-<xsl:attribute name="class">
-<xsl:value-of select="@rend"/>
-</xsl:attribute>
-
-</xsl:template>
-
-
-
+<!--
 <xsl:template match="tei:ref">
   <span class="ref"><xsl:apply-templates/></span>
   <span class="contextaRef"><xsl:value-of select="@cRef"/></span>
 </xsl:template>
+-->
 
 <!-- add a space in front of surname inside author -->
 
@@ -131,7 +128,7 @@ This page is made available under the Creative Commons General Public License "A
     </div>  
   </xsl:template>
 
-<!-- replace template for listbibl -->
+<!-- replace template for listbibl 
 <xsl:template match="tei:listBibl">
  <ul class="listBibl">
         <xsl:for-each select="tei:bibl|tei:biblItem">
@@ -153,7 +150,7 @@ This page is made available under the Creative Commons General Public License "A
         </xsl:for-each>
       </ul>
 </xsl:template>
-
+-->
   <xsl:template match="tei:div[@type='abstract']">
     <div class="abstract">
       <xsl:if test='not(tei:head)'>

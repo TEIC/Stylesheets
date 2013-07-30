@@ -1,7 +1,7 @@
 /* 
 ** Copyright 2011 TEI Consortium
 
-$Id$
+$Id: tei-agora.css 12482 2013-07-28 18:39:41Z louburnard $
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
@@ -163,7 +163,14 @@ h1 {
    font-weight: bold;
    font-size: 2em;
    line-height: 34pt;
+  }
+h1.center {
+   font-weight: bold;
+   font-size: 2em;
+   line-height: 34pt;
+   text-align : center;
 }
+
 
 h2 {
    font-size: larger;
@@ -171,12 +178,27 @@ h2 {
    margin-top: 18pt;
    font-weight: bold;
 }
+h2.center {
+   font-size: larger;
+   line-height: 20pt;
+   margin-top: 18pt;
+   font-weight: bold;
+   text-align : center;
+
+}
 
 h3 {
    font-size: larger;
    line-height: 18pt;
    font-weight: bold;
    font-style: italic;
+}
+h3.center {
+   font-size: larger;
+   line-height: 18pt;
+   font-weight: bold;
+   font-style: italic;
+   text-align : center;
 }
 
 
@@ -591,10 +613,10 @@ p.left {
 }
 
 .indent{
-text-indent: 3em;
+text-indent: 2em;
 }
 
-div.indent blockquote {
+div.indent  {
     text-indent: 0em;
 }
 
@@ -667,6 +689,12 @@ div.tocBody {
 
 ul.listBibl {
     list-style : none;
+    list-item-style: none;
+}
+
+ol.listBibl {
+    list-style : none;
+    list-item-style: none;
 }
 
 /* a listBibl rend='labels' */
@@ -715,8 +743,11 @@ div.citquote {
 dt {
    font-weight: bold;
 }
-div.blockquote {
-   margin: 10pt;
+
+span.indent {
+    display:block;
+    font-size:smaller;
+    text-indent: 5mm;
 }
 
 /* generic <hi> */
@@ -751,6 +782,10 @@ span.camera {
 }
 span.caption {
  font-style: italic;
+}
+span.right {
+display:block;
+text-align:right;
 }
 span.role {
  font-style: italic;
@@ -1052,6 +1087,40 @@ span.numberParagraph {
     font-size: smaller;
     color: grey;
 }
+
+
+blockquote.block {
+display:block;
+font-size:smaller;
+}
+
+table td {
+    border: solid black 1pt;
+    padding: 1ex 1ex 1ex 1ex;
+    text-align: center;
+    font-size:medium;
+    }
+    
+    table {
+    /* trick to centre table: may not work with IE */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+span.centre {
+    display: block;
+   text-align:center;
+}
+
+p.centre {
+    display: block;
+   text-align:center;
+}
+
+
+
 .centre .center{
+    display: block;
    text-align:center;
 }
