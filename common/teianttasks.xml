@@ -232,8 +232,8 @@
     <sequential>
       <mkdir dir="${outputTempDir}"/>
       <!-- The transformation for EPUB output. -->
+      <basename property="coverfile" file="${coverimage}"/>
       <echo level="info">XSLT generate ePub files in  ${outputTempDir}</echo>
-      <!--<basename property="coverfile" file="${coverimage}"/>-->
       <xslt force="yes" style="${teitoepub}" in="@{in}" out="${outputTempDir}/OPS/index.html">
         <factory name="net.sf.saxon.TransformerFactoryImpl">
           <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
@@ -276,11 +276,12 @@
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="outputDir" expression="${outputTempDir}"/>
         <param name="inputDir" expression="@{inDir}"/>
+        <param name="coverimage" expression="${coverimage}" if="coverimage"/>
+        <param name="coverDir" expression="${outputTempDir}/OPS" if="coverimage"/>
         <param name="mediaDir" expression="OPS/media"/>
         <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
         <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
       </xslt>
-      <!--<copy todir="${outputTempDir}/OPS" file="${coverfile}"/>-->
       <echo level="info">Copy image files</echo>
       <ant antfile="${outputTempDir}/copy.xml"/>
       <echo level="info">ZIP: put files from ${outputTempDir} together into @{out}</echo>
@@ -449,4 +450,5 @@
     <delete  file="${outputDir}/${basefile}-handout.tex"/>
     <delete  file="${outputDir}/${outputDir}/_slidelogo.png"/>
   </target>
+
 </project>

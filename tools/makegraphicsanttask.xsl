@@ -51,6 +51,8 @@ of this software, even if advised of the possibility of such damage.
    <xsl:key name="PB" match="tei:pb[@facs and not(@rend='none')]" use="1"/>
    <xsl:key name="Timeline" match="tei:timeline" use="1"/>
    <xsl:param name="mediaoverlay">false</xsl:param>
+   <xsl:param name="coverimage"/>
+   <xsl:param name="coverDir"/>
    <xsl:param name="filePerPage">false</xsl:param>
    <xsl:param name="inputDir">.</xsl:param>
    <xsl:param name="outputDir">${outputTempDir}</xsl:param>
@@ -66,6 +68,9 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:value-of select="$mediaDir"/>
 	     </xsl:attribute>
 	   </mkdir>
+	 </xsl:if>
+	 <xsl:if test="not($coverimage='')">
+	     <copy toFile="{$coverDir}/{tokenize($coverimage,'/')[last()]}" file="{$coverimage}"/>
 	 </xsl:if>
 	 <xsl:if test="$mediaoverlay='true' and key('Timeline',1)">
 	   <xsl:for-each select="key('Timeline',1)">
