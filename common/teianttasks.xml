@@ -374,7 +374,7 @@
     <attribute name="in"/>
     <attribute name="out"/>
     <sequential>
-      <echo>Do ODD processing </echo>
+      <echo>Do ODD processing (schema ${selectedSchema})</echo>
       <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{in}.tmpodd">
         <xmlcatalog>
           <catalogpath>
@@ -387,6 +387,7 @@
         <param name="lang" expression="${lang}" if="lang"/>
         <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
         <param name="verbose" expression="${verbose}" if="verbose"/>
+        <param name="selectedSchema" expression="${selectedSchema}" if="selectedSchema"/>
       </xslt>
       <xslt force="yes" style="${odd2litexsl}" in="@{in}.tmpodd" out="@{out}">
         <xmlcatalog>
@@ -408,13 +409,14 @@
     <attribute name="in"/>
     <attribute name="out"/>
     <sequential>
-      <echo>Do ODD expand processing </echo>
+      <echo>Do ODD expand processing (schema ${selectedSchema}) </echo>
       <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{out}">
         <factory name="net.sf.saxon.TransformerFactoryImpl">
           <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
         </factory>
         <param name="lang" expression="${lang}" if="lang"/>
         <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+        <param name="selectedSchema" expression="${selectedSchema}" if="selectedSchema"/>
         <param name="verbose" expression="${verbose}" if="verbose"/>
       </xslt>
     </sequential>
