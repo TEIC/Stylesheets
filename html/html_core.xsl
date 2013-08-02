@@ -1045,7 +1045,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="ancestor::tei:listBibl"/>
       <xsl:when test="ancestor::tei:floatingText"/>
       <xsl:when test="number($splitLevel)=-1"/>
-      <xsl:when test="tei:isEndNote(.) or tei:isFootNote(.) or $autoEndNotes='true'">
+      <xsl:when test="tei:isEndNote(.) or tei:isFootNote(.) or
+		      $autoEndNotes='true'">
         <xsl:variable name="parent">
 	  <xsl:for-each select="ancestor::tei:*[local-name()='div'
 	    or local-name()='div1'
@@ -1057,7 +1058,6 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:call-template name="locateParentDiv"/>
 	  </xsl:for-each>
         </xsl:variable>
-
         <xsl:if test="$whence = $parent">
           <xsl:call-template name="makeaNote"/>
         </xsl:if>
@@ -1483,10 +1483,12 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] </desc>
+    <desc>[html] produce all the notes </desc>
   </doc>
   <xsl:template name="printNotes">
-    <xsl:if test="count(key('NOTES',1)) or ($autoEndNotes='true' and count(key('ALLNOTES',1)))">
+    <xsl:if test="key('FOOTNOTES',1) or
+		  key('ENDNOTES',1) or  
+		  ($autoEndNotes='true' and key('ALLNOTES',1))">
       <xsl:choose>
         <xsl:when test="$footnoteFile='true'">
           <xsl:variable name="BaseFile">
@@ -1531,16 +1533,27 @@ of this software, even if advised of the possibility of such damage.
                   </xsl:call-template>
                 </div>
                 <div class="notes">
-                  <div class="noteHeading">
-                    <xsl:sequence select="tei:i18n('noteHeading')"/>
-                  </div>
                   <xsl:choose>
                     <xsl:when test="$autoEndNotes='true'">
+		      <div class="noteHeading">
+			<xsl:sequence select="tei:i18n('noteHeading')"/>
+		      </div>
                       <xsl:apply-templates mode="printnotes" select="key('ALLNOTES',1)"/>
                     </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:apply-templates mode="printnotes" select="key('NOTES',1)"/>
-                    </xsl:otherwise>
+		    <xsl:otherwise>
+		      <xsl:if test="key('FOOTNOTES',1)">
+			<div class="noteHeading">
+			  <xsl:sequence select="tei:i18n('noteHeading')"/>
+			</div>
+			<xsl:apply-templates mode="printnotes" select="key('FOOTNOTES',1)"/>
+		      </xsl:if>
+		      <xsl:if test="key('ENDNOTES',1)">
+			<div class="noteHeading">
+			  <xsl:sequence select="tei:i18n('noteHeading')"/>
+			</div>
+			<xsl:apply-templates mode="printnotes" select="key('ENDNOTES',1)"/>
+		      </xsl:if>
+		    </xsl:otherwise>
                   </xsl:choose>
                 </div>
                 <xsl:call-template name="stdfooter"/>
@@ -1576,14 +1589,31 @@ of this software, even if advised of the possibility of such damage.
               <xsl:when test="self::tei:TEI">
                 <xsl:choose>
                   <xsl:when test="$autoEndNotes='true'">
+		    <div class="noteHeading">
+		      <xsl:sequence select="tei:i18n('noteHeading')"/>
+		    </div>
                     <xsl:apply-templates mode="printallnotes" select="key('ALLNOTES',1)"/>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:apply-templates mode="printallnotes" select="key('NOTES',1)"/>
+		      <xsl:if test="key('FOOTNOTES',1)">
+			<div class="noteHeading">
+			  <xsl:sequence select="tei:i18n('noteHeading')"/>
+			</div>
+			<xsl:apply-templates mode="printallnotes" select="key('FOOTNOTES',1)"/>
+		      </xsl:if>
+		      <xsl:if test="key('ENDNOTES',1)">
+			<div class="noteHeading">
+			  <xsl:sequence select="tei:i18n('noteHeading')"/>
+			</div>
+			<xsl:apply-templates mode="printallnotes" select="key('ENDNOTES',1)"/>
+		      </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:when>
 	      <xsl:when test="self::tei:text and $splitLevel=0">
+		<div class="noteHeading">
+		  <xsl:sequence select="tei:i18n('noteHeading')"/>
+		</div>
 		<xsl:for-each select="tei:front|tei:body|tei:back">
 		  <xsl:for-each
 		      select=".//tei:note[tei:isEndNote(.) or
@@ -1600,6 +1630,9 @@ of this software, even if advised of the possibility of such damage.
               <xsl:when test="parent::tei:group and tei:group">
 	      </xsl:when>
               <xsl:otherwise>
+		<div class="noteHeading">
+		  <xsl:sequence select="tei:i18n('noteHeading')"/>
+		</div>
                 <xsl:apply-templates mode="printnotes" select=".//tei:note">
                   <xsl:with-param name="whence" select="$me"/>
                 </xsl:apply-templates>
@@ -1608,12 +1641,9 @@ of this software, even if advised of the possibility of such damage.
           </xsl:variable>
 	  <xsl:variable name="where" select="name()"/>
           <xsl:for-each select="$NOTES">
-            <xsl:if test="html:div">
+            <xsl:if test="html:div[@class='note']">
 	      <xsl:comment>Notes in [<xsl:value-of select="$where"/>]</xsl:comment>
               <div class="notes">
-                <div class="noteHeading">
-                  <xsl:sequence select="tei:i18n('noteHeading')"/>
-                </div>
                 <xsl:copy-of select="*|comment()"/>
               </div>
             </xsl:if>

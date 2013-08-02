@@ -522,7 +522,7 @@ of this software, even if advised of the possibility of such damage.
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>mentioned element</desc>
    </doc>
   <xsl:template match="tei:mentioned">
       <inline>
@@ -546,13 +546,13 @@ of this software, even if advised of the possibility of such damage.
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>a name</desc>
    </doc>
   <xsl:template match="tei:name">
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>end note processing</desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>end note</desc>

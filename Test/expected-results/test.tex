@@ -1,61 +1,51 @@
 \documentclass[11pt,twoside]{article}\makeatletter
+
 \IfFileExists{xcolor.sty}%
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
 \usepackage{colortbl}
-
-\IfFileExists{utf8x.def}%
- {\usepackage[utf8x]{inputenc}
-    \PrerenderUnicode{–}
-  }%
- {\usepackage[utf8]{inputenc}}
-\usepackage[english]{babel}
-\usepackage[T1]{fontenc}
-\usepackage{float}
-\usepackage[]{ucs}
-\uc@dclc{8421}{default}{\textbackslash }
-\uc@dclc{10100}{default}{\{}
-\uc@dclc{10101}{default}{\}}
-\uc@dclc{8491}{default}{\AA{}}
-\uc@dclc{8239}{default}{\,}
-\uc@dclc{20154}{default}{ }
-\uc@dclc{10148}{default}{>}
-\def\textschwa{\rotatebox{-90}{e}}
-\def\textJapanese{}
-\def\textChinese{}
-
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+  \usepackage{xunicode}
+  \catcode`⃥=\active \def⃥{\textbackslash}
+  \catcode`❴=\active \def❴{\{}
+  \catcode`❵=\active \def❵{\}}
+  \def\textJapanese{\fontspec{Kochi Mincho}}
+  \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
+  \def\textKorean{\fontspec{Baekmuk Gulim} }
+  \setmonofont{DejaVu Sans Mono}
+  
+    \setsansfont{Helvetica}
+  
+    \setromanfont{Times Roman}
+  
+\else
+  \IfFileExists{utf8x.def}%
+   {\usepackage[utf8x]{inputenc}
+      \PrerenderUnicode{–}
+    }%
+   {\usepackage[utf8]{inputenc}}
+  \usepackage[english]{babel}
+  \usepackage[T1]{fontenc}
+  \usepackage{float}
+  \usepackage[]{ucs}
+  \uc@dclc{8421}{default}{\textbackslash }
+  \uc@dclc{10100}{default}{\{}
+  \uc@dclc{10101}{default}{\}}
+  \uc@dclc{8491}{default}{\AA{}}
+  \uc@dclc{8239}{default}{\,}
+  \uc@dclc{20154}{default}{ }
+  \uc@dclc{10148}{default}{>}
+  \def\textschwa{\rotatebox{-90}{e}}
+  \def\textJapanese{}
+  \def\textChinese{}
+  \IfFileExists{tipa.sty}{\usepackage{tipa}}{}
+  \usepackage{times}
+\fi
+\def\exampleFont{\ifxetex\fontspec{Courier New}\else\ttfamily\fi\small\selectfont}
 \DeclareTextSymbol{\textpi}{OML}{25}
 \usepackage{relsize}
-\def\textsubscript#1{%
-  \@textsubscript{\selectfont#1}}
-\def\@textsubscript#1{%
-  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
-\def\textquoted#1{‘#1’}
-\def\textsmall#1{{\small #1}}
-\def\textlarge#1{{\large #1}}
-\def\textoverbar#1{\ensuremath{\overline{#1}}}
-\def\textgothic#1{{\fontspec{Lucida Blackletter}#1}}
-\def\textcal#1{{\fontspec{Lucida Calligraphy}#1}}
-\newenvironment{biblfree}{}{\ifvmode\par\fi }
-\newenvironment{docImprint}{\vskip 6pt}{\ifvmode\par\fi }
-\newenvironment{docDate}{}{\ifvmode\par\fi }
-\newenvironment{docAuthor}{\ifvmode\vskip4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape}{\ifvmode\par\fi }
-\newenvironment{docTitle}{\vskip6pt\bfseries\fontsize{18pt}{22pt}\selectfont}{\par }
-\newenvironment{titlePart}{}{\par }
-\newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
-\newenvironment{citbibl}{}{\ifvmode\par\fi }
-\newenvironment{bibl}{}{}
-\newenvironment{rubric}{}{}
-\newenvironment{msItem}{\vskip 6pt}{\par}
-\newenvironment{msHead}{\vskip 6pt}{\par}
-\def\titlem#1{\emph{#1}}
-\def\corr#1{#1}
-\def\sic#1{#1}
-\def\reg#1{#1}
-\def\orig#1{#1}
-\def\gap{}
-\def\abbr#1{#1}
-\def\expan#1{#1}
 \RequirePackage{array}
 \def\@testpach{\@chclass
  \ifnum \@lastchclass=6 \@ne \@chnum \@ne \else
@@ -82,10 +72,37 @@
     \if \@nextchar b5 \else
    \z@ \@chclass \z@ \@preamerr \z@ \fi \fi \fi \fi
    \fi \fi  \fi  \fi  \fi  \fi  \fi \fi \fi \fi \fi \fi}
-
 \gdef\arraybackslash{\let\\=\@arraycr}
-\def\textxi{\ensuremath{\xi}}
+\def\@textsubscript#1{{\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
 \def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+\def\abbr#1{#1}
+\def\corr#1{#1}
+\def\expan#1{#1}
+\def\gap{}
+\def\orig#1{#1}
+\def\reg#1{#1}
+\def\sic#1{#1}
+\def\textcal#1{{\fontspec{Lucida Calligraphy}#1}}
+\def\textgothic#1{{\fontspec{Lucida Blackletter}#1}}
+\def\textlarge#1{{\large #1}}
+\def\textoverbar#1{\ensuremath{\overline{#1}}}
+\def\textquoted#1{‘#1’}
+\def\textsmall#1{{\small #1}}
+\def\textsubscript#1{\@textsubscript{\selectfont#1}}
+\def\textxi{\ensuremath{\xi}}
+\def\titlem#1{\emph{#1}}
+\newenvironment{biblfree}{}{\ifvmode\par\fi }
+\newenvironment{bibl}{}{}
+\newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
+\newenvironment{citbibl}{}{\ifvmode\par\fi }
+\newenvironment{docAuthor}{\ifvmode\vskip4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape}{\ifvmode\par\fi }
+\newenvironment{docDate}{}{\ifvmode\par\fi }
+\newenvironment{docImprint}{\vskip 6pt}{\ifvmode\par\fi }
+\newenvironment{docTitle}{\vskip6pt\bfseries\fontsize{18pt}{22pt}\selectfont}{\par }
+\newenvironment{msHead}{\vskip 6pt}{\par}
+\newenvironment{msItem}{\vskip 6pt}{\par}
+\newenvironment{rubric}{}{}
+\newenvironment{titlePart}{}{\par }
 
 \newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
 \newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
@@ -117,10 +134,11 @@
 \setlength\marginparwidth{.75in}
 \usepackage{graphicx}
 
+  \usepackage{endnotes}
+  
+      \def\theendnote{\@alph\c@endnote}
+    
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
-
-\IfFileExists{tipa.sty}{\usepackage{tipa}}{}
-\usepackage{times}
 
   \pagestyle{fancy} 
 
@@ -376,9 +394,10 @@ No more of drowning, do you hear?\end{description}
 
 I am changed: I'll go sell all my land.\end{description}
 
-\section[Footnotes]{Footnotes}
+\section[Footnotes and endnotes]{Footnotes and endnotes}
 \subsection[1 Zur Entstehung der Philosophischen  	UntersuchungenZu Textauszeichnungen und  	Siglen siehe die Legende.]{1 Zur Entstehung der Philosophischen Untersuchungen\footnote{Zu Textauszeichnungen und Siglen siehe die Legende.}}\par
-Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod \footnote{Zu Textauszeichnungen und Siglen siehe die Legende.} Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod\footnote{It is time to begin the beguine.} Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod\par
+Iriure dolor in hendrerit in vulputate\endnote{Not Vulture} velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit\endnote{Not Blandings} praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
 \section[emph and links]{emph and links}\par
 The \texttt{<emph>} element is used for linguistic emph\textit{asis}. ‘highlighting’ (\texttt{<soCalled>}) nor with \emph{shouting} (\texttt{<mentioned>}), \emph{transmogrification}, (a technical \texttt{<term>}), for which the \texttt{<gloss>} tag might be used to supply  \textit{a technical definition}).\par
 Now for some links! We will start by cross-referring to a later section.\par
@@ -549,7 +568,7 @@ Lastly, That, upon his solemn oath to observe all the above articles, the said m
 \section[Verbatim]{Verbatim}\par
 an egXML in a list: \begin{itemize}
 
-\item \par\bgroup\ttfamily\small\selectfont \begin{shaded}\noindent\mbox{}{<\textbf{div}\hspace*{6pt}{xml:id}="{test99}"\hspace*{6pt}{rend}="{whatever}">}\mbox{}\newline 
+\item \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{div}\hspace*{6pt}{xml:id}="{test99}"\hspace*{6pt}{rend}="{whatever}">}\mbox{}\newline 
 \hspace*{6pt}{<\textbf{head}>}Choice, sic, corr, reg, orig{</\textbf{head}>}\mbox{}\newline 
 \hspace*{6pt}{<\textbf{p}>}v{<\textbf{ex}>}oro{</\textbf{ex}>} þav sam{<\textbf{ex}>}m{</\textbf{ex}>}ędd syskin in\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt} hei{<\textbf{ex}>}lagr{</\textbf{ex}>}i {<\textbf{lb}/>} ol{<\textbf{ex}>}afr{</\textbf{ex}>} k{<\textbf{ex}>}onvng{</\textbf{ex}>}r\mbox{}\newline 
@@ -560,4 +579,5 @@ an egXML in a list: \begin{itemize}
 \hspace*{6pt}\hspace*{6pt}{</\textbf{choice}>}.{</\textbf{p}>}\mbox{}\newline 
 {</\textbf{div}>}\end{shaded}\egroup\par 
 \end{itemize} 
+\theendnotes
 \end{document}
