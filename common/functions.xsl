@@ -140,7 +140,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="$element">
       <xsl:choose>
         <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'smallcaps')]">true</xsl:when>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'sc')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][@rend='sc']">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -231,6 +231,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="@rend='i'">true</xsl:when>
         <xsl:when test="@rend='att'">true</xsl:when>
         <xsl:when test="self::tei:att">true</xsl:when>
+        <xsl:when test="self::tei:mentioned">true</xsl:when>
         <xsl:when test="self::tei:speaker">true</xsl:when>
         <xsl:when test="self::tei:gloss">true</xsl:when>
         <xsl:when test="self::tei:title">true</xsl:when>

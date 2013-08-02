@@ -729,7 +729,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:date" mode="get-style">date</xsl:template>
   <xsl:template match="tei:foreign" mode="get-style">tei_foreign</xsl:template>
   <xsl:template match="tei:formula" mode="get-style">Formula</xsl:template>
-  <xsl:template match="tei:mentioned" mode="get-style">tei_mentioned</xsl:template>
   <xsl:template match="tei:orgName" mode="get-style">tei_orgName</xsl:template>
   <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
   <xsl:template match="tei:q" mode="get-style">tei_q</xsl:template>
@@ -954,8 +953,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="id" select="$num+1"/>
     <w:r>
       <w:rPr>
-        <w:rStyle w:val="EndnoteReference"/>
-        <w:noProof/>
+	<w:rStyle w:val="EndnoteReference"/>
       </w:rPr>
       <w:endnoteReference w:id="{$id}"/>
     </w:r>
