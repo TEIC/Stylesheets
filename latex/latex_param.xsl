@@ -92,13 +92,6 @@ the beginning of the document</desc>
    </doc>
    <xsl:param name="baseURL"/>
 
-   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
-      <desc>Whether or not to load LaTeX packages which attempt to
-process the UTF-8 characters. Set to "false" if you are
-using XeTeX or similar.</desc>
-   </doc>
-   <xsl:param name="reencode">true</xsl:param>
-
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
       <desc>The name of a LaTeX style package which should be loaded</desc>
    </doc>
@@ -150,14 +143,6 @@ using XeTeX or similar.</desc>
 <xsl:text>
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 </xsl:text>
-<xsl:choose>
-      <xsl:when test="$reencode='true'">
-         <xsl:text>
-\IfFileExists{tipa.sty}{\usepackage{tipa}}{}
-\usepackage{times}
-</xsl:text>
-      </xsl:when>
-</xsl:choose>
       <xsl:if test="not($userpackage='')">
   \usepackage{<xsl:value-of select="$userpackage"/>}
 </xsl:if>
@@ -222,91 +207,58 @@ really tinker with unless you really understand  why and how. Note
 that we need to set up a mapping here for Unicode 8421, 10100 and
 10100 to glyphs for backslash and the two curly brackets, to provide literal
 characters. The normal characters remain active for LaTeX commands.
-Note that if $reencode is set to false, no input or output encoding
-packages are loaded, since it is assumed you are using a TeX variant
-capable of dealing with UTF-8 directly.
 </p>
       </desc>
    </doc>
    <xsl:template name="latexSetup">
    <xsl:call-template name="latexSetupHook"/>
-<xsl:text>\IfFileExists{xcolor.sty}%
+\IfFileExists{xcolor.sty}%
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
 \usepackage{colortbl}
-</xsl:text>
-      <xsl:choose>
-         <xsl:when test="$reencode='true'">
-\IfFileExists{utf8x.def}%
- {\usepackage[utf8x]{inputenc}
-    \PrerenderUnicode{–}
-  }%
- {\usepackage[utf8]{inputenc}}
-<xsl:call-template name="latexBabel"/>
-\usepackage[T1]{fontenc}
-\usepackage{float}
-\usepackage[]{ucs}
-\uc@dclc{8421}{default}{\textbackslash }
-\uc@dclc{10100}{default}{\{}
-\uc@dclc{10101}{default}{\}}
-\uc@dclc{8491}{default}{\AA{}}
-\uc@dclc{8239}{default}{\,}
-\uc@dclc{20154}{default}{ }
-\uc@dclc{10148}{default}{>}
-\def\textschwa{\rotatebox{-90}{e}}
-\def\textJapanese{}
-\def\textChinese{}
-</xsl:when>
-         <xsl:otherwise>
-\usepackage{fontspec}
-\usepackage{xunicode}
-\catcode`⃥=\active \def⃥{\textbackslash}
-\catcode`❴=\active \def❴{\{}
-\catcode`❵=\active \def❵{\}}
-\def\textJapanese{\fontspec{Kochi Mincho}}
-\def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
-\def\textKorean{\fontspec{Baekmuk Gulim} }
-\setmonofont{<xsl:value-of select="$typewriterFont"/>}
-<xsl:if test="not($sansFont='')">
-  \setsansfont{<xsl:value-of select="$sansFont"/>}
-</xsl:if>
-<xsl:if test="not($romanFont='')">
-  \setromanfont{<xsl:value-of select="$romanFont"/>}
-</xsl:if>
-</xsl:otherwise>
-      </xsl:choose>
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+  \usepackage{xunicode}
+  \catcode`⃥=\active \def⃥{\textbackslash}
+  \catcode`❴=\active \def❴{\{}
+  \catcode`❵=\active \def❵{\}}
+  \def\textJapanese{\fontspec{Kochi Mincho}}
+  \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
+  \def\textKorean{\fontspec{Baekmuk Gulim} }
+  \setmonofont{<xsl:value-of select="$typewriterFont"/>}
+  <xsl:if test="not($sansFont='')">
+    \setsansfont{<xsl:value-of select="$sansFont"/>}
+  </xsl:if>
+  <xsl:if test="not($romanFont='')">
+    \setromanfont{<xsl:value-of select="$romanFont"/>}
+  </xsl:if>
+\else
+  \IfFileExists{utf8x.def}%
+   {\usepackage[utf8x]{inputenc}
+      \PrerenderUnicode{–}
+    }%
+   {\usepackage[utf8]{inputenc}}
+  <xsl:call-template name="latexBabel"/>
+  \usepackage[T1]{fontenc}
+  \usepackage{float}
+  \usepackage[]{ucs}
+  \uc@dclc{8421}{default}{\textbackslash }
+  \uc@dclc{10100}{default}{\{}
+  \uc@dclc{10101}{default}{\}}
+  \uc@dclc{8491}{default}{\AA{}}
+  \uc@dclc{8239}{default}{\,}
+  \uc@dclc{20154}{default}{ }
+  \uc@dclc{10148}{default}{>}
+  \def\textschwa{\rotatebox{-90}{e}}
+  \def\textJapanese{}
+  \def\textChinese{}
+  \IfFileExists{tipa.sty}{\usepackage{tipa}}{}
+  \usepackage{times}
+\fi
+<xsl:call-template name="exampleFontSet"/>
 \DeclareTextSymbol{\textpi}{OML}{25}
 \usepackage{relsize}
-\def\textsubscript#1{%
-  \@textsubscript{\selectfont#1}}
-\def\@textsubscript#1{%
-  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
-\def\textquoted#1{‘#1’}
-\def\textsmall#1{{\small #1}}
-\def\textlarge#1{{\large #1}}
-\def\textoverbar#1{\ensuremath{\overline{#1}}}
-\def\textgothic#1{{\fontspec{<xsl:value-of select="$gothicFont"/>}#1}}
-\def\textcal#1{{\fontspec{<xsl:value-of select="$calligraphicFont"/>}#1}}
-\newenvironment{biblfree}{}{\ifvmode\par\fi }
-\newenvironment{docImprint}{\vskip 6pt}{\ifvmode\par\fi }
-\newenvironment{docDate}{}{\ifvmode\par\fi }
-\newenvironment{docAuthor}{\ifvmode\vskip4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape}{\ifvmode\par\fi }
-\newenvironment{docTitle}{\vskip6pt\bfseries\fontsize{18pt}{22pt}\selectfont}{\par }
-\newenvironment{titlePart}{}{\par }
-\newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
-\newenvironment{citbibl}{}{\ifvmode\par\fi }
-\newenvironment{bibl}{}{}
-\newenvironment{rubric}{}{}
-\newenvironment{msItem}{\vskip 6pt}{\par}
-\newenvironment{msHead}{\vskip 6pt}{\par}
-\def\titlem#1{\emph{#1}}
-\def\corr#1{#1}
-\def\sic#1{#1}
-\def\reg#1{#1}
-\def\orig#1{#1}
-\def\gap{}
-\def\abbr#1{#1}
-\def\expan#1{#1}
 \RequirePackage{array}
 \def\@testpach{\@chclass
  \ifnum \@lastchclass=6 \@ne \@chnum \@ne \else
@@ -333,10 +285,37 @@ capable of dealing with UTF-8 directly.
     \if \@nextchar b5 \else
    \z@ \@chclass \z@ \@preamerr \z@ \fi \fi \fi \fi
    \fi \fi  \fi  \fi  \fi  \fi  \fi \fi \fi \fi \fi \fi}
-
 \gdef\arraybackslash{\let\\=\@arraycr}
-\def\textxi{\ensuremath{\xi}}
+\def\@textsubscript#1{{\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
 \def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+\def\abbr#1{#1}
+\def\corr#1{#1}
+\def\expan#1{#1}
+\def\gap{}
+\def\orig#1{#1}
+\def\reg#1{#1}
+\def\sic#1{#1}
+\def\textcal#1{{\fontspec{<xsl:value-of select="$calligraphicFont"/>}#1}}
+\def\textgothic#1{{\fontspec{<xsl:value-of select="$gothicFont"/>}#1}}
+\def\textlarge#1{{\large #1}}
+\def\textoverbar#1{\ensuremath{\overline{#1}}}
+\def\textquoted#1{‘#1’}
+\def\textsmall#1{{\small #1}}
+\def\textsubscript#1{\@textsubscript{\selectfont#1}}
+\def\textxi{\ensuremath{\xi}}
+\def\titlem#1{\emph{#1}}
+\newenvironment{biblfree}{}{\ifvmode\par\fi }
+\newenvironment{bibl}{}{}
+\newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
+\newenvironment{citbibl}{}{\ifvmode\par\fi }
+\newenvironment{docAuthor}{\ifvmode\vskip4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape}{\ifvmode\par\fi }
+\newenvironment{docDate}{}{\ifvmode\par\fi }
+\newenvironment{docImprint}{\vskip 6pt}{\ifvmode\par\fi }
+\newenvironment{docTitle}{\vskip6pt\bfseries\fontsize{18pt}{22pt}\selectfont}{\par }
+\newenvironment{msHead}{\vskip 6pt}{\par}
+\newenvironment{msItem}{\vskip 6pt}{\par}
+\newenvironment{rubric}{}{}
+\newenvironment{titlePart}{}{\par }
 <xsl:text disable-output-escaping="yes">
 \newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
 \newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
@@ -358,20 +337,9 @@ capable of dealing with UTF-8 directly.
    </xsl:template>
 
    <xsl:template name="exampleFontSet">
-      <xsl:choose>
-         <xsl:when test="$reencode='true'">
-            <xsl:text>\ttfamily\small\selectfont </xsl:text>
-         </xsl:when>
-         <xsl:when test="../@xml:lang='zh-TW' or       @xml:lang='zh-TW'">
-            <xsl:text>\fontspec{Arial Unicode MS}\small\selectfont </xsl:text>
-         </xsl:when>
-         <xsl:when test="../@xml:lang='ja' or       @xml:lang='ja'">
-            <xsl:text>\fontspec{Arial Unicode MS}\small\selectfont </xsl:text>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:text>\ttfamily\small\selectfont </xsl:text>
-         </xsl:otherwise>
-      </xsl:choose>
+    <xsl:text>\def\exampleFont{\ifxetex\fontspec{</xsl:text>
+    <xsl:value-of select="$exampleFont"/>
+    <xsl:text>}\else\ttfamily\fi\small\selectfont}</xsl:text>
    </xsl:template>
 
 
@@ -393,12 +361,14 @@ capable of dealing with UTF-8 directly.
 </doc>
 <xsl:param name="latexPaperSize">a4paper</xsl:param>
      
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for examples</desc>   </doc>
+<xsl:param name="exampleFont">Courier New</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for literal code</desc>   </doc>
 <xsl:param name="typewriterFont">DejaVu Sans Mono</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for sans-serif</desc>   </doc>
-<xsl:param name="sansFont"></xsl:param>
+<xsl:param name="sansFont">Helvetica</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for serif</desc>   </doc>
-<xsl:param name="romanFont"></xsl:param>
+<xsl:param name="romanFont">Times Roman</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for gothic</desc>   </doc>
 <xsl:param name="gothicFont">Lucida Blackletter</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for calligraphic</desc>   </doc>

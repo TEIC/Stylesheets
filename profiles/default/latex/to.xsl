@@ -49,7 +49,6 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-  <xsl:param name="reencode">false</xsl:param>
 
     
 </xsl:stylesheet>

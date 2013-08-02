@@ -144,8 +144,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
          <xsl:when test="ancestor::tei:list[@type='gloss']">
 	           <xsl:text>\hspace{1em}\hfill\linebreak</xsl:text>
-	           <xsl:text>\bgroup</xsl:text>
-	           <xsl:call-template name="exampleFontSet"/>
+	           <xsl:text>\bgroup\exampleFont</xsl:text>
 	           <xsl:text>\vskip 10pt\begin{shaded}
 \noindent\obeylines\obeyspaces </xsl:text>
 	           <xsl:apply-templates mode="eg"/>
@@ -155,8 +154,7 @@ of this software, even if advised of the possibility of such damage.
 </xsl:text>
          </xsl:when>
          <xsl:otherwise>
-	           <xsl:text>\par\bgroup</xsl:text>
-	           <xsl:call-template name="exampleFontSet"/>
+	           <xsl:text>\par\bgroup\exampleFont</xsl:text>
 	           <xsl:text>\vskip 10pt\begin{shaded}
 \obeylines\obeyspaces </xsl:text>
 	           <xsl:apply-templates mode="eg"/>

@@ -87,7 +87,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
          <xsl:when test="parent::tei:cell[number(@cols)&gt;1]">
 	           <xsl:call-template name="egXMLStartHook"/>
-	           <xsl:call-template name="exampleFontSet"/>
+	           <xsl:text>\exampleFont </xsl:text>
 	           <xsl:apply-templates mode="verbatim">
 	              <xsl:with-param name="highlight">
 	                 <xsl:value-of select="$highlight"/>
@@ -98,7 +98,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="parent::tei:cell">
 	           <xsl:text>\leavevmode\bgroup</xsl:text>
 	           <xsl:call-template name="egXMLStartHook"/>
-	           <xsl:call-template name="exampleFontSet"/>
+	           <xsl:text>\exampleFont </xsl:text>
 	           <xsl:text>\begin{shaded}\noindent\mbox{}</xsl:text>
 	           <xsl:apply-templates mode="verbatim">
 	              <xsl:with-param name="highlight">
@@ -112,7 +112,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:otherwise>
 	           <xsl:text>\par\bgroup</xsl:text>
 	           <xsl:call-template name="egXMLStartHook"/>
-	           <xsl:call-template name="exampleFontSet"/>
+	           <xsl:text>\exampleFont </xsl:text>
 	           <xsl:text>\begin{shaded}\noindent\mbox{}</xsl:text>
 	           <xsl:apply-templates mode="verbatim">
 	              <xsl:with-param name="highlight">
