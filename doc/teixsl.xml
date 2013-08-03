@@ -240,7 +240,7 @@ TEI conversion: from tei to html
         <div>
           <head>Importing the XSL into your own stylesheet</head>
           <p>If, for example, you want to write a customization of the HTML conversion
-you can simply refer to the specification <code>html/tei.xsl</code>
+you can simply refer to the specification <code>html/html.xsl</code>
 directly with your XSL processor, or install it locally on your own
 server.  For more flexibility, you may prefer to reference the
 specifications from an XSL wrapper of your own. The minimal
@@ -248,7 +248,7 @@ specification would look like this:
 <eg><![CDATA[
 <xsl:stylesheet 
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-  <xsl:import href="html/tei.xsl"/>
+  <xsl:import href="html/html.xsl"/>
 </xsl:stylesheet>
 ]]></eg>
 You can customize the result by adding to this wrapper file.  The normal result will be a single stream of HTML
@@ -267,14 +267,14 @@ for ePub)</item><label>latex</label><item>templates for making LaTeX output</ite
 Within each directory there is usually a separate file for the templates
 which implement each of the TEI modules (eg
 <ident>html_textstructure.xsl</ident>,
-<ident>html_linking.xsl</ident>, or <ident>drama.xsl</ident>); these
+<ident>html_linking.xsl</ident>, or <ident>html_drama.xsl</ident>); these
 are included by a master file eg <ident>html.xsl</ident>. This also
 includes a parameterization layer in the file eg
 <ident>html_param.xsl</ident>, and the parameterization file from
 the <ident>common</ident> directory. The file (eg) <ident>html.xsl</ident> does
 any necessary declaration of constants and XSL keys.</p>
         <p>There are further directories  for other conversions, some which
-are built on top of the xhtml one above:
+are built on top of the html one above:
 <list type="gloss"><label>bibtex</label><item>conversion to BibTeX</item><label>docbook</label><item>conversion to/from Docbook</item><label>dtd</label><item>ODD conversion to DTD </item><label>epub</label><item>conversion to ePub</item><label>epub3</label><item>conversion to ePub3</item><label>html5</label><item>conversion to HTML5 </item><label>json</label><item>conversion to JSON</item><label>nlm</label><item>conversion to NLM </item><label>rdf</label><item>conversion to RDF (CIDOC CRM)</item><label>slides</label><item>conversion to LaTeX and HTML slides</item><label>tbx</label><item>conversion to TBX</item><label>tcp</label><item>conversion from Text Creation Partnership P4 XML</item><label>tite</label><item>conversion from TEI Tite to normal TEI P5</item><label>txt</label><item>conversion to plain text</item><label>xlsx</label><item>conversion from Microsoft Office spreadsheet format</item></list>
 </p>
         <div xml:id="start">
