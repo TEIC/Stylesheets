@@ -23,7 +23,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: schema test-html test-latex test-fo test-to-docx test-from-docx test-other test-epub test-rdf test-text test-odt p4top5 oddity pureant scripts
+default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-other test-epub test-rdf test-text test-odt p4top5 oddity pureant scripts
 
 p4top5:
 	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
@@ -31,7 +31,7 @@ p4top5:
 	$(SAXON) A54031.tcp ../tcp/tcp2tei.xsl | xmllint --format - > A54031.xml
 	diff A54031.xml expected-results/A54031.xml
 
-schema:
+test.rng:
 	../teitorelaxng --odd test.odd test.rng
 
 test-html:

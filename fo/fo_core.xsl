@@ -396,11 +396,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>label element in mode 'print'</desc>
    </doc>
   <xsl:template match="tei:label"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>label element</desc>
    </doc>
   <xsl:template match="tei:lb">
       <xsl:choose>

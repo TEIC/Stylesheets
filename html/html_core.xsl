@@ -515,7 +515,10 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element label</desc>
   </doc>
   <xsl:template match="tei:label">
+    <span>
+      <xsl:call-template name="makeRendition"/>
       <xsl:apply-templates/>
+    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element label in print mode</desc>
