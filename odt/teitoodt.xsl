@@ -470,7 +470,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="($origheight *         number(@scale)) div 127 cast as xs:integer"/>
             </xsl:when>
 	    <xsl:when test="@width[contains(.,'%')]">
-	      <xsl:value-of select="number($pageHeight * (number(substring-before(@width,'%')))) cast as xs:integer"/>
+	      <xsl:value-of select="(($pageHeight div 100) * (number(substring-before(@width,'%')))) cast as xs:integer"/>
 	    </xsl:when>	  
             <xsl:when test="@width[not(contains(.,'%'))] and $origheight and $origwidth">
               <xsl:variable name="w">
