@@ -336,6 +336,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="self::tei:idno">true</xsl:when>
             <xsl:when test="self::tei:imprint">true</xsl:when>
             <xsl:when test="self::tei:institution">true</xsl:when>
+            <xsl:when test="self::tei:label[not(parent::tei:list)]">true</xsl:when>
             <xsl:when test="self::tei:list">false</xsl:when>
             <xsl:when test="self::tei:locus">true</xsl:when>
             <xsl:when test="self::tei:mentioned">true</xsl:when>

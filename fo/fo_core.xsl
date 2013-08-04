@@ -398,7 +398,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>label element in mode 'print'</desc>
    </doc>
-  <xsl:template match="tei:label"/>
+  <xsl:template match="tei:list/tei:label"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>label element</desc>
    </doc>
