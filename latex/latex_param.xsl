@@ -303,7 +303,7 @@ characters. The normal characters remain active for LaTeX commands.
 \def\textsmall#1{{\small #1}}
 \def\textsubscript#1{\@textsubscript{\selectfont#1}}
 \def\textxi{\ensuremath{\xi}}
-\def\titlem{\textit}
+\def\titlem{\itshape}
 \newenvironment{biblfree}{}{\ifvmode\par\fi }
 \newenvironment{bibl}{}{}
 \newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
