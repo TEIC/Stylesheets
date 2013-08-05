@@ -256,7 +256,7 @@ characters. The normal characters remain active for LaTeX commands.
   \IfFileExists{tipa.sty}{\usepackage{tipa}}{}
   \usepackage{times}
 \fi
-<xsl:call-template name="exampleFontSet"/>
+\def\exampleFont{\ttfamily\small}
 \DeclareTextSymbol{\textpi}{OML}{25}
 \usepackage{relsize}
 \RequirePackage{array}
@@ -335,13 +335,6 @@ characters. The normal characters remain active for LaTeX commands.
 \catcode`\_=12\relax
 </xsl:text>
    </xsl:template>
-
-   <xsl:template name="exampleFontSet">
-    <xsl:text>\def\exampleFont{\ifxetex\fontspec{</xsl:text>
-    <xsl:value-of select="$exampleFont"/>
-    <xsl:text>}\else\ttfamily\fi\small\selectfont}</xsl:text>
-   </xsl:template>
-
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>

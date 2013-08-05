@@ -78,6 +78,8 @@ of this software, even if advised of the possibility of such damage.
 \uc@dclc{8239}{default}{\,}
 \uc@dclc{20154}{default}{ }
 \uc@dclc{10148}{default}{>}
+\def\exampleFont{\ttfamily\fontsize{7pt}{8pt}\selectfont}
+
   </xsl:template>
   <xsl:template name="latexLayout"/>
   <xsl:template name="latexBegin">
@@ -189,9 +191,6 @@ of this software, even if advised of the possibility of such damage.
     \balancecolumns
   </xsl:template>
       
-   <xsl:template name="exampleFontSet">
-     <xsl:text>\def\exampleFont{\ttfamily\fontsize{7pt}{8pt}\selectfont}</xsl:text>
-   </xsl:template>
 
    <xsl:template match="ptr[@type='bibl']">
      <xsl:sequence select="concat('\cite{',substring-after(@target,'#'),'}')"/>
