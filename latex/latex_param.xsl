@@ -359,9 +359,9 @@ characters. The normal characters remain active for LaTeX commands.
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for literal code</desc>   </doc>
 <xsl:param name="typewriterFont">DejaVu Sans Mono</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for sans-serif</desc>   </doc>
-<xsl:param name="sansFont">Helvetica</xsl:param>
+<xsl:param name="sansFont"></xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for serif</desc>   </doc>
-<xsl:param name="romanFont">Times Roman</xsl:param>
+<xsl:param name="romanFont"></xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for gothic</desc>   </doc>
 <xsl:param name="gothicFont">Lucida Blackletter</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for calligraphic</desc>   </doc>
