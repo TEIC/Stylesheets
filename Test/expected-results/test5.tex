@@ -71,13 +71,13 @@
 \gdef\arraybackslash{\let\\=\@arraycr}
 \def\@textsubscript#1{{\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
 \def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
-\def\abbr#1{#1}
-\def\corr#1{#1}
-\def\expan#1{#1}
+\def\abbr{}
+\def\corr{}
+\def\expan{}
 \def\gap{}
-\def\orig#1{#1}
-\def\reg#1{#1}
-\def\sic#1{#1}
+\def\orig{}
+\def\reg{}
+\def\sic{}
 \def\textcal#1{{\fontspec{Lucida Calligraphy}#1}}
 \def\textgothic#1{{\fontspec{Lucida Blackletter}#1}}
 \def\textlarge#1{{\large #1}}
@@ -86,7 +86,7 @@
 \def\textsmall#1{{\small #1}}
 \def\textsubscript#1{\@textsubscript{\selectfont#1}}
 \def\textxi{\ensuremath{\xi}}
-\def\titlem#1{\emph{#1}}
+\def\titlem{\textit}
 \newenvironment{biblfree}{}{\ifvmode\par\fi }
 \newenvironment{bibl}{}{}
 \newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
@@ -306,7 +306,7 @@
 \begin{document}
 \let\tabcellsep& \frontmatter 
   \begin{titlepage}
-  \begin{docTitle} \begin{titlePart}Ridván 2009 Botschaft des Universalen Hauses der Gerechtigkeitan die Bahá’í der Welt\end{titlePart} \end{docTitle} \begin{byline}durch \docAuthor{Das Universale Haus der Gerechtigkeit}\end{byline} \begin{docImprint}Copyright © \docDate{Ridván 2009}, alle Rechte vorbehalten, \reg{Bahá’í}Weltzentrum, Haifa, Israel. \end{docImprint}
+  \begin{docTitle} \begin{titlePart}Ridván 2009 Botschaft des Universalen Hauses der Gerechtigkeitan die Bahá’í der Welt\end{titlePart} \end{docTitle} \begin{byline}durch {\docAuthor Das Universale Haus der Gerechtigkeit}\end{byline} \begin{docImprint}Copyright © {\docDate Ridván 2009}, alle Rechte vorbehalten, {\reg Bahá’í}Weltzentrum, Haifa, Israel. \end{docImprint}
   \end{titlepage}
   \cleardoublepage
 
@@ -324,7 +324,7 @@ Quote 5, with rend="inline" ‘Ils ne produisent qu’en collaborant d’une man
 \begin{quote}
 \par
 Ils ne produisent qu’en collaborant d’une manière déterminée et en échangeant entre eux leurs activités. Pour produire, ils entrent en relations et en rapports déterminés les uns avec les autres, et ce n’est que dans les limites de ces relations et de ces rapports sociaux que s’établit leur action sur la nature, la production.\par
-\citbibl{Karl Marx, \titlem{Travail salarié et capital, suivi de Salaire, prix et profit}, p. 31, Éditions sociales, Paris, 1952.}
+{\citbibl Karl Marx, {\titlem Travail salarié et capital, suivi de Salaire, prix et profit}, p. 31, Éditions sociales, Paris, 1952.}
 \end{quote}
 
 \section[Welcome: 1st section]{Welcome: 1st section}\label{part1}\par

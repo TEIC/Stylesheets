@@ -288,13 +288,13 @@ characters. The normal characters remain active for LaTeX commands.
 \gdef\arraybackslash{\let\\=\@arraycr}
 \def\@textsubscript#1{{\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
 \def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
-\def\abbr#1{#1}
-\def\corr#1{#1}
-\def\expan#1{#1}
+\def\abbr{}
+\def\corr{}
+\def\expan{}
 \def\gap{}
-\def\orig#1{#1}
-\def\reg#1{#1}
-\def\sic#1{#1}
+\def\orig{}
+\def\reg{}
+\def\sic{}
 \def\textcal#1{{\fontspec{<xsl:value-of select="$calligraphicFont"/>}#1}}
 \def\textgothic#1{{\fontspec{<xsl:value-of select="$gothicFont"/>}#1}}
 \def\textlarge#1{{\large #1}}
@@ -303,7 +303,7 @@ characters. The normal characters remain active for LaTeX commands.
 \def\textsmall#1{{\small #1}}
 \def\textsubscript#1{\@textsubscript{\selectfont#1}}
 \def\textxi{\ensuremath{\xi}}
-\def\titlem#1{\emph{#1}}
+\def\titlem{\textit}
 \newenvironment{biblfree}{}{\ifvmode\par\fi }
 \newenvironment{bibl}{}{}
 \newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }

@@ -228,14 +228,14 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:text>}</xsl:text>	    
 	</xsl:when>
 	<xsl:when test="$style=''">
-	  <xsl:sequence select="concat('\',local-name(),'{')"/>
+	  <xsl:sequence select="concat('{\',local-name(),' ')"/>
 	  <xsl:apply-templates/>
 	  <xsl:text>}</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:sequence select="concat('{\',$style,'{')"/>
+	  <xsl:sequence select="concat('{\',$style[1], ' ')"/>
 	  <xsl:apply-templates/>
-	  <xsl:text>}}</xsl:text>
+	  <xsl:text>}</xsl:text>
 	</xsl:otherwise>
       </xsl:choose>
       <xsl:value-of select="$after"/>
