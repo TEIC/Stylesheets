@@ -669,9 +669,6 @@
     <script type="text/javascript" src="jquery-1.2.6.min.js">
       <xsl:comment>JQuery</xsl:comment>
     </script>
-    <script type="text/javascript" src="popupFootnotes.js">
-      <xsl:comment>JS lib for popup footnotes added by MDH 2013-08.</xsl:comment>
-    </script>
     <!--
     <script type="text/javascript" src="jquery.treeview.js">	
        <xsl:comment>JQuery treeview</xsl:comment>
