@@ -109,6 +109,8 @@ test-latex:
 	diff test25.tex expected-results/test25.tex
 	$(SAXON) -o:test27.tex test27.xml ../latex/latex.xsl $(SAXONOPT)
 	diff test27.tex expected-results/test27.tex
+	$(SAXON) -o:test31.tex test31.xml ../latex/latex.xsl $(SAXONOPT)
+	diff test31.tex expected-results/test31.tex
 
 test-fo:
 	$(SAXON) -o:test.fo test.xml ../fo/fo.xsl  $(SAXONOPT)
@@ -284,7 +286,7 @@ profile:
 	$(SAXON) -o:/dev/null -TP test.odd2odd ../odds/odd2relax.xsl >& profile3.html
 
 clean:
-	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc
+	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc *.end *.1 *.2
 	rm -f test.rng test.rnc
 	rm -f  oddbyexample.* index*div*html
 	rm -f  testdrama.compiled.xml

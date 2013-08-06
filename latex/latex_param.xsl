@@ -153,7 +153,7 @@ the beginning of the document</desc>
  pdfauthor={<xsl:sequence select="replace(string-join(tei:generateAuthor(.),''),'\\newline','')"/>}]{hyperref}
 \hyperbaseurl{<xsl:value-of select="$baseURL"/>}
 <xsl:if test="count(key('APP',1))&gt;0">
-\usepackage{ledmac}
+\usepackage{eledmac}
 <xsl:call-template name="ledmacOptions"/>
 </xsl:if>
 
