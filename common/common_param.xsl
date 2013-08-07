@@ -113,42 +113,59 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="numberSpacer">
     <xsl:text> </xsl:text>
   </xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
     <desc>Name of department within institution</desc>
   </doc>
   <xsl:param name="department"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
     <desc>Name of link to home page of application</desc>
   </doc>
   <xsl:param name="homeLabel">Home</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
-    <desc>Project Home</desc>
+    <desc>Project url</desc>
   </doc>
-  <xsl:param name="homeURL">http://www.tei-c.org/</xsl:param>
+  <xsl:param name="homeURL">/</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
-    <desc>Project</desc>
+    <desc>Project name</desc>
   </doc>
-  <xsl:param name="homeWords">TEI</xsl:param>
+  <xsl:param name="homeWords">Home</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
-    <desc>Institution</desc>
+    <desc>Institution or project name</desc>
   </doc>
-  <xsl:param name="institution">A TEI Project</xsl:param>
+  <xsl:param name="institution">(unknown project)</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
     <desc>Institution link</desc>
   </doc>
-  <xsl:param name="parentURL">http://www.tei-c.org/</xsl:param>
+  <xsl:param name="parentURL"></xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
     <desc>Name of overall institution</desc>
   </doc>
   <xsl:param name="parentWords">Parent Institution</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
     <desc>Link to search application</desc>
   </doc>
-  <xsl:param name="searchURL">http://www.google.com</xsl:param>
+  <xsl:param name="searchURL"></xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="anyURI">
     <desc>The home page for these stylesheets</desc>
   </doc>
-  <xsl:param name="teixslHome">http://www.tei-c.org/Stylesheets/</xsl:param>
+  <xsl:param
+      name="teixslHome">http://www.tei-c.org/Stylesheets/</xsl:param>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
+      <desc>Link for feedback</desc>
+
+   </doc>
+  <xsl:param name="feedbackURL"></xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
     <desc>Process elements according to assumptions
     of TEI P4</desc>

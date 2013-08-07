@@ -44,20 +44,20 @@ test-html:
 	xmllint --encode utf-8 --format test.html5 | perl cleanup.pl > test.temp
 	mv test.temp test.html5
 	diff test.html5 expected-results/test.html5
-	$(SAXON) -o:test20.html  test20.xml ../html/html.xsl $(SAXONOPT)
+	$(SAXON) test20.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > test20.html
 	diff test20.html expected-results/test20.html
-	$(SAXON) -o:test3.html -versionmsg:off  test3.xml ../html/html.xsl $(SAXONOPT)
-	$(SAXON) -o:test4.html -versionmsg:off  test4.xml ../html/html.xsl $(SAXONOPT)
+	$(SAXON)  -versionmsg:off  test3.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test3.html
+	$(SAXON) -versionmsg:off  test4.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test4.html
 	diff test4.html test3.html
 	$(SAXON) test5.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > test5.xhtml
 	diff test5.xhtml expected-results/test5.xhtml
 	jing -c xhtml.rnc test5.xhtml
-	$(SAXON) -o:test6.html test6.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)
+	$(SAXON) test6.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > test6.html
 	diff test6.html expected-results/test6.html
 	jing -c xhtml.rnc test6.html
-	$(SAXON) -o:test22.html test22.xml ../html/html.xsl $(SAXONOPT)
+	$(SAXON) test22.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test22.html
 	diff test22.html expected-results/test22.html
-	$(SAXON) -o:test23.html test23.xml ../html/html.xsl $(SAXONOPT)
+	$(SAXON) test23.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test23.html
 	diff test23.html expected-results/test23.html
 	(mkdir files; cd files; saxon ../testnotes1.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html

@@ -257,9 +257,11 @@ will generate an &lt;h2&gt;</p>
       <a class="hide">|</a>
       <xsl:call-template name="crumbPath"/>
       <a class="hide">|</a>
-      <a class="bannerright" href="{$parentURL}" title="Go to home page">
-         <xsl:value-of select="$parentWords"/>
-      </a>
+      <xsl:if test="not($parentURL='')">
+	<a class="bannerright" href="{$parentURL}" title="Go to home page">
+	  <xsl:value-of select="$parentWords"/>
+	</a>
+      </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>[html]Bottom of left-hand column <param name="currentID">ID of selected section</param>
@@ -486,11 +488,6 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
 
    </doc>
   <xsl:param name="bottomNavigationPanel">true</xsl:param>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
-      <desc>Link for feedback</desc>
-
-   </doc>
-  <xsl:param name="feedbackURL">mailto:feedback</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
       <desc>Fixed string to insert before normal page title in HTML meta
 &lt;title&gt; element</desc>
