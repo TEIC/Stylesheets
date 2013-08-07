@@ -91,13 +91,31 @@ of this software, even if advised of the possibility of such damage.
      <xsl:choose>
        <xsl:when test="parent::tei:choice">
        </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="makeInline">
-	  <xsl:with-param name="after">}</xsl:with-param>
-	  <xsl:with-param name="before">{</xsl:with-param>
-	</xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
+       <xsl:when test="@reason='damage'">
+	 <xsl:call-template name="makeInline">
+	   <xsl:with-param name="before">&lt;</xsl:with-param>
+	   <xsl:with-param name="after">&gt;</xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:when test="@reason='illegible' or not(@reason)">
+	 <xsl:call-template name="makeInline">
+	   <xsl:with-param name="before">[</xsl:with-param>
+	   <xsl:with-param name="after">]</xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:when test="@reason='omitted'">
+	 <xsl:call-template name="makeInline">
+	   <xsl:with-param name="before">⟨</xsl:with-param>
+	   <xsl:with-param name="after">⟩</xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:call-template name="makeInline">
+	   <xsl:with-param name="after">}</xsl:with-param>
+	   <xsl:with-param name="before">{</xsl:with-param>
+	 </xsl:call-template>
+       </xsl:otherwise>
+     </xsl:choose>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1259,6 +1277,96 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
     </xsl:if>
     <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="tei:expan/tei:ex">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="before">(</xsl:with-param>
+      <xsl:with-param name="after">)</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="tei:gap" priority="10">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="before">[...]</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="tei:unclear">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="after">[?]</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="tei:geogName|tei:roleName">
+    <xsl:choose>
+      <xsl:when test="*">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="makeInline"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>mentioned element</desc>
+   </doc>
+  <xsl:template match="tei:mentioned">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">italic</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>foreign element</desc>
+   </doc>
+  <xsl:template match="tei:foreign">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">italic</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>term element</desc>
+   </doc>
+  <xsl:template match="tei:term">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">italic</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>The del element</desc>
+  </doc>
+  <xsl:template match="tei:del">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">strikethrough</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>The add element</desc>
+  </doc>
+  <xsl:template match="tei:add">
+    <xsl:choose>
+      <xsl:when test="@place='sup' or @place='above'">
+	<xsl:call-template name="makeInline">
+	  <xsl:with-param name="style">sup</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:when test="@place='sub' or @place='below'">
+	<xsl:call-template name="makeInline">
+	  <xsl:with-param name="style">sub</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="makeInline">
+	  <xsl:with-param name="after">&#10217;</xsl:with-param>
+	  <xsl:with-param name="before">&#10216;</xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>

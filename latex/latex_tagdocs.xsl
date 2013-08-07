@@ -151,11 +151,6 @@ of this software, even if advised of the possibility of such damage.
 <xsl:text>\end{description}</xsl:text>
 </xsl:template>
 -->
-<xsl:template match="tei:term">
-      <xsl:text>\emph{</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>}</xsl:text>
-   </xsl:template>
 
    <xsl:template match="tei:seg[@xml:lang]">
       <xsl:choose>

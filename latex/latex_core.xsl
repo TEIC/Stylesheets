@@ -100,20 +100,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process &lt;supplied&gt;</desc></doc>
-  <xsl:template match="tei:supplied">
-      <xsl:text>[</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>]</xsl:text>
-      <xsl:choose>
-         <xsl:when test="@reason">
-            <xsl:text>\footnote{</xsl:text>
-            <xsl:value-of select="./@reason"/>
-            <xsl:text>}</xsl:text>
-         </xsl:when>
-      </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element eg|tei:q[@rend='eg']</desc>
    </doc>
   <xsl:template match="tei:seg[@rend='pre']|tei:eg|tei:q[@rend='eg']">
@@ -185,14 +171,6 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element emph</desc>
    </doc>
   <xsl:template match="tei:emph">
-      <xsl:text>\textit{</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>}</xsl:text>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element foreign</desc>
-   </doc>
-  <xsl:template match="tei:foreign">
       <xsl:text>\textit{</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>}</xsl:text>
@@ -509,14 +487,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
       <xsl:text>&#10;</xsl:text>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element mentioned</desc>
-   </doc>
-  <xsl:template match="tei:mentioned">
-      <xsl:text>\emph{</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>}</xsl:text>
-  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process a note element which has a @place attribute
@@ -756,15 +726,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
       <xsl:value-of select="$postQuote"/>
   </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element unclear</desc>
-   </doc>
-  <xsl:template match="tei:unclear">
-    <xsl:text>\textbf{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
-    </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element space</desc>

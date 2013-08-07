@@ -227,6 +227,21 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
 	  <xsl:text>}</xsl:text>	    
 	</xsl:when>
+	<xsl:when test="$style='strikethrough'">
+	  <xsl:text>\sout{</xsl:text>
+	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+	  <xsl:text>}</xsl:text>	    
+	</xsl:when>
+	<xsl:when test="$style='sup'">
+	  <xsl:text>\textsuperscript{</xsl:text>
+	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+	  <xsl:text>}</xsl:text>	    
+	</xsl:when>
+	<xsl:when test="$style='sub'">
+	  <xsl:text>\textsubscript{</xsl:text>
+	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+	  <xsl:text>}</xsl:text>	    
+	</xsl:when>
 	<xsl:when test="$style=''">
 	  <xsl:sequence select="concat('{\',local-name(),' ')"/>
 	  <xsl:apply-templates/>

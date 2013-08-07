@@ -228,50 +228,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-imports/>
     </span>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>The del element</desc>
-  </doc>
-  <xsl:template match="tei:del">
-    <del>
-      <xsl:call-template name="makeRendition">
-	<xsl:with-param name="default">false</xsl:with-param>
-      </xsl:call-template>
-      <xsl:apply-templates/>
-    </del>
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>The add element</desc>
-  </doc>
-  <xsl:template match="tei:add">
-      <xsl:choose>
-         <xsl:when test="@place='sup' or @place='above'">
-            <sup>
-	      <xsl:call-template name="makeRendition">
-		<xsl:with-param name="default">false</xsl:with-param>
-	      </xsl:call-template>
-               <xsl:apply-templates/>
-            </sup>
-         </xsl:when>
-         <xsl:when test="@place='sub' or @place='below'">
-            <sub>
-	      <xsl:call-template name="makeRendition">
-		<xsl:with-param name="default">false</xsl:with-param>
-	      </xsl:call-template>
-               <xsl:apply-templates/>
-            </sub>
-         </xsl:when>
-	 <xsl:otherwise>
-	   <span style="color:green;">
-	     <xsl:text>&#10216;</xsl:text>
-	   </span>
-	   <xsl:apply-templates/>
-	   <span style="color:green;">
-	     <xsl:text>&#10217;</xsl:text>
-	   </span>
-	 </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element eg</desc>
@@ -314,15 +270,6 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:epigraph/tei:lg">
     <xsl:apply-templates/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element foreign and unclear</desc>
-  </doc>
-  <xsl:template match="tei:foreign|tei:unclear">
-    <span>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:apply-templates/>
-    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element caesura</desc>
@@ -843,15 +790,6 @@ of this software, even if advised of the possibility of such damage.
         </ol>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element mentioned</desc>
-  </doc>
-  <xsl:template match="tei:mentioned">
-    <span>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:apply-templates/>
-    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element name in mode "plain"</desc>
@@ -1405,15 +1343,6 @@ of this software, even if advised of the possibility of such damage.
         </xsl:attribute>
       </xsl:if>
       <xsl:text> </xsl:text>
-    </span>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element term</desc>
-  </doc>
-  <xsl:template match="tei:term">
-    <span>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:apply-templates/>
     </span>
   </xsl:template>
 

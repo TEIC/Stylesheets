@@ -179,8 +179,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="parent::tei:hi[starts-with(@rend,'specList-')]">true</xsl:when>
         <xsl:when test="self::tei:cell and parent::tei:row[@role='label']">true</xsl:when>
         <xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
-        <xsl:when test="self::tei:term">true</xsl:when>
-        <xsl:when test="self::tei:unclear">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -231,7 +229,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="@rend='i'">true</xsl:when>
         <xsl:when test="@rend='att'">true</xsl:when>
         <xsl:when test="self::tei:att">true</xsl:when>
-        <xsl:when test="self::tei:mentioned">true</xsl:when>
         <xsl:when test="self::tei:speaker">true</xsl:when>
         <xsl:when test="self::tei:gloss">true</xsl:when>
         <xsl:when test="self::tei:title">true</xsl:when>

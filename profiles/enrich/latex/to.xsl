@@ -14,7 +14,6 @@
                 exclude-result-prefixes="xlink dbk rng tei teix xhtml a html xs xsl"
                 version="2.0">
    <xsl:import href="../../../latex/latex.xsl"/>
-   <xsl:import href="../../../common/common_msdescription.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

@@ -2661,6 +2661,12 @@ of this software, even if advised of the possibility of such damage.
         <xsl:if test="$renderAddDel='true' and ancestor-or-self::tei:del">
           <w:strike/>
         </xsl:if>
+	<xsl:if test="$style='sup'">
+	  <w:vertAlign w:val="superscript"/>
+	</xsl:if>
+	<xsl:if test="$style='sub'">
+	  <w:vertAlign w:val="subscript"/>
+	</xsl:if>
       </w:rPr>
       <w:t>
         <xsl:attribute name="xml:space">preserve</xsl:attribute>

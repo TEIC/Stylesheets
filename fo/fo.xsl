@@ -233,6 +233,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="$style='docAuthor'">italic</xsl:when>
       <xsl:when test="$style='titlem'">italic</xsl:when>
+      <xsl:when test="$style='italic'">italic</xsl:when>
       <xsl:otherwise>normal</xsl:otherwise>
     </xsl:choose>
   </xsl:function>
@@ -242,6 +243,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="$style='docTitle'">bold</xsl:when>
       <xsl:when test="$style='titlePart'">bold</xsl:when>
+      <xsl:when test="$style='bold'">bold</xsl:when>
       <xsl:otherwise>normal</xsl:otherwise>
     </xsl:choose>
   </xsl:function>
