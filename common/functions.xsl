@@ -836,7 +836,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:generateEdition">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
-      <xsl:value-of select="tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+      <xsl:value-of select="normalize-space(tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition)"/>
     </xsl:for-each>
   </xsl:function>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
