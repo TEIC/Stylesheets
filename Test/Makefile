@@ -109,8 +109,8 @@ test-latex:
 	diff test25.tex expected-results/test25.tex
 	$(SAXON) -o:test27.tex test27.xml ../latex/latex.xsl $(SAXONOPT)
 	diff test27.tex expected-results/test27.tex
-	$(SAXON) -o:test31.tex test31.xml ../latex/latex.xsl $(SAXONOPT)
-	diff test31.tex expected-results/test31.tex
+	$(SAXON) -o:test20.tex test20.xml ../latex/latex.xsl $(SAXONOPT)
+	diff test2.tex expected-results/test20.tex
 
 test-fo:
 	$(SAXON) -o:test.fo test.xml ../fo/fo.xsl  $(SAXONOPT)
