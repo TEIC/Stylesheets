@@ -212,15 +212,13 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="after"/>
       <xsl:value-of select="$before"/>
       <xsl:choose>
-	<xsl:when test="$style='bibl'">
+	<xsl:when test="$style=('add','unclear','bibl','docAuthor','titlem','italic','mentioned','term','foreign')">
 	  <xsl:text>\textit{</xsl:text>
 	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
 	  <xsl:text>}</xsl:text>
 	</xsl:when>
-	<xsl:when test="$style='italic'">
-	  <xsl:text>\textit{</xsl:text>
+	<xsl:when test="$style='supplied'">
 	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
-	  <xsl:text>}</xsl:text>
 	</xsl:when>
 	<xsl:when test="$style='bold'">
 	  <xsl:text>\textbf{</xsl:text>

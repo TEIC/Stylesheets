@@ -127,7 +127,7 @@ test-fo:
 	diff test24.fo expected-results/test24.fo
 	$(SAXON) -o:test25.fo test25.xml ../fo/fo.xsl $(SAXONOPT)
 	diff test25.fo expected-results/test25.fo
-	$(SAXON) -o:test27.fo test27.xml ../fo/fo.xsl $(SAXONOPT)
+	$(SAXON) test27.xml ../fo/fo.xsl $(SAXONOPT) | xmllint --format - > test27.fo 
 	diff test27.fo expected-results/test27.fo
 
 test-epub:

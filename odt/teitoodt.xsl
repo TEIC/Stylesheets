@@ -1153,7 +1153,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="style"/>
     <text:span>
       <xsl:choose>
-	<xsl:when test="$style='italic'">
+	<xsl:when test="$style=('bibl','docAuthor','titlem','italic','mentioned','term','foreign')">
 	  <xsl:attribute
 	      name="text:style-name">Emphasis</xsl:attribute>
 	</xsl:when>

@@ -724,15 +724,15 @@ of this software, even if advised of the possibility of such damage.
   </doc>
 
 
-  <xsl:template match="tei:abbr" mode="get-style">tei_abbr</xsl:template>
+  <xsl:template match="tei:abbr" mode="get-style">teiabbr</xsl:template>
   <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
   <xsl:template match="tei:date" mode="get-style">date</xsl:template>
-  <xsl:template match="tei:foreign" mode="get-style">tei_foreign</xsl:template>
+  <xsl:template match="tei:foreign" mode="get-style">teiforeign</xsl:template>
   <xsl:template match="tei:formula" mode="get-style">Formula</xsl:template>
-  <xsl:template match="tei:orgName" mode="get-style">tei_orgName</xsl:template>
+  <xsl:template match="tei:orgName" mode="get-style">teiorgName</xsl:template>
   <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
-  <xsl:template match="tei:q" mode="get-style">tei_q</xsl:template>
-  <xsl:template match="tei:bibl" mode="get-style">tei_bibl</xsl:template>
+  <xsl:template match="tei:q" mode="get-style">teiq</xsl:template>
+  <xsl:template match="tei:bibl" mode="get-style">teibibl</xsl:template>
   <xsl:template match="tei:ref[@rend and not(@target)]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
   <xsl:template match="tei:seg[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
   
@@ -2569,7 +2569,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:signed">
     <xsl:call-template name="block-element">
-      <xsl:with-param name="style">tei_signed</xsl:with-param>
+      <xsl:with-param name="style">teisigned</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2649,10 +2649,11 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:when test="$style='italic'"/>
 	      <xsl:when test="$style='bold'"/>
 	      <xsl:when test="$style=''">
-		<xsl:text>tei_</xsl:text>
+		<xsl:text>tei</xsl:text>
 		<xsl:value-of select="local-name()"/>
 	      </xsl:when>
 	      <xsl:otherwise>
+		<xsl:text>tei</xsl:text>
 		<xsl:value-of select="$style"/>
 	      </xsl:otherwise>
 	    </xsl:choose>
@@ -2674,6 +2675,9 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:if>
 	<xsl:if test="$style='sub'">
 	  <w:vertAlign w:val="subscript"/>
+	</xsl:if>
+	<xsl:if test="ancestor-or-self::*[@xml:lang]">
+	  <w:lang w:val="{ancestor-or-self::*[@xml:lang][1]/@xml:lang}"/>
 	</xsl:if>
       </w:rPr>
       <w:t>
@@ -2715,7 +2719,7 @@ of this software, even if advised of the possibility of such damage.
     </w:r>
     <w:r>
       <w:rPr>
-        <w:rStyle w:val="tei_{local-name()}"/>
+        <w:rStyle w:val="tei{local-name()}"/>
       </w:rPr>
       <w:t>
         <xsl:value-of select="."/>

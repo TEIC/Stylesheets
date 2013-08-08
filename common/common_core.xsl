@@ -93,24 +93,28 @@ of this software, even if advised of the possibility of such damage.
        </xsl:when>
        <xsl:when test="@reason='damage'">
 	 <xsl:call-template name="makeInline">
+	   <xsl:with-param name="style">supplied</xsl:with-param>
 	   <xsl:with-param name="before">&lt;</xsl:with-param>
 	   <xsl:with-param name="after">&gt;</xsl:with-param>
 	 </xsl:call-template>
        </xsl:when>
        <xsl:when test="@reason='illegible' or not(@reason)">
 	 <xsl:call-template name="makeInline">
+	   <xsl:with-param name="style">supplied</xsl:with-param>
 	   <xsl:with-param name="before">[</xsl:with-param>
 	   <xsl:with-param name="after">]</xsl:with-param>
 	 </xsl:call-template>
        </xsl:when>
        <xsl:when test="@reason='omitted'">
 	 <xsl:call-template name="makeInline">
+	   <xsl:with-param name="style">supplied</xsl:with-param>
 	   <xsl:with-param name="before">⟨</xsl:with-param>
 	   <xsl:with-param name="after">⟩</xsl:with-param>
 	 </xsl:call-template>
        </xsl:when>
        <xsl:otherwise>
 	 <xsl:call-template name="makeInline">
+	   <xsl:with-param name="style">supplied</xsl:with-param>
 	   <xsl:with-param name="after">}</xsl:with-param>
 	   <xsl:with-param name="before">{</xsl:with-param>
 	 </xsl:call-template>
@@ -1294,6 +1298,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:unclear">
     <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">unclear</xsl:with-param>
       <xsl:with-param name="after">[?]</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
@@ -1314,7 +1319,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:mentioned">
     <xsl:call-template name="makeInline">
-      <xsl:with-param name="style">italic</xsl:with-param>
+      <xsl:with-param name="style">mentioned</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
@@ -1323,7 +1328,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:foreign">
     <xsl:call-template name="makeInline">
-      <xsl:with-param name="style">italic</xsl:with-param>
+      <xsl:with-param name="style">foreign</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
@@ -1332,7 +1337,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:term">
     <xsl:call-template name="makeInline">
-      <xsl:with-param name="style">italic</xsl:with-param>
+      <xsl:with-param name="style">term</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
@@ -1362,6 +1367,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
 	<xsl:call-template name="makeInline">
+	  <xsl:with-param name="style">add</xsl:with-param>
 	  <xsl:with-param name="after">&#10217;</xsl:with-param>
 	  <xsl:with-param name="before">&#10216;</xsl:with-param>
 	</xsl:call-template>
