@@ -48,9 +48,9 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:key name="INDEX" use="1" match="tei:index"/>
   <xsl:key name="PB" match="tei:pb" use="1"/>
-  <xsl:key name="FOOTNOTES" use="1"  match="tei:note[tei:isFootNote(.)]"/>
-  <xsl:key name="ENDNOTES" use="1"  match="tei:note[tei:isEndNote(.)]"/>
-  <xsl:key name="ALLNOTES" use="1"  match="tei:note[not(@place='margin' or @place='inline' or @place='display')
+  <xsl:key name="FOOTNOTES" use="1"  match="tei:note[not(ancestor::tei:floatingText)][tei:isFootNote(.)]"/>
+  <xsl:key name="ENDNOTES" use="1"  match="tei:note[not(ancestor::tei:floatingText)][tei:isEndNote(.)]"/>
+  <xsl:key name="ALLNOTES" use="1"  match="tei:note[not(ancestor::tei:floatingText)][not(@place='margin' or @place='inline' or @place='display')
 		  and not(parent::tei:bibl or  ancestor::tei:teiHeader)]"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
