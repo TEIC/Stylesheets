@@ -974,7 +974,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="not(@place)">
         <xsl:choose>
 	  <xsl:when test="ancestor::tei:floatingText">
-	    <xsl:number count="tei:note[not(@place)]" from="ancestor::tei:floatingText" level="any"/>
+	    <xsl:number count="tei:note[not(@place)]" from="tei:floatingText" level="any"/>
 	  </xsl:when>
           <xsl:when test="ancestor::tei:front">
             <xsl:number count="tei:note[not(@place)]" from="tei:front[not(ancestor::tei:floatingText)]" level="any"/>
@@ -995,7 +995,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:otherwise>
             <xsl:choose>
 	      <xsl:when test="ancestor::tei:floatingText">
-                <xsl:number count="tei:note[tei:isEndNote(.)]" from="ancestor::tei:floatingText" level="any"/>
+                <xsl:number count="tei:note[tei:isEndNote(.)]" from="tei:floatingText" level="any"/>
 	      </xsl:when>
               <xsl:when test="ancestor::tei:front">
                 <xsl:number count="tei:note[tei:isEndNote(.)]" from="tei:front[not(ancestor::tei:floatingText)]" level="any"/>
@@ -1018,7 +1018,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:otherwise>
             <xsl:choose>
 	      <xsl:when test="ancestor::tei:floatingText">
-                <xsl:number count="tei:note[tei:isFootNote(.)]" from="ancestor::tei:floatingText" level="any"/>
+                <xsl:number count="tei:note[tei:isFootNote(.)]" from="tei:floatingText" level="any"/>
 	      </xsl:when>
               <xsl:when test="ancestor::tei:front">
                 <xsl:number count="tei:note[tei:isFootNote(.)]" from="tei:front[not(ancestor::tei:floatingText)]" level="any"/>
