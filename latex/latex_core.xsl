@@ -184,6 +184,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="parent::tei:figure"/>
          <xsl:when test="parent::tei:list"/>
          <xsl:when test="parent::tei:lg"> \subsection*{<xsl:apply-templates/>} </xsl:when>
+         <xsl:when test="parent::tei:front or parent::tei:body or parent::tei:back"> \section*{<xsl:apply-templates/>} </xsl:when>
          <xsl:when test="parent::tei:table"/>
          <xsl:otherwise>
             <xsl:variable name="depth">
