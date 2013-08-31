@@ -613,7 +613,6 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template match="tei:list">
-
     <xsl:if test="tei:head">
       <xsl:element name="{if (not(tei:is-inline(.))) then 'div' else 'span' }">
         <xsl:attribute name="class">listhead</xsl:attribute>
@@ -725,6 +724,12 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element listBibl</desc>
   </doc>
   <xsl:template match="tei:listBibl">
+    <xsl:if test="tei:head">
+      <xsl:element name="{if (not(tei:is-inline(.))) then 'div' else 'span' }">
+        <xsl:attribute name="class">listhead</xsl:attribute>
+        <xsl:apply-templates select="tei:head"/>
+      </xsl:element>
+    </xsl:if>
     <xsl:choose>
       <xsl:when test="tei:biblStruct and $biblioStyle='mla'">
 	<div type="listBibl" xmlns="http://www.w3.org/1999/xhtml">	  
@@ -769,7 +774,7 @@ of this software, even if advised of the possibility of such damage.
         </ol>
       </xsl:when>
       <xsl:when test="tei:msDesc">
-	<xsl:for-each select="*">
+	<xsl:for-each select="*[not(self::tei:head)]">
 	  <div class="msDesc">
 	    <xsl:apply-templates/>
 	  </div>
@@ -777,7 +782,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
         <ol class="listBibl">
-          <xsl:for-each select="*">
+          <xsl:for-each select="*[not(self::tei:head)]">
             <li>
               <xsl:call-template name="makeAnchor">
                 <xsl:with-param name="name">

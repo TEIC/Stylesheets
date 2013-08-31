@@ -431,6 +431,13 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element listBibl</desc>
    </doc>
    <xsl:template match="tei:listBibl">
+      <xsl:if test="tei:head"> 
+	<xsl:text>\leftline{\textbf{</xsl:text>
+	<xsl:for-each select="tei:head">
+            <xsl:apply-templates/>
+         </xsl:for-each>
+	 <xsl:text>}} </xsl:text>
+      </xsl:if>
      <xsl:choose>
        <xsl:when test="tei:biblStruct">
 	 <xsl:text>\begin{bibitemlist}{1}</xsl:text>
@@ -449,11 +456,11 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:text>&#10;\end{bibitemlist}&#10;</xsl:text>
        </xsl:when>
       <xsl:when test="tei:msDesc">
-	<xsl:apply-templates/>
+	<xsl:apply-templates select="*[not(self::tei:head)]"/>
       </xsl:when>
        <xsl:otherwise>
 	 <xsl:text>\begin{bibitemlist}{1}&#10;</xsl:text>
-	 <xsl:apply-templates/> 
+	 <xsl:apply-templates select="*[not(self::tei:head)]"/>
 	 <xsl:text>&#10;\end{bibitemlist}&#10;</xsl:text>
        </xsl:otherwise>
      </xsl:choose>
