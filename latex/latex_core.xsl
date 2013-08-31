@@ -439,7 +439,7 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:text>}} </xsl:text>
       </xsl:if>
      <xsl:choose>
-       <xsl:when test="tei:biblStruct">
+       <xsl:when test="tei:biblStruct and not(tei:bibl)">
 	 <xsl:text>\begin{bibitemlist}{1}</xsl:text>
 	 <xsl:for-each select="tei:biblStruct">
 	   <xsl:sort select="lower-case(string(tei:*[1]/tei:author/tei:surname or  tei:*[1]/tei:author/tei:orgName or  tei:*[1]/tei:author/tei:name or  tei:*[1]/tei:editor/tei:surname or  tei:*[1]/tei:editor/tei:name or  tei:*[1]/tei:title))"/>
