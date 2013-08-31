@@ -55,6 +55,8 @@ test-html:
 	$(SAXON) test6.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > test6.html
 	diff test6.html expected-results/test6.html
 	jing -c xhtml.rnc test6.html
+	$(SAXON) test14.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test14.html
+	diff test14.html expected-results/test14.html
 	$(SAXON) test22.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test22.html
 	diff test22.html expected-results/test22.html
 	$(SAXON) test23.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test23.html

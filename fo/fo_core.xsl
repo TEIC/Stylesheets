@@ -738,15 +738,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>salutation</desc>
-   </doc>
-  <xsl:template match="tei:salute">
-      <block text-align="left">
-         <xsl:apply-templates/>
-      </block>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>decorative initial letter</desc>
    </doc>
   <xsl:template match="tei:seg[@rend='decorInit']">
     <inline background-color="yellow"              font-size="36pt">
@@ -755,11 +747,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:seg">
     <xsl:apply-templates/>
-  </xsl:template>
-  <xsl:template match="tei:signed">
-      <block text-align="left">
-         <xsl:apply-templates/>
-      </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[fo] add an ID</desc>

@@ -69,6 +69,22 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element salute</desc>
+  </doc>
+  <xsl:template match="tei:salute">
+    <xsl:choose>
+      <xsl:when test="parent::tei:closer">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="makeBlock">
+      <xsl:with-param name="style">salute</xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process tei:sic</desc>
    </doc>
   <xsl:template match="tei:sic">

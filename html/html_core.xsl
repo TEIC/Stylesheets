@@ -1282,21 +1282,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element salute</desc>
-  </doc>
-  <xsl:template match="tei:salute">
-    <xsl:choose>
-      <xsl:when test="parent::tei:closer">
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:otherwise>
-        <div class="left">
-          <xsl:apply-templates/>
-        </div>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element seg, pass through @type and @rend as @class</desc>
   </doc>
   <xsl:template match="tei:seg">
