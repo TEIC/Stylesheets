@@ -55,6 +55,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="FOOTNOTES" match="tei:note[@place='foot']" use="1"/>
   <xsl:key name="FOOTNOTES" match="tei:note[@place='bottom']" use="1"/>
   <xsl:key name="ENDNOTES" match="tei:note[@place='end']" use="1"/>
+  <xsl:key name="TREES" match="tei:eTree[not(ancestor::tei:eTree)]" use="1"/>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>[latex] Hook where LaTeX commands can be inserted after 
@@ -129,6 +130,9 @@ the beginning of the document</desc>
 \setlength\marginparwidth{.75in}
 \usepackage{graphicx}
 </xsl:text>
+<xsl:if test="key('TREES',1)">
+  \usepackage{pstricks,pst-node,pst-tree}
+</xsl:if>
 <xsl:if test="key('ENDNOTES',1)">
   \usepackage{endnotes}
   <xsl:choose>

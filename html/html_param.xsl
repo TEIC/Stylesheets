@@ -52,6 +52,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="ENDNOTES" use="1"  match="tei:note[not(ancestor::tei:floatingText)][tei:isEndNote(.)]"/>
   <xsl:key name="ALLNOTES" use="1"  match="tei:note[not(ancestor::tei:floatingText)][not(@place='margin' or @place='inline' or @place='display')
 		  and not(parent::tei:bibl or  ancestor::tei:teiHeader)]"/>
+  <xsl:key name="TREES" match="tei:eTree[not(ancestor::tei:eTree)]" use="1"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
     <desc>  CSS class for links derived from &lt;ptr&gt;    </desc>

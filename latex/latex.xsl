@@ -14,6 +14,7 @@
   <xsl:import href="latex_header.xsl"/>
   <xsl:import href="latex_linking.xsl"/>
   <xsl:import href="latex_namesdates.xsl"/>
+  <xsl:import href="latex_nets.xsl"/>
   <xsl:import href="latex_tagdocs.xsl"/>
   <xsl:import href="latex_textstructure.xsl"/>
   <xsl:import href="latex_transcr.xsl"/>
