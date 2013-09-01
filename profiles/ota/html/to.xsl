@@ -50,8 +50,9 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-   <xsl:output method="xhtml" omit-xml-declaration="yes"/>
-    
+   <xsl:output method="xhtml" omit-xml-declaration="yes"
+	       encoding="utf-8"/>
+
     <xsl:param name="publisher">University of Oxford Text Archive</xsl:param>
     <xsl:param name="numberHeadings">false</xsl:param>
     <xsl:param name="numberHeadingsDepth">-1</xsl:param>
