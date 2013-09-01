@@ -38,15 +38,17 @@ test-html:
 	$(SAXON)  test.xml ../html/html.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
 	diff test.html expected-results/test.html
 	$(SAXON) test.html checklinks.xsl
-	$(SAXON) test.xml ../html/html.xsl cssFile=../tei.css pageLayout=Complex  $(SAXONOPT)  | xmllint --format - > test-css.html
-	diff test-css.html expected-results/test-css.html
+	$(SAXON) test.xml ../html/html.xsl cssFile=../tei.css pageLayout=Complex  $(SAXONOPT)  | xmllint --format - > test-complex.html
+	diff test-complex.html expected-results/test-complex.html
+	$(SAXON) test.xml ../profiles/ota/html/to.xsl cssFile=../tei.css $(SAXONOPT)  | xmllint --format - > test-ota.html
+	diff test-ota.html expected-results/test-ota.html
 	../teitohtml5 test.xml test.html5
 	xmllint --encode utf-8 --format test.html5 | perl cleanup.pl > test.temp
 	mv test.temp test.html5
 	diff test.html5 expected-results/test.html5
 	$(SAXON) test20.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > test20.html
 	diff test20.html expected-results/test20.html
-	$(SAXON)  -versionmsg:off  test3.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test3.html
+	$(SAXON) -versionmsg:off  test3.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test3.html
 	$(SAXON) -versionmsg:off  test4.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test4.html
 	diff test4.html test3.html
 	$(SAXON) test5.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > test5.xhtml

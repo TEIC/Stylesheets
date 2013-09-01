@@ -79,15 +79,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="autoMakeHead">
     <xsl:param name="display"/>
     <xsl:choose>
-      <xsl:when test="tei:head and $display='full'">
-        <xsl:apply-templates select="tei:head" mode="makeheading"/>
-      </xsl:when>
-      <xsl:when test="tei:head">
-        <xsl:apply-templates select="tei:head" mode="plain"/>
-      </xsl:when>
-      <xsl:when test="tei:front/tei:head">
-        <xsl:apply-templates select="tei:front/tei:head" mode="plain"/>
-      </xsl:when>
       <xsl:when test="@n">
 	<xsl:value-of select="@n"/>
       </xsl:when>
@@ -95,7 +86,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates select="tei:docDate" mode="plain"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text>➤</xsl:text>
+        <xsl:text>§</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

@@ -264,9 +264,12 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:when test="self::tei:text">
 		    <xsl:value-of select="if (@n) then @n else concat('[',position(),']')"/>
 		  </xsl:when>
+		  <xsl:when test="not(tei:head) and tei:front/tei:head">
+		    <xsl:apply-templates  mode="plain" select="tei:front/tei:head"/>
+		  </xsl:when>
 		  <xsl:when test="not(tei:head) and tei:body/tei:head">
 		    <xsl:apply-templates mode="plain" select="tei:body/tei:head"/>
-		  </xsl:when>	
+		  </xsl:when>
 		  <xsl:when test="not(tei:head) and tei:front//tei:titlePart/tei:title">
 		    <xsl:apply-templates mode="plain" select="tei:front//tei:titlePart/tei:title"/>
 		  </xsl:when>	
@@ -294,12 +297,7 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:when>
-	  <xsl:when test="$display='plain'">
-	    <xsl:for-each select="tei:head">
-	      <xsl:apply-templates mode="plain"/>
-	    </xsl:for-each>
-	  </xsl:when>
-	  <xsl:when test="$display='simple'">
+	  <xsl:when test="tei:head and ($display='plain' or $display='simple')">
 	    <xsl:for-each select="tei:head">
 	      <xsl:apply-templates mode="plain"/>
 	    </xsl:for-each>
@@ -307,6 +305,12 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test="tei:head">
 	    <xsl:apply-templates mode="makeheading" select="tei:head"/>
 	  </xsl:when>
+	  <xsl:when test="tei:front/tei:head">
+	    <xsl:apply-templates  mode="plain" select="tei:front/tei:head"/>
+	  </xsl:when>
+	  <xsl:when test="tei:body/tei:head">
+	    <xsl:apply-templates mode="plain" select="tei:body/tei:head"/>
+		  </xsl:when>
 	  <xsl:when test="self::tei:index">
 	    <xsl:value-of select="substring(tei:term,1,10)"/>
 	    <xsl:text>…</xsl:text>
