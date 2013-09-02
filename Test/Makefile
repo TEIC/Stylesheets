@@ -40,7 +40,7 @@ test-html:
 	$(SAXON) test.html checklinks.xsl
 	$(SAXON) test.xml ../html/html.xsl cssFile=../tei.css pageLayout=Complex  $(SAXONOPT)  | xmllint --format - > test-complex.html
 	diff test-complex.html expected-results/test-complex.html
-	$(SAXON) test.xml ../profiles/ota/html/to.xsl cssFile=../tei.css $(SAXONOPT)  | xmllint --format - > test-ota.html
+	$(SAXON) test.xml ../profiles/ota/html/to.xsl cssFile=../tei.css $(SAXONOPT)  | xmllint --format - | perl cleanup.pl > test-ota.html
 	diff test-ota.html expected-results/test-ota.html
 	../teitohtml5 test.xml test.html5
 	xmllint --encode utf-8 --format test.html5 | perl cleanup.pl > test.temp
