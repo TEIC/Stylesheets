@@ -151,32 +151,15 @@ of this software, even if advised of the possibility of such damage.
         <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
           <xsl:element name="html" namespace="{$outputNamespace}">
             <xsl:call-template name="addLangAtt"/>
-            <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
-            <head>
-              <title>
-                <xsl:text>TEI </xsl:text>
+	    <xsl:variable name="pagetitle">
+	      <xsl:text>TEI </xsl:text>
                 <xsl:value-of select="substring-before(local-name(),'Spec')"/>
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="$name"/>
                 <xsl:text> </xsl:text>
                 <xsl:sequence select="tei:makeGloss(.,$langs)"/>
-              </title>
-              <xsl:call-template name="metaHTML">
-                <xsl:with-param name="title">
-                  <xsl:value-of select="substring-before(local-name(),'Spec')"/>
-                  <xsl:text> </xsl:text>
-                  <xsl:value-of select="@ident"/>
-                  <xsl:text> </xsl:text>
-		  <xsl:sequence select="tei:makeGloss(.,$langs)"/>
-		  <xsl:text> - </xsl:text>
-                  <xsl:sequence select="tei:generateTitle(.)"/>
-                </xsl:with-param>
-              </xsl:call-template>
-              <xsl:call-template name="includeCSS"/>
-              <xsl:call-template name="generateLocalCSS"/>
-              <xsl:call-template name="includeJavascript"/>
-              <xsl:call-template name="javascriptHook"/>
-            </head>
+	    </xsl:variable>
+	    <xsl:sequence select="tei:htmlHead($pagetitle,7)"/>
             <body id="TOP">
               <xsl:call-template name="bodyMicroData"/>
               <xsl:call-template name="bodyHook"/>

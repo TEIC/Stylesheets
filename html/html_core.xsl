@@ -1430,17 +1430,13 @@ of this software, even if advised of the possibility of such damage.
           </xsl:if>
           <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
             <html>
-              <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (11)</xsl:comment>
               <xsl:call-template name="addLangAtt"/>
-              <head>
-                <title>
-                  <xsl:sequence select="tei:generateTitle(.)"/>
+	      <xsl:variable name="pagetitle">
+		<xsl:sequence select="tei:generateTitle(.)"/>
                   <xsl:text>: </xsl:text>
                   <xsl:sequence select="tei:i18n('noteHeading')"/>
-                </title>
-                <xsl:call-template name="includeCSS"/>
-                <xsl:call-template name="cssHook"/>
-              </head>
+	      </xsl:variable>
+	      <xsl:sequence select="tei:htmlHead($pagetitle,1)"/>
               <body>
                 <xsl:call-template name="bodyMicroData"/>
                 <xsl:call-template name="bodyJavascriptHook"/>

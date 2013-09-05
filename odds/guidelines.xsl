@@ -288,30 +288,14 @@
       </xsl:variable>
       <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outputDir}/examples-{$me}.html" method="{$outputMethod}">
         <html>
-          <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (10) </xsl:comment>
-          <head>
-            <title>
-              <xsl:sequence select="tei:i18n('Example')"/>
-              <xsl:text>: &lt;</xsl:text>
-              <xsl:value-of select="$me"/>
-              <xsl:text>&gt; </xsl:text>
-	      <xsl:sequence select="tei:makeGloss(.,$langs)"/>
-            </title>
-            <xsl:call-template name="includeCSS"/>
-            <meta content="Text Encoding Initiative Consortium XSLT
-			   stylesheets" name="generator"/>
-	    <xsl:call-template name="metaHTML">
-	      <xsl:with-param name="title">
-                <xsl:sequence select="tei:i18n('Example')"/>
-                <xsl:text>: </xsl:text>
-                <xsl:value-of select="$me"/>
-                <xsl:text> </xsl:text>
-                <xsl:sequence select="tei:makeGloss(.,$langs)"/>
-	      </xsl:with-param>
-	    </xsl:call-template>
-            <xsl:call-template name="includeJavascript"/>
-            <xsl:call-template name="javascriptHook"/>
-          </head>
+	  <xsl:variable name="pagetitle">
+	    <xsl:sequence select="tei:i18n('Example')"/>
+	    <xsl:text>: &lt;</xsl:text>
+	    <xsl:value-of select="$me"/>
+	    <xsl:text>&gt; </xsl:text>
+	    <xsl:sequence select="tei:makeGloss(.,$langs)"/>
+	  </xsl:variable>
+	  <xsl:sequence select="tei:htmlHead($pagetitle,10)"/>
           <body id="TOP">
             <xsl:call-template name="guidelinesTop">
               <xsl:with-param name="name">
