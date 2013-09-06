@@ -84,7 +84,7 @@ test-html:
 	diff -r  files expected-results/testnotes3
 	$(SAXON) -o:test24.html test24.xml ../html/html.xsl $(SAXONOPT)
 	diff test24.html expected-results/test24.html
-	$(SAXON) -o:test25.html test25.xml ../html/html.xsl $(SAXONOPT)
+	$(SAXON) test25.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > test25.html 
 	diff test25.html expected-results/test25.html
 	$(SAXON) test27.xml ../html/html.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../msdescription.css  | xmllint --format - > test27.html
 	diff test27.html expected-results/test27.html

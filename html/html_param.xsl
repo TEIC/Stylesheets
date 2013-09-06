@@ -147,7 +147,13 @@ HTML width and height (in pixels) from supplied dimensions.</desc>
          <p>This would be used to insert &lt;meta&gt; tags.</p>
       </desc>
    </doc>
-  <xsl:template name="headHook"/>
+  <xsl:template name="headHook">
+    <!--
+    <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="/favicon.ico" rel="shortcut icon"
+	  type="image/x-icon"/>
+    -->
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>[html] Hook where HTML can be inserted when creating an &lt;img&gt;</desc>
    </doc>

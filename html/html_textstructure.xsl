@@ -328,7 +328,7 @@ of this software, even if advised of the possibility of such damage.
 		     <xsl:variable name="pagetitle">
 		       <xsl:sequence select="tei:generateTitle(.)"/>
 		     </xsl:variable>
-		     <xsl:sequence select="tei:htmlHead($pagetitle,1)"/>
+		     <xsl:sequence select="tei:htmlHead($pagetitle,6)"/>
 		     <body id="TOP">
                         <xsl:call-template name="bodyMicroData"/>
                         <xsl:call-template name="bodyJavascriptHook"/>
@@ -370,7 +370,7 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:variable name="pagetitle">
 	   <xsl:sequence select="tei:generateTitle(.)"/>
 	 </xsl:variable>
-	 <xsl:sequence select="tei:htmlHead($pagetitle,0)"/>
+	 <xsl:sequence select="tei:htmlHead($pagetitle,5)"/>
          <body class="simple" id="TOP">
             <xsl:call-template name="bodyMicroData"/>
             <xsl:call-template name="bodyJavascriptHook"/>
@@ -1142,12 +1142,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:htmlHead">
     <xsl:param name="pagetitle"/>
     <xsl:param name="number"/>
-    <xsl:for-each select="$top">
+    <xsl:for-each select="$top/*">
     <head>
       <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (<xsl:value-of select="$number"/>)</xsl:comment>
-      <title>
-	<xsl:copy-of select="$pagetitle"/>
-      </title>
       <title>
 	<xsl:value-of select="$htmlTitlePrefix"/>
 	<xsl:if test="$htmlTitlePrefix!=''">
@@ -1155,8 +1152,6 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:if>
 	<xsl:value-of select="$pagetitle"/>
       </title>
-      <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
-      <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
       <xsl:call-template name="headHook"/>
       <xsl:call-template name="metaHTML">
 	<xsl:with-param name="title" select="$pagetitle"/>
@@ -1926,7 +1921,7 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:variable name="pagetitle">
 	   <xsl:sequence select="tei:generateTitle(.)"/>
 	 </xsl:variable>
-	 <xsl:sequence select="tei:htmlHead($pagetitle,1)"/>
+	 <xsl:sequence select="tei:htmlHead($pagetitle,3)"/>
          <body class="simple" id="TOP">
 	   <xsl:copy-of select="tei:text/tei:body/@unload"/>
 	   <xsl:copy-of select="tei:text/tei:body/@onunload"/>
@@ -2113,7 +2108,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:text> page </xsl:text>
 	  <xsl:value-of select="$page"/>
 	</xsl:variable>
-	<xsl:sequence select="tei:htmlHead($pagetitle,0)"/>
+	<xsl:sequence select="tei:htmlHead($pagetitle,8)"/>
 	<body>
 	  <xsl:apply-templates select="current-group()" mode="copy"/>
 	</body>
@@ -2137,7 +2132,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:value-of select="$page"/>
 	    <xsl:text> (facsimile) </xsl:text>
 	  </xsl:variable>
-	  <xsl:sequence select="tei:htmlHead($pagetitle,0)"/>
+	  <xsl:sequence select="tei:htmlHead($pagetitle,9)"/>
 	  <body style="margin:0;padding:0">
 	    <p><img src="{@facs}" class="fullpage" alt="page facsimile"/></p>
 	  </body>
