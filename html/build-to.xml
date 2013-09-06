@@ -29,8 +29,8 @@
   <target name="dist" depends="odd,notodd"/>
 
   <target name="odd" if="processODD">
-    <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
-    <buildhtml in="${inputFile}.processedodd" out="${outputFile}"/>
+    <oddexpand in="${inputFile}" out="${inputFile}.processedodd"/>
+    <buildgeneric type="html" xsl="${profiledir}/${profile}/html/oddhtml.xsl" in="${inputFile}.processedodd" out="${outputFile}"/>
     <delete file="${inputFile}.processedodd"/>
   </target>
 

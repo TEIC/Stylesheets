@@ -325,7 +325,10 @@ of this software, even if advised of the possibility of such damage.
                <xsl:otherwise>
                   <html>
                      <xsl:call-template name="addLangAtt"/>
-                     <xsl:call-template name="htmlFileTop"/>
+		     <xsl:variable name="pagetitle">
+		       <xsl:sequence select="tei:generateTitle(.)"/>
+		     </xsl:variable>
+		     <xsl:sequence select="tei:htmlHead($pagetitle,6)"/>
 		     <body id="TOP">
                         <xsl:call-template name="bodyMicroData"/>
                         <xsl:call-template name="bodyJavascriptHook"/>
@@ -364,22 +367,10 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <html>
          <xsl:call-template name="addLangAtt"/>
-         <head>
-            <xsl:variable name="pagetitle">
-               <xsl:sequence select="tei:generateTitle(.)"/>
-            </xsl:variable>
-            <title>
-               <xsl:value-of select="$pagetitle"/>
-            </title>
-            <xsl:call-template name="headHook"/>
-            <xsl:call-template name="metaHTML">
-               <xsl:with-param name="title" select="$pagetitle"/>
-            </xsl:call-template>
-            <xsl:call-template name="includeCSS"/>
-            <xsl:call-template name="cssHook"/>
-            <xsl:call-template name="includeJavascript"/>
-            <xsl:call-template name="javascriptHook"/>
-         </head>
+	 <xsl:variable name="pagetitle">
+	   <xsl:sequence select="tei:generateTitle(.)"/>
+	 </xsl:variable>
+	 <xsl:sequence select="tei:htmlHead($pagetitle,5)"/>
          <body class="simple" id="TOP">
             <xsl:call-template name="bodyMicroData"/>
             <xsl:call-template name="bodyJavascriptHook"/>
@@ -1146,29 +1137,67 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="stdfooter"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
+      <desc>[html] make the header of an HTML file </desc>
    </doc>
-  <xsl:template name="htmlFileTop">
-      <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (6)</xsl:comment>
-      <xsl:variable name="pagetitle">
-         <xsl:sequence select="tei:generateTitle(.)"/>
-      </xsl:variable>
-      <head>
-         <title>
-            <xsl:value-of select="$pagetitle"/>
-         </title>
-         <xsl:call-template name="headHook"/>
-         <xsl:call-template name="metaHTML">
-            <xsl:with-param name="title" select="$pagetitle"/>
-         </xsl:call-template>
-         <xsl:call-template name="includeCSS"/>
-         <xsl:call-template name="cssHook"/>
-         <xsl:call-template name="includeJavascript"/>
-         <xsl:call-template name="javascriptHook"/>
-      </head>
-  </xsl:template>
+  <xsl:function name="tei:htmlHead">
+    <xsl:param name="pagetitle"/>
+    <xsl:param name="number"/>
+    <xsl:for-each select="$top/*">
+    <head>
+      <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (<xsl:value-of select="$number"/>)</xsl:comment>
+      <title>
+	<xsl:value-of select="$htmlTitlePrefix"/>
+	<xsl:if test="$htmlTitlePrefix!=''">
+	  <xsl:text> </xsl:text>
+	</xsl:if>
+	<xsl:value-of select="$pagetitle"/>
+      </title>
+      <xsl:call-template name="headHook"/>
+      <xsl:call-template name="metaHTML">
+	<xsl:with-param name="title" select="$pagetitle"/>
+      </xsl:call-template>
+      <xsl:choose>
+	<xsl:when test="count(key('TREES',1))=0"/>
+	<xsl:when test="$treestyle='google'">
+          <script type="text/javascript" src="https://www.google.com/jsapi"/>
+          <script type="text/javascript">
+	google.load('visualization', '1', {packages:['orgchart']});
+	google.setOnLoadCallback(drawCharts);
+	  </script>
+	</xsl:when>
+	<xsl:when test="$treestyle='d3'">
+          <script type="text/javascript" src="d3.js"/>
+          <script type="text/javascript" src="d3.layout.js"/>
+          <script type="text/javascript">
+    function elbow(d, i) {
+    var down= d.target.y - 20;
+    var down2 = d.source.y + 5 ;
+    return "M" + d.target.x + "," + down
+    + "V" + down2 + "H" + d.source.x; }
+	  </script>
+	  <style>	    
+	    .nodetext {
+	        text-align: center;
+	        border: solid green 1pt;
+	    }
+	    .link {
+	    fill: none;
+	    stroke: black;
+	    stroke-width: 2px;
+	    }
+	    .node { background-color: black; font-size: 8pt; stroke: black;}
+	  </style>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:call-template name="includeCSS"/>
+      <xsl:call-template name="cssHook"/>
+      <xsl:call-template name="includeJavascript"/>
+      <xsl:call-template name="javascriptHook"/>
+    </head>
+</xsl:for-each>
+  </xsl:function>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
+      <desc>[html] bring in CSS files </desc>
    </doc>
   <xsl:template name="includeCSS">
 
@@ -1720,66 +1749,48 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="pageLayoutComplex">
       <xsl:param name="currentID"/>
       <html>
-         <xsl:call-template name="addLangAtt"/>
-         <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (4)</xsl:comment>
-         <xsl:text>&#10;</xsl:text>
-         <head>
-	   <xsl:variable name="pagetitle">
-	     <xsl:choose>
-	       <xsl:when test="$currentID=''">
-		 <xsl:sequence select="tei:generateTitle(.)"/>
-	       </xsl:when>
-	       <xsl:otherwise>
-		 <xsl:choose>
-		   <xsl:when test="$currentID='current'">
-		     <xsl:apply-templates mode="xref" select="."/>
-		   </xsl:when>
-		   <xsl:when test="count(id($currentID))&gt;0">
-		     <xsl:for-each select="id($currentID)">
-		       <xsl:apply-templates mode="xref" select="."/>
-		     </xsl:for-each>
-		   </xsl:when>
-		   <xsl:otherwise>
-		     <xsl:apply-templates mode="xpath" select="descendant::text">
-		       <xsl:with-param name="xpath" select="$currentID"/>
-		       <xsl:with-param name="action" select="'header'"/>
-		     </xsl:apply-templates>
-		   </xsl:otherwise>
-		 </xsl:choose>
-		 <xsl:text> - </xsl:text>
-		 <xsl:sequence select="tei:generateTitle(.)"/>
-	       </xsl:otherwise>
-	     </xsl:choose>
-	   </xsl:variable>
-	   <title>
-	     <xsl:value-of select="$htmlTitlePrefix"/>
-	     <xsl:text> </xsl:text>
-	     <xsl:value-of select="$pagetitle"/>
-	   </title>
-	   <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
-	   <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-	   <xsl:call-template name="headHook"/>
-	   <xsl:call-template name="metaHTML">
-	     <xsl:with-param name="title" select="$pagetitle"/>
-	   </xsl:call-template>
-	   <xsl:call-template name="includeCSS"/>
-	   <xsl:call-template name="cssHook"/>
-	   <xsl:call-template name="includeJavascript"/>
-	   <xsl:call-template name="javascriptHook"/>
-         </head>
-         <body>
-	   <xsl:copy-of select="tei:text/tei:body/@unload"/>
-	   <xsl:copy-of select="tei:text/tei:body/@onunload"/>
-	   <xsl:call-template name="bodyMicroData"/>
-	   <xsl:call-template name="bodyJavascriptHook"/>
-	   <xsl:call-template name="bodyHook"/>
-	   <xsl:call-template name="mainPage">
-	     <xsl:with-param name="currentID">
-	       <xsl:value-of select="$currentID"/>
-	     </xsl:with-param>
-	   </xsl:call-template>
-	   <xsl:call-template name="bodyEndHook"/>
-         </body>
+	<xsl:call-template name="addLangAtt"/>
+	<xsl:variable name="pagetitle">
+	  <xsl:choose>
+	    <xsl:when test="$currentID=''">
+	      <xsl:sequence select="tei:generateTitle(.)"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:choose>
+		<xsl:when test="$currentID='current'">
+		  <xsl:apply-templates mode="xref" select="."/>
+		</xsl:when>
+		<xsl:when test="count(id($currentID))&gt;0">
+		  <xsl:for-each select="id($currentID)">
+		    <xsl:apply-templates mode="xref" select="."/>
+		  </xsl:for-each>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:apply-templates mode="xpath" select="descendant::text">
+		    <xsl:with-param name="xpath" select="$currentID"/>
+		    <xsl:with-param name="action" select="'header'"/>
+		  </xsl:apply-templates>
+		</xsl:otherwise>
+	      </xsl:choose>
+	      <xsl:text> - </xsl:text>
+	      <xsl:sequence select="tei:generateTitle(.)"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
+	<xsl:sequence select="tei:htmlHead($pagetitle,4)"/>
+	<body>
+	  <xsl:copy-of select="tei:text/tei:body/@unload"/>
+	  <xsl:copy-of select="tei:text/tei:body/@onunload"/>
+	  <xsl:call-template name="bodyMicroData"/>
+	  <xsl:call-template name="bodyJavascriptHook"/>
+	  <xsl:call-template name="bodyHook"/>
+	  <xsl:call-template name="mainPage">
+	    <xsl:with-param name="currentID">
+	      <xsl:value-of select="$currentID"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:call-template name="bodyEndHook"/>
+	</body>
       </html>
   </xsl:template>
   
@@ -1907,7 +1918,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="pageLayoutSimple">
       <html>
          <xsl:call-template name="addLangAtt"/>
-         <xsl:call-template name="htmlFileTop"/>
+	 <xsl:variable name="pagetitle">
+	   <xsl:sequence select="tei:generateTitle(.)"/>
+	 </xsl:variable>
+	 <xsl:sequence select="tei:htmlHead($pagetitle,3)"/>
          <body class="simple" id="TOP">
 	   <xsl:copy-of select="tei:text/tei:body/@unload"/>
 	   <xsl:copy-of select="tei:text/tei:body/@onunload"/>
@@ -2089,24 +2103,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:result-document href="{$outName}">
       <html>
 	<xsl:call-template name="addLangAtt"/>
-	<head>
-	  <xsl:variable name="pagetitle">
-	    <xsl:sequence select="tei:generateTitle(.)"/>
-	    <xsl:text> page </xsl:text>
-	    <xsl:value-of select="$page"/>
-	  </xsl:variable>
-	  <title>
-	    <xsl:value-of select="$pagetitle"/>
-	  </title>
-	  <xsl:call-template name="headHook"/>
-	  <xsl:call-template name="metaHTML">
-	    <xsl:with-param name="title" select="$pagetitle"/>
-	  </xsl:call-template>
-	  <xsl:call-template name="includeCSS"/>
-	  <xsl:call-template name="cssHook"/>
-	  <xsl:call-template name="includeJavascript"/>
-	  <xsl:call-template name="javascriptHook"/>
-	</head>
+	<xsl:variable name="pagetitle">
+	  <xsl:sequence select="tei:generateTitle(.)"/>
+	  <xsl:text> page </xsl:text>
+	  <xsl:value-of select="$page"/>
+	</xsl:variable>
+	<xsl:sequence select="tei:htmlHead($pagetitle,8)"/>
 	<body>
 	  <xsl:apply-templates select="current-group()" mode="copy"/>
 	</body>
@@ -2124,25 +2126,13 @@ of this software, even if advised of the possibility of such damage.
       <xsl:result-document href="{$outNameFacs}">
 	<html>
 	  <xsl:call-template name="addLangAtt"/>
-	  <head>
-	    <xsl:variable name="pagetitle">
-	      <xsl:sequence select="tei:generateTitle(.)"/>
-	      <xsl:text> page </xsl:text>
-	      <xsl:value-of select="$page"/>
-	      <xsl:text> (facsimile) </xsl:text>
-	    </xsl:variable>
-	    <title>
-	      <xsl:value-of select="$pagetitle"/>
-	    </title>
-	    <xsl:call-template name="headHook"/>
-	    <xsl:call-template name="metaHTML">
-	      <xsl:with-param name="title" select="$pagetitle"/>
-	    </xsl:call-template>
-	    <xsl:call-template name="includeCSS"/>
-	    <xsl:call-template name="cssHook"/>
-	    <xsl:call-template name="includeJavascript"/>
-	    <xsl:call-template name="javascriptHook"/>
-	  </head>
+	  <xsl:variable name="pagetitle">
+	    <xsl:sequence select="tei:generateTitle(.)"/>
+	    <xsl:text> page </xsl:text>
+	    <xsl:value-of select="$page"/>
+	    <xsl:text> (facsimile) </xsl:text>
+	  </xsl:variable>
+	  <xsl:sequence select="tei:htmlHead($pagetitle,9)"/>
 	  <body style="margin:0;padding:0">
 	    <p><img src="{@facs}" class="fullpage" alt="page facsimile"/></p>
 	  </body>
@@ -2171,22 +2161,33 @@ of this software, even if advised of the possibility of such damage.
       <div class="stdfooter">
          <xsl:if test="$linkPanel='true'">
             <div class="footer">
+	      <xsl:comment>standard links to project, instiution etc</xsl:comment>
                <xsl:if test="not($parentURL='')">
-                  <a class="{$style}" href="{$parentURL}">
-                     <xsl:value-of select="$parentWords"/>
-                  </a> | </xsl:if>
-               <a class="{$style}" href="{$homeURL}">
-                  <xsl:value-of select="$homeWords"/>
-               </a>
-               <xsl:if test="$searchURL">
-		 <xsl:text>| </xsl:text>
+		 <a class="{$style}" href="{$parentURL}">
+		   <xsl:value-of select="$parentWords"/>
+		 </a>
+		 <xsl:text>&#160;</xsl:text>
+	       </xsl:if>
+
+               <xsl:if test="not($homeURL='')">
+		 <a class="{$style}" href="{$homeURL}">
+		   <xsl:value-of select="$homeWords"/>
+		 </a>
+		 <xsl:text>&#160;</xsl:text>
+	       </xsl:if>
+
+               <xsl:if test="not($searchURL='')">
 		 <a class="{$style}" href="{$searchURL}">
 		   <xsl:sequence select="tei:i18n('searchWords')"/>            
 		 </a>
+		 <xsl:text>&#160;</xsl:text>
                </xsl:if>
-               <xsl:if test="$feedbackURL"> | <a class="{$style}" href="{$feedbackURL}">
-	       <xsl:sequence select="tei:i18n('feedbackWords')"/>
-	     </a>
+
+               <xsl:if test="not($feedbackURL='')">
+		 <a class="{$style}" href="{$feedbackURL}">
+		   <xsl:sequence select="tei:i18n('feedbackWords')"/>
+		 </a>
+		 <xsl:text>&#160;</xsl:text>
                </xsl:if>
             </div>
          </xsl:if>
@@ -2195,7 +2196,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:if test="not($author='')">
                <xsl:text> </xsl:text>
                <xsl:value-of select="$author"/>.
-      </xsl:if>
+	    </xsl:if>
             <xsl:sequence select="tei:i18n('dateWord')"/>
             <xsl:text>: </xsl:text>
             <xsl:value-of select="$date"/>
@@ -2642,33 +2643,20 @@ of this software, even if advised of the possibility of such damage.
       </xsl:variable>
       <html>
          <xsl:call-template name="addLangAtt"/>
-         <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (2)</xsl:comment>
-         <head>
-            <xsl:variable name="pagetitle">
-	      <xsl:choose>
-		<xsl:when test="tei:head">
-		  <xsl:apply-templates select="tei:head" mode="plain"/>
-		</xsl:when>
-		<xsl:when test="self::tei:text">
-		  <xsl:value-of
-		      select="tei:generateTitle(ancestor::tei:TEI)"/>
-		  <xsl:value-of select="concat('[',position(),']')"/>
-		</xsl:when>
-		<xsl:otherwise>&#160;</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:variable>
-            <title>
-               <xsl:sequence select="$pagetitle"/>
-            </title>
-            <xsl:call-template name="headHook"/>
-            <xsl:call-template name="metaHTML">
-               <xsl:with-param name="title" select="$pagetitle"/>
-            </xsl:call-template>
-            <xsl:call-template name="includeCSS"/>
-            <xsl:call-template name="cssHook"/>
-            <xsl:call-template name="includeJavascript"/>
-            <xsl:call-template name="javascriptHook"/>
-         </head>
+	 <xsl:variable name="pagetitle">
+	   <xsl:choose>
+	     <xsl:when test="tei:head">
+	       <xsl:apply-templates select="tei:head" mode="plain"/>
+	     </xsl:when>
+	     <xsl:when test="self::tei:text">
+	       <xsl:value-of
+		   select="tei:generateTitle(ancestor::tei:TEI)"/>
+	       <xsl:value-of select="concat('[',position(),']')"/>
+	     </xsl:when>
+	     <xsl:otherwise>&#160;</xsl:otherwise>
+	   </xsl:choose>
+	 </xsl:variable>
+	 <xsl:sequence select="tei:htmlHead($pagetitle,2)"/>
          <body id="TOP">
             <xsl:call-template name="bodyMicroData"/>
             <xsl:call-template name="bodyJavascriptHook"/>

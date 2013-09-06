@@ -1,61 +1,47 @@
 \documentclass[11pt,twoside]{article}\makeatletter
+
 \IfFileExists{xcolor.sty}%
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
 \usepackage{colortbl}
-
-\IfFileExists{utf8x.def}%
- {\usepackage[utf8x]{inputenc}
-    \PrerenderUnicode{–}
-  }%
- {\usepackage[utf8]{inputenc}}
-\usepackage[english]{babel}
-\usepackage[T1]{fontenc}
-\usepackage{float}
-\usepackage[]{ucs}
-\uc@dclc{8421}{default}{\textbackslash }
-\uc@dclc{10100}{default}{\{}
-\uc@dclc{10101}{default}{\}}
-\uc@dclc{8491}{default}{\AA{}}
-\uc@dclc{8239}{default}{\,}
-\uc@dclc{20154}{default}{ }
-\uc@dclc{10148}{default}{>}
-\def\textschwa{\rotatebox{-90}{e}}
-\def\textJapanese{}
-\def\textChinese{}
-
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+  \usepackage{xunicode}
+  \catcode`⃥=\active \def⃥{\textbackslash}
+  \catcode`❴=\active \def❴{\{}
+  \catcode`❵=\active \def❵{\}}
+  \def\textJapanese{\fontspec{Kochi Mincho}}
+  \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
+  \def\textKorean{\fontspec{Baekmuk Gulim} }
+  \setmonofont{DejaVu Sans Mono}
+  
+\else
+  \IfFileExists{utf8x.def}%
+   {\usepackage[utf8x]{inputenc}
+      \PrerenderUnicode{–}
+    }%
+   {\usepackage[utf8]{inputenc}}
+  \usepackage[english]{babel}
+  \usepackage[T1]{fontenc}
+  \usepackage{float}
+  \usepackage[]{ucs}
+  \uc@dclc{8421}{default}{\textbackslash }
+  \uc@dclc{10100}{default}{\{}
+  \uc@dclc{10101}{default}{\}}
+  \uc@dclc{8491}{default}{\AA{}}
+  \uc@dclc{8239}{default}{\,}
+  \uc@dclc{20154}{default}{ }
+  \uc@dclc{10148}{default}{>}
+  \def\textschwa{\rotatebox{-90}{e}}
+  \def\textJapanese{}
+  \def\textChinese{}
+  \IfFileExists{tipa.sty}{\usepackage{tipa}}{}
+  \usepackage{times}
+\fi
+\def\exampleFont{\ttfamily\small}
 \DeclareTextSymbol{\textpi}{OML}{25}
 \usepackage{relsize}
-\def\textsubscript#1{%
-  \@textsubscript{\selectfont#1}}
-\def\@textsubscript#1{%
-  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
-\def\textquoted#1{‘#1’}
-\def\textsmall#1{{\small #1}}
-\def\textlarge#1{{\large #1}}
-\def\textoverbar#1{\ensuremath{\overline{#1}}}
-\def\textgothic#1{{\fontspec{Lucida Blackletter}#1}}
-\def\textcal#1{{\fontspec{Lucida Calligraphy}#1}}
-\newenvironment{biblfree}{}{\ifvmode\par\fi }
-\newenvironment{docImprint}{\vskip 6pt}{\ifvmode\par\fi }
-\newenvironment{docDate}{}{\ifvmode\par\fi }
-\newenvironment{docAuthor}{\ifvmode\vskip4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape}{\ifvmode\par\fi }
-\newenvironment{docTitle}{\vskip6pt\bfseries\fontsize{18pt}{22pt}\selectfont}{\par }
-\newenvironment{titlePart}{}{\par }
-\newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
-\newenvironment{citbibl}{}{\ifvmode\par\fi }
-\newenvironment{bibl}{}{}
-\newenvironment{rubric}{}{}
-\newenvironment{msItem}{\vskip 6pt}{\par}
-\newenvironment{msHead}{\vskip 6pt}{\par}
-\def\titlem#1{\emph{#1}}
-\def\corr#1{#1}
-\def\sic#1{#1}
-\def\reg#1{#1}
-\def\orig#1{#1}
-\def\gap{}
-\def\abbr#1{#1}
-\def\expan#1{#1}
 \RequirePackage{array}
 \def\@testpach{\@chclass
  \ifnum \@lastchclass=6 \@ne \@chnum \@ne \else
@@ -82,10 +68,37 @@
     \if \@nextchar b5 \else
    \z@ \@chclass \z@ \@preamerr \z@ \fi \fi \fi \fi
    \fi \fi  \fi  \fi  \fi  \fi  \fi \fi \fi \fi \fi \fi}
-
 \gdef\arraybackslash{\let\\=\@arraycr}
-\def\textxi{\ensuremath{\xi}}
+\def\@textsubscript#1{{\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
 \def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+\def\abbr{}
+\def\corr{}
+\def\expan{}
+\def\gap{}
+\def\orig{}
+\def\reg{}
+\def\sic{}
+\def\textcal#1{{\fontspec{Lucida Calligraphy}#1}}
+\def\textgothic#1{{\fontspec{Lucida Blackletter}#1}}
+\def\textlarge#1{{\large #1}}
+\def\textoverbar#1{\ensuremath{\overline{#1}}}
+\def\textquoted#1{‘#1’}
+\def\textsmall#1{{\small #1}}
+\def\textsubscript#1{\@textsubscript{\selectfont#1}}
+\def\textxi{\ensuremath{\xi}}
+\def\titlem{\itshape}
+\newenvironment{biblfree}{}{\ifvmode\par\fi }
+\newenvironment{bibl}{}{}
+\newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
+\newenvironment{citbibl}{}{\ifvmode\par\fi }
+\newenvironment{docAuthor}{\ifvmode\vskip4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape}{\ifvmode\par\fi }
+\newenvironment{docDate}{}{\ifvmode\par\fi }
+\newenvironment{docImprint}{\vskip 6pt}{\ifvmode\par\fi }
+\newenvironment{docTitle}{\vskip6pt\bfseries\fontsize{18pt}{22pt}\selectfont}{\par }
+\newenvironment{msHead}{\vskip 6pt}{\par}
+\newenvironment{msItem}{\vskip 6pt}{\par}
+\newenvironment{rubric}{}{}
+\newenvironment{titlePart}{}{\par }
 
 \newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
 \newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
@@ -118,9 +131,6 @@
 \usepackage{graphicx}
 
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
-
-\IfFileExists{tipa.sty}{\usepackage{tipa}}{}
-\usepackage{times}
 
   \pagestyle{fancy} 
 
@@ -313,7 +323,7 @@
 \bibitem[Petty (1977)]{PETTY}\hypertarget{PETTY}{}A. G. Petty. \textit{English literary hands from Chaucer to Dryden}, 1977. London: Edward Arnold. pp. 22–25. 
 \bibitem[Jackendoff (1977)]{GD-BIBL-2}\hypertarget{GD-BIBL-2}{}R. Jackendoff. ‘X-Bar Syntax: A study of phrase structure’. \textit{Linguistic Inquiry Monograph} 1977. 2. 
 \bibitem[Istituto Centrale per il Catalogo Unico (1979)]{RICA}\hypertarget{RICA}{}Istituto Centrale per il Catalogo Unico. \textit{Regole italiane di catalogazione per autori}, 1979. 
-\bibitem[Klinkenborg and Cahoon (1981)]{KLINKENBORG}\hypertarget{KLINKENBORG}{}\textit{British Literary Manuscripts. Series 2: from 1800 to 1914}, Klinkenborg Verlyn, Cahoon Herbert. 1981. New York: Pierpont Morgan Library. 
+\bibitem[Klinkenborg and Cahoon (1981)]{KLINKENBORG}\hypertarget{KLINKENBORG}{}\textit{British Literary Manuscripts. Series 2: from 1800 to 1914}, Verlyn Klinkenborg, Herbert Cahoon. 1981. New York: Pierpont Morgan Library. 
 \bibitem[Marshall (1983)]{AI-BIBL-6}\hypertarget{AI-BIBL-6}{}I. Marshall. ‘Choice of Grammatical Word Class without Global Syntactic Analysis: Tagging Words in the LOB Corpus’. \textit{Computers and the Humanities} 1983. 17 pp. 139-50. 
 \bibitem[British Standards Institute (1983)]{BS-6371}\hypertarget{BS-6371}{}British Standards Institute. \textit{BS 6371:1983: Recommendations for Citation of Unpublished Documents}, 1983. 
 \bibitem[Deutsches Institut für Normung (1984)]{DIN-1505-2}\hypertarget{DIN-1505-2}{}Deutsches Institut für Normung. \textit{DIN 1505-2: Titelangaben von Dokumenten; Zitierregeln}, 1984. 
@@ -331,17 +341,17 @@
 \bibitem[Johansson et al. (1991)]{TS-BIBL-3}\hypertarget{TS-BIBL-3}{}Stig Johansson, Lou Burnard, Jane Edwards, And Rosta. \textit{Working Paper on Spoken Texts}, \textit{TEI document TEI AI2 W1}, 1991. 
 \bibitem[Leech and Garside (1991)]{AI-BIBL-5}\hypertarget{AI-BIBL-5}{}G. N. Leech, R. G. Garside. ‘Running a Grammar Factory’. S. Johansson, A.-B. Stenstrøm (eds.) \textit{English Computer Corpora: Selected Papers and Research Guide}, 1991. Berlin, New York: de Gruyter. Mouton. pp. pp. 15-32.. 
 \bibitem[Garside et al. (1991)]{AI-BIBL-7}\hypertarget{AI-BIBL-7}{}R. G. Garside, G. N. Leech, G. R. Sampson. \textit{The Computational Analysis of English: a Corpus-Based Approach}, 1991. Oxford: Oxford University Press. 
-\bibitem[Knuth (1992)]{KNUTH}\hypertarget{KNUTH}{}Knuth Donald E.. \textit{Literate Programming}, CSLI Lecture Notes 271992. Stanford, California: Center for the Study of Language and Information.  0-937073-80-6 
+\bibitem[Knuth (1992)]{KNUTH}\hypertarget{KNUTH}{}Donald E. Knuth. Literate Programming, CSLI Lecture Notes 271992. Stanford, California: Center for the Study of Language and Information.  0-937073-80-6 
 \bibitem[Carpenter (1992)]{FS-BIBL-5}\hypertarget{FS-BIBL-5}{}Bob Carpenter. \textit{The logic of typed feature structures}, 1992. Cambridge: Cambridge University Press. Cambridge Tracts in Theoretical Computer Science 32. 
 \bibitem[Ide et al. (1992)]{DI-BIBL-6}\hypertarget{DI-BIBL-6}{}Nancy Ide, Jean Veronis, Susan Warwick-Amstrong, Nicoletta Calzolari. ‘Principles for Encoding machine readable dictionaries’. \textit{Proceedings of the Fifth EURALEX International Congress, EURALEX'92},  (Fifth EURALEX International Congress, EURALEX'92, University of Tampere, Finland) 1992. 
 \bibitem[Edwards and Lampert (eds.) (1993)]{TS-BIBL-1}\hypertarget{TS-BIBL-1}{}J. A. Edwards, M. D. Lampert (eds.) \textit{Talking Language: Transcription and Coding of Spoken Discourse}, 1993. Hillsdale, N.J.: Lawrence Erlbaum Associates. 
 \bibitem[Ide et al. (1993)]{DI-BIBL-5}\hypertarget{DI-BIBL-5}{}Nancy Ide, Jacques Le Maitre, Jean Veronis. ‘Outline of a Model for Lexical Databases’. \textit{Information Processing and Management} 1993. 29  (2)  pp. 159-186. 
 \bibitem[Gale and Church (1993)]{SA-BIBL-1}\hypertarget{SA-BIBL-1}{}William A. Gale, Kenneth W. Church. ‘Program for aligning sentences in bilingual corpora’. \textit{Computational Linguistics} 1993. 19 pp. 75-102. 
-\bibitem[Johansson (1994)]{TS-BIBL-2}\hypertarget{TS-BIBL-2}{}Stig Johansson. ‘Encoding a Corpus in Machine-Readable Form’.  Sue Atkins, Antonio Zampolli (eds.) \textit{Computational Approaches to the Lexicon: An Overview}, 1994. Oxford: Oxford University Press. 
+\bibitem[Johansson (1994)]{TS-BIBL-2}\hypertarget{TS-BIBL-2}{}Stig Johansson. ‘Encoding a Corpus in Machine-Readable Form’. Sue Atkins, Antonio Zampolli (eds.) \textit{Computational Approaches to the Lexicon: An Overview}, 1994. Oxford: Oxford University Press. 
 \bibitem[Burnard and Sperberg-McQueen (1995)]{Burnard1995b}\hypertarget{Burnard1995b}{}Lou Burnard, C. Michael Sperberg-McQueen. ‘The Design of the TEI Encoding Scheme’. \textit{Computers and the Humanities} 1995. 29  (1)  p. 17–39.  http://dx.doi.org/10.1007/BF01830314[Reprinted in Ide1995b, pp. 17-40] 
 \bibitem[Ide and Veronis (1995)]{DI-BIBL-4}\hypertarget{DI-BIBL-4}{}Nancy Ide, Jean Veronis. ‘Encoding Print Dictionaries’. \textit{Computers and the Humanities} 1995. 29 pp. 167-195. 
 \bibitem[Langendoen and Simons (1995)]{FS-BIBL-01}\hypertarget{FS-BIBL-01}{}D. Terence Langendoen, Gary F.  Simons. ‘A rationale for the TEI recommendations for feature-structure markup,’. \textit{Computers and the Humanities} 1995. 29 pp. 167-195. 
-\bibitem[Renear et al. (1996)]{SG-BIBL-2}\hypertarget{SG-BIBL-2}{}Renear A., Mylonas E., Durand D. . ‘Refining our notion of what text really is: the problem of overlapping hierarchies’. Nancy Ide, Susan Hockey (eds.) \textit{Research in Humanities Computing}, 1996. Oxford University Press. 
+\bibitem[Renear et al. (1996)]{SG-BIBL-2}\hypertarget{SG-BIBL-2}{}A. Renear, E. Mylonas, D.  Durand. ‘Refining our notion of what text really is: the problem of overlapping hierarchies’. Nancy Ide, Susan Hockey (eds.) \textit{Research in Humanities Computing}, 1996. Oxford University Press. 
 \bibitem[Tutin and Veronis (1998)]{DI-BIBL-8}\hypertarget{DI-BIBL-8}{}Agnès Tutin, Jean Veronis. ‘Electronic dictionary encoding: customizing the TEI Guidelines’. \textit{Proceedings of the Eighth Euralex International Congress},  (Eighth Euralex International Congress) 1998. 
 \bibitem[Ide et al. (2000)]{DI-BIBL-9}\hypertarget{DI-BIBL-9}{}N. Ide, A. Kilgarriff, L. Romary. ‘A Formal Model of Dictionary Structure and Content’. \textit{Proceedings of Euralex 2000},  (Euralex 2000) 2000. Stuttgart. pp. 113-126. 
 \bibitem[Huitfeldt and Sperberg-McQueen (2001)]{NH-BIBL-8}\hypertarget{NH-BIBL-8}{}Claus Huitfeldt, C. Michael Sperberg-McQueen. \textit{TexMECS: An experimental markup meta-language for complex documents}, 2001.  <\url{http://decentius.aksis.uib.no/mlcd/2003/Papers/texmecs.html}>.
@@ -404,27 +414,27 @@ ok þottí sannaz vm lifdaga hans sva sem hann sagdí\begin{bibitemlist}{1}
  \bibitem {bibitem-7}Cipolla, \xref{NornaGestr1996}{Il racconto di Nornagestr} 227-244
 
 \end{bibitemlist}
-\end{msItem} \begin{msItem}\textbf{31va:23-32rb}:  \textit{Helga Þáttr Þórissonar} \rubric{her segir fra {\hskip1pt}\newline  godmun {\hskip1pt}\newline di kkonvngi {\hskip1pt}\newline  af gl {\hskip1pt}\newline asisu{\hskip1pt}\newline ollum}
+\end{msItem} \begin{msItem}\textbf{31va:23-32rb}:  \textit{Helga Þáttr Þórissonar} {\rubric her segir fra {\hskip1pt}\newline  godmun {\hskip1pt}\newline di kkonvngi {\hskip1pt}\newline  af gl {\hskip1pt}\newline asisu{\hskip1pt}\newline ollum}
 \subsection{Incipit}
 Þorir het madr er bío j noregi
 \subsection{Explicit}
-ok hefir engí {\hskip1pt}\newline  madr þav sed sidanok lykr her þessi sǫgv etc.\begin{biblfree}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  38-44  (Ed. D\textsuperscript{1})\end{biblfree} \end{msItem} \begin{msItem}\textbf{33va-37vb}:  \textit{Færeyinga saga} \rubric{her hefir færeyíngar þattr}
+ok hefir engí {\hskip1pt}\newline  madr þav sed sidanok lykr her þessi sǫgv etc.\begin{biblfree}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  38-44  (Ed. D\textsuperscript{1})\end{biblfree} \end{msItem} \begin{msItem}\textbf{33va-37vb}:  \textit{Færeyinga saga} {\rubric her hefir færeyíngar þattr}
 \subsection{Incipit}
 Madr er nefndr grimr kamban
 \subsection{Explicit}
-varist [?] segía henni hvert þat [...]\gap{}dit\begin{biblfree}Ólafur Halldórsson, \xref{Rit30}{Færeyinga saga} 3-5, 8-11, 13-37, 39-41, 43, 49-67  (Bottom text. Ed. D)\end{biblfree} \end{msItem} \begin{msItem}\textbf{44rb:3-46ra}:  \textit{Óláfr konungr braut goð þrænda} \rubric{Capitulum}
+varist [?] segía henni hvert þat [...]{\gap }dit\begin{biblfree}Ólafur Halldórsson, \xref{Rit30}{Færeyinga saga} 3-5, 8-11, 13-37, 39-41, 43, 49-67  (Bottom text. Ed. D)\end{biblfree} \end{msItem} \begin{msItem}\textbf{44rb:3-46ra}:  \textit{Óláfr konungr braut goð þrænda} {\rubric Capitulum}
 \subsection{Incipit}
-[E]\footnote{omitted}n er olafr konvngr hafdi skama stvnd verít i þrandheimi
+⟨E⟩n er olafr konvngr hafdi skama stvnd verít i þrandheimi
 \subsection{Explicit}
-ef þer hafít adr illa ok oheyrilí{\hskip1pt}\newline ga af honvm gengít\begin{biblfree}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  1-14  (Ed. D\textsuperscript{1})\end{biblfree} \end{msItem} \begin{msItem}\textbf{50ra:2-b:4}:  \textit{Tryggva Óláfssonar hefnt} \rubric{Capitulum}
+ef þer hafít adr illa ok oheyrilí{\hskip1pt}\newline ga af honvm gengít\begin{biblfree}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  1-14  (Ed. D\textsuperscript{1})\end{biblfree} \end{msItem} \begin{msItem}\textbf{50ra:2-b:4}:  \textit{Tryggva Óláfssonar hefnt} {\rubric Capitulum}
 \subsection{Incipit}
 Sva bar at eítt sínn at haralldr konvngr {\hskip1pt}\newline  kom þar
 \subsection{Explicit}
-ok hafdi hann med ser j hírd sínní\begin{biblfree}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  45-47  (Ed. D\textsuperscript{1})\end{biblfree} \end{msItem} \begin{msItem}\textbf{51va:25-52va:36}:  \textit{Halldórs Þáttr Snorrasonar} \rubric{sidasti þattr olaf{\hskip1pt}\newline ssaug{\hskip1pt}\newline o try{\hskip1pt}\newline ggua{\hskip1pt}\newline son[ar]\footnote{omitted} {\hskip1pt}\newline  noreg{\hskip1pt}\newline s konvngs}
+ok hafdi hann med ser j hírd sínní\begin{biblfree}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  45-47  (Ed. D\textsuperscript{1})\end{biblfree} \end{msItem} \begin{msItem}\textbf{51va:25-52va:36}:  \textit{Halldórs Þáttr Snorrasonar} {\rubric sidasti þattr olaf{\hskip1pt}\newline ssaug{\hskip1pt}\newline o try{\hskip1pt}\newline ggua{\hskip1pt}\newline son⟨ar⟩ {\hskip1pt}\newline  noreg{\hskip1pt}\newline s konvngs}
 \subsection{Incipit}
 Halldor son snora goda af islandi var med haraldi konvngí sigvrdar syni
 \subsection{Explicit}
-hann hafdi drepit {\hskip1pt}\newline  hirdmann haralldz konvngs ok hafdi [hann]\footnote{omitted} þvi reidi a honvm\begin{bibitemlist}{1}
+hann hafdi drepit {\hskip1pt}\newline  hirdmann haralldz konvngs ok hafdi ⟨hann⟩ þvi reidi a honvm\begin{bibitemlist}{1}
  \bibitem {bibitem-12}\xref{FMS3}{Fornmanna sögur} III  152-163:2  (Ed. S)
  \bibitem {bibitem-13}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  47-57  (Ed. D\textsuperscript{1})
 
@@ -433,12 +443,12 @@ hann hafdi drepit {\hskip1pt}\newline  hirdmann haralldz konvngs ok hafdi [hann]
 \subsection{Incipit}
 Sęmilígr kenní madr ok godrar mínníngar
 \subsection{Explicit}
-voro þav sammędd syskin in heilagri {\hskip1pt}\newline  olafr konvngr ok fyrnefnd [\corr{gvnnhilldr}].\begin{bibitemlist}{1}
+voro þav sammędd syskin in heilagri {\hskip1pt}\newline  olafr konvngr ok fyrnefnd [{\corr gvnnhilldr}].\begin{bibitemlist}{1}
  \bibitem {bibitem-14}\xref{FMS3}{Fornmanna sögur} III  163:4-172  (Ed. S)
  \bibitem {bibitem-15}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  57-64  (Ed. D\textsuperscript{1})
 
 \end{bibitemlist}
-\end{msItem} \begin{msItem}\textbf{53vb:14-31}:  \textit{Sýn Brestis} \rubric{Kapitulum [...]\gap{}}
+\end{msItem} \begin{msItem}\textbf{53vb:14-31}:  \textit{Sýn Brestis} {\rubric Kapitulum [...]{\gap }}
 \subsection{Incipit}
 Sva hefir brodir Gvnlavgr ok sagt j latínv
 \subsection{Explicit}
@@ -487,25 +497,25 @@ Most chapter-titles or division marks are in red, but a few are in blue or blue-
 \par
 \begin{itemize}
 
-\item[1] Fol. \textbf{15vb}:  has a major initial, a \emph{littera florissa} of a \textbf{Þ} of four lines with an extension down the left margin.
-\item[2] Fol. \textbf{29rb}: : The opening of \textit{Norna-Gests þáttr} contains a \emph{littera florissa} of the letter \textbf{Þ} with dots and branches. The first three lines are set in, but the round bow of the \textbf{Þ} extends up the upper margin, while the descendent runs down to the bottom of the margin. The bar is metamorphosing down the page from a dotted line to some sort of a branch with leaf-like outgrows and is ending in two spirals, and a leaf in the middle, in the lower margin. The top of the \textbf{Þ} is ending in one single spiral.
-\item[3] Fol. \textbf{31va}: The opening of \textit{Helga þáttr Þórissonar} contains a major initial, a \emph{littera florissa} of a \textbf{Þ}. 3 lines are set in, but the letter extends in the margin. The \textbf{Þ} ends with two spirals in the lower margin.
-\item[4] Fol. \textbf{33va}: The opening of \textit{Færeyinga saga} contains a major initial, a \emph{littera florissa} of the letter \textbf{M} with branches and leaves. The four top lines are set in, but the \textbf{M} extends in the upper margin. The right-hand line of the \textbf{M} just intrudes on of the first letters of the text, showing that the illumination was done after the scribe finished his work.
+\item[1] Fol. \textbf{15vb}:  has a major initial, a \textit{littera florissa} of a \textbf{Þ} of four lines with an extension down the left margin.
+\item[2] Fol. \textbf{29rb}: : The opening of \textit{Norna-Gests þáttr} contains a \textit{littera florissa} of the letter \textbf{Þ} with dots and branches. The first three lines are set in, but the round bow of the \textbf{Þ} extends up the upper margin, while the descendent runs down to the bottom of the margin. The bar is metamorphosing down the page from a dotted line to some sort of a branch with leaf-like outgrows and is ending in two spirals, and a leaf in the middle, in the lower margin. The top of the \textbf{Þ} is ending in one single spiral.
+\item[3] Fol. \textbf{31va}: The opening of \textit{Helga þáttr Þórissonar} contains a major initial, a \textit{littera florissa} of a \textbf{Þ}. 3 lines are set in, but the letter extends in the margin. The \textbf{Þ} ends with two spirals in the lower margin.
+\item[4] Fol. \textbf{33va}: The opening of \textit{Færeyinga saga} contains a major initial, a \textit{littera florissa} of the letter \textbf{M} with branches and leaves. The four top lines are set in, but the \textbf{M} extends in the upper margin. The right-hand line of the \textbf{M} just intrudes on of the first letters of the text, showing that the illumination was done after the scribe finished his work.
 \item[5] Fol. \textbf{46rb}: contains a major initial a \textbf{Þ} with branches and leaves, with an extention down the margin with one fleur-de-lis-like outgrow, and ends with a fleur-de-lis.
-\item[6] Fol. \textbf{51va}: : The opening of \textit{Halldórs þáttr Snorrasonar} contains a major initial, a \emph{littera florissa} of the letter \textbf{H}. Four lines are set in, but the initial extends nine lines up the margin.
+\item[6] Fol. \textbf{51va}: : The opening of \textit{Halldórs þáttr Snorrasonar} contains a major initial, a \textit{littera florissa} of the letter \textbf{H}. Four lines are set in, but the initial extends nine lines up the margin.
 \end{itemize}  \par
 There are also some little drawings in the margins, e.g. fol. \textbf{10r}: : A man with a fish on the hook of his fishing rod; fol. \textbf{22r}: : A kissing couple; fol. \textbf{26r}: : Three knights fighting a dragon who is eating one of them.\par
 There are a few proper marginalia in the codex and some of them are illegible, some can only be read in part. \begin{itemize}
 
 \item Fol. \textbf{26r}:  ‘Gifur(?) þu kv(?) {\hskip1pt}\newline  sem bezt sem {\hskip1pt}\newline  heiter frut{\hskip1pt}\newline titum’. [the reading of the last word is uncertain.] 
-\item Fol. \textbf{27r}:  between the columns: ‘íon {\hskip1pt}\newline  hef{\hskip1pt}\newline vr g{\hskip1pt}\newline ert og(?) {\hskip1pt}\newline  til {\hskip1pt}\newline  sett {\hskip1pt}\newline  [...]\gap{}br{\hskip1pt}\newline ef’ (sixteenth century).
+\item Fol. \textbf{27r}:  between the columns: ‘íon {\hskip1pt}\newline  hef{\hskip1pt}\newline vr g{\hskip1pt}\newline ert og(?) {\hskip1pt}\newline  til {\hskip1pt}\newline  sett {\hskip1pt}\newline  [...]{\gap }br{\hskip1pt}\newline ef’ (sixteenth century).
 \item Fol. \textbf{35v}:  below the text: ‘Ek einar’ (fifteenth century).
 \item Fol. \textbf{36r}:  below the text: ‘Austr ædd’ (c. 1500).
 \item Fol. \textbf{38r}:  below the text: ‘ave maria’ (c. 1500).
-\item Fol. \textbf{46r}:  below the text: ‘olafur [...]\gap{} {\hskip1pt}\newline  ok [...]\gap{}’ (fifteenth century).
+\item Fol. \textbf{46r}:  below the text: ‘olafur [...]{\gap } {\hskip1pt}\newline  ok [...]{\gap }’ (fifteenth century).
 \item The originally blank column 32rb has some nib-trials, including the alphabet, and there is more writing, pen trials, epistolary forms, apophthegms and the like, on the pages originally left blank, fols 32v and 33r.
 \item At the top of fol. 32v a hand from c. 1400 or the first half of the fifteenth century wrote: ‘þeim godvm monnvm sem þetta bref sía edr heyra sennder sira gvdvardr prestr {\hskip1pt}\newline  þorkeli þormrmodzsyní kvedív gvds ok sína kvnnígt gerandi’.
-\item At the top of fol. 32v below the note just mentioned another hand has written: ‘Þeim er eckí þat til mozt er þannen lifa sem wílía hallda síg med heídr ok gozs ok harma fra ser skílía∴ {\hskip1pt}\newline  Hʀafn aurn hane mr þerna haukur stelkur spoe ualur ok kraka. langleítt haufut quad gyllta sá kautt [j]\footnote{damage} myr[kri]\footnote{omitted}’. The stanza is from \textit{Skáld-Helga rímur} but the list of bird-names and the adage are not known from elsewhere.
+\item At the top of fol. 32v below the note just mentioned another hand has written: ‘Þeim er eckí þat til mozt er þannen lifa sem wílía hallda síg med heídr ok gozs ok harma fra ser skílía∴ {\hskip1pt}\newline  Hʀafn aurn hane mr þerna haukur stelkur spoe ualur ok kraka. langleítt haufut quad gyllta sá kautt <j> myr⟨kri⟩’. The stanza is from \textit{Skáld-Helga rímur} but the list of bird-names and the adage are not known from elsewhere.
 \item Parts of these entries are repeated in younger, unpractised hands in other spaces on fols 32v and 33r, as if it had been set them as a copybook model.
 \item Fol. \textbf{32v}:  ‘þoruardur skrifar illa’ (c. 1500).
 \item A little further down the page: ‘helge h.’
@@ -543,12 +553,12 @@ The manuscript was photographed twice, the first time in 1968 and for the second
 Supplementary photographs of fols 29-32r and 37, 38r.\par
 In August 1992 photographs in uv-light were taken of fols 1r, 5v, 6r, 9r, 10v, 11r-v, 13r, 20v, 21r-v, 23r, 24v, 25r, 26r, 30r, 33v, 34r, 37v, 38r, 43r, 51v, and 53v.\par
 \begin{bibitemlist}{1}
- \bibitem {bibitem-24}\titlem{plate}  plade 133 6 August 1992.
- \bibitem {bibitem-25}\titlem{plate} plade 21 s.d.  (Supplementary photographs of fols 29-32r, 37, 38r.)
- \bibitem {bibitem-26}\titlem{b/w prints}  AM 62 fol. 6. August 1992
- \bibitem {bibitem-27}\titlem{b/w prints} AM 62 fol. s.d.  (supplementary photographs of fols 29-32r and 37, 38r.)
- \bibitem {bibitem-28}\titlem{b/w prints}  AM 62 fol August 1992  (Supplementary photogrpahs in uv-light of fols 1r, 5v, 6r, 9r, 10v, 11r-v, 13r, 20v, 21r-v, 23r, 24v, 25r, 26r, 30r, 33v, 34r, 37v, 38r, 43r, 51v, and 53v.)
- \bibitem {bibitem-29}\titlem{diapositive} AM 29 fol. s.d.  (fol. 29r)
+ \bibitem {bibitem-24}\textit{plate}  plade 133 6 August 1992.
+ \bibitem {bibitem-25}\textit{plate} plade 21 s.d.  (Supplementary photographs of fols 29-32r, 37, 38r.)
+ \bibitem {bibitem-26}\textit{b/w prints}  AM 62 fol. 6. August 1992
+ \bibitem {bibitem-27}\textit{b/w prints} AM 62 fol. s.d.  (supplementary photographs of fols 29-32r and 37, 38r.)
+ \bibitem {bibitem-28}\textit{b/w prints}  AM 62 fol August 1992  (Supplementary photogrpahs in uv-light of fols 1r, 5v, 6r, 9r, 10v, 11r-v, 13r, 20v, 21r-v, 23r, 24v, 25r, 26r, 30r, 33v, 34r, 37v, 38r, 43r, 51v, and 53v.)
+ \bibitem {bibitem-29}\textit{diapositive} AM 29 fol. s.d.  (fol. 29r)
 
 \end{bibitemlist}
 \begin{bibitemlist}{1}

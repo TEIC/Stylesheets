@@ -8,7 +8,7 @@
     version="2.0">
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../html/html.xsl"/>
+    <xsl:import href="../../../odds/odd2html.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -51,25 +51,6 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-   <xsl:output method="xhtml" omit-xml-declaration="yes" encoding="utf-8"/>
+   <xsl:output method="xhtml" omit-xml-declaration="yes"/>
     
-    <xsl:template match="html:*">
-      <xsl:element name="{local-name()}">
-	<xsl:copy-of select="@*"/>
-	<xsl:apply-templates/>
-      </xsl:element>
-    </xsl:template>
-    
-    <xsl:template match="html:*/comment()">
-      <xsl:copy-of select="."/>
-    </xsl:template>
-
-  <xsl:template match="tei:div[@type='frontispiece']">
-      <xsl:apply-templates/>
-  </xsl:template>
-
-  <xsl:template match="tei:div[@type='illustration']">
-      <xsl:apply-templates/>
-  </xsl:template>
-
 </xsl:stylesheet>

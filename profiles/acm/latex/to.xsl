@@ -55,7 +55,6 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-  <xsl:param name="reencode">true</xsl:param>
   <xsl:param name="classParameters"></xsl:param>
   <xsl:param name="longtables">false</xsl:param>
   <xsl:param name="attsOnSameLine">2</xsl:param>
@@ -79,6 +78,8 @@ of this software, even if advised of the possibility of such damage.
 \uc@dclc{8239}{default}{\,}
 \uc@dclc{20154}{default}{ }
 \uc@dclc{10148}{default}{>}
+\def\exampleFont{\ttfamily\fontsize{7pt}{8pt}\selectfont}
+
   </xsl:template>
   <xsl:template name="latexLayout"/>
   <xsl:template name="latexBegin">
@@ -190,9 +191,6 @@ of this software, even if advised of the possibility of such damage.
     \balancecolumns
   </xsl:template>
       
-   <xsl:template name="exampleFontSet">
-     <xsl:text>\ttfamily\fontsize{7pt}{8pt}\selectfont </xsl:text>
-   </xsl:template>
 
    <xsl:template match="ptr[@type='bibl']">
      <xsl:sequence select="concat('\cite{',substring-after(@target,'#'),'}')"/>
@@ -242,7 +240,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="highlight"/>
       <xsl:text>\par\bgroup</xsl:text>
       <xsl:call-template name="egXMLStartHook"/>
-      <xsl:call-template name="exampleFontSet"/>
+      <xsl:text>\exampleFont </xsl:text>
       <xsl:text>\begin{shaded}\noindent\mbox{}</xsl:text>
       <xsl:apply-templates mode="verbatim">
 	<xsl:with-param name="highlight">
@@ -258,7 +256,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:eg">
     <xsl:text>\par\bgroup</xsl:text>
-    <xsl:call-template name="exampleFontSet"/>
+    <xsl:text>\exampleFont </xsl:text>
     <xsl:text>\vskip 10pt\begin{shaded}
     \obeylines\obeyspaces </xsl:text>
     <xsl:apply-templates mode="eg"/>

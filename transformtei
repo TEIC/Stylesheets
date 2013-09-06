@@ -44,6 +44,7 @@ case $format in
 	echo "  --odd                # perform processing of ODD (if appropriate)"
 	echo "  --localsource=DIR    # where is local copy of source of TEI Guidelines"
 	echo "  --summaryDoc         # only make summary, when doing ODD processing"
+	echo "  --schema=NAME        # process the schemaSpec called NAME"
 	;;
 esac
 
@@ -96,6 +97,7 @@ viewportwidth=
 viewportheight=
 medioverlay=
 nocompress=
+schema=
 # ---
 version=`cat $APPHOME/VERSION`
 SAXONJAR=/usr/share/saxon/saxon9he.jar
@@ -121,6 +123,7 @@ while test $# -gt 0; do
     --odd)          odd=true;;
     --lang=*)    lang=`echo $1 | sed 's/.*=//'`;;
     --localsource=*)   TEISOURCE="`echo $1 | sed 's/.*=//'`";;
+    --schema=*)   schema="`echo $1 | sed 's/.*=//'`";;
     --mediaoverlay) mediaoverlay="-Dmediaoverlay=true";;
        --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
      --oxygenlib=*)  oxygenlib=`echo $1 | sed 's/.*=//'`;;
@@ -219,6 +222,7 @@ ant $antflag -f $APPHOME/$format/build-$direction.xml \
         -Dprofile=$profile \
 	-Dpublisher=$publisher \
 	-Duid=$uid \
+        -DselectedSchema=$schema \
 	-Dlang=$lang \
 	-Dsubject=$subject \
 	-Dcoverimage=$cover \

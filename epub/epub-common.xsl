@@ -414,25 +414,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text> (alternative title)</xsl:text>
   </xsl:template>
 
-  <xsl:template name="autoMakeHead">
-    <xsl:param name="display"/>
-    <xsl:choose>
-      <xsl:when test="tei:head and $display='full'">
-        <xsl:apply-templates select="tei:head" mode="makeheading"/>
-      </xsl:when>
-      <xsl:when test="tei:head">
-        <xsl:apply-templates select="tei:head" mode="plain"/>
-      </xsl:when>
-      <xsl:when test="tei:front/tei:head">
-        <xsl:apply-templates select="tei:front/tei:head" mode="plain"/>
-      </xsl:when>
-      <xsl:when test="@n">
-        <xsl:value-of select="@n"/>
-      </xsl:when>
-      <xsl:otherwise>§</xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
   <xsl:template name="generateDate">
     <xsl:choose>
       <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate[@when]">

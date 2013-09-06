@@ -49,7 +49,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-<xsl:param name="reencode">false</xsl:param>
+
 <xsl:template name="ledmacOptions">
 <xsl:message>SOAS Ledmac setup</xsl:message>
 \renewcommand{\notenumfont}{\bfseries}

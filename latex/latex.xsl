@@ -14,6 +14,7 @@
   <xsl:import href="latex_header.xsl"/>
   <xsl:import href="latex_linking.xsl"/>
   <xsl:import href="latex_namesdates.xsl"/>
+  <xsl:import href="latex_nets.xsl"/>
   <xsl:import href="latex_tagdocs.xsl"/>
   <xsl:import href="latex_textstructure.xsl"/>
   <xsl:import href="latex_transcr.xsl"/>
@@ -64,8 +65,6 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <xsl:output method="text" encoding="utf8"/>
-
-  <xsl:preserve-space elements="tei:hi tei:emph tei:foreign tei:p"/>
   <xsl:param name="outputTarget">latex</xsl:param>
   <xsl:param name="documentclass">article</xsl:param>
   <xsl:param name="spaceCharacter">\hspace*{6pt}</xsl:param>
@@ -214,28 +213,41 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="after"/>
       <xsl:value-of select="$before"/>
       <xsl:choose>
-	<xsl:when test="$style='bibl'">
+	<xsl:when test="$style=('add','unclear','bibl','docAuthor','titlem','italic','mentioned','term','foreign')">
 	  <xsl:text>\textit{</xsl:text>
 	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
 	  <xsl:text>}</xsl:text>
 	</xsl:when>
-	<xsl:when test="$style='italic'">
-	  <xsl:text>\textit{</xsl:text>
+	<xsl:when test="$style='supplied'">
 	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
-	  <xsl:text>}</xsl:text>
 	</xsl:when>
 	<xsl:when test="$style='bold'">
 	  <xsl:text>\textbf{</xsl:text>
 	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
 	  <xsl:text>}</xsl:text>	    
 	</xsl:when>
+	<xsl:when test="$style='strikethrough'">
+	  <xsl:text>\sout{</xsl:text>
+	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+	  <xsl:text>}</xsl:text>	    
+	</xsl:when>
+	<xsl:when test="$style='sup'">
+	  <xsl:text>\textsuperscript{</xsl:text>
+	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+	  <xsl:text>}</xsl:text>	    
+	</xsl:when>
+	<xsl:when test="$style='sub'">
+	  <xsl:text>\textsubscript{</xsl:text>
+	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+	  <xsl:text>}</xsl:text>	    
+	</xsl:when>
 	<xsl:when test="$style=''">
-	  <xsl:sequence select="concat('\',local-name(),'{')"/>
+	  <xsl:sequence select="concat('{\',local-name(),' ')"/>
 	  <xsl:apply-templates/>
 	  <xsl:text>}</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:sequence select="concat('\',$style,'{')"/>
+	  <xsl:sequence select="concat('{\',$style[1], ' ')"/>
 	  <xsl:apply-templates/>
 	  <xsl:text>}</xsl:text>
 	</xsl:otherwise>

@@ -231,8 +231,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:fontStyle" as="xs:string">
     <xsl:param name="style"/>
     <xsl:choose>
-      <xsl:when test="$style='docAuthor'">italic</xsl:when>
-      <xsl:when test="$style='titlem'">italic</xsl:when>
+      <xsl:when test="$style=('bibl','docAuthor','titlem','italic','mentioned','term','foreign')">italic</xsl:when>
       <xsl:otherwise>normal</xsl:otherwise>
     </xsl:choose>
   </xsl:function>
@@ -242,6 +241,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="$style='docTitle'">bold</xsl:when>
       <xsl:when test="$style='titlePart'">bold</xsl:when>
+      <xsl:when test="$style='bold'">bold</xsl:when>
       <xsl:otherwise>normal</xsl:otherwise>
     </xsl:choose>
   </xsl:function>

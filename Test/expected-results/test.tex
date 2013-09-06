@@ -1,61 +1,47 @@
 \documentclass[11pt,twoside]{article}\makeatletter
+
 \IfFileExists{xcolor.sty}%
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
 \usepackage{colortbl}
-
-\IfFileExists{utf8x.def}%
- {\usepackage[utf8x]{inputenc}
-    \PrerenderUnicode{–}
-  }%
- {\usepackage[utf8]{inputenc}}
-\usepackage[english]{babel}
-\usepackage[T1]{fontenc}
-\usepackage{float}
-\usepackage[]{ucs}
-\uc@dclc{8421}{default}{\textbackslash }
-\uc@dclc{10100}{default}{\{}
-\uc@dclc{10101}{default}{\}}
-\uc@dclc{8491}{default}{\AA{}}
-\uc@dclc{8239}{default}{\,}
-\uc@dclc{20154}{default}{ }
-\uc@dclc{10148}{default}{>}
-\def\textschwa{\rotatebox{-90}{e}}
-\def\textJapanese{}
-\def\textChinese{}
-
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+  \usepackage{xunicode}
+  \catcode`⃥=\active \def⃥{\textbackslash}
+  \catcode`❴=\active \def❴{\{}
+  \catcode`❵=\active \def❵{\}}
+  \def\textJapanese{\fontspec{Kochi Mincho}}
+  \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
+  \def\textKorean{\fontspec{Baekmuk Gulim} }
+  \setmonofont{DejaVu Sans Mono}
+  
+\else
+  \IfFileExists{utf8x.def}%
+   {\usepackage[utf8x]{inputenc}
+      \PrerenderUnicode{–}
+    }%
+   {\usepackage[utf8]{inputenc}}
+  \usepackage[english]{babel}
+  \usepackage[T1]{fontenc}
+  \usepackage{float}
+  \usepackage[]{ucs}
+  \uc@dclc{8421}{default}{\textbackslash }
+  \uc@dclc{10100}{default}{\{}
+  \uc@dclc{10101}{default}{\}}
+  \uc@dclc{8491}{default}{\AA{}}
+  \uc@dclc{8239}{default}{\,}
+  \uc@dclc{20154}{default}{ }
+  \uc@dclc{10148}{default}{>}
+  \def\textschwa{\rotatebox{-90}{e}}
+  \def\textJapanese{}
+  \def\textChinese{}
+  \IfFileExists{tipa.sty}{\usepackage{tipa}}{}
+  \usepackage{times}
+\fi
+\def\exampleFont{\ttfamily\small}
 \DeclareTextSymbol{\textpi}{OML}{25}
 \usepackage{relsize}
-\def\textsubscript#1{%
-  \@textsubscript{\selectfont#1}}
-\def\@textsubscript#1{%
-  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
-\def\textquoted#1{‘#1’}
-\def\textsmall#1{{\small #1}}
-\def\textlarge#1{{\large #1}}
-\def\textoverbar#1{\ensuremath{\overline{#1}}}
-\def\textgothic#1{{\fontspec{Lucida Blackletter}#1}}
-\def\textcal#1{{\fontspec{Lucida Calligraphy}#1}}
-\newenvironment{biblfree}{}{\ifvmode\par\fi }
-\newenvironment{docImprint}{\vskip 6pt}{\ifvmode\par\fi }
-\newenvironment{docDate}{}{\ifvmode\par\fi }
-\newenvironment{docAuthor}{\ifvmode\vskip4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape}{\ifvmode\par\fi }
-\newenvironment{docTitle}{\vskip6pt\bfseries\fontsize{18pt}{22pt}\selectfont}{\par }
-\newenvironment{titlePart}{}{\par }
-\newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
-\newenvironment{citbibl}{}{\ifvmode\par\fi }
-\newenvironment{bibl}{}{}
-\newenvironment{rubric}{}{}
-\newenvironment{msItem}{\vskip 6pt}{\par}
-\newenvironment{msHead}{\vskip 6pt}{\par}
-\def\titlem#1{\emph{#1}}
-\def\corr#1{#1}
-\def\sic#1{#1}
-\def\reg#1{#1}
-\def\orig#1{#1}
-\def\gap{}
-\def\abbr#1{#1}
-\def\expan#1{#1}
 \RequirePackage{array}
 \def\@testpach{\@chclass
  \ifnum \@lastchclass=6 \@ne \@chnum \@ne \else
@@ -82,10 +68,37 @@
     \if \@nextchar b5 \else
    \z@ \@chclass \z@ \@preamerr \z@ \fi \fi \fi \fi
    \fi \fi  \fi  \fi  \fi  \fi  \fi \fi \fi \fi \fi \fi}
-
 \gdef\arraybackslash{\let\\=\@arraycr}
-\def\textxi{\ensuremath{\xi}}
+\def\@textsubscript#1{{\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
 \def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+\def\abbr{}
+\def\corr{}
+\def\expan{}
+\def\gap{}
+\def\orig{}
+\def\reg{}
+\def\sic{}
+\def\textcal#1{{\fontspec{Lucida Calligraphy}#1}}
+\def\textgothic#1{{\fontspec{Lucida Blackletter}#1}}
+\def\textlarge#1{{\large #1}}
+\def\textoverbar#1{\ensuremath{\overline{#1}}}
+\def\textquoted#1{‘#1’}
+\def\textsmall#1{{\small #1}}
+\def\textsubscript#1{\@textsubscript{\selectfont#1}}
+\def\textxi{\ensuremath{\xi}}
+\def\titlem{\itshape}
+\newenvironment{biblfree}{}{\ifvmode\par\fi }
+\newenvironment{bibl}{}{}
+\newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
+\newenvironment{citbibl}{}{\ifvmode\par\fi }
+\newenvironment{docAuthor}{\ifvmode\vskip4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape}{\ifvmode\par\fi }
+\newenvironment{docDate}{}{\ifvmode\par\fi }
+\newenvironment{docImprint}{\vskip 6pt}{\ifvmode\par\fi }
+\newenvironment{docTitle}{\vskip6pt\bfseries\fontsize{18pt}{22pt}\selectfont}{\par }
+\newenvironment{msHead}{\vskip 6pt}{\par}
+\newenvironment{msItem}{\vskip 6pt}{\par}
+\newenvironment{rubric}{}{}
+\newenvironment{titlePart}{}{\par }
 
 \newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
 \newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
@@ -117,10 +130,11 @@
 \setlength\marginparwidth{.75in}
 \usepackage{graphicx}
 
+  \usepackage{endnotes}
+  
+      \def\theendnote{\@alph\c@endnote}
+    
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
-
-\IfFileExists{tipa.sty}{\usepackage{tipa}}{}
-\usepackage{times}
 
   \pagestyle{fancy} 
 
@@ -298,7 +312,7 @@
 \section*{(half title note)}\par
 The Original Edition of A CHRISTMAS CAROL has been out of print for many years, and this Edition is a reprint from the stereotype plates of that Edition.
   \begin{titlepage}
-  \begin{docTitle} \begin{titlePart}A Christmas carol. in prose. \end{titlePart} \begin{titlePart}being \textit{A Ghost Story of Christmas}\end{titlePart} \end{docTitle} \begin{byline}by \docAuthor{Charles Dickens.}\end{byline} \begin{byline}With illustrations by John Leech\end{byline} \begin{docImprint}London: Chapman and Hall, Ltd. 1893.\end{docImprint}
+  \begin{docTitle} \begin{titlePart}A Christmas carol. in prose. \end{titlePart} \begin{titlePart}being \textit{A Ghost Story of Christmas}\end{titlePart} \end{docTitle} \begin{byline}by \textit{Charles Dickens.}\end{byline} \begin{byline}With illustrations by John Leech\end{byline} \begin{docImprint}London: Chapman and Hall, Ltd. 1893.\end{docImprint}
   \end{titlepage}
   \cleardoublepage
 
@@ -314,8 +328,7 @@ Their faithful Friend and Servant, C.D. December, 1843.\end{quote}
 \item[Stave III ]The second of the three spirits 
 \item[Stave IV ]The last of the spirits 
 \item[Stave V]The end of it 
-\end{description} \mainmatter 
-\section*{(Bits of) A CHRISTMAS CAROL, and other things}
+\end{description} \mainmatter  \section*{(Bits of) A CHRISTMAS CAROL, and other things} 
 \section[Simple rendition tests]{Simple rendition tests}\par
 ‘Who-e debel you?’ — he at last said — ‘you no speak-e, damme, I kill-e.’ And so saying, the lighted tomahawk began flourishing about me in the dark.\par
 ‘Who-e debel you?’ — he at last said — ‘you no speak-e, damme, I kill-e.’ And so saying, the lighted tomahawk began flourishing about me in the dark. \par 
@@ -353,7 +366,7 @@ Here, by contrast is an ‘inline quotation’. Another strange thing about quot
 He used a French \textit{radiateur}.\par
 Languages: \textit{Deutsch}; \textit{Italiano}; \textit{Español}; \textit{Français}; \textit{Portugues}; \textit{Russian}; \textit{Svenska}; \textit{日本語}; \textit{中文}.
 \section[del, gap, add, unclear etc]{del, gap, add, unclear etc}\par
-[...]\gap{}. The \textsuperscript{interest} \& — affor [...]\gap{} the amount \textbf{over}{\hskip1pt}\newline  so small the interest afforded compared with cash, [...]\gap{} by the Annuity{\hskip1pt}\newline  note paper to those who \textbf{tutor} \textbf{think} it, or keep it, with a view {\hskip1pt}\newline  to circulation, will, when compared with cash be it ever so small be {\hskip1pt}\newline  so much \uline{profit}: compared with a the preceding higher {\hskip1pt}\newline  rate of interest, the reduced rate afforded by the Annuity {\hskip1pt}\newline  note paper, to those who, \textbf{tutor} if they \textbf{tutor} it, {\hskip1pt}\newline  will, have to depend upon to the extent of their {\hskip1pt}\newline  respective capitals so invested, have nothing else {\hskip1pt}\newline  to depend upon for their respective incomes, will, [...]\gap{} by the {\hskip1pt}\newline  amount of the difference, \textbf{foremost} itself as so {\hskip1pt}\newline  much less.
+\sout{. The interest \& — affor the amount over so small} the interest afforded ⟨\textit{compared with cash,}⟩ by the Annuity{\hskip1pt}\newline  note paper to those who \textit{tutor}[?] ⟨\textit{think}⟩ it, ⟨\textit{or keep it,}⟩ with a view {\hskip1pt}\newline  to circulation, will, \sout{when compared with cash} ⟨\textit{be it ever so small}⟩ be {\hskip1pt}\newline  so much \uline{profit}: compared with \sout{a} ⟨\textit{the}⟩ preceding higher {\hskip1pt}\newline  rate of interest, the ⟨\textit{reduced}⟩ rate afforded by the Annuity {\hskip1pt}\newline  note paper, to those who, \textit{tutor}[?] if they \textit{tutor}[?] it, {\hskip1pt}\newline  will, \sout{have to depend upon} to the extent of their {\hskip1pt}\newline  respective capitals so invested, have nothing else {\hskip1pt}\newline  to depend upon for their ⟨\textit{respective}⟩ incomes, will, \sout{} ⟨\textit{by}⟩ the {\hskip1pt}\newline  amount of the difference, \textit{foremost}[?] itself as so {\hskip1pt}\newline  much less.
 \section[Drama]{Drama} \begin{description} \item[Roderigo] 
 
 Where shall we meet i' the morning?\end{description}
@@ -376,11 +389,12 @@ No more of drowning, do you hear?\end{description}
 
 I am changed: I'll go sell all my land.\end{description}
 
-\section[Footnotes]{Footnotes}
+\section[Footnotes and endnotes]{Footnotes and endnotes}
 \subsection[1 Zur Entstehung der Philosophischen  	UntersuchungenZu Textauszeichnungen und  	Siglen siehe die Legende.]{1 Zur Entstehung der Philosophischen Untersuchungen\footnote{Zu Textauszeichnungen und Siglen siehe die Legende.}}\par
-Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod \footnote{Zu Textauszeichnungen und Siglen siehe die Legende.} Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-\section[emph and links]{emph and links}\par
-The \texttt{<emph>} element is used for linguistic emph\textit{asis}. ‘highlighting’ (\texttt{<soCalled>}) nor with \emph{shouting} (\texttt{<mentioned>}), \emph{transmogrification}, (a technical \texttt{<term>}), for which the \texttt{<gloss>} tag might be used to supply  \textit{a technical definition}).\par
+Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod\footnote{It is time to begin the beguine.} Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod\par
+Iriure dolor in hendrerit in vulputate\endnote{Not Vulture} velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit\endnote{Not Blandings} praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+\section[Assorted elements and links]{Assorted elements and links}\par
+Fit the first The \texttt{<emph>} element is used for linguistic emph\textit{asis}. ‘highlighting’ (\texttt{<soCalled>}) nor with \textit{shouting} (\texttt{<mentioned>}), \textit{transmogrification}, (a technical \texttt{<term>}), for which the \texttt{<gloss>} tag might be used to supply  \textit{a technical definition}).\par
 Now for some links! We will start by cross-referring to a later section.\par
 Here is a simple \texttt{<ptr>} to it: \textit{\hyperref[P1]{9. Lists}}. Here is a simple \texttt{<ref>}, a \hyperlink{P1}{reference to it}.\par
 An \xref{http://www.bbc.co.uk}{external link} as ref and as ptr: \url{http://www.bbc.co.uk}.
@@ -540,16 +554,16 @@ I wonder what are the xml-ids preserved in a transformation to XHTML, in particu
 \begin{quote}
 \par
 Something longer. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.\par
-\begin{biblfree}In \titlem{Somewhere}.\end{biblfree}
+\begin{biblfree}In \textit{Somewhere}.\end{biblfree}
 \end{quote}
 
 \section[Choice, sic, corr, reg, orig]{Choice, sic, corr, reg, orig}\par
-voro þav sammędd syskin in heilagri {\hskip1pt}\newline  olafr konvngr ok fyrnefnd [\corr{gvnnhilldr}].\par
-Lastly, That, upon his solemn oath to observe all the above articles, the said man-mountain shall have a daily allowance of meat and drink sufficient for the support of [\corr{1728}] of our subjects, with free access to our royal person, and other marks of our \reg{favor}.
+voro þav sammędd syskin in heilagri {\hskip1pt}\newline  olafr konvngr ok fyrnefnd [{\corr gvnnhilldr}].\par
+Lastly, That, upon his solemn oath to observe all the above articles, the said man-mountain shall have a daily allowance of meat and drink sufficient for the support of [{\corr 1728}] of our subjects, with free access to our royal person, and other marks of our {\reg favor}.
 \section[Verbatim]{Verbatim}\par
 an egXML in a list: \begin{itemize}
 
-\item \par\bgroup\ttfamily\small\selectfont \begin{shaded}\noindent\mbox{}{<\textbf{div}\hspace*{6pt}{xml:id}="{test99}"\hspace*{6pt}{rend}="{whatever}">}\mbox{}\newline 
+\item \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{div}\hspace*{6pt}{xml:id}="{test99}"\hspace*{6pt}{rend}="{whatever}">}\mbox{}\newline 
 \hspace*{6pt}{<\textbf{head}>}Choice, sic, corr, reg, orig{</\textbf{head}>}\mbox{}\newline 
 \hspace*{6pt}{<\textbf{p}>}v{<\textbf{ex}>}oro{</\textbf{ex}>} þav sam{<\textbf{ex}>}m{</\textbf{ex}>}ędd syskin in\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt} hei{<\textbf{ex}>}lagr{</\textbf{ex}>}i {<\textbf{lb}/>} ol{<\textbf{ex}>}afr{</\textbf{ex}>} k{<\textbf{ex}>}onvng{</\textbf{ex}>}r\mbox{}\newline 
@@ -560,4 +574,8 @@ an egXML in a list: \begin{itemize}
 \hspace*{6pt}\hspace*{6pt}{</\textbf{choice}>}.{</\textbf{p}>}\mbox{}\newline 
 {</\textbf{div}>}\end{shaded}\egroup\par 
 \end{itemize} 
+\section[divs with no heads]{divs with no heads}\par
+Fit the first\par
+Fit the second
+\theendnotes
 \end{document}

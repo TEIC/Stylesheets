@@ -100,20 +100,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process &lt;supplied&gt;</desc></doc>
-  <xsl:template match="tei:supplied">
-      <xsl:text>[</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>]</xsl:text>
-      <xsl:choose>
-         <xsl:when test="@reason">
-            <xsl:text>\footnote{</xsl:text>
-            <xsl:value-of select="./@reason"/>
-            <xsl:text>}</xsl:text>
-         </xsl:when>
-      </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element eg|tei:q[@rend='eg']</desc>
    </doc>
   <xsl:template match="tei:seg[@rend='pre']|tei:eg|tei:q[@rend='eg']">
@@ -144,8 +130,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
          <xsl:when test="ancestor::tei:list[@type='gloss']">
 	           <xsl:text>\hspace{1em}\hfill\linebreak</xsl:text>
-	           <xsl:text>\bgroup</xsl:text>
-	           <xsl:call-template name="exampleFontSet"/>
+	           <xsl:text>\bgroup\exampleFont</xsl:text>
 	           <xsl:text>\vskip 10pt\begin{shaded}
 \noindent\obeylines\obeyspaces </xsl:text>
 	           <xsl:apply-templates mode="eg"/>
@@ -155,8 +140,7 @@ of this software, even if advised of the possibility of such damage.
 </xsl:text>
          </xsl:when>
          <xsl:otherwise>
-	           <xsl:text>\par\bgroup</xsl:text>
-	           <xsl:call-template name="exampleFontSet"/>
+	           <xsl:text>\par\bgroup\exampleFont</xsl:text>
 	           <xsl:text>\vskip 10pt\begin{shaded}
 \obeylines\obeyspaces </xsl:text>
 	           <xsl:apply-templates mode="eg"/>
@@ -192,14 +176,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element foreign</desc>
-   </doc>
-  <xsl:template match="tei:foreign">
-      <xsl:text>\textit{</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>}</xsl:text>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element head</desc>
    </doc>
   <xsl:template match="tei:head">
@@ -208,6 +184,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="parent::tei:figure"/>
          <xsl:when test="parent::tei:list"/>
          <xsl:when test="parent::tei:lg"> \subsection*{<xsl:apply-templates/>} </xsl:when>
+         <xsl:when test="parent::tei:front or parent::tei:body or parent::tei:back"> \section*{<xsl:apply-templates/>} </xsl:when>
          <xsl:when test="parent::tei:table"/>
          <xsl:otherwise>
             <xsl:variable name="depth">
@@ -371,7 +348,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element label in normal mode</desc>
    </doc>
-  <xsl:template match="tei:label"/>
+  <xsl:template match="tei:list/tei:label"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element label in normal mode, inside an item</desc>
@@ -454,8 +431,15 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element listBibl</desc>
    </doc>
    <xsl:template match="tei:listBibl">
+      <xsl:if test="tei:head"> 
+	<xsl:text>\leftline{\textbf{</xsl:text>
+	<xsl:for-each select="tei:head">
+            <xsl:apply-templates/>
+         </xsl:for-each>
+	 <xsl:text>}} </xsl:text>
+      </xsl:if>
      <xsl:choose>
-       <xsl:when test="tei:biblStruct">
+       <xsl:when test="tei:biblStruct and not(tei:bibl)">
 	 <xsl:text>\begin{bibitemlist}{1}</xsl:text>
 	 <xsl:for-each select="tei:biblStruct">
 	   <xsl:sort select="lower-case(string(tei:*[1]/tei:author/tei:surname or  tei:*[1]/tei:author/tei:orgName or  tei:*[1]/tei:author/tei:name or  tei:*[1]/tei:editor/tei:surname or  tei:*[1]/tei:editor/tei:name or  tei:*[1]/tei:title))"/>
@@ -472,11 +456,11 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:text>&#10;\end{bibitemlist}&#10;</xsl:text>
        </xsl:when>
       <xsl:when test="tei:msDesc">
-	<xsl:apply-templates/>
+	<xsl:apply-templates select="*[not(self::tei:head)]"/>
       </xsl:when>
        <xsl:otherwise>
 	 <xsl:text>\begin{bibitemlist}{1}&#10;</xsl:text>
-	 <xsl:apply-templates/> 
+	 <xsl:apply-templates select="*[not(self::tei:head)]"/>
 	 <xsl:text>&#10;\end{bibitemlist}&#10;</xsl:text>
        </xsl:otherwise>
      </xsl:choose>
@@ -510,14 +494,6 @@ of this software, even if advised of the possibility of such damage.
          </xsl:otherwise>
       </xsl:choose>
       <xsl:text>&#10;</xsl:text>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element mentioned</desc>
-   </doc>
-  <xsl:template match="tei:mentioned">
-      <xsl:text>\emph{</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>}</xsl:text>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -758,15 +734,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
       <xsl:value-of select="$postQuote"/>
   </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element unclear</desc>
-   </doc>
-  <xsl:template match="tei:unclear">
-    <xsl:text>\textbf{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
-    </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element space</desc>

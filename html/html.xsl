@@ -65,6 +65,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:include href="html_header.xsl"/>
   <xsl:include href="html_linking.xsl"/>
   <xsl:include href="html_namesdates.xsl"/>
+  <xsl:include href="html_nets.xsl"/>
   <xsl:include href="html_tagdocs.xsl"/>
   <xsl:include href="html_textstructure.xsl"/>
   <xsl:include href="html_textcrit.xsl"/>
@@ -390,7 +391,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="before"/>
     <xsl:param name="after"/>
     <xsl:param name="style"/>
-    <span>
+    <xsl:element name="{if ($style='sup') then 'sup' else if
+      ($style='sub') then 'sub' else 'span'}">
       <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default" select="$style"/>
       </xsl:call-template>
@@ -402,7 +404,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="$before"/>
       <xsl:apply-templates/>
       <xsl:value-of select="$after"/>
-    </span>
+    </xsl:element>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

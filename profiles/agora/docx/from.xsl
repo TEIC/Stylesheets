@@ -6,9 +6,6 @@
 
 <!-- 1 : here's what we do in pass2 -->
 
- <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-  <desc>set up a pass3 </desc>
- </doc>
 
  <xsl:template match="tei:TEI" mode="pass2">
   <xsl:variable name="Doctext">
@@ -19,6 +16,17 @@
   <xsl:apply-templates select="$Doctext" mode="pass3"/>
  </xsl:template>
 
+ <xsl:template match="tei:TEI" mode="pass3">
+  <xsl:variable name="Doctext2">
+   <xsl:copy>
+    <xsl:apply-templates mode="pass3"/>
+   </xsl:copy>
+  </xsl:variable>
+  <xsl:apply-templates select="$Doctext2" mode="pass4"/>
+ </xsl:template>
+
+
+
  <!-- fix paragraph styles which should be TEI elements -->
  <xsl:template match="tei:p[@rend='epigraph']" mode="pass2">
   <epigraph>
@@ -27,8 +35,15 @@
  </xsl:template>
 
  <xsl:template match="tei:p[@rend='Quote']" mode="pass2">
-<!-- need to keep centering if there is any -->
-  <quote rend="{@rend}">
+  <quote>
+   <p>
+    <xsl:apply-templates mode="pass2"/>
+   </p>
+  </quote>
+ </xsl:template>
+
+ <xsl:template match="tei:p[@rend='CentredQuote']" mode="pass2">
+  <quote rend="center">
    <p>
     <xsl:apply-templates mode="pass2"/>
    </p>
@@ -45,11 +60,11 @@
   </xsl:element>
  </xsl:template>
 
-
+<!-- templates for pass3 start here -->
 
  <!-- jiggle around the paragraphs which should be in front -->
 
- <xsl:template match="tei:text" mode="pass2">
+ <xsl:template match="tei:text" mode="pass3">
   <text>
    <front>
     <titlePage>
@@ -92,11 +107,7 @@
   </text>
  </xsl:template>
 
-
-
- <!-- templates for pass3 start here -->
- 
- <!-- first, suppress paragraphs which have been jiggled into front/back -->
+ <!-- suppress paragraphs which have been jiggled into front/back -->
 
  <xsl:template match="tei:p[@rend='Title']" mode="pass3"/>
  <xsl:template match="tei:p[@rend='author']" mode="pass3"/>
@@ -115,7 +126,6 @@
   </xsl:if>
  </xsl:template>
 
- 
 
  <!-- fix up the default header -->
  <xsl:template match="tei:encodingDesc" mode="pass3"/>
@@ -145,12 +155,6 @@
   </quote>
  </xsl:template>
 
- <xsl:template match="tei:hi[@rend='CentredQuote']" mode="pass3">
-  <quote  rend="center">
-   <xsl:apply-templates mode="pass3"/>
-  </quote>
- </xsl:template>
- 
  <xsl:template match="tei:hi[@rend='foreign']" mode="pass3">
   <foreign>
    <xsl:apply-templates mode="pass3"/>
@@ -192,22 +196,19 @@
  </xsl:template>
 -->
 
-<xsl:template match="tei:note/tei:p" mode="pass3">
-<xsl:apply-templates mode="pass3"/>
+<xsl:template match="tei:note/tei:p" mode="pass4">
+<xsl:apply-templates mode="pass4"/>
 </xsl:template>
- <xsl:template match="tei:note/tei:seg" mode="pass3">
-  <xsl:apply-templates/>
- </xsl:template>
 
- <xsl:template match="tei:p" mode="pass3">
+
+ <xsl:template match="tei:p" mode="pass4">
   <xsl:if test="ancestor::tei:body">
    <xsl:element name="p">
     <xsl:attribute name="xml:id">
      <xsl:text>P</xsl:text>
-     <xsl:number from="tei:body" count="tei:p[
-					not(ancestor::tei:note) ]" level="any"/>
+     <xsl:number from="tei:body" count="tei:p[not(ancestor::tei:note)]" level="any"/>
     </xsl:attribute>
-    <xsl:apply-templates mode="pass3"/>
+    <xsl:apply-templates mode="pass4"/>
    </xsl:element>
 
   </xsl:if>
@@ -216,7 +217,7 @@
 
  <!-- contexta magic references -->
 
- <xsl:template match="tei:hi[@rend='reference']" mode="pass3">
+ <xsl:template match="tei:hi[@rend='reference']" mode="pass4">
   <xsl:variable name="magicString">
    <xsl:value-of select="substring-before(substring-after(., '&lt;'),'&gt;')"/>
   </xsl:variable>
@@ -239,17 +240,17 @@
    <xsl:attribute name="corresp">
 <xsl:value-of select="$parentN"/>
  	        </xsl:attribute>
-<xsl:apply-templates mode="pass3"/>
+<xsl:apply-templates mode="pass4"/>
   </xsl:element>
  </xsl:template>
 
- <xsl:template match="tei:hi[@rend='reference']/tei:seg" mode="pass3">
+ <xsl:template match="tei:hi[@rend='reference']/tei:seg" mode="pass4">
 <hi rend="{@rend}">
 <xsl:value-of select="."/>
 </hi>
 </xsl:template>
 
- <xsl:template match="tei:hi[@rend='reference']/text()" mode="pass3">
+ <xsl:template match="tei:hi[@rend='reference']/text()" mode="pass4">
 <xsl:value-of select='substring-before(.,"&lt;")'/>
 <xsl:if test="not(contains(.,'&lt;'))">
 <xsl:value-of select="."/>
@@ -266,12 +267,23 @@
  </xsl:template>
 
  <!-- and copy everything else -->
+
  <xsl:template match="@*|comment()|processing-instruction()|text()" mode="pass3">
   <xsl:copy-of select="."/>
  </xsl:template>
  <xsl:template match="*" mode="pass3">
   <xsl:copy>
    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+  </xsl:copy>
+ </xsl:template>
+
+
+ <xsl:template match="@*|comment()|processing-instruction()|text()" mode="pass4">
+  <xsl:copy-of select="."/>
+ </xsl:template>
+ <xsl:template match="*" mode="pass4">
+  <xsl:copy>
+   <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass4"/>
   </xsl:copy>
  </xsl:template>
 

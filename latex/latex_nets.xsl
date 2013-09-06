@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="tei html"
-    version="2.0">
-    <!-- import base conversion style -->
-
-    <xsl:import href="../../../html/html.xsl"/>
+<xsl:stylesheet xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="a rng tei teix"
+                version="2.0">
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
-
+         <p> TEI stylesheet dealing with elements from the nets module,
+      making LaTeX output. </p>
          <p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
@@ -50,26 +49,33 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
-
-   <xsl:output method="xhtml" omit-xml-declaration="yes" encoding="utf-8"/>
-    
-    <xsl:template match="html:*">
-      <xsl:element name="{local-name()}">
-	<xsl:copy-of select="@*"/>
-	<xsl:apply-templates/>
-      </xsl:element>
-    </xsl:template>
-    
-    <xsl:template match="html:*/comment()">
-      <xsl:copy-of select="."/>
-    </xsl:template>
-
-  <xsl:template match="tei:div[@type='frontispiece']">
-      <xsl:apply-templates/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element eTree</desc>
+   </doc>
+  <xsl:template match="tei:eTree|tei:eLeaf">
+    <xsl:if test="not(ancestor::tei:eTree)">
+\renewcommand{\psedge}{\ncangle}
+\psset{levelsep=72pt,angleA=-90,angleB=90}
+      <xsl:variable name="maxleaves"
+		    select="count(tei:eTree|tei:eLeaf)"/>
+      <xsl:text></xsl:text>
+      <xsl:message><xsl:value-of select="$maxleaves"/> leaves</xsl:message>
+    </xsl:if>
+    <xsl:text>&#10;\pstree{\Tr{\psframebox[linestyle=none]{\parbox{.1\textwidth}{\raggedright\footnotesize </xsl:text>
+    <xsl:apply-templates select="tei:label"/>
+    <xsl:text>}}}}{</xsl:text>
+    <xsl:apply-templates select="tei:eTree|tei:eLeaf"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element eTree</desc>
+   </doc>
+  <xsl:template match="tei:eTree/tei:label/tei:lb">
+    <xsl:text> </xsl:text>
+  </xsl:template>
+  <xsl:template match="tei:eLeaf/tei:label/tei:lb">
+    <xsl:text> </xsl:text>
   </xsl:template>
 
-  <xsl:template match="tei:div[@type='illustration']">
-      <xsl:apply-templates/>
-  </xsl:template>
 
 </xsl:stylesheet>

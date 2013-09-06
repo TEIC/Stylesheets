@@ -69,6 +69,22 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element salute</desc>
+  </doc>
+  <xsl:template match="tei:salute">
+    <xsl:choose>
+      <xsl:when test="parent::tei:closer">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="makeBlock">
+      <xsl:with-param name="style">salute</xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process tei:sic</desc>
    </doc>
   <xsl:template match="tei:sic">
@@ -77,10 +93,49 @@ of this software, even if advised of the possibility of such damage.
        </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="makeInline">
-	  <xsl:with-param name="after"> (sic)</xsl:with-param>
+	  <xsl:with-param name="after">}</xsl:with-param>
+	  <xsl:with-param name="before">{</xsl:with-param>
 	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process tei:supplied</desc>
+   </doc>
+  <xsl:template match="tei:supplied">
+     <xsl:choose>
+       <xsl:when test="parent::tei:choice">
+       </xsl:when>
+       <xsl:when test="@reason='damage'">
+	 <xsl:call-template name="makeInline">
+	   <xsl:with-param name="style">supplied</xsl:with-param>
+	   <xsl:with-param name="before">&lt;</xsl:with-param>
+	   <xsl:with-param name="after">&gt;</xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:when test="@reason='illegible' or not(@reason)">
+	 <xsl:call-template name="makeInline">
+	   <xsl:with-param name="style">supplied</xsl:with-param>
+	   <xsl:with-param name="before">[</xsl:with-param>
+	   <xsl:with-param name="after">]</xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:when test="@reason='omitted'">
+	 <xsl:call-template name="makeInline">
+	   <xsl:with-param name="style">supplied</xsl:with-param>
+	   <xsl:with-param name="before">⟨</xsl:with-param>
+	   <xsl:with-param name="after">⟩</xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:call-template name="makeInline">
+	   <xsl:with-param name="style">supplied</xsl:with-param>
+	   <xsl:with-param name="after">}</xsl:with-param>
+	   <xsl:with-param name="before">{</xsl:with-param>
+	 </xsl:call-template>
+       </xsl:otherwise>
+     </xsl:choose>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -298,26 +353,25 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template match="tei:editor|tei:author">
      <xsl:choose>
        <xsl:when test="ancestor::tei:bibl">
-	 <xsl:apply-templates/>
+	 <xsl:apply-templates select="if (tei:surname) then * else node()"/>
        </xsl:when>
        <xsl:when test="self::tei:author and not(following-sibling::tei:author)">
-	 <xsl:apply-templates/>
+	 <xsl:apply-templates select="if (tei:surname) then * else node()"/>
 	 <xsl:call-template name="makeText">
 	   <xsl:with-param name="letters">. </xsl:with-param>
 	 </xsl:call-template>
        </xsl:when>
        <xsl:when test="self::tei:editor and not(following-sibling::tei:editor)">
-	 <xsl:apply-templates/>
+	 <xsl:apply-templates select="if (tei:surname) then * else node()"/>
 	 <xsl:call-template name="makeText">
-	   <xsl:with-param name="letters"> (ed</xsl:with-param>
-	 </xsl:call-template>
-	 <xsl:if test="preceding-sibling::tei:editor">s</xsl:if>
-	 <xsl:call-template name="makeText">
-	   <xsl:with-param name="letters">.) </xsl:with-param>
+	   <xsl:with-param name="letters">
+	   <xsl:value-of select="if (preceding-sibling::tei:editor) then
+				 ' (eds.) ' else ' (ed.) '"/>
+	   </xsl:with-param>
 	 </xsl:call-template>
        </xsl:when>
        <xsl:otherwise>
-	 <xsl:apply-templates/>
+	 <xsl:apply-templates select="if (tei:surname) then * else node()"/>
 	 <xsl:call-template name="makeText">
 	   <xsl:with-param name="letters">, </xsl:with-param>
 	 </xsl:call-template>
@@ -621,13 +675,15 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
          <xsl:when test="not(@level) and parent::tei:bibl">
 	   <xsl:call-template name="makeInline">
-	     <xsl:with-param name="style">titlem</xsl:with-param>
+	     <xsl:with-param name="style">
+	       <xsl:value-of select="('titlem',@rend)" separator=" "/>
+	     </xsl:with-param>
 	   </xsl:call-template>
 	 </xsl:when>
          <xsl:when test="@level='m' or not(@level)">
 	   <xsl:call-template name="emphasize">
 	     <xsl:with-param name="class">
-	       <xsl:text>titlem</xsl:text>
+	       <xsl:value-of select="('titlem',@rend)" separator=" "/>
 	     </xsl:with-param>
 	     <xsl:with-param name="content">
 	       <xsl:apply-templates/>
@@ -642,7 +698,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="@level='s'">
 	   <xsl:call-template name="emphasize">
 	     <xsl:with-param name="class">
-	       <xsl:text>titles</xsl:text>
+	       <xsl:value-of select="('titles',@rend)" separator=" "/>
 	     </xsl:with-param>
 	     <xsl:with-param name="content">
 	       <xsl:apply-templates/>
@@ -659,7 +715,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="@level='j'">
 	   <xsl:call-template name="emphasize">
 	     <xsl:with-param name="class">
-	       <xsl:text>titlej</xsl:text>
+	       <xsl:value-of select="('titlej',@rend)" separator=" "/>
 	     </xsl:with-param>
 	     <xsl:with-param name="content">
 	       <xsl:apply-templates/>
@@ -672,7 +728,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="@level='a'">
 	   <xsl:call-template name="emphasize">
 	     <xsl:with-param name="class">
-	       <xsl:text>titlea</xsl:text>
+	       <xsl:value-of select="('titlea',@rend)" separator=" "/>
 	     </xsl:with-param>
 	     <xsl:with-param name="content">
 	       <xsl:apply-templates/>
@@ -688,7 +744,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="@level='u'">
 	   <xsl:call-template name="emphasize">
 	     <xsl:with-param name="class">
-	       <xsl:text>titleu</xsl:text>
+	       <xsl:value-of select="('titleu',@rend)" separator=" "/>
 	     </xsl:with-param>
 	     <xsl:with-param name="content">
 	       <xsl:apply-templates/>
@@ -709,7 +765,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:otherwise>
 	   <xsl:call-template name="emphasize">
 	     <xsl:with-param name="class">
-	       <xsl:text>titlem</xsl:text>
+	       <xsl:value-of select="('titlem',@rend)" separator=" "/>
 	     </xsl:with-param>
 	     <xsl:with-param name="content">
 	       <xsl:apply-templates/>
@@ -933,14 +989,17 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="not(@place)">
         <xsl:choose>
+	  <xsl:when test="ancestor::tei:floatingText">
+	    <xsl:number count="tei:note[not(@place)]" from="tei:floatingText" level="any"/>
+	  </xsl:when>
           <xsl:when test="ancestor::tei:front">
-            <xsl:number count="tei:note[not(@place)]" from="tei:front" level="any"/>
+            <xsl:number count="tei:note[not(ancestor::tei:floatingText) and not(@place)]" from="tei:front[not(ancestor::tei:floatingText)]" level="any"/>
           </xsl:when>
           <xsl:when test="ancestor::tei:back">
-            <xsl:number count="tei:note[not(@place)]" from="tei:back" level="any"/>
+            <xsl:number count="tei:note[not(ancestor::tei:floatingText) and not(@place)]" from="tei:back[not(ancestor::tei:floatingText)]" level="any"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:number count="tei:note[not(@place)]" from="tei:body" level="any"/>
+            <xsl:number count="tei:note[not(ancestor::tei:floatingText) and not(@place)]" from="tei:body[not(ancestor::tei:floatingText)]" level="any"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
@@ -951,14 +1010,17 @@ of this software, even if advised of the possibility of such damage.
           </xsl:when>
           <xsl:otherwise>
             <xsl:choose>
+	      <xsl:when test="ancestor::tei:floatingText">
+                <xsl:number count="tei:note[tei:isEndNote(.)]" from="tei:floatingText" level="any"/>
+	      </xsl:when>
               <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[tei:isEndNote(.)]" from="tei:front" level="any"/>
+                <xsl:number count="tei:note[not(ancestor::tei:floatingText) and tei:isEndNote(.)]" from="tei:front[not(ancestor::tei:floatingText)]" level="any"/>
               </xsl:when>
               <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[tei:isEndNote(.)]" from="tei:back" level="any"/>
+                <xsl:number count="tei:note[not(ancestor::tei:floatingText) and tei:isEndNote(.)]" from="tei:back[not(ancestor::tei:floatingText)]" level="any"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:number count="tei:note[tei:isEndNote(.)]" from="tei:body" level="any"/>
+                <xsl:number count="tei:note[not(ancestor::tei:floatingText) and tei:isEndNote(.)]" from="tei:body[not(ancestor::tei:floatingText)]" level="any"/>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:otherwise>
@@ -971,14 +1033,17 @@ of this software, even if advised of the possibility of such damage.
           </xsl:when>
           <xsl:otherwise>
             <xsl:choose>
+	      <xsl:when test="ancestor::tei:floatingText">
+                <xsl:number count="tei:note[tei:isFootNote(.)]" from="tei:floatingText" level="any"/>
+	      </xsl:when>
               <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[tei:isFootNote(.)]" from="tei:front" level="any"/>
+                <xsl:number count="tei:note[not(ancestor::tei:floatingText) and tei:isFootNote(.)]" from="tei:front[not(ancestor::tei:floatingText)]" level="any"/>
               </xsl:when>
               <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[tei:isFootNote(.)]" from="tei:back" level="any"/>
+                <xsl:number count="tei:note[not(ancestor::tei:floatingText) and tei:isFootNote(.)]" from="tei:back[not(ancestor::tei:floatingText)]" level="any"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:number count="tei:note[tei:isFootNote(.)]" from="tei:body" level="any"/>
+                <xsl:number count="tei:note[not(ancestor::tei:floatingText) and tei:isFootNote(.)]" from="tei:body[not(ancestor::tei:floatingText)]" level="any"/>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:otherwise>
@@ -1215,6 +1280,124 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="makeLabelItem">
     <xsl:apply-templates/>
+  </xsl:template>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process forename</desc>
+   </doc>
+  <xsl:template match="tei:forename">
+    <xsl:choose>
+      <xsl:when test="parent::*/tei:surname"/>
+      <xsl:otherwise>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process surname</desc>
+   </doc>
+  <xsl:template match="tei:surname">
+    <xsl:if test="parent::*/tei:forename">
+      <xsl:for-each select="parent::*/tei:forename">
+	<xsl:apply-templates/>
+	<xsl:text> </xsl:text>
+      </xsl:for-each>
+    </xsl:if>
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="tei:expan/tei:ex">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="before">(</xsl:with-param>
+      <xsl:with-param name="after">)</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="tei:gap" priority="10">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="before">[...]</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="tei:unclear">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">unclear</xsl:with-param>
+      <xsl:with-param name="after">[?]</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="tei:geogName|tei:roleName">
+    <xsl:choose>
+      <xsl:when test="*">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="makeInline"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>mentioned element</desc>
+   </doc>
+  <xsl:template match="tei:mentioned">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">mentioned</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>foreign element</desc>
+   </doc>
+  <xsl:template match="tei:foreign">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">foreign</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>term element</desc>
+   </doc>
+  <xsl:template match="tei:term">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">term</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>The del element</desc>
+  </doc>
+  <xsl:template match="tei:del">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">strikethrough</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>The add element</desc>
+  </doc>
+  <xsl:template match="tei:add">
+    <xsl:choose>
+      <xsl:when test="@place='sup' or @place='above'">
+	<xsl:call-template name="makeInline">
+	  <xsl:with-param name="style">sup</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:when test="@place='sub' or @place='below'">
+	<xsl:call-template name="makeInline">
+	  <xsl:with-param name="style">sub</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="makeInline">
+	  <xsl:with-param name="style">add</xsl:with-param>
+	  <xsl:with-param name="after">&#10217;</xsl:with-param>
+	  <xsl:with-param name="before">&#10216;</xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>

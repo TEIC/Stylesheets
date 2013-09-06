@@ -27,7 +27,6 @@
       </desc>
    </doc>
 
-  <xsl:param name="reencode">false</xsl:param>
   <xsl:param name="numberHeadings">false</xsl:param>
 
 

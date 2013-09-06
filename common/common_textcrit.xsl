@@ -63,7 +63,9 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <xsl:template match="tei:app">
-    <xsl:call-template name="makeApp"/>
+    <xsl:if test="not(@from)">
+      <xsl:call-template name="makeApp"/>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template name="makeApp">

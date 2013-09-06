@@ -321,56 +321,12 @@ of this software, even if advised of the possibility of such damage.
       <xsl:with-param name="style">italic</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-  <xsl:template match="tei:expan/tei:ex">
-    <xsl:call-template name="makeInline">
-      <xsl:with-param name="before">(</xsl:with-param>
-      <xsl:with-param name="after">)</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
   <xsl:template match="tei:locus">
     <xsl:call-template name="makeInline">
       <xsl:with-param name="style">bold</xsl:with-param>
       <xsl:with-param name="before"/>
       <xsl:with-param name="after">: </xsl:with-param>
     </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:supplied[@reason='damage']">
-    <xsl:call-template name="makeInline">
-      <xsl:with-param name="before">&lt;</xsl:with-param>
-      <xsl:with-param name="after">&gt;</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:supplied[@reason='illegible' or not(@reason)]">
-    <xsl:call-template name="makeInline">
-      <xsl:with-param name="before">[</xsl:with-param>
-      <xsl:with-param name="after">]</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:supplied[@reason='omitted']">
-    <xsl:call-template name="makeInline">
-      <xsl:with-param name="before">⟨</xsl:with-param>
-      <xsl:with-param name="after">⟩</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:gap" priority="10">
-    <xsl:call-template name="makeInline">
-      <xsl:with-param name="before">[...]</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:unclear" priority="10">
-    <xsl:call-template name="makeInline">
-      <xsl:with-param name="after">[?]</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:geogName|tei:roleName">
-    <xsl:choose>
-      <xsl:when test="*">
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="makeInline"/>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:dimensions">
     <xsl:for-each select="*">

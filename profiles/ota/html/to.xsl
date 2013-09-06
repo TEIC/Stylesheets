@@ -50,17 +50,27 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-   <xsl:output method="xhtml" omit-xml-declaration="yes"/>
-    
-  <xsl:param name="splitLevel">-1</xsl:param>
-  <xsl:param name="numberHeadings">true</xsl:param>
-  <xsl:param name="googlestylesheet">oxford</xsl:param>
-  <xsl:param name="cssPrintFile">/ota-print.css</xsl:param>
-  <xsl:param name="ROOT">http://www.oucs.ox.ac.uk</xsl:param>
-  <xsl:param name="OUCSBASE">http://www.oucs.ox.ac.uk</xsl:param>
-  <xsl:param name="cssFile">/otatext.css</xsl:param>
-  <xsl:param name="sort">author</xsl:param>
-  <xsl:param name="htmlTitlePrefix">[OTA] </xsl:param>
+   <xsl:output method="xhtml" omit-xml-declaration="yes"
+	       encoding="utf-8"/>
+
+    <xsl:param name="publisher">University of Oxford Text Archive</xsl:param>
+    <xsl:param name="numberHeadings">false</xsl:param>
+    <xsl:param name="numberHeadingsDepth">-1</xsl:param>
+    <xsl:param name="numberBackHeadings"></xsl:param>
+    <xsl:param name="numberFrontHeadings"></xsl:param>
+    <xsl:param name="numberFigures">false</xsl:param>
+    <xsl:param name="numberTables">false</xsl:param>
+    <xsl:param name="autoToc">true</xsl:param>
+    <xsl:param name="footnoteBackLink">true</xsl:param>
+    <xsl:param name="subject">University of Oxford Text Archive</xsl:param>
+    <xsl:param name="pagebreakStyle">visible</xsl:param>
+
+    <xsl:param name="splitLevel">-1</xsl:param>
+    <xsl:param name="googlestylesheet">oxford</xsl:param>
+    <xsl:param name="cssPrintFile">/ota-print.css</xsl:param>
+    <xsl:param name="cssFile">/otatext.css</xsl:param>
+    <xsl:param name="sort">author</xsl:param>
+    <xsl:param name="htmlTitlePrefix">[OTA] </xsl:param>
 
   <xsl:template name="additionalMenu">
     <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
@@ -85,23 +95,6 @@ of this software, even if advised of the possibility of such damage.
       </li>
     </ul>
     </xsl:element>
-  </xsl:template>
-
-  <xsl:template name="stdfooter">
-    <div class="clear" id="footer">
-      <p>
-        <a href="/about/contact.xml">Contact and Feedback</a> | <a
-          href="http://www.oucs.ox.ac.uk/enable/acstatement.xml"
-        >Accessibility</a> | <a href="http://www.oucs.ox.ac.uk/">OUCS</a> | <a
-          href="http://www.ox.ac.uk/copyright/">&#169;</a> University of
-        Oxford. <span class="toclist">
-          <a href="http://www.ox.ac.uk/">
-            <img alt="University Crest" height="71"
-              src="http://www.oucs.ox.ac.uk/images/crest-outline.gif"
-              title="Oxford University home page" width="60"/>
-          </a>
-        </span></p>
-    </div>
   </xsl:template>
 
   <xsl:template name="mainPage">
@@ -148,5 +141,58 @@ of this software, even if advised of the possibility of such damage.
     </div>
 
   </xsl:template>
+
+
+  <xsl:function name="tei:generateDate">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>	
+         <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date">
+	   <xsl:analyze-string
+	       select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date"
+	       regex="([0-9][0-9][0-9][0-9]) ([A-z]+)( \(TCP [^\)]+\))?">
+	     <xsl:matching-substring>
+	       <xsl:value-of select="regex-group(1)"/>
+	       <xsl:text>-</xsl:text>
+	       <xsl:choose>
+		 <xsl:when test="regex-group(2)='January'">01</xsl:when>
+		 <xsl:when test="regex-group(2)='February'">02</xsl:when>
+		 <xsl:when test="regex-group(2)='March'">03</xsl:when>
+		 <xsl:when test="regex-group(2)='April'">04</xsl:when>
+		 <xsl:when test="regex-group(2)='May'">05</xsl:when>
+		 <xsl:when test="regex-group(2)='June'">06</xsl:when>
+		 <xsl:when test="regex-group(2)='July'">07</xsl:when>
+		 <xsl:when test="regex-group(2)='August'">08</xsl:when>
+		 <xsl:when test="regex-group(2)='September'">09</xsl:when>
+		 <xsl:when test="regex-group(2)='October'">10</xsl:when>
+		 <xsl:when test="regex-group(2)='November'">11</xsl:when>
+		 <xsl:when test="regex-group(2)='December'">12</xsl:when>
+	       </xsl:choose>  
+	     </xsl:matching-substring>
+	     <xsl:non-matching-substring>
+	       <xsl:value-of select="."/>
+	     </xsl:non-matching-substring>
+	   </xsl:analyze-string>
+         </xsl:when>
+         <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+	   <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+         </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
+	 </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <xsl:template match="tei:body/tei:lb"/>
+
+  <xsl:template match="tei:div/tei:lb"/>
+
+   <xsl:template match="tei:titlePart" mode="simple">
+      <xsl:if test="preceding-sibling::tei:titlePart">
+         <br/>
+      </xsl:if>
+      <xsl:value-of select="."/>
+   </xsl:template>
 
 </xsl:stylesheet>

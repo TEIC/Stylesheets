@@ -470,7 +470,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="($origheight *         number(@scale)) div 127 cast as xs:integer"/>
             </xsl:when>
 	    <xsl:when test="@width[contains(.,'%')]">
-	      <xsl:value-of select="number($pageHeight * (number(substring-before(@width,'%')))) cast as xs:integer"/>
+	      <xsl:value-of select="(($pageHeight div 100) * (number(substring-before(@width,'%')))) cast as xs:integer"/>
 	    </xsl:when>	  
             <xsl:when test="@width[not(contains(.,'%'))] and $origheight and $origwidth">
               <xsl:variable name="w">
@@ -716,11 +716,6 @@ of this software, even if advised of the possibility of such damage.
       <text:bookmark text:name="{@xml:id}"/>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="tei:unclear">
-    <text:span text:style-name="Highlight">
-      <xsl:apply-templates/>
-    </text:span>
-  </xsl:template>
   <xsl:template match="tei:hi">
     <text:span>
       <xsl:attribute name="text:style-name">
@@ -771,14 +766,6 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>Emphasis</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
-      </xsl:attribute>
-      <xsl:apply-templates/>
-    </text:span>
-  </xsl:template>
-  <xsl:template match="tei:term">
-    <text:span>
-      <xsl:attribute name="text:style-name">
-        <xsl:text>Highlight</xsl:text>
       </xsl:attribute>
       <xsl:apply-templates/>
     </text:span>
@@ -966,11 +953,6 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:apply-templates/>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-  <xsl:template match="tei:mentioned">
-    <text:span  text:style-name="Emphasis">
-      <xsl:apply-templates/>
-    </text:span>
   </xsl:template>
   <xsl:template match="tei:code">
     <text:span text:style-name="User_20_Entry">
@@ -1169,10 +1151,27 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="before"/>
     <xsl:param name="after"/>
     <xsl:param name="style"/>
-    <xsl:value-of select="$before"/>
-    <xsl:apply-templates/>
-    <xsl:value-of select="$after"/>
+    <text:span>
+      <xsl:choose>
+	<xsl:when test="$style=('bibl','docAuthor','titlem','italic','mentioned','term','foreign')">
+	  <xsl:attribute
+	      name="text:style-name">Emphasis</xsl:attribute>
+	</xsl:when>
+	<xsl:when test="$style='bold'">
+	  <xsl:attribute
+	      name="text:style-name">Highlight</xsl:attribute>
+	</xsl:when>
+	<xsl:when test="$style='strikethrough'">
+	  <xsl:attribute
+	      name="text:style-name">StrikeThrough</xsl:attribute>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:value-of select="$before"/>
+      <xsl:apply-templates/>
+      <xsl:value-of select="$after"/>
+    </text:span>
   </xsl:template>
+
   <xsl:template name="generateEndLink">
     <xsl:param name="where"/>
     <xsl:value-of select="$where"/>

@@ -48,11 +48,11 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:key name="INDEX" use="1" match="tei:index"/>
   <xsl:key name="PB" match="tei:pb" use="1"/>
-  <xsl:key name="NOTES" use="1"
-	   match="tei:note[tei:isFootNote(.) or tei:isEndNote(.)]"/>
-  <xsl:key name="ALLNOTES" use="1"
-	   match="tei:note[not(@place='margin' or @place='inline' or @place='display')
+  <xsl:key name="FOOTNOTES" use="1"  match="tei:note[not(ancestor::tei:floatingText)][tei:isFootNote(.)]"/>
+  <xsl:key name="ENDNOTES" use="1"  match="tei:note[not(ancestor::tei:floatingText)][tei:isEndNote(.)]"/>
+  <xsl:key name="ALLNOTES" use="1"  match="tei:note[not(ancestor::tei:floatingText)][not(@place='margin' or @place='inline' or @place='display')
 		  and not(parent::tei:bibl or  ancestor::tei:teiHeader)]"/>
+  <xsl:key name="TREES" match="tei:eTree[not(ancestor::tei:eTree)]" use="1"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
     <desc>  CSS class for links derived from &lt;ptr&gt;    </desc>
@@ -147,7 +147,13 @@ HTML width and height (in pixels) from supplied dimensions.</desc>
          <p>This would be used to insert &lt;meta&gt; tags.</p>
       </desc>
    </doc>
-  <xsl:template name="headHook"/>
+  <xsl:template name="headHook">
+    <!--
+    <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="/favicon.ico" rel="shortcut icon"
+	  type="image/x-icon"/>
+    -->
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>[html] Hook where HTML can be inserted when creating an &lt;img&gt;</desc>
    </doc>
@@ -258,9 +264,11 @@ will generate an &lt;h2&gt;</p>
       <a class="hide">|</a>
       <xsl:call-template name="crumbPath"/>
       <a class="hide">|</a>
-      <a class="bannerright" href="{$parentURL}" title="Go to home page">
-         <xsl:value-of select="$parentWords"/>
-      </a>
+      <xsl:if test="not($parentURL='')">
+	<a class="bannerright" href="{$parentURL}" title="Go to home page">
+	  <xsl:value-of select="$parentWords"/>
+	</a>
+      </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>[html]Bottom of left-hand column <param name="currentID">ID of selected section</param>
@@ -487,11 +495,6 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
 
    </doc>
   <xsl:param name="bottomNavigationPanel">true</xsl:param>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
-      <desc>Link for feedback</desc>
-
-   </doc>
-  <xsl:param name="feedbackURL">mailto:feedback</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
       <desc>Fixed string to insert before normal page title in HTML meta
 &lt;title&gt; element</desc>

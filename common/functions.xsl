@@ -140,7 +140,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="$element">
       <xsl:choose>
         <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'smallcaps')]">true</xsl:when>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'sc')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][@rend='sc']">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -179,8 +179,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="parent::tei:hi[starts-with(@rend,'specList-')]">true</xsl:when>
         <xsl:when test="self::tei:cell and parent::tei:row[@role='label']">true</xsl:when>
         <xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
-        <xsl:when test="self::tei:term">true</xsl:when>
-        <xsl:when test="self::tei:unclear">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -335,6 +333,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="self::tei:idno">true</xsl:when>
             <xsl:when test="self::tei:imprint">true</xsl:when>
             <xsl:when test="self::tei:institution">true</xsl:when>
+            <xsl:when test="self::tei:label[not(parent::tei:list)]">true</xsl:when>
             <xsl:when test="self::tei:list">false</xsl:when>
             <xsl:when test="self::tei:locus">true</xsl:when>
             <xsl:when test="self::tei:mentioned">true</xsl:when>
@@ -837,7 +836,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:generateEdition">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
-      <xsl:value-of select="tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+      <xsl:value-of select="normalize-space(tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition)"/>
     </xsl:for-each>
   </xsl:function>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

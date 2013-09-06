@@ -66,7 +66,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="footnoteBackLink">true</xsl:param>
     <xsl:param name="cssFile">../profiles/ota/epub/ota.css</xsl:param>
-    <xsl:param name="subject">Oxford Text Archive</xsl:param>
+    <xsl:param name="subject">University of Oxford Text Archive</xsl:param>
     <xsl:param name="pagebreakStyle">visible</xsl:param>
 
     <xsl:template match="tei:title[@type='main']/text()">

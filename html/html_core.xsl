@@ -228,50 +228,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-imports/>
     </span>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>The del element</desc>
-  </doc>
-  <xsl:template match="tei:del">
-    <del>
-      <xsl:call-template name="makeRendition">
-	<xsl:with-param name="default">false</xsl:with-param>
-      </xsl:call-template>
-      <xsl:apply-templates/>
-    </del>
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>The add element</desc>
-  </doc>
-  <xsl:template match="tei:add">
-      <xsl:choose>
-         <xsl:when test="@place='sup' or @place='above'">
-            <sup>
-	      <xsl:call-template name="makeRendition">
-		<xsl:with-param name="default">false</xsl:with-param>
-	      </xsl:call-template>
-               <xsl:apply-templates/>
-            </sup>
-         </xsl:when>
-         <xsl:when test="@place='sub' or @place='below'">
-            <sub>
-	      <xsl:call-template name="makeRendition">
-		<xsl:with-param name="default">false</xsl:with-param>
-	      </xsl:call-template>
-               <xsl:apply-templates/>
-            </sub>
-         </xsl:when>
-	 <xsl:otherwise>
-	   <span style="color:green;">
-	     <xsl:text>&#10216;</xsl:text>
-	   </span>
-	   <xsl:apply-templates/>
-	   <span style="color:green;">
-	     <xsl:text>&#10217;</xsl:text>
-	   </span>
-	 </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element eg</desc>
@@ -314,15 +270,6 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:epigraph/tei:lg">
     <xsl:apply-templates/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element foreign and unclear</desc>
-  </doc>
-  <xsl:template match="tei:foreign|tei:unclear">
-    <span>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:apply-templates/>
-    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element caesura</desc>
@@ -515,7 +462,10 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element label</desc>
   </doc>
   <xsl:template match="tei:label">
+    <span>
+      <xsl:call-template name="makeRendition"/>
       <xsl:apply-templates/>
+    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element label in print mode</desc>
@@ -663,7 +613,6 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template match="tei:list">
-
     <xsl:if test="tei:head">
       <xsl:element name="{if (not(tei:is-inline(.))) then 'div' else 'span' }">
         <xsl:attribute name="class">listhead</xsl:attribute>
@@ -775,6 +724,12 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element listBibl</desc>
   </doc>
   <xsl:template match="tei:listBibl">
+    <xsl:if test="tei:head">
+      <xsl:element name="{if (not(tei:is-inline(.))) then 'div' else 'span' }">
+        <xsl:attribute name="class">listhead</xsl:attribute>
+        <xsl:apply-templates select="tei:head"/>
+      </xsl:element>
+    </xsl:if>
     <xsl:choose>
       <xsl:when test="tei:biblStruct and $biblioStyle='mla'">
 	<div type="listBibl" xmlns="http://www.w3.org/1999/xhtml">	  
@@ -806,7 +761,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>
 	</div>
       </xsl:when>
-      <xsl:when test="tei:biblStruct">
+      <xsl:when test="tei:biblStruct and not(tei:bibl)">
         <ol class="listBibl {$biblioStyle}">
           <xsl:for-each select="tei:biblStruct">
             <xsl:sort select="lower-case((tei:*/tei:author/tei:surname|tei:*[1]/tei:author/tei:orgName|tei:*[1]/tei:author/tei:name|tei:*[1]/tei:author|tei:*[1]/tei:editor/tei:surname|tei:*[1]/tei:editor/tei:name|tei:*[1]/tei:editor|tei:*[1]/tei:title[1])[1])"/>
@@ -819,7 +774,7 @@ of this software, even if advised of the possibility of such damage.
         </ol>
       </xsl:when>
       <xsl:when test="tei:msDesc">
-	<xsl:for-each select="*">
+	<xsl:for-each select="*[not(self::tei:head)]">
 	  <div class="msDesc">
 	    <xsl:apply-templates/>
 	  </div>
@@ -827,7 +782,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
         <ol class="listBibl">
-          <xsl:for-each select="*">
+          <xsl:for-each select="*[not(self::tei:head)]">
             <li>
               <xsl:call-template name="makeAnchor">
                 <xsl:with-param name="name">
@@ -840,15 +795,6 @@ of this software, even if advised of the possibility of such damage.
         </ol>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element mentioned</desc>
-  </doc>
-  <xsl:template match="tei:mentioned">
-    <span>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:apply-templates/>
-    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element name in mode "plain"</desc>
@@ -1045,7 +991,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="ancestor::tei:listBibl"/>
       <xsl:when test="ancestor::tei:floatingText"/>
       <xsl:when test="number($splitLevel)=-1"/>
-      <xsl:when test="tei:isEndNote(.) or tei:isFootNote(.) or $autoEndNotes='true'">
+      <xsl:when test="tei:isEndNote(.) or tei:isFootNote(.) or
+		      $autoEndNotes='true'">
         <xsl:variable name="parent">
 	  <xsl:for-each select="ancestor::tei:*[local-name()='div'
 	    or local-name()='div1'
@@ -1057,7 +1004,6 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:call-template name="locateParentDiv"/>
 	  </xsl:for-each>
         </xsl:variable>
-
         <xsl:if test="$whence = $parent">
           <xsl:call-template name="makeaNote"/>
         </xsl:if>
@@ -1341,21 +1287,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element salute</desc>
-  </doc>
-  <xsl:template match="tei:salute">
-    <xsl:choose>
-      <xsl:when test="parent::tei:closer">
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:otherwise>
-        <div class="left">
-          <xsl:apply-templates/>
-        </div>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element seg, pass through @type and @rend as @class</desc>
   </doc>
   <xsl:template match="tei:seg">
@@ -1402,15 +1333,6 @@ of this software, even if advised of the possibility of such damage.
         </xsl:attribute>
       </xsl:if>
       <xsl:text> </xsl:text>
-    </span>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element term</desc>
-  </doc>
-  <xsl:template match="tei:term">
-    <span>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:apply-templates/>
     </span>
   </xsl:template>
 
@@ -1483,10 +1405,12 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] </desc>
+    <desc>[html] produce all the notes </desc>
   </doc>
   <xsl:template name="printNotes">
-    <xsl:if test="count(key('NOTES',1)) or ($autoEndNotes='true' and count(key('ALLNOTES',1)))">
+    <xsl:if test="key('FOOTNOTES',1) or
+		  key('ENDNOTES',1) or  
+		  ($autoEndNotes='true' and key('ALLNOTES',1))">
       <xsl:choose>
         <xsl:when test="$footnoteFile='true'">
           <xsl:variable name="BaseFile">
@@ -1506,17 +1430,13 @@ of this software, even if advised of the possibility of such damage.
           </xsl:if>
           <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
             <html>
-              <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (11)</xsl:comment>
               <xsl:call-template name="addLangAtt"/>
-              <head>
-                <title>
-                  <xsl:sequence select="tei:generateTitle(.)"/>
+	      <xsl:variable name="pagetitle">
+		<xsl:sequence select="tei:generateTitle(.)"/>
                   <xsl:text>: </xsl:text>
                   <xsl:sequence select="tei:i18n('noteHeading')"/>
-                </title>
-                <xsl:call-template name="includeCSS"/>
-                <xsl:call-template name="cssHook"/>
-              </head>
+	      </xsl:variable>
+	      <xsl:sequence select="tei:htmlHead($pagetitle,1)"/>
               <body>
                 <xsl:call-template name="bodyMicroData"/>
                 <xsl:call-template name="bodyJavascriptHook"/>
@@ -1531,16 +1451,27 @@ of this software, even if advised of the possibility of such damage.
                   </xsl:call-template>
                 </div>
                 <div class="notes">
-                  <div class="noteHeading">
-                    <xsl:sequence select="tei:i18n('noteHeading')"/>
-                  </div>
                   <xsl:choose>
                     <xsl:when test="$autoEndNotes='true'">
+		      <div class="noteHeading">
+			<xsl:sequence select="tei:i18n('noteHeading')"/>
+		      </div>
                       <xsl:apply-templates mode="printnotes" select="key('ALLNOTES',1)"/>
                     </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:apply-templates mode="printnotes" select="key('NOTES',1)"/>
-                    </xsl:otherwise>
+		    <xsl:otherwise>
+		      <xsl:if test="key('FOOTNOTES',1)">
+			<div class="noteHeading">
+			  <xsl:sequence select="tei:i18n('noteHeading')"/>
+			</div>
+			<xsl:apply-templates mode="printnotes" select="key('FOOTNOTES',1)"/>
+		      </xsl:if>
+		      <xsl:if test="key('ENDNOTES',1)">
+			<div class="noteHeading">
+			  <xsl:sequence select="tei:i18n('noteHeading')"/>
+			</div>
+			<xsl:apply-templates mode="printnotes" select="key('ENDNOTES',1)"/>
+		      </xsl:if>
+		    </xsl:otherwise>
                   </xsl:choose>
                 </div>
                 <xsl:call-template name="stdfooter"/>
@@ -1576,14 +1507,31 @@ of this software, even if advised of the possibility of such damage.
               <xsl:when test="self::tei:TEI">
                 <xsl:choose>
                   <xsl:when test="$autoEndNotes='true'">
+		    <div class="noteHeading">
+		      <xsl:sequence select="tei:i18n('noteHeading')"/>
+		    </div>
                     <xsl:apply-templates mode="printallnotes" select="key('ALLNOTES',1)"/>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:apply-templates mode="printallnotes" select="key('NOTES',1)"/>
+		      <xsl:if test="key('FOOTNOTES',1)">
+			<div class="noteHeading">
+			  <xsl:sequence select="tei:i18n('noteHeading')"/>
+			</div>
+			<xsl:apply-templates mode="printallnotes" select="key('FOOTNOTES',1)"/>
+		      </xsl:if>
+		      <xsl:if test="key('ENDNOTES',1)">
+			<div class="noteHeading">
+			  <xsl:sequence select="tei:i18n('noteHeading')"/>
+			</div>
+			<xsl:apply-templates mode="printallnotes" select="key('ENDNOTES',1)"/>
+		      </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:when>
 	      <xsl:when test="self::tei:text and $splitLevel=0">
+		<div class="noteHeading">
+		  <xsl:sequence select="tei:i18n('noteHeading')"/>
+		</div>
 		<xsl:for-each select="tei:front|tei:body|tei:back">
 		  <xsl:for-each
 		      select=".//tei:note[tei:isEndNote(.) or
@@ -1600,6 +1548,9 @@ of this software, even if advised of the possibility of such damage.
               <xsl:when test="parent::tei:group and tei:group">
 	      </xsl:when>
               <xsl:otherwise>
+		<div class="noteHeading">
+		  <xsl:sequence select="tei:i18n('noteHeading')"/>
+		</div>
                 <xsl:apply-templates mode="printnotes" select=".//tei:note">
                   <xsl:with-param name="whence" select="$me"/>
                 </xsl:apply-templates>
@@ -1608,12 +1559,9 @@ of this software, even if advised of the possibility of such damage.
           </xsl:variable>
 	  <xsl:variable name="where" select="name()"/>
           <xsl:for-each select="$NOTES">
-            <xsl:if test="html:div">
+            <xsl:if test="html:div[@class='note']">
 	      <xsl:comment>Notes in [<xsl:value-of select="$where"/>]</xsl:comment>
               <div class="notes">
-                <div class="noteHeading">
-                  <xsl:sequence select="tei:i18n('noteHeading')"/>
-                </div>
                 <xsl:copy-of select="*|comment()"/>
               </div>
             </xsl:if>
