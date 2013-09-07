@@ -124,61 +124,69 @@ of this software, even if advised of the possibility of such damage.
 					     true() else false()"/>
 	<xsl:variable name="xmllang" select="@xml:lang"/>
 	<xsl:variable name="here" select="."/>
-	<xsl:for-each select="tokenize(normalize-space(@target|@url),' ')">
-	  <xsl:variable name="a" select="."/>
-	  <xsl:for-each select="$here">
-	    <xsl:choose>
-	      <!-- If there is a target attribute starting with #, it is always a local reference -->
-	      <xsl:when test="starts-with($a,'#')">
-		<xsl:call-template name="makeInternalLink">
-		  <xsl:with-param name="target" select="substring($a,2)"/>
-		  <xsl:with-param name="ptr" select="$ptr"/>
-		  <xsl:with-param name="dest">
-		    <xsl:call-template name="generateEndLink">
-		      <xsl:with-param name="where">
-			<xsl:value-of select="substring($a,2)"/>
+	<xsl:choose>
+	  <xsl:when test="not(@target)">
+	    <xsl:apply-templates/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:for-each select="tokenize(normalize-space(@target),' ')">
+	      <xsl:variable name="a" select="."/>
+	      <xsl:for-each select="$here">
+		<xsl:choose>
+		  <!-- If there is a target attribute starting with #, it is always a local reference -->
+		  <xsl:when test="starts-with($a,'#')">
+		    <xsl:call-template name="makeInternalLink">
+		      <xsl:with-param name="target" select="substring($a,2)"/>
+		      <xsl:with-param name="ptr" select="$ptr"/>
+		      <xsl:with-param name="dest">
+			<xsl:call-template name="generateEndLink">
+			  <xsl:with-param name="where">
+			    <xsl:value-of select="substring($a,2)"/>
+			  </xsl:with-param>
+			</xsl:call-template>
 		      </xsl:with-param>
 		    </xsl:call-template>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </xsl:when>
-	      <!-- if we are doing TEI P4, all targets are local -->
-	      <xsl:when test="$teiP4Compat='true'">
-		<xsl:call-template name="makeInternalLink">
-		  <xsl:with-param name="target" select="$a"/>
-		  <xsl:with-param name="ptr" select="$ptr"/>
-		  <xsl:with-param name="dest">
-		    <xsl:call-template name="generateEndLink">
-		      <xsl:with-param name="where">
-			<xsl:value-of select="$a"/>
+		  </xsl:when>
+		  <!-- if we are doing TEI P4, all targets are local -->
+		  <xsl:when test="$teiP4Compat='true'">
+		    <xsl:call-template name="makeInternalLink">
+		      <xsl:with-param name="target" select="$a"/>
+		      <xsl:with-param name="ptr" select="$ptr"/>
+		      <xsl:with-param name="dest">
+			<xsl:call-template name="generateEndLink">
+			  <xsl:with-param name="where">
+			    <xsl:value-of select="$a"/>
+			  </xsl:with-param>
+			</xsl:call-template>
 		      </xsl:with-param>
 		    </xsl:call-template>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </xsl:when>
-	      <!-- other uses of target means it is external -->
-	      <xsl:otherwise>
-		<xsl:call-template name="makeExternalLink">
-		  <xsl:with-param name="ptr" select="$ptr"/>
-		  <xsl:with-param name="dest">
-		    <xsl:sequence select="tei:resolveURI($here,$a)"/>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:for-each> 
-	  <xsl:call-template name="multiTargetSeparator">
-	    <xsl:with-param name="xmllang" select="$xmllang"/>
-	  </xsl:call-template>
-	</xsl:for-each>      
+		  </xsl:when>
+		  <!-- other uses of target means it is external -->
+		  <xsl:otherwise>
+		    <xsl:call-template name="makeExternalLink">
+		      <xsl:with-param name="ptr" select="$ptr"/>
+		      <xsl:with-param name="dest">
+			<xsl:sequence select="tei:resolveURI($here,$a)"/>
+		      </xsl:with-param>
+		    </xsl:call-template>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:for-each> 
+	      <xsl:call-template name="multiTargetSeparator">
+		<xsl:with-param name="xmllang" select="$xmllang"/>
+	      </xsl:call-template>
+	    </xsl:for-each>      
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
+    
     <xsl:if test="parent::tei:analytic or parent::tei:monogr">
       <xsl:text> </xsl:text>
     </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[common] Making a heading for something
+    <desc>[common] Making a heading for something
          <param name="minimal">whether to display headings</param>
          <param name="toc">whether this is making a TOC entry</param>
          <param name="display">detail of display (full, simple, plain), ie
