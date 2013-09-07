@@ -125,8 +125,10 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:variable name="xmllang" select="@xml:lang"/>
 	<xsl:variable name="here" select="."/>
 	<xsl:choose>
-	  <xsl:when test="not(@target)">
-	    <xsl:apply-templates/>
+	  <xsl:when test="not(@target) and self::tei:ref">
+	    <xsl:call-template name="makeInline">
+	      <xsl:with-param name="style">ref</xsl:with-param>
+	    </xsl:call-template>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:for-each select="tokenize(normalize-space(@target),' ')">

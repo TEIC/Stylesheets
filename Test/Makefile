@@ -105,6 +105,8 @@ test-latex:
 	diff test5.tex expected-results/test5.tex
 	$(SAXON) -o:test6.tex test6.xml ../slides/teilatex-slides.xsl $(SAXONOPT)
 	diff test6.tex expected-results/test6.tex
+	$(SAXON) -o:test20.tex test20.xml ../latex/latex.xsl $(SAXONOPT)
+	diff test20.tex expected-results/test20.tex
 	$(SAXON) -o:test23.tex test23.xml ../latex/latex.xsl $(SAXONOPT)
 	diff test23.tex expected-results/test23.tex
 	$(SAXON) -o:test24.tex test24.xml ../latex/latex.xsl $(SAXONOPT)
@@ -113,8 +115,6 @@ test-latex:
 	diff test25.tex expected-results/test25.tex
 	$(SAXON) -o:test27.tex test27.xml ../latex/latex.xsl $(SAXONOPT)
 	diff test27.tex expected-results/test27.tex
-	$(SAXON) -o:test20.tex test20.xml ../latex/latex.xsl $(SAXONOPT)
-	diff test20.tex expected-results/test20.tex
 
 test-fo:
 	$(SAXON) -o:test.fo test.xml ../fo/fo.xsl  $(SAXONOPT)

@@ -298,6 +298,7 @@ characters. The normal characters remain active for LaTeX commands.
 \def\gap{}
 \def\orig{}
 \def\reg{}
+\def\ref{}
 \def\sic{}
 \def\textcal#1{{\fontspec{<xsl:value-of select="$calligraphicFont"/>}#1}}
 \def\textgothic#1{{\fontspec{<xsl:value-of select="$gothicFont"/>}#1}}
