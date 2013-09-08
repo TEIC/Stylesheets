@@ -68,7 +68,7 @@ of this software, even if advised of the possibility of such damage.
 <xsl:message>Create file "stylebear" </xsl:message>
 <xsl:text>#!/usr/bin/perl&#10;</xsl:text>
 
-<xsl:for-each select="TEI/text/body/div[@xml:id]">
+<xsl:for-each select="TEI/text/body//div[@type='param']">
   <xsl:call-template name="listcgi">
     <xsl:with-param name="File">common/common_param.xsl</xsl:with-param>
   </xsl:call-template>
@@ -100,7 +100,7 @@ print &lt;&lt;END;
     exclude-result-prefixes="tei xsl"
     version="2.0">
 &lt;!-- XSLT stylesheet to generate HTML version of TEI document.
-Written by the TEI XSL generator (Sebastian Rahtz, sebastian.rahtz\@oucs.ox.ac.uk)
+Written by the TEI XSL generator (Sebastian Rahtz, sebastian.rahtz\@it.ox.ac.uk)
 Created on $today-->
 END
 #foreach $key ($query->param) {
@@ -167,7 +167,7 @@ return "";
 <p>Name of output file:
  <html:input type="textbox" name="outputFile" value="myTei.xsl"/></p>
 
-   <xsl:for-each select="TEI/text/body/div[@type='param']">
+   <xsl:for-each select="TEI/text/body//div[@type='param']">
        <p><hi><xsl:number/>: <xsl:value-of select="head"/></hi></p>
        <p><ref target="customize.html#{@xml:id}">Details of this section</ref></p>
        <table>

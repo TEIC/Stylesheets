@@ -353,8 +353,7 @@ of this software, even if advised of the possibility of such damage.
          <p>[common] Making a heading for something, and making sure it has
       contents</p>
          <p>This is a wrapper around the "header" template which ensures that
-      some text is returned; if all else fails, the element name is
-    used.</p>
+      some text is returned; if all else fails, the element name is used.</p>
          <param name="minimal">false</param>
       </desc>
    </doc>
