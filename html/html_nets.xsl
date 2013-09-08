@@ -77,7 +77,16 @@ of this software, even if advised of the possibility of such damage.
           <xsl:when test="not(ancestor::tei:eTree)">
             <xsl:variable name="TREEID" select="generate-id()"/>
             <div class="treediagram" id="viz{$TREEID}"/>
-            <script type="text/javascript">
+<xsl:variable name="treedepth"
+	      select="max(
+		      descendant::*[(self::tei:eTree or self::tei:eLeaf) and not(tei:eTree or tei:eLeaf)]/count(ancestor-or-self::*[self::tei:eTree or self::tei:eLeaf])) "/>
+<xsl:variable name="treewidth"
+	      select="max(
+		      descendant-or-self::*[self::tei:eTree or self::tei:eLeaf]/(count(tei:eLeaf)+count(tei:eTree))) "/>
+
+<xsl:message>Size of tree is <xsl:value-of select="($treedepth,$treewidth)"
+separator=":"/></xsl:message>
+           <script type="text/javascript">
        //JSON object with the data
       var treeData = {
          "name" : '<xsl:apply-templates select="tei:label"/>

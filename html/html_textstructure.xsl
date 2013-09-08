@@ -1183,9 +1183,12 @@ of this software, even if advised of the possibility of such damage.
 	    .link {
 	    fill: none;
 	    stroke: black;
-	    stroke-width: 2px;
+	    stroke-width: 1px;
 	    }
-	    .node { background-color: black; font-size: 8pt; stroke: black;}
+	    .node { 
+	    font-weight: normal;
+	    font-size: 7pt;
+	    }
 	  </style>
 	</xsl:when>
       </xsl:choose>
