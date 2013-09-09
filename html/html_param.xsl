@@ -54,6 +54,11 @@ of this software, even if advised of the possibility of such damage.
 		  and not(parent::tei:bibl or  ancestor::tei:teiHeader)]"/>
   <xsl:key name="TREES" match="tei:eTree[not(ancestor::tei:eTree)]" use="1"/>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
+    <desc>which Javascript library to use for drawing trees</desc>
+  </doc>
+  <xsl:param name="treestyle">google</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
     <desc>  CSS class for links derived from &lt;ptr&gt;    </desc>
   </doc>

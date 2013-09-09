@@ -1178,7 +1178,6 @@ of this software, even if advised of the possibility of such damage.
 	  <style>	    
 	    .nodetext {
 	        text-align: center;
-	        border: solid green 1pt;
 	    }
 	    .link {
 	    fill: none;
@@ -1189,6 +1188,12 @@ of this software, even if advised of the possibility of such damage.
 	    font-weight: normal;
 	    font-size: 7pt;
 	    }
+	    .treediagram {
+	        
+	    }
+	    .svgtree {
+	    
+		}
 	  </style>
 	</xsl:when>
       </xsl:choose>

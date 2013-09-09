@@ -41,7 +41,6 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:param name="treestyle">google</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element eTree</desc>
   </doc>
@@ -73,20 +72,14 @@ of this software, even if advised of the possibility of such damage.
         </xsl:if>
       </xsl:when>
       <xsl:when test="$treestyle='d3'">
-       <xsl:choose>
+        <xsl:choose>
           <xsl:when test="not(ancestor::tei:eTree)">
+            <xsl:variable name="treewidth" select="max(descendant-or-self::*[self::tei:eTree or self::tei:eLeaf]/(count(tei:eLeaf)+count(tei:eTree))) "/>
+            <xsl:variable name="treedepth" select="max(descendant::*[(self::tei:eTree or self::tei:eLeaf) and not(tei:eTree or tei:eLeaf)]/count(ancestor-or-self::*[self::tei:eTree or self::tei:eLeaf])) "/>
             <xsl:variable name="TREEID" select="generate-id()"/>
-            <div class="treediagram" id="viz{$TREEID}"/>
-<xsl:variable name="treedepth"
-	      select="max(
-		      descendant::*[(self::tei:eTree or self::tei:eLeaf) and not(tei:eTree or tei:eLeaf)]/count(ancestor-or-self::*[self::tei:eTree or self::tei:eLeaf])) "/>
-<xsl:variable name="treewidth"
-	      select="max(
-		      descendant-or-self::*[self::tei:eTree or self::tei:eLeaf]/(count(tei:eLeaf)+count(tei:eTree))) "/>
-
-<xsl:message>Size of tree is <xsl:value-of select="($treedepth,$treewidth)"
-separator=":"/></xsl:message>
-           <script type="text/javascript">
+            <div class="treediagram" style="width:{($treewidth * 150)}
+					    {@style}" id="viz{$TREEID}"/>
+            <script type="text/javascript">
        //JSON object with the data
       var treeData = {
          "name" : '<xsl:apply-templates select="tei:label"/>
@@ -94,13 +87,14 @@ separator=":"/></xsl:message>
 	 <xsl:if test="tei:eTree|tei:eLeaf">"children" : [<xsl:apply-templates select="*[not(self::tei:label)]"/>]</xsl:if>};
       // Create a svg canvas
       var vis = d3.select("#viz<xsl:value-of select="$TREEID"/>").append("svg:svg")
-      .attr("width", 600)
-      .attr("height", 600)
+      .attr("class", "svgtree")
+      .attr("width", <xsl:value-of select="($treewidth * 150) + 50"/>)
+      .attr("height", <xsl:value-of select="($treedepth * 50) + 100"/>)
       .append("svg:g")
-      .attr("transform", "translate(40, 40)"); 
+      .attr("transform", "translate(0, 40)"); 
       // Create a tree "canvas"
       var tree = d3.layout.tree()
-    .size([600,500]);
+    .size([<xsl:value-of select="($treewidth * 150)"/>,<xsl:value-of select="($treedepth * 50)"/>]);
     // Preparing the data for the tree layout, convert data into an array of nodes
     var nodes = tree.nodes(treeData);
     // Create an array with all the links
@@ -124,7 +118,6 @@ separator=":"/></xsl:message>
       .attr("class", "nodetext")
       .html(function(d) { return d.name; });
     </script>
-
           </xsl:when>
           <xsl:otherwise>{"name" : '<xsl:apply-templates select="tei:label"/>
 	  <xsl:text>', </xsl:text>
