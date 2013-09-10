@@ -130,6 +130,11 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:with-param name="style">ref</xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:when>
+	  <xsl:when test="@cRef and self::tei:ptr">
+	    <xsl:call-template name="makeInline">
+	      <xsl:with-param name="style">ptr</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:for-each select="tokenize(normalize-space(@target),' ')">
 	      <xsl:variable name="a" select="."/>
