@@ -90,8 +90,9 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:variable name="F">
 	     <xsl:choose>
 	       <xsl:when test="starts-with(@facs,'#')">
-		 <xsl:for-each select="id(substring(@facs,2))">
-		   <xsl:value-of select="tei:graphic[1]/tei:resolveURI(.,@url)"/>
+		 <xsl:for-each
+		     select="id(substring(@facs,2))">
+		   <xsl:value-of select="tei:resolveURI(.,descendant-or-self::*[@url][1]/@url)"/>
 		 </xsl:for-each>
 	       </xsl:when>
 	       <xsl:otherwise>
@@ -110,7 +111,7 @@ of this software, even if advised of the possibility of such damage.
 	   </xsl:variable>
 	   <xsl:choose>
 	     <xsl:when test="contains($F,':')">
-	       <get src="{tei:resolveURI(.,@url)}" dest="{$target}"/>
+	       <get src="{$F}" dest="{$target}"/>
 	     </xsl:when>
 	     <xsl:when test="starts-with($F,'/')">
 	       <copy toFile="{$target}" file="{@url}"/>
@@ -136,7 +137,7 @@ of this software, even if advised of the possibility of such damage.
 	   </xsl:variable>
 	   <xsl:choose>
 	     <xsl:when test="contains($F,':')">
-	       <get src="{tei:resolveURI(.,@url)}" dest="{$target}"/>
+	       <get src="{$F}" dest="{$target}"/>
 	     </xsl:when>
 	     <xsl:when test="starts-with($F,'/')">
 	       <copy toFile="{$target}" file="{@url}"/>
