@@ -74,12 +74,60 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="$treestyle='d3'">
         <xsl:choose>
           <xsl:when test="not(ancestor::tei:eTree)">
-            <xsl:variable name="treewidth" select="max(descendant-or-self::*[self::tei:eTree or self::tei:eLeaf]/(count(tei:eLeaf)+count(tei:eTree))) "/>
-            <xsl:variable name="treedepth" select="max(descendant::*[(self::tei:eTree or self::tei:eLeaf) and not(tei:eTree or tei:eLeaf)]/count(ancestor-or-self::*[self::tei:eTree or self::tei:eLeaf])) "/>
+	    <xsl:variable name="maxlabel"
+			  select="(max(descendant::tei:label/string-length()))"/>
+            <xsl:variable name="treewidth"
+			  select="max(descendant-or-self::*[self::tei:eTree
+				  or
+				  self::tei:eLeaf]/(count(tei:eLeaf)+count(tei:eTree)))
+				  * 175"/>
+            <xsl:variable name="treedepth"
+			  select="max(descendant::*[(self::tei:eTree
+				  or self::tei:eLeaf) and
+				  not(tei:eTree or
+				  tei:eLeaf)]/count(ancestor-or-self::*[self::tei:eTree
+				  or self::tei:eLeaf]))"/>
             <xsl:variable name="TREEID" select="generate-id()"/>
-            <div class="treediagram" style="width:{($treewidth * 150)}
-					    {@style}" id="viz{$TREEID}"/>
+            <div class="treediagram" style="width:{$treewidth} {@style}" id="viz{$TREEID}"/>
             <script type="text/javascript">
+	      <xsl:choose>
+		<xsl:when test="$maxlabel &gt; 150">
+	      downoffset= 75;
+	      down2offset=5;
+	      yoffset = -75;
+	      treewidth = <xsl:value-of select="$treewidth"/>;
+	      treedepth = <xsl:value-of select="$treedepth * 100"/>;
+		</xsl:when>
+		<xsl:when test="$maxlabel &gt; 50">
+	      downoffset= 50;
+	      down2offset=5;
+	      yoffset = -45;
+	      treewidth = <xsl:value-of select="$treewidth"/>;
+	      treedepth = <xsl:value-of select="$treedepth * 100"/>;
+		</xsl:when>
+		<xsl:when test="$maxlabel &gt; 10">
+	      downoffset= 40;
+	      down2offset=5;
+	      yoffset = -35;
+	      treewidth = <xsl:value-of select="$treewidth"/>;
+	      treedepth = <xsl:value-of select="$treedepth * 75"/>;
+		</xsl:when>
+		<xsl:otherwise>
+	      downoffset= 10;
+	      down2offset=5;
+	      yoffset = -10;
+	      treewidth = <xsl:value-of select="$treewidth"/>;
+	      treedepth = <xsl:value-of select="$treedepth * 40"/>;
+		</xsl:otherwise>
+	      </xsl:choose>
+	      <xsl:variable name="extray">
+	      <xsl:choose>
+		<xsl:when test="$maxlabel &gt; 150">150</xsl:when>
+		<xsl:when test="$maxlabel &gt; 50">100</xsl:when>
+		<xsl:when test="$maxlabel &gt; 10">40</xsl:when>
+		<xsl:otherwise>30</xsl:otherwise>
+	      </xsl:choose>
+	      </xsl:variable>
        //JSON object with the data
       var treeData = {
          "name" : '<xsl:apply-templates select="tei:label"/>
@@ -88,13 +136,12 @@ of this software, even if advised of the possibility of such damage.
       // Create a svg canvas
       var vis = d3.select("#viz<xsl:value-of select="$TREEID"/>").append("svg:svg")
       .attr("class", "svgtree")
-      .attr("width", <xsl:value-of select="($treewidth * 150) + 50"/>)
-      .attr("height", <xsl:value-of select="($treedepth * 50) + 100"/>)
+      .attr("width", treewidth + 50)
+      .attr("height", treedepth + <xsl:value-of select="$extray"/>)
       .append("svg:g")
-      .attr("transform", "translate(0, 40)"); 
+      .attr("transform", "translate(0, <xsl:value-of select="$extray"/>)"); 
       // Create a tree "canvas"
-      var tree = d3.layout.tree()
-    .size([<xsl:value-of select="($treewidth * 150)"/>,<xsl:value-of select="($treedepth * 50)"/>]);
+      var tree = d3.layout.tree().size([treewidth,treedepth]);
     // Preparing the data for the tree layout, convert data into an array of nodes
     var nodes = tree.nodes(treeData);
     // Create an array with all the links
@@ -110,10 +157,10 @@ of this software, even if advised of the possibility of such damage.
     .attr("class","node")
     .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
     node.append("svg:foreignObject")
-    .attr("x", -75)
-    .attr("y", -15)
-      .attr("width", 150)
-      .attr("height", 150)
+    .attr("x", -50)
+    .attr("y", yoffset)
+      .attr("width", 100)
+      .attr("height", 100)
       .append("xhtml:div")
       .attr("class", "nodetext")
       .html(function(d) { return d.name; });

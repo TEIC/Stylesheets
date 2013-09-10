@@ -1166,14 +1166,15 @@ of this software, even if advised of the possibility of such damage.
 	  </script>
 	</xsl:when>
 	<xsl:when test="$treestyle='d3'">
-          <script type="text/javascript" src="d3.js"/>
-          <script type="text/javascript" src="d3.layout.js"/>
+          <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"/>
           <script type="text/javascript">
-    function elbow(d, i) {
-    var down= d.target.y - 20;
-    var down2 = d.source.y + 5 ;
-    return "M" + d.target.x + "," + down
-    + "V" + down2 + "H" + d.source.x; }
+	    var downoffset= 40;
+	    var down2offset=5;
+	    function elbow(d, i) {
+	    var down= d.target.y - downoffset;
+	    var down2 = d.source.y + down2offset ;
+	    return "M" + d.target.x + "," + down
+	    + "V" + down2 + "H" + d.source.x; }
 	  </script>
 	  <style>	    
 	    .nodetext {
