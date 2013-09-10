@@ -2122,33 +2122,47 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <!-- hyperlink -->
   <xsl:template match="tei:ptr">
-    <xsl:call-template name="linkMe">
-      <xsl:with-param name="anchor">
-	<xsl:choose>
-	  <xsl:when test="@type='cit'">[</xsl:when>
-	  <xsl:when test="@type='figure'">
-	    <xsl:sequence select="tei:i18n('figureWord')"/>
-	    <xsl:text> </xsl:text>
-	  </xsl:when>
-	  <xsl:when test="@type='table'">
-	    <xsl:sequence select="tei:i18n('tableWord')"/>
-	    <xsl:text> </xsl:text>
-	  </xsl:when>
-	</xsl:choose>
-	<xsl:choose>
-	  <xsl:when test="starts-with(@target,'#')  and
-			  id(substring(@target,2))">
-	    <xsl:apply-templates select="id(substring(@target,2))" mode="xref"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:sequence select="tei:resolveURI(.,@target)"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-	<xsl:choose>
-	  <xsl:when test="@type='cit'">]</xsl:when>
-	</xsl:choose>
-      </xsl:with-param>
-    </xsl:call-template>
+    <xsl:choose>
+      <xsl:when test="@cRef">
+	<w:r>
+	  <w:rPr>
+	    <w:u w:val="single"/>
+        </w:rPr>
+	<w:t>
+	    <xsl:value-of select="@cRef"/>
+	</w:t>
+	</w:r>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="linkMe">
+	  <xsl:with-param name="anchor">
+	    <xsl:choose>
+	      <xsl:when test="@type='cit'">[</xsl:when>
+	      <xsl:when test="@type='figure'">
+		<xsl:sequence select="tei:i18n('figureWord')"/>
+		<xsl:text> </xsl:text>
+	      </xsl:when>
+	      <xsl:when test="@type='table'">
+		<xsl:sequence select="tei:i18n('tableWord')"/>
+		<xsl:text> </xsl:text>
+	      </xsl:when>
+	    </xsl:choose>
+	    <xsl:choose>
+	      <xsl:when test="starts-with(@target,'#')  and
+			      id(substring(@target,2))">
+		<xsl:apply-templates select="id(substring(@target,2))" mode="xref"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:sequence select="tei:resolveURI(.,@target)"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	    <xsl:choose>
+	      <xsl:when test="@type='cit'">]</xsl:when>
+	    </xsl:choose>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:ref[@target]">
     <xsl:variable name="rContent">
@@ -2596,7 +2610,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="marginalNote">
     <xsl:call-template name="block-element">
         <xsl:with-param name="style">
-	<xsl:value-of select="if (@place='margin') then 'marginOuter' else @place"/>
+	<xsl:value-of select="if (@place='margin') then 'marginOuter'
+			      else if (starts-with(@place,'margin-'))
+			      then concat('margin',upper-case(substring(@place,8,1)),substring(@place,9))
+			      else @place"/>
 	</xsl:with-param>
     </xsl:call-template>
   </xsl:template>

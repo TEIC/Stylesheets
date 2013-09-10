@@ -1104,7 +1104,12 @@ of this software, even if advised of the possibility of such damage.
 		      @place='divend' or
 		      @place='marginOuter' or
 		      @place='marginLeft' or
-		      @place='marginRight'">
+		      @place='marginRight' or
+		      @place='margin-left' or
+		      @place='margin-right' or
+		      @place='margin-top' or
+		      @place='margin-bottom'
+		      ">
 	<xsl:call-template name="marginalNote"/>
       </xsl:when>
 
