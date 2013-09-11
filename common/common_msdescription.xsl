@@ -147,14 +147,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-  <xsl:template match="tei:msWriting">
-    <xsl:call-template name="makeSection">
-      <xsl:with-param name="level">2</xsl:with-param>
-      <xsl:with-param name="heading">
-        <xsl:text>Writing</xsl:text>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
   <xsl:template match="tei:musicNotation">
     <xsl:call-template name="makeSection">
       <xsl:with-param name="level">2</xsl:with-param>
