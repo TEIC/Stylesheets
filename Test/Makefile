@@ -283,6 +283,10 @@ pureant:
 	-DoutputFile=`pwd`/test29.xml \
 	-DinputFile=`pwd`/test29.docx -Dprofile=default 
 
+test-oxgarage:
+	curl -v  -F upload=@test.odd  -o test.rng http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/relaxng%3Aapplication%3Axml-relaxng
+	curl -v  -F upload=@test.odd  -o test.zip http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/xsd%3Aapplication%3Axml-xsd/
+
 profile:
 	$(SAXON) -o:/dev/null	-TP test.xml ../html/html.xsl >& profile1.html
 	$(SAXON) -o:/dev/null	-TP test.xml ../latex/latex.xsl >& profile2.html
@@ -290,7 +294,7 @@ profile:
 	$(SAXON) -o:/dev/null -TP test.odd2odd ../odds/odd2relax.xsl >& profile3.html
 
 clean:
-	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc *.end *.1 *.2
+	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd
 	rm -f test.rng test.rnc
 	rm -f  oddbyexample.* index*div*html
 	rm -f  testdrama.compiled.xml
