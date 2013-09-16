@@ -1170,11 +1170,13 @@ of this software, even if advised of the possibility of such damage.
           <script type="text/javascript">
 	    var downoffset= 40;
 	    var down2offset=5;
+	    var diagonal = d3.svg.diagonal()
+	    .projection(function(d) { return [d.x, d.y]; });
 	    function elbow(d, i) {
-	    var down= d.target.y - downoffset;
-	    var down2 = d.source.y + down2offset ;
-	    return "M" + d.target.x + "," + down
-	    + "V" + down2 + "H" + d.source.x; }
+	      return "M" + d.target.x + "," + (d.target.y - downoffset)
+	           + "V" + (d.source.y + down2offset ) 
+		   + "H" + d.source.x;
+	      }
 	  </script>
 	  <style>	    
 	    .nodetext {

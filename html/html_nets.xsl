@@ -41,6 +41,7 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
+  <xsl:variable name="squo">'</xsl:variable>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element eTree</desc>
   </doc>
@@ -176,27 +177,22 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+  <xsl:template match="tei:eLeaf/tei:ptr"/>
   <xsl:template match="tei:eTree/tei:label/tei:lb">
     <br/>
   </xsl:template>
   <xsl:template match="tei:eLeaf/tei:label/tei:lb">
     <br/>
   </xsl:template>
+
+  <xsl:template match="tei:eLeaf/tei:label/text()|tei:eTree/tei:label/text()">
+    <xsl:value-of select="replace(.,$squo,concat('\\',$squo))"/>
+  </xsl:template>
+
   <xsl:template match="tei:forest">
     <div>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
-  <xsl:function name="tei:escape">
-    <xsl:param name="what"/>
-    <xsl:variable name="result">
-      <xsl:apply-templates select="$what"/>
-    </xsl:variable>
-    <xsl:apply-templates select="$result" mode="escape"/>
-  </xsl:function>
-  <xsl:template match="*" mode="escape">
-    <xsl:value-of select="concat('&lt;',name(),'&gt;')"/>
-    <xsl:apply-templates mode="escape"/>
-    <xsl:value-of select="concat('&lt;/',name(),'&gt;')"/>
-  </xsl:template>
+
 </xsl:stylesheet>
