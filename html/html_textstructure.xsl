@@ -1174,13 +1174,16 @@ of this software, even if advised of the possibility of such damage.
 	    .projection(function(d) { return [d.x, d.y]; });
 	    function elbow(d, i) {
 	      return "M" + d.target.x + "," + (d.target.y - downoffset)
-	           + "V" + (d.source.y + down2offset ) 
+	           + "V" + (d.source.y +  down2offset )
 		   + "H" + d.source.x;
 	      }
 	  </script>
 	  <style>	    
 	    .nodetext {
 	        text-align: center;
+	    }
+	    .linkinvisible {
+	         visibility: hidden;
 	    }
 	    .link {
 	    fill: none;
@@ -1191,12 +1194,11 @@ of this software, even if advised of the possibility of such damage.
 	    font-weight: normal;
 	    font-size: 7pt;
 	    }
-	    .treediagram {
-	        
+	    .treediagram {	        
 	    }
 	    .svgtree {
-	    
-		}
+              padding-bottom: 6pt;
+            }
 	  </style>
 	</xsl:when>
       </xsl:choose>

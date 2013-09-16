@@ -53,6 +53,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:output method="xhtml" omit-xml-declaration="yes"
 	       encoding="utf-8"/>
 
+    <xsl:param name="treestyle">d3</xsl:param>
     <xsl:param name="publisher">University of Oxford Text Archive</xsl:param>
     <xsl:param name="numberHeadings">false</xsl:param>
     <xsl:param name="numberHeadingsDepth">-1</xsl:param>
@@ -193,6 +194,58 @@ of this software, even if advised of the possibility of such damage.
          <br/>
       </xsl:if>
       <xsl:value-of select="."/>
+   </xsl:template>
+
+   <xsl:template name="cssHook">
+     <style type="text/css">
+   div.contamination {
+   font-style:italic;
+   }
+   div.derivation-syntactic {
+   font-style:italic;
+   }
+   div.extant {
+   font-weight:bold;
+   }
+   div.hypothetical {
+   font-style:italic;
+   }
+   div.lost {
+   color: red;
+   }
+   div.main {
+   font-weight: bold;
+   }
+   pre,div.pre,div.pre_eg,pre.eg,div.eg {
+   clear:both;
+   margin-top: 1em;
+   margin-bottom:1em;
+   border-top-width: 4px;
+   border-bottom-width: 4px;
+   border-left-width: 2px;
+   border-right-width: 2px;
+   border-style: solid;
+   padding-top: 10px;
+   padding-right: 10px;
+   padding-bottom: 10px;
+   padding-left: 10px;
+   color: #000000;
+   line-height: 1.1em;
+   font-family: monospace;
+   font-size: 10pt;
+   white-space: pre;
+   }
+   .leaf {
+    background-color: lightgrey;
+   }
+   .node { 
+   font-weight: normal;
+   font-size: 8pt;
+   }
+   .treediagram {
+   }
+   
+     </style>
    </xsl:template>
 
 </xsl:stylesheet>
