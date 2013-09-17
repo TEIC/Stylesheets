@@ -129,38 +129,28 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:otherwise>25</xsl:otherwise>
 	      </xsl:choose>
 	      </xsl:variable>
-       //JSON object with the data
-      var treeData = {
-         "name" : '<xsl:apply-templates select="tei:label"/>',
-	 "showlink" : '<xsl:value-of select="if (self::tei:forest) then 'invisible' else ''"/>',
-         "type" : '<xsl:apply-templates select="@type"/>
-	 <xsl:if test="self::tei:eLeaf"> leaf</xsl:if>
-	 <xsl:text>', </xsl:text>
-	 <xsl:if test="tei:eTree|tei:eLeaf">"children" : [<xsl:apply-templates select="*[not(self::tei:label)]"/>]</xsl:if>};
-      // Create a svg canvas
+      var treeData = {<xsl:call-template name="treelabel"/>};
       var vis = d3.select("#viz<xsl:value-of select="$TREEID"/>").append("svg:svg")
       .attr("class", "svgtree")
       .attr("width", treewidth + 50)
       .attr("height", treedepth + <xsl:value-of select="$extray"/>)
       .append("svg:g")
       .attr("transform", "translate(0, <xsl:value-of select="$extray"/>)"); 
-      // Create a tree 
       var tree = d3.layout.tree().size([treewidth,treedepth]);
-    // Preparing the data for the tree layout, convert data into an array of nodes
-    var nodes = tree.nodes(treeData);
-    // Create an array with all the links
-    var links = tree.links(nodes);
-    var link = vis.selectAll("pathlink")
+      var nodes = tree.nodes(treeData);
+      console.log(nodes);
+      var links = tree.links(nodes);
+      var link = vis.selectAll("pathlink")
       .data(links)
       .enter().append("svg:path")
       .attr("class", function (d) { return "link" + d.source.showlink; })
       .attr("d", elbow)    
-    var node = vis.selectAll("g.node")
+      var node = vis.selectAll("g.node")
       .data(nodes)
       .enter().append("svg:g")
       .attr("class","node")
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-    node.append("svg:foreignObject")
+      node.append("svg:foreignObject")
       .attr("x", -40)
       .attr("y", yoffset)
       .attr("width", 80)
@@ -170,23 +160,37 @@ of this software, even if advised of the possibility of such damage.
       .html(function(d) { return d.name; });
     </script>
           </xsl:when>
-          <xsl:otherwise>{"name" : '<xsl:apply-templates select="tei:label"/>
-	  <xsl:text>', </xsl:text>
-	  <xsl:text>"showlink" : '</xsl:text>
-	  <xsl:value-of select="if (self::tei:forest) then 'invisible' else ''"/>
-	  <xsl:text>', </xsl:text>
-	  <xsl:text>"type" : '</xsl:text>
-	  <xsl:apply-templates select="@type"/>
-	 <xsl:if test="self::tei:eLeaf"> leaf</xsl:if>
-	  <xsl:text>', </xsl:text>
-	    <xsl:if test="tei:eTree|tei:eLeaf">"children" : [<xsl:apply-templates select="*[not(self::tei:label)]"/>]</xsl:if>
-	    <xsl:text>}, 
+          <xsl:otherwise>{<xsl:call-template name="treelabel"/><xsl:text>}, 
 	    </xsl:text>
 	  </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template name="treelabel">
+    <xsl:text>"name":'</xsl:text>
+    <xsl:apply-templates select="tei:label"/>
+    <xsl:text>', </xsl:text>
+    <xsl:text>"synch":'</xsl:text>
+    <xsl:value-of select="tei:label/@synch"/>
+    <xsl:text>', </xsl:text>
+    <xsl:text>"showlink":'</xsl:text>
+    <xsl:value-of select="if (self::tei:forest) then 'invisible' else ''"/>
+    <xsl:text>', </xsl:text>
+    <xsl:text>"type":'</xsl:text>
+    <xsl:apply-templates select="@type"/>
+    <xsl:if test="self::tei:eLeaf">
+      <xsl:text> leaf</xsl:text>
+    </xsl:if>
+    <xsl:text>', </xsl:text>
+    <xsl:if test="tei:eTree|tei:eLeaf">
+      <xsl:text>"children":[</xsl:text>
+      <xsl:apply-templates select="*[not(self::tei:label)]"/>
+      <xsl:text>]</xsl:text>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template match="tei:eLeaf/tei:ptr"/>
   <xsl:template match="tei:eTree/tei:label/tei:lb">
     <br/>
