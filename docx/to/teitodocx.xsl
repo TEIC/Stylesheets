@@ -78,6 +78,69 @@
   <xsl:param name="word-directory">..</xsl:param>
   <xsl:param name="tableWidthPercentage"></xsl:param>
   <xsl:param name="glossListSeparator">tab</xsl:param>
+  <xsl:param name="footnoteNumbering">decimal</xsl:param>
+<!-- choose from 
+decimal	Decimal Numbers
+upperRoman	Uppercase Roman Numerals
+lowerRoman	Lowercase Roman Numerals
+upperLetter	Uppercase Latin Alphabet
+lowerLetter	Lowercase Latin Alphabet
+ordinal	Ordinal
+cardinalText	Cardinal Text
+ordinalText	Ordinal Text
+hex	Hexadecimal Numbering
+chicago	Chicago Manual of Style
+ideographDigital	Ideographs
+japaneseCounting	Japanese Counting System
+aiueo	AIUEO Order Hiragana
+iroha	Iroha Ordered Katakana
+decimalFullWidth	Double Byte Arabic Numerals
+decimalHalfWidth	Single Byte Arabic Numerals
+japaneseLegal	Japanese Legal Numbering
+japaneseDigitalTenThousand	Japanese Digital Ten Thousand Counting System
+decimalEnclosedCircle	Decimal Numbers Enclosed in a Circle
+decimalFullWidth2	Double Byte Arabic Numerals Alternate
+aiueoFullWidth	Full-Width AIUEO Order Hiragana
+irohaFullWidth	Full-Width Iroha Ordered Katakana
+decimalZero	Initial Zero Arabic Numerals
+bullet	Bullet
+ganada	Korean Ganada Numbering
+chosung	Korean Chosung Numbering
+decimalEnclosedFullstop	Decimal Numbers Followed by a Period
+decimalEnclosedParen	Decimal Numbers Enclosed in Parenthesis
+decimalEnclosedCircleChinese	Decimal Numbers Enclosed in a Circle
+ideographEnclosedCircle	Ideographs Enclosed in a Circle
+ideographTraditional	Traditional Ideograph Format
+ideographZodiac	Zodiac Ideograph Format
+ideographZodiacTraditional	Traditional Zodiac Ideograph Format
+taiwaneseCounting	Taiwanese Counting System
+ideographLegalTraditional	Traditional Legal Ideograph Format
+taiwaneseCountingThousand	Taiwanese Counting Thousand System
+taiwaneseDigital	Taiwanese Digital Counting System
+chineseCounting	Chinese Counting System
+chineseLegalSimplified	Chinese Legal Simplified Format
+chineseCountingThousand	Chinese Counting Thousand System
+koreanDigital	Korean Digital Counting System
+koreanCounting	Korean Counting System
+koreanLegal	Korean Legal Numbering
+koreanDigital2	Korean Digital Counting System Alternate
+vietnameseCounting	Vietnamese Numerals
+russianLower	Lowercase Russian Alphabet
+russianUpper	Uppercase Russian Alphabet
+none	No Numbering
+numberInDash	Number With Dashes
+hebrew1	Hebrew Numerals
+hebrew2	Hebrew Alphabet
+arabicAlpha	Arabic Alphabet
+arabicAbjad	Arabic Abjad Numerals
+hindiVowels	Hindi Vowels
+hindiConsonants	Hindi Consonants
+hindiNumbers	Hindi Numbers
+hindiCounting	Hindi Counting System
+thaiLetters	Thai Letters
+thaiNumbers	Thai Numerals
+thaiCounting	Thai Counting System
+-->
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for making Word docx files from TEI XML </p>
@@ -931,6 +994,7 @@ of this software, even if advised of the possibility of such damage.
       <w:t xml:space="preserve"> </w:t>
     </w:r>
   </xsl:template>
+
   <xsl:template name="commentNote">
     <w:r>
       <w:rPr>

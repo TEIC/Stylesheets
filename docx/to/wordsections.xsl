@@ -106,8 +106,10 @@ of this software, even if advised of the possibility of such damage.
 		  </xsl:variable>
 		  <w:headerReference w:type="{@type}" r:id="{concat('rId',100+$headernum)}"/>
 		</xsl:if>
-	      </xsl:for-each>
-	      
+	      </xsl:for-each>	      
+	      <w:footnotePr>
+		<w:numFmt w:val="{$footnoteNumbering}"/>
+	      </w:footnotePr>
 	      <w:pgSz>
 		<xsl:choose>
 		  <!-- landscape -->

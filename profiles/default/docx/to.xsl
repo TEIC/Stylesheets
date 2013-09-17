@@ -29,7 +29,7 @@
 
     <xsl:param name="renderAddDel">true</xsl:param>
     <xsl:param name="addColour">red</xsl:param>
-
+    <xsl:param name="footnoteNumbering">decimal</xsl:param>
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making Word docx files from TEI XML (see tei-docx.xsl)</p>
