@@ -56,7 +56,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-    <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
+   <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
     <xsl:param name="numberHeadings">false</xsl:param>
     <xsl:param name="numberHeadingsDepth">-1</xsl:param>
     <xsl:param name="numberBackHeadings"></xsl:param>
@@ -213,5 +213,12 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
+  <xsl:template match="tei:pb" mode="preflight">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:attribute name="rend">none</xsl:attribute>
+    </xsl:copy>
+  </xsl:template>
 
 </xsl:stylesheet>
