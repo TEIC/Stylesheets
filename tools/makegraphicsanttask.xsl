@@ -48,7 +48,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
    <xsl:key name="G" match="tei:graphic[not(ancestor::teix:egXML)]"  use="1"/>
    <xsl:key name="G" match="tei:media[not(ancestor::teix:egXML)]"  use="1"/>
-   <xsl:key name="PB" match="tei:pb[@facs and not(@rend='none')]" use="1"/>
+   <xsl:key name="PB" match="tei:pb[@facs[not(starts-with(.,'eebopage:'))] and not(@rend='none')]" use="1"/>
    <xsl:key name="Timeline" match="tei:timeline" use="1"/>
    <xsl:param name="mediaoverlay">false</xsl:param>
    <xsl:param name="coverimage"/>

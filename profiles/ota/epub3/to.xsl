@@ -214,10 +214,33 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:function>
 
-  <xsl:template match="tei:pb" mode="preflight">
+  <xsl:template match="tei:pb[@facs]" mode="preflight">
     <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <xsl:attribute name="rend">none</xsl:attribute>
+      <xsl:choose>
+	<xsl:when test="@rend='none'">
+          <xsl:copy-of select="@*"/>
+	</xsl:when>
+	<xsl:when test="starts-with(@facs,'eebopage:')">
+	  <xsl:copy-of select="@*[not(name(.)='facs')]"/>
+	  <xsl:attribute name="rend">none</xsl:attribute>
+	</xsl:when>
+        <xsl:when test="$fixgraphicsurl='true'">
+          <xsl:variable name="newName">
+            <xsl:text>media/pageimage</xsl:text>
+            <xsl:number level="any"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="tokenize(@facs,'\.')[last()]"/>
+          </xsl:variable>
+          <xsl:attribute name="facs">
+            <xsl:value-of select="$newName"/>
+          </xsl:attribute>
+	  <xsl:copy-of select="@*[not(name(.)='facs')]"/>
+          <xsl:copy-of select="@*[not(local-name()='facs')]"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="@*"/>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:copy>
   </xsl:template>
 
