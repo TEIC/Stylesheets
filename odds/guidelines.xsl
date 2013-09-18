@@ -644,20 +644,10 @@
     </xsl:if>
   </xsl:template>
 
-<!--
-  <xsl:template match="tei:divGen[@type='toc']">
-    <xsl:call-template name="mainPage"/>
-  </xsl:template>
--->
   <xsl:template name="javascriptHook">
     <script type="text/javascript" src="jquery-1.2.6.min.js">
       <xsl:comment>JQuery</xsl:comment>
     </script>
-    <!--
-    <script type="text/javascript" src="jquery.treeview.js">	
-       <xsl:comment>JQuery treeview</xsl:comment>
-    </script>
--->
     <script type="text/javascript" src="columnlist.js">
       <xsl:comment>JQuery columnlist</xsl:comment>
     </script>
@@ -675,12 +665,6 @@
 	  });
         })
     </script>
-    <xsl:if test="not($googleAnalytics='')">
-      <script type="text/javascript" src="udm-all.js">
-        <xsl:comment>UDM</xsl:comment>
-      </script>
-      <link rel="stylesheet" href="udm.css"/>
-    </xsl:if>
     <xsl:call-template name="jsForOdds"/>
   </xsl:template>
   <xsl:template name="sectionHeadHook">
