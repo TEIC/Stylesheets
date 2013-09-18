@@ -992,11 +992,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="Namespaces" match="*[not(ancestor::*)]" use="namespace-uri()"/>
   <xsl:template name="newLine">
 </xsl:template>
-  <xsl:template name="lineBreak">
-    <xsl:param name="id"/>
-    <xsl:text>
-</xsl:text>
-  </xsl:template>
   <xsl:template name="makeIndent">
     <xsl:variable name="depth" select="count(ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')])"/>
     <xsl:call-template name="makeSpace">
@@ -1031,9 +1026,8 @@ of this software, even if advised of the possibility of such damage.
           <xsl:when test="name(.)=''"/>
           <xsl:when test=".='http://www.w3.org/XML/1998/namespace'"/>
           <xsl:otherwise>
-            <xsl:call-template name="lineBreak">
-              <xsl:with-param name="id">22</xsl:with-param>
-            </xsl:call-template>
+	    <xsl:text>
+	    </xsl:text>
             <xsl:text>   </xsl:text>
             <xsl:text>xmlns:</xsl:text>
             <xsl:value-of select="name(.)"/>

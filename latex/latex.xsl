@@ -267,15 +267,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>make a line break</desc>
-   </doc>
-
-   <xsl:template name="lineBreak">
-      <xsl:param name="id"/>
-      <xsl:text>\mbox{}\newline &#10;</xsl:text>
-   </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>division-like object</desc>
    </doc>
 
