@@ -366,26 +366,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element lb</desc>
+      <desc>line break</desc>
    </doc>
-  <xsl:template match="tei:lb">
-    <xsl:choose>
-      <xsl:when test="parent::tei:body"/>
-      <xsl:when test="parent::tei:back"/>
-      <xsl:when test="parent::tei:front"/>
-      <xsl:when test="@type='hyphenInWord' and @rend='hidden'"/>
-      <xsl:when test="@rend='hidden'">
-        <xsl:text> </xsl:text>
-      </xsl:when>
-      <xsl:when test="@rend='-' or @type='hyphenInWord'">
-        <xsl:text>-</xsl:text>
-	<xsl:text>{\hskip1pt}\newline </xsl:text>
-      </xsl:when>
-      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
-      <xsl:otherwise>
+   <xsl:template name="lineBreak">
       <xsl:text>{\hskip1pt}\newline </xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

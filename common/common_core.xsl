@@ -1270,7 +1270,14 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:note" mode="plain"/>
   <xsl:template match="tei:app" mode="plain"/>
   <xsl:template match="tei:pb" mode="plain"/>
-  <xsl:template match="tei:lb" mode="plain"/>
+  <xsl:template match="tei:lb" mode="plain">
+    <xsl:choose>
+      <xsl:when test="@type='hyphenInWord'"/>
+      <xsl:otherwise>
+	<xsl:text> </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
   <xsl:template match="tei:figure" mode="plain">
     <xsl:text>[</xsl:text>
     <xsl:sequence select="tei:i18n('figureWord')"/>
@@ -1287,6 +1294,41 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process linebreaks</desc>
+   </doc>
+
+  <xsl:template match="tei:lb">
+    <xsl:choose>
+      <xsl:when test="parent::tei:div"/>
+      <xsl:when test="@type='hyphenInWord' and @rend='hidden'"/>
+      <xsl:when test="@rend='hidden'">
+        <xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:when test="@rend='-' or @type='hyphenInWord'">
+        <xsl:text>-</xsl:text>
+	<xsl:call-template name="lineBreak"/>
+      </xsl:when>
+      <xsl:when test="@rend='above'">
+        <xsl:text>⌜</xsl:text>
+      </xsl:when>
+      <xsl:when test="@rend='below'">
+        <xsl:text>⌞</xsl:text>
+      </xsl:when>
+      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or
+		      tei:is-first(.))"/>
+      <xsl:when test="@rend='show'">
+	<xsl:call-template name="lineBreak"/>
+      </xsl:when>
+      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
+      <xsl:otherwise>
+	<xsl:call-template name="lineBreak"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template name="lineBreak">
+    <xsl:text> </xsl:text>
+  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process forename</desc>

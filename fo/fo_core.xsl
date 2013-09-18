@@ -369,51 +369,21 @@ of this software, even if advised of the possibility of such damage.
       <desc>label element in mode 'print'</desc>
    </doc>
   <xsl:template match="tei:list/tei:label"/>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>label element</desc>
-   </doc>
-  <xsl:template match="tei:lb">
-      <xsl:choose>
-	<xsl:when test="parent::tei:body"/>
-	<xsl:when test="parent::tei:back"/>
-	<xsl:when test="parent::tei:front"/>
-	<xsl:when test="@type='hyphenInWord' and @rend='hidden'"/>
-	<xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
-	<xsl:when test="$activeLinebreaks='true'">
-	  <xsl:choose>
-	    <!-- this is a *visible* linebreak character 
-		 PassiveTeX implements it as a real line break
-	    -->
-	    <xsl:when test="parent::tei:list">
-	      <list-item>
-		<list-item-label>
-		  <block/>
-		</list-item-label>
-		<list-item-body>
-		  <block/>
-		</list-item-body>
-	      </list-item>
-	    </xsl:when>
-	    <xsl:when test="parent::tei:hi">
-	      <inline
-		  white-space-treatment="preserve"
-		  white-space-collapse="false">&#xA;</inline>
-	    </xsl:when>
-	    <xsl:when test="$foEngine='passivetex'">&#8232;</xsl:when>
-	    <xsl:otherwise>
-	      <block/>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:when>
-	<xsl:otherwise>
-	  <inline font-size="8pt">
-	    <xsl:text>❡</xsl:text>
-	  </inline>
-	</xsl:otherwise>
-      </xsl:choose>
+  <xsl:template name="lineBreak">
+    <xsl:choose>
+      <xsl:when test="parent::tei:hi">
+	<inline
+	    white-space-treatment="preserve"
+	    white-space-collapse="false">&#xA;</inline>
+      </xsl:when>
+      <xsl:when test="$foEngine='passivetex'">&#8232;</xsl:when>
+      <xsl:otherwise>
+	<block/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>list bibl</desc>
    </doc>
   <xsl:template match="tei:list|tei:listBibl">
       <xsl:if test="child::tei:head">

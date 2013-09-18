@@ -2165,25 +2165,14 @@ of this software, even if advised of the possibility of such damage.
       <w:ptab w:relativeTo="margin" w:alignment="{@type}" w:leader="none"/>
     </w:r>
   </xsl:template>
+  <xsl:template name="lineBreak">
   <xsl:template match="tei:lb">
-    <xsl:choose>
-      <xsl:when test="parent::tei:div"/>
-      <xsl:when test="parent::tei:body"/>
-      <xsl:when test="parent::tei:back"/>
-      <xsl:when test="parent::tei:front"/>
-      <xsl:when test="@rend='show'">
 	<w:r>
 	  <w:br/>
 	</w:r>
-      </xsl:when>
-      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
-      <xsl:otherwise>
-	<w:r>
-	  <w:br/>
-	</w:r>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
+
+</xsl:template>
   <!-- hyperlink -->
   <xsl:template match="tei:ptr">
     <xsl:choose>

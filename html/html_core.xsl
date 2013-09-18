@@ -482,44 +482,14 @@ of this software, even if advised of the possibility of such damage.
     </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element lb in plain mode</desc>
+    <desc>Line break</desc>
   </doc>
-  <xsl:template match="tei:lb" mode="plain">
-    <xsl:text> </xsl:text>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element lb. ignore if at very start or very end of a
-    block-level context</desc>
-  </doc>
-  <xsl:template match="tei:lb">
-    <xsl:choose>
-      <xsl:when test="parent::tei:body"/>
-      <xsl:when test="parent::tei:back"/>
-      <xsl:when test="parent::tei:front"/>
-      <xsl:when test="@type='hyphenInWord' and @rend='hidden'"/>
-      <xsl:when test="@rend='hidden'">
-        <xsl:text> </xsl:text>
-      </xsl:when>
-      <xsl:when test="@rend='-' or @type='hyphenInWord'">
-        <xsl:text>-</xsl:text>
-        <br/>
-      </xsl:when>
-      <xsl:when test="@rend='above'">
-        <xsl:text>⌜</xsl:text>
-      </xsl:when>
-      <xsl:when test="@rend='below'">
-        <xsl:text>⌞</xsl:text>
-      </xsl:when>
-      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or
-		      tei:is-first(.))"/>
-      <xsl:otherwise>
-        <br>
-	  <xsl:call-template name="makeRendition">
-	    <xsl:with-param name="default">false</xsl:with-param>
-	  </xsl:call-template>
-	</br>
-      </xsl:otherwise>
-    </xsl:choose>
+  <xsl:template name="lineBreak">
+    <br>
+      <xsl:call-template name="makeRendition">
+	<xsl:with-param name="default">false</xsl:with-param>
+      </xsl:call-template>
+    </br>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element l</desc>
@@ -861,8 +831,8 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:variable name="note-text">
 	  <xsl:apply-templates mode="plain"/>
 	</xsl:variable>
-	<xsl:value-of select="substring($note-text,1,500)"/>
-	<xsl:if test="string-length($note-text) &gt; 500">
+	<xsl:value-of select="substring($note-text,1,150)"/>
+	<xsl:if test="string-length($note-text) &gt; 150">
 	  <xsl:text>…</xsl:text>
 	</xsl:if>
       </xsl:variable>
@@ -1491,14 +1461,14 @@ of this software, even if advised of the possibility of such damage.
            <xsl:variable name="NOTES">
             <xsl:choose>
 	      <xsl:when test="self::tei:floatingText">
-		<xsl:variable name="me" select="generate-id(.)"/>
+		<xsl:variable name="outer" select="generate-id(.)"/>
 		<xsl:for-each select=".//tei:note[tei:isEndNote(.) or
 				      tei:isFootNote(.)]">
 		  <xsl:choose>
-		    <xsl:when test="count(ancestor::tei:floatingText)=1">
+		    <xsl:when test="count(ancestor-or-self::tei:floatingText)=1">
 		      <xsl:call-template name="makeaNote"/>
 		    </xsl:when>
-		    <xsl:when test="generate-id(ancestor::tei:floatingText[1])=$me">
+		    <xsl:when test="generate-id(ancestor-or-self::tei:floatingText[1])=$outer">
 		      <xsl:call-template name="makeaNote"/>
 		    </xsl:when>
 		  </xsl:choose>
