@@ -2166,13 +2166,11 @@ of this software, even if advised of the possibility of such damage.
     </w:r>
   </xsl:template>
   <xsl:template name="lineBreak">
-  <xsl:template match="tei:lb">
 	<w:r>
 	  <w:br/>
 	</w:r>
   </xsl:template>
 
-</xsl:template>
   <!-- hyperlink -->
   <xsl:template match="tei:ptr">
     <xsl:choose>
