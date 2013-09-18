@@ -1380,7 +1380,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="printNotes">
     <xsl:if test="key('FOOTNOTES',1) or
 		  key('ENDNOTES',1) or  
-		  ($autoEndNotes='true' and key('ALLNOTES',1))">
+		  ($autoEndNotes='true' and key('ALLNOTES',1))
+		  or (self::tei:floatingText and .//tei:note)">
       <xsl:choose>
         <xsl:when test="$footnoteFile='true'">
           <xsl:variable name="BaseFile">
