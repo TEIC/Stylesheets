@@ -1437,6 +1437,11 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:with-param name="style">sub</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
+      <xsl:when test="not(tei:is-inline(*[last()]))">
+	<xsl:call-template name="makeBlock">
+	  <xsl:with-param name="style">add</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
       <xsl:otherwise>
 	<xsl:call-template name="makeInline">
 	  <xsl:with-param name="style">add</xsl:with-param>
