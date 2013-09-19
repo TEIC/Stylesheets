@@ -214,14 +214,14 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:function>
 
-  <xsl:template match="tei:pb[@facs]" mode="preflight">
+  <xsl:template match="tei:pb[@facs]" mode="preflight" priority="99">
     <xsl:copy>
       <xsl:choose>
 	<xsl:when test="@rend='none'">
           <xsl:copy-of select="@*"/>
 	</xsl:when>
 	<xsl:when test="starts-with(@facs,'eebopage:')">
-	  <xsl:copy-of select="@*[not(name(.)='facs')]"/>
+          <xsl:copy-of select="@*"/>
 	  <xsl:attribute name="rend">none</xsl:attribute>
 	</xsl:when>
         <xsl:when test="$fixgraphicsurl='true'">
@@ -235,7 +235,6 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="$newName"/>
           </xsl:attribute>
 	  <xsl:copy-of select="@*[not(name(.)='facs')]"/>
-          <xsl:copy-of select="@*[not(local-name()='facs')]"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:copy-of select="@*"/>

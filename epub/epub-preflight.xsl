@@ -115,20 +115,22 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:apply-templates select="." mode="preflight"/>
 	      <tei:hi>
 		<xsl:copy-of select="$atts"/>
-		<xsl:copy-of select="current-group() except ."/>
+		<xsl:apply-templates select="current-group() except ."
+				     mode="preflight"/>
 	      </tei:hi>
           </xsl:when>
           <xsl:when test="self::tei:figure">
 	    <xsl:copy-of select="."/>
 	    <tei:hi>
 	      <xsl:copy-of select="$atts"/>
-	      <xsl:copy-of select="current-group() except ."/>
+	      <xsl:apply-templates select="current-group() except ."
+				   mode="preflight"/>
 	    </tei:hi>
           </xsl:when>
           <xsl:otherwise>
 	    <tei:hi>
 	      <xsl:copy-of select="$atts"/>
-	      <xsl:copy-of select="current-group()"/>
+		<xsl:apply-templates select="current-group()"     mode="preflight"/>
 	    </tei:hi>
           </xsl:otherwise>
         </xsl:choose>
