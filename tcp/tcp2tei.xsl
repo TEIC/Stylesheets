@@ -500,7 +500,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="PB/@REF">
     <xsl:attribute name="facs">
       <xsl:value-of
-	  select="('eebopage',translate(normalize-space(/ETS/EEBO/IDG/VID),' ',''),.)" separator=":"/>
+	  select="('eebopage',translate(normalize-space(/ETS/EEBO/IDG/VID),' ',''),replace(.,'^\.',''))" separator=":"/>
     </xsl:attribute>
   </xsl:template>
 
@@ -764,7 +764,7 @@ of this software, even if advised of the possibility of such damage.
       <listPrefixDef>
 	<prefixDef
 	    ident="eebopage"
-	    matchPattern="([0-9]+):([0-9]+)"
+	    matchPattern="([0-9\-]+):([0-9IVX]+)"
 	    replacementPattern="http://eebo.chadwyck.com/downloadtiff?vid=$1&amp;page=$2">
 	</prefixDef>
       </listPrefixDef>
