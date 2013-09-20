@@ -500,7 +500,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="PB/@REF">
     <xsl:attribute name="facs">
       <xsl:value-of
-	  select="('eebopage',translate(normalize-space(/ETS/EEBO/IDG/VID),' ',''),replace(.,'^\.',''))" separator=":"/>
+	  select="('eebopage',translate(normalize-space(/ETS/EEBO/IDG/VID),' ',''),normalize-space(replace(.,'^\.','')))" separator=":"/>
     </xsl:attribute>
   </xsl:template>
 
