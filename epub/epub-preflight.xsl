@@ -120,7 +120,7 @@ of this software, even if advised of the possibility of such damage.
 	      </tei:hi>
           </xsl:when>
           <xsl:when test="self::tei:figure">
-	    <xsl:copy-of select="."/>
+	    <xsl:apply-templates select="." mode="preflight"/>
 	    <tei:hi>
 	      <xsl:copy-of select="$atts"/>
 	      <xsl:apply-templates select="current-group() except ."
