@@ -2661,6 +2661,10 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:when test="tei:head">
 	       <xsl:apply-templates select="tei:head" mode="plain"/>
 	     </xsl:when>
+	     <xsl:when test="self::tei:TEI">
+	       <xsl:value-of
+		   select="tei:generateTitle(.)"/>
+	     </xsl:when>
 	     <xsl:when test="self::tei:text">
 	       <xsl:value-of
 		   select="tei:generateTitle(ancestor::tei:TEI)"/>
