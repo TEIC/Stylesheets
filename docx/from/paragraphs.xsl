@@ -291,10 +291,10 @@ of this software, even if advised of the possibility of such damage.
     <xsl:template name="process-index-term">
       <xsl:param name="term"/>
       <xsl:param name="xr"/>
-      <!--xsl:message>[<xsl:value-of select="$term"/>]</xsl:message-->
+
       <xsl:choose>
 	<xsl:when test="starts-with($term,'XE') or starts-with($term,' XE')">
-	  <xsl:variable name="quoted-text" select="concat('[^',$dblq,']+',$dblq,'([^',$dblq,']+)',$dblq,'.*')"/>
+	  <xsl:variable name="quoted-text" select="concat('[^',$dblq,']+',$dblq,'([^',$dblq,']+)',$dblq,'?.*')"/>
 	  <xsl:variable name="clean-term" select="fn:replace($term,$quoted-text,'$1')"/>
 	  <xsl:variable name="span" select="fn:replace(substring-after($term,$usr),$quoted-text,'$1')"/>
 	  <xsl:variable name="see">
@@ -308,7 +308,8 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:attribute>
 	    </xsl:if>
 	    <xsl:call-template name="process-index-term">
-	      <xsl:with-param name="term" select="substring-after(normalize-space($clean-term),'XE')"/>
+	      <xsl:with-param name="term"
+			      select="normalize-space($clean-term)"/>
 	      <xsl:with-param name="xr"  select="normalize-space($see)"/>
 	    </xsl:call-template>
 	  </index>
@@ -334,6 +335,9 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:if>
 	  </term>
 	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:message>[4. <xsl:value-of select="$term"/>]</xsl:message>
+	</xsl:otherwise>
       </xsl:choose> 
     </xsl:template>
       
