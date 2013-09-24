@@ -308,7 +308,7 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:attribute>
 	    </xsl:if>
 	    <xsl:call-template name="process-index-term">
-	      <xsl:with-param name="term" select="normalize-space($clean-term)"/>
+	      <xsl:with-param name="term" select="substring-after(normalize-space($clean-term),'XE')"/>
 	      <xsl:with-param name="xr"  select="normalize-space($see)"/>
 	    </xsl:call-template>
 	  </index>
