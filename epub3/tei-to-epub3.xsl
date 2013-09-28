@@ -341,7 +341,8 @@ height: </xsl:text>
                 </xsl:for-each>
               </xsl:if>
               <xsl:if test="not($coverImageOutside='')">
-                <item href="{$coverImageOutside}" id="cover-image" media-type="image/jpeg"/>
+                <item href="{$coverImageOutside}" id="cover-image"
+		      properties="cover-image" media-type="image/jpeg"/>
               </xsl:if>
               <xsl:for-each select="tokenize($javascriptFiles,',')">
                 <xsl:variable name="name" select="tokenize(normalize-space(.),'/')[last()]"/>
@@ -359,7 +360,10 @@ height: </xsl:text>
               </xsl:for-each>
               <item href="titlepageback.html" id="titlepageback" media-type="application/xhtml+xml"/>
               <item id="toc" properties="nav" href="toc.html" media-type="application/xhtml+xml"/>
-              <item id="start" href="index.html" media-type="application/xhtml+xml"/>
+              <item id="start" href="index.html"
+		    media-type="application/xhtml+xml">
+		<xsl:call-template name="epub-start-properties"/>
+	      </item>
               <xsl:choose>
                 <xsl:when test="$filePerPage='true'">
                   <xsl:for-each select="key('PB',1)">
@@ -906,4 +910,5 @@ height: </xsl:text>
   <xsl:template name="epubSpineHook"/>
   <xsl:template name="epubManifestHook"/>
   <xsl:template name="processTEIHook"/>
+  <xsl:template name="epub-start-properties"/>
 </xsl:stylesheet>
