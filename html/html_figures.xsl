@@ -139,7 +139,8 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:when>
 	<xsl:when test="@align"/>
 	<xsl:when test="not($cellAlign='left')">
-	  <xsl:attribute name="align">
+	  <xsl:attribute name="style">
+	    <xsl:text>text-align:</xsl:text>
 	    <xsl:value-of select="$cellAlign"/>
 	  </xsl:attribute>
 	</xsl:when>
