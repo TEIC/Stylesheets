@@ -506,8 +506,6 @@ of this software, even if advised of the possibility of such damage.
 
 
    <xsl:template name="getgraphics">
-     <xsl:message>Media dir is <xsl:value-of
-     select="($mediaDir, $outputDir)" separator=" in "/></xsl:message>
      <xsl:result-document href="{concat($directory,'/copy.xml')}">
      <project xmlns="" basedir="." default="dist" name="imagecopy">
        <target name="dist">
