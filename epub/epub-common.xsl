@@ -44,7 +44,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:key match="tei:graphic[not(ancestor::teix:egXML or starts-with(@url,'film:'))]" use="1" name="G"/>
   <xsl:key match="tei:media[not(ancestor::teix:egXML)]" use="1" name="G"/>
-  <xsl:key name="GRAPHICS" use="1" match="tei:graphic[not(starts-with(@url,'film:'))]|tei:media"/>
+  <xsl:key name="GRAPHICS" use="1" match="tei:graphic|tei:media"/>
   <xsl:key name="PBGRAPHICS" use="1" match="tei:pb[@facs and not(@rend='none')]"/>
   <xsl:key name="Timeline" match="tei:timeline" use="1"/>
   <xsl:key name="Object" match="tei:when" use="substring(@corresp,2)"/>
