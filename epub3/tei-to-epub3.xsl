@@ -15,8 +15,6 @@
   <xsl:import href="../epub/epub-common.xsl"/>
   <xsl:import href="../epub/epub-preflight.xsl"/>
   <xsl:output method="xml" encoding="utf-8" doctype-system="" indent="no"/>
-  <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
-  <xsl:key match="tei:media[not(ancestor::teix:egXML)]" use="1" name="G"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p>
@@ -92,6 +90,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="topNavigationPanel">false</xsl:param>
   <xsl:param name="uid"/>
   <xsl:param name="useHeaderFrontMatter">false</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>(extensible) wrapper for root element</desc>
   </doc>
@@ -179,6 +178,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:if test="$verbose='true'">
           <xsl:message>write file OPS/stylesheet.css</xsl:message>
         </xsl:if>
+
         <xsl:result-document method="text" href="{concat($directory,'/OPS/stylesheet.css')}">
           <xsl:if test="not($cssFile='')">
             <xsl:if test="$verbose='true'">
@@ -822,6 +822,8 @@ height: </xsl:text>
 
       </xsl:for-each>
     </xsl:for-each>
+    <xsl:call-template name="getgraphics"/>
+
   </xsl:template>
 
   <xsl:template name="opfmetadata">

@@ -806,6 +806,7 @@ height: </xsl:text>
         </xsl:if>
       </xsl:for-each>
     </xsl:for-each>
+    <xsl:call-template name="getgraphics"/>
   </xsl:template>
   <xsl:template match="html:li">
     <xsl:choose>

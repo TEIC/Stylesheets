@@ -42,14 +42,21 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
+  <xsl:key match="tei:graphic[not(ancestor::teix:egXML or starts-with(@url,'film:'))]" use="1" name="G"/>
   <xsl:key match="tei:media[not(ancestor::teix:egXML)]" use="1" name="G"/>
-  <xsl:key name="GRAPHICS" use="1" match="tei:graphic|tei:media"/>
+  <xsl:key name="GRAPHICS" use="1" match="tei:graphic[not(starts-with(@url,'film:'))]|tei:media"/>
   <xsl:key name="PBGRAPHICS" use="1" match="tei:pb[@facs and not(@rend='none')]"/>
   <xsl:key name="Timeline" match="tei:timeline" use="1"/>
   <xsl:key name="Object" match="tei:when" use="substring(@corresp,2)"/>
   <xsl:key name="objectOnPage" match="tei:*[@xml:id]" use="generate-id(preceding::tei:pb[1])"/>
-
+  <xsl:key name="PB"
+	   match="tei:pb[not(@facs='') and not(starts-with(@facs,'eebopage:')) and not(@rend='none')]" use="1"/>
+  <xsl:key name="Timeline" match="tei:timeline" use="1"/>
+  <xsl:param name="mediaoverlay">false</xsl:param>
+  <xsl:param name="coverimage"/>
+  <xsl:param name="coverDir"/>
+  <xsl:param name="filePerPage">false</xsl:param>
+  <xsl:param name="mediaDir">media</xsl:param>
   <xsl:param name="javascriptFiles"/>
   <xsl:param name="pagebreakStyle">simple</xsl:param>
   <xsl:param name="epubMimetype">application/epub+zip</xsl:param>
@@ -496,5 +503,108 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="hdr3"/>
+
+
+   <xsl:template name="getgraphics">
+     <xsl:message>Media dir is <xsl:value-of
+     select="($mediaDir, $outputDir)" separator=" in "/></xsl:message>
+     <xsl:result-document href="{concat($directory,'/copy.xml')}">
+     <project xmlns="" basedir="." default="dist" name="imagecopy">
+       <target name="dist">
+	 <xsl:if test="key('PB',1) or key('G',1)">
+	   <mkdir>
+	     <xsl:attribute name="dir">
+	       <xsl:value-of select="$outputDir"/>
+	       <xsl:text>/</xsl:text>
+	       <xsl:value-of select="$mediaDir"/>
+	     </xsl:attribute>
+	   </mkdir>
+	 </xsl:if>
+	 <xsl:if test="not($coverimage='')">
+	     <copy toFile="{$coverDir}/{tokenize($coverimage,'/')[last()]}" file="{$coverimage}"/>
+	 </xsl:if>
+	 <xsl:if test="$mediaoverlay='true' and key('Timeline',1)">
+	   <xsl:for-each select="key('Timeline',1)">
+	     <xsl:variable name="target">
+	       <xsl:value-of select="$outputDir"/>
+	       <xsl:text>/</xsl:text>
+	       <xsl:value-of select="$mediaDir"/>
+	       <xsl:text>/audio</xsl:text>
+	       <xsl:number level="any"/>
+	       <xsl:text>.</xsl:text>
+	       <xsl:value-of select="tokenize(@corresp,'\.')[last()]"/>
+	     </xsl:variable>
+	     <copy toFile="{$target}" file="{$inputDir}/{@corresp}"/>
+	   </xsl:for-each>
+	 </xsl:if>
+
+	 <xsl:for-each select="key('PB',1)">
+	   <xsl:if test="@facs">
+	     <xsl:variable name="F">
+	     <xsl:choose>
+	       <xsl:when test="starts-with(@facs,'#')">
+		 <xsl:for-each
+		     select="id(substring(@facs,2))">
+		   <xsl:value-of select="tei:resolveURI(.,descendant-or-self::*[@url][1]/@url)"/>
+		 </xsl:for-each>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:value-of select="tei:resolveURI(.,@facs)"/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:variable>
+	   <xsl:variable name="target">
+	     <xsl:value-of select="$outputDir"/>
+	     <xsl:text>/</xsl:text>
+	     <xsl:value-of select="$mediaDir"/>
+	     <xsl:text>/pageimage</xsl:text>
+	     <xsl:number level="any"/>
+	     <xsl:text>.</xsl:text>
+	     <xsl:value-of select="tokenize($F,'\.')[last()]"/>
+	   </xsl:variable>
+	   <xsl:choose>
+	     <xsl:when test="contains($F,':')">
+	       <get src="{$F}" dest="{$target}"/>
+	     </xsl:when>
+	     <xsl:when test="starts-with($F,'/')">
+	       <copy toFile="{$target}" file="{@url}"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <copy toFile="{$target}" file="{$inputDir}/{$F}"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	   </xsl:if>
+	 </xsl:for-each>
+
+	 <xsl:for-each select="key('G',1)">
+	   <xsl:variable name="F">
+	     <xsl:value-of select="@url"/>
+	   </xsl:variable>
+	   <xsl:variable name="target">
+	     <xsl:value-of select="$outputDir"/>
+	     <xsl:text>/</xsl:text>
+	     <xsl:value-of select="$mediaDir"/>
+	     <xsl:text>/resource</xsl:text>
+	     <xsl:number level="any"/>
+	     <xsl:text>.</xsl:text>
+	     <xsl:value-of select="tokenize($F,'\.')[last()]"/>
+	   </xsl:variable>
+	   <xsl:choose>
+	     <xsl:when test="contains($F,':')">
+	       <get src="{$F}" dest="{$target}"/>
+	     </xsl:when>
+	     <xsl:when test="starts-with($F,'/')">
+	       <copy toFile="{$target}" file="{@url}"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <copy toFile="{$target}" file="{$inputDir}/{@url}"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	 </xsl:for-each>
+
+       </target>
+     </project>
+     </xsl:result-document>
+ </xsl:template>
 
 </xsl:stylesheet>
