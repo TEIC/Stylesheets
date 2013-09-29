@@ -58,6 +58,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="filePerPage">false</xsl:param>
   <xsl:param name="mediaDir">media</xsl:param>
   <xsl:param name="javascriptFiles"/>
+  <xsl:param name="extraGraphicsFiles"/>
   <xsl:param name="pagebreakStyle">simple</xsl:param>
   <xsl:param name="epubMimetype">application/epub+zip</xsl:param>
 
@@ -572,6 +573,25 @@ of this software, even if advised of the possibility of such damage.
 	     </xsl:otherwise>
 	   </xsl:choose>
 	   </xsl:if>
+	 </xsl:for-each>
+
+	 <xsl:for-each select="tokenize($extraGraphicsFiles,',')">
+	   <xsl:variable name="target">
+	     <xsl:value-of select="$outputDir"/>
+	     <xsl:text>/</xsl:text>
+	     <xsl:value-of select="tokenize(.,'/')[last()]"/>
+	   </xsl:variable>
+	   <xsl:choose>
+	     <xsl:when test="contains(.,':')">
+	       <get src="{.}" dest="{$target}"/>
+	     </xsl:when>
+	     <xsl:when test="starts-with(.,'/')">
+	       <copy toFile="{$target}" file="{.}"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <copy toFile="{$target}" file="{$inputDir}/{.}"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
 	 </xsl:for-each>
 
 	 <xsl:for-each select="key('G',1)">

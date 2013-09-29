@@ -468,6 +468,16 @@ height: </xsl:text>
                 </xsl:variable>
                 <item href="{$img}" id="pbimage-{$ID}" media-type="{$mimetype}"/>
               </xsl:for-each>
+	      <xsl:for-each select="tokenize($extraGraphicsFiles,',')">
+		<xsl:variable name="mimetype">
+                  <xsl:choose>
+                    <xsl:when test="contains(.,'.gif')">image/gif</xsl:when>
+                    <xsl:when test="contains(.,'.png')">image/png</xsl:when>
+                    <xsl:otherwise>image/jpeg</xsl:otherwise>
+                  </xsl:choose>
+                </xsl:variable>
+                <item href="{.}" id="graphic-{.}" media-type="{$mimetype}"/>
+	      </xsl:for-each>
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
               <xsl:call-template name="epubManifestHook"/>
             </manifest>
