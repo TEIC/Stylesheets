@@ -851,7 +851,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:value-of select="$default"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt">
+          <xsl:for-each select="/*/tei:teiHeader/tei:fileDesc/tei:publicationStmt">
             <xsl:for-each select="tei:authority|tei:publisher|tei:distributor|tei:p">
               <xsl:value-of select="normalize-space(.)"/>
               <xsl:if test="following-sibling::tei:authority|tei:publisher|tei:distributor|tei:p">
