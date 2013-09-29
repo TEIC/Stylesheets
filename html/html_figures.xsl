@@ -150,6 +150,11 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="@role"/>
 	</xsl:attribute>
       </xsl:if>
+      <xsl:if test="ancestor::tei:table/@rend='rules' and not(@rend)">
+	<xsl:attribute name="style">
+	  <xsl:text>border: 1px solid black; padding: 2px;</xsl:text>
+	</xsl:attribute>
+      </xsl:if>
       <xsl:if test="@xml:id">	   
 	<xsl:call-template name="makeAnchor"/>
       </xsl:if>
@@ -291,8 +296,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:with-param name="default">false</xsl:with-param>
 	  </xsl:call-template>
 	   <xsl:if test="@rend='frame' or @rend='rules'">
-	     <xsl:attribute name="rules">all</xsl:attribute>
-	     <xsl:attribute name="border">1</xsl:attribute>
+	     <xsl:attribute name="style">border-collapse:collapse;border-spacing:0;</xsl:attribute>
 	   </xsl:if>
 	   <xsl:for-each select="@*">
 	     <xsl:if test="name(.)='summary' or name(.) = 'width' or name(.) = 'border' or name(.) = 'frame' or name(.) = 'rules' or name(.) = 'cellspacing' or name(.) = 'cellpadding'">
