@@ -90,6 +90,7 @@ test-html:
 	diff test27.html expected-results/test27.html
 	rm -rf files
 	$(SAXON) test28.xml ../html/html.xsl splitLevel=0  STDOUT=false $(SAXONOPT) 
+	xmllint --format index.html > x ; mv x index.html
 	diff index.html expected-results/test28.html
 
 testsplit:

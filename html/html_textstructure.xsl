@@ -2207,7 +2207,6 @@ of this software, even if advised of the possibility of such damage.
          <xsl:call-template name="preAddressHook"/>
          <address>
             <xsl:if test="not($author='')">
-               <xsl:text> </xsl:text>
                <xsl:value-of select="$author"/>.
 	    </xsl:if>
             <xsl:sequence select="tei:i18n('dateWord')"/>
