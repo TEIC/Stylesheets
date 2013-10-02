@@ -304,12 +304,17 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:message>Processing file <xsl:value-of
 	select="$inputFile"/></xsl:message>
       </xsl:if>
-      <xsl:for-each select="*">
-	<xsl:call-template name="write-docxfiles"/>
-      </xsl:for-each>
       <xsl:variable name="pass0">
 	<xsl:apply-templates mode="pass0"/>
       </xsl:variable>
+      <!--
+	  <xsl:result-document href="/tmp/x.xml">
+	  <xsl:copy-of select="$pass0"/>
+	  </xsl:result-document>
+      -->
+      <xsl:for-each select="$pass0/*">
+	<xsl:call-template name="write-docxfiles"/>
+      </xsl:for-each>
       <xsl:variable name="pass2">
 	<xsl:apply-templates select="$pass0/*"/>
       </xsl:variable>

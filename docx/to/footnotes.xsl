@@ -106,7 +106,6 @@ of this software, even if advised of the possibility of such damage.
                     <w:p/>
                     <w:p/>
                 </w:footnote>
-                
                 <xsl:for-each select="key('FOOTNOTES',1)">
                     <xsl:variable name="id" select="position()+1"/>
                     <w:footnote w:id="{$id}">

@@ -581,7 +581,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
           <xsl:apply-templates select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle/tei:titlePart"/>
         </xsl:when>
-        <xsl:when test="self::tei:teiCorpus">
+        <xsl:when test="ancestor-or-self::tei:teiCorpus">
           <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type='subordinate')]"/>
         </xsl:when>
         <xsl:otherwise>
