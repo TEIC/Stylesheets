@@ -652,6 +652,12 @@ of this software, even if advised of the possibility of such damage.
             </xsl:choose>
           </xsl:for-each>
         </xsl:when>
+        <xsl:when test="ancestor-or-self::tei:teiCorpus/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+          <xsl:for-each select="ancestor-or-self::tei:teiCorpus/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+            <xsl:apply-templates
+		select="*[not(self::tei:email)]|text()"/>
+	  </xsl:for-each>
+	</xsl:when>
         <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author']">
           <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author'][1]/tei:name"/>
         </xsl:when>

@@ -225,6 +225,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates mode="metadata"/>
   </xsl:template>
 
+  <xsl:template match="tei:classDecl" mode="metadata"/>
+
   <xsl:template match="tei:sourceDesc/tei:bibl" mode="metadata">
     <p> — <xsl:apply-templates mode="metadata"/></p>
   </xsl:template>
