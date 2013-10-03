@@ -21,6 +21,9 @@
    <XSL:template match="title">
       <XSL:call-template name="E35"/>
    </XSL:template>
+   <XSL:template match="teiCorpus">
+      <XSL:call-template name="TEI"/>
+   </XSL:template>
    <XSL:template match="fileDesc">
       <XSL:call-template name="F24"/>
    </XSL:template>

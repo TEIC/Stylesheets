@@ -97,7 +97,7 @@
   <xsl:template name="E31">
     <E31_Document xmlns="http://purl.org/NET/crm-owl#" 
 	rdf:about="{tei:makeID(.,'id')}">
-      <xsl:apply-templates select="parent::TEI/teiHeader/fileDesc"/>
+      <xsl:apply-templates select="parent::TEI/teiHeader/fileDesc|parent::teiCorous/teiHeader/fileDesc"/>
     </E31_Document>
     <xsl:apply-templates/>
   </xsl:template>
@@ -557,9 +557,9 @@
       <xsl:variable name="baseid">
 	<xsl:choose>
 	  <xsl:when
-	      test="ancestor::TEI/teiHeader/fileDesc/publicationStmt/idno[starts-with(.,'http')]">
+	      test="(ancestor::TEI|ancestor::teiCorpus)/teiHeader/fileDesc/publicationStmt/idno[starts-with(.,'http')]">
 	    <xsl:value-of 
-		select="ancestor::TEI/teiHeader/fileDesc/publicationStmt/idno[starts-with(.,'http')][1]"/>
+		select="(ancestor::TEI|ancestor::teiCorpus)/teiHeader/fileDesc/publicationStmt/idno[starts-with(.,'http')][1]"/>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:choose>
@@ -575,8 +575,8 @@
 		<xsl:value-of select="@xml:id"/>
 	      </xsl:when>
 	      <xsl:when
-		  test="ancestor::TEI/teiHeader/fileDesc/publicationStmt/idno">
-		<xsl:value-of select="ancestor::TEI/teiHeader/fileDesc/publicationStmt/idno[1]"/>
+		  test="(ancestor::TEI|ancestor::teiCorpus)/teiHeader/fileDesc/publicationStmt/idno">
+		<xsl:value-of select="(ancestor::TEI|ancestor::teiCorpus)/teiHeader/fileDesc/publicationStmt/idno[1]"/>
 	      </xsl:when>
 	      <xsl:otherwise>
 		<xsl:number level="any"/>
@@ -588,9 +588,9 @@
       <xsl:variable name="baseurl">
 	<xsl:choose>
 	  <xsl:when
-	      test="ancestor::TEI/teiHeader/fileDesc/publicationStmt/idno[contains(.,'/id/')]">
+	      test="(ancestor::TEI|ancestor::teiCorpus)/teiHeader/fileDesc/publicationStmt/idno[contains(.,'/id/')]">
 	    <xsl:analyze-string
-		select="ancestor::TEI/teiHeader/fileDesc/publicationStmt/idno[contains(.,'/id/')][1]"
+		select="(ancestor::TEI|ancestor::teiCorpus)/teiHeader/fileDesc/publicationStmt/idno[contains(.,'/id/')][1]"
 		regex="(.*)/id/[^/]+">
 	      <xsl:matching-substring>
 		<xsl:value-of select="regex-group(1)"/>
