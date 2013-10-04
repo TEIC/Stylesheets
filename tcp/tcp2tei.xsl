@@ -429,42 +429,24 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="*" />
       <xsl:if test="parent::FILEDESC">
         <xsl:call-template name="makeID"/>
-        <xsl:for-each select="$HERE">
-          <xsl:for-each select="/ETS/EEBO/IDG">
-            <xsl:for-each select="STC">
-              <idno type="STC">
-                <xsl:value-of select="."/>
-              </idno>
-            </xsl:for-each>
-            <idno type="TCP">
-              <xsl:value-of select="@ID"/>
-            </idno>
-            <idno type="BIBNO">
-              <xsl:value-of select="BIBNO"/>
-            </idno>
-            <xsl:for-each select="VID">
-	      <xsl:choose>
-              <xsl:when test="@SET">
-                <idno type="{@SET}">
-                  <xsl:value-of select="."/>
-                </idno>
-	      </xsl:when>
-	      <xsl:otherwise>
-                <idno type="VID">
-                  <xsl:value-of select="translate(normalize-space(.),' ','')"/>
-                </idno>
-	      </xsl:otherwise>
-	      </xsl:choose>
-            </xsl:for-each>
-          </xsl:for-each>
-        </xsl:for-each>
-        <xsl:call-template name="idnoHook"/>
       </xsl:if>
+      <xsl:call-template name="idnoHook"/>
     </publicationStmt>
   </xsl:template>
 
-  <xsl:template match="PUBLICATIONSTMT/IDNO"/>
-  <xsl:template match="FILEDESC/EXTENT" />
+  <xsl:template match="IDNO">
+    <idno>
+        <xsl:apply-templates select="@*" />
+        <xsl:apply-templates/>
+    </idno>
+  </xsl:template>
+
+  <xsl:template match="FILEDESC/EXTENT" >
+    <extent>
+        <xsl:apply-templates select="@*" />
+        <xsl:apply-templates/>
+    </extent>
+  </xsl:template>
   <xsl:template match="EEBO/GROUP">
     <text>
       <group>
