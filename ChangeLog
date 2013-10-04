@@ -1,3 +1,427 @@
+2013-10-04  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+	VERSION 7.2.0
+	change to way TCP metadata is shown
+
+	change result from change in thinking about $pPr
+
+	use header file not text for TCP metadata
+
+	make sure that footnotes keep footnoteRef, even when a style is present. involves making sure all uses of $pPr are as nodes, not string. also cope with <w:sdt> properly
+
+2013-10-03  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	add support for teiCorpus to RDF conversion
+
+2013-10-02  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	change in generateAuthor to remove trailing space, and work with corpus
+
+	update version for new release
+
+	write auxiliary files (eg footnotes) _after_ completing pass0
+
+	dont show classDecl in epub metadata; get author from header of corpus where appropriate
+
+2013-09-29  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	allow for extra graphics files in epub
+
+	allow for corpus ancestor in generatePublisher
+
+	dont use @rules on table, use CSS instead
+
+	dont special case @url of film: here
+
+2013-09-28  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	need to add properties to manifest entries for epub3
+
+	avoid old @align on HTML cells
+
+	remove debug
+
+	create Ant job to copy graphics files from within main epub transformation
+
+	correct mistake when getting title from teiCorpus
+
+2013-09-25  martindholmes  <mholmes@uvic.ca>
+
+	Fixing broken URL in oddbyexample.xsl; location of file has changed in deb package.
+
+2013-09-24  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	index term does not always have double quote at the end (undo last, wrong, fix)
+
+	processing of index entries in docx, need to strip off XE first
+
+2013-09-22  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	allow for writeDiv at level of <TEI>
+
+2013-09-20  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	TCP results changed
+
+	protect against trailing space in PB/@REF
+
+	extend regexp for eebopage URL scheme for include roman numerals, and junk left-trailing . in page numbers
+
+	make sure all comons in preflight are processed in the right mode
+
+2013-09-19  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	fix epub preflight so that elements within <hi> are processed in proper mode
+
+	allow for block-level objects inside <add>
+
+2013-09-18  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	remove typo
+
+	footnotes in <floatingText> were not working
+
+	remove redundant lineBreak functions
+
+	change to notes means some changed test results
+
+2013-09-18  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	donr put in TEIC-specific udm code
+
+	dont process eebopage: @facs values
+
+	normslize handling of <lb> into core
+
+2013-09-17  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	change to Word output test file
+
+	new parameter in TEI to Word, footnoteNumbering, to set the numbering style for footnotes
+
+	clean up tree processing code
+
+2013-09-17  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	drop <pb>  when processing EEBO data
+
+	more tree test data
+
+2013-09-16  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	change in result file in test
+
+2013-09-16  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	refinements to handling of trees; don't show links which are inside a <forest>
+
+	escape single quote when making JSON for trees; update tree test file to have all examples from Guidelines
+
+2013-09-11  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	more cleaning
+
+	stanza to test www.tei-c garage too
+
+	<msWriting> does not exist, so do not support it
+
+	how to test oxgarage
+
+2013-09-10  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	tweak test result
+
+	support @cRef on <ptr> minimally in Word generation; add marginRight and Left to default Word templates
+
+	allow for CSS names for values of @place
+
+	take account of @facs pointing at a <graphic> element directly or at an element which contains a <graphic>
+	found by Torsten Schassan
+
+	d3-generated tree diagrams now more robust and responsive to content variation
+
+2013-09-10  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	more work on d3-generated trees
+
+2013-09-09  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	tweak D3 trees, and start looking at width and depth of nodes
+
+2013-09-08  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	look for <div> at any level when making styleabear and styledoc
+
+	documentation cleaning
+
+2013-09-07  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	missing Debian file giving compat level
+
+	version updated
+
+	time for a new release
+
+	better implementation of handling <ref> with no target
+
+	a <ref> without @target should not throw away the contents
+
+2013-09-06  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	trying to merge Merge branch 'master' of https://github.com/TEIC/Stylesheets
+	Conflicts:
+		profiles/agora/docx/to.xsl
+
+2013-09-06  Lou Burnard  <lou@psammead.(none)>
+
+	remove old version ; add 4-pass version of from.xsl
+
+	there should be no to.xsl and the from is out of date
+
+2013-09-06  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	changes to test files as a result of normalizing <head> in HTML
+
+2013-09-06  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	improved d3-based tree rendering
+
+	normalise the creation of HTML <head> element to single function
+
+2013-09-02  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	result file changed with date, needs stripping
+
+	typos in doc
+
+2013-09-02  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	results changed by adding new HTML module to XSL
+
+2013-09-01  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	preliminary support for <eTree>/<eLeaf> in HTML and LaTeX
+
+	force encoding in output
+
+	add section to test.xml for div with no heading
+	also simplify working of autoHead, change symbol for what autoMakeHead
+	does by default, and make OTA HTML more like OTA epub
+
+2013-08-31  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	if autoHeadr is set to false. really don't make any heading at all.
+	https://sourceforge.net/p/tei/bugs/595/
+
+	do special processing for <biblStruct> only if no <bibl> present in <listBibl>
+
+	process `<head>` inside `<listBibl>` properly in HTML and LaTeX
+	see https://sourceforge.net/p/tei/bugs/593/
+
+	process `<salute>` in standard way, so that @rend is noticed
+
+2013-08-09  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	change results
+
+	allow for <head> as child of front/body/back
+
+	better distinguish notes in floating texts from normal notes
+
+2013-08-09  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	coding mistake
+
+	allow for notes within <floatingText>, just number them
+
+	calculation of note number should not be confused by <floatingText>
+
+2013-08-09  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	eejit
+
+	ignore LOG file
+
+	do test20 in latex as well, working on rendering
+
+2013-08-08  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	make sure <edition> goes through space normalization
+
+	more test cases
+
+	using more common code to process inline elements means a lot of changes to test results
+
+	borders around revisionDesc table
+
+2013-08-08  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	refactoring some more inline elements to put a single match in common area, using makeInline template
+
+2013-08-07  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	missing test result
+
+	redo standard header and footer for simple HTML
+	omit institution, feedback, search etc if URLs not explicitly provided
+
+2013-08-06  martindholmes  <mholmes@uvic.ca>
+
+	Removing my popup js from the odds guidelines.xsl file. I've moved it into the svn repo guidelines.xsl.model file instead, keeping it local to our build of the guidelines.
+
+2013-08-06  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	missing file
+
+2013-08-06  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	clean up LaTeX <app> processing
+	switch to using eledmac instead of ledmac;add test file for use of
+	<app>; suppress <app> with @from
+
+	correct way to declare italic in LaTeX is \itshape, not \textit. Durr.
+
+2013-08-05  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	change the way conversion to LaTeX does arbitrary commands. use a brace group instead of a command with param
+
+	guard effect of LaTeX commands inside braces to be careful
+
+	can't assume people have Helvetica and Times Roman fonts
+
+2013-08-05  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	change the way font is set in egXML examples in LaTeX
+	the previous vversion caused P5 Guidelines to fall over in
+	incomprehensible ways. just make it \ttfamily\small and have done with
+	it
+
+2013-08-05  martindholmes  <mholmes@uvic.ca>
+
+	Attempting to add a change to guidelines.xsl which should add the popup footnotes functionality,
+
+2013-08-04  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	fix error in teitoodt where calculating height of picture
+
+	<label> test provokes fixes for of and docx too
+
+	new test file for working on @rend
+
+	take account of @rend on <title> and <label>; while there, handle forename and surname inside author/editor better
+	resposnse to https://sourceforge.net/p/tei/bugs/591/
+
+2013-08-03  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	fixes to documentation
+
+2013-08-02  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	clean up artefacts
+
+	better support for endnotes
+	Adding an endnote to the test file, and associated fixes to render a
+	mixtire of footnotes and endnotes properly
+
+	simpliy the way LaTeX comversion handles xelatex vs pdflatex
+	The old reencode param is thrown away, and the test is put in the LaTeX
+	instead. redo the way examplefont is done
+
+	render <mentioned> in italic by default. make sure endnotereference style defined in Word
+
+	add endnotes to test file
+
+2013-08-01  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	support --schema on teito* scripts
+	allowing for choosing which schemaSpec in an ODD shoukd be picked up
+
+2013-07-31  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	doing this because sebastian tol;d ,me to
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+
+2013-07-30  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	mods for rune's list (1)
+
+2013-07-30  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	fix processing of cover image in epub
+
+	cover image code doesn't work
+
+	remove debugging code
+
+	bump version number
+
+	wrong file name in script
+
+2013-07-29  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	file name changed, fix where imported
+
+2013-07-29  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	debian package conflicts
+
+	another uncaught date in test results
+
+	better clean up of dates in test results
+
+	change name of doc directory to just tei-xsl
+
+	fix names of documentation targets
+
+2013-07-29  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	Create README.md
+
+	file names in documentation
+
+	msitake
+
+	fix file names in documentation generation
+
+	more places using old file names changed
+
+2013-07-28  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	rename files through many directories to avoid files with same name
+	at the risk of some redundancy, there should now be many fewer
+	occasions when there are files of the same name in several directories,
+	such as tei.xsl
+
+	doc referred to old directory names
+
+	insisting on utf-8 all the time
+
+	do clang and documentationLang parameters are also to set by --lang flag on teito*
+
+	rethink the way makeDescription works, and change some test results as fallout
+	the template makeDescription was called often. now re-expressed as a
+	function. take the opportunity to make the teito* scripts support a
+	--lang switch, and remove a file (odds.xsl in common) which is folded
+	into functions.xsl and teiodds.xsl
+
+	support for extra @rend attribute (from Lou)
+
+2013-07-26  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	don't call page layout style 'CSS', but rather 'Complex'
+
+2013-07-26  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	correct URL for oXygen update file
+
+	fix license reference for TEI P5 readme files
+
+	change of test files after P5 2.5.0 release, and correction of typo in test.xml
+
+2013-07-26  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	preserve <gi> across odd2lite
+
+	generalise handling of <item> a bit more, and make sure @xml:id on it is taken account of
 2013-07-22  Sebastian Rahtz <sebastian.rahtz@gmail.com>
 	version 6.38
 	Changed paths:
@@ -40590,3 +41014,427 @@ x2003-12-14  Sebastian Rahtz  <sebastian.rahtz@computing-services.oxford.ac.uk>
 	* (from Jason Diamond <jason@injektilo.org>). added a
 	"startDivHook" and made generation of IDs for <p> configurable.
 
+2013-10-04  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	change to way TCP metadata is shown
+
+	change result from change in thinking about $pPr
+
+	use header file not text for TCP metadata
+
+	make sure that footnotes keep footnoteRef, even when a style is present. involves making sure all uses of $pPr are as nodes, not string. also cope with <w:sdt> properly
+
+2013-10-03  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	add support for teiCorpus to RDF conversion
+
+2013-10-02  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	change in generateAuthor to remove trailing space, and work with corpus
+
+	update version for new release
+
+	write auxiliary files (eg footnotes) _after_ completing pass0
+
+	dont show classDecl in epub metadata; get author from header of corpus where appropriate
+
+2013-09-29  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	allow for extra graphics files in epub
+
+	allow for corpus ancestor in generatePublisher
+
+	dont use @rules on table, use CSS instead
+
+	dont special case @url of film: here
+
+2013-09-28  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	need to add properties to manifest entries for epub3
+
+	avoid old @align on HTML cells
+
+	remove debug
+
+	create Ant job to copy graphics files from within main epub transformation
+
+	correct mistake when getting title from teiCorpus
+
+2013-09-25  martindholmes  <mholmes@uvic.ca>
+
+	Fixing broken URL in oddbyexample.xsl; location of file has changed in deb package.
+
+2013-09-24  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	index term does not always have double quote at the end (undo last, wrong, fix)
+
+	processing of index entries in docx, need to strip off XE first
+
+2013-09-22  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	allow for writeDiv at level of <TEI>
+
+2013-09-20  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	TCP results changed
+
+	protect against trailing space in PB/@REF
+
+	extend regexp for eebopage URL scheme for include roman numerals, and junk left-trailing . in page numbers
+
+	make sure all comons in preflight are processed in the right mode
+
+2013-09-19  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	fix epub preflight so that elements within <hi> are processed in proper mode
+
+	allow for block-level objects inside <add>
+
+2013-09-18  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	remove typo
+
+	footnotes in <floatingText> were not working
+
+	remove redundant lineBreak functions
+
+	change to notes means some changed test results
+
+2013-09-18  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	donr put in TEIC-specific udm code
+
+	dont process eebopage: @facs values
+
+	normslize handling of <lb> into core
+
+2013-09-17  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	change to Word output test file
+
+	new parameter in TEI to Word, footnoteNumbering, to set the numbering style for footnotes
+
+	clean up tree processing code
+
+2013-09-17  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	drop <pb>  when processing EEBO data
+
+	more tree test data
+
+2013-09-16  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	change in result file in test
+
+2013-09-16  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	refinements to handling of trees; don't show links which are inside a <forest>
+
+	escape single quote when making JSON for trees; update tree test file to have all examples from Guidelines
+
+2013-09-11  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	more cleaning
+
+	stanza to test www.tei-c garage too
+
+	<msWriting> does not exist, so do not support it
+
+	how to test oxgarage
+
+2013-09-10  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	tweak test result
+
+	support @cRef on <ptr> minimally in Word generation; add marginRight and Left to default Word templates
+
+	allow for CSS names for values of @place
+
+	take account of @facs pointing at a <graphic> element directly or at an element which contains a <graphic>
+	found by Torsten Schassan
+
+	d3-generated tree diagrams now more robust and responsive to content variation
+
+2013-09-10  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	more work on d3-generated trees
+
+2013-09-09  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	tweak D3 trees, and start looking at width and depth of nodes
+
+2013-09-08  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	look for <div> at any level when making styleabear and styledoc
+
+	documentation cleaning
+
+2013-09-07  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	missing Debian file giving compat level
+
+	version updated
+
+	time for a new release
+
+	better implementation of handling <ref> with no target
+
+	a <ref> without @target should not throw away the contents
+
+2013-09-06  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	trying to merge Merge branch 'master' of https://github.com/TEIC/Stylesheets
+	Conflicts:
+		profiles/agora/docx/to.xsl
+
+2013-09-06  Lou Burnard  <lou@psammead.(none)>
+
+	remove old version ; add 4-pass version of from.xsl
+
+	there should be no to.xsl and the from is out of date
+
+2013-09-06  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	changes to test files as a result of normalizing <head> in HTML
+
+2013-09-06  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	improved d3-based tree rendering
+
+	normalise the creation of HTML <head> element to single function
+
+2013-09-02  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	result file changed with date, needs stripping
+
+	typos in doc
+
+2013-09-02  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	results changed by adding new HTML module to XSL
+
+2013-09-01  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	preliminary support for <eTree>/<eLeaf> in HTML and LaTeX
+
+	force encoding in output
+
+	add section to test.xml for div with no heading
+	also simplify working of autoHead, change symbol for what autoMakeHead
+	does by default, and make OTA HTML more like OTA epub
+
+2013-08-31  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	if autoHeadr is set to false. really don't make any heading at all.
+	https://sourceforge.net/p/tei/bugs/595/
+
+	do special processing for <biblStruct> only if no <bibl> present in <listBibl>
+
+	process `<head>` inside `<listBibl>` properly in HTML and LaTeX
+	see https://sourceforge.net/p/tei/bugs/593/
+
+	process `<salute>` in standard way, so that @rend is noticed
+
+2013-08-09  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	change results
+
+	allow for <head> as child of front/body/back
+
+	better distinguish notes in floating texts from normal notes
+
+2013-08-09  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	coding mistake
+
+	allow for notes within <floatingText>, just number them
+
+	calculation of note number should not be confused by <floatingText>
+
+2013-08-09  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	eejit
+
+	ignore LOG file
+
+	do test20 in latex as well, working on rendering
+
+2013-08-08  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	make sure <edition> goes through space normalization
+
+	more test cases
+
+	using more common code to process inline elements means a lot of changes to test results
+
+	borders around revisionDesc table
+
+2013-08-08  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	refactoring some more inline elements to put a single match in common area, using makeInline template
+
+2013-08-07  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	missing test result
+
+	redo standard header and footer for simple HTML
+	omit institution, feedback, search etc if URLs not explicitly provided
+
+2013-08-06  martindholmes  <mholmes@uvic.ca>
+
+	Removing my popup js from the odds guidelines.xsl file. I've moved it into the svn repo guidelines.xsl.model file instead, keeping it local to our build of the guidelines.
+
+2013-08-06  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	missing file
+
+2013-08-06  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	clean up LaTeX <app> processing
+	switch to using eledmac instead of ledmac;add test file for use of
+	<app>; suppress <app> with @from
+
+	correct way to declare italic in LaTeX is \itshape, not \textit. Durr.
+
+2013-08-05  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	change the way conversion to LaTeX does arbitrary commands. use a brace group instead of a command with param
+
+	guard effect of LaTeX commands inside braces to be careful
+
+	can't assume people have Helvetica and Times Roman fonts
+
+2013-08-05  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	change the way font is set in egXML examples in LaTeX
+	the previous vversion caused P5 Guidelines to fall over in
+	incomprehensible ways. just make it \ttfamily\small and have done with
+	it
+
+2013-08-05  martindholmes  <mholmes@uvic.ca>
+
+	Attempting to add a change to guidelines.xsl which should add the popup footnotes functionality,
+
+2013-08-04  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	fix error in teitoodt where calculating height of picture
+
+	<label> test provokes fixes for of and docx too
+
+	new test file for working on @rend
+
+	take account of @rend on <title> and <label>; while there, handle forename and surname inside author/editor better
+	resposnse to https://sourceforge.net/p/tei/bugs/591/
+
+2013-08-03  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	fixes to documentation
+
+2013-08-02  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	clean up artefacts
+
+	better support for endnotes
+	Adding an endnote to the test file, and associated fixes to render a
+	mixtire of footnotes and endnotes properly
+
+	simpliy the way LaTeX comversion handles xelatex vs pdflatex
+	The old reencode param is thrown away, and the test is put in the LaTeX
+	instead. redo the way examplefont is done
+
+	render <mentioned> in italic by default. make sure endnotereference style defined in Word
+
+	add endnotes to test file
+
+2013-08-01  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	support --schema on teito* scripts
+	allowing for choosing which schemaSpec in an ODD shoukd be picked up
+
+2013-07-31  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	doing this because sebastian tol;d ,me to
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+
+2013-07-30  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	mods for rune's list (1)
+
+2013-07-30  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	fix processing of cover image in epub
+
+	cover image code doesn't work
+
+	remove debugging code
+
+	bump version number
+
+	wrong file name in script
+
+2013-07-29  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	file name changed, fix where imported
+
+2013-07-29  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	debian package conflicts
+
+	another uncaught date in test results
+
+	better clean up of dates in test results
+
+	change name of doc directory to just tei-xsl
+
+	fix names of documentation targets
+
+2013-07-29  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	Create README.md
+
+	file names in documentation
+
+	msitake
+
+	fix file names in documentation generation
+
+	more places using old file names changed
+
+2013-07-28  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	rename files through many directories to avoid files with same name
+	at the risk of some redundancy, there should now be many fewer
+	occasions when there are files of the same name in several directories,
+	such as tei.xsl
+
+	doc referred to old directory names
+
+	insisting on utf-8 all the time
+
+	do clang and documentationLang parameters are also to set by --lang flag on teito*
+
+	rethink the way makeDescription works, and change some test results as fallout
+	the template makeDescription was called often. now re-expressed as a
+	function. take the opportunity to make the teito* scripts support a
+	--lang switch, and remove a file (odds.xsl in common) which is folded
+	into functions.xsl and teiodds.xsl
+
+	support for extra @rend attribute (from Lou)
+
+2013-07-26  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	don't call page layout style 'CSS', but rather 'Complex'
+
+2013-07-26  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	correct URL for oXygen update file
+
+	fix license reference for TEI P5 readme files
+
+	change of test files after P5 2.5.0 release, and correction of typo in test.xml
+
+2013-07-26  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	preserve <gi> across odd2lite
+
+	generalise handling of <item> a bit more, and make sure @xml:id on it is taken account of
