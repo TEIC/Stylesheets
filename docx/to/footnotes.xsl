@@ -110,7 +110,7 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:variable name="id" select="position()+1"/>
                     <w:footnote w:id="{$id}">
                         <xsl:call-template name="block-element">
-                            <xsl:with-param name="pPr">
+                            <xsl:with-param name="pPr" as="node()*">
                                 <w:pPr>
                                     <w:pStyle w:val="FootnoteText"/>
                                 </w:pPr>

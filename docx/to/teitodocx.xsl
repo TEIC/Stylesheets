@@ -436,7 +436,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="block-element">
     <xsl:param name="style"/>
     <xsl:param name="select" select="."/>
-    <xsl:param name="pPr"/>
+    <xsl:param name="pPr" as="node()*"/>
     <xsl:param name="nop">false</xsl:param>
     <xsl:param name="bookmark-id"/>
     <xsl:param name="bookmark-name"/>
@@ -469,7 +469,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template name="_process-blockelement">
     <xsl:param name="style"/>
-    <xsl:param name="pPr"/>
+    <xsl:param name="pPr"  as="node()*"/>
     <xsl:param name="nop"/>
     <xsl:param name="bookmark-id"/>
     <xsl:param name="bookmark-name"/>
@@ -483,14 +483,14 @@ of this software, even if advised of the possibility of such damage.
           <!-- process block element -->
           <xsl:apply-templates select=".">
             <xsl:with-param name="style" select="$style"/>
-            <xsl:with-param name="pPr" select="$pPr"/>
+            <xsl:with-param name="pPr" select="$pPr"  as="node()*"/>
             <xsl:with-param name="nop" select="$nop"/>
           </xsl:apply-templates>
           <!-- process all the other elements in the current group -->
           <xsl:for-each-group select="current-group() except ." group-adjacent="1">
             <xsl:call-template name="_process-blockelement">
               <xsl:with-param name="style" select="$style"/>
-              <xsl:with-param name="pPr" select="$pPr"/>
+              <xsl:with-param name="pPr" select="$pPr"  as="node()*"/>
               <xsl:with-param name="nop" select="$nop"/>
             </xsl:call-template>
           </xsl:for-each-group>
@@ -510,6 +510,7 @@ of this software, even if advised of the possibility of such damage.
                       <xsl:attribute name="w:val" select="$style"/>
                     </w:pStyle>
                   </w:pPr>
+		  <xsl:copy-of select="$pPr[not(self::w:pPr)]"/>
                 </xsl:when>
                 <xsl:when test="not(empty($pPr))">
                   <xsl:copy-of select="$pPr"/>
@@ -524,7 +525,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:for-each select="current-group()">
               <xsl:apply-templates select=".">
                 <xsl:with-param name="style" select="$style"/>
-                <xsl:with-param name="pPr" select="$pPr"/>
+                <xsl:with-param name="pPr" select="$pPr"  as="node()*"/>
               </xsl:apply-templates>
             </xsl:for-each>
             <!-- bookmark end-->
@@ -1034,7 +1035,7 @@ of this software, even if advised of the possibility of such damage.
         Headers and Sections  
     -->
   <xsl:template match="tei:head[parent::tei:div or parent::tei:div1 or parent::tei:div2 or parent::tei:div3 or parent::tei:div4 or parent::tei:div5 or parent::tei:div6 or parent::tei:div7]">
-    <xsl:param name="pPr"/>
+    <xsl:param name="pPr"  as="node()*"/>
     <!-- find out what level we are at -->
     <xsl:variable name="level">
       <xsl:value-of select="count(ancestor-or-self::tei:div| ancestor-or-self::tei:div1| ancestor-or-self::tei:div2| ancestor-or-self::tei:div3| ancestor-or-self::tei:div4| ancestor-or-self::tei:div5| ancestor-or-self::tei:div6| ancestor-or-self::tei:div7)"/>
@@ -1417,7 +1418,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:otherwise>
           <xsl:call-template name="block-element">
-            <xsl:with-param name="pPr">
+            <xsl:with-param name="pPr" as="node()*">
               <w:pPr>
                 <xsl:choose>
                   <xsl:when test="@rend">
@@ -2094,7 +2095,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="cals:entry" mode="contents">
     <xsl:call-template name="block-element">
-      <xsl:with-param name="pPr">
+      <xsl:with-param name="pPr" as="node()*">
         <w:pPr>
           <xsl:choose>
             <xsl:when test="@rend">
@@ -2439,63 +2440,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <!-- revisionDesc -->
-  <xsl:template match="tei:revisionDesc">
-    <w:tbl>
-      <w:tblPr>
-        <w:tblStyle w:val="revisionDesc"/>
-        <w:tblW w:w="0" w:type="auto"/>
-        <w:tblBorders>
-          <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-          <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-          <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-          <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-          <w:insideH w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-          <w:insideV w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-        </w:tblBorders>
-      </w:tblPr>
-      <w:tblGrid>
-        <w:gridCol w:w="2366"/>
-        <w:gridCol w:w="2366"/>
-        <w:gridCol w:w="2366"/>
-        <w:gridCol w:w="2366"/>
-      </w:tblGrid>
-      <xsl:for-each select="tei:change">
-	<w:tr>
-	  <w:trPr>
-	    <w:trHeight w:val="380"/>
-	  </w:trPr>
-	  <w:tc>
-	    <w:p>
-	      <w:r>
-		<w:t><xsl:value-of select="@n"/></w:t>
-	      </w:r>
-	    </w:p>
-	  </w:tc>
-	  <w:tc>
-	    <w:p>
-	      <w:r>
-		<w:t><xsl:value-of select="@when"/></w:t>
-	      </w:r>
-	    </w:p>
-	  </w:tc>
-	  <w:tc>
-	    <w:p>
-	      <w:r>
-		<w:t><xsl:value-of select="@who"/></w:t>
-	      </w:r>
-	    </w:p>
-	  </w:tc>
-	  <w:tc>
-	    <w:p>
-	      <w:r>
-		<w:t><xsl:value-of select="."/></w:t>
-	      </w:r>
-	    </w:p>
-	  </w:tc>
-	</w:tr>
-      </xsl:for-each>
-    </w:tbl>
-  </xsl:template>
+  <xsl:template match="tei:revisionDesc"/>
 
   <!-- no handling of index terms -->
   <xsl:template match="tei:index"/>

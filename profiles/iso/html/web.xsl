@@ -151,7 +151,7 @@ of this software, even if advised of the possibility of such damage.
 
 
    <xsl:template name="block-element">
-     <xsl:param name="pPr"/>
+     <xsl:param name="pPr" as="node()*"/>
      <xsl:param name="style"/>
      <xsl:param name="select" select="."/>
      <xsl:for-each select="$select">

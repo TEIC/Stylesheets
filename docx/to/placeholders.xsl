@@ -170,7 +170,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     <xsl:template match="*[not(tei:is-inline(.))]" priority="-10">
         <xsl:param name="style"/>
-        <xsl:param name="pPr"/>
+        <xsl:param name="pPr" as="node()*"/>
         <xsl:param name="nop"/>
         <!-- calculate style definition -->
         <xsl:variable name="newStyle">
@@ -208,7 +208,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:template match="*[tei:is-inline(.)]" priority="-10">
         <xsl:param name="character-style"/>
         <xsl:param name="style"/>
-        <xsl:param name="pPr"/>
+        <xsl:param name="pPr" as="node()*"/>
 
         <xsl:variable name="style">
             <xsl:apply-templates select="." mode="get-style"/>

@@ -459,7 +459,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:choose>
 	  <xsl:when test="tbx:termGrp/tbx:termNote[@type='administrativeStatus']/@iso:style='symbol'">
 	    <xsl:call-template name="block-element">
-	      <xsl:with-param name="pPr">
+	      <xsl:with-param name="pPr" as="node()*">
 		<w:pPr>
 		  <w:pStyle w:val="{$style}"/>
 		  <w:rPr>

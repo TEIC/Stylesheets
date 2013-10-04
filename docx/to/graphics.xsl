@@ -117,7 +117,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:call-template name="block-element">
-            <xsl:with-param name="pPr">
+            <xsl:with-param name="pPr" as="node()*">
 	      <w:pPr>
 		<w:spacing w:before="240"/>
 		<w:jc w:val="{$alignFigures}"/>

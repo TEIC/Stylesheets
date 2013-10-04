@@ -524,7 +524,7 @@ STANDARD &amp;\bfseries <xsl:call-template name="getiso_documentNumber"/>-<xsl:c
   </xsl:template>
 
    <xsl:template name="block-element">
-     <xsl:param name="pPr"/>
+     <xsl:param name="pPr" as="node()*"/>
      <xsl:param name="style"/>
      <xsl:param name="select" select="."/>
      <xsl:for-each select="$select">

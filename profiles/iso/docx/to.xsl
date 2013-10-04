@@ -203,7 +203,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:p">
     <xsl:param name="style"/>
-    <xsl:param name="pPr"/>
+    <xsl:param name="pPr" as="node()*"/>
     <xsl:variable name="pstyle">
       <w:pPr>
         <xsl:choose>
@@ -343,7 +343,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="ancestor-or-self::*[@type='normativeReferences']">
         <xsl:for-each select="tei:bibl">
           <xsl:call-template name="block-element">
-            <xsl:with-param name="pPr">
+            <xsl:with-param name="pPr" as="node()*">
               <w:pPr>
                 <w:pStyle>
                   <xsl:attribute name="w:val">
@@ -386,7 +386,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="block-element">
-          <xsl:with-param name="pPr">
+          <xsl:with-param name="pPr" as="node()*">
             <w:pPr>
               <w:pStyle>
                 <xsl:attribute name="w:val">
@@ -410,7 +410,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:note[@rend]">
     <xsl:call-template name="block-element">
-      <xsl:with-param name="pPr">
+      <xsl:with-param name="pPr" as="node()*">
         <w:pPr>
           <w:pStyle>
             <xsl:attribute name="w:val">
@@ -445,7 +445,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="block-element">
-          <xsl:with-param name="pPr">
+          <xsl:with-param name="pPr" as="node()*">
             <w:pPr>
               <w:pStyle>
                 <xsl:attribute name="w:val">
@@ -572,7 +572,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:front/tei:div/tei:p[@type='foreword']">
     <xsl:call-template name="block-element">
-      <xsl:with-param name="pPr">
+      <xsl:with-param name="pPr" as="node()*">
         <w:pPr>
           <w:pStyle>
             <xsl:attribute name="w:val">
@@ -588,7 +588,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:front/tei:div[@type='toc']">
     <xsl:call-template name="block-element">
-      <xsl:with-param name="pPr">
+      <xsl:with-param name="pPr" as="node()*">
         <w:pPr>
           <w:pStyle w:val="zzContents"/>
         </w:pPr>
@@ -601,7 +601,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:list[@type='gloss']">
     <xsl:for-each select="tei:head">
       <xsl:call-template name="block-element">
-        <xsl:with-param name="pPr">
+        <xsl:with-param name="pPr" as="node()*">
           <w:pPr>
             <w:pStyle w:val="dl"/>
             <w:tabs>

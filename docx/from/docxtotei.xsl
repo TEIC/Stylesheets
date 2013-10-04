@@ -324,7 +324,7 @@ of this software, even if advised of the possibility of such damage.
 		</p>
       </desc>
 	  </doc>
-	  <xsl:template match="w:tbl|w:p" mode="inSectionGroup">
+	  <xsl:template match="w:sdt|w:tbl|w:p" mode="inSectionGroup">
 	    
 	    <!-- 
 		 We are looking for:

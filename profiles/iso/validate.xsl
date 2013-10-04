@@ -153,7 +153,7 @@ of this software, even if advised of the possibility of such damage.
  <xsl:template name="block-element">
      <xsl:param name="select"/>
      <xsl:param name="style"/>
-     <xsl:param name="pPr"/>
+     <xsl:param name="pPr" as="node()*"/>
      <xsl:param name="nop"/>
      <xsl:param name="bookmark-name"/>
      <xsl:param name="bookmark-id"/>
