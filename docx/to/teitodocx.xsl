@@ -1079,8 +1079,8 @@ of this software, even if advised of the possibility of such damage.
       <!-- find the correct header style -->
       <xsl:with-param name="style">
         <xsl:choose>
-          <xsl:when test="not($pPr  instance of xs:string)">
-            <xsl:value-of select="$pPr/w:pPr/w:pStyle/@w:val"/>
+          <xsl:when test="$pPr//w:pStyle">
+            <xsl:value-of select="$pPr//w:pStyle/@w:val"/>
           </xsl:when>
           <xsl:when test="string-length($getstyle) &gt; 0">
             <xsl:call-template name="getStyleName">
