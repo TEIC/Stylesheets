@@ -434,6 +434,12 @@ of this software, even if advised of the possibility of such damage.
     </publicationStmt>
   </xsl:template>
 
+  <xsl:template match="IDNO/@TYPE">
+    <xsl:attribute name="type">
+      <xsl:value-of select="upper-case(.)"/>
+    </xsl:attribute>
+  </xsl:template>
+
   <xsl:template match="IDNO">
     <idno>
         <xsl:apply-templates select="@*" />
