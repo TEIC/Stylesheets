@@ -9,8 +9,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:oxdoc="http://www.oxygenxml.com/ns/doc/xsl"
                 version="2.0"
-                exclude-result-prefixes="tei rng teix sch xi xs
-                                         #default">
+                exclude-result-prefixes="tei rng teix sch xi #default">
   <oxdoc:doc scope="stylesheet" type="stylesheet">
     <oxdoc:desc>
       <oxdoc:p> TEI stylesheet for simplifying TEI ODD markup </oxdoc:p>
