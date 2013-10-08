@@ -138,7 +138,7 @@ of this software, even if advised of the possibility of such damage.
       .attr("transform", "translate(0, <xsl:value-of select="$extray"/>)"); 
       var tree = d3.layout.tree().size([treewidth,treedepth]);
       var nodes = tree.nodes(treeData);
-      console.log(nodes);
+      //console.log(nodes);
       var links = tree.links(nodes);
       var link = vis.selectAll("pathlink")
       .data(links)
@@ -158,6 +158,15 @@ of this software, even if advised of the possibility of such damage.
       .append("xhtml:div")
       .attr("class",  function(d) { return "nodetext " + d.type; })
       .html(function(d) { return d.name; });
+<!--
+      var linknode = vis.selectAll("g.node.synch")
+      .data(nodes)
+      .enter().append("svg:line")
+      .attr("x1",function(d) { return d.x;})
+      .attr("y1",function(d) { return d.y;})
+      .attr("x2",function(d) { return d.x + 100;})
+      .attr("y2",function(d) { return d.y + 100;})
+-->
     </script>
           </xsl:when>
           <xsl:otherwise>{<xsl:call-template name="treelabel"/><xsl:text>}, 
@@ -172,9 +181,16 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text>"name":'</xsl:text>
     <xsl:apply-templates select="tei:label"/>
     <xsl:text>', </xsl:text>
-    <xsl:text>"synch":'</xsl:text>
-    <xsl:value-of select="tei:label/@synch"/>
-    <xsl:text>', </xsl:text>
+    <xsl:if test="tei:label/@xml:id">
+      <xsl:text>"id":"</xsl:text>
+      <xsl:value-of select="tei:label/@xml:id"/>
+      <xsl:text>", </xsl:text>
+    </xsl:if>
+    <xsl:if test="tei:label/@synch">
+      <xsl:text>"synch":"</xsl:text>
+      <xsl:value-of select="translate(tei:label/@synch,'#','')"/>
+      <xsl:text>", </xsl:text>
+    </xsl:if>
     <xsl:text>"showlink":'</xsl:text>
     <xsl:value-of select="if (self::tei:forest) then 'invisible' else ''"/>
     <xsl:text>', </xsl:text>
