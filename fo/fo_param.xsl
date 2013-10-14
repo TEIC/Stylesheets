@@ -388,7 +388,7 @@ there are no bookmarks or other such features. Possible values are
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>Colour for background display of &lt;eg&gt; blocks.</desc>
    </doc>
-  <xsl:param name="exampleBackgroundColor">gray</xsl:param>
+  <xsl:param name="exampleBackgroundColor">lightgray</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>Calculation of font size for examples (add dimension)
 </desc>
