@@ -2817,7 +2817,18 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:attribute name="{$rendName}">
 	      <xsl:text>deprecated</xsl:text>
 	    </xsl:attribute>
-	    <xsl:sequence select="tei:i18n('deprecated')"/>
+	    <xsl:variable name="m">
+	      <tei:seg><xsl:sequence
+	      select="tei:i18n('deprecated')"/></tei:seg>
+	    </xsl:variable>
+	    <xsl:for-each select="$m">
+	      <xsl:call-template name="makeExternalLink">
+		<xsl:with-param name="ptr" select="false()"/>
+		<xsl:with-param name="dest">
+		  <xsl:text>http://www.tei-c.org/Activities/Council/Working/tcw27.xml</xsl:text>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
 	  </xsl:element>
 	</xsl:element>
 	<xsl:element namespace="{$outputNS}" name="{$cellName}">
