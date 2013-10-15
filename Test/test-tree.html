@@ -41,8 +41,8 @@
 	    {"name":'<span class="label">Frederick</span>', "showlink":'', "type":'', "children":[{"name":'<span class="label">Philip</span>', "id":"philip", "showlink":'', "type":'', "children":[{"name":'<span class="label">Sebastian</span>', "showlink":'', "type":'', "children":[{"name":'<span class="label">Matilde</span>', "showlink":'', "type":' leaf', }, 
 	    {"name":'<span class="label">Inês</span>', "showlink":'', "type":' leaf', }, 
 	    ]}, 
-	    {"name":'<span class="label">David</span>', "showlink":'', "type":' leaf', }, 
-	    {"name":'<span class="label">Diana</span>', "showlink":'', "type":' leaf', }, 
+	    {"name":'<span class="label">David</span>', "synch":"#diana","showlink":'', "type":' leaf', }, 
+	    {"name":'<span class="label">Diana</span>', "showlink":'', "id":"diana","type":' leaf', }, 
 	    {"name":'<span class="label">Nicholas</span>', "showlink":'', "type":' leaf', }, 
 	    {"name":'<span class="label">Gentian</span>', "showlink":'', "type":' leaf', }, 
 	    ]}, 
@@ -67,6 +67,7 @@
       .data(nodes)
       .enter().append("svg:g")
       .attr("class","node")
+      .attr("id", function (d) { return d.id;})
       node.append("svg:foreignObject")
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
       .attr("x", -40)
@@ -78,12 +79,14 @@
       .attr("class",  function(d) { return "nodetext " + d.type; })
       .html(function(d) { return d.name; });
       var node2 = vis.selectAll("g.node")
-       .filter(function(d) { return d.synch })
-       .data(nodes);
+       .data(nodes)
+       .filter(function(d) { return d.synch });
       node2.append("svg:line")
-      .attr("x1",function(d) { console.log(d); return d.x + 10;})
+      .attr("x1",function(d) { return d.x + 10;})
       .attr("y1",function(d) { return d.y - 5;})
-      .attr("x2",function(d) { return vis.select(d.synch).x;})
-      .attr("y2",function(d) { return vis.select(d.synch).y;})
+      .attr("x2",function(d) { other=vis.select(d.synch);
+	    console.log("SEE " + other.datum().x); return other.datum().x;})
+      .attr("y2",function(d) { other=vis.select(d.synch);
+	    console.log("SEE " + other.datum().y); return other.datum().y;})
       .attr("style", "stroke-width: 2px;stroke:green; fill:solid;");
     </script> thin lips blue; and spoke out shrewdly in his grating voice. A frosty rime was on his head, and on his eyebrows, and his wiry chin</div></body></html>
