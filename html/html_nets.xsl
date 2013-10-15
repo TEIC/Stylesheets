@@ -130,43 +130,7 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:choose>
 	      </xsl:variable>
       var treeData = {<xsl:call-template name="treelabel"/>};
-      var vis = d3.select("#viz<xsl:value-of select="$TREEID"/>").append("svg:svg")
-      .attr("class", "svgtree")
-      .attr("width", treewidth + 50)
-      .attr("height", treedepth + <xsl:value-of select="$extray"/>)
-      .append("svg:g")
-      .attr("transform", "translate(0, <xsl:value-of select="$extray"/>)"); 
-      var tree = d3.layout.tree().size([treewidth,treedepth]);
-      var nodes = tree.nodes(treeData);
-      //console.log(nodes);
-      var links = tree.links(nodes);
-      var link = vis.selectAll("pathlink")
-      .data(links)
-      .enter().append("svg:path")
-      .attr("class", function (d) { return "link" + d.source.showlink; })
-      .attr("d", elbow)    
-      var node = vis.selectAll("g.node")
-      .data(nodes)
-      .enter().append("svg:g")
-      .attr("class","node")
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-      node.append("svg:foreignObject")
-      .attr("x", -40)
-      .attr("y", yoffset)
-      .attr("width", 80)
-      .attr("height", 80)
-      .append("xhtml:div")
-      .attr("class",  function(d) { return "nodetext " + d.type; })
-      .html(function(d) { return d.name; });
-<!--
-      var linknode = vis.selectAll("g.node.synch")
-      .data(nodes)
-      .enter().append("svg:line")
-      .attr("x1",function(d) { return d.x;})
-      .attr("y1",function(d) { return d.y;})
-      .attr("x2",function(d) { return d.x + 100;})
-      .attr("y2",function(d) { return d.y + 100;})
--->
+      visMe("#viz<xsl:value-of select="$TREEID"/>",<xsl:value-of select="$extray"/>);
     </script>
           </xsl:when>
           <xsl:otherwise>{<xsl:call-template name="treelabel"/><xsl:text>}, 
@@ -181,16 +145,30 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text>"name":'</xsl:text>
     <xsl:apply-templates select="tei:label"/>
     <xsl:text>', </xsl:text>
-    <xsl:if test="tei:label/@xml:id">
-      <xsl:text>"id":"</xsl:text>
-      <xsl:value-of select="tei:label/@xml:id"/>
-      <xsl:text>", </xsl:text>
-    </xsl:if>
-    <xsl:if test="tei:label/@synch">
-      <xsl:text>"synch":"</xsl:text>
-      <xsl:value-of select="translate(tei:label/@synch,'#','')"/>
-      <xsl:text>", </xsl:text>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="tei:label/@xml:id">
+	<xsl:text>"id":"</xsl:text>
+	<xsl:value-of select="tei:label/@xml:id"/>
+	<xsl:text>", </xsl:text>
+      </xsl:when>
+      <xsl:when test="@xml:id">
+	<xsl:text>"id":"</xsl:text>
+	<xsl:value-of select="@xml:id"/>
+	<xsl:text>", </xsl:text>
+      </xsl:when>
+    </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="tei:label/@synch">
+	<xsl:text>"synch":"</xsl:text>
+	<xsl:value-of select="tei:label/@synch"/>
+	<xsl:text>", </xsl:text>
+      </xsl:when>
+      <xsl:when test="@corresp">
+	<xsl:text>"synch":"</xsl:text>
+	<xsl:value-of select="@corresp"/>
+	<xsl:text>", </xsl:text>
+      </xsl:when>
+    </xsl:choose>
     <xsl:text>"showlink":'</xsl:text>
     <xsl:value-of select="if (self::tei:forest) then 'invisible' else ''"/>
     <xsl:text>', </xsl:text>

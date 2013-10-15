@@ -1177,6 +1177,53 @@ of this software, even if advised of the possibility of such damage.
 	           + "V" + (d.source.y +  down2offset )
 		   + "H" + d.source.x;
 	      }
+	     function visMe (ID,extray) {
+      var vis = d3.select(ID).append("svg:svg")
+      .attr("class", "svgtree")
+      .attr("width", treewidth + 50)
+      .attr("height", treedepth + extray)
+      .append("svg:g")
+      .attr("transform", "translate(0, extray)"); 
+      var tree = d3.layout.tree().size([treewidth,treedepth]);
+      var nodes = tree.nodes(treeData);
+       var links = tree.links(nodes);
+      var link = vis.selectAll("pathlink")
+      .data(links)
+      .enter().append("svg:path")
+      .attr("class", function (d) { return "link" + d.source.showlink; })
+      .attr("d", elbow);
+      var node = vis.selectAll("g.node")
+      .data(nodes)
+      .enter().append("svg:g")
+      .attr("class","node")
+      .attr("id", function (d) { return d.id;})
+      node.append("svg:foreignObject")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+      .attr("x", -40)
+      .attr("y", yoffset)
+      .attr("width", 80)
+      .attr("height", 80)
+      .attr("style", "fill-opacity:1.0")
+      .append("xhtml:div")
+      .attr("class",  function(d) { return "nodetext " + d.type; })
+      .html(function(d) { return d.name; });
+      var linknode = vis.selectAll("g.node")
+       .data(nodes)
+       .filter(function(d) { return d.synch });
+      linknode.append("svg:line")
+      .attr("x1",function(d) { other=vis.select(d.synch).datum();
+         if (d.x <xsl:text disable-output-escaping="yes">&gt;</xsl:text> other.x) 
+	 { return d.x - 30 ;} else { return d.x + 30;};
+	 })
+      .attr("y1",function(d) { return d.y + (yoffset + 5) ;})
+      .attr("x2",function(d) { other=vis.select(d.synch).datum();
+         if (d.x <xsl:text disable-output-escaping="yes">&gt;</xsl:text> other.x) 
+	 { return other.x + 30 ;} else { return other.x - 30;};
+	 })
+      .attr("y2",function(d) { return vis.select(d.synch).datum().y + (yoffset + 5); })
+      .attr("stroke-dasharray","10,10")
+      .attr("style", "stroke-width: 2px;stroke:green");
+}
 	  </script>
 	  <style>	    
 	    .nodetext {
