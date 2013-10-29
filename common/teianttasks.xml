@@ -238,7 +238,7 @@
         <factory name="net.sf.saxon.TransformerFactoryImpl">
           <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
         </factory>
-        <param name="directory" expression="${outputTempDir}"/>
+        <param name="directory" expression="$file:///{outputTempDir}"/>
         <param name="inputDir" expression="@{inDir}/"/>
         <param name="fixgraphicsurl" expression="true"/>
         <!-- supply unique URN for ebook-->
