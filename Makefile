@@ -166,7 +166,8 @@ sfupload:
 
 log:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
-	svn log -v -r 'HEAD:{'$$LastDate'}' | perl ../gnuify-changelog.pl | grep -v "^;" > newchanges)
+	echo changes since $$LastDate; \
+	./git-to-changelog --since=$$LastDate > newchanges)
 	mv ChangeLog oldchanges
 	cat newchanges oldchanges > ChangeLog
 	rm newchanges oldchanges
