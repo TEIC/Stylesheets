@@ -277,6 +277,7 @@
       <ant antfile="${outputTempDir}/copy.xml"/>
       <echo level="info">ZIP: put files from ${outputTempDir} together into @{out}</echo>
       <delete file="@{out}"/>
+      <!-- needs zip64Mode="never"  in Ant 1.9.2 onwards -->
       <zip destfile="@{out}" basedir="${outputTempDir}" 	   
 	   compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
       <zip destfile="@{out}" basedir="${outputTempDir}"
