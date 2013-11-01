@@ -78,7 +78,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="institution"/>
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="odd">false</xsl:param>
-  <xsl:param name="outputDir"><xsl:value-of select="replace($directory,'file:///','')"/>/OPS</xsl:param>
+  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
   <xsl:param name="outputMethod">xml</xsl:param>
   <xsl:param name="outputSuffix">.html</xsl:param>
   <xsl:param name="outputTarget">epub3</xsl:param>

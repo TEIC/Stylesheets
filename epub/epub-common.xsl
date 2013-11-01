@@ -515,7 +515,7 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:if test="key('PB',1) or key('G',1)">
 	   <mkdir>
 	     <xsl:attribute name="dir">
-	       <xsl:value-of select="$outputDir"/>
+	       <xsl:value-of select="replace($outputDir,'file:///','')"/>
 	       <xsl:text>/</xsl:text>
 	       <xsl:value-of select="$mediaDir"/>
 	     </xsl:attribute>
@@ -527,7 +527,7 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:if test="$mediaoverlay='true' and key('Timeline',1)">
 	   <xsl:for-each select="key('Timeline',1)">
 	     <xsl:variable name="target">
-	       <xsl:value-of select="$outputDir"/>
+	       <xsl:value-of select="replace($outputDir,'file:///','')"/>
 	       <xsl:text>/</xsl:text>
 	       <xsl:value-of select="$mediaDir"/>
 	       <xsl:text>/audio</xsl:text>
@@ -555,7 +555,7 @@ of this software, even if advised of the possibility of such damage.
 	     </xsl:choose>
 	   </xsl:variable>
 	   <xsl:variable name="target">
-	     <xsl:value-of select="$outputDir"/>
+	     <xsl:value-of select="replace($outputDir,'file:///','')"/>
 	     <xsl:text>/</xsl:text>
 	     <xsl:value-of select="$mediaDir"/>
 	     <xsl:text>/pageimage</xsl:text>
@@ -579,7 +579,7 @@ of this software, even if advised of the possibility of such damage.
 
 	 <xsl:for-each select="tokenize($extraGraphicsFiles,',')">
 	   <xsl:variable name="target">
-	     <xsl:value-of select="$outputDir"/>
+	     <xsl:value-of select="replace($outputDir,'file:///','')"/>
 	     <xsl:text>/</xsl:text>
 	     <xsl:value-of select="tokenize(.,'/')[last()]"/>
 	   </xsl:variable>
@@ -601,7 +601,7 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:value-of select="@url"/>
 	   </xsl:variable>
 	   <xsl:variable name="target">
-	     <xsl:value-of select="$outputDir"/>
+	     <xsl:value-of select="replace($outputDir,'file:///','')"/>
 	     <xsl:text>/</xsl:text>
 	     <xsl:value-of select="$mediaDir"/>
 	     <xsl:text>/resource</xsl:text>
