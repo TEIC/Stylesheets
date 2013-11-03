@@ -25,6 +25,25 @@
         <moduleRef key="figures"/>
         <moduleRef key="linking"/>
         <moduleRef key="textstructure"/>
+	<elementSpec ident="platypus" mode="add">
+	  <classes mode="replace">
+	    <memberOf key="model.nameLike.agent"/>
+	  </classes>
+	  <attList>
+	    <attDef ident="bill">
+	      <datatype>
+		<rng:value>duck</rng:value>
+	      </datatype>
+	      <constraintSpec scheme="isoschematron" ident="silly-test">
+		<constraint>
+		  <sch:report test="true()">
+		    My context is <sch:value-of select="."/>
+		  </sch:report>
+		</constraint>
+	      </constraintSpec>
+	    </attDef>
+	  </attList>
+	</elementSpec>
         <elementSpec ident="div1" module="textstructure" mode="delete"/>
         <elementSpec ident="div2" module="textstructure" mode="delete"/>
         <elementSpec ident="div3" module="textstructure" mode="delete"/>
