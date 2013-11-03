@@ -265,7 +265,7 @@ of this software, even if advised of the possibility of such damage.
 <xsl:template match="tei:biblStruct" mode="xref">
       <xsl:choose>
          <xsl:when test="count(key('ANAMES',@xml:id))=1">
-	           <xsl:value-of select="key('ANAMES',@xml:id)/tei:surname"/>
+	           <xsl:value-of select="normalize-space(key('ANAMES',@xml:id)/tei:surname)"/>
          </xsl:when>
          <xsl:when test="count(key('ANAMES',@xml:id))=2">
 	           <xsl:value-of select="key('ANAMES',@xml:id)[1]/tei:surname"/>
