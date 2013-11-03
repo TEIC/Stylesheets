@@ -2191,6 +2191,9 @@ of this software, even if advised of the possibility of such damage.
 	</w:r>
       </xsl:when>
       <xsl:otherwise>
+	<xsl:variable name="multi" select="if (contains(@target,' '))
+	  then true() else false()"/>
+	<xsl:variable name="xmllang" select="@xml:lang"/>
 	<xsl:variable name="context" select="."/>
 	<xsl:for-each select="tokenize(@target,' ')">
 	  <xsl:variable name="target" select="."/>
@@ -2222,10 +2225,17 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:for-each>
 	    </xsl:with-param>
 	  </xsl:call-template>
+	  <xsl:if test="$multi">
+	    <w:r>
+	      <w:t>
+		<xsl:attribute name="xml:space">preserve</xsl:attribute>
+		<xsl:call-template name="multiTargetSeparator">
+		  <xsl:with-param name="xmllang" select="$xmllang"/>
+		</xsl:call-template>
+	      </w:t>
+	    </w:r>
+	  </xsl:if>
 	</xsl:for-each>
-	<xsl:call-template name="multiTargetSeparator">
-	  <xsl:with-param name="xmllang" select="@xml:lang"/>
-	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -2235,6 +2245,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="a">
       <xsl:apply-templates/>
     </xsl:variable>
+    <xsl:variable name="xmllang" select="@xml:lang"/>
+    <xsl:variable name="multi" select="if (contains(@target,' '))
+				       then true() else false()"/>   
     <xsl:for-each select="tokenize(@target,' ')">
       <xsl:variable name="rContent">
 	<xsl:choose>
@@ -2264,6 +2277,16 @@ of this software, even if advised of the possibility of such damage.
 	  </w:p>
 	</xsl:otherwise>
       </xsl:choose>
+	  <xsl:if test="$multi">
+	    <w:r>
+	      <w:t>
+		<xsl:attribute name="xml:space">preserve</xsl:attribute>
+		<xsl:call-template name="multiTargetSeparator">
+		  <xsl:with-param name="xmllang" select="$xmllang"/>
+		</xsl:call-template>
+	      </w:t>
+	    </w:r>
+	  </xsl:if>
     </xsl:for-each>
   </xsl:template>
 
@@ -2325,7 +2348,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="anchor"/>
     <xsl:param name="context"/>
     <xsl:param name="target"/>
-
+    <xsl:for-each select="$context">    
     <!-- create the field codes for the complex field -->
     <!-- based on information in tei:ref/@tei:rend -->
     <xsl:variable name="instrText">
@@ -2333,7 +2356,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="starts-with($target,'#')">
           <xsl:variable name="goto" select="substring($target,2)"/>
           <xsl:choose>
-            <xsl:when test="contains($context/@rend,'noteref')">
+            <xsl:when test="contains(@rend,'noteref')">
               <xsl:text>NOTEREF </xsl:text>
             </xsl:when>
             <xsl:otherwise>
@@ -2341,9 +2364,6 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:value-of select="$goto"/>
-    <xsl:message>FOOLING WITH <xsl:value-of select="($target,$anchor,$goto)"/></xsl:message>
-
-	  <xsl:for-each select="$context">
 	    <xsl:for-each select="id($goto)">
 	      <xsl:choose>
 		<xsl:when test="contains(@rend,'instr_')">
@@ -2367,12 +2387,9 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:if test="contains(@rend,'mergeformat')">
 	      <xsl:text> \* MERGEFORMAT</xsl:text>
 	    </xsl:if>
-	  </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
-	  <xsl:message>FOOLING (2) WITH <xsl:value-of select="$target"/></xsl:message>
-          <xsl:text>HYPERLINK "</xsl:text>
-          <xsl:sequence select="tei:resolveURI($context,$target)"/>
+          <xsl:sequence select="tei:resolveURI(.,$target)"/>
           <xsl:text>" \h</xsl:text>
         </xsl:otherwise>
       </xsl:choose>
@@ -2391,7 +2408,7 @@ of this software, even if advised of the possibility of such damage.
     <w:r>
       <xsl:variable name="rPr">
         <xsl:apply-templates>
-          <xsl:with-param name="character-style" select="$context/@iso:class"/>
+          <xsl:with-param name="character-style" select="@iso:class"/>
         </xsl:apply-templates>
       </xsl:variable>
       <w:rPr>
@@ -2422,6 +2439,7 @@ of this software, even if advised of the possibility of such damage.
     <w:r>
       <w:fldChar w:fldCharType="end"/>
     </w:r>
+    </xsl:for-each>
   </xsl:template>
   <xsl:template match="tei:bibl|tei:biblStruct" mode="xref">
     <xsl:number/>
