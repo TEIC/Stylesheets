@@ -188,23 +188,24 @@ of this software, even if advised of the possibility of such damage.
 
 
 		<xsl:for-each select="key('TARGETS',1)">
-		  <xsl:if test="not(starts-with(@target,'#'))">
+		  <xsl:variable name="orig" select="."/>
+		  <xsl:variable name="n">
+		    <xsl:number count="tei:ptr|tei:ref" level="any"/>
+		  </xsl:variable>
+		  <xsl:for-each select="tokenize(@target, ' ')">
+		    <xsl:if test="not(starts-with(.,'#'))">
                     <Relationship 
 			Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
-			Target="{tei:resolveURI(.,@target)}" 
+			Target="{tei:resolveURI($orig,.)}" 
 			TargetMode="External">
 		      <xsl:attribute name="Id">
 			<xsl:text>rId</xsl:text>
-			<xsl:variable name="n">
-			  <xsl:number count="tei:ptr|tei:ref" level="any"/>
-			</xsl:variable>
-			<xsl:value-of select="$n + 3000"/>
+			<xsl:value-of select="$n + 3000 + position()"/>
 		      </xsl:attribute>
 		    </Relationship>
-		  </xsl:if>
+		    </xsl:if>
+		  </xsl:for-each>		  
 		</xsl:for-each>
-
-
                 <!-- Formulas -->
                 <xsl:for-each select="key('IMAGEDATA',1)">
                     <Relationship Id="rId{position() + 1000}"

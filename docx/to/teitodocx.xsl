@@ -2191,75 +2191,93 @@ of this software, even if advised of the possibility of such damage.
 	</w:r>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:call-template name="linkMe">
-	  <xsl:with-param name="anchor">
-	    <xsl:choose>
-	      <xsl:when test="@type='cit'">[</xsl:when>
-	      <xsl:when test="@type='figure'">
-		<xsl:sequence select="tei:i18n('figureWord')"/>
-		<xsl:text> </xsl:text>
-	      </xsl:when>
-	      <xsl:when test="@type='table'">
-		<xsl:sequence select="tei:i18n('tableWord')"/>
-		<xsl:text> </xsl:text>
-	      </xsl:when>
-	    </xsl:choose>
-	    <xsl:choose>
-	      <xsl:when test="starts-with(@target,'#')  and
-			      id(substring(@target,2))">
-		<xsl:apply-templates select="id(substring(@target,2))" mode="xref"/>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:sequence select="tei:resolveURI(.,@target)"/>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	    <xsl:choose>
-	      <xsl:when test="@type='cit'">]</xsl:when>
-	    </xsl:choose>
-	  </xsl:with-param>
+	<xsl:variable name="context" select="."/>
+	<xsl:for-each select="tokenize(@target,' ')">
+	  <xsl:variable name="target" select="."/>
+	  <xsl:call-template name="linkMe">
+	    <xsl:with-param name="context" select="$context"/>
+	    <xsl:with-param name="target" select="$target"/>
+	    <xsl:with-param name="anchor">
+	      <xsl:choose>
+		<xsl:when test="$context/@type='cit'">[</xsl:when>
+		<xsl:when test="$context/@type='figure'">
+		  <xsl:sequence select="tei:i18n('figureWord')"/>
+		  <xsl:text> </xsl:text>
+		</xsl:when>
+		<xsl:when test="$context/@type='table'">
+		  <xsl:sequence select="tei:i18n('tableWord')"/>
+		  <xsl:text> </xsl:text>
+		</xsl:when>
+	      </xsl:choose>
+	      <xsl:for-each select="$context">
+		<xsl:choose>
+		  <xsl:when test="starts-with(.,'#')  and  id(substring($target,2))">
+		    <xsl:apply-templates select="id(substring($target,2))" mode="xref"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:sequence select="tei:resolveURI(.,$target)"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+		<xsl:if test="@type='cit'">]</xsl:if>
+	      </xsl:for-each>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:for-each>
+	<xsl:call-template name="multiTargetSeparator">
+	  <xsl:with-param name="xmllang" select="@xml:lang"/>
 	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="tei:ref[@target]">
-    <xsl:variable name="rContent">
-      <xsl:choose>
-	<xsl:when test="starts-with(@target,'#') and id(substring(@target,2))">
-	  <xsl:call-template name="linkMe">
-	    <xsl:with-param name="anchor">
-	      <xsl:apply-templates/>
-	    </xsl:with-param>
+    <xsl:variable name="context" select="."/>
+    <xsl:variable name="a">
+      <xsl:apply-templates/>
+    </xsl:variable>
+    <xsl:for-each select="tokenize(@target,' ')">
+      <xsl:variable name="rContent">
+	<xsl:choose>
+	  <xsl:when test="starts-with(.,'#') and $context/id(substring(.,2))">
+	    <xsl:call-template name="linkMe">
+	      <xsl:with-param name="target" select="."/>
+	      <xsl:with-param name="context" select="$context"/>
+	      <xsl:with-param name="anchor" select="$a"/>
 	  </xsl:call-template>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="linkMeUsingHyperlink">
+	      <xsl:with-param name="target" select="."/>
+	      <xsl:with-param name="context" select="$context"/>
+	      <xsl:with-param name="anchor" select="$a"/>
+	    </xsl:call-template>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="tei:is-inline($context)">
+	  <xsl:copy-of select="$rContent"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:call-template name="linkMeUsingHyperlink">
-	    <xsl:with-param name="anchor">
-	      <xsl:apply-templates/>
-	    </xsl:with-param>
-	  </xsl:call-template>
+	  <w:p>
+	    <xsl:copy-of select="$rContent"/>
+	  </w:p>
 	</xsl:otherwise>
       </xsl:choose>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="tei:is-inline(.)">
-	  <xsl:copy-of select="$rContent"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<w:p>
-	  <xsl:copy-of select="$rContent"/>
-	</w:p>
-      </xsl:otherwise>
-    </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
+
   <xsl:template name="linkMeUsingHyperlink">
+    <xsl:param name="context"/>
     <xsl:param name="anchor"/>
+    <xsl:param name="target"/>
     <xsl:choose>
-      <xsl:when test="starts-with(@target,'#')">
+      <xsl:when test="starts-with($target,'#')">
         <w:r>
           <w:fldChar w:fldCharType="begin"/>
         </w:r>
         <w:r>
-          <w:instrText>HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
+          <w:instrText>HYPERLINK "<xsl:value-of select="$target"/>" \h</w:instrText>
         </w:r>
         <w:r>
           <w:fldChar w:fldCharType="separate"/>
@@ -2268,7 +2286,7 @@ of this software, even if advised of the possibility of such damage.
           <w:rPr>
             <w:rStyle w:val="Hyperlink"/>
             <w:u w:val="none"/>
-            <xsl:if test="ancestor::tei:cell">
+            <xsl:if test="$context/ancestor::tei:cell">
               <w:sz w:val="18"/>
             </xsl:if>
           </w:rPr>
@@ -2284,9 +2302,11 @@ of this software, even if advised of the possibility of such damage.
         <xsl:variable name="rid">
           <xsl:text>rId</xsl:text>
           <xsl:variable name="n">
-            <xsl:number count="tei:ptr|tei:ref"  level="any"/>
+	    <xsl:for-each select="$context">
+	      <xsl:number count="tei:ptr|tei:ref"  level="any"/>
+	    </xsl:for-each>
           </xsl:variable>
-          <xsl:value-of select="$n + 3000"/>
+          <xsl:value-of select="$n + 3000 + position()"/>
         </xsl:variable>
         <w:hyperlink r:id="{$rid}">
           <w:r>
@@ -2303,49 +2323,56 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="linkMe">
     <xsl:param name="anchor"/>
+    <xsl:param name="context"/>
+    <xsl:param name="target"/>
+
     <!-- create the field codes for the complex field -->
     <!-- based on information in tei:ref/@tei:rend -->
     <xsl:variable name="instrText">
       <xsl:choose>
-        <xsl:when test="starts-with(@target,'#')">
-          <xsl:variable name="target" select="substring(@target,2)"/>
-          <xsl:variable name="rend" select="@rend"/>
+        <xsl:when test="starts-with($target,'#')">
+          <xsl:variable name="goto" select="substring($target,2)"/>
           <xsl:choose>
-            <xsl:when test="contains($rend,'noteref')">
+            <xsl:when test="contains($context/@rend,'noteref')">
               <xsl:text>NOTEREF </xsl:text>
             </xsl:when>
             <xsl:otherwise>
               <xsl:text>REF </xsl:text>
             </xsl:otherwise>
           </xsl:choose>
-          <xsl:value-of select="$target"/>
-          <xsl:for-each select="id($target)">
-            <xsl:choose>
-              <xsl:when test="contains($rend,'instr_')">
-                <xsl:if test="contains($rend,'instr_f')">
-                  <xsl:text> \f</xsl:text>
-                </xsl:if>
-                <xsl:if test="contains($rend,'instr_r')">
-                  <xsl:text> \r</xsl:text>
-                </xsl:if>
-                <xsl:if test="contains($rend,'instr_n')">
-                  <xsl:text> \n</xsl:text>
-                </xsl:if>
-              </xsl:when>
-              <xsl:when test="@type='refdoc'"/>
-              <xsl:otherwise>
-                <xsl:text> \n</xsl:text>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:for-each>
-          <xsl:text> \h</xsl:text>
-          <xsl:if test="contains(@rend,'mergeformat')">
-            <xsl:text> \* MERGEFORMAT</xsl:text>
-          </xsl:if>
+          <xsl:value-of select="$goto"/>
+    <xsl:message>FOOLING WITH <xsl:value-of select="($target,$anchor,$goto)"/></xsl:message>
+
+	  <xsl:for-each select="$context">
+	    <xsl:for-each select="id($goto)">
+	      <xsl:choose>
+		<xsl:when test="contains(@rend,'instr_')">
+		  <xsl:if test="contains(@rend,'instr_f')">
+		    <xsl:text> \f</xsl:text>
+		  </xsl:if>
+		  <xsl:if test="contains(@rend,'instr_r')">
+		    <xsl:text> \r</xsl:text>
+		  </xsl:if>
+		  <xsl:if test="contains(@rend,'instr_n')">
+		    <xsl:text> \n</xsl:text>
+		  </xsl:if>
+		</xsl:when>
+		<xsl:when test="@type='refdoc'"/>
+		<xsl:otherwise>
+		  <xsl:text> \n</xsl:text>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
+	    <xsl:text> \h</xsl:text>
+	    <xsl:if test="contains(@rend,'mergeformat')">
+	      <xsl:text> \* MERGEFORMAT</xsl:text>
+	    </xsl:if>
+	  </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
+	  <xsl:message>FOOLING (2) WITH <xsl:value-of select="$target"/></xsl:message>
           <xsl:text>HYPERLINK "</xsl:text>
-          <xsl:sequence select="tei:resolveURI(.,@target)"/>
+          <xsl:sequence select="tei:resolveURI($context,$target)"/>
           <xsl:text>" \h</xsl:text>
         </xsl:otherwise>
       </xsl:choose>
@@ -2364,7 +2391,7 @@ of this software, even if advised of the possibility of such damage.
     <w:r>
       <xsl:variable name="rPr">
         <xsl:apply-templates>
-          <xsl:with-param name="character-style" select="@iso:class"/>
+          <xsl:with-param name="character-style" select="$context/@iso:class"/>
         </xsl:apply-templates>
       </xsl:variable>
       <w:rPr>
