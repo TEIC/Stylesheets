@@ -1967,8 +1967,19 @@ select="$makeDecls"/></xsl:message>
           </xsl:attribute>
           <rule>
             <xsl:attribute name="context">
-	      <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>
-              <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+	      <xsl:sequence
+		  select="tei:generate-nsprefix-schematron(.)"/>
+	      <xsl:choose>
+		<xsl:when test="ancestor::tei:attDef">
+		  <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+		  <xsl:text>/@</xsl:text>
+		  <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+		  <xsl:text></xsl:text>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+		</xsl:otherwise>
+	      </xsl:choose>
             </xsl:attribute>
             <xsl:apply-templates mode="justcopy" select="."/>
           </rule>
@@ -2008,7 +2019,17 @@ select="$makeDecls"/></xsl:message>
           <rule>
             <xsl:attribute name="context">
 	      <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>
-              <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+	      <xsl:choose>
+		<xsl:when test="ancestor::tei:attDef">
+		  <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+		  <xsl:text>/@</xsl:text>
+		  <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+		  <xsl:text></xsl:text>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+		</xsl:otherwise>
+	      </xsl:choose>
             </xsl:attribute>
             <xsl:apply-templates mode="justcopy" select="."/>
           </rule>
