@@ -956,13 +956,15 @@ att.translatable.attribute.versionDate =
   
   ## specifies the date on which the source text was extracted and sent to the translator
   attribute versionDate { data.temporal.w3c }?
-model.nameLike.agent = name | orgName | persName
-model.nameLike.agent_alternation = name | orgName | persName
-model.nameLike.agent_sequence = name, orgName, persName
-model.nameLike.agent_sequenceOptional = name?, orgName?, persName?
+model.nameLike.agent = name | orgName | persName | platypus
+model.nameLike.agent_alternation = name | orgName | persName | platypus
+model.nameLike.agent_sequence = name, orgName, persName, platypus
+model.nameLike.agent_sequenceOptional =
+  name?, orgName?, persName?, platypus?
 model.nameLike.agent_sequenceOptionalRepeatable =
-  name*, orgName*, persName*
-model.nameLike.agent_sequenceRepeatable = name+, orgName+, persName+
+  name*, orgName*, persName*, platypus*
+model.nameLike.agent_sequenceRepeatable =
+  name+, orgName+, persName+, platypus+
 model.segLike = seg
 model.hiLike = hi
 model.hiLike_alternation = hi
@@ -5711,6 +5713,38 @@ back =
      (model.divBottomPart, (model.divBottomPart | model.global)*)?),
     att.global.attributes,
     att.declaring.attributes,
+    empty
+  }
+platypus =
+  
+  ##
+  element platypus {
+    empty,
+    (
+     ##
+     attribute bill { "duck" }?)
+    >> sch:pattern [
+         id = "platypus-constraint-silly-test"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:platypus/@bill"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test = "true()"
+             "\x{a}" ~
+             "		    My context is "
+             sch:value-of [ select = "." ]
+             "\x{a}" ~
+             "		             "
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 Menu =
