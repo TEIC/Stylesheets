@@ -112,7 +112,6 @@ of this software, even if advised of the possibility of such damage.
       <desc>Crossref element biblStruct</desc>
    </doc>
    <xsl:template match="tei:biblStruct" mode="xref">
-<xsl:message>Look at <xsl:value-of select="."/></xsl:message>
       <xsl:choose>
          <xsl:when test="count(key('ANAMES',@xml:id))=1">
 	           <xsl:value-of select="normalize-space(key('ANAMES',@xml:id)//tei:surname)"/>
