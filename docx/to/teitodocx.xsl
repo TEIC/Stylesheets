@@ -2198,7 +2198,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="tokenize(@target,' ')">
       <xsl:variable name="target" select="."/>
       <xsl:variable name="pos" select="position()"/>
-<xsl:message><xsl:value-of select="(position(),$target)"/></xsl:message>
       <xsl:for-each select="$context">
 	<xsl:variable name="a">
 	  <xsl:choose>
@@ -2314,7 +2313,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="anchor"/>
     <xsl:param name="target"/>
     <xsl:param name="position"/>
-<xsl:message>(1 External) <xsl:value-of select="($anchor,$target,$position)"/></xsl:message>
     <xsl:choose>
       <xsl:when test="starts-with($target,'#')">
         <w:r>
@@ -2369,8 +2367,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="anchor"/>
     <xsl:param name="context"/>
     <xsl:param name="target"/>
-<xsl:message>(2 internal) <xsl:value-of select="($anchor,$target)"/></xsl:message>
-
     <xsl:for-each select="$context">    
     <!-- create the field codes for the complex field -->
     <!-- based on information in tei:ref/@tei:rend -->
