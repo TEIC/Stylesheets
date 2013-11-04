@@ -49,7 +49,22 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="linkElementNamespace"></xsl:param>
   <xsl:param name="urlMarkup">span</xsl:param>
   <xsl:param name="linkAttributeNamespace">http://www.w3.org/1999/xlink</xsl:param>
-  <xsl:param name="outputSuffix">freddy</xsl:param>
+  <xsl:param name="outputSuffix">.xml</xsl:param>
+
+  <xsl:key name="MNAMES"
+            match="tei:monogr/tei:author[tei:surname]|tei:monogr/tei:editor[tei:surname]"
+            use="ancestor::tei:biblStruct/@xml:id"/>
+  <xsl:key name="ANAMES"
+            match="tei:analytic/tei:author[tei:surname]|tei:analytic/tei:editor[tei:surname]"
+            use="ancestor::tei:biblStruct/@xml:id"/>
+  <xsl:key name="MNAMES"
+            match="tei:monogr/tei:author[tei:persName/tei:surname]|tei:monogr/tei:editor[tei:persName/tei:surname]"
+            use="ancestor::tei:biblStruct/@xml:id"/>
+  <xsl:key name="ANAMES"
+            match="tei:analytic/tei:author[tei:persName/tei:surname]|tei:analytic/tei:editor[tei:persName/tei:surname]"
+            use="ancestor::tei:biblStruct/@xml:id"/>
+  
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element  in xref mode</desc>
    </doc>
@@ -85,13 +100,105 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>here</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element bibl</desc>
+      <desc>Crossref element bibl</desc>
    </doc>
   <xsl:template match="tei:bibl" mode="xref">
       <xsl:text>[</xsl:text>
       <xsl:number/>
       <xsl:text>]</xsl:text>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Crossref element biblStruct</desc>
+   </doc>
+   <xsl:template match="tei:biblStruct" mode="xref">
+<xsl:message>Look at <xsl:value-of select="."/></xsl:message>
+      <xsl:choose>
+         <xsl:when test="count(key('ANAMES',@xml:id))=1">
+	           <xsl:value-of select="normalize-space(key('ANAMES',@xml:id)//tei:surname)"/>
+         </xsl:when>
+         <xsl:when test="count(key('ANAMES',@xml:id))=2">
+	           <xsl:value-of select="key('ANAMES',@xml:id)[1]//tei:surname"/>
+	           <xsl:call-template name="makeText">
+		     <xsl:with-param name="letters"> and </xsl:with-param>
+		   </xsl:call-template>
+	           <xsl:value-of select="key('ANAMES',@xml:id)[2]//tei:surname"/>
+         </xsl:when>
+         <xsl:when test="count(key('ANAMES',@xml:id))&gt;2">
+	           <xsl:value-of select="key('ANAMES',@xml:id)[1]//tei:surname"/>
+	           <xsl:call-template name="makeText">
+		     <xsl:with-param name="letters"> et al.</xsl:with-param>
+		   </xsl:call-template>
+         </xsl:when>
+         <xsl:when test="count(key('MNAMES',@xml:id))=1">
+	           <xsl:value-of select="key('MNAMES',@xml:id)//tei:surname"/>
+         </xsl:when>
+         <xsl:when test="count(key('MNAMES',@xml:id))=2">
+	           <xsl:value-of select="key('MNAMES',@xml:id)[1]//tei:surname"/>
+	           <xsl:call-template name="makeText">
+		     <xsl:with-param name="letters"> and </xsl:with-param>
+		   </xsl:call-template>
+	           <xsl:value-of select="key('MNAMES',@xml:id)[2]//tei:surname"/>
+         </xsl:when>
+         <xsl:when test="count(key('MNAMES',@xml:id))&gt;2">
+	           <xsl:value-of select="key('MNAMES',@xml:id)[1]//tei:surname"/>
+	           <xsl:call-template name="makeText">
+		     <xsl:with-param name="letters"> et al.</xsl:with-param>
+		   </xsl:call-template>
+         </xsl:when>
+         <xsl:when test=".//tei:author[tei:surname]">
+	           <xsl:value-of select=".//tei:author//tei:surname[1]"/>
+         </xsl:when>
+         <xsl:when test=".//tei:author[tei:orgName]">
+	           <xsl:value-of select=".//tei:author/tei:orgName[1]"/>
+         </xsl:when>
+         <xsl:when test=".//tei:author">
+	           <xsl:value-of select=".//tei:author[1]"/>
+         </xsl:when>
+         <xsl:when test=".//tei:editor[tei:surname]">
+	           <xsl:value-of select=".//tei:editor//tei:surname[1]"/>
+         </xsl:when>
+         <xsl:when test=".//tei:editor">
+	           <xsl:value-of select=".//tei:editor[1]"/>
+         </xsl:when>
+         <xsl:otherwise>
+	           <xsl:value-of select=".//tei:title[1]"/>
+         </xsl:otherwise>
+      </xsl:choose>
+      <xsl:choose>
+         <xsl:when test="count(tei:*[1]/tei:editor)=1">
+	           <xsl:call-template name="makeText">
+		     <xsl:with-param name="letters"> (ed.)</xsl:with-param>
+		   </xsl:call-template>
+         </xsl:when>
+         <xsl:when test="count(tei:*[1]/tei:editor)&gt;1">
+	           <xsl:call-template name="makeText">
+		     <xsl:with-param name="letters"> (eds.)</xsl:with-param>
+		   </xsl:call-template>
+         </xsl:when>
+      </xsl:choose>
+      <xsl:choose>
+         <xsl:when test="tei:monogr/tei:imprint/tei:date/@when">
+	           <xsl:call-template name="makeText">
+		     <xsl:with-param name="letters"> (</xsl:with-param>
+		   </xsl:call-template>
+	           <xsl:value-of select="substring-before(tei:monogr/tei:imprint/tei:date/@when,'-')"/>
+	           <xsl:call-template name="makeText">
+		     <xsl:with-param name="letters">)</xsl:with-param>
+		   </xsl:call-template>
+         </xsl:when>
+         <xsl:when test="tei:monogr/tei:imprint/tei:date">
+	           <xsl:call-template name="makeText">
+		     <xsl:with-param name="letters"> (</xsl:with-param>
+		   </xsl:call-template>
+	           <xsl:value-of select="tei:monogr/tei:imprint/tei:date"/>
+	           <xsl:call-template name="makeText">
+		     <xsl:with-param name="letters">)</xsl:with-param>
+		   </xsl:call-template>
+         </xsl:when>
+      </xsl:choose>
+   </xsl:template>
+
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element s
