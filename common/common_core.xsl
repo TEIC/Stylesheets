@@ -960,7 +960,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:note">
     <xsl:choose>
       <xsl:when test="@place='none'"/>
-      <xsl:when test="not(@place) and ancestor::tei:bibl">
+      <xsl:when test="not(@place) and (parent::tei:head or ancestor::tei:bibl or
+		      ancestor::tei:biblFull or ancestor::tei:biblStruct)">
 	<xsl:call-template name="makeText">
 	  <xsl:with-param name="letters"> (</xsl:with-param>
 	</xsl:call-template>
@@ -968,14 +969,6 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="makeText">
 	  <xsl:with-param name="letters">)</xsl:with-param>
 	</xsl:call-template>
-      </xsl:when>
-
-      <xsl:when test="ancestor::tei:listBibl or
-		      ancestor::tei:biblFull or
-		      ancestor::tei:biblStruct">
-	<xsl:text>[</xsl:text>
-	<xsl:apply-templates/>
-	<xsl:text>] </xsl:text>
       </xsl:when>
 
       <xsl:when test="@place='comment'">
