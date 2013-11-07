@@ -76,10 +76,13 @@ p5:
 	done
 
 
-common: 
+common: names
 	@echo BUILD Build for P5, common files and documentation
 	test -d release/common/xml/tei/stylesheet || mkdir -p release/common/xml/tei/stylesheet
-	cp catalog.xml VERSION *.css i18n.xml release/common/xml/tei/stylesheet
+	cp names.xml catalog.xml VERSION *.css i18n.xml release/common/xml/tei/stylesheet
+
+names:
+	saxon -it:main tools/getnames.xsl > names.xml
 
 profiles: 
 	@echo BUILD Build for P5, profiles
@@ -102,7 +105,7 @@ oxygendoc:
 teioo.jar:
 	(cd odt;  mkdir TEIP5; saxon -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
 
-test: clean p5 common debversion
+test: clean p5 common names debversion
 	@echo BUILD Run tests
 	(cd Test; make)
 

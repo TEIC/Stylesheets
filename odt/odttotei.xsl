@@ -78,7 +78,6 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:key match="style:style" name="STYLES" use="@style:name"/>
 
-
   <xsl:key name="LISTS" 
 	 match="text:list-level-style-number" 
 	 use="parent::text:list-style/@style:name"/>
@@ -559,36 +558,6 @@ of this software, even if advised of the possibility of such damage.
           </xsl:choose>
         </q>
       </xsl:when>
-      <xsl:when test="$Style='date'">
-        <date>
-          <xsl:apply-templates/>
-        </date>
-      </xsl:when>
-      <xsl:when test="$Style='l'">
-        <l>
-          <xsl:apply-templates/>
-        </l>
-      </xsl:when>
-      <xsl:when test="$Style='Filespec'">
-        <Filespec>
-          <xsl:apply-templates/>
-        </Filespec>
-      </xsl:when>
-      <xsl:when test="$Style='gi'">
-        <gi>
-          <xsl:apply-templates/>
-        </gi>
-      </xsl:when>
-      <xsl:when test="$Style='Code'">
-        <Code>
-          <xsl:apply-templates/>
-        </Code>
-      </xsl:when>
-      <xsl:when test="$Style='Input'">
-        <Input>
-          <xsl:apply-templates/>
-        </Input>
-      </xsl:when>
       <xsl:when test="$Style='Internet Link'">
         <xsl:apply-templates/>
       </xsl:when>
@@ -618,12 +587,19 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="applyStyle">
     <xsl:variable name="name">
-      <xsl:value-of select="@text:style-name"/>
+      <xsl:value-of select="replace(@text:style-name,'tei_5f_','')"/>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="string-length(.)=0 and not (text:s)"/>
       <xsl:when test="text:note">
 	<xsl:apply-templates/>
+      </xsl:when>
+      <!-- if the style name is the same as that of a known TEI
+      element, make it that -->
+      <xsl:when test="doc('../names.xml')//tei:gi[.=$name]">
+	<xsl:element name="{$name}">
+	  <xsl:apply-templates/>
+	</xsl:element>
       </xsl:when>
       <xsl:when test="key('STYLES',$name)">
         <xsl:variable name="contents">
@@ -654,6 +630,18 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:text>sup </xsl:text>
 	    </xsl:if>
 	    
+	    <xsl:if test="style:text-properties/@fo:color and not(style:text-properties/@fo:color='transparent')">
+	      <xsl:text> color(</xsl:text>
+	      <xsl:value-of select="style:text-properties/@fo:color"/>
+	      <xsl:text>)</xsl:text>
+	    </xsl:if>
+
+	    <xsl:if test="style:text-properties/@fo:background-color and not(style:text-properties/@fo:background-color='transparent')">
+	      <xsl:text> background-color(</xsl:text>
+	      <xsl:value-of select="style:text-properties/@fo:background-color"/>
+	      <xsl:text>)</xsl:text>
+	    </xsl:if>
+
 	    <xsl:if
 		test="style:text-properties[starts-with(@style:text-position,'sub')]">
 	      <xsl:text>sub </xsl:text>

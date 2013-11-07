@@ -131,15 +131,13 @@ of this software, even if advised of the possibility of such damage.
 	 </xsl:element>
        </xsl:when>
 
-       <xsl:when test="$style='ref' or $style='date' or
-		       $style='mentioned' or $style='orgName'">
-	 <xsl:element name="{$style}">
+	<xsl:when test="doc('../names.xml')//tei:gi[.=$style]">
+	  <xsl:element name="{$style}">
 	   <xsl:call-template name="basicStyles">
 	     <xsl:with-param name="parented">true</xsl:with-param>
 	   </xsl:call-template>
-	 </xsl:element>
-       </xsl:when>
-
+	  </xsl:element>
+	</xsl:when>
        
        <xsl:when test="not($style='')">
 	 <hi rend="{replace($style,' ','_')}">
