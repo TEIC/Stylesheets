@@ -327,9 +327,15 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="."/>
     </xsl:comment>
   </xsl:template>
- 
 
-  <xsl:template match="text:p[@text:style-name]">
+  <xsl:template match="office:annotation/text:p" priority="100">
+    <note>
+        <xsl:apply-templates/>
+    </note>
+  </xsl:template>
+
+
+  <xsl:template match="text:p">
     <xsl:choose>
       <xsl:when test="draw:frame and parent::draw:text-box">
 	<xsl:apply-templates select="draw:frame"/>
@@ -337,7 +343,6 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:apply-templates select="text()|*[not(local-name(.)='frame')]"/>
 	</head>
       </xsl:when>
-      <xsl:when test="parent::table:table-cell"/>
 
       <xsl:when test="count(parent::text:note-body/text:p)=1">
           <xsl:apply-templates/>
@@ -367,21 +372,19 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:for-each-group>
         </lg>
       </xsl:when>
+
       <xsl:when test="@text:style-name='Title'">
         <title>
           <xsl:apply-templates/>
         </title>
       </xsl:when>
-      <xsl:when test="@text:style-name='Date'">
-        <date>
-          <xsl:apply-templates/>
-        </date>
-      </xsl:when>
+
       <xsl:when test="@text:style-name='Section Title'">
         <head>
           <xsl:apply-templates/>
         </head>
       </xsl:when>
+
       <xsl:when test="@text:style-name='Appendix Title'">
         <head>
           <xsl:apply-templates/>
@@ -398,46 +401,22 @@ of this software, even if advised of the possibility of such damage.
         </Output>
       </xsl:when>
 
-      <xsl:otherwise>
-        <p>
-	  <xsl:call-template name="applyStyle"/>
-        </p>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template match="office:annotation/text:p" priority="100">
-    <note>
-        <xsl:apply-templates/>
-    </note>
-  </xsl:template>
-
-
-  <!-- normal paragraphs -->
-  <xsl:template match="text:p">
-    <xsl:choose>
       <xsl:when test="parent::text:list-item">
 	<xsl:call-template name="applyStyle"/>
       </xsl:when>
-      <xsl:when test="parent::table:table-cell">
-        <xsl:call-template name="applyStyle"/>
-      </xsl:when>
+
       <xsl:when test="@text:style-name='Table'"/>
+
       <xsl:when test="text:span[@text:style-name = 'XrefLabel']"/>
+
       <xsl:when test="@text:style-name='Speech'">
         <sp>
           <speaker/>
-          <p>
-            <xsl:call-template name="id.attribute"/>
-            <xsl:call-template name="applyStyle"/>
-          </p>
+	  <xsl:call-template name="applyStyle"/>
         </sp>
       </xsl:when>
       <xsl:otherwise>
-        <p>
-          <xsl:call-template name="id.attribute"/>
-          <xsl:call-template name="applyStyle"/>
-        </p>
+	<xsl:call-template name="applyStyle"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -590,7 +569,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="replace(@text:style-name,'tei_5f_','')"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="string-length(.)=0 and not (text:s)"/>
+      <xsl:when test="string-length(.)=0 and not (text:s or draw:frame)"/>
       <xsl:when test="text:note">
 	<xsl:apply-templates/>
       </xsl:when>
@@ -598,98 +577,38 @@ of this software, even if advised of the possibility of such damage.
       element, make it that -->
       <xsl:when test="doc('../names.xml')//tei:gi[.=$name]">
 	<xsl:element name="{$name}">
+          <xsl:call-template name="id.attribute"/>
 	  <xsl:apply-templates/>
 	</xsl:element>
       </xsl:when>
-      <xsl:when test="key('STYLES',$name)">
-        <xsl:variable name="contents">
-          <xsl:apply-templates/>
-        </xsl:variable>
-        <xsl:for-each select="key('STYLES',$name)">
-
-	  <!--! <xsl:for-each select="style:text-properties/@*">
-	      <xsl:value-of select="name(.)"/>:        <xsl:value-of select="."/>&#10;
-	      </xsl:for-each>
-	  -->
-	  <xsl:variable name="divrendstring">
-	    <xsl:if
-		test="style:paragraph-properties/@fo:text-align">
-	      <xsl:value-of
-		  select="style:paragraph-properties/@fo:text-align"/>
-	      <xsl:text> </xsl:text>
-	    </xsl:if>
-	  </xsl:variable>
-
-	  <xsl:if test="not($divrendstring='')">
-	      <xsl:attribute name="rend" select="normalize-space($divrendstring)"/>
-	  </xsl:if>
-
-	  <xsl:variable name="rendstring">
-	    <xsl:if
-		test="style:text-properties[starts-with(@style:text-position,'super')]">
-	      <xsl:text>sup </xsl:text>
-	    </xsl:if>
-	    
-	    <xsl:if test="style:text-properties/@fo:color and not(style:text-properties/@fo:color='transparent')">
-	      <xsl:text> color(</xsl:text>
-	      <xsl:value-of select="style:text-properties/@fo:color"/>
-	      <xsl:text>)</xsl:text>
-	    </xsl:if>
-
-	    <xsl:if test="style:text-properties/@fo:background-color and not(style:text-properties/@fo:background-color='transparent')">
-	      <xsl:text> background-color(</xsl:text>
-	      <xsl:value-of select="style:text-properties/@fo:background-color"/>
-	      <xsl:text>)</xsl:text>
-	    </xsl:if>
-
-	    <xsl:if
-		test="style:text-properties[starts-with(@style:text-position,'sub')]">
-	      <xsl:text>sub </xsl:text>
-	    </xsl:if>
-	    
-	    <xsl:if test="style:text-properties[@fo:font-weight='bold']">
-	      <xsl:text>bold </xsl:text>
-	    </xsl:if>
-	    
-	    <xsl:if
-		test="style:text-properties[@style:text-underline-type='double']">
-	      <xsl:text>underdoubleline </xsl:text>
-	    </xsl:if>
-	    
-	    <xsl:if
-		test="style:text-properties[@style:text-underline-style='solid']">
-	      <xsl:text>underline </xsl:text>
-	    </xsl:if>
-	    
-	    <xsl:if
-		test="style:text-properties[@style:text-line-through-style='solid']">
-	      <xsl:text>strikethrough </xsl:text>
-	    </xsl:if>
-	    
-	    <xsl:if
-		test="style:text-properties[@fo:font-variant='small-caps']">
-	      <xsl:text>smallcaps </xsl:text>
-	    </xsl:if>
-	    
-	    <xsl:if test="style:text-properties[@fo:font-style='italic']">
-	      <xsl:text>italic </xsl:text>
-	    </xsl:if>
-	  </xsl:variable>
-	  <xsl:choose>
-	    <xsl:when test="$rendstring=''">
-	      <xsl:copy-of select="$contents"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <hi rend="{normalize-space($rendstring)}">
-		<xsl:copy-of select="$contents"/>
-	      </hi>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	  
-        </xsl:for-each>
-      </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates/>
+	<xsl:variable name="rendition"
+		      select="tei:inlineStyles($name,.)"/>
+	<xsl:choose>
+	  <xsl:when test="self::text:p and count(parent::table:table-cell/text:p)=1">
+	    <xsl:if test="not($rendition='')">
+	      <xsl:attribute name="rend" select="$rendition"/>
+	    </xsl:if>
+	    <xsl:apply-templates/>
+	  </xsl:when>
+	  <xsl:when test="self::text:p">
+	    <p>
+            <xsl:call-template name="id.attribute"/>
+	      <xsl:if test="not($rendition='')">
+		<xsl:attribute name="rend" select="$rendition"/>
+	      </xsl:if>
+	      <xsl:apply-templates/>
+	    </p>
+	  </xsl:when>
+	  <xsl:when test="$rendition=''">
+	    <xsl:apply-templates/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <hi rend="{$rendition}">
+	      <xsl:apply-templates/>
+	    </hi>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -798,9 +717,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="text:h">
         <xsl:attribute name="role">label</xsl:attribute>
       </xsl:if>
-      <xsl:for-each select="text:p[@text:style-name][1]">
-	<xsl:call-template name="applyStyle"/>
-      </xsl:for-each>
       <xsl:apply-templates/>
     </cell>
   </xsl:template>
@@ -1307,11 +1223,12 @@ These seem to have no obvious translation
     </xsl:for-each-group>
   </xsl:template>
 		
-<xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass1">
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass1">
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="tei:p[not(node())]" mode="pass1"/>
+  <xsl:template match="tei:p[not(node())]" mode="pass1">
+  </xsl:template>
 
   <xsl:template match="tei:HEAD" mode="pass1">
     <xsl:if test="preceding-sibling::tei:HEAD">
@@ -1344,39 +1261,41 @@ These seem to have no obvious translation
   <!-- second pass -->
 
 
-  <xsl:template match="tei:p[not(*) and normalize-space(.)='']" mode="pass2"/>
-
-    <xsl:template match="@*|comment()|processing-instruction()" mode="pass2">
-        <xsl:copy-of select="."/>
-    </xsl:template>
-    
-    <xsl:template match="*" mode="pass2">
-        <xsl:copy>
-            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
-        </xsl:copy>
-    </xsl:template>
-    
-    
-    <xsl:template match="text()" mode="pass2">
-        <xsl:value-of select="."/>
-    </xsl:template>
-
-
-    <xsl:template match="tei:title" mode="pass2">
-      <xsl:choose>
-	<xsl:when test="parent::tei:div|parent::tei:body">
-	  <head>
-            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
-	  </head>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:copy>
-	    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
-	  </xsl:copy>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:template>
-
+  <xsl:template match="tei:p[not(*) and normalize-space(.)='']"
+		mode="pass2">
+  </xsl:template>
+  
+  <xsl:template match="@*|comment()|processing-instruction()" mode="pass2">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+  
+  <xsl:template match="*" mode="pass2">
+    <xsl:copy>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  
+  <xsl:template match="text()" mode="pass2">
+    <xsl:value-of select="."/>
+  </xsl:template>
+  
+  
+  <xsl:template match="tei:title" mode="pass2">
+    <xsl:choose>
+      <xsl:when test="parent::tei:div|parent::tei:body">
+	<head>
+	  <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+	</head>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy>
+	  <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+	</xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   <!-- third pass -->
 
 
@@ -1395,11 +1314,77 @@ These seem to have no obvious translation
     <xsl:template match="text()" mode="pass3">
         <xsl:value-of select="."/>
     </xsl:template>
-
+    
     <xsl:template match="tei:div[not(@type)]" mode="pass3">
       <div type="div{count(ancestor-or-self::tei:div)}">
 	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
       </div>
     </xsl:template>
+    
+    <xsl:function name="tei:inlineStyles"  as="xs:string">
+      <xsl:param name="name"/>
+      <xsl:param name="context"/>
+      <xsl:variable name="r">
+	<xsl:for-each select="$context/key('STYLES',$name)">
+	  <xsl:if
+	      test="style:paragraph-properties/@fo:text-align">
+	    <xsl:value-of
+		select="style:paragraph-properties/@fo:text-align"/>
+	    <xsl:text> </xsl:text>
+	  </xsl:if>
+	  
+	  <xsl:if
+	     test="style:text-properties[starts-with(@style:text-position,'super')]">
+	    <xsl:text>sup </xsl:text>
+	 </xsl:if>
+	 
+	 <xsl:if test="style:text-properties/@fo:color and not(style:text-properties/@fo:color='transparent')">
+	   <xsl:text> color(</xsl:text>
+	   <xsl:value-of select="style:text-properties/@fo:color"/>
+	   <xsl:text>)</xsl:text>
+	 </xsl:if>
+	 
+	 <xsl:if test="style:text-properties/@fo:background-color and not(style:text-properties/@fo:background-color='transparent')">
+	   <xsl:text> background-color(</xsl:text>
+	   <xsl:value-of select="style:text-properties/@fo:background-color"/>
+	   <xsl:text>)</xsl:text>
+	 </xsl:if>
+	 
+	 <xsl:if
+	     test="style:text-properties[starts-with(@style:text-position,'sub')]">
+	   <xsl:text>sub </xsl:text>
+	 </xsl:if>
+	 
+	 <xsl:if test="style:text-properties[@fo:font-weight='bold']">
+	   <xsl:text>bold </xsl:text>
+	 </xsl:if>
+	 
+	 <xsl:if
+		test="style:text-properties[@style:text-underline-type='double']">
+	   <xsl:text>underdoubleline </xsl:text>
+	 </xsl:if>
+	 
+	 <xsl:if
+	     test="style:text-properties[@style:text-underline-style='solid']">
+	   <xsl:text>underline </xsl:text>
+	 </xsl:if>
+	 
+	 <xsl:if
+	     test="style:text-properties[@style:text-line-through-style='solid']">
+	   <xsl:text>strikethrough </xsl:text>
+	 </xsl:if>
+	 
+	 <xsl:if
+	     test="style:text-properties[@fo:font-variant='small-caps']">
+	   <xsl:text>smallcaps </xsl:text>
+	 </xsl:if>
+	 
+	 <xsl:if test="style:text-properties[@fo:font-style='italic']">
+	   <xsl:text>italic </xsl:text>
+	 </xsl:if>
 
+       </xsl:for-each>
+     </xsl:variable>
+     <xsl:value-of select="normalize-space($r)"/>
+    </xsl:function>
 </xsl:stylesheet>
