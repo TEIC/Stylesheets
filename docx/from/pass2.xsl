@@ -414,6 +414,11 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:div[count(*)=1 and tei:head[not(text())]]" mode="pass2"/>
 
+  <xsl:template match="tei:div[count(parent::*/tei:div)=1 and
+		       tei:head[not(text())]]" mode="pass2">
+    <xsl:apply-templates select="*[not(self::tei:head)]" mode="pass2"/>
+  </xsl:template>
+
   <xsl:template match="tei:figure/tei:p[@rend='caption' or @rend='Figure title']/text()[starts-with(.,'Figure  ')]" mode="pass2">
     <xsl:value-of select="substring(.,9)"/>
   </xsl:template>
