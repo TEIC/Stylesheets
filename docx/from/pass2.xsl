@@ -121,7 +121,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:seg[not(@*)]" mode="pass2">
     <xsl:choose>
       <xsl:when test="parent::tei:formula and normalize-space(.)=''"/>
-      <xsl:when test=".=' ' and following-sibling::node()[1][self::tei:hi]/@rend=        preceding-sibling::node()[1][self::tei:hi]/@rend"/>
+      <xsl:when test=".=' ' and
+		      following-sibling::node()[1][self::tei:hi]/@rend=preceding-sibling::node()[1][self::tei:hi]/@rend">
+      </xsl:when>
       <xsl:when test="parent::*/text()">
         <xsl:value-of select="."/>
       </xsl:when>
@@ -269,7 +271,8 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>a &lt;hi&gt; with just white space is ignored</desc>
   </doc>
-  <xsl:template match="tei:hi[not(@rend) and not(*) and string-length(.)=0]" mode="pass2">
+  <xsl:template match="tei:hi[not(@rend) and not(*) and
+		       string-length(.)=0]" mode="pass2">
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -286,15 +289,17 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="not(*) and string-length(.)=0"/>
       <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']  and tei:g[@ref='x:tab']"/>
       <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]"/>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and   preceding-sibling::node()[2][self::tei:hi[@rend=$r]]"/>
-      <xsl:when test="@rend='bold' and .=' '">
+      <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and
+		      preceding-sibling::node()[2][self::tei:hi[@rend=$r]]"/>
+      <xsl:when test="($r='bold' or $r='italic') and .=' '">
         <xsl:text> </xsl:text>
-	<xsl:call-template name="nextHi">
-	  <xsl:with-param name="r" select="$r"/>
-	</xsl:call-template>
-      </xsl:when>
-      <xsl:when test="@rend='italic' and .=' '">
-        <xsl:text> </xsl:text>
+        <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
+        <xsl:element name="{$ename}">
+          <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
+	  <xsl:call-template name="nextHi">
+	    <xsl:with-param name="r" select="$r"/>
+	  </xsl:call-template>
+	</xsl:element>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>

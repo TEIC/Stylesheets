@@ -193,7 +193,7 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:apply-templates/>
        </xsl:for-each>
      </xsl:variable>		  
-
+     
      <!--
 	 <xsl:result-document href="/tmp/foo.xml">
 	 <xsl:copy-of select="$pass1"/>
