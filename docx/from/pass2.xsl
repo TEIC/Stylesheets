@@ -293,13 +293,15 @@ of this software, even if advised of the possibility of such damage.
 		      preceding-sibling::node()[2][self::tei:hi[@rend=$r]]"/>
       <xsl:when test="($r='bold' or $r='italic') and .=' '">
         <xsl:text> </xsl:text>
-        <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
-        <xsl:element name="{$ename}">
-          <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
-	  <xsl:call-template name="nextHi">
-	    <xsl:with-param name="r" select="$r"/>
-	  </xsl:call-template>
-	</xsl:element>
+	<xsl:if test="following-sibling::node()[1][self::tei:hi[@rend=$r]]">
+	  <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
+	  <xsl:element name="{$ename}">
+	    <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
+	    <xsl:call-template name="nextHi">
+	      <xsl:with-param name="r" select="$r"/>
+	    </xsl:call-template>
+	  </xsl:element>
+	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
