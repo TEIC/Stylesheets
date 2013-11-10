@@ -129,7 +129,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="@*" mode="egXML">
-    <xsl:attribute name="{tei:checkAltIdentAttribute(name(),local-name(parent::*))}">
+    <xsl:attribute name="{tei:checkAltIdentAttribute(local-name(),local-name(parent::*))}">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
