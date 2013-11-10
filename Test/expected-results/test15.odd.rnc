@@ -3272,8 +3272,11 @@ floatingText =
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
     att.divLike.attributes,
-    att.typed.attributes,
+    att.typed.attribute.subtype,
     att.declaring.attributes,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    attribute typ { data.enumerated }?,
     empty
   }
 div1 =

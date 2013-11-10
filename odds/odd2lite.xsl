@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+		xmlns:dcr="http://www.isocat.org/ns/dcr"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:html="http://www.w3.org/1999/xhtml"
 		xmlns:s="http://www.ascc.net/xml/schematron" 
@@ -11,7 +12,8 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                exclude-result-prefixes="fo a tei html s rng sch xsi teix xs"
+                exclude-result-prefixes="fo a tei html s rng sch xsi
+					 teix xs dcr"
                 version="2.0">
   <xsl:import href="../common/verbatim.xsl"/>
   <xsl:import href="teiodds.xsl"/> 
@@ -85,6 +87,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="urlName">target</xsl:param>
   <xsl:param name="xrefName">ref</xsl:param>
 
+  <xsl:variable name="TOP" select="/"/>
+  <xsl:key name="ALTIDENTS" match="tei:elementSpec[tei:altIdent]" use="@ident"/>
+  <xsl:key name="ALTIDENTS"
+	   match="tei:elementSpec/tei:attList/tei:attDef[tei:altIdent]"
+	   use="concat(ancestor::tei:elementSpec/@ident,@ident)"/>
+  <xsl:key name="ALTIDENTS"
+	   match="tei:classSpec/tei:attList/tei:attDef[tei:altIdent]" 
+	   use="concat(ancestor::tei:classSpec/@ident,@ident)"/>
+
 
   <xsl:template match="/">
     <xsl:variable name="resolvedClassatts">
@@ -113,17 +124,21 @@ of this software, even if advised of the possibility of such damage.
       <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="@*|comment()|processing-instruction()" mode="egXML">
-      <xsl:copy-of select="."/>
+  <xsl:template match="comment()|processing-instruction()" mode="egXML">
+    <xsl:copy-of select="."/>
   </xsl:template>
 
+  <xsl:template match="@*" mode="egXML">
+    <xsl:attribute name="{tei:checkAltIdentAttribute(name(),local-name(parent::*))}">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
 
   <xsl:template match="*" mode="egXML"> 
-    <xsl:copy>
+    <xsl:element name="{tei:checkAltIdent(local-name())}">
       <xsl:apply-templates
 	  select="*|@*|processing-instruction()|comment()|text()" mode="egXML"/>
-    </xsl:copy>
-
+    </xsl:element>
   </xsl:template>
 
   <xsl:template match="teix:egXML">
@@ -588,5 +603,41 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </item>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>see whether an element has been renamed</desc>
+  </doc>
+  <xsl:function name="tei:checkAltIdent" as="xs:string">
+    <xsl:param name="name"/>
+    <xsl:for-each select="$TOP">
+      <xsl:choose>
+	<xsl:when test="key('ALTIDENTS',$name)">
+	  <xsl:value-of select="key('ALTIDENTS',$name)/tei:altIdent"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$name"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>see whether an attribute has been renamed</desc>
+  </doc>
+  <xsl:function name="tei:checkAltIdentAttribute" as="xs:string">
+    <xsl:param name="aname"/>
+    <xsl:param name="ename"/>
+    <xsl:variable name="name" select="concat($ename,$aname)"/>
+    <xsl:for-each select="$TOP">
+      <xsl:choose>
+	<xsl:when test="key('ALTIDENTS',$name)">
+	  <xsl:value-of select="key('ALTIDENTS',$name)/tei:altIdent"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$aname"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
 
 </xsl:stylesheet>
