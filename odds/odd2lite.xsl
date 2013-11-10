@@ -128,17 +128,28 @@ of this software, even if advised of the possibility of such damage.
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="@*" mode="egXML">
+  <xsl:template match="@*[namespace-uri() = '']" mode="egXML">
     <xsl:attribute name="{tei:checkAltIdentAttribute(local-name(),local-name(parent::*))}">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
 
-  <xsl:template match="*" mode="egXML"> 
-    <xsl:element name="{tei:checkAltIdent(local-name())}">
+  <xsl:template match="@*" mode="egXML">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="teix:*" mode="egXML"> 
+    <xsl:element name="{tei:checkAltIdent(local-name())}" xmlns="http://www.tei-c.org/ns/Examples">
       <xsl:apply-templates
 	  select="*|@*|processing-instruction()|comment()|text()" mode="egXML"/>
     </xsl:element>
+  </xsl:template>
+
+  <xsl:template match="*" mode="egXML"> 
+    <xsl:copy>
+      <xsl:apply-templates
+	  select="*|@*|processing-instruction()|comment()|text()" mode="egXML"/>
+    </xsl:copy>
   </xsl:template>
 
   <xsl:template match="teix:egXML">
