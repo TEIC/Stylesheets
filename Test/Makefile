@@ -164,7 +164,7 @@ test-text:
 	../teitotxt test14.xml test.text
 	diff test.text expected-results/test.text
 
-test-odt:
+test-odt: 
 	../teitoodt test.xml 
 	unzip -t test.xml.odt > test.xml.odt.listing
 	unzip -o -q test.xml.odt content.xml

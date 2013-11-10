@@ -575,7 +575,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <!-- if the style name is the same as that of a known TEI
       element, make it that -->
-      <xsl:when test="doc-available('../../names.xml') and doc('../names.xml')//tei:gi[.=$name]">
+      <xsl:when test="doc-available('../names.xml') and doc('../names.xml')//tei:gi[.=$name]">
 	<xsl:element name="{$name}">
           <xsl:call-template name="id.attribute"/>
 	  <xsl:apply-templates/>
