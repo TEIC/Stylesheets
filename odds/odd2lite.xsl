@@ -346,13 +346,13 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:gi">
       <xsl:choose>
-         <xsl:when test="not(@scheme='') or parent::tei:ref or parent::tei:head">
+         <xsl:when test="parent::tei:ref or parent::tei:head">
             <gi>
             <xsl:apply-templates/>
 	    </gi>
          </xsl:when>
-         <xsl:when test="key('ELEMENTS',.)[last()]">
-            <xsl:for-each select="key('ELEMENTS',.)">
+         <xsl:when test="(not(@scheme) or @scheme='TEI') and key('ELEMENTS',.)">
+            <xsl:for-each select="key('ELEMENTS',.)[last()]">
                <ref target="#{@ident}">
                   <xsl:text>&lt;</xsl:text>
                   <xsl:choose>
@@ -373,7 +373,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
          <xsl:otherwise>
             <gi>
-            <xsl:apply-templates/>
+	      <xsl:apply-templates/>
 	    </gi>
          </xsl:otherwise>
       </xsl:choose>
