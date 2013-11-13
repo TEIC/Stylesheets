@@ -9,7 +9,7 @@
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="a fo rng tei teix"
+                exclude-result-prefixes="a fo rng tei teix html"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -55,4 +55,54 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[html] processing source doc</desc>
+   </doc>
+<xsl:template match="tei:sourceDoc">
+  <xsl:apply-templates/>
+</xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[html] lines, surfaces and zones in transcription just turn into divs</desc>
+   </doc>
+
+<xsl:template match="tei:surface">
+  <div class="surface">
+    <xsl:call-template name="checkfacs"/>
+    <xsl:apply-templates/>
+  </div>
+</xsl:template>
+
+<xsl:template match="tei:surfaceGrp">
+  <div class="surfaceGrp">
+    <xsl:apply-templates/>
+  </div>
+</xsl:template>
+
+<xsl:template match="tei:zone">
+  <div class="zone">
+    <xsl:call-template name="checkfacs"/>
+    <xsl:apply-templates/>
+  </div>
+</xsl:template>
+
+<xsl:template match="tei:line">
+  <div class="line">
+    <xsl:apply-templates/>
+  </div>
+</xsl:template>
+
+<xsl:template name="checkfacs">
+  <xsl:if test="@facs">
+    <img src="{@facs}" class="facsimage"/>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="tei:damage">
+  <span class="damage">
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+
 </xsl:stylesheet>

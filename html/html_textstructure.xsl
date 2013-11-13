@@ -1071,7 +1071,7 @@ of this software, even if advised of the possibility of such damage.
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>link to level above[html] </desc>
+      <desc>[html] link to level above </desc>
    </doc>
   <xsl:template name="generateUpLink">
       <xsl:variable name="myName">
@@ -2076,69 +2076,70 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
   <xsl:template name="simpleBody">
+    <xsl:apply-templates select="tei:sourceDoc"/>
     <xsl:choose>
       <xsl:when test="tei:text/tei:group">
 	<xsl:apply-templates select="tei:text/tei:group"/>
       </xsl:when>
-       <xsl:when test="$filePerPage='true'">
-	 <xsl:variable name="pass1">	 
-	   <xsl:apply-templates select="tei:text/*"/>
-	 </xsl:variable>
-	 <xsl:choose>
-	   <xsl:when test="$pass1/html:PAGEBREAK">
-	     <xsl:for-each-group select="$pass1/*"
-				 group-starting-with="html:PAGEBREAK">
-	       <xsl:choose>
-		 <xsl:when test="self::html:PAGEBREAK">
-		   <xsl:call-template name="pageperfile">
-		     <xsl:with-param name="page" select="self::html:PAGEBREAK/@name"/>
-		   </xsl:call-template>
-		 </xsl:when>
-		 <xsl:otherwise>
-		   <xsl:copy-of select="current-group()"/>
-		 </xsl:otherwise>
-	       </xsl:choose>
-	     </xsl:for-each-group>
-	   </xsl:when>
-	   <xsl:when test="$pass1/html:div[@class='tei_front' or
-			   @class='tei_body' or @class='tei_back']/html:PAGEBREAK">
-	     <xsl:for-each-group select="$pass1/*/*"
-				 group-starting-with="html:PAGEBREAK">
-	       <xsl:choose>
-		 <xsl:when test="self::html:PAGEBREAK">
-		   <xsl:call-template name="pageperfile">
-		     <xsl:with-param name="page" select="self::html:PAGEBREAK/@name"/>
-		   </xsl:call-template>
-		 </xsl:when>
-		 <xsl:otherwise>
-		   <xsl:copy-of select="current-group()"/>
-		 </xsl:otherwise>
-	       </xsl:choose>
-	     </xsl:for-each-group>
-	   </xsl:when>
-	   <xsl:otherwise>
-	     <xsl:for-each-group select="$pass1/*"
-				 group-ending-with="*[(position() mod 40) = 0]">
-	       <xsl:call-template name="pageperfile">
-		 <xsl:with-param name="page">
-		   <xsl:text>page</xsl:text>
-		   <xsl:value-of select="position()"/>
-		 </xsl:with-param>
-	       </xsl:call-template>
-	     </xsl:for-each-group>
-	   </xsl:otherwise>
-	 </xsl:choose>
-       </xsl:when>
+      <xsl:when test="$filePerPage='true'">
+	<xsl:variable name="pass1">	 
+	  <xsl:apply-templates select="tei:text/*"/>
+	</xsl:variable>
+	<xsl:choose>
+	  <xsl:when test="$pass1/html:PAGEBREAK">
+	    <xsl:for-each-group select="$pass1/*"
+				group-starting-with="html:PAGEBREAK">
+	      <xsl:choose>
+		<xsl:when test="self::html:PAGEBREAK">
+		  <xsl:call-template name="pageperfile">
+		    <xsl:with-param name="page" select="self::html:PAGEBREAK/@name"/>
+		  </xsl:call-template>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:copy-of select="current-group()"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each-group>
+	  </xsl:when>
+	  <xsl:when test="$pass1/html:div[@class='tei_front' or
+			  @class='tei_body' or @class='tei_back']/html:PAGEBREAK">
+	    <xsl:for-each-group select="$pass1/*/*"
+				group-starting-with="html:PAGEBREAK">
+	      <xsl:choose>
+		<xsl:when test="self::html:PAGEBREAK">
+		  <xsl:call-template name="pageperfile">
+		    <xsl:with-param name="page" select="self::html:PAGEBREAK/@name"/>
+		  </xsl:call-template>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:copy-of select="current-group()"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each-group>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:for-each-group select="$pass1/*"
+				group-ending-with="*[(position() mod 40) = 0]">
+	      <xsl:call-template name="pageperfile">
+		<xsl:with-param name="page">
+		  <xsl:text>page</xsl:text>
+		  <xsl:value-of select="position()"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each-group>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:when>
       <xsl:otherwise>
-    <!-- front matter -->
-    <xsl:apply-templates select="tei:text/tei:front"/>
-      <xsl:if test="$autoToc='true' and (descendant::tei:div or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
-         <h2>
+	<!-- front matter -->
+	<xsl:apply-templates select="tei:text/tei:front"/>
+	<xsl:if test="$autoToc='true' and (descendant::tei:div or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
+	  <h2>
             <xsl:sequence select="tei:i18n('tocWords')"/>
-         </h2>
-         <xsl:call-template name="mainTOC"/>
-      </xsl:if>
-      <!-- main text -->
+	  </h2>
+	  <xsl:call-template name="mainTOC"/>
+	</xsl:if>
+	<!-- main text -->
 	<xsl:apply-templates select="tei:text/tei:body"/>
       </xsl:otherwise>
     </xsl:choose>
