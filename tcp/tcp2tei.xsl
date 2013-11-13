@@ -11,8 +11,7 @@ $Date$ $Author$
     version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
-      <p>XSLT script for cleaning up ECCO texts to P4, then running a
-      P4 to P5 conversion</p>
+      <p>XSLT script for cleaning up ECCO texts TEI P5 conversion</p>
       <p><h1 xmlns="">License</h1>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
@@ -104,6 +103,14 @@ of this software, even if advised of the possibility of such damage.
     <xsl:copy/>
   </xsl:template>
   
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>text nodes are examined to find soft-hyphen characters,
+      which are replaced by explicit "lb".
+      </p>
+    </desc>
+  </doc>
+
   <xsl:template match="text()">
     <xsl:variable name="parent" select="local-name(parent::*)"/>
     <xsl:analyze-string regex="([^∣]*)∣" select="translate(.,'¦','∣')">
@@ -123,13 +130,15 @@ of this software, even if advised of the possibility of such damage.
     </xsl:analyze-string>
   </xsl:template>
 
-  <!-- TCP discards -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>TCP simple discard</desc>
+  </doc>
   <xsl:template match="FIGDESC/HI">
     <xsl:apply-templates />
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>TCP controversial changes</desc>
+    <desc>TCP controversial discards</desc>
   </doc>
   <xsl:template match="PB/@MS" />
   <xsl:template match="LABEL/@ROLE" />
@@ -139,13 +148,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="TITLE/@I2" />
   <xsl:template match="IDG" />
 
-  <!-- lose all the multi-language xml:lang things -->
-  <xsl:template match="@LANG[.='32']" />
-  <xsl:template match="@LANG[contains(.,' ')]" />
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>multiple values for @lang are discarded</desc>
+  </doc>
+
+  <xsl:template match="@LANG[.='32' or contains(.,' ')]" />
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>Milestones:
-	a) if there is no @n, just @unit   == marginal note
+	a) if there is no @n, just @unit  == marginal note
 	b) if there is no @unit, just a @n,  == marginal note, @type='milestone'
 
 	c) if @unit is from a closed list of words (page, line, folio), it
@@ -240,7 +251,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>A HEAD/@TYPE='sub' can lose itself if it consists of
-      Q with L inside; though if thats all there is, looks like
+      Q with L inside; though if thats all there is, it looks like
       an epigraph
       </p>
     </desc>
@@ -357,6 +368,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>STAGE with a HEAD _after_ it brings the stage inside the head</desc>
+  </doc>
   <xsl:template match="STAGE[following-sibling::HEAD]">
     <head type="sub">
       <stage>
@@ -365,6 +379,9 @@ of this software, even if advised of the possibility of such damage.
     </head>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>put POSTSCRIPT as sibling of CLOSER, not child</desc>
+  </doc>
   <xsl:template match="CLOSER">
     <xsl:choose>
       <xsl:when test="POSTSCRIPT">
@@ -383,7 +400,11 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <!-- TCP non-controversial transforms -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>move PB outside ROW</desc>
+  </doc>
   <xsl:template match="ROW/PB" />
   <xsl:template match="ROW[PB]">
     <row>
