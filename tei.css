@@ -825,6 +825,7 @@ div.footer {
 }
 
 div.stdfooter {
+    clear:both;
     border-top: solid black 1pt;
     border-bottom: solid black 1pt;
 }
@@ -1353,9 +1354,11 @@ div.surfaceGrp {
     border-bottom-width: 1pt;
     border-bottom-color: green;
     border-bottom-style: solid;
+    clear:both;
 }
 
 div.surface {
+    clear:both;
     border-width: 1pt;
     border-style: solid;
     border-color: grey;
@@ -1372,7 +1375,13 @@ div.zone {
 div.line {
 }
 
-div.zone img, div.surface img { float: right;}
+div.facsimage { 
+    float: right;
+}
+div.facsimage img { 
+    max-height: 100%;
+    width: auto 
+}
 
 span.damage {
    border-bottom: 1px dashed red;

@@ -1005,6 +1005,8 @@ of this software, even if advised of the possibility of such damage.
 		      @place='marginRight' or
 		      @place='margin-left' or
 		      @place='margin-right' or
+		      @place='margin_left' or
+		      @place='margin_right' or
 		      @place='margin-top' or
 		      @place='margin-bottom'
 		      ">

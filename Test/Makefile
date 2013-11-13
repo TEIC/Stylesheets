@@ -23,7 +23,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-other test-epub test-rdf test-text test-odt p4top5 oddity pureant scripts
+default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-other test-rdf test-text test-odt p4top5 oddity pureant scripts test-epub 
 
 p4top5:
 	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
@@ -92,6 +92,11 @@ test-html:
 	$(SAXON) test28.xml ../html/html.xsl splitLevel=0  STDOUT=false $(SAXONOPT) 
 	xmllint --format index.html > x ; mv x index.html
 	diff index.html expected-results/test28.html
+foo2:
+	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFile=../tei.css $(SAXONOPT)  | xmllint --format - > test31.html
+	diff test31.html expected-results/test31.html
+	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFile=../tei.css $(SAXONOPT)  | xmllint --format - > test32.html
+	diff test32.html expected-results/test32.html
 
 testsplit:
 	$(SAXON) test6.xml ../html/html.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true

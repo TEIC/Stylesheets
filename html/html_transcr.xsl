@@ -67,36 +67,50 @@ of this software, even if advised of the possibility of such damage.
       <desc>[html] lines, surfaces and zones in transcription just turn into divs</desc>
    </doc>
 
-<xsl:template match="tei:surface">
-  <div class="surface">
-    <xsl:call-template name="checkfacs"/>
+<xsl:template match="tei:surfaceGrp">
+  <div>
+    <xsl:call-template name="makeRendition"/>
     <xsl:apply-templates/>
   </div>
 </xsl:template>
 
-<xsl:template match="tei:surfaceGrp">
-  <div class="surfaceGrp">
-    <xsl:apply-templates/>
+<xsl:template match="tei:surface">
+  <div>
+    <xsl:call-template name="makeRendition"/>
+    <xsl:call-template name="checkfacs"/>
+    <xsl:apply-templates select="text()|*[not(self::tei:graphic)]"/>
   </div>
 </xsl:template>
 
 <xsl:template match="tei:zone">
-  <div class="zone">
+  <div>
+    <xsl:call-template name="makeRendition"/>
     <xsl:call-template name="checkfacs"/>
-    <xsl:apply-templates/>
+    <xsl:apply-templates select="text()|*[not(self::tei:graphic)]"/>
   </div>
 </xsl:template>
 
 <xsl:template match="tei:line">
-  <div class="line">
-    <xsl:apply-templates/>
+  <div>
+    <xsl:call-template name="makeRendition"/>
+    <xsl:call-template name="checkfacs"/>
+    <xsl:apply-templates select="text()|*[not(self::tei:graphic)]"/>
   </div>
 </xsl:template>
 
 <xsl:template name="checkfacs">
-  <xsl:if test="@facs">
-    <img src="{@facs}" class="facsimage"/>
-  </xsl:if>
+  <xsl:choose>
+    <xsl:when test="@facs">
+      <div class="facsimage">
+	<img src="{@facs}"/>
+      </div>
+    </xsl:when>
+    <xsl:when test="tei:graphic">
+      <div class="facsimage">
+	<img src="{tei:graphic[contains(@url,'.jpg')][1]/@url}"/>
+      </div>
+    </xsl:when>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:damage">
@@ -105,4 +119,7 @@ of this software, even if advised of the possibility of such damage.
   </span>
 </xsl:template>
 
+<xsl:template match="tei:surfaceGrp/tei:desc"/>
+<xsl:template match="tei:surface/tei:desc"/>
+<xsl:template match="tei:zone/tei:desc"/>
 </xsl:stylesheet>
