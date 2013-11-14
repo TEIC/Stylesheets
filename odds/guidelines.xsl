@@ -836,9 +836,8 @@
       <address>
 	<br/>
         <xsl:text>TEI Guidelines </xsl:text> 
-        <a href="AB.html#ABTEI4">Version
-        <xsl:value-of 
-	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/></a>
+        <xsl:apply-templates
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
         <xsl:text> This page generated on </xsl:text> 
 	<xsl:call-template name="whatsTheDate"/>
 
