@@ -1,3 +1,104 @@
+2013-11-14  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	processing editionStmt in guidelines
+
+2013-11-13  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	a bit more documentation for TCP to TEI
+
+	better handling of images in surface, extra test files
+
+	start support for sourceDoc and othe transcriptional elements in HTML
+
+2013-11-11  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	changed results
+
+	change to results
+
+	make sure <gi> follows rename in altIdent
+
+2013-11-10  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	adjust element renaming in egXML to only apply to TEI elements and attributes in no namespace
+
+	ignore namespace when looking for alternate names for attributes
+
+	convert names inside <egXML> to match <altIdent>, if present
+
+	fix path to names file in odttotei
+
+	set CSS for TEI readme output
+
+	fix to avoid spurious singleton divs means some results change
+
+2013-11-09  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	apparently we dont want institution showing
+
+	make sure we dont end up with an empty <hi/>
+
+	in pass2, ignore a singleton <div> with empty <head>, just show contents
+
+	check whether file of allowed TEI names exists
+
+	deal with a difficult situation of a space marked as italic followed by real text as italic. we were losing the second bit
+
+2013-11-08  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	clean up handling of styles in odt to tei
+
+2013-11-07  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	changed result
+
+	and for docx
+
+	extend ODT to TEI by turning something with a style name into a TEI element of the same name (if it exists in the TEI)
+
+2013-11-05  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	change the way notes in <head> and in biblio entries are handled
+
+2013-11-04  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	improvement in test results
+
+	allow for surname in biblStruct being inside a persName
+
+	remove debug messages
+
+	resolve issues with multiple values for @target in docx
+
+2013-11-03  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	fix multi-target links in docx
+
+	extra biblStruct in results
+
+	a vareiant example of biblStruct
+
+	making multiple values for @target work in tei to docx
+
+	an attDef with a constraintSpec generates a better context for rule
+
+	add test case of two values for @target
+
+	test case for attDef containing a constraintSpec
+
+	fix code for sorting listBib/biblStruct
+
+2013-11-01  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	remove file:/// from directory name in a different place to avoid conflict with other uses of outputDir
+
+2013-10-30  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	confusion over file:/// in directory names
+
+	stupid typo in Ant
+
+	undo 64bit change, so that jenkinses can work
 2013-10-29  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
 
 	missing file:/// before directory name. TEI Bug #615
