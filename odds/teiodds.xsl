@@ -86,14 +86,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="rng:ref" name="REFS"  use="@name"/>
   <xsl:key match="rng:ref[contains(@name,'_')]" name="REFS" use="substring-before(@name,'_')"/>
 
-  <xsl:key match="tei:elementSpec/tei:attList/tei:attDef/tei:datatype/rng:ref"
-    name="ATTREFS-ELEMENT" use="@name"/>
-  <xsl:key match="tei:classSpec/tei:attList/tei:attDef/tei:datatype/rng:ref" name="ATTREFS-CLASS"
-    use="@name"/>
-  <xsl:key match="tei:elementSpec/tei:attList/tei:attList/tei:attDef/tei:datatype/rng:ref"
-    name="ATTREFS-ELEMENT" use="@name"/>
-  <xsl:key match="tei:classSpec/tei:attList/tei:attList/tei:attDef/tei:datatype/rng:ref"
-    name="ATTREFS-CLASS" use="@name"/>
+  <xsl:key
+      match="tei:elementSpec/tei:attList//tei:attDef/tei:datatype/rng:ref"
+      name="REFSTO-ELEMENT" 
+      use="@name"/>
+  <xsl:key 
+      match="tei:classSpec/tei:attList//tei:attDef/tei:datatype/rng:ref" 
+      name="REFSTO-CLASS" 
+      use="@name"/>
+
   <xsl:key match="tei:macroSpec/tei:content//rng:ref" name="MACROREFS"  use="@name"/>
 
   <xsl:key match="tei:elementSpec|tei:classSpec" name="CLASSMEMBERS" use="tei:classes/tei:memberOf/@key"/>
@@ -230,40 +231,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
   </xsl:template>
 
-    <xsl:template name="makeRef">
-      <xsl:param name="lookup"/>
-      <xsl:variable name="fullname" select="@name"/>
-      <xsl:variable name="myprefix"
-		    select="ancestor::*[@prefix][1]/@prefix"/>
-      <xsl:choose>
-	<xsl:when test="ancestor::tei:content[@autoPrefix='false']">
-	  <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$fullname}"/>
-	</xsl:when>
-	<xsl:when test="count(key('IDENTS',$lookup))&gt;1">
-	  <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$myprefix}{$fullname}"/>
-	</xsl:when>
-	<xsl:when test="key('IDENTS',$lookup)">
-	  <xsl:for-each select="key('IDENTS',$lookup)">
-	    <xsl:variable name="localprefix">
-	      <xsl:choose>
-		<xsl:when test="@prefix">
-		<xsl:value-of select="@prefix"/>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:value-of select="$generalPrefix"/>
-	      </xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:variable>
-	    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$localprefix}{$fullname}"/>
-	  </xsl:for-each>
-	</xsl:when>
-	<xsl:otherwise>
-	  <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-
   <xsl:template match="rng:*">
     <xsl:element name="{local-name()}" xmlns="http://relaxng.org/ns/structure/1.0" >
       <xsl:copy-of select="@*"/>
@@ -349,10 +316,10 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:*" mode="tangle"/>
 
-  <xsl:template match="tei:attRef" mode="tangle">
-    <xsl:call-template name="makeRef">
-      <xsl:with-param name="lookup" select="substring-before(@name,'.attribute')"/>
-    </xsl:call-template>
+  <xsl:template match="tei:attRef" mode="tangle">  
+    <xsl:if test="key('IDENTS',@class)">
+      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateAttRef(.)}"/>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="tei:attDef" mode="tangle">
@@ -470,9 +437,9 @@ of this software, even if advised of the possibility of such damage.
                     </xsl:if>
                   </xsl:for-each>
                   <xsl:for-each select="tei:attList//tei:attRef">
-		    <xsl:call-template name="makeRef">
-		      <xsl:with-param name="lookup" select="substring-before(@name,'.attribute')"/>
-		    </xsl:call-template>
+		    <xsl:if test="key('IDENTS',@class)">
+		      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateAttRef(.)}"/>
+		    </xsl:if>
                   </xsl:for-each>
                 </ROOT>
               </xsl:variable>
@@ -2152,6 +2119,41 @@ select="$makeDecls"/></xsl:message>
 	   select="*|@*|processing-instruction()|text()" mode="justcopy"/>
      </xsl:element>
    </xsl:template>
+
+
+    <xsl:template name="makeRef">
+      <xsl:param name="lookup"/>
+      <xsl:variable name="myprefix"
+		    select="ancestor::*[@prefix][1]/@prefix"/>
+      <xsl:variable name="fullname" select="@name"/>
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:content[@autoPrefix='false']">
+	  <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$fullname}"/>
+	</xsl:when>
+	<xsl:when test="count(key('IDENTS',$lookup))&gt;1">
+	  <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$myprefix}{$fullname}"/>
+	</xsl:when>
+	<xsl:when test="key('IDENTS',$lookup)">
+	  <xsl:for-each select="key('IDENTS',$lookup)">
+	    <xsl:variable name="localprefix">
+	      <xsl:choose>
+		<xsl:when test="@prefix">
+		<xsl:value-of select="@prefix"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="$generalPrefix"/>
+	      </xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:variable>
+	    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$localprefix}{$fullname}"/>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$fullname}"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 
 
 </xsl:stylesheet>

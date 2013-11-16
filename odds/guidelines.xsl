@@ -894,12 +894,12 @@
   </xsl:template>
   <xsl:template name="generateParentsByAttribute">
     <xsl:variable name="this" select="@ident"/>
-    <xsl:if test="count(key('ATTREFS-CLASS',$this))&gt;0">
+    <xsl:if test="count(key('REFSTO-CLASS',$this))&gt;0">
       <div>
         <xsl:sequence select="tei:i18n('Class')"/>
         <xsl:text>: </xsl:text>
         <ul class="attrefs-class">
-          <xsl:for-each select="key('ATTREFS-CLASS',$this)">
+          <xsl:for-each select="key('REFSTO-CLASS',$this)">
             <xsl:sort select="ancestor::tei:classSpec/@ident"/>
             <xsl:sort select="@ident"/>
             <li>
@@ -921,12 +921,12 @@
         </ul>
       </div>
     </xsl:if>
-    <xsl:if test="count(key('ATTREFS-ELEMENT',$this))&gt;0">
+    <xsl:if test="count(key('REFSTO-ELEMENT',$this))&gt;0">
       <div>
         <xsl:sequence select="tei:i18n('Element')"/>
         <xsl:text>: </xsl:text>
         <ul class="attrefs-element">
-          <xsl:for-each select="key('ATTREFS-ELEMENT',$this)">
+          <xsl:for-each select="key('REFSTO-ELEMENT',$this)">
             <xsl:sort select="ancestor::tei:elementSpec/@ident"/>
             <xsl:sort select="@ident"/>
             <li>

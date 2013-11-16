@@ -1753,7 +1753,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="mode"/>
     <xsl:call-template name="showAttClasses"/>
     <xsl:for-each-group select="tei:attRef[not(@rend='none')]"
-			group-by="substring(@corresp,2)">
+			group-by="@class">
       <xsl:call-template name="linkTogether">
 	<xsl:with-param name="name" select="current-grouping-key()"/>
 	<xsl:with-param name="reftext">
@@ -1764,7 +1764,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:for-each
 	  select="$Original//tei:classSpec[@ident=current-grouping-key()]/tei:attList/tei:attDef">
 	<xsl:variable name="me" select="@ident"/>
-	<xsl:if test="not(current-group()[@n=$me])">
+	<xsl:if test="not(current-group()[@name=$me])">
 	  <xsl:element namespace="{$outputNS}" name="{$segName}">
 	    <xsl:attribute name="{$rendName}">unusedattribute</xsl:attribute>
 	      <xsl:value-of select="$me"/>
@@ -1774,7 +1774,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
       <xsl:for-each select="current-group()">
 	<xsl:text>@</xsl:text>
- 	<xsl:value-of select="@n"/>
+ 	<xsl:value-of select="@name"/>
 	<xsl:if test="position() != last()">, </xsl:if>
 	</xsl:for-each>
       <xsl:text>) </xsl:text>
@@ -2003,7 +2003,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="this" select="@ident"/>
     <xsl:variable name="list">
       <PattList>
-	<xsl:for-each select="key('ATTREFS-CLASS',$this)">
+	<xsl:for-each select="key('REFSTO-CLASS',$this)">
 	  <xsl:sort select="ancestor::tei:classSpec/@ident"/>
 	  <xsl:sort select="@ident"/>
 	  <xsl:element namespace="{$outputNS}" name="{$itemName}">
@@ -2041,7 +2041,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
     <xsl:variable name="list2">
       <PattList>
-	<xsl:for-each select="key('ATTREFS-ELEMENT',$this)">
+	<xsl:for-each select="key('REFSTO-ELEMENT',$this)">
 	  <xsl:sort select="ancestor::tei:elementSpec/@ident"/>
 	  <xsl:sort select="@ident"/>
 	  <Item>

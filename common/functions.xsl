@@ -1189,5 +1189,18 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
+  
+  <xsl:function name="tei:generateAttRef" as="xs:string">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+	<xsl:when test="not(@name)">
+	  <xsl:value-of select="concat(@class,'.attributes')"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="concat(@class,'.attribute.',translate(@name,':',''))"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
 </xsl:stylesheet>

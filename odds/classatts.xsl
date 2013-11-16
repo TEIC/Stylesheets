@@ -118,7 +118,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="E" select="$here"/>
     <null/>
     <xsl:if test="$autoGlobal='true'">
-      <attRef rend="none" name="att.global.attributes"/>
+      <attRef rend="none" class="att.global"/>
     </xsl:if>
     <xsl:choose>
       <xsl:when test="not($E//attDef)">
@@ -127,7 +127,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:copy-of select="@*"/>
 	  </memberOf>
 	  <xsl:if test="key('ATTCLASSES',@key) and not($parameterize='true')">
-	    <attRef rend="none" name="{@key}.attributes"/>
+	    <attRef rend="none" class="{@key}"/>
 	  </xsl:if>
 	</xsl:for-each>
       </xsl:when>
@@ -151,7 +151,7 @@ of this software, even if advised of the possibility of such damage.
 		    <xsl:copy-of select="@*"/>
 		  </memberOf>
 		  <xsl:if test="not($parameterize='true')">
-		    <attRef  rend="none" name="{@key}.attributes"/>
+		    <attRef  rend="none" class="{@key}"/>
 		  </xsl:if>
 		</xsl:when>
 		<xsl:otherwise>
@@ -194,8 +194,7 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <attRef n="{@ident}" corresp="#{ancestor::classSpec/@ident}"
-		name="{ancestor::classSpec/@ident}.attribute.{translate(@ident,':','')}"/>
+	    <attRef class="{ancestor::classSpec/@ident}" name="{@ident}"/>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:for-each>	
