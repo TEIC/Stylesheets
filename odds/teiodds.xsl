@@ -317,9 +317,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:*" mode="tangle"/>
 
   <xsl:template match="tei:attRef" mode="tangle">  
-    <xsl:if test="key('IDENTS',@class)">
-      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateAttRef(.,$generalPrefix)}"/>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="key('IDENTS',@class)">
+	<ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateAttRef(.,$generalPrefix)}"/>
+      </xsl:when>
+      <xsl:when test="@class"/>
+      <xsl:otherwise>
+	<ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:attDef" mode="tangle">
@@ -437,9 +443,15 @@ of this software, even if advised of the possibility of such damage.
                     </xsl:if>
                   </xsl:for-each>
                   <xsl:for-each select="tei:attList//tei:attRef">
-		    <xsl:if test="key('IDENTS',@class)">
-		      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateAttRef(.,$generalPrefix)}"/>
-		    </xsl:if>
+		    <xsl:choose>
+		      <xsl:when test="key('IDENTS',@class)">
+			<ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateAttRef(.,$generalPrefix)}"/>
+		      </xsl:when>
+		      <xsl:when test="@class"/>
+		      <xsl:otherwise>
+			<ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
+		      </xsl:otherwise>
+		    </xsl:choose>
                   </xsl:for-each>
                 </ROOT>
               </xsl:variable>
