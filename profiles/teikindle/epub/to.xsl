@@ -86,4 +86,9 @@
 
    <xsl:template name="javascriptHook"/>
 
+   <xsl:template
+       match="tei:ref[starts-with(@target,'../../readme-')]">
+     <xsl:apply-templates/>
+   </xsl:template>
+
 </xsl:stylesheet>
