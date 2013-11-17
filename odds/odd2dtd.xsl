@@ -1580,7 +1580,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:attRef" mode="tangle">
       <xsl:text>&#10; %</xsl:text>
-      <xsl:sequence select="tei:generateAttRef(.)"/>
+      <xsl:sequence select="tei:generateAttRef(.,$generalPrefix)"/>
       <xsl:text>;</xsl:text>
   </xsl:template>
   <xsl:template name="checkClass">

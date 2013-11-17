@@ -318,7 +318,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:attRef" mode="tangle">  
     <xsl:if test="key('IDENTS',@class)">
-      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateAttRef(.)}"/>
+      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateAttRef(.,$generalPrefix)}"/>
     </xsl:if>
   </xsl:template>
 
@@ -438,7 +438,7 @@ of this software, even if advised of the possibility of such damage.
                   </xsl:for-each>
                   <xsl:for-each select="tei:attList//tei:attRef">
 		    <xsl:if test="key('IDENTS',@class)">
-		      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateAttRef(.)}"/>
+		      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateAttRef(.,$generalPrefix)}"/>
 		    </xsl:if>
                   </xsl:for-each>
                 </ROOT>
@@ -2154,6 +2154,33 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
+  <xsl:function name="tei:generateAttRef" as="xs:string">
+    <xsl:param name="context"/>
+    <xsl:param name="prefix"/>
+    <xsl:variable name="result">
+    <xsl:for-each select="$context">
+      <xsl:for-each select="key('IDENTS',@class)">
+	<xsl:choose>
+	  <xsl:when test="@prefix">
+	    <xsl:value-of select="@prefix"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$prefix"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+      <xsl:choose>
+	<xsl:when test="not(@name)">
+	  <xsl:value-of select="concat(@class,'.attributes')"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="concat(@class,'.attribute.',translate(@name,':',''))"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+    </xsl:variable>
+    <xsl:value-of select="$result"/>
+  </xsl:function>
 
 
 </xsl:stylesheet>
