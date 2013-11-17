@@ -189,6 +189,7 @@ clean:
 	-(cd debian-tei-xsl/debian;  rm -rf tei-xsl)
 	rm -f teioo.jar
 	rm -rf docx/ImageInfo/bin
+	rm -f names.xml
 
 tags:
 	etags `find . -name "*.xsl" | grep -v "slides/" | grep -v "latex/" | grep -v "html/" | grep -v "fo/" | grep -v "common2/" | grep -v "doc/" `

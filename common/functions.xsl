@@ -1192,7 +1192,18 @@ of this software, even if advised of the possibility of such damage.
   
   <xsl:function name="tei:generateAttRef" as="xs:string">
     <xsl:param name="context"/>
+    <xsl:variable name="result">
     <xsl:for-each select="$context">
+      <xsl:for-each select="key('IDENTS',@class)">
+	<xsl:choose>
+	  <xsl:when test="@prefix">
+	    <xsl:value-of select="@prefix"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$generalPrefix"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
       <xsl:choose>
 	<xsl:when test="not(@name)">
 	  <xsl:value-of select="concat(@class,'.attributes')"/>
@@ -1202,5 +1213,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
+    </xsl:variable>
+    <xsl:value-of select="$result"/>
   </xsl:function>
 </xsl:stylesheet>
