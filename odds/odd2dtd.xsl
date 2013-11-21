@@ -1037,7 +1037,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test=".//rng:anyName">
 	    <xsl:text> ANY</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="@mixed='true' and not(*)">
+	  <xsl:when test="@allowsText='true' and not(*)">
 	    <xsl:text> CDATA</xsl:text>
 	  </xsl:when>
 	  <xsl:when test="processing-instruction()[name()='NameList']">
@@ -1804,7 +1804,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="innards">
     <xsl:param name="sep">|</xsl:param>
     <xsl:variable name="innards">
-      <xsl:if test="ancestor::tei:*/@mixed='true'">
+      <xsl:if test="ancestor::tei:*/@allowsText='true'">
 	<token>
 	  <xsl:text>#PCDATA</xsl:text>
 	</token>
