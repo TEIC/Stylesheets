@@ -169,7 +169,7 @@ of this software, even if advised of the possibility of such damage.
     </refState>
   </xsl:template>
   
-    <xsl:template match="@targTYpe">
+    <xsl:template match="@targType">
       <xsl:attribute name="type">
 	<xsl:value-of select="."/>
       </xsl:attribute>
