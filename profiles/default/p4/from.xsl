@@ -169,7 +169,12 @@ of this software, even if advised of the possibility of such damage.
     </refState>
   </xsl:template>
   
-  
+    <xsl:template match="@targTYpe">
+      <xsl:attribute name="type">
+	<xsl:value-of select="."/>
+      </xsl:attribute>
+    </xsl:template>
+
   <!-- lost elements -->
   <xsl:template match="dateRange">
     <date>
