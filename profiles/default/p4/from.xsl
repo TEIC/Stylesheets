@@ -192,12 +192,18 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template match="language">
-    <xsl:element namespace="http://www.tei-c.org/ns/1.0" name="language">
-	<xsl:if test="@id">
-        <xsl:attribute name="ident">
-	  <xsl:value-of select="@id"/>
-        </xsl:attribute>
-        </xsl:if>
+    <xsl:element namespace="http://www.tei-c.org/ns/1.0"
+		 name="language">
+      <xsl:choose>
+	<xsl:when test="@id">
+	  <xsl:attribute name="ident">
+	    <xsl:value-of select="@id"/>
+	  </xsl:attribute>
+	</xsl:when>
+	<xsl:when test=".='English'">
+	  <xsl:attribute name="ident">en</xsl:attribute>
+	</xsl:when>
+      </xsl:choose>
       <xsl:apply-templates select="*|processing-instruction()|comment()|text()"/>
     </xsl:element>
   </xsl:template>
