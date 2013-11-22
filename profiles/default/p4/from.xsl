@@ -649,6 +649,14 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
   
+  <xsl:template match="@type">
+    <xsl:if test="not(normalize-space(.)='')">
+	<xsl:attribute name="type">
+	  <xsl:value-of select="translate(.,' ','_')"/>
+	</xsl:attribute>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template match="teiHeader/@type">
     <xsl:if test="not(lower-case(.) ='text')">
       <xsl:attribute name="type">
