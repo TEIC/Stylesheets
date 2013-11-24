@@ -66,7 +66,7 @@ the <ref target="mailto:info@tei-c.org">TEI Consortium</ref>.
   </teiHeader>
   <text>
     <body>
-      <div>
+      <div xml:id="intro">
         <head>Introduction</head>
         <p>This is a family of XSLT 2.0 stylesheets to transform TEI XML documents
 to various formats, including XHTML, LaTeX, XSL Formatting Objects,
@@ -79,7 +79,7 @@ digital</q> writing. It is important to understand that they do <hi>not</hi>:
 model</item></list>
 and should not be treated as the definitive view of the TEI Consortium.</p>
       </div>
-          <div>
+          <div xml:id="profiles">
             <head>Profiles</head>
             <p>The stylesheets support a set of <ident>profiles</ident>, which are
 project starting points. They are implemented as a set of directories each of which may have a file
@@ -108,11 +108,11 @@ project starting points. They are implemented as a set of directories each of wh
 to go <emph>from</emph> the selected format to TEI XML.</p>
           </div>
 
-      <div>
+      <div xmlLid="using">
         <head>Using the stylesheets</head>
         <p>The stylesheets are embedded in various services, or can be used on their own to perform
 	the transformations. </p>
-        <div>
+        <div xml:id="oxygen">
           <head>oXygen editor</head>
           <p>The stylesheets are available for immediate use in the oXygen XML editor,
 if you have the TEI framework installed (it is enabled by default). This will make various transformations available
@@ -132,7 +132,7 @@ be asked if you want to install them.</p>
             <head>Rolling your own in oXygen</head>
             <p>In addition to editing the copy of the stylesheets in oXygen, you can set up a copy of TEI framework, and configure oXygen
 	  to look at it. First, grab the current oXygen TEI framework by downloading
-	the big zip file from <ptr target="http://code.google.com/p/oxygen-tei/downloads/list"/>. Create a directory in your
+	the big zip file from <ptr target="https://sourceforge.net/projects/tei/files/tei-oxygen/"/>. Create a directory in your
 	own directory area called <code>oxygenframeworks</code> and unpack
 	the zip file into there.</p>
             <p>Start up oXygen, and go to Preferences/Global and
@@ -151,7 +151,7 @@ be asked if you want to install them.</p>
 Edit that accordingly, and then choose the <code>local</code> profile in oXygen transformations.</p>
           </div>
         </div>
-        <div>
+        <div xml:id="oxgarage">
           <head>OxGarage web service</head>
           <p>OxGarage<note place="foot">Based on the Enrich Garage Engine
 developed by Poznan Supercomputing and Networking Center and Oxford
@@ -177,7 +177,7 @@ Microsoft Word.</p>
           <p>By selecting <emph>Show Advanced options</emph> you can access a drop-down list of the
 different profiles supported for the current conversion path.</p>
         </div>
-        <div>
+        <div xml:id="commandline">
           <head>Command-line scripts</head>
           <p>When the stylesheet package is installed, either by running <code>make install</code> from source,
 or installing a Debian package, there are Linux/OSX command-line shell scripts available
@@ -237,7 +237,7 @@ TEI conversion: from tei to html
 </eg>
 </p>
         </div>
-        <div>
+        <div xml:id="importing">
           <head>Importing the XSL into your own stylesheet</head>
           <p>If, for example, you want to write a customization of the HTML conversion
 you can simply refer to the specification <code>html/html.xsl</code>
@@ -257,7 +257,7 @@ multiple output files, one per top-level <gi>div</gi> or <gi>div1</gi>.
 </p>
         </div>
       </div>
-      <div>
+      <div xml:id="structure">
         <head>File structure and customization</head>
         <p>The stylesheets files consist of a number of scripts, and seven 
 main directories where most of the work is done:
@@ -337,7 +337,7 @@ are built on top of the html one above:
           </list>
         </div>
       </div>
-      <div>
+      <div xml:id="parameters">
         <head>Parameters and customizable templates</head>
         <p>The TEI stylesheets are designed to be customized. There
         are several hundred things you can set to change the output in
