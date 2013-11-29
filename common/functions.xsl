@@ -1194,7 +1194,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="context"/>
     <xsl:choose>
       <xsl:when test="$useFixedDate='true'">0</xsl:when>
-      <xsl:otherwise><xsl:value-of select="unparsed-text(resolve-uri('../VERSION',base-uri($context)))"/></xsl:otherwise>
+      <xsl:otherwise><xsl:value-of select="unparsed-text('../VERSION')"/></xsl:otherwise>
     </xsl:choose>
   </xsl:function>
   
