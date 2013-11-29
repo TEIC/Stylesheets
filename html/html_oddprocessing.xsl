@@ -390,6 +390,56 @@ of this software, even if advised of the possibility of such damage.
           </xsl:for-each>
         </table>
       </xsl:when>
+      <xsl:when test="$splitLevel &gt; -1">
+        <h2>Schema <xsl:value-of select="@ident"/>: Elements</h2>
+	<ul class="toc">
+	  <xsl:for-each select="tei:elementSpec">
+	    <xsl:sort select="lower-case(@ident)"/>
+	    <li>
+	      <xsl:call-template name="refDocLink"/>
+	      <xsl:apply-templates mode="weave" select="."/>
+	    </li>
+	  </xsl:for-each>
+	</ul>
+
+        <xsl:if test="tei:classSpec[@type='model']">
+          <h2>Schema <xsl:value-of select="@ident"/>: Model classes</h2>
+	  <ul class="toc">
+	    <xsl:for-each select="tei:classSpec[@type='model']">
+	      <xsl:sort select="lower-case(@ident)"/>
+	      <li>
+		<xsl:call-template name="refDocLink"/>
+		<xsl:apply-templates mode="weave" select="."/>
+	      </li>
+	    </xsl:for-each>
+	  </ul>
+        </xsl:if>
+
+        <xsl:if test="tei:classSpec[@type='atts']">
+          <h2>Schema <xsl:value-of select="@ident"/>: Attribute classes</h2>
+	  <ul class="toc">
+	    <xsl:for-each select="tei:classSpec[@type='atts']">
+	      <xsl:sort select="lower-case(@ident)"/>
+	      <li>
+		<xsl:call-template name="refDocLink"/>
+		<xsl:apply-templates mode="weave" select="."/>
+	      </li>
+	    </xsl:for-each>
+	  </ul>
+        </xsl:if>
+        <xsl:if test="tei:macroSpec">
+          <h2>Schema <xsl:value-of select="@ident"/>: Macros</h2>
+	  <ul class="toc">
+	    <xsl:for-each select="tei:macroSpec">
+	      <xsl:sort select="lower-case(@ident)"/>
+	      <li>
+		<xsl:call-template name="refDocLink"/>
+		<xsl:apply-templates mode="weave" select="."/>
+	      </li>
+	    </xsl:for-each>
+	  </ul>
+        </xsl:if>
+      </xsl:when>
       <xsl:otherwise>
         <h2>Schema <xsl:value-of select="@ident"/>: Elements</h2>
         <xsl:apply-templates mode="weave" select="tei:elementSpec">
