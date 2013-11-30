@@ -2967,4 +2967,14 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
 
+    <xsl:template name="horizontalRule">
+      <w:p>
+	<w:pPr>
+	  <w:pBdr>
+	    <w:top w:color="auto" w:space="1" w:val="single" w:sz="4"/>
+	  </w:pBdr>
+	</w:pPr>
+      </w:p>
+    </xsl:template>
+
 </xsl:stylesheet>

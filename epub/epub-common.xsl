@@ -169,10 +169,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text> </xsl:text>
   </xsl:template>
 
-  <xsl:template match="tei:milestone[@unit='line']">
-    <xsl:text> </xsl:text>
-  </xsl:template>
-
   <xsl:template match="tei:titleStmt" mode="metadata">
     <h3>Title statement</h3>
     <xsl:apply-templates mode="metadata"/>

@@ -257,6 +257,13 @@ of this software, even if advised of the possibility of such damage.
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>how to make a horizontal rule</desc>
+  </doc>
+  <xsl:template name="horizontalRule">
+    <xsl:text>\hline</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>block objects</desc>
    </doc>
     <xsl:template name="makeBlock">

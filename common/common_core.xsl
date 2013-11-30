@@ -71,7 +71,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
 	<xsl:call-template name="makeBlock">
-      <xsl:with-param name="style">salute</xsl:with-param>
+	  <xsl:with-param name="style">salute</xsl:with-param>
 	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -1348,6 +1348,27 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:with-param name="after">&#10217;</xsl:with-param>
 	  <xsl:with-param name="before">&#10216;</xsl:with-param>
 	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>processing milestone elements</desc>
+   </doc>
+  <xsl:template match="tei:milestone">
+    <xsl:choose>
+      <xsl:when test="@rend='hr'">
+	<xsl:call-template name="horizontalRule"/>
+      </xsl:when>
+      <xsl:when test="@unit='line'">
+	<xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+         <xsl:text>&#x261B;</xsl:text>
+         <xsl:value-of select="@unit"/>
+         <xsl:text> </xsl:text>
+         <xsl:value-of select="@n"/>
+         <xsl:text>&#x261A;</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
