@@ -1542,9 +1542,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
     <xsl:if test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:app">
       <div class="notes">
-        <div class="noteHeading">
-          <xsl:sequence select="tei:i18n('noteHeading')"/>
-        </div>
         <xsl:apply-templates mode="printnotes" select="descendant::tei:app"/>
       </div>
     </xsl:if>
