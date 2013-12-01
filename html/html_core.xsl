@@ -1541,7 +1541,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:if>
     <xsl:if test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:app">
-      <div class="notes">
+      <div class="appcrit">
         <xsl:apply-templates mode="printnotes" select="descendant::tei:app"/>
       </div>
     </xsl:if>

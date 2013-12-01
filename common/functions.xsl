@@ -1204,10 +1204,14 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="$top">
       <xsl:choose>
 	<xsl:when test="starts-with($witness,'#')">
-	  <xsl:value-of select="id(substring($witness,2))"/>
+	  <xsl:for-each select="id(substring($witness,2))">
+	    <xsl:sequence select="if (@n) then @n else ."/>
+	  </xsl:for-each>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:apply-templates select="doc($witness)"/>
+	  <xsl:for-each select="doc($witness)/*">
+	    <xsl:sequence select="if (@n) then @n else ."/>
+	  </xsl:for-each>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>

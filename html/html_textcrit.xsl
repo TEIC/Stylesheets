@@ -135,12 +135,13 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:value-of select="tei:getWitness(tei:lem/@wit)"/>
 	 </span>
 	 <xsl:for-each select="tei:rdg">
+	   <xsl:text>; </xsl:text>
 	   <xsl:apply-templates/>
 	   <xsl:if test="@cause='omission'">[]</xsl:if>
 	   <xsl:text> (</xsl:text>
 	   <xsl:value-of select="tei:getWitness(@wit)"/>
 	   <xsl:text>)</xsl:text>
-	   <xsl:if test="following-sibling::tei:rdg">; </xsl:if>
+	   <xsl:if test="not(following-sibling::tei:rdg)">.</xsl:if>
 	 </xsl:for-each>
      </div>
      
