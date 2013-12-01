@@ -23,7 +23,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-other test-rdf test-text test-odt p4top5 oddity pureant scripts test-epub 
+default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-other test-rdf test-text test-odt p4top5 oddity pureant scripts test-epub namespaces
 
 p4top5:
 	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
@@ -265,6 +265,27 @@ moreoddity:
 	../teitodtd test.odd test.dtd
 	../teitornc test.odd test.rnc
 
+namespaces:
+# This test checks the rnc files so that to make sure we are testing
+# what we think we are testing.
+	../teitornc test33.odd test33.rnc
+	perl -p -i -e 's/generated from ODD source .*//' test33.rnc
+	diff test33.rnc expected-results/test33.rnc
+	$(SAXON) test33.odd ../odds/odd2json.xsl > test33.json
+	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test33.json
+	diff test33.json expected-results/test33.json
+	../teitornc test34.odd test34.rnc
+	perl -p -i -e 's/generated from ODD source .*//' test34.rnc
+	diff test34.rnc expected-results/test34.rnc
+	$(SAXON) test34.odd ../odds/odd2json.xsl > test34.json
+	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.json
+	diff test34.json expected-results/test34.json
+	$(SAXON) test34.odd ../odds/odd2odd.xsl > test34.combined.odd
+	$(SAXON) test34.combined.odd ../odds/odd2json.xsl > test34.combined.json
+	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.combined.json
+	diff test34.json expected-results/test34.combined.json
+
+
 scripts:
 	for i in $(SCRIPTS); do ../$$i maria.xml $$i.result && rm $$i.result; done
 	../teitoodd test16.odd temp.odd
@@ -327,3 +348,5 @@ clean:
 	rm -f test30.rnc
 	rm -f xml.result
 	rm -rf charts/ embeddings/ media/
+	rm -f test33.rnc test33.json
+	rm -f test34.rnc test34.json test34.combined.odd test34.combined.json
