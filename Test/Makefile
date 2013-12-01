@@ -259,7 +259,8 @@ oddity:
 	rm test.odd2lite
 	rm test.odd2relax
 	rm test.odd2xslstripspace
-foo:
+
+moreoddity:
 	../teitoxsd test.odd test.xsd
 	../teitodtd test.odd test.dtd
 	../teitornc test.odd test.rnc
