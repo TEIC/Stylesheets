@@ -59,6 +59,7 @@ of this software, even if advised of the possibility of such damage.
      <xsl:param name="lemma"/>
      <xsl:param name="lemmawitness"/>
      <xsl:param name="readings"/>
+     <!--<xsl:message>App: <xsl:value-of select="($lemma,$lemmawitness,$readings)" separator="|"/></xsl:message>-->
      <xsl:value-of select="$lemma"/>
       <xsl:variable name="identifier">
          <xsl:text>App</xsl:text>
@@ -124,8 +125,29 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>. </xsl:text>
          </span>
          <span class="noteBody">
-            <xsl:apply-templates/>
-         </span>
+	   <span class="lemma">
+	     <xsl:choose>
+	       <xsl:when test="tei:lem">
+		 <xsl:apply-templates select="tei:lem"/>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:apply-templates select="tei:rdg[1]"/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </span>
+	   <xsl:text>] </xsl:text>
+	   <span class="lemmawitness">
+	      <xsl:value-of select="tei:getWitness(tei:lem/@wit)"/>
+	   </span>
+	   <xsl:for-each select="tei:rdg">
+	      <xsl:apply-templates/>
+	      <xsl:if test="@cause='omission'">[]</xsl:if>
+	      <xsl:text> (</xsl:text>
+	      <xsl:value-of select="tei:getWitness(@wit)"/>
+	      <xsl:text>)</xsl:text>
+	      <xsl:if test="following-sibling::tei:rdg">; </xsl:if>
+	   </xsl:for-each>
+	 </span>
       </div>
   
    </xsl:template>

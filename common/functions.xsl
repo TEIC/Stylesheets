@@ -1197,5 +1197,19 @@ of this software, even if advised of the possibility of such damage.
       <xsl:otherwise><xsl:value-of select="unparsed-text('../VERSION')"/></xsl:otherwise>
     </xsl:choose>
   </xsl:function>
+
+  <xsl:function name="tei:getWitness" as="xs:string">
+    <xsl:param name="witness"/>
+    <xsl:for-each select="$top">
+      <xsl:choose>
+	<xsl:when test="starts-with($witness,'#')">
+	  <xsl:value-of select="id(substring($witness,2))"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates select="doc($witness)"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
   
 </xsl:stylesheet>
