@@ -68,6 +68,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="selectedSchema"/>
   <xsl:param name="doclang"/>
+  <xsl:variable name="top" select="/"/>
   <xsl:variable name="whichSchemaSpec">
     <xsl:choose>
       <xsl:when test="$selectedSchema">
