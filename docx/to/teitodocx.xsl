@@ -379,8 +379,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="write-document-dot-xml-frontmatter">
     <!-- are there specific titlepages -->
     <xsl:call-template name="titlepages"/>
-    <!-- header components -->
-    <xsl:call-template name="headerParts"/>
     <!-- The front matter -->
     <xsl:apply-templates select=".//tei:text/tei:front"/>
   </xsl:template>
@@ -390,6 +388,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="write-document-dot-xml-maincontent">
     <!-- document title -->
     <xsl:call-template name="document-title"/>
+    <!-- header components -->
+    <xsl:call-template name="headerParts"/>
     <!-- Describes the main part of the document -->
     <xsl:apply-templates select=".//tei:text/tei:body"/>
   </xsl:template>
