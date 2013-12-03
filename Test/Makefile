@@ -23,7 +23,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-other test-rdf test-text test-odt p4top5 oddity pureant scripts test-epub namespaces
+default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-other test-rdf test-text test-odt p4top5 oddity pureant scripts test-epub namespaces
 
 p4top5:
 	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
@@ -167,6 +167,10 @@ test-rdf:
 test-text:
 	../teitotxt test14.xml test.text
 	diff test.text expected-results/test.text
+
+test-xlsx:
+	../xlsxtotei test.xlsx test.xlsx.xml
+	diff test.xlsx.xml expected-results/test.xlsx.xml
 
 test-odt: 
 	../teitoodt test.xml 
@@ -349,3 +353,4 @@ clean:
 	rm -rf charts/ embeddings/ media/ _rels/ \[Content_Types\].xml
 	rm -f test33.rnc test33.json
 	rm -f test34.rnc test34.json test34.combined.odd test34.combined.json
+	rm -f test.xlsx.xml
