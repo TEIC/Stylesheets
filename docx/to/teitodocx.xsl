@@ -996,11 +996,15 @@ of this software, even if advised of the possibility of such damage.
       </w:rPr>
       <w:footnoteReference w:id="{$id}"/>
     </w:r>
-    <w:r>
-      <w:t xml:space="preserve"> </w:t>
-    </w:r>
+    <!--
+	<xsl:if test="not(matches(following-sibling::node()[1], '\p{Punct}))'
+	<w:r>
+	<w:t xml:space="preserve"> </w:t>
+	</w:r>
+	</xsl:if>
+    -->
   </xsl:template>
-
+  
   <xsl:template name="commentNote">
     <w:r>
       <w:rPr>

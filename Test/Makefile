@@ -336,17 +336,16 @@ clean:
 	rm -f  test*listing*
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype
 	rm -f test17.tei
-	rm -f content.xml.odt.listing
+	rm -f content.xml.odt.listing content.xml.odt
 	rm -f test.xml.docx.core
 	rm -f test7.docx
 	rm -f test.html5
 	rm -f A54031.xml
-	rm -f content.xml.odt
 	rm -f dcr.result
 	rm -f test-rtf2tei.xml
 	rm -f test29.xml
 	rm -f test30.rnc
 	rm -f xml.result
-	rm -rf charts/ embeddings/ media/
+	rm -rf charts/ embeddings/ media/ _rels/ \[Content_Types\].xml
 	rm -f test33.rnc test33.json
 	rm -f test34.rnc test34.json test34.combined.odd test34.combined.json
