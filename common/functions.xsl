@@ -1199,21 +1199,24 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:function>
 
-  <xsl:function name="tei:getWitness" as="xs:string">
+  <xsl:function name="tei:getWitness" as="xs:string*">
     <xsl:param name="witness"/>
-    <xsl:for-each select="$top">
-      <xsl:choose>
-	<xsl:when test="starts-with($witness,'#')">
-	  <xsl:for-each select="id(substring($witness,2))">
-	    <xsl:sequence select="if (@n) then @n else ."/>
-	  </xsl:for-each>
+    <xsl:for-each select="tokenize($witness,' ')">
+      <xsl:variable name="wit" select="."/>
+      <xsl:for-each select="$top">
+	<xsl:choose>
+	  <xsl:when test="starts-with($wit,'#')">
+	    <xsl:for-each select="id(substring($wit,2))">
+	      <xsl:sequence select="if (@n) then @n else @xml:id"/>
+	    </xsl:for-each>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:for-each select="doc($witness)/*">
-	    <xsl:sequence select="if (@n) then @n else ."/>
+	  <xsl:for-each select="doc($wit)/*">
+	    <xsl:sequence select="if (@n) then @n else @xml:id"/>
 	  </xsl:for-each>
 	</xsl:otherwise>
       </xsl:choose>
+    </xsl:for-each>
     </xsl:for-each>
   </xsl:function>
   

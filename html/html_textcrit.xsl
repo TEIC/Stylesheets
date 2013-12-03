@@ -132,9 +132,17 @@ of this software, even if advised of the possibility of such damage.
 	 </span>
 	 <xsl:text>] </xsl:text>
 	 <span class="lemmawitness">
-	   <xsl:value-of select="tei:getWitness(tei:lem/@wit)"/>
+	   <xsl:choose>
+	     <xsl:when test="tei:lem">
+	       <xsl:value-of select="tei:getWitness(tei:lem/@wit)"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:value-of select="tei:getWitness(tei:rdg[1]/@wit)"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
 	 </span>
-	 <xsl:for-each select="tei:rdg">
+	<xsl:variable name="start" select="if (not(../tei:lem)) then 1 else 0"/>
+	<xsl:for-each select="tei:rdg[position() &gt; $start]">
 	   <xsl:text>; </xsl:text>
 	   <xsl:apply-templates/>
 	   <xsl:if test="@cause='omission'">[]</xsl:if>
