@@ -831,5 +831,14 @@ of this software, even if advised of the possibility of such damage.
   </xsl:choose></xsl:template>
 
 
-
+<!-- JC Additions 2013-11 -->
+  
+  <!-- handList and hand not catered for: they become handNotes and handNote -->
+  <xsl:template match="handList"><handNotes><xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/></handNotes></xsl:template>
+    <!-- hand inside handList -->
+  <xsl:template match="handList/hand"><handNote><xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/></handNote></xsl:template>
+  
+<!-- @ink on hand -->
+<xsl:template match="hand/@ink"><xsl:attribute name="medium"><xsl:value-of select="."/></xsl:attribute></xsl:template>
+  
 </xsl:stylesheet>
