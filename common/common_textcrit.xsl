@@ -85,19 +85,24 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:choose>
       </xsl:with-param>
       <xsl:with-param name="lemmawitness">
-	<xsl:value-of select="@wit"/>
+	<xsl:choose>
+	  <xsl:when test="tei:lem">
+	    <xsl:value-of select="tei:getWitness(tei:lem/@wit)"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="tei:getWitness(tei:rdg[1]/@wit)"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:with-param>
       <xsl:with-param name="readings">
-	<xsl:for-each select="tei:rdg">
-
-<!--	    <xsl:when test="$lem='' or (not(../tei:lem) and position()=1)"/>--> 
-
-	      <xsl:apply-templates/>
-	      <xsl:if test="@cause='omission'">[]</xsl:if>
-	      <xsl:text> (</xsl:text>
-	      <xsl:value-of select="translate(substring(@wit,2),' #',', ')"/>
-	      <xsl:text>)</xsl:text>
-	      <xsl:if test="following-sibling::tei:rdg">; </xsl:if>
+	<xsl:variable name="start" select="if (not(tei:lem)) then 1 else 0"/>
+	<xsl:for-each select="tei:rdg[position() &gt; $start]">
+	  <xsl:apply-templates/>
+	  <xsl:if test="@cause='omission'">[]</xsl:if>
+	  <xsl:text> (</xsl:text>
+	  <xsl:value-of select="tei:getWitness(@wit)"/>
+	  <xsl:text>)</xsl:text>
+	  <xsl:if test="following-sibling::tei:rdg">; </xsl:if>
 	</xsl:for-each>
       </xsl:with-param>
     </xsl:call-template>

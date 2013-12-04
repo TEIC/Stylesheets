@@ -56,6 +56,7 @@ fi
 echo 
 echo "  Options, shown with defaults:"
 echo "  --saxonjar=$SAXONJAR  # location of Saxon jar file"
+echo "  --trangjar=$TRANGJAR  # location of trang jar file"
 if [ $script = "teitoepub" ]
 then
 echo "  --mediaoverlay       # create media overlays from timeline data "
@@ -101,6 +102,7 @@ schema=
 # ---
 version=`cat $APPHOME/VERSION`
 SAXONJAR=/usr/share/saxon/saxon9he.jar
+TRANGJAR=$APPHOME/lib/trang.jar
 from=`echo $script | sed 's/to.*//'`
 to=`echo $script | sed 's/.*to//'`
 if [ $to = "tei" ]
@@ -131,6 +133,7 @@ while test $# -gt 0; do
        --apphome=*)  APPHOME=`echo $1 | sed 's/.*=//'`;;
      --publisher=*)  publisher=`echo $1 | sed 's/.*=//'`;;
       --saxonjar=*)   SAXONJAR=`echo $1 | sed 's/.*=//'`;;
+      --trangjar=*)   TRANGJAR=`echo $1 | sed 's/.*=//'`;;
     --splitLevel=*) splitLevel="-DsplitLevel=`echo $1 | sed 's/.*=//'`";;
        --subject=*)    subject="`echo $1 | sed 's/.*=//'`";;
            --uid=*)        uid=`echo $1 | sed 's/.*=//'`;;
@@ -215,6 +218,7 @@ ant $antflag -f $APPHOME/$format/build-$direction.xml \
     $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress $localsource \
         -Dodd=$odd \
         -Dsaxon.jar=${SAXONJAR} \
+        -Dtrang.jar=${TRANGJAR} \
         -Dverbose=$verbose \
 	-DinputFile="$indir/$infile" \
 	-DoutputFile="$outdir/$outfile" \

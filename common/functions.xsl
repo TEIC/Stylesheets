@@ -68,6 +68,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="selectedSchema"/>
   <xsl:param name="doclang"/>
+  <xsl:variable name="top" select="/"/>
   <xsl:variable name="whichSchemaSpec">
     <xsl:choose>
       <xsl:when test="$selectedSchema">
@@ -1187,6 +1188,35 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:choose>
 	</xsl:otherwise>
       </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <xsl:function name="tei:stylesheetVersion" as="xs:string">
+    <xsl:param name="context"/>
+    <xsl:choose>
+      <xsl:when test="$useFixedDate='true'">0</xsl:when>
+      <xsl:otherwise><xsl:value-of select="unparsed-text('../VERSION')"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="tei:getWitness" as="xs:string*">
+    <xsl:param name="witness"/>
+    <xsl:for-each select="tokenize($witness,' ')">
+      <xsl:variable name="wit" select="."/>
+      <xsl:for-each select="$top">
+	<xsl:choose>
+	  <xsl:when test="starts-with($wit,'#')">
+	    <xsl:for-each select="id(substring($wit,2))">
+	      <xsl:sequence select="if (@n) then @n else @xml:id"/>
+	    </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:for-each select="doc($wit)/*">
+	    <xsl:sequence select="if (@n) then @n else @xml:id"/>
+	  </xsl:for-each>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
     </xsl:for-each>
   </xsl:function>
   

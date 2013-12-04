@@ -59,6 +59,7 @@ of this software, even if advised of the possibility of such damage.
      <xsl:param name="lemma"/>
      <xsl:param name="lemmawitness"/>
      <xsl:param name="readings"/>
+     <!--<xsl:message>App: <xsl:value-of select="($lemma,$lemmawitness,$readings)" separator="|"/></xsl:message>-->
      <xsl:value-of select="$lemma"/>
       <xsl:variable name="identifier">
          <xsl:text>App</xsl:text>
@@ -115,20 +116,43 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
-      <div class="note">
+      <div class="app">
          <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
          </xsl:call-template>
-         <span class="noteLabel">
-            <xsl:call-template name="appN"/>
-            <xsl:text>. </xsl:text>
-         </span>
-         <span class="noteBody">
-            <xsl:apply-templates/>
-         </span>
-      </div>
-  
+	 <span class="lemma">
+	   <xsl:choose>
+	     <xsl:when test="tei:lem">
+	       <xsl:apply-templates select="tei:lem"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:apply-templates select="tei:rdg[1]"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	 </span>
+	 <xsl:text>] </xsl:text>
+	 <span class="lemmawitness">
+	   <xsl:choose>
+	     <xsl:when test="tei:lem">
+	       <xsl:value-of select="tei:getWitness(tei:lem/@wit)"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:value-of select="tei:getWitness(tei:rdg[1]/@wit)"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	 </span>
+	<xsl:variable name="start" select="if (not(../tei:lem)) then 1 else 0"/>
+	<xsl:for-each select="tei:rdg[position() &gt; $start]">
+	   <xsl:text>; </xsl:text>
+	   <xsl:apply-templates/>
+	   <xsl:if test="@cause='omission'">[]</xsl:if>
+	   <xsl:text> (</xsl:text>
+	   <xsl:value-of select="tei:getWitness(@wit)"/>
+	   <xsl:text>)</xsl:text>
+	   <xsl:if test="not(following-sibling::tei:rdg)">.</xsl:if>
+	 </xsl:for-each>
+     </div>
+     
    </xsl:template>
-
 
 </xsl:stylesheet>

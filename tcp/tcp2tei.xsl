@@ -1444,7 +1444,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="TEIHEADER/@TYPE" />
   <xsl:template match="@TARGTYPE">
-    <xsl:attribute name="targType">
+    <xsl:attribute name="type">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>

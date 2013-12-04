@@ -1003,7 +1003,7 @@ select="$makeDecls"/></xsl:message>
 	  <xsl:when test="tei:content/processing-instruction()">
             <xsl:apply-templates select="tei:content/processing-instruction()"/>
 	  </xsl:when>
-	  <xsl:when test="tei:content/@mixed='true'">
+	  <xsl:when test="tei:content/@allowsText='true'">
             <text xmlns="http://relaxng.org/ns/structure/1.0"/>
 	  </xsl:when>
         </xsl:choose>
@@ -1106,7 +1106,7 @@ select="$makeDecls"/></xsl:message>
 	  <xsl:when test="tei:content/processing-instruction()">
             <xsl:apply-templates select="tei:content/processing-instruction()"/>
 	  </xsl:when>
-	  <xsl:when test="tei:content/@mixed='true'">
+	  <xsl:when test="tei:content/@allowsText='true'">
             <text xmlns="http://relaxng.org/ns/structure/1.0"/>
 	  </xsl:when>
         </xsl:choose>

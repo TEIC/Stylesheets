@@ -474,6 +474,8 @@ text-indent: -1em;
 }
 
 span.noteLabel {
+vertical-align: super;
+font-size: smaller;
 font-style: italic;
 }
 span.note:before {
@@ -1395,6 +1397,23 @@ width: auto
 
 span.damage {
 border-bottom: 1px dashed red;
+}
+/* app crit */
+div.appcrit {
+border-top: solid black 1pt;
+margin-top: 2pt;
+padding-top: 2pt;
+margin-bottom: 2pt;
+margin-left: 1em;
+}
+div.app {
+margin-top: 1pt;
+font-size: smaller;
+}
+span.lemma {
+}
+span.lemmawitness {
+font-weight: bold;
 }
 </style>
   </head>
@@ -2963,7 +2982,8 @@ border-bottom: 1px dashed red;
       <div class="footer"><!--standard links to project, instiution etc--><a class="plain" href="http://www.tei-c.org/">TEI</a> <a class="plain" href="/">Home</a> </div>
       <address>Sebastian Rahtz.
 	    <br/><!--
-	  Generated from index.xml using XSLT stylesheets 
+	  Generated from index.xml using 
+
 	       based on http://www.tei-c.org/Stylesheets/
 	       
 	       

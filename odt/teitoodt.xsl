@@ -1132,6 +1132,12 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </text:span>
   </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>how to make a horizontal rule</desc>
+  </doc>
+  <xsl:template name="horizontalRule">
+  </xsl:template>
+
   <xsl:template name="makeBlock">
     <xsl:param name="style"/>
     <xsl:apply-templates/>

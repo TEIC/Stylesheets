@@ -165,6 +165,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:include href="fo_transcr.xsl"/>
   <xsl:include href="fo_verse.xsl"/>
 
+  <xsl:template name="horizontalRule">
+    <leader rule-thickness="1pt"/>
+  </xsl:template>
   <xsl:template name="makeBlock">
     <xsl:param name="style"/>
       <block font-size="{tei:fontSize($style)}"

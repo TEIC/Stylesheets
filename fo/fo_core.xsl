@@ -462,18 +462,6 @@ of this software, even if advised of the possibility of such damage.
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:milestone">
-      <block>
-         <xsl:text>******************</xsl:text>
-         <xsl:value-of select="@unit"/>
-         <xsl:text> </xsl:text>
-         <xsl:value-of select="@n"/>
-         <xsl:text>******************</xsl:text>
-      </block>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>a name</desc>
    </doc>
   <xsl:template match="tei:name">

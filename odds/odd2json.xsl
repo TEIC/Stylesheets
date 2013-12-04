@@ -205,6 +205,13 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>{"ident":"</xsl:text>
       <xsl:value-of select="@ident"/>
       <xsl:text>",</xsl:text>
+      <xsl:variable name="ns"
+                    select="(@ns,  ancestor::tei:schemaSpec[1]/@ns)[1]"/>
+      <xsl:if test="$ns">
+        <xsl:text>"ns":"</xsl:text>
+        <xsl:value-of select="$ns"/>
+        <xsl:text>",</xsl:text>
+      </xsl:if>
       <xsl:text>"type":"</xsl:text>
       <xsl:value-of select="local-name()"/>
       <xsl:text>",</xsl:text>
@@ -246,6 +253,11 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:text>{"ident":"</xsl:text>
 	<xsl:value-of select="@ident"/>
 	<xsl:text>",</xsl:text>
+        <xsl:if test="@ns">
+          <xsl:text>"ns":"</xsl:text>
+          <xsl:value-of select="@ns"/>
+	  <xsl:text>",</xsl:text>
+        </xsl:if>
 	<xsl:value-of select="desc"/>
 	<xsl:text>}</xsl:text>
 	<xsl:if test="position()!=last()">,</xsl:if>
@@ -385,6 +397,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="atts">
     <xsl:for-each select=".//tei:attDef">
       <tei:attDef ident="{@ident}">
+        <xsl:if test="@ns">
+          <xsl:attribute name="ns" select="@ns"/>
+        </xsl:if>
 	<desc>
 	  <xsl:call-template name="desc"/>
 	</desc>

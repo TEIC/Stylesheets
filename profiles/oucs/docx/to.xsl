@@ -84,7 +84,8 @@ of this software, even if advised of the possibility of such damage.
         </xsl:call-template>
     </xsl:template>
 
-  <xsl:template match="tei:revisionDesc">
+    <xsl:template name="headerParts">
+    <xsl:for-each select="/*/tei:teiHeader/tei:revisionDesc">
     <w:tbl>
       <w:tblPr>
         <w:tblStyle w:val="revisionDesc"/>
@@ -140,6 +141,7 @@ of this software, even if advised of the possibility of such damage.
 	</w:tr>
       </xsl:for-each>
     </w:tbl>
+    </xsl:for-each>
   </xsl:template>
 
    

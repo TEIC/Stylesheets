@@ -379,8 +379,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="write-document-dot-xml-frontmatter">
     <!-- are there specific titlepages -->
     <xsl:call-template name="titlepages"/>
-    <!-- header components -->
-    <xsl:call-template name="headerParts"/>
     <!-- The front matter -->
     <xsl:apply-templates select=".//tei:text/tei:front"/>
   </xsl:template>
@@ -390,6 +388,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="write-document-dot-xml-maincontent">
     <!-- document title -->
     <xsl:call-template name="document-title"/>
+    <!-- header components -->
+    <xsl:call-template name="headerParts"/>
     <!-- Describes the main part of the document -->
     <xsl:apply-templates select=".//tei:text/tei:body"/>
   </xsl:template>
@@ -996,11 +996,15 @@ of this software, even if advised of the possibility of such damage.
       </w:rPr>
       <w:footnoteReference w:id="{$id}"/>
     </w:r>
-    <w:r>
-      <w:t xml:space="preserve"> </w:t>
-    </w:r>
+    <!--
+	<xsl:if test="not(matches(following-sibling::node()[1], '\p{Punct}))'
+	<w:r>
+	<w:t xml:space="preserve"> </w:t>
+	</w:r>
+	</xsl:if>
+    -->
   </xsl:template>
-
+  
   <xsl:template name="commentNote">
     <w:r>
       <w:rPr>
@@ -2966,5 +2970,15 @@ of this software, even if advised of the possibility of such damage.
       </w:p>
     </xsl:template>
 
+
+    <xsl:template name="horizontalRule">
+      <w:p>
+	<w:pPr>
+	  <w:pBdr>
+	    <w:top w:color="auto" w:space="1" w:val="single" w:sz="4"/>
+	  </w:pBdr>
+	</w:pPr>
+      </w:p>
+    </xsl:template>
 
 </xsl:stylesheet>

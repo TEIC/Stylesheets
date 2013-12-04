@@ -2269,7 +2269,8 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:text>from </xsl:text>
                   <xsl:value-of select="$masterFile"/>
                </xsl:if>
-               <xsl:text> using XSLT stylesheets </xsl:text>
+               <xsl:text> using XSLT stylesheets version </xsl:text>
+	       <xsl:value-of select="tei:stylesheetVersion(/)"/>
 	       based on <xsl:value-of select="$teixslHome"/>
 	       on <xsl:call-template name="whatsTheDate"/>.
 	       <xsl:choose>
