@@ -245,14 +245,7 @@ XSL LaTeX stylesheet to make slides
          <xsl:text>width=\textwidth</xsl:text>
       </xsl:if>
       <xsl:text>]{</xsl:text>
-      <xsl:choose>
-         <xsl:when test="@url">
-	   <xsl:sequence select="tei:resolveURI(.,@url)"/>
-         </xsl:when>
-         <xsl:when test="@entity">
-            <xsl:value-of select="unparsed-entity-uri(@entity)"/>
-         </xsl:when>
-      </xsl:choose>
+      <xsl:sequence select="tei:resolveURI(.,@url)"/>
       <xsl:text>}</xsl:text>
       <xsl:if test="@rend='centre'">
          <xsl:text>}</xsl:text>

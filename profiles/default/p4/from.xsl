@@ -139,7 +139,6 @@ of this software, even if advised of the possibility of such damage.
     </figure>
   </xsl:template>
   
- 
   <xsl:template match="figure/@entity"/>
 
   

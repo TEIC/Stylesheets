@@ -110,14 +110,7 @@ of this software, even if advised of the possibility of such damage.
             <float>
                <xsl:call-template name="addID"/>
                <block text-align="center">
-                  <xsl:choose>
-                     <xsl:when test="@url or @entity">
-                        <xsl:call-template name="makePic"/>
-                     </xsl:when>
-                     <xsl:otherwise>
-                        <xsl:apply-templates/>
-                     </xsl:otherwise>
-                  </xsl:choose>
+		 <xsl:apply-templates/>
                </block>
                <block>
                   <xsl:call-template name="figureCaptionstyle"/>
@@ -128,16 +121,9 @@ of this software, even if advised of the possibility of such damage.
             </float>
          </xsl:when>
          <xsl:otherwise>
-	           <block>
-	              <xsl:choose>
-	                 <xsl:when test="@url or @entity">
-	                    <xsl:call-template name="makePic"/>
-	                 </xsl:when>
-	                 <xsl:otherwise>
-	                    <xsl:apply-templates/>
-	                 </xsl:otherwise>
-	              </xsl:choose>
-	           </block>
+	   <block>
+	     <xsl:apply-templates/>
+	   </block>
             <xsl:choose>
                <xsl:when test="$captionInlineFigures='true'">
                   <block>
@@ -420,16 +406,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>[fo] Insert reference to graphics file </desc>
    </doc>
   <xsl:template name="makePic">
-      <xsl:variable name="File">
-         <xsl:choose>
-            <xsl:when test="@url">
-	      <xsl:sequence select="tei:resolveURI(.,@url)"/>
-            </xsl:when>
-            <xsl:when test="@entity">
-               <xsl:value-of select="unparsed-entity-uri(@entity)"/>
-            </xsl:when>
-         </xsl:choose>
-      </xsl:variable>
+      <xsl:variable name="File" select="tei:resolveURI(.,@url)"/>
       <external-graphic>
          <xsl:call-template name="addID"/>
          <xsl:attribute name="src">

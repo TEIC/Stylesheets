@@ -85,12 +85,6 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:text>&#10;%FIGMAP </xsl:text>
 	   <xsl:variable name="f">
 	     <xsl:choose>
-	       <xsl:when test="@url">
-		 <xsl:sequence select="tei:resolveURI(.,@url)"/>
-	       </xsl:when>
-	       <xsl:when test="@entity">
-		 <xsl:value-of select="unparsed-entity-uri(@entity)"/>
-	       </xsl:when>
 	       <xsl:when test="tei:graphic">
 		 <xsl:sequence select="tei:resolveURI(tei:graphic,tei:graphic/@url)"/>
 	       </xsl:when>
