@@ -1,5 +1,6 @@
 default namespace = "http://foo.foo/foo"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace bar = "http://blah.blah/bar"
 namespace ns1 = "http://www.isocat.org/ns/dcr"
 namespace ns2 = "http://blah.blah/blah"
 namespace rng = "http://relaxng.org/ns/structure/1.0"
@@ -1102,15 +1103,17 @@ tei_model.availabilityPart = tei_licence
 tei_model.certLike = notAllowed
 tei_model.descLike = tei_desc
 tei_model.glossLike = tei_gloss
-tei_model.quoteLike = tei_quote | tei_cit | foo_cit | blah_q
-tei_model.quoteLike_alternation = tei_quote | tei_cit | foo_cit | blah_q
-tei_model.quoteLike_sequence = tei_quote, tei_cit, foo_cit, blah_q
+tei_model.quoteLike = tei_quote | tei_cit | foo_cit | bar_cit | tei_q
+tei_model.quoteLike_alternation =
+  tei_quote | tei_cit | foo_cit | bar_cit | tei_q
+tei_model.quoteLike_sequence =
+  tei_quote, tei_cit, foo_cit, bar_cit, tei_q
 tei_model.quoteLike_sequenceOptional =
-  tei_quote?, tei_cit?, foo_cit?, blah_q?
+  tei_quote?, tei_cit?, foo_cit?, bar_cit?, tei_q?
 tei_model.quoteLike_sequenceOptionalRepeatable =
-  tei_quote*, tei_cit*, foo_cit*, blah_q*
+  tei_quote*, tei_cit*, foo_cit*, bar_cit*, tei_q*
 tei_model.quoteLike_sequenceRepeatable =
-  tei_quote+, tei_cit+, foo_cit+, blah_q+
+  tei_quote+, tei_cit+, foo_cit+, bar_cit+, tei_q+
 tei_model.qLike =
   tei_model.quoteLike | tei_said | tei_q | tei_floatingText
 tei_model.qLike_alternation =
@@ -4241,10 +4244,14 @@ tei_att.global.linking.attribute.select =
   }?
 foo_cit =
   
-  ## This element encodes a citation according to the foo standard. 
+  ## This element encodes a new citation (CASE 1) 
   element cit { tei_ref, tei_macro.specialPara+, text }
-blah_q =
+bar_cit =
   
-  ## This element encodes a quote according to the blah standard. 
+  ## This element encodes a new citation (CASE 2) 
+  element bar:cit { tei_ref, tei_macro.specialPara+, text }
+tei_q =
+  
+  ## This element encodes a new quote (CASE 4) 
   element ns2:q { tei_ref, tei_macro.specialPara+, text }
 start = tei_TEI

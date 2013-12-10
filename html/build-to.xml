@@ -15,7 +15,7 @@
 	License along with this library; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	
-        Id: $Id$
+        Id: $Id: build-to.xml 11933 2013-04-14 14:45:01Z rahtz $
         Copyright: 2011, TEI Consortium<
 -->
   <!--
@@ -29,8 +29,8 @@
   <target name="dist" depends="odd,notodd"/>
 
   <target name="odd" if="processODD">
-    <oddexpand in="${inputFile}" out="${inputFile}.processedodd"/>
-    <buildgeneric type="html" xsl="${profiledir}/${profile}/html/oddhtml.xsl" in="${inputFile}.processedodd" out="${outputFile}"/>
+    <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
+    <buildhtml in="${inputFile}.processedodd" out="${outputFile}"/>
     <delete file="${inputFile}.processedodd"/>
   </target>
 

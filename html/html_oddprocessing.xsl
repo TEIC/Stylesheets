@@ -95,19 +95,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:message> refdoc for <xsl:value-of select="name(.)"/> - <xsl:value-of select="@ident"/>
          </xsl:message>
     </xsl:if>
-    <xsl:variable name="objectname">
-      <xsl:choose>
-        <xsl:when test="tei:altIdent">
-          <xsl:value-of select="tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@ident"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:variable name="name">
-      <xsl:value-of select="$objectname"/>
-    </xsl:variable>
+    <xsl:variable name="name" select="tei:createSpecName(.)"/>
     <xsl:choose>
       <xsl:when test="self::tei:classSpec and not(@ident='att.global') and         count(key('CLASSMEMBERS',@ident))=0">
         <xsl:if test="$verbose='true'">
@@ -137,7 +125,8 @@ of this software, even if advised of the possibility of such damage.
           <xsl:call-template name="outputChunkName">
             <xsl:with-param name="ident">
               <xsl:text>ref-</xsl:text>
-              <xsl:value-of select="@ident"/>
+	      <xsl:value-of select="tei:createSpecPrefix(.)"/>
+              <xsl:value-of select="$name"/>
             </xsl:with-param>
           </xsl:call-template>
         </xsl:variable>
@@ -170,7 +159,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:call-template name="stdfooter">
                 <xsl:with-param name="file">
                   <xsl:text>ref-</xsl:text>
-                  <xsl:value-of select="@ident"/>
+                  <xsl:value-of select="$name"/>
                 </xsl:with-param>
               </xsl:call-template>
               <xsl:call-template name="bodyEndHook"/>
@@ -597,17 +586,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:for-each select="tei:classSpec">
         <xsl:sort select="tei:altIdent"/>
         <xsl:sort select="lower-case(@ident)"/>
+	<xsl:variable name="name" select="concat(tei:createSpecPrefix(.),tei:createSpecName(.))"/>
         <xsl:element name="{$tocElement}">
           <xsl:attribute name="class">toclist0</xsl:attribute>
-          <a class="toclist" href="#{@ident}">
-            <xsl:choose>
-              <xsl:when test="tei:altIdent">
-                <xsl:value-of select="tei:altIdent"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="@ident"/>
-              </xsl:otherwise>
-            </xsl:choose>
+          <a class="toclist" href="#{$name}">
+	    <xsl:value-of select="$name"/>	    
           </a>
         </xsl:element>
       </xsl:for-each>
@@ -615,17 +598,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:for-each select="tei:elementSpec">
         <xsl:sort select="tei:altIdent"/>
         <xsl:sort select="lower-case(@ident)"/>
+	<xsl:variable name="name" select="concat(tei:createSpecPrefix(.),tei:createSpecName(.))"/>
         <xsl:element name="{$tocElement}">
           <xsl:attribute name="class">toclist0</xsl:attribute>
-          <a class="toclist" href="#{@ident}">
-            <xsl:choose>
-              <xsl:when test="tei:altIdent">
-                <xsl:value-of select="tei:altIdent"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="@ident"/>
-              </xsl:otherwise>
-            </xsl:choose>
+          <a class="toclist" href="#{$name}">
+	    <xsl:value-of select="$name"/>
           </a>
         </xsl:element>
       </xsl:for-each>
@@ -633,17 +610,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:for-each select="tei:macroSpec">
         <xsl:sort select="tei:altIdent"/>
         <xsl:sort select="lower-case(@ident)"/>
+	<xsl:variable name="name" select="concat(tei:createSpecPrefix(.),tei:createSpecName(.))"/>
         <xsl:element name="{$tocElement}">
           <xsl:attribute name="class">toclist0</xsl:attribute>
-          <a class="toclist" href="#{@ident}">
-            <xsl:choose>
-              <xsl:when test="tei:altIdent">
-                <xsl:value-of select="tei:altIdent"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="@ident"/>
-              </xsl:otherwise>
-            </xsl:choose>
+          <a class="toclist" href="#{$name}">	    
+	    <xsl:value-of select="$name"/>
           </a>
         </xsl:element>
       </xsl:for-each>

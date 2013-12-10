@@ -288,6 +288,9 @@ namespaces:
 	$(SAXON) test34.combined.odd ../odds/odd2json.xsl > test34.combined.json
 	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.combined.json
 	diff test34.combined.json expected-results/test34.combined.json
+	../teitohtml --odd --summaryDoc test34.odd test34.odd.html
+	xmllint --encode utf-8 --format test34.odd.html | perl cleanup.pl> test.temp ; mv test.temp test34.odd.html
+	diff test34.odd.html expected-results/test34.odd.html
 
 
 scripts:

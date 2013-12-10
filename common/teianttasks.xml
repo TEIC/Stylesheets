@@ -332,6 +332,9 @@
         <param name="debug" expression="${debug}" if="debug"/>
         <!-- be verbose-->
         <param name="verbose" expression="${verbose}" if="verbose"/>
+	<!-- for ODD docs -->
+        <param name="summaryDoc" expression="${summaryDoc}" if="summaryDoc"/>
+        <param name="displayMode" expression="rnc"/>
       </xslt>
     </sequential>
   </macrodef>
@@ -361,14 +364,35 @@
         <!-- be verbose-->
         <param name="verbose" expression="${verbose}" if="verbose"/>
         <param name="logoFile" expression="_slidelogo.png"/>
+	<!-- for ODD docs -->
+        <param name="summaryDoc" expression="${summaryDoc}" if="summaryDoc"/>
+        <param name="displayMode" expression="rnc"/>
       </xslt>
     </sequential>
   </macrodef>
+
+  <macrodef name="oddexpand">
+    <attribute name="in"/>
+    <attribute name="out"/>
+    <sequential>
+      <echo>Do ODD expand processing (schema ${selectedSchema}) </echo>
+      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{out}">
+        <factory name="net.sf.saxon.TransformerFactoryImpl">
+          <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
+        </factory>
+        <param name="lang" expression="${lang}" if="lang"/>
+        <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+        <param name="selectedSchema" expression="${selectedSchema}" if="selectedSchema"/>
+        <param name="verbose" expression="${verbose}" if="verbose"/>
+      </xslt>
+    </sequential>
+  </macrodef>
+
   <macrodef name="odd2odd">
     <attribute name="in"/>
     <attribute name="out"/>
     <sequential>
-      <echo>Do ODD processing (schema ${selectedSchema})</echo>
+      <echo>Do ODD expand processing and conversion to TEI Lite (schema ${selectedSchema})</echo>
       <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{in}.tmpodd">
         <xmlcatalog>
           <catalogpath>
@@ -393,26 +417,11 @@
         <param name="lang" expression="${lang}" if="lang"/>
         <param name="doclang" expression="${lang}" if="lang"/>
         <param name="documentationLanguage" expression="${lang}" if="lang"/>
+	<!-- for ODD docs -->
         <param name="summaryDoc" expression="${summaryDoc}" if="summaryDoc"/>
         <param name="displayMode" expression="rnc"/>
       </xslt>
       <delete file="@{in}.tmpodd"/>
-    </sequential>
-  </macrodef>
-  <macrodef name="oddexpand">
-    <attribute name="in"/>
-    <attribute name="out"/>
-    <sequential>
-      <echo>Do ODD expand processing (schema ${selectedSchema}) </echo>
-      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{out}">
-        <factory name="net.sf.saxon.TransformerFactoryImpl">
-          <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
-        </factory>
-        <param name="lang" expression="${lang}" if="lang"/>
-        <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
-        <param name="selectedSchema" expression="${selectedSchema}" if="selectedSchema"/>
-        <param name="verbose" expression="${verbose}" if="verbose"/>
-      </xslt>
     </sequential>
   </macrodef>
 

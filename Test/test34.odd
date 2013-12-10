@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:bar="http://blah.blah/bar"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
      xml:lang="en">
   <teiHeader>
@@ -29,7 +30,23 @@
         <elementSpec ident="cit"
                      prefix="foo_">
           <desc>
-            This element encodes a citation according to the foo standard.
+            This element encodes a new citation (CASE 1)
+          </desc>
+          <classes>
+            <memberOf key="model.quoteLike"/>
+          </classes>
+          <content>
+            <rng:ref name="ref"/>
+            <rng:oneOrMore>
+              <rng:ref name="macro.specialPara"/>
+            </rng:oneOrMore>
+            <rng:text/>
+          </content>
+        </elementSpec>
+
+        <elementSpec ident="cit" prefix="bar_" ns="http://blah.blah/bar">
+          <desc>
+            This element encodes a new citation (CASE 2)
           </desc>
           <classes>
             <memberOf key="model.quoteLike"/>
@@ -44,10 +61,9 @@
         </elementSpec>
 
         <elementSpec ident="q"
-                     ns="http://blah.blah/blah"
-                     prefix="blah_">
+                     ns="http://blah.blah/blah">
           <desc>
-            This element encodes a quote according to the blah standard.
+            This element encodes a new quote (CASE 4)
           </desc>
           <classes>
             <memberOf key="model.quoteLike"/>

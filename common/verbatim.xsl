@@ -697,19 +697,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each-group>
     </xsl:for-each>
   </xsl:template>
-  <xsl:function name="tei:getPrefix" as="xs:string*">
-    <xsl:param name="ns"/>
-    <xsl:param name="here"/>
-    <xsl:for-each select="in-scope-prefixes($here)">
-      <xsl:choose>
-        <xsl:when test=".=''"/>
-        <xsl:when test="$ns=namespace-uri-for-prefix(.,$here)">
-          <xsl:value-of select="."/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:for-each>
-  </xsl:function>
-
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>show an XML element in a verbatim context</desc>

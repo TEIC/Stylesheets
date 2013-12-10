@@ -107,16 +107,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:attDef" mode="summary">
-    <xsl:variable name="name">
-      <xsl:choose>
-        <xsl:when test="tei:altIdent">
-          <xsl:value-of select="tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@ident"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+    <xsl:variable name="name" select="tei:createSpecName(.)"/>
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
@@ -142,16 +133,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:attRef" mode="summary"/>
 
   <xsl:template match="tei:classSpec|tei:elementSpec" mode="summary">
-    <xsl:variable name="name">
-      <xsl:choose>
-        <xsl:when test="tei:altIdent">
-          <xsl:value-of select="tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@ident"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+    <xsl:variable name="name" select="tei:createSpecName(.)"/>
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
@@ -205,16 +187,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element attDef</desc>
   </doc>
   <xsl:template match="tei:attDef">
-    <xsl:variable name="name">
-      <xsl:choose>
-        <xsl:when test="tei:altIdent">
-          <xsl:value-of select="tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@ident"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+    <xsl:variable name="name" select="tei:createSpecName(.)"/>
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
@@ -402,14 +375,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:element>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element attList</desc>
-  </doc>
-  <xsl:template match="tei:attList" mode="show">
-    <xsl:call-template name="displayAttList">
-      <xsl:with-param name="mode">summary</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element classSpec</desc>
   </doc>
   <xsl:template match="tei:classSpec">
@@ -445,20 +410,11 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element classSpec</desc>
   </doc>
   <xsl:template match="tei:classSpec" mode="weavebody">
-    <xsl:variable name="name">
-      <xsl:choose>
-        <xsl:when test="tei:altIdent">
-          <xsl:value-of select="tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@ident"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+    <xsl:variable name="name" select="tei:createSpecName(.)"/>
     <xsl:element namespace="{$outputNS}" name="{$sectionName}">
       <xsl:call-template name="makeSectionHead">
         <xsl:with-param name="id">
-          <xsl:value-of select="@ident"/>
+          <xsl:value-of select="concat(tei:createSpecPrefix(.),$name)"/>
         </xsl:with-param>
         <xsl:with-param name="name">
           <xsl:value-of select="$name"/>
@@ -511,9 +467,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:element>
         </xsl:if>
 	<xsl:call-template name="validUntil"/>
-        <xsl:if test="@module">
-          <xsl:call-template name="moduleInfo"/>
-        </xsl:if>
+	<xsl:call-template name="moduleInfo"/>
         <xsl:if test="@type='model'">
           <xsl:element namespace="{$outputNS}" name="{$rowName}">
             <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -629,20 +583,12 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element elementSpec</desc>
   </doc>
   <xsl:template match="tei:elementSpec" mode="weavebody">
-    <xsl:variable name="name">
-      <xsl:choose>
-        <xsl:when test="tei:altIdent">
-          <xsl:value-of select="tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@ident"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+    <xsl:variable name="name" select="tei:createSpecName(.)"/>
     <xsl:element namespace="{$outputNS}" name="{$sectionName}">
+
       <xsl:call-template name="makeSectionHead">
         <xsl:with-param name="id">
-          <xsl:value-of select="@ident"/>
+          <xsl:value-of select="concat(tei:createSpecPrefix(.),$name)"/>
         </xsl:with-param>
         <xsl:with-param name="name">
           <xsl:text>&lt;</xsl:text>
@@ -699,9 +645,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:element>
         </xsl:element>
 	<xsl:call-template name="validUntil"/>
-        <xsl:if test="@module">
-          <xsl:call-template name="moduleInfo"/>
-        </xsl:if>
+	<xsl:call-template name="moduleInfo"/>
         <xsl:variable name="myatts">
           <a>
             <xsl:choose>
@@ -834,16 +778,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element elementSpec/tei:content</desc>
   </doc>
   <xsl:template match="tei:elementSpec/tei:content" mode="weave">
-    <xsl:variable name="name">
-      <xsl:choose>
-        <xsl:when test="../tei:altIdent">
-          <xsl:value-of select="../tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="../@ident"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+    <xsl:variable name="name" select="tei:createSpecName(..)"/>
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
@@ -947,16 +882,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec" mode="show">
     <xsl:param name="atts"/>
-    <xsl:variable name="name">
-      <xsl:choose>
-        <xsl:when test="tei:altIdent">
-          <xsl:value-of select="tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@ident"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+    <xsl:variable name="name" select="tei:createSpecName(.)"/>
     <xsl:element namespace="{$outputNS}" name="{$hiName}">
       <xsl:attribute name="{$rendName}">
         <xsl:text>specList-</xsl:text>
@@ -1024,13 +950,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:element>
 	</xsl:if>
       </xsl:when>
-      <xsl:when test="$atts='-'"/>
-      <xsl:when test="$atts='+'">
-        <xsl:call-template name="showAttClasses">
-          <xsl:with-param name="minimal">true</xsl:with-param>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:when test="$atts=''"/>
+      <xsl:when test="$atts='-' or $atts=''"/>
       <xsl:when test="string-length($atts)&gt;0">
         <xsl:element namespace="{$outputNS}" name="{$tableName}">
           <xsl:attribute name="{$rendName}">
@@ -1038,11 +958,41 @@ of this software, even if advised of the possibility of such damage.
           </xsl:attribute>
           <xsl:variable name="HERE" select="."/>
           <xsl:for-each select="tokenize($atts,' ')">
-            <xsl:call-template name="doAnAttToken">
-              <xsl:with-param name="HERE" select="$HERE"/>
-              <xsl:with-param name="TOKEN" select="."/>
-            </xsl:call-template>
-          </xsl:for-each>
+	    <xsl:variable name="TOKEN" select="."/>
+	    <!-- Show a selected attribute where "$HERE" is the
+	    starting node 
+	    and $TOKEN is attribute we have been asked to display-->
+	    <xsl:for-each select="$HERE">	      
+	      <xsl:choose>
+		<xsl:when test="$TOKEN='+'">
+		  <xsl:element namespace="{$outputNS}" name="{$rowName}">
+		    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+		      <xsl:attribute name="{$rendName}">
+			<xsl:text>odd_value</xsl:text>
+		      </xsl:attribute>
+		      <xsl:attribute name="{$colspan}">
+			<xsl:text>2</xsl:text>
+		      </xsl:attribute>
+		      <xsl:call-template name="showAttClasses">
+			<xsl:with-param name="minimal">true</xsl:with-param>
+		      </xsl:call-template>
+		    </xsl:element>
+		  </xsl:element>
+		</xsl:when>
+		<xsl:when test="tei:attList//tei:attDef[@ident=$TOKEN]">
+		  <xsl:for-each select="tei:attList//tei:attDef[@ident=$TOKEN]">
+		    <xsl:call-template name="showAnAttribute"/>
+		  </xsl:for-each>
+		</xsl:when>
+		<xsl:otherwise>
+		  <!--Look for it in class hierarchy -->
+		  <xsl:call-template name="checkClassesForAttribute">
+		    <xsl:with-param name="TOKEN" select="$TOKEN"/>
+		  </xsl:call-template>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
+	  </xsl:for-each>
         </xsl:element>
       </xsl:when>
       <xsl:otherwise>
@@ -1060,30 +1010,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Show a selected attribute <param name="HERE">the starting node </param>
-         <param name="TOKEN">attribute we have been asked to display</param>
-      </desc>
-  </doc>
-  <xsl:template name="doAnAttToken">
-    <xsl:param name="HERE"/>
-    <xsl:param name="TOKEN"/>
-    <xsl:for-each select="$HERE">
-      <xsl:choose>
-      <xsl:when test="tei:attList//tei:attDef[@ident=$TOKEN]">
-        <xsl:for-each select="tei:attList//tei:attDef[@ident=$TOKEN]">
-          <xsl:call-template name="showAnAttribute"/>
-        </xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-	<!--Look for $TOKEN in class hierarchy -->
-	<xsl:call-template name="checkClassesForAttribute">
-	  <xsl:with-param name="TOKEN" select="$TOKEN"/>
-	</xsl:call-template>
-      </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
-  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Recursively check class membership, looking for the
@@ -1094,8 +1020,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:for-each select="tei:classes/tei:memberOf/key('IDENTS',@key)">
 	<xsl:choose>
 	  <xsl:when test="tei:attList//tei:attDef[@ident=$TOKEN]">
-	    <xsl:for-each select="tei:attList//tei:attDef[@ident=$TOKEN]">
-	      <xsl:call-template name="showAnAttribute"/>
+	    <xsl:for-each
+		select="tei:attList//tei:attDef[@ident=$TOKEN]">
+	      <xsl:call-template name="showAnAttribute">
+		<xsl:with-param name="showClass">true</xsl:with-param>
+	      </xsl:call-template>
 	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:otherwise>
@@ -1111,6 +1040,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Display of an attribute</desc>
   </doc>
   <xsl:template name="showAnAttribute">
+    <xsl:param name="showClass">false</xsl:param>
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
@@ -1128,6 +1058,11 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="@ident"/>
             </xsl:otherwise>
           </xsl:choose>
+	  <xsl:if test="$showClass='true'">
+	    <xsl:text> [</xsl:text>
+	    <xsl:value-of select="ancestor::tei:classSpec/@ident"/>
+	    <xsl:text>]</xsl:text>
+	  </xsl:if>
         </xsl:element>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -1223,20 +1158,11 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element macroSpec in weavebody mode</desc>
   </doc>
   <xsl:template match="tei:macroSpec" mode="weavebody">
-    <xsl:variable name="name">
-      <xsl:choose>
-        <xsl:when test="tei:altIdent">
-          <xsl:value-of select="tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@ident"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+    <xsl:variable name="name" select="tei:createSpecName(.)"/>
     <xsl:element namespace="{$outputNS}" name="{$sectionName}">
       <xsl:call-template name="makeSectionHead">
         <xsl:with-param name="id">
-          <xsl:value-of select="@ident"/>
+          <xsl:value-of select="concat(tei:createSpecPrefix(.),$name)"/>
         </xsl:with-param>
         <xsl:with-param name="name">
           <xsl:value-of select="$name"/>
@@ -1265,9 +1191,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:element>
         </xsl:element>
 	<xsl:call-template name="validUntil"/>
-        <xsl:if test="@module">
-          <xsl:call-template name="moduleInfo"/>
-        </xsl:if>
+	<xsl:call-template name="moduleInfo"/>
         <xsl:choose>
           <xsl:when test="@type='pe' or @type='dt'">
             <xsl:element namespace="{$outputNS}" name="{$rowName}">
@@ -1535,7 +1459,38 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:specDesc">
     <xsl:element namespace="{$outputNS}" name="{$itemName}">
-      <xsl:call-template name="processSpecDesc"/>
+      <xsl:variable name="name">
+	<xsl:value-of select="@key"/>
+      </xsl:variable>
+      <xsl:variable name="atts">
+	<xsl:choose>
+	  <xsl:when test="@rend='noatts'">-</xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="normalize-space(@atts)"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="$name=''">
+	  <xsl:message>ERROR: no key attribute on specDesc</xsl:message>
+	</xsl:when>
+	<xsl:when test="key('IDENTS',$name)">
+	  <xsl:apply-templates mode="show" select="key('IDENTS',$name)">
+	    <xsl:with-param name="atts" select="$atts"/>
+	  </xsl:apply-templates>
+	</xsl:when>
+	<xsl:when test="not($localsource='')">
+	  <xsl:for-each select="document($localsource)/tei:TEI">
+	    <xsl:apply-templates mode="show" select="tei:*[@ident=$name]">
+	      <xsl:with-param name="atts" select="$atts"/>
+	    </xsl:apply-templates>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>UNKNOWN ELEMENT </xsl:text>
+	  <xsl:value-of select="$name"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:element>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1721,7 +1676,32 @@ of this software, even if advised of the possibility of such damage.
     <desc>[odds] </desc>
   </doc>
   <xsl:template name="moduleInfo">
-    <xsl:if test="not($oddWeaveLite='true')">
+    <xsl:if test="@ns">
+      <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	<xsl:element namespace="{$outputNS}" name="{$cellName}">
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>wovenodd-col1</xsl:text>
+	  </xsl:attribute>
+	  <xsl:element namespace="{$outputNS}" name="{$hiName}">
+	    <xsl:attribute name="{$rendName}">
+	      <xsl:text>label</xsl:text>
+	    </xsl:attribute>
+	    <xsl:attribute name="{$langAttributeName}">
+                  <xsl:value-of select="$documentationLanguage"/>
+	    </xsl:attribute>
+	    <xsl:sequence select="tei:i18n('Namespace')"/>
+	  </xsl:element>
+	</xsl:element>
+	<xsl:element namespace="{$outputNS}" name="{$cellName}">
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>wovenodd-col2</xsl:text>
+	  </xsl:attribute>
+              <xsl:value-of select="@ns"/>
+	</xsl:element>
+      </xsl:element>
+    </xsl:if>
+    
+    <xsl:if test="@module and not($oddWeaveLite='true')">
       <xsl:element namespace="{$outputNS}" name="{$rowName}">
         <xsl:element namespace="{$outputNS}" name="{$cellName}">
           <xsl:attribute name="{$rendName}">
@@ -2396,9 +2376,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:call-template name="attClassDetails"/>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:if test="$minimal='true'">
-      <xsl:text> — </xsl:text>
-    </xsl:if>
     <xsl:choose>
       <xsl:when test="$minimal='true' and not($clatts='')">
         <xsl:text> [+ </xsl:text>
@@ -2543,40 +2520,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template name="processSpecDesc">
-    <xsl:variable name="name">
-      <xsl:value-of select="@key"/>
-    </xsl:variable>
-    <xsl:variable name="atts">
-      <xsl:choose>
-        <xsl:when test="@rend='noatts'">-</xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="normalize-space(@atts)"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$name=''">
-        <xsl:message>ERROR: no key attribute on specDesc</xsl:message>
-      </xsl:when>
-      <xsl:when test="key('IDENTS',$name)">
-        <xsl:apply-templates mode="show" select="key('IDENTS',$name)">
-          <xsl:with-param name="atts" select="$atts"/>
-        </xsl:apply-templates>
-      </xsl:when>
-      <xsl:when test="not($localsource='')">
-        <xsl:for-each select="document($localsource)/tei:TEI">
-          <xsl:apply-templates mode="show" select="tei:*[@ident=$name]">
-            <xsl:with-param name="atts" select="$atts"/>
-          </xsl:apply-templates>
-        </xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>UNKNOWN ELEMENT </xsl:text>
-        <xsl:value-of select="$name"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+
   <xsl:template name="processatts">
     <xsl:param name="values"/>
     <xsl:variable name="here" select="."/>

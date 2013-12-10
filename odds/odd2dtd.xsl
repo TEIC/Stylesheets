@@ -498,17 +498,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:if test="$parameterize='true' and (@ns)">
             <xsl:text>%NS;</xsl:text>
          </xsl:if>
-         <xsl:choose>
-            <xsl:when test="tei:altIdent=@ident">
-               <xsl:value-of select="@ident"/>
-            </xsl:when>
-            <xsl:when test="tei:altIdent">
-               <xsl:value-of select="tei:altIdent"/>
-            </xsl:when>
-            <xsl:otherwise>
-               <xsl:value-of select="@ident"/>
-            </xsl:otherwise>
-         </xsl:choose>
+	<xsl:variable name="name" select="tei:createSpecName(.)"/>
          <xsl:text>"&gt;&#10;</xsl:text>
       </xsl:if>
   </xsl:template>
@@ -944,17 +934,7 @@ of this software, even if advised of the possibility of such damage.
                   </xsl:when>
                   <xsl:when test="key('ELEMENTS',@name)">
                      <xsl:for-each select="key('ELEMENTS',@name)">
-                        <xsl:choose>
-                           <xsl:when test="tei:altIdent=@ident">
-                              <xsl:value-of select="@ident"/>
-                           </xsl:when>
-                           <xsl:when test="tei:altIdent">
-                              <xsl:value-of select="normalize-space(tei:altIdent)"/>
-                           </xsl:when>
-                           <xsl:otherwise>
-                              <xsl:value-of select="@ident"/>
-                           </xsl:otherwise>
-                        </xsl:choose>
+		       <xsl:value-of select="tei:createSpecName(.)"/>
                      </xsl:for-each>
                   </xsl:when>
                </xsl:choose>
@@ -1379,17 +1359,7 @@ of this software, even if advised of the possibility of such damage.
                               <xsl:text>;</xsl:text>
                            </xsl:when>
                            <xsl:when test="key('ELEMENTS',@ident)">
-                              <xsl:choose>
-                                 <xsl:when test="tei:altIdent=@ident">
-                                    <xsl:value-of select="@ident"/>
-                                 </xsl:when>
-                                 <xsl:when test="tei:altIdent">
-                                    <xsl:value-of select="normalize-space(tei:altIdent)"/>
-                                 </xsl:when>
-                                 <xsl:otherwise>
-                                    <xsl:value-of select="@ident"/>
-                                 </xsl:otherwise>
-                              </xsl:choose>
+			     <xsl:value-of select="tei:createSpecName(.)"/>
                            </xsl:when>
                         </xsl:choose>
                      </xsl:when>
@@ -1490,17 +1460,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>%NS;</xsl:text>
          </xsl:when>
       </xsl:choose>
-      <xsl:choose>
-         <xsl:when test="tei:altIdent=@ident">
-            <xsl:value-of select="@ident"/>
-         </xsl:when>
-         <xsl:when test="tei:altIdent">
-            <xsl:value-of select="normalize-space(tei:altIdent)"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:value-of select="@ident"/>
-         </xsl:otherwise>
-      </xsl:choose>
+      <xsl:value-of select="tei:createSpecName(.)"/>
       <xsl:choose>
          <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or tei:datatype/@maxOccurs='unbounded') and tei:datatype/rng:ref[@name='data.enumerated']">
             <xsl:text> NMTOKENS </xsl:text>

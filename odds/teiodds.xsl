@@ -846,19 +846,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:with-param name="grammar"/>
       <xsl:with-param name="content">
         <Wrapper>
-          <xsl:variable name="name">
-            <xsl:choose>
-              <xsl:when test="tei:altIdent=@ident">
-                <xsl:value-of select="@ident"/>
-              </xsl:when>
-              <xsl:when test="tei:altIdent">
-                <xsl:value-of select="normalize-space(tei:altIdent)"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="@ident"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
+          <xsl:variable name="name" select="tei:createSpecName(.)"/>
           <xsl:choose>
             <xsl:when test="tei:content/rng:notAllowed">
               <define xmlns="http://relaxng.org/ns/structure/1.0" name="{$elementPrefix}{@ident}">
@@ -1028,17 +1016,7 @@ select="$makeDecls"/></xsl:message>
     <choice xmlns="http://relaxng.org/ns/structure/1.0">
       <xsl:for-each select="tei:valList/tei:valItem">
         <value>
-          <xsl:choose>
-            <xsl:when test="tei:altIdent=@ident">
-              <xsl:value-of select="@ident"/>
-            </xsl:when>
-            <xsl:when test="tei:altIdent">
-              <xsl:value-of select="normalize-space(tei:altIdent)"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="@ident"/>
-            </xsl:otherwise>
-          </xsl:choose>
+          <xsl:value-of select="tei:createSpecName(.)"/>
         </value>
         <xsl:if test="not($oddmode='tei')">
           <a:documentation>

@@ -17,8 +17,22 @@
    </teiHeader>
 <text>
 <body>
-
-    <schemaSpec ident="test" start="TEI">
+  <p>Testing specList:
+  <specList>
+    <specDesc key="p"/>
+    <specDesc key="p" atts="xml:id type"/>
+    <specDesc key="eTree"/>
+    <specDesc key="eTree" atts="-"/>
+    <specDesc key="eTree" atts="value"/>
+    <specDesc key="eTree" atts="+"/>
+    <specDesc key="eTree" atts="value"/>
+    <specDesc key="eTree" atts="value +"/>
+    <specDesc key="eTree" atts="value rend xml:base prev next"/>
+    <specDesc key="valList"/>
+    <specDesc key="valList" atts="type"/>
+  </specList>
+  </p>
+  <schemaSpec ident="test" start="TEI">
       <moduleRef key="header"/>
       <moduleRef key="core"/>
       <moduleRef key="tei"/>
