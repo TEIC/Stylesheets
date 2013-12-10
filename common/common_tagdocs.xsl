@@ -2648,7 +2648,7 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:variable name="type" select="@type"/>
                     <xsl:for-each select="$here">
                       <xsl:call-template name="linkTogether">
-                        <xsl:with-param name="name" select="$me"/>
+                        <xsl:with-param name="name" select="$alt"/>
                         <xsl:with-param name="reftext" select="$alt"/>
                         <xsl:with-param name="class">link_odd_<xsl:value-of select="$type"/></xsl:with-param>
                       </xsl:call-template>
