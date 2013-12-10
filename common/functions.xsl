@@ -1237,6 +1237,7 @@ of this software, even if advised of the possibility of such damage.
     <!-- work out a name prefix for ODD objects -->
     <xsl:function name="tei:createSpecPrefix" as="xs:string">
       <xsl:param name="context"/>
+      <xsl:variable name="result">
       <xsl:for-each select="$context">
 	<xsl:variable name="ns" select="ancestor-or-self::*[@ns][1]/@ns"/>
 	<xsl:choose>
@@ -1252,6 +1253,8 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:for-each>
+      </xsl:variable>
+      <xsl:value-of select="$result"/>
     </xsl:function>
 
   <xsl:function name="tei:getPrefix" as="xs:string*">
