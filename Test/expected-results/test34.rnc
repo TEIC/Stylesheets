@@ -1,8 +1,8 @@
 default namespace = "http://foo.foo/foo"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 namespace bar = "http://blah.blah/bar"
+namespace blah = "http://blah.blah/blah"
 namespace ns1 = "http://www.isocat.org/ns/dcr"
-namespace ns2 = "http://blah.blah/blah"
 namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 namespace xlink = "http://www.w3.org/1999/xlink"
@@ -4253,5 +4253,5 @@ bar_cit =
 tei_q =
   
   ## This element encodes a new quote (CASE 4) 
-  element ns2:q { tei_ref, tei_macro.specialPara+, text }
+  element blah:q { tei_ref, tei_macro.specialPara+, text }
 start = tei_TEI
