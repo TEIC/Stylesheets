@@ -128,7 +128,8 @@ to the TEI addon (maintained by the TEI Consortium) for oXygen. Go to <code>Add-
 <code>http://www.tei-c.org/release/oxygen/updateSite.oxygen</code> to the list. Then go to  <code>Help/Manage add-ons</code> and activate the <emph>TEI P5 + XSL</emph>
 entry. After a restart, you'll be using the latest version in preference to what is delivered with your copy of oXygen. When updates appear, you'll
 be asked if you want to install them.</p>
-          <div>
+	</div>
+          <div xml:id="oxygendev">
             <head>Rolling your own in oXygen</head>
             <p>In addition to editing the copy of the stylesheets in oXygen, you can set up a copy of TEI framework, and configure oXygen
 	  to look at it. First, grab the current oXygen TEI framework by downloading
@@ -149,7 +150,6 @@ be asked if you want to install them.</p>
 	called <code>from.xsl</code> which looks like this:
   <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.tei-c.org/ns/1.0" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" version="2.0" exclude-result-prefixes="w"><xsl:import href="../../default/docx/from.xsl"/></xsl:stylesheet></egXML>
 Edit that accordingly, and then choose the <code>local</code> profile in oXygen transformations.</p>
-          </div>
         </div>
         <div xml:id="oxgarage">
           <head>OxGarage web service</head>
