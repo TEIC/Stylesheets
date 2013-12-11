@@ -225,7 +225,10 @@ test-to-docx:
 	rm testnotes1.xml.docx.document
 
 oddity:
-	../teitohtml5 --summaryDoc --lang=es --profile=tei --odd test15.odd test.odd.html
+	../teitohtml5 --summaryDoc --lang=es --profile=tei --odd test15.odd test15.odd.html
+	xmllint --encode utf-8 --format test15.odd.html | perl cleanup.pl> test.temp ; mv test.temp test15.odd.html
+	diff test15.odd.html expected-results/test15.odd.html
+	../teitohtml5 --summaryDoc --odd test.odd test.odd.html
 	xmllint --encode utf-8 --format test.odd.html | perl cleanup.pl> test.temp ; mv test.temp test.odd.html
 	diff test.odd.html expected-results/test.odd.html
 	$(SAXON) -it:main -o:oddbyexample.odd  -xsl:../tools/oddbyexample.xsl corpus=`pwd`/bare 
