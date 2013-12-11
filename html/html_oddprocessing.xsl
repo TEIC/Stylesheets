@@ -158,8 +158,7 @@ of this software, even if advised of the possibility of such damage.
               </div>
               <xsl:call-template name="stdfooter">
                 <xsl:with-param name="file">
-                  <xsl:text>ref-</xsl:text>
-                  <xsl:value-of select="$name"/>
+                  <xsl:value-of select="$outName"/>
                 </xsl:with-param>
               </xsl:call-template>
               <xsl:call-template name="bodyEndHook"/>
@@ -786,6 +785,8 @@ of this software, even if advised of the possibility of such damage.
 
 
   <xsl:template name="refDocLink">
+    <xsl:variable name="linkname" select="concat(tei:createSpecPrefix(.),tei:createSpecName(.))"/>
+
     <span
 	class="refDocLink">
       <a>
@@ -793,12 +794,12 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:choose>
 	    <xsl:when test="number($splitLevel)=-1 or $STDOUT='true'">
 	      <xsl:text>#</xsl:text>
-	      <xsl:value-of select="@ident"/>
+	      <xsl:value-of select="$linkname"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:text>ref-</xsl:text>
 	      <xsl:value-of
-		  select="@ident"/>
+		  select="$linkname"/>
 	      <xsl:value-of select="$outputSuffix"/>
 	    </xsl:otherwise>
 	  </xsl:choose>

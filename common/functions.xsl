@@ -1249,7 +1249,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:text>xml:</xsl:text>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:value-of select="tei:getPrefix($ns,.)"/>
+	    <xsl:value-of select="translate(tei:getPrefix($ns,.),':','_')"/>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:for-each>

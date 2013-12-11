@@ -134,6 +134,8 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:classSpec|tei:elementSpec" mode="summary">
     <xsl:variable name="name" select="tei:createSpecName(.)"/>
+    <xsl:variable name="linkname" select="concat(tei:createSpecPrefix(.),$name)"/>
+
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
@@ -161,7 +163,7 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:when>
 	      <xsl:otherwise>
 		<xsl:text>ref-</xsl:text>
-		<xsl:value-of select="$name"/>
+		<xsl:value-of select="$linkname"/>
 		<xsl:text>.html</xsl:text>
 	      </xsl:otherwise>
 	    </xsl:choose>
@@ -883,6 +885,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec" mode="show">
     <xsl:param name="atts"/>
     <xsl:variable name="name" select="tei:createSpecName(.)"/>
+    <xsl:variable name="linkname" select="concat(tei:createSpecPrefix(.),$name)"/>
     <xsl:element namespace="{$outputNS}" name="{$hiName}">
       <xsl:attribute name="{$rendName}">
         <xsl:text>specList-</xsl:text>
@@ -910,7 +913,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:when>
             <xsl:otherwise>
               <xsl:text>ref-</xsl:text>
-              <xsl:value-of select="$name"/>
+              <xsl:value-of select="$linkname"/>
               <xsl:text>.html</xsl:text>
             </xsl:otherwise>
           </xsl:choose>
@@ -2472,6 +2475,8 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="showElement">
     <xsl:param name="name"/>
+    <xsl:variable name="linkname" select="concat(tei:createSpecPrefix(.),$name)"/>
+
     <xsl:choose>
       <xsl:when test="$oddmode='tei'">
         <tei:ref target="#{$name}">
@@ -2501,7 +2506,7 @@ of this software, even if advised of the possibility of such damage.
             </a>
           </xsl:when>
           <xsl:when test="key('IDENTS',$name)">
-            <a xmlns="http://www.w3.org/1999/xhtml" class="link_element" href="ref-{$name}{$outputSuffix}">
+            <a xmlns="http://www.w3.org/1999/xhtml" class="link_element" href="ref-{$linkname}{$outputSuffix}">
               <xsl:value-of select="$name"/>
             </a>
           </xsl:when>

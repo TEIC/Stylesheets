@@ -118,6 +118,8 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="oddTocEntry">
+    <xsl:variable name="linkname" select="concat(tei:createSpecPrefix(.),tei:createSpecName(.))"/>
+
     <xsl:variable name="loc">
       <xsl:choose>
         <xsl:when test="number($splitLevel)=-1 or $STDOUT='true'">
@@ -126,14 +128,14 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:otherwise>
           <xsl:text>ref-</xsl:text>
-          <xsl:value-of select="@ident"/>
+          <xsl:value-of select="$linkname"/>
           <xsl:value-of select="$outputSuffix"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <div class="oddTocEntry">
       <a href="{$loc}">
-        <xsl:value-of select="@ident"/>
+        <xsl:value-of select="$linkname"/>
       </a>
     </div>
   </xsl:template>
