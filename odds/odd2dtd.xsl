@@ -498,7 +498,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:if test="$parameterize='true' and (@ns)">
             <xsl:text>%NS;</xsl:text>
          </xsl:if>
-	<xsl:variable name="name" select="tei:createSpecName(.)"/>
+	<xsl:value-of select="tei:createSpecName(.)"/>
          <xsl:text>"&gt;&#10;</xsl:text>
       </xsl:if>
   </xsl:template>
