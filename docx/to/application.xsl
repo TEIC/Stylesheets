@@ -96,11 +96,11 @@ of this software, even if advised of the possibility of such damage.
         <xsl:result-document href="{concat($wordDirectory,'/docProps/newcore.xml')}" standalone="yes">
             <cp:coreProperties>
                 <dc:title>
-		  <xsl:sequence select="normalize-space(tei:generateTitle(.))"/>
+		  <xsl:sequence select="tei:generateMetadataTitle(.)"/>
                 </dc:title>
                 <dc:creator>
-		  <xsl:sequence
-		      select="normalize-space(string-join(tei:generateAuthor(.),''))"/>
+		  <xsl:value-of
+		      select="string-join(tei:generateMetadataAuthor(.),'')"/>
                 </dc:creator>
                 <cp:lastModifiedBy>TEI stylesheets</cp:lastModifiedBy>
                 <cp:revision>
