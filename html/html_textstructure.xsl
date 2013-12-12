@@ -711,18 +711,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element docAuthor in "author" mode"</desc>
-   </doc>
-  <xsl:template match="tei:docAuthor" mode="author">
-      <xsl:if test="preceding-sibling::tei:docAuthor">
-         <xsl:text>, </xsl:text>
-      </xsl:if>
-      <xsl:apply-templates/>
-  </xsl:template>
-
-  
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element opener</desc>
    </doc>
 

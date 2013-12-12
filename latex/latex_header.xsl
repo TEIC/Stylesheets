@@ -49,12 +49,5 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-  <xsl:template match="tei:docAuthor" mode="author">
-      <xsl:apply-templates/>
-      <xsl:choose>
-         <xsl:when test="count(following-sibling::tei:docAuthor)=1"> and </xsl:when>
-         <xsl:when test="following-sibling::tei:docAuthor">, </xsl:when>
-      </xsl:choose>
-  </xsl:template>
 
 </xsl:stylesheet>
