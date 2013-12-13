@@ -230,7 +230,7 @@ of this software, even if advised of the possibility of such damage.
 	<office:meta>
         <meta:generator>TEI to OpenOffice XSLT</meta:generator>
         <dc:title>
-          <xsl:sequence select="tei:generateTitle(.)"/>
+          <xsl:sequence select="tei:generateMetadataTitle(.)"/>
         </dc:title>
         <dc:description/>
         <dc:subject/>

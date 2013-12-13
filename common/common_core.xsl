@@ -1373,4 +1373,42 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element docAuthor in "author" mode"</desc>
+   </doc>
+  <xsl:template match="tei:docAuthor" mode="author">
+    <xsl:apply-templates/>
+    <xsl:choose>
+      <xsl:when test="count(following-sibling::tei:docAuthor)=1">
+	<xsl:if test="count(preceding-sibling::tei:docAuthor)&gt;1">
+	  <xsl:text>,</xsl:text>
+	</xsl:if>
+	<xsl:text> </xsl:text>
+	<xsl:sequence select="tei:i18n('and')"/>
+	<xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:when test="following-sibling::tei:docAuthor">, </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element author in "author" mode"</desc>
+   </doc>
+  <xsl:template match="tei:author" mode="author">
+    <xsl:apply-templates select="*[not(self::tei:email)]|text()"/>
+    <xsl:choose>
+      <xsl:when test="count(following-sibling::tei:author)=1">
+	<xsl:if test="count(preceding-sibling::tei:author)&gt;1">
+	  <xsl:text>,</xsl:text>
+	</xsl:if>
+	<xsl:text> </xsl:text>
+	<xsl:sequence select="tei:i18n('and')"/>
+	<xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:when test="following-sibling::tei:author">, </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
+  
 </xsl:stylesheet>

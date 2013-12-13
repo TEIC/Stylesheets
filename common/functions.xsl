@@ -572,14 +572,18 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[common] Generate a title</desc>
   </doc>
-  <xsl:function name="tei:generateTitle">
+  <xsl:function name="tei:generateTitle"  as="node()*">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
-        <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
+        <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
+          <xsl:apply-templates
+	      select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt"/>
+	</xsl:when>
+        <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
           <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle/tei:titlePart"/>
         </xsl:when>
-        <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
+        <xsl:when test="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
           <xsl:apply-templates select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle/tei:titlePart"/>
         </xsl:when>
         <xsl:when test="ancestor-or-self::tei:teiCorpus">
@@ -599,6 +603,35 @@ of this software, even if advised of the possibility of such damage.
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[common] Generate a title for metadata context</desc>
+  </doc>
+  <xsl:function name="tei:generateMetadataTitle"  as="node()*">
+    <xsl:param name="context"/>
+    <xsl:variable name="r">
+      <xsl:for-each select="$context">
+	<xsl:choose>
+	  <xsl:when test="ancestor-or-self::tei:teiCorpus">
+	    <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type='subordinate')]"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
+	      <xsl:choose>
+		<xsl:when test="tei:title[@type='main']">
+		  <xsl:apply-templates select="tei:title[@type='main']"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:apply-templates select="tei:title"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+          </xsl:for-each>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:value-of select="normalize-space($r)"/>
   </xsl:function>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[common] Find a plausible editor name</desc>
@@ -630,44 +663,53 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[common] Find a plausible main author name</desc>
   </doc>
-  <xsl:function name="tei:generateAuthor">
+  <xsl:function name="tei:generateAuthor"  as="node()*">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
-        <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
-          <xsl:apply-templates mode="author" select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor"/>
-        </xsl:when>
-        <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
-          <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
-            <xsl:apply-templates select="*[not(self::tei:email)]|text()"/>
-            <xsl:choose>
-              <xsl:when test="count(following-sibling::tei:author)=1">
-                <xsl:if test="count(preceding-sibling::tei:author)&gt;1">
-                  <xsl:text>,</xsl:text>
-                </xsl:if>
-                <xsl:text> </xsl:text>
-                <xsl:sequence select="tei:i18n('and')"/>
-                <xsl:text> </xsl:text>
-              </xsl:when>
-              <xsl:when test="following-sibling::tei:author">, </xsl:when>
-            </xsl:choose>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:when test="ancestor-or-self::tei:teiCorpus/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
-          <xsl:for-each select="ancestor-or-self::tei:teiCorpus/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
-            <xsl:apply-templates
-		select="*[not(self::tei:email)]|text()"/>
-	  </xsl:for-each>
-	</xsl:when>
-        <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author']">
-          <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author'][1]/tei:name"/>
+        <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+          <xsl:apply-templates mode="author" select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author"/>
         </xsl:when>
         <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
           <xsl:apply-templates mode="author" select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor"/>
         </xsl:when>
+        <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+          <xsl:apply-templates mode="author" select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author"/>
+	</xsl:when>
+        <xsl:when test="ancestor-or-self::tei:teiCorpus/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+          <xsl:apply-templates mode="author" select="ancestor-or-self::tei:teiCorpus/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author"/>
+	</xsl:when>
+        <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author']">
+          <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author'][1]/tei:name"/>
+        </xsl:when>
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[common] Find a plausible main author name in metadata context</desc>
+  </doc>
+  <xsl:function name="tei:generateMetadataAuthor"  as="node()*">
+    <xsl:param name="context"/>
+    <xsl:variable name="r">
+      <xsl:for-each select="$context">
+	<xsl:choose>
+	  <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+	    <xsl:apply-templates mode="author" select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author"/>
+	  </xsl:when>
+	  <xsl:when test="ancestor-or-self::tei:teiCorpus/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+	    <xsl:apply-templates mode="author" select="ancestor-or-self::tei:teiCorpus/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author"/>
+	  </xsl:when>
+        <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author']">
+          <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author'][1]/tei:name"/>
+        </xsl:when>
+	</xsl:choose>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:value-of select="normalize-space($r)"/>
+  </xsl:function>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[common] Find a plausible name of person responsible for current revision</desc>
   </doc>
