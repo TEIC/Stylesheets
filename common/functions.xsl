@@ -665,25 +665,34 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:function name="tei:generateAuthor"  as="node()*">
     <xsl:param name="context"/>
+      <xsl:variable name="result">
     <xsl:for-each select="$context">
       <xsl:choose>
-        <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+        <xsl:when test="$useHeaderFrontMatter='true' and
+			ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
           <xsl:apply-templates mode="author" select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author"/>
         </xsl:when>
-        <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
-          <xsl:apply-templates mode="author" select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor"/>
+        <xsl:when
+	    test="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
+          <xsl:apply-templates mode="author"
+			       select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor"/>
         </xsl:when>
-        <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+        <xsl:when
+	    test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
           <xsl:apply-templates mode="author" select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author"/>
 	</xsl:when>
-        <xsl:when test="ancestor-or-self::tei:teiCorpus/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+        <xsl:when
+	    test="ancestor-or-self::tei:teiCorpus/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
           <xsl:apply-templates mode="author" select="ancestor-or-self::tei:teiCorpus/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author"/>
 	</xsl:when>
-        <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author']">
+        <xsl:when
+	    test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author']">
           <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author'][1]/tei:name"/>
         </xsl:when>
       </xsl:choose>
     </xsl:for-each>
+  </xsl:variable>
+  <xsl:sequence select="$result"/>
   </xsl:function>
 
 

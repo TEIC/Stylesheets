@@ -1388,7 +1388,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:sequence select="tei:i18n('and')"/>
 	<xsl:text> </xsl:text>
       </xsl:when>
-      <xsl:when test="following-sibling::tei:docAuthor">, </xsl:when>
+      <xsl:when test="following-sibling::tei:docAuthor">
+	<xsl:text>, </xsl:text>
+      </xsl:when>
     </xsl:choose>
   </xsl:template>
 
