@@ -568,8 +568,8 @@ height: </xsl:text>
 		@page {padding: 0pt; margin:0pt}
 		body { text-align: center; padding:0pt; margin: 0pt; }
 		div.titlepage { text-align: center; padding:0pt; margin: 0pt; font-size: 225% ; font-family: Arial,Helvetica,sans-serif;}
-		p.covertitle { font-weight: bold; color: #FFFFFF ; background-color: #012148; margin: 5%; padding: 5%}
-		p.covertitle {margin: 10%}
+		div.covertitle { font-weight: bold; color: #FFFFFF ; background-color: #012148; margin: 5%; padding: 5%}
+		div.covertitle {margin: 10%}
 	      </style>
             </head>
             <body>
@@ -588,9 +588,9 @@ height: </xsl:text>
 		      text-align:center;
 		    </xsl:attribute>
 		    <div class="titlepage">
-		      <p class="covertitle">
+		      <div class="covertitle">
 			<xsl:sequence select="tei:generateTitle(.)"/>
-		      </p>
+		      </div>
 		      <p class="coverauthor">
 			<xsl:sequence select="tei:generateAuthor(.)"/>
 		      </p>
