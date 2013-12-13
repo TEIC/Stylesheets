@@ -49,6 +49,25 @@ of this software, even if advised of the possibility of such damage.
       <oxdoc:p>Id: $Id$</oxdoc:p>
       <oxdoc:p>Copyright: 2013, TEI Consortium</oxdoc:p>
       <oxdoc:p/>
+      <oxdoc:p>Modified 2013-12 by Syd Bauman:
+      <oxdoc:ul>
+        <oxdoc:li>generate checks for validUntil= on some constructs:
+          <oxdoc:ul>
+            <oxdoc:li><tt>&lt;attDef></tt> when inside either <tt>&lt;elementSpec></tt>
+            or <tt>&lt;classSpec></tt></oxdoc:li>
+            <oxdoc:li><tt>&lt;elementSpec></tt> itself</oxdoc:li>
+            <oxdoc:li><tt>&lt;valItem></tt> when inside an <tt>&lt;elementSpec></tt></oxdoc:li>
+          </oxdoc:ul>
+        </oxdoc:li>
+        <oxdoc:li>move ancestor::egXML test to key-building time (rather
+          than testing in template that matches keys)</oxdoc:li>
+        <oxdoc:li>add comment of metadata to output (perhaps this should be improved in future
+        by passing in useful information via a parameter or parsing input <tt>&lt;teiHeader></tt>
+        or some such)</oxdoc:li>
+        <oxdoc:li>make output section comments into blocks that are pretty, at least
+          if output is indentend nicely (e.g. via <tt>xmllint --format</tt>)</oxdoc:li>
+      </oxdoc:ul>
+      </oxdoc:p>
       <oxdoc:p>Modified 2012-05 by Syd Bauman: It seems that ISO Schematron does not have
         a <oxdoc:pre>&lt;key></oxdoc:pre> element. In fact, ISO 19757-3:2006 explicitly
         says “The XSLT key element may be used, in the XSLT namespace, before the pattern
@@ -59,37 +78,44 @@ of this software, even if advised of the possibility of such damage.
   </oxdoc:doc>
 
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
-  <xsl:param name="lang"></xsl:param>
+  <xsl:param name="lang"/>
+  <xsl:variable name="P5" select="/"/>
 
   <xsl:key name="NSs" 
-           match="sch:ns"
+           match="sch:ns[ not( ancestor::teix:egXML ) ]"
            use="1"/>
 
   <xsl:key name="KEYs" 
-           match="xsl:key"
+           match="xsl:key[ not( ancestor::teix:egXML ) ]"
            use="1"/>
 
   <xsl:key name="badKEYs" 
-           match="sch:key"
+           match="sch:key[ not( ancestor::teix:egXML ) ]"
+           use="1"/>
+  
+  <xsl:key name="DEPRECATEDs"
+           match="//tei:*[@validUntil][ not( ancestor::teix:egXML ) ]"
            use="1"/>
 
   <xsl:key name="PATTERNs"
-           match="sch:pattern"
+           match="sch:pattern[ not( ancestor::teix:egXML ) ]"
            use="1"/>
 
   <xsl:key name="CONSTRAINTs"
-           match="tei:constraint"
+    match="tei:constraint[ not( ancestor::teix:egXML ) ]"
            use="1"/>
 
   <xsl:template match="/">
     <schema queryBinding="xslt2">
       <title>ISO Schematron rules</title>
+      <xsl:comment> This file generated <xsl:value-of
+    select="current-dateTime()"/> by 'extract-isosch.xsl'. </xsl:comment>
 
-      <xsl:comment>namespaces:</xsl:comment>
-      <xsl:text>&#x0A;</xsl:text>
+      <xsl:call-template name="blockComment">
+        <xsl:with-param name="content" select="'namespaces:'"/>
+      </xsl:call-template>
       <xsl:for-each select="key('NSs',1)">
         <xsl:choose>
-          <xsl:when test="ancestor::teix:egXML"/>
           <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
                   and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
           <xsl:otherwise>
@@ -102,12 +128,12 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
 
       <xsl:if test="key('KEYs',1)">
-        <xsl:comment>keys:</xsl:comment>
-        <xsl:text>&#x0A;</xsl:text>
+        <xsl:call-template name="blockComment">
+          <xsl:with-param name="content" select="'keys:'"/>
+        </xsl:call-template>
       </xsl:if>
       <xsl:for-each select="key('KEYs',1)">
         <xsl:choose>
-          <xsl:when test="ancestor::teix:egXML"/>
           <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
                   and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
           <xsl:otherwise>
@@ -124,12 +150,12 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
 
       <xsl:if test="key('PATTERNs',1)">
-        <xsl:comment>patterns:</xsl:comment>
-        <xsl:text>&#x0A;</xsl:text>
+        <xsl:call-template name="blockComment">
+          <xsl:with-param name="content" select="'patterns:'"/>
+        </xsl:call-template>
       </xsl:if>
       <xsl:for-each select="key('PATTERNs',1)">
         <xsl:choose>
-          <xsl:when test="ancestor::teix:egXML"/>
           <xsl:when
             test="ancestor::tei:constraintSpec/@xml:lang
                  and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
@@ -140,15 +166,14 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
 
       <xsl:if test="key('CONSTRAINTs',1)">
-        <xsl:comment>constraints:</xsl:comment>
-        <xsl:text>&#x0A;</xsl:text>
+        <xsl:call-template name="blockComment">
+          <xsl:with-param name="content" select="'constraints:'"/>
+        </xsl:call-template>
       </xsl:if>
       <xsl:for-each select="key('CONSTRAINTs',1)">
         <xsl:choose>
-          <xsl:when test="ancestor::teix:egXML"/>
-          <xsl:when
-            test="ancestor::tei:constraintSpec/@xml:lang
-                 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
+          <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
+                  and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
           <xsl:otherwise>
             <xsl:variable name="patID">
               <xsl:choose>
@@ -203,6 +228,76 @@ of this software, even if advised of the possibility of such damage.
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
+
+      <xsl:if test="key('DEPRECATEDs',1)">
+        <xsl:call-template name="blockComment">
+          <xsl:with-param name="content" select="'deprecated:'"/>
+        </xsl:call-template>
+      </xsl:if>
+      <xsl:for-each select="key('DEPRECATEDs',1)">
+        <xsl:variable name="amsg1" select="'WARNING: use of deprecated attribute — The TEI-C may drop support for'"/>
+        <xsl:variable name="vmsg1" select="'WARNING: use of deprecated attribute value — The TEI-C may drop support for'"/>
+        <xsl:choose>
+          <xsl:when test="self::tei:attDef[ancestor::tei:elementSpec]">
+            <xsl:variable name="gi" select="ancestor::tei:elementSpec/@ident"/>
+            <!-- This is a start at how we might process other namespaces;
+              doesn't work yet for a variety of reasons, but also is not
+              important yet, as @validUntil is used by TEI-C only on its
+              own constructs
+            <xsl:if test="ancestor-or-self::*/@ns">
+              <xsl:variable name="nsu" select="ancestor-or-self::*[@ns][1]/@ns"/>
+              <xsl:variable name="nsp" select="concat('ex-is-ns-', generate-id() )"/>
+              <ns prefix="{$nsp}" uri="{$nsu}"/>
+            </xsl:if> -->
+            <sch:pattern>
+              <sch:rule context="tei:{$gi}">
+                <sch:report test="@{@ident}" role="nonfatal">
+                   <xsl:value-of select="$amsg1"/> @<xsl:value-of select="@ident"/> of the <xsl:value-of select="$gi"/> element as early as <xsl:value-of select="@validUntil"/>.
+                </sch:report>
+              </sch:rule>
+            </sch:pattern>
+          </xsl:when>
+          <xsl:when test="self::tei:attDef[ancestor::tei:classSpec]">
+            <xsl:variable name="class" select="ancestor::tei:classSpec/@ident"/>
+            <xsl:variable name="gis" select="$P5//tei:elementSpec[tei:classes/tei:memberOf[@key=$class]]/@ident"/>
+            <xsl:variable name="fqgis">
+              <xsl:for-each select="$gis">
+                <xsl:value-of select="concat(' tei:', . )"/>
+              </xsl:for-each>
+            </xsl:variable>
+            <xsl:variable name="giPattern">
+              <xsl:value-of select="tokenize( normalize-space($fqgis), ' ')" separator="|"/>
+            </xsl:variable>
+            <sch:pattern>
+              <sch:rule context="{$giPattern}">
+                <sch:report test="@{@ident}" role="nonfatal">
+                  <xsl:value-of select="$amsg1"/> @<xsl:value-of select="@ident"/> of the <sch:name/> element as early as <xsl:value-of select="@validUntil"/>.
+                </sch:report>
+              </sch:rule>
+            </sch:pattern>
+          </xsl:when>
+          <xsl:when test="self::tei:elementSpec">
+            <sch:pattern>
+              <sch:rule context="tei:{@ident}">
+                <sch:report test="true()" role="nonfatal">
+                  WARNING: use of deprecated element — The TEI-C may drop support for the <sch:name/> element as early as <xsl:value-of select="@validUntil"/>. 
+                </sch:report>
+              </sch:rule>
+            </sch:pattern>
+          </xsl:when>
+          <xsl:when test="self::tei:valItem[ancestor::tei:elementSpec]">
+            <xsl:variable name="gi" select="ancestor::tei:elementSpec/@ident"/>
+            <xsl:variable name="attrName" select="ancestor::tei:attDef/@ident"/>
+            <sch:pattern>
+              <sch:rule context="tei:{$gi}">
+                <sch:report test="@{$attrName} eq '{@ident}'" role="nonfatal">
+                  <xsl:value-of select="$vmsg1"/> the value '<xsl:value-of select="@ident"/>' of @<xsl:value-of select="$attrName"/> of the <xsl:value-of select="$gi"/> element as early as <xsl:value-of select="@validUntil"/>.
+                </sch:report>
+              </sch:rule>
+            </sch:pattern>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:for-each>
     </schema>
   </xsl:template>
   
@@ -249,5 +344,20 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+  
+  <xsl:template name="blockComment">
+    <xsl:param name="content"/>
+    <xsl:variable name="myContent" select="normalize-space($content)"/>
+    <xsl:variable name="border" select="replace($myContent,'.','*')"/>
+    <xsl:variable name="useContent" select="concat(' ',$myContent,' ')"/>
+    <xsl:variable name="useBorder" select="concat(' ',$border,' ')"/>
+    <xsl:text>&#x0A;&#x0A;</xsl:text>
+    <xsl:comment><xsl:value-of select="$useBorder"/></xsl:comment>
+    <xsl:text>&#x0A;</xsl:text>
+    <xsl:comment><xsl:value-of select="$useContent"/></xsl:comment>
+    <xsl:text>&#x0A;</xsl:text>
+    <xsl:comment><xsl:value-of select="$useBorder"/></xsl:comment>
+    <xsl:text>&#x0A;</xsl:text>
+  </xsl:template>
   
 </xsl:stylesheet>
