@@ -360,3 +360,4 @@ clean:
 	rm -f test33.rnc test33.json
 	rm -f test34.rnc test34.json test34.combined.odd test34.combined.json
 	rm -f test.xlsx.xml
+	rm -rf *.result.tex *.result.pdf _slidelogo.png
