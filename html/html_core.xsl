@@ -1055,7 +1055,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="$pagebreakStyle='none'"/>
       <xsl:otherwise>
         <xsl:element name="{if (parent::tei:body or parent::tei:front
-			   or parent::tei:div  or parent::tei:back or parent::tei:group) then 'div' else 'span'}">
+			   or parent::tei:div  or parent::tei:back or
+			   ancestor::tei:lg or parent::tei:group) then 'div' else 'span'}">
           <xsl:call-template name="makeRendition">
 	    <xsl:with-param  name="default" select="'pagebreak'"/>
 	  </xsl:call-template>
@@ -1071,7 +1072,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:variable>
 	  <xsl:choose>
 	    <xsl:when test="$pagebreakStyle='simple'">
-		<xsl:copy-of select="$Words"/>
+	      <xsl:copy-of select="$Words"/>
 	    </xsl:when>
 	    <xsl:when test="@facs">
 	      <xsl:variable name="IMG">

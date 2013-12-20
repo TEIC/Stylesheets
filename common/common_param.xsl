@@ -264,7 +264,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="STDOUT">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
     <desc>Display of &lt;pb&gt; element.
-    Choices are "visible", "active" and "none".</desc>
+    Choices are "active" or "none"; the default is to put in a display
+    of the page break</desc>
   </doc>
   <xsl:param name="pagebreakStyle">visible</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
