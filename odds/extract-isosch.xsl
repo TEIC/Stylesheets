@@ -7,13 +7,13 @@
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:oxdoc="http://www.oxygenxml.com/ns/doc/xsl"
+                xmlns:d="http://www.oxygenxml.com/ns/doc/xsl"
                 version="2.0"
                 exclude-result-prefixes="tei rng teix sch xi #default">
-  <oxdoc:doc scope="stylesheet" type="stylesheet">
-    <oxdoc:desc>
-      <oxdoc:p> TEI stylesheet for simplifying TEI ODD markup </oxdoc:p>
-      <oxdoc:p>This software is dual-licensed:
+  <d:doc scope="stylesheet" type="stylesheet">
+    <d:desc>
+      <d:p> TEI stylesheet for simplifying TEI ODD markup </d:p>
+      <d:p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
 Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
@@ -44,45 +44,61 @@ data, or profits; or business interruption) however caused and on any
 theory of liability, whether in contract, strict liability, or tort
 (including negligence or otherwise) arising in any way out of the use
 of this software, even if advised of the possibility of such damage.
-</oxdoc:p>
-      <oxdoc:p>Author: See AUTHORS</oxdoc:p>
-      <oxdoc:p>Id: $Id$</oxdoc:p>
-      <oxdoc:p>Copyright: 2013, TEI Consortium</oxdoc:p>
-      <oxdoc:p/>
-      <oxdoc:p>Modified 2013-12 by Syd Bauman:
-      <oxdoc:ul>
-        <oxdoc:li>generate checks for validUntil= on some constructs:
-          <oxdoc:ul>
-            <oxdoc:li><tt>&lt;attDef></tt> when inside either <tt>&lt;elementSpec></tt>
-            or <tt>&lt;classSpec></tt></oxdoc:li>
-            <oxdoc:li><tt>&lt;elementSpec></tt> itself</oxdoc:li>
-            <oxdoc:li><tt>&lt;valItem></tt> when inside an <tt>&lt;elementSpec></tt></oxdoc:li>
-          </oxdoc:ul>
-        </oxdoc:li>
-        <oxdoc:li>move ancestor::egXML test to key-building time (rather
-          than testing in template that matches keys)</oxdoc:li>
-        <oxdoc:li>add comment of metadata to output (perhaps this should be improved in future
+</d:p>
+      <d:p>Author: See AUTHORS</d:p>
+      <d:p>Id: $Id$</d:p>
+      <d:p>Copyright: 2013, TEI Consortium</d:p>
+      <d:p/>
+      <d:p>Modified 2012-12-31 by Syd Bauman:
+        <d:ul>
+          <d:li>change documentation prefix</d:li>
+          <d:li>add code to support deprecation of constructs declared to
+          be in non-TEI namespaces, part 1: elements, and attrs &amp; valItems delcared in elements</d:li>
+          <d:li>NOTE-TO-SELF: part 2, attrs in classes, might be done by generating complete block of all &lt;ns>s,
+          storing that in a variable (putting out variable at right time), and querying that var</d:li>
+        </d:ul>
+      </d:p>
+      <d:p>Modified 2013-12 by Syd Bauman:
+      <d:ul>
+        <d:li>generate checks for validUntil= on some constructs:
+          <d:ul>
+            <d:li><tt>&lt;attDef></tt> when inside either <tt>&lt;elementSpec></tt>
+            or <tt>&lt;classSpec></tt></d:li>
+            <d:li><tt>&lt;elementSpec></tt> itself</d:li>
+            <d:li><tt>&lt;valItem></tt> when inside an <tt>&lt;elementSpec></tt></d:li>
+          </d:ul>
+        </d:li>
+        <d:li>move ancestor::egXML test to key-building time (rather
+          than testing in template that matches keys)</d:li>
+        <d:li>add comment of metadata to output (perhaps this should be improved in future
         by passing in useful information via a parameter or parsing input <tt>&lt;teiHeader></tt>
-        or some such)</oxdoc:li>
-        <oxdoc:li>make output section comments into blocks that are pretty, at least
-          if output is indentend nicely (e.g. via <tt>xmllint --format</tt>)</oxdoc:li>
-      </oxdoc:ul>
-      </oxdoc:p>
-      <oxdoc:p>Modified 2012-05 by Syd Bauman: It seems that ISO Schematron does not have
-        a <oxdoc:pre>&lt;key></oxdoc:pre> element. In fact, ISO 19757-3:2006 explicitly
+        or some such)</d:li>
+        <d:li>make output section comments into blocks that are pretty, at least
+          if output is indentend nicely (e.g. via <tt>xmllint --format</tt>)</d:li>
+      </d:ul>
+      </d:p>
+      <d:p>Modified 2012-05 by Syd Bauman: It seems that ISO Schematron does not have
+        a <d:pre>&lt;key></d:pre> element. In fact, ISO 19757-3:2006 explicitly
         says “The XSLT key element may be used, in the XSLT namespace, before the pattern
-        elements.” So we could just ignore <oxdoc:pre>&lt;key></oxdoc:pre> elements in
+        elements.” So we could just ignore <d:pre>&lt;key></d:pre> elements in
         the (ISO) Schematron namespace, but since then the user will likely not be
-        getting what is intended, we’ll issue an error message as well.</oxdoc:p>
-    </oxdoc:desc>
-  </oxdoc:doc>
+        getting what is intended, we’ll issue an error message as well.</d:p>
+      <d:p>Modified 2010-07-03 by Syd Bauman: Add code to handle the case in which <d:pre>&lt;constraintSpec></d:pre>
+        is a direct child of <d:pre>&lt;schemaSpec</d:pre>.</d:p>
+    </d:desc>
+  </d:doc>
 
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:param name="lang"/>
   <xsl:variable name="P5" select="/"/>
+  <xsl:param name="ns-prefix-prefix" select="'eip-'"/>
 
   <xsl:key name="NSs" 
            match="sch:ns[ not( ancestor::teix:egXML ) ]"
+           use="1"/>
+  
+  <xsl:key name="DEPRECATED_NSs"
+           match="//tei:*[@validUntil][ not( ancestor::teix:egXML ) ][ ancestor-or-self::*[@ns] ]"
            use="1"/>
 
   <xsl:key name="KEYs" 
@@ -109,10 +125,10 @@ of this software, even if advised of the possibility of such damage.
     <schema queryBinding="xslt2">
       <title>ISO Schematron rules</title>
       <xsl:comment> This file generated <xsl:value-of
-    select="current-dateTime()"/> by 'extract-isosch.xsl'. </xsl:comment>
+        select="current-dateTime()"/> by 'extract-isosch.xsl'. </xsl:comment>
 
       <xsl:call-template name="blockComment">
-        <xsl:with-param name="content" select="'namespaces:'"/>
+        <xsl:with-param name="content" select="'namespaces, normal:'"/>
       </xsl:call-template>
       <xsl:for-each select="key('NSs',1)">
         <xsl:choose>
@@ -124,9 +140,20 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
       </xsl:for-each>
       <xsl:if test="not( key('NSs',1)[@prefix='tei'] )">
-        <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+        <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
       </xsl:if>
-
+      
+      <xsl:call-template name="blockComment">
+        <xsl:with-param name="content" select="'namespaces, of deprecated constructs:'"/>
+      </xsl:call-template>
+      <xsl:for-each select="key('DEPRECATED_NSs',1)">
+        <xsl:variable name="nsu" select="ancestor-or-self::*[@ns][1]/@ns"/>
+        <xsl:variable name="nsp">
+          <xsl:value-of select="concat( $ns-prefix-prefix, generate-id() )"/>
+        </xsl:variable>
+        <ns prefix="{$nsp}" uri="{$nsu}"/>
+      </xsl:for-each>
+        
       <xsl:if test="key('KEYs',1)">
         <xsl:call-template name="blockComment">
           <xsl:with-param name="content" select="'keys:'"/>
@@ -172,8 +199,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:for-each select="key('CONSTRAINTs',1)">
         <xsl:choose>
-          <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
-                  and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
+          <xsl:when test="parent::tei:constraintSpec/@xml:lang
+                  and not(parent::tei:constraintSpec/@xml:lang = $lang)"/>
           <xsl:otherwise>
             <xsl:variable name="patID">
               <xsl:choose>
@@ -193,8 +220,6 @@ of this software, even if advised of the possibility of such damage.
                   />
                 </xsl:when>
                 <xsl:otherwise>
-                  <!-- Added 2010-07-03 by Syd Bauman to handle the case in which <constraintSpec> -->
-                  <!-- is a direct child of <schemaSpec>. -->
                   <xsl:text>constraint-</xsl:text>
                   <xsl:value-of select="ancestor::tei:constraintSpec/@ident"/>
                   <xsl:if test="count( ../sch:rule ) > 1">
@@ -237,25 +262,24 @@ of this software, even if advised of the possibility of such damage.
       <xsl:for-each select="key('DEPRECATEDs',1)">
         <xsl:variable name="amsg1" select="'WARNING: use of deprecated attribute — The TEI-C may drop support for'"/>
         <xsl:variable name="vmsg1" select="'WARNING: use of deprecated attribute value — The TEI-C may drop support for'"/>
+        <xsl:variable name="nsp">
+          <xsl:choose>
+            <xsl:when test="ancestor-or-self::*[@ns]">
+              <xsl:value-of select="concat( $ns-prefix-prefix, generate-id() )"/>
+            </xsl:when>
+            <xsl:otherwise>tei</xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
         <xsl:choose>
           <xsl:when test="self::tei:attDef[ancestor::tei:elementSpec]">
             <xsl:variable name="gi" select="ancestor::tei:elementSpec/@ident"/>
-            <!-- This is a start at how we might process other namespaces;
-              doesn't work yet for a variety of reasons, but also is not
-              important yet, as @validUntil is used by TEI-C only on its
-              own constructs
-            <xsl:if test="ancestor-or-self::*/@ns">
-              <xsl:variable name="nsu" select="ancestor-or-self::*[@ns][1]/@ns"/>
-              <xsl:variable name="nsp" select="concat('ex-is-ns-', generate-id() )"/>
-              <ns prefix="{$nsp}" uri="{$nsu}"/>
-            </xsl:if> -->
-            <sch:pattern>
-              <sch:rule context="tei:{$gi}">
-                <sch:report test="@{@ident}" role="nonfatal">
+            <pattern>
+              <rule context="{$nsp}:{$gi}">
+                <report test="@{@ident}" role="nonfatal">
                    <xsl:value-of select="$amsg1"/> @<xsl:value-of select="@ident"/> of the <xsl:value-of select="$gi"/> element as early as <xsl:value-of select="@validUntil"/>.
-                </sch:report>
-              </sch:rule>
-            </sch:pattern>
+                </report>
+              </rule>
+            </pattern>
           </xsl:when>
           <xsl:when test="self::tei:attDef[ancestor::tei:classSpec]">
             <xsl:variable name="class" select="ancestor::tei:classSpec/@ident"/>
@@ -268,33 +292,33 @@ of this software, even if advised of the possibility of such damage.
             <xsl:variable name="giPattern">
               <xsl:value-of select="tokenize( normalize-space($fqgis), ' ')" separator="|"/>
             </xsl:variable>
-            <sch:pattern>
-              <sch:rule context="{$giPattern}">
-                <sch:report test="@{@ident}" role="nonfatal">
-                  <xsl:value-of select="$amsg1"/> @<xsl:value-of select="@ident"/> of the <sch:name/> element as early as <xsl:value-of select="@validUntil"/>.
-                </sch:report>
-              </sch:rule>
-            </sch:pattern>
+            <pattern>
+              <rule context="{$giPattern}">
+                <report test="@{@ident}" role="nonfatal">
+                  <xsl:value-of select="$amsg1"/> @<xsl:value-of select="@ident"/> of the <name/> element as early as <xsl:value-of select="@validUntil"/>.
+                </report>
+              </rule>
+            </pattern>
           </xsl:when>
           <xsl:when test="self::tei:elementSpec">
-            <sch:pattern>
-              <sch:rule context="tei:{@ident}">
-                <sch:report test="true()" role="nonfatal">
-                  WARNING: use of deprecated element — The TEI-C may drop support for the <sch:name/> element as early as <xsl:value-of select="@validUntil"/>. 
-                </sch:report>
-              </sch:rule>
-            </sch:pattern>
+            <pattern>
+              <rule context="{$nsp}:{@ident}">
+                <report test="true()" role="nonfatal">
+                  WARNING: use of deprecated element — The TEI-C may drop support for the <name/> element as early as <xsl:value-of select="@validUntil"/>. 
+                </report>
+              </rule>
+            </pattern>
           </xsl:when>
           <xsl:when test="self::tei:valItem[ancestor::tei:elementSpec]">
             <xsl:variable name="gi" select="ancestor::tei:elementSpec/@ident"/>
             <xsl:variable name="attrName" select="ancestor::tei:attDef/@ident"/>
-            <sch:pattern>
-              <sch:rule context="tei:{$gi}">
-                <sch:report test="@{$attrName} eq '{@ident}'" role="nonfatal">
+            <pattern>
+              <rule context="{$nsp}:{$gi}">
+                <report test="@{$attrName} eq '{@ident}'" role="nonfatal">
                   <xsl:value-of select="$vmsg1"/> the value '<xsl:value-of select="@ident"/>' of @<xsl:value-of select="$attrName"/> of the <xsl:value-of select="$gi"/> element as early as <xsl:value-of select="@validUntil"/>.
-                </sch:report>
-              </sch:rule>
-            </sch:pattern>
+                </report>
+              </rule>
+            </pattern>
           </xsl:when>
         </xsl:choose>
       </xsl:for-each>
