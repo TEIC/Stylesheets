@@ -361,6 +361,9 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element head in heading mode</desc>
   </doc>
   <xsl:template match="tei:head" mode="makeheading">
+    <xsl:if test="preceding-sibling::tei:head">
+      <xsl:text> </xsl:text>
+    </xsl:if>
     <xsl:call-template name="splitHTMLBlocks">
       <xsl:with-param name="element">span</xsl:with-param>
       <xsl:with-param name="class">head</xsl:with-param>

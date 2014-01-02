@@ -772,21 +772,21 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
     <xsl:param name="content"/>
     <xsl:param name="class">false</xsl:param>
     <xsl:variable name="CLASS">
-	<freddy>
+	<tmp1>
 	  <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="default" select="$class"/>
 	  </xsl:call-template>
-	</freddy>
+	</tmp1>
     </xsl:variable>
     <xsl:variable name="ID">
-      <freddy>
+      <tmp2>
 	<xsl:choose>
 	  <xsl:when test="not($copyid='true')"/>
 	  <xsl:when test="@xml:id or ($generateParagraphIDs='true' and $element='p')">
 	    <xsl:call-template name="makeAnchor"/>
 	  </xsl:when>
 	</xsl:choose>
-      </freddy>
+      </tmp2>
     </xsl:variable>
     <xsl:for-each-group select="$content/node()" 		
 			group-adjacent="if (self::html:ol or
@@ -803,9 +803,9 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:element name="{$element}">
-	    <xsl:copy-of select="$CLASS/html:freddy/@*"/>
+	    <xsl:copy-of select="$CLASS/html:tmp1/@*"/>
 	    <xsl:if test="position()=1">
-	      <xsl:copy-of select="$ID/html:freddy/@*"/>
+	      <xsl:copy-of select="$ID/html:tmp2/@*"/>
 	    </xsl:if>
 	    <xsl:copy-of select="current-group()"/>
 	  </xsl:element>

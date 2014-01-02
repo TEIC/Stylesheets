@@ -439,20 +439,16 @@ of this software, even if advised of the possibility of such damage.
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-    
-         <p xmlns="http://www.w3.org/1999/XSL/Format"> Simple head </p>
-    
-      </desc>
+      <desc>Simple head</desc>
    </doc>
   <xsl:template match="tei:head" mode="section">
-<!-- if we have multiple <head> elements together, 
-  separate by spaces -->
-<!--
-   <xsl:if test="preceding-sibling::tei:head">
+    <!-- if we have multiple <head> elements together, 
+	 separate by spaces -->
+    <!--
+	<xsl:if test="preceding-sibling::tei:head">
 	<xsl:text> </xsl:text>
-     </xsl:if>
--->
+	</xsl:if>
+    -->
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -460,20 +456,17 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element head in heading mode</desc>
    </doc>
   <xsl:template match="tei:head" mode="makeheading">
-      <xsl:apply-templates/>
+    <xsl:if test="preceding-sibling::tei:head">
+      <xsl:text> </xsl:text>
+    </xsl:if>
+    <xsl:apply-templates/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-    
-         <p xmlns="http://www.w3.org/1999/XSL/Format"> unqualified &lt;head&gt; </p>
-    
-      </desc>
+      <desc>unqualified &lt;head&gt; is ignored</desc>
    </doc>
   <xsl:template match="tei:head"/>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
+
   <xsl:template match="tei:opener">
       <block space-before.optimum="4pt" space-after.optimum="4pt"
              end-indent="{$exampleMargin}"
@@ -482,11 +475,7 @@ of this software, even if advised of the possibility of such damage.
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-    
-         <p xmlns="http://www.w3.org/1999/XSL/Format"> headings when cross-referenced </p>
-    
-      </desc>
+      <desc>texts when cross-referenced </desc>
    </doc>
   <xsl:template match="tei:text" mode="xref">
       <xsl:choose>
