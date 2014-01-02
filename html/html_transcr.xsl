@@ -107,7 +107,11 @@ of this software, even if advised of the possibility of such damage.
     </xsl:when>
     <xsl:when test="tei:graphic">
       <div class="facsimage">
-	<img src="{tei:graphic[contains(@url,'.jpg')][1]/@url}"/>
+	<!-- avoid URLs without a file suffix, likely to be dodgy -->
+	<xsl:for-each
+	    select="tei:graphic[matches(@url,'.*\.[a-z]+$')][1]">
+	  <xsl:apply-templates select="."/>
+	</xsl:for-each>
       </div>
     </xsl:when>
   </xsl:choose>
