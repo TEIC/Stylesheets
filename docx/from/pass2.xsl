@@ -414,10 +414,17 @@ of this software, even if advised of the possibility of such damage.
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="tei:div[count(*)=1 and tei:head[not(text())]]" mode="pass2"/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>a div with no content but an empty head isn't needed</desc>
+  </doc>
+  <xsl:template match="tei:div[count(*)=1 and tei:head[not(node())]]" mode="pass2"/>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>a singleton div with an empty head and no div children is bypassed</desc>
+  </doc>
   <xsl:template match="tei:div[count(parent::*/tei:div)=1 and
-		       tei:head[not(text())]]" mode="pass2">
+		       not(tei:div) and
+		       tei:head[not(node())]]" mode="pass2">
     <xsl:apply-templates select="*[not(self::tei:head)]" mode="pass2"/>
   </xsl:template>
 
