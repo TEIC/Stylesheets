@@ -362,7 +362,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:head" mode="makeheading">
     <xsl:if test="preceding-sibling::tei:head">
-      <xsl:text> </xsl:text>
+      <xsl:call-template name="lineBreak"/>
     </xsl:if>
     <xsl:call-template name="splitHTMLBlocks">
       <xsl:with-param name="element">span</xsl:with-param>
