@@ -1274,14 +1274,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:function name="tei:createSpecName" as="xs:string">
       <xsl:param name="context"/>
       <xsl:for-each select="$context">
-	<xsl:choose>
-	  <xsl:when test="tei:altIdent">
-	    <xsl:value-of select="normalize-space(tei:altIdent)"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="@ident"/>
-	  </xsl:otherwise>
-	</xsl:choose>
+	<xsl:value-of select="if (tei:altIdent) then
+			      normalize-space(tei:altIdent) else @ident"/>
       </xsl:for-each>
     </xsl:function>
 

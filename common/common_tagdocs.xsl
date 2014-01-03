@@ -1321,16 +1321,10 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:sort select="@ident"/>
                     <Item>
                       <xsl:call-template name="linkTogether">
-                        <xsl:with-param name="name" select="@ident"/>
+                        <xsl:with-param name="name"
+					select="concat(@prefix,@ident)"/>
 			<xsl:with-param name="reftext">
-			  <xsl:choose>
-			    <xsl:when test="tei:altIdent">
-			      <xsl:value-of select="tei:altIdent"/>
-			    </xsl:when>
-			    <xsl:otherwise>
-			      <xsl:value-of select="@ident"/>
-			    </xsl:otherwise>
-			  </xsl:choose>
+			  <xsl:value-of select="tei:createSpecName(.)"/>
 			</xsl:with-param>
                       </xsl:call-template>
                     </Item>
@@ -1362,14 +1356,7 @@ of this software, even if advised of the possibility of such damage.
                       <xsl:call-template name="linkTogether">
                         <xsl:with-param name="name" select="@ident"/>
 			<xsl:with-param name="reftext">
-			  <xsl:choose>
-			    <xsl:when test="tei:altIdent">
-			      <xsl:value-of select="tei:altIdent"/>
-			    </xsl:when>
-			    <xsl:otherwise>
-			      <xsl:value-of select="@ident"/>
-			    </xsl:otherwise>
-			  </xsl:choose>
+			  <xsl:value-of select="tei:createSpecName(.)"/>
 			</xsl:with-param>
                       </xsl:call-template>
                     </Item>
@@ -1401,14 +1388,7 @@ of this software, even if advised of the possibility of such damage.
                       <xsl:call-template name="linkTogether">
                         <xsl:with-param name="name" select="@ident"/>
 			<xsl:with-param name="reftext">
-			  <xsl:choose>
-			    <xsl:when test="tei:altIdent">
-			      <xsl:value-of select="tei:altIdent"/>
-			    </xsl:when>
-			    <xsl:otherwise>
-			      <xsl:value-of select="@ident"/>
-			    </xsl:otherwise>
-			  </xsl:choose>
+			  <xsl:value-of select="tei:createSpecName(.)"/>
 			</xsl:with-param>
                       </xsl:call-template>
                     </Item>
@@ -1787,50 +1767,30 @@ of this software, even if advised of the possibility of such damage.
     <xsl:element namespace="{$outputNS}" name="{$divName}">
       <xsl:attribute name="{$rendName}">parent</xsl:attribute>
       <xsl:variable name="Parents">
-        <xsl:for-each select="key('REFS',@ident)/ancestor::tei:content/parent::*">
-          <Element type="{local-name()}" module="{@module}" name="{@ident}">
-            <xsl:attribute name="altName">
-              <xsl:choose>
-                <xsl:when test="tei:altIdent">
-                  <xsl:value-of select="tei:altIdent"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="@ident"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:attribute>
-          </Element>
+        <xsl:for-each select="key('REFS',concat(@prefix,@ident))/ancestor::tei:content/parent::*">
+          <Element prefix="{@prefix}"  type="{local-name()}"
+		   name="{tei:createSpecName(.)}" 
+		   module="{@module}"/>
         </xsl:for-each>
         <xsl:for-each select="tei:classes/tei:memberOf">
           <xsl:for-each select="key('CLASSES',@key)">
             <xsl:if test="@type='model'">
-              <Element type="classSpec" module="{@module}" name="{@ident}">
-                <xsl:attribute name="altName">
-                  <xsl:choose>
-                    <xsl:when test="tei:altIdent">
-                      <xsl:value-of select="tei:altIdent"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="@ident"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:attribute>
-              </Element>
+              <Element prefix="{@prefix}"  type="classSpec" module="{@module}" name="{tei:createSpecName(.)}"/>
             </xsl:if>
           </xsl:for-each>
         </xsl:for-each>
       </xsl:variable>
       <xsl:if test="count($Parents/*)&gt;0">
         <xsl:for-each-group select="$Parents/*" group-by="@name">
-          <xsl:sort select="@altName"/>
-          <xsl:variable name="name" select="@name"/>
-          <xsl:variable name="alt" select="@altName"/>
+          <xsl:sort select="@name"/>
+          <xsl:variable name="name" select="concat(@prefix,@name)"/>
+          <xsl:variable name="display" select="@name"/>
           <xsl:variable name="type" select="@type"/>
           <xsl:if test="not(@type='elementSpec' and $showElements='false')">
             <xsl:for-each select="$here">
               <xsl:call-template name="linkTogether">
                 <xsl:with-param name="name" select="$name"/>
-                <xsl:with-param name="reftext" select="$alt"/>
+                <xsl:with-param name="reftext" select="$display"/>
                 <xsl:with-param name="class">link_odd_<xsl:value-of select="$type"/></xsl:with-param>
               </xsl:call-template>
             </xsl:for-each>
@@ -1849,17 +1809,13 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="generateIndirectParents">
     <xsl:element namespace="{$outputNS}" name="{$divName}">
       <xsl:attribute name="{$rendName}">parent</xsl:attribute>
-      <xsl:variable name="here" select="."/>
-      <xsl:variable name="name" select="@ident"/>
       <xsl:variable name="Parents">
         <xsl:call-template name="ProcessDirectRefs"/>
         <!-- now look at class membership -->
         <xsl:for-each select="tei:classes/tei:memberOf">
           <xsl:for-each select="key('CLASSES',@key)">
             <xsl:if test="@type='model'">
-              <xsl:call-template name="ProcessClass">
-                <xsl:with-param name="name" select="$name"/>
-              </xsl:call-template>
+              <xsl:call-template name="ProcessClass"/>
             </xsl:if>
           </xsl:for-each>
         </xsl:for-each>
@@ -1873,21 +1829,11 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="ProcessDirectRefs">
     <!-- direct parents -->
-    <xsl:for-each select="key('REFS',@ident)/ancestor::tei:content/parent::tei:*">
+    <xsl:for-each select="key('REFS',concat(@prefix,@ident))/ancestor::tei:content/parent::tei:*">
       <xsl:choose>
         <xsl:when test="self::tei:elementSpec">
-          <Element type="{local-name()}" module="{@module}" name="{@ident}">
-            <xsl:attribute name="altName">
-              <xsl:choose>
-                <xsl:when test="tei:altIdent">
-                  <xsl:value-of select="tei:altIdent"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="@ident"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:attribute>
-          </Element>
+          <Element prefix="{@prefix}"  type="{local-name()}" module="{@module}"
+		   name="{tei:createSpecName(.)}"/>
         </xsl:when>
         <xsl:when test="self::tei:macroSpec">
           <xsl:call-template name="ProcessDirectRefs"/>
@@ -1896,22 +1842,11 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="ProcessClass">
-    <xsl:param name="name"/>
-    <xsl:for-each select="key('REFS',@ident)/ancestor::tei:content/parent::tei:*">
+    <xsl:for-each select="key('REFS',concat(@prefix,@ident))/ancestor::tei:content/parent::tei:*">
       <xsl:choose>
         <xsl:when test="self::tei:elementSpec">
-          <Element type="{local-name()}" module="{@module}" name="{@ident}">
-            <xsl:attribute name="altName">
-              <xsl:choose>
-                <xsl:when test="tei:altIdent">
-                  <xsl:value-of select="tei:altIdent"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="@ident"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:attribute>
-          </Element>
+          <Element prefix="{@prefix}"  type="{local-name()}" module="{@module}"
+		     name="{tei:createSpecName(.)}"/>
         </xsl:when>
         <xsl:when test="self::tei:macroSpec">
           <xsl:call-template name="ProcessDirectRefs"/>
@@ -1921,9 +1856,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:for-each select="key('CLASSES',@key)">
         <xsl:if test="@type='model'">
-          <xsl:call-template name="ProcessClass">
-            <xsl:with-param name="name" select="$name"/>
-          </xsl:call-template>
+          <xsl:call-template name="ProcessClass"/>
         </xsl:if>
       </xsl:for-each>
     </xsl:for-each>
@@ -1931,7 +1864,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="generateMembers">
     <xsl:param name="depth">1</xsl:param>
     <xsl:param name="me"/>
-    <xsl:variable name="here" select="."/>
     <xsl:variable name="this" select="@ident"/>
     <xsl:if test="not($this=$me) and key('CLASSMEMBERS',$this)">
       <xsl:element namespace="{$outputNS}" name="{$hiName}">
@@ -1945,16 +1877,9 @@ of this software, even if advised of the possibility of such damage.
             <xsl:for-each select="key('CLASSMEMBERS',$this)">
               <Item type="{local-name()}" ident="{@ident}">
                 <xsl:call-template name="linkTogether">
-                  <xsl:with-param name="name" select="@ident"/>
+                  <xsl:with-param name="name" select="concat(@prefix,@ident)"/>
                   <xsl:with-param name="reftext">
-                    <xsl:choose>
-                      <xsl:when test="tei:altIdent">
-                        <xsl:value-of select="tei:altIdent"/>
-                      </xsl:when>
-                      <xsl:otherwise>
-                        <xsl:value-of select="@ident"/>
-                      </xsl:otherwise>
-                    </xsl:choose>
+		    <xsl:value-of select="tei:createSpecName(.)"/>
                   </xsl:with-param>
                   <xsl:with-param name="class">
                     <xsl:text>link_odd_</xsl:text>
@@ -2032,17 +1957,10 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:for-each select="ancestor::tei:elementSpec">
 		<xsl:call-template name="linkTogether">
 		  <xsl:with-param name="name">
-		    <xsl:value-of select="@ident"/>
+		    <xsl:value-of select="concat(@prefix,@ident)"/>
 		  </xsl:with-param>
 		  <xsl:with-param name="reftext">
-		    <xsl:choose>
-		      <xsl:when test="tei:altIdent">
-			<xsl:value-of select="tei:altIdent"/>
-		      </xsl:when>
-		      <xsl:otherwise>
-			<xsl:value-of select="@ident"/>
-		      </xsl:otherwise>
-		    </xsl:choose>
+		    <xsl:value-of select="tei:createSpecName(.)"/>
 		  </xsl:with-param>
 		  <xsl:with-param name="class">
 		    <xsl:text>link_odd_elementSpec</xsl:text>
@@ -2126,17 +2044,10 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:for-each select="ancestor::tei:classSpec|ancestor::elementSpec">
                   <xsl:call-template name="linkTogether">
                     <xsl:with-param name="name">
-                      <xsl:value-of select="@ident"/>
+                      <xsl:value-of select="concat(@prefix,@ident)"/>
                     </xsl:with-param>
 		    <xsl:with-param name="reftext">
-		      <xsl:choose>
-			<xsl:when test="tei:altIdent">
-			  <xsl:value-of select="tei:altIdent"/>
-			</xsl:when>
-			<xsl:otherwise>
-			  <xsl:value-of select="@ident"/>
-			</xsl:otherwise>
-		      </xsl:choose>
+		      <xsl:value-of select="tei:createSpecName(.)"/>
 		    </xsl:with-param>
                     <xsl:with-param name="class">
                       <xsl:text>link_odd</xsl:text>
@@ -2150,17 +2061,10 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:for-each select="ancestor::tei:elementSpec">
                   <xsl:call-template name="linkTogether">
                     <xsl:with-param name="name">
-                      <xsl:value-of select="@ident"/>
+                      <xsl:value-of select="concat(@prefix,@ident)"/>
                     </xsl:with-param>
                     <xsl:with-param name="reftext">
-                      <xsl:choose>
-                        <xsl:when test="tei:altIdent">
-                          <xsl:value-of select="tei:altIdent"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                          <xsl:value-of select="@ident"/>
-                        </xsl:otherwise>
-                      </xsl:choose>
+		      <xsl:value-of select="tei:createSpecName(.)"/>
                     </xsl:with-param>
                     <xsl:with-param name="class">
                       <xsl:text>link_odd</xsl:text>
@@ -2436,15 +2340,8 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:with-param name="class">attribute</xsl:with-param>
                     <xsl:with-param name="content">
                       <xsl:text>@</xsl:text>
-                      <xsl:choose>
-                        <xsl:when test="tei:altIdent">
-                          <xsl:value-of select="tei:altIdent"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                          <xsl:value-of select="@ident"/>
-                        </xsl:otherwise>
-                      </xsl:choose>
-                    </xsl:with-param>
+		      <xsl:value-of select="tei:createSpecName(.)"/>
+		    </xsl:with-param>
                   </xsl:call-template>
                   <xsl:if test="following-sibling::tei:attDef">
                     <xsl:text>, </xsl:text>
@@ -2561,7 +2458,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="generateChildren">
-    <xsl:variable name="name" select="@ident"/>
+    <xsl:variable name="name" select="concat(@prefix,@ident)"/>
     <xsl:choose>
       <xsl:when test="tei:content//rng:ref[@name='macro.anyXML']">
         <xsl:element namespace="{$outputNS}" name="{$segName}">
@@ -2646,15 +2543,15 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:attribute name="{$rendName}">
                     <xsl:text>specChildElements</xsl:text>
                   </xsl:attribute>
-                  <xsl:for-each-group select="current-group()" group-by="@altName">
-                    <xsl:sort select="@altName"/>
-                    <xsl:variable name="me" select="@name"/>
-                    <xsl:variable name="alt" select="@altName"/>
+                  <xsl:for-each-group select="current-group()" group-by="@name">
+                    <xsl:sort select="@name"/>
+                    <xsl:variable name="me" select="concat(@prefix,@name)"/>
+                    <xsl:variable name="display" select="@name"/>
                     <xsl:variable name="type" select="@type"/>
                     <xsl:for-each select="$here">
                       <xsl:call-template name="linkTogether">
-                        <xsl:with-param name="name" select="$alt"/>
-                        <xsl:with-param name="reftext" select="$alt"/>
+                        <xsl:with-param name="name" select="$me"/>
+                        <xsl:with-param name="reftext" select="$display"/>
                         <xsl:with-param name="class">link_odd_<xsl:value-of select="$type"/></xsl:with-param>
                       </xsl:call-template>
                     </xsl:for-each>
@@ -2672,44 +2569,22 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="followRef">
       <xsl:if test=".//rng:text or .//rng:data">
-	<Element type="TEXT"/>
+	<Element prefix="{@prefix}"  type="TEXT"/>
       </xsl:if>
     <xsl:for-each select=".//rng:ref">
       <xsl:if test="not(starts-with(@name,'any')        or starts-with(@name,'macro.any')       or @name='AnyThing')">
-        <xsl:variable name="Name">
-          <xsl:choose>
-            <xsl:when test="contains(@name,'_sequence')">
-              <xsl:value-of select="substring-before(@name,'_')"/>
-            </xsl:when>
-            <xsl:when test="contains(@name,'_alternat')">
-              <xsl:value-of select="substring-before(@name,'_')"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="@name"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
+        <xsl:variable name="Name"
+	  select="replace(@name,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
         <xsl:for-each select="key('IDENTS',$Name)">
           <xsl:choose>
             <xsl:when test="self::tei:elementSpec">
-              <Element name="{@ident}" module="{@module}" type="{local-name()}">
-                <xsl:attribute name="altName">
-                  <xsl:choose>
-                    <xsl:when test="tei:altIdent">
-                      <xsl:value-of select="tei:altIdent"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="@ident"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:attribute>
-              </Element>
+              <Element prefix="{@prefix}"  module="{@module}" type="{local-name()}"   name="{tei:createSpecName(.)}"/>
             </xsl:when>
             <xsl:when test="self::tei:macroSpec">
               <xsl:for-each select="tei:content">
                 <xsl:choose>
                   <xsl:when test="(rng:text or rng:data) and count(rng:*)=1">
-                    <Element type="TEXT"/>
+                    <Element prefix="{@prefix}"  type="TEXT"/>
                   </xsl:when>
                   <xsl:otherwise>
                     <xsl:call-template name="followRef"/>
@@ -2729,19 +2604,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="key('CLASSMEMBERS',@ident)">
       <xsl:choose>
         <xsl:when test="self::tei:elementSpec">
-          <Element name="{@ident}" module="{@module}"
-		   type="{local-name()}">
-	    <xsl:attribute name="altName">
-	      <xsl:choose>
-		<xsl:when test="tei:altIdent">
-		  <xsl:value-of select="tei:altIdent"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:value-of select="@ident"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:attribute>
-	  </Element>
+          <Element prefix="{@prefix}"  module="{@module}"
+		   type="{local-name()}"
+		   name="{tei:createSpecName(.)}"/>
         </xsl:when>
         <xsl:when test="self::tei:classSpec">
           <xsl:call-template name="followMembers"/>

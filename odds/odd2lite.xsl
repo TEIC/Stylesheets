@@ -311,14 +311,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="class"/>
       <xsl:variable name="partialname">
          <xsl:value-of select="$idPrefix"/>
-         <xsl:choose>
-            <xsl:when test="contains($name,'_')">
-               <xsl:value-of select="substring-before($name,'_')"/>
-            </xsl:when>
-            <xsl:otherwise>
-               <xsl:value-of select="$name"/>
-            </xsl:otherwise>
-         </xsl:choose>
+	 <xsl:value-of select="replace($name,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
       </xsl:variable>
       <ref target="#{$partialname}">
 	<xsl:if test="$class">

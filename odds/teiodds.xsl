@@ -100,7 +100,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:elementSpec|tei:classSpec" name="CLASSMEMBERS" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key match="tei:elementSpec" name="CLASSMEMBERS-ELEMENTS" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key match="tei:classSpec" name="CLASSMEMBERS-CLASSES" use="tei:classes/tei:memberOf/@key"/>
-  <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec" name="IDENTS" use="@ident"/>
+  <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec" name="IDENTS" use="concat(@prefix,@ident)"/>
 
   <xsl:key match="tei:macroSpec[@type='dt']" name="DATATYPES" use="1"/>
   <xsl:key match="tei:macroSpec" name="MACRODOCS" use="1"/>
@@ -1650,14 +1650,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:param name="class">link_odd</xsl:param>
 
     <xsl:variable name="partialname">
-      <xsl:choose>
-        <xsl:when test="contains($name,'_')">
-          <xsl:value-of select="substring-before($name,'_')"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$name"/>
-        </xsl:otherwise>
-      </xsl:choose>
+      <xsl:value-of select="replace($name,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
     </xsl:variable>
     <xsl:variable name="link">
       <xsl:choose>
