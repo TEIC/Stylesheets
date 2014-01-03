@@ -23,7 +23,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-other test-rdf test-text test-odt p4top5 oddity pureant scripts test-epub namespaces
+default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-other test-rdf test-text test-odt p4top5 oddity pureant scripts namespaces test-epub 
 
 p4top5:
 	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
