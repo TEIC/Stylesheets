@@ -428,6 +428,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="*[not(self::tei:head)]" mode="pass2"/>
   </xsl:template>
 
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>an empty head is bypassed</desc>
+  </doc>
+  <xsl:template match="tei:head[not(node())]" mode="pass2"/>
+
   <xsl:template match="tei:figure/tei:p[@rend='caption' or @rend='Figure title']/text()[starts-with(.,'Figure  ')]" mode="pass2">
     <xsl:value-of select="substring(.,9)"/>
   </xsl:template>
