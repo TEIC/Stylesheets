@@ -249,8 +249,10 @@ oddity:
 	perl -p -i -e 's+ xml:base=".*testdrama.odd"++' testdrama.compiled.xml
 	diff testdrama.compiled.xml expected-results/testdrama.compiled.xml
 	../teitornc test30.odd test30.rnc
+	../teitodtd test30.odd test30.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test30.rnc
 	jing -c test30.rnc test11.xml
+	xmllint --noout --dtdvalid test30.dtd test11.xml
 	diff test30.rnc expected-results/test30.rnc
 	$(SAXON) test.odd ../odds/odd2odd.xsl > test.odd2odd
 	$(SAXON) test.odd2odd ../odds/odd2dtd.xsl > test.odd2dtd
@@ -335,7 +337,7 @@ profile:
 	$(SAXON) -o:/dev/null -TP test.odd2odd ../odds/odd2relax.xsl >& profile3.html
 
 clean:
-	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd test.zip
+	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd test.zip test*.dtd test-indexes.xml
 	rm -f test.rng test.rnc
 	rm -f  oddbyexample.* index*div*html
 	rm -f  testdrama.compiled.xml

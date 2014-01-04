@@ -1184,9 +1184,12 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="attclasses">
       <xsl:for-each select="tei:classes/tei:memberOf">
          <xsl:for-each select="key('IDENTS',@key)[1]">
-            <xsl:if test="@type='atts'"> %<xsl:value-of select="@ident"/>
-					          <xsl:text>.attributes;</xsl:text>
-				        </xsl:if>
+            <xsl:if test="@type='atts'">
+	      <xsl:text>%</xsl:text>
+	      <xsl:value-of select="concat(if (@prefix) then @prefix
+				    else $generalPrefix, @ident)"/>
+	      <xsl:text>.attributes;</xsl:text>
+	    </xsl:if>
          </xsl:for-each>
       </xsl:for-each>
   </xsl:template>
@@ -1195,9 +1198,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="$verbose='true'">
          <xsl:message> .... <xsl:value-of select="@ident"/>.attributes</xsl:message>
       </xsl:if>
-      <xsl:variable name="thisclass">
-         <xsl:value-of select="@ident"/>
-      </xsl:variable>
+      <xsl:variable name="thisclass"
+		    select="concat(if (@prefix) then @prefix else
+			    $generalPrefix, @ident)"/>
       <xsl:choose>
          <xsl:when test="$declare='false'">
             <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
