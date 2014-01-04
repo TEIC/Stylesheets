@@ -1,3 +1,116 @@
+2014-01-04  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	class names in DTDs need prefix adding; make sure an ODD with prefix is tested
+
+	loss of empty <head>s  changes results
+
+	throw away empy <head> in docx to TEI
+
+2014-01-03  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	mistaken additions
+
+	more results changed after fixes to ODD to HTML
+
+	line breaks in result file
+
+	line breaks between sibling heads now, instead of space, when displayed in context
+
+	smallest of starts on TEI to InDesign, start with code from John Maxwell
+
+	take account of @prefix when making links to elements in ODD documentation processing
+
+2014-01-02  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	more insertion of spaces between consecutive <head>
+
+	make handling of empty heads and singleton divs more sophisticated.
+	A head with any children, and an empty div with div children, both
+	deserve to live
+
+	<graphic> in <surface> should be treated like any other
+
+2013-12-20  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	visible page breaks in verse create div not span
+
+	i18n for Slovene, from Tomaž Erjavec <tomaz.erjavec@ijs.si>
+
+2013-12-15  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	more things to remove
+
+2013-12-13  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	make generateAuthor a bit safer
+
+	change p to div to make legal HTML in titlepage for epub
+
+2013-12-13  Syd Bauman  <Syd_Bauman@Brown.edu>
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+
+	partial implimentation of SF FR 459, to wit generating Schematron warnings for occurrences in TEI instances of constructs that have @validUntil in TEI source
+
+2013-12-12  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	more tweaks to generating authors and titles
+
+	rethink function for generating author name (thanks to
+
+2013-12-11  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	tweak order of doc
+
+	silly typo in odd2dtd
+
+	html changed
+
+2013-12-11  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	change of result after delcaring namespace
+
+	more places where the name for an object (as ID or file name) is calculated using a posible prefix
+
+	add new test of odd2html
+
+2013-12-10  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	missing file
+
+	expected results off odd2html
+
+	links to elements which have translated names
+
+	oh gash I hate this business of functions return non values
+
+	clean up process of naming and identifying things, using common code for getting at @ident and altIdent. take this chance to clean up HTML build for ODD slighlt, and show namespace where needed
+
+	dont support @entity or @url on <figure> any more
+
+2013-12-08  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	start new version
+
+	update changelog for release
+
+2013-12-07  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	allow old-style use of <attRef> with just @name
+
+2013-12-05  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	spell name of style right
+
+	ptr/@to does not equate to ptr/@target
+
+	margin notes
+
+2013-12-04  jamescummings  <James.Cummings@it.ox.ac.uk>
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+
+	Adding more to P4 conversion.
 2013-12-03  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
 	VERSION 7.6.0 released
 
