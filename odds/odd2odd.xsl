@@ -470,8 +470,29 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>
 	
 	<xsl:for-each select="tei:macroRef|tei:classRef|tei:elementRef">
-	    <xsl:call-template name="odd2odd-followRef">
-	  </xsl:call-template>
+	  <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
+	  <xsl:variable name="name" select="@key"/>
+	  <xsl:for-each select="document($sourceDoc,$top)">
+	    <xsl:choose>
+	      <xsl:when test="key('odd2odd-IDENTS',$name)">
+		<xsl:for-each select="key('odd2odd-IDENTS',$name)">
+		  <xsl:call-template name="odd2odd-checkObject">
+		    <xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
+		    <xsl:with-param name="why">direct reference</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:for-each>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:call-template name="die">
+		  <xsl:with-param name="message">
+		    <xsl:text>Reference to </xsl:text>
+		    <xsl:value-of select="$name"/>
+		    <xsl:text>: not found in source</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each>
 	</xsl:for-each>
 
 	<xsl:for-each select="tei:classSpec[@mode='add' or not(@mode)]">
@@ -576,31 +597,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="odd2odd-followRef">
-    <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
-    <xsl:variable name="name" select="@key"/>
-    <xsl:for-each select="document($sourceDoc,$top)">
-      <xsl:choose>
-	<xsl:when test="key('odd2odd-IDENTS',$name)">
-	  <xsl:for-each select="key('odd2odd-IDENTS',$name)">
-	    <xsl:call-template name="odd2odd-checkObject">
-		<xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
-		<xsl:with-param name="why">direct reference</xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:for-each>
-	</xsl:when>
-	<xsl:otherwise>
-	<xsl:call-template name="die">
-	  <xsl:with-param name="message">
-	    <xsl:text>Reference to </xsl:text>
-	    <xsl:value-of select="$name"/>
-	    <xsl:text>: not found in source</xsl:text>
-	  </xsl:with-param>
-	</xsl:call-template>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
-  </xsl:template>
+
 
 <!-- pass 2 -->      
   <xsl:template match="rng:ref" mode="odd2odd-pass2">
