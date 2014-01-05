@@ -313,57 +313,60 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="depth">
          <xsl:apply-templates mode="depth" select="."/>
       </xsl:variable>
-      <xsl:call-template name="formatHeadingNumber">
-	<xsl:with-param name="toc">
-	  <xsl:value-of select="$toc"/>
-	</xsl:with-param>
-	<xsl:with-param name="text">
-	  <xsl:choose>
-	    <xsl:when test="local-name(.) = 'TEI'">
-	      <xsl:if test="@n">
-		<xsl:value-of select="@n"/>
-	      </xsl:if>
-	    </xsl:when>
-	    <xsl:when test="$depth &gt; $numberHeadingsDepth"> </xsl:when>
-	    <xsl:when test="self::tei:text">
-	      <xsl:number/>
-	      <xsl:call-template name="headingNumberSuffix"/>
-	    </xsl:when>
-	    <xsl:when test="ancestor::tei:back">
-	      <xsl:if test="not($numberBackHeadings='')">
-		<xsl:sequence select="tei:i18n('appendixWords')"/>
-		<xsl:text> </xsl:text>
-		<xsl:call-template name="numberBackDiv"/>
-		<xsl:if test="$minimal='false'">
-		  <xsl:value-of select="$numberSpacer"/>
-		</xsl:if>
-	      </xsl:if>
-	    </xsl:when>
-	    <xsl:when test="ancestor::tei:front">
-	      <xsl:if test="not($numberFrontHeadings='')">
-		<xsl:call-template name="numberFrontDiv">
-		  <xsl:with-param name="minimal">
-		    <xsl:value-of select="$minimal"/>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </xsl:if>
-	    </xsl:when>
-	    <xsl:when test="$numberHeadings ='true'">
-	      <xsl:choose>
-		<xsl:when test="$prenumberedHeadings='true'">
+      <xsl:variable name="headingNumber">
+	<xsl:call-template name="formatHeadingNumber">
+	  <xsl:with-param name="toc">
+	    <xsl:value-of select="$toc"/>
+	  </xsl:with-param>
+	  <xsl:with-param name="text">
+	    <xsl:choose>
+	      <xsl:when test="local-name(.) = 'TEI'">
+		<xsl:if test="@n">
 		  <xsl:value-of select="@n"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:call-template name="numberBodyDiv"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-	      <xsl:if test="$minimal='false'">
+		</xsl:if>
+	      </xsl:when>
+	      <xsl:when test="$depth &gt; $numberHeadingsDepth"> </xsl:when>
+	      <xsl:when test="self::tei:text">
+		<xsl:number/>
 		<xsl:call-template name="headingNumberSuffix"/>
-	      </xsl:if>
-	    </xsl:when>
-	  </xsl:choose>
-	</xsl:with-param>
-      </xsl:call-template>
+	      </xsl:when>
+	      <xsl:when test="ancestor::tei:back">
+		<xsl:if test="not($numberBackHeadings='')">
+		  <xsl:sequence select="tei:i18n('appendixWords')"/>
+		  <xsl:text> </xsl:text>
+		  <xsl:call-template name="numberBackDiv"/>
+		  <xsl:if test="$minimal='false'">
+		    <xsl:value-of select="$numberSpacer"/>
+		  </xsl:if>
+		</xsl:if>
+	      </xsl:when>
+	      <xsl:when test="ancestor::tei:front">
+		<xsl:if test="not($numberFrontHeadings='')">
+		  <xsl:call-template name="numberFrontDiv">
+		    <xsl:with-param name="minimal">
+		      <xsl:value-of select="$minimal"/>
+		    </xsl:with-param>
+		  </xsl:call-template>
+		</xsl:if>
+	      </xsl:when>
+	      <xsl:when test="$numberHeadings ='true'">
+		<xsl:choose>
+		  <xsl:when test="$prenumberedHeadings='true'">
+		    <xsl:value-of select="@n"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:call-template name="numberBodyDiv"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+		<xsl:if test="$minimal='false'">
+		  <xsl:call-template name="headingNumberSuffix"/>
+		</xsl:if>
+	      </xsl:when>
+	    </xsl:choose>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:variable>
+      <xsl:copy-of select="$headingNumber"/>
       <xsl:if test="$minimal='false'">
 	<xsl:choose>
 	  <xsl:when test="local-name(.) = 'TEI'">
@@ -400,7 +403,8 @@ of this software, even if advised of the possibility of such damage.
 		    <xsl:text>]</xsl:text>
 		  </xsl:when>
 		  <xsl:when test="tei:head[not(.='')] and
-				  not(tei:head[count(*)=1 and tei:figure])">
+				  not(tei:head[count(*)=1 and
+				  tei:figure])">
 		    <xsl:apply-templates mode="plain" select="tei:head"/>
 		  </xsl:when>
 		  <xsl:when test="@type='title_page'">Title page</xsl:when>
@@ -440,6 +444,9 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:call-template name="autoMakeHead">
 	      <xsl:with-param name="display" select="$display"/>
 	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:when test="not(self::tei:div) and $headingNumber=''">
+	    <xsl:value-of select="(normalize-space(substring(.,1,20)),'…')"/>
 	  </xsl:when>
 	</xsl:choose>
       </xsl:if>
