@@ -144,5 +144,17 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
 
+  <xsl:template name="write-document-dot-xml-frontmatter">
+    <xsl:call-template name="document-title"/>
+    <xsl:call-template name="headerParts"/>
+    <xsl:call-template name="titlepages"/>
+    <xsl:apply-templates select=".//tei:text/tei:front"/>
+  </xsl:template>
+
+  <xsl:template name="write-document-dot-xml-maincontent">
+    <xsl:apply-templates select=".//tei:text/tei:body"/>
+  </xsl:template>
+
+
    
 </xsl:stylesheet>
