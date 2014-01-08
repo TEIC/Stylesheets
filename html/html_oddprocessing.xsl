@@ -76,7 +76,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="sectionName">div</xsl:param>
   <xsl:param name="segName">span</xsl:param>
   <xsl:param name="outputNS">http://www.w3.org/1999/xhtml</xsl:param>
-  <xsl:key match="tei:*" name="NameToID" use="@ident"/>
   <xsl:key name="MODEL-CLASS-MODULE" match="tei:classSpec[@type='model']" use="@module"/>
   <xsl:key name="ATT-CLASS-MODULE" match="tei:classSpec[@type='atts']" use="@module"/>
   <xsl:key name="ELEMENT-MODULE" match="tei:elementSpec" use="@module"/>
