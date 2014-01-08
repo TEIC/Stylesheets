@@ -296,7 +296,9 @@ namespaces:
 	../teitohtml --odd --summaryDoc test34.odd test34.odd.html
 	xmllint --encode utf-8 --format test34.odd.html | perl cleanup.pl> test.temp ; mv test.temp test34.odd.html
 	diff test34.odd.html expected-results/test34.odd.html
-
+n:
+	../teitornc test35.odd test35.rnc
+	diff test35.rnc expected-results/test35.rnc
 
 scripts:
 	for i in $(SCRIPTS); do ../$$i maria.xml $$i.result && rm $$i.result; done
