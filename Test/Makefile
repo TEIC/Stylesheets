@@ -341,26 +341,20 @@ profile:
 clean:
 	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd test.zip test*.dtd test-indexes.xml
 	rm -f test.rng test.rnc
-	rm -f  oddbyexample.* index*div*html
-	rm -f  testdrama.compiled.xml
-	rm -f  test5.odt
-	rm -f  test7.xml test11.xml test18.xml test19.xml test-index.xml
-	rm -f  test7.zip
-	rm -f  test9.docx test9.odt
-	rm -f  test*listing*
-	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype
-	rm -f test17.tei
+	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5
+	rm -f oddbyexample.* index*div*html
+	rm -f testdrama.compiled.xml
+	rm -f test5.odt test7.xml test11.xml test18.xml test19.xml test-index.xml test7.zip
+	rm -f test9.docx test9.odt
 	rm -f content.xml.odt.listing content.xml.odt
 	rm -f test.xml.docx.core
 	rm -f test7.docx
-	rm -f test.html5
 	rm -f A54031.xml
 	rm -f dcr.result
 	rm -f test-rtf2tei.xml
 	rm -f test29.xml
-	rm -f test30.rnc
 	rm -f xml.result
 	rm -rf charts/ embeddings/ media/ _rels/ \[Content_Types\].xml
-	rm -f test*.rnc tests*.json test*.rnc test*.combined.odd 
+	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype
 	rm -f test.xlsx.xml
 	rm -rf *.result.tex *.result.pdf _slidelogo.png
