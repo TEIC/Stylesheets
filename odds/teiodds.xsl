@@ -220,6 +220,14 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="rng:ref">
+    <!-- where we meet a pointer, we have a choice of how to proceed
+
+ a) if there is no auto-prefixing, just use as is
+ b) if the thing exists in the IDENTS table (which includes prefixes), and starts with the prefix, then use it as is
+ c) if it exists in the IDENTS table and has a prefix, use that
+ d) otherwise, if it exists in the IDENTS table use the general prefix
+ e) otherwise, just use what we are given
+
     <xsl:variable name="lookup" select="replace(@name,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
       <xsl:variable name="myprefix"
 		    select="ancestor::*[@prefix][1]/@prefix"/>
