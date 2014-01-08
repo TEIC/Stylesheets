@@ -23,7 +23,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-other test-rdf test-text test-odt p4top5 oddity pureant scripts namespaces test-epub 
+default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-other test-rdf test-text test-odt p4top5 oddity pureant scripts test-namespaces test-epub 
 
 p4top5:
 	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
@@ -274,7 +274,7 @@ moreoddity:
 	../teitodtd test.odd test.dtd
 	../teitornc test.odd test.rnc
 
-namespaces:
+test-namespaces:
 # This test checks the rnc files so that to make sure we are testing
 # what we think we are testing.
 	../teitornc test33.odd test33.rnc
@@ -296,8 +296,8 @@ namespaces:
 	../teitohtml --odd --summaryDoc test34.odd test34.odd.html
 	xmllint --encode utf-8 --format test34.odd.html | perl cleanup.pl> test.temp ; mv test.temp test34.odd.html
 	diff test34.odd.html expected-results/test34.odd.html
-n:
 	../teitornc test35.odd test35.rnc
+	perl -p -i -e 's/generated from ODD source .*//' test35.rnc
 	diff test35.rnc expected-results/test35.rnc
 
 scripts:
@@ -361,7 +361,6 @@ clean:
 	rm -f test30.rnc
 	rm -f xml.result
 	rm -rf charts/ embeddings/ media/ _rels/ \[Content_Types\].xml
-	rm -f test33.rnc test33.json
-	rm -f test34.rnc test34.json test34.combined.odd test34.combined.json
+	rm -f test*.rnc tests*.json test*.rnc test*.combined.odd 
 	rm -f test.xlsx.xml
 	rm -rf *.result.tex *.result.pdf _slidelogo.png

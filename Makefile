@@ -1,6 +1,5 @@
 SFUSER=rahtz
 JING=jing
-TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
 
@@ -58,8 +57,6 @@ check:
 	@which perl || exit 1
 	@echo -n xmllint: 
 	@which xmllint || exit 1
-	@echo -n trang: 
-	@which ${TRANG} || exit 1
 	@echo -n jing: 
 	@which ${JING} || exit 1
 	@echo -n saxon: 
@@ -124,7 +121,7 @@ release: common doc oxygendoc p5 profiles
 
 installp5: p5 teioo.jar
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
-	cp teioo.jar ${PREFIX}/share/xml/tei/stylesheet
+	cp -r lib teioo.jar ${PREFIX}/share/xml/tei/stylesheet
 	(cd release/p5; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
 	mkdir -p ${PREFIX}/bin
 	for i in $(SCRIPTS); do \
