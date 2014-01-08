@@ -227,6 +227,7 @@ of this software, even if advised of the possibility of such damage.
  c) if it exists in the IDENTS table and has a prefix, use that
  d) otherwise, if it exists in the IDENTS table use the general prefix
  e) otherwise, just use what we are given
+    -->
 
     <xsl:variable name="lookup" select="replace(@name,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
       <xsl:variable name="myprefix"
