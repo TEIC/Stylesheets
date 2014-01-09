@@ -340,8 +340,7 @@ profile:
 
 clean:
 	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd test.zip test*.dtd test-indexes.xml
-	rm -f test.rng test.rnc
-	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5
+	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5 test*.processedodd
 	rm -f oddbyexample.* index*div*html
 	rm -f testdrama.compiled.xml
 	rm -f test5.odt test7.xml test11.xml test18.xml test19.xml test-index.xml test7.zip
