@@ -55,6 +55,14 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="TREES" match="tei:eTree[not(ancestor::tei:eTree)]" use="1"/>
   <xsl:key name="TREES" match="tei:forest" use="1"/>
 
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
+    <desc>Separator between items in header, footer etc</desc>
+  </doc>
+  <xsl:param name="separator">
+    <xsl:text>&#160;</xsl:text>
+  </xsl:param>
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
     <desc>which Javascript library to use for drawing trees</desc>
   </doc>
@@ -124,7 +132,6 @@ HTML width and height (in pixels) from supplied dimensions.</desc>
   <xsl:param name="dpi">96</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="figures" type="boolean">
       <desc>Display figures.</desc>
-
    </doc>
   <xsl:param name="showFigures">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
@@ -143,11 +150,10 @@ HTML width and height (in pixels) from supplied dimensions.</desc>
    </doc>
   <xsl:template name="bodyJavascriptHook"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
-      <desc>     <p>[html] Hook where extra CSS can be inserted</p>
-         <p>&#160; </p>
-      </desc>
+    <desc>     <p>[html] Hook where extra CSS can be inserted</p>      </desc>
    </doc>
   <xsl:template name="cssHook"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>     <p>[html] Hook where code can be added to the HTML &lt;head&gt;.</p>
          <p>This would be used to insert &lt;meta&gt; tags.</p>
@@ -267,9 +273,13 @@ will generate an &lt;h2&gt;</p>
    </doc>
   <xsl:template name="hdr3">
       <a href="#rh-col" title="Go to main page content" class="skiplinks">Skip links</a>
-      <a class="hide">|</a>
+      <a class="hide">		 
+      <xsl:value-of select="$separator"/>
+      </a>
       <xsl:call-template name="crumbPath"/>
-      <a class="hide">|</a>
+      <a class="hide">	
+	<xsl:value-of select="$separator"/>
+      </a>
       <xsl:if test="not($parentURL='')">
 	<a class="bannerright" href="{$parentURL}" title="Go to home page">
 	  <xsl:value-of select="$parentWords"/>
@@ -277,7 +287,8 @@ will generate an &lt;h2&gt;</p>
       </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
-      <desc>[html]Bottom of left-hand column <param name="currentID">ID of selected section</param>
+      <desc>[html]Bottom of left-hand column <param
+      name="currentID">ID of selected section</param>
       </desc>
    </doc>
   <xsl:template name="lh-col-bottom">
@@ -364,7 +375,9 @@ will generate an &lt;h2&gt;</p>
 		  <xsl:apply-templates select="tei:xref/text()"/>
 		</a>
 	      </span>
-	      <xsl:if test="following-sibling::tei:item"> | </xsl:if>
+	      <xsl:if test="following-sibling::tei:item"> 
+		<xsl:value-of select="$separator"/>
+	      </xsl:if>
 	    </xsl:for-each>
 	  </xsl:for-each>
 	</xsl:element>

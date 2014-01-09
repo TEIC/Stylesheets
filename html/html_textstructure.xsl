@@ -2215,28 +2215,28 @@ of this software, even if advised of the possibility of such damage.
 		 <a class="{$style}" href="{$parentURL}">
 		   <xsl:value-of select="$parentWords"/>
 		 </a>
-		 <xsl:text>&#160;</xsl:text>
+		 <xsl:value-of select="$separator"/>
 	       </xsl:if>
 
                <xsl:if test="not($homeURL='')">
 		 <a class="{$style}" href="{$homeURL}">
 		   <xsl:value-of select="$homeWords"/>
 		 </a>
-		 <xsl:text>&#160;</xsl:text>
+		 <xsl:value-of select="$separator"/>
 	       </xsl:if>
 
                <xsl:if test="not($searchURL='')">
 		 <a class="{$style}" href="{$searchURL}">
 		   <xsl:sequence select="tei:i18n('searchWords')"/>            
 		 </a>
-		 <xsl:text>&#160;</xsl:text>
+		 <xsl:value-of select="$separator"/>
                </xsl:if>
 
                <xsl:if test="not($feedbackURL='')">
 		 <a class="{$style}" href="{$feedbackURL}">
 		   <xsl:sequence select="tei:i18n('feedbackWords')"/>
 		 </a>
-		 <xsl:text>&#160;</xsl:text>
+		 <xsl:value-of select="$separator"/>
                </xsl:if>
             </div>
          </xsl:if>
