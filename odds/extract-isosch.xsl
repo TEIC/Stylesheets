@@ -9,7 +9,8 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:d="http://www.oxygenxml.com/ns/doc/xsl"
                 version="2.0"
-                exclude-result-prefixes="tei rng teix sch xi #default">
+                xpath-default-namespace="http://www.tei-c.org/ns/1.0"
+                exclude-result-prefixes="#all">
   <d:doc scope="stylesheet" type="stylesheet">
     <d:desc>
       <d:p> TEI stylesheet for simplifying TEI ODD markup </d:p>
@@ -47,15 +48,20 @@ of this software, even if advised of the possibility of such damage.
 </d:p>
       <d:p>Author: See AUTHORS</d:p>
       <d:p>Id: $Id$</d:p>
-      <d:p>Copyright: 2013, TEI Consortium</d:p>
+      <d:p>Copyright: 2014, TEI Consortium</d:p>
       <d:p/>
-      <d:p>Modified 2012-12-31 by Syd Bauman:
+      <d:p>Modified 2014-01-01/09 by Syd Bauman:
+      <d:ul>
+        <d:li>rely on xpath-default-namespace</d:li>
+        <d:li>re-work how we support non-TEI namespaces</d:li>
+        <d:li>re-work how we generate context= attrs</d:li>
+      </d:ul>
+      </d:p>
+      <d:p>Modified 2013-12-31 by Syd Bauman:
         <d:ul>
           <d:li>change documentation prefix</d:li>
           <d:li>add code to support deprecation of constructs declared to
           be in non-TEI namespaces, part 1: elements, and attrs &amp; valItems delcared in elements</d:li>
-          <d:li>NOTE-TO-SELF: part 2, attrs in classes, might be done by generating complete block of all &lt;ns>s,
-          storing that in a variable (putting out variable at right time), and querying that var</d:li>
         </d:ul>
       </d:p>
       <d:p>Modified 2013-12 by Syd Bauman:
@@ -89,18 +95,19 @@ of this software, even if advised of the possibility of such damage.
   </d:doc>
 
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
+  <xsl:param name="verbose" select="'false'"/>
   <xsl:param name="lang"/>
-  <xsl:variable name="P5" select="/"/>
+  <d:doc>
+    <d:desc>"eip" stands for "Extract Iso schematron Prefix". Silly, I know, but
+     my first thought (honestly) was "Tei Extract Iso schematron" :-|</d:desc>
+  </d:doc>
   <xsl:param name="ns-prefix-prefix" select="'eip-'"/>
-
-  <xsl:key name="NSs" 
+  <xsl:variable name="P5" select="/"/>
+  
+  <xsl:key name="DECLARED_NSs" 
            match="sch:ns[ not( ancestor::teix:egXML ) ]"
            use="1"/>
   
-  <xsl:key name="DEPRECATED_NSs"
-           match="//tei:*[@validUntil][ not( ancestor::teix:egXML ) ][ ancestor-or-self::*[@ns] ]"
-           use="1"/>
-
   <xsl:key name="KEYs" 
            match="xsl:key[ not( ancestor::teix:egXML ) ]"
            use="1"/>
@@ -113,47 +120,111 @@ of this software, even if advised of the possibility of such damage.
            match="//tei:*[@validUntil][ not( ancestor::teix:egXML ) ]"
            use="1"/>
 
-  <xsl:key name="PATTERNs"
-           match="sch:pattern[ not( ancestor::teix:egXML ) ]"
-           use="1"/>
-
   <xsl:key name="CONSTRAINTs"
-    match="tei:constraint[ not( ancestor::teix:egXML ) ]"
+           match="constraint[parent::constraintSpec[@scheme='isoschematron']]
+                            [ not( ancestor::teix:egXML )]"
            use="1"/>
 
   <xsl:template match="/">
+    <!-- first, decorate tree with namespace info -->
+    <xsl:variable name="input-with-NSs">
+      <xsl:apply-templates select="node()" mode="NSdecoration"/>
+    </xsl:variable>
+    <!-- then process decorated tree -->
+    <xsl:apply-templates select="$input-with-NSs" mode="schematron-extraction">
+      <xsl:with-param name="P5deco" select="$input-with-NSs/TEI"/>
+    </xsl:apply-templates>
+    <!-- Note: to see decorated tree for debugging, change mode of above -->
+    <!-- from "schematron-extraction" to "copy". -->
+  </xsl:template>
+
+  <xsl:template match="@*|node()" mode="copy">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()" mode="copy"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  
+  <d:doc>
+    <d:desc>First pass ... elements that might have an ns= attribute
+    get new nsu= (namespace URI) and nsp= (namespace prefix) attributes</d:desc>
+  </d:doc>
+  <xsl:template match="attDef|elementSpec|schemaSpec" mode="NSdecoration">
+    <xsl:copy>
+      <xsl:apply-templates select="@*"/>
+      <xsl:variable name="nsu">
+        <xsl:choose>
+          <xsl:when test="self::attDef">
+            <xsl:value-of select="if ( @ns ) then @ns else ''"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="if (ancestor-or-self::*[@ns] ) then ancestor-or-self::*[@ns][1]/@ns else 'http://www.tei-c.org/ns/1.0'"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:attribute name="nsp">
+        <xsl:choose>
+          <xsl:when test="$nsu eq ''"/>
+          <xsl:when test="$nsu eq 'http://www.tei-c.org/ns/1.0'">tei:</xsl:when>
+          <xsl:when test="$nsu eq 'http://www.tei-c.org/ns/Examples'">teix:</xsl:when>
+          <xsl:when test="ancestor-or-self::schemaSpec//sch:ns[@uri eq $nsu]">
+            <xsl:value-of select="concat( ancestor-or-self::schemaSpec//sch:ns[@uri eq $nsu]/@prefix, ':')"/>
+          </xsl:when>
+          <xsl:when test="namespace::* = $nsu">
+            <xsl:value-of select="concat( local-name( namespace::*[ . eq $nsu ][1] ), ':')"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="concat( $ns-prefix-prefix, generate-id(), ':')"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:attribute>
+      <xsl:attribute name="nsu" select="$nsu"/>
+      <xsl:apply-templates select="node()" mode="NSdecoration"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <d:doc>
+    <d:desc>First pass ... everything else just gets copied</d:desc>
+  </d:doc>
+  <xsl:template match="@*|node()" mode="NSdecoration">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()" mode="NSdecoration"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <d:doc>
+    <d:desc>Second pass does most the work ...</d:desc>
+  </d:doc>
+  <xsl:template match="/" mode="schematron-extraction">
+    <xsl:param name="P5deco" as="element( tei:TEI )"/>
     <schema queryBinding="xslt2">
       <title>ISO Schematron rules</title>
       <xsl:comment> This file generated <xsl:value-of
         select="current-dateTime()"/> by 'extract-isosch.xsl'. </xsl:comment>
 
       <xsl:call-template name="blockComment">
-        <xsl:with-param name="content" select="'namespaces, normal:'"/>
+        <xsl:with-param name="content" select="'namespaces, declared:'"/>
       </xsl:call-template>
-      <xsl:for-each select="key('NSs',1)">
+      <xsl:for-each select="key('DECLARED_NSs',1)">
         <xsl:choose>
-          <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
-                  and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
+          <xsl:when test="ancestor::constraintSpec/@xml:lang
+                  and not(ancestor::constraintSpec/@xml:lang = $lang)"/>
           <xsl:otherwise>
-            <xsl:apply-templates select="."/>
+            <ns><xsl:apply-templates select="@*|node()" mode="copy"/></ns>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
-      <xsl:if test="not( key('NSs',1)[@prefix='tei'] )">
-        <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
-      </xsl:if>
       
       <xsl:call-template name="blockComment">
-        <xsl:with-param name="content" select="'namespaces, of deprecated constructs:'"/>
+        <xsl:with-param name="content" select="'namespaces, implicit:'"/>
       </xsl:call-template>
-      <xsl:for-each select="key('DEPRECATED_NSs',1)">
-        <xsl:variable name="nsu" select="ancestor-or-self::*[@ns][1]/@ns"/>
-        <xsl:variable name="nsp">
-          <xsl:value-of select="concat( $ns-prefix-prefix, generate-id() )"/>
-        </xsl:variable>
-        <ns prefix="{$nsp}" uri="{$nsu}"/>
-      </xsl:for-each>
-        
+      <xsl:variable name="NSs" select="distinct-values( //tei:*[@nsu]/concat( @nsp, '␝', @nsu ) )"/>
+      <xsl:variable name="NSpres" select="distinct-values( //tei:*[@nsu]/@nsp )"/>
+      <xsl:for-each select="$NSs[ not(. eq '␝') ]">
+        <xsl:sort/>
+        <ns prefix="{substring-before( .,':␝')}" uri="{substring-after( .,'␝')}"/>
+      </xsl:for-each>      
+      
       <xsl:if test="key('KEYs',1)">
         <xsl:call-template name="blockComment">
           <xsl:with-param name="content" select="'keys:'"/>
@@ -161,8 +232,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:for-each select="key('KEYs',1)">
         <xsl:choose>
-          <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
-                  and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
+          <xsl:when test="ancestor::constraintSpec/@xml:lang
+                  and not(ancestor::constraintSpec/@xml:lang = $lang)"/>
           <xsl:otherwise>
             <xsl:apply-templates select="."/>
           </xsl:otherwise>
@@ -176,22 +247,6 @@ of this software, even if advised of the possibility of such damage.
           schema that does not perform the desired constraint tests properly.</xsl:message>
       </xsl:if>
 
-      <xsl:if test="key('PATTERNs',1)">
-        <xsl:call-template name="blockComment">
-          <xsl:with-param name="content" select="'patterns:'"/>
-        </xsl:call-template>
-      </xsl:if>
-      <xsl:for-each select="key('PATTERNs',1)">
-        <xsl:choose>
-          <xsl:when
-            test="ancestor::tei:constraintSpec/@xml:lang
-                 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
-          <xsl:otherwise>
-            <xsl:apply-templates select="."/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:for-each>
-
       <xsl:if test="key('CONSTRAINTs',1)">
         <xsl:call-template name="blockComment">
           <xsl:with-param name="content" select="'constraints:'"/>
@@ -199,54 +254,29 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:for-each select="key('CONSTRAINTs',1)">
         <xsl:choose>
-          <xsl:when test="parent::tei:constraintSpec/@xml:lang
-                  and not(parent::tei:constraintSpec/@xml:lang = $lang)"/>
-          <xsl:otherwise>
+          <xsl:when test="parent::constraintSpec/@xml:lang
+                  and not(parent::constraintSpec/@xml:lang = $lang)"/>
+          <xsl:otherwise> 
             <xsl:variable name="patID">
-              <xsl:choose>
-                <xsl:when test="ancestor::tei:elementSpec">
-                  <xsl:value-of
-                    select="concat(ancestor::tei:elementSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"
-                  />
-                </xsl:when>
-                <xsl:when test="ancestor::tei:classSpec">
-                  <xsl:value-of
-                    select="concat(ancestor::tei:classSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"
-                  />
-                </xsl:when>
-                <xsl:when test="ancestor::tei:macroSpec">
-                  <xsl:value-of
-                    select="concat(ancestor::tei:macroSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"
-                  />
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:text>constraint-</xsl:text>
-                  <xsl:value-of select="ancestor::tei:constraintSpec/@ident"/>
-                  <xsl:if test="count( ../sch:rule ) > 1">
-                    <xsl:text>-</xsl:text>
-                    <xsl:number/>
-                  </xsl:if>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:variable name="idents">
+                <xsl:value-of select="../ancestor::*[@ident]/@ident" separator="-"/>
+              </xsl:variable>
+              <xsl:value-of select="concat( $idents,'-constraint-',../@ident)"/>
             </xsl:variable>
+            <xsl:if test="sch:pattern">
+              <xsl:apply-templates/>
+            </xsl:if>
             <xsl:if test="sch:rule">
               <pattern id="{$patID}">
-                <xsl:apply-templates select="sch:rule"/>
+                <xsl:apply-templates/>
               </pattern>
             </xsl:if>
             <xsl:if test="sch:assert|sch:report">
               <pattern id="{$patID}">
                 <rule>
-                  <xsl:attribute name="context">
-                    <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>
-                    <xsl:choose>
-                      <xsl:when test="ancestor::tei:elementSpec">
-                        <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
-                      </xsl:when>
-                      <xsl:otherwise>*</xsl:otherwise>
-                    </xsl:choose>
-                  </xsl:attribute>
-                  <xsl:apply-templates select="sch:assert|sch:report"/>
+                  <xsl:apply-templates select="@*"/>
+                  <xsl:attribute name="context" select="tei:generate-context(.)"/>
+                  <xsl:apply-templates select="node()"/>
                 </rule>
               </pattern>
             </xsl:if>
@@ -260,62 +290,59 @@ of this software, even if advised of the possibility of such damage.
         </xsl:call-template>
       </xsl:if>
       <xsl:for-each select="key('DEPRECATEDs',1)">
-        <xsl:variable name="amsg1" select="'WARNING: use of deprecated attribute — The TEI-C may drop support for'"/>
-        <xsl:variable name="vmsg1" select="'WARNING: use of deprecated attribute value — The TEI-C may drop support for'"/>
-        <xsl:variable name="nsp">
-          <xsl:choose>
-            <xsl:when test="ancestor-or-self::*[@ns]">
-              <xsl:value-of select="concat( $ns-prefix-prefix, generate-id() )"/>
-            </xsl:when>
-            <xsl:otherwise>tei</xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
+        <xsl:variable name="amsg1" select="'WARNING: use of deprecated attribute —'"/>
+        <xsl:variable name="vmsg1" select="'WARNING: use of deprecated attribute value — The'"/>
+        <xsl:variable name="msg2" select="'will be removed from the TEI on '"/>
+        <xsl:variable name="nsp" select="ancestor-or-self::tei:*[@nsp][1]/@nsp"/>
         <xsl:choose>
-          <xsl:when test="self::tei:attDef[ancestor::tei:elementSpec]">
-            <xsl:variable name="gi" select="ancestor::tei:elementSpec/@ident"/>
+          <xsl:when test="self::attDef[ancestor::elementSpec]">
+            <xsl:variable name="gi" select="ancestor::elementSpec/@ident"/>
+            <xsl:variable name="ginsp" select="ancestor::elementSpec/@nsp"/>
             <pattern>
-              <rule context="{$nsp}:{$gi}">
-                <report test="@{@ident}" role="nonfatal">
-                   <xsl:value-of select="$amsg1"/> @<xsl:value-of select="@ident"/> of the <xsl:value-of select="$gi"/> element as early as <xsl:value-of select="@validUntil"/>.
+              <rule context="{tei:generate-context(.)}">
+                <report test="@{concat($nsp,@ident)}" role="nonfatal">
+                   <xsl:value-of select="$amsg1"/> @<xsl:value-of select="@ident"/> of the <xsl:value-of select="$gi"/> element <xsl:value-of select="$msg2"/> <xsl:value-of select="@validUntil"/>.
                 </report>
               </rule>
             </pattern>
           </xsl:when>
-          <xsl:when test="self::tei:attDef[ancestor::tei:classSpec]">
-            <xsl:variable name="class" select="ancestor::tei:classSpec/@ident"/>
-            <xsl:variable name="gis" select="$P5//tei:elementSpec[tei:classes/tei:memberOf[@key=$class]]/@ident"/>
+          <xsl:when test="self::attDef[ancestor::classSpec]">
+            <xsl:variable name="class" select="ancestor::classSpec/@ident"/>
             <xsl:variable name="fqgis">
-              <xsl:for-each select="$gis">
-                <xsl:value-of select="concat(' tei:', . )"/>
-              </xsl:for-each>
+              <xsl:choose>
+                <xsl:when test="contains( $class,'global')">tei:*</xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$P5deco//elementSpec[classes/memberOf[@key=$class]]/concat( @nsp, @ident )" separator="|"/>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:variable>
             <xsl:variable name="giPattern">
-              <xsl:value-of select="tokenize( normalize-space($fqgis), ' ')" separator="|"/>
+              <xsl:value-of select="$fqgis" separator="|"/>
             </xsl:variable>
             <pattern>
               <rule context="{$giPattern}">
                 <report test="@{@ident}" role="nonfatal">
-                  <xsl:value-of select="$amsg1"/> @<xsl:value-of select="@ident"/> of the <name/> element as early as <xsl:value-of select="@validUntil"/>.
+                  <xsl:value-of select="$amsg1"/> @<xsl:value-of select="@ident"/> of the <name/> element <xsl:value-of select="$msg2"/> <xsl:value-of select="@validUntil"/>.
                 </report>
               </rule>
             </pattern>
           </xsl:when>
-          <xsl:when test="self::tei:elementSpec">
+          <xsl:when test="self::elementSpec">
             <pattern>
-              <rule context="{$nsp}:{@ident}">
+              <rule context="{concat($nsp,@ident)}">
                 <report test="true()" role="nonfatal">
-                  WARNING: use of deprecated element — The TEI-C may drop support for the <name/> element as early as <xsl:value-of select="@validUntil"/>. 
+                  WARNING: use of deprecated element — The <name/> element <xsl:value-of select="$msg2"/> <xsl:value-of select="@validUntil"/>. 
                 </report>
               </rule>
             </pattern>
           </xsl:when>
-          <xsl:when test="self::tei:valItem[ancestor::tei:elementSpec]">
-            <xsl:variable name="gi" select="ancestor::tei:elementSpec/@ident"/>
-            <xsl:variable name="attrName" select="ancestor::tei:attDef/@ident"/>
+          <xsl:when test="self::valItem[ancestor::elementSpec]">
+            <xsl:variable name="gi" select="ancestor::elementSpec/@ident"/>
+            <xsl:variable name="attrName" select="ancestor::attDef/@ident"/>
             <pattern>
-              <rule context="{$nsp}:{$gi}">
+              <rule context="{concat($nsp,$gi)}">
                 <report test="@{$attrName} eq '{@ident}'" role="nonfatal">
-                  <xsl:value-of select="$vmsg1"/> the value '<xsl:value-of select="@ident"/>' of @<xsl:value-of select="$attrName"/> of the <xsl:value-of select="$gi"/> element as early as <xsl:value-of select="@validUntil"/>.
+                  <xsl:value-of select="$vmsg1"/> the value '<xsl:value-of select="@ident"/>' of @<xsl:value-of select="$attrName"/> of the <xsl:value-of select="$gi"/> element <xsl:value-of select="$msg2"/> <xsl:value-of select="@validUntil"/>.
                 </report>
               </rule>
             </pattern>
@@ -325,16 +352,18 @@ of this software, even if advised of the possibility of such damage.
     </schema>
   </xsl:template>
   
-  <xsl:template match="sch:rule[not(@context)]">
+  <xsl:template match="sch:rule[parent::tei:constraint]">
     <rule>
-      <xsl:attribute name="context">
-        <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>        
-        <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
-      </xsl:attribute>
-      <xsl:apply-templates/>
+      <xsl:apply-templates select="@*"/>
+      <xsl:if test="not(@context)">
+        <!-- note: don't want to call generate-context() if not needed, -->
+        <!-- as we may want it to generate warning msgs -->
+        <xsl:attribute name="context" select="tei:generate-context(.)"/>
+      </xsl:if>
+      <xsl:apply-templates select="node()"/>
     </rule>
   </xsl:template>
-    
+  
   <xsl:template match="@*|text()|comment()|processing-instruction()">
     <xsl:copy/>
   </xsl:template>
@@ -345,30 +374,8 @@ of this software, even if advised of the possibility of such damage.
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="sch:key"/>
+  <xsl:template match="sch:key|sch:ns"/>
 
-  <xsl:function name="tei:generate-nsprefix-schematron" as="xs:string">
-    <xsl:param name="e"/>
-    <xsl:for-each select="$e">
-      <xsl:variable name="myns" select="ancestor::tei:elementSpec/@ns"/>
-      <xsl:choose>
-        <xsl:when test="not($myns) or $myns='http://www.tei-c.org/ns/1.0'">
-          <xsl:text>tei:</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:choose>
-            <xsl:when test="ancestor::tei:schemaSpec//sch:ns[@uri=$myns]">
-              <xsl:value-of select="concat(ancestor::tei:schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="ancestor::tei:elementSpec/@ident"/></xsl:message>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
-  </xsl:function>
-  
   <xsl:template name="blockComment">
     <xsl:param name="content"/>
     <xsl:variable name="myContent" select="normalize-space($content)"/>
@@ -384,4 +391,49 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text>&#x0A;</xsl:text>
   </xsl:template>
   
+  <xsl:function name="tei:generate-context">
+    <xsl:param name="here"/>
+    <xsl:for-each select="$here">
+      <xsl:choose>
+        <!-- attDef classSpec elementSpec macroSpec schemaSpec -->
+        <xsl:when test="ancestor::attDef[ancestor::classSpec]">
+          <!-- this is WRONG: need to run around and get the -->
+          <!-- members of the class, and for each use its -->
+          <!-- @nsp:@ident -->
+          <xsl:variable name="me">
+            <xsl:text>@</xsl:text>
+            <xsl:value-of select="ancestor::attDef/@nsp"/>
+            <xsl:value-of select="ancestor::attDef/@ident"/>
+          </xsl:variable>
+          <xsl:value-of select="$me"/>
+          <xsl:message>WARNING: constraint for <xsl:value-of select="$me"/> of the <xsl:value-of select="ancestor::classSpec/@ident"/> class does not have a context=. Resulting rule is applied to *all* occurences of <xsl:value-of select="$me"/>.</xsl:message>
+        </xsl:when>
+        <xsl:when test="ancestor::attDef[ancestor::elementSpec]">
+          <xsl:value-of select="ancestor::elementSpec/@nsp"/>
+          <xsl:value-of select="ancestor::elementSpec/@ident"/>
+          <xsl:text>/@</xsl:text>
+          <xsl:value-of select="ancestor::attDef/@nsp"/>
+          <xsl:value-of select="ancestor::attDef/@ident"/>
+        </xsl:when>
+        <xsl:when test="ancestor::classSpec">
+          <!-- this is WRONG: need to run around and get the -->
+          <!-- members of the class, and for each use its -->
+          <!-- @nsp:@ident -->
+          <xsl:message>WARNING: constraint for <xsl:value-of select="ancestor::classSpec/@ident"/> class does not have a context=. Resulting rule is applied to *all* elements.</xsl:message>
+          <xsl:text>*</xsl:text>
+        </xsl:when>
+        <xsl:when test="ancestor::elementSpec">
+          <xsl:value-of select="ancestor::elementSpec/@nsp"/>
+          <xsl:value-of select="ancestor::elementSpec/@ident"/>
+        </xsl:when>
+        <!-- this should not happen: -->
+        <xsl:when test="ancestor::macroSpec"/>
+        <!-- root seems the least problematic: -->
+        <xsl:when test="ancestor::schemaSpec">
+          <xsl:text>/</xsl:text>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
 </xsl:stylesheet>
