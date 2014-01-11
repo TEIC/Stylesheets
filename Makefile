@@ -95,9 +95,9 @@ doc: oxygendoc
 	cp doc/*.png doc/teixsl.xml doc/style.xml release/common/doc/tei-xsl
 	cp VERSION tei.css ChangeLog LICENCE release/common/doc/tei-xsl
 
-oxygendoc: 
-	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh
-	-test -f $(OXY)/stylesheetDocumentation.sh && $(MAKE) ${DOCTARGETS}
+oxygendoc:
+	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh and make stylesheet documentation if it exists
+	if test -f $(OXY)/stylesheetDocumentation.sh; then $(MAKE) ${DOCTARGETS}; fi
 
 teioo.jar:
 	(cd odt;  mkdir TEIP5; saxon -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
@@ -133,8 +133,9 @@ installp5: p5 teioo.jar
 installprofiles: install-profiles-files install-profiles-docs
 
 install-profiles-docs: 
+	mkdir -p release/profiles/doc
 	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh
-	-test -f $(OXY)//stylesheetDocumentation.sh && $(MAKE) ${PROFILEDOCTARGETS}
+	if test -f $(OXY)/stylesheetDocumentation.sh; then  $(MAKE) ${PROFILEDOCTARGETS};fi
 	(cd release/profiles/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 
 install-profiles-files:
