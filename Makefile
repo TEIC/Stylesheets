@@ -107,7 +107,7 @@ test: clean p5 common names debversion
 	(cd Test; make)
 
 dist: clean release
-	-rm tei-xsl-`cat VERSION`.zip
+	-rm -f tei-xsl-`cat VERSION`.zip
 	(cd release/common; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
 	(cd release/p5;     zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
 	(cd release/profiles;    zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)

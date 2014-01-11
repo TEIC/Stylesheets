@@ -53,7 +53,8 @@ of this software, even if advised of the possibility of such damage.
 
 
 <xsl:output method="xml" indent="yes" encoding="utf-8"/>
-  <xsl:param name="spaceCharacter">&#160;</xsl:param>
+<xsl:param name="debug"/>
+<xsl:param name="spaceCharacter">&#160;</xsl:param>
 
 <xsl:template match="text()|comment()">
   <xsl:copy-of select="."/>
@@ -347,7 +348,10 @@ of this software, even if advised of the possibility of such damage.
 <!-- catch all -->
 
 <xsl:template match="*">
-  <xsl:message>Unknown element <xsl:value-of  select="name()"/></xsl:message>
+  <xsl:if test="$debug='true'">
+    <xsl:message>Unknown element <xsl:value-of
+    select="name()"/></xsl:message>
+  </xsl:if>
   <xsl:apply-templates select="*|text()|comment()"/>
 </xsl:template>
 
