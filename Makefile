@@ -47,7 +47,7 @@ PROFILEDOCTARGETS=\
 	profiles/enrich/html/to.xsl \
 	profiles/enrich/latex/to.xsl 
 
-.PHONY: doc release common profiles
+.PHONY: doc release common profiles $(PROFILEDOCTARGETS) $(DOCTARGETS)
 
 default: check test release
 
@@ -95,9 +95,9 @@ doc: oxygendoc
 	cp doc/*.png doc/teixsl.xml doc/style.xml release/common/doc/tei-xsl
 	cp VERSION tei.css ChangeLog LICENCE release/common/doc/tei-xsl
 
-oxygendoc:
+oxygendoc: 
 	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh
-	-test -f $(OXY)/stylesheetDocumentation.sh && for i in ${DOCTARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl/`dirname $$i`; ${OXY}/stylesheetDocumentation.sh $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
+	-test -d $(OXY)/stylesheetDocumentation.sh && $(MAKE) ${DOCTARGETS}
 
 teioo.jar:
 	(cd odt;  mkdir TEIP5; saxon -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
@@ -130,15 +130,25 @@ installp5: p5 teioo.jar
 	  perl -p -i -e 's+^APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/$$i; \
 	done
 
-installprofiles:
+installprofiles: install-profiles-files install-profiles-docs
+
+install-profiles-docs: 
+	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh
+	-test -d $(OXY) && $(MAKE) ${PROFILEDOCTARGETS}
+	(cd release/profiles/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
+
+install-profiles-files:
 	test -d release/profiles || mkdir -p release/profiles/xml/tei/stylesheet/
 	mkdir -p ${PREFIX}/share/xml/
 	mkdir -p ${PREFIX}/share/doc/
 	tar cf - --exclude .svn --exclude default profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
 	(cd release/profiles; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
-	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh
-	-test -f $(OXY) && for i in ${PROFILEDOCTARGETS}; do echo process doc for $$i; export ODIR=release/profiles/doc/tei-p5-xslprofiles/`dirname $$i`; ${OXY}/stylesheetDocumentation.sh $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done && \
-	(cd release/profiles/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
+
+${PROFILEDOCTARGETS} ${DOCTARGETS}:
+	echo process doc for $@
+	ODIR=release/profiles/doc/tei-p5-xslprofiles/`dirname $@` ${OXY}/stylesheetDocumentation.sh $@ -cfg:doc/oxydoc.cfg
+	(cd `dirname $@`; tar cf - release) | tar xf -
+	rm -rf `dirname $@`/release
 
 installcommon: doc common
 	mkdir -p ${PREFIX}/lib/cgi-bin
