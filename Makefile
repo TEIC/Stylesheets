@@ -69,7 +69,7 @@ p5:
 	@echo BUILD Build for P5, XSLT 2.0
 	test -d release/p5/xml/tei/stylesheet || mkdir -p release/p5/xml/tei/stylesheet/
 	for i in  ${DIRS} ; do \
-		tar cf - --exclude .svn $$i | (cd release/p5/xml/tei/stylesheet; tar xf - ); \
+		tar cf - $$i | (cd release/p5/xml/tei/stylesheet; tar xf - ); \
 	done
 
 
@@ -84,7 +84,7 @@ names:
 profiles: 
 	@echo BUILD Build for P5, profiles
 	test -d release/profiles/xml/tei/stylesheet || mkdir -p release/profiles/xml/tei/stylesheet
-	tar cf - --exclude .svn profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
+	tar cf - profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
 
 doc: oxygendoc
 	test -d release/common/doc/tei-xsl || mkdir -p release/common/doc/tei-xsl
@@ -142,7 +142,7 @@ install-profiles-files:
 	test -d release/profiles/xml/tei/stylesheet || mkdir -p release/profiles/xml/tei/stylesheet/
 	mkdir -p ${PREFIX}/share/xml/
 	mkdir -p ${PREFIX}/share/doc/
-	tar cf - --exclude .svn --exclude default profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
+	tar cf - --exclude default profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
 	(cd release/profiles; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
 
 ${PROFILEDOCTARGETS} ${DOCTARGETS}:
@@ -170,7 +170,7 @@ deb: debversion
 	rm -f tei*xsl*_*deb
 	rm -f tei*xsl*_*changes
 	rm -f tei*xsl*_*build
-	(cd debian-tei-xsl; debclean;debuild --no-lintian  -nc -b -i.svn -I.svn -uc -us)
+	(cd debian-tei-xsl; debclean;debuild --no-lintian  -nc -b -uc -us)
 
 sfupload:
 	rsync -e ssh tei-xsl-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
