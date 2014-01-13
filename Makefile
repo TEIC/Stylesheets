@@ -67,7 +67,7 @@ v:
 
 p5:
 	@echo BUILD Build for P5, XSLT 2.0
-	test -d release/p5 || mkdir -p release/p5/xml/tei/stylesheet/
+	test -d release/p5/xml/tei/stylesheet || mkdir -p release/p5/xml/tei/stylesheet/
 	for i in  ${DIRS} ; do \
 		tar cf - --exclude .svn $$i | (cd release/p5/xml/tei/stylesheet; tar xf - ); \
 	done
@@ -139,7 +139,7 @@ install-profiles-docs:
 	(cd release/profiles/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 
 install-profiles-files:
-	test -d release/profiles || mkdir -p release/profiles/xml/tei/stylesheet/
+	test -d release/profiles/xml/tei/stylesheet || mkdir -p release/profiles/xml/tei/stylesheet/
 	mkdir -p ${PREFIX}/share/xml/
 	mkdir -p ${PREFIX}/share/doc/
 	tar cf - --exclude .svn --exclude default profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
