@@ -1,6 +1,7 @@
 SFUSER=rahtz
 JING=jing
 SAXON=java -jar Test/lib/Saxon-HE-9.4.0.6.jar
+DOTDOTSAXON=java -jar ../Test/lib/Saxon-HE-9.4.0.6.jar
 SAXON_ARGS=-ext:on
 
 DIRS=bibtex common docx dtd docbook epub epub3 fo html html5 json latex latex nlm odd odds odt pdf profiles/default rdf relaxng rnc slides tbx tcp tite tools txt html xsd xlsx pdf
@@ -98,7 +99,7 @@ oxygendoc:
 	if test -f $(OXY)/stylesheetDocumentation.sh; then $(MAKE) ${DOCTARGETS}; fi
 
 teioo.jar:
-	(cd odt;  mkdir TEIP5; $(SAXON) -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
+	(cd odt;  mkdir TEIP5; $(DOTDOTSAXON) -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
 
 test: clean p5 common names debversion
 	@echo BUILD Run tests
