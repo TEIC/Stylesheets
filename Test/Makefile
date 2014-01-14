@@ -1,6 +1,7 @@
 VERSION=`cat VERSION`
 SAXONOPT=useFixedDate=true
 SAXON=java -jar lib/Saxon-HE-9.4.0.6.jar 
+JING=java -jar lib/jing-20120724.0.0.jar 
 OXY=/usr/share/oxygen
 SCRIPTS=teitobibtex \
 	teitodocbook \
@@ -53,10 +54,10 @@ test-html:
 	diff test4.html test3.html
 	$(SAXON) test5.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > test5.xhtml
 	diff test5.xhtml expected-results/test5.xhtml
-	jing -c xhtml.rnc test5.xhtml
+	$(JING) -c xhtml.rnc test5.xhtml
 	$(SAXON) test6.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > test6.html
 	diff test6.html expected-results/test6.html
-	jing -c xhtml.rnc test6.html
+	$(JING) -c xhtml.rnc test6.html
 	$(SAXON) test14.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test14.html
 	diff test14.html expected-results/test14.html
 	$(SAXON) test22.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test22.html
@@ -123,16 +124,16 @@ test-latex:
 
 test-fo:
 	$(SAXON) -o:test.fo test.xml ../fo/fo.xsl  $(SAXONOPT)
-	jing fo.xsd test.fo
+	$(JING) fo.xsd test.fo
 	diff test.fo expected-results/test.fo
 	$(SAXON)  test5.xml ../fo/fo.xsl  $(SAXONOPT)  | xmllint --format - > test5.fo
-	jing fo.xsd test5.fo
+	$(JING) fo.xsd test5.fo
 	diff test5.fo expected-results/test5.fo
 	$(SAXON) testnotes1.xml ../fo/fo.xsl  $(SAXONOPT)   | xmllint --format - > testnotes1.fo
-	jing fo.xsd testnotes1.fo
+	$(JING) fo.xsd testnotes1.fo
 	diff testnotes1.fo expected-results/testnotes1.fo 
 	$(SAXON) -o:test24.fo test24.xml ../fo/fo.xsl $(SAXONOPT)
-	jing fo.xsd test24.fo 
+	$(JING) fo.xsd test24.fo 
 	diff test24.fo expected-results/test24.fo
 	$(SAXON) -o:test25.fo test25.xml ../fo/fo.xsl $(SAXONOPT)
 	diff test25.fo expected-results/test25.fo
@@ -181,25 +182,25 @@ test-odt:
 	rm test.xml.odt.listing
 	rm content.xml
 	../odttotei test7.odt test7.xml
-	jing test.rng test7.xml
+	$(JING) test.rng test7.xml
 	diff test7.xml expected-results/test7.xml
 
 test-from-docx:
 	../docxtotei test-indexes.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-indexes.xml  && rm temp.xml
-	jing test.rng test-indexes.xml
+	$(JING) test.rng test-indexes.xml
 	diff test-indexes.xml expected-results/test-indexes.xml
 	../docxtotei test11.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl> test11.xml  && rm temp.xml
-	jing test.rng test11.xml
+	$(JING) test.rng test11.xml
 	diff test11.xml expected-results/test11.xml
 	../docxtotei test19.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test19.xml  && rm temp.xml
-	jing test.rng test19.xml
+	$(JING) test.rng test19.xml
 	diff test19.xml expected-results/test19.xml
 	../docxtotei test18.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test18.xml  && rm temp.xml
-	jing test.rng test18.xml
+	$(JING) test.rng test18.xml
 	diff test18.xml expected-results/test18.xml
 	../docxtotei --profile=transcription test-rtf2tei.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-rtf2tei.xml  && rm temp.xml
@@ -238,11 +239,11 @@ oddity:
 	../teitoxsd  oddbyexample.odd  oddbyexample.xsd
 	../teitornc  oddbyexample.odd  oddbyexample.rnc
 	../teitodtd  oddbyexample.odd  oddbyexample.dtd
-	jing -c oddbyexample.rnc bare/test2.xml
-	jing oddbyexample.xsd bare/test2.xml
+	$(JING) -c oddbyexample.rnc bare/test2.xml
+	$(JING) oddbyexample.xsd bare/test2.xml
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test2.xml
-	jing -c oddbyexample.rnc bare/test.xml
-	jing oddbyexample.xsd bare/test.xml
+	$(JING) -c oddbyexample.rnc bare/test.xml
+	$(JING) oddbyexample.xsd bare/test.xml
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 	$(SAXON) -s:testdrama.odd -xsl:../odds/odd2odd.xsl -o:testdrama.compiled.xml \
 	localsource=`pwd`/p5subset.xml $(SAXONOPT) 
@@ -251,7 +252,7 @@ oddity:
 	../teitornc test30.odd test30.rnc
 	../teitodtd test30.odd test30.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test30.rnc
-	jing -c test30.rnc test11.xml
+	$(JING) -c test30.rnc test11.xml
 	xmllint --noout --dtdvalid test30.dtd test11.xml
 	diff test30.rnc expected-results/test30.rnc
 	$(SAXON) test.odd ../odds/odd2odd.xsl > test.odd2odd

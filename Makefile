@@ -1,6 +1,6 @@
 SFUSER=rahtz
 JING=jing
-SAXON=saxon
+SAXON=java -jar Test/lib/Saxon-HE-9.4.0.6.jar
 SAXON_ARGS=-ext:on
 
 DIRS=bibtex common docx dtd docbook epub epub3 fo html html5 json latex latex nlm odd odds odt pdf profiles/default rdf relaxng rnc slides tbx tcp tite tools txt html xsd xlsx pdf
@@ -59,8 +59,6 @@ check:
 	@which xmllint || exit 1
 	@echo -n jing: 
 	@which ${JING} || exit 1
-	@echo -n saxon: 
-	@which ${SAXON} || exit 1
 
 v:
 	perl -p -i -e "s+AppVersion.*/AppVersion+AppVersion>`cat VERSION`</AppVersion+" docx/to/application.xsl
@@ -79,7 +77,7 @@ common: names
 	cp names.xml catalog.xml VERSION *.css i18n.xml release/common/xml/tei/stylesheet
 
 names:
-	saxon -it:main tools/getnames.xsl > names.xml
+	$(SAXON) -it:main tools/getnames.xsl > names.xml
 
 profiles: 
 	@echo BUILD Build for P5, profiles
@@ -88,10 +86,10 @@ profiles:
 
 doc: oxygendoc
 	test -d release/common/doc/tei-xsl || mkdir -p release/common/doc/tei-xsl
-	saxon -o:doc/index.xml doc/teixsl.xml doc/param.xsl 
-	saxon -o:doc/style.xml doc/teixsl.xml  doc/paramform.xsl 
-	saxon -o:release/common/doc/tei-xsl/index.html doc/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
-	saxon -o:release/common/doc/tei-xsl/style.html doc/style.xml  profiles/default/html/to.xsl 
+	$(SAXON) -o:doc/index.xml doc/teixsl.xml doc/param.xsl 
+	$(SAXON) -o:doc/style.xml doc/teixsl.xml  doc/paramform.xsl 
+	$(SAXON) -o:release/common/doc/tei-xsl/index.html doc/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
+	$(SAXON) -o:release/common/doc/tei-xsl/style.html doc/style.xml  profiles/default/html/to.xsl 
 	cp doc/*.png doc/teixsl.xml doc/style.xml release/common/doc/tei-xsl
 	cp VERSION tei.css ChangeLog LICENCE release/common/doc/tei-xsl
 
@@ -100,7 +98,7 @@ oxygendoc:
 	if test -f $(OXY)/stylesheetDocumentation.sh; then $(MAKE) ${DOCTARGETS}; fi
 
 teioo.jar:
-	(cd odt;  mkdir TEIP5; saxon -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
+	(cd odt;  mkdir TEIP5; $(SAXON) -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
 
 test: clean p5 common names debversion
 	@echo BUILD Run tests
