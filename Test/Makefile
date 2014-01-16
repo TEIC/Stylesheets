@@ -24,9 +24,10 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-other test-rdf test-text test-odt p4top5 oddity pureant scripts test-namespaces test-epub 
+default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-other test-rdf test-text test-odt p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
 
 p4top5:
+	@echo BUILD: testing p4top5
 	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
 	diff test17.tei expected-results/test17.tei
 	$(SAXON) A54031.tcp ../tcp/tcp2tei.xsl | xmllint --format - > A54031.xml
@@ -36,6 +37,7 @@ test.rng:
 	../teitorelaxng --odd test.odd test.rng
 
 test-html:
+	@echo BUILD: testing html
 	$(SAXON)  test.xml ../html/html.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
 	diff test.html expected-results/test.html
 	$(SAXON) test.html checklinks.xsl
@@ -103,6 +105,7 @@ testsplit:
 
 
 test-latex:
+	@echo BUILD: testing latex
 	$(SAXON) -o:test.tex test.xml ../latex/latex.xsl  $(SAXONOPT)
 	diff test.tex expected-results/test.tex
 	$(SAXON) -o:testnotes1.tex testnotes1.xml ../latex/latex.xsl  $(SAXONOPT)
@@ -123,6 +126,7 @@ test-latex:
 	diff test27.tex expected-results/test27.tex
 
 test-fo:
+	@echo BUILD: testing fo
 	$(SAXON) -o:test.fo test.xml ../fo/fo.xsl  $(SAXONOPT)
 	$(JING) fo.xsd test.fo
 	diff test.fo expected-results/test.fo
@@ -141,6 +145,7 @@ test-fo:
 	diff test27.fo expected-results/test27.fo
 
 test-epub:
+	@echo BUILD: testing epub
 	../teitoepub3  test.xml test.epub
 	java -jar epubcheck3.jar test.epub
 	../teitoepub  test.xml test.epub
@@ -154,6 +159,7 @@ test-epub:
 	rm test.epub.listing2
 
 test-other:
+	@echo BUILD: testing other
 	../teitornc  test21.odd test21.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test21.odd.rnc
 	diff test21.odd.rnc expected-results/test21.odd.rnc 
@@ -162,18 +168,22 @@ test-other:
 	diff test15.odd.rnc expected-results/test15.odd.rnc 
 
 test-rdf:
+	@echo BUILD: testing rdf
 	$(SAXON) -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	diff test12.rdf expected-results/test12.rdf
 
 test-text:
+	@echo BUILD: testing text
 	../teitotxt test14.xml test.text
 	diff test.text expected-results/test.text
 
 test-xlsx:
+	@echo BUILD: testing xlsx
 	../xlsxtotei test.xlsx test.xlsx.xml
 	diff test.xlsx.xml expected-results/test.xlsx.xml
 
 test-odt: 
+	@echo BUILD: testing odt
 	../teitoodt test.xml 
 	unzip -t test.xml.odt > test.xml.odt.listing
 	unzip -o -q test.xml.odt content.xml
@@ -186,6 +196,7 @@ test-odt:
 	diff test7.xml expected-results/test7.xml
 
 test-from-docx:
+	@echo BUILD: testing from-docx
 	../docxtotei test-indexes.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-indexes.xml  && rm temp.xml
 	$(JING) test.rng test-indexes.xml
@@ -210,6 +221,7 @@ test-from-docx:
 	diff test29.xml expected-results/test29.xml
 
 test-to-docx:
+	@echo BUILD: testing to-docx
 	../teitodocx test.xml 
 	unzip -p test.xml.docx word/document.xml | xmllint --format - > test.xml.docx.document
 	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > test.xml.docx.core
@@ -225,7 +237,8 @@ test-to-docx:
 	diff testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document
 	rm testnotes1.xml.docx.document
 
-oddity:
+test-oddity:
+	@echo BUILD: testing oddity
 	../teitohtml5 --summaryDoc --lang=es --profile=tei --odd test15.odd test15.odd.html
 	xmllint --encode utf-8 --format test15.odd.html | perl cleanup.pl> test.temp ; mv test.temp test15.odd.html
 	diff test15.odd.html expected-results/test15.odd.html
@@ -276,6 +289,7 @@ moreoddity:
 	../teitornc test.odd test.rnc
 
 test-namespaces:
+	@echo BUILD: testing namespaces
 # This test checks the rnc files so that to make sure we are testing
 # what we think we are testing.
 	../teitornc test33.odd test33.rnc
@@ -301,13 +315,13 @@ test-namespaces:
 	perl -p -i -e 's/generated from ODD source .*//' test35.rnc
 	diff test35.rnc expected-results/test35.rnc
 
-scripts:
+test-scripts:
 	for i in $(SCRIPTS); do ../$$i maria.xml $$i.result && rm $$i.result; done
 	../teitoodd test16.odd temp.odd
 	for i in $(SCHEMASCRIPTS) ; do ../$$i temp.odd $$i.result && rm $$i.result; done
 	rm temp.odd
 
-pureant:
+test-pureant:
 	java -Xmx256m \
 	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
 	-Dant.home=$(OXY)/tools/ant \
@@ -326,12 +340,14 @@ pureant:
 	-DinputFile=`pwd`/test29.docx -Dprofile=default 
 
 test-oxgarage:
-	curl -v  -F upload=@test.odd  -o test.rng http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/relaxng%3Aapplication%3Axml-relaxng
-	curl -v  -F upload=@test.odd  -o test.zip http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/xsd%3Aapplication%3Axml-xsd/
+	@echo BUILD: testing oxgarage
+	curl -s -F upload=@test.odd  -o test.rng http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/relaxng%3Aapplication%3Axml-relaxng
+	curl -s -F upload=@test.odd  -o test.zip http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/xsd%3Aapplication%3Axml-xsd/
 
 test-oxgarage-tei:
-	curl -v  -F upload=@test.odd  -o test.rng http://www.tei-c.org/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/relaxng%3Aapplication%3Axml-relaxng
-	curl -v  -F upload=@test.odd  -o test.zip http://www.tei-c.org/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/xsd%3Aapplication%3Axml-xsd/
+	@echo BUILD: testing oxgarage-tei
+	Curl -s  -F upload=@test.odd  -o test.rng http://www.tei-c.org/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/relaxng%3Aapplication%3Axml-relaxng
+	curl -s  -F upload=@test.odd  -o test.zip http://www.tei-c.org/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/xsd%3Aapplication%3Axml-xsd/
 
 profile:
 	$(SAXON) -o:/dev/null	-TP test.xml ../html/html.xsl >& profile1.html

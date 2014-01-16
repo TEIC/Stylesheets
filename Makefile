@@ -137,7 +137,7 @@ installprofiles: install-profiles-files install-profiles-docs
 install-profiles-docs: 
 	mkdir -p release/profiles/doc
 	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh
-	if test -f $(OXY)/stylesheetDocumentation.sh; then  $(MAKE) ${PROFILEDOCTARGETS};fi
+	if test -f $(OXY)/stylesheetDocumentation.sh; then perl -pe "s+-Djava.awt+-Djava.awt -Duser.home=/tmp/+; s+OXYGEN_HOME=.*+OXYGEN_HOME=/usr/share/oxygen+" < $(OXY)/stylesheetDocumentation.sh > ./runDoc.sh; chmod 755 runDoc.sh;  cp -f $(OXY)/licensekey.txt .;  $(MAKE) ${PROFILEDOCTARGETS}; rm -f licensekey.txt runDoc.sh; fi
 	(cd release/profiles/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 
 install-profiles-files:
