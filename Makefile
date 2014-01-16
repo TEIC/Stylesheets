@@ -95,8 +95,11 @@ doc: oxygendoc
 	cp VERSION tei.css ChangeLog LICENCE release/common/doc/tei-xsl
 
 oxygendoc:
+	# when building Debain packages, the script runs under
+	# fakeroot, and the oxygen script then tries to look in /root/.com.oxygenxml, and fails.  
+	# The answer is to tweak the stylesheetDocumentation.sh script 
 	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh and make stylesheet documentation if it exists
-	if test -f $(OXY)/stylesheetDocumentation.sh; then $(MAKE) ${DOCTARGETS}; fi
+	if test -f $(OXY)/stylesheetDocumentation.sh; then perl -pe "s+-Djava.awt+-Djava.awt -Duser.home=/tmp/+; s+OXYGEN_HOME=.*+OXYGEN_HOME=/usr/share/oxygen+" < $(OXY)/stylesheetDocumentation.sh > ./runDoc.sh; chmod 755 runDoc.sh;  cp -f $(OXY)/licensekey.txt .;  $(MAKE) ${DOCTARGETS}; rm -f licensekey.txt runDoc.sh; fi
 
 teioo.jar:
 	(cd odt;  mkdir TEIP5; $(DOTDOTSAXON) -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
@@ -146,7 +149,7 @@ install-profiles-files:
 
 ${PROFILEDOCTARGETS} ${DOCTARGETS}:
 	echo process doc for $@
-	ODIR=release/profiles/doc/tei-p5-xslprofiles/`dirname $@` ${OXY}/stylesheetDocumentation.sh $@ -cfg:doc/oxydoc.cfg
+	ODIR=release/profiles/doc/tei-p5-xslprofiles/`dirname $@` ./runDoc.sh $@ -cfg:doc/oxydoc.cfg
 	(cd `dirname $@`; tar cf - release) | tar xf -
 	rm -rf `dirname $@`/release
 
@@ -196,7 +199,7 @@ clean:
 	-(cd debian-tei-xsl/debian;  rm -rf tei-xsl)
 	rm -f teioo.jar
 	rm -rf docx/ImageInfo/bin
-	rm -f names.xml
+	rm -f names.xml licensekey.txt runDoc.sh
 
 tags:
 	etags `find . -name "*.xsl" | grep -v "slides/" | grep -v "latex/" | grep -v "html/" | grep -v "fo/" | grep -v "common2/" | grep -v "doc/" `
