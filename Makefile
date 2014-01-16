@@ -66,40 +66,40 @@ v:
 
 p5:
 	@echo BUILD Build for P5, XSLT 2.0
-	test -d release/p5/xml/tei/stylesheet || mkdir -p release/p5/xml/tei/stylesheet/
+	test -d release/xsl/xml/tei/stylesheet || mkdir -p release/xsl/xml/tei/stylesheet/
 	for i in  ${DIRS} ; do \
-		tar cf - $$i | (cd release/p5/xml/tei/stylesheet; tar xf - ); \
+		tar cf - $$i | (cd release/xsl/xml/tei/stylesheet; tar xf - ); \
 	done
 
 
 common: names
 	@echo BUILD Build for P5, common files and documentation
-	test -d release/common/xml/tei/stylesheet || mkdir -p release/common/xml/tei/stylesheet
-	cp names.xml catalog.xml VERSION *.css i18n.xml release/common/xml/tei/stylesheet
+	test -d release/xslcommon/xml/tei/stylesheet || mkdir -p release/xslcommon/xml/tei/stylesheet
+	cp names.xml catalog.xml VERSION *.css i18n.xml release/xslcommon/xml/tei/stylesheet
 
 names:
 	$(SAXON) -it:main tools/getnames.xsl > names.xml
 
 profiles: 
 	@echo BUILD Build for P5, profiles
-	test -d release/profiles/xml/tei/stylesheet || mkdir -p release/profiles/xml/tei/stylesheet
-	tar cf - profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
+	test -d release/xslprofiles/xml/tei/stylesheet || mkdir -p release/xslprofiles/xml/tei/stylesheet
+	tar cf - profiles | (cd release/xslprofiles/xml/tei/stylesheet; tar xf - )
 
 doc: oxygendoc
-	test -d release/common/doc/tei-xsl || mkdir -p release/common/doc/tei-xsl
+	test -d release/xslcommon/doc/tei-xsl || mkdir -p release/xslcommon/doc/tei-xsl
 	$(SAXON) -o:doc/index.xml doc/teixsl.xml doc/param.xsl 
 	$(SAXON) -o:doc/style.xml doc/teixsl.xml  doc/paramform.xsl 
-	$(SAXON) -o:release/common/doc/tei-xsl/index.html doc/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
-	$(SAXON) -o:release/common/doc/tei-xsl/style.html doc/style.xml  profiles/default/html/to.xsl 
-	cp doc/*.png doc/teixsl.xml doc/style.xml release/common/doc/tei-xsl
-	cp VERSION tei.css ChangeLog LICENCE release/common/doc/tei-xsl
+	$(SAXON) -o:release/xslcommon/doc/tei-xsl/index.html doc/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
+	$(SAXON) -o:release/xslcommon/doc/tei-xsl/style.html doc/style.xml  profiles/default/html/to.xsl 
+	cp doc/*.png doc/teixsl.xml doc/style.xml release/xslcommon/doc/tei-xsl
+	cp VERSION tei.css ChangeLog LICENCE release/xslcommon/doc/tei-xsl
 
 oxygendoc:
 	# when building Debain packages, the script runs under
 	# fakeroot, and the oxygen script then tries to look in /root/.com.oxygenxml, and fails.  
 	# The answer is to tweak the stylesheetDocumentation.sh script 
 	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh and make stylesheet documentation if it exists
-	if test -f $(OXY)/stylesheetDocumentation.sh; then perl -pe "s+-Djava.awt+-Djava.awt -Duser.home=/tmp/+; s+OXYGEN_HOME=.*+OXYGEN_HOME=/usr/share/oxygen+" < $(OXY)/stylesheetDocumentation.sh > ./runDoc.sh; chmod 755 runDoc.sh;  cp -f $(OXY)/licensekey.txt .;  $(MAKE) ${DOCTARGETS}; rm -f licensekey.txt runDoc.sh; fi
+	if test -f $(OXY)/stylesheetDocumentation.sh; then perl -pe "s+-Djava.awt+-Djava.awt -Duser.home=/tmp/+; s+OXYGEN_HOME=.*+OXYGEN_HOME=/usr/share/oxygen+" < $(OXY)/stylesheetDocumentation.sh > ./runDoc.sh; chmod 755 runDoc.sh;  cp -f $(OXY)/licensekey.txt .;  $(MAKE) ${DOCTARGETS} ${PROFILEDOCTARGETS}; rm -f licensekey.txt runDoc.sh; fi
 
 teioo.jar:
 	(cd odt;  mkdir TEIP5; $(DOTDOTSAXON) -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
@@ -110,21 +110,21 @@ test: clean p5 common names debversion
 
 dist: clean release
 	-rm -f tei-xsl-`cat VERSION`.zip
-	(cd release/common; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
-	(cd release/p5;     zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
-	(cd release/profiles;    zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/xslcommon; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/xsl;     zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/xslprofiles;    zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
 	-rm -rf dist
 	mkdir dist
-	(cd release/p5; tar cf - .)       | (cd dist; tar xf  -)
-	(cd release/profiles; tar cf - .) | (cd dist; tar xf  -)
-	(cd release/common/; tar cf - .)  | (cd dist; tar xf -)
+	(cd release/xsl; tar cf - .)       | (cd dist; tar xf  -)
+	(cd release/xslprofiles; tar cf - .) | (cd dist; tar xf  -)
+	(cd release/xslcommon/; tar cf - .)  | (cd dist; tar xf -)
 
 release: common doc oxygendoc p5 profiles
 
 installp5: p5 teioo.jar
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
 	cp -r lib teioo.jar ${PREFIX}/share/xml/tei/stylesheet
-	(cd release/p5; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
+	(cd release/xsl; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
 	mkdir -p ${PREFIX}/bin
 	for i in $(SCRIPTS); do \
 	  cp $$i ${PREFIX}/bin/$$i; \
@@ -135,21 +135,27 @@ installp5: p5 teioo.jar
 installprofiles: install-profiles-files install-profiles-docs
 
 install-profiles-docs: 
-	mkdir -p release/profiles/doc
+	mkdir -p release/xslprofiles/doc
 	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh
 	if test -f $(OXY)/stylesheetDocumentation.sh; then perl -pe "s+-Djava.awt+-Djava.awt -Duser.home=/tmp/+; s+OXYGEN_HOME=.*+OXYGEN_HOME=/usr/share/oxygen+" < $(OXY)/stylesheetDocumentation.sh > ./runDoc.sh; chmod 755 runDoc.sh;  cp -f $(OXY)/licensekey.txt .;  $(MAKE) ${PROFILEDOCTARGETS}; rm -f licensekey.txt runDoc.sh; fi
-	(cd release/profiles/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
+	(cd release/xslprofiles/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 
 install-profiles-files:
-	test -d release/profiles/xml/tei/stylesheet || mkdir -p release/profiles/xml/tei/stylesheet/
+	test -d release/xslprofiles/xml/tei/stylesheet || mkdir -p release/xslprofiles/xml/tei/stylesheet/
 	mkdir -p ${PREFIX}/share/xml/
 	mkdir -p ${PREFIX}/share/doc/
-	tar cf - --exclude default profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
-	(cd release/profiles; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
+	tar cf - --exclude default profiles | (cd release/xslprofiles/xml/tei/stylesheet; tar xf - )
+	(cd release/xslprofiles; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
 
-${PROFILEDOCTARGETS} ${DOCTARGETS}:
+${PROFILEDOCTARGETS}:
 	echo process doc for $@
-	ODIR=release/profiles/doc/tei-p5-xslprofiles/`dirname $@` ./runDoc.sh $@ -cfg:doc/oxydoc.cfg
+	ODIR=release/xslprofiles/doc/tei-xsl/`dirname $@` ./runDoc.sh $@ -cfg:doc/oxydoc.cfg
+	(cd `dirname $@`; tar cf - release) | tar xf -
+	rm -rf `dirname $@`/release
+
+${DOCTARGETS}:
+	echo process doc for $@
+	ODIR=release/xsl/doc/tei-xsl/`dirname $@` ./runDoc.sh $@ -cfg:doc/oxydoc.cfg
 	(cd `dirname $@`; tar cf - release) | tar xf -
 	rm -rf `dirname $@`/release
 
@@ -159,8 +165,8 @@ installcommon: doc common
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear
 	mkdir -p ${PREFIX}/share/doc/
 	mkdir -p ${PREFIX}/share/xml/
-	(cd release/common/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
-	(cd release/common/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
+	(cd release/xslcommon/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
+	(cd release/xslcommon/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
 install: doc installp5 installprofiles installcommon 
 
