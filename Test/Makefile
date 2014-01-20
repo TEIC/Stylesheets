@@ -182,7 +182,8 @@ test-xlsx:
 	../xlsxtotei test.xlsx test.xlsx.xml
 	diff test.xlsx.xml expected-results/test.xlsx.xml
 
-test-odt: 
+test-odt:   test.rng
+	(cd ..; $(MAKE) names)
 	@echo BUILD: testing odt
 	../teitoodt test.xml 
 	unzip -t test.xml.odt > test.xml.odt.listing
