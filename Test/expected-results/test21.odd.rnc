@@ -7,9 +7,9 @@ namespace sch = "http://purl.oclc.org/dsdl/schematron"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
 # Schema 
-# Edition: 2.5.0. Last updated on
-#	26th July 2013.
-# Edition Location: http://www.tei-c.org/Vault/P5/2.5.0/
+# Edition: Version 2.6.0. Last updated on
+#	20th January 2014, revision 12801
+# Edition Location: http://www.tei-c.org/Vault/P5/Version 2.6.0/
 #
 
 #
@@ -134,7 +134,7 @@ att.dimensions.attributes =
 att.dimensions.attribute.unit =
   
   ## noms des unités utilisées pour la mesure.
-  ## Suggested values include: 1] cm(centimetres) ; 2] mm(millimetres) ; 3] in(inches) ; 4] lines; 5] chars(characters) 
+  ## Suggested values include: 1] cm; 2] mm; 3] in; 4] lines; 5] chars
   attribute unit {
     
     ## (centimètres) 
@@ -149,7 +149,7 @@ att.dimensions.attribute.unit =
       ## lignes de texte
       "lines"
     | 
-      ## (characters) caractères du texte
+      ## caractères du texte
       "chars"
     | xsd:Name
   }?
@@ -159,7 +159,7 @@ att.dimensions.attribute.quantity =
   attribute quantity { data.numeric }?
 att.dimensions.attribute.extent =
   
-  ## indique la dimension de l'objet en utilisant un vocabulaire spécifique à un projet qui combine la quantité et l'unité dans une chaîne seule de mots. 
+  ## indique la dimension de l'objet en utilisant un vocabulaire spécifique à un projet qui combine la quantité et l'unité dans une chaîne seule de mots.
   attribute extent { data.text }?
 att.dimensions.attribute.precision =
   
@@ -306,19 +306,19 @@ att.fragmentable.attribute.part =
   [ a:defaultValue = "N" ]
   attribute part {
     
-    ## (yes) the element is fragmented in some (unspecified) respect
+    ## the element is fragmented in some (unspecified) respect
     "Y"
     | 
-      ## (no) either the element is not fragmented, or no claim is made as to its completeness.
+      ## either the element is not fragmented, or no claim is made as to its completeness.
       "N"
     | 
-      ## (initial) this is the initial part of a fragmented element
+      ## this is the initial part of a fragmented element
       "I"
     | 
-      ## (medial) this is a medial part of a fragmented element
+      ## this is a medial part of a fragmented element
       "M"
     | 
-      ## (final) this is the final part of a fragmented element
+      ## this is the final part of a fragmented element
       "F"
   }?
 att.divLike.attributes =
@@ -327,7 +327,7 @@ att.divLike.attributes =
   att.divLike.attribute.sample
 att.divLike.attribute.org =
   
-  ## (organisation) précise l'organisation du contenu de la division 
+  ## (organisation) précise l'organisation du contenu de la division
   [ a:defaultValue = "uniform" ]
   attribute org {
     
@@ -365,7 +365,9 @@ att.docStatus.attribute.status =
   ## Sample values include: 1] approved; 2] candidate; 3] cleared; 4] deprecated; 5] draft; 6] embargoed; 7] expired; 8] frozen; 9] galley; 10] proposed; 11] published; 12] recommendation; 13] submitted; 14] unfinished; 15] withdrawn
   [ a:defaultValue = "draft" ] attribute status { data.enumerated }?
 att.responsibility.attributes =
-  att.responsibility.attribute.cert, att.responsibility.attribute.resp
+  att.source.attributes,
+  att.responsibility.attribute.cert,
+  att.responsibility.attribute.resp
 att.responsibility.attribute.cert =
   
   ## (certitude) donne le degré de certitude associée à l'intervention ou à l'interprétation.
@@ -380,7 +382,6 @@ att.editLike.attributes =
   att.dimensions.attributes,
   att.responsibility.attributes,
   att.editLike.attribute.evidence,
-  att.editLike.attribute.source,
   att.editLike.attribute.instant
 att.editLike.attribute.evidence =
   
@@ -399,12 +400,6 @@ att.editLike.attribute.evidence =
          "conjecture"
        | xsd:Name)+
     }
-  }?
-att.editLike.attribute.source =
-  
-  ## contient une liste d'un ou plusieurs pointeurs indiquant les sources qui appuient la lecture proposée
-  attribute source {
-    list { data.pointer+ }
   }?
 att.editLike.attribute.instant =
   
@@ -437,7 +432,7 @@ att.global.attribute.rend =
   }?
 att.global.attribute.style =
   
-  ## contains an expression in some formal style definition language which defines the rendering or presentation used for this element in the source text 
+  ## contains an expression in some formal style definition language which defines the rendering or presentation used for this element in the source text
   attribute style { data.text }?
 att.global.attribute.rendition =
   
@@ -521,7 +516,7 @@ att.media.attributes =
   att.media.attribute.scale
 att.media.attribute.width =
   
-  ## Where the media are displayed, indicates the display width 
+  ## Where the media are displayed, indicates the display width
   attribute width { data.outputMeasurement }?
 att.media.attribute.height =
   
@@ -543,7 +538,7 @@ att.measurement.attributes =
 att.measurement.attribute.unit =
   
   ## (unité) indique les unités de mesure utilisées ; il s'agit en général du symbole normalisé pour les unités dont on a besoin.
-  ## Suggested values include: 1] m(metre) ; 2] kg(kilogram) ; 3] s(second) ; 4] Hz(hertz) ; 5] Pa(pascal) ; 6] Ω(ohm) ; 7] L(litre) ; 8] t(tonne) ; 9] ha(hectare) ; 10] Å(ångström) ; 11] mL(millilitre) ; 12] cm(centimetre) ; 13] dB(decibel) ; 14] kbit(kilobit) ; 15] Kibit(kibibit) ; 16] kB(kilobyte) ; 17] KiB(kibibyte) ; 18] MB(megabyte) ; 19] MiB(mebibyte) 
+  ## Suggested values include: 1] m; 2] kg; 3] s; 4] Hz; 5] Pa; 6] Ω; 7] L; 8] t; 9] ha; 10] Å; 11] mL; 12] cm; 13] dB; 14] kbit; 15] Kibit; 16] kB; 17] KiB; 18] MB; 19] MiB
   attribute unit {
     
     ## (mètre) unité SI (système international) de longueur
@@ -555,28 +550,28 @@ att.measurement.attribute.unit =
       ## (seconde) unité SI de temps
       "s"
     | 
-      ## (hertz) unité SI de fréquence
+      ## unité SI de fréquence
       "Hz"
     | 
-      ## (pascal) unité SI de pression
+      ## unité SI de pression
       "Pa"
     | 
-      ## (ohm) unité SI de résistance électrique
+      ## unité SI de résistance électrique
       "Ω"
     | 
-      ## (litre) 1 dm³
+      ##
       "L"
     | 
-      ## (tonne) 10³ kg
+      ##
       "t"
     | 
-      ## (hectare) 1 hm²
+      ##
       "ha"
     | 
-      ## (ångström) 10⁻¹⁰ m
+      ##
       "Å"
     | 
-      ## (millilitre) 
+      ##
       "mL"
     | 
       ## (centimètre) 
@@ -585,10 +580,10 @@ att.measurement.attribute.unit =
       ## (décibel) Voir remarques, ci-dessous.
       "dB"
     | 
-      ## (kilobit) 10³ ou 1000 bits
+      ## 10³ ou 1000 bits
       "kbit"
     | 
-      ## (kibibit) 2¹⁰ ou 1024 bits
+      ## 2¹⁰ ou 1024 bits
       "Kibit"
     | 
       ## (kilo-octet) 10³ ou 1000 octets
@@ -625,7 +620,7 @@ att.naming.attribute.altname =
   attribute altname { text }?
 att.naming.attribute.role =
   
-  ## may be used to specify further information about the entity referenced by this name, for example the occupation of a person, or the status of a place. 
+  ## may be used to specify further information about the entity referenced by this name, for example the occupation of a person, or the status of a place.
   attribute role { data.enumerated }?
 att.naming.attribute.nymRef =
   
@@ -697,7 +692,7 @@ sch:pattern [
   sch:rule [
     context = "*[@subtype]"
     "\x{a}" ~
-    "	        "
+    "        "
     sch:assert [
       test = "@type"
       "The "
@@ -797,7 +792,7 @@ att.edition.attribute.ed =
   }?
 att.edition.attribute.edRef =
   
-  ## (edition reference) provides a pointer to the source edition in which the associated feature (for example, a page, column, or line break) occurs at this point in the text.
+  ## provides a pointer to the source edition in which the associated feature (for example, a page, column, or line break) occurs at this point in the text.
   attribute edRef {
     list { data.pointer+ }
   }?
@@ -813,7 +808,7 @@ sch:pattern [
   sch:rule [
     context = "tei:*[@spanTo]"
     "\x{a}" ~
-    "         "
+    "            "
     sch:assert [
       test =
         "id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]"
@@ -823,10 +818,10 @@ sch:pattern [
       ") must follow the current element "
       sch:name [ ]
       "\x{a}" ~
-      "         "
+      "                  "
     ]
     "\x{a}" ~
-    "      "
+    "          "
   ]
   "\x{a}" ~
   "   "
@@ -920,6 +915,46 @@ att.translatable.attribute.versionDate =
   
   ## spécifie le nom de la version ou le numéro de la source dont la version traduite a été tirée.
   attribute versionDate { data.temporal.w3c }?
+att.citing.attributes =
+  att.citing.attribute.unit,
+  att.citing.attribute.from,
+  att.citing.attribute.to
+att.citing.attribute.unit =
+  
+  ## identifie le type d'information que transmet l'élément, par exemple colonnes, pages, volume, etc.
+  ## Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] part; 7] column
+  attribute unit {
+    
+    ## l'élément contient un numéro de volume.
+    "volume"
+    | 
+      ## l'élément contient un numéro de livraison ou bien un numéro de volume et de livraison.
+      "issue"
+    | 
+      ## l'élément contient un nombre de pages ou l'étendue de sélection des pages.
+      "page"
+    | 
+      ## the element contains a line number or line range.
+      "line"
+    | 
+      ## (chapitre) l'élément contient une indication de chapitre (le numéro et/ou le titre)
+      "chapter"
+    | 
+      ## l'élément identifie une partie d'un livre ou une anthologie.
+      "part"
+    | 
+      ## the element identifies a column.
+      "column"
+    | xsd:Name
+  }?
+att.citing.attribute.from =
+  
+  ## specifies the starting point of the range of units indicated by the unit attribute.
+  attribute from { data.word }?
+att.citing.attribute.to =
+  
+  ## specifies the end-point of the range of units indicated by the unit attribute.
+  attribute to { data.word }?
 model.nameLike.agent = name | orgName | persName
 model.nameLike.agent_alternation = name | orgName | persName
 model.nameLike.agent_sequence = name, orgName, persName
@@ -1317,15 +1352,9 @@ model.placeStateLike_sequenceRepeatable =
   trait+
 model.placeEventLike = event
 model.orgPart = listOrg | listPerson | listPlace
-model.publicationStmtPart =
-  address
-  | date
-  | publisher
-  | pubPlace
-  | distributor
-  | authority
-  | idno
-  | availability
+model.publicationStmtPart.agency = publisher | distributor | authority
+model.publicationStmtPart.detail =
+  address | date | pubPlace | idno | availability
 model.availabilityPart = licence
 model.certLike = notAllowed
 model.descLike = desc
@@ -1356,7 +1385,7 @@ model.divWrapper =
   | salute
   | docAuthor
   | docDate
-model.divTopPart = model.headLike | opener
+model.divTopPart = model.headLike | opener | signed
 model.divTop = model.divWrapper | model.divTopPart
 model.pLike.front =
   head
@@ -1541,7 +1570,8 @@ model.editorialDeclPart =
   | stdVals
   | interpretation
 model.profileDescPart =
-  creation
+  abstract
+  | creation
   | langUsage
   | textClass
   | calendarDesc
@@ -1550,7 +1580,7 @@ model.profileDescPart =
 att.source.attributes = att.source.attribute.source
 att.source.attribute.source =
   
-  ## (pointer to a bibliographical source reference) provides a pointer to the bibliographical source from which a quotation or citation is drawn.
+  ## provides a pointer to the bibliographical source from which a quotation or citation is drawn.
   attribute source {
     list { data.pointer+ }
   }?
@@ -1622,7 +1652,7 @@ att.milestoneUnit.attribute.unit =
       ## passages qui ne sont pas présents dans l'édition de référence.
       "absent"
     | 
-      ## passages figurant dans le texte, mais qui ne sont pas destinés à être inclus comme élément de référence. 
+      ## passages figurant dans le texte, mais qui ne sont pas destinés à être inclus comme élément de référence.
       "unnumbered"
     | xsd:Name
   }
@@ -1641,7 +1671,7 @@ p =
   }
 foreign =
   
-  ## (étranger) reconnaît un mot ou une expression comme appartenant à une langue différente de celle du contexte.  [3.3.2.1. ]
+  ## (étranger) reconnaît un mot ou une expression comme appartenant à une langue différente de celle du contexte. [3.3.2.1. ]
   element foreign { macro.phraseSeq, att.global.attributes, empty }
 emph =
   
@@ -1649,7 +1679,7 @@ emph =
   element emph { macro.paraContent, att.global.attributes, empty }
 hi =
   
-  ## (mis en évidence) distingue un mot ou une expression comme graphiquement distincte du texte environnant, sans en donner la raison.  [3.3.2.2.  3.3.2. ]
+  ## (mis en évidence) distingue un mot ou une expression comme graphiquement distincte du texte environnant, sans en donner la raison. [3.3.2.2.  3.3.2. ]
   element hi {
     macro.paraContent,
     att.global.attribute.xmlid,
@@ -1717,7 +1747,7 @@ quote =
   }
 q =
   
-  ## (séparé du texte environnant par des guillemets) contient un fragment qui est marqué (visiblement) comme étant d’une manière ou d'une autre différent du texte environnant, pour diverses raisons telles que, par exemple, un discours direct ou une pensée, des termes techniques ou du jargon, une mise à distance par rapport à l’auteur, des citations empruntées et des passages qui sont mentionnés mais non employés.  [3.3.3. ]
+  ## (séparé du texte environnant par des guillemets) contient un fragment qui est marqué (visiblement) comme étant d’une manière ou d'une autre différent du texte environnant, pour diverses raisons telles que, par exemple, un discours direct ou une pensée, des termes techniques ou du jargon, une mise à distance par rapport à l’auteur, des citations empruntées et des passages qui sont mentionnés mais non employés. [3.3.3. ]
   element q {
     macro.specialPara,
     att.global.attributes,
@@ -1787,6 +1817,7 @@ desc =
     macro.limitedContent,
     att.global.attributes,
     att.translatable.attributes,
+    att.typed.attributes,
     empty
   }
 gloss =
@@ -1828,7 +1859,7 @@ sic =
   }
 corr =
   
-  ## (correction) contient la forme correcte d'un passage qui est considéré erroné dans la copie du texte. [3.4.1. ]
+  ## contient la forme correcte d'un passage qui est considéré erroné dans la copie du texte. [3.4.1. ]
   element corr {
     macro.paraContent,
     att.global.attributes,
@@ -1960,7 +1991,7 @@ address =
   }
 addrLine =
   
-  ## (ligne d'adresse) contient une ligne d'adresse postale.  [3.5.2.  2.2.4.  3.11.2.4. ]
+  ## (ligne d'adresse) contient une ligne d'adresse postale. [3.5.2.  2.2.4.  3.11.2.4. ]
   element addrLine { macro.phraseSeq, att.global.attributes, empty }
 street =
   
@@ -1989,7 +2020,7 @@ num =
       ## nombre entier ou décimal, par exemple 21, 21.5
       "cardinal"
       | 
-        ## nombre ordinal, par exemple 21ème 
+        ## nombre ordinal, par exemple 21ème
         "ordinal"
       | 
         ## fraction, par exemple une moitié ou trois-quarts
@@ -2123,7 +2154,7 @@ ptr =
   }
 ref =
   
-  ## (référence) définit une référence vers un autre emplacement, la référence étant éventuellement modifiée ou complétée par un texte ou un commentaire.  [3.6.  16.1. ]
+  ## (référence) définit une référence vers un autre emplacement, la référence étant éventuellement modifiée ou complétée par un texte ou un commentaire. [3.6.  16.1. ]
   element ref {
     macro.paraContent
     >> sch:pattern [
@@ -2225,7 +2256,7 @@ head =
   }
 headLabel =
   
-  ## (intitulé d'une liste d'étiquettes) contient l'intitulé pour la colonne d'étiquettes ou de termes dans un glossaire ou dans une liste structurée de la même manière.  [3.7. ]
+  ## (intitulé d'une liste d'étiquettes) contient l'intitulé pour la colonne d'étiquettes ou de termes dans un glossaire ou dans une liste structurée de la même manière. [3.7. ]
   element headLabel { macro.phraseSeq, att.global.attributes, empty }
 headItem =
   
@@ -2312,7 +2343,7 @@ binaryObject =
   }
 milestone =
   
-  ## (borne) marque un point permettant de délimiter les sections d'un texte selon un autre systeme que les éléments de structure ; une balise de ce type marque une frontière.  [3.10.3. ]
+  ## (borne) marque un point permettant de délimiter les sections d'un texte selon un autre systeme que les éléments de structure ; une balise de ce type marque une frontière. [3.10.3. ]
   element milestone {
     empty,
     att.global.attributes,
@@ -2325,7 +2356,7 @@ milestone =
   }
 gb =
   
-  ## (gathering begins) marks the point in a transcribed codex at which a new gathering or quire begins. [3.10.3. ]
+  ## marks the point in a transcribed codex at which a new gathering or quire begins. [3.10.3. ]
   element gb {
     empty,
     att.global.attributes,
@@ -2406,7 +2437,7 @@ monogr =
   }
 series =
   
-  ## (informations sur la série) contient une information sur la série dans laquelle une monographie ou un autre élément bibliographique ont paru.  [3.11.2.1. ]
+  ## (informations sur la série) contient une information sur la série dans laquelle une monographie ou un autre élément bibliographique ont paru. [3.11.2.1. ]
   element series {
     (text
      | model.gLike
@@ -2423,7 +2454,7 @@ series =
   }
 author =
   
-  ## (auteur) dans une référence bibliographique contient le nom de la (des) personne(s) physique(s) ou du collectif, auteur(s) d'une oeuvre ; par exemple dans la même forme que celle utilisée par une référence bibliographique reconnue.  [3.11.2.2.  2.2.1. ]
+  ## (auteur) dans une référence bibliographique contient le nom de la (des) personne(s) physique(s) ou du collectif, auteur(s) d'une oeuvre ; par exemple dans la même forme que celle utilisée par une référence bibliographique reconnue. [3.11.2.2.  2.2.1. ]
   element author {
     macro.phraseSeq,
     att.global.attributes,
@@ -2444,7 +2475,7 @@ editor =
     att.canonical.attribute.key,
     att.canonical.attribute.ref,
     
-    ## may be used to specify further information about the entity referenced by this name, for example the occupation of a person, or the status of a place. 
+    ## may be used to specify further information about the entity referenced by this name, for example the occupation of a person, or the status of a place.
     attribute role {
       
       ##
@@ -2461,6 +2492,7 @@ respStmt =
   element respStmt {
     ((resp+, model.nameLike.agent+) | (model.nameLike.agent+, resp+)),
     att.global.attributes,
+    att.canonical.attributes,
     empty
   }
 resp =
@@ -2482,7 +2514,7 @@ title =
     att.typed.attribute.subtype,
     
     ## caractérise le titre selon une typologie adaptée.
-    ## Sample values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] short; 5] desc(descriptive) 
+    ## Sample values include: 1] main; 2] sub; 3] alt; 4] short; 5] desc
     attribute type { data.enumerated }?,
     
     ## indique le niveau bibliographique d'un titre, c'est-à-dire si ce titre identifie un article, un livre, une revue, une collection, ou un document non publié
@@ -2494,21 +2526,26 @@ title =
         ## (monographique) titre de monographie (livre, ensemble ou autre, publié comme un document distinct, y compris les volumes isolés d'ouvrages en plusieurs volumes)
         "m"
       | 
-        ## (journal) titre de revue
+        ## titre de revue
         "j"
       | 
         ## (série) titre de publication en série
         "s"
       | 
-        ## (unpublished) titre de matéria non publié (thèses et dissertations comprises, à l'exception de leurs éditions commerciales)
+        ## titre de matéria non publié (thèses et dissertations comprises, à l'exception de leurs éditions commerciales)
         "u"
     }?,
     empty
   }
 meeting =
   
-  ## contient le titre descriptif formalisé d’une réunion ou d’une conférence, employé dans une description bibliographique pour un article provenant d'une telle réunion, ou comme le titre ou le préambule aux publications qui en émanent.  [3.11.2.2. ]
-  element meeting { macro.limitedContent, att.global.attributes, empty }
+  ## contient le titre descriptif formalisé d’une réunion ou d’une conférence, employé dans une description bibliographique pour un article provenant d'une telle réunion, ou comme le titre ou le préambule aux publications qui en émanent. [3.11.2.2. ]
+  element meeting {
+    macro.limitedContent,
+    att.global.attributes,
+    att.canonical.attributes,
+    empty
+  }
 imprint =
   
   ## regroupe des informations relatives à la publication ou à la distribution d'un élément bibliographique. [3.11.2.4. ]
@@ -2528,107 +2565,41 @@ biblScope =
   element biblScope {
     macro.phraseSeq,
     att.global.attributes,
+    att.citing.attributes,
     
     ## identifie le type d'information que transmet l'élément, par exemple colonnes, pages, volume, etc.
-    ## Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] part; 7] column
-    attribute unit {
-      
-      ## l'élément contient un numéro de volume.
-      "volume"
-      | 
-        ## l'élément contient un numéro de livraison ou bien un numéro de volume et de livraison.
-        "issue"
-      | 
-        ## l'élément contient un nombre de pages ou l'étendue de sélection des pages.
-        "page"
-      | 
-        ## the element contains a line number or line range.
-        "line"
-      | 
-        ## (chapitre) l'élément contient une indication de chapitre (le numéro et/ou le titre)
-        "chapter"
-      | 
-        ## l'élément identifie une partie d'un livre ou une anthologie.
-        "part"
-      | 
-        ## the element identifies a column.
-        "column"
-      | xsd:Name
-    }?,
-    
-    ## identifie le type d'information que transmet l'élément, par exemple colonnes, pages, volume, etc.
-    ## Suggested values include: 1] vol(volume) ; 2] issue; 3] pp(pages) ; 4] ll(lines) ; 5] chap(chapter) ; 6] part
+    ## Suggested values include: 1] vol; 2] issue; 3] pp; 4] ll; 5] chap; 6] part
     attribute type {
       
-      ## (volume) volumel'élément contient un numéro de volume.
+      ## ( volume) l'élément contient un numéro de volume.
       "vol"
       | 
         ## l'élément contient un numéro de livraison ou bien un numéro de volume et de livraison.
         "issue"
       | 
-        ## (pages) pagesl'élément contient un nombre de pages ou l'étendue de sélection des pages.
+        ## ( pages) l'élément contient un nombre de pages ou l'étendue de sélection des pages.
         "pp"
       | 
-        ## (lines) the element contains a line number or line range.
+        ## the element contains a line number or line range.
         "ll"
       | 
-        ## ((chapitre) l'élément
-        ##                         contient une indication de chapitre (numéro et/ou
-        ##                         titre)) l'élément contient une indication de chapitre (le numéro et/ou le titre)
+        ## ((chapitre)) l'élément contient une indication de chapitre (le numéro et/ou le titre)
         "chap"
       | 
         ## l'élément identifie une partie d'un livre ou une anthologie.
         "part"
       | xsd:Name
     }?,
-    
-    ## specifies the starting point of the range of units indicated by the unit attribute.
-    attribute from { data.word }?,
-    
-    ## specifies the end-point of the range of units indicated by the unit attribute.
-    attribute to { data.word }?,
     empty
   }
 citedRange =
   
-  ## (cited range) defines the range of cited content, often represented by pages or other units [3.11.2.4. ]
+  ## defines the range of cited content, often represented by pages or other units [3.11.2.4. ]
   element citedRange {
     macro.phraseSeq,
     att.global.attributes,
     att.pointing.attributes,
-    
-    ## identifies the type of information conveyed by the element, e.g. columns, pages, volume.
-    ## Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] part; 7] column
-    attribute unit {
-      
-      ## the element contains a volume number.
-      "volume"
-      | 
-        ## the element contains an issue number, or volume and issue numbers.
-        "issue"
-      | 
-        ## the element contains a page number or page range.
-        "page"
-      | 
-        ## the element contains a line number or line range.
-        "line"
-      | 
-        ## the element contains a chapter indication (number and/or title)
-        "chapter"
-      | 
-        ## the element identifies a part of a book or collection.
-        "part"
-      | 
-        ## the element identifies a column.
-        "column"
-      | xsd:Name
-    }?,
-    
-    ## specifies the starting point of the range of units indicated by the unit attribute.
-    attribute from { data.word }?,
-    
-    ## specifies the end-point of the range of units indicated by the unit attribute.
-    attribute to { data.word }?,
+    att.citing.attributes,
     empty
   }
 pubPlace =
@@ -2688,7 +2659,7 @@ listBibl =
   }
 relatedItem =
   
-  ## contient ou référe à un autre élément bibliographique ayant une relation quelconque avec l'objet décrit, par exemple comme faisant partie d'une version alternative de celui-ci, ou bien en étant une version alternative.  [3.11.2.7. ]
+  ## contient ou référe à un autre élément bibliographique ayant une relation quelconque avec l'objet décrit, par exemple comme faisant partie d'une version alternative de celui-ci, ou bien en étant une version alternative. [3.11.2.7. ]
   element relatedItem {
     ((model.biblLike | model.ptrLike)?)
     >> sch:pattern [
@@ -2825,6 +2796,7 @@ stage =
     macro.specialPara,
     att.ascribed.attributes,
     att.global.attributes,
+    att.placement.attributes,
     
     ## indique le type d'indication scénique
     ## Suggested values include: 1] setting; 2] entrance; 3] exit; 4] business; 5] novelistic; 6] delivery; 7] modifier; 8] location; 9] mixed
@@ -3519,7 +3491,7 @@ place =
   }
 population =
   
-  ## (population) contient des informations sur la population d'un lieu.contient des informations sur la population d'un lieu. [13.3.4.3. ]
+  ## (population) contient des informations sur la population d'un lieu. [13.3.4.3. ]
   element population {
     (model.headLike*,
      ((model.pLike+ | model.labelLike+),
@@ -3537,6 +3509,24 @@ relation =
   ## (relation) décrit tout type de relation ou de lien à l'intérieur d'un groupe donné de participants. [13.3.2.3. ]
   element relation {
     (desc?)
+    >> sch:pattern [
+         id = "relation-constraint-reforkeyorname"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:relation"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "@ref or @key or @name"
+             "One of the attributes  'name', 'ref' or 'key' must be supplied"
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
     >> sch:pattern [
          id = "relation-constraint-activemutual"
          "\x{a}" ~
@@ -3599,7 +3589,7 @@ relation =
     }?,
     
     ## fournit un nom pour le type de relation dont elle est une instance.
-    attribute name { data.enumerated },
+    attribute name { data.enumerated }?,
     (
      ## identifie les participants actifs dans une relation à sens unique, ou tous les participants dans une relation réciproque.
      attribute active {
@@ -3797,19 +3787,28 @@ sponsor =
   
   ## (commanditaire) indique le nom d’une institution ou d’un organisme partenaires. [2.2.1. ]
   element sponsor {
-    macro.phraseSeq.limited, att.global.attributes, empty
+    macro.phraseSeq.limited,
+    att.global.attributes,
+    att.canonical.attributes,
+    empty
   }
 funder =
   
   ## (financeur) désigne le nom d’une personne ou d’un organisme responsable du financement d’un projet ou d’un texte. [2.2.1. ]
   element funder {
-    macro.phraseSeq.limited, att.global.attributes, empty
+    macro.phraseSeq.limited,
+    att.global.attributes,
+    att.canonical.attributes,
+    empty
   }
 principal =
   
   ## (chercheur principal) contient le nom du chercheur qui est principalement responsable de la création d’un texte électronique. [2.2.1. ]
   element principal {
-    macro.phraseSeq.limited, att.global.attributes, empty
+    macro.phraseSeq.limited,
+    att.global.attributes,
+    att.canonical.attributes,
+    empty
   }
 editionStmt =
   
@@ -3831,7 +3830,9 @@ publicationStmt =
   
   ## (mention de publication) regroupe des informations concernant la publication ou la diffusion d’un texte électronique ou d’un autre type de texte. [2.2.4.  2.2. ]
   element publicationStmt {
-    (model.pLike+ | model.publicationStmtPart+),
+    ((model.publicationStmtPart.agency,
+      model.publicationStmtPart.detail*)+
+     | model.pLike+),
     att.global.attributes,
     empty
   }
@@ -4006,7 +4007,7 @@ correction =
   }
 normalization =
   
-  ## (normalisation) indique l'extension de la normalisation ou de la régularisation effectuée sur le texte source dans sa conversion vers sa forme électronique.  [2.3.3.  15.3.2. ]
+  ## (normalisation) indique l'extension de la normalisation ou de la régularisation effectuée sur le texte source dans sa conversion vers sa forme électronique. [2.3.3.  15.3.2. ]
   element normalization {
     model.pLike+,
     att.global.attributes,
@@ -4156,7 +4157,7 @@ tagUsage =
   }
 \namespace =
   
-  ## (espace de noms) fournit le nom formel de l'espace de noms auquel appartiennent les éléments documentés par ses éléments fils.  [2.3.4. ]
+  ## (espace de noms) fournit le nom formel de l'espace de noms auquel appartiennent les éléments documentés par ses éléments fils. [2.3.4. ]
   element namespace {
     tagUsage+,
     att.global.attributes,
@@ -4180,7 +4181,7 @@ rendition =
   }
 styleDefDecl =
   
-  ## (style definition language declaration) specifies the name of the formal language in which style or renditional information is supplied elsewhere in the document. The specific version of the scheme may also be supplied. [2.3.5. ]
+  ## specifies the name of the formal language in which style or renditional information is supplied elsewhere in the document. The specific version of the scheme may also be supplied. [2.3.5. ]
   element styleDefDecl {
     model.pLike*,
     att.global.attributes,
@@ -4219,19 +4220,19 @@ att.patternReplacement.attribute.replacementPattern =
   attribute replacementPattern { data.replacement }
 prefixDef =
   
-  ## (prefixing scheme used in data.pointer values) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. ]
+  ## defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. ]
   element prefixDef {
     model.pLike*,
     att.global.attributes,
     att.patternReplacement.attributes,
     
-    ## supplies the identifier which functions as the prefix for an abbreviated pointing scheme such as a private URI scheme. The prefix constitutes the text preceding the first colon.
+    ## supplies a name which functions as the prefix for an abbreviated pointing scheme such as a private URI scheme. The prefix constitutes the text preceding the first colon.
     attribute ident { data.name },
     empty
   }
 listPrefixDef =
   
-  ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. ]
+  ## contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. ]
   element listPrefixDef {
     (prefixDef | listPrefixDef)+, att.global.attributes, empty
   }
@@ -4291,7 +4292,7 @@ geoDecl =
     att.declarable.attributes,
     
     ## donne un nom de code d'usage général pour les données employées.
-    ## Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Grid Reference System) ; 3] OSGB36(ordnance survey great britain) ; 4] ED50(European Datum coordinate system) 
+    ## Suggested values include: 1] WGS84; 2] MGRS; 3] OSGB36; 4] ED50
     [ a:defaultValue = "WGS84" ]
     attribute datum {
       
@@ -4348,6 +4349,15 @@ handNote =
     att.handFeatures.attributes,
     empty
   }
+abstract =
+  
+  ## contains a summary or formal abstract prefixed to an existing source document by the encoder. [2.4.4. ]
+  element abstract {
+    (model.pLike | model.listLike)+,
+    att.global.attributes,
+    att.responsibility.attributes,
+    empty
+  }
 creation =
   
   ## (création) contient des informations concernant la création d’un texte. [2.4.1.  2.4. ]
@@ -4395,7 +4405,7 @@ keywords =
     (term+ | \list),
     att.global.attributes,
     
-    ## désigne la liste close de mots dans lequel l'ensemble des mots-clés concernés est défini. 
+    ## désigne la liste close de mots dans lequel l'ensemble des mots-clés concernés est défini.
     attribute scheme { data.pointer }?,
     empty
   }
@@ -4424,11 +4434,11 @@ catRef =
   }
 calendarDesc =
   
-  ## (description des calendriers) contient la description des différents calendriers utilisés dans des dates écrits dans un manuscrit. [2.4.  2.4.4. ]
+  ## (description des calendriers) contient la description des différents calendriers utilisés dans des dates écrits dans un manuscrit. [2.4.  2.4.5. ]
   element calendarDesc { calendar+, att.global.attributes, empty }
 calendar =
   
-  ## (calendrier) describes a calendar or dating system used in a dating formula in the text. [2.4.4. ]
+  ## (calendrier) describes a calendar or dating system used in a dating formula in the text. [2.4.5. ]
   element calendar {
     model.pLike+, att.global.attributes, att.pointing.attributes, empty
   }
@@ -4460,7 +4470,7 @@ change =
   }
 typeNote =
   
-  ## (note sur les caractères typographiques.) décrit une police particulière ou un autre trait typographique significatif que l’on note dans la description d'une ressource imprimée.  [10.7.2. ]
+  ## (note sur les caractères typographiques.) décrit une police particulière ou un autre trait typographique significatif que l’on note dans la description d'une ressource imprimée. [10.7.2. ]
   element typeNote {
     macro.specialPara,
     att.global.attributes,
@@ -4478,7 +4488,7 @@ scriptNote =
   }
 listChange =
   
-  ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text.  [2.5.  11.7. ]
+  ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.5.  11.7. ]
   element listChange {
     (listChange | change)+,
     att.global.attributes,
@@ -4494,48 +4504,6 @@ link =
   element link {
     empty
     >> sch:pattern [
-         id = "link-constraint-linkTargets1"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:link"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test = "@target and @targets"
-             "You may not supply both @target and @targets on "
-             sch:name [ ]
-             "\x{a}" ~
-             "               "
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ]
-    >> sch:pattern [
-         id = "link-constraint-linkTargets2"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:link"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test = "not(@target) and not(@targets)"
-             "You must supply either @target or @targets on "
-             sch:name [ ]
-             "\x{a}" ~
-             "               "
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ]
-    >> sch:pattern [
          id = "link-constraint-linkTargets3"
          "\x{a}" ~
          "            "
@@ -4544,7 +4512,7 @@ link =
            "\x{a}" ~
            "               "
            sch:assert [
-             test = "contains(@targets,' ') or contains(@target,' ')"
+             test = "contains(@target,' ')"
              "You must supply at least two values for  @target or @targets on "
              sch:name [ ]
              "\x{a}" ~
@@ -4559,11 +4527,6 @@ link =
     att.global.attributes,
     att.pointing.attributes,
     att.typed.attributes,
-    
-    ## spécifie les identifiants des éléments ou des passages à lier ou à associer.
-    attribute targets {
-      list { data.pointer, data.pointer, data.pointer* }
-    }?,
     empty
   }
 linkGrp =
@@ -4632,7 +4595,7 @@ when =
     attribute absolute { data.temporal.w3c }?,
     
     ## spécifie l'unité de temps dans laquelle la valeur de l'attribut interval est exprimée, si elle n'est pas héritée de l'élément parent timeLine.
-    ## Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seconds) ; 5] ms(milliseconds) 
+    ## Suggested values include: 1] d; 2] h; 3] min; 4] s; 5] ms
     attribute unit {
       
       ## (jours) 
@@ -4641,7 +4604,7 @@ when =
         ## (heures) 
         "h"
       | 
-        ## (minutes) 
+        ##
         "min"
       | 
         ## (secondes) 
@@ -4670,7 +4633,7 @@ timeline =
     attribute origin { data.pointer }?,
     
     ## spécifie l'unité de temps correspondant à la valeur de l'attribut interval de la frise chronologique ou des points temporels qui la constituent.
-    ## Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seconds) ; 5] ms(milliseconds) 
+    ## Suggested values include: 1] d; 2] h; 3] min; 4] s; 5] ms
     attribute unit {
       
       ## (jours) 
@@ -4679,7 +4642,7 @@ timeline =
         ## (heures) 
         "h"
       | 
-        ## (minutes) 
+        ##
         "min"
       | 
         ## (secondes) 
@@ -4699,50 +4662,6 @@ join =
   ## (jointure) identifie un segment de texte, qui peut être fragmenté, en pointant vers les éléments éventuellement dispersés qui le composent. [16.7. ]
   element join {
     ((model.descLike | model.certLike)*)
-    >> sch:pattern [
-         id = "join-constraint-joinTargets1"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:join"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test = "@target and @targets"
-             "\x{a}" ~
-             "You may not supply both @target and @targets on "
-             sch:name [ ]
-             "\x{a}" ~
-             "               "
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ]
-    >> sch:pattern [
-         id = "join-constraint-joinTargets2"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:join"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test = "not(@target) and not(@targets)"
-             "\x{a}" ~
-             "You must supply either @target or @targets on "
-             sch:name [ ]
-             "\x{a}" ~
-             "               "
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ]
     >> sch:pattern [
          id = "join-constraint-joinTargets3"
          "\x{a}" ~
@@ -4768,11 +4687,6 @@ join =
     att.global.attributes,
     att.pointing.attributes,
     att.typed.attributes,
-    
-    ## spécifie les identifiants des éléments ou des passages qui doivent être réunis dans un élément virtuel.
-    attribute targets {
-      list { data.pointer, data.pointer, data.pointer* }
-    }?,
     
     ## spécifie le nom de l'élément que cette agrégation est censée former.
     attribute result { data.name }?,
@@ -4805,51 +4719,7 @@ alt =
   
   ## (alternative) identifie une alternative ou un ensemble d'options entre des éléments ou des passages. [16.8. ]
   element alt {
-    empty
-    >> sch:pattern [
-         id = "alt-constraint-altTargets1"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:alt"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test = "@target and @targets"
-             "You may not supply both \x{a}" ~
-             "	@target and @targets on "
-             sch:name [ ]
-             "\x{a}" ~
-             "               "
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ]
-    >> sch:pattern [
-         id = "alt-constraint-altTargets2"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:alt"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test = "not(@target) and not(@targets)"
-             "You must\x{a}" ~
-             "	supply either @target or @targets on "
-             sch:name [ ]
-             "\x{a}" ~
-             "               "
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ],
+    empty,
     att.global.attributes,
     att.pointing.attribute.targetLang,
     att.pointing.attribute.evaluate,
@@ -4857,11 +4727,6 @@ alt =
     
     ## précise la cible de la référence en donnant une ou plusieurs références URI
     attribute target {
-      list { data.pointer, data.pointer, data.pointer* }
-    }?,
-    
-    ## spécifie les identifiants des éléments ou des passages alternatifs.
-    attribute targets {
       list { data.pointer, data.pointer, data.pointer* }
     }?,
     
@@ -5098,7 +4963,7 @@ locus =
   }
 locusGrp =
   
-  ## (groupe d'emplacements) regroupe un certain nombre d'emplacements qui forment ensemble un item identifiable bien que discontinu dans un manuscrit ou une partie de manuscrit selon une foliotation spécifique.  [10.3.5. ]
+  ## (groupe d'emplacements) regroupe un certain nombre d'emplacements qui forment ensemble un item identifiable bien que discontinu dans un manuscrit ou une partie de manuscrit selon une foliotation spécifique. [10.3.5. ]
   element locusGrp {
     locus+,
     att.global.attributes,
@@ -5118,7 +4983,7 @@ material =
   }
 objectType =
   
-  ## (type d'objet) contient un mot ou une expression qui décrit le type de l'objet consideré.  [10.3.2. ]
+  ## (type d'objet) contient un mot ou une expression qui décrit le type de l'objet consideré. [10.3.2. ]
   element objectType {
     macro.phraseSeq,
     att.global.attributes,
@@ -5226,15 +5091,16 @@ collection =
   }
 altIdentifier =
   
-  ## (autre identifiant) Contient un autre ou un ancien identifiant pour un manuscrit, par exemple un numéro anciennement utilisé dans un catalogue. [10.4. ]
+  ## contains an alternative or former structured identifier used for a manuscript, such as a former catalogue number. [10.4. ]
   element altIdentifier {
-    (model.placeNamePart_sequenceOptional,
+    (country?,
+     region?,
+     settlement?,
      institution?,
      repository?,
      collection?,
      idno,
      note?),
-    att.global.attributes,
     att.typed.attributes,
     empty
   }
@@ -5282,7 +5148,7 @@ msContents =
     att.global.attributes,
     att.msExcerpt.attributes,
     
-    ## (classe) spécifie la ou les catégories ou classes auxquelles le manuscrit appartient.
+    ## spécifie la ou les catégories ou classes auxquelles le manuscrit appartient.
     attribute class {
       list { data.pointer+ }
     }?,
@@ -5298,7 +5164,7 @@ msItem =
     att.global.attributes,
     att.msExcerpt.attributes,
     
-    ## (classe) spécifie la ou les catégories ou classes auxquelles l'item appartient.
+    ## spécifie la ou les catégories ou classes auxquelles l'item appartient.
     attribute class {
       list { data.pointer+ }
     }?,
@@ -5375,10 +5241,10 @@ supportDesc =
     att.global.attributes,
     
     ## (matériau) contient un nom abrégé propre au projet désignant le matériau qui a principalement servi pour fabriquer le support.
-    ## Suggested values include: 1] paper(paper) ; 2] parch(parchment) ; 3] mixed
+    ## Suggested values include: 1] paper; 2] parch; 3] mixed
     attribute material {
       
-      ## (paper) 
+      ##
       "paper"
       | 
         ## (parchemin) 
@@ -5690,7 +5556,7 @@ surface =
   }
 surfaceGrp =
   
-  ## defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit.  [11.1. ]
+  ## defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. ]
   element surfaceGrp {
     (model.global | surface | surfaceGrp)+,
     att.global.attributes,
@@ -5921,7 +5787,7 @@ fw =
     att.placement.attributes,
     
     ## caractérise l'information encodée conformément à une typologie appropriée.
-    ## Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNum(line number) ; 5] sig(signature) ; 6] catch(catchword) 
+    ## Sample values include: 1] header; 2] footer; 3] pageNum; 4] lineNum; 5] sig; 6] catch
     attribute type { data.enumerated }?,
     empty
   }
@@ -5969,6 +5835,13 @@ space =
     (model.descLike | model.certLike)*,
     att.global.attributes,
     att.dimensions.attributes,
+    att.responsibility.attribute.cert,
+    att.source.attribute.source,
+    
+    ## (responsable) (responsible party) indicates the individual responsible for identifying and measuring the space
+    attribute resp {
+      list { data.pointer+ }
+    }?,
     
     ## (dimension) indique si l'espace est vertical ou horizontal.
     attribute dim {
@@ -5979,9 +5852,6 @@ space =
         ## l'espace est vertical.
         "vertical"
     }?,
-    
-    ## (responsable) désigne la personne qui a identifié et mesuré l'espace.
-    attribute resp { data.pointer }?,
     empty
   }
 subst =
@@ -6073,7 +5943,7 @@ metamark =
     ## describes the function (for example status, insertion, deletion, transposition) of the mark.
     attribute function { data.word }?,
     
-    ## identifies one or more elements to which the function indicated by the metamark applies. 
+    ## identifies one or more elements to which the function indicated by the metamark applies.
     attribute target {
       list { data.pointer+ }
     }?,
@@ -6117,7 +5987,7 @@ retrace =
   }
 transpose =
   
-  ## describes a single textual transposition as an ordered list of at least two pointers specifying the order in which the elements indicated should be re-combined.  [11.3.4.5. ]
+  ## describes a single textual transposition as an ordered list of at least two pointers specifying the order in which the elements indicated should be re-combined. [11.3.4.5. ]
   element transpose { (ptr, ptr+), att.global.attributes, empty }
 undo =
   
@@ -6141,6 +6011,7 @@ TEI =
     (teiHeader,
      ((model.resourceLike+, \text?) | \text))
     >> sch:ns [ prefix = "tei" uri = "http://www.tei-c.org/ns/1.0" ]
+    >> sch:ns [ prefix = "xs" uri = "http://www.w3.org/2001/XMLSchema" ]
     >> sch:ns [
          prefix = "rng"
          uri = "http://relaxng.org/ns/structure/1.0"
@@ -6225,7 +6096,7 @@ group =
   }
 div1 =
   
-  ## (division du texte de niveau 1) contient une subdivision de premier niveau dans le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.  [4.1.2. ]
+  ## (division du texte de niveau 1) contient une subdivision de premier niveau dans le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire. [4.1.2. ]
   element div1 {
     ((model.divTop | model.global)*,
      ((((model.div2Like | model.divGenLike), model.global*)+
@@ -6240,7 +6111,7 @@ div1 =
   }
 div2 =
   
-  ## (division du texte de niveau 2) contient une subdivision de deuxième niveau dans le texte prélimaire, dans le corps d’un texte ou dans le texte postliminaire.  [4.1.2. ]
+  ## (division du texte de niveau 2) contient une subdivision de deuxième niveau dans le texte prélimaire, dans le corps d’un texte ou dans le texte postliminaire. [4.1.2. ]
   element div2 {
     ((model.divTop | model.global)*,
      ((((model.div3Like | model.divGenLike), model.global*)+
@@ -6255,7 +6126,7 @@ div2 =
   }
 div3 =
   
-  ## (division du texte de niveau 3) contient une subdivision de troisième niveau dans le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.  [4.1.2. ]
+  ## (division du texte de niveau 3) contient une subdivision de troisième niveau dans le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire. [4.1.2. ]
   element div3 {
     ((model.divTop | model.global)*,
      ((((model.div4Like | model.divGenLike), model.global*)+
@@ -6270,7 +6141,7 @@ div3 =
   }
 div4 =
   
-  ## ( division du texte de niveau 4) contient une subdivision de quatrième niveau dans le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.  [4.1.2. ]
+  ## ( division du texte de niveau 4) contient une subdivision de quatrième niveau dans le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire. [4.1.2. ]
   element div4 {
     ((model.divTop | model.global)*,
      ((((model.div5Like | model.divGenLike), model.global*)+
@@ -6285,7 +6156,7 @@ div4 =
   }
 div5 =
   
-  ## ( division du texte de niveau 5) contient une subdivision de cinquième niveau dans le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.  [4.1.2. ]
+  ## ( division du texte de niveau 5) contient une subdivision de cinquième niveau dans le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire. [4.1.2. ]
   element div5 {
     ((model.divTop | model.global)*,
      ((((model.div6Like | model.divGenLike), model.global*)+
@@ -6300,7 +6171,7 @@ div5 =
   }
 div6 =
   
-  ## ( division du texte de niveau 6) contient une subdivision de sixième niveau dans le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.  [4.1.2. ]
+  ## ( division du texte de niveau 6) contient une subdivision de sixième niveau dans le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire. [4.1.2. ]
   element div6 {
     ((model.divTop | model.global)*,
      ((((model.div7Like | model.divGenLike), model.global*)+
@@ -6330,7 +6201,16 @@ trailer =
   
   ## contient un titre de fin ou de bas de page à la fin d’une division du texte. [4.2.4.  4.2. ]
   element trailer {
-    macro.phraseSeq, att.global.attributes, att.typed.attributes, empty
+    (text
+     | lg
+     | model.gLike
+     | model.phrase
+     | model.inter
+     | model.lLike
+     | model.global)*,
+    att.global.attributes,
+    att.typed.attributes,
+    empty
   }
 byline =
   
@@ -6343,7 +6223,11 @@ byline =
 dateline =
   
   ## (mention de date) contient une brève description des lieux, date, heure, etc. concernant la production d’une lettre, d’un article de journal ou d’un autre texte qui, placée au début ou à la fin, lui est associée comme en-tête ou annonce de fin. [4.2.2. ]
-  element dateline { macro.phraseSeq, att.global.attributes, empty }
+  element dateline {
+    (text | model.gLike | model.phrase | model.global | docDate)*,
+    att.global.attributes,
+    empty
+  }
 argument =
   
   ## (argument) liste formelle ou description en texte libre des sujets traités dans une subdivision d’un texte [4.2.  4.6. ]
@@ -6392,10 +6276,10 @@ closer =
 salute =
   
   ## (formule de politesse) contient un dédicace ou une formule de salut qui précède un avant-propos ou autre division du texte; ou bien encore la formule de politesse qui conclut une lettre, une préface, etc. [4.2.2. ]
-  element salute { macro.phraseSeq, att.global.attributes, empty }
+  element salute { macro.paraContent, att.global.attributes, empty }
 signed =
   
-  ## (signature) contient la dernière salutation, ajoutée à un avant-propos, à une dédicace ou à une autre division du texte. [4.2.2. ]
+  ## contient la dernière salutation, ajoutée à un avant-propos, à une dédicace ou à une autre division du texte. [4.2.2. ]
   element signed { macro.paraContent, att.global.attributes, empty }
 postscript =
   
@@ -6438,7 +6322,7 @@ titlePart =
     att.global.attributes,
     
     ## précise le rôle de cette subdivision du titre.
-    ## Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] short; 5] desc(descriptive) 
+    ## Suggested values include: 1] main; 2] sub; 3] alt; 4] short; 5] desc
     [ a:defaultValue = "main" ]
     attribute type {
       
@@ -6495,7 +6379,7 @@ docImprint =
   }
 docDate =
   
-  ## (date du document) contient la date d’un document telle qu’elle est (généralement ) donnée sur une page de titre.  [4.6. ]
+  ## (date du document) contient la date d’un document telle qu’elle est (généralement ) donnée sur une page de titre. [4.6. ]
   element docDate {
     macro.phraseSeq,
     att.global.attributes,
