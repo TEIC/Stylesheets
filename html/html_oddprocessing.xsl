@@ -157,7 +157,7 @@ of this software, even if advised of the possibility of such damage.
               </div>
               <xsl:call-template name="stdfooter">
                 <xsl:with-param name="file">
-                  <xsl:value-of select="$name"/>
+                  <xsl:value-of select="concat('-',$name)"/>
                 </xsl:with-param>
               </xsl:call-template>
               <xsl:call-template name="bodyEndHook"/>
