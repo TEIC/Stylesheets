@@ -64,8 +64,8 @@ check:
 v:
 	perl -p -i -e "s+AppVersion.*/AppVersion+AppVersion>`cat VERSION`</AppVersion+" docx/to/application.xsl
 
-p5:
-	@echo BUILD Build for P5, XSLT 2.0
+build:
+	@echo BUILD Copy main XSL files
 	test -d release/xsl/xml/tei/stylesheet || mkdir -p release/xsl/xml/tei/stylesheet/
 	for i in  ${DIRS} ; do \
 		tar cf - $$i | (cd release/xsl/xml/tei/stylesheet; tar xf - ); \
@@ -73,7 +73,7 @@ p5:
 
 
 common: names
-	@echo BUILD Build for P5, common files and documentation
+	@echo BUILD Copy common files and documentation
 	test -d release/xslcommon/xml/tei/stylesheet || mkdir -p release/xslcommon/xml/tei/stylesheet
 	cp names.xml catalog.xml VERSION *.css i18n.xml release/xslcommon/xml/tei/stylesheet
 
@@ -81,11 +81,12 @@ names:
 	$(SAXON) -it:main tools/getnames.xsl > names.xml
 
 profiles: 
-	@echo BUILD Build for P5, profiles
+	@echo BUILD Copy profiles
 	test -d release/xslprofiles/xml/tei/stylesheet || mkdir -p release/xslprofiles/xml/tei/stylesheet
 	tar cf - profiles | (cd release/xslprofiles/xml/tei/stylesheet; tar xf - )
 
 doc: oxygendoc
+	@echo BUILD Compile documentation
 	test -d release/xslcommon/doc/tei-xsl || mkdir -p release/xslcommon/doc/tei-xsl
 	$(SAXON) -o:doc/index.xml doc/teixsl.xml doc/param.xsl 
 	$(SAXON) -o:doc/style.xml doc/teixsl.xml  doc/paramform.xsl 
@@ -104,24 +105,24 @@ oxygendoc:
 teioo.jar:
 	(cd odt;  mkdir TEIP5; $(DOTDOTSAXON) -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
 
-test: clean p5 common names debversion
+test: clean build common names debversion
 	@echo BUILD Run tests
 	(cd Test; make)
 
 dist: clean release
 	-rm -f tei-xsl-`cat VERSION`.zip
-	(cd release/xslcommon; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
-	(cd release/xsl;     zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
-	(cd release/xslprofiles;    zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/xslcommon; 		zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/xsl;     		zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/xslprofiles;    	zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
 	-rm -rf dist
 	mkdir dist
-	(cd release/xsl; tar cf - .)       | (cd dist; tar xf  -)
-	(cd release/xslprofiles; tar cf - .) | (cd dist; tar xf  -)
+	(cd release/xsl; tar cf - .)         | (cd dist; tar xf -)
+	(cd release/xslprofiles; tar cf - .) | (cd dist; tar xf -)
 	(cd release/xslcommon/; tar cf - .)  | (cd dist; tar xf -)
 
-release: common doc oxygendoc p5 profiles
+release: common doc oxygendoc build profiles
 
-installp5: p5 teioo.jar
+installxsl: build teioo.jar
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
 	cp -r lib teioo.jar ${PREFIX}/share/xml/tei/stylesheet
 	(cd release/xsl; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
@@ -168,7 +169,7 @@ installcommon: doc common
 	(cd release/xslcommon/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 	(cd release/xslcommon/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
-install: doc installp5 installprofiles installcommon 
+install: doc installxsl installprofiles installcommon 
 
 debversion:
 	sh ./mydch debian-tei-xsl/debian/changelog

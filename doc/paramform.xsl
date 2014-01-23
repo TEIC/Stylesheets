@@ -169,7 +169,7 @@ return "";
 
    <xsl:for-each select="TEI/text/body//div[@type='param']">
        <p><hi><xsl:number/>: <xsl:value-of select="head"/></hi></p>
-       <p><ref target="customize.html#{@xml:id}">Details of this section</ref></p>
+       <p><ref target="index.html#{@xml:id}">Details of this section</ref></p>
        <table>
 	 <xsl:call-template name="list">
 	   <xsl:with-param
