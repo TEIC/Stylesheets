@@ -1095,7 +1095,8 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>ANNEX</xsl:text>
           </xsl:when>
           <xsl:when test="ancestor::tei:back">
-            <xsl:value-of select="concat('a',$level)"/>
+            <xsl:text>a</xsl:text>
+	    <xsl:value-of select="$level"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:call-template name="getStyleName">
