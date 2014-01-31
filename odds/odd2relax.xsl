@@ -614,7 +614,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="string-length($suffix)=0">
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
-          <xsl:if test="ancestor::tei:content/@allowsText='true'">
+          <xsl:if test="ancestor::tei:content/@allowText='true'">
             <text xmlns="http://relaxng.org/ns/structure/1.0"/>
           </xsl:if>
           <xsl:apply-templates/>
@@ -623,7 +623,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:otherwise>
         <xsl:element name="{$suffix}" xmlns="http://relaxng.org/ns/structure/1.0">
           <choice xmlns="http://relaxng.org/ns/structure/1.0">
-            <xsl:if test="ancestor::tei:content/@allowsText='true'">
+            <xsl:if test="ancestor::tei:content/@allowText='true'">
               <text xmlns="http://relaxng.org/ns/structure/1.0"/>
             </xsl:if>
             <xsl:apply-templates/>

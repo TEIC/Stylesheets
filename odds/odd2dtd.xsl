@@ -1017,7 +1017,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test=".//rng:anyName">
 	    <xsl:text> ANY</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="@allowsText='true' and not(*)">
+	  <xsl:when test="@allowText='true' and not(*)">
 	    <xsl:text> CDATA</xsl:text>
 	  </xsl:when>
 	  <xsl:when test="processing-instruction()[name()='NameList']">
@@ -1111,12 +1111,18 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test="tei:valList[@type='closed']">
 	    <xsl:text> (#PCDATA)</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="tei:content">
-	    <xsl:apply-templates select="tei:content/*"/>
+          <xsl:when test="tei:content/* and
+			  tei:content/@allowText='true'">
+	      <xsl:text>(#PCDATA | </xsl:text>
+	      <xsl:apply-templates select="tei:content/*"/>
+	      <xsl:text>)*</xsl:text>
 	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:text/>
-	  </xsl:otherwise>
+          <xsl:when test="tei:content/@allowText='true'">
+            <xsl:text>#PCDATA</xsl:text>
+	  </xsl:when>
+          <xsl:when test="tei:content/*">
+	      <xsl:apply-templates select="tei:content/*"/>
+	  </xsl:when>
 	</xsl:choose>
 	</Contents>
       </xsl:variable>
@@ -1767,7 +1773,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="innards">
     <xsl:param name="sep">|</xsl:param>
     <xsl:variable name="innards">
-      <xsl:if test="ancestor::tei:*/@allowsText='true'">
+      <xsl:if test="ancestor::tei:*/@allowText='true'">
 	<token>
 	  <xsl:text>#PCDATA</xsl:text>
 	</token>
