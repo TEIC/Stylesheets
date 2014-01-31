@@ -285,7 +285,7 @@ of this software, even if advised of the possibility of such damage.
 
 
   <xsl:variable name="ODD">
-    <xsl:for-each select="/tei:TEI">
+    <xsl:for-each select="/*">
       <xsl:copy>
 	<xsl:attribute name="xml:base" select="document-uri(/)"/>
         <xsl:copy-of select="@*"/>
@@ -303,6 +303,10 @@ of this software, even if advised of the possibility of such damage.
 
 
   <xsl:template match="/">
+<xsl:result-document href="/tmp/x.xml">
+<xsl:copy-of select="$ODD"/>
+</xsl:result-document>
+
     <xsl:apply-templates mode="odd2odd-pass1" select="$ODD"/>
   </xsl:template>
 
