@@ -27,9 +27,11 @@
     <!-- import default conversion style -->
     <xsl:import href="/project/tei/convert/Stylesheets/profiles/default/docx/from.xsl"/>
 
-    <!--Key pointing elements (any others?); Remove evil Windows underscore as well -->
-    <xsl:key name="ref" match="tei:*" use="fn:replace(@target,'^#_?','#')"/>
-    <xsl:key name="spanTo" match="tei:*" use="fn:replace(@spanTarget,'^#_?','#')"/>
+    <!-- Pointing elements (any others?) -->
+    <xsl:key name="target" match="tei:*" use="@target"/>
+    <xsl:key name="spanTo" match="tei:*" use="@spanTo"/>
+    <!--For promoting these milestones upwards -->
+    <xsl:key name="milestone-id" match="tei:lb | tei:pb" use="generate-id(.)"/>
 
     <!-- indent and strip-space: for testing only! -->
     <xsl:output
@@ -150,12 +152,12 @@ of this software, even if advised of the possibility of such damage.
 </p>
 <p xml:lang="en">Tomaž Erjavec, JSI</p>
 <p xml:lang="sl">Tomaž Erjavec, IJS</p>
-<p>JSI 2014-01-25, et</p>
+<p>JSI 2014-02-03, et</p>
       </desc>
    </doc>
 
-   <!-- This should be true only for text-cricital editions -->
-   <xsl:param name="preserveSoftPageBreaks">true</xsl:param>    	  
+   <!-- This should be true only for editions where original pagination is important -->
+   <xsl:param name="preserveSoftPageBreaks"/>
 	  
    <!-- By default this is not set correctly?? -->
    <xsl:template name="create-tei-header">
@@ -198,6 +200,49 @@ of this software, even if advised of the possibility of such damage.
 	 </change>
        </revisionDesc>
      </teiHeader>
+   </xsl:template>
+
+   <!-- ADD TWO NEW PASSES TO PROCESSING (docxtotei.xsl) -->
+   <xsl:template match="/">
+     <!-- Do an initial normalization and store everything in $pass0 -->
+      <xsl:if test="not(doc-available($relsFile))">
+	<xsl:message terminate="yes">The file <xsl:value-of
+	select="$relsFile"/> cannot be read</xsl:message>
+      </xsl:if>
+      <xsl:if test="not(doc-available($styleDoc))">
+	<xsl:message terminate="yes">The file <xsl:value-of
+	select="$styleDoc"/> cannot be read</xsl:message>
+      </xsl:if>
+     <xsl:variable name="pass0">
+       <xsl:apply-templates mode="pass0"/>
+     </xsl:variable>
+     <!-- Do the main transformation and store everything in the variable pass1 -->
+     <xsl:variable name="pass1">
+       <xsl:for-each select="$pass0">
+	 <xsl:apply-templates/>
+       </xsl:for-each>
+     </xsl:variable>		  
+    
+     <!--
+	 <xsl:result-document href="/tmp/foo.xml">
+	 <xsl:copy-of select="$pass1"/>
+	 </xsl:result-document>
+     -->
+
+     <!-- Create valid TEI -->
+     <xsl:variable name="pass2">
+       <xsl:apply-templates select="$pass1" mode="pass2"/>
+     </xsl:variable>
+
+     <!-- ADDIOTIONAl PASSES: -->
+     <!-- Massage TEI to make it better -->
+     <xsl:variable name="pass3">
+       <xsl:apply-templates select="$pass2" mode="pass3"/>
+     </xsl:variable>
+     <!-- Final clean-up -->
+     <xsl:apply-templates select="$pass3" mode="pass4"/>
+
+     <xsl:call-template name="fromDocxFinalHook"/>
    </xsl:template>
 
 
@@ -302,25 +347,6 @@ of this software, even if advised of the possibility of such damage.
 
    <!-- PASS2: overwriting templates from Stylesheets/docx/from/pass2.xsl -->
 
-   <!-- Change pass2 on div to run through new pass3 and pass4 -->
-   <xsl:template match="tei:body/tei:div" mode="pass2">
-     <xsl:variable name="pass2">
-       <xsl:copy>
-	 <xsl:apply-templates mode="pass2" select="@*"/>
-	 <xsl:apply-templates mode="pass2"/>
-       </xsl:copy>
-     </xsl:variable>
-     <xsl:variable name="pass3">
-       <xsl:apply-templates select="$pass2" mode="pass3"/>
-       <!--xsl:copy-of select="$pass2"/-->
-     </xsl:variable>
-     <xsl:apply-templates select="$pass3" mode="pass4"/>
-     <!-- For debugging: -->
-     <!--xsl:copy-of select="."/-->
-     <!--xsl:copy-of select="$pass2"/-->
-     <!--xsl:copy-of select="$pass3"/-->
-   </xsl:template>
-   
    <!-- This template is a project-specific hack: -->
    <!-- Consider div[1] to be tei:front/tei:titlePage if it contains Title; other divs are tei:body -->
    <!-- Takes only Title, Subtitle, Author, Date from the div, other stuff is ignored -->
@@ -357,6 +383,8 @@ of this software, even if advised of the possibility of such damage.
 	       </docDate>
 	     </xsl:if>
 	   </titlePage>
+	   <!-- HERE WE NEED A HOOK NOT TO LOOSE ALL DIV1 
+		IF IT HAS ANYTHING APARAT FROM TITLEPAGE ELEMENTS! -->
 	 </front>
        </xsl:if>
        <body>
@@ -367,16 +395,18 @@ of this software, even if advised of the possibility of such damage.
 	     </xsl:for-each>
 	   </xsl:when>
 	   <xsl:otherwise>
-	     <xsl:for-each select="tei:body/tei:div">
-	       <xsl:apply-templates select="." mode="pass2"/>
-	     </xsl:for-each>
+	     <xsl:apply-templates select="tei:body/tei:div" mode="pass2"/>
 	   </xsl:otherwise>
 	 </xsl:choose>
        </body>
      </text>
    </xsl:template>
 
-
+   <!-- Sometimes there is a bogus top level div, just get rid of it -->
+   <xsl:template match="tei:body/tei:div[count(../*)=1]" mode="pass2">
+     <xsl:apply-templates mode="pass2"/>
+   </xsl:template>
+   
    <!-- FIX: original only takes care of captions that follow tables and figures 
 	but they can be before as well.
 	However, this can lead to errors if two images are one next to another:
@@ -544,12 +574,12 @@ of this software, even if advised of the possibility of such damage.
 	   </xsl:when>
 	   <xsl:when test="current-grouping-key() = 'div'">
 	     <xsl:for-each select="current-group()">
-	       <xsl:apply-templates mode="pass3" select="."/>
+	       <xsl:apply-templates select="." mode="pass3"/>
 	     </xsl:for-each> 
 	   </xsl:when>
 	   <xsl:otherwise>
 	     <xsl:for-each select="current-group()">
-	       <xsl:apply-templates mode="pass3" select="."/>
+	       <xsl:apply-templates select="." mode="pass3"/>
              </xsl:for-each> 
 	   </xsl:otherwise>
 	 </xsl:choose>
@@ -557,13 +587,17 @@ of this software, even if advised of the possibility of such damage.
      </xsl:copy>
    </xsl:template>
 
+   <!-- Get rid of empty heads, which seem to abound -->
+   <!-- DOESN'T WORK - some other template steals the show? -->
+   <!--xsl:template match="tei:head[normalize-space(.)='']" mode="pass3" priority="100"/-->
+
    <!-- Fix table/head so it is always at start of table -->
    <!-- This doesn't happen with standard stylesheets, producing non-valid TEI -->
    <xsl:template match="tei:table[tei:head]" mode="pass3">
        <xsl:copy>
 	 <xsl:copy-of select="@*"/>
-	 <xsl:apply-templates mode="pass3" select="tei:head"/>
-	 <xsl:apply-templates mode="pass3" select="tei:*[not(self::tei:head)]"/>
+	 <xsl:apply-templates select="tei:head" mode="pass3"/>
+	 <xsl:apply-templates select="tei:*[not(self::tei:head)]" mode="pass3"/>
        </xsl:copy>
    </xsl:template>
 
@@ -586,6 +620,13 @@ of this software, even if advised of the possibility of such damage.
 
    <!-- tei:cit already takes care of this one -->
    <xsl:template match="tei:cit/tei:bibl" mode="pass3"/>
+
+   <!-- Insert docAuthor - it is up do the user to place it correctly -->
+   <xsl:template match="tei:p[@rend = 'Author']" mode="pass3">
+     <docAuthor>
+       <xsl:apply-templates mode="pass3"/>
+     </docAuthor>
+   </xsl:template>
 
    <!-- Dates inside a paragraph -->
    <!-- Can't do it in pass2 as that one fiddles with adjecent tei:hi elements -->
@@ -619,61 +660,72 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
 
    <!-- Janus elements: del/add, abbr/expan, orig/reg, sic/corr
-	These are wrapped in subst or choice if they are adjacent -->
+	These are wrapped in subst or choice if they are adjacent
+	(but can have white-space betweet - otherwise it would be v. difficult to edit them in Word -->
    
-   <xsl:template match="tei:del" mode="pass3">
-     <xsl:if test="string-length(normalize-space(.))>0 or tei:*">
-       <xsl:if test="not(
-		     following-sibling::*[1][self::tei:add] and
-		     not(following-sibling::node()[1][self::text()][normalize-space(.)])
-		     )
-		     and
-		     not(
-		     preceding-sibling::*[1][self::tei:add] and
-		     not(preceding-sibling::node()[1][self::text()][normalize-space(.)])
-		     )">
+   <!-- Procesing (add|del)+ which are wrapped in subst -->
+   <xsl:template match="text()" mode="pass3">
+     <xsl:choose>
+       <xsl:when test="normalize-space(.)">
+	 <xsl:value-of select="."/>
+       </xsl:when>
+       <!-- Ignore this whitespace, otherwise it is output after subst, which we don't want -->
+       <xsl:when test="preceding-sibling::tei:*[1][name()='del' or name()='add'] and
+		       following-sibling::tei:*[1][name()='del' or name()='add']"/>
+       <xsl:otherwise>
+	 <xsl:value-of select="."/>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template>
+   <xsl:template match="tei:del | tei:add" mode="pass3">
+     <xsl:if test="normalize-space(.) or tei:*">
+       <xsl:choose>
+       <xsl:when test="preceding-sibling::*[1][name()='add' or name()='del'] and
+		       not(preceding-sibling::node()[1][self::text()][normalize-space(.)])"/>
+       <xsl:when test="following-sibling::*[1][name()='add' or name()='del'] and
+		       not(following-sibling::node()[1][self::text()][normalize-space(.)])">
+	 <subst>
+	   <xsl:variable name="subst">
+	     <xsl:apply-templates select="." mode="subst"/>
+	   </xsl:variable>
+	   <!--xsl:copy-of select="$subst"/-->
+	   <xsl:apply-templates select="$subst" mode="re-space"/>
+	 </subst>
+       </xsl:when>
+       <xsl:otherwise>
 	 <xsl:copy>
 	   <xsl:apply-templates mode="pass3"/>
 	 </xsl:copy>
-       </xsl:if>
-     </xsl:if>
-   </xsl:template>
-   <xsl:template match="tei:add" mode="pass3">
-     <xsl:if test="string-length(normalize-space(.))>0 or tei:*">
-       <xsl:choose>
-	 <xsl:when test="following-sibling::*[1][self::tei:del] and
-			 not(following-sibling::node()[1][self::text()][normalize-space(.)])">
-	   <subst>
-	     <xsl:copy>
-	       <xsl:apply-templates mode="pass3"/>
-	     </xsl:copy>
-	     <del>
-	       <xsl:apply-templates select="following-sibling::tei:del[1]/node()" mode="pass3"/>
-	     </del>
-	   </subst>
-	 </xsl:when>
-	 <xsl:when test="preceding-sibling::*[1][self::tei:del] and
-			 not(preceding-sibling::node()[1][self::text()][normalize-space(.)])">
-	   <subst>
-	     <del>
-	       <xsl:apply-templates select="preceding-sibling::tei:del[1]/node()" mode="pass3"/>
-	     </del>
-	     <xsl:copy>
-	       <xsl:apply-templates mode="pass3"/>
-	     </xsl:copy>
-	   </subst>
-	 </xsl:when>
-	 <xsl:otherwise>
-	   <xsl:copy>
-	     <xsl:apply-templates mode="pass3"/>
-	   </xsl:copy>
-	 </xsl:otherwise>
+       </xsl:otherwise>
        </xsl:choose>
      </xsl:if>
    </xsl:template>
+   <xsl:template match="tei:del | tei:add" mode="subst">
+     <xsl:copy>
+       <xsl:apply-templates mode="pass3"/>
+     </xsl:copy>
+     <xsl:if test="following-sibling::*[1][name()='add' or name()='del'] and
+		   not(following-sibling::node()[1][self::text()][normalize-space(.)])">
+       <xsl:apply-templates select="following-sibling::*[1]" mode="subst"/>
+     </xsl:if>
+   </xsl:template>
+   <!-- If there is more than one del/add in a subst
+	we better put in a space so they don't run together -->
+   <xsl:template match="tei:del | tei:add" mode="re-space">
+     <xsl:variable name="name" select="name()"/>
+     <xsl:copy>
+       <xsl:apply-templates select="@*" mode="pass3"/>
+       <xsl:apply-templates/>
+       <xsl:if test="following-sibling::tei:*[name()=$name]">
+	 <xsl:text> </xsl:text>
+       </xsl:if>
+     </xsl:copy>
+   </xsl:template>
 
+   <!-- These are done in the old way, but we want different behaviour than with subst anyway:
+   these make sense only in pairs? -->
    <xsl:template match="tei:abbr" mode="pass3">
-     <xsl:if test="string-length(normalize-space(.))>0 or tei:*">
+     <xsl:if test="normalize-space(.) or tei:*">
        <xsl:if test="not(
 		     following-sibling::*[1][self::tei:expan] and
 		     not(following-sibling::node()[1][self::text()][normalize-space(.)])
@@ -690,7 +742,7 @@ of this software, even if advised of the possibility of such damage.
      </xsl:if>
    </xsl:template>
    <xsl:template match="tei:expan" mode="pass3">
-     <xsl:if test="string-length(normalize-space(.))>0 or tei:*">
+     <xsl:if test="normalize-space(.) or tei:*">
        <xsl:choose>
 	 <xsl:when test="following-sibling::*[1][self::tei:abbr] and
 			 not(following-sibling::node()[1][self::text()][normalize-space(.)])">
@@ -724,7 +776,7 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
    
    <xsl:template match="tei:orig" mode="pass3">
-     <xsl:if test="string-length(normalize-space(.))>0 or tei:*">
+     <xsl:if test="normalize-space(.) or tei:*">
        <xsl:if test="not(
 		     following-sibling::*[1][self::tei:reg] and
 		     not(following-sibling::node()[1][self::text()][normalize-space(.)])
@@ -741,7 +793,7 @@ of this software, even if advised of the possibility of such damage.
      </xsl:if>
    </xsl:template>
    <xsl:template match="tei:reg" mode="pass3">
-     <xsl:if test="string-length(normalize-space(.))>0 or tei:*">
+     <xsl:if test="normalize-space(.) or tei:*">
        <xsl:choose>
 	 <xsl:when test="following-sibling::*[1][self::tei:orig] and
 			 not(following-sibling::node()[1][self::text()][normalize-space(.)])">
@@ -775,7 +827,7 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
    
    <xsl:template match="tei:sic" mode="pass3">
-     <xsl:if test="string-length(normalize-space(.))>0 or tei:*">
+     <xsl:if test="normalize-space(.) or tei:*">
        <xsl:if test="not(
 		     following-sibling::*[1][self::tei:corr] and
 		     not(following-sibling::node()[1][self::text()][normalize-space(.)])
@@ -792,7 +844,7 @@ of this software, even if advised of the possibility of such damage.
      </xsl:if>
    </xsl:template>
    <xsl:template match="tei:corr" mode="pass3">
-     <xsl:if test="string-length(normalize-space(.))>0 or tei:*">
+     <xsl:if test="normalize-space(.) or tei:*">
        <xsl:choose>
 	 <xsl:when test="following-sibling::*[1][self::tei:sic] and
 			 not(following-sibling::node()[1][self::text()][normalize-space(.)])">
@@ -825,13 +877,36 @@ of this software, even if advised of the possibility of such damage.
      </xsl:if>
    </xsl:template>
    
-   <!-- By default pass through -->
-   <xsl:template match="tei:*" mode="pass3">
-     <xsl:copy>
-       <xsl:apply-templates select="@*" mode="pass3"/>
-       <xsl:apply-templates mode="pass3"/>
-     </xsl:copy>
+  <!-- Instead of using anchor give @xml:id to superordinate element -->
+  <xsl:template match="tei:anchor[not(../@xml:id)][not(preceding-sibling::tei:anchor)]" mode="pass3"/>
+  <xsl:template match="tei:*[not(@xml:id)][tei:anchor]" mode="pass3">
+    <xsl:copy>
+      <xsl:attribute name="xml:id" select="tei:anchor[1]/@xml:id"/>
+      <xsl:apply-templates select="@*" mode="pass3"/>
+      <xsl:apply-templates mode="pass3"/>
+    </xsl:copy>
+  </xsl:template>
+
+   <!-- Remove evil Windows underscore -->
+   <xsl:template match="@target | @spanTo" mode="pass3">
+     <xsl:attribute name="{name()}">
+       <xsl:if test="fn:matches(.,'^#_')">
+	 <xsl:message>
+	   <xsl:text>INFO: Removing evil Windows underscore in </xsl:text>
+	   <xsl:value-of select="."/>
+	 </xsl:message>
+       </xsl:if>
+       <xsl:value-of select="fn:replace(.,'^#_','#')"/>
+     </xsl:attribute>
    </xsl:template>
+
+  <!-- By default pass through -->
+  <xsl:template match="tei:*" mode="pass3">
+    <xsl:copy>
+      <xsl:apply-templates select="@*" mode="pass3"/>
+      <xsl:apply-templates mode="pass3"/>
+    </xsl:copy>
+  </xsl:template>
    <xsl:template match="@*|comment()" mode="pass3">
      <xsl:copy/>
    </xsl:template>
@@ -840,49 +915,180 @@ of this software, even if advised of the possibility of such damage.
    <!-- PASS4: final clean-up -->
 
    <!-- ToDo: 
-        - check which other attributes apart from @target, @spanTo can have pointers (if evil underscore is still there..)
-        - promote <pb>s out of subordinate elements and nuke these if they contain nothing but pb?
+	- remove anchors / id's not pointing anywhere (check other atts except for @target, @spanTo?; 
+	also evil underscore)
         - fix spaces in cases as "foo<term> bar </term>baz" -> "foo <term>bar</term> baz"?
     -->
-
-   <!-- Remove evil Windows underscore -->
-   <!-- Do we still need this? -->
-   <xsl:template match="@target | @spanTo" mode="pass4">
-     <xsl:attribute name="{name()}">
-       <xsl:if test="fn:matches(.,'^#_')">
-	 <xsl:message>
-	   <xsl:text>INFO: Removing evil Windows underscore </xsl:text>
-	   <xsl:value-of select="."/>
-	 </xsl:message>
-       </xsl:if>
-       <xsl:value-of select="fn:replace(.,'^#_','#')"/>
-     </xsl:attribute>
-   </xsl:template>
-
+   
    <!-- Remove unused anchors -->
-   <xsl:template match="tei:anchor" mode="pass4">
+   <!-- This doesn't work, gobbles up used anchors too! -->
+   <!--xsl:template match="tei:anchor" mode="pass4">
      <xsl:variable name="ref" select="concat('#',@xml:id)"/>
-     <xsl:if test="key('ref',$ref) or key('spanTo',$ref)">
-       <xsl:copy>
-	 <xsl:apply-templates select="@*" mode="pass4"/>
-	 <xsl:apply-templates mode="pass4"/>
-       </xsl:copy>
-     </xsl:if>
-     <xsl:if test="not(key('ref',$ref) or key('spanTo',$ref))">
-       <xsl:message>
-	 <xsl:text>INFO: Removing anchor with no referent for </xsl:text>
-	 <xsl:value-of select="@xml:id"/>
-       </xsl:message>
-     </xsl:if>
+     <xsl:choose>
+       <xsl:when test="key('target',$ref) or key('spanTo',$ref)">
+	 <xsl:copy>
+	   <xsl:apply-templates select="@*" mode="pass4"/>
+	   <xsl:apply-templates mode="pass4"/>
+	 </xsl:copy>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:message>
+	   <xsl:text>INFO: Removing anchor with no referent for </xsl:text>
+	   <xsl:value-of select="@xml:id"/>
+	 </xsl:message>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template-->
+   
+   <!-- Nuke empty divs -->
+   <!-- This has been moved to pass2  -->
+   <!--xsl:template match="tei:div" mode="pass4">
+     <xsl:choose>
+       <xsl:when test="not(tei:*)"/>
+       <xsl:otherwise>
+	 <xsl:copy>
+	   <xsl:apply-templates select="@*" mode="pass4"/>
+	   <xsl:apply-templates mode="pass4"/>
+	 </xsl:copy>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template-->
+
+   <!-- Zap phantom empty segs, a la <seg> </seg> -->
+   <xsl:template match="tei:seg[normalize-space(.)='']" mode="pass4"/>
+
+   <!-- Simplify bizzare structure as e.g.
+	<hi rend="footnote_reference">
+  	  <seg rend="bold">
+	    <note place="foot" xml:id="ftn8" n="8">...</note>
+	  </seg>
+	</hi>
+	(maybe this happes only with LibreOffice Writer?)   -->
+   <xsl:template match="tei:hi[@rend='footnote_reference'][tei:seg/tei:note]" mode="pass4">
+     <xsl:apply-templates select="tei:seg/tei:note" mode="pass4"/>
    </xsl:template>
+
+  <!-- Pass through, but promote singleton left or right edge lb/pb upwards;
+       also zap elements that are empty once lb/pb are removed -->
+  <xsl:template match="tei:*" mode="pass4">
+    <xsl:choose>
+      <!-- No milestones or more than one, just process -->
+      <xsl:when test="(not(.//tei:*[name()='pb' or name()='lb']) or 
+		      (.//tei:*[name()='pb' or name()='lb'])[2])">
+	<xsl:copy>
+	  <xsl:apply-templates select="@*" mode="pass4"/>
+	  <xsl:apply-templates mode="pass4"/>
+	</xsl:copy>
+      </xsl:when>
+      <!-- One milestones, possibly promotable -->
+      <xsl:otherwise>
+	<!-- id of left-edge lb/pb -->
+	<xsl:variable name="left">
+	  <xsl:apply-templates select="." mode="left"/>
+	</xsl:variable>
+	<!-- id of right-edge lb/pb -->
+	<xsl:variable name="right">
+	  <xsl:apply-templates select="." mode="right"/>
+	</xsl:variable>
+	<!-- found left-edge, output it -->
+	<xsl:if test="key('milestone-id',$left)">
+	  <xsl:message>INFO: un-nesting left lb/pb from <xsl:value-of select="name()"/></xsl:message>
+	  <xsl:apply-templates select="key('milestone-id',$left)" mode="pass4"/>
+	  <xsl:if test="$left = $right">
+	    <xsl:message>INFO: zap empty <xsl:value-of select="name()"/></xsl:message>
+	  </xsl:if>
+	</xsl:if>
+	<!-- output element  -->
+	<xsl:choose>
+	<!-- left-edge = right-edge, i.e. element will be empty and should be zapped -->
+	  <xsl:when test="key('milestone-id',$left) and key('milestone-id',$right)"/>
+	<!-- remove promoted lb/pb from context node and process it -->
+	<xsl:when test="key('milestone-id',$right) or key('milestone-id',$left)">
+	    <!-- context node sans promoted milestone -->
+	    <xsl:variable name="clean">
+	      <xsl:choose>
+		<xsl:when test="key('milestone-id',$left)">
+		  <xsl:apply-templates select="." mode="clean">
+		    <xsl:with-param name="remove" select="$left"/>
+		  </xsl:apply-templates>
+		</xsl:when>
+		<xsl:when test="key('milestone-id',$right)">
+		  <xsl:apply-templates select="." mode="clean">
+		    <xsl:with-param name="remove" select="$right"/>
+		  </xsl:apply-templates>
+		</xsl:when>
+	      </xsl:choose>
+	    </xsl:variable>
+	    <!-- Sanity check, maybe no longer necessary -->
+	    <xsl:if test="$clean//tei:lb or $clean//tei:pb ">
+	      <xsl:message terminate="yes">FATAL: clean still has pb!</xsl:message>
+	    </xsl:if>
+	    <!-- Now process cleaned context node -->
+	    <xsl:apply-templates select="$clean" mode="pass4"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:copy>
+	      <xsl:apply-templates select="@*" mode="pass4"/>
+	      <xsl:apply-templates mode="pass4"/>
+	    </xsl:copy>
+	  </xsl:otherwise>
+	</xsl:choose>
+	<!-- found right-edge, output it (but not if it was already output as left edge) -->
+	<xsl:if test="key('milestone-id',$right) and $left != $right">
+	  <xsl:message>INFO: un-nesting right lb/pb from <xsl:value-of select="name()"/></xsl:message>
+	  <xsl:apply-templates select="key('milestone-id',$right)" mode="pass4"/>
+	</xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <!-- output sans element with id $remove -->
+  <xsl:template match="@*" mode="clean">
+    <xsl:copy/>
+  </xsl:template>
+  <xsl:template match="*" mode="clean">
+    <xsl:param name="remove"/>
+    <xsl:if test="generate-id(.) != $remove">
+      <xsl:copy>
+	<xsl:apply-templates select="@*" mode="clean"/>
+	<xsl:apply-templates mode="clean">
+	  <xsl:with-param name="remove" select="$remove"/>
+	</xsl:apply-templates>
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+  <!-- find id of left edge lb/pb if exists; carefull with whitespace on left -->
+  <xsl:template match="*" mode="left">
+    <xsl:variable name="left" select="*[1][not(normalize-space(preceding-sibling::text())!='')]"/>
+    <xsl:choose>
+      <xsl:when test="$left/self::tei:lb or $left/self::tei:pb">
+	<xsl:value-of select="generate-id(*[1])"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates select="$left" mode="left"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <!-- find id of right edge lb/pb if exists; carefull with whitespace on right -->
+  <xsl:template match="*" mode="right">
+    <xsl:variable name="right" select="*[last()][not(normalize-space(following-sibling::text())!='')]"/>
+    <xsl:choose>
+      <xsl:when test="$right/self::tei:lb or $right/self::tei:pb">
+	<xsl:value-of select="generate-id(*[last()])"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates select="$right" mode="right"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
    <!-- By default pass through -->
-   <xsl:template match="tei:*" mode="pass4">
+   <!--xsl:template match="tei:*" mode="pass4">
      <xsl:copy>
        <xsl:apply-templates select="@*" mode="pass4"/>
        <xsl:apply-templates mode="pass4"/>
      </xsl:copy>
-   </xsl:template>
+   </xsl:template-->
+
    <xsl:template match="@*|comment()" mode="pass4">
      <xsl:copy/>
    </xsl:template>

@@ -278,6 +278,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:when test=".='strike' or .='striked'"><s>text-decoration: line-through</s></xsl:when>
 	    <xsl:when test=".='sub' or .='sup' or .='code' or	.='superscript' or .='subscript'"/>
 	    <xsl:when test=".='ul' or .='underline'"><s>text-decoration:underline</s></xsl:when>
+	    <xsl:when test="starts-with(.,'background(')"><s><xsl:text>background-color:</xsl:text><xsl:value-of select="substring-before(substring-after(.,'('),')')"/></s></xsl:when>
 	    <xsl:when test="starts-with(.,'align(')"><s><xsl:text>text-align:</xsl:text><xsl:value-of select="substring-before(substring-after(.,'('),')')"/></s></xsl:when>
 	    <xsl:when test="starts-with(.,'color(')"><s><xsl:text>color:</xsl:text><xsl:value-of select="substring-before(substring-after(.,'('),')')"/></s></xsl:when>
 	    <xsl:when test="starts-with(.,'post(')"><xsl:message terminate="yes">no support for post() pattern in @rend</xsl:message></xsl:when>
