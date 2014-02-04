@@ -1986,8 +1986,7 @@ select="$makeDecls"/></xsl:message>
         <xsl:apply-templates mode="justcopy" select="."/>
       </xsl:when>
       <xsl:when test="self::s:rule">
-        <pattern>
-          xmlns="http://www.ascc.net/xml/schematron">
+        <pattern xmlns="http://www.ascc.net/xml/schematron">
           <xsl:attribute name="name">
             <xsl:value-of select="ancestor::tei:constraintSpec/parent::*/@ident"/>
             <xsl:text>-constraint-</xsl:text>
