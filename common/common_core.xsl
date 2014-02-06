@@ -851,10 +851,12 @@ of this software, even if advised of the possibility of such damage.
 
    </xsl:template>
 
-  <xsl:template match="tei:name|tei:persName|tei:placeName">
+  <xsl:template match="tei:name|tei:persName|tei:placeName|tei:orgName">
       <xsl:choose>
          <xsl:when test="not(ancestor::tei:person|ancestor::tei:biblStruct)">
-	   <xsl:call-template name="makeSpan"/>
+	   <xsl:call-template name="makeInline">
+	     <xsl:with-param name="style" select="local-name()"/>
+	   </xsl:call-template>
 	 </xsl:when>
          <xsl:when test="following-sibling::tei:name|following-sibling::tei:persName">
 	   <xsl:call-template name="makeText">

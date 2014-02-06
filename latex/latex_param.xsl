@@ -300,6 +300,9 @@ characters. The normal characters remain active for LaTeX commands.
 \def\reg{}
 \def\ref{}
 \def\sic{}
+\def\persName{}
+\def\placeName{}
+\def\orgName{}
 \def\textcal#1{{\fontspec{<xsl:value-of select="$calligraphicFont"/>}#1}}
 \def\textgothic#1{{\fontspec{<xsl:value-of select="$gothicFont"/>}#1}}
 \def\textlarge#1{{\large #1}}
