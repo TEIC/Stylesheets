@@ -131,6 +131,14 @@ of this software, even if advised of the possibility of such damage.
 	 </xsl:element>
        </xsl:when>
 
+       <xsl:when test="starts-with($style,'tei_')">
+	 <xsl:element name="{substring($style,5)}">
+	   <xsl:call-template name="basicStyles">
+	     <xsl:with-param name="parented">true</xsl:with-param>
+	   </xsl:call-template>
+	 </xsl:element>
+       </xsl:when>
+
 	<xsl:when test="doc-available('../../names.xml') and doc('../../names.xml')//tei:gi[.=$style]">
 	  <xsl:element name="{$style}">
 	   <xsl:call-template name="basicStyles">

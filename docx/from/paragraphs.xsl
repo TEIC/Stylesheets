@@ -94,35 +94,28 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="$style='GeneratedTitle'"/>
 	<xsl:when test="$style='GeneratedSubTitle'"/>
 
-	<xsl:when test="$style='tei_l'">
-	  <l>
+       <xsl:when test="starts-with($style,'tei_')">
+	 <xsl:element name="{substring($style,5)}">
 	    <xsl:apply-templates/>
-	  </l>
-	</xsl:when>
+	 </xsl:element>
+       </xsl:when>
+
+       <xsl:when test="starts-with($style,'TEI ')">
+	 <xsl:element name="{substring($style,5)}">
+	    <xsl:apply-templates/>
+	 </xsl:element>
+       </xsl:when>
+
 	<xsl:when test="$style='Tabletitle'">
 	  <head>
 	    <xsl:apply-templates/>
 	  </head>
 	</xsl:when>
+
 	<xsl:when test="$style='dl'">
 	  <GLOSSITEM>
 	    <xsl:apply-templates/>
 	  </GLOSSITEM>
-	</xsl:when>
-	<xsl:when test="$style='tei_signed'">
-	  <signed>
-	    <xsl:apply-templates/>
-	  </signed>
-	</xsl:when>
-	<xsl:when test="$style='tei_speaker'">
-	  <speaker>
-	    <xsl:apply-templates/>
-	  </speaker>
-	</xsl:when>
-	<xsl:when test="$style='tei_speech'">
-	  <speech>
-	    <xsl:apply-templates/>
-	  </speech>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:call-template name="paragraph-wp">

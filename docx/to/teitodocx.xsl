@@ -794,14 +794,15 @@ of this software, even if advised of the possibility of such damage.
 
 
   <xsl:template match="tei:abbr" mode="get-style">teiabbr</xsl:template>
+  <xsl:template match="tei:bibl" mode="get-style">teibibl</xsl:template>
   <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
-  <xsl:template match="tei:date" mode="get-style">date</xsl:template>
+  <xsl:template match="tei:date" mode="get-style">teidate</xsl:template>
   <xsl:template match="tei:foreign" mode="get-style">teiforeign</xsl:template>
   <xsl:template match="tei:formula" mode="get-style">Formula</xsl:template>
   <xsl:template match="tei:orgName" mode="get-style">teiorgName</xsl:template>
-  <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
+  <xsl:template match="tei:persName" mode="get-style">teipersName</xsl:template>
   <xsl:template match="tei:q" mode="get-style">teiq</xsl:template>
-  <xsl:template match="tei:bibl" mode="get-style">teibibl</xsl:template>
+  <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
   <xsl:template match="tei:ref[@rend and not(@target)]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
   <xsl:template match="tei:seg[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
   
@@ -2647,6 +2648,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:with-param name="style">italic</xsl:with-param>
     </xsl:call-template>
    </xsl:template>
+
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>A signature block</desc>
