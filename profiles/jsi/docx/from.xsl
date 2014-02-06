@@ -25,7 +25,7 @@
                 exclude-result-prefixes="#all">
 
     <!-- import default conversion style -->
-    <xsl:import href="/project/tei/convert/Stylesheets/profiles/default/docx/from.xsl"/>
+    <xsl:import href="../../default/docx/from.xsl"/>
 
     <!-- Pointing elements (any others?) -->
     <xsl:key name="target" match="tei:*" use="@target"/>
