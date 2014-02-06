@@ -62,7 +62,6 @@
 	  <xsl:include href="maths.xsl"/>
 	  <xsl:include href="paragraphs.xsl"/>
 	  <xsl:include href="tables.xsl"/>
-	  <xsl:include href="tei-templates.xsl"/>
 	  <xsl:include href="textruns.xsl"/>
 	  <xsl:include href="utility-templates.xsl"/>
 	  <xsl:include href="wordsections.xsl"/>
@@ -527,5 +526,64 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
    </xsl:template>
 
-
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>simple teiHeader. For a more sophisticated header, think about overriding
+        this template</desc>
+    </doc>
+    <xsl:template name="create-tei-header">
+      <teiHeader>
+	<fileDesc>
+	  <titleStmt>
+	    <title>
+	      <xsl:call-template name="getDocTitle"/>
+	    </title>
+	    <author>
+	      <xsl:call-template name="getDocAuthor"/>
+	    </author>
+	  </titleStmt>
+	  <editionStmt>
+	    <edition>
+	      <date>
+		<xsl:call-template name="getDocDate"/>
+	      </date>
+	    </edition>
+	  </editionStmt>
+	  <publicationStmt>
+	    <p>unknown</p>
+	  </publicationStmt>
+	  <sourceDesc>
+	    <p>Converted from a Word document </p>
+	  </sourceDesc>
+	</fileDesc>
+	<encodingDesc>
+	  <xsl:call-template name="generateAppInfo"/>
+	</encodingDesc>
+	<revisionDesc>
+	  <change>
+	    <date>
+	      <xsl:text>$LastChangedDate: </xsl:text>
+	      <xsl:value-of select="tei:whatsTheDate()"/>
+	      <xsl:text>$</xsl:text>
+	    </date>
+	    <name>
+	      <xsl:call-template name="getDocAuthor"/>
+	    </name>
+	  </change>
+	</revisionDesc>
+      </teiHeader>
+    </xsl:template>
+    
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>generates a section heading. If you need something specific, feel free
+        to overwrite this template</desc>
+    </doc>
+    <xsl:template name="generate-section-heading">
+        <xsl:param name="Style"/>
+        <head>
+	  <xsl:apply-templates/>
+        </head>
+    </xsl:template>
+    
+    
+    
 </xsl:stylesheet>
