@@ -303,10 +303,11 @@ of this software, even if advised of the possibility of such damage.
 
 
   <xsl:template match="/">
-<xsl:result-document href="/tmp/x.xml">
-<xsl:copy-of select="$ODD"/>
-</xsl:result-document>
-
+    <!--
+	<xsl:result-document href="/tmp/x.xml">
+	<xsl:copy-of select="$ODD"/>
+	</xsl:result-document>
+    -->
     <xsl:apply-templates mode="odd2odd-pass1" select="$ODD"/>
   </xsl:template>
 
@@ -427,6 +428,31 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="tei:elementSpec[@mode='change']|tei:classSpec[@mode='change']|tei:macroSpec[@mode='change']"
+		mode="odd2odd-pass0">
+    <xsl:choose>
+      <xsl:when test="count(key('odd2odd-CHANGE',@ident))&gt;1">
+	<xsl:if
+	    test="generate-id(.)=generate-id(key('odd2odd-CHANGE',@ident)[1])">
+	  <xsl:copy>
+	    <xsl:copy-of select="@*"/>
+	    <xsl:for-each select="key('odd2odd-CHANGE',@ident)">
+	      <xsl:apply-templates
+		  select="*|text()|comment()|processing-instruction()"
+		  mode="odd2odd-pass0"/>
+	    </xsl:for-each>
+	  </xsl:copy>
+	</xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates select="*|text()|comment()|processing-instruction()" mode="odd2odd-pass0"/>
+	</xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template
+>
 
   <!-- ******************* Pass 1, follow schemaSpec ********************************* -->
   <xsl:template match="@*|processing-instruction()|text()|comment()" mode="odd2odd-pass1">
@@ -1393,9 +1419,7 @@ so that is only put back in if there is some content
       </WHAT>
     </xsl:variable>
     <xsl:variable name="entCount">
-      <xsl:for-each select="$contents/WHAT">
-        <xsl:value-of select="count(*)"/>
-      </xsl:for-each>
+      <xsl:value-of select="count($contents/WHAT/*)"/>
     </xsl:variable>
     <xsl:for-each select="$contents/WHAT">
       <xsl:choose>
