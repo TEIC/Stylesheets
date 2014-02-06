@@ -25,7 +25,24 @@
     <!-- import conversion style -->
     <xsl:import href="../../default/docx/to.xsl"/>
     
-<xsl:param name="lang">fr</xsl:param>
+    <xsl:param name="lang">fr</xsl:param>
+    <xsl:param name="pagebreakStyle">active</xsl:param>
+    <xsl:template name="document-title"/>
+    
+    <xsl:template match="tei:p[@rend]" mode="get-style">
+      <xsl:variable name="this" select="@rend"/>
+      <xsl:for-each select="document($styleDoc,/)">
+      <xsl:for-each select="key('Styles',$this)">
+        <xsl:value-of select="parent::w:style/@w:styleId"/>
+      </xsl:for-each>
+    </xsl:for-each>
+    </xsl:template>
 
-   
+   <xsl:template match="tei:title">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">title</xsl:with-param>
+    </xsl:call-template>
+   </xsl:template>
+
+
 </xsl:stylesheet>
