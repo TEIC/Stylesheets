@@ -110,32 +110,33 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:variable name="id" select="position()+1"/>
                     <w:footnote w:id="{$id}">
                         <xsl:call-template name="block-element">
-                            <xsl:with-param name="pPr" as="node()*">
-                                <w:pPr>
-                                    <w:pStyle w:val="FootnoteText"/>
-                                </w:pPr>
-                                <w:r>
-                                    <w:rPr>
-                                        <w:rStyle w:val="FootnoteReference"/>
-                                    </w:rPr>
-                                    <w:footnoteRef/>
-                                </w:r>
-				<xsl:choose>
-				  <xsl:when test="ancestor::tei:bibl">
-				    <w:r>
-				      <w:rPr>
-					<w:rStyle w:val="FootnoteReference"/>
-				      </w:rPr>
-				      <w:t>)</w:t>
-				    </w:r>
-				  </xsl:when>
-				  <xsl:otherwise>
-				    <w:r>
-				      <w:t xml:space="preserve"> </w:t>
-				    </w:r>	
-				  </xsl:otherwise>
-				</xsl:choose>
-                            </xsl:with-param>
+			  <xsl:with-param name="nop">false</xsl:with-param>
+			  <xsl:with-param name="pPr" as="node()*">
+			    <w:pPr>
+			      <w:pStyle w:val="FootnoteText"/>
+			    </w:pPr>
+			    <w:r>
+			      <w:rPr>
+				<w:rStyle w:val="FootnoteReference"/>
+			      </w:rPr>
+			      <w:footnoteRef/>
+			    </w:r>
+			    <xsl:choose>
+			      <xsl:when test="ancestor::tei:bibl">
+				<w:r>
+				  <w:rPr>
+				    <w:rStyle w:val="FootnoteReference"/>
+				  </w:rPr>
+				  <w:t>)</w:t>
+				</w:r>
+			      </xsl:when>
+			      <xsl:otherwise>
+				<w:r>
+				  <w:t xml:space="preserve"> </w:t>
+				</w:r>	
+			      </xsl:otherwise>
+			    </xsl:choose>
+			  </xsl:with-param>
                         </xsl:call-template>
                     </w:footnote>
                 </xsl:for-each>

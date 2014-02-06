@@ -2879,6 +2879,32 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each-group>
     </xsl:template>
 
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>A tbl as a child of a p is not allowed, this should not
+    happen. If it does, group the other siblings in self-contained p elements.</desc>
+  </doc>
+
+    <xsl:template match="w:p[w:tbl]" mode="pass2">
+      <xsl:variable name="props" select="w:pPr"/>
+      <xsl:for-each-group select="*" group-adjacent="local-name()">
+	<xsl:choose>
+	  <xsl:when test="current-grouping-key()='p'">
+	    <xsl:copy-of select="current-group()"/>
+	  </xsl:when>
+	  <xsl:when test="current-grouping-key()='tbl'">
+	    <xsl:copy-of select="current-group()"/>
+	  </xsl:when>
+	  <xsl:when test="current-grouping-key()='pPr'"/>
+	  <xsl:otherwise>
+	    <w:p>
+	      <xsl:copy-of select="$props"/>	      
+	      <xsl:copy-of select="current-group()"/>	      
+	    </w:p>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each-group>
+    </xsl:template>
+
 
   <xsl:template name="generateEndLink">
       <xsl:param name="where"/>
