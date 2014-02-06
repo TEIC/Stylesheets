@@ -79,6 +79,9 @@
 \def\reg{}
 \def\ref{}
 \def\sic{}
+\def\persName{}
+\def\placeName{}
+\def\orgName{}
 \def\textcal#1{{\fontspec{Lucida Calligraphy}#1}}
 \def\textgothic#1{{\fontspec{Lucida Blackletter}#1}}
 \def\textlarge#1{{\large #1}}
@@ -313,7 +316,7 @@
 \vspace{18pt}
 \makeatother
 \let\tabcellsep&  \par 
-\begin{longtable}{P{0.7652973360839537\textwidth}P{0.08470266391604628\textwidth}}
+\begin{longtable}{P{0.7628341528833258\textwidth}P{0.08716584711667412\textwidth}}
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}This is in a {<\textbf{ab}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rendition}="{\#bold \#initcaps}">}ab element{</\textbf{ab}>}\end{shaded}\egroup 
 
@@ -479,16 +482,16 @@
 \tabcellsep \textit{in despatches}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{orgName}>}orgName{</\textbf{orgName}>}\end{shaded}\egroup 
 
-\tabcellsep orgName\\
+\tabcellsep {\orgName orgName}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{orig}>}orig{</\textbf{orig}>}\end{shaded}\egroup 
 
 \tabcellsep {\orig orig}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{persName}>}persName{</\textbf{persName}>}\end{shaded}\egroup 
 
-\tabcellsep persName\\
+\tabcellsep {\persName persName}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{placeName}>}placeName{</\textbf{placeName}>}\end{shaded}\egroup 
 
-\tabcellsep placeName\\
+\tabcellsep {\placeName placeName}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{q}>}q{</\textbf{q}>}\end{shaded}\egroup 
 
 \tabcellsep ‘q’\\

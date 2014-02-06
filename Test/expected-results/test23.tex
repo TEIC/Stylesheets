@@ -79,6 +79,9 @@
 \def\reg{}
 \def\ref{}
 \def\sic{}
+\def\persName{}
+\def\placeName{}
+\def\orgName{}
 \def\textcal#1{{\fontspec{Lucida Calligraphy}#1}}
 \def\textgothic#1{{\fontspec{Lucida Blackletter}#1}}
 \def\textlarge#1{{\large #1}}
@@ -313,14 +316,14 @@
 \vspace{18pt}
 \makeatother
 \let\tabcellsep& \par
-Edward George Bulwer-Lytton, Baron Lytton of Knebworth via Marsala 2440126BolognaItaly\par
+{\persName Edward George Bulwer-Lytton, Baron Lytton of {\placeName Knebworth}} via Marsala 2440126{\name Bologna}{\name Italy}\par
 Languages: \textit{Deutsch}; \textit{Italiano}; \textit{Español}; \textit{Français}; \textit{Portugues}; \textit{Russian}; \textit{Svenska}; \textit{日本語}; \textit{中文}.\par
 Here is a simple \texttt{<ptr>} to it: \textit{\hyperref[P1]{1. Tests}}. Here is a simple \texttt{<ref>}, a \hyperlink{P1}{reference to it}. \par 
 \begin{longtable}{P{0.11724137931034483\textwidth}P{0.7327586206896551\textwidth}}
 emph\tabcellsep This is \textit{emph} tag\end{longtable} \par
  
 \section[Tests]{Tests}\label{P1}\par
- 	   	     	     	    Edward George Bulwer-Lytton, 	    Baron Lytton of 	    Knebworth 	     	   	   	    via Marsala 24 	    40126 	    Bologna 	    Italy 	   	 	
+ 	  {\persName  	     	     	    Edward George Bulwer-Lytton, 	    Baron Lytton of 	    {\placeName Knebworth} 	     	  } 	   	    via Marsala 24 	    40126 	    {\name Bologna} 	    {\name Italy} 	   	 	
 \section[More Tests]{More Tests}         \par
-  Edward George Bulwer-Lytton, Baron Lytton of Knebworth via Marsala 2440126BolognaItaly       
+{\persName   Edward George Bulwer-Lytton, Baron Lytton of {\placeName Knebworth}} via Marsala 2440126{\name Bologna}{\name Italy}       
 \end{document}
