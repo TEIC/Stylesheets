@@ -1,7 +1,7 @@
 /* 
-** Copyright 2011 TEI Consortium
+** Copyright 2014 TEI Consortium
 
-$Id: tei-agora.css 12482 2013-07-28 18:39:41Z louburnard $
+$Id: tei-oulipo.css 12482 2013-07-28 18:39:41Z louburnard $
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
@@ -286,20 +286,11 @@ div.breadcrumb {
    padding-right : 15px;
 }
 
-.tocontent{
-   color : #000066;
-   display : none;
-}
 
 .hide{
    display : none;
 }
 
-.framestdlink {
-   color: red;
-   font-size: smaller;
-   font-weight: bold;
-}
 
 a:hover
 {
@@ -348,132 +339,6 @@ td.maintext {
    padding-left: 6pt;
    padding-right: 6pt;
 }
-
-table.wovenodd td,p.wovenodd {
-   background-color: #FFFFFF;
-}
-
-/* an inner <text>, eg inside a <q> */
-div.innertext {
-   margin: 6pt;
-   border: 1pt solid red;
-}
-/* literal code */
-
-div.cdata {
-    white-space: pre;
-    clear:both;
-}
-
-pre,div.pre,div.pre_eg,pre.eg,div.eg {
-    clear:both;
-    margin-top: 1em;
-    margin-bottom:1em;
-    border-top-width: 4px;
-    border-bottom-width: 4px;
-    border-left-width: 2px;
-    border-right-width: 2px;
-    border-style: solid;
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    color: #000000;
-    line-height: 1.1em;
-    font-family: monospace;
-    font-size: 10pt;
-    white-space: pre;
-}
-
-div.egXML_valid {
-    background-color: #f7f9f6;
-    border-color: #c5d8bb;
-    }
-div.egXML_feasible {
-    background-color: #fff9f3;
-    border-color: #ffe1ad;
-    }
-div.egXML_invalid {
-    border-color: #ffe7e8 ;
-    background-color:  #fdbbac;
-    }
-
-
-/* table of contents */
-ul.toc {list-style: none;}
-li.toc {list-style: none;}
-
-/* table of contents links */
-
-a.inlinetoc:link,a.inlinetoc:visited
-{
-   color: #7A7A7A;
-   font-size: smaller; 
-   text-decoration: none;
-}
-
-a.inlinetoc-this:visited,a.inlinetoc-this:link
-{   
-   font-size: smaller; 
-   color: #000000;
-   font-weight: bold; 
-   text-decoration: underline;
-}
-
-a.inlinetoc-sub:visited,a.inlinetoc-sub:link
-{
-   text-decoration: none;
-   color: #000000;
-   font-weight: normal;
-   font-size: smaller; 
-}
-
-span.toclist{
-   font-size: smaller; 
-   font-family: Arial,Helvetica,sans-serif;
-   font-weight: bold;
-}
-
-p.toclist0 {
-   margin-left: 0.5em; 
-   margin-top: 1pt; 
-   margin-bottom: 3pt; 
-   text-indent: -0.5em;
-   font-size: small;    
-}
-
-p.toclist1 {
-   margin-left: 1em; 
-   margin-top: 1pt; 
-   margin-bottom: 2pt; 
-   text-indent: -0.7em;
-   font-size: small;    
-}
-
-p.toclist2 {
-   margin-left: 1.5em; 
-   text-indent: -1em;
-   font-size: small;    
-}
-
-p.toclist3 {
-   margin-left: 2em; 
-   text-indent: -1.5em;
-   font-size: small;    
-}
-
-span.toclist-this {
-   color: red;
-}
-
-a.toclist:visited,a.toclist:link
-{
-   font-weight: bold; 
-   color: #000000;
-   text-decoration: none;
-}
-
-
 
 /* notes */
 div.noteHeading {
@@ -616,46 +481,6 @@ p.left {
 text-indent: 2em;
 }
 
-div.indent  {
-    text-indent: 0em;
-}
-
-
-div.indent1 {
-   margin-left: 1em;
-}
-div.indent2 {
-   margin-left: 2em;
-}
-div.indent3 {
-   margin-left: 3em;
-}
-div.indent4 {
-   margin-left: 4em;
-}
-div.indent5 {
-   margin-left: 5em;
-}
-div.indent6 {
-   margin-left: 6em;
-}
-/* misc inline*/
-
-span.foreign {
-    font-style: italic;
-}
-
-.plain {
-   text-decoration: none;
-}
-
-p.box {
-   border: 1pt solid #000000;
-}
-
-.small {
-   font-size: small;
-}
 
 td.label {
    font-weight: bold;
@@ -854,14 +679,12 @@ div.floatingText {
     margin: 6pt;
     border: solid black 1pt;
 }
-span.pagebreak {
-    background-color: green;
-    font-weight: bold;
-}
-div.pagebreak {
+span.pagebreak, div.pagebreak {
     display: block;
-    border: solid red 1pt;
+    color: grey;
+    float: right;
 }
+
 span.element {
     font-weight: bold;
     color: black;
@@ -869,12 +692,6 @@ span.element {
 span.unclear {
     font-weight: bold;
 }
-span.wordtypeNN, span.wordtypeNNS {
-    color: green;
-    }
-span.wordtypeVVD,span.wordtypeVVN,span.wordtypeVVN,span.wordtypeVVZ,span.wordtypeVVG, span.wordtypeVV {
-    color: red;
-    }
 
 li.headless {
     display: none;
@@ -912,135 +729,6 @@ p.mainAuthor {
 p.mainEditor {
     display: block;
     margin: 1ex 0ex 1ex 0ex;
-}
-
-/* odd-specific styles removed */
-
-/* A -Z Styles From http://www.smileycat.com/miaow/archives/000211.php -styling the a to z */
-#azindex {
-    background-color: #ddd;
-    color:inherit;
-    display: block;
-    margin: 0px;
-    float: left;
-    padding: 5px;
-    width: 75%;
-    border: 1px solid #999;
-}
-#azindex p {
-    color: #fff;
-    background-color: #000060;
-    padding: 4px;
-    display: block;
-    margin: 0;
-    border-bottom: 1px solid #333;
-    font-size: 0.95em;
-}
-.index {
-    font: bold 100% Verdana, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-.index li {
-    float: left;
-    height: 1.5em;
-    list-style-type: none;
-    margin: 0.35em 0.15em;
-    padding: 0;
-    width: 1.5em;
-}
-.index a:link, .index a:visited {
-    background: #fff;
-    color: navy;
-    display: block;
-    height: 1.5em;
-    padding: 0.37em 0 0 0;
-    text-align: center;
-    text-decoration: none;
-    width: 1.5em;
-    border: 1px solid #999;
-}
-li.showall, li.showall a:visited,li.showall a:link {
-    width: 10em;
-}
-* html .index li {
-    margin: 0.2em 0.2em;
-}
-ul.index li a:hover {
-    background-color: #93D1E4;
-    color: #fff;
-    text-decoration: underline;
-}
-div.atozwrapper {
-   float: left;
-   width: 70%;
-}
-div.atoz {    
-   clear: left;
-   float: left;
-}    
-#byMod {
-   margin-top: 12px;
-   clear: left;
-}
-ul.atoz {
-    list-style: none;
-    text-align:left;
-    margin: 2px;
-    padding: 2px;
-    background-color: #eef;
-    color:inherit;
-}
-.atoz li {
-    padding: 0px;
-    display: inline;
-}
-span.listhead {
-    margin-top: 0em;
-    margin-right: 1em;
-    padding-left: 3px;
-    padding-right: 3px;
-    color: #000066;
-    font-weight: bold;
-    font-size: large;
-}
-/* End of A - Z styles */
- div.specChildren {
-    margin: 0em;
-    padding: 0em;
-}
-span.specChildModule {
-    font-weight: bold;
-}
-div.specChild {
-    margin-bottom: 4pt;
-    margin-left: 25px;
-    text-indent: -30px;
-}
-span.emptySlash:after {
-    content: "/";
-}
-/* status notation */
-.status_deprecated:after {
-    content: " (deprecated)";
-    color: red;
-}
-.status_changed:after {
-    content: " (changed)";
-    color: blue;
-}
-.status_unstable:after {
-    content: " (unstable)";
-    color: orange;
-}
-.status_deprecated {
-    border: solid red 1pt;
-}
-.status_changed {
-    border: solid blue 1pt;
-}
-.status_unstable {
-    border: solid orange 1pt;
 }
 /* <hi> rend values */
 span.typewriter{
@@ -1097,32 +785,33 @@ font-size:smaller;
 }
 
 table td {
-    border: solid black 1pt;
-    padding: 1ex 1ex 1ex 1ex;
-    text-align: center;
-    font-size:medium;
     }
     
-    table {
+table {
     /* trick to centre table: may not work with IE */
     margin-left: auto;
     margin-right: auto;
 }
 
 
-span.centre {
-    display: block;
-   text-align:center;
+/* oulipo specific */
+span.persName {
+    color: green;
+}
+p.Title {
+    font-weight: bold;
+    font-size: 18pt;
+    margin-bottom: 2pt;
+}
+p.Secrétaire, p.Présents , p.Excusés,p.Président {
+    font-style: italic;
+    margin-bottom: 4pt;
+    margin-left: 1em; 
+    text-indent: -1em;
 }
 
-p.centre {
-    display: block;
-   text-align:center;
-}
-
-
-
-.centre .center{
-    display: block;
-   text-align:center;
+div.front, div.back {
+    border: solid red 1pt;
+    padding: 3pt;
+    margin-bottom: 12pt;
 }

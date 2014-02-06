@@ -44,5 +44,7 @@
     </xsl:call-template>
    </xsl:template>
 
+  <xsl:template match="tei:date" mode="get-style">teidate</xsl:template>
+
 
 </xsl:stylesheet>

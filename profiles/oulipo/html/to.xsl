@@ -32,28 +32,47 @@
    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
 
 <!-- set stylesheet parameters -->
-   <xsl:param name="numberHeadings">false</xsl:param>
-   <xsl:param name="numberFigures">false</xsl:param>
-   <xsl:param name="numberTables">false</xsl:param>
-  <xsl:param name="numberParagraphs">false</xsl:param>
+<xsl:param name="numberHeadings">false</xsl:param>
+<xsl:param name="numberFigures">false</xsl:param>
+<xsl:param name="numberTables">false</xsl:param>
+<xsl:param name="numberParagraphs">false</xsl:param>
 <xsl:param name="lang">fr</xsl:param>
 
-  <xsl:param name="cssInlineFile">../profiles/oulipo/html/oulipo.css</xsl:param>
-  <xsl:param name="cssFile"/>
-  <xsl:param name="institution">OULIPO</xsl:param>
-   <xsl:param name="bottomNavigationPanel">false</xsl:param>
-  <xsl:param name="linkPanel">false</xsl:param>
-   <xsl:param name="footnoteBackLink">true</xsl:param>
-   <xsl:param name="homeURL"></xsl:param>
-  <xsl:param name="feedbackURL"></xsl:param>
-   <xsl:param name="homeWords">OULIPO</xsl:param>
- 
+<xsl:param name="cssInlineFile">../profiles/oulipo/html/oulipo.css</xsl:param>
+<xsl:param name="cssFile"/>
+<xsl:param name="institution">OuLiPo</xsl:param>
+<xsl:param name="bottomNavigationPanel">false</xsl:param>
+<xsl:param name="linkPanel">false</xsl:param>
+<xsl:param name="footnoteBackLink">true</xsl:param>
+<xsl:param name="homeURL"></xsl:param>
+<xsl:param name="feedbackURL"></xsl:param>
+<xsl:param name="homeWords">OuLiPo</xsl:param>
 
 
 <xsl:template name="copyrightStatement">
 This page is made available under the Creative Commons General Public License "Attribution, Non-Commercial, Share-Alike", version 3.0 (CCPL BY-NC-SA) 
 </xsl:template>
 
+<xsl:template match="tei:front">
+  <table>
+    <tr class="label"><td>Nom</td><td>Occurrences</td></tr>
+    <xsl:for-each-group select="//tei:persName" group-by=".">
+      <xsl:sort select="."/>
+      <tr>
+	<td><xsl:value-of select="."/></td>
+	<td><xsl:value-of select="count(current-group())"/></td>
+      </tr>
+    </xsl:for-each-group>
+  </table>
+  <div class="front">
+    <xsl:apply-templates/>
+  </div>
+</xsl:template>
 
+<xsl:template match="tei:back">
+  <div class="back">
+    <xsl:apply-templates/>
+  </div>
+</xsl:template>
 
 </xsl:stylesheet>
