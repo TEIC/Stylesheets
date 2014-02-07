@@ -38,11 +38,17 @@
     </xsl:for-each>
     </xsl:template>
 
-   <xsl:template match="tei:title">
+   <xsl:template match="tei:title|tei:q|tei:said|tei:quote">
     <xsl:call-template name="makeInline">
-      <xsl:with-param name="style">title</xsl:with-param>
+      <xsl:with-param name="style" select="local-name()"/>
     </xsl:call-template>
    </xsl:template>
+
+  <xsl:template match="tei:byline|tei:quotation|tei:opener|tei:closer">
+    <xsl:call-template name="block-element">
+      <xsl:with-param name="style" select="concat('tei',local-name())"/>
+    </xsl:call-template>
+  </xsl:template>
 
   <xsl:template match="tei:date" mode="get-style">teidate</xsl:template>
 

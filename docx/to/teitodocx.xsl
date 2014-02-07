@@ -1113,7 +1113,8 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
   </xsl:template>
 
-  <!-- quoted text; if it surrounds egXML, just pass on -->
+  <!-- quoted text -->
+
   <xsl:template match="tei:quote|tei:q|tei:said|tei:soCalled">
     <xsl:choose>
       <xsl:when test="*[not(tei:is-inline(.))] or parent::tei:div">

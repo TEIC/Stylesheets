@@ -123,6 +123,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="$p[@rend='Excusés']">true</xsl:when>
 	<xsl:when test="$p[@rend='Président']">true</xsl:when>
 	<xsl:when test="$p[@rend='Secrétaire']">true</xsl:when>
+	<xsl:when test="$p[@rend='opener']">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
  </xsl:function>
@@ -130,6 +131,7 @@ of this software, even if advised of the possibility of such damage.
  <xsl:function name="tei:is-back"   as="xs:boolean">
     <xsl:param name="p"/>
       <xsl:choose>
+	<xsl:when test="$p[self::tei:closer]">true</xsl:when>
 	<xsl:when test="$p[@rend='closer']">true</xsl:when>
 	<xsl:when test="$p[self::tei:byline]">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
