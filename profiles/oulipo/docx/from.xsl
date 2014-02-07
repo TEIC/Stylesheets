@@ -78,6 +78,18 @@ of this software, even if advised of the possibility of such damage.
   <xsl:apply-templates select="$Doctext" mode="pass3"/>
  </xsl:template>
 
+ <xsl:template match="tei:Personne" mode="pass3">
+   <persName type="other">
+	   <xsl:apply-templates mode="pass3"/>
+   </persName>
+ </xsl:template>
+
+ <xsl:template match="tei:Oulipen" mode="pass3">
+   <persName type="oulipen">
+	   <xsl:apply-templates mode="pass3"/>
+   </persName>
+ </xsl:template>
+
  <xsl:template match="tei:body" mode="pass3">
    <xsl:for-each-group select="*" group-adjacent="if
 						  (tei:is-front(.))  then 1

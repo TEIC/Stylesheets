@@ -52,5 +52,16 @@
 
   <xsl:template match="tei:date" mode="get-style">teidate</xsl:template>
 
+   <xsl:template match="tei:persName[@type='oulipen']">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">Oulipen</xsl:with-param>
+    </xsl:call-template>
+   </xsl:template>
+
+   <xsl:template match="tei:persName[@type='other']">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style">Personne</xsl:with-param>
+    </xsl:call-template>
+   </xsl:template>
 
 </xsl:stylesheet>
