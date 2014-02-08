@@ -127,6 +127,17 @@ of this software, even if advised of the possibility of such damage.
   </xsl:copy>
  </xsl:template>
 
+ <xsl:template match="tei:opener" mode="pass3">
+   <p>
+     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+   </p>
+ </xsl:template>
+ <xsl:template match="tei:closer" mode="pass3">
+   <p>
+     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+   </p>
+ </xsl:template>
+
  <xsl:function name="tei:is-front"   as="xs:boolean">
     <xsl:param name="p"/>
       <xsl:choose>
@@ -136,6 +147,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="$p[@rend='Président']">true</xsl:when>
 	<xsl:when test="$p[@rend='Secrétaire']">true</xsl:when>
 	<xsl:when test="$p[@rend='opener']">true</xsl:when>
+	<xsl:when test="$p[self::tei:opener]">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
  </xsl:function>
