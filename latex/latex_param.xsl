@@ -300,7 +300,7 @@ characters. The normal characters remain active for LaTeX commands.
 \def\reg{}
 \def\ref{}
 \def\sic{}
-\def\persName{}
+\def\persName{}\def\name{}
 \def\placeName{}
 \def\orgName{}
 \def\textcal#1{{\fontspec{<xsl:value-of select="$calligraphicFont"/>}#1}}
