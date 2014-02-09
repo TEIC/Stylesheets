@@ -47,6 +47,7 @@
 <xsl:param name="homeURL"></xsl:param>
 <xsl:param name="feedbackURL"></xsl:param>
 <xsl:param name="homeWords">OuLiPo</xsl:param>
+<xsl:param name="pagebreakStyle">display</xsl:param>
 
 
 <xsl:template name="copyrightStatement">
