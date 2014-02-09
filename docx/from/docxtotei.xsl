@@ -559,16 +559,16 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:call-template name="generateAppInfo"/>
 	</encodingDesc>
 	<revisionDesc>
-	  <change>
-	    <date>
-	      <xsl:text>$LastChangedDate: </xsl:text>
-	      <xsl:value-of select="tei:whatsTheDate()"/>
-	      <xsl:text>$</xsl:text>
-	    </date>
-	    <name>
-	      <xsl:call-template name="getDocAuthor"/>
-	    </name>
-	  </change>
+	  <listChange>
+	    <change>
+	      <date>
+		<xsl:value-of select="tei:whatsTheDate()"/>
+	      </date>
+	      <name>
+		<xsl:call-template name="getDocAuthor"/>
+	      </name>
+	    </change>
+	  </listChange>
 	</revisionDesc>
       </teiHeader>
     </xsl:template>
