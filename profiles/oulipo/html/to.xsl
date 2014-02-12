@@ -66,7 +66,7 @@ This page is made available under the Creative Commons General Public License "A
   <xsl:variable name="replace">$1 </xsl:variable>
   <xsl:variable name="wurds">
     <xsl:for-each select="//tei:body//text() [not(parent::tei:persName)]">
-      <xsl:variable name="n" select="ancestor::tei:TEI[1]/@n"/>
+      <xsl:variable name="n" select="preceding::tei:pb[@n][1]/@n|ancestor::tei:TEI[1]/@n"/>
       <xsl:for-each
 	  select="normalize-space(translate(translate(.,$punc,''),'-',$space))">
 	<xsl:for-each select="tokenize(replace(.,$contract,$replace),' ')">
@@ -92,7 +92,6 @@ This page is made available under the Creative Commons General Public License "A
 	<xsl:value-of select="count(current-group())"/>
       </td>
       <td>
-<xsl:message><xsl:copy-of select="current-group()"/></xsl:message>
 	<xsl:for-each-group select="current-group()" group-by="@n">
 	  <xsl:value-of select="current-grouping-key()"/><xsl:text> </xsl:text>
 	</xsl:for-each-group>
@@ -120,7 +119,7 @@ This page is made available under the Creative Commons General Public License "A
     <thead>
       <tr><th>Code</th><th>Occurrences</th><th>Noms</th></tr>
     </thead>
-    <xsl:for-each-group select="//tei:persName" group-by="tei:Maybe(@key)">
+    <xsl:for-each-group select="//tei:text//tei:persName" group-by="tei:Maybe(@key)">
       <xsl:sort select="."/>
       <tr>
 	<td><xsl:value-of select="current-grouping-key()"/></td>
