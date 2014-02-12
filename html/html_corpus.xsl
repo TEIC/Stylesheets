@@ -64,6 +64,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text()"/>
 	</title>
 	<xsl:call-template name="includeCSS"/>
+        <xsl:call-template name="javascriptHook"/>
 	<xsl:call-template name="cssHook"/>
       </head>
       <body class="simple">

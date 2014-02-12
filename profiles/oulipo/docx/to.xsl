@@ -58,6 +58,8 @@
     </xsl:call-template>
    </xsl:template>
 
+   <xsl:template match="tei:pb[parent::tei:text]"/>
+
    <xsl:template match="tei:persName[@type='other']">
     <xsl:call-template name="makeInline">
       <xsl:with-param name="style">Personne</xsl:with-param>

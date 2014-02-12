@@ -91,6 +91,7 @@ of this software, even if advised of the possibility of such damage.
  </xsl:template>
 
  <xsl:template match="tei:body" mode="pass3">
+   <pb/>
    <xsl:for-each-group select="*" group-adjacent="if
 						  (tei:is-front(.))  then 1
 						  else  if (tei:is-back(.))   then 2
