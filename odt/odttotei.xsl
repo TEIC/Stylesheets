@@ -32,6 +32,8 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+	  <xsl:import href="../common/functions.xsl"/>
+
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making TEI files from
@@ -246,15 +248,17 @@ of this software, even if advised of the possibility of such damage.
 	</profileDesc>
       </xsl:if>
       <revisionDesc>
-	<change>
-	  <name>
-	    <xsl:apply-templates
-		select="$META/office:meta/dc:creator"/>
-	  </name>
-	  <date>
-	    <xsl:apply-templates select="$META/office:meta/dc:date"/>
-	  </date>
-	</change>
+	<listChange>
+          <change>
+	    <name>
+	      <xsl:apply-templates
+		  select="$META/office:meta/dc:creator"/>
+	    </name>
+	    <date>
+	      <xsl:apply-templates select="$META/office:meta/dc:date"/>
+	    </date>
+          </change>
+	</listChange>
       </revisionDesc>
     </teiHeader>
   </xsl:template>
@@ -336,6 +340,7 @@ of this software, even if advised of the possibility of such damage.
 
 
   <xsl:template match="text:p">
+
     <xsl:choose>
       <xsl:when test="draw:frame and parent::draw:text-box">
 	<xsl:apply-templates select="draw:frame"/>
@@ -353,9 +358,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
 
       <xsl:when test="@text:style-name='Document Title'">
-        <title>
+        <docTitle>
           <xsl:apply-templates/>
-        </title>
+	</docTitle>
       </xsl:when>
 
       <xsl:when test="@text:style-name='Author'">
@@ -389,16 +394,6 @@ of this software, even if advised of the possibility of such damage.
         <head>
           <xsl:apply-templates/>
         </head>
-      </xsl:when>
-      <xsl:when test="@text:style-name='Screen'">
-        <Screen>
-          <xsl:apply-templates/>
-        </Screen>
-      </xsl:when>
-      <xsl:when test="@text:style-name='Output'">
-        <Output>
-          <xsl:apply-templates/>
-        </Output>
       </xsl:when>
 
       <xsl:when test="parent::text:list-item">
@@ -568,14 +563,15 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="name">
       <xsl:value-of select="replace(@text:style-name,'tei_5f_','')"/>
     </xsl:variable>
+    <xsl:variable name="style">
+      <xsl:value-of select="@text:style-name"/>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="string-length(.)=0 and not (text:s or draw:frame)"/>
-      <xsl:when test="text:note">
-	<xsl:apply-templates/>
-      </xsl:when>
       <!-- if the style name is the same as that of a known TEI
       element, make it that -->
-      <xsl:when test="doc-available('../names.xml') and doc('../names.xml')//tei:gi[.=$name]">
+      <xsl:when test="doc-available('../names.xml') and
+		      doc('../names.xml')//tei:gi[.=$name]">
 	<xsl:element name="{$name}">
           <xsl:call-template name="id.attribute"/>
 	  <xsl:apply-templates/>
@@ -583,7 +579,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
 	<xsl:variable name="rendition"
-		      select="tei:inlineStyles($name,.)"/>
+		      select="tei:inlineStyles($style,.)"/>
 	<xsl:choose>
 	  <xsl:when test="self::text:p and count(parent::table:table-cell/text:p)=1">
 	    <xsl:if test="not($rendition='')">
@@ -1324,43 +1320,47 @@ These seem to have no obvious translation
     <xsl:function name="tei:inlineStyles"  as="xs:string">
       <xsl:param name="name"/>
       <xsl:param name="context"/>
-      <xsl:variable name="r">
-	<xsl:for-each select="$context/key('STYLES',$name)">
+      <xsl:choose>
+	<xsl:when test="starts-with($name,'tei_5f_')">
+	  <xsl:value-of select="substring($name,8)"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:variable name="r">
+	    <xsl:for-each select="$context/key('STYLES',$name)">
+	      <xsl:if
+		  test="style:paragraph-properties/@fo:text-align">
+		<xsl:value-of
+		    select="style:paragraph-properties/@fo:text-align"/>
+		<xsl:text> </xsl:text>
+	  </xsl:if>	  
 	  <xsl:if
-	      test="style:paragraph-properties/@fo:text-align">
-	    <xsl:value-of
-		select="style:paragraph-properties/@fo:text-align"/>
-	    <xsl:text> </xsl:text>
+	      test="style:text-properties[starts-with(@style:text-position,'super')]">
+	    <xsl:text>sup </xsl:text>
+	  </xsl:if>
+	  
+	  <xsl:if test="style:text-properties/@fo:color and not(style:text-properties/@fo:color='transparent')">
+	    <xsl:text> color(</xsl:text>
+	    <xsl:value-of select="style:text-properties/@fo:color"/>
+	    <xsl:text>)</xsl:text>
+	  </xsl:if>
+	  
+	  <xsl:if test="style:text-properties/@fo:background-color and not(style:text-properties/@fo:background-color='transparent')">
+	    <xsl:text> background-color(</xsl:text>
+	    <xsl:value-of select="style:text-properties/@fo:background-color"/>
+	    <xsl:text>)</xsl:text>
 	  </xsl:if>
 	  
 	  <xsl:if
-	     test="style:text-properties[starts-with(@style:text-position,'super')]">
-	    <xsl:text>sup </xsl:text>
-	 </xsl:if>
-	 
-	 <xsl:if test="style:text-properties/@fo:color and not(style:text-properties/@fo:color='transparent')">
-	   <xsl:text> color(</xsl:text>
-	   <xsl:value-of select="style:text-properties/@fo:color"/>
-	   <xsl:text>)</xsl:text>
-	 </xsl:if>
-	 
-	 <xsl:if test="style:text-properties/@fo:background-color and not(style:text-properties/@fo:background-color='transparent')">
-	   <xsl:text> background-color(</xsl:text>
-	   <xsl:value-of select="style:text-properties/@fo:background-color"/>
-	   <xsl:text>)</xsl:text>
+	      test="style:text-properties[starts-with(@style:text-position,'sub')]">
+	    <xsl:text>sub </xsl:text>
+	  </xsl:if>
+	  
+	  <xsl:if test="style:text-properties[@fo:font-weight='bold']">
+	    <xsl:text>bold </xsl:text>
 	 </xsl:if>
 	 
 	 <xsl:if
-	     test="style:text-properties[starts-with(@style:text-position,'sub')]">
-	   <xsl:text>sub </xsl:text>
-	 </xsl:if>
-	 
-	 <xsl:if test="style:text-properties[@fo:font-weight='bold']">
-	   <xsl:text>bold </xsl:text>
-	 </xsl:if>
-	 
-	 <xsl:if
-		test="style:text-properties[@style:text-underline-type='double']">
+	     test="style:text-properties[@style:text-underline-type='double']">
 	   <xsl:text>underdoubleline </xsl:text>
 	 </xsl:if>
 	 
@@ -1382,9 +1382,11 @@ These seem to have no obvious translation
 	 <xsl:if test="style:text-properties[@fo:font-style='italic']">
 	   <xsl:text>italic </xsl:text>
 	 </xsl:if>
-
-       </xsl:for-each>
-     </xsl:variable>
-     <xsl:value-of select="normalize-space($r)"/>
+	 
+	    </xsl:for-each>
+	  </xsl:variable>
+	  <xsl:value-of select="normalize-space($r)"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:function>
 </xsl:stylesheet>
