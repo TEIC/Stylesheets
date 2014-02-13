@@ -24,8 +24,7 @@
     <!-- import base conversion style -->
 
 
-    <xsl:import href="../../default/docx/from.xsl"/>
-    <xsl:import href="../from_common.xsl"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p>This software is dual-licensed:
@@ -70,13 +69,98 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:encodingDesc" mode="pass2"/>
   <xsl:template match="tei:editionStmt" mode="pass2"/>
 
- <xsl:template match="tei:TEI" mode="pass2">
-  <xsl:variable name="Doctext">
-   <xsl:copy>
-    <xsl:apply-templates mode="pass2"/>
-   </xsl:copy>
-  </xsl:variable>
-  <xsl:apply-templates select="$Doctext" mode="pass3"/>
+ <xsl:template match="tei:Personne|tei:hi[@rend='Oulipen']" mode="pass3">
+   <persName type="other">
+	   <xsl:apply-templates mode="pass3"/>
+   </persName>
+ </xsl:template>
+
+ <xsl:template match="tei:Oulipen|tei:hi[@rend='Oulipen']" mode="pass3">
+   <persName type="oulipen">
+	   <xsl:apply-templates mode="pass3"/>
+   </persName>
+ </xsl:template>
+
+ <xsl:template match="tei:body" mode="pass3">
+   <pb/>
+   <xsl:for-each-group select="*" group-adjacent="if
+						  (tei:is-front(.))  then 1
+						  else  if (tei:is-back(.))   then 2
+						  else 3">     
+     <xsl:choose>
+       <xsl:when test="current-grouping-key()=1">
+	 <front>
+	   <xsl:apply-templates select="current-group()" mode="pass3"/>
+	 </front>
+       </xsl:when>
+       <xsl:when test="current-grouping-key()=2">
+	 <back>
+	   <xsl:apply-templates select="current-group()" mode="pass3"/>
+	 </back>
+       </xsl:when>
+       <xsl:when test="current-grouping-key()=3">
+	 <body>
+	   <xsl:apply-templates select="current-group()" mode="pass3"/>
+	 </body>
+       </xsl:when>
+
+     </xsl:choose>
+   </xsl:for-each-group>
+ </xsl:template>
+
+ <!-- and copy everything else -->
+
+ <xsl:template match="@*|comment()|processing-instruction()|text()" mode="pass3">
+  <xsl:copy-of select="."/>
+ </xsl:template>
+ <xsl:template match="*" mode="pass3">
+  <xsl:copy>
+   <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+  </xsl:copy>
+ </xsl:template>
+
+ <xsl:template match="tei:opener" mode="pass3">
+   <p>
+     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+   </p>
+ </xsl:template>
+ <xsl:template match="tei:closer" mode="pass3">
+   <p>
+     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+   </p>
+ </xsl:template>
+
+ <xsl:function name="tei:is-front"   as="xs:boolean">
+    <xsl:param name="p"/>
+      <xsl:choose>
+	<xsl:when test="$p[@rend='Title']">true</xsl:when>
+	<xsl:when test="$p[@rend='P4']">true</xsl:when>
+	<xsl:when test="$p[@rend='Présents']">true</xsl:when>
+	<xsl:when test="$p[@rend='Excusés']">true</xsl:when>
+	<xsl:when test="$p[@rend='Président']">true</xsl:when>
+	<xsl:when test="$p[@rend='Secrétaire']">true</xsl:when>
+	<xsl:when test="$p[@rend='opener']">true</xsl:when>
+	<xsl:when test="$p[self::tei:opener]">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+ </xsl:function>
+
+ <xsl:function name="tei:is-back"   as="xs:boolean">
+    <xsl:param name="p"/>
+      <xsl:choose>
+	<xsl:when test="$p[self::tei:closer]">true</xsl:when>
+	<xsl:when test="$p[@rend='closer']">true</xsl:when>
+	<xsl:when test="$p[self::tei:byline]">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+ </xsl:function>
+
+ <xsl:template match="tei:revisionDesc/tei:change/tei:date" mode="pass3">
+   <xsl:value-of select="tei:whatsTheDate()"/>
+ </xsl:template>
+
+ <xsl:template match="tei:persName[.=' ']">
+   <xsl:value-of select="."/>
  </xsl:template>
 
 </xsl:stylesheet>
