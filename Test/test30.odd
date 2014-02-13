@@ -25,6 +25,27 @@
         <moduleRef key="figures"/>
         <moduleRef key="linking"/>
         <moduleRef key="textstructure"/>
+        <elementRef key="setting"/>
+        <elementRef key="settingDesc"/>
+	<elementSpec ident="setting" mode="change">
+	  <content>
+	    <alternate maxOccurs="unbounded">
+	      <classRef key="model.nameLike.agent" except="orgName name"/>
+	      <classRef key="model.dateLike"/>
+	      <classRef key="model.settingPart"/>
+	    </alternate>
+	  </content>
+	</elementSpec>
+
+	<elementSpec ident="settingDesc" mode="change">
+	  <content>
+	    <alternate maxOccurs="unbounded">
+	      <classRef key="model.placeLike" include="place"/>
+	      <elementRef key="setting"/>
+	    </alternate>
+	  </content>
+	</elementSpec>
+
 	<elementSpec ident="platypus" mode="add">
 	  <classes mode="replace">
 	    <memberOf key="model.nameLike.agent"/>

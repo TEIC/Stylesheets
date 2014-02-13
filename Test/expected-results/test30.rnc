@@ -1524,6 +1524,7 @@ Tmodel.choicePart =
   | Tseg
 Tmodel.imprintPart = Tpublisher | TbiblScope | TpubPlace | Tdistributor
 Tmodel.catDescPart = notAllowed
+Tmodel.settingPart = notAllowed
 Tmodel.addressLike = Temail | Taddress | Taffiliation
 Tmodel.addressLike_alternation = Temail | Taddress | Taffiliation
 Tmodel.addressLike_sequence = Temail, Taddress, Taffiliation
@@ -1657,6 +1658,7 @@ Tmodel.profileDescPart =
   | TcalendarDesc
   | ThandNotes
   | TlistTranspose
+  | TsettingDesc
 Tatt.source.attributes = Tatt.source.attribute.source
 Tatt.source.attribute.source =
   
@@ -5715,6 +5717,24 @@ Tback =
      (Tmodel.divBottomPart, (Tmodel.divBottomPart | Tmodel.global)*)?),
     Tatt.global.attributes,
     Tatt.declaring.attributes,
+    empty
+  }
+Tsetting =
+  
+  ## describes one particular setting in which a language interaction takes place. [15.2.3. ]
+  element setting {
+    (TpersName | Tplatypus | Tmodel.dateLike | Tmodel.settingPart)+,
+    Tatt.global.attributes,
+    Tatt.ascribed.attributes,
+    empty
+  }
+TsettingDesc =
+  
+  ## (setting description) describes the setting or settings within which a language interaction takes place, or other places otherwise referred to in a text, edition, or metadata. [15.2.  2.4. ]
+  element settingDesc {
+    (Tplace | Tsetting)+,
+    Tatt.global.attributes,
+    Tatt.declarable.attributes,
     empty
   }
 Tplatypus =

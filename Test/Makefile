@@ -266,9 +266,11 @@ test-oddity:
 	../teitornc test30.odd test30.rnc
 	../teitodtd test30.odd test30.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test30.rnc
+	perl -p -i -e 's/generated from ODD source .*//' test30.dtd
 	$(JING) -c test30.rnc test11.xml
 	xmllint --noout --dtdvalid test30.dtd test11.xml
 	diff test30.rnc expected-results/test30.rnc
+	diff test30.dtd expected-results/test30.dtd
 	$(SAXON) test.odd ../odds/odd2odd.xsl > test.odd2odd
 	$(SAXON) test.odd2odd ../odds/odd2dtd.xsl > test.odd2dtd
 	$(SAXON) test.odd2odd ../odds/odd2html.xsl > test.odd2html

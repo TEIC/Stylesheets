@@ -562,10 +562,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="odd2odd-expandModule">
     <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
     <xsl:variable name="name" select="@key"/>
-    <xsl:variable name="exc"
-		  select="concat(' ',normalize-space(@except),' ')"/>
-    <xsl:variable name="inc"  
-		  select="concat('/',translate(normalize-space(@include),' ','/'),'/')"/>
+    <xsl:variable name="exc" select="@except"/>
+    <xsl:variable name="inc"  select="@include"/>
       <xsl:choose>
 	<xsl:when test="not(@except) and not(@include)">
 	  <xsl:for-each select="document($sourceDoc,$top)">
@@ -596,7 +594,7 @@ of this software, even if advised of the possibility of such damage.
 		select="key('odd2odd-MODULE_MEMBERS',$name)">
 	      <xsl:choose>
 		<xsl:when test="self::tei:classSpec"/>
-		<xsl:when test="contains($inc,concat('/',@ident,'/'))">
+		<xsl:when test="@ident = tokenize($inc, ' ')">
 		  <xsl:call-template name="odd2odd-checkObject">
 		    <xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
 		    <xsl:with-param name="why">(inclusion) module <xsl:value-of select="$name"/></xsl:with-param>
@@ -613,9 +611,8 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:if>
 	  <xsl:for-each select="document($sourceDoc,$top)">
 	    <xsl:for-each select="key('odd2odd-MODULE_MEMBERS',$name)">
-	      <xsl:if test="not(
-			    contains($exc,concat(' ',@ident,' '))
-			    or $top//tei:classRef[@key=current()/@ident])">
+	      <xsl:if test="@ident != tokenize($exc, ' ')
+			    or $top//tei:classRef[@key=current()/@ident]">
 		<xsl:call-template name="odd2odd-checkObject">
 		  <xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
 		  <xsl:with-param name="why">(exclusion) module <xsl:value-of select="$name"/></xsl:with-param>

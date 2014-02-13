@@ -220,45 +220,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="rng:ref">
-    <!-- where we meet a pointer, we have a choice of how to proceed
-
- a) if there is no auto-prefixing, just use as is
- b) if the thing exists in the IDENTS table (which includes prefixes), and starts with the prefix, then use it as is
- c) if it exists in the IDENTS table and has a prefix, use that
- d) otherwise, if it exists in the IDENTS table use the general prefix
- e) otherwise, just use what we are given
-    -->
-
-    <xsl:variable name="lookup" select="replace(@name,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
-      <xsl:variable name="myprefix"
-		    select="ancestor::*[@prefix][1]/@prefix"/>
-      <xsl:variable name="fullname" select="@name"/>
-      <xsl:choose>
-	<xsl:when test="ancestor::tei:content[@autoPrefix='false']">
-	  <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$fullname}"/>
-	</xsl:when>
-	<xsl:when test="key('IDENTS',$lookup)">
-	  <xsl:for-each select="key('IDENTS',$lookup)">
-	    <xsl:variable name="use">
-	      <xsl:choose>
-		<xsl:when test="@prefix and starts-with($fullname,@prefix)">
-		  <xsl:value-of select="$fullname"/>
-		</xsl:when>
-		<xsl:when test="@prefix">
-		  <xsl:value-of select="concat(@prefix,$fullname)"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:value-of select="concat($generalPrefix,$fullname)"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:variable>
-	    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$use}"/>
-	  </xsl:for-each>
-	</xsl:when>
-	<xsl:otherwise>
-	  <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$fullname}"/>
-	</xsl:otherwise>
-      </xsl:choose>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateRefPrefix(.)}"/>
   </xsl:template>
   
   <xsl:template match="rng:*">
@@ -2194,5 +2156,58 @@ select="$makeDecls"/></xsl:message>
     <xsl:value-of select="$result"/>
   </xsl:function>
 
+
+<xsl:function name="tei:generateRefPrefix" as="xs:string">
+  <xsl:param name="context"/>
+  <!-- where we meet a pointer, we have a choice of how to proceed
+       
+       a) if there is no auto-prefixing, just use as is
+       b) if the thing exists in the IDENTS table (which includes prefixes), and starts with the prefix, then use it as is
+       c) if it exists in the IDENTS table and has a prefix, use that
+       d) otherwise, if it exists in the IDENTS table use the general prefix
+       e) otherwise, just use what we are given
+  -->
+  <xsl:for-each select="$context">
+    <xsl:variable name="lookup" select="replace(@name|@key,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
+    <xsl:variable name="myprefix"
+		  select="ancestor::*[@prefix][1]/@prefix"/>
+    <xsl:variable name="fullname" select="@name|@key"/>
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:content[@autoPrefix='false']">
+	<xsl:value-of select="$fullname"/>
+      </xsl:when>
+      <xsl:when test="key('IDENTS',$lookup)">
+	<xsl:for-each select="key('IDENTS',$lookup)">
+	  <xsl:choose>
+	    <xsl:when test="@prefix and starts-with($fullname,@prefix)">
+	      <xsl:value-of select="$fullname"/>
+	    </xsl:when>
+	    <xsl:when test="@prefix">
+	      <xsl:value-of select="concat(@prefix,$fullname)"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="concat($generalPrefix,$fullname)"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$fullname"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:for-each>
+</xsl:function>
+
+  <xsl:function name="tei:includeMember" as="xs:boolean">
+    <xsl:param name="ident"  as="xs:string"/>
+    <xsl:param name="exc" />
+    <xsl:param name="inc" />
+      <xsl:choose>
+	<xsl:when test="not($exc) and not($inc)">true</xsl:when>
+	<xsl:when test="$inc and $ident cast as xs:string  = tokenize($inc, ' ')">true</xsl:when>
+	<xsl:when test="$exc and $ident cast as xs:string   = tokenize($exc, ' ')">false</xsl:when>
+	<xsl:otherwise>true</xsl:otherwise>
+      </xsl:choose>
+  </xsl:function>
 
 </xsl:stylesheet>

@@ -120,7 +120,7 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:with-param name="text"> 
 	                    <xsl:text>DTD module </xsl:text>
 	                    <xsl:value-of select="@ident"/>
-	                    <xsl:text>. Generated </xsl:text>
+	                    <xsl:text>. generated from ODD source </xsl:text>
 	                    <xsl:call-template name="showDate"/>
 	                    <xsl:text>. </xsl:text>
 			    <xsl:call-template name="copyright"/>
@@ -176,7 +176,7 @@ of this software, even if advised of the possibility of such damage.
                      <xsl:with-param name="text">
 		                      <xsl:text>TEI P5 entity declaration module for </xsl:text>
 		                      <xsl:value-of select="@ident"/>
-		                      <xsl:text>. Generated </xsl:text>
+		                      <xsl:text>. generated from ODD source </xsl:text>
 		                      <xsl:call-template name="showDate"/>
 		                      <xsl:text>.&#10;</xsl:text>
 				      <xsl:call-template name="copyright"/>
@@ -385,7 +385,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="schemaOut">
       <xsl:call-template name="dtdComment">
          <xsl:with-param name="text">
-            <xsl:text>DTD Generated </xsl:text>
+            <xsl:text>DTD generated from ODD source </xsl:text>
             <xsl:call-template name="showDate"/>
             <xsl:text>. </xsl:text>
 	    <xsl:call-template name="copyright"/>
@@ -1689,6 +1689,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef">
+    <xsl:variable name="except" select="@except"/>
+    <xsl:variable name="include" select="@include"/>
+
     <xsl:variable name="exists">
       <xsl:call-template name="checkClass">
 	<xsl:with-param name="id" select="@key"/>
@@ -1719,6 +1722,19 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
 	<xsl:when test="ancestor::tei:macroSpec">
 	  <xsl:copy-of select="$ename"/>
+	</xsl:when>
+	<xsl:when test="not(@expand) and (@include or @except)">
+	  <xsl:variable name="members">
+	    <xsl:for-each select="key('CLASSMEMBERS',$this)">
+	      <xsl:if test="key('IDENTS',@ident) and
+			    tei:includeMember(@ident,$except,$include)">
+		<token>
+		  <xsl:value-of select="@ident"/>
+		</token>
+	      </xsl:if>
+	    </xsl:for-each>
+	  </xsl:variable>
+	  <xsl:value-of select="$members/*" separator="|"/>
 	</xsl:when>
         <xsl:when test="@expand='sequenceOptionalRepeatable'">
 	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
