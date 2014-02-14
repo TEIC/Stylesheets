@@ -2205,7 +2205,8 @@ select="$makeDecls"/></xsl:message>
       <xsl:choose>
 	<xsl:when test="not($exc) and not($inc)">true</xsl:when>
 	<xsl:when test="$inc and $ident cast as xs:string  = tokenize($inc, ' ')">true</xsl:when>
-	<xsl:when test="$exc and $ident cast as xs:string   = tokenize($exc, ' ')">false</xsl:when>
+	<xsl:when test="$inc">false</xsl:when>
+	<xsl:when test="$exc and $ident cast as xs:string = tokenize($exc, ' ')">false</xsl:when>
 	<xsl:otherwise>true</xsl:otherwise>
       </xsl:choose>
   </xsl:function>

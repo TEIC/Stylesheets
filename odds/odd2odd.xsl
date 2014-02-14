@@ -92,6 +92,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-REFED" use="@key" match="tei:macroRef"/>
   <xsl:key name="odd2odd-REFED" use="@key" match="tei:classRef"/>
   <xsl:key name="odd2odd-REFED" use="@key" match="tei:elementRef"/>
+
+  <xsl:key name="odd2odd-REFOBJECTS" use="@key" match="tei:schemaSpec/tei:macroRef"/>
+  <xsl:key name="odd2odd-REFOBJECTS" use="@key" match="tei:schemaSpec/tei:classRef"/>
+  <xsl:key name="odd2odd-REFOBJECTS" use="@key" match="tei:schemaSpec/tei:elementRef"/>
   <xsl:key name="odd2odd-REPLACECONSTRAINT" match="tei:constraintSpec[@mode='replace']" use="concat(../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
   <xsl:key match="tei:moduleSpec" name="odd2odd-MODULES" use="@ident"/>
@@ -266,6 +270,33 @@ of this software, even if advised of the possibility of such damage.
          <xsl:apply-templates
 	     select="*|@*|processing-instruction()|comment()|text()" mode="justcopy"/>
      </xsl:copy>
+   </xsl:template>
+
+   <xsl:template match="tei:classSpec/tei:attList/tei:attDef"
+		 mode="justcopy">
+     <xsl:variable name="c" select="ancestor::tei:classSpec/@ident"/>
+     <xsl:variable name="a" select="@ident"/>
+       <xsl:choose>
+	 <xsl:when test="$ODD/key('odd2odd-REFED',$c)[@include or @except]">
+	   <xsl:if
+	       test="tei:includeMember(@ident,$ODD/key('odd2odd-REFED',$c)/@except,$ODD/key('odd2odd-REFED',$c)/@include)">
+	     <xsl:if test="$verbose='true'">
+	       <xsl:message>keeping attribute <xsl:value-of
+	       select="(ancestor::tei:classSpec/@ident,@ident)" separator="/"/></xsl:message>
+	     </xsl:if>
+	     <xsl:copy>
+	       <xsl:apply-templates
+		   select="*|@*|processing-instruction()|comment()|text()" mode="justcopy"/>
+	     </xsl:copy>
+	   </xsl:if>
+	 </xsl:when>
+	 <xsl:otherwise>
+	     <xsl:copy>
+	       <xsl:apply-templates
+		   select="*|@*|processing-instruction()|comment()|text()" mode="justcopy"/>
+	     </xsl:copy>
+	 </xsl:otherwise>
+       </xsl:choose>
    </xsl:template>
 
    <xsl:template match="a:*" mode="justcopy">
@@ -797,9 +828,10 @@ of this software, even if advised of the possibility of such damage.
     <!--
         for every object
          - if its in DELETE list, ignore
-         - if its in REPLACE list, use that
+         - if its in REPLACE list, use that	
          - if its in CHANGE list
            (do the hard merge bit)
+	 - if its duplicated by a classRef, ignore
          - otherwise copy 
         done
   -->
@@ -825,6 +857,8 @@ of this software, even if advised of the possibility of such damage.
             </xsl:if>
             <xsl:apply-templates mode="odd2odd-change" select="$Current"/>
           </xsl:when>
+          <xsl:when test="key('odd2odd-REFOBJECTS',$specName) and not ($why='direct reference')">
+	  </xsl:when>
           <xsl:otherwise>
             <xsl:if test="$verbose='true'">
 	      <xsl:message>Phase 1: include <xsl:value-of
@@ -1895,5 +1929,19 @@ so that is only put back in if there is some content
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+
+  <xsl:function name="tei:includeMember" as="xs:boolean">
+    <xsl:param name="ident"  as="xs:string"/>
+    <xsl:param name="exc" />
+    <xsl:param name="inc" />
+      <xsl:choose>
+	<xsl:when test="not($exc) and not($inc)">true</xsl:when>
+	<xsl:when test="$inc and $ident cast as xs:string  = tokenize($inc, ' ')">true</xsl:when>
+	<xsl:when test="$inc">false</xsl:when>
+	<xsl:when test="$exc and $ident cast as xs:string   = tokenize($exc, ' ')">false</xsl:when>
+	<xsl:otherwise>true</xsl:otherwise>
+      </xsl:choose>
+  </xsl:function>
 
 </xsl:stylesheet>

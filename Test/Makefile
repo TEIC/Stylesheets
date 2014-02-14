@@ -24,7 +24,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-other test-rdf test-text test-odt p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
+default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
 
 p4top5:
 	@echo BUILD: testing p4top5
@@ -158,15 +158,6 @@ test-epub:
 	diff test.epub.listing2 expected-results/test.epub.listing2
 	rm test.epub.listing2
 
-test-other:
-	@echo BUILD: testing other
-	../teitornc  test21.odd test21.odd.rnc
-	perl -p -i -e 's/generated from ODD source.*//' test21.odd.rnc
-	diff test21.odd.rnc expected-results/test21.odd.rnc 
-	../teitornc  test15.odd test15.odd.rnc
-	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
-	diff test15.odd.rnc expected-results/test15.odd.rnc 
-
 test-rdf:
 	@echo BUILD: testing rdf
 	$(SAXON) -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
@@ -240,6 +231,12 @@ test-to-docx:
 
 test-oddity:
 	@echo BUILD: testing oddity
+	../teitornc  test21.odd test21.odd.rnc
+	perl -p -i -e 's/generated from ODD source.*//' test21.odd.rnc
+	diff test21.odd.rnc expected-results/test21.odd.rnc 
+	../teitornc  test15.odd test15.odd.rnc
+	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
+	diff test15.odd.rnc expected-results/test15.odd.rnc 
 	../teitohtml5 --summaryDoc --lang=es --profile=tei --odd test15.odd test15.odd.html
 	xmllint --encode utf-8 --format test15.odd.html | perl cleanup.pl> test.temp ; mv test.temp test15.odd.html
 	diff test15.odd.html expected-results/test15.odd.html
