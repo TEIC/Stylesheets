@@ -413,77 +413,6 @@ Tatt.editLike.attribute.instant =
   
   ## indicates whether this is an instant revision or not.
   [ a:defaultValue = "false" ] attribute instant { Tdata.xTruthValue }?
-Tatt.global.attributes =
-  Tatt.global.linking.attributes,
-  Tatt.global.facs.attributes,
-  Tatt.global.change.attributes,
-  Tatt.global.attribute.xmlid,
-  Tatt.global.attribute.n,
-  Tatt.global.attribute.xmllang,
-  Tatt.global.attribute.rend,
-  Tatt.global.attribute.style,
-  Tatt.global.attribute.rendition,
-  Tatt.global.attribute.xmlbase,
-  Tatt.global.attribute.xmlspace
-Tatt.global.attribute.xmlid =
-  
-  ## (identifier) provides a unique identifier for the element bearing the attribute.
-  attribute xml:id { xsd:ID }?
-Tatt.global.attribute.n =
-  
-  ## (number) gives a number (or other label) for an element, which is not necessarily unique within the document.
-  attribute n { Tdata.text }?
-Tatt.global.attribute.xmllang =
-  
-  ## (language) indicates the language of the element content using a tag generated according to BCP 47.
-  attribute xml:lang { Tdata.language }?
-Tatt.global.attribute.rend =
-  
-  ## (rendition) indicates how the element in question was rendered or presented in the source text.
-  attribute rend {
-    list {
-      (
-       ##
-       "bold"
-       | 
-         ##
-         "boxed"
-       | 
-         ##
-         "center"
-       | 
-         ##
-         "italic"
-       | 
-         ##
-         "underline")+
-    }
-  }?
-Tatt.global.attribute.style =
-  
-  ## contains an expression in some formal style definition language which defines the rendering or presentation used for this element in the source text
-  attribute style { Tdata.text }?
-Tatt.global.attribute.rendition =
-  
-  ## points to a description of the rendering or presentation used for this element in the source text.
-  attribute rendition {
-    list { Tdata.pointer+ }
-  }?
-Tatt.global.attribute.xmlbase =
-  
-  ## provides a base URI reference with which applications can resolve relative URI references into absolute URI references.
-  attribute xml:base { Tdata.pointer }?
-Tatt.global.attribute.xmlspace =
-  
-  ## signals an intention about how white space should be managed by applications.
-  attribute xml:space {
-    
-    ## signals that the application's default white-space processing modes are acceptable
-    "default"
-    | 
-      ## indicates the intent that applications preserve all white space
-      "preserve"
-  }?
 Tatt.handFeatures.attributes =
   Tatt.handFeatures.attribute.scribe,
   Tatt.handFeatures.attribute.scribeRef,
@@ -2910,6 +2839,17 @@ TtextLang =
     }?,
     empty
   }
+Tatt.patternReplacement.attributes =
+  Tatt.patternReplacement.attribute.matchPattern,
+  Tatt.patternReplacement.attribute.replacementPattern
+Tatt.patternReplacement.attribute.matchPattern =
+  
+  ## specifies a regular expression against which the values of other attributes can be matched.
+  attribute matchPattern { Tdata.pattern }
+Tatt.patternReplacement.attribute.replacementPattern =
+  
+  ## specifies a replacement pattern, that is, the skeleton of a relative or absolute URI containing references to groups in the matchPattern which, once subpattern substitution has been performed, complete the URI.
+  attribute replacementPattern { Tdata.replacement }
 TteiHeader =
   
   ## (TEI header) supplies the descriptive and declarative information making up an electronic title page prefixed to every TEI-conformant text. [2.1.1.  15.1. ]
@@ -3368,17 +3308,6 @@ TcRefPattern =
     Tatt.patternReplacement.attributes,
     empty
   }
-Tatt.patternReplacement.attributes =
-  Tatt.patternReplacement.attribute.matchPattern,
-  Tatt.patternReplacement.attribute.replacementPattern
-Tatt.patternReplacement.attribute.matchPattern =
-  
-  ## specifies a regular expression against which the values of other attributes can be matched.
-  attribute matchPattern { Tdata.pattern }
-Tatt.patternReplacement.attribute.replacementPattern =
-  
-  ## specifies a replacement pattern, that is, the skeleton of a relative or absolute URI containing references to groups in the matchPattern which, once subpattern substitution has been performed, complete the URI.
-  attribute replacementPattern { Tdata.replacement }
 TprefixDef =
   
   ## (prefixing scheme used in data.pointer values) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. ]
@@ -3704,6 +3633,32 @@ Tmodel.persNamePart_sequenceOptionalRepeatable =
   Tsurname*, Tforename*, TgenName*, TnameLink*, TaddName*, TroleName*
 Tmodel.persNamePart_sequenceRepeatable =
   Tsurname+, Tforename+, TgenName+, TnameLink+, TaddName+, TroleName+
+Tatt.datable.iso.attributes =
+  Tatt.datable.iso.attribute.when-iso,
+  Tatt.datable.iso.attribute.notBefore-iso,
+  Tatt.datable.iso.attribute.notAfter-iso,
+  Tatt.datable.iso.attribute.from-iso,
+  Tatt.datable.iso.attribute.to-iso
+Tatt.datable.iso.attribute.when-iso =
+  
+  ## supplies the value of a date or time in a standard form.
+  attribute when-iso { Tdata.temporal.iso }?
+Tatt.datable.iso.attribute.notBefore-iso =
+  
+  ## specifies the earliest possible date for the event in standard form, e.g. yyyy-mm-dd.
+  attribute notBefore-iso { Tdata.temporal.iso }?
+Tatt.datable.iso.attribute.notAfter-iso =
+  
+  ## specifies the latest possible date for the event in standard form, e.g. yyyy-mm-dd.
+  attribute notAfter-iso { Tdata.temporal.iso }?
+Tatt.datable.iso.attribute.from-iso =
+  
+  ## indicates the starting point of the period in standard form.
+  attribute from-iso { Tdata.temporal.iso }?
+Tatt.datable.iso.attribute.to-iso =
+  
+  ## indicates the ending point of the period in standard form.
+  attribute to-iso { Tdata.temporal.iso }?
 TorgName =
   
   ## (organization name) contains an organizational name. [13.2.2. ]
@@ -4473,32 +4428,46 @@ TlistNym =
     Tatt.sortable.attributes,
     empty
   }
-Tatt.datable.iso.attributes =
-  Tatt.datable.iso.attribute.when-iso,
-  Tatt.datable.iso.attribute.notBefore-iso,
-  Tatt.datable.iso.attribute.notAfter-iso,
-  Tatt.datable.iso.attribute.from-iso,
-  Tatt.datable.iso.attribute.to-iso
-Tatt.datable.iso.attribute.when-iso =
+Tatt.global.facs.attributes = Tatt.global.facs.attribute.facs
+Tatt.global.facs.attribute.facs =
   
-  ## supplies the value of a date or time in a standard form.
-  attribute when-iso { Tdata.temporal.iso }?
-Tatt.datable.iso.attribute.notBefore-iso =
+  ## (facsimile) points to all or part of an image which corresponds with the content of the element.
+  attribute facs {
+    list { Tdata.pointer+ }
+  }?
+Tatt.global.change.attributes = Tatt.global.change.attribute.change
+Tatt.global.change.attribute.change =
   
-  ## specifies the earliest possible date for the event in standard form, e.g. yyyy-mm-dd.
-  attribute notBefore-iso { Tdata.temporal.iso }?
-Tatt.datable.iso.attribute.notAfter-iso =
+  ## points to one or more change elements documenting a state or revision campaign to which the element bearing this attribute and its children have been assigned by the encoder.
+  attribute change {
+    list { Tdata.pointer+ }
+  }?
+Tatt.coordinated.attributes =
+  Tatt.coordinated.attribute.start,
+  Tatt.coordinated.attribute.ulx,
+  Tatt.coordinated.attribute.uly,
+  Tatt.coordinated.attribute.lrx,
+  Tatt.coordinated.attribute.lry
+Tatt.coordinated.attribute.start =
   
-  ## specifies the latest possible date for the event in standard form, e.g. yyyy-mm-dd.
-  attribute notAfter-iso { Tdata.temporal.iso }?
-Tatt.datable.iso.attribute.from-iso =
+  ## indicates the element within a transcription of the text containing at least the start of the writing represented by this zone or surface.
+  attribute start { Tdata.pointer }?
+Tatt.coordinated.attribute.ulx =
   
-  ## indicates the starting point of the period in standard form.
-  attribute from-iso { Tdata.temporal.iso }?
-Tatt.datable.iso.attribute.to-iso =
+  ## gives the x coordinate value for the upper left corner of a rectangular space.
+  attribute ulx { Tdata.numeric }?
+Tatt.coordinated.attribute.uly =
   
-  ## indicates the ending point of the period in standard form.
-  attribute to-iso { Tdata.temporal.iso }?
+  ## gives the y coordinate value for the upper left corner of a rectangular space.
+  attribute uly { Tdata.numeric }?
+Tatt.coordinated.attribute.lrx =
+  
+  ## gives the x coordinate value for the lower right corner of a rectangular space.
+  attribute lrx { Tdata.numeric }?
+Tatt.coordinated.attribute.lry =
+  
+  ## gives the y coordinate value for the lower right corner of a rectangular space.
+  attribute lry { Tdata.numeric }?
 Tfacsimile =
   
   ## contains a representation of some written source in the form of a set of images rather than as transcribed or encoded text. [11.1. ]
@@ -4517,20 +4486,6 @@ TsourceDoc =
     Tatt.declaring.attributes,
     empty
   }
-Tatt.global.facs.attributes = Tatt.global.facs.attribute.facs
-Tatt.global.facs.attribute.facs =
-  
-  ## (facsimile) points to all or part of an image which corresponds with the content of the element.
-  attribute facs {
-    list { Tdata.pointer+ }
-  }?
-Tatt.global.change.attributes = Tatt.global.change.attribute.change
-Tatt.global.change.attribute.change =
-  
-  ## points to one or more change elements documenting a state or revision campaign to which the element bearing this attribute and its children have been assigned by the encoder.
-  attribute change {
-    list { Tdata.pointer+ }
-  }?
 Tsurface =
   
   ## defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and transcriptions of the writing within them. [11.1.  11.2.2. ]
@@ -4561,32 +4516,6 @@ TsurfaceGrp =
     Tatt.typed.attributes,
     empty
   }
-Tatt.coordinated.attributes =
-  Tatt.coordinated.attribute.start,
-  Tatt.coordinated.attribute.ulx,
-  Tatt.coordinated.attribute.uly,
-  Tatt.coordinated.attribute.lrx,
-  Tatt.coordinated.attribute.lry
-Tatt.coordinated.attribute.start =
-  
-  ## indicates the element within a transcription of the text containing at least the start of the writing represented by this zone or surface.
-  attribute start { Tdata.pointer }?
-Tatt.coordinated.attribute.ulx =
-  
-  ## gives the x coordinate value for the upper left corner of a rectangular space.
-  attribute ulx { Tdata.numeric }?
-Tatt.coordinated.attribute.uly =
-  
-  ## gives the y coordinate value for the upper left corner of a rectangular space.
-  attribute uly { Tdata.numeric }?
-Tatt.coordinated.attribute.lrx =
-  
-  ## gives the x coordinate value for the lower right corner of a rectangular space.
-  attribute lrx { Tdata.numeric }?
-Tatt.coordinated.attribute.lry =
-  
-  ## gives the y coordinate value for the lower right corner of a rectangular space.
-  attribute lry { Tdata.numeric }?
 Tzone =
   
   ## defines any two-dimensional area within a surface element. [11.1.  11.2.2. ]
@@ -5694,6 +5623,72 @@ Tatt.global.linking.attribute.select =
   ## selects one or more alternants; if one alternant is selected, the ambiguity or uncertainty is marked as resolved. If more than one alternant is selected, the degree of ambiguity or uncertainty is marked as reduced by the number of alternants not selected.
   attribute select {
     list { Tdata.pointer+ }
+  }?
+Tatt.global.attributes =
+  Tatt.global.linking.attributes,
+  Tatt.global.facs.attributes,
+  Tatt.global.change.attributes,
+  Tatt.global.attribute.xmlid,
+  Tatt.global.attribute.xmllang,
+  Tatt.global.attribute.rend,
+  Tatt.global.attribute.style,
+  Tatt.global.attribute.rendition,
+  Tatt.global.attribute.xmlbase,
+  Tatt.global.attribute.xmlspace
+Tatt.global.attribute.xmlid =
+  
+  ## (identifier) provides a unique identifier for the element bearing the attribute.
+  attribute xml:id { xsd:ID }?
+Tatt.global.attribute.xmllang =
+  
+  ## (language) indicates the language of the element content using a tag generated according to BCP 47.
+  attribute xml:lang { Tdata.language }?
+Tatt.global.attribute.rend =
+  
+  ## (rendition) indicates how the element in question was rendered or presented in the source text.
+  attribute rend {
+    list {
+      (
+       ##
+       "bold"
+       | 
+         ##
+         "boxed"
+       | 
+         ##
+         "center"
+       | 
+         ##
+         "italic"
+       | 
+         ##
+         "underline")+
+    }
+  }?
+Tatt.global.attribute.style =
+  
+  ## contains an expression in some formal style definition language which defines the rendering or presentation used for this element in the source text
+  attribute style { Tdata.text }?
+Tatt.global.attribute.rendition =
+  
+  ## points to a description of the rendering or presentation used for this element in the source text.
+  attribute rendition {
+    list { Tdata.pointer+ }
+  }?
+Tatt.global.attribute.xmlbase =
+  
+  ## provides a base URI reference with which applications can resolve relative URI references into absolute URI references.
+  attribute xml:base { Tdata.pointer }?
+Tatt.global.attribute.xmlspace =
+  
+  ## signals an intention about how white space should be managed by applications.
+  attribute xml:space {
+    
+    ## signals that the application's default white-space processing modes are acceptable
+    "default"
+    | 
+      ## indicates the intent that applications preserve all white space
+      "preserve"
   }?
 Tsetting =
   

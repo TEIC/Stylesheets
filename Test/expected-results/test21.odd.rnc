@@ -2949,6 +2949,32 @@ model.persNamePart_sequenceOptionalRepeatable =
   surname*, forename*, genName*, nameLink*, addName*, roleName*
 model.persNamePart_sequenceRepeatable =
   surname+, forename+, genName+, nameLink+, addName+, roleName+
+att.datable.iso.attributes =
+  att.datable.iso.attribute.when-iso,
+  att.datable.iso.attribute.notBefore-iso,
+  att.datable.iso.attribute.notAfter-iso,
+  att.datable.iso.attribute.from-iso,
+  att.datable.iso.attribute.to-iso
+att.datable.iso.attribute.when-iso =
+  
+  ## précise une date exacte pour l'évènement selon la forme normalisée ISO 8601, c'est-à-dire aaaa-mm-jj.
+  attribute when-iso { data.temporal.iso }?
+att.datable.iso.attribute.notBefore-iso =
+  
+  ## précise la première date possible pour l'évènement selon la forme normalisée, c'est-à-dire aaaa-mm-jj.
+  attribute notBefore-iso { data.temporal.iso }?
+att.datable.iso.attribute.notAfter-iso =
+  
+  ## précise la dernière date possible pour l'évènement selon la forme normalisée, c'est-à-dire aaaa-mm-jj.
+  attribute notAfter-iso { data.temporal.iso }?
+att.datable.iso.attribute.from-iso =
+  
+  ## Indique le point de départ de la période sous une forme normalisée
+  attribute from-iso { data.temporal.iso }?
+att.datable.iso.attribute.to-iso =
+  
+  ## Indique le point final de la période sous une forme normalisée
+  attribute to-iso { data.temporal.iso }?
 orgName =
   
   ## (nom d'organisation) contient le nom d'une organisation. [13.2.2. ]
@@ -3725,32 +3751,17 @@ listNym =
     att.sortable.attributes,
     empty
   }
-att.datable.iso.attributes =
-  att.datable.iso.attribute.when-iso,
-  att.datable.iso.attribute.notBefore-iso,
-  att.datable.iso.attribute.notAfter-iso,
-  att.datable.iso.attribute.from-iso,
-  att.datable.iso.attribute.to-iso
-att.datable.iso.attribute.when-iso =
+att.patternReplacement.attributes =
+  att.patternReplacement.attribute.matchPattern,
+  att.patternReplacement.attribute.replacementPattern
+att.patternReplacement.attribute.matchPattern =
   
-  ## précise une date exacte pour l'évènement selon la forme normalisée ISO 8601, c'est-à-dire aaaa-mm-jj.
-  attribute when-iso { data.temporal.iso }?
-att.datable.iso.attribute.notBefore-iso =
+  ## specifies a regular expression against which the values of other attributes can be matched.
+  attribute matchPattern { data.pattern }
+att.patternReplacement.attribute.replacementPattern =
   
-  ## précise la première date possible pour l'évènement selon la forme normalisée, c'est-à-dire aaaa-mm-jj.
-  attribute notBefore-iso { data.temporal.iso }?
-att.datable.iso.attribute.notAfter-iso =
-  
-  ## précise la dernière date possible pour l'évènement selon la forme normalisée, c'est-à-dire aaaa-mm-jj.
-  attribute notAfter-iso { data.temporal.iso }?
-att.datable.iso.attribute.from-iso =
-  
-  ## Indique le point de départ de la période sous une forme normalisée
-  attribute from-iso { data.temporal.iso }?
-att.datable.iso.attribute.to-iso =
-  
-  ## Indique le point final de la période sous une forme normalisée
-  attribute to-iso { data.temporal.iso }?
+  ## spécifie une règle de remplacement qui, après avoir opéré les substitutions prévues à chaque nœud, génère une URI.
+  attribute replacementPattern { data.replacement }
 teiHeader =
   
   ## (en-tête TEI) fournit des informations descriptives et déclaratives qui constituent une page de titre électronique au début de tout texte conforme à la TEI. [2.1.1.  15.1. ]
@@ -4207,17 +4218,6 @@ cRefPattern =
     att.patternReplacement.attributes,
     empty
   }
-att.patternReplacement.attributes =
-  att.patternReplacement.attribute.matchPattern,
-  att.patternReplacement.attribute.replacementPattern
-att.patternReplacement.attribute.matchPattern =
-  
-  ## specifies a regular expression against which the values of other attributes can be matched.
-  attribute matchPattern { data.pattern }
-att.patternReplacement.attribute.replacementPattern =
-  
-  ## spécifie une règle de remplacement qui, après avoir opéré les substitutions prévues à chaque nœud, génère une URI.
-  attribute replacementPattern { data.replacement }
 prefixDef =
   
   ## defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. ]
@@ -4498,6 +4498,55 @@ listChange =
     [ a:defaultValue = "true" ] attribute ordered { data.truthValue }?,
     empty
   }
+att.global.linking.attributes =
+  att.global.linking.attribute.corresp,
+  att.global.linking.attribute.synch,
+  att.global.linking.attribute.sameAs,
+  att.global.linking.attribute.copyOf,
+  att.global.linking.attribute.next,
+  att.global.linking.attribute.prev,
+  att.global.linking.attribute.exclude,
+  att.global.linking.attribute.select
+att.global.linking.attribute.corresp =
+  
+  ## (correspond) pointe vers des éléments qui ont une correspondance avec l'élément en question.
+  attribute corresp {
+    list { data.pointer+ }
+  }?
+att.global.linking.attribute.synch =
+  
+  ## (synchrone) pointe vers des éléments qui sont synchrones avec l'élément en question.
+  attribute synch {
+    list { data.pointer+ }
+  }?
+att.global.linking.attribute.sameAs =
+  
+  ## pointe vers un élément identique à l'élément en question.
+  attribute sameAs { data.pointer }?
+att.global.linking.attribute.copyOf =
+  
+  ## pointe vers un élément dont l'élément en question est une copie.
+  attribute copyOf { data.pointer }?
+att.global.linking.attribute.next =
+  
+  ## pointe vers l'élément suivant d'un ensemble virtuel dont l'élément en question est une partie.
+  attribute next { data.pointer }?
+att.global.linking.attribute.prev =
+  
+  ## ( précédent) pointe vers l'élément précédent d'un ensemble virtuel auquel appartient l'élément en question.
+  attribute prev { data.pointer }?
+att.global.linking.attribute.exclude =
+  
+  ## pointe vers des éléments qui sont une alternative exclusive à l'élément en question.
+  attribute exclude {
+    list { data.pointer+ }
+  }?
+att.global.linking.attribute.select =
+  
+  ## sélectionne une ou plusieurs valeurs alternatives ; si une seule valeur est sélectionnée, l'ambiguïté ou l'incertitude est marquée comme résolue. Si plus d'une valeur alternative est sélectionnée, le degré d'ambiguïté ou d'incertitude est marqué comme réduit par le nombre de valeurs alternatives non sélectionnées.
+  attribute select {
+    list { data.pointer+ }
+  }?
 link =
   
   ## ( lien) définit une association ou un lien hypertextuel entre des éléments ou des passages, lien dont le type ne peut être spécifié précisément par d'autres éléments. [16.1. ]
@@ -4766,55 +4815,11 @@ altGrp =
     }?,
     empty
   }
-att.global.linking.attributes =
-  att.global.linking.attribute.corresp,
-  att.global.linking.attribute.synch,
-  att.global.linking.attribute.sameAs,
-  att.global.linking.attribute.copyOf,
-  att.global.linking.attribute.next,
-  att.global.linking.attribute.prev,
-  att.global.linking.attribute.exclude,
-  att.global.linking.attribute.select
-att.global.linking.attribute.corresp =
+att.msExcerpt.attributes = att.msExcerpt.attribute.defective
+att.msExcerpt.attribute.defective =
   
-  ## (correspond) pointe vers des éléments qui ont une correspondance avec l'élément en question.
-  attribute corresp {
-    list { data.pointer+ }
-  }?
-att.global.linking.attribute.synch =
-  
-  ## (synchrone) pointe vers des éléments qui sont synchrones avec l'élément en question.
-  attribute synch {
-    list { data.pointer+ }
-  }?
-att.global.linking.attribute.sameAs =
-  
-  ## pointe vers un élément identique à l'élément en question.
-  attribute sameAs { data.pointer }?
-att.global.linking.attribute.copyOf =
-  
-  ## pointe vers un élément dont l'élément en question est une copie.
-  attribute copyOf { data.pointer }?
-att.global.linking.attribute.next =
-  
-  ## pointe vers l'élément suivant d'un ensemble virtuel dont l'élément en question est une partie.
-  attribute next { data.pointer }?
-att.global.linking.attribute.prev =
-  
-  ## ( précédent) pointe vers l'élément précédent d'un ensemble virtuel auquel appartient l'élément en question.
-  attribute prev { data.pointer }?
-att.global.linking.attribute.exclude =
-  
-  ## pointe vers des éléments qui sont une alternative exclusive à l'élément en question.
-  attribute exclude {
-    list { data.pointer+ }
-  }?
-att.global.linking.attribute.select =
-  
-  ## sélectionne une ou plusieurs valeurs alternatives ; si une seule valeur est sélectionnée, l'ambiguïté ou l'incertitude est marquée comme résolue. Si plus d'une valeur alternative est sélectionnée, le degré d'ambiguïté ou d'incertitude est marqué comme réduit par le nombre de valeurs alternatives non sélectionnées.
-  attribute select {
-    list { data.pointer+ }
-  }?
+  ## indique si le passage décrit est fautif, i.e. incomplet en raison d'une lacune ou d'une détérioration.
+  [ a:defaultValue = "false" ] attribute defective { data.xTruthValue }?
 msDesc =
   
   ## (description d'un manuscrit) contient la description d'un manuscrit bien individualisé [10.1. ]
@@ -5208,11 +5213,6 @@ summary =
   
   ## contains an overview of the available information concerning some aspect of an item (for example, its intellectual content, history, layout, typography etc.) as a complement or alternative to the more detailed information carried by more specific elements. [10.6. ]
   element summary { macro.phraseSeq, att.global.attributes, empty }
-att.msExcerpt.attributes = att.msExcerpt.attribute.defective
-att.msExcerpt.attribute.defective =
-  
-  ## indique si le passage décrit est fautif, i.e. incomplet en raison d'une lacune ou d'une détérioration.
-  [ a:defaultValue = "false" ] attribute defective { data.xTruthValue }?
 physDesc =
   
   ## (description physique) contient la description physique complète d'un manuscrit ou d'une partie d'un manuscrit, éventuellement structurée en utilisant les éléments plus spécialisés appartenant à la classe model.physDescPart. [10.7. ]
@@ -5503,6 +5503,46 @@ msPart =
     att.global.attributes,
     empty
   }
+att.global.facs.attributes = att.global.facs.attribute.facs
+att.global.facs.attribute.facs =
+  
+  ## (fac-similé) pointe directement vers une image ou vers une partie d'une image correspondant au contenu de l'élément.
+  attribute facs {
+    list { data.pointer+ }
+  }?
+att.global.change.attributes = att.global.change.attribute.change
+att.global.change.attribute.change =
+  
+  ## points to one or more change elements documenting a state or revision campaign to which the element bearing this attribute and its children have been assigned by the encoder.
+  attribute change {
+    list { data.pointer+ }
+  }?
+att.coordinated.attributes =
+  att.coordinated.attribute.start,
+  att.coordinated.attribute.ulx,
+  att.coordinated.attribute.uly,
+  att.coordinated.attribute.lrx,
+  att.coordinated.attribute.lry
+att.coordinated.attribute.start =
+  
+  ## désigne l'élément qui, dans la transcription du texte, contient au moins le début de la section de texte représentée dans la zone ou surface.
+  attribute start { data.pointer }?
+att.coordinated.attribute.ulx =
+  
+  ## donne la valeur x de l'abscisse du coin supérieur gauche d'un rectangle.
+  attribute ulx { data.numeric }?
+att.coordinated.attribute.uly =
+  
+  ## donne la valeur y de l'ordonnée du coin supérieur gauche d'un rectangle.
+  attribute uly { data.numeric }?
+att.coordinated.attribute.lrx =
+  
+  ## donne la valeur x de l'abscisse du coin inférieur droit d'un rectangle.
+  attribute lrx { data.numeric }?
+att.coordinated.attribute.lry =
+  
+  ## donne la valeur y de l'ordonnée du coin inférieur droit d'un rectangle.
+  attribute lry { data.numeric }?
 facsimile =
   
   ## contient une représentation d'une source écrite quelconque sous la forme d'un ensemble d'images plutôt que sous la forme d'un texte transcrit ou encodé. [11.1. ]
@@ -5521,20 +5561,6 @@ sourceDoc =
     att.declaring.attributes,
     empty
   }
-att.global.facs.attributes = att.global.facs.attribute.facs
-att.global.facs.attribute.facs =
-  
-  ## (fac-similé) pointe directement vers une image ou vers une partie d'une image correspondant au contenu de l'élément.
-  attribute facs {
-    list { data.pointer+ }
-  }?
-att.global.change.attributes = att.global.change.attribute.change
-att.global.change.attribute.change =
-  
-  ## points to one or more change elements documenting a state or revision campaign to which the element bearing this attribute and its children have been assigned by the encoder.
-  attribute change {
-    list { data.pointer+ }
-  }?
 surface =
   
   ## définit une surface écrite comme un rectangle décrit par ses coordonnées spatiales, en regroupant éventuellement une ou plusieurs représentations graphiques de cet espace et des zones rectangulaires intéressantes à l'intérieur de celui-ci. [11.1.  11.2.2. ]
@@ -5565,32 +5591,6 @@ surfaceGrp =
     att.typed.attributes,
     empty
   }
-att.coordinated.attributes =
-  att.coordinated.attribute.start,
-  att.coordinated.attribute.ulx,
-  att.coordinated.attribute.uly,
-  att.coordinated.attribute.lrx,
-  att.coordinated.attribute.lry
-att.coordinated.attribute.start =
-  
-  ## désigne l'élément qui, dans la transcription du texte, contient au moins le début de la section de texte représentée dans la zone ou surface.
-  attribute start { data.pointer }?
-att.coordinated.attribute.ulx =
-  
-  ## donne la valeur x de l'abscisse du coin supérieur gauche d'un rectangle.
-  attribute ulx { data.numeric }?
-att.coordinated.attribute.uly =
-  
-  ## donne la valeur y de l'ordonnée du coin supérieur gauche d'un rectangle.
-  attribute uly { data.numeric }?
-att.coordinated.attribute.lrx =
-  
-  ## donne la valeur x de l'abscisse du coin inférieur droit d'un rectangle.
-  attribute lrx { data.numeric }?
-att.coordinated.attribute.lry =
-  
-  ## donne la valeur y de l'ordonnée du coin inférieur droit d'un rectangle.
-  attribute lry { data.numeric }?
 zone =
   
   ## définit une zone rectangulaire contenue dans un élément surface. [11.1.  11.2.2. ]
@@ -6424,6 +6424,10 @@ back =
     att.declaring.attributes,
     empty
   }
+homer =
+  
+  ## A Simpsons character
+  element homer { p }
 att.magical.attributes = att.magical.attribute.degree
 att.magical.attribute.degree =
   
@@ -6439,8 +6443,4 @@ att.magical.attribute.degree =
       ##
       "entirely"
   }?
-homer =
-  
-  ## A Simpsons character
-  element homer { p }
 start = TEI

@@ -5101,6 +5101,156 @@ and appear multiple times.</desc>
   können.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">agrupa los elementos que pueden ser usados al interno de <gi>profileDesc</gi> y que aparecen en diversas ocasiones.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">raggruppa gli elementi utilizzati all'interno di <gi>profileDesc</gi> e che appaiono più volte.</desc>
+</classSpec><classSpec module="tei" type="atts" ident="att.source" predeclare="true">
+  <desc versionDate="2013-01-11" xml:lang="en">provides attributes for pointing to the source of a bibliographic reference.</desc>
+  <attList>
+    <attDef ident="source" usage="opt">
+
+
+      <desc versionDate="2013-01-11" xml:lang="en">provides a pointer to the bibliographical source from which a quotation or citation is drawn.</desc>
+      <datatype maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SOURCE-eg-01">
+      <p><!-- ... -->
+        As Willard McCarty (<bibl xml:id="mcc_2012">2012, p.2</bibl>) 
+      tells us, <quote source="#mcc_2012">‘Collaboration’  is  a   
+        problematic  and  should  be  a  contested  term.</quote>
+            <!-- ... -->
+         </p>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>
+        <!-- ... -->
+        <quote source="#chicago_15_ed">Grammatical theories 
+        are in flux, and the more we learn, the less we 
+        seem to know.</quote>
+        <!-- ... -->
+      </p>
+      <!-- ... -->
+      <bibl xml:id="chicago_15_ed"><title level="m">The Chicago Manual of Style</title>, 
+        <edition>15th edition</edition>. 
+        <pubPlace>Chicago</pubPlace>: 
+        <publisher>University of Chicago Press</publisher> 
+        (<date>2003</date>), 
+        <biblScope unit="page">p.147</biblScope>.
+      </bibl>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COHQQ">3.3.3. </ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TS.html#TSBAWR">8.3.4. </ref>
+  </listRef>
+</classSpec><classSpec module="tei" type="model" ident="model.resourceLike" predeclare="true">
+  <desc versionDate="2007-10-03" xml:lang="en">groups non-textual elements which may appear together with a
+  header and a text to constitute a TEI document.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">TEI 문서를 구성하는 헤더 및 텍스트와 함께 나타날 수 있는 비테스트적 요소를 모아 놓는다.</desc>
+  <desc versionDate="2008-04-06" xml:lang="es">agrupa los elementos no-textuales que pueden aparecer junto al encabezado y un texto para constituir un documento de TEI.</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">ヘダーやTEI文書を構成するテキストと共に出現する，非テキスト要素をま
+  とめる．</desc>
+  <desc versionDate="2009-10-06" xml:lang="fr">regroupe des éléments non-textuels qui, avec un
+en-tête et un texte, constitue un document TEI.</desc>
+  <desc versionDate="2007-11-06" xml:lang="it">raggruppa elementi non testuali che possono costituire un documento TEI insieme a un'intestazione e a un testo</desc>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STEC">1.3. </ref>
+  </listRef>
+</classSpec><classSpec module="tei" type="atts" ident="att.personal">
+  <gloss versionDate="2012-10-24" xml:lang="en">attributes for components of names usually, but not necessarily, personal names</gloss>
+  <gloss versionDate="2007-12-20" xml:lang="ko">사람 이름의 성분에 대한 속성</gloss>
+  <gloss versionDate="2007-05-02" xml:lang="zh-TW">用於個人名稱元件的屬性</gloss>
+  <gloss versionDate="2007-06-12" xml:lang="fr">attributs des composantes des noms de personnes</gloss>
+  <gloss versionDate="2007-05-04" xml:lang="es">atributos para los componentes de nombres propios de persona</gloss>
+  <gloss versionDate="2007-01-21" xml:lang="it">attributi per componenti di nomi propri di persona</gloss>
+  <desc versionDate="2012-10-24" xml:lang="en">common attributes for those elements which form part of a name usually, but not necessarily, a personal name.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">사람 이름의 부분을 형성하는 요소에 대한 공통 속성</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">構成部分個人名稱的元素所用之通用屬性</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">個人名の構成要素となる要素に付与される属性．</desc>
+  <desc versionDate="2009-05-28" xml:lang="fr">attributs communs des éléments qui composent un nom de personne</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">atributos comunes para los elementos que forman parte de un nombre propio de persona.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">attributi comuni agli
+  elementi che compongono un nome proprio di persona</desc>
+  <classes>
+    <memberOf key="att.naming"/>
+  </classes>
+  <attList>
+    <attDef ident="full" usage="opt">
+      <desc versionDate="2005-10-10" xml:lang="en">indicates whether the name component is given in full, as an
+abbreviation or simply as an initial.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">축약 또는 이니셜로 간단하게 이름 성분이 완전히 제시된 것인지의 여부를 나타낸다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出所提供的名稱元件是否完整，為一縮寫或僅為一字首字母。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該名前要素は省略がないか，省略形か，イニシャルのような簡単なも
+    のか示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">indique si la composante du nom est donnée en intégralité, sous forme d'abréviation ou simplement d'initiale.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica si el componente del nombre aparece por completo, como una abreviatura o como una inicial.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica se la componente del nome compare per esteso, come abbreviazione o come iniziale</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <defaultVal>yes</defaultVal>
+      <valList type="closed">
+        <valItem ident="yes">
+          <gloss versionDate="2009-05-28" xml:lang="fr">complet</gloss>
+          <desc versionDate="2007-06-27" xml:lang="en">the name component is spelled out in full.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">이름 성분이 완전히 제시된다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">該名稱元件的拼字完整。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">el componente nombre se deletrea por completo.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">当該名前要素は，省略無く示されている．</desc>
+          <desc versionDate="2009-05-28" xml:lang="fr">la composante du nom est orthographiée en intégralité.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">la componente del nome compare per esteso</desc>
+        </valItem>
+        <valItem ident="abb">
+          <gloss versionDate="2007-07-04" xml:lang="en">abbreviated</gloss>
+          <gloss versionDate="2007-12-20" xml:lang="ko">축약된</gloss>
+          <gloss versionDate="2009-05-28" xml:lang="fr">abrégé</gloss>
+          <gloss versionDate="2007-11-06" xml:lang="it">abbreviato</gloss>
+          <gloss versionDate="2007-05-04" xml:lang="es">el componente del nombre aparece como forma abreviada.</gloss>
+          <desc versionDate="2007-06-27" xml:lang="en">the name component is given in an abbreviated form.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">이름 성분이 축약형으로 제시된다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">該名稱元件為縮寫形式。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">el componente conocido se da en una forma abreviada.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">当該名前要素には，省略がある．</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">la composante du nom est donnée sous forme abrégée.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">la componente del nome compare in forma abbreviata</desc>
+        </valItem>
+        <valItem ident="init">
+          <gloss versionDate="2007-07-04" xml:lang="en">initial letter</gloss>
+          <gloss versionDate="2007-12-20" xml:lang="ko">이니셜 문자</gloss>
+          <gloss versionDate="2007-06-12" xml:lang="fr">initiale</gloss>
+          <gloss versionDate="2007-11-06" xml:lang="it">lettera iniziale</gloss>
+          <gloss versionDate="2007-05-04" xml:lang="es">el componente del nombre aparece mediante la inicial.</gloss>
+          <desc versionDate="2007-06-27" xml:lang="en">the name component is indicated only by
+one initial.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">이름 성분이 하나의 이니셜(첫글자)로 제시되었다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">該名稱元件僅以一字首字母表示。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">el componente conocido es indicado solamente por una inicial.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">当該名前要素は，イニシャルだけで示されている．</desc>
+          <desc versionDate="2009-05-28" xml:lang="fr">la composante du nom n'est indiquée que par sa lettre initiale.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">la componente del nome è indicata da una sola iniziale</desc>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="sort" usage="opt">
+      <gloss versionDate="2009-05-28" xml:lang="fr">ordre</gloss>
+      <desc versionDate="2012-10-24" xml:lang="en">specifies the sort order of the name component in relation to others within the name.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">사람 이름 내에 다른 것과 관련된 이름 성분의 정렬 순서를 명시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指明個人名稱中該名稱元件與其他元件之間的排列順序。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">個人名間で並び替えをする際の順番を示す．</desc>
+      <desc versionDate="2009-05-28" xml:lang="fr">précise dans quel ordre est placé la composante par rapport aux autres dans le nom d'une personne.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">especifica la posición del componente al interno del nombre propio de persona en relación con los otros componentes.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">specifica la posizione della componente all'interno del nome proprio di persona in relazione alle altre componenti</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+      </datatype>
+    </attDef>
+  </attList>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPER">13.2.1. </ref>
+  </listRef>
 </classSpec><macroSpec module="tei" type="pe" ident="macro.paraContent">
   <gloss versionDate="2005-01-14" xml:lang="en">paragraph content</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">문단 내용</gloss>
@@ -6118,157 +6268,7 @@ resource, either within the current document or elsewhere.</desc>
       de valeurs dans la spécification de l'attribut associé, exprimée par un élément
       <gi>valList</gi>.</p>
   </remarks>
-</macroSpec><classSpec module="tei" type="atts" ident="att.source" predeclare="true">
-  <desc versionDate="2013-01-11" xml:lang="en">provides attributes for pointing to the source of a bibliographic reference.</desc>
-  <attList>
-    <attDef ident="source" usage="opt">
-
-
-      <desc versionDate="2013-01-11" xml:lang="en">provides a pointer to the bibliographical source from which a quotation or citation is drawn.</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-    </attDef>
-  </attList>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SOURCE-eg-01">
-      <p><!-- ... -->
-        As Willard McCarty (<bibl xml:id="mcc_2012">2012, p.2</bibl>) 
-      tells us, <quote source="#mcc_2012">‘Collaboration’  is  a   
-        problematic  and  should  be  a  contested  term.</quote>
-            <!-- ... -->
-         </p>
-    </egXML>
-  </exemplum>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <p>
-        <!-- ... -->
-        <quote source="#chicago_15_ed">Grammatical theories 
-        are in flux, and the more we learn, the less we 
-        seem to know.</quote>
-        <!-- ... -->
-      </p>
-      <!-- ... -->
-      <bibl xml:id="chicago_15_ed"><title level="m">The Chicago Manual of Style</title>, 
-        <edition>15th edition</edition>. 
-        <pubPlace>Chicago</pubPlace>: 
-        <publisher>University of Chicago Press</publisher> 
-        (<date>2003</date>), 
-        <biblScope unit="page">p.147</biblScope>.
-      </bibl>
-    </egXML>
-  </exemplum>
-  <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COHQQ">3.3.3. </ref>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TS.html#TSBAWR">8.3.4. </ref>
-  </listRef>
-</classSpec><classSpec module="tei" type="model" ident="model.resourceLike" predeclare="true">
-  <desc versionDate="2007-10-03" xml:lang="en">groups non-textual elements which may appear together with a
-  header and a text to constitute a TEI document.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">TEI 문서를 구성하는 헤더 및 텍스트와 함께 나타날 수 있는 비테스트적 요소를 모아 놓는다.</desc>
-  <desc versionDate="2008-04-06" xml:lang="es">agrupa los elementos no-textuales que pueden aparecer junto al encabezado y un texto para constituir un documento de TEI.</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">ヘダーやTEI文書を構成するテキストと共に出現する，非テキスト要素をま
-  とめる．</desc>
-  <desc versionDate="2009-10-06" xml:lang="fr">regroupe des éléments non-textuels qui, avec un
-en-tête et un texte, constitue un document TEI.</desc>
-  <desc versionDate="2007-11-06" xml:lang="it">raggruppa elementi non testuali che possono costituire un documento TEI insieme a un'intestazione e a un testo</desc>
-  <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STEC">1.3. </ref>
-  </listRef>
-</classSpec><classSpec module="tei" type="atts" ident="att.personal">
-  <gloss versionDate="2012-10-24" xml:lang="en">attributes for components of names usually, but not necessarily, personal names</gloss>
-  <gloss versionDate="2007-12-20" xml:lang="ko">사람 이름의 성분에 대한 속성</gloss>
-  <gloss versionDate="2007-05-02" xml:lang="zh-TW">用於個人名稱元件的屬性</gloss>
-  <gloss versionDate="2007-06-12" xml:lang="fr">attributs des composantes des noms de personnes</gloss>
-  <gloss versionDate="2007-05-04" xml:lang="es">atributos para los componentes de nombres propios de persona</gloss>
-  <gloss versionDate="2007-01-21" xml:lang="it">attributi per componenti di nomi propri di persona</gloss>
-  <desc versionDate="2012-10-24" xml:lang="en">common attributes for those elements which form part of a name usually, but not necessarily, a personal name.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">사람 이름의 부분을 형성하는 요소에 대한 공통 속성</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">構成部分個人名稱的元素所用之通用屬性</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">個人名の構成要素となる要素に付与される属性．</desc>
-  <desc versionDate="2009-05-28" xml:lang="fr">attributs communs des éléments qui composent un nom de personne</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">atributos comunes para los elementos que forman parte de un nombre propio de persona.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">attributi comuni agli
-  elementi che compongono un nome proprio di persona</desc>
-  <classes>
-    <memberOf key="att.naming"/>
-  </classes>
-  <attList>
-    <attDef ident="full" usage="opt">
-      <desc versionDate="2005-10-10" xml:lang="en">indicates whether the name component is given in full, as an
-abbreviation or simply as an initial.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">축약 또는 이니셜로 간단하게 이름 성분이 완전히 제시된 것인지의 여부를 나타낸다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出所提供的名稱元件是否完整，為一縮寫或僅為一字首字母。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該名前要素は省略がないか，省略形か，イニシャルのような簡単なも
-    のか示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">indique si la composante du nom est donnée en intégralité, sous forme d'abréviation ou simplement d'initiale.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica si el componente del nombre aparece por completo, como una abreviatura o como una inicial.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica se la componente del nome compare per esteso, come abbreviazione o come iniziale</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
-      <defaultVal>yes</defaultVal>
-      <valList type="closed">
-        <valItem ident="yes">
-          <gloss versionDate="2009-05-28" xml:lang="fr">complet</gloss>
-          <desc versionDate="2007-06-27" xml:lang="en">the name component is spelled out in full.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">이름 성분이 완전히 제시된다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">該名稱元件的拼字完整。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">el componente nombre se deletrea por completo.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">当該名前要素は，省略無く示されている．</desc>
-          <desc versionDate="2009-05-28" xml:lang="fr">la composante du nom est orthographiée en intégralité.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">la componente del nome compare per esteso</desc>
-        </valItem>
-        <valItem ident="abb">
-          <gloss versionDate="2007-07-04" xml:lang="en">abbreviated</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">축약된</gloss>
-          <gloss versionDate="2009-05-28" xml:lang="fr">abrégé</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">abbreviato</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">el componente del nombre aparece como forma abreviada.</gloss>
-          <desc versionDate="2007-06-27" xml:lang="en">the name component is given in an abbreviated form.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">이름 성분이 축약형으로 제시된다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">該名稱元件為縮寫形式。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">el componente conocido se da en una forma abreviada.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">当該名前要素には，省略がある．</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">la composante du nom est donnée sous forme abrégée.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">la componente del nome compare in forma abbreviata</desc>
-        </valItem>
-        <valItem ident="init">
-          <gloss versionDate="2007-07-04" xml:lang="en">initial letter</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">이니셜 문자</gloss>
-          <gloss versionDate="2007-06-12" xml:lang="fr">initiale</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">lettera iniziale</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">el componente del nombre aparece mediante la inicial.</gloss>
-          <desc versionDate="2007-06-27" xml:lang="en">the name component is indicated only by
-one initial.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">이름 성분이 하나의 이니셜(첫글자)로 제시되었다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">該名稱元件僅以一字首字母表示。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">el componente conocido es indicado solamente por una inicial.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">当該名前要素は，イニシャルだけで示されている．</desc>
-          <desc versionDate="2009-05-28" xml:lang="fr">la composante du nom n'est indiquée que par sa lettre initiale.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">la componente del nome è indicata da una sola iniziale</desc>
-        </valItem>
-      </valList>
-    </attDef>
-    <attDef ident="sort" usage="opt">
-      <gloss versionDate="2009-05-28" xml:lang="fr">ordre</gloss>
-      <desc versionDate="2012-10-24" xml:lang="en">specifies the sort order of the name component in relation to others within the name.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">사람 이름 내에 다른 것과 관련된 이름 성분의 정렬 순서를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指明個人名稱中該名稱元件與其他元件之間的排列順序。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">個人名間で並び替えをする際の順番を示す．</desc>
-      <desc versionDate="2009-05-28" xml:lang="fr">précise dans quel ordre est placé la composante par rapport aux autres dans le nom d'une personne.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica la posición del componente al interno del nombre propio de persona en relación con los otros componentes.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica la posizione della componente all'interno del nome proprio di persona in relazione alle altre componenti</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
-      </datatype>
-    </attDef>
-  </attList>
-  <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPER">13.2.1. </ref>
-  </listRef>
-</classSpec><macroSpec module="tei" type="dt" ident="data.duration.iso">
+</macroSpec><macroSpec module="tei" type="dt" ident="data.duration.iso">
   <desc versionDate="2007-04-09" xml:lang="en">defines the range of attribute values available for representation of a duration in time
     using ISO 8601 standard formats</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">ISO 8601 표준 형식을 사용하여 시간의 지속을 나타내는 속성 값 범위를 정의한다.</desc>
@@ -14808,7 +14808,100 @@ element in the TEI Header.
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOI">3.11.2.4. </ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ms.html#mslangs">10.6.6. </ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="teiHeader">
+</elementSpec><classSpec module="header" type="atts" ident="att.patternReplacement">
+  <desc versionDate="2012-11-22" xml:lang="en">provides attributes for regular-expression matching and replacement.</desc>
+  <attList>
+    <attDef ident="matchPattern" usage="req">
+      <desc versionDate="2012-11-22" xml:lang="en">specifies a regular expression against which the values of other attributes
+        can be matched.</desc>
+      
+      
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pattern"/>
+      </datatype>
+      <remarks versionDate="2013-12-08" xml:lang="en">
+        <p>The syntax used should follow that defined by <ref target="http://www.w3.org/TR/xpath-functions/#regex-syntax">W3C XPath syntax</ref>. Note that parenthesized groups are used not only for establishing order of precedence and atoms for
+          quantification, but also for creating subpatterns to be referenced by the
+          <att>replacementPattern</att> attribute.</p>
+      </remarks>
+      <remarks xml:lang="fr" versionDate="2007-06-12">
+        <p>Les groupes parenthésés ne sont pas seulement utilisés pour établir un ordre de priorité
+          et des unités de quantification, mais aussi pour créer des sous-modèles référencés par
+          l'attribut <att>replacementPattern</att>.</p>
+      </remarks>
+      <remarks xml:lang="es" versionDate="2008-04-06">
+        <p>Utilizan a los grupos de Parenthesised no sólo para establecer el orden de la precedencia
+          y los átomos para la cuantificación, sino también para crear los subpatterns que se
+          referirán por el atributo <att>replacementPattern</att>.</p>
+      </remarks>
+      <remarks xml:lang="ja" versionDate="2008-04-05">
+        <p> 丸括弧で区切られたグループは，出現順序や量化単位の他，属性 <att>replacementPattern</att>で示された下位パタンを示す． </p>
+      </remarks>
+    </attDef>
+    <attDef ident="replacementPattern" usage="req">
+      <desc versionDate="2013-12-08" xml:lang="en">specifies a <soCalled>replacement pattern</soCalled>, that is, the skeleton of a relative or absolute URI containing references to groups in
+        the <att>matchPattern</att> which, once subpattern substitution
+        has been performed, complete the URI.</desc>
+      <desc versionDate="2009-01-05" xml:lang="fr">spécifie une <soCalled>règle de
+        remplacement</soCalled> qui, après avoir opéré les substitutions prévues à chaque nœud,
+        génère une URI.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">하위 유형 대치가 실행되면, URI를 제공하는 <soCalled>replacement
+        pattern</soCalled>를 명시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">標明一個<soCalled>取代模式</soCalled>，一旦進行次要模式的替換，會自動提供統一資源識別符 (URI) 。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja"><soCalled>変形パタン</soCalled>を示す．下位の置換パタンが実行さ
+        れれば，これはURIになる．</desc>
+      <desc versionDate="2006-10-18" xml:lang="de">beschreibt ein <soCalled>replacement pattern
+        (Ersetzungsmuster)</soCalled>, das eine URI erstellt, sobald der Austausch der
+        untergeordneten Ersetzungsmuster durchgeführt wurde.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">especifica un <soCalled>replacement pattern (patrón
+        de remplazamiento)</soCalled>, el cual, una vez se ha ejecutado el subpatrón de
+        sustitución, proporciona un URI.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">specifica un <soCalled>replacement pattern</soCalled>
+        che, una volta applicato un sub-pattern di sostituzione, fornisce un URI.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.replacement"/>
+      </datatype>
+      <remarks versionDate="2012-11-22" xml:lang="en">
+        <p>The strings <mentioned>$1</mentioned>, <mentioned>$2</mentioned> etc.  are references to the corresponding group in the
+          regular expression specified by <att>matchPattern</att> (counting open parenthesis, left
+          to right). Processors are expected to replace them with whatever matched the corresponding
+          group in the regular expression.</p>
+        <p>If a digit preceded by a dollar sign is needed in the actual replacement pattern (as
+          opposed to being used as a back reference), the dollar sign must be written as
+          <code>%24</code>.</p>
+      </remarks>
+      <remarks xml:lang="fr" versionDate="2007-06-12">
+        <p>Les chaînes <q>$1</q> à <q>$9</q> sont des références au groupe correspondant dans
+          l'expression régulière spécifiée par l'attribut <att>re</att> (en incluant la parenthèse
+          ouvrante, de gauche à droite). Les processeurs devraient remplacer ces groupes par les
+          valeurs correspondant aux groupes dans l'expression régulière.</p>
+        <p>Si un chiffre précédé par un dollar est nécessaire dans le modèle de remplacement actuel
+          (en opposition à ce qui a été utilisé comme référence antérieure), le signe dollar doit
+          être encodé <code>%24</code>.</p>
+      </remarks>
+      <remarks xml:lang="es" versionDate="2008-04-06">
+        <p>Las series <q>$1</q>a través <q>$9</q> son referencias al grupo correspondiente en la
+          expresión regular especificada por el <att>matchPattern</att> (contando paréntesis
+          abiertos, de izquierda a derecha). Se espera que los procesadores las substituyan por el
+          grupo correspondiente en la expresión regular.</p>
+        <p>Si un dígito precedido por el signo del dólar se necesita en el modelo actual de
+          substitución (en contraposición a ser utilizado como una referencia posterior), el signo
+          de dólar se debe escribir como <code>%24</code>.</p>
+      </remarks>
+      <remarks xml:lang="ja" versionDate="2008-04-05">
+        <p> 文字列<q>$1</q>から<q>$9</q>は，属性<att>re</att>にある正規表現 に該当するグループに(左から右の順番で)対応したものである．ソフ
+          トウェアは，当該正規表現に対応したグループを変形することが期待 されている． </p>
+        <p> ドル記号に続く数値が(後方参照に対する)置換パタンとして必要な場 合には，当該ドル記号は<code>%24</code>と書かれなければならない． </p>
+      </remarks>
+    </attDef>
+  </attList>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SAPU">16.2.3. </ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54M">2.3.6.3. </ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54">2.3.6. </ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54S">2.3.6.2. </ref>
+  </listRef>
+</classSpec><elementSpec module="header" ident="teiHeader">
   <gloss versionDate="2013-02-02" xml:lang="en">TEI header</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">en-tête TEI</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">TEI 헤더</gloss>
@@ -18153,100 +18246,7 @@ the target element</desc>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54">2.3.6. </ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54S">2.3.6.2. </ref>
   </listRef>
-</elementSpec><classSpec module="header" type="atts" ident="att.patternReplacement">
-  <desc versionDate="2012-11-22" xml:lang="en">provides attributes for regular-expression matching and replacement.</desc>
-  <attList>
-    <attDef ident="matchPattern" usage="req">
-      <desc versionDate="2012-11-22" xml:lang="en">specifies a regular expression against which the values of other attributes
-        can be matched.</desc>
-      
-      
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pattern"/>
-      </datatype>
-      <remarks versionDate="2013-12-08" xml:lang="en">
-        <p>The syntax used should follow that defined by <ref target="http://www.w3.org/TR/xpath-functions/#regex-syntax">W3C XPath syntax</ref>. Note that parenthesized groups are used not only for establishing order of precedence and atoms for
-          quantification, but also for creating subpatterns to be referenced by the
-          <att>replacementPattern</att> attribute.</p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>Les groupes parenthésés ne sont pas seulement utilisés pour établir un ordre de priorité
-          et des unités de quantification, mais aussi pour créer des sous-modèles référencés par
-          l'attribut <att>replacementPattern</att>.</p>
-      </remarks>
-      <remarks xml:lang="es" versionDate="2008-04-06">
-        <p>Utilizan a los grupos de Parenthesised no sólo para establecer el orden de la precedencia
-          y los átomos para la cuantificación, sino también para crear los subpatterns que se
-          referirán por el atributo <att>replacementPattern</att>.</p>
-      </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 丸括弧で区切られたグループは，出現順序や量化単位の他，属性 <att>replacementPattern</att>で示された下位パタンを示す． </p>
-      </remarks>
-    </attDef>
-    <attDef ident="replacementPattern" usage="req">
-      <desc versionDate="2013-12-08" xml:lang="en">specifies a <soCalled>replacement pattern</soCalled>, that is, the skeleton of a relative or absolute URI containing references to groups in
-        the <att>matchPattern</att> which, once subpattern substitution
-        has been performed, complete the URI.</desc>
-      <desc versionDate="2009-01-05" xml:lang="fr">spécifie une <soCalled>règle de
-        remplacement</soCalled> qui, après avoir opéré les substitutions prévues à chaque nœud,
-        génère une URI.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">하위 유형 대치가 실행되면, URI를 제공하는 <soCalled>replacement
-        pattern</soCalled>를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">標明一個<soCalled>取代模式</soCalled>，一旦進行次要模式的替換，會自動提供統一資源識別符 (URI) 。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"><soCalled>変形パタン</soCalled>を示す．下位の置換パタンが実行さ
-        れれば，これはURIになる．</desc>
-      <desc versionDate="2006-10-18" xml:lang="de">beschreibt ein <soCalled>replacement pattern
-        (Ersetzungsmuster)</soCalled>, das eine URI erstellt, sobald der Austausch der
-        untergeordneten Ersetzungsmuster durchgeführt wurde.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica un <soCalled>replacement pattern (patrón
-        de remplazamiento)</soCalled>, el cual, una vez se ha ejecutado el subpatrón de
-        sustitución, proporciona un URI.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica un <soCalled>replacement pattern</soCalled>
-        che, una volta applicato un sub-pattern di sostituzione, fornisce un URI.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.replacement"/>
-      </datatype>
-      <remarks versionDate="2012-11-22" xml:lang="en">
-        <p>The strings <mentioned>$1</mentioned>, <mentioned>$2</mentioned> etc.  are references to the corresponding group in the
-          regular expression specified by <att>matchPattern</att> (counting open parenthesis, left
-          to right). Processors are expected to replace them with whatever matched the corresponding
-          group in the regular expression.</p>
-        <p>If a digit preceded by a dollar sign is needed in the actual replacement pattern (as
-          opposed to being used as a back reference), the dollar sign must be written as
-          <code>%24</code>.</p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>Les chaînes <q>$1</q> à <q>$9</q> sont des références au groupe correspondant dans
-          l'expression régulière spécifiée par l'attribut <att>re</att> (en incluant la parenthèse
-          ouvrante, de gauche à droite). Les processeurs devraient remplacer ces groupes par les
-          valeurs correspondant aux groupes dans l'expression régulière.</p>
-        <p>Si un chiffre précédé par un dollar est nécessaire dans le modèle de remplacement actuel
-          (en opposition à ce qui a été utilisé comme référence antérieure), le signe dollar doit
-          être encodé <code>%24</code>.</p>
-      </remarks>
-      <remarks xml:lang="es" versionDate="2008-04-06">
-        <p>Las series <q>$1</q>a través <q>$9</q> son referencias al grupo correspondiente en la
-          expresión regular especificada por el <att>matchPattern</att> (contando paréntesis
-          abiertos, de izquierda a derecha). Se espera que los procesadores las substituyan por el
-          grupo correspondiente en la expresión regular.</p>
-        <p>Si un dígito precedido por el signo del dólar se necesita en el modelo actual de
-          substitución (en contraposición a ser utilizado como una referencia posterior), el signo
-          de dólar se debe escribir como <code>%24</code>.</p>
-      </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 文字列<q>$1</q>から<q>$9</q>は，属性<att>re</att>にある正規表現 に該当するグループに(左から右の順番で)対応したものである．ソフ
-          トウェアは，当該正規表現に対応したグループを変形することが期待 されている． </p>
-        <p> ドル記号に続く数値が(後方参照に対する)置換パタンとして必要な場 合には，当該ドル記号は<code>%24</code>と書かれなければならない． </p>
-      </remarks>
-    </attDef>
-  </attList>
-  <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SAPU">16.2.3. </ref>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54M">2.3.6.3. </ref>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54">2.3.6. </ref>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54S">2.3.6.2. </ref>
-  </listRef>
-</classSpec><elementSpec module="header" ident="prefixDef">
+</elementSpec><elementSpec module="header" ident="prefixDef">
   <gloss versionDate="2012-11-22" xml:lang="en">prefixing scheme used in <ident type="datatype">data.pointer</ident> values</gloss>
   <desc versionDate="2012-12-26" xml:lang="en">defines a prefixing scheme used in <ident type="datatype">data.pointer</ident> values,
   showing how abbreviated URIs using the scheme may be expanded into full URIs.</desc>
@@ -24440,7 +24440,247 @@ she has done so inadvertently.
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DS.html#DSBACK">4.7. </ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DS.html#DS">4. </ref>
   </listRef>
-</elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="linking" ident="link">
+</elementSpec><classSpec predeclare="true" module="linking" xml:id="CLLINK" type="atts" ident="att.global.linking">
+  <desc versionDate="2013-03-18" xml:lang="en">defines a set of attributes for hypertextual linking.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">하이퍼텍스트와 다른 연결에 대한 속성의 집합을 정의한다. 이것은 연결에 대한 부가적 태그 집합이 선택될 때 모든 요소에 가능해야 한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">定義一組用於超文字連結及其他連結的屬性，當連結的附加標籤組被選擇時，這些屬性可用於所有元素。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">リンクに関する付加的タグが使用される場合，全ての要素に付与可能な，リ
+  ンクやハイパーテキストのための属性を定義する．</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">définit un ensemble d'attributs pour décrire les
+      liens hypertextuels.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">define un conjunto de atributos para hipertexto u otro vínculo habilitado para todos los elementos cuando se selecciona la etiqueta adicional para los enlaces.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">definisce un insieme di attributi per ipertesto o altro legame abilitati per tutti gli elementi quando è selezionato il sottoinsieme di marcatori per i collegamenti</desc>
+  <attList>
+    <attDef ident="corresp" usage="opt">
+      <gloss versionDate="2007-07-04" xml:lang="en">corresponds</gloss>
+      <gloss versionDate="2007-12-20" xml:lang="ko">일치</gloss>
+      <gloss versionDate="2008-04-06" xml:lang="es">correspondencia</gloss>
+      <gloss versionDate="2008-03-30" xml:lang="fr">correspond</gloss>
+      <gloss versionDate="2007-11-06" xml:lang="it">corrispondente</gloss>
+      <desc versionDate="2005-10-10" xml:lang="en">points to elements that correspond to the current
+      element in some way.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">어떤 식으로든 현 요소와 일치하는 요소를 가리킨다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到的元素在某方面符合現有元素。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該要素と対応する要素を示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers des éléments qui ont une
+          correspondance avec l'élément en question.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">señala los elementos que presentan una correspondencia con el elemento corriente.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">punta a elementi che hanno una qualche corrispondenza con l'elemento corrente</desc>
+      <datatype maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
+          <group>
+            <text xml:id="t1-g1-t1" xml:lang="mi">
+              <body xml:id="t1-g1-t1-body1">
+                <div type="chapter">
+                  <head>He Whakamaramatanga mo te Ture Hoko, Riihi hoki, i nga Whenua Maori, 1876.</head>
+                  <p>…</p>
+                </div>
+              </body>
+            </text>
+            <text xml:id="t1-g1-t2" xml:lang="en">
+              <body xml:id="t1-g1-t2-body1" corresp="#t1-g1-t1-body1">
+                <div type="chapter">
+                  <head>An Act to regulate the Sale, Letting, and Disposal of Native Lands, 1876.</head>
+                  <p>…</p>
+                </div>
+              </body>
+            </text>
+          </group>
+        </egXML>
+        <p>In this example a <gi>group</gi> contains two <gi>text</gi>s, each containing the same document in a different language. The correspondence is indicated using <att>corresp</att>. The language is indicated using <code>xml:lang</code>, whose value is inherited; both the tag with the <att>corresp</att> and the tag pointed to by the <att>corresp</att> inherit the value from their immediate parent.  </p>
+      </exemplum>
+      
+      <exemplum xml:lang="en" versionDate="2013-12-23">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
+          
+        <!-- In a placeography -->
+          
+        <place xml:id="LOND1" corresp="#LOND2 #GENI1">
+          <placeName>London</placeName>
+          <desc>The city of London...</desc>
+        </place>
+        
+        <!-- In a literary personography -->
+        <person xml:id="LOND2" corresp="#LOND1 #GENI1">
+          <persName type="lit">London</persName>
+          <note>
+            <p>Allegorical character representing the city of <ref target="LOND1.xml">London</ref>.
+            </p>
+          </note>
+        </person>
+        <person xml:id="GENI1" corresp="#LOND1 #LOND2">
+          <persName type="lit">London’s Genius</persName>
+          <note>
+            <p>Personification of London’s genius. Appears as an 
+              allegorical character in mayoral shows.
+            </p>
+          </note>
+        </person>
+      </egXML>
+        <p>In this example, a <gi>place</gi> element containing information about the city of 
+           London is linked with two <gi>person</gi> elements in a literary personography. 
+           This correspondence represents a slightly looser relationship than the one in the 
+           preceding example; there is no sense in which an allegorical character could be 
+           substituted for the physical city, or vice versa, but there is obviously a correspondence 
+           between them.
+        </p>
+      </exemplum>
+      
+    </attDef>
+    <attDef ident="synch" usage="opt">
+      <gloss versionDate="2007-07-04" xml:lang="en">synchronous</gloss>
+      <gloss versionDate="2007-12-20" xml:lang="ko">동시발생</gloss>
+      <gloss versionDate="2008-04-06" xml:lang="es">sincrónico</gloss>
+      <gloss versionDate="2008-03-30" xml:lang="fr">synchrone</gloss>
+      <gloss versionDate="2007-11-06" xml:lang="it">sincrono</gloss>
+      <desc versionDate="2005-10-10" xml:lang="en">points to elements that are synchronous with the current
+      element.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">현 요소와 동시 발생하는 요소를 가리킨다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到的元素和現有元素同時出現。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該要素と連動する要素を示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers des éléments qui sont synchrones avec l'élément en question.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">señala los elementos que son sincrónicos con el elemento corriente.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">punta a elementi sincroni rispetto all'elemento corrente</desc>
+      <datatype maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+    <attDef ident="sameAs" usage="opt">
+      <desc versionDate="2005-10-10" xml:lang="en">points to an element that is the same as the current
+      element.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">현 요소와 동일한 요소를 가리킨다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到的元素和現有元素相同。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該要素と同一の要素を示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers un élément identique à l'élément en question.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">señala el elementos que se corresponde exactamente con el elemento corriente.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">punta a un elemento che corrisponde esattamente all'elemento corrente</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+    <attDef ident="copyOf" usage="opt">
+      <desc versionDate="2005-10-10" xml:lang="en">points to an element of which the current element is a
+	copy.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">현 요소가 그 복사인 요소를 가리킨다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">現有元素為所連結元素的複製本。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該要素のコピー要素を示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers un élément dont l'élément en question
+          est une copie.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">señala un elemento del que el elemento corriente es una copia.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">punta a un elemento di cui l'elemento corrente è una copia</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <remarks versionDate="2005-10-10" xml:lang="en">
+        <p>Any content of the current element should be ignored. Its
+	true content is that of the element being pointed at.</p>
+      </remarks>
+      <remarks xml:lang="fr" versionDate="2007-06-12">
+        <p>Tout contenu appartenant à l'élément en cours doit être ignoré. Le vrai
+                        contenu est celui de l'élément cible du pointeur.</p>
+      </remarks>
+      <remarks xml:lang="ja" versionDate="2008-04-05">
+        <p>
+        当該要素の内容は無視されるべき．本当の内容は，参照先の要素の内
+        容になる．
+        </p>
+      </remarks>
+    </attDef>
+    <attDef ident="next" usage="opt">
+      <desc versionDate="2005-10-10" xml:lang="en">points to the next element of a virtual aggregate of which
+      the current element is part.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">현 요소가 그 부분인 가상 집합의 다음 요소를 가리킨다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到現有元素所屬虛擬集合中的下一個元素。</desc>
+      <desc versionDate="2008-04-06" xml:lang="es">indica el elemento siguiente de un agregado virtual del cual elemento actual es una parte.</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該要素も所属する仮想集合における次の要素を示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers l'élément suivant d'un ensemble
+          virtuel dont l'élément en question est une partie.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">punta all'elemento
+      seguente all'interno di un aggregazione virtuale di cui l'elemento corrente fa parte</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+    <attDef ident="prev" usage="opt">
+      <gloss versionDate="2007-07-04" xml:lang="en">previous</gloss>
+      <gloss versionDate="2007-12-20" xml:lang="ko">이전</gloss>
+      <gloss versionDate="2008-04-06" xml:lang="es">anterior</gloss>
+      <gloss versionDate="2008-03-30" xml:lang="fr"> précédent</gloss>
+      <gloss versionDate="2007-11-06" xml:lang="it">precedente</gloss>
+      <desc versionDate="2005-10-10" xml:lang="en">points to the previous element of a virtual aggregate of
+      which the current element is part.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">현 요소가 그 부분인 가상 집합의 이전 요소를 가리킨다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到現有元素所屬虛擬集合中的上一個元素。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該要素も所属する仮想集合における前の要素を示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers l'élément précédent d'un ensemble
+          virtuel auquel appartient l'élément en question.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">señala al elemento precedente de una adición virtual, de la cual el elemento corriente forma parte.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">punta all'elemento
+      precedente all'interno di un aggregazione virtuale di cui l'elemento corrente fa parte</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+    <attDef ident="exclude" usage="opt">
+      <desc versionDate="2005-10-10" xml:lang="en">points to elements that are in exclusive alternation
+      with the current element.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">현 요소와 배타적 교체인 요소를 가리킨다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到的元素是現有元素的專有替換元素。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該要素の代替要素を示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers des éléments qui sont une alternative
+          exclusive à l'élément en question.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">señala los elementos que estan en relación de alternancia exclusiva con el elemento corriente.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">punta a elementi in relazione di alternanza esclusiva con l'elemento corrente</desc>
+      <datatype maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+    <attDef ident="select" usage="opt">
+      <desc versionDate="2005-10-10" xml:lang="en">selects one or more alternants; if one alternant is
+      selected, the ambiguity or uncertainty is marked as resolved. If
+      more than one alternant is selected, the degree of ambiguity or
+      uncertainty is marked as reduced by the number of alternants not
+      selected.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">하나 이상의 교체형을 선택한다; 만약 하나의 교체형이 선택되면 중의성 또는 불활실성이 해결된 것으로 표시된다. 만약 둘 이상의 교체형이 선택되면, 중의성 또는 불확실성의 정도가, 선택되지 않은 교체형의 수로 감소된 것으로 표시된다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">選擇一個或多個替換；若選擇一個替換，則疑惑或不明確被標記為已解決。若選擇的替換多於一個，則疑惑或不明確的程度因為未選擇的替換而被標記為減低。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">ひとつ以上の選択肢を選ぶ．ひとつの選択肢が選ばれる場合，その曖昧
+      度や不確実度が示される．複数の選択肢が選ばれる場合，選ばれなかっ
+      た選択肢の数から還元される，曖昧度や不確実度が示される．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">sélectionne une ou plusieurs valeurs alternatives
+          ; si une seule valeur est sélectionnée, l'ambiguïté ou l'incertitude est marquée comme
+          résolue. Si plus d'une valeur alternative est sélectionnée, le degré d'ambiguïté ou
+          d'incertitude est marqué comme réduit par le nombre de valeurs alternatives non
+          sélectionnées.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">selecciona una o más alternativas; si se selecciona una de las alternativas, la ambigüidad o la incerteza se indica como resuelta; si se selecciona más de una alternativa, el grado de ambigüidad o incerteza se indica como reducido del número de las alternativas no seleccionadas.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">seleziona una o più alternative; se viene selezionata una delle alternative, l'ambiguità o incertezza è indicata come risolta; se viene selezionata più di un'alternativa, il grado di ambiguità o incertezza è indicato come ridotto dal numero delle alternative non selezionate</desc>
+      <datatype maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <remarks versionDate="2005-10-10" xml:lang="en">
+        <p>This attribute should be placed on an element which is
+	superordinate to all of the alternants from which the
+	selection is being made.</p>
+      </remarks>
+      <remarks xml:lang="fr" versionDate="2007-06-12">
+        <p>Cet attribut doit être placé dans un élément hiérarchiquement supérieur à
+                        tous les éléments possibles parmi lesquelles la sélection est faite.</p>
+      </remarks>
+      <remarks xml:lang="ja" versionDate="2008-04-05">
+        <p>
+        当該属性は，選択対象となる全ての要素の上位に位置する要素に付与
+        されるべきである．
+        </p>
+      </remarks>
+    </attDef>
+  </attList>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SA">16. </ref>
+  </listRef>
+</classSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="linking" ident="link">
   <gloss versionDate="2007-06-12" xml:lang="fr"> lien</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">defines an association or hypertextual link among elements or passages, of some type not more precisely specifiable by other elements.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">다른 요소들에 의해 좀 더 명확하게 명시되지 않는 유형의 요소 또는 단락들의 연관 또는 하이퍼텍스트 연결을 정의한다.</desc>
@@ -25665,247 +25905,7 @@ You must supply at least two values for @target on <name/>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SAAT">16.8. </ref>
   </listRef>
-</elementSpec><classSpec predeclare="true" module="linking" xml:id="CLLINK" type="atts" ident="att.global.linking">
-  <desc versionDate="2013-03-18" xml:lang="en">defines a set of attributes for hypertextual linking.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">하이퍼텍스트와 다른 연결에 대한 속성의 집합을 정의한다. 이것은 연결에 대한 부가적 태그 집합이 선택될 때 모든 요소에 가능해야 한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">定義一組用於超文字連結及其他連結的屬性，當連結的附加標籤組被選擇時，這些屬性可用於所有元素。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">リンクに関する付加的タグが使用される場合，全ての要素に付与可能な，リ
-  ンクやハイパーテキストのための属性を定義する．</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">définit un ensemble d'attributs pour décrire les
-      liens hypertextuels.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">define un conjunto de atributos para hipertexto u otro vínculo habilitado para todos los elementos cuando se selecciona la etiqueta adicional para los enlaces.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">definisce un insieme di attributi per ipertesto o altro legame abilitati per tutti gli elementi quando è selezionato il sottoinsieme di marcatori per i collegamenti</desc>
-  <attList>
-    <attDef ident="corresp" usage="opt">
-      <gloss versionDate="2007-07-04" xml:lang="en">corresponds</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">일치</gloss>
-      <gloss versionDate="2008-04-06" xml:lang="es">correspondencia</gloss>
-      <gloss versionDate="2008-03-30" xml:lang="fr">correspond</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">corrispondente</gloss>
-      <desc versionDate="2005-10-10" xml:lang="en">points to elements that correspond to the current
-      element in some way.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">어떤 식으로든 현 요소와 일치하는 요소를 가리킨다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到的元素在某方面符合現有元素。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該要素と対応する要素を示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers des éléments qui ont une
-          correspondance avec l'élément en question.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">señala los elementos que presentan una correspondencia con el elemento corriente.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">punta a elementi che hanno una qualche corrispondenza con l'elemento corrente</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-
-      <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
-          <group>
-            <text xml:id="t1-g1-t1" xml:lang="mi">
-              <body xml:id="t1-g1-t1-body1">
-                <div type="chapter">
-                  <head>He Whakamaramatanga mo te Ture Hoko, Riihi hoki, i nga Whenua Maori, 1876.</head>
-                  <p>…</p>
-                </div>
-              </body>
-            </text>
-            <text xml:id="t1-g1-t2" xml:lang="en">
-              <body xml:id="t1-g1-t2-body1" corresp="#t1-g1-t1-body1">
-                <div type="chapter">
-                  <head>An Act to regulate the Sale, Letting, and Disposal of Native Lands, 1876.</head>
-                  <p>…</p>
-                </div>
-              </body>
-            </text>
-          </group>
-        </egXML>
-        <p>In this example a <gi>group</gi> contains two <gi>text</gi>s, each containing the same document in a different language. The correspondence is indicated using <att>corresp</att>. The language is indicated using <code>xml:lang</code>, whose value is inherited; both the tag with the <att>corresp</att> and the tag pointed to by the <att>corresp</att> inherit the value from their immediate parent.  </p>
-      </exemplum>
-      
-      <exemplum xml:lang="en" versionDate="2013-12-23">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
-          
-        <!-- In a placeography -->
-          
-        <place xml:id="LOND1" corresp="#LOND2 #GENI1">
-          <placeName>London</placeName>
-          <desc>The city of London...</desc>
-        </place>
-        
-        <!-- In a literary personography -->
-        <person xml:id="LOND2" corresp="#LOND1 #GENI1">
-          <persName type="lit">London</persName>
-          <note>
-            <p>Allegorical character representing the city of <ref target="LOND1.xml">London</ref>.
-            </p>
-          </note>
-        </person>
-        <person xml:id="GENI1" corresp="#LOND1 #LOND2">
-          <persName type="lit">London’s Genius</persName>
-          <note>
-            <p>Personification of London’s genius. Appears as an 
-              allegorical character in mayoral shows.
-            </p>
-          </note>
-        </person>
-      </egXML>
-        <p>In this example, a <gi>place</gi> element containing information about the city of 
-           London is linked with two <gi>person</gi> elements in a literary personography. 
-           This correspondence represents a slightly looser relationship than the one in the 
-           preceding example; there is no sense in which an allegorical character could be 
-           substituted for the physical city, or vice versa, but there is obviously a correspondence 
-           between them.
-        </p>
-      </exemplum>
-      
-    </attDef>
-    <attDef ident="synch" usage="opt">
-      <gloss versionDate="2007-07-04" xml:lang="en">synchronous</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">동시발생</gloss>
-      <gloss versionDate="2008-04-06" xml:lang="es">sincrónico</gloss>
-      <gloss versionDate="2008-03-30" xml:lang="fr">synchrone</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">sincrono</gloss>
-      <desc versionDate="2005-10-10" xml:lang="en">points to elements that are synchronous with the current
-      element.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">현 요소와 동시 발생하는 요소를 가리킨다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到的元素和現有元素同時出現。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該要素と連動する要素を示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers des éléments qui sont synchrones avec l'élément en question.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">señala los elementos que son sincrónicos con el elemento corriente.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">punta a elementi sincroni rispetto all'elemento corrente</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-    </attDef>
-    <attDef ident="sameAs" usage="opt">
-      <desc versionDate="2005-10-10" xml:lang="en">points to an element that is the same as the current
-      element.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">현 요소와 동일한 요소를 가리킨다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到的元素和現有元素相同。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該要素と同一の要素を示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers un élément identique à l'élément en question.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">señala el elementos que se corresponde exactamente con el elemento corriente.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">punta a un elemento che corrisponde esattamente all'elemento corrente</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-    </attDef>
-    <attDef ident="copyOf" usage="opt">
-      <desc versionDate="2005-10-10" xml:lang="en">points to an element of which the current element is a
-	copy.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">현 요소가 그 복사인 요소를 가리킨다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">現有元素為所連結元素的複製本。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該要素のコピー要素を示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers un élément dont l'élément en question
-          est une copie.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">señala un elemento del que el elemento corriente es una copia.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">punta a un elemento di cui l'elemento corrente è una copia</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-      <remarks versionDate="2005-10-10" xml:lang="en">
-        <p>Any content of the current element should be ignored. Its
-	true content is that of the element being pointed at.</p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>Tout contenu appartenant à l'élément en cours doit être ignoré. Le vrai
-                        contenu est celui de l'élément cible du pointeur.</p>
-      </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p>
-        当該要素の内容は無視されるべき．本当の内容は，参照先の要素の内
-        容になる．
-        </p>
-      </remarks>
-    </attDef>
-    <attDef ident="next" usage="opt">
-      <desc versionDate="2005-10-10" xml:lang="en">points to the next element of a virtual aggregate of which
-      the current element is part.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">현 요소가 그 부분인 가상 집합의 다음 요소를 가리킨다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到現有元素所屬虛擬集合中的下一個元素。</desc>
-      <desc versionDate="2008-04-06" xml:lang="es">indica el elemento siguiente de un agregado virtual del cual elemento actual es una parte.</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該要素も所属する仮想集合における次の要素を示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers l'élément suivant d'un ensemble
-          virtuel dont l'élément en question est une partie.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">punta all'elemento
-      seguente all'interno di un aggregazione virtuale di cui l'elemento corrente fa parte</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-    </attDef>
-    <attDef ident="prev" usage="opt">
-      <gloss versionDate="2007-07-04" xml:lang="en">previous</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">이전</gloss>
-      <gloss versionDate="2008-04-06" xml:lang="es">anterior</gloss>
-      <gloss versionDate="2008-03-30" xml:lang="fr"> précédent</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">precedente</gloss>
-      <desc versionDate="2005-10-10" xml:lang="en">points to the previous element of a virtual aggregate of
-      which the current element is part.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">현 요소가 그 부분인 가상 집합의 이전 요소를 가리킨다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到現有元素所屬虛擬集合中的上一個元素。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該要素も所属する仮想集合における前の要素を示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers l'élément précédent d'un ensemble
-          virtuel auquel appartient l'élément en question.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">señala al elemento precedente de una adición virtual, de la cual el elemento corriente forma parte.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">punta all'elemento
-      precedente all'interno di un aggregazione virtuale di cui l'elemento corrente fa parte</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-    </attDef>
-    <attDef ident="exclude" usage="opt">
-      <desc versionDate="2005-10-10" xml:lang="en">points to elements that are in exclusive alternation
-      with the current element.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">현 요소와 배타적 교체인 요소를 가리킨다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">連結到的元素是現有元素的專有替換元素。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該要素の代替要素を示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers des éléments qui sont une alternative
-          exclusive à l'élément en question.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">señala los elementos que estan en relación de alternancia exclusiva con el elemento corriente.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">punta a elementi in relazione di alternanza esclusiva con l'elemento corrente</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-    </attDef>
-    <attDef ident="select" usage="opt">
-      <desc versionDate="2005-10-10" xml:lang="en">selects one or more alternants; if one alternant is
-      selected, the ambiguity or uncertainty is marked as resolved. If
-      more than one alternant is selected, the degree of ambiguity or
-      uncertainty is marked as reduced by the number of alternants not
-      selected.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">하나 이상의 교체형을 선택한다; 만약 하나의 교체형이 선택되면 중의성 또는 불활실성이 해결된 것으로 표시된다. 만약 둘 이상의 교체형이 선택되면, 중의성 또는 불확실성의 정도가, 선택되지 않은 교체형의 수로 감소된 것으로 표시된다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">選擇一個或多個替換；若選擇一個替換，則疑惑或不明確被標記為已解決。若選擇的替換多於一個，則疑惑或不明確的程度因為未選擇的替換而被標記為減低。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">ひとつ以上の選択肢を選ぶ．ひとつの選択肢が選ばれる場合，その曖昧
-      度や不確実度が示される．複数の選択肢が選ばれる場合，選ばれなかっ
-      た選択肢の数から還元される，曖昧度や不確実度が示される．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">sélectionne une ou plusieurs valeurs alternatives
-          ; si une seule valeur est sélectionnée, l'ambiguïté ou l'incertitude est marquée comme
-          résolue. Si plus d'une valeur alternative est sélectionnée, le degré d'ambiguïté ou
-          d'incertitude est marqué comme réduit par le nombre de valeurs alternatives non
-          sélectionnées.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">selecciona una o más alternativas; si se selecciona una de las alternativas, la ambigüidad o la incerteza se indica como resuelta; si se selecciona más de una alternativa, el grado de ambigüidad o incerteza se indica como reducido del número de las alternativas no seleccionadas.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">seleziona una o più alternative; se viene selezionata una delle alternative, l'ambiguità o incertezza è indicata come risolta; se viene selezionata più di un'alternativa, il grado di ambiguità o incertezza è indicato come ridotto dal numero delle alternative non selezionate</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-      <remarks versionDate="2005-10-10" xml:lang="en">
-        <p>This attribute should be placed on an element which is
-	superordinate to all of the alternants from which the
-	selection is being made.</p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>Cet attribut doit être placé dans un élément hiérarchiquement supérieur à
-                        tous les éléments possibles parmi lesquelles la sélection est faite.</p>
-      </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p>
-        当該属性は，選択対象となる全ての要素の上位に位置する要素に付与
-        されるべきである．
-        </p>
-      </remarks>
-    </attDef>
-  </attList>
-  <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SA">16. </ref>
-  </listRef>
-</classSpec><elementSpec module="drama" ident="set">
+</elementSpec><elementSpec module="drama" ident="set">
   <gloss versionDate="2007-07-04" xml:lang="en">setting</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">배경</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
