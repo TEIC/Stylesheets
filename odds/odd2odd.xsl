@@ -459,9 +459,11 @@ of this software, even if advised of the possibility of such damage.
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
+        <xsl:if test="$verbose='true'">
           <xsl:message>Phase 1: hang onto <xsl:value-of
 	  select="$specName"/> in mode <xsl:value-of
 	  select="@mode"/></xsl:message>
+	</xsl:if>
 	<xsl:copy>
 	  <xsl:apply-templates mode="pass1" select="*|@*|processing-instruction()|comment()|text()"/>
 	</xsl:copy>
@@ -475,13 +477,13 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="tei:classSpec[@mode='add']" mode="pass1">
+  <xsl:template match="tei:classSpec[@mode='add'or (not(@mode) and ancestor::tei:schemaSpec)]" mode="pass1">
     <xsl:call-template name="odd2odd-createCopy"/>
   </xsl:template>
-  <xsl:template match="tei:macroSpec[@mode='add']" mode="pass1">
+  <xsl:template match="tei:macroSpec[@mode='add'or (not(@mode) and ancestor::tei:schemaSpec)]" mode="pass1">
     <xsl:call-template name="odd2odd-createCopy"/>
   </xsl:template>
-  <xsl:template match="tei:elementSpec[@mode='add']" mode="pass1">
+  <xsl:template match="tei:elementSpec[@mode='add'or (not(@mode) and ancestor::tei:schemaSpec)]" mode="pass1">
     <xsl:call-template name="odd2odd-createCopy"/>
   </xsl:template>
 
@@ -541,9 +543,11 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>
       </xsl:copy>
     </xsl:variable>
-    <xsl:result-document href="/tmp/foo.xml">
-      <xsl:copy-of select="$source"/>
-    </xsl:result-document>
+    <!--
+	<xsl:result-document href="/tmp/foo.xml">
+	  <xsl:copy-of select="$source"/>
+	</xsl:result-document>
+	-->
     <xsl:for-each select="$source">
       <xsl:apply-templates mode="pass2"/>
     </xsl:for-each>
@@ -756,18 +760,6 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:elementSpec" mode="odd2odd-copy">
     <xsl:copy>
-      <xsl:choose>
-	<xsl:when test="@module"/>
-	<xsl:when test="ancestor::tei:schemaSpec/@module">
-	  <xsl:copy-of select="ancestor::tei:schemaSpec/@module"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:attribute name="module">
-	    <xsl:text>derived-module-</xsl:text>
-	    <xsl:value-of select="ancestor::tei:schemaSpec/@ident"/>
-	  </xsl:attribute>
-	</xsl:otherwise>
-      </xsl:choose>
       <xsl:call-template name="odd2odd-copyElementSpec">
 	<xsl:with-param name="n" select="'1'"/>
       </xsl:call-template>

@@ -2606,6 +2606,17 @@ tei_textLang =
     }?,
     empty
   }
+tei_att.patternReplacement.attributes =
+  tei_att.patternReplacement.attribute.matchPattern,
+  tei_att.patternReplacement.attribute.replacementPattern
+tei_att.patternReplacement.attribute.matchPattern =
+  
+  ## specifies a regular expression against which the values of other attributes can be matched.
+  attribute matchPattern { tei_data.pattern }
+tei_att.patternReplacement.attribute.replacementPattern =
+  
+  ## specifies a replacement pattern, that is, the skeleton of a relative or absolute URI containing references to groups in the matchPattern which, once subpattern substitution has been performed, complete the URI.
+  attribute replacementPattern { tei_data.replacement }
 tei_teiHeader =
   
   ## (TEI header) supplies the descriptive and declarative information making up an electronic title page prefixed to every TEI-conformant text. [2.1.1.  15.1. ]
@@ -3075,17 +3086,6 @@ tei_cRefPattern =
     tei_att.patternReplacement.attributes,
     empty
   }
-tei_att.patternReplacement.attributes =
-  tei_att.patternReplacement.attribute.matchPattern,
-  tei_att.patternReplacement.attribute.replacementPattern
-tei_att.patternReplacement.attribute.matchPattern =
-  
-  ## specifies a regular expression against which the values of other attributes can be matched.
-  attribute matchPattern { tei_data.pattern }
-tei_att.patternReplacement.attribute.replacementPattern =
-  
-  ## specifies a replacement pattern, that is, the skeleton of a relative or absolute URI containing references to groups in the matchPattern which, once subpattern substitution has been performed, complete the URI.
-  attribute replacementPattern { tei_data.replacement }
 tei_prefixDef =
   
   ## (prefixing scheme used in data.pointer values) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. ]
@@ -3803,6 +3803,55 @@ tei_back =
     tei_att.declaring.attributes,
     empty
   }
+tei_att.global.linking.attributes =
+  tei_att.global.linking.attribute.corresp,
+  tei_att.global.linking.attribute.synch,
+  tei_att.global.linking.attribute.sameAs,
+  tei_att.global.linking.attribute.copyOf,
+  tei_att.global.linking.attribute.next,
+  tei_att.global.linking.attribute.prev,
+  tei_att.global.linking.attribute.exclude,
+  tei_att.global.linking.attribute.select
+tei_att.global.linking.attribute.corresp =
+  
+  ## (corresponds) points to elements that correspond to the current element in some way.
+  attribute corresp {
+    list { tei_data.pointer+ }
+  }?
+tei_att.global.linking.attribute.synch =
+  
+  ## (synchronous) points to elements that are synchronous with the current element.
+  attribute synch {
+    list { tei_data.pointer+ }
+  }?
+tei_att.global.linking.attribute.sameAs =
+  
+  ## points to an element that is the same as the current element.
+  attribute sameAs { tei_data.pointer }?
+tei_att.global.linking.attribute.copyOf =
+  
+  ## points to an element of which the current element is a copy.
+  attribute copyOf { tei_data.pointer }?
+tei_att.global.linking.attribute.next =
+  
+  ## points to the next element of a virtual aggregate of which the current element is part.
+  attribute next { tei_data.pointer }?
+tei_att.global.linking.attribute.prev =
+  
+  ## (previous) points to the previous element of a virtual aggregate of which the current element is part.
+  attribute prev { tei_data.pointer }?
+tei_att.global.linking.attribute.exclude =
+  
+  ## points to elements that are in exclusive alternation with the current element.
+  attribute exclude {
+    list { tei_data.pointer+ }
+  }?
+tei_att.global.linking.attribute.select =
+  
+  ## selects one or more alternants; if one alternant is selected, the ambiguity or uncertainty is marked as resolved. If more than one alternant is selected, the degree of ambiguity or uncertainty is marked as reduced by the number of alternants not selected.
+  attribute select {
+    list { tei_data.pointer+ }
+  }?
 tei_link =
   
   ## defines an association or hypertextual link among elements or passages, of some type not more precisely specifiable by other elements. [16.1. ]
@@ -4057,55 +4106,6 @@ tei_altGrp =
     }?,
     empty
   }
-tei_att.global.linking.attributes =
-  tei_att.global.linking.attribute.corresp,
-  tei_att.global.linking.attribute.synch,
-  tei_att.global.linking.attribute.sameAs,
-  tei_att.global.linking.attribute.copyOf,
-  tei_att.global.linking.attribute.next,
-  tei_att.global.linking.attribute.prev,
-  tei_att.global.linking.attribute.exclude,
-  tei_att.global.linking.attribute.select
-tei_att.global.linking.attribute.corresp =
-  
-  ## (corresponds) points to elements that correspond to the current element in some way.
-  attribute corresp {
-    list { tei_data.pointer+ }
-  }?
-tei_att.global.linking.attribute.synch =
-  
-  ## (synchronous) points to elements that are synchronous with the current element.
-  attribute synch {
-    list { tei_data.pointer+ }
-  }?
-tei_att.global.linking.attribute.sameAs =
-  
-  ## points to an element that is the same as the current element.
-  attribute sameAs { tei_data.pointer }?
-tei_att.global.linking.attribute.copyOf =
-  
-  ## points to an element of which the current element is a copy.
-  attribute copyOf { tei_data.pointer }?
-tei_att.global.linking.attribute.next =
-  
-  ## points to the next element of a virtual aggregate of which the current element is part.
-  attribute next { tei_data.pointer }?
-tei_att.global.linking.attribute.prev =
-  
-  ## (previous) points to the previous element of a virtual aggregate of which the current element is part.
-  attribute prev { tei_data.pointer }?
-tei_att.global.linking.attribute.exclude =
-  
-  ## points to elements that are in exclusive alternation with the current element.
-  attribute exclude {
-    list { tei_data.pointer+ }
-  }?
-tei_att.global.linking.attribute.select =
-  
-  ## selects one or more alternants; if one alternant is selected, the ambiguity or uncertainty is marked as resolved. If more than one alternant is selected, the degree of ambiguity or uncertainty is marked as reduced by the number of alternants not selected.
-  attribute select {
-    list { tei_data.pointer+ }
-  }?
 foo_cit =
   
   ## This element encodes a new citation (CASE 1) 
