@@ -745,7 +745,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text> NMTOKENS</xsl:text>
          </xsl:when>
          <xsl:when test="rng:data/@type='boolean'">
-            <xsl:text> (true | false()) </xsl:text>
+            <xsl:text> (true | false) </xsl:text>
          </xsl:when>
          <xsl:when test="rng:ref">
             <xsl:text> %</xsl:text>
