@@ -268,6 +268,11 @@ test-oddity:
 	xmllint --noout --dtdvalid test30.dtd test11.xml
 	diff test30.rnc expected-results/test30.rnc
 	diff test30.dtd expected-results/test30.dtd
+	../teitornc test-pure.odd test-pure.rnc
+	../teitohtml --odd test-pure.odd test-pure.odd.html
+	perl -p -i -e 's/generated from ODD source .*//' test-pure.rnc
+	diff test-pure.rnc expected-results/test-pure.rnc
+	diff test-pure.odd.html expected-results/test-pure.odd.html
 	$(SAXON) test.odd ../odds/odd2odd.xsl > test.odd2odd
 	$(SAXON) test.odd2odd ../odds/odd2dtd.xsl > test.odd2dtd
 	$(SAXON) test.odd2odd ../odds/odd2html.xsl > test.odd2html

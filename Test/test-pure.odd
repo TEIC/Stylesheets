@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Pure ODD test</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>Publication Information</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Information about the source</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <schemaSpec ns="" start="stuff" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+        xmlns="http://www.tei-c.org/ns/1.0">
+        <elementSpec ident="stuff">
+          <desc>élément racine d'un schéma simplissime</desc>
+          <content>
+            <alternate maxOccurs="unbounded">
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>
+            </alternate>
+          </content>
+        </elementSpec>
+        <elementSpec ident="bob">
+          <desc>élément pointeur du schéma simplissime</desc> 
+          <content/>
+          <attList>
+            <attDef ident="href">
+              <desc>fournit l' URI de l'objet cible</desc>
+              <datatype>
+                <rng:data type="anyURI"/>
+                <!-- should be <macroRef key="data.pointer"/>-->
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <elementSpec ident="bit">
+          <desc>élément textuel du schéma simplissime (peut contenir des bobs) </desc>
+          <content allowText="true">
+            <elementRef key="bob" minOccurs="0" maxOccurs="unbounded"/>
+          </content>
+        </elementSpec>
+      </schemaSpec>
+      
+    </body>
+  </text>
+</TEI>

@@ -800,9 +800,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:attribute name="{$rendName}">
           <xsl:text>wovenodd-col2</xsl:text>
         </xsl:attribute>
-        <xsl:call-template name="bitOut">
-          <xsl:with-param name="grammar"/>
-          <xsl:with-param name="content">
+	<xsl:variable name="content">
             <Wrapper>
               <rng:element name="{$name}">
                 <xsl:if test="not(key('SCHEMASPECS',1))">
@@ -813,11 +811,22 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:call-template name="showClassAtts"/>
                   </xsl:for-each>
                 </xsl:if>
-                <xsl:apply-templates mode="tangle" select="../tei:attList"/>
-                <xsl:copy-of select="rng:*"/>
+                <xsl:apply-templates mode="tangle"
+				     select="../tei:attList"/>
+		<xsl:choose>
+		  <xsl:when test="rng:*">
+		    <xsl:copy-of select="rng:*"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:apply-templates/>
+		  </xsl:otherwise>
+		</xsl:choose>
               </rng:element>
             </Wrapper>
-          </xsl:with-param>
+	</xsl:variable>
+        <xsl:call-template name="bitOut">
+          <xsl:with-param name="grammar"/>
+          <xsl:with-param name="content" select="$content"/>
         </xsl:call-template>
         <xsl:for-each select="tei:valList[@type='closed']">
           <xsl:sequence select="tei:i18n('Legal values are')"/>
@@ -2571,10 +2580,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test=".//rng:text or .//rng:data">
 	<Element prefix="{@prefix}"  type="TEXT"/>
       </xsl:if>
-    <xsl:for-each select=".//rng:ref">
-      <xsl:if test="not(starts-with(@name,'any')        or starts-with(@name,'macro.any')       or @name='AnyThing')">
+    <xsl:for-each select=".//rng:ref|.//tei:elementRef|.//tei:classRef|.//tei:macroRef">
+      <xsl:if test="not(starts-with(@name,'any')        or starts-with(@name,'macro.any') or starts-with(@key,'macro.any')       or @name='AnyThing')">
         <xsl:variable name="Name"
-	  select="replace(@name,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
+	  select="replace(@name|@key,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
         <xsl:for-each select="key('IDENTS',$Name)">
           <xsl:choose>
             <xsl:when test="self::tei:elementSpec">
