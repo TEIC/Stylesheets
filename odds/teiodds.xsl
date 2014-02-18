@@ -2132,25 +2132,24 @@ select="$makeDecls"/></xsl:message>
 
    <!-- for Pure ODD -->
 
-<xsl:template match="tei:sequence" >
+<xsl:template match="tei:sequence" mode="#default tangle">
     <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:choose>
       <xsl:when test="string-length($suffix)=0">
         <group  xmlns="http://relaxng.org/ns/structure/1.0">
-          <xsl:apply-templates  />
+          <xsl:apply-templates   mode="tangle"/>
         </group>
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="{$suffix}" xmlns="http://relaxng.org/ns/structure/1.0">
           <group xmlns="http://relaxng.org/ns/structure/1.0">
-            <xsl:apply-templates  />
+            <xsl:apply-templates    mode="tangle"/>
           </group>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="tei:alternate" >
-<xsl:message>FOUND AN ALTERNATE</xsl:message>
+  <xsl:template match="tei:alternate"  mode="#default tangle">
     <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:choose>
       <xsl:when test="string-length($suffix)=0">
@@ -2158,7 +2157,7 @@ select="$makeDecls"/></xsl:message>
           <xsl:if test="ancestor::tei:content/@allowText='true'">
             <text xmlns="http://relaxng.org/ns/structure/1.0"/>
           </xsl:if>
-          <xsl:apply-templates  />
+          <xsl:apply-templates   mode="tangle"/>
         </choice>
       </xsl:when>
       <xsl:otherwise>
@@ -2167,17 +2166,16 @@ select="$makeDecls"/></xsl:message>
             <xsl:if test="ancestor::tei:content/@allowText='true'">
               <text xmlns="http://relaxng.org/ns/structure/1.0"/>
             </xsl:if>
-            <xsl:apply-templates  />
+            <xsl:apply-templates  mode="tangle"/>
           </choice>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="tei:interleave"  >
+  <xsl:template match="tei:interleave"   mode="#default tangle">
     <xsl:message>met an interleave</xsl:message>
   </xsl:template>
-  <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef"  >
-<xsl:message>SEE <xsl:value-of select="@key"/></xsl:message>
+  <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef"   mode="#default tangle">
     <xsl:variable name="prefixedName" select="tei:generateRefPrefix(.)"/>
     <xsl:variable name="wrapperElement"
 		  select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>

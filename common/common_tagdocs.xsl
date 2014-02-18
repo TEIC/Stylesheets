@@ -815,18 +815,15 @@ of this software, even if advised of the possibility of such damage.
 				     select="../tei:attList"/>
 		<xsl:choose>
 		  <xsl:when test="rng:*">
-<xsl:message>RNG content</xsl:message>
 		    <xsl:copy-of select="rng:*"/>
 		  </xsl:when>
 		  <xsl:otherwise>
-<xsl:message>TEI content: <xsl:copy-of select="*"/></xsl:message>
-		    <xsl:apply-templates/>
+		    <xsl:apply-templates mode="tangle"/>
 		  </xsl:otherwise>
 		</xsl:choose>
               </rng:element>
             </Wrapper>
 	</xsl:variable>
-<xsl:message>CONTENT <xsl:copy-of select="$content"/></xsl:message>
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar"/>
           <xsl:with-param name="content" select="$content"/>
