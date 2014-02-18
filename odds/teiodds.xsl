@@ -2130,7 +2130,7 @@ select="$makeDecls"/></xsl:message>
      </xsl:element>
    </xsl:template>
 
-<!-- for foxglove -->
+   <!-- for Pure ODD -->
 
 <xsl:template match="tei:sequence" >
     <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
@@ -2149,7 +2149,8 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="tei:alternate"  >
+  <xsl:template match="tei:alternate" >
+<xsl:message>FOUND AN ALTERNATE</xsl:message>
     <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:choose>
       <xsl:when test="string-length($suffix)=0">
@@ -2176,6 +2177,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:message>met an interleave</xsl:message>
   </xsl:template>
   <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef"  >
+<xsl:message>SEE <xsl:value-of select="@key"/></xsl:message>
     <xsl:variable name="prefixedName" select="tei:generateRefPrefix(.)"/>
     <xsl:variable name="wrapperElement"
 		  select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>

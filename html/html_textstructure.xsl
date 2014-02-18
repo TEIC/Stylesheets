@@ -1132,7 +1132,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="number"/>
     <xsl:for-each select="$top/*">
     <head>
-      <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (<xsl:value-of select="$number"/>)</xsl:comment>
       <title>
 	<xsl:value-of select="$htmlTitlePrefix"/>
 	<xsl:if test="$htmlTitlePrefix!=''">

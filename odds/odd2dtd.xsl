@@ -1736,6 +1736,9 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:variable>
 	  <xsl:value-of select="$members/*" separator="|"/>
 	</xsl:when>
+	<xsl:when test="parent::*/@allowText='true'">
+	  <xsl:value-of select="$ename"/>
+	</xsl:when>
         <xsl:when test="@expand='sequenceOptionalRepeatable'">
 	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
 	    <xsl:text>(</xsl:text>
@@ -1782,7 +1785,9 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="$ename"/>
       </xsl:otherwise>
       </xsl:choose>
-      <xsl:value-of select="$suffix"/>
+      <xsl:if test="not(parent::*/@allowText='true')">
+	<xsl:value-of select="$suffix"/>
+      </xsl:if>
     </token>
   </xsl:template>
   

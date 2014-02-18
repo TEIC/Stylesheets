@@ -271,7 +271,9 @@ test-oddity:
 	../teitodtd test-pure.odd test-pure.dtd
 	../teitornc test-pure.odd test-pure.rnc
 	../teitohtml --odd test-pure.odd test-pure.odd.html
-	perl -p -i -e 's/generated from ODD source .*//' test-ure.dtd
+	xmllint --noout --dtdvalid test-pure.dtd test-pure.xml
+	xmllint --encode utf-8 --format test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure.odd.html
+	perl -p -i -e 's/generated from ODD source .*//' test-pure.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.rnc
 	diff test-pure.rnc expected-results/test-pure.rnc
 	diff test-pure.dtd expected-results/test-pure.dtd
@@ -382,3 +384,4 @@ clean:
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype
 	rm -f test.xlsx.xml
 	rm -rf *.result.tex *.result.pdf _slidelogo.png
+
