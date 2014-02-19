@@ -1742,36 +1742,11 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="parent::*/@allowText='true'">
 	  <xsl:value-of select="$ename"/>
 	</xsl:when>
-        <xsl:when test="@expand='sequenceOptionalRepeatable'">
-	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
-	    <xsl:text>(</xsl:text>
-	    <xsl:value-of select="@ident"/>
-	    <xsl:text>)*</xsl:text>
-	    <xsl:if test="position() &lt; last()"><xsl:text>,</xsl:text></xsl:if>
-	  </xsl:for-each>
-        </xsl:when>
-        <xsl:when test="@expand='sequenceOptional'">
-	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
-	    <xsl:text>(</xsl:text>
-	    <xsl:value-of select="@ident"/>
-	    <xsl:text>)?</xsl:text>
-	    <xsl:if test="position() &lt; last()"><xsl:text>,</xsl:text></xsl:if>
-	  </xsl:for-each>
-        </xsl:when>
-        <xsl:when test="@expand='sequence'">
-	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
-	    <xsl:value-of select="@ident"/>
-	    <xsl:if test="position() &lt; last()"><xsl:text>,</xsl:text></xsl:if>
-	  </xsl:for-each>
-        </xsl:when>
-        <xsl:when test="@expand='sequenceRepeatable'">
-	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
-	    <xsl:text>(</xsl:text>
-	    <xsl:value-of select="@ident"/>
-	    <xsl:text>)+</xsl:text>
-	    <xsl:if test="position() &lt; last()"><xsl:text>,</xsl:text></xsl:if>
-	  </xsl:for-each>
-        </xsl:when>
+        <xsl:when test="@expand">
+	    <xsl:text>(%</xsl:text>
+	    <xsl:value-of select="(@key,@expand)" separator="_"/>
+	    <xsl:text>;)</xsl:text>
+	</xsl:when>
 	<xsl:when test="number(@maxOccurs)&gt;1">
 	  <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
 	  <xsl:for-each select="1 to $max">

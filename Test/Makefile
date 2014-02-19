@@ -280,6 +280,16 @@ test-oddity:
 	diff test-pure.rnc expected-results/test-pure.rnc
 	diff test-pure.dtd expected-results/test-pure.dtd
 	diff test-pure.odd.html expected-results/test-pure.odd.html
+	../teitodtd test-pure2.odd test-pure2.dtd
+	../teitornc test-pure2.odd test-pure2.rnc
+	../teitohtml --odd test-pure2.odd test-pure2.odd.html
+	xmllint --noout --dtdvalid test-pure2.dtd test-pure2.xml
+	xmllint --encode utf-8 --format test-pure2.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure2.odd.html
+	perl -p -i -e 's/generated from ODD source .*//' test-pure2.dtd
+	perl -p -i -e 's/generated from ODD source .*//' test-pure2.rnc
+	diff test-pure2.rnc expected-results/test-pure2.rnc
+	diff test-pure2.dtd expected-results/test-pure2.dtd
+	diff test-pure2.odd.html expected-results/test-pure2.odd.html
 	$(SAXON) test.odd ../odds/odd2odd.xsl > test.odd2odd
 	$(SAXON) test.odd2odd ../odds/odd2dtd.xsl > test.odd2dtd
 	$(SAXON) test.odd2odd ../odds/odd2html.xsl > test.odd2html
@@ -294,17 +304,6 @@ test-oddity:
 	rm test.odd2lite
 	rm test.odd2relax
 	rm test.odd2xslstripspace
-pure:
-	../teitodtd test-pure2.odd test-pure2.dtd
-	../teitornc test-pure2.odd test-pure2.rnc
-	../teitohtml --odd test-pure2.odd test-pure2.odd.html
-	xmllint --noout --dtdvalid test-pure2.dtd test-pure2.xml
-	xmllint --encode utf-8 --format test-pure2.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure2.odd.html
-	perl -p -i -e 's/generated from ODD source .*//' test-pure2.dtd
-	perl -p -i -e 's/generated from ODD source .*//' test-pure2.rnc
-	diff test-pure2.rnc expected-results/test-pure2.rnc
-	diff test-pure2.dtd expected-results/test-pure2.dtd
-	diff test-pure2.odd.html expected-results/test-pure2.odd.html
 
 moreoddity:
 	../teitoxsd test.odd test.xsd
