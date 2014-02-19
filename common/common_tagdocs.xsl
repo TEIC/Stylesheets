@@ -818,14 +818,9 @@ of this software, even if advised of the possibility of such damage.
                 </xsl:if>
                 <xsl:apply-templates mode="tangle"
 				     select="../tei:attList"/>
-		<xsl:choose>
-		  <xsl:when test="rng:*">
-		    <xsl:copy-of select="rng:*"/>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:apply-templates mode="tangle"/>
-		  </xsl:otherwise>
-		</xsl:choose>
+		<xsl:for-each select="..">
+		  <xsl:call-template name="defineContent"/>
+		</xsl:for-each>
               </rng:element>
             </Wrapper>
 	</xsl:variable>

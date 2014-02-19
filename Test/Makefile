@@ -35,6 +35,8 @@ p4top5:
 
 test.rng:
 	../teitorelaxng --odd test.odd test.rng
+	perl -p -i -e 's/generated from ODD source.*//' test.rng
+	diff test.rng expected-results/test.rng
 
 test-html:
 	@echo BUILD: testing html

@@ -173,7 +173,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:variable>
 
 
-  <xsl:template match="processing-instruction()">
+  <xsl:template match="processing-instruction()" mode="#default tangle">
     <xsl:choose>
       <xsl:when test="name(.) = 'odds'">
 	<xsl:choose>
@@ -220,11 +220,11 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="rng:ref">
+  <xsl:template match="rng:ref" mode="#default tangle">
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateRefPrefix(.)}"/>
   </xsl:template>
   
-  <xsl:template match="rng:*">
+  <xsl:template match="rng:*"  mode="#default tangle">
     <xsl:element name="{local-name()}" xmlns="http://relaxng.org/ns/structure/1.0" >
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
@@ -232,7 +232,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
-  <xsl:template match="rng:zeroOrMore">
+  <xsl:template match="rng:zeroOrMore" mode="#default tangle">
     <xsl:choose>
       <xsl:when
         test="rng:ref/@name='model.global'   and preceding-sibling::rng:*[1][self::rng:zeroOrMore/rng:ref/@name='model.global']"/>
@@ -249,7 +249,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
-  <xsl:template match="rng:choice">
+  <xsl:template match="rng:choice" mode="#default tangle">
     <xsl:choose>
       <xsl:when test="count(rng:*)=1">
         <xsl:apply-templates select="a:*|rng:*|tei:*|text()|comment()"/>
@@ -264,7 +264,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
-  <xsl:template match="rng:group">
+  <xsl:template match="rng:group" mode="#default tangle">
     <!-- check if this group is identical to the last -->
     <xsl:choose>
       <xsl:when
@@ -984,15 +984,19 @@ select="$makeDecls"/></xsl:message>
 	      <choice>
 		<text/>
 		<xsl:apply-templates
-		    select="tei:content/*|tei:content/processing-instruction()"/>
+		    select="tei:content/*|tei:content/processing-instruction()"
+		    mode="tangle"/>
 	      </choice>
 	    </zeroOrMore>
 	  </xsl:when>
           <xsl:when test="tei:content/*">
-            <xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>
+            <xsl:apply-templates
+		select="tei:content/*|tei:content/processing-instruction()"
+		mode="tangle"/>
           </xsl:when>
 	  <xsl:when test="tei:content/processing-instruction()">
-            <xsl:apply-templates select="tei:content/processing-instruction()"/>
+            <xsl:apply-templates
+		select="tei:content/processing-instruction()" mode="tangle"/>
 	  </xsl:when>
 	  <xsl:when test="tei:content/@allowText='true'">
             <text xmlns="http://relaxng.org/ns/structure/1.0"/>

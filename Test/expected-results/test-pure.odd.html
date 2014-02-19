@@ -99,7 +99,7 @@
                 <span lang="en" class="label">Declaration</span>
               </td>
               <td class="wovenodd-col2">
-                <pre class="pre_eg">element bit { <a class="link_ref" href="#TEI.bob" title="bob">bob</a>* }</pre>
+                <pre class="pre_eg">element bit { ( text | <a class="link_ref" href="#TEI.bob" title="bob">bob</a>* )* }</pre>
               </td>
             </tr>
           </table>
@@ -192,7 +192,7 @@
                 <span lang="en" class="label">Declaration</span>
               </td>
               <td class="wovenodd-col2">
-                <pre class="pre_eg cdata">element bob { attribute href { xsd:anyURI }? }</pre>
+                <pre class="pre_eg cdata">element bob { attribute href { xsd:anyURI }?, empty }</pre>
               </td>
             </tr>
           </table>
