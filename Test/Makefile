@@ -35,7 +35,7 @@ p4top5:
 
 test.rng:
 	../teitorelaxng --odd test.odd test.rng
-	perl -p -i -e 's/generated from ODD source.*//' test.rng
+	perl -p -e 's/generated from ODD source.*//' test.rng | xmllint --format - > temp; mv temp test.rng
 	diff test.rng expected-results/test.rng
 
 test-html:
