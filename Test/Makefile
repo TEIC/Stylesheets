@@ -264,8 +264,8 @@ test-oddity:
 	../teitodtd test30.odd test30.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test30.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test30.dtd
-	$(JING) -c test30.rnc test11.xml
-	xmllint --noout --dtdvalid test30.dtd test11.xml
+	$(JING) -c test30.rnc test36.xml
+	xmllint --noout --dtdvalid test30.dtd test36.xml
 	diff test30.rnc expected-results/test30.rnc
 	diff test30.dtd expected-results/test30.dtd
 	../teitodtd test-pure.odd test-pure.dtd
@@ -370,7 +370,7 @@ clean:
 	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5 test*.processedodd
 	rm -f oddbyexample.* index*div*html
 	rm -f testdrama.compiled.xml
-	rm -f test5.odt test7.xml test11.xml test18.xml test19.xml test-index.xml test7.zip
+	rm -f test5.odt test7.xml test18.xml test19.xml test-index.xml test7.zip
 	rm -f test9.docx test9.odt
 	rm -f content.xml.odt.listing content.xml.odt
 	rm -f test.xml.docx.core
