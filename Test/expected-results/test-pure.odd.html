@@ -35,6 +35,10 @@
             <span class="headingNumber">1.3. </span>
             <a class="toc toc_1" href="#TEI.stuff" title="stuff">&lt;stuff&gt;</a>
           </li>
+          <li class="toc">
+            <span class="headingNumber">1.4. </span>
+            <a class="toc toc_1" href="#TEI.thingummy" title="thingummy">&lt;thingummy&gt;</a>
+          </li>
         </ul>
       </li>
     </ul>
@@ -236,6 +240,7 @@
                     <span class="specChildElements">
                       <a class="link_odd_elementSpec" href="#TEI.bit" title="bit">bit</a>
                       <a class="link_odd_elementSpec" href="#TEI.bob" title="bob">bob</a>
+                      <a class="link_odd_elementSpec" href="#TEI.thingummy" title="thingummy">thingummy</a>
                     </span>
                   </div>
                 </div>
@@ -246,7 +251,62 @@
                 <span lang="en" class="label">Declaration</span>
               </td>
               <td class="wovenodd-col2">
-                <pre class="pre_eg">element stuff { ( <a class="link_ref" href="#TEI.bit" title="bit">bit</a> | <a class="link_ref" href="#TEI.bob" title="bob">bob</a> )+ }</pre>
+                <pre class="pre_eg">element stuff { ( <a class="link_ref" href="#TEI.bit" title="bit">bit</a> | <a class="link_ref" href="#TEI.bob" title="bob">bob</a> | <a class="link_ref" href="#TEI.thingummy" title="thingummy">thingummy</a> )+ }</pre>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="refdoc" id="TEI.thingummy">
+        <h3>
+          <span class="headingNumber">1.4. </span>
+          <span class="head">&lt;thingummy&gt;</span>
+        </h3>
+        <div class="table">
+          <table class="wovenodd">
+            <tr>
+              <td colspan="2" class="wovenodd-col2">
+                <span class="label">&lt;thingummy&gt; </span>
+                <span>élément </span>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Module</span>
+              </td>
+              <td class="wovenodd-col2">derived-module-odd-1</td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Contained by</span>
+              </td>
+              <td class="wovenodd-col2">
+                <div class="parent">
+                  <div class="specChildren">
+                    <div class="specChild">
+                      <span class="specChildModule">derived-module-odd-1: </span>
+                      <span class="specChildElements">
+                        <a class="link_odd_elementSpec" href="#TEI.stuff" title="stuff">stuff</a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">May contain</span>
+              </td>
+              <td class="wovenodd-col2">
+                <span lang="en">Character data only</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Declaration</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">element thingummy { text }</pre>
               </td>
             </tr>
           </table>

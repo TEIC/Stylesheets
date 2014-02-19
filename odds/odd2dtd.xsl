@@ -1117,6 +1117,9 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:apply-templates select="tei:content/*"/>
 	      <xsl:text>)*</xsl:text>
 	  </xsl:when>
+          <xsl:when test="tei:content/@allowText='true' and not(tei:content/*)">
+            <xsl:text>(#PCDATA)</xsl:text>
+	  </xsl:when>
           <xsl:when test="tei:content/@allowText='true'">
             <xsl:text>#PCDATA</xsl:text>
 	  </xsl:when>

@@ -294,6 +294,17 @@ test-oddity:
 	rm test.odd2lite
 	rm test.odd2relax
 	rm test.odd2xslstripspace
+pure:
+	../teitodtd test-pure2.odd test-pure2.dtd
+	../teitornc test-pure2.odd test-pure2.rnc
+	../teitohtml --odd test-pure2.odd test-pure2.odd.html
+	xmllint --noout --dtdvalid test-pure2.dtd test-pure2.xml
+	xmllint --encode utf-8 --format test-pure2.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure2.odd.html
+	perl -p -i -e 's/generated from ODD source .*//' test-pure2.dtd
+	perl -p -i -e 's/generated from ODD source .*//' test-pure2.rnc
+	diff test-pure2.rnc expected-results/test-pure2.rnc
+	diff test-pure2.dtd expected-results/test-pure2.dtd
+	diff test-pure2.odd.html expected-results/test-pure2.odd.html
 
 moreoddity:
 	../teitoxsd test.odd test.xsd
@@ -372,7 +383,7 @@ clean:
 	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5 test*.processedodd
 	rm -f oddbyexample.* index*div*html
 	rm -f testdrama.compiled.xml
-	rm -f test5.odt test7.xml test18.xml test19.xml test-index.xml test7.zip
+	rm -f test5.odt test7.xml test18.xml test19.xml test-index.xml test7.zip test11.xml
 	rm -f test9.docx test9.odt
 	rm -f content.xml.odt.listing content.xml.odt
 	rm -f test.xml.docx.core

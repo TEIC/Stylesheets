@@ -24,6 +24,7 @@
             <alternate maxOccurs="unbounded">
               <elementRef key="bit"/>
               <elementRef key="bob"/>
+              <elementRef key="thingummy"/>
             </alternate>
           </content>
         </elementSpec>
@@ -39,6 +40,10 @@
               </datatype>
             </attDef>
           </attList>
+        </elementSpec>
+        <elementSpec ident="thingummy">
+          <desc>élément </desc> 
+          <content allowText="true"/>
         </elementSpec>
         <elementSpec ident="bit">
           <desc>élément textuel du schéma simplissime (peut contenir des bobs) </desc>

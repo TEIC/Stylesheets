@@ -2478,12 +2478,12 @@ of this software, even if advised of the possibility of such damage.
           <xsl:text>ANY</xsl:text>
         </xsl:element>
       </xsl:when>
-      <xsl:when test="tei:content/rng:empty">
+      <xsl:when test="tei:content/@allowText='true' and not(tei:content/*)">
         <xsl:element namespace="{$outputNS}" name="{$segName}">
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
-          <xsl:sequence select="tei:i18n('Empty element')"/>
+          <xsl:sequence select="tei:i18n('Character data only')"/>
         </xsl:element>
       </xsl:when>
       <xsl:when test="tei:content/rng:text and    count(tei:content/rng:*)=1">
@@ -2492,6 +2492,14 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:sequence select="tei:i18n('Character data only')"/>
+        </xsl:element>
+      </xsl:when>
+      <xsl:when test="tei:content/rng:empty">
+        <xsl:element namespace="{$outputNS}" name="{$segName}">
+          <xsl:attribute name="{$langAttributeName}">
+            <xsl:value-of select="$documentationLanguage"/>
+          </xsl:attribute>
+          <xsl:sequence select="tei:i18n('Empty element')"/>
         </xsl:element>
       </xsl:when>
       <xsl:otherwise>
