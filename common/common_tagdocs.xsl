@@ -704,30 +704,35 @@ of this software, even if advised of the possibility of such damage.
             </xsl:element>
           </xsl:element>
         </xsl:if>
-        <xsl:element namespace="{$outputNS}" name="{$rowName}">
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:attribute name="{$rendName}">
-              <xsl:text>wovenodd-col1</xsl:text>
-            </xsl:attribute>
-            <xsl:element namespace="{$outputNS}" name="{$hiName}">
-              <xsl:attribute name="{$rendName}">
-                <xsl:text>label</xsl:text>
-              </xsl:attribute>
-              <xsl:attribute name="{$langAttributeName}">
-                <xsl:value-of select="$documentationLanguage"/>
-              </xsl:attribute>
-              <xsl:sequence select="tei:i18n('Member of')"/>
-            </xsl:element>
-          </xsl:element>
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:attribute name="{$rendName}">
-              <xsl:text>wovenodd-col2</xsl:text>
-            </xsl:attribute>
-            <xsl:call-template name="generateModelParents">
-              <xsl:with-param name="showElements">false</xsl:with-param>
-            </xsl:call-template>
-          </xsl:element>
-        </xsl:element>
+	<xsl:variable name="memberclasses">
+	  <xsl:call-template name="generateModelParents">
+	    <xsl:with-param name="showElements">false</xsl:with-param>
+	  </xsl:call-template>
+	</xsl:variable>
+	<xsl:if test="count($memberclasses/*/*)&gt;0">
+	  <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>wovenodd-col1</xsl:text>
+	      </xsl:attribute>
+	      <xsl:element namespace="{$outputNS}" name="{$hiName}">
+		<xsl:attribute name="{$rendName}">
+		  <xsl:text>label</xsl:text>
+		</xsl:attribute>
+		<xsl:attribute name="{$langAttributeName}">
+		  <xsl:value-of select="$documentationLanguage"/>
+		</xsl:attribute>
+		<xsl:sequence select="tei:i18n('Member of')"/>
+	      </xsl:element>
+	    </xsl:element>
+	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>wovenodd-col2</xsl:text>
+	      </xsl:attribute>
+	      <xsl:copy-of select="$memberclasses"/>
+	    </xsl:element>
+	  </xsl:element>
+	</xsl:if>
         <xsl:element namespace="{$outputNS}" name="{$rowName}">
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:attribute name="{$rendName}">
@@ -1830,6 +1835,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:for-each>
       </xsl:variable>
       <xsl:call-template name="displayElementsByModule">
+	<xsl:with-param name="context">parents</xsl:with-param>
         <xsl:with-param name="List">
           <xsl:copy-of select="$Parents"/>
         </xsl:with-param>
@@ -2500,6 +2506,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:for-each>
         </xsl:variable>
         <xsl:call-template name="displayElementsByModule">
+	  <xsl:with-param name="context">children</xsl:with-param>
           <xsl:with-param name="List">
             <xsl:copy-of select="$Children"/>
           </xsl:with-param>
@@ -2509,9 +2516,13 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="displayElementsByModule">
     <xsl:param name="List"/>
+    <xsl:param name="context"/>
     <xsl:variable name="here" select="."/>
     <xsl:for-each select="$List">
       <xsl:choose>
+	<xsl:when test="$context='parents' and count(Element)=0">
+	  <xsl:text>—</xsl:text>
+	</xsl:when>
         <xsl:when test="Element[@type='TEXT'] and count(Element)=1">
           <xsl:element namespace="{$outputNS}" name="{$segName}">
             <xsl:attribute name="{$langAttributeName}">
