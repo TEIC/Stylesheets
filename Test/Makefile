@@ -310,6 +310,10 @@ moreoddity:
 	../teitodtd test.odd test.dtd
 	../teitornc test.odd test.rnc
 
+pure:
+	../teitodtd test-pure.odd test-pure.dtd
+	../teitornc test-pure.odd test-pure.rnc
+
 test-namespaces:
 	@echo BUILD: testing namespaces
 # This test checks the rnc files so that to make sure we are testing

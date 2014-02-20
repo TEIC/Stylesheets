@@ -48,8 +48,13 @@
         <elementSpec ident="bit">
           <desc>élément textuel du schéma simplissime (peut contenir des bobs) </desc>
           <content allowText="true">
-            <elementRef key="bob" minOccurs="0" maxOccurs="unbounded"/>
+            <elementRef key="bob" minOccurs="1" maxOccurs="1"/>
           </content>
+	  <constraintSpec>
+	    <constraint>
+	      <report test="count(bob) !=1" xmlns="http://purl.oclc.org/dsdl/schematron">Only one bob allowed</report>
+	    </constraint>
+	  </constraintSpec>
         </elementSpec>
       </schemaSpec>
       
