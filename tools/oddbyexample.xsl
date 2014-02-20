@@ -106,12 +106,6 @@ valList
   <xsl:param name="processP5">true</xsl:param>
 
 
-
-  <xsl:variable name="checkAtts">
-    <xsl:text>,</xsl:text>
-    <xsl:value-of select="$attributeList"/>
-    <xsl:text>,</xsl:text>
-  </xsl:variable>
   <xsl:key name="Atts" match="@*" use="local-name(parent::*)"/>
   <xsl:key name="attVals" match="@*" use="concat(local-name(parent::*),local-name())"/>
   <xsl:key name="ELEMENTS" use="1" match="elementSpec"/>
@@ -271,16 +265,9 @@ valList
                   <valList type="closed">
                     <xsl:for-each-group select="key('attVals',concat($ident,local-name()))" group-by=".">
                       <xsl:sort select="."/>
-                      <xsl:choose>
-                        <xsl:when test="contains(current-grouping-key(),' ')">
-                          <xsl:for-each select="tokenize(current-grouping-key(),' ')">
-                            <valItem ident="{.}"/>
-                          </xsl:for-each>
-                        </xsl:when>
-                        <xsl:otherwise>
-                          <valItem ident="{current-grouping-key()}"/>
-                        </xsl:otherwise>
-                      </xsl:choose>
+		      <xsl:for-each select="tokenize(current-grouping-key(),' ')">
+			<valItem ident="{.}"/>
+		      </xsl:for-each>
                     </xsl:for-each-group>
                   </valList>
                 </attDef>
@@ -551,7 +538,7 @@ valList
   <xsl:template name="checktype">
     <xsl:attribute name="enumerated">
       <xsl:choose>
-        <xsl:when test="contains($checkAtts,concat(',',@ident,','))">true</xsl:when>
+        <xsl:when test="@ident = ($attributeList)">true</xsl:when>
         <xsl:when test="@ident='n'">false</xsl:when>
         <xsl:when test="@ident='rend' and $enumerateRend='true'">true</xsl:when>
         <xsl:when test="@ident='type' and $enumerateType='true'">true</xsl:when>
