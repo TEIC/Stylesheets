@@ -50,7 +50,7 @@
           <content allowText="true">
             <elementRef key="bob" minOccurs="1" maxOccurs="1"/>
           </content>
-	  <constraintSpec>
+	  <constraintSpec ident="test" scheme="isoschematron">
 	    <constraint>
 	      <report test="count(bob) !=1" xmlns="http://purl.oclc.org/dsdl/schematron">Only one bob allowed</report>
 	    </constraint>
