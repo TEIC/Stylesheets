@@ -1,5 +1,9 @@
 default namespace = ""
+namespace math = "http://www.w3.org/1998/Math/MathML"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
+namespace svg = "http://www.w3.org/2000/svg"
+namespace xi = "http://www.w3.org/2001/XInclude"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
 # Schema 
@@ -32,5 +36,22 @@ thingummy =
 bit =
   
   ## élément textuel du schéma simplissime (peut contenir des bobs) 
-  element bit { (text | bob)* }
+  element bit {
+    ((text | bob)*)
+    >> sch:pattern [
+         id = "bit-constraint-test"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:bit"
+           "\x{a}" ~
+           "               "
+           sch:report [ test = "count(bob) !=1" "Only one bob allowed" ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+  }
 start = stuff
