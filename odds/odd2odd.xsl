@@ -81,7 +81,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-MEMBEROFDELETE" match="tei:memberOf[@mode='delete']" use="concat(../../@ident,@key)"/>
   <xsl:key name="odd2odd-MODULES" match="tei:moduleRef" use="@key"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:elementSpec" use="@module"/>
-  <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:macroSpec"  use="@module"/>
+  <xsl:key name="odd2odd-MODULE_MEMBERS_CLASS" match="tei:macroSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_CLASS" match="tei:classSpec" use="@module"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:elementSpec]"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:macroSpec and not(@name=ancestor::tei:macroSpec/@ident)]"/>
@@ -447,7 +447,14 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template
 >
 
-  <!-- ******************* Pass 1, expand schemaSpec ********************************* -->
+  <!-- ******************* Phase 1, expand schemaSpec ********************************* -->
+
+  <xsl:template match="*" mode="pass1">
+    <xsl:copy>
+      <xsl:apply-templates mode="pass1" select="*|@*|processing-instruction()|comment()|text()"/>
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="@*|processing-instruction()|text()|comment()" mode="pass1">
     <xsl:copy-of select="."/>
   </xsl:template>
@@ -475,12 +482,6 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:copy>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-
-  <xsl:template match="*" mode="pass1">
-    <xsl:copy>
-      <xsl:apply-templates mode="pass1" select="*|@*|processing-instruction()|comment()|text()"/>
-    </xsl:copy>
   </xsl:template>
 
   <xsl:template match="tei:classSpec[@mode='add' or (not(@mode) and ancestor::tei:schemaSpec)]" mode="pass1">
@@ -592,7 +593,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:for-each>
   </xsl:template>
   
-  <!-- ******************* Pass 2, make the changes ********************************* -->
+  <!-- ******************* Phase 2, make the changes ********************************* -->
   <xsl:template match="@*|processing-instruction()|text()|comment()" mode="pass2">
     <xsl:copy-of select="."/>
   </xsl:template>
