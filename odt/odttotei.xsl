@@ -988,12 +988,12 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="text:bookmark-end">
-    <anchor type="bookmark-end">
-      <xsl:attribute name="corresp">
+    <ptr type="bookmark-end">
+      <xsl:attribute name="target">
 	<xsl:text>#id_</xsl:text>
 	<xsl:value-of select="@text:name"/>
       </xsl:attribute>
-    </anchor>
+    </ptr>
   </xsl:template>
 
   <xsl:template match="text:bookmark">
