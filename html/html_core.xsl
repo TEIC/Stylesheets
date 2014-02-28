@@ -1567,6 +1567,11 @@ of this software, even if advised of the possibility of such damage.
           <xsl:comment>anchor</xsl:comment>
         </a>
       </xsl:when>
+      <xsl:when test="self::tei:anchor and @xml:id">
+        <a id="{@xml:id}">
+          <xsl:comment>anchor</xsl:comment>
+        </a>
+      </xsl:when>
       <xsl:when test="(self::tei:fb or self::tei:index or self::tei:anchor) and @xml:id">
         <a id="{@xml:id}">
           <xsl:comment><xsl:value-of select="local-name()"/></xsl:comment>
@@ -1584,8 +1589,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:attribute name="id" select="@xml:id"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="me"><xsl:value-of select="$masterFile"/>-<xsl:value-of select="local-name(.)"/>-<xsl:value-of select="generate-id()"/></xsl:variable>
-        <xsl:attribute name="id" select="$me"/>
+        <xsl:attribute name="id" select="concat($masterFile,'-',local-name(.),'-',generate-id())"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
