@@ -1588,6 +1588,12 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@xml:id">
         <xsl:attribute name="id" select="@xml:id"/>
       </xsl:when>
+      <xsl:when test="self::tei:anchor">
+	<a>
+	  <xsl:attribute name="id"
+		       select="concat($masterFile,'-',local-name(.),'-',generate-id())"/>
+	</a>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:attribute name="id" select="concat($masterFile,'-',local-name(.),'-',generate-id())"/>
       </xsl:otherwise>
