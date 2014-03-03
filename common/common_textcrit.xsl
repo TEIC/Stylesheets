@@ -136,4 +136,16 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template match="tei:sourceDoc"/>
    <xsl:template match="tei:facsimile"/>
 
+   <xsl:template match="tei:listWit">
+     <xsl:variable name="l">
+       <list rend="unordered" xmlns="http://www.tei-c.org/ns/1.0">
+	 <xsl:for-each select="tei:witness">
+	   <item>
+	     <xsl:copy-of select="@*|*|text()"/>
+	   </item>
+	 </xsl:for-each>
+       </list>
+     </xsl:variable>
+     <xsl:apply-templates select="$l"/>
+   </xsl:template>
 </xsl:stylesheet>

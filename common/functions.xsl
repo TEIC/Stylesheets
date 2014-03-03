@@ -1257,9 +1257,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="wit" select="."/>
       <xsl:for-each select="$top">
 	<xsl:choose>
-	  <xsl:when test="starts-with($wit,'#') and id(substring($wit,2))">
+	  <xsl:when test="starts-with($wit,'#') and
+			  id(substring($wit,2))">
 	    <xsl:for-each select="id(substring($wit,2))">
-	      <xsl:sequence select="if (@n) then @n else @xml:id"/>
+	      <xsl:value-of select="if (@n) then @n else @xml:id"/>
 	    </xsl:for-each>
 	</xsl:when>
 	  <xsl:when test="starts-with($wit,'#')">
@@ -1267,7 +1268,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:for-each select="doc($wit)/*">
-	    <xsl:sequence select="if (@n) then @n else @xml:id"/>
+	    <xsl:value-of select="if (@n) then @n else @xml:id"/>
 	  </xsl:for-each>
 	</xsl:otherwise>
 	</xsl:choose>
