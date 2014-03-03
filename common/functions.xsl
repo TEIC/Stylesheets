@@ -1252,23 +1252,30 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:function name="tei:getWitness" as="xs:string*">
     <xsl:param name="witness"/>
+      <xsl:variable name="r">
     <xsl:for-each select="tokenize($witness,' ')">
       <xsl:variable name="wit" select="."/>
       <xsl:for-each select="$top">
 	<xsl:choose>
-	  <xsl:when test="starts-with($wit,'#')">
+	  <xsl:when test="starts-with($wit,'#') and id(substring($wit,2))">
 	    <xsl:for-each select="id(substring($wit,2))">
 	      <xsl:sequence select="if (@n) then @n else @xml:id"/>
 	    </xsl:for-each>
+	</xsl:when>
+	  <xsl:when test="starts-with($wit,'#')">
+	    <xsl:value-of select="substring($wit,2)"/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:for-each select="doc($wit)/*">
 	    <xsl:sequence select="if (@n) then @n else @xml:id"/>
 	  </xsl:for-each>
 	</xsl:otherwise>
-      </xsl:choose>
+	</xsl:choose>
+      </xsl:for-each>
+      <xsl:if test="position() &lt; last()">, </xsl:if>
     </xsl:for-each>
-    </xsl:for-each>
+      </xsl:variable>
+      <xsl:value-of select="$r"/>
   </xsl:function>
 
     <xsl:function name="tei:createSpecName" as="xs:string">
