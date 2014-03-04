@@ -97,7 +97,7 @@
   <xsl:template name="E31">
     <E31_Document xmlns="http://purl.org/NET/crm-owl#" 
 	rdf:about="{tei:makeID(.,'id')}">
-      <xsl:apply-templates select="parent::TEI/teiHeader/fileDesc|parent::teiCorous/teiHeader/fileDesc"/>
+      <xsl:apply-templates select="parent::TEI/teiHeader/fileDesc"/>
     </E31_Document>
     <xsl:apply-templates/>
   </xsl:template>
