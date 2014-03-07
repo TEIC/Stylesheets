@@ -456,7 +456,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
                            encoding="{$outputEncoding}"
-                           href="{$outName}"
+                           href="{if (matches($outName,'^[A-z]:')) then
+				 concat('file:///',$outName) else $outName}"
                            method="{$outputMethod}">
     
         <xsl:call-template name="pageLayoutSimple"/>
