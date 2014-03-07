@@ -505,7 +505,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
       </xsl:matching-substring>
       <xsl:non-matching-substring>
-        <xsl:value-of select="$target"/>
+        <xsl:sequence select="concat($context/ancestor-or-self::*[@xml:base][1]/@xml:base,$target)"/>
       </xsl:non-matching-substring>
     </xsl:analyze-string>
   </xsl:function>
