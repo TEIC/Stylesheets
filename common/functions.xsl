@@ -174,6 +174,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="starts-with(@rend,'specList-')">true</xsl:when>
         <xsl:when test="starts-with(parent::tei:hi/@rend,'specList-')">true</xsl:when>
         <xsl:when test="@rend='label'">true</xsl:when>
+        <xsl:when test="@rend='wovenodd'">true</xsl:when>
+        <xsl:when test="@rend='specChildModule'">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[@rend='wovenodd-col1']">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[@role='label']">true</xsl:when>
         <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'bold')]">true</xsl:when>
@@ -250,10 +252,68 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:code">true</xsl:when>
         <xsl:when test="self::tei:ident">true</xsl:when>
         <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'typewriter')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'code')]">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Whether to render something in underline.</desc>
+  </doc>
+  <xsl:function name="tei:render-underline" as="xs:boolean">
+    <xsl:param name="element"/>
+    <xsl:for-each select="$element">
+      <xsl:choose>
+        <xsl:when test="ancestor-or-self::*[@rend][@rend='ul']">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'underline')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'UL')]">true</xsl:when>
+        <xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Whether to render something in superscript.</desc>
+  </doc>
+  <xsl:function name="tei:render-superscript" as="xs:boolean">
+    <xsl:param name="element"/>
+    <xsl:for-each select="$element">
+      <xsl:choose>
+        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'sup')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'superscript')]">true</xsl:when>
+        <xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Whether to render something in subscript.</desc>
+  </doc>
+  <xsl:function name="tei:render-subscript" as="xs:boolean">
+    <xsl:param name="element"/>
+    <xsl:for-each select="$element">
+      <xsl:choose>
+        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'sup')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'subscript')]">true</xsl:when>
+        <xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Whether to render something in strikethrough.</desc>
+  </doc>
+  <xsl:function name="tei:render-strike" as="xs:boolean">
+    <xsl:param name="element"/>
+    <xsl:for-each select="$element">
+      <xsl:choose>
+        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'strike')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'strikethrough')]">true</xsl:when>
+        <xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Is given an element and defines whether or not this element is to be rendered inline.</desc>
   </doc>

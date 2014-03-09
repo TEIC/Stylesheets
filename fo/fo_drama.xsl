@@ -57,10 +57,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:actor">
       <inline>
-         <xsl:call-template name="rend">
-            <xsl:with-param name="defaultvalue" select="string('normal')"/>
-            <xsl:with-param name="defaultstyle" select="string('font-style')"/>
-         </xsl:call-template>
+         <xsl:call-template name="rend"/>
          <xsl:apply-templates/>
       </inline>
   </xsl:template>
@@ -69,10 +66,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:camera">
       <inline>
-         <xsl:call-template name="rend">
-            <xsl:with-param name="defaultvalue" select="string('normal')"/>
-            <xsl:with-param name="defaultstyle" select="string('font-style')"/>
-         </xsl:call-template>
+         <xsl:call-template name="rend"/>
          <xsl:apply-templates/>
       </inline>
   </xsl:template>
@@ -81,10 +75,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:caption">
       <inline>
-         <xsl:call-template name="rend">
-            <xsl:with-param name="defaultvalue" select="string('normal')"/>
-            <xsl:with-param name="defaultstyle" select="string('font-style')"/>
-         </xsl:call-template>
+         <xsl:call-template name="rend"/>
          <xsl:apply-templates/>
       </inline>
   </xsl:template>
@@ -119,10 +110,7 @@ of this software, even if advised of the possibility of such damage.
          </list-item-label>
          <list-item-body start-indent="body-start()">
             <block>
-               <xsl:call-template name="rend">
-                  <xsl:with-param name="defaultvalue" select="string('italic')"/>
-                  <xsl:with-param name="defaultstyle" select="string('font-style')"/>
-               </xsl:call-template>
+               <xsl:call-template name="rend"/>
                <xsl:text>(</xsl:text>
                <xsl:apply-templates/>
                <xsl:text>)</xsl:text>
@@ -171,10 +159,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:speaker">
       <inline>
-         <xsl:call-template name="rend">
-            <xsl:with-param name="defaultvalue" select="string('italic')"/>
-            <xsl:with-param name="defaultstyle" select="string('font-style')"/>
-         </xsl:call-template>
+         <xsl:call-template name="rend"/>
          <xsl:apply-templates/>
          <xsl:text> </xsl:text>
       </inline>
@@ -185,10 +170,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:stage">
       <block>
          <xsl:attribute name="text-indent">1em</xsl:attribute>
-         <xsl:call-template name="rend">
-            <xsl:with-param name="defaultvalue" select="string('italic')"/>
-            <xsl:with-param name="defaultstyle" select="string('font-style')"/>
-         </xsl:call-template>
+         <xsl:call-template name="rend"/>
          <xsl:apply-templates/>
       </block>
   </xsl:template>
@@ -197,10 +179,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:p/tei:stage">
       <inline>
-         <xsl:call-template name="rend">
-            <xsl:with-param name="defaultvalue" select="string('italic')"/>
-            <xsl:with-param name="defaultstyle" select="string('font-style')"/>
-         </xsl:call-template>
+         <xsl:call-template name="rend"/>
          <xsl:apply-templates/>
       </inline>
   </xsl:template>
@@ -209,10 +188,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:sp/tei:stage">
       <inline>
-         <xsl:call-template name="rend">
-            <xsl:with-param name="defaultvalue" select="string('italic')"/>
-            <xsl:with-param name="defaultstyle" select="string('font-style')"/>
-         </xsl:call-template>
+         <xsl:call-template name="rend"/>
          <xsl:apply-templates/>
       </inline>
   </xsl:template>
@@ -221,10 +197,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:tech">
       <inline>
-         <xsl:call-template name="rend">
-            <xsl:with-param name="defaultvalue" select="string('italic')"/>
-            <xsl:with-param name="defaultstyle" select="string('font-style')"/>
-         </xsl:call-template>
+         <xsl:call-template name="rend"/>
          <xsl:apply-templates/>
       </inline>
   </xsl:template>
@@ -233,10 +206,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:view">
       <inline>
-         <xsl:call-template name="rend">
-            <xsl:with-param name="defaultvalue" select="string('italic')"/>
-            <xsl:with-param name="defaultstyle" select="string('font-style')"/>
-         </xsl:call-template>
+         <xsl:call-template name="rend"/>
          <xsl:apply-templates/>
       </inline>
   </xsl:template>

@@ -172,8 +172,9 @@ of this software, even if advised of the possibility of such damage.
       <desc/>
    </doc>
   <xsl:template match="tei:emph">
-      <inline font-style="italic">
-         <xsl:apply-templates/>
+      <inline>
+	<xsl:call-template name="rend"/>
+        <xsl:apply-templates/>
       </inline>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -243,10 +244,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:hi">
       <inline>
-         <xsl:call-template name="rend">
-            <xsl:with-param name="defaultvalue" select="string('bold')"/>
-            <xsl:with-param name="defaultstyle" select="string('font-weight')"/>
-         </xsl:call-template>
+         <xsl:call-template name="rend"/>
          <xsl:apply-templates/>
       </inline>
   </xsl:template>
@@ -254,10 +252,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="@rend">
 	<inline>
-          <xsl:call-template name="rend">
-            <xsl:with-param name="defaultvalue" select="string('bold')"/>
-            <xsl:with-param name="defaultstyle" select="string('font-weight')"/>
-          </xsl:call-template>
+          <xsl:call-template name="rend"/>
          <xsl:apply-templates/>
       </inline>
       </xsl:when>
@@ -746,40 +741,9 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="$value='calligraphic'">
             <xsl:attribute name="font-family">cursive</xsl:attribute>
          </xsl:when>
-         <xsl:when test="$value='ital' or $value='italic' or $value='it' or $value='i' or $value='italics'">
-            <xsl:attribute name="font-style">italic</xsl:attribute>
-         </xsl:when>
-         <xsl:when test="$value='sc'">
-            <xsl:attribute name="font-variant">small-caps</xsl:attribute>
-         </xsl:when>
-         <xsl:when test="$value='code'">
-            <xsl:attribute name="font-family">
-               <xsl:value-of select="$typewriterFont"/>
-            </xsl:attribute>
-         </xsl:when>
-         <xsl:when test="$value='bo' or $value='bold' or
-			 $value='label' or
-			 $value='wovenodd' or $value='specChildModule'">
-            <xsl:attribute name="font-weight">bold</xsl:attribute>
-         </xsl:when>
          <xsl:when test="$value='BO'">
             <xsl:attribute name="font-style">italic</xsl:attribute>
             <xsl:attribute name="text-decoration">underline</xsl:attribute>
-         </xsl:when>
-         <xsl:when test="$value='UL' or $value='ul'">
-            <xsl:attribute name="text-decoration">underline</xsl:attribute>
-         </xsl:when>
-         <xsl:when test="$value='sub'">
-            <xsl:attribute name="vertical-align">sub</xsl:attribute>
-         </xsl:when>
-         <xsl:when test="$value='small'">
-            <xsl:attribute name="font-size">small</xsl:attribute>
-         </xsl:when>
-         <xsl:when test="$value='strike'">
-            <xsl:attribute name="text-decoration">line-through</xsl:attribute>
-         </xsl:when>
-         <xsl:when test="$value='sup'">
-            <xsl:attribute name="vertical-align">super</xsl:attribute>
          </xsl:when>
       </xsl:choose>
   </xsl:template>
@@ -796,28 +760,40 @@ of this software, even if advised of the possibility of such damage.
       <xsl:number from="tei:text" level="any" count="tei:note[@place='foot']"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[fo] <param name="defaultvalue">defaultvalue</param>
-         <param name="defaultstyle">defaultstyle</param>
-         <param name="rend">rend</param>
-      </desc>
+    <desc>process rend attribute</desc>
    </doc>
   <xsl:template name="rend">
-      <xsl:param name="defaultvalue"/>
-      <xsl:param name="defaultstyle"/>
-      <xsl:choose>
-         <xsl:when test="@rend">
-	   <xsl:for-each select="tokenize(@rend, ' ')">
-             <xsl:call-template name="applyRend">
-               <xsl:with-param name="value" select="."/>
-             </xsl:call-template>
-	   </xsl:for-each>
-         </xsl:when>
-	 <xsl:otherwise>
-           <xsl:attribute name="{$defaultstyle}">
-               <xsl:value-of select="$defaultvalue"/>
-            </xsl:attribute>
-	 </xsl:otherwise>
-      </xsl:choose>
+      <xsl:if test="tei:render-smallcaps(.)" >
+        <xsl:attribute name="font-variant">small-caps</xsl:attribute>
+      </xsl:if>
+    <xsl:if test="tei:render-bold(.)" >
+      <xsl:attribute name="font-weight">bold</xsl:attribute>
+    </xsl:if>
+    <xsl:if test="tei:render-italic(.)" >
+      <xsl:attribute name="font-style">italic</xsl:attribute>
+    </xsl:if>
+    <xsl:if test="tei:render-underline(.)" >
+      <xsl:attribute name="text-decoration">underline</xsl:attribute>
+    </xsl:if>
+    <xsl:if test="tei:render-subscript(.)" >
+      <xsl:attribute name="vertical-align">sub</xsl:attribute>
+    </xsl:if>
+    <xsl:if test="tei:render-superscript(.)" >
+      <xsl:attribute name="vertical-align">super</xsl:attribute>
+    </xsl:if>
+    <xsl:if test="tei:render-strike(.)">
+      <xsl:attribute name="text-decoration">line-through</xsl:attribute>
+    </xsl:if>
+    <xsl:if test="tei:render-typewriter(.)">
+      <xsl:attribute name="font-family">
+        <xsl:value-of select="$typewriterFont"/>
+      </xsl:attribute>
+    </xsl:if>      
+    <xsl:for-each select="tokenize(@rend, ' ')">
+      <xsl:call-template name="applyRend">
+        <xsl:with-param name="value" select="."/>
+      </xsl:call-template>
+    </xsl:for-each>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[fo] Spacing setup for list blocks</desc>
