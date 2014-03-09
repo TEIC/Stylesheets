@@ -362,7 +362,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="$summaryDoc='true'">
         <h2>Schema <xsl:value-of select="@ident"/>: changed components</h2>
-        <xsl:for-each select="tei:classSpec[@mode or @rend='change']        | tei:macroSpec[(@mode or @rend='change')]        | tei:elementSpec[(@mode or @rend='change')]">
+        <xsl:for-each select="tei:classSpec[@mode='change' or @rend='change']        | tei:macroSpec[(@mode='change' or @rend='change')]        | tei:elementSpec[(@mode='change' or @rend='change')]">
           <xsl:sort select="lower-case(@ident)"/>
           <xsl:apply-templates mode="weave" select="."/>
         </xsl:for-each>

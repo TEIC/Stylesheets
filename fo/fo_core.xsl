@@ -233,23 +233,38 @@ of this software, even if advised of the possibility of such damage.
       </inline>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>gloss</desc>
    </doc>
   <xsl:template match="tei:gloss">
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>hi</desc>
    </doc>
   <xsl:template match="tei:hi">
       <inline>
          <xsl:call-template name="rend">
             <xsl:with-param name="defaultvalue" select="string('bold')"/>
             <xsl:with-param name="defaultstyle" select="string('font-weight')"/>
-            <xsl:with-param name="rend" select="@rend"/>
          </xsl:call-template>
          <xsl:apply-templates/>
       </inline>
+  </xsl:template>
+  <xsl:template match="tei:seg">
+    <xsl:choose>
+      <xsl:when test="@rend">
+	<inline>
+          <xsl:call-template name="rend">
+            <xsl:with-param name="defaultvalue" select="string('bold')"/>
+            <xsl:with-param name="defaultstyle" select="string('font-weight')"/>
+          </xsl:call-template>
+         <xsl:apply-templates/>
+      </inline>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
@@ -703,9 +718,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </inline>
   </xsl:template>
-  <xsl:template match="tei:seg">
-    <xsl:apply-templates/>
-  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[fo] add an ID</desc>
    </doc>
@@ -745,7 +757,9 @@ of this software, even if advised of the possibility of such damage.
                <xsl:value-of select="$typewriterFont"/>
             </xsl:attribute>
          </xsl:when>
-         <xsl:when test="$value='bo' or $value='bold'">
+         <xsl:when test="$value='bo' or $value='bold' or
+			 $value='label' or
+			 $value='wovenodd' or $value='specChildModule'">
             <xsl:attribute name="font-weight">bold</xsl:attribute>
          </xsl:when>
          <xsl:when test="$value='BO'">
@@ -790,26 +804,19 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="rend">
       <xsl:param name="defaultvalue"/>
       <xsl:param name="defaultstyle"/>
-      <xsl:param name="rend"/>
       <xsl:choose>
-         <xsl:when test="$rend=''">
-            <xsl:attribute name="{$defaultstyle}">
+         <xsl:when test="@rend">
+	   <xsl:for-each select="tokenize(@rend, ' ')">
+             <xsl:call-template name="applyRend">
+               <xsl:with-param name="value" select="."/>
+             </xsl:call-template>
+	   </xsl:for-each>
+         </xsl:when>
+	 <xsl:otherwise>
+           <xsl:attribute name="{$defaultstyle}">
                <xsl:value-of select="$defaultvalue"/>
             </xsl:attribute>
-         </xsl:when>
-         <xsl:when test="contains($rend,';')">
-            <xsl:call-template name="applyRend">
-               <xsl:with-param name="value" select="substring-before($rend,';')"/>
-            </xsl:call-template>
-            <xsl:call-template name="rend">
-               <xsl:with-param name="rend" select="substring-after($rend,';')"/>
-            </xsl:call-template>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:call-template name="applyRend">
-               <xsl:with-param name="value" select="$rend"/>
-            </xsl:call-template>
-         </xsl:otherwise>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

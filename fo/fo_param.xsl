@@ -251,19 +251,19 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>Margin at bottom of text area</desc>
    </doc>
-  <xsl:param name="pageMarginBottom">100pt</xsl:param>
+  <xsl:param name="pageMarginBottom">72pt</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>Left margin</desc>
    </doc>
-  <xsl:param name="pageMarginLeft">80pt</xsl:param>
+  <xsl:param name="pageMarginLeft">72pt</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>Right margin</desc>
    </doc>
-  <xsl:param name="pageMarginRight">150pt</xsl:param>
+  <xsl:param name="pageMarginRight">72pt</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>Margin at top of text area</desc>
    </doc>
-  <xsl:param name="pageMarginTop">75pt</xsl:param>
+  <xsl:param name="pageMarginTop">72pt</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>Paper width</desc>
    </doc>

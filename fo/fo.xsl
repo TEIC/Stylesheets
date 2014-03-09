@@ -62,7 +62,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:variable name="tableSpecs">
       <xsl:choose>
-         <xsl:when test="$readColSpecFile">
+         <xsl:when test="not($readColSpecFile='')">
             <xsl:copy-of select="document($readColSpecFile,$top)/Info"/>
          </xsl:when>
          <xsl:otherwise>

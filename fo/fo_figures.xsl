@@ -320,7 +320,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:attribute>
       </xsl:if>
       <xsl:choose>
-         <xsl:when test="ancestor::tei:table[1][@rend='frame']">
+         <xsl:when test="ancestor::tei:table[1][@rend='frame' or @rend='wovenodd']">
             <xsl:if test="not(parent::tei:row/preceding-sibling::tei:row)">
                <xsl:attribute name="border-before-style">solid</xsl:attribute>
             </xsl:if>
