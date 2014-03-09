@@ -174,7 +174,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:sequence select="tei:processClass(local-name(),'')"/>
       </xsl:when>
       <xsl:when test="@rend">
-	<xsl:sequence select="tei:processRend(@rend,$auto)"/>
+	<xsl:sequence select="tei:processRend(@rend,$auto,.)"/>
       </xsl:when>
       <xsl:when test="@rendition or @style">
 	<xsl:for-each select="@rendition">
@@ -252,20 +252,23 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:processRend" as="node()*">
     <xsl:param name="value"/>
     <xsl:param name="auto"/>
+    <xsl:param name="context"/>
     <xsl:variable name="values">
       <values xmlns="">
 	<xsl:if test="not($auto='')">	    
 	  <c><xsl:value-of select="$auto"/></c>
 	</xsl:if>
+	<xsl:if test="tei:render-bold($context)"><s>font-weight:bold</s></xsl:if>
+	<xsl:if test="tei:render-italic($context)"><s>font-style: italic</s></xsl:if>
+	<xsl:if test="tei:render-strike($context)"><s>text-decoration: line-through</s></xsl:if>
+	<xsl:if test="tei:render-underline($context)"><s>text-decoration:underline</s></xsl:if>
 	<xsl:for-each select="tokenize(normalize-space($value),' ')">
 	  <xsl:choose>
-	    <xsl:when test=".='bold' or .='bo'"><s>font-weight:bold</s></xsl:when>
 	    <xsl:when test=".='calligraphic' or .='cursive'"><s>font-family:cursive</s></xsl:when>
 	    <xsl:when test=".='center' or .='centered' or .='centred'"><s>text-align: center</s></xsl:when>
 	    <xsl:when test=".='expanded'"><s>letter-spacing: 0.15em</s></xsl:when>
 	    <xsl:when test=".='gothic'"><s>font-family: Papyrus, fantasy</s></xsl:when>
 	    <xsl:when test=".='indent'"><s>text-indent: 5em</s></xsl:when>
-	    <xsl:when test=".='italics' or .='italic' or .='it' or .='ital'"><s>font-style: italic</s></xsl:when>
 	    <xsl:when test=".='large'"><s>font-size: 130%</s></xsl:when>
 	    <xsl:when test=".='larger'"><s>font-size: 200%</s></xsl:when>
 	    <xsl:when test=".='overbar'"><s>text-decoration:overline</s></xsl:when>
@@ -275,14 +278,16 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:when test=".='small'"><s>font-size: 75%</s></xsl:when>
 	    <xsl:when test=".='smaller'"><s>font-size: 50%</s></xsl:when>
 	    <xsl:when test=".='spaced'"><s>letter-spacing: 0.15em</s></xsl:when>
-	    <xsl:when test=".='strike' or .='striked'"><s>text-decoration: line-through</s></xsl:when>
 	    <xsl:when test=".='sub' or .='sup' or .='code' or	.='superscript' or .='subscript'"/>
-	    <xsl:when test=".='ul' or .='underline'"><s>text-decoration:underline</s></xsl:when>
 	    <xsl:when test="starts-with(.,'background(')"><s><xsl:text>background-color:</xsl:text><xsl:value-of select="substring-before(substring-after(.,'('),')')"/></s></xsl:when>
 	    <xsl:when test="starts-with(.,'align(')"><s><xsl:text>text-align:</xsl:text><xsl:value-of select="substring-before(substring-after(.,'('),')')"/></s></xsl:when>
 	    <xsl:when test="starts-with(.,'color(')"><s><xsl:text>color:</xsl:text><xsl:value-of select="substring-before(substring-after(.,'('),')')"/></s></xsl:when>
 	    <xsl:when test="starts-with(.,'post(')"><xsl:message terminate="yes">no support for post() pattern in @rend</xsl:message></xsl:when>
-	    <xsl:when test="starts-with(.,'pre(')"><xsl:message terminate="yes">no support for pre() pattern in @rend</xsl:message></xsl:when>
+	    <xsl:when test="starts-with(.,'pre(')"><xsl:message   terminate="yes">no support for pre() pattern in  @rend</xsl:message></xsl:when>
+	    <xsl:when test=".='bold'"/>
+	    <xsl:when test=".='italic'"/>
+	    <xsl:when test=".='strikethrough'"/>
+	    <xsl:when test=".='underline'"/>
 	    <xsl:otherwise><c><xsl:value-of select="."/></c></xsl:otherwise>
 	  </xsl:choose>	  
 	</xsl:for-each>

@@ -175,6 +175,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="starts-with(parent::tei:hi/@rend,'specList-')">true</xsl:when>
         <xsl:when test="@rend='label'">true</xsl:when>
         <xsl:when test="@rend='wovenodd'">true</xsl:when>
+        <xsl:when test="@rend='important'">true</xsl:when>
         <xsl:when test="@rend='specChildModule'">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[@rend='wovenodd-col1']">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[@role='label']">true</xsl:when>
@@ -307,7 +308,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'strike')]">true</xsl:when>
         <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'strikethrough')]">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>

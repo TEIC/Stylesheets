@@ -316,7 +316,7 @@
 \vspace{18pt}
 \makeatother
 \let\tabcellsep&  \par 
-\begin{longtable}{P{0.7628341528833258\textwidth}P{0.08716584711667412\textwidth}}
+\begin{longtable}{P{0.7585615220483641\textwidth}P{0.09143847795163584\textwidth}}
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}This is in a {<\textbf{ab}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rendition}="{\#bold \#initcaps}">}ab element{</\textbf{ab}>}\end{shaded}\egroup 
 
@@ -396,12 +396,12 @@
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{hi}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{class}="{font-weight: bold; color:red}">}bold red{</\textbf{hi}>}\end{shaded}\egroup 
 
-\tabcellsep \textit{bold red}\\
+\tabcellsep {\itshape bold red}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{hi}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rend}="{bold         italic         smallcaps}">}rend\mbox{}\newline 
  test 1{</\textbf{hi}>}\end{shaded}\egroup 
 
-\tabcellsep rend test 1\\
+\tabcellsep {\itshape\bfseries\scshape rend test 1}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{hi}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rend}="{bold}">}\mbox{}\newline 
 \hspace*{6pt}{<\textbf{hi}\mbox{}\newline 
@@ -411,11 +411,11 @@
 \hspace*{6pt}{</\textbf{hi}>}\mbox{}\newline 
 {</\textbf{hi}>}\end{shaded}\egroup 
 
-\tabcellsep \textbf{\textit{\textcolor{red}{rend test 1}}}\\
+\tabcellsep {\bfseries {\itshape\bfseries {\itshape\bfseries\color{red}rend test 1}}}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{hi}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rend}="{bold}">}bold{</\textbf{hi}>} effect\end{shaded}\egroup 
 
-\tabcellsep \textbf{bold} effect\\
+\tabcellsep {\bfseries bold} effect\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{hi}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rend}="{capsall}">}capsall{</\textbf{hi}>} effect\end{shaded}\egroup 
 
@@ -423,7 +423,7 @@
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{hi}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rend}="{color(red)}">}color(red){</\textbf{hi}>} effect\end{shaded}\egroup 
 
-\tabcellsep \textcolor{red}{color(red)} effect\\
+\tabcellsep {\color{red}color(red)} effect\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{hi}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rend}="{normalweight}">}normalweight{</\textbf{hi}>} effect\end{shaded}\egroup 
 
@@ -431,7 +431,7 @@
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{hi}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rend}="{smallcaps}">}smallcaps{</\textbf{hi}>} effect\end{shaded}\egroup 
 
-\tabcellsep \textsc{smallcaps} effect\\
+\tabcellsep {\scshape smallcaps} effect\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{hi}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rend}="{smcap}">}Philosophischen {</\textbf{hi}>}\end{shaded}\egroup 
 
@@ -459,7 +459,7 @@
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{hi}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rend}="{typewriter}">}typewriter{</\textbf{hi}>} effect\end{shaded}\egroup 
 
-\tabcellsep \texttt{typewriter} effect\\
+\tabcellsep {\ttfamily typewriter} effect\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{hi}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rend}="{underdoubleline}">}underdoubleline{</\textbf{hi}>} effect\end{shaded}\egroup 
 
@@ -475,7 +475,7 @@
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{hi}>}hi{</\textbf{hi}>}\mbox{}\newline 
  tag\end{shaded}\egroup 
 
-\tabcellsep \textit{hi} tag\\
+\tabcellsep {\itshape hi} tag\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{mentioned}>}in\mbox{}\newline 
  despatches{</\textbf{mentioned}>}\end{shaded}\egroup 
 

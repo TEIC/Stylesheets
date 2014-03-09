@@ -259,68 +259,77 @@ of this software, even if advised of the possibility of such damage.
       <desc>Rendering rules, turning @rend into LaTeX commands</desc>
    </doc>
   <xsl:template name="rendering">
-      <xsl:variable name="cmd">
-         <xsl:choose>
-            <xsl:when test="not(@rend) and self::tei:hi">\textit</xsl:when>
-            <xsl:when test="starts-with(@rend,'color')">\textcolor</xsl:when>
-            <xsl:when test="@rend='bold'">\textbf</xsl:when>
-            <xsl:when test="@rend='calligraphic'">\textcal</xsl:when>
-            <xsl:when test="@rend='capsall'">\uppercase</xsl:when>
-            <xsl:when test="@rend='center'">\centerline</xsl:when>
-            <xsl:when test="@rend='code'">\texttt</xsl:when>
-            <xsl:when test="@rend='expanded'">\textsc</xsl:when>
-            <xsl:when test="@rend='gothic'">\textgothic</xsl:when>
-            <xsl:when test="@rend='i'">\textit</xsl:when>
-            <xsl:when test="@rend='important'">\textbf</xsl:when>
-            <xsl:when test="@rend='it'">\textit</xsl:when>
-            <xsl:when test="@rend='ital'">\textit</xsl:when>
-            <xsl:when test="@rend='italic'">\textit</xsl:when>
-            <xsl:when test="@rend='italics'">\textit</xsl:when>
-            <xsl:when test="@rend='large'">\textlarge</xsl:when>
-            <xsl:when test="@rend='larger'">\textlarger</xsl:when>
-            <xsl:when test="@rend='noindex'">\textrm</xsl:when>
-            <xsl:when test="@rend='overbar'">\textoverbar</xsl:when>
-            <xsl:when test="@rend='plain'">\textrm</xsl:when>
-            <xsl:when test="@rend='quoted'">\textquoted</xsl:when>
-            <xsl:when test="@rend='sc'">\textsc</xsl:when>
-            <xsl:when test="@rend='small'">\textsmall</xsl:when>
-            <xsl:when test="@rend='smallcaps'">\textsc</xsl:when>
-            <xsl:when test="@rend='smaller'">\textsmaller</xsl:when>
-            <xsl:when test="@rend='strikethrough'">\sout</xsl:when>
-            <xsl:when test="@rend='sub'">\textsubscript</xsl:when>
-            <xsl:when test="@rend='subscript'">\textsubscript</xsl:when>
-            <xsl:when test="@rend='sup'">\textsuperscript</xsl:when>
-            <xsl:when test="@rend='superscript'">\textsuperscript</xsl:when>
-            <xsl:when test="@rend='typewriter'">\texttt</xsl:when>
-            <xsl:when test="@rend='ul'">\uline</xsl:when>
-            <xsl:when test="@rend='underwavyline'">\uwave</xsl:when>
-            <xsl:when test="@rend='underdoubleline'">\uuline</xsl:when>
-            <xsl:when test="@rend='underline'">\uline</xsl:when>
-         </xsl:choose>
+      <xsl:variable name="decls">
+	<xsl:if test="tei:render-italic(.)">\itshape</xsl:if>
+	<xsl:if test="tei:render-bold(.)">\bfseries</xsl:if>
+	<xsl:if test="tei:render-typewriter(.)">\ttfamily</xsl:if>
+        <xsl:if test="tei:render-smallcaps(.)">\scshape</xsl:if>
+	<xsl:for-each select="tokenize(normalize-space(@rend),' ')">
+          <xsl:if test=".='large'">\large</xsl:if>
+          <xsl:if test=".='larger'">\larger</xsl:if>
+          <xsl:if test=".='small'">\small</xsl:if>
+          <xsl:if test=".='smaller'">\smaller</xsl:if>
+          <xsl:if test="starts-with(.,'color')">
+	    <xsl:text>\color</xsl:text>
+	    <xsl:choose>
+	      <xsl:when test="starts-with(.,'color(')">
+	        <xsl:text>{</xsl:text>
+	        <xsl:value-of select="substring-before(substring-after(.,'color('),')')"/>
+	        <xsl:text>}</xsl:text>
+	      </xsl:when>
+	      <xsl:when test="starts-with(.,'color')">
+	        <xsl:text>{</xsl:text>
+	        <xsl:value-of select="substring-after(.,'color')"/>
+	        <xsl:text>}</xsl:text>
+	      </xsl:when>
+	    </xsl:choose>
+	  </xsl:if>
+	</xsl:for-each>
       </xsl:variable>
-      <xsl:value-of select="$cmd"/>
+      <xsl:variable name="cmd">
+	<xsl:if test="tei:render-underline(.)">\uline </xsl:if>
+	<xsl:if test="tei:render-strike(.)">\sout </xsl:if>
+	<xsl:for-each select="tokenize(normalize-space(@rend),' ')">
+         <xsl:choose>
+            <xsl:when test=".='calligraphic'">\textcal </xsl:when>
+            <xsl:when test=".='capsall'">\uppercase </xsl:when>
+            <xsl:when test=".='center'">\centerline </xsl:when>
+            <xsl:when test=".='gothic'">\textgothic </xsl:when>
+            <xsl:when test=".='noindex'">\textrm </xsl:when>
+            <xsl:when test=".='overbar'">\textoverbar </xsl:when>
+            <xsl:when test=".='plain'">\textrm </xsl:when>
+            <xsl:when test=".='quoted'">\textquoted </xsl:when>
+            <xsl:when test=".='sub'">\textsubscript </xsl:when>
+            <xsl:when test=".='subscript'">\textsubscript </xsl:when>
+            <xsl:when test=".='sup'">\textsuperscript </xsl:when>
+            <xsl:when test=".='superscript'">\textsuperscript </xsl:when>
+            <xsl:when test=".='underwavyline'">\uwave </xsl:when>
+            <xsl:when test=".='underdoubleline'">\uuline </xsl:when>
+         </xsl:choose>
+	</xsl:for-each>
+      </xsl:variable>
+      <xsl:for-each select="tokenize(normalize-space($cmd),' ')">
+	<xsl:value-of select="concat(.,'{')"/>
+      </xsl:for-each>
       <xsl:choose>
-	<xsl:when test="starts-with(@rend,'color(')">
-	        <xsl:text>{</xsl:text>
-	        <xsl:value-of select="substring-before(substring-after(@rend,'color('),')')"/>
-	        <xsl:text>}</xsl:text>
-	</xsl:when>
-	<xsl:when test="starts-with(@rend,'color')">
-	        <xsl:text>{</xsl:text>
-	        <xsl:value-of select="substring-after(@rend,'color')"/>
-	        <xsl:text>}</xsl:text>
-	</xsl:when>
-      </xsl:choose>
-      <xsl:choose>
-	<xsl:when test="$cmd=''">
+	<xsl:when test="$decls=''">
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:text>{</xsl:text>
+	  <xsl:if test="$cmd=''">
+	    <xsl:text>{</xsl:text>
+	  </xsl:if>
+	  <xsl:value-of select="$decls"/>
+	  <xsl:if test="matches($decls,'[a-z]$')"><xsl:text> </xsl:text></xsl:if>
 	  <xsl:apply-templates/>
-	  <xsl:text>}</xsl:text>
+	  <xsl:if test="$cmd=''">
+	    <xsl:text>}</xsl:text>
+	  </xsl:if>
 	</xsl:otherwise>
       </xsl:choose>
+      <xsl:for-each select="tokenize(normalize-space($cmd),' ')">
+	<xsl:text>}</xsl:text>
+      </xsl:for-each>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element hr</desc>
@@ -396,7 +405,7 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:text>&#10;\end{description} </xsl:text>
 	 </xsl:when>
          <xsl:when test="tei:isOrderedList(.)">
-	   <xsl:text>\begin{enumerate}&#10;</xsl:text>
+	   <xsl:text>\begin{enumerate}</xsl:text>
 	   <xsl:apply-templates/>
 	   <xsl:text>&#10;\end{enumerate}</xsl:text>
 	 </xsl:when>
@@ -404,7 +413,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates mode="runin" select="tei:item"/>
          </xsl:when>
          <xsl:otherwise> 
-	   <xsl:text>\begin{itemize}&#10;</xsl:text>
+	   <xsl:text>\begin{itemize}</xsl:text>
 	   <xsl:apply-templates/> 
 	   <xsl:text>&#10;\end{itemize} </xsl:text>
       </xsl:otherwise>

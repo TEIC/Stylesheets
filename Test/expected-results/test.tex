@@ -316,7 +316,7 @@
 \section*{(half title note)}\par
 The Original Edition of A CHRISTMAS CAROL has been out of print for many years, and this Edition is a reprint from the stereotype plates of that Edition.
   \begin{titlepage}
-  \begin{docTitle} \begin{titlePart}A Christmas carol. in prose. \end{titlePart} \begin{titlePart}being \textit{A Ghost Story of Christmas}\end{titlePart} \end{docTitle} \begin{byline}by \textit{Charles Dickens}.\end{byline} \begin{byline}With illustrations by John Leech\end{byline} \begin{docImprint}London: Chapman and Hall, Ltd. 1893.\end{docImprint}
+  \begin{docTitle} \begin{titlePart}A Christmas carol. in prose. \end{titlePart} \begin{titlePart}being {\itshape A Ghost Story of Christmas}\end{titlePart} \end{docTitle} \begin{byline}by \textit{Charles Dickens}.\end{byline} \begin{byline}With illustrations by John Leech\end{byline} \begin{docImprint}London: Chapman and Hall, Ltd. 1893.\end{docImprint}
   \end{titlepage}
   \cleardoublepage
 
@@ -336,26 +336,26 @@ Their faithful Friend and Servant, C.D. December, 1843.\end{quote}
 \section[Simple rendition tests]{Simple rendition tests}\par
 ‘Who-e debel you?’ — he at last said — ‘you no speak-e, damme, I kill-e.’ And so saying, the lighted tomahawk began flourishing about me in the dark.\par
 ‘Who-e debel you?’ — he at last said — ‘you no speak-e, damme, I kill-e.’ And so saying, the lighted tomahawk began flourishing about me in the dark. \par 
-\begin{longtable}{P{0.20534262485482\textwidth}P{0.64465737514518\textwidth}}
+\begin{longtable}{P{0.1917570498915401\textwidth}P{0.6582429501084599\textwidth}}
 \hline \rowcolor{label}Effect\tabcellsep Example\\\hline 
 hi\tabcellsep This is hi rend="special" tag\\
 emph\tabcellsep This is \textit{emph} tag\\
-hi\tabcellsep This is \textit{hi} tag\\
-typewriter\tabcellsep This is \texttt{typewriter} effect\\
-bold\tabcellsep This is \textbf{bold} effect\\
+hi\tabcellsep This is {\itshape hi} tag\\
+typewriter\tabcellsep This is {\ttfamily typewriter} effect\\
+bold\tabcellsep This is {\bfseries bold} effect\\
 normalweight\tabcellsep This is normalweight effect\\
-smallcaps\tabcellsep This is \textsc{smallcaps} effect\\
+smallcaps\tabcellsep This is {\scshape smallcaps} effect\\
 capsall\tabcellsep This is \uppercase{capsall} effect\\
 strikethrough\tabcellsep This is \sout{strikethrough} effect\\
 strikedoublethrough\tabcellsep This is strikedoublethrough effect\\
-color(red)\tabcellsep This is \textcolor{red}{color(red)} effect\\
+color(red)\tabcellsep This is {\color{red}color(red)} effect\\
 underline\tabcellsep This is \uline{underline} effect\\
 underwavyline\tabcellsep This is \uwave{underwavyline} effect\\
 underdoubleline\tabcellsep This is \uuline{underdoubleline} effect\\
 subscript\tabcellsep This is \textsubscript{subscript} effect\\
 superscript\tabcellsep This is \textsuperscript{superscript} effect\\
-bold italic red, done separately\tabcellsep \textbf{\textit{\textcolor{red}{rend test 1}}}\\
-bold italic smallcaps\tabcellsep rend test 1 \footnote{Cairns 2003: 11. My work is Muellner 1996.}\end{longtable} \par
+bold italic red, done separately\tabcellsep {\bfseries {\itshape\bfseries {\itshape\bfseries\color{red}rend test 1}}}\\
+bold italic smallcaps\tabcellsep {\itshape\bfseries\scshape rend test 1} \footnote{Cairns 2003: 11. My work is Muellner 1996.}\end{longtable} \par
  
 \section[Quotations]{Quotations}\par
 A paragraph with a footnote containing a block-level object\footnote{We start with a quotation:
@@ -412,21 +412,20 @@ SVG, JPEG, GIF or PNG format\\
 \noindent\includegraphics[]{nature2.jpg}\tabcellsep Sunset over a secondary ridge.\tabcellsep north-east\\
 \noindent\includegraphics[]{nature3.jpg}\tabcellsep Glacier lake at 2100m altitude.\tabcellsep east\end{longtable} \par
   \par 
-\begin{longtable}{P{0.3216216216216216\textwidth}P{0.13209459459459458\textwidth}P{0.2125\textwidth}P{0.1722972972972973\textwidth}P{0.011486486486486487\textwidth}}
+\begin{longtable}{P{0.32331288343558284\textwidth}P{0.13558282208588956\textwidth}P{0.2085889570552147\textwidth}P{0.17208588957055215\textwidth}P{0.010429447852760737\textwidth}}
  \hline\endfoot\hline\endlastfoot \endfirsthead \multicolumn{3}{c}{
             TEI Span Sample
           (cont.)}\\\hline \endhead \caption{
             TEI Span Sample
-          }\\ \hline \rowcolor{label}\multicolumn{2}{){\columncolor{label}}l}{Spans \textbf{Horizontally}}\tabcellsep Header 3\tabcellsep \multicolumn{2}{){\columncolor{label}}l}{Spans \textbf{Horizontally}}\\\hline 
-Spans \textbf{Vertically}\tabcellsep a\tabcellsep b\tabcellsep c\tabcellsep d\\
-e\tabcellsep \multicolumn{2}{l}{Spans \textbf{both}}\tabcellsep f\\
+          }\\ \hline \rowcolor{label}\multicolumn{2}{){\columncolor{label}}l}{Spans {\bfseries Horizontally}}\tabcellsep Header 3\tabcellsep \multicolumn{2}{){\columncolor{label}}l}{Spans {\bfseries Horizontally}}\\\hline 
+Spans {\bfseries Vertically}\tabcellsep a\tabcellsep b\tabcellsep c\tabcellsep d\\
+e\tabcellsep \multicolumn{2}{l}{Spans {\bfseries both}}\tabcellsep f\\
 g\tabcellsep g\\
-i\tabcellsep j\tabcellsep \multicolumn{2}{l}{Spans \textbf{Horizontally}}\\
+i\tabcellsep j\tabcellsep \multicolumn{2}{l}{Spans {\bfseries Horizontally}}\\
 k\tabcellsep l\tabcellsep m\tabcellsep n\tabcellsep o\end{longtable} \par
  
 \section[Lists]{Lists}\label{P1}\par
 Various sorts of list are legal within paragraphs, and you can reference \hyperlink{birds}{items in lists}... \begin{enumerate}
-
 \item Dogs
 \item Zebras
 \item \hypertarget{birds}{}Birds
@@ -439,7 +438,6 @@ Various sorts of list are legal within paragraphs, and you can reference \hyperl
 \end{description} \par
 The preceding lists was between paragraphs.\par
 \leftline{\textbf{This untyped list has a heading and a nested glosslist }} \begin{itemize}
-
 \item first item 
 \item \begin{description}
 
@@ -546,7 +544,6 @@ foo\par
 \xref{http://www.example.com/getBibl.xql?name=Jones&year=76}{Jones 76}
 \section[Testing preservation of ID]{Testing preservation of ID}\par
 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. With references to \begin{itemize}
-
 \item \hyperlink{thisQuotation}{Quotation}
 \item \hyperlink{thisCitation}{Citation}
 \item \hyperlink{thisParagraph}{Paragraph}
@@ -566,7 +563,6 @@ voro þav sammędd syskin in heilagri {\hskip1pt}\newline  olafr konvngr ok fyrn
 Lastly, That, upon his solemn oath to observe all the above articles, the said man-mountain shall have a daily allowance of meat and drink sufficient for the support of [{\corr 1728}] of our subjects, with free access to our royal person, and other marks of our {\reg favor}.
 \section[Verbatim]{Verbatim}\par
 an egXML in a list: \begin{itemize}
-
 \item \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{div}\hspace*{6pt}{xml:id}="{test99}"\hspace*{6pt}{rend}="{whatever}">}\mbox{}\newline 
 \hspace*{6pt}{<\textbf{head}>}Choice, sic, corr, reg, orig{</\textbf{head}>}\mbox{}\newline 
 \hspace*{6pt}{<\textbf{p}>}v{<\textbf{ex}>}oro{</\textbf{ex}>} þav sam{<\textbf{ex}>}m{</\textbf{ex}>}ędd syskin in\mbox{}\newline 
