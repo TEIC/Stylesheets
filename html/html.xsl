@@ -258,10 +258,6 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:if test="not($auto='')">	    
 	  <c><xsl:value-of select="$auto"/></c>
 	</xsl:if>
-	<xsl:if test="tei:render-bold($context)"><s>font-weight:bold</s></xsl:if>
-	<xsl:if test="tei:render-italic($context)"><s>font-style: italic</s></xsl:if>
-	<xsl:if test="tei:render-strike($context)"><s>text-decoration: line-through</s></xsl:if>
-	<xsl:if test="tei:render-underline($context)"><s>text-decoration:underline</s></xsl:if>
 	<xsl:for-each select="tokenize(normalize-space($value),' ')">
 	  <xsl:choose>
 	    <xsl:when test=".='calligraphic' or .='cursive'"><s>font-family:cursive</s></xsl:when>
@@ -284,10 +280,10 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:when test="starts-with(.,'color(')"><s><xsl:text>color:</xsl:text><xsl:value-of select="substring-before(substring-after(.,'('),')')"/></s></xsl:when>
 	    <xsl:when test="starts-with(.,'post(')"><xsl:message terminate="yes">no support for post() pattern in @rend</xsl:message></xsl:when>
 	    <xsl:when test="starts-with(.,'pre(')"><xsl:message   terminate="yes">no support for pre() pattern in  @rend</xsl:message></xsl:when>
-	    <xsl:when test=".='bold'"/>
-	    <xsl:when test=".='italic'"/>
-	    <xsl:when test=".='strikethrough'"/>
-	    <xsl:when test=".='underline'"/>
+	    <xsl:when test=".='bold' or . ='b'"><s>font-weight:bold</s></xsl:when>
+	    <xsl:when test=".='italic' or .='i'"><s>font-style:italic</s></xsl:when>
+	    <xsl:when test=".='strikethrough' or .='strike'"><s>text-decoration: line-through</s></xsl:when>
+	    <xsl:when test=".='underline'"><s>text-decoration:underline</s></xsl:when>
 	    <xsl:otherwise><c><xsl:value-of select="."/></c></xsl:otherwise>
 	  </xsl:choose>	  
 	</xsl:for-each>
@@ -302,7 +298,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:attribute name="style">
 	<xsl:value-of select="$values/values/s" separator=';'/>
       </xsl:attribute>
-    </xsl:if>    
+b    </xsl:if>    
   </xsl:function>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
