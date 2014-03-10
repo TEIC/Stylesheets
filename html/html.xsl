@@ -298,7 +298,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:attribute name="style">
 	<xsl:value-of select="$values/values/s" separator=';'/>
       </xsl:attribute>
-b    </xsl:if>    
+    </xsl:if>    
   </xsl:function>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
