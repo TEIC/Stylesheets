@@ -83,6 +83,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="cellname">
       <xsl:choose>
 	<xsl:when test="parent::tei:row[@rend='thead']">th</xsl:when>
+	<xsl:when test="parent::tei:row[@role='label' and not(preceding::tei:row)]">th</xsl:when>
 	<xsl:otherwise>td</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -316,6 +317,16 @@ of this software, even if advised of the possibility of such damage.
 	       </thead>
 	       <tbody>
 		 <xsl:apply-templates select="tei:row[not(@rend='thead')]"/>
+	       </tbody>
+	     </xsl:when>
+	     <xsl:when test="tei:row[@role='label' and not(preceding::tei:row)]">
+	       <thead>
+		 <xsl:apply-templates
+		     select="tei:row[@role='label' and not(preceding::tei:row)]"/>
+	       </thead>
+	       <tbody>
+		 <xsl:apply-templates
+		     select="tei:row[not(@role='label' and not(preceding::tei:row))]"/>
 	       </tbody>
 	     </xsl:when>
 	     <xsl:otherwise>
