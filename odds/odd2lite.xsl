@@ -289,6 +289,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="content"/>
       <xsl:param name="element">pre</xsl:param>
       <eg rend="eg_rnc">
+	<xsl:attribute name="xml:space">preserve</xsl:attribute>
          <xsl:call-template name="make-body-from-r-t-f">
             <xsl:with-param name="schema">
                <xsl:for-each select="$content/*">
