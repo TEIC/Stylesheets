@@ -103,7 +103,18 @@
                 <span lang="en" class="label">Declaration</span>
               </td>
               <td class="wovenodd-col2">
-                <pre class="pre_eg">element bit { ( text | <a class="link_ref" href="#TEI.bob" title="bob">bob</a> )* &gt;&gt; tei:constraintSpec [ ident = "test" scheme = "isoschematron" "Only one bob allowed" ] }</pre>
+                <pre class="pre_eg">
+element bit
+{
+   ( text | <a class="link_ref" href="#TEI.bob" title="bob">bob</a> )*
+   &gt;&gt;
+   tei:constraintSpec
+   [
+      ident = "test"
+      scheme = "isoschematron"
+      "Only one bob allowed"
+   ]
+}</pre>
               </td>
             </tr>
             <tr>
@@ -111,7 +122,8 @@
                 <span lang="en" class="label">Schematron</span>
               </td>
               <td class="wovenodd-col2">
-                <div class="pre">&lt;s:report test="count(bob) !=1"&gt;Only one bob allowed&lt;/s:report&gt;</div>
+                <div class="pre">
+&lt;s:report test="count(bob) !=1"&gt;Only one bob allowed&lt;/s:report&gt;</div>
               </td>
             </tr>
           </table>
@@ -162,7 +174,8 @@
                                 <span lang="en" class="label">Datatype</span>
                               </td>
                               <td class="odd_value">
-                                <pre class="pre_eg cdata">xsd:anyURI</pre>
+                                <pre class="pre_eg cdata">
+xsd:anyURI</pre>
                               </td>
                             </tr>
                           </table>
@@ -204,7 +217,8 @@
                 <span lang="en" class="label">Declaration</span>
               </td>
               <td class="wovenodd-col2">
-                <pre class="pre_eg cdata">element bob { attribute href { xsd:anyURI }?, empty }</pre>
+                <pre class="pre_eg cdata">
+element bob { attribute href { xsd:anyURI }?, empty }</pre>
               </td>
             </tr>
           </table>
@@ -259,7 +273,8 @@
                 <span lang="en" class="label">Declaration</span>
               </td>
               <td class="wovenodd-col2">
-                <pre class="pre_eg">element stuff { ( <a class="link_ref" href="#TEI.bit" title="bit">bit</a> | <a class="link_ref" href="#TEI.bob" title="bob">bob</a> | <a class="link_ref" href="#TEI.thingummy" title="thingummy">thingummy</a> )+ }</pre>
+                <pre class="pre_eg">
+element stuff { ( <a class="link_ref" href="#TEI.bit" title="bit">bit</a> | <a class="link_ref" href="#TEI.bob" title="bob">bob</a> | <a class="link_ref" href="#TEI.thingummy" title="thingummy">thingummy</a> )+ }</pre>
               </td>
             </tr>
           </table>
@@ -314,7 +329,8 @@
                 <span lang="en" class="label">Declaration</span>
               </td>
               <td class="wovenodd-col2">
-                <pre class="pre_eg cdata">element thingummy { text }</pre>
+                <pre class="pre_eg cdata">
+element thingummy { text }</pre>
               </td>
             </tr>
           </table>

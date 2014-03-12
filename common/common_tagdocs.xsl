@@ -868,6 +868,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:sequence select="tei:makeDescription(.,true())"/>
         <xsl:for-each select="tei:constraint">
           <xsl:element namespace="{$outputNS}" name="{$divName}">
+            <xsl:attribute name="xml:space">preserve</xsl:attribute>
             <xsl:attribute name="{$rendName}">
               <xsl:text>pre</xsl:text>
             </xsl:attribute>

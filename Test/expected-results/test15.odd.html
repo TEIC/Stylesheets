@@ -1511,7 +1511,8 @@ font-weight: bold;
                 <td class="wovenodd-col1">
                   <span lang="es" class="label" itemprop="hi">Atributos</span>
                 </td>
-                <td class="wovenodd-col2">Atributos<div class="table"><table class="attList" itemprop="table"><tr itemprop="row"><td class="odd_label">typo</td><td class="odd_value"><span lang="es" itemprop="seg">caracteriza el elemento utilizando una clasificación o tipología funcional.</span><div class="table"><table class="attDef" itemprop="table"><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Estado</span></td><td class="odd_value"><span lang="es" itemprop="seg">Opcional</span></td></tr><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Tipo de datos</span></td><td class="odd_value"><pre>data.enumerated</pre></td></tr><tr itemprop="row"><td colspan="2"><div id="index.xml-egXML-d32e343" class="pre egXML_valid"><span class="element">&lt;div
+                <td class="wovenodd-col2">Atributos<div class="table"><table class="attList" itemprop="table"><tr itemprop="row"><td class="odd_label">typo</td><td class="odd_value"><span lang="es" itemprop="seg">caracteriza el elemento utilizando una clasificación o tipología funcional.</span><div class="table"><table class="attDef" itemprop="table"><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Estado</span></td><td class="odd_value"><span lang="es" itemprop="seg">Opcional</span></td></tr><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Tipo de datos</span></td><td class="odd_value"><pre>
+data.enumerated</pre></td></tr><tr itemprop="row"><td colspan="2"><div id="index.xml-egXML-d32e343" class="pre egXML_valid"><span class="element">&lt;div
   <span class="attribute">typ</span>="<span class="attributevalue">verse</span>"&gt;</span>
  <span class="element">&lt;head&gt;</span>Night in Tarras<span class="element">&lt;/head&gt;</span>
  <span class="element">&lt;lg
@@ -1524,14 +1525,18 @@ font-weight: bold;
   <span class="element">&lt;l&gt;</span>A wind sprang up from nowhere as the sky<span class="element">&lt;/l&gt;</span>
   <span class="element">&lt;l&gt;</span>…<span class="element">&lt;/l&gt;</span>
  <span class="element">&lt;/lg&gt;</span>
-<span class="element">&lt;/div&gt;</span></div></td></tr></table></div></td></tr><tr itemprop="row"><td class="odd_label">subtype</td><td class="odd_value"><span lang="es" itemprop="seg">proporciona, si es necesario, una subcategorización del elemento.</span><div class="table"><table class="attDef" itemprop="table"><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Estado</span></td><td class="odd_value"><span lang="es" itemprop="seg">Opcional</span></td></tr><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Tipo de datos</span></td><td class="odd_value"><pre>data.enumerated</pre></td></tr><tr itemprop="row"><td class="wovenodd-col1"><span lang="es" class="label" itemprop="hi">Nota</span></td><td class="wovenodd-col2">El atributo <span class="att" itemprop="hi">subtipo</span> se puede utilizar para proporcionar cualquier subclasificación para el elemento, adicional a ésa proporcionada por su <span class="att" itemprop="hi">tipo</span> de atributo.</td></tr></table></div></td></tr></table></div></td>
+<span class="element">&lt;/div&gt;</span></div></td></tr></table></div></td></tr><tr itemprop="row"><td class="odd_label">subtype</td><td class="odd_value"><span lang="es" itemprop="seg">proporciona, si es necesario, una subcategorización del elemento.</span><div class="table"><table class="attDef" itemprop="table"><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Estado</span></td><td class="odd_value"><span lang="es" itemprop="seg">Opcional</span></td></tr><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Tipo de datos</span></td><td class="odd_value"><pre>
+data.enumerated</pre></td></tr><tr itemprop="row"><td class="wovenodd-col1"><span lang="es" class="label" itemprop="hi">Nota</span></td><td class="wovenodd-col2">El atributo <span class="att" itemprop="hi">subtipo</span> se puede utilizar para proporcionar cualquier subclasificación para el elemento, adicional a ésa proporcionada por su <span class="att" itemprop="hi">tipo</span> de atributo.</td></tr></table></div></td></tr></table></div></td>
               </tr>
               <tr itemprop="row">
                 <td class="wovenodd-col1">
                   <span lang="es" class="label" itemprop="hi">Schematron</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <div class="pre" itemprop="ab">&lt;sch:rule context="*[@subtype]"&gt; &lt;sch:assert test="@type"&gt;The &lt;sch:name/&gt; element should not be categorized in detail with @subtype unless also categorized in general with @type&lt;/sch:assert&gt;&lt;/sch:rule&gt;</div>
+                  <div class="pre" itemprop="ab">
+&lt;sch:rule context="*[@subtype]"&gt;
+&lt;sch:assert test="@type"&gt;The &lt;sch:name/&gt; element should not be categorized in detail with @subtype
+ unless also categorized in general with @type&lt;/sch:assert&gt;&lt;/sch:rule&gt;</div>
                 </td>
               </tr>
             </table>
@@ -1602,7 +1607,8 @@ font-weight: bold;
                   <span lang="es" class="label" itemprop="hi">Declaración</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre>data.enumerated = data.name</pre>
+                  <pre>
+data.enumerated = data.name</pre>
                 </td>
               </tr>
             </table>
@@ -1628,7 +1634,8 @@ font-weight: bold;
                 <td class="wovenodd-col1">
                   <span lang="es" class="label" itemprop="hi">Atributos</span>
                 </td>
-                <td class="wovenodd-col2"><span lang="es" itemprop="seg">Atributos </span>att.global (<span class="attribute" itemprop="hi">@xml:id</span>, <span class="attribute" itemprop="hi">@n</span>, <span class="attribute" itemprop="hi">@xml:lang</span>, <span class="attribute" itemprop="hi">@rend</span>, <span class="attribute" itemprop="hi">@style</span>, <span class="attribute" itemprop="hi">@rendition</span>, <span class="attribute" itemprop="hi">@xml:base</span>, <span class="attribute" itemprop="hi">@xml:space</span>)  (att.global.linking (<span class="attribute" itemprop="hi">@corresp</span>, <span class="attribute" itemprop="hi">@synch</span>, <span class="attribute" itemprop="hi">@sameAs</span>, <span class="attribute" itemprop="hi">@copyOf</span>, <span class="attribute" itemprop="hi">@next</span>, <span class="attribute" itemprop="hi">@prev</span>, <span class="attribute" itemprop="hi">@exclude</span>, <span class="attribute" itemprop="hi">@select</span>)) att.divLike (<span class="attribute" itemprop="hi">@org</span>, <span class="attribute" itemprop="hi">@sample</span>)  (att.fragmentable (<span class="attribute" itemprop="hi">@part</span>)) att.declaring (<span class="attribute" itemprop="hi">@decls</span>) <a class="link_ref" itemprop="ref" href="#TEI.att.typed" title="att.typed">att.typed</a> (<span class="unusedattribute" itemprop="seg">type</span>, @subtype) <div class="table"><table class="attList" itemprop="table"><tr itemprop="row"><td class="odd_label">typ</td><td class="odd_value"><span lang="es" itemprop="seg">caracteriza el elemento utilizando una clasificación o tipología funcional.</span><div class="table"><table class="attDef" itemprop="table"><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Derivado de</span></td><td class="odd_value"><a class="link_ref" itemprop="ref" href="#TEI.att.typed" title="att.typed">att.typed</a></td></tr><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Estado</span></td><td class="odd_value"><span lang="es" itemprop="seg">Opcional</span></td></tr><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Tipo de datos</span></td><td class="odd_value"><pre>data.enumerated</pre></td></tr></table></div></td></tr></table></div></td>
+                <td class="wovenodd-col2"><span lang="es" itemprop="seg">Atributos </span>att.global (<span class="attribute" itemprop="hi">@xml:id</span>, <span class="attribute" itemprop="hi">@n</span>, <span class="attribute" itemprop="hi">@xml:lang</span>, <span class="attribute" itemprop="hi">@rend</span>, <span class="attribute" itemprop="hi">@style</span>, <span class="attribute" itemprop="hi">@rendition</span>, <span class="attribute" itemprop="hi">@xml:base</span>, <span class="attribute" itemprop="hi">@xml:space</span>)  (att.global.linking (<span class="attribute" itemprop="hi">@corresp</span>, <span class="attribute" itemprop="hi">@synch</span>, <span class="attribute" itemprop="hi">@sameAs</span>, <span class="attribute" itemprop="hi">@copyOf</span>, <span class="attribute" itemprop="hi">@next</span>, <span class="attribute" itemprop="hi">@prev</span>, <span class="attribute" itemprop="hi">@exclude</span>, <span class="attribute" itemprop="hi">@select</span>)) att.divLike (<span class="attribute" itemprop="hi">@org</span>, <span class="attribute" itemprop="hi">@sample</span>)  (att.fragmentable (<span class="attribute" itemprop="hi">@part</span>)) att.declaring (<span class="attribute" itemprop="hi">@decls</span>) <a class="link_ref" itemprop="ref" href="#TEI.att.typed" title="att.typed">att.typed</a> (<span class="unusedattribute" itemprop="seg">type</span>, @subtype) <div class="table"><table class="attList" itemprop="table"><tr itemprop="row"><td class="odd_label">typ</td><td class="odd_value"><span lang="es" itemprop="seg">caracteriza el elemento utilizando una clasificación o tipología funcional.</span><div class="table"><table class="attDef" itemprop="table"><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Derivado de</span></td><td class="odd_value"><a class="link_ref" itemprop="ref" href="#TEI.att.typed" title="att.typed">att.typed</a></td></tr><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Estado</span></td><td class="odd_value"><span lang="es" itemprop="seg">Opcional</span></td></tr><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Tipo de datos</span></td><td class="odd_value"><pre>
+data.enumerated</pre></td></tr></table></div></td></tr></table></div></td>
               </tr>
               <tr itemprop="row">
                 <td class="wovenodd-col1">
@@ -1687,7 +1694,28 @@ font-weight: bold;
                   <span lang="es" class="label" itemprop="hi">Declaración</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre>element div { att.global.attributes, att.divLike.attributes, <a class="link_ref" itemprop="ref" href="#TEI.att.typed" title="att.typed">att.typed.attribute.subtype</a>, att.declaring.attributes, attribute typ { data.enumerated }?, ( ( model.divTop | model.global )*, ( ( ( ( ( model.divLike | model.divGenLike ), model.global* )+ ) | ( ( ( model.common ), model.global* )+, ( ( model.divLike | model.divGenLike ), model.global* )* ) ), ( ( model.divBottom ), model.global* )* )? ) }</pre>
+                  <pre>
+element div
+{
+   att.global.attributes,
+   att.divLike.attributes,
+   <a class="link_ref" itemprop="ref" href="#TEI.att.typed" title="att.typed">att.typed.attribute.subtype</a>,
+   att.declaring.attributes,
+   attribute typ { data.enumerated }?,
+   (
+      ( model.divTop | model.global )*,
+      (
+         (
+            ( ( ( model.divLike | model.divGenLike ), model.global* )+ )
+          | (
+               ( ( model.common ), model.global* )+,
+               ( ( model.divLike | model.divGenLike ), model.global* )*
+            )
+         ),
+         ( ( model.divBottom ), model.global* )*
+      )?
+   )
+}</pre>
                 </td>
               </tr>
               <tr itemprop="row">
@@ -1812,7 +1840,14 @@ font-weight: bold;
                   <span lang="es" class="label" itemprop="hi">Declaración</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre>element para { att.global.attributes, att.declaring.attributes, att.fragmentable.attributes, macro.paraContent }</pre>
+                  <pre>
+element para
+{
+   att.global.attributes,
+   att.declaring.attributes,
+   att.fragmentable.attributes,
+   macro.paraContent
+}</pre>
                 </td>
               </tr>
               <tr itemprop="row">
@@ -1857,7 +1892,8 @@ font-weight: bold;
                 <td class="wovenodd-col1">
                   <span lang="es" class="label" itemprop="hi">Atributos</span>
                 </td>
-                <td class="wovenodd-col2"><span lang="es" itemprop="seg">Atributos </span>att.global (<span class="attribute" itemprop="hi">@xml:id</span>, <span class="attribute" itemprop="hi">@n</span>, <span class="attribute" itemprop="hi">@xml:lang</span>, <span class="attribute" itemprop="hi">@rend</span>, <span class="attribute" itemprop="hi">@style</span>, <span class="attribute" itemprop="hi">@rendition</span>, <span class="attribute" itemprop="hi">@xml:base</span>, <span class="attribute" itemprop="hi">@xml:space</span>)  (att.global.linking (<span class="attribute" itemprop="hi">@corresp</span>, <span class="attribute" itemprop="hi">@synch</span>, <span class="attribute" itemprop="hi">@sameAs</span>, <span class="attribute" itemprop="hi">@copyOf</span>, <span class="attribute" itemprop="hi">@next</span>, <span class="attribute" itemprop="hi">@prev</span>, <span class="attribute" itemprop="hi">@exclude</span>, <span class="attribute" itemprop="hi">@select</span>)) att.ascribed (<span class="attribute" itemprop="hi">@who</span>) att.source (<span class="attribute" itemprop="hi">@source</span>) <div class="table"><table class="attList" itemprop="table"><tr itemprop="row"><td class="odd_label">typ</td><td class="odd_value"><span lang="es" itemprop="seg">Puede usarse para indicar si el material citado es hablado o pensado, o para caracterizarlo con más precisión.</span><div class="table"><table class="attDef" itemprop="table"><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Estado</span></td><td class="odd_value"><span lang="es" itemprop="seg">Opcional</span></td></tr><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Tipo de datos</span></td><td class="odd_value"><pre>data.eumerated</pre></td></tr><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Los valores sugeridos incluyen:</span></td><td class="odd_value"><dl class="valList" itemprop="list"><dt><span class="odd_label" itemprop="label">spoken</span></dt><dd><span lang="es" itemprop="seg">representación del estilo directo, normalmente marcado mediante comillas.</span></dd><dt><span class="odd_label" itemprop="label">thought</span></dt><dd><span lang="es" itemprop="seg">representación de un pensamiento o reflexión, p.ej. un monólogo interno.</span></dd><dt><span class="odd_label" itemprop="label">written</span></dt><dd><span lang="es" itemprop="seg">cita de una fuente escrita.</span></dd><dt><span class="odd_label" itemprop="label">soCalled</span></dt><dd><span lang="es" itemprop="seg">distancia autorial</span></dd><dt><span class="odd_label" itemprop="label">foreign</span></dt><dd><span lang="es" itemprop="seg">palabras extranjeras</span></dd><dt><span class="odd_label" itemprop="label">distinct</span></dt><dd><span lang="es" itemprop="seg">lingüisticamente distinto</span></dd><dt><span class="odd_label" itemprop="label">term</span></dt><dd><span lang="es" itemprop="seg">término técnico</span></dd><dt><span class="odd_label" itemprop="label">emph</span></dt><dd><span lang="es" itemprop="seg">énfasis retórico</span></dd><dt><span class="odd_label" itemprop="label">mentioned</span></dt><dd><span lang="es" itemprop="seg">se refiere a sí mismo, no a su referente habitual</span></dd></dl></td></tr></table></div></td></tr></table></div></td>
+                <td class="wovenodd-col2"><span lang="es" itemprop="seg">Atributos </span>att.global (<span class="attribute" itemprop="hi">@xml:id</span>, <span class="attribute" itemprop="hi">@n</span>, <span class="attribute" itemprop="hi">@xml:lang</span>, <span class="attribute" itemprop="hi">@rend</span>, <span class="attribute" itemprop="hi">@style</span>, <span class="attribute" itemprop="hi">@rendition</span>, <span class="attribute" itemprop="hi">@xml:base</span>, <span class="attribute" itemprop="hi">@xml:space</span>)  (att.global.linking (<span class="attribute" itemprop="hi">@corresp</span>, <span class="attribute" itemprop="hi">@synch</span>, <span class="attribute" itemprop="hi">@sameAs</span>, <span class="attribute" itemprop="hi">@copyOf</span>, <span class="attribute" itemprop="hi">@next</span>, <span class="attribute" itemprop="hi">@prev</span>, <span class="attribute" itemprop="hi">@exclude</span>, <span class="attribute" itemprop="hi">@select</span>)) att.ascribed (<span class="attribute" itemprop="hi">@who</span>) att.source (<span class="attribute" itemprop="hi">@source</span>) <div class="table"><table class="attList" itemprop="table"><tr itemprop="row"><td class="odd_label">typ</td><td class="odd_value"><span lang="es" itemprop="seg">Puede usarse para indicar si el material citado es hablado o pensado, o para caracterizarlo con más precisión.</span><div class="table"><table class="attDef" itemprop="table"><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Estado</span></td><td class="odd_value"><span lang="es" itemprop="seg">Opcional</span></td></tr><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Tipo de datos</span></td><td class="odd_value"><pre>
+data.eumerated</pre></td></tr><tr itemprop="row"><td class="odd_label"><span lang="es" class="label" itemprop="hi">Los valores sugeridos incluyen:</span></td><td class="odd_value"><dl class="valList" itemprop="list"><dt><span class="odd_label" itemprop="label">spoken</span></dt><dd><span lang="es" itemprop="seg">representación del estilo directo, normalmente marcado mediante comillas.</span></dd><dt><span class="odd_label" itemprop="label">thought</span></dt><dd><span lang="es" itemprop="seg">representación de un pensamiento o reflexión, p.ej. un monólogo interno.</span></dd><dt><span class="odd_label" itemprop="label">written</span></dt><dd><span lang="es" itemprop="seg">cita de una fuente escrita.</span></dd><dt><span class="odd_label" itemprop="label">soCalled</span></dt><dd><span lang="es" itemprop="seg">distancia autorial</span></dd><dt><span class="odd_label" itemprop="label">foreign</span></dt><dd><span lang="es" itemprop="seg">palabras extranjeras</span></dd><dt><span class="odd_label" itemprop="label">distinct</span></dt><dd><span lang="es" itemprop="seg">lingüisticamente distinto</span></dd><dt><span class="odd_label" itemprop="label">term</span></dt><dd><span lang="es" itemprop="seg">término técnico</span></dd><dt><span class="odd_label" itemprop="label">emph</span></dt><dd><span lang="es" itemprop="seg">énfasis retórico</span></dd><dt><span class="odd_label" itemprop="label">mentioned</span></dt><dd><span lang="es" itemprop="seg">se refiere a sí mismo, no a su referente habitual</span></dd></dl></td></tr></table></div></td></tr></table></div></td>
               </tr>
               <tr itemprop="row">
                 <td class="wovenodd-col1">
@@ -1932,7 +1968,27 @@ font-weight: bold;
                   <span lang="es" class="label" itemprop="hi">Declaración</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre>element q { att.global.attributes, att.ascribed.attributes, att.source.attributes, attribute typ { "spoken" | "thought" | "written" | "soCalled" | "foreign" | "distinct" | "term" | "emph" | "mentioned" | data.eumerated }?, macro.specialPara }</pre>
+                  <pre>
+element q
+{
+   att.global.attributes,
+   att.ascribed.attributes,
+   att.source.attributes,
+   attribute typ
+   {
+      "spoken"
+    | "thought"
+    | "written"
+    | "soCalled"
+    | "foreign"
+    | "distinct"
+    | "term"
+    | "emph"
+    | "mentioned"
+    | data.eumerated
+   }?,
+   macro.specialPara
+}</pre>
                 </td>
               </tr>
               <tr itemprop="row">
