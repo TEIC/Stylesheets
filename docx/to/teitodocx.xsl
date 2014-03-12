@@ -606,6 +606,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:for-each select="..">
         <xsl:call-template name="applyRend"/>
       </xsl:for-each>
+      <xsl:if test="ancestor::tei:cell and not (parent::tei:cell)">
+        <w:sz w:val="18"/>
+      </xsl:if>
     </xsl:variable>
     <xsl:variable name="rProps">
       <xsl:if test="string-length($character-style) &gt; 0 or not(empty($renderingProperties))">
