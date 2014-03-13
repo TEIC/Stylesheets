@@ -437,16 +437,16 @@ of this software, even if advised of the possibility of such damage.
 
       <xsl:variable name="outName">
          <xsl:call-template name="outputChunkName">
-	           <xsl:with-param name="ident">
-	              <xsl:choose>
-	                 <xsl:when test="parent::tei:teiCorpus">
-	                    <xsl:apply-templates select="." mode="ident"/>
-	                 </xsl:when>
-	                 <xsl:otherwise>
-	                    <xsl:value-of select="$BaseFile"/>
-	                 </xsl:otherwise>
-	              </xsl:choose>
-	           </xsl:with-param>
+	   <xsl:with-param name="ident">
+	     <xsl:choose>
+	       <xsl:when test="parent::tei:teiCorpus">
+	         <xsl:apply-templates select="." mode="ident"/>
+	       </xsl:when>
+	       <xsl:otherwise>
+	         <xsl:value-of select="$BaseFile"/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:with-param>
          </xsl:call-template>
       </xsl:variable>
     
@@ -456,8 +456,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
                            encoding="{$outputEncoding}"
-                           href="{if (matches($outName,'^[A-z]:')) then
-				 concat('file:///',$outName) else $outName}"
+                           href="{$outName}"
                            method="{$outputMethod}">
     
         <xsl:call-template name="pageLayoutSimple"/>
@@ -1788,7 +1787,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:if>
         </xsl:when>
       </xsl:choose>
-      <xsl:value-of select="$ident"/>
+      <xsl:value-of select="if (matches($ident,'^[A-z]:')) then concat('file:///',$ident) else $ident"/>
       <xsl:value-of select="$outputSuffix"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
