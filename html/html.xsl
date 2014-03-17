@@ -75,7 +75,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
       <desc>Stylesheet constant setting the name of the main output file.</desc>
    </doc>
-  <xsl:variable name="top" select="/"/>
+
   <xsl:variable name="masterFile">
       <xsl:choose>
          <xsl:when test="not($outputName ='')">

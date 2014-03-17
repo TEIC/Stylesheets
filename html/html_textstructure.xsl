@@ -54,6 +54,9 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
+
+  <xsl:variable name="top" select="/"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process elements * in inner mode</desc>
    </doc>

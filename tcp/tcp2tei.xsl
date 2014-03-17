@@ -439,9 +439,11 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:variable>
-      <xsl:for-each select="document(concat($headerDirectory,$name,'.hdr'),$HERE)">
-        <xsl:apply-templates select="*" />
-      </xsl:for-each>
+      <xsl:if test="doc-available(concat($headerDirectory,$name,'.hdr'))">
+	<xsl:for-each select="document(concat($headerDirectory,$name,'.hdr'),$HERE)">
+          <xsl:apply-templates select="*" />
+	</xsl:for-each>
+      </xsl:if>
       <xsl:apply-templates />
     </TEI>
   </xsl:template>
