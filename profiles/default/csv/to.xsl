@@ -57,6 +57,8 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
    <xsl:output omit-xml-declaration="yes"/>
+   <xsl:variable name="dq">"</xsl:variable>
+   <xsl:variable name="qdq">""</xsl:variable>
 
   <xsl:param name="directory"></xsl:param>
 
@@ -69,7 +71,7 @@ of this software, even if advised of the possibility of such damage.
 			    encoding="UTF-8" method="text">
 	 <xsl:for-each select="tei:row">
 	   <xsl:for-each select="tei:cell">
-	     <xsl:value-of select="concat('&quot;',normalize-space(.),'&quot;')"/>
+	     <xsl:value-of select="concat($dq,replace(normalize-space(.),$dq,$qdq),$dq)"/>
 	     <xsl:if test="following-sibling::tei:cell[1]">,</xsl:if>
 	   </xsl:for-each>
 	   <xsl:text>&#xa;</xsl:text>
