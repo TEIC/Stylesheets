@@ -446,6 +446,9 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>
 	</xsl:when>
 	<xsl:when test="not(static-base-uri()='') and doc-available(resolve-uri($hfile,base-uri(/*)))">
+	<xsl:for-each select="doc(resolve-uri($hfile,base-uri(/*)))">
+          <xsl:apply-templates select="*" />
+	</xsl:for-each>
 	</xsl:when>
       </xsl:choose>
       <xsl:apply-templates />
