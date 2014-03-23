@@ -66,9 +66,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:variable>
 
   <xsl:template match="/">
-
-	<xsl:message>processing <xsl:value-of select="base-uri()"/></xsl:message>
-
     <xsl:variable name="pass1">
       <xsl:apply-templates/>
     </xsl:variable>
@@ -439,13 +436,18 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:variable>
-      <xsl:variable name="hfile" select="resolve-uri(concat($headerDirectory,$name,'.hdr'),base-uri(/))"/>
-      <xsl:if
+      <xsl:variable name="hfile"
+		    select="concat($headerDirectory,$name,'.hdr')"/>
+      <xsl:choose>
+	<xsl:when
 	  test="doc-available($hfile)">
 	<xsl:for-each select="doc($hfile)">
           <xsl:apply-templates select="*" />
 	</xsl:for-each>
-      </xsl:if>
+	</xsl:when>
+	<xsl:when test="not(static-base-uri()='') and doc-available(resolve-uri($hfile,base-uri(/*)))">
+	</xsl:when>
+      </xsl:choose>
       <xsl:apply-templates />
     </TEI>
   </xsl:template>

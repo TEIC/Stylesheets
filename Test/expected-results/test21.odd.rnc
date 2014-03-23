@@ -2508,14 +2508,10 @@ title =
   
   ## (titre) contient le titre complet d'une oeuvre quelconque [3.11.2.2.  2.2.1.  2.2.5. ]
   element title {
-    macro.paraContent,
-    att.global.attributes,
+    (text | hi)*,
+    att.global.attribute.xmlid,
+    att.global.attribute.xmllang,
     att.canonical.attributes,
-    att.typed.attribute.subtype,
-    
-    ## caractérise le titre selon une typologie adaptée.
-    ## Sample values include: 1] main; 2] sub; 3] alt; 4] short; 5] desc
-    attribute type { data.enumerated }?,
     
     ## indique le niveau bibliographique d'un titre, c'est-à-dire si ce titre identifie un article, un livre, une revue, une collection, ou un document non publié
     attribute level {
