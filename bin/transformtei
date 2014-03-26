@@ -8,8 +8,8 @@
 
 script=`basename $0`
 scriptdir=`dirname $0`
-APPHOME=`(cd $scriptdir; pwd)`
-defaultAPPHOME=`(cd $scriptdir; pwd)`
+APPHOME=`(cd $scriptdir; cd ..; pwd)`
+defaultAPPHOME=`(cd $scriptdir; cd .. ; pwd)`
 profiledir=$APPHOME/profiles
 defaultprofiledir=$APPHOME/profiles
 oxygenlib=/usr/share/oxygen/lib

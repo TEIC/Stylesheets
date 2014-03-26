@@ -1,5 +1,6 @@
 VERSION=`cat VERSION`
 FLAG=
+BINDIR=../bin
 SAXONOPT=useFixedDate=true
 SAXON=java -jar lib/Saxon-HE-9.4.0.6.jar 
 JING=java -jar lib/jing-20120724.0.0.jar 
@@ -35,7 +36,7 @@ p4top5:
 	diff A54031.xml expected-results/A54031.xml
 
 test.rng:
-	../teitorelaxng --odd test.odd test.rng
+	$(BINDIR)/teitorelaxng --odd test.odd test.rng
 	perl -p -e 's/generated from ODD source.*//' test.rng | xmllint --format - > temp; mv temp test.rng
 	diff test.rng expected-results/test.rng
 
@@ -48,7 +49,7 @@ test-html:
 	diff test-complex.html expected-results/test-complex.html
 	$(SAXON) test.xml ../profiles/ota/html/to.xsl cssFile=../tei.css $(SAXONOPT)  | xmllint --format - | perl cleanup.pl > test-ota.html
 	diff test-ota.html expected-results/test-ota.html
-	../teitohtml5 test.xml test.html5
+	$(BINDIR)/teitohtml5 test.xml test.html5
 	xmllint --encode utf-8 --format test.html5 | perl cleanup.pl > test.temp
 	mv test.temp test.html5
 	diff test.html5 expected-results/test.html5
@@ -149,14 +150,14 @@ test-fo:
 
 test-epub:
 	@echo BUILD: testing epub
-	../teitoepub3  test.xml test.epub
+	$(BINDIR)/teitoepub3  test.xml test.epub
 	java -jar epubcheck3.jar test.epub
-	../teitoepub  test.xml test.epub
+	$(BINDIR)/teitoepub  test.xml test.epub
 	java -jar epubcheck3.jar  test.epub
 	unzip -t test.epub > test.epub.listing
 	diff test.epub.listing expected-results/test.epub.listing
 	rm test.epub.listing
-	../teitoepub  --fileperpage test.xml test-pages.epub
+	$(BINDIR)/teitoepub  --fileperpage test.xml test-pages.epub
 	unzip -t test-pages.epub > test.epub.listing2
 	diff test.epub.listing2 expected-results/test.epub.listing2
 	rm test.epub.listing2
@@ -168,7 +169,7 @@ test-rdf:
 
 test-text:
 	@echo BUILD: testing text
-	../teitotxt test14.xml test.text
+	$(BINDIR)/teitotxt test14.xml test.text
 	diff test.text expected-results/test.text
 
 test-xlsx:
@@ -179,80 +180,80 @@ test-xlsx:
 test-odt:   test.rng
 	(cd ..; $(MAKE) names)
 	@echo BUILD: testing odt
-	../teitoodt test.xml 
+	$(BINDIR)/teitoodt test.xml 
 	unzip -t test.xml.odt > test.xml.odt.listing
 	unzip -o -q test.xml.odt content.xml
 	xmllint --format content.xml > content.xml.odt.listing
 	diff test.xml.odt.listing expected-results/test.xml.odt.listing
 	rm test.xml.odt.listing
 	rm content.xml
-	../odttotei test7.odt test7.xml
+	$(BINDIR)/odttotei test7.odt test7.xml
 	$(JING) test.rng test7.xml
 	diff test7.xml expected-results/test7.xml
 
 test-from-docx:
 	@echo BUILD: testing from-docx
-	../docxtotei test-indexes.docx temp.xml
+	$(BINDIR)/docxtotei test-indexes.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-indexes.xml  && rm temp.xml
 	$(JING) test.rng test-indexes.xml
 	diff test-indexes.xml expected-results/test-indexes.xml
-	../docxtotei test11.docx temp.xml
+	$(BINDIR)/docxtotei test11.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl> test11.xml  && rm temp.xml
 	$(JING) test.rng test11.xml
 	diff test11.xml expected-results/test11.xml
-	../docxtotei test19.docx temp.xml
+	$(BINDIR)/docxtotei test19.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test19.xml  && rm temp.xml
 	$(JING) test.rng test19.xml
 	diff test19.xml expected-results/test19.xml
-	../docxtotei test18.docx temp.xml
+	$(BINDIR)/docxtotei test18.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test18.xml  && rm temp.xml
 	$(JING) test.rng test18.xml
 	diff test18.xml expected-results/test18.xml
-	../docxtotei --profile=transcription test-rtf2tei.docx temp.xml
+	$(BINDIR)/docxtotei --profile=transcription test-rtf2tei.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-rtf2tei.xml  && rm temp.xml
 	diff test-rtf2tei.xml expected-results/test-rtf2tei.xml
-	../docxtotei --profile=transcription test29.docx temp.xml
+	$(BINDIR)/docxtotei --profile=transcription test29.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test29.xml  && rm temp.xml
 	diff test29.xml expected-results/test29.xml
 
 test-to-docx:
 	@echo BUILD: testing to-docx
-	../teitodocx test.xml 
+	$(BINDIR)/teitodocx test.xml 
 	unzip -p test.xml.docx word/document.xml | xmllint --format - > test.xml.docx.document
 	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > test.xml.docx.core
 	diff test.xml.docx.document expected-results/test.xml.docx.document
 	diff test.xml.docx.core expected-results/test.xml.docx.core
 	rm test.xml.docx.document
-	../teitodocx test6.xml 
+	$(BINDIR)/teitodocx test6.xml 
 	unzip -p test6.xml.docx word/document.xml | xmllint --format - > test6.xml.docx.document
 	diff test6.xml.docx.document expected-results/test6.xml.docx.document
 	rm test6.xml.docx.document
-	../teitodocx testnotes1.xml 
+	$(BINDIR)/teitodocx testnotes1.xml 
 	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > testnotes1.xml.docx.document
 	diff testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document
 	rm testnotes1.xml.docx.document
 
 test-oddity:
 	@echo BUILD: testing oddity
-	../teitornc  $(FLAG) test21.odd test21.odd.rnc
+	$(BINDIR)/teitornc  $(FLAG) test21.odd test21.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test21.odd.rnc
 	diff test21.odd.rnc expected-results/test21.odd.rnc 
-	../teitornc  $(FLAG) test15.odd test15.odd.rnc
+	$(BINDIR)/teitornc  $(FLAG) test15.odd test15.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
 	diff test15.odd.rnc expected-results/test15.odd.rnc 
-	../teitohtml5 $(FLAG) --summaryDoc --lang=es --profile=tei --odd test15.odd test15.odd.html
+	$(BINDIR)/teitohtml5 $(FLAG) --summaryDoc --lang=es --profile=tei --odd test15.odd test15.odd.html
 	xmllint --encode utf-8 --format test15.odd.html | perl cleanup.pl> test.temp ; mv test.temp test15.odd.html
 	diff test15.odd.html expected-results/test15.odd.html
-	../teitohtml5 $(FLAG) --summaryDoc --odd test.odd test.odd.html
+	$(BINDIR)/teitohtml5 $(FLAG) --summaryDoc --odd test.odd test.odd.html
 	xmllint --encode utf-8 --format test.odd.html | perl cleanup.pl> test.temp ; mv test.temp test.odd.html
 	diff test.odd.html expected-results/test.odd.html
 	$(SAXON) -it:main -o:oddbyexample.odd  -xsl:../tools/oddbyexample.xsl corpus=`pwd`/bare 
 	perl -p -i -e 's+<p>generated by oddbyexample.*</p>+<p></p>+' oddbyexample.odd
 	perl -p -i -e 's+<date>.*</date>+<date></date>+' oddbyexample.odd
 	diff oddbyexample.odd expected-results/oddbyexample.odd
-	../teitoxsd  $(FLAG) oddbyexample.odd  oddbyexample.xsd
-	../teitornc  $(FLAG) oddbyexample.odd  oddbyexample.rnc
-	../teitodtd  $(FLAG) oddbyexample.odd  oddbyexample.dtd
+	$(BINDIR)/teitoxsd  $(FLAG) oddbyexample.odd  oddbyexample.xsd
+	$(BINDIR)/teitornc  $(FLAG) oddbyexample.odd  oddbyexample.rnc
+	$(BINDIR)/teitodtd  $(FLAG) oddbyexample.odd  oddbyexample.dtd
 	$(JING) -c oddbyexample.rnc bare/test2.xml
 	$(JING) oddbyexample.xsd bare/test2.xml
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test2.xml
@@ -263,17 +264,17 @@ test-oddity:
 	localsource=`pwd`/p5subset.xml $(SAXONOPT) 
 	perl -p -i -e 's+ xml:base=".*testdrama.odd"++' testdrama.compiled.xml
 	diff testdrama.compiled.xml expected-results/testdrama.compiled.xml
-	../teitornc $(FLAG) test30.odd test30.rnc
-	../teitodtd $(FLAG) test30.odd test30.dtd
+	$(BINDIR)/teitornc $(FLAG) test30.odd test30.rnc
+	$(BINDIR)/teitodtd $(FLAG) test30.odd test30.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test30.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test30.dtd
 	$(JING) -c test30.rnc test36.xml
 	xmllint --noout --dtdvalid test30.dtd test36.xml
 	diff test30.rnc expected-results/test30.rnc
 	diff test30.dtd expected-results/test30.dtd
-	../teitodtd $(FLAG) test-pure.odd test-pure.dtd
-	../teitornc $(FLAG) test-pure.odd test-pure.rnc
-	../teitohtml $(FLAG) --odd test-pure.odd test-pure.odd.html
+	$(BINDIR)/teitodtd $(FLAG) test-pure.odd test-pure.dtd
+	$(BINDIR)/teitornc $(FLAG) test-pure.odd test-pure.rnc
+	$(BINDIR)/teitohtml $(FLAG) --odd test-pure.odd test-pure.odd.html
 	xmllint --noout --dtdvalid test-pure.dtd test-pure.xml
 	xmllint --encode utf-8 --format test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure.odd.html
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.dtd
@@ -281,9 +282,9 @@ test-oddity:
 	diff test-pure.rnc expected-results/test-pure.rnc
 	diff test-pure.dtd expected-results/test-pure.dtd
 	diff test-pure.odd.html expected-results/test-pure.odd.html
-	../teitodtd $(FLAG) test-pure2.odd test-pure2.dtd
-	../teitornc $(FLAG) test-pure2.odd test-pure2.rnc
-	../teitohtml $(FLAG) --odd test-pure2.odd test-pure2.odd.html
+	$(BINDIR)/teitodtd $(FLAG) test-pure2.odd test-pure2.dtd
+	$(BINDIR)/teitornc $(FLAG) test-pure2.odd test-pure2.rnc
+	$(BINDIR)/teitohtml $(FLAG) --odd test-pure2.odd test-pure2.odd.html
 	xmllint --noout --dtdvalid test-pure2.dtd test-pure2.xml
 	xmllint --encode utf-8 --format test-pure2.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure2.odd.html
 	perl -p -i -e 's/generated from ODD source .*//' test-pure2.dtd
@@ -307,25 +308,25 @@ test-oddity:
 	rm test.odd2xslstripspace
 
 moreoddity:
-	../teitoxsd test.odd test.xsd
-	../teitodtd test.odd test.dtd
-	../teitornc test.odd test.rnc
+	$(BINDIR)/teitoxsd test.odd test.xsd
+	$(BINDIR)/teitodtd test.odd test.dtd
+	$(BINDIR)/teitornc test.odd test.rnc
 
 pure:
-	../teitodtd test-pure.odd test-pure.dtd
-	../teitornc test-pure.odd test-pure.rnc
+	$(BINDIR)/teitodtd test-pure.odd test-pure.dtd
+	$(BINDIR)/teitornc test-pure.odd test-pure.rnc
 
 test-namespaces:
 	@echo BUILD: testing namespaces
 # This test checks the rnc files so that to make sure we are testing
 # what we think we are testing.
-	../teitornc test33.odd test33.rnc
+	$(BINDIR)/teitornc test33.odd test33.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test33.rnc
 	diff test33.rnc expected-results/test33.rnc
 	$(SAXON) test33.odd ../odds/odd2json.xsl > test33.json
 	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test33.json
 	diff test33.json expected-results/test33.json
-	../teitornc test34.odd test34.rnc
+	$(BINDIR)/teitornc test34.odd test34.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test34.rnc
 	diff test34.rnc expected-results/test34.rnc
 	$(SAXON) test34.odd ../odds/odd2json.xsl > test34.json
@@ -335,17 +336,17 @@ test-namespaces:
 	$(SAXON) test34.combined.odd ../odds/odd2json.xsl > test34.combined.json
 	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.combined.json
 	diff test34.combined.json expected-results/test34.combined.json
-	../teitohtml --odd --summaryDoc test34.odd test34.odd.html
+	$(BINDIR)/teitohtml --odd --summaryDoc test34.odd test34.odd.html
 	xmllint --encode utf-8 --format test34.odd.html | perl cleanup.pl> test.temp ; mv test.temp test34.odd.html
 	diff test34.odd.html expected-results/test34.odd.html
-	../teitornc test35.odd test35.rnc
+	$(BINDIR)/teitornc test35.odd test35.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test35.rnc
 	diff test35.rnc expected-results/test35.rnc
 
 test-scripts:
-	for i in $(SCRIPTS); do ../$$i maria.xml $$i.result && rm $$i.result; done
-	../teitoodd test16.odd temp.odd
-	for i in $(SCHEMASCRIPTS) ; do ../$$i temp.odd $$i.result && rm $$i.result; done
+	for i in $(SCRIPTS); do $(BINDIR)/$$i maria.xml $$i.result && rm $$i.result; done
+	$(BINDIR)/teitoodd test16.odd temp.odd
+	for i in $(SCHEMASCRIPTS) ; do $(BINDIR)/$$i temp.odd $$i.result && rm $$i.result; done
 	rm temp.odd
 
 test-pureant:

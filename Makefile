@@ -6,13 +6,7 @@ SAXON_ARGS=-ext:on
 
 DIRS=bibtex common docx dtd docbook epub epub3 fo html html5 json latex latex nlm odd odds odt pdf profiles/default rdf relaxng rnc slides tbx tcp tite tools txt html xsd xlsx pdf
 
-SCRIPTS=docbooktotei docxtotei odttotei transformtei tcptotei xlsxtotei \
-	teitodocx 	teitodtd 	teitoepub \
-	teitoepub3 	teitofo 	teitohtml \
-	teitohtml5 	teitojson 	teitolatex \
-	teitoodt 	teitordf 	teitorelaxng \
-	teitornc 	teitoslides 	teitotxt \
-	teitoxsd	teitopdf	teitobibtex teitodocbook teitoodd
+SCRIPTS=bin/*to*
 PREFIX=/usr
 OXY=/usr/share/oxygen
 DOCTARGETS= \
@@ -127,10 +121,12 @@ installxsl: build teioo.jar
 	cp -r lib teioo.jar ${PREFIX}/share/xml/tei/stylesheet
 	(cd release/xsl; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
 	mkdir -p ${PREFIX}/bin
+	cp bin/transformtei ${PREFIX}/bin
+	perl -p -i -e 's+^APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/transformtei
+	chmod 755 ${PREFIX}/bin/transformtei
 	for i in $(SCRIPTS); do \
-	  cp $$i ${PREFIX}/bin/$$i; \
-	  chmod 755 ${PREFIX}/bin/$$i; \
-	  perl -p -i -e 's+^APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/$$i; \
+	  rm -f ${PREFIX}/bin/`basename $$i`; \
+	  ln -s ${PREFIX}/bin/transformtei ${PREFIX}/bin/`basename $$i`; \
 	done
 
 installprofiles: install-profiles-files install-profiles-docs
