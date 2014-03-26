@@ -174,7 +174,7 @@ test-text:
 
 test-xlsx:
 	@echo BUILD: testing xlsx
-	../xlsxtotei test.xlsx test.xlsx.xml
+	$(BINDIR)/xlsxtotei test.xlsx test.xlsx.xml
 	diff test.xlsx.xml expected-results/test.xlsx.xml
 
 test-odt:   test.rng
