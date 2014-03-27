@@ -28,7 +28,7 @@ SCHEMASCRIPTS=teitornc \
 
 default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
 
-p4top5:
+p4top5: 
 	@echo BUILD: testing p4top5
 	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
 	diff test17.tei expected-results/test17.tei
@@ -40,14 +40,17 @@ test.rng:
 	perl -p -e 's/generated from ODD source.*//' test.rng | xmllint --format - > temp; mv temp test.rng
 	diff test.rng expected-results/test.rng
 
-test-html:
+css:
+	(cd ..; for i in css/*; do test -f `basename $$i` || ln -s $$i `basename $$i`;done)
+
+test-html: css
 	@echo BUILD: testing html
-	$(SAXON)  test.xml ../html/html.xsl cssFile=../css/tei.css $(SAXONOPT) | xmllint --format - > test.html
+	$(SAXON)  test.xml ../html/html.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
 	diff test.html expected-results/test.html
 	$(SAXON) test.html checklinks.xsl
-	$(SAXON) test.xml ../html/html.xsl cssFile=../css/tei.css pageLayout=Complex  $(SAXONOPT)  | xmllint --format - > test-complex.html
+	$(SAXON) test.xml ../html/html.xsl cssFile=../tei.css pageLayout=Complex  $(SAXONOPT)  | xmllint --format - > test-complex.html
 	diff test-complex.html expected-results/test-complex.html
-	$(SAXON) test.xml ../profiles/ota/html/to.xsl cssFile=../css/tei.css $(SAXONOPT)  | xmllint --format - | perl cleanup.pl > test-ota.html
+	$(SAXON) test.xml ../profiles/ota/html/to.xsl cssFile=../tei.css $(SAXONOPT)  | xmllint --format - | perl cleanup.pl > test-ota.html
 	diff test-ota.html expected-results/test-ota.html
 	$(BINDIR)/teitohtml5 test.xml test.html5
 	xmllint --encode utf-8 --format test.html5 | perl cleanup.pl > test.temp
@@ -70,20 +73,20 @@ test-html:
 	diff test22.html expected-results/test22.html
 	$(SAXON) test23.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test23.html
 	diff test23.html expected-results/test23.html
-	(mkdir files; cd files; saxon ../testnotes1.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../css/tei.css)
+	(mkdir files; cd files; saxon ../testnotes1.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/two.html > x ; mv x files/two.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r  files expected-results/testnotes
 	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/html.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../css/tei.css)
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/html.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r  files expected-results/testnotes2
 	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../css/tei.css)
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/two.html > x ; mv x files/two.html
@@ -93,15 +96,15 @@ test-html:
 	diff test24.html expected-results/test24.html
 	$(SAXON) test25.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > test25.html 
 	diff test25.html expected-results/test25.html
-	$(SAXON) test27.xml ../html/html.xsl $(SAXONOPT) cssFile=../css/tei.css cssSecondaryFile=../css/msdescription.css  | xmllint --format - > test27.html
+	$(SAXON) test27.xml ../html/html.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../css/msdescription.css  | xmllint --format - > test27.html
 	diff test27.html expected-results/test27.html
 	rm -rf files
 	$(SAXON) test28.xml ../html/html.xsl splitLevel=0  STDOUT=false $(SAXONOPT) 
 	xmllint --format index.html > x ; mv x index.html
 	diff index.html expected-results/test28.html
-	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFile=../css/tei.css $(SAXONOPT)  | xmllint --format - > test31.html
+	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFile=../tei.css $(SAXONOPT)  | xmllint --format - > test31.html
 	diff test31.html expected-results/test31.html
-	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFile=../css/tei.css $(SAXONOPT)  | xmllint --format - > test32.html
+	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFile=../tei.css $(SAXONOPT)  | xmllint --format - > test32.html
 	diff test32.html expected-results/test32.html
 
 testsplit:
@@ -384,22 +387,15 @@ profile:
 	$(SAXON) -o:/dev/null -TP test.odd2odd ../odds/odd2relax.xsl >& profile3.html
 
 clean:
+	(cd ..; for i in css/*; do rm `basename $$i`;done)
 	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd test.zip test*.dtd test-indexes.xml
 	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5 test*.processedodd
 	rm -f oddbyexample.* index*div*html
 	rm -f testdrama.compiled.xml
-	rm -f test5.odt test7.xml test18.xml test19.xml test-index.xml test7.zip test11.xml
-	rm -f test9.docx test9.odt
-	rm -f content.xml.odt.listing content.xml.odt
-	rm -f test.xml.docx.core
-	rm -f test7.docx
-	rm -f A54031.xml
-	rm -f dcr.result
-	rm -f test-rtf2tei.xml
-	rm -f test29.xml
+	rm -f test5.odt test7.xml test18.xml test19.xml test-index.xml test7.zip test11.xml test9.docx test9.odt content.xml.odt.listing content.xml.odt test.xml.docx.core test7.docx
+	rm -f A54031.xml dcr.result test-rtf2tei.xml test29.xml
 	rm -f xml.result
 	rm -rf charts/ embeddings/ media/ _rels/ \[Content_Types\].xml
-	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype
-	rm -f test.xlsx.xml
-	rm -rf *.result.tex *.result.pdf _slidelogo.png
+	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype files
+	rm -f test.xlsx.xml *.result.tex *.result.pdf _slidelogo.png
 
