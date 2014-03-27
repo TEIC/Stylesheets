@@ -42,12 +42,12 @@ test.rng:
 
 test-html:
 	@echo BUILD: testing html
-	$(SAXON)  test.xml ../html/html.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
+	$(SAXON)  test.xml ../html/html.xsl cssFile=../css/tei.css $(SAXONOPT) | xmllint --format - > test.html
 	diff test.html expected-results/test.html
 	$(SAXON) test.html checklinks.xsl
-	$(SAXON) test.xml ../html/html.xsl cssFile=../tei.css pageLayout=Complex  $(SAXONOPT)  | xmllint --format - > test-complex.html
+	$(SAXON) test.xml ../html/html.xsl cssFile=../css/tei.css pageLayout=Complex  $(SAXONOPT)  | xmllint --format - > test-complex.html
 	diff test-complex.html expected-results/test-complex.html
-	$(SAXON) test.xml ../profiles/ota/html/to.xsl cssFile=../tei.css $(SAXONOPT)  | xmllint --format - | perl cleanup.pl > test-ota.html
+	$(SAXON) test.xml ../profiles/ota/html/to.xsl cssFile=../css/tei.css $(SAXONOPT)  | xmllint --format - | perl cleanup.pl > test-ota.html
 	diff test-ota.html expected-results/test-ota.html
 	$(BINDIR)/teitohtml5 test.xml test.html5
 	xmllint --encode utf-8 --format test.html5 | perl cleanup.pl > test.temp
@@ -70,20 +70,20 @@ test-html:
 	diff test22.html expected-results/test22.html
 	$(SAXON) test23.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test23.html
 	diff test23.html expected-results/test23.html
-	(mkdir files; cd files; saxon ../testnotes1.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
+	(mkdir files; cd files; saxon ../testnotes1.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../css/tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/two.html > x ; mv x files/two.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r  files expected-results/testnotes
 	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/html.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../tei.css)
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/html.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../css/tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r  files expected-results/testnotes2
 	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../css/tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/two.html > x ; mv x files/two.html
@@ -93,15 +93,15 @@ test-html:
 	diff test24.html expected-results/test24.html
 	$(SAXON) test25.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > test25.html 
 	diff test25.html expected-results/test25.html
-	$(SAXON) test27.xml ../html/html.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../msdescription.css  | xmllint --format - > test27.html
+	$(SAXON) test27.xml ../html/html.xsl $(SAXONOPT) cssFile=../css/tei.css cssSecondaryFile=../css/msdescription.css  | xmllint --format - > test27.html
 	diff test27.html expected-results/test27.html
 	rm -rf files
 	$(SAXON) test28.xml ../html/html.xsl splitLevel=0  STDOUT=false $(SAXONOPT) 
 	xmllint --format index.html > x ; mv x index.html
 	diff index.html expected-results/test28.html
-	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFile=../tei.css $(SAXONOPT)  | xmllint --format - > test31.html
+	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFile=../css/tei.css $(SAXONOPT)  | xmllint --format - > test31.html
 	diff test31.html expected-results/test31.html
-	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFile=../tei.css $(SAXONOPT)  | xmllint --format - > test32.html
+	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFile=../css/tei.css $(SAXONOPT)  | xmllint --format - > test32.html
 	diff test32.html expected-results/test32.html
 
 testsplit:

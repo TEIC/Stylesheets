@@ -55,7 +55,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="ROLES" match="ITEM/@ROLE" use="1"/>
   <xsl:param name="intype"> ',)</xsl:param>
   <xsl:param name="debug">false</xsl:param>
-  <xsl:param name="headerDirectory">./</xsl:param>
+  <xsl:param name="headerDirectory"></xsl:param>
   <xsl:variable name="HERE" select="/"/>
   <xsl:variable name="Rendition">
     <tagsDecl>
@@ -438,6 +438,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:variable>
       <xsl:variable name="hfile"
 		    select="concat($headerDirectory,$name,'.hdr')"/>
+      <xsl:message> attempt to load header <xsl:value-of select="$hfile"/></xsl:message>
       <xsl:choose>
 	<xsl:when
 	  test="doc-available($hfile)">

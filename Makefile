@@ -69,7 +69,7 @@ build:
 common: names
 	@echo BUILD Copy common files and documentation
 	test -d release/xslcommon/xml/tei/stylesheet || mkdir -p release/xslcommon/xml/tei/stylesheet
-	cp names.xml catalog.xml VERSION *.css i18n.xml release/xslcommon/xml/tei/stylesheet
+	cp names.xml catalog.xml VERSION css/*.css i18n.xml release/xslcommon/xml/tei/stylesheet
 
 names:
 	$(SAXON) -it:main tools/getnames.xsl > names.xml
@@ -168,7 +168,7 @@ installcommon: doc common
 install: doc installxsl installprofiles installcommon 
 
 debversion:
-	sh ./mydch debian-tei-xsl/debian/changelog
+	sh ./util/mydch debian-tei-xsl/debian/changelog
 
 deb: debversion
 	@echo BUILD Make Debian packages
@@ -183,7 +183,7 @@ sfupload:
 log:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
 	echo changes since $$LastDate; \
-	./git-to-changelog --since=$$LastDate > newchanges)
+	./util/git-to-changelog --since=$$LastDate > newchanges)
 	mv ChangeLog oldchanges
 	cat newchanges oldchanges > ChangeLog
 	rm newchanges oldchanges
