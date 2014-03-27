@@ -236,7 +236,7 @@ test-to-docx:
 	diff testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document
 	rm testnotes1.xml.docx.document
 
-test-oddity:
+test-oddity: css
 	@echo BUILD: testing oddity
 	$(BINDIR)/teitornc  $(FLAG) test21.odd test21.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test21.odd.rnc
