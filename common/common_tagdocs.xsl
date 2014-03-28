@@ -125,7 +125,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
         <xsl:sequence select="tei:makeDescription(.,true())"/>
-        <xsl:apply-templates select="valList"/>
+        <xsl:apply-templates select="tei:valList"/>
       </xsl:element>
     </xsl:element>
   </xsl:template>
@@ -181,7 +181,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
 	<xsl:sequence select="tei:makeDescription(.,false())"/>
-        <xsl:apply-templates select="valList"/>
+        <xsl:apply-templates select="tei:valList"/>
       </xsl:element>
     </xsl:element>
   </xsl:template>
@@ -1080,6 +1080,14 @@ of this software, even if advised of the possibility of such damage.
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:sequence select="tei:makeDescription(.,true())"/>
+	<xsl:if test="$verboseSpecDesc='true' and tei:valList">
+          <xsl:element namespace="{$outputNS}" name="{$tableName}">
+            <xsl:attribute name="{$rendName}">
+              <xsl:text>attDef</xsl:text>
+            </xsl:attribute>
+	    <xsl:apply-templates select="tei:valList" mode="contents"/>
+	  </xsl:element>
+	</xsl:if>	
       </xsl:element>
     </xsl:element>
   </xsl:template>

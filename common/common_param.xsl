@@ -336,4 +336,8 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:param name="langAttributeName">xml:lang</xsl:param>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="string">
+    <desc>[common] whether specDesc output is verbose</desc>
+  </doc>  <xsl:param name="verboseSpecDesc">true</xsl:param>
+
 </xsl:stylesheet>
