@@ -339,15 +339,17 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>/</xsl:text>
   </xsl:template>
   <xsl:template match="tei:gi">
+    <xsl:variable name="name" select="."/>
       <xsl:choose>
          <xsl:when test="parent::tei:ref or parent::tei:head">
             <gi>
             <xsl:apply-templates/>
 	    </gi>
          </xsl:when>
-         <xsl:when test="(not(@scheme) or @scheme='TEI') and key('ELEMENTS',.)">
-            <xsl:for-each select="key('ELEMENTS',.)[last()]">
-               <ref target="#{@ident}">
+         <xsl:when test="(not(@scheme) or @scheme='TEI') and key('ELEMENTS',$name)">
+            <xsl:for-each select="key('ELEMENTS',$name)[last()]">
+	      <xsl:variable name="linkname" select="concat($idPrefix,tei:createSpecPrefix(.),$name)"/>
+               <ref target="#{$linkname}">
                   <xsl:text>&lt;</xsl:text>
                   <xsl:choose>
                      <xsl:when test="tei:content/rng:empty">
