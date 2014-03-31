@@ -222,7 +222,6 @@
       </exec>
       <echo>Rename @{in}.pdf to @{out}, and delete @{in}.tex</echo>
       <move file="@{in}.pdf" tofile="@{out}"/>
-      <delete file="@{in}.tex"/>
     </sequential>
   </macrodef>
   <macrodef name="buildepub">

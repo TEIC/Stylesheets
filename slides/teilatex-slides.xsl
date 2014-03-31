@@ -275,10 +275,10 @@ XSL LaTeX stylesheet to make slides
   <xsl:template match="text()" mode="eg">
       <xsl:choose>
          <xsl:when test="starts-with(.,'&#xA;')">
-            <xsl:value-of select="substring-after(.,'&#xA;')"/>
+            <xsl:value-of select="tei:escapeCharsVerbatim(substring-after(.,'&#xA;'))"/>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:value-of select="."/>
+            <xsl:value-of select="tei:escapeCharsVerbatim(.)"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>

@@ -255,7 +255,7 @@ of this software, even if advised of the possibility of such damage.
 
 
   <xsl:template match="tei:eg">
-    <xsl:text>\par\bgroup</xsl:text>
+    <xsl:text>\hfill\par\bgroup</xsl:text>
     <xsl:text>\exampleFont </xsl:text>
     <xsl:text>\vskip 10pt\begin{shaded}
     \obeylines\obeyspaces </xsl:text>
