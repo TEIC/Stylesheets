@@ -165,7 +165,11 @@ installcommon: doc common
 	(cd release/xslcommon/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 	(cd release/xslcommon/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
-install: doc installxsl installprofiles installcommon 
+install: linkcss doc installxsl installprofiles installcommon 
+
+linkcss:
+	(for i in css/*; do test -f `basename $$i` || ln -s $$i `basename $$i`;done)
+
 
 debversion:
 	sh ./util/mydch debian-tei-xsl/debian/changelog
@@ -189,6 +193,7 @@ log:
 	rm newchanges oldchanges
 
 clean:
+	(for i in css/*; do rm -f `basename $$i`;done)
 	echo "" > test~
 	rm -f profile1.html profile2.html profile.xml
 	find . -name "*~"  | xargs rm
