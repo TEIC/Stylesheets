@@ -49,7 +49,7 @@ of this software, even if advised of the possibility of such damage.
        
        P4 to P5 converter 
        
-       Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
+       Sebastian Rahtz <sebastian.rahtz@it.ox.ac.uk>
        
        $Date$  $Id$
        
