@@ -154,9 +154,9 @@ test-fo:
 test-epub:
 	@echo BUILD: testing epub
 	$(BINDIR)/teitoepub3  test.xml test.epub
-	java -jar epubcheck3.jar test.epub
+	java -Djava.awt.headless=true -jar epubcheck3.jar test.epub
 	$(BINDIR)/teitoepub  test.xml test.epub
-	java -jar epubcheck3.jar  test.epub
+	java -Djava.awt.headless=true -jar epubcheck3.jar  test.epub
 	unzip -t test.epub > test.epub.listing
 	diff test.epub.listing expected-results/test.epub.listing
 	rm test.epub.listing
@@ -353,7 +353,7 @@ test-scripts:
 	rm temp.odd
 
 test-pureant:
-	java -Xmx256m \
+	java -Djava.awt.headless=true -Xmx256m \
 	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
 	-Dant.home=$(OXY)/tools/ant \
 	org.apache.tools.ant.launch.Launcher \
@@ -361,7 +361,7 @@ test-pureant:
 	-lib $(OXY)/lib/saxon9ee.jar \
 	-DoutputFile=`pwd`/test7.docx \
 	-DinputFile=`pwd`/test7.xml -Dprofile=default 
-	java -Xmx256m \
+	java -Djava.awt.headless=true -Xmx256m \
 	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
 	-Dant.home=$(OXY)/tools/ant \
 	org.apache.tools.ant.launch.Launcher \
