@@ -358,7 +358,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template name="verbatim-Text">
     <xsl:param name="words"/>
-    <xsl:analyze-string select="$words" regex="(&amp;)(.)">
+    <xsl:analyze-string select="$words" regex="(&amp;)(.?)">
       <xsl:matching-substring>
         <xsl:choose>
           <xsl:when test="starts-with(regex-group(2),'#')">
