@@ -134,7 +134,7 @@ att.dimensions.attributes =
 att.dimensions.attribute.unit =
   
   ## noms des unités utilisées pour la mesure.
-  ## Suggested values include: 1] cm; 2] mm; 3] in; 4] lines; 5] chars
+  ## Suggested values include: 1] cm(centimetres) ; 2] mm(millimetres) ; 3] in(inches) ; 4] lines; 5] chars(characters) 
   attribute unit {
     
     ## (centimètres) 
@@ -149,7 +149,7 @@ att.dimensions.attribute.unit =
       ## lignes de texte
       "lines"
     | 
-      ## caractères du texte
+      ## (characters) caractères du texte
       "chars"
     | xsd:Name
   }?
@@ -306,19 +306,19 @@ att.fragmentable.attribute.part =
   [ a:defaultValue = "N" ]
   attribute part {
     
-    ## the element is fragmented in some (unspecified) respect
+    ## (yes) the element is fragmented in some (unspecified) respect
     "Y"
     | 
-      ## either the element is not fragmented, or no claim is made as to its completeness.
+      ## (no) either the element is not fragmented, or no claim is made as to its completeness.
       "N"
     | 
-      ## this is the initial part of a fragmented element
+      ## (initial) this is the initial part of a fragmented element
       "I"
     | 
-      ## this is a medial part of a fragmented element
+      ## (medial) this is a medial part of a fragmented element
       "M"
     | 
-      ## this is the final part of a fragmented element
+      ## (final) this is the final part of a fragmented element
       "F"
   }?
 att.divLike.attributes =
@@ -538,7 +538,7 @@ att.measurement.attributes =
 att.measurement.attribute.unit =
   
   ## (unité) indique les unités de mesure utilisées ; il s'agit en général du symbole normalisé pour les unités dont on a besoin.
-  ## Suggested values include: 1] m; 2] kg; 3] s; 4] Hz; 5] Pa; 6] Ω; 7] L; 8] t; 9] ha; 10] Å; 11] mL; 12] cm; 13] dB; 14] kbit; 15] Kibit; 16] kB; 17] KiB; 18] MB; 19] MiB
+  ## Suggested values include: 1] m(metre) ; 2] kg(kilogram) ; 3] s(second) ; 4] Hz(hertz) ; 5] Pa(pascal) ; 6] Ω(ohm) ; 7] L(litre) ; 8] t(tonne) ; 9] ha(hectare) ; 10] Å(ångström) ; 11] mL(millilitre) ; 12] cm(centimetre) ; 13] dB(decibel) ; 14] kbit(kilobit) ; 15] Kibit(kibibit) ; 16] kB(kilobyte) ; 17] KiB(kibibyte) ; 18] MB(megabyte) ; 19] MiB(mebibyte) 
   attribute unit {
     
     ## (mètre) unité SI (système international) de longueur
@@ -550,28 +550,28 @@ att.measurement.attribute.unit =
       ## (seconde) unité SI de temps
       "s"
     | 
-      ## unité SI de fréquence
+      ## (hertz) unité SI de fréquence
       "Hz"
     | 
-      ## unité SI de pression
+      ## (pascal) unité SI de pression
       "Pa"
     | 
-      ## unité SI de résistance électrique
+      ## (ohm) unité SI de résistance électrique
       "Ω"
     | 
-      ##
+      ## (litre) 1 dm³
       "L"
     | 
-      ##
+      ## (tonne) 10³ kg
       "t"
     | 
-      ##
+      ## (hectare) 1 hm²
       "ha"
     | 
-      ##
+      ## (ångström) 10⁻¹⁰ m
       "Å"
     | 
-      ##
+      ## (millilitre) 
       "mL"
     | 
       ## (centimètre) 
@@ -580,10 +580,10 @@ att.measurement.attribute.unit =
       ## (décibel) Voir remarques, ci-dessous.
       "dB"
     | 
-      ## 10³ ou 1000 bits
+      ## (kilobit) 10³ ou 1000 bits
       "kbit"
     | 
-      ## 2¹⁰ ou 1024 bits
+      ## (kibibit) 2¹⁰ ou 1024 bits
       "Kibit"
     | 
       ## (kilo-octet) 10³ ou 1000 octets
@@ -792,7 +792,7 @@ att.edition.attribute.ed =
   }?
 att.edition.attribute.edRef =
   
-  ## provides a pointer to the source edition in which the associated feature (for example, a page, column, or line break) occurs at this point in the text.
+  ## (edition reference) provides a pointer to the source edition in which the associated feature (for example, a page, column, or line break) occurs at this point in the text.
   attribute edRef {
     list { data.pointer+ }
   }?
@@ -1859,7 +1859,7 @@ sic =
   }
 corr =
   
-  ## contient la forme correcte d'un passage qui est considéré erroné dans la copie du texte. [3.4.1. ]
+  ## (correction) contient la forme correcte d'un passage qui est considéré erroné dans la copie du texte. [3.4.1. ]
   element corr {
     macro.paraContent,
     att.global.attributes,
@@ -2356,7 +2356,7 @@ milestone =
   }
 gb =
   
-  ## marks the point in a transcribed codex at which a new gathering or quire begins. [3.10.3. ]
+  ## (gathering begins) marks the point in a transcribed codex at which a new gathering or quire begins. [3.10.3. ]
   element gb {
     empty,
     att.global.attributes,
@@ -2522,13 +2522,13 @@ title =
         ## (monographique) titre de monographie (livre, ensemble ou autre, publié comme un document distinct, y compris les volumes isolés d'ouvrages en plusieurs volumes)
         "m"
       | 
-        ## titre de revue
+        ## (journal) titre de revue
         "j"
       | 
         ## (série) titre de publication en série
         "s"
       | 
-        ## titre de matéria non publié (thèses et dissertations comprises, à l'exception de leurs éditions commerciales)
+        ## (unpublished) titre de matéria non publié (thèses et dissertations comprises, à l'exception de leurs éditions commerciales)
         "u"
     }?,
     empty
@@ -2564,7 +2564,7 @@ biblScope =
     att.citing.attributes,
     
     ## identifie le type d'information que transmet l'élément, par exemple colonnes, pages, volume, etc.
-    ## Suggested values include: 1] vol; 2] issue; 3] pp; 4] ll; 5] chap; 6] part
+    ## Suggested values include: 1] vol(volume) ; 2] issue; 3] pp(pages) ; 4] ll(lines) ; 5] chap(chapter) ; 6] part
     attribute type {
       
       ## ( volume) l'élément contient un numéro de volume.
@@ -2576,7 +2576,7 @@ biblScope =
         ## ( pages) l'élément contient un nombre de pages ou l'étendue de sélection des pages.
         "pp"
       | 
-        ## the element contains a line number or line range.
+        ## (lines) the element contains a line number or line range.
         "ll"
       | 
         ## ((chapitre)) l'élément contient une indication de chapitre (le numéro et/ou le titre)
@@ -2590,7 +2590,7 @@ biblScope =
   }
 citedRange =
   
-  ## defines the range of cited content, often represented by pages or other units [3.11.2.4. ]
+  ## (cited range) defines the range of cited content, often represented by pages or other units [3.11.2.4. ]
   element citedRange {
     macro.phraseSeq,
     att.global.attributes,
@@ -4188,7 +4188,7 @@ rendition =
   }
 styleDefDecl =
   
-  ## specifies the name of the formal language in which style or renditional information is supplied elsewhere in the document. The specific version of the scheme may also be supplied. [2.3.5. ]
+  ## (style definition language declaration) specifies the name of the formal language in which style or renditional information is supplied elsewhere in the document. The specific version of the scheme may also be supplied. [2.3.5. ]
   element styleDefDecl {
     model.pLike*,
     att.global.attributes,
@@ -4216,7 +4216,7 @@ cRefPattern =
   }
 prefixDef =
   
-  ## defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. ]
+  ## (prefixing scheme used in data.pointer values) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. ]
   element prefixDef {
     model.pLike*,
     att.global.attributes,
@@ -4228,7 +4228,7 @@ prefixDef =
   }
 listPrefixDef =
   
-  ## contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. ]
+  ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. ]
   element listPrefixDef {
     (prefixDef | listPrefixDef)+, att.global.attributes, empty
   }
@@ -4288,7 +4288,7 @@ geoDecl =
     att.declarable.attributes,
     
     ## donne un nom de code d'usage général pour les données employées.
-    ## Suggested values include: 1] WGS84; 2] MGRS; 3] OSGB36; 4] ED50
+    ## Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Grid Reference System) ; 3] OSGB36(ordnance survey great britain) ; 4] ED50(European Datum coordinate system) 
     [ a:defaultValue = "WGS84" ]
     attribute datum {
       
@@ -4640,7 +4640,7 @@ when =
     attribute absolute { data.temporal.w3c }?,
     
     ## spécifie l'unité de temps dans laquelle la valeur de l'attribut interval est exprimée, si elle n'est pas héritée de l'élément parent timeLine.
-    ## Suggested values include: 1] d; 2] h; 3] min; 4] s; 5] ms
+    ## Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seconds) ; 5] ms(milliseconds) 
     attribute unit {
       
       ## (jours) 
@@ -4649,7 +4649,7 @@ when =
         ## (heures) 
         "h"
       | 
-        ##
+        ## (minutes) 
         "min"
       | 
         ## (secondes) 
@@ -4678,7 +4678,7 @@ timeline =
     attribute origin { data.pointer }?,
     
     ## spécifie l'unité de temps correspondant à la valeur de l'attribut interval de la frise chronologique ou des points temporels qui la constituent.
-    ## Suggested values include: 1] d; 2] h; 3] min; 4] s; 5] ms
+    ## Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seconds) ; 5] ms(milliseconds) 
     attribute unit {
       
       ## (jours) 
@@ -4687,7 +4687,7 @@ timeline =
         ## (heures) 
         "h"
       | 
-        ##
+        ## (minutes) 
         "min"
       | 
         ## (secondes) 
@@ -5092,7 +5092,7 @@ collection =
   }
 altIdentifier =
   
-  ## contains an alternative or former structured identifier used for a manuscript, such as a former catalogue number. [10.4. ]
+  ## (alternative identifier) contains an alternative or former structured identifier used for a manuscript, such as a former catalogue number. [10.4. ]
   element altIdentifier {
     (country?,
      region?,
@@ -5237,10 +5237,10 @@ supportDesc =
     att.global.attributes,
     
     ## (matériau) contient un nom abrégé propre au projet désignant le matériau qui a principalement servi pour fabriquer le support.
-    ## Suggested values include: 1] paper; 2] parch; 3] mixed
+    ## Suggested values include: 1] paper(paper) ; 2] parch(parchment) ; 3] mixed
     attribute material {
       
-      ##
+      ## (paper) 
       "paper"
       | 
         ## (parchemin) 
@@ -5783,7 +5783,7 @@ fw =
     att.placement.attributes,
     
     ## caractérise l'information encodée conformément à une typologie appropriée.
-    ## Sample values include: 1] header; 2] footer; 3] pageNum; 4] lineNum; 5] sig; 6] catch
+    ## Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNum(line number) ; 5] sig(signature) ; 6] catch(catchword) 
     attribute type { data.enumerated }?,
     empty
   }
@@ -6275,7 +6275,7 @@ salute =
   element salute { macro.paraContent, att.global.attributes, empty }
 signed =
   
-  ## contient la dernière salutation, ajoutée à un avant-propos, à une dédicace ou à une autre division du texte. [4.2.2. ]
+  ## (signature) contient la dernière salutation, ajoutée à un avant-propos, à une dédicace ou à une autre division du texte. [4.2.2. ]
   element signed { macro.paraContent, att.global.attributes, empty }
 postscript =
   
@@ -6318,7 +6318,7 @@ titlePart =
     att.global.attributes,
     
     ## précise le rôle de cette subdivision du titre.
-    ## Suggested values include: 1] main; 2] sub; 3] alt; 4] short; 5] desc
+    ## Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] short; 5] desc(descriptive) 
     [ a:defaultValue = "main" ]
     attribute type {
       

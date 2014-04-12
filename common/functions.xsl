@@ -1116,8 +1116,8 @@ of this software, even if advised of the possibility of such damage.
             </xsl:for-each>
           </xsl:variable>
           <xsl:choose>
-            <xsl:when test="$D='' and tei:desc[not(@xml:lang)]">
-              <xsl:for-each select="tei:desc[not(@xml:lang)]">
+            <xsl:when test="$D='' and tei:desc[(not(@xml:lang) or @xml:lang='en')]">
+              <xsl:for-each select="tei:desc[(not(@xml:lang) or @xml:lang='en')]">
                 <xsl:apply-templates select="." mode="inLanguage"/>
               </xsl:for-each>
             </xsl:when>
@@ -1222,6 +1222,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:makeGloss" as="node()*">
     <xsl:param name="context"/>
     <xsl:param name="langs"/>
+
     <xsl:variable name="firstLang" select="($langs)[1]"/>
     <xsl:for-each select="$context">
       <xsl:choose>
@@ -1253,9 +1254,9 @@ of this software, even if advised of the possibility of such damage.
             </xsl:for-each>
           </xsl:variable>
           <xsl:choose>
-            <xsl:when test="$G='' and tei:gloss[not(@xml:lang)]">
+            <xsl:when test="$G='' and tei:gloss[(not(@xml:lang) or @xml:lang='en')]">
               <xsl:text>(</xsl:text>
-              <xsl:apply-templates select="tei:gloss[not(@xml:lang)]" mode="inLanguage"/>
+              <xsl:apply-templates select="tei:gloss[(not(@xml:lang) or @xml:lang='en')]" mode="inLanguage"/>
               <xsl:text>) </xsl:text>
             </xsl:when>
             <xsl:otherwise>
