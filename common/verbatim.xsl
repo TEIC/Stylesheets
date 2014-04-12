@@ -362,10 +362,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:analyze-string select="$words" regex="(&amp;)(.?)">
       <xsl:matching-substring>
         <xsl:choose>
-	  <xsl:when   test="not($escape='true')">
-    <xsl:message><xsl:value-of select="($escape,$words)"/></xsl:message>
-            <xsl:text>&amp;</xsl:text>
-	  </xsl:when>
           <xsl:when test="regex-group(2)='#'">
             <xsl:text>&amp;</xsl:text>
           </xsl:when>
