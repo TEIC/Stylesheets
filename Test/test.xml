@@ -1002,7 +1002,24 @@ frost.
       <div>
 	<head>divs with no heads</head>
 	<div>
-	  <p>Fit the first</p>
+	  <p>Ampersands:
+	    <seg>Fit the first&amp;</seg>
+	    <seg>Fit the first&amp; more</seg>
+	    <seg>Fit the first&amp;amp; more</seg>
+	    <seg>Fit the first&amp;&amp;</seg>
+	    <seg>Fit the first&amp;quot;</seg>
+	    <seg>Fit the first @ <ref target="http://www.example.com/?foo=bar&amp;bar=foo&amp;#3">http://www.example.com/?foo=bar&amp;bar=foo&amp;#3</ref></seg>.
+	  </p>
+	    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <p>Ampersands:
+	    <seg>Fit the first&amp;</seg> 
+	    <seg>Fit the first&amp; more</seg> 
+	    <seg>Fit the first&amp;amp; more</seg> 
+	    <seg>Fit the first&amp;&amp;</seg> 
+	    <seg>Fit the first&amp;quot; (as opposed to <?entity quot?>)</seg> 
+	    <seg>Fit the first @ <ref target="http://www.example.com/?foo=bar&amp;bar=foo&amp;#3">http://www.example.com/?foo=bar&amp;bar=foo&amp;#3</ref></seg>.
+	  </p>
+	    </egXML>
 	</div>
 	<div>
 	  <p>Fit the <ref>second</ref></p>

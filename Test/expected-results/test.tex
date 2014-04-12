@@ -575,7 +575,16 @@ an egXML in a list: \begin{itemize}
 {</\textbf{div}>}\end{shaded}\egroup\par 
 \end{itemize} 
 \section[divs with no heads]{divs with no heads}\par
-Fit the first\par
+Ampersands: Fit the first\& Fit the first\& more Fit the first\&amp; more Fit the first\&\& Fit the first\&quot; Fit the first @ \xref{http://www.example.com/?foo=bar&bar=foo&\#3}{http://www.example.com/?foo=bar\&bar=foo\&\#3}.\par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{p}>}Ampersands:\mbox{}\newline 
+{<\textbf{seg}>}Fit the first\&{</\textbf{seg}>}\mbox{}\newline 
+\hspace*{6pt}{<\textbf{seg}>}Fit the first\& more{</\textbf{seg}>}\mbox{}\newline 
+\hspace*{6pt}{<\textbf{seg}>}Fit the first\&amp; more{</\textbf{seg}>}\mbox{}\newline 
+\hspace*{6pt}{<\textbf{seg}>}Fit the first\&\&{</\textbf{seg}>}\mbox{}\newline 
+\hspace*{6pt}{<\textbf{seg}>}Fit the first\&quot; (as opposed to &quot;){</\textbf{seg}>}\mbox{}\newline 
+\hspace*{6pt}{<\textbf{seg}>}Fit the first @ {<\textbf{ref}\mbox{}\newline 
+\hspace*{6pt}\hspace*{6pt}\hspace*{6pt}\hspace*{6pt}{target}="{http://www.example.com/?foo=bar\&bar=foo\&\#3}">}http://www.example.com/?foo=bar\&bar=foo\&\#3{</\textbf{ref}>}\mbox{}\newline 
+\hspace*{6pt}{</\textbf{seg}>}.\mbox{}\newline 
+{</\textbf{p}>}\end{shaded}\egroup\par \par
 Fit the {\ref second}
 \theendnotes
 \end{document}

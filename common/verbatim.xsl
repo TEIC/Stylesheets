@@ -358,10 +358,15 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template name="verbatim-Text">
     <xsl:param name="words"/>
+    <xsl:param name="escape">true</xsl:param>
     <xsl:analyze-string select="$words" regex="(&amp;)(.?)">
       <xsl:matching-substring>
         <xsl:choose>
-          <xsl:when test="starts-with(regex-group(2),'#') or starts-with(regex-group(2),'apos;') or starts-with(regex-group(2), 'quot;')">
+	  <xsl:when   test="not($escape='true')">
+    <xsl:message><xsl:value-of select="($escape,$words)"/></xsl:message>
+            <xsl:text>&amp;</xsl:text>
+	  </xsl:when>
+          <xsl:when test="regex-group(2)='#'">
             <xsl:text>&amp;</xsl:text>
           </xsl:when>
           <xsl:otherwise>
@@ -758,4 +763,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
+<xsl:template match="processing-instruction()[name(.)='entity']" mode="verbatim">
+    <xsl:value-of select="concat('&amp;',.,';')"/>
+</xsl:template>
 </xsl:stylesheet>

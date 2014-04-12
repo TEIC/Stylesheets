@@ -2,8 +2,8 @@ VERSION=`cat VERSION`
 FLAG=
 BINDIR=../bin
 SAXONOPT=useFixedDate=true
-SAXON=java -jar lib/Saxon-HE-9.4.0.6.jar 
-JING=java -jar lib/jing-20120724.0.0.jar 
+SAXON=java -Djava.awt.headless=true -jar lib/Saxon-HE-9.4.0.6.jar 
+JING=java -Djava.awt.headless=true -jar lib/jing-20120724.0.0.jar 
 OXY=/usr/share/oxygen
 SCRIPTS=teitobibtex \
 	teitodocbook \
