@@ -139,6 +139,12 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:value-of select="$style"/>
 	 </xsl:attribute>
        </xsl:if>
+	<xsl:if test="$preserveEffects='true' and w:pPr/w:jc">
+	  <xsl:attribute name="style">
+	    <xsl:text>text-align:</xsl:text>
+	    <xsl:value-of select="w:pPr/w:jc/@w:val"/>
+	  </xsl:attribute>
+	</xsl:if>
        <xsl:if test="w:pPr/w:pStyle/w:rPr/w:rtl">
 	 <xsl:attribute name="dir"
 			xmlns="http://www.w3.org/2005/11/its">

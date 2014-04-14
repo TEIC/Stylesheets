@@ -84,7 +84,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:for-each
 		select="document(concat($wordDirectory,'/word/footnotes.xml'))//w:footnote[@w:id=$referenced-id]">
 	      <xsl:variable name="pass0">
-		<xsl:apply-templates mode="pass0"/>
+		<xsl:apply-templates select="." mode="pass0"/>
 	      </xsl:variable>
 	      <xsl:apply-templates mode="paragraph" select="$pass0"/>
             </xsl:for-each>
