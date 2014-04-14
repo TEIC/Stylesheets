@@ -6,7 +6,7 @@
   <xsl:import href="../../common/functions.xsl"/>
   <xsl:import href="../../common/identity.xsl"/>
   <xsl:import href="functions.xsl"/>
-  <xsl:import href="variables.xsl"/>
+  <xsl:import href="../variables.xsl"/>
   <xsl:import href="mml2omml.xsl"/>
   <xsl:import href="tei-docx-verbatim.xsl"/>
   <xsl:import href="../../common/common_param.xsl"/>

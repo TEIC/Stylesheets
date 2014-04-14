@@ -138,7 +138,10 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:template name="create-tei-header">
       <xsl:variable name="getCustomLang">
-	<xsl:value-of select="document(concat($word-directory,'/docProps/custom.xml'))//*[@name='DocIdentLanguage']/vt:lpwstr"/>
+	<xsl:if test="doc-available($customFile)">
+	<xsl:value-of
+	    select="doc($customFile)//*[@name='DocIdentLanguage']/vt:lpwstr"/>
+	</xsl:if>
       </xsl:variable>
       <xsl:variable name="getSdtLang">
 	<xsl:call-template name="getSdt">
@@ -175,8 +178,11 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <xsl:template name="teiHeader-extract-from-doc">
-        <xsl:variable name="customProps"
-                    select="document(concat($word-directory,'/docProps/custom.xml'))"/>
+        <xsl:variable name="customProps">
+	  <xsl:if test="doc-available($customFile)">
+	    <xsl:copy-of select="doc($customFile)"/>
+	</xsl:if>
+	</xsl:variable>
         <teiHeader>
             <fileDesc>
                 <titleStmt>
@@ -2085,4 +2091,4 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
 
    <xsl:template name="termNum"/>
-    </xsl:stylesheet>
+ </xsl:stylesheet>

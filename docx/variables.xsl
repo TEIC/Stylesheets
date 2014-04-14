@@ -43,8 +43,7 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
-	
-	
+
 	  <xsl:variable name="Heading">heading</xsl:variable>
 	  <xsl:variable name="Heading1">heading 1</xsl:variable>
 	  <xsl:variable name="Heading2">heading 2</xsl:variable>
@@ -52,11 +51,11 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:variable name="Heading4">heading 4</xsl:variable>
 	  <xsl:variable name="Heading5">heading 5</xsl:variable>
 	  <xsl:variable name="Heading6">heading 6</xsl:variable>
+	  <xsl:variable name="List">List</xsl:variable>
 	  <xsl:variable name="List2">List 2</xsl:variable>
 	  <xsl:variable name="List3">List 3</xsl:variable>
 	  <xsl:variable name="List4">List 4</xsl:variable>
 	  <xsl:variable name="List5">List 5</xsl:variable>
-	  <xsl:variable name="List">List</xsl:variable>
 	  <xsl:variable name="ListBullet">List Bullet</xsl:variable>
 	  <xsl:variable name="ListBullet2">List Bullet 2</xsl:variable>
 	  <xsl:variable name="ListBullet3">List Bullet 3</xsl:variable>
@@ -74,6 +73,5 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:variable name="ListNumber5">List Number 5</xsl:variable>
 	  <xsl:variable name="Note">Note</xsl:variable>
 	  <xsl:variable name="TableText">Tabletext9</xsl:variable>
-
-
+          <xsl:variable name="Tabletitle">Table title</xsl:variable>
 </xsl:stylesheet>

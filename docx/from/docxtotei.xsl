@@ -34,7 +34,7 @@
 	  <xsl:import href="../../common/functions.xsl"/>
 	  <xsl:import href="../../common/identity.xsl"/>
 	  <xsl:import href="functions.xsl"/>
-	  <xsl:import href="variables.xsl"/>
+	  <xsl:import href="../variables.xsl"/>
 	  <xsl:import href="omml2mml.xsl"/>
 
 	  <xsl:param name="convert-graphics">true</xsl:param>	  
