@@ -258,6 +258,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:if test="not($auto='')">	    
 	  <c><xsl:value-of select="$auto"/></c>
 	</xsl:if>
+	<xsl:for-each select="tokenize($context/@style,';')">
+	  <s><xsl:value-of select="."/></s>
+	</xsl:for-each>
 	<xsl:for-each select="tokenize(normalize-space($value),' ')">
 	  <xsl:choose>
 	    <xsl:when test=".='calligraphic' or .='cursive'"><s>font-family:cursive</s></xsl:when>
