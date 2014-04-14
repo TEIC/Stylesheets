@@ -759,7 +759,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
-<xsl:template match="processing-instruction()[name(.)='entity']" mode="verbatim">
+<xsl:template match="processing-instruction()[name(.)='entity']" mode="#all">
     <xsl:value-of select="concat('&amp;',.,';')"/>
 </xsl:template>
 </xsl:stylesheet>

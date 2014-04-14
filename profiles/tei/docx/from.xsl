@@ -67,7 +67,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
     
     <xsl:output indent="yes"/>
-
+    <xsl:param name="preserveEffects">true</xsl:param>
     <xsl:template match="@rend[.='Body Text']" mode="pass2"/>
     <xsl:template match="@rend[.='Body Text 2']" mode="pass2"/>
     <xsl:template match="@rend[.='Body Text 3']" mode="pass2"/>
