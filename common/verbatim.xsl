@@ -760,6 +760,6 @@ of this software, even if advised of the possibility of such damage.
 
 
 <xsl:template match="processing-instruction()[name(.)='entity']" mode="#all">
-    <xsl:value-of select="concat('&amp;',.,';')"/>
+    <xsl:value-of select="concat('&amp;',normalize-space(.),';')"/>
 </xsl:template>
 </xsl:stylesheet>
