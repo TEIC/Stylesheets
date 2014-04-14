@@ -290,11 +290,13 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:value-of select="$effects/*" separator=" "/>
 		</xsl:attribute>
 	      </xsl:when>
+	      <!--
 	      <xsl:when test="$preserveEffects='true'">
 		<xsl:attribute name="rend">
 		  <xsl:text>preserveEffects</xsl:text>
 		</xsl:attribute>
 	      </xsl:when>
+	      -->
 	    </xsl:choose>
 	    <xsl:if test="$styles/* and $preserveEffects='true'">
 	      <xsl:attribute name="style">

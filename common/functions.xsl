@@ -1385,4 +1385,12 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:function>
   
+  <xsl:function name="tei:makePatternID" as="xs:string">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:value-of
+	  select="(../ancestor::*[@ident]/@ident,'constraint',../@ident)"
+	  separator="-"/>
+    </xsl:for-each>
+  </xsl:function>
 </xsl:stylesheet>

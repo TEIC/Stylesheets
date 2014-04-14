@@ -93,7 +93,7 @@ of this software, even if advised of the possibility of such damage.
         is a direct child of <d:pre>&lt;schemaSpec</d:pre>.</d:p>
     </d:desc>
   </d:doc>
-
+  <xsl:import href="../common/functions.xsl"/>
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:param name="verbose" select="'false'"/>
   <xsl:param name="lang"/>
@@ -257,12 +257,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:when test="parent::constraintSpec/@xml:lang
                   and not(parent::constraintSpec/@xml:lang = $lang)"/>
           <xsl:otherwise> 
-            <xsl:variable name="patID">
-              <xsl:variable name="idents">
-                <xsl:value-of select="../ancestor::*[@ident]/@ident" separator="-"/>
-              </xsl:variable>
-              <xsl:value-of select="concat( $idents,'-constraint-',../@ident)"/>
-            </xsl:variable>
+            <xsl:variable name="patID" select="tei:makePatternID(.)"/>
             <xsl:if test="sch:pattern">
               <xsl:apply-templates/>
             </xsl:if>

@@ -200,7 +200,7 @@ att.datable.attribute.calendar =
   ## indicates the system or calendar to which the date represented by the content of this element belongs.
   attribute calendar { data.pointer }?
 sch:pattern [
-  id = "calendar-constraint-calendar"
+  id = "test15-att.datable-calendar-calendar-constraint"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -630,7 +630,7 @@ att.typed.attribute.subtype =
   ## provides a sub-categorization of the element, if needed
   attribute subtype { data.enumerated }?
 sch:pattern [
-  id = "att.typed-constraint-subtypeTyped"
+  id = "test15-att.typed-subtypeTyped-constraint"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -659,7 +659,7 @@ att.pointing.attribute.targetLang =
   ## specifies the language of the content to be found at the destination referenced by target, using a language tag generated according to BCP 47.
   attribute targetLang { data.language }?
 sch:pattern [
-  id = "targetLang-constraint-targetLang"
+  id = "test15-att.pointing-targetLang-targetLang-constraint"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -746,7 +746,7 @@ att.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { data.pointer }?
 sch:pattern [
-  id = "spanTo-constraint-spanTo-2"
+  id = "test15-att.spanning-spanTo-spanTo-2-constraint"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -794,7 +794,8 @@ att.styleDef.attribute.schemeVersion =
   ## supplies a version number for the style language provided in scheme.
   attribute schemeVersion { data.versionNumber }?
 sch:pattern [
-  id = "schemeVersion-constraint-schemeVersionRequiresScheme"
+  id =
+    "test15-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1747,7 +1748,7 @@ ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "ptr-constraint-ptrAtts"
+         id = "test15-ptr-ptrAtts-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1781,7 +1782,7 @@ ref =
   element ref {
     macro.paraContent
     >> sch:pattern [
-         id = "ref-constraint-refAtts"
+         id = "test15-ref-refAtts-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2264,7 +2265,7 @@ relatedItem =
   element relatedItem {
     ((model.biblLike | model.ptrLike)?)
     >> sch:pattern [
-         id = "relatedItem-constraint-targetorcontent11"
+         id = "test15-relatedItem-targetorcontent1-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2286,7 +2287,7 @@ relatedItem =
          "         "
        ]
     >> sch:pattern [
-         id = "relatedItem-constraint-targetorcontent12"
+         id = "test15-relatedItem-targetorcontent1-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2333,7 +2334,7 @@ lg =
       | lg)*,
      (model.divBottom, model.global*)*)
     >> sch:pattern [
-         id = "lg-constraint-atleast1oflggapl"
+         id = "test15-lg-atleast1oflggapl-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2757,7 +2758,7 @@ quotation =
   element quotation {
     (model.pLike*)
     >> sch:pattern [
-         id = "quotation-constraint-quotationContents"
+         id = "test15-quotation-quotationContents-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3657,7 +3658,7 @@ link =
   element link {
     empty
     >> sch:pattern [
-         id = "link-constraint-linkTargets3"
+         id = "test15-link-linkTargets3-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3798,7 +3799,7 @@ join =
   element join {
     ((model.descLike | model.certLike)*)
     >> sch:pattern [
-         id = "join-constraint-joinTargets3"
+         id = "test15-join-joinTargets3-constraint"
          "\x{a}" ~
          "            "
          sch:rule [

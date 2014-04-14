@@ -51,6 +51,7 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
+  <xsl:import href="../common/functions.xsl"/>
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:param name="lang"></xsl:param>
 
@@ -98,19 +99,7 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
 		 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
                <xsl:otherwise>
-		 <xsl:variable name="patID">
-		   <xsl:choose>
-		     <xsl:when test="ancestor::tei:elementSpec">
-		       <xsl:value-of select="concat(ancestor::tei:elementSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
-		     </xsl:when>
-		     <xsl:when test="ancestor::tei:classSpec">
-		       <xsl:value-of select="concat(ancestor::tei:classSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
-		     </xsl:when>
-		     <xsl:when test="ancestor::tei:macroSpec">
-		       <xsl:value-of select="concat(ancestor::tei:macroSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
-		     </xsl:when>
-                     </xsl:choose>
-                  </xsl:variable>
+		 <xsl:variable name="patID" select="tei:makePatternID(.)"/>
 		 <xsl:if test="sch:rule">
 		   <pattern id="{$patID}">
 		     <xsl:apply-templates select="sch:rule"/>

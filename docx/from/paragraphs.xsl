@@ -143,6 +143,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:attribute name="style">
 	    <xsl:text>text-align:</xsl:text>
 	    <xsl:value-of select="w:pPr/w:jc/@w:val"/>
+	    <xsl:text>;</xsl:text>
 	  </xsl:attribute>
 	</xsl:if>
        <xsl:if test="w:pPr/w:pStyle/w:rPr/w:rtl">

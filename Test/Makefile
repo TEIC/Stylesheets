@@ -26,14 +26,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
-
-p4top5: 
-	@echo BUILD: testing p4top5
-	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
-	diff test17.tei expected-results/test17.tei
-	$(SAXON) A54031.tcp ../tcp/tcp2tei.xsl | xmllint --format - > A54031.xml
-	diff A54031.xml expected-results/A54031.xml
+default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt test-p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
 
 test.rng:
 	$(BINDIR)/teitorelaxng --odd test.odd test.rng
@@ -106,6 +99,13 @@ test-html: css
 	diff test31.html expected-results/test31.html
 	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFile=../tei.css $(SAXONOPT)  | xmllint --format - > test32.html
 	diff test32.html expected-results/test32.html
+
+test-p4top5: 
+	@echo BUILD: testing p4top5
+	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
+	diff test17.tei expected-results/test17.tei
+	$(SAXON) A54031.tcp ../tcp/tcp2tei.xsl | xmllint --format - > A54031.xml
+	diff A54031.xml expected-results/A54031.xml
 
 testsplit:
 	$(SAXON) test6.xml ../html/html.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
@@ -218,6 +218,9 @@ test-from-docx:
 	$(BINDIR)/docxtotei --profile=transcription test29.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test29.xml  && rm temp.xml
 	diff test29.xml expected-results/test29.xml
+	$(BINDIR)/docxtotei --profile=tei test37.docx temp.xml
+	xmllint --format temp.xml | perl cleanup.pl > test37.xml  && rm temp.xml
+	diff test37.xml expected-results/test37.xml
 
 test-to-docx:
 	@echo BUILD: testing to-docx
