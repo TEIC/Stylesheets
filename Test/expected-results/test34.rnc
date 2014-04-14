@@ -211,7 +211,7 @@ tei_att.datable.attribute.calendar =
   ## indicates the system or calendar to which the date represented by the content of this element belongs.
   attribute calendar { tei_data.pointer }?
 sch:pattern [
-  id = "calendar-constraint-calendar"
+  id = "foo-att.datable-calendar-calendar-constraint"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -643,7 +643,7 @@ tei_att.typed.attribute.subtype =
   ## provides a sub-categorization of the element, if needed
   attribute subtype { tei_data.enumerated }?
 sch:pattern [
-  id = "att.typed-constraint-subtypeTyped"
+  id = "foo-att.typed-subtypeTyped-constraint"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -672,7 +672,7 @@ tei_att.pointing.attribute.targetLang =
   ## specifies the language of the content to be found at the destination referenced by target, using a language tag generated according to BCP 47.
   attribute targetLang { tei_data.language }?
 sch:pattern [
-  id = "targetLang-constraint-targetLang"
+  id = "foo-att.pointing-targetLang-targetLang-constraint"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -759,7 +759,7 @@ tei_att.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { tei_data.pointer }?
 sch:pattern [
-  id = "spanTo-constraint-spanTo-2"
+  id = "foo-att.spanning-spanTo-spanTo-2-constraint"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -808,7 +808,8 @@ tei_att.styleDef.attribute.schemeVersion =
   ## supplies a version number for the style language provided in scheme.
   attribute schemeVersion { tei_data.versionNumber }?
 sch:pattern [
-  id = "schemeVersion-constraint-schemeVersionRequiresScheme"
+  id =
+    "foo-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1852,7 +1853,7 @@ tei_ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "ptr-constraint-ptrAtts"
+         id = "foo-ptr-ptrAtts-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1886,7 +1887,7 @@ tei_ref =
   element ref {
     tei_macro.paraContent
     >> sch:pattern [
-         id = "ref-constraint-refAtts"
+         id = "foo-ref-refAtts-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2402,7 +2403,7 @@ tei_relatedItem =
   element relatedItem {
     ((tei_model.biblLike | tei_model.ptrLike)?)
     >> sch:pattern [
-         id = "relatedItem-constraint-targetorcontent11"
+         id = "foo-relatedItem-targetorcontent1-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2424,7 +2425,7 @@ tei_relatedItem =
          "         "
        ]
     >> sch:pattern [
-         id = "relatedItem-constraint-targetorcontent12"
+         id = "foo-relatedItem-targetorcontent1-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2474,7 +2475,7 @@ tei_lg =
       | tei_lg)*,
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "lg-constraint-atleast1oflggapl"
+         id = "foo-lg-atleast1oflggapl-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2912,7 +2913,7 @@ tei_quotation =
   element quotation {
     (tei_model.pLike*)
     >> sch:pattern [
-         id = "quotation-constraint-quotationContents"
+         id = "foo-quotation-quotationContents-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3858,7 +3859,7 @@ tei_link =
   element link {
     empty
     >> sch:pattern [
-         id = "link-constraint-linkTargets3"
+         id = "foo-link-linkTargets3-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3999,7 +4000,7 @@ tei_join =
   element join {
     ((tei_model.descLike | tei_model.certLike)*)
     >> sch:pattern [
-         id = "join-constraint-joinTargets3"
+         id = "foo-join-joinTargets3-constraint"
          "\x{a}" ~
          "            "
          sch:rule [
