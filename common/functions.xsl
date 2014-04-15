@@ -1107,10 +1107,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:otherwise>
           <xsl:variable name="D">
             <xsl:for-each select="tei:desc">
-              <xsl:variable name="currentLang">
-                <xsl:call-template name="findLanguage"/>
-              </xsl:variable>
-              <xsl:if test="contains($langs,concat($currentLang,' '))">
+	      <xsl:variable name="currentLang"   select="tei:findLanguage(.)"/>
+              <xsl:if test="$currentLang=($langs)">
                 <xsl:apply-templates select="." mode="inLanguage"/>
               </xsl:if>
             </xsl:for-each>
@@ -1203,6 +1201,10 @@ of this software, even if advised of the possibility of such damage.
   </xsl:variable>
   <xsl:copy-of select="$D"/>
   </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[localisation]work out the language for documentation</desc>
+  </doc>
   <xsl:function name="tei:generateDocumentationLang" as="node()*">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
@@ -1219,6 +1221,11 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>work out which &lt;gloss&gt; to use</desc>
+  </doc>
+
   <xsl:function name="tei:makeGloss" as="node()*">
     <xsl:param name="context"/>
     <xsl:param name="langs"/>
@@ -1243,9 +1250,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:otherwise>
           <xsl:variable name="G">
             <xsl:for-each select="tei:gloss">
-              <xsl:variable name="currentLang">
-                <xsl:call-template name="findLanguage"/>
-              </xsl:variable>
+	      <xsl:variable name="currentLang" select="tei:findLanguage(.)"/>
               <xsl:if test="$currentLang=($langs)">
                 <xsl:text>(</xsl:text>
                 <xsl:apply-templates select="." mode="inLanguage"/>
@@ -1267,19 +1272,10 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-  <xsl:template name="findLanguage">
-    <xsl:choose>
-      <xsl:when test="@xml:lang">
-        <xsl:value-of select="@xml:lang"/>
-      </xsl:when>
-      <xsl:when test="ancestor::tei:*[@xml:lang]">
-        <xsl:value-of select="(ancestor::tei:*[@xml:lang])[1]/@xml:lang"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>en</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>which prefix for schematron</desc>
+  </doc>
 
   <xsl:function name="tei:generate-nsprefix-schematron" as="xs:string">
     <xsl:param name="e"/>
@@ -1304,6 +1300,10 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:function>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>find version of stylesheets</desc>
+  </doc>
+
   <xsl:function name="tei:stylesheetVersion" as="xs:string">
     <xsl:param name="context"/>
     <xsl:choose>
@@ -1312,6 +1312,9 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:function>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>look up witness</desc>
+  </doc>
   <xsl:function name="tei:getWitness" as="xs:string*">
     <xsl:param name="witness"/>
       <xsl:variable name="r">
@@ -1385,6 +1388,9 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:function>
   
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>work out unique ID for generated Schematron</desc>
+  </doc>
   <xsl:function name="tei:makePatternID" as="xs:string">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
@@ -1393,4 +1399,38 @@ of this software, even if advised of the possibility of such damage.
 	  separator="-"/>
     </xsl:for-each>
   </xsl:function>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>find nearest language code</desc>
+  </doc>
+
+
+ <xsl:function name="tei:findLanguage">
+       <xsl:param name="context"/>
+       <!-- note: $context should always be 1 node, so following -->
+       <!-- for-each just sets context node and executes once for it -->
+       <xsl:for-each select="$context">
+         <xsl:value-of select="(ancestor-or-self::*[@xml:lang][1]/@xml:lang/string(),'en')[1]"/>
+         <!-- 
+           That XPath is a bit complex, so deserves some explanation.
+           ( = start a (two item) sequence
+           ancestor-or-self::tei:* = generate sequence of elements starting from the context
+                                     node selecting each parent:: until the outermost element
+           [@xml:lang] = filter the selected set to only those that have @xml:lang; note that
+                         the sequence is still in closest to root order
+           [1] = take only the first, i.e. closest, of those nodes
+           /@xml:lang = take its @xml:lang attribute
+           /string() = convert that attribute to a string
+           , = separate the two items in our sequence; note that what's on the L will be
+               either a single @xml:lang value or nothing
+           'en' = second item in our two item sequence
+           ) = end the (two item) sequence
+           [1] = select the first item in the sequence: if the first item is nothing, it is
+                 really a one item sequence, we get the 'en'; if the first item is a string
+                 we get it.
+         -->
+       </xsl:for-each>
+       <!-- Syd Bauman scripsit-->
+     </xsl:function>
 </xsl:stylesheet>
