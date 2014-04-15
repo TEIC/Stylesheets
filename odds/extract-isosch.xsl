@@ -11,6 +11,7 @@
                 version="2.0"
                 xpath-default-namespace="http://www.tei-c.org/ns/1.0"
                 exclude-result-prefixes="#all">
+  <xsl:import href="../common/functions.xsl"/>
   <d:doc scope="stylesheet" type="stylesheet">
     <d:desc>
       <d:p> TEI stylesheet for simplifying TEI ODD markup </d:p>
@@ -93,7 +94,6 @@ of this software, even if advised of the possibility of such damage.
         is a direct child of <d:pre>&lt;schemaSpec</d:pre>.</d:p>
     </d:desc>
   </d:doc>
-  <xsl:import href="../common/functions.xsl"/>
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:param name="verbose" select="'false'"/>
   <xsl:param name="lang"/>

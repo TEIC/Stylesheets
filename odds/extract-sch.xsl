@@ -10,6 +10,7 @@
                 version="2.0"
                 exclude-result-prefixes="tei rng teix sch xi xs
 					 #default">
+  <xsl:import href="../common/functions.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -51,7 +52,6 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:import href="../common/functions.xsl"/>
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:param name="lang"></xsl:param>
 
