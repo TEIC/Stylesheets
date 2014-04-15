@@ -1433,4 +1433,10 @@ of this software, even if advised of the possibility of such damage.
        </xsl:for-each>
        <!-- Syd Bauman scripsit-->
      </xsl:function>
+
+     <xsl:function name="tei:sanitize" as="xs:string">
+       <xsl:param name="text"/>
+       <xsl:value-of
+			     select="substring(replace(normalize-space($text),'[^\w_\s]+',''),1,127)"/>
+     </xsl:function>
 </xsl:stylesheet>

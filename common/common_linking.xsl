@@ -689,27 +689,22 @@ of this software, even if advised of the possibility of such damage.
 				 select="$eventualtarget"/>
 		 <xsl:call-template name="htmlAttributes"/>
 		 <xsl:for-each select="id($W)">
+		   <xsl:attribute name="title" namespace="{$linkAttributeNamespace}">
 		     <xsl:choose>
 		       <xsl:when test="@n">
-			 <xsl:attribute name="title" namespace="{$linkAttributeNamespace}">
-			   <xsl:value-of select="@n"/>
-			 </xsl:attribute>
+			 <xsl:value-of select="@n"/>
 		       </xsl:when>
-		       <xsl:when test="starts-with(local-name(.),'div')">
-			 <xsl:attribute name="title" namespace="{$linkAttributeNamespace}">
-			   <xsl:value-of
-			       select="translate(normalize-space(tei:head[1]),'&gt;&lt;','')"/>
-			 </xsl:attribute>
+		       <xsl:when
+			   test="starts-with(local-name(.),'div') and tei:head">
+			 <xsl:value-of select="tei:sanitize(tei:head/string())"/>
 		       </xsl:when>
 		       <xsl:otherwise>
-			 <xsl:attribute name="title" namespace="{$linkAttributeNamespace}">
-			 <xsl:value-of
-			     select="substring(replace(normalize-space(./string()),'[^A-Za-z\d\-_\s]+',''),1,65)"/>
-			 </xsl:attribute>
+			 <xsl:value-of select="tei:sanitize(./string())"/>
                        </xsl:otherwise>
 		     </xsl:choose>
+		   </xsl:attribute>
 		 </xsl:for-each>
-	       <xsl:copy-of select="$linktext"/>
+		 <xsl:copy-of select="$linktext"/>
 	       </xsl:element>
 	     </xsl:otherwise>
 	   </xsl:choose>
