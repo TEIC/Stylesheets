@@ -557,7 +557,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:attribute>
 	 <xsl:choose>
 	   <xsl:when test="@n">
-	     <xsl:attribute name="title">
+	     <xsl:attribute name="title"  namespace="{$linkAttributeNamespace}">
 	       <xsl:value-of select="@n"/>
 	     </xsl:attribute>
 	   </xsl:when>
@@ -690,12 +690,23 @@ of this software, even if advised of the possibility of such damage.
 		 <xsl:call-template name="htmlAttributes"/>
 		 <xsl:for-each select="id($W)">
 		     <xsl:choose>
+		       <xsl:when test="@n">
+			 <xsl:attribute name="title" namespace="{$linkAttributeNamespace}">
+			   <xsl:value-of select="@n"/>
+			 </xsl:attribute>
+		       </xsl:when>
 		       <xsl:when test="starts-with(local-name(.),'div')">
-			 <xsl:attribute name="title">
+			 <xsl:attribute name="title" namespace="{$linkAttributeNamespace}">
 			   <xsl:value-of
 			       select="translate(normalize-space(tei:head[1]),'&gt;&lt;','')"/>
 			 </xsl:attribute>
 		       </xsl:when>
+		       <xsl:otherwise>
+			 <xsl:attribute name="title" namespace="{$linkAttributeNamespace}">
+			 <xsl:value-of
+			     select="substring(replace(normalize-space(./string()),'[^A-Za-z\d\-_\s]+',''),1,65)"/>
+			 </xsl:attribute>
+                       </xsl:otherwise>
 		     </xsl:choose>
 		 </xsl:for-each>
 	       <xsl:copy-of select="$linktext"/>
