@@ -69,16 +69,28 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:encodingDesc" mode="pass2"/>
   <xsl:template match="tei:editionStmt" mode="pass2"/>
 
- <xsl:template match="tei:Personne|tei:hi[@rend='Oulipen']" mode="pass3">
-   <persName type="other">
+ <xsl:template match="tei:Oulipen|tei:hi[@rend='Nom-oulipien']" mode="pass3">
+   <persName type="oulipien">
 	   <xsl:apply-templates mode="pass3"/>
    </persName>
  </xsl:template>
 
- <xsl:template match="tei:Oulipen|tei:hi[@rend='Oulipen']" mode="pass3">
-   <persName type="oulipen">
-	   <xsl:apply-templates mode="pass3"/>
+ <xsl:template match="tei:hi[@rend='reunion-presents']" mode="pass3">
+   <persName type="oulipien" subtype="present">
+     <xsl:apply-templates mode="pass3"/>
    </persName>
+ </xsl:template>
+ 
+ <xsl:template match="tei:hi[@rend='reunion-date]" mode="pass3">
+   <date type="reunion">
+     <xsl:apply-templates mode="pass3"/>
+   </date>
+ </xsl:template>
+ 
+ <xsl:template match="tei:hi[@rend='reunion-lieu']" mode="pass3">
+   <placeName type="reunion">
+     <xsl:apply-templates mode="pass3"/>
+   </placeName>
  </xsl:template>
 
  <xsl:template match="tei:body" mode="pass3">
