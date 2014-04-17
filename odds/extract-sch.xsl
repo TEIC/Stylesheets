@@ -172,5 +172,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-  
+
+  <xsl:template match="*">
+    <xsl:apply-templates/>
+  </xsl:template>  
 </xsl:stylesheet>

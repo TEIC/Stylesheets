@@ -2,7 +2,7 @@ VERSION=`cat VERSION`
 FLAG=
 BINDIR=../bin
 SAXONOPT=useFixedDate=true
-SAXON=java -Djava.awt.headless=true -jar lib/Saxon-HE-9.4.0.6.jar 
+SAXON=java -Djava.awt.headless=true -jar lib/saxon9he.jar
 JING=java -Djava.awt.headless=true -jar lib/jing-20120724.0.0.jar 
 OXY=/usr/share/oxygen
 SCRIPTS=teitobibtex \
