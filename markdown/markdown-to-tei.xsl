@@ -81,7 +81,7 @@
   <xsl:param name="pS" as="xs:string"/>
 
   <xsl:analyze-string select="$pS" flags="x" regex=
-  '(__(.*?)__)
+  '(_(.*?)_)
   |
    (\*(.*?)\*)
   |
