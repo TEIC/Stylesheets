@@ -177,7 +177,7 @@ of this software, even if advised of the possibility of such damage.
 <xsl:template name="makeBlock">
   <xsl:param name="style"/>
   <xsl:apply-templates/>
-  <xsl:text>&#10;</xsl:text>
+  <xsl:call-template name="newline"/>
 </xsl:template>
 
 <xsl:template name="makeInline">
@@ -186,13 +186,14 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="after"/>
 </xsl:template>
 
-<xsl:template name="makeSpan"/>
+<xsl:template name="makeSpan">
+  <xsl:apply-templates/>
+</xsl:template>
 
 <xsl:template match="p">
-  <xsl:text>&#10;</xsl:text>
+  <xsl:call-template name="newline"/>
   <xsl:apply-templates/>
-  <xsl:text>&#10;</xsl:text>
-
+  <xsl:call-template name="newline"/>
 </xsl:template>
 
   <xsl:template match="head">
@@ -207,7 +208,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:variable name="depth">
                <xsl:apply-templates mode="depth" select=".."/>
             </xsl:variable>
-            <xsl:text>&#10;</xsl:text>
+            <xsl:call-template name="newline"/>
 	    <xsl:choose>
 	      <xsl:when test="$depth=0">#</xsl:when>
 	      <xsl:when test="$depth=1">##</xsl:when>
@@ -218,23 +219,23 @@ of this software, even if advised of the possibility of such damage.
 		</xsl:choose>
 		<xsl:text> </xsl:text>
 	    <xsl:apply-templates/>
-	    <xsl:text>&#10;</xsl:text>
+	    <xsl:call-template name="newline"/>
 	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:item|tei:biblStruct">
-      <xsl:call-template name="makeItem"/>
-  </xsl:template>
-
-  <xsl:template name="makeItem">
-    <xsl:text>&#10;</xsl:text>
+    <xsl:call-template name="newline"/>
     <xsl:choose>
       <xsl:when test="tei:isOrderedList(..)">1. </xsl:when>
       <xsl:otherwise>* </xsl:otherwise>
     </xsl:choose>
     <xsl:apply-templates/>
-    <xsl:text>&#10;</xsl:text>
+    <xsl:call-template name="newline"/>
   </xsl:template>
+
+    <xsl:template name="newline">
+      <xsl:text>&#10;</xsl:text>
+    </xsl:template>
 
 </xsl:stylesheet>
