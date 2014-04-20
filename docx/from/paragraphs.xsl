@@ -134,7 +134,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template name="paragraph-wp">
      <xsl:param name="style"/>
      <xsl:element name="p">
-       <xsl:if test="$style and not($style='Default')">
+       <xsl:if test="$style and not($style='Default' or $style='Default Style')">
 	 <xsl:attribute name="rend">
 	   <xsl:value-of select="$style"/>
 	 </xsl:attribute>
