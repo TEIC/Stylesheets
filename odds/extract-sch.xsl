@@ -173,7 +173,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:function>
 
-  <xsl:template match="tei:*">
+  <xsl:template match="tei:TEI">
     <xsl:apply-templates/>
   </xsl:template>  
 </xsl:stylesheet>
