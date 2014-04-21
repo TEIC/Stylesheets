@@ -36,48 +36,45 @@
 
  <xsl:template name="gatherText">
      <xsl:for-each select="tokenize(., '\n')">
-       <xsl:sequence select="tei:parse-line(.)"/>
+       <xsl:sequence select="tei:parseLine(.)"/>
      </xsl:for-each>
  </xsl:template>
 
- <xsl:function name="tei:parse-line" as="element()*">
+ <xsl:function name="tei:parseLine" as="element()*">
   <xsl:param name="vLine" as="xs:string*"/>
     <xsl:choose>
       <xsl:when test="string-length(normalize-space($vLine))=0"/>
       <xsl:when test="starts-with($vLine, '# ')">
-	<xsl:variable name="depth">
-	  <xsl:analyze-string select="$vLine" regex="(#+).*">
+	  <xsl:analyze-string select="$vLine" regex="^(#+) ?(.*)(#*)$">
 	    <xsl:matching-substring>
-	      <xsl:value-of select="string-length(regex-group(1))"/>
+              <HEAD level="{string-length(regex-group(1))}">
+		<xsl:sequence select="tei:parseString(regex-group(2))"/>
+	      </HEAD>
 	    </xsl:matching-substring>
 	    <xsl:non-matching-substring>
-	      <xsl:text>1</xsl:text>
+	      <xsl:sequence select="tei:parseString(.)"/>
 	    </xsl:non-matching-substring>
 	  </xsl:analyze-string>
-	</xsl:variable>
-        <HEAD level="{$depth}">
-	  <xsl:sequence select="substring($vLine,$depth+2)"/>
-	</HEAD>
       </xsl:when>
       <xsl:when test="starts-with($vLine, '- ') or starts-with($vLine, '* ')">
           <ITEM n="item">
-            <xsl:sequence select="tei:parse-string(substring($vLine, 3))"/>
+            <xsl:sequence select="tei:parseString(substring($vLine, 3))"/>
           </ITEM>
        </xsl:when>
-      <xsl:when test="matches($vLine,'[0-9]\. ')">
+      <xsl:when test="matches($vLine,'^[0-9]\. ')">
           <NITEM n="item">
-            <xsl:sequence select="tei:parse-string(substring($vLine, 3))"/>
+            <xsl:sequence select="tei:parseString(substring($vLine, 3))"/>
           </NITEM>
        </xsl:when>
        <xsl:otherwise>
         <p>
-          <xsl:sequence select="tei:parse-string($vLine)"/>
+          <xsl:sequence select="tei:parseString($vLine)"/>
         </p>
        </xsl:otherwise>
       </xsl:choose>
  </xsl:function>
 
- <xsl:function name="tei:parse-string" as="node()*">
+ <xsl:function name="tei:parseString" as="node()*">
   <xsl:param name="pS" as="xs:string"/>
 
   <xsl:analyze-string select="$pS" flags="x" regex=
@@ -92,12 +89,12 @@
     <xsl:choose>
      <xsl:when test="regex-group(1)">
         <hi>
-          <xsl:sequence select="tei:parse-string(regex-group(2))"/>
+          <xsl:sequence select="tei:parseString(regex-group(2))"/>
 	</hi>
      </xsl:when>
      <xsl:when test="regex-group(3)">
         <seg>
-          <xsl:sequence select="tei:parse-string(regex-group(4))"/>
+          <xsl:sequence select="tei:parseString(regex-group(4))"/>
         </seg>
      </xsl:when>
      <xsl:when test="regex-group(5)">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project basedir="." default="dist" name="teitomarkdown">
+<project basedir="." default="dist" name="markdowntotei">
   <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -19,20 +19,21 @@
         Copyright: 2011, TEI Consortium<
 -->
   <!--
- Convert TEI documents into Markdown files.
+ Convert TEI documents into TXT files.
  -->
-  <import file="../common/teianttasks.xml"/>
+  <property name="markdowntotei" value="${profiledir}/${profile}/markdown/from.xsl"/>
 
-  <target name="dist" depends="odd,notodd"/>
-
-  <target name="odd" if="processODD">
-    <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
-    <buildgeneric type="txt" xsl="${profiledir}/${profile}/markdown/to.xsl" in="${inputFile}.processedodd" out="${outputFile}"/>
-    <delete file="${inputFile}.processedodd"/>
-  </target>
-
-  <target name="notodd" unless="processODD">
-    <buildgeneric type="markdown" xsl="${profiledir}/${profile}/markdown/to.xsl" in="${inputFile}" out="${outputFile}"/>
-  </target>
-
+<target name="dist" >
+  <xslt force="yes" style="${markdowntotei}" in="dummy.xml" out="${outputFile}">
+    <xmlcatalog>
+      <catalogpath>
+        <pathelement location="$catalogfile"/>
+      </catalogpath>
+    </xmlcatalog>
+    <factory name="net.sf.saxon.TransformerFactoryImpl">
+      <attribute name="http://saxon.sf.net/feature/initialTemplate" value="main"/>
+    </factory>
+    <param name="input-uri" expression="${inputFile}/"/>
+  </xslt>
+</target>  
 </project>
