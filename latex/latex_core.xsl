@@ -73,7 +73,8 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="@n"/>
               <xsl:text>) </xsl:text>
             </xsl:if>
-            <xsl:apply-templates select="tei:q|tei:quote"/>
+	    <xsl:if test="@xml:id"> <xsl:text>\hypertarget{</xsl:text><xsl:value-of select="@xml:id"/><xsl:text>}{}</xsl:text></xsl:if>
+            <xsl:apply-templates select="*[not(self::tei:bibl)]"/>
 	    <xsl:text>\par&#10;</xsl:text>
             <xsl:apply-templates select="tei:bibl"/>
         <xsl:text>&#10;\end{quote}&#10;</xsl:text>
@@ -598,6 +599,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:text>\par&#10;</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
+      <xsl:if test="@xml:id"> <xsl:text>\hypertarget{</xsl:text><xsl:value-of select="@xml:id"/><xsl:text>}{}</xsl:text></xsl:if>
     <xsl:if test="$numberParagraphs='true'">
       <xsl:call-template name="numberParagraph"/>
     </xsl:if>
@@ -681,10 +683,12 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:quote">
       <xsl:choose>
 	<xsl:when test="parent::tei:cit">
+	    <xsl:if test="@xml:id"> <xsl:text>\hypertarget{</xsl:text><xsl:value-of select="@xml:id"/><xsl:text>}{}</xsl:text></xsl:if>
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:when test="not(tei:is-inline(.))">
 	  <xsl:text>\begin{quote}</xsl:text>
+	    <xsl:if test="@xml:id"> <xsl:text>\hypertarget{</xsl:text><xsl:value-of select="@xml:id"/><xsl:text>}{}</xsl:text></xsl:if>
 	  <xsl:apply-templates/>
 	  <xsl:text>\end{quote}</xsl:text>
 	</xsl:when>

@@ -225,7 +225,9 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process the tei:div elements</desc>
    </doc>
-  <xsl:template match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
+  <xsl:template
+      match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
+    <xsl:if test="@xml:id"> <xsl:text>\hypertarget{</xsl:text><xsl:value-of select="@xml:id"/><xsl:text>}{}</xsl:text></xsl:if>
     <xsl:apply-templates/>
   </xsl:template>
 
