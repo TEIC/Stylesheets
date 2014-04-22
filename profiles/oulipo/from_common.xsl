@@ -81,7 +81,7 @@ of this software, even if advised of the possibility of such damage.
    </persName>
  </xsl:template>
  
- <xsl:template match="tei:hi[@rend='reunion-date]" mode="pass3">
+ <xsl:template match="tei:hi[@rend='reunion-date']" mode="pass3">
    <date type="reunion">
      <xsl:apply-templates mode="pass3"/>
    </date>
