@@ -124,11 +124,7 @@ installxsl: build teioo.jar
 	cp bin/transformtei ${PREFIX}/bin
 	perl -p -i -e 's+^APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/transformtei
 	chmod 755 ${PREFIX}/bin/transformtei
-	cd ${PREFIX}/bin
-	for i in $(SCRIPTS); do \
-	  rm -f `basename $$i`; \
-	  ln -s transformtei `basename $$i`; \
-	done
+	for i in $(SCRIPTS); do  (cd ${PREFIX}/bin; rm -f `basename $$i`;  ln -s transformtei `basename $$i`); done
 
 installprofiles: install-profiles-files install-profiles-docs
 
