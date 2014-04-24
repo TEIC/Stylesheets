@@ -1,3 +1,131 @@
+2014-04-24  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+	fix error in bin/ symlinks links and make new release
+
+2014-04-23  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	wrong path in import
+
+	mixed a result, of course
+
+	add info to HTML output to better support round-tripping
+
+2014-04-22  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	typo
+
+2014-04-21  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	LaTeX conversion failing to make hyperlink targets in enough places
+
+	date stamp in test resul
+
+	one more attempt to avoid warning from extract-isoc.xsh
+
+	command-line scripts and ant tasks for markdown
+
+2014-04-20  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	default templates for tei:* to ship up Saxon warnings
+
+	tweak markdown
+
+	Markdown to/from TEI, first go
+
+	starting work on TEI to Markdown
+
+	dont keep a style called 'Default Style' in Word to TEI
+
+2014-04-17  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	updated Saxon
+
+2014-04-16  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	updates for oulipo styles
+
+	put ... if @title on <a> exceeds cutoff length
+
+	improve sanitization of title attributes in HTML links
+
+2014-04-16  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	making @title regexp should cover all scripts, of course, not just latin.
+
+2014-04-15  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	restore generation of title attribute on internal hyperlinks in HTML
+
+	another use of findLanguage
+
+	import is allowed at top only
+
+	new function to identify appropriate language from xmL;lang (thanks to Syd)
+
+2014-04-15  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	missed  changed result files
+
+2014-04-14  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	whoops. forgot that changed result file.
+
+	put all occasions when the ID of a Schematron constraint is worked out, and use a common function to generate it. this changes some results and adds a case to test21.odd
+
+	if @style and @rend are both used, combine them (in tei to html)
+
+2014-04-14  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	change expected results of docx to tei
+
+	fix hyperlink in footnote in docx to TEI; also remember paragraph alignment
+
+2014-04-14  jamescummings  <James.Cummings@it.ox.ac.uk>
+
+	Adding normalize-space(.) to entity PI... just for safety.
+
+2014-04-14  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	make entity PI work in all modes
+
+	fix ISO profile from docx. add test37 to test font effects
+
+2014-04-12  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	remove debug message
+
+	.* is too vague; needs to be "anything except an ampersand"; add tests for this ampersand stuff. add PI for literal entities
+
+	allow for apes and quit after &
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+	Conflicts:
+		common/verbatim.xsl
+
+	rename isoStyle parameter to preserveEffects
+
+2014-04-11  jamescummings  <James.Cummings@it.ox.ac.uk>
+
+	Actually that regex should probably be * instead of + shouldn't it...
+
+	Adding for case in egXML where you may wish to have &amp;quot; in order to render as &quot;
+
+2014-04-09  jamescummings  <James.Cummings@it.ox.ac.uk>
+
+	Fixing egXML bug where &amp; wasn't escaped if there was no text node following.
+
+2014-04-04  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	name of XSL wrong
+
+2014-04-03  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	when looking for translations of texts, check for things with xml:lang='en' _or_ no @xml:lang. using just the latter fell over.
+
+2014-04-03  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	use normal CSS for science journal
+
+	new profile, new release
 2014-04-02  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
 	release 7.13.0
 
