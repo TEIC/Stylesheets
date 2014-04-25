@@ -60,10 +60,17 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:call-template name="gatherText"/>
 	 </xsl:variable>
 	 
+	 <!-- pokaz kopie 
+	 <xsl:copy-of select="$Body"/>
+       	<xsl:text>alalla</xsl:text>
+       	-->
+       	
 	 <xsl:variable name="Body2">
 	   <xsl:for-each select="$Body">
 	     <xsl:apply-templates mode="pass1"/>
+	   	
 	   </xsl:for-each>
+	 	
 	 </xsl:variable>
 
 	 <xsl:for-each select="$Body2">
@@ -73,11 +80,36 @@ of this software, even if advised of the possibility of such damage.
 		 <xsl:call-template name="group-by-section"/>
                </xsl:when>
                <xsl:otherwise>
-		 <xsl:call-template name="inSection"/>
+		 <xsl:call-template name="inSectionBlock"/>
             </xsl:otherwise>
              </xsl:choose>
            </xsl:for-each-group>
+	 	
+
 	 </xsl:for-each>
+       	
+       	<!-- 
+       	<xsl:for-each select="$Body2">
+       	<xsl:for-each-group select="tei:*" group-starting-with="tei:FCODE">
+       		<xsl:choose>
+       			<xsl:when test="local-name(current-group()[1])='FCODE' and position() mod 2 = 0">
+       				<eg>
+       					<xsl:for-each select="current-group()">
+       						<xsl:copy>
+       							<xsl:apply-templates/>
+       						</xsl:copy>
+       					</xsl:for-each>
+       				</eg>
+       			</xsl:when>
+       			<xsl:otherwise>
+       				<! omitting odd groups 
+       			</xsl:otherwise>
+       		</xsl:choose>
+       		
+       	</xsl:for-each-group>
+       	</xsl:for-each>
+       	-->
+       	
        </body>
      </text>
    </xsl:template>
@@ -126,13 +158,36 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
+ <xsl:template name="inSectionBlock">
+ 	<xsl:call-template name="inSection"/>
+ 	
+ 	<xsl:for-each-group select="tei:*" group-starting-with="tei:FCODE">
+ 		<xsl:choose>
+ 			<xsl:when test="local-name(current-group()[1])='FCODE' and position() mod 2 = 0">
+ 				<eg>
+ 					<xsl:for-each select="current-group()">
+ 						<xsl:copy>
+ 							<xsl:apply-templates/>
+ 						</xsl:copy>
+ 					</xsl:for-each>
+ 				</eg>
+ 			</xsl:when>
+ 			<xsl:otherwise>
+ 				<!-- omitting odd groups -->
+ 			</xsl:otherwise>
+ 		</xsl:choose>
+ 		
+ 	</xsl:for-each-group>
+ </xsl:template>
 
   <xsl:template name="inSection">
     <xsl:for-each-group select="current-group()"
 			group-adjacent="if (self::tei:GLOSS) then 1
 					else if (self::tei:ITEM) then 2
 					else if (self::tei:NITEM) then 3
-					else 4">      
+					else if (self::tei:BQUOTE) then 4
+					else if (self::tei:BCODE) then 5
+					else 6">      
       <xsl:choose>
 	<xsl:when test="current-grouping-key()=1">
 	  <list type="gloss">
@@ -161,7 +216,25 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:for-each>
 	  </list>
 	</xsl:when>
-	<xsl:otherwise>
+      	<xsl:when test="current-grouping-key()=4">
+      		<q>
+      			<xsl:for-each select="current-group()">
+      				<p>
+      					<xsl:apply-templates mode="pass2"/>
+      				</p>
+      			</xsl:for-each>
+      		</q>
+      	</xsl:when>
+      	<xsl:when test="current-grouping-key()=5">
+      		<eg>
+      			<xsl:for-each select="current-group()">
+      				<l>
+      					<xsl:apply-templates mode="pass2"/>
+      				</l>
+      			</xsl:for-each>
+      		</eg>
+      	</xsl:when>
+      	<xsl:otherwise>
 	  <xsl:for-each select="current-group()">
 	    <xsl:apply-templates select="." mode="pass2"/>
 	  </xsl:for-each>
@@ -191,6 +264,8 @@ of this software, even if advised of the possibility of such damage.
 	mode="pass1"/>
     </xsl:copy>
   </xsl:template>
+
+
 
   <xsl:template match="*" mode="pass1">
     <xsl:copy>
