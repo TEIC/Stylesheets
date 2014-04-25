@@ -60,17 +60,10 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:call-template name="gatherText"/>
 	 </xsl:variable>
 	 
-	 <!-- pokaz kopie 
-	 <xsl:copy-of select="$Body"/>
-       	<xsl:text>alalla</xsl:text>
-       	-->
-       	
 	 <xsl:variable name="Body2">
 	   <xsl:for-each select="$Body">
 	     <xsl:apply-templates mode="pass1"/>
-	   	
-	   </xsl:for-each>
-	 	
+ 	   </xsl:for-each>
 	 </xsl:variable>
 
 	 <xsl:for-each select="$Body2">
@@ -84,8 +77,6 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
              </xsl:choose>
            </xsl:for-each-group>
-	 	
-
 	 </xsl:for-each>
        	
        	<!-- 
@@ -102,7 +93,7 @@ of this software, even if advised of the possibility of such damage.
        				</eg>
        			</xsl:when>
        			<xsl:otherwise>
-       				<! omitting odd groups 
+       				<xsl:text> omitting odd groups </xsl:text> 
        			</xsl:otherwise>
        		</xsl:choose>
        	</xsl:for-each-group>
