@@ -24,7 +24,7 @@
            <p>from markdown</p>
 	 </publicationStmt>
 	 <sourceDesc>
-           <p>new born fsdkjfds </p>
+           <p>new born</p>
       </sourceDesc>
        </fileDesc>
      </teiHeader>
@@ -107,9 +107,7 @@
    (`(.*?)`)
    |
    (~~(.*?)~~)
-   |
-   (~~~(.*?))
-   '>
+  '>
    <xsl:matching-substring>
     <xsl:choose>
      <xsl:when test="regex-group(1)">
@@ -143,13 +141,7 @@
           <xsl:sequence select="regex-group(11)"/>
         </del>
       </xsl:when>
-      <xsl:when test="regex-group(12)">
-        <!-- This spans man lines and needs to be done via grouping, like heads -->
-          <eg>
-            <xsl:sequence select="regex-group(13)"/>
-          </eg>
-        </xsl:when>
-      
+    
     </xsl:choose>
    </xsl:matching-substring>
    <xsl:non-matching-substring>

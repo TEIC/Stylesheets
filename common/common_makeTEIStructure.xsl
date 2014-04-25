@@ -92,7 +92,7 @@ of this software, even if advised of the possibility of such damage.
        	<xsl:for-each select="$Body2">
        	<xsl:for-each-group select="tei:*" group-starting-with="tei:FCODE">
        		<xsl:choose>
-       			<xsl:when test="local-name(current-group()[1])='FCODE' and position() mod 2 = 0">
+       			<xsl:when test="position() mod 2 = 0">
        				<eg>
        					<xsl:for-each select="current-group()">
        						<xsl:copy>
@@ -105,7 +105,6 @@ of this software, even if advised of the possibility of such damage.
        				<! omitting odd groups 
        			</xsl:otherwise>
        		</xsl:choose>
-       		
        	</xsl:for-each-group>
        	</xsl:for-each>
        	-->
@@ -162,6 +161,7 @@ of this software, even if advised of the possibility of such damage.
   	<xsl:for-each-group select="tei:*" group-starting-with="tei:FCODE">
  		<xsl:choose>
  			<xsl:when test="position() mod 2 = 0">
+ 				<!-- even groups contain code blocks that were fenced with ~~~ -->
  				<eg>
  					<xsl:for-each select="current-group()">
  						<xsl:copy>
@@ -171,7 +171,7 @@ of this software, even if advised of the possibility of such damage.
  				</eg>
  			</xsl:when>
  			<xsl:otherwise>
- 				<!-- omitting odd groups -->
+				<!-- other groups should be processed as before -->
  				<xsl:call-template name="inSection"/>
  			</xsl:otherwise>
  		</xsl:choose>
