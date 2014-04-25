@@ -80,7 +80,7 @@ of this software, even if advised of the possibility of such damage.
 		 <xsl:call-template name="group-by-section"/>
                </xsl:when>
                <xsl:otherwise>
-		 <xsl:call-template name="inSectionBlock"/>
+		 <xsl:call-template name="inSectionCodeBlock"/>
             </xsl:otherwise>
              </xsl:choose>
            </xsl:for-each-group>
@@ -127,7 +127,7 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:call-template name="group-by-section"/>
 	      </xsl:when>
 	    <xsl:otherwise>
-	      <xsl:call-template name="inSection"/>
+	      <xsl:call-template name="inSectionCodeBlock"/>
 	    </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:for-each-group>
@@ -149,7 +149,7 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:call-template name="group-by-section"/>
 	      </xsl:when>
 	    <xsl:otherwise>
-		<xsl:call-template name="inSection"/>
+		<xsl:call-template name="inSectionCodeBlock"/>
 	    </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:for-each-group>
@@ -158,12 +158,10 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
- <xsl:template name="inSectionBlock">
- 	<xsl:call-template name="inSection"/>
- 	
- 	<xsl:for-each-group select="tei:*" group-starting-with="tei:FCODE">
+ <xsl:template name="inSectionCodeBlock">
+  	<xsl:for-each-group select="tei:*" group-starting-with="tei:FCODE">
  		<xsl:choose>
- 			<xsl:when test="local-name(current-group()[1])='FCODE' and position() mod 2 = 0">
+ 			<xsl:when test="position() mod 2 = 0">
  				<eg>
  					<xsl:for-each select="current-group()">
  						<xsl:copy>
@@ -174,9 +172,9 @@ of this software, even if advised of the possibility of such damage.
  			</xsl:when>
  			<xsl:otherwise>
  				<!-- omitting odd groups -->
+ 				<xsl:call-template name="inSection"/>
  			</xsl:otherwise>
  		</xsl:choose>
- 		
  	</xsl:for-each-group>
  </xsl:template>
 
