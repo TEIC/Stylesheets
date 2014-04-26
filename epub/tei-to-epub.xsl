@@ -410,20 +410,7 @@ height: </xsl:text>
                   <xsl:variable name="ID">
                     <xsl:number level="any"/>
                   </xsl:variable>
-                  <xsl:variable name="mimetype">
-                    <xsl:choose>
-                      <xsl:when test="@mimeType != ''">
-                        <xsl:value-of select="@mimeType"/>
-                      </xsl:when>
-                      <xsl:when test="contains($img,'.gif')">image/gif</xsl:when>
-                      <xsl:when test="contains($img,'.png')">image/png</xsl:when>
-                      <xsl:when test="contains($img,'.mpeg')">video/mpeg4</xsl:when>
-                      <xsl:when test="contains($img,'.mp4')">video/mpeg4</xsl:when>
-                      <xsl:when test="contains($img,'.m4v')">video/mpeg4</xsl:when>
-                      <xsl:otherwise>image/jpeg</xsl:otherwise>
-                    </xsl:choose>
-                  </xsl:variable>
-                  <item href="{$img}" id="image-{$ID}" media-type="{$mimetype}"/>
+                  <item href="{$img}" id="image-{$ID}" media-type="{tei:generateMimeSuffix($img,@mimeType)}"/>
                 </xsl:if>
               </xsl:for-each>
               <!-- page images -->
@@ -432,17 +419,7 @@ height: </xsl:text>
                 <xsl:variable name="ID">
                   <xsl:number level="any"/>
                 </xsl:variable>
-                <xsl:variable name="mimetype">
-                  <xsl:choose>
-                    <xsl:when test="@mimeType != ''">
-                      <xsl:value-of select="@mimeType"/>
-                    </xsl:when>
-                    <xsl:when test="contains($img,'.gif')">image/gif</xsl:when>
-                    <xsl:when test="contains($img,'.png')">image/png</xsl:when>
-                    <xsl:otherwise>image/jpeg</xsl:otherwise>
-                  </xsl:choose>
-                </xsl:variable>
-                <item href="{$img}" id="pbimage-{$ID}" media-type="{$mimetype}"/>
+                <item href="{$img}" id="pbimage-{$ID}" media-type="{tei:generateMimeSuffix($img,@mimeType)}"/>
               </xsl:for-each>
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
               <xsl:call-template name="epubManifestHook"/>

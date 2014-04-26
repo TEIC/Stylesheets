@@ -198,8 +198,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:if test="count(key('GRAPHICS',1))&gt;0">
           <manifest:file-entry manifest:media-type="" manifest:full-path="Pictures/"/>
           <xsl:for-each select="key('GRAPHICS',1)">
-            <xsl:variable name="imagetype" select="tokenize(@url,'\.')[last()]"/>
             <manifest:file-entry>
+            <xsl:variable name="imagetype" select="tokenize(@url,'\.')[last()]"/>
               <xsl:attribute name="manifest:full-path">
                 <xsl:text>Pictures/resource</xsl:text>
                 <xsl:number level="any"/>
@@ -207,16 +207,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:value-of select="$imagetype"/>
               </xsl:attribute>
               <xsl:attribute name="manifest:media-type">
-                <xsl:text>image/</xsl:text>
-                <xsl:choose>
-                  <xsl:when test="$imagetype='png'">png</xsl:when>
-                  <xsl:when test="$imagetype='gif'">gif</xsl:when>
-                  <xsl:when test="$imagetype='jpg'">jpeg</xsl:when>
-                  <xsl:when test="$imagetype='jpeg'">jpg</xsl:when>
-                  <xsl:when test="$imagetype='tiff'">tiff</xsl:when>
-                  <xsl:when test="$imagetype='tif'">tiff</xsl:when>
-                  <xsl:otherwise>jpeg</xsl:otherwise>
-                </xsl:choose>
+		<xsl:value-of  select="tei:generateMimeSuffix(@url,@mimeType)"/>
               </xsl:attribute>
             </manifest:file-entry>
           </xsl:for-each>

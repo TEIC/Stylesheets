@@ -12,7 +12,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
+    exclude-result-prefixes="#all"
     version="2.0">
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="classatts.xsl"/>
