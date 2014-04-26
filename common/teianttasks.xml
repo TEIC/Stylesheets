@@ -366,6 +366,8 @@
 	<!-- for ODD docs -->
         <param name="summaryDoc" expression="${summaryDoc}" if="summaryDoc"/>
         <param name="displayMode" expression="rnc"/>
+	<!-- for ones which need an output filename and/or directory-->
+	<param name="directory" expression="${outputDir}"/>
       </xslt>
     </sequential>
   </macrodef>
