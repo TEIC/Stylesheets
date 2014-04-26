@@ -59,15 +59,17 @@ of this software, even if advised of the possibility of such damage.
 	   <HEAD level="1" magic="true">Start</HEAD>
 	   <xsl:call-template name="gatherText"/>
 	 </xsl:variable>
-	 
+
 	 <xsl:variable name="Body2">
 	   <xsl:for-each select="$Body">
-	     <xsl:apply-templates mode="pass1"/>
+	     <xsl:apply-templates
+		 select="*|@*|processing-instruction()|comment()|text()"
+		 mode="pass1"/>
 	   </xsl:for-each>
 	 </xsl:variable>
 
 	 <xsl:for-each select="$Body2">
-           <xsl:for-each-group select="tei:*" group-starting-with="tei:HEAD[@level='1']">
+           <xsl:for-each-group select="tei:*|comment()" group-starting-with="tei:HEAD[@level='1']">
              <xsl:choose>
                <xsl:when test="self::tei:HEAD[@level='1']">
 		 <xsl:call-template name="group-by-section"/>
@@ -138,7 +140,9 @@ of this software, even if advised of the possibility of such damage.
 	  <list type="gloss">
 	    <xsl:for-each select="current-group()">
 	      <xsl:element name="{@n}">
-		<xsl:apply-templates mode="pass2"/>
+		<xsl:apply-templates
+ 		    select="*|@*|processing-instruction()|comment()|text()"
+		    mode="pass2"/>
 	      </xsl:element>
 	    </xsl:for-each>
 	  </list>
@@ -147,7 +151,9 @@ of this software, even if advised of the possibility of such damage.
 	  <list type="unordered">
 	    <xsl:for-each select="current-group()">
 	      <xsl:element name="{@n}">
-		<xsl:apply-templates mode="pass2"/>
+		<xsl:apply-templates
+ 		    select="*|@*|processing-instruction()|comment()|text()"
+		    mode="pass2"/>
 	      </xsl:element>
 	    </xsl:for-each>
 	  </list>
@@ -156,7 +162,9 @@ of this software, even if advised of the possibility of such damage.
 	  <list type="ordered">
 	    <xsl:for-each select="current-group()">
 	      <xsl:element name="{@n}">
-		<xsl:apply-templates mode="pass2"/>
+		<xsl:apply-templates
+		    select="*|@*|processing-instruction()|comment()|text()"
+		    mode="pass2"/>
 	      </xsl:element>
 	    </xsl:for-each>
 	  </list>

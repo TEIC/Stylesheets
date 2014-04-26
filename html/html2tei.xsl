@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" exclude-result-prefixes="tei xs" version="2.0" xpath-default-namespace="http://www.w3.org/1999/xhtml">
   <xsl:import href="../common/common_makeTEIStructure.xsl"/>
+  <xsl:import href="../common/functions.xsl"/>
   <xsl:output method="xml" indent="no"/>
   <xsl:template match="html">
     <TEI>
@@ -24,6 +25,9 @@
         <publicationStmt>
           <p/>
         </publicationStmt>
+        <sourceDesc>
+          <p>translated from HTML to TEI</p>
+        </sourceDesc>
       </fileDesc>
     </teiHeader>
   </xsl:template>
@@ -92,29 +96,43 @@
       <xsl:apply-templates/>
     </hi>
   </xsl:template>
-  <xsl:template match="img">
-    <graphic url="{@src}">
-      <xsl:for-each select="@width">
-        <xsl:attribute name="width">
-          <xsl:value-of select="."/>
-          <xsl:analyze-string select="." regex="^[0-9]+$">
-            <xsl:matching-substring>
-              <xsl:text>px</xsl:text>
-            </xsl:matching-substring>
-          </xsl:analyze-string>
-        </xsl:attribute>
-      </xsl:for-each>
-      <xsl:for-each select="@height">
-        <xsl:attribute name="height">
-          <xsl:value-of select="."/>
-          <xsl:analyze-string select="." regex="^[0-9]+$">
-            <xsl:matching-substring>
-              <xsl:text>px</xsl:text>
-            </xsl:matching-substring>
-          </xsl:analyze-string>
-        </xsl:attribute>
-      </xsl:for-each>
-    </graphic>
+  <xsl:template match="img|video|embed|source">
+    <xsl:variable name="object">
+      <xsl:element name="{if (self::img) then 'graphic' else 'media'}">
+        <xsl:attribute name="url" select="@src"/>
+        <xsl:attribute name="mimeType" select="tei:generateMimeType(@src,@type)"/>
+        <xsl:for-each select="@width">
+          <xsl:attribute name="width">
+            <xsl:value-of select="."/>
+            <xsl:analyze-string select="." regex="^[0-9]+$">
+              <xsl:matching-substring>
+                <xsl:text>px</xsl:text>
+              </xsl:matching-substring>
+            </xsl:analyze-string>
+          </xsl:attribute>
+        </xsl:for-each>
+        <xsl:for-each select="@height">
+          <xsl:attribute name="height">
+            <xsl:value-of select="."/>
+            <xsl:analyze-string select="." regex="^[0-9]+$">
+              <xsl:matching-substring>
+                <xsl:text>px</xsl:text>
+              </xsl:matching-substring>
+            </xsl:analyze-string>
+          </xsl:attribute>
+        </xsl:for-each>
+      </xsl:element>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="parent::body or parent::div or parent::article         or parent::audio">
+        <p>
+          <xsl:copy-of select="$object"/>
+        </p>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="$object"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="pre">
     <eg>
@@ -192,19 +210,117 @@
       <xsl:apply-templates select="@*|*|text()"/>
     </table>
   </xsl:template>
-  <xsl:template match="td">
+  <xsl:template match="td|th">
     <cell>
       <xsl:apply-templates select="@*|*|text()"/>
     </cell>
   </xsl:template>
   <xsl:template match="tr">
     <row>
+      <xsl:if test="parent::thead">
+        <xsl:attribute name="role">label</xsl:attribute>
+      </xsl:if>
       <xsl:apply-templates select="@*|*|text()"/>
     </row>
   </xsl:template>
-  <xsl:template match="hr"/>
-  <xsl:template match="*">
-    <xsl:message>UNKNOWN TAG <xsl:value-of select="name()"/></xsl:message>
+  <xsl:template match="abbr">
+    <abbr>
+      <xsl:apply-templates/>
+    </abbr>
+  </xsl:template>
+  <xsl:template match="address">
     <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template match="article">
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template match="aside">
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template match="audio">
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template match="cite">
+    <ref>
+      <xsl:apply-templates/>
+    </ref>
+  </xsl:template>
+  <xsl:template match="del">
+    <del>
+      <xsl:apply-templates/>
+    </del>
+  </xsl:template>
+  <xsl:template match="figcaption">
+    <head>
+      <xsl:apply-templates/>
+    </head>
+  </xsl:template>
+  <xsl:template match="figure">
+    <figure>
+      <xsl:apply-templates/>
+    </figure>
+  </xsl:template>
+  <xsl:template match="footer">
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template match="ins">
+    <add>
+      <xsl:apply-templates/>
+    </add>
+  </xsl:template>
+  <xsl:template match="kbd">
+    <code rend="kbd">
+      <xsl:apply-templates/>
+    </code>
+  </xsl:template>
+  <xsl:template match="samp">
+    <code rend="samp">
+      <xsl:apply-templates/>
+    </code>
+  </xsl:template>
+  <xsl:template match="section">
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template match="small">
+    <hi rend="small">
+      <xsl:apply-templates/>
+    </hi>
+  </xsl:template>
+  <xsl:template match="sub">
+    <hi rend="sub">
+      <xsl:apply-templates/>
+    </hi>
+  </xsl:template>
+  <xsl:template match="summary">
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template match="var">
+    <code rend="var">
+      <xsl:apply-templates/>
+    </code>
+  </xsl:template>
+  <xsl:template match="tbody">
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template match="tfoot">
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template match="thead">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="hr"/>
+
+  <xsl:template match="*">
+    <xsl:message>UNTRANSLATED TAG <xsl:value-of select="name()"/></xsl:message>
+    <xsl:comment>&lt;<xsl:value-of select="name()"/>
+    <xsl:for-each select="@*">
+      <xsl:text>&#10;  </xsl:text>
+      <xsl:value-of select="name()"/>="<xsl:value-of select="."/><xsl:text>"</xsl:text>
+    </xsl:for-each>
+    <xsl:text>&gt;</xsl:text>
+    </xsl:comment>
+    <xsl:apply-templates/>
+    <xsl:comment>&lt;/<xsl:value-of select="name()"/>&gt;</xsl:comment>
   </xsl:template>
 </xsl:stylesheet>

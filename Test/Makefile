@@ -26,7 +26,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt test-p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
+default: test.rng test-to-html test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt test-p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
 
 test.rng:
 	$(BINDIR)/teitorelaxng --odd test.odd test.rng
@@ -36,7 +36,7 @@ test.rng:
 css:
 	(cd ..; for i in css/*; do test -f `basename $$i` || ln -s $$i `basename $$i`;done)
 
-test-html: css
+test-to-html: css
 	@echo BUILD: testing html
 	$(SAXON)  test.xml ../html/html.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
 	diff test.html expected-results/test.html
@@ -99,6 +99,10 @@ test-html: css
 	diff test31.html expected-results/test31.html
 	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFile=../tei.css $(SAXONOPT)  | xmllint --format - > test32.html
 	diff test32.html expected-results/test32.html
+
+test-from-html:
+	$(SAXON) test38.htm ../html/html2tei.xsl $(SAXONOPT)  | xmllint --format - > test38.xml
+	diff test38.xml expected-results/test38.xml
 
 test-p4top5: 
 	@echo BUILD: testing p4top5
