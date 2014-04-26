@@ -63,7 +63,7 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:variable name="Body2">
 	   <xsl:for-each select="$Body">
 	     <xsl:apply-templates
-		 select="*|@*|processing-instruction()|comment()|text()"
+		 select="*|processing-instruction()|comment()|text()"
 		 mode="pass1"/>
 	   </xsl:for-each>
 	 </xsl:variable>
