@@ -207,7 +207,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:value-of select="$imagetype"/>
               </xsl:attribute>
               <xsl:attribute name="manifest:media-type">
-		<xsl:value-of  select="tei:generateMimeSuffix(@url,@mimeType)"/>
+		<xsl:value-of  select="tei:generateMimeType(@url,@mimeType)"/>
               </xsl:attribute>
             </manifest:file-entry>
           </xsl:for-each>

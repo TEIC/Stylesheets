@@ -410,7 +410,7 @@ height: </xsl:text>
                   <xsl:variable name="ID">
                     <xsl:number level="any"/>
                   </xsl:variable>
-                  <item href="{$img}" id="image-{$ID}" media-type="{tei:generateMimeSuffix($img,@mimeType)}"/>
+                  <item href="{$img}" id="image-{$ID}" media-type="{tei:generateMimeType($img,@mimeType)}"/>
                 </xsl:if>
               </xsl:for-each>
               <!-- page images -->
@@ -419,7 +419,7 @@ height: </xsl:text>
                 <xsl:variable name="ID">
                   <xsl:number level="any"/>
                 </xsl:variable>
-                <item href="{$img}" id="pbimage-{$ID}" media-type="{tei:generateMimeSuffix($img,@mimeType)}"/>
+                <item href="{$img}" id="pbimage-{$ID}" media-type="{tei:generateMimeType($img,@mimeType)}"/>
               </xsl:for-each>
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
               <xsl:call-template name="epubManifestHook"/>
