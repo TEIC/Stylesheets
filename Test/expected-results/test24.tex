@@ -270,8 +270,7 @@
   {\end{list}\end{raggedright}}
 \newenvironment{specHead}[2]%
  {\vspace{20pt}\hrule\vspace{10pt}%
-  \hypertarget{#1}{}%
-  \markright{#2}%
+  \label{#1}\markright{#2}%
 
   \pdfbookmark[2]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%

@@ -270,8 +270,7 @@
   {\end{list}\end{raggedright}}
 \newenvironment{specHead}[2]%
  {\vspace{20pt}\hrule\vspace{10pt}%
-  \hypertarget{#1}{}%
-  \markright{#2}%
+  \label{#1}\markright{#2}%
 
   \pdfbookmark[2]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
@@ -315,15 +314,21 @@
 \par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\raggedright\selectfont\@author\hfill\TheDate}
 \vspace{18pt}
 \makeatother
-\let\tabcellsep& \par
-{\persName Edward George Bulwer-Lytton, Baron Lytton of {\placeName Knebworth}} via Marsala 2440126{\name Bologna}{\name Italy}\par
+\let\tabcellsep& 
+     \tableofcontents
+   \par
+Figure links: \ref{testfig} and \hyperref[testfig]{Lessing pic}\par
+ {\persName Edward George Bulwer-Lytton, Baron Lytton of  {\placeName Knebworth}} via Marsala 2440126 {\name Bologna} {\name Italy}\par
 Languages: \textit{Deutsch}; \textit{Italiano}; \textit{Español}; \textit{Français}; \textit{Portugues}; \textit{Russian}; \textit{Svenska}; \textit{日本語}; \textit{中文}.\par
-Here is a simple \texttt{<ptr>} to it: \textit{\hyperref[P1]{1. Tests}}. Here is a simple \texttt{<ref>}, a \hyperlink{P1}{reference to it}. \par 
+Here is a simple \texttt{<ptr>} to the next section: \textit{\hyperref[P1]{1. Tests}}. Here is a simple \texttt{<ref>}, a \hyperref[P1]{reference to it}. \par 
 \begin{longtable}{P{0.11724137931034483\textwidth}P{0.7327586206896551\textwidth}}
 emph\tabcellsep This is \textit{emph} tag\end{longtable} \par
- \hypertarget{P1}{}
+ 
 \section[Tests]{Tests}\label{P1}\par
- 	  {\persName  	     	     	    Edward George Bulwer-Lytton, 	    Baron Lytton of 	    {\placeName Knebworth} 	     	  } 	   	    via Marsala 24 	    40126 	    {\name Bologna} 	    {\name Italy} 	   	 	
+ 	   {\persName  	     	     	    Edward George Bulwer-Lytton, 	    Baron Lytton of 	     {\placeName Knebworth} 	     	  } 	   	    via Marsala 24 	    40126 	     {\name Bologna} 	     {\name Italy} 	   	 	
 \section[More Tests]{More Tests}         \par
-{\persName   Edward George Bulwer-Lytton, Baron Lytton of {\placeName Knebworth}} via Marsala 2440126{\name Bologna}{\name Italy}       
+ {\persName   Edward George Bulwer-Lytton, Baron Lytton of  {\placeName Knebworth}} via Marsala 2440126 {\name Bologna} {\name Italy} 	\begin{figure}[htbp]
+\noindent 	   	  \includegraphics[]{lessing.jpg} 	
+\caption{\label{testfig}Doris Lessing}\end{figure}
+       
 \end{document}

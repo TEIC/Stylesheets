@@ -274,8 +274,7 @@
   {\end{list}\end{raggedright}}
 \newenvironment{specHead}[2]%
  {\vspace{20pt}\hrule\vspace{10pt}%
-  \hypertarget{#1}{}%
-  \markright{#2}%
+  \label{#1}\markright{#2}%
 
   \pdfbookmark[2]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
@@ -348,13 +347,13 @@ Display note (no other content in cell)\end{quote}
 \begin{quote}
 Display note\end{quote}
 \end{longtable} \par
- \hypertarget{one}{}
+ 
 \section[Section one]{Section one}\label{one}\par
-\hypertarget{p1}{}the words\hypertarget{two}{}
+\label{p1}the words
 \subsection[subsection heading]{subsection heading}\label{two}\par
 hello\par
 A note here \footnote{A footnote in section 1}\par
-\hypertarget{three}{}
+
 \section[Section two]{Section two}\label{three}\par
 A note \footnote{A footnote in section 2}
 \theendnotes

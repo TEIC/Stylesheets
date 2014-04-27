@@ -270,8 +270,7 @@
   {\end{list}\end{raggedright}}
 \newenvironment{specHead}[2]%
  {\vspace{20pt}\hrule\vspace{10pt}%
-  \hypertarget{#1}{}%
-  \markright{#2}%
+  \label{#1}\markright{#2}%
 
   \pdfbookmark[2]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
@@ -316,14 +315,14 @@
 \vspace{18pt}
 \makeatother
 \let\tabcellsep&  \par 
-\begin{longtable}{P{0.7585615220483641\textwidth}P{0.09143847795163584\textwidth}}
+\begin{longtable}{P{0.757820410338396\textwidth}P{0.09217958966160404\textwidth}}
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}This is in a {<\textbf{ab}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rendition}="{\#bold \#initcaps}">}ab element{</\textbf{ab}>}\end{shaded}\egroup 
 
 \tabcellsep This is in a ab element\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{abbr}>}abbr{</\textbf{abbr}>}\end{shaded}\egroup 
 
-\tabcellsep {\abbr abbr}\\
+\tabcellsep  {\abbr abbr}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}Thus: {<\textbf{add}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{place}="{above}"\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{hand}="{primary}">}QDM{</\textbf{add}>}\end{shaded}\egroup 
@@ -350,7 +349,7 @@
 \tabcellsep ‘Quote’\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{corr}>}corr{</\textbf{corr}>}\end{shaded}\egroup 
 
-\tabcellsep [{\corr corr}]\\
+\tabcellsep [ {\corr corr}]\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{date}>}date{</\textbf{date}>}\end{shaded}\egroup 
 
 \tabcellsep date\\
@@ -368,7 +367,7 @@
 \tabcellsep \textit{emph}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{expan}>}expan{</\textbf{expan}>}\end{shaded}\egroup 
 
-\tabcellsep {\expan expan}\\
+\tabcellsep  {\expan expan}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{foreign}>}foreign{</\textbf{foreign}>}\end{shaded}\egroup 
 
 \tabcellsep \textit{foreign}\\
@@ -380,12 +379,12 @@
 \hspace*{6pt}\hspace*{6pt}{extent}="{4}"\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{reason}="{illegible}"/>}\end{shaded}\egroup 
 
-\tabcellsep [...]{\gap }\\
+\tabcellsep [...] {\gap }\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{gap}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{extent}="{1 letter}"\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rend}="{content:•}"/>}\end{shaded}\egroup 
 
-\tabcellsep [...]{\gap }\\
+\tabcellsep [...] {\gap }\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{gi}>}term{</\textbf{gi}>}\end{shaded}\egroup 
 
 \tabcellsep \texttt{<term>}\\
@@ -482,16 +481,16 @@
 \tabcellsep \textit{in despatches}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{orgName}>}orgName{</\textbf{orgName}>}\end{shaded}\egroup 
 
-\tabcellsep {\orgName orgName}\\
+\tabcellsep  {\orgName orgName}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{orig}>}orig{</\textbf{orig}>}\end{shaded}\egroup 
 
-\tabcellsep {\orig orig}\\
+\tabcellsep  {\orig orig}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{persName}>}persName{</\textbf{persName}>}\end{shaded}\egroup 
 
-\tabcellsep {\persName persName}\\
+\tabcellsep  {\persName persName}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{placeName}>}placeName{</\textbf{placeName}>}\end{shaded}\egroup 
 
-\tabcellsep {\placeName placeName}\\
+\tabcellsep  {\placeName placeName}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{q}>}q{</\textbf{q}>}\end{shaded}\egroup 
 
 \tabcellsep ‘q’\\
@@ -506,7 +505,7 @@
 \tabcellsep ‘Quote’\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{reg}>}reg{</\textbf{reg}>}\end{shaded}\egroup 
 
-\tabcellsep {\reg reg}\\
+\tabcellsep  {\reg reg}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{said}\mbox{}\newline 
 \hspace*{6pt}\hspace*{6pt}{rendition}="{\#qbefore              \#qafter}">}Who-e\mbox{}\newline 
  debel you?{</\textbf{said}>} — he at last said — \end{shaded}\egroup 
@@ -522,7 +521,7 @@
 \tabcellsep This is in a seg element\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{sic}>}sic{</\textbf{sic}>}\end{shaded}\egroup 
 
-\tabcellsep {{\sic sic}}\\
+\tabcellsep { {\sic sic}}\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{soCalled}>}highlighting{</\textbf{soCalled}>}\end{shaded}\egroup 
 
 \tabcellsep ‘highlighting’\\

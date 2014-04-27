@@ -528,8 +528,7 @@ characters. The normal characters remain active for LaTeX commands.
   {\end{list}\end{raggedright}}
 \newenvironment{specHead}[2]%
  {\vspace{20pt}\hrule\vspace{10pt}%
-  \hypertarget{#1}{}%
-  \markright{#2}%
+  \label{#1}\markright{#2}%
 <xsl:text>
   \pdfbookmark[</xsl:text>
       <xsl:value-of select="$specLinkDepth"/>
@@ -694,11 +693,7 @@ characters. The normal characters remain active for LaTeX commands.
       <xsl:text>&#10;\item</xsl:text>
       <xsl:if test="@n">[<xsl:value-of select="@n"/>]</xsl:if>
       <xsl:text> </xsl:text>
-      <xsl:if test="@xml:id">
-         <xsl:text>\hypertarget{</xsl:text>
-         <xsl:value-of select="@xml:id"/>
-         <xsl:text>}{}</xsl:text>
-      </xsl:if>
+      <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:call-template name="rendering"/>
   </xsl:template>  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

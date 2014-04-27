@@ -164,11 +164,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element table</desc>
    </doc>
   <xsl:template match="tei:table">
-      <xsl:if test="@xml:id">
-         <xsl:text>\label{</xsl:text>
-         <xsl:value-of select="@xml:id"/>
-         <xsl:text>}</xsl:text>
-      </xsl:if>
+    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:text> \par </xsl:text>
       <xsl:choose>
          <xsl:when test="ancestor::tei:table or $longtables='false'"> 
@@ -199,7 +195,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="makeTable"/> 
      <xsl:text>\end{tabular} 
       \caption{</xsl:text>
-      <xsl:if test="@xml:id">\label{<xsl:value-of select="@xml:id"/>}</xsl:if>
+      <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:apply-templates mode="ok" select="tei:head"/>
       <xsl:text>}
      \end{small} 
@@ -232,7 +228,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
          <xsl:when test="tei:head or tei:p">
             <xsl:text>&#10;\caption{</xsl:text>
-            <xsl:if test="@xml:id">\label{<xsl:value-of select="@xml:id"/>}</xsl:if>
+	    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
             <xsl:for-each select="tei:head">
 	      <xsl:apply-templates/>
 	    </xsl:for-each>
@@ -255,8 +251,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>[latex] Make picture</desc>
    </doc>
   <xsl:template name="makePic">
-      <xsl:if test="@xml:id">\hypertarget{<xsl:value-of
-      select="@xml:id"/>}{}</xsl:if>
+    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:choose>
 	<xsl:when test="@rend='noindent'">
 	  <xsl:text>\noindent</xsl:text>
