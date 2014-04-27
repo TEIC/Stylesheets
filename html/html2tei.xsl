@@ -100,6 +100,7 @@
     <xsl:variable name="object">
       <xsl:element name="{if (self::img) then 'graphic' else 'media'}">
         <xsl:attribute name="url" select="@src"/>
+        <xsl:attribute name="type" select="local-name()"/>
         <xsl:attribute name="mimeType" select="tei:generateMimeType(@src,@type)"/>
         <xsl:for-each select="@width">
           <xsl:attribute name="width">
