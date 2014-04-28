@@ -96,7 +96,7 @@
       <xsl:apply-templates/>
     </hi>
   </xsl:template>
-  <xsl:template match="img|video|embed|source">
+  <xsl:template match="img|video[@src]|audio[@src]|embed|source">
     <xsl:variable name="object">
       <xsl:element name="{if (self::img) then 'graphic' else 'media'}">
         <xsl:attribute name="url" select="@src"/>
@@ -125,7 +125,8 @@
       </xsl:element>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="parent::body or parent::div or parent::article         or parent::audio">
+      <xsl:when test="parent::body or parent::div or parent::article
+		      or parent::audio or parent::video">
         <p>
           <xsl:copy-of select="$object"/>
         </p>
@@ -238,8 +239,8 @@
   <xsl:template match="aside">
     <xsl:apply-templates/>
   </xsl:template>
-  <xsl:template match="audio">
-    <xsl:apply-templates/>
+  <xsl:template match="audio[source]|video[source]">
+    <xsl:apply-templates select="source[1]"/>
   </xsl:template>
   <xsl:template match="cite">
     <ref>
