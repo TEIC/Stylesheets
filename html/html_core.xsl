@@ -737,8 +737,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="tei:biblStruct and not(tei:bibl)">
         <ol class="listBibl {$biblioStyle}">
           <xsl:for-each select="tei:biblStruct">
-	    <xsl:sort select="lower-case(normalize-space((
-			      tei:*[1]/tei:author/tei:surname
+	    <xsl:sort select="lower-case(normalize-space((@sortKey,tei:*[1]/tei:author/tei:surname
 			      ,tei:*[1]/tei:author/tei:orgName
 			      ,tei:*[1]/tei:author/tei:name
 			      ,tei:*[1]/tei:author
