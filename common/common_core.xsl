@@ -626,9 +626,11 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:apply-templates/>
 	     </xsl:with-param>
 	   </xsl:call-template>
-	   <xsl:call-template name="makeText">
+	   <xsl:if test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
+	     <xsl:call-template name="makeText">
 	     <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	   </xsl:call-template>
+	   </xsl:if>
          </xsl:when>
          <xsl:when test="@level='a'">
 	   <xsl:call-template name="emphasize">
