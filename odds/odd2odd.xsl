@@ -857,10 +857,12 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:apply-templates mode="odd2odd-copy" select="tei:content/*"/>
               </xsl:when>
               <xsl:when test="tei:content/tei:*">
+                <xsl:apply-templates mode="odd2odd-copy" select="tei:content/@*"/>
                 <xsl:apply-templates mode="odd2odd-copy" select="tei:content/*"/>
               </xsl:when>
               <xsl:otherwise>
-                  <xsl:apply-templates mode="odd2odd-copy" select="$ORIGINAL/tei:content/*"/>
+                <xsl:apply-templates mode="odd2odd-copy" select="$ORIGINAL/tei:content/@*"/>
+                <xsl:apply-templates mode="odd2odd-copy" select="$ORIGINAL/tei:content/*"/>
               </xsl:otherwise>
             </xsl:choose>
           </content>
