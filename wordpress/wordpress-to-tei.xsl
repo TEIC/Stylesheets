@@ -48,7 +48,7 @@
  </xsl:template>
 
  <xsl:template match="wp:attachment_url">
-   <p><graphic url="."/></p>
+   <p><graphic url="{.}"/></p>
  </xsl:template>
 
  <xsl:template match="content:encoded">
