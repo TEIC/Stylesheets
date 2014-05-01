@@ -78,20 +78,13 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:value-of select="$latexLogo"/>
 	   <xsl:text> FIG0 </xsl:text>
          </xsl:if>
-         <xsl:for-each select="//tei:figure">
+         <xsl:for-each select="//tei:graphic|//tei:media">
 	   <xsl:variable name="c">
 	     <xsl:number level="any"/>
 	   </xsl:variable>
 	   <xsl:text>&#10;%FIGMAP </xsl:text>
 	   <xsl:variable name="f">
-	     <xsl:choose>
-	       <xsl:when test="tei:graphic">
-		 <xsl:sequence select="tei:resolveURI(tei:graphic,tei:graphic/@url)"/>
-	       </xsl:when>
-	       <xsl:when test="tei:media">
-		 <xsl:sequence select="tei:resolveURI(tei:media,tei:media/@url)"/>
-	       </xsl:when>
-	     </xsl:choose>
+	     <xsl:sequence select="tei:resolveURI(.,./@url)"/>
 	   </xsl:variable>
 	   <xsl:choose>
 	     <xsl:when test="contains($f,'.')">
