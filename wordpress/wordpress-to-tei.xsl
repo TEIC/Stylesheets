@@ -99,10 +99,10 @@
         <xsl:with-param name="str">
           <xsl:choose>
             <xsl:when test="starts-with(.,'&lt;p&gt;')">
-              <xsl:value-of select="."/>
+              <xsl:value-of select="replace(.,'&amp;amp;','&amp;')"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="concat('&lt;p&gt;',replace(.,'&#10;&#10;','&lt;/p&gt;&lt;p&gt;'),'&lt;/p&gt;')"/>
+              <xsl:value-of select="replace(concat('&lt;p&gt;',replace(.,'&#10;&#10;','&lt;/p&gt;&lt;p&gt;'),'&lt;/p&gt;'), '&amp;amp;','&amp;')"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:with-param>
