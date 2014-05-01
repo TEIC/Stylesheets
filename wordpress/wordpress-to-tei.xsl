@@ -16,9 +16,11 @@
     <ul/>
     <br/>
     <p/>
+    <span/>
     <a>
       <href/>
       <name/>
+      <target/>
     </a>
   </xsl:variable>
   <xsl:output indent="yes"/>
@@ -47,7 +49,7 @@
       </teiHeader>
       <text>
         <body>
-          <xsl:for-each select="channel/item">
+          <xsl:for-each select="channel/item[wp:status='publish']">
             <xsl:sort select="wp:post_date"/>
 	    <xsl:if test="normalize-space(content:encoded)!='' or wp:attachment_url">
               <div>
@@ -121,7 +123,7 @@
     </hi>
   </xsl:template>
 
-  <xsl:template match="div">
+  <xsl:template match="div|span">
       <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="em">
@@ -161,9 +163,11 @@
     </list>
   </xsl:template>
   <xsl:template match="li">
+    <xsl:if test="* or not(normalize-space(.)='')">
     <item>
       <xsl:apply-templates/>
     </item>
+    </xsl:if>
   </xsl:template>
   <xsl:template match="a[@name]"/>
 
