@@ -273,7 +273,7 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:variable name="F">
 	     <xsl:sequence select="tei:resolveURI(.,@url)"/>
 	   </xsl:variable>
-	   <xsl:text>image</xsl:text>
+	   <xsl:text>Pictures/resource</xsl:text>
 	   <xsl:number level="any"/>
 	   <xsl:text>.</xsl:text>
 	   <xsl:value-of select="tokenize($F,'\.')[last()]"/>

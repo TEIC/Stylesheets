@@ -259,6 +259,7 @@
       <xsl:apply-templates/>
     </ref>
   </xsl:template>
+
   <!-- from
      http://stackoverflow.com/questions/2463155/how-to-unescape-xml-characters-with-help-of-xslt -->
   <xsl:template name="unescape">

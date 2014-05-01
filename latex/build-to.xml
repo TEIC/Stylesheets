@@ -32,7 +32,9 @@
   </target>
 
   <target name="notodd" unless="processODD">
-    <buildgeneric type="latex" xsl="${profiledir}/${profile}/latex/to.xsl" in="${inputFile}" out="${outputFile}"/>
+    <buildgeneric type="latex"
+		  xsl="${profiledir}/${profile}/latex/to.xsl"
+		  in="${inputFile}" out="${outputFile}"/>
   </target>
 
 </project>

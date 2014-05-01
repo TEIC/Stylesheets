@@ -71,35 +71,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="mainDocument">
-      <xsl:if test="not($realFigures='true')">
-         <xsl:text>%BEGINFIGMAP</xsl:text>
-         <xsl:if test="not($latexLogo='')">
-	   <xsl:text>&#10;%FIGMAP </xsl:text>
-	   <xsl:value-of select="$latexLogo"/>
-	   <xsl:text> FIG0 </xsl:text>
-         </xsl:if>
-         <xsl:for-each select="//tei:graphic|//tei:media">
-	   <xsl:variable name="c">
-	     <xsl:number level="any"/>
-	   </xsl:variable>
-	   <xsl:text>&#10;%FIGMAP </xsl:text>
-	   <xsl:variable name="f">
-	     <xsl:sequence select="tei:resolveURI(.,./@url)"/>
-	   </xsl:variable>
-	   <xsl:choose>
-	     <xsl:when test="contains($f,'.')">
-	       <xsl:value-of select="$f"/>
-	     </xsl:when>
-	     <xsl:otherwise>
-	       <xsl:value-of select="concat($f,'.png')"/>
-	     </xsl:otherwise>
-	   </xsl:choose>
-	   <xsl:text> FIG</xsl:text>
-	   <xsl:value-of select="$c + 1000"/>
-	   <xsl:text>&#10;</xsl:text>
-         </xsl:for-each>
-         <xsl:text>&#10;%ENDFIGMAP&#10;</xsl:text>
-      </xsl:if>
       <xsl:text>\documentclass[</xsl:text>
       <xsl:value-of select="$classParameters"/>
       <xsl:text>]{</xsl:text>
