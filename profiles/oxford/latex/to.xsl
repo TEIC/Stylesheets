@@ -48,7 +48,7 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
-
+<xsl:param name="realFigures">false</xsl:param>
    <xsl:template name="latexPreambleHook">
 \defaultfontfeatures{Scale=MatchLowercase}
 \setromanfont{Minion Pro}
