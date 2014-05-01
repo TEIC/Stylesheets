@@ -584,9 +584,16 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="tei:list[tei:isGlossList(.)]/tei:item">
-    <text:p text:style-name="List_20_Contents">
+    <xsl:choose>
+      <xsl:when test="count(*)=1 and tei:list">
       <xsl:apply-templates/>
-    </text:p>
+      </xsl:when>
+      <xsl:otherwise>
+	<text:p text:style-name="List_20_Contents">
+	  <xsl:apply-templates/>
+	</text:p>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:list[tei:isGlossList(.)]/tei:label">
     <text:p text:style-name="List_20_Heading">
