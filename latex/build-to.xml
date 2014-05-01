@@ -23,7 +23,7 @@
  -->
   <import file="../common/teianttasks.xml"/>
 
-  <target name="dist" depends="odd,notodd"/>
+  <target name="dist" depends="odd,notodd,go"/>
 
   <target name="odd" if="processODD">
     <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
@@ -35,6 +35,24 @@
     <buildgeneric type="latex"
 		  xsl="${profiledir}/${profile}/latex/to.xsl"
 		  in="${inputFile}" out="${outputFile}"/>
+  </target>
+
+  <target name="go">
+    <echo level="info">Get names of graphics files and write an ant task</echo>
+    <xslt force="yes" style="${listgraphics}" in="${inputFile}" out="${outputDir}/copy.xml">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="$catalogfile"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="inputDir" expression="${inputDir}"/>
+      <param name="outputDir" expression="${outputDir}"/>
+      <param name="mediaDir" expression="Pictures"/>
+    </xslt>
+    <echo level="info">Copy image files by running ant task</echo>
+    <ant antfile="${outputDir}/copy.xml"/>
+    <delete file="${outputDir}/copy.xml"/>
   </target>
 
 </project>
