@@ -600,27 +600,36 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
+
   <xsl:template match="tei:item/tei:p">
     <xsl:apply-templates/>
   </xsl:template>
+
   <xsl:template match="tei:item">
     <text:list-item>
-      <xsl:choose>
-        <xsl:when test="tei:list or teix:egXML">
-          <xsl:apply-templates/>
-        </xsl:when>
-        <xsl:otherwise>
-          <text:p>
-            <xsl:attribute name="text:style-name">
-              <xsl:choose>
-                <xsl:when test="tei:isOrderedList(..)">P2</xsl:when>
-                <xsl:otherwise>P1</xsl:otherwise>
-              </xsl:choose>
-            </xsl:attribute>
-            <xsl:apply-templates/>
-          </text:p>
-        </xsl:otherwise>
-      </xsl:choose>
+      <xsl:for-each-group select="node()" group-adjacent="if
+							  (self::text())			  then 1
+							  else if  (self::tei:list
+							  or
+							  self::tei:p
+							  or self::teix:egXML)        then 2       else 1        ">
+	<xsl:choose>
+	  <xsl:when test="current-grouping-key()=2">
+	    <xsl:apply-templates select="current-group()"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+            <text:p>
+              <xsl:attribute name="text:style-name">
+		<xsl:choose>
+                  <xsl:when test="tei:isOrderedList(..)">P2</xsl:when>
+                  <xsl:otherwise>P1</xsl:otherwise>
+		</xsl:choose>
+              </xsl:attribute>
+		<xsl:apply-templates select="current-group()"/>
+	      </text:p>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each-group>
     </text:list-item>
   </xsl:template>
   <xsl:template name="displayNote">

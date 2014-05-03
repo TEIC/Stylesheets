@@ -107,7 +107,7 @@
           </row>
           <row>
             <cell>hi</cell>
-	    <cell>This is <hi rend="special">hi rend="special"</hi> tag</cell>
+            <cell>This is <hi rend="special">hi rend="special"</hi> tag</cell>
           </row>
           <row>
             <cell>emph</cell>
@@ -172,7 +172,11 @@
           <row>
             <cell>bold italic red, done separately</cell>
             <cell>
-              <hi rend="bold"><hi rend="italic"><hi rend="color(red)">rend test 1</hi></hi></hi>
+              <hi rend="bold">
+                <hi rend="italic">
+                  <hi rend="color(red)">rend test 1</hi>
+                </hi>
+              </hi>
             </cell>
           </row>
           <row>
@@ -282,8 +286,7 @@
       accumsan et iusto odio dignissim qui blandit praesent luptatum zzril
       delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor
       sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod</p>
-
-      <p>Iriure dolor in hendrerit in vulputate<note place="end">Not Vulture</note> velit esse molestie
+          <p>Iriure dolor in hendrerit in vulputate<note place="end">Not Vulture</note> velit esse molestie
       consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
       accumsan et iusto odio dignissim qui blandit<note place="end">Not Blandings</note> praesent luptatum zzril
       delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor
@@ -406,9 +409,7 @@
         <head>Lists</head>
         <p>Various sorts of list are legal within paragraphs, and you
 	can reference <ref target="#birds">items in lists</ref>...
-          <list
-	      type="ordered"><item>Dogs</item><item>Zebras</item><item
-	      xml:id="birds">Birds</item><item>Cats</item></list>
+          <list type="ordered"><item>Dogs</item><item>Zebras</item><item xml:id="birds">Birds</item><item>Cats</item></list>
         </p>
         <list type="gloss">
           <label>100</label>
@@ -445,6 +446,27 @@
             </item>
           </list>
         </p>
+        <p>What's wrong with this list?</p>
+        <list type="gloss">
+          <label>apricot</label>
+          <item>
+            <list>
+              <item>one
+	    <list><item>one-hay</item><item>one-bee</item></list></item>
+              <item>two</item>
+              <item>three</item>
+            </list>
+          </item>
+          <label>banana</label>
+          <item>
+            <list>
+              <item>one</item>
+              <item>two</item>
+              <item>three</item>
+            </list>
+          </item>
+        </list>
+
       </div>
       <div>
         <head>Pictures</head>
@@ -530,6 +552,7 @@
           </msDesc>
         </listBibl>
       </div>
+
       <div xml:id="S1" type="stave">
         <head>Extended prose: MARLEY'S GHOST</head>
         <pb rend="foo" n="1" facs="bar.jpg"/>
@@ -979,30 +1002,19 @@ frost.
 	with free access to our royal person, and other marks of our
 	<choice><orig>favour</orig><reg>favor</reg></choice>.</p>
       </div>
-
       <div>
-	<head>Verbatim</head>
-	<p>an egXML in a list:
-	<list>
-	  <item>
-	    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	      <div xml:id="test99" rend="whatever">
-		<head>Choice, sic, corr, reg, orig</head>
-		<p>v<ex>oro</ex> þav sam<ex>m</ex>ędd syskin in
+        <head>Verbatim</head>
+        <p>an egXML in a list:
+	<list><item><egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="test99" rend="whatever"><head>Choice, sic, corr, reg, orig</head><p>v<ex>oro</ex> þav sam<ex>m</ex>ędd syskin in
 		hei<ex>lagr</ex>i <lb/> ol<ex>afr</ex> k<ex>onvng</ex>r
 		<ex>ok</ex> fyrnefnd
-		<choice><sic>gvn<ex>n</ex>hillde</sic><corr>gvn<ex>n</ex>hilldr</corr></choice>.</p>
-	      </div>
-	    </egXML>
-	  </item>
-	</list>
+		<choice><sic>gvn<ex>n</ex>hillde</sic><corr>gvn<ex>n</ex>hilldr</corr></choice>.</p></div></egXML></item></list>
 	</p>
       </div>
-
       <div>
-	<head>divs with no heads</head>
-	<div>
-	  <p>Ampersands:
+        <head>divs with no heads</head>
+        <div>
+          <p>Ampersands:
 	    <seg>Fit the first&amp;</seg>
 	    <seg>Fit the first&amp; more</seg>
 	    <seg>Fit the first&amp;amp; more</seg>
@@ -1010,8 +1022,8 @@ frost.
 	    <seg>Fit the first&amp;quot;</seg>
 	    <seg>Fit the first @ <ref target="http://www.example.com/?foo=bar&amp;bar=foo&amp;#3">http://www.example.com/?foo=bar&amp;bar=foo&amp;#3</ref></seg>.
 	  </p>
-	    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	  <p>Ampersands:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <p>Ampersands:
 	    <seg>Fit the first&amp;</seg> 
 	    <seg>Fit the first&amp; more</seg> 
 	    <seg>Fit the first&amp;amp; more</seg> 
@@ -1019,11 +1031,11 @@ frost.
 	    <seg>Fit the first&amp;quot; (as opposed to <?entity quot?>)</seg> 
 	    <seg>Fit the first @ <ref target="http://www.example.com/?foo=bar&amp;bar=foo&amp;#3">http://www.example.com/?foo=bar&amp;bar=foo&amp;#3</ref></seg>.
 	  </p>
-	    </egXML>
-	</div>
-	<div>
-	  <p>Fit the <ref>second</ref></p>
-	</div>
+          </egXML>
+        </div>
+        <div>
+          <p>Fit the <ref>second</ref></p>
+        </div>
       </div>
     </body>
   </text>

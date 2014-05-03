@@ -192,8 +192,7 @@ test-odt:   test.rng
 	unzip -o -q test.xml.odt content.xml
 	xmllint --format content.xml > content.xml.odt.listing
 	diff test.xml.odt.listing expected-results/test.xml.odt.listing
-	rm test.xml.odt.listing
-	rm content.xml
+	diff content.xml.odt.listing expected-results/content.xml.odt.listing
 	$(BINDIR)/odttotei test7.odt test7.xml
 	$(JING) test.rng test7.xml
 	diff test7.xml expected-results/test7.xml
@@ -409,4 +408,4 @@ clean:
 	rm -rf charts/ embeddings/ media/ _rels/ \[Content_Types\].xml
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype files
 	rm -f test.xlsx.xml *.result.tex *.result.pdf _slidelogo.png
-
+	rm -f content.xml
