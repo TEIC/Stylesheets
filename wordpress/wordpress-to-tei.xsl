@@ -74,7 +74,7 @@
             <xsl:if test="normalize-space(content:encoded)!='' or wp:attachment_url">
               <div>
                 <head><xsl:apply-templates select="title"/>
-		  (<xsl:apply-templates select="wp:post_date"/>)
+		  <lb/>(<xsl:apply-templates select="wp:post_date"/>)
 		</head>
                 <xsl:apply-templates select="wp:attachment_url"/>
                 <xsl:apply-templates select="content:encoded"/>
