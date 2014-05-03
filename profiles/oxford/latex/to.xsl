@@ -49,6 +49,8 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 <xsl:param name="realFigures">false</xsl:param>
+<xsl:param name="parSkip">4pt</xsl:param>
+<xsl:param name="parIndent">0pt</xsl:param>
    <xsl:template name="latexPreambleHook">
 \defaultfontfeatures{Scale=MatchLowercase}
 \setromanfont{Minion Pro}
