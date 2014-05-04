@@ -66,6 +66,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="@ident"/>
   <xsl:key match="tei:schemaSpec" name="SCHEMASPECS" use="1"/>
   <xsl:param name="oddmode">tei</xsl:param>
+  <xsl:param name="ignoreXmlBase">false</xsl:param>
   <xsl:param name="selectedSchema"/>
   <xsl:param name="doclang"/>
   <xsl:variable name="top" select="/"/>
@@ -565,7 +566,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:matching-substring>
       <xsl:non-matching-substring>
 	<xsl:variable name="base" select="$context/ancestor-or-self::*[@xml:base][1]/@xml:base"/>
-        <xsl:sequence select="if (starts-with($base,'file:')) then
+        <xsl:sequence select="if (starts-with($base,'file:') or $ignoreXmlBase='true') then
 			      $target else concat($base,$target)"/>
       </xsl:non-matching-substring>
     </xsl:analyze-string>

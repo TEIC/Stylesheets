@@ -778,7 +778,7 @@ have a shot at styling it. -->
       </xsl:matching-substring>
       <xsl:non-matching-substring>
 	<xsl:variable name="base" select="$context/ancestor-or-self::*[@xml:base][1]/@xml:base"/>
-        <xsl:sequence select="if (starts-with($base,'file:')) then
+        <xsl:sequence select="if (starts-with($base,'file:') or $ignoreXmlBase='true') then
 			      $target else concat($base,$target)"/>
       </xsl:non-matching-substring>
     </xsl:analyze-string>
