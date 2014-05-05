@@ -567,7 +567,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:non-matching-substring>
 	<xsl:variable name="base" select="$context/ancestor-or-self::*[@xml:base][1]/@xml:base"/>
         <xsl:sequence select="if (starts-with($base,'file:') or $ignoreXmlBase='true') then
-			      $target else concat($base,$target)"/>
+			      $target else concat(replace($base,'/[^/]+$','/'),$target)"/>
       </xsl:non-matching-substring>
     </xsl:analyze-string>
   </xsl:function>
