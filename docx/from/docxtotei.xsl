@@ -123,7 +123,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:variable name="docProps" select="doc(concat($wordDirectory,'/docProps/core.xml'))"/>
 	  <xsl:variable name="numberFile" select="concat($wordDirectory,'/word/numbering.xml')"/>
 	  <xsl:variable name="relsDoc" select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
-	  <xsl:variable name="relsFile" select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
+	  <xsl:variable name="relsFile"  select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
 	  <xsl:variable name="styleDoc" select="concat($wordDirectory,'/word/styles.xml')"/>
 	<xsl:strip-space elements="*"/>
 	  <xsl:preserve-space elements="w:t"/>
