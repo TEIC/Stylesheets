@@ -238,7 +238,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:result-document>
         
 
-                <!-- hyperlinks -->
+                <!-- hyperlinks in end notes-->
         <xsl:result-document href="{$relDocEnd}"
                            standalone="yes">
             <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
@@ -269,6 +269,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:result-document>
 
 
+	<!-- hyperlinks in footnotes -->
         <xsl:result-document href="{$relDocFoot}"
                            standalone="yes">
             <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
