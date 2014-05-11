@@ -40,7 +40,7 @@
 
   <target name="go">
     <echo level="info">Get names of graphics files and write an ant task</echo>
-    <xslt force="yes" style="${listgraphics}" in="${inputDir}/${texfile}" out="${outputDir}/copy.xml">
+    <xslt force="yes" style="${listgraphics}" in="${inputFile}" out="${outputDir}/copy.xml">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="$catalogfile"/>

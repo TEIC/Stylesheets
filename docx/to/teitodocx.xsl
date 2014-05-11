@@ -2225,8 +2225,9 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:when>
 	  </xsl:choose>
 	  <xsl:choose>
-	    <xsl:when test="starts-with(.,'#')  and  id(substring($target,2))">
-	      <xsl:apply-templates select="id(substring($target,2))" mode="xref"/>
+	    <xsl:when test="starts-with($target,'#')  and  id(substring($target,2))">
+	      <xsl:apply-templates select="id(substring($target,2))"
+				   mode="xref"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:sequence select="tei:resolveURI(.,$target)"/>
