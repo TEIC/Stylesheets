@@ -205,7 +205,7 @@ fi
 case $format in
       rnc) ;;
       xsd) ;;
-      *) if ! test -f $profiledir/$profile/$format/$direction.xsl
+      *) if ! test -f "$profiledir/$profile/$format/$direction.xsl"
 	  then
 	  die "No support for profile $profile: $profiledir/$profile/$format/$direction.xsl does not exist"
 	 fi
@@ -222,8 +222,8 @@ ant $antflag -f $APPHOME/$format/build-$direction.xml \
         -Dverbose=$verbose \
 	-DinputFile="$indir/$infile" \
 	-DoutputFile="$outdir/$outfile" \
-        -Dprofiledir=$profiledir \
-        -Dprofile=$profile \
+        -Dprofiledir="$profiledir" \
+        -Dprofile="$profile" \
 	-Dpublisher=$publisher \
 	-Duid=$uid \
         -DselectedSchema=$schema \
