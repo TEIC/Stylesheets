@@ -125,28 +125,28 @@ of this software, even if advised of the possibility of such damage.
     </placeName>
   </xsl:template>
   
- <xsl:template match="tei:hi[@rend='reunion-présents']" mode="pass3">
+ <xsl:template match="tei:hi[@rend='reunion-presents']" mode="pass3">
    <persName type="présent">
      <xsl:apply-templates mode="pass3"/>
    </persName>
  </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='reunion-président']" mode="pass3">
+  <xsl:template match="tei:hi[@rend='reunion-president']" mode="pass3">
     <persName type="président">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='reunion-secrétaire']" mode="pass3">
+  <xsl:template match="tei:hi[@rend='reunion-secretaire']" mode="pass3">
     <persName type="secrétaire">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
   <xsl:template match="tei:hi[@rend='titre-oeuvre']" mode="pass3">
-    <titre>
+    <title>
       <xsl:apply-templates mode="pass3"/>
-    </titre>
+    </title>
   </xsl:template>
   
   <xsl:template match="tei:hi[@rend='titre-divers']" mode="pass3">
