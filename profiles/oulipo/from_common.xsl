@@ -69,29 +69,92 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:encodingDesc" mode="pass2"/>
   <xsl:template match="tei:editionStmt" mode="pass2"/>
 
+  <xsl:template match="tei:hi[@rend='Nom-manifestation']" mode="pass3">
+    <name type="event">
+      <xsl:apply-templates mode="pass3"/>
+    </name>
+  </xsl:template>
+
  <xsl:template match="tei:Oulipen|tei:hi[@rend='Nom-oulipien']" mode="pass3">
    <persName type="oulipien">
 	   <xsl:apply-templates mode="pass3"/>
    </persName>
  </xsl:template>
 
- <xsl:template match="tei:hi[@rend='reunion-presents']" mode="pass3">
-   <persName type="oulipien" subtype="present">
+  <xsl:template match="tei:hi[@rend='Nom-personne-auteur']" mode="pass3">
+    <persName type="auteur">
+      <xsl:apply-templates mode="pass3"/>
+    </persName>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='Nom-personne-divers']" mode="pass3">
+    <persName type="divers">
+      <xsl:apply-templates mode="pass3"/>
+    </persName>
+  </xsl:template>
+  
+  
+  <xsl:template match="tei:hi[@rend='Nom-personne-editeur']" mode="pass3">
+    <orgName type="editeur">
+      <xsl:apply-templates mode="pass3"/>
+    </orgName>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='Notions']" mode="pass3">
+    <term>
+      <xsl:apply-templates mode="pass3"/>
+    </term>
+  </xsl:template>
+  
+  
+  <xsl:template match="tei:hi[@rend='Réunion-date']" mode="pass3">
+    <date type="réunion">
+      <xsl:apply-templates mode="pass3"/>
+    </date>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='Réunion-invité']" mode="pass3">
+    <persName type="invité">
+      <xsl:apply-templates mode="pass3"/>
+    </persName>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='Réunion-lieu']" mode="pass3">
+    <placeName type="réunion">
+      <xsl:apply-templates mode="pass3"/>
+    </placeName>
+  </xsl:template>
+  
+ <xsl:template match="tei:hi[@rend='Réunion-présents']" mode="pass3">
+   <persName type="présent">
      <xsl:apply-templates mode="pass3"/>
    </persName>
  </xsl:template>
- 
- <xsl:template match="tei:hi[@rend='reunion-date']" mode="pass3">
-   <date type="reunion">
-     <xsl:apply-templates mode="pass3"/>
-   </date>
- </xsl:template>
- 
- <xsl:template match="tei:hi[@rend='reunion-lieu']" mode="pass3">
-   <placeName type="reunion">
-     <xsl:apply-templates mode="pass3"/>
-   </placeName>
- </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='Réunion-président']" mode="pass3">
+    <persName type="président">
+      <xsl:apply-templates mode="pass3"/>
+    </persName>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='Réunion-secrétaire']" mode="pass3">
+    <persName type="secrétaire">
+      <xsl:apply-templates mode="pass3"/>
+    </persName>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='titre-oeuvre']" mode="pass3">
+    <titre>
+      <xsl:apply-templates mode="pass3"/>
+    </titre>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='Titre-divers']" mode="pass3">
+    <titre type="divers">
+      <xsl:apply-templates mode="pass3"/>
+    </titre>
+  </xsl:template>
+  
 
  <xsl:template match="tei:body" mode="pass3">
    <pb/>
