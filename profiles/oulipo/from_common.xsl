@@ -107,37 +107,37 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   
-  <xsl:template match="tei:hi[@rend='Réunion-date']" mode="pass3">
+  <xsl:template match="tei:hi[@rend='reunion-date']" mode="pass3">
     <date type="réunion">
       <xsl:apply-templates mode="pass3"/>
     </date>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='Réunion-invité']" mode="pass3">
+  <xsl:template match="tei:hi[@rend='reunion-invité']" mode="pass3">
     <persName type="invité">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='Réunion-lieu']" mode="pass3">
+  <xsl:template match="tei:hi[@rend='reunion-lieu']" mode="pass3">
     <placeName type="réunion">
       <xsl:apply-templates mode="pass3"/>
     </placeName>
   </xsl:template>
   
- <xsl:template match="tei:hi[@rend='Réunion-présents']" mode="pass3">
+ <xsl:template match="tei:hi[@rend='reunion-présents']" mode="pass3">
    <persName type="présent">
      <xsl:apply-templates mode="pass3"/>
    </persName>
  </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='Réunion-président']" mode="pass3">
+  <xsl:template match="tei:hi[@rend='reunion-président']" mode="pass3">
     <persName type="président">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='Réunion-secrétaire']" mode="pass3">
+  <xsl:template match="tei:hi[@rend='reunion-secrétaire']" mode="pass3">
     <persName type="secrétaire">
       <xsl:apply-templates mode="pass3"/>
     </persName>
@@ -149,10 +149,10 @@ of this software, even if advised of the possibility of such damage.
     </titre>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='Titre-divers']" mode="pass3">
-    <titre type="divers">
+  <xsl:template match="tei:hi[@rend='titre-divers']" mode="pass3">
+    <title type="divers">
       <xsl:apply-templates mode="pass3"/>
-    </titre>
+    </title>
   </xsl:template>
   
 
