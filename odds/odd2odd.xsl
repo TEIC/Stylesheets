@@ -77,7 +77,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-IDENTS" match="tei:classSpec" use="@ident"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:elementSpec" use="@ident"/>
   <xsl:key name="odd2odd-MACROS" use="@ident" match="tei:macroSpec"/>
-  <xsl:key name="odd2odd-MEMBEROFADD" match="tei:memberOf[not(@mode='delete')]" use="concat(../../@ident,@key)"/>
+  <xsl:key name="odd2odd-MEMBEROFADD" match="tei:memberOf[@mode='add']" use="concat(../../@ident,@key)"/>
   <xsl:key name="odd2odd-MEMBEROFDELETE" match="tei:memberOf[@mode='delete']" use="concat(../../@ident,@key)"/>
   <xsl:key name="odd2odd-MODULES" match="tei:moduleRef" use="@key"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:elementSpec" use="@module"/>
@@ -582,11 +582,12 @@ of this software, even if advised of the possibility of such damage.
 	    <!-- now elements -->
 	    <xsl:for-each
 		select="key('odd2odd-MODULE_MEMBERS',$name)">
+	      <xsl:variable name="i" select="@ident"/>
 		<xsl:if test="tei:includeMember(@ident,$exc,$inc)
-			      and not($ODD/key('odd2odd-REFOBJECTS',./@ident))">
+			      and not($ODD/key('odd2odd-REFOBJECTS',$i))">
 		  <xsl:if test="$verbose='true'">
 		    <xsl:message>Phase 1: import <xsl:value-of
-		    select="@ident"/> by moduleRef</xsl:message>
+		    select="$i"/> by moduleRef</xsl:message>
 		  </xsl:if>
 		  <xsl:apply-templates mode="pass1" select="."/>
 		</xsl:if>
@@ -1040,7 +1041,9 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:choose>
                     <xsl:when test="@mode='delete'"/>
                     <xsl:when test="@mode='add' or not (@mode)">
-                      <memberOf key="{@key}"/>
+                      <memberOf key="{@key}">
+			<xsl:copy-of select="@min|@max"/>
+		      </memberOf>
                     </xsl:when>
                   </xsl:choose>
                 </xsl:for-each>
@@ -1052,16 +1055,14 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:variable name="metoo">
                       <xsl:value-of select="concat(../../@ident,@key)"/>
                     </xsl:variable>
-                    <xsl:for-each select="$ODD">
                       <xsl:choose>
-                        <xsl:when test="key('odd2odd-DELETE',$me)"> </xsl:when>
-                        <xsl:when test="key('odd2odd-MEMBEROFDELETE',$metoo)"> </xsl:when>
-                        <xsl:when test="key('odd2odd-MEMBEROFADD',$metoo)"> </xsl:when>
+                        <xsl:when test="$ODD/key('odd2odd-DELETE',$me)"> </xsl:when>
+                        <xsl:when test="$ODD/key('odd2odd-MEMBEROFDELETE',$metoo)"> </xsl:when>
+                        <xsl:when test="$ODD/key('odd2odd-MEMBEROFADD',$metoo)"> </xsl:when>
                         <xsl:otherwise>
                           <memberOf key="{$me}"/>
                         </xsl:otherwise>
                       </xsl:choose>
-                    </xsl:for-each>
                   </xsl:for-each>
                 </xsl:for-each>
               </xsl:when>
