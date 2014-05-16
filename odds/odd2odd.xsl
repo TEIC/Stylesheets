@@ -77,7 +77,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-IDENTS" match="tei:classSpec" use="@ident"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:elementSpec" use="@ident"/>
   <xsl:key name="odd2odd-MACROS" use="@ident" match="tei:macroSpec"/>
-  <xsl:key name="odd2odd-MEMBEROFADD" match="tei:memberOf[@mode='add']" use="concat(../../@ident,@key)"/>
+  <xsl:key name="odd2odd-MEMBEROFADD" match="tei:memberOf[@mode='add' or not (@mode)]" use="concat(../../@ident,@key)"/>
   <xsl:key name="odd2odd-MEMBEROFDELETE" match="tei:memberOf[@mode='delete']" use="concat(../../@ident,@key)"/>
   <xsl:key name="odd2odd-MODULES" match="tei:moduleRef" use="@key"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:elementSpec" use="@module"/>
