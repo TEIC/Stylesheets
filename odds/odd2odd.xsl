@@ -565,8 +565,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="inc"  select="@include"/>
     <xsl:sequence select="if ($verbose='true') then
 			  tei:message(concat('Process module reference to [',@key,'] with exclusion/inclusion of [',@except,'/',@include,']')) else ()"/>
-	  <!-- get model and attribute classes regardless -->
 	  <xsl:for-each select="document($sourceDoc,$top)">
+	    
+	    <!-- get model and attribute classes regardless -->
 	    <xsl:for-each
 		select="key('odd2odd-MODULE_MEMBERS_CLASS',$name)">
 	      <xsl:variable name="class" select="@ident"/>
@@ -577,13 +578,15 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:apply-templates mode="pass1" select="."/>
 	      </xsl:if>
 	    </xsl:for-each>
+
+	    <!-- now elements -->
 	    <xsl:for-each
 		select="key('odd2odd-MODULE_MEMBERS',$name)">
 		<xsl:if test="tei:includeMember(@ident,$exc,$inc)
-			      and not($ODD/key('odd2odd-REFOBJECTS',$name))">
+			      and not($ODD/key('odd2odd-REFOBJECTS',@ident))">
 		  <xsl:if test="$verbose='true'">
 		    <xsl:message>Phase 1: import <xsl:value-of
-		    select="$name"/> by moduleRef</xsl:message>
+		    select="@ident"/> by moduleRef</xsl:message>
 		  </xsl:if>
 		  <xsl:apply-templates mode="pass1" select="."/>
 		</xsl:if>
