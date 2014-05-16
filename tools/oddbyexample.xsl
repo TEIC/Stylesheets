@@ -231,6 +231,7 @@ valList
                     <xsl:call-template name="checktype"/>
                   </attDef>
                 </xsl:for-each>
+                <xsl:call-template name="classatts"/>
 		<xsl:for-each select="classes/memberOf">
 		  <classmember ident="{@key}"/>
 		</xsl:for-each>
