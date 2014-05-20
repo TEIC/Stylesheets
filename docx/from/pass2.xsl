@@ -417,7 +417,8 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>a div with no content but an empty head isn't needed</desc>
   </doc>
-  <xsl:template match="tei:div[count(*)=1 and tei:head[not(node())]]" mode="pass2"/>
+  <xsl:template match="tei:div[count(*)=1 and tei:head[not(node())]]"
+		mode="pass2" priority="21"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>a singleton div with an empty head and no div children is bypassed</desc>
