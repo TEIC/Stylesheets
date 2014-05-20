@@ -381,10 +381,8 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="makeRendition"/>
       </x>
     </xsl:variable>
-    <xsl:variable name="container" select="if (@rend='sup') then 'sup' 
-					   else if (@rend='sub') then 'sub' 
-					   else if (@rend='subscript') then 'sub' 
-					   else if (@rend='superscript') then 'sup' 
+    <xsl:variable name="container" select="if (tei:render-superscript(.)) then 'sup' 
+					   else if (tei:render-subscript(.)) then 'sub' 
 					   else if (@rend='code') then 'code' else 'span'"/>
     <xsl:for-each-group select="*|text()"
 			group-adjacent="if (self::tei:note or
