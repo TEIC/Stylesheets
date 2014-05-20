@@ -360,7 +360,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="w:bookmarkStart" mode="pass2">
     <anchor>
       <xsl:attribute name="xml:id">
-        <xsl:value-of select="substring(@w:name,2)"/>
+        <xsl:value-of select="replace(@w:name,'^_','')"/>
       </xsl:attribute>
     </anchor>
   </xsl:template>

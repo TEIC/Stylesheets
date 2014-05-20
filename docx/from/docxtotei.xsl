@@ -492,7 +492,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:attribute name="target">
 	  <xsl:choose>
 	    <xsl:when test="@w:anchor">
-	      <xsl:value-of select="concat('#',@w:anchor)"/>
+	      <xsl:value-of select="concat('#',replace(@w:anchor,'^_',''))"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:variable name="rid" select="@r:id"/>
