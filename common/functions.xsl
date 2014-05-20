@@ -176,6 +176,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="@rend='label'">true</xsl:when>
         <xsl:when test="@rend='wovenodd'">true</xsl:when>
         <xsl:when test="@rend='important'">true</xsl:when>
+        <xsl:when test="@rend='Heading_2_Char'">true</xsl:when>
         <xsl:when test="@rend='specChildModule'">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[@rend='wovenodd-col1']">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[@role='label']">true</xsl:when>
