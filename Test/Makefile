@@ -103,8 +103,8 @@ test-html: css
 test-markdown: 
 	@echo BUILD: testing markdown 
 	@echo BUILD: markdown to tei 
-	$(BINDIR)/markdowntotei mdtest1.md mdtest1.tei
-	diff mdtest1.tei expected-results/mdtest1.tei
+	$(BINDIR)/markdowntotei mdtest1.md mdtest1.xml
+	diff mdtest1.xml expected-results/mdtest1.xml
 	@echo BUILD: tei to markdown
 	$(BINDIR)/teitomarkdown test.xml mdtest2.md
 	diff mdtest2.md expected-results/mdtest2.md

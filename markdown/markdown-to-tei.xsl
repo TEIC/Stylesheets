@@ -55,7 +55,7 @@
           </xsl:matching-substring>
         </xsl:analyze-string>
       </xsl:when>
-      <xsl:when test="starts-with($nLine, '~~~')">
+      <xsl:when test="starts-with($nLine, '```')">
         <!-- fenced code block -->
             <FCODE/>
       </xsl:when>
@@ -102,12 +102,12 @@
   |
    (\*\*?(.*?)\*\*?)
   |
-   ("(.*?)"\[(.*?)\])
+  (\[(.*?)\]\((.*?)\))
    |
    (`(.*?)`)
    |
    (~~(.*?)~~)
-  '>
+   '>
    <xsl:matching-substring>
     <xsl:choose>
      <xsl:when test="regex-group(1)">
@@ -141,7 +141,7 @@
           <xsl:sequence select="regex-group(11)"/>
         </del>
       </xsl:when>
-    
+      
     </xsl:choose>
    </xsl:matching-substring>
    <xsl:non-matching-substring>
