@@ -236,15 +236,6 @@ valList
               <xsl:call-template name="classatts"/>
                 <xsl:for-each select="classes/memberOf">
                   <classmember ident="{@key}"/>
-                  <!-- for each of the memberOf classes add their attributes -->
-                  <!--
-                  <xsl:for-each select="key('IDENTS', @key)//attDef">
-                    <attDef>
-                    <xsl:copy-of select="@ident"/>
-                    <xsl:call-template name="checktype"/>
-                  </attDef>
-                  </xsl:for-each>
-                  -->
                 </xsl:for-each>
                 <xsl:call-template name="classmembers"/>
               </classSpec>
