@@ -240,7 +240,7 @@ att.datable.attribute.calendar =
   ## indique le système ou le calendrier auquel appartient la date exprimée dans le contenu de l'élément.
   attribute calendar { data.pointer }?
 sch:pattern [
-  id = "test21-att.datable-calendar-calendar-constraint"
+  id = "test21-att.datable-calendar-calendar-constraint-1"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -686,7 +686,7 @@ att.typed.attribute.subtype =
   ## (sous-type) fournit une sous-catégorisation de l'élément, si c'est nécessaire.
   attribute subtype { data.enumerated }?
 sch:pattern [
-  id = "test21-att.typed-subtypeTyped-constraint"
+  id = "test21-att.typed-subtypeTyped-constraint-2"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -715,7 +715,7 @@ att.pointing.attribute.targetLang =
   ## specifies the language of the content to be found at the destination referenced by target, using a language tag generated according to BCP 47.
   attribute targetLang { data.language }?
 sch:pattern [
-  id = "test21-att.pointing-targetLang-targetLang-constraint"
+  id = "test21-att.pointing-targetLang-targetLang-constraint-3"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -802,7 +802,7 @@ att.spanning.attribute.spanTo =
   ## indique la fin d'un passage introduit par l'élément portant cet attribut.
   attribute spanTo { data.pointer }?
 sch:pattern [
-  id = "test21-att.spanning-spanTo-spanTo-2-constraint"
+  id = "test21-att.spanning-spanTo-spanTo-2-constraint-4"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -851,7 +851,7 @@ att.styleDef.attribute.schemeVersion =
   attribute schemeVersion { data.versionNumber }?
 sch:pattern [
   id =
-    "test21-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint"
+    "test21-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -2115,7 +2115,7 @@ ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "test21-ptr-ptrAtts-constraint"
+         id = "test21-ptr-ptrAtts-constraint-1"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2159,7 +2159,7 @@ ref =
   element ref {
     macro.paraContent
     >> sch:pattern [
-         id = "test21-ref-refAtts-constraint"
+         id = "test21-ref-refAtts-constraint-2"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2660,7 +2660,7 @@ relatedItem =
   element relatedItem {
     ((model.biblLike | model.ptrLike)?)
     >> sch:pattern [
-         id = "test21-relatedItem-targetorcontent1-constraint"
+         id = "test21-relatedItem-targetorcontent1-constraint-3"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2682,7 +2682,7 @@ relatedItem =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-relatedItem-targetorcontent1-constraint"
+         id = "test21-relatedItem-targetorcontent1-constraint-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2729,7 +2729,7 @@ lg =
       | lg)*,
      (model.divBottom, model.global*)*)
     >> sch:pattern [
-         id = "test21-lg-atleast1oflggapl-constraint"
+         id = "test21-lg-atleast1oflggapl-constraint-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3533,7 +3533,7 @@ relation =
   element relation {
     (desc?)
     >> sch:pattern [
-         id = "test21-relation-reforkeyorname-constraint"
+         id = "test21-relation-reforkeyorname-constraint-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3551,7 +3551,7 @@ relation =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-relation-activemutual-constraint"
+         id = "test21-relation-activemutual-constraint-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3570,7 +3570,7 @@ relation =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-relation-activepassive-constraint"
+         id = "test21-relation-activepassive-constraint-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4042,7 +4042,7 @@ quotation =
   element quotation {
     (model.pLike*)
     >> sch:pattern [
-         id = "test21-quotation-quotationContents-constraint"
+         id = "test21-quotation-quotationContents-constraint-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4550,7 +4550,7 @@ link =
   element link {
     empty
     >> sch:pattern [
-         id = "test21-link-linkTargets3-constraint"
+         id = "test21-link-linkTargets3-constraint-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4709,7 +4709,7 @@ join =
   element join {
     ((model.descLike | model.certLike)*)
     >> sch:pattern [
-         id = "test21-join-joinTargets3-constraint"
+         id = "test21-join-joinTargets3-constraint-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4840,7 +4840,7 @@ dimensions =
   element dimensions {
     ((dim | model.dimLike)*)
     >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint"
+         id = "test21-dimensions-duplicateDim-constraint-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4862,7 +4862,7 @@ dimensions =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint"
+         id = "test21-dimensions-duplicateDim-constraint-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4884,7 +4884,7 @@ dimensions =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint"
+         id = "test21-dimensions-duplicateDim-constraint-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5048,7 +5048,7 @@ msIdentifier =
       idno?),
      (msName | altIdentifier)*)
     >> sch:pattern [
-         id = "test21-msIdentifier-msId_minimal-constraint"
+         id = "test21-msIdentifier-msId_minimal-constraint-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5616,7 +5616,7 @@ addSpan =
   element addSpan {
     empty
     >> sch:pattern [
-         id = "test21-addSpan-spanTo-constraint"
+         id = "test21-addSpan-spanTo-constraint-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5636,7 +5636,7 @@ addSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-addSpan-spanTo_fr-constraint"
+         id = "test21-addSpan-spanTo_fr-constraint-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5661,7 +5661,7 @@ addSpan =
     ## indique la fin d'un passage introduit par l'élément portant cet attribut.
     attribute spanTo { data.pointer }
     >> sch:pattern [
-         id = "test21-addSpan-spanTo-spanTo-2-constraint"
+         id = "test21-addSpan-spanTo-spanTo-2-constraint-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5703,7 +5703,7 @@ damageSpan =
   element damageSpan {
     empty
     >> sch:pattern [
-         id = "test21-damageSpan-spanTo-constraint"
+         id = "test21-damageSpan-spanTo-constraint-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5724,7 +5724,7 @@ damageSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-damageSpan-spanTo_fr-constraint"
+         id = "test21-damageSpan-spanTo_fr-constraint-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5753,7 +5753,7 @@ delSpan =
   element delSpan {
     empty
     >> sch:pattern [
-         id = "test21-delSpan-spanTo-constraint"
+         id = "test21-delSpan-spanTo-constraint-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5773,7 +5773,7 @@ delSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-delSpan-spanTo_fr-constraint"
+         id = "test21-delSpan-spanTo_fr-constraint-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5884,7 +5884,7 @@ subst =
   element subst {
     ((add | del | model.milestoneLike)+)
     >> sch:pattern [
-         id = "test21-subst-substContents1-constraint"
+         id = "test21-subst-substContents1-constraint-18"
          "\x{a}" ~
          "            "
          sch:rule [

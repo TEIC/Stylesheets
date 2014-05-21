@@ -31,6 +31,9 @@
    </doc>
 
    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
+   <xsl:param name="pagebreakStyle">none</xsl:param>
+   <xsl:param name="institution"></xsl:param>
+   <xsl:template name="stdfooter"/>
 
    <xsl:key name="TABLESORT" use="1" match="tei:table[@rend='sort']"/>
 

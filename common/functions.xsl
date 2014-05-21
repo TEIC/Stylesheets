@@ -66,6 +66,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="@ident"/>
   <xsl:key match="tei:schemaSpec" name="SCHEMASPECS" use="1"/>
   <xsl:param name="oddmode">tei</xsl:param>
+  <xsl:param name="ignoreXmlBase">false</xsl:param>
   <xsl:param name="selectedSchema"/>
   <xsl:param name="doclang"/>
   <xsl:variable name="top" select="/"/>
@@ -175,6 +176,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="@rend='label'">true</xsl:when>
         <xsl:when test="@rend='wovenodd'">true</xsl:when>
         <xsl:when test="@rend='important'">true</xsl:when>
+        <xsl:when test="@rend='Heading_2_Char'">true</xsl:when>
         <xsl:when test="@rend='specChildModule'">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[@rend='wovenodd-col1']">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[@role='label']">true</xsl:when>
@@ -565,8 +567,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:matching-substring>
       <xsl:non-matching-substring>
 	<xsl:variable name="base" select="$context/ancestor-or-self::*[@xml:base][1]/@xml:base"/>
-        <xsl:sequence select="if (starts-with($base,'file:')) then
-			      $target else concat($base,$target)"/>
+        <xsl:sequence select="if (starts-with($base,'file:') or $ignoreXmlBase='true') then
+			      $target else concat(replace($base,'/[^/]+$','/'),$target)"/>
       </xsl:non-matching-substring>
     </xsl:analyze-string>
   </xsl:function>
@@ -1394,8 +1396,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:makePatternID" as="xs:string">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
+      <xsl:variable name="num">
+	<xsl:number level="any"/>
+      </xsl:variable>
       <xsl:value-of
-	  select="(../ancestor::*[@ident]/@ident,'constraint',../@ident)"
+	  select="(../ancestor::*[@ident]/@ident,'constraint',../@ident,$num)"
 	  separator="-"/>
     </xsl:for-each>
   </xsl:function>
@@ -1434,6 +1439,9 @@ of this software, even if advised of the possibility of such damage.
        <!-- Syd Bauman scripsit-->
      </xsl:function>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>pare back a string to contain only alphanumerics and some punctuation</desc>
+  </doc>
      <xsl:function name="tei:sanitize" as="xs:string">
        <xsl:param name="text"/>
        <xsl:variable name="result"
@@ -1441,4 +1449,34 @@ of this software, even if advised of the possibility of such damage.
        <xsl:value-of select="if (string-length($result)&gt;127) then
 	 concat(substring($result,1,127),'...') else $result"/>
      </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>map file suffix to mime type</desc>
+  </doc>
+
+     <xsl:function name="tei:generateMimeType" as="xs:string">
+       <xsl:param name="filename"/>
+       <xsl:param name="type"/>
+       <xsl:variable name="filesuffix"
+		     select="tokenize($filename,'\.')[last()]"/>
+
+	<xsl:choose>
+	  <xsl:when test="$type"><xsl:message>check <xsl:value-of select="($filename,$filesuffix,$type)"/></xsl:message><xsl:value-of select="$type"/></xsl:when>
+          <xsl:when test="$filesuffix='bin'">application/vnd.openxmlformats-officedocument.oleObject</xsl:when>
+          <xsl:when test="$filesuffix='emf'">image/x-emf</xsl:when>
+          <xsl:when test="$filesuffix='gif'">image/gif</xsl:when>
+          <xsl:when test="$filesuffix='m4v'">video/mpeg4</xsl:when>
+          <xsl:when test="$filesuffix='mp4'">video/mpeg4</xsl:when>
+          <xsl:when test="$filesuffix='mpeg'">video/mpeg4</xsl:when>
+          <xsl:when test="$filesuffix='png'">image/png</xsl:when>
+          <xsl:when test="$filesuffix='tif'">image/tiff</xsl:when>
+          <xsl:when test="$filesuffix='tiff'">image/tiff</xsl:when>
+          <xsl:when test="$filesuffix='wav'">audio/wav</xsl:when>
+          <xsl:when test="$filesuffix='ogg'">audio/ogg</xsl:when>
+          <xsl:when test="$filesuffix='mp3'">audio/mpeg</xsl:when>
+          <xsl:when test="$filesuffix='wmf'">image/x-wmf</xsl:when>
+          <xsl:otherwise>image/jpeg</xsl:otherwise>
+        </xsl:choose>
+     </xsl:function>
+
 </xsl:stylesheet>

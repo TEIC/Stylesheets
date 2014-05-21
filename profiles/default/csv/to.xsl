@@ -57,6 +57,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
    <xsl:output omit-xml-declaration="yes"/>
+   <xsl:param name="filePrefix">table</xsl:param>
    <xsl:variable name="dq">"</xsl:variable>
    <xsl:variable name="qdq">""</xsl:variable>
 
@@ -67,7 +68,9 @@ of this software, even if advised of the possibility of such damage.
        <xsl:variable name="tableNum">
 	 <xsl:number level="any"/>
        </xsl:variable>
-       <xsl:result-document href="{concat($directory,'table',$tableNum, '.csv')}"
+       <xsl:variable name="dest" select="concat($directory,$filePrefix,$tableNum, '.csv')"/>
+       <xsl:message>Writing <xsl:value-of select="$dest"/></xsl:message>
+       <xsl:result-document href="{$dest}"
 			    encoding="UTF-8" method="text">
 	 <xsl:for-each select="tei:row">
 	   <xsl:for-each select="tei:cell">

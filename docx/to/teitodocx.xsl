@@ -275,6 +275,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="styleDoc"><xsl:value-of select="concat($wordDirectory, '/word/styles.xml')"/></xsl:variable>
   <xsl:variable name="numberDoc"><xsl:value-of select="concat($wordDirectory, '/word/numbering.xml')"/></xsl:variable>
   <xsl:variable name="relDoc"><xsl:value-of select="concat($wordDirectory, '/word/_rels/document.xml.rels')"/></xsl:variable>
+  <xsl:variable name="relDocFoot"><xsl:value-of select="concat($wordDirectory, '/word/_rels/footnotes.xml.rels')"/></xsl:variable>
+  <xsl:variable name="relDocEnd"><xsl:value-of select="concat($wordDirectory, '/word/_rels/endnotes.xml.rels')"/></xsl:variable>
   <xsl:variable name="coreFile"><xsl:value-of select="concat($wordDirectory, '/docProps/core.xml')"/></xsl:variable>
   <xsl:variable name="appFile"><xsl:value-of select="concat($wordDirectory, '/docProps/app.xml')"/></xsl:variable>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2223,8 +2225,9 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:when>
 	  </xsl:choose>
 	  <xsl:choose>
-	    <xsl:when test="starts-with(.,'#')  and  id(substring($target,2))">
-	      <xsl:apply-templates select="id(substring($target,2))" mode="xref"/>
+	    <xsl:when test="starts-with($target,'#')  and  id(substring($target,2))">
+	      <xsl:apply-templates select="id(substring($target,2))"
+				   mode="xref"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:sequence select="tei:resolveURI(.,$target)"/>

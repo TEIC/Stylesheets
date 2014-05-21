@@ -968,12 +968,13 @@
   <entry>
     <key>editorWord</key>
     <text xml:lang="en" lang3="eng">Editor</text> 
+    <text xml:lang="de" lang3="deu">Herausgeber</text>
     <text xml:lang="sl" lang3="slv">Urednik</text>
   </entry>
   <entry>
     <key>authorWord</key>
     <text xml:lang="en" lang3="eng">Author</text>
-   <text xml:lang="de" lang3="deu">Autor</text>
+    <text xml:lang="de" lang3="deu">Autor</text>
     <text xml:lang="ro" lang3="ron">Autor</text>
     <text xml:lang="fr" lang3="fra">Auteur</text>
     <text xml:lang="pt" lang3="por">Autor</text>
@@ -1454,8 +1455,8 @@
     <text xml:lang="hr" lang3="hrv">U izvorniku se pojavljuje kao</text>
     <text xml:lang="ko" lang3="kor">와 같이 원본에 나타난다</text>
     <text xml:lang="sl" lang3="slv">V izvirniku se pojavlja kot</text>
+    <text xml:lang="it" lang3="ita">Nell'originale appare come</text>
   </entry>
-  <text xml:lang="it" lang3="ita">Nell'originale appare come</text>
   <entry>
     <key>shouldbereadas</key>
     <text xml:lang="en" lang3="eng">Should be read as</text>
@@ -1483,6 +1484,7 @@
   <entry>
     <key>gathering</key>
     <text xml:lang="en" lang3="eng">Gathering</text>
+    <text xml:lang="de" lang3="deu">Lage</text>
     <text xml:lang="sl" lang3="slv">Lega</text>
   </entry>
   <entry>
@@ -1650,7 +1652,7 @@
     <text xml:lang="pt" lang3="por">separado por espaços</text>
     <text xml:lang="ja" lang3="jpn">空白文字で区切られる</text>
     <text xml:lang="es" lang3="spa">separado por espacio en blanco</text>
-    <text xml:lang="de" lang3="deu">Durch Leerzeichen getrennt</text>
+    <text xml:lang="de" lang3="deu">durch Leerzeichen getrennt</text>
     <text xml:lang="ko" lang3="kor">공백문자로 분리됨</text>
     <text xml:lang="sl" lang3="slv">ločeno s presledki</text>
   </entry>
@@ -1678,7 +1680,7 @@
     <text xml:lang="it" lang3="ita">Sezioni conclusive</text>
     <text xml:lang="pt" lang3="por">Anexos</text>
     <text xml:lang="es" lang3="spa">Material final</text>
-    <text xml:lang="de" lang3="deu">Nachspann</text>
+    <text xml:lang="de" lang3="deu">Anhang</text>
     <text xml:lang="ko" lang3="kor">권말 부분</text>
     <text xml:lang="sl" lang3="slv">Dodatki</text>
   </entry>
@@ -1692,7 +1694,7 @@
     <text xml:lang="pt" lang3="por">Front Matter</text>
     <text xml:lang="ja" lang3="jpn">前付</text>
     <text xml:lang="es" lang3="spa">Material preliminar</text>
-    <text xml:lang="de" lang3="deu">Vorspann</text>
+    <text xml:lang="de" lang3="deu">Titelei</text>
     <text xml:lang="ko" lang3="kor">책 앞부분</text>
     <text xml:lang="sl" lang3="slv">Uvodni del</text>
   </entry>
@@ -1851,7 +1853,7 @@
   <entry>
     <key>author</key>
     <text xml:lang="en" lang3="eng">Author</text>
-    <text xml:lang="de" lang3="deu">Verfasser</text>
+    <text xml:lang="de" lang3="deu">Autor</text>
     <text xml:lang="fr" lang3="fra">Auteur</text>
     <text xml:lang="it" lang3="ita">Autore</text>
     <text xml:lang="ko" lang3="kor">저자</text>
@@ -2012,23 +2014,33 @@
   </entry>
   <entry>
     <key>handDesc</key>
-    <text xml:lang="en" lang3="eng">Writing and hands</text>
-    <text xml:lang="fr" lang3="fra">Type d'écritures et copistes</text>
-    <text xml:lang="it" lang3="ita">Tipo di scrittura e e mani</text>
-    <text xml:lang="de" lang3="deu">Schrift und Hände</text>
-    <text xml:lang="ko" lang3="kor">집필과 필체</text>
-    <text xml:lang="sl" lang3="slv">Opis rok</text>
+    <text xml:lang="en" lang3="eng">Hands</text>
+    <text xml:lang="fr" lang3="fra">Type de copistes</text>
+    <text xml:lang="it" lang3="ita">Tipo di mani</text>
+    <text xml:lang="de" lang3="deu">Hände</text>
+    <!--<text xml:lang="ko" lang3="kor">집필과 필체</text>-->
+    <!--<text xml:lang="sl" lang3="slv">Opis rok</text>-->
+  </entry>
+  <entry>
+    <key>ScriptDesc</key>
+    <text xml:lang="en" lang3="eng">Writing</text>
+    <text xml:lang="fr" lang3="fra">Type d'écritures</text>
+    <text xml:lang="it" lang3="ita">Tipo di scrittura</text>
+    <text xml:lang="de" lang3="deu">Schriftbeschreibung</text>
+    <!--<text xml:lang="ko" lang3="kor">집필과 필체</text>-->
+    <!--<text xml:lang="sl" lang3="slv">Opis rok</text>-->
   </entry>
   <entry>
     <!-- ET: How can <title> be "Author and title"? 
     Even more so with manuscripts, where, as Matija tells me, author is often unknown -->
+    <!-- TS: should be replaced with "Manuscript title" -->
     <key>msDesc/head/title</key>
-    <text xml:lang="en" lang3="eng">Author and title</text>
-    <text xml:lang="fr" lang3="fra">Auteur et titre</text>
-    <text xml:lang="it" lang3="ita">Autore e titolo</text>
-    <text xml:lang="de" lang3="deu">Autor und Titel</text>
-    <text xml:lang="ko" lang3="kor">저자와 제목</text>
-    <text xml:lang="sl" lang3="slv">Avtor in naslov</text>
+    <text xml:lang="en" lang3="eng">Manuscript title</text>
+    <text xml:lang="fr" lang3="fra">Titre du manuscrit</text>
+    <text xml:lang="it" lang3="ita">Titolo del codice</text>
+    <text xml:lang="de" lang3="deu">Handschriftentitel</text>
+    <!--<text xml:lang="ko" lang3="kor">저자와 제목</text>-->
+    <!--<text xml:lang="sl" lang3="slv">Avtor in naslov</text>-->
   </entry>
   <entry>
     <key>origPlace</key>
@@ -2086,6 +2098,7 @@
   </entry>
   <entry>
     <!-- ET: Matija notst that this should maybe be "leafSize" ? -->
+    <!-- TS: I wonder where this came from? Our suggestion has always been either measure[@type="pageDimensions"] or dimensions[@type=leaf"] -->
     <key>measure[@type="leaveSize"]</key>
     <text xml:lang="en" lang3="eng">Format</text>
     <text xml:lang="fr" lang3="fra">Format</text>
@@ -2163,16 +2176,19 @@
   <entry>
     <key>deprecated</key>
     <text xml:lang="en" lang3="eng">Deprecated</text>
+    <text xml:lang="de" lang3="deu">veraltet</text>
     <text xml:lang="sl" lang3="slv">Odsvetovano</text>
   </entry>
   <entry>
     <key>validuntil</key>
-    <text xml:lang="en" lang3="eng">will be removed on </text>
+    <text xml:lang="en" lang3="eng">will be removed on</text>
+    <text xml:lang="de" lang3="deu">gültig bis</text>
     <text xml:lang="sl" lang3="slv">odstranjeno bo</text>
   </entry>
   <entry>
      <key>Namespace</key>
      <text xml:lang="en" lang3="eng">Namespace</text>
+     <text xml:lang="de" lang3="deu">Namensraum</text>
      <text xml:lang="sl" lang3="slv">Imenski prostor</text>
   </entry>
 </i18n>

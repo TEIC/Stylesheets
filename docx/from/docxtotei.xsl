@@ -123,7 +123,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:variable name="docProps" select="doc(concat($wordDirectory,'/docProps/core.xml'))"/>
 	  <xsl:variable name="numberFile" select="concat($wordDirectory,'/word/numbering.xml')"/>
 	  <xsl:variable name="relsDoc" select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
-	  <xsl:variable name="relsFile" select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
+	  <xsl:variable name="relsFile"  select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
 	  <xsl:variable name="styleDoc" select="concat($wordDirectory,'/word/styles.xml')"/>
 	<xsl:strip-space elements="*"/>
 	  <xsl:preserve-space elements="w:t"/>
@@ -492,7 +492,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:attribute name="target">
 	  <xsl:choose>
 	    <xsl:when test="@w:anchor">
-	      <xsl:value-of select="concat('#',@w:anchor)"/>
+	      <xsl:value-of select="concat('#',replace(@w:anchor,'^_',''))"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:variable name="rid" select="@r:id"/>
@@ -521,6 +521,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
          <xsl:when test="contains(.,'REF _')"></xsl:when>
          <xsl:when test="starts-with(.,'HYPERLINK')"></xsl:when>
+         <xsl:when test="starts-with(.,' ADDIN EN.')"/>
+	 <xsl:when test="starts-with(.,' ADDIN ZOTERO')"/>
          <xsl:when test="starts-with(.,' XE')"></xsl:when>
          <xsl:when test="starts-with(.,'XE')"></xsl:when>
 	 <xsl:when test="contains(.,'SEQ')"/>

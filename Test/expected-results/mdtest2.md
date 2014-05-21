@@ -118,6 +118,28 @@ The preceding lists was between paragraphs.
 * third item 
 
 
+What's wrong with this list?
+apricot
+* 
+* one 
+* one-hay
+
+* one-bee
+
+
+* two
+
+* three
+
+banana
+* 
+* one
+
+* two
+
+* three
+
+
 # Pictures
 width="2.5in" width=".5in" scale=".5"width="1in"width="1in" style="border:solid green 2pt"height="1in"height="1in" width="2in"height="2in" width="1in"width="10%"height="10%" width="10%"
 # MS catalogue
@@ -297,7 +319,7 @@ Lastly, That, upon his solemn oath to observe all the above articles, the said m
 # Verbatim
 
 an egXML in a list: 
-* Choice, sic, corr, reg, orig voro þav sammędd syskin in heilagri  olafr konvngr ok fyrnefnd gvnnhilldegvnnhilldr.
+* Choice, sic, corr, reg, origvoro þav sammędd syskin in heilagri  olafr konvngr ok fyrnefnd gvnnhilldegvnnhilldr.
 
 
 # divs with no heads

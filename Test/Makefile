@@ -26,7 +26,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test-markdown test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt test-p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
+default: test.rng test-markdown test-to-html test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt test-p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
 
 test.rng:
 	$(BINDIR)/teitorelaxng --odd test.odd test.rng
@@ -36,7 +36,7 @@ test.rng:
 css:
 	(cd ..; for i in css/*; do test -f `basename $$i` || ln -s $$i `basename $$i`;done)
 
-test-html: css
+test-to-html: css
 	@echo BUILD: testing html
 	$(SAXON)  test.xml ../html/html.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
 	diff test.html expected-results/test.html
@@ -100,6 +100,10 @@ test-html: css
 	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFile=../tei.css $(SAXONOPT)  | xmllint --format - > test32.html
 	diff test32.html expected-results/test32.html
 
+test-from-html:
+	$(SAXON) test38.htm ../html/html2tei.xsl $(SAXONOPT)  | xmllint --format - > test38.xml
+	diff test38.xml expected-results/test38.xml
+
 test-markdown: 
 	@echo BUILD: testing markdown 
 	@echo BUILD: markdown to tei 
@@ -108,7 +112,6 @@ test-markdown:
 	@echo BUILD: tei to markdown
 	$(BINDIR)/teitomarkdown test.xml mdtest2.md
 	diff mdtest2.md expected-results/mdtest2.md
-
 
 test-p4top5: 
 	@echo BUILD: testing p4top5
@@ -198,8 +201,7 @@ test-odt:   test.rng
 	unzip -o -q test.xml.odt content.xml
 	xmllint --format content.xml > content.xml.odt.listing
 	diff test.xml.odt.listing expected-results/test.xml.odt.listing
-	rm test.xml.odt.listing
-	rm content.xml
+	diff content.xml.odt.listing expected-results/content.xml.odt.listing
 	$(BINDIR)/odttotei test7.odt test7.xml
 	$(JING) test.rng test7.xml
 	diff test7.xml expected-results/test7.xml
@@ -405,7 +407,7 @@ profile:
 
 clean:
 	(cd ..; for i in css/*; do rm -f `basename $$i`;done)
-	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd test.zip test*.dtd test-indexes.xml test37.xml
+	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd test.zip test*.dtd test-indexes.xml test37.xml test38.xml
 	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5 test*.processedodd *.isosch
 	rm -f oddbyexample.* index*div*html
 	rm -f testdrama.compiled.xml
@@ -415,4 +417,4 @@ clean:
 	rm -rf charts/ embeddings/ media/ _rels/ \[Content_Types\].xml
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype files
 	rm -f test.xlsx.xml *.result.tex *.result.pdf _slidelogo.png
-
+	rm -f content.xml

@@ -39,6 +39,21 @@
   </target>
 
   <target name="go">
+    <echo level="info">Get names of graphics files and write an ant task</echo>
+    <xslt force="yes" style="${listgraphics}" in="${inputFile}" out="${outputDir}/copy.xml">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="$catalogfile"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="inputDir" expression="${inputDir}"/>
+      <param name="outputDir" expression="${outputDir}"/>
+      <param name="mediaDir" expression="Pictures"/>
+    </xslt>
+    <echo level="info">Copy image files by running ant task</echo>
+    <ant antfile="${outputDir}/copy.xml"/>
+    <delete file="${outputDir}/copy.xml"/>
     <runtex out="${outputFile}" in="${inputDir}/${texfile}" indir="${inputDir}"  outdir="${outputDir}"/>
   </target>
 

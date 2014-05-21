@@ -52,9 +52,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element anchor</desc>
    </doc>
   <xsl:template match="tei:anchor">
-      <xsl:text>\hypertarget{</xsl:text>
-      <xsl:value-of select="@xml:id"/>
-      <xsl:text>}{}</xsl:text>
+    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[latex] <param name="where">where</param>
@@ -102,12 +100,22 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="dest"/>
       <xsl:param name="body"/>
       <xsl:choose>
+	<xsl:when test="$dest=''">
+	  <xsl:value-of select="$body"/>
+	</xsl:when>
          <xsl:when test="id($dest)">
             <xsl:choose>
-               <xsl:when test="not($body='')">
+               <xsl:when test="parent::tei:label">
 		 <xsl:text>\hyperlink{</xsl:text>
 		 <xsl:value-of select="$dest"/>
 		 <xsl:text>}{</xsl:text>
+		 <xsl:value-of select="$body"/>
+		 <xsl:text>}</xsl:text>
+               </xsl:when>
+               <xsl:when test="not($body='')">
+		 <xsl:text>\hyperref[</xsl:text>
+		 <xsl:value-of select="$dest"/>
+		 <xsl:text>]{</xsl:text>
 		 <xsl:value-of select="$body"/>
 		 <xsl:text>}</xsl:text>
                </xsl:when>
@@ -144,9 +152,9 @@ of this software, even if advised of the possibility of such damage.
 		       <xsl:text>}}</xsl:text>
 		     </xsl:when>
 		     <xsl:otherwise>
-		       <xsl:text>\hyperlink{</xsl:text>
+		       <xsl:text>\hyperref[</xsl:text>
 		       <xsl:value-of select="$dest"/>
-		       <xsl:text>}{</xsl:text>
+		       <xsl:text>]{</xsl:text>
 		       <xsl:value-of select="$body"/>
 		       <xsl:apply-templates mode="xref" select=".">
 			 <xsl:with-param name="minimal" select="$minimalCrossRef"/>
@@ -157,9 +165,9 @@ of this software, even if advised of the possibility of such damage.
 		 </xsl:for-each>
                </xsl:when>
                <xsl:otherwise>
-		 <xsl:text>\hyperlink{</xsl:text>
+		 <xsl:text>\hyperref[</xsl:text>
 		 <xsl:value-of select="$dest"/>
-		 <xsl:text>}{</xsl:text>
+		 <xsl:text>]{</xsl:text>
 		 <xsl:value-of select="$body"/>
 		 <xsl:apply-templates/>
 		 <xsl:text>}</xsl:text>

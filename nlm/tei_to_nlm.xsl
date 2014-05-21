@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exist="http://exist.sourceforge.net/NS/exist" xmlns="" xpath-default-namespace="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exclude-result-prefixes="#all">
+<xsl:stylesheet version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exist="http://exist.sourceforge.net/NS/exist" xmlns="" xpath-default-namespace="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exclude-result-prefixes="#all">
 
   <!--
         Written by Martin Holmes, University of Victoria Humanities Computing and 
@@ -22,7 +23,6 @@
     to OJS.
     
     -->
-  <xsl:import href="../common/functions.xsl"/>
 
   <xsl:output method="xml" doctype-public="-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" doctype-system="http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd" xpath-default-namespace="" indent="yes"></xsl:output>
 
@@ -747,5 +747,41 @@ have a shot at styling it. -->
   <xsl:template match="hi[@rend='overline']">
     <xsl:element name="overline"><xsl:apply-templates /></xsl:element>
   </xsl:template>
+
+  <xsl:function name="tei:resolveURI" as="xs:string">
+    <xsl:param name="context"/>
+    <xsl:param name="target"/>
+    <xsl:analyze-string select="normalize-space($target)" regex="^(\w+):(.+)$">
+      <xsl:matching-substring>
+        <xsl:variable name="prefix" select="regex-group(1)"/>
+        <xsl:variable name="value" select="regex-group(2)"/>
+        <xsl:choose>
+          <xsl:when test="$context/ancestor::*/tei:teiHeader/tei:encodingDesc/tei:listPrefixDef/tei:prefixDef[@ident=$prefix]">
+            <xsl:variable name="result">
+              <xsl:for-each select="($context/ancestor::*/tei:teiHeader/tei:encodingDesc/tei:listPrefixDef/tei:prefixDef[@ident=$prefix])[1]">
+                <xsl:sequence select="replace($value,@matchPattern,@replacementPattern)"/>
+              </xsl:for-each>
+            </xsl:variable>
+            <xsl:choose>
+              <xsl:when test="$result=''">
+                <xsl:message terminate="yes">prefix pattern/replacement applied to <xsl:value-of select="$value"/> returns an empty result</xsl:message>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:sequence select="$result"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:sequence select="."/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:matching-substring>
+      <xsl:non-matching-substring>
+	<xsl:variable name="base" select="$context/ancestor-or-self::*[@xml:base][1]/@xml:base"/>
+        <xsl:sequence select="if (starts-with($base,'file:') or $ignoreXmlBase='true') then
+			      $target else concat($base,$target)"/>
+      </xsl:non-matching-substring>
+    </xsl:analyze-string>
+  </xsl:function>
 
 </xsl:stylesheet>

@@ -71,42 +71,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="mainDocument">
-      <xsl:if test="not($realFigures='true')">
-         <xsl:text>%BEGINFIGMAP</xsl:text>
-         <xsl:if test="not($latexLogo='')">
-	   <xsl:text>&#10;%FIGMAP </xsl:text>
-	   <xsl:value-of select="$latexLogo"/>
-	   <xsl:text> FIG0 </xsl:text>
-         </xsl:if>
-         <xsl:for-each select="//tei:figure">
-	   <xsl:variable name="c">
-	     <xsl:number level="any"/>
-	   </xsl:variable>
-	   <xsl:text>&#10;%FIGMAP </xsl:text>
-	   <xsl:variable name="f">
-	     <xsl:choose>
-	       <xsl:when test="tei:graphic">
-		 <xsl:sequence select="tei:resolveURI(tei:graphic,tei:graphic/@url)"/>
-	       </xsl:when>
-	       <xsl:when test="tei:media">
-		 <xsl:sequence select="tei:resolveURI(tei:media,tei:media/@url)"/>
-	       </xsl:when>
-	     </xsl:choose>
-	   </xsl:variable>
-	   <xsl:choose>
-	     <xsl:when test="contains($f,'.')">
-	       <xsl:value-of select="$f"/>
-	     </xsl:when>
-	     <xsl:otherwise>
-	       <xsl:value-of select="concat($f,'.png')"/>
-	     </xsl:otherwise>
-	   </xsl:choose>
-	   <xsl:text> FIG</xsl:text>
-	   <xsl:value-of select="$c + 1000"/>
-	   <xsl:text>&#10;</xsl:text>
-         </xsl:for-each>
-         <xsl:text>&#10;%ENDFIGMAP&#10;</xsl:text>
-      </xsl:if>
       <xsl:text>\documentclass[</xsl:text>
       <xsl:value-of select="$classParameters"/>
       <xsl:text>]{</xsl:text>
@@ -227,7 +191,6 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template
       match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
-    <xsl:if test="@xml:id"> <xsl:text>\hypertarget{</xsl:text><xsl:value-of select="@xml:id"/><xsl:text>}{}</xsl:text></xsl:if>
     <xsl:apply-templates/>
   </xsl:template>
 

@@ -13,7 +13,7 @@
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 exclude-result-prefixes="tei html t a rng s iso tbx
-					 cals svg xlink mathml teix"
+					 cals xlink teix"
                 version="2.0">
     <xsl:import href="../../../epub/tei-to-epub.xsl"/>
 
@@ -65,7 +65,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="numberTables">false</xsl:param>
     <xsl:param name="autoToc">true</xsl:param>
 
-   <xsl:param name="cssFile">../profiles/oucs/epub/oucs.css</xsl:param>
+   <xsl:param name="cssFile">../profiles/oxford/epub/oxford.css</xsl:param>
     
     <xsl:template match="tei:w[@type and @lemma]">
       <span class="wordtype{@type}">

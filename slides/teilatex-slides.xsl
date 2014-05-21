@@ -229,11 +229,7 @@ XSL LaTeX stylesheet to make slides
    </xsl:template>
 
   <xsl:template name="makePic">
-      <xsl:if test="@xml:id">
-         <xsl:text>\hypertarget{</xsl:text>
-         <xsl:value-of select="@xml:id"/>
-         <xsl:text>}{}</xsl:text>
-      </xsl:if>
+    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:if test="@rend='centre'">
          <xsl:text>\centerline{</xsl:text>
       </xsl:if>
@@ -347,7 +343,7 @@ XSL LaTeX stylesheet to make slides
       <xsl:choose>
          <xsl:when test="tei:head">
             <xsl:text>&#10;\par\noindent\textit{</xsl:text>
-            <xsl:if test="@xml:id">\label{<xsl:value-of select="@xml:id"/>}</xsl:if>
+	    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
             <xsl:for-each select="tei:head">
 	      <xsl:apply-templates/>
 	    </xsl:for-each>

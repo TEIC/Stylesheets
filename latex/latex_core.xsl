@@ -73,7 +73,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="@n"/>
               <xsl:text>) </xsl:text>
             </xsl:if>
-	    <xsl:if test="@xml:id"> <xsl:text>\hypertarget{</xsl:text><xsl:value-of select="@xml:id"/><xsl:text>}{}</xsl:text></xsl:if>
+	    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
             <xsl:apply-templates select="*[not(self::tei:bibl)]"/>
 	    <xsl:text>\par&#10;</xsl:text>
             <xsl:apply-templates select="tei:bibl"/>
@@ -392,11 +392,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:for-each>
 	 <xsl:text>}} </xsl:text>
       </xsl:if>
-      <xsl:if test="@xml:id">
-	        <xsl:text>\label{</xsl:text>
-	        <xsl:value-of select="@xml:id"/>
-	        <xsl:text>}</xsl:text>
-      </xsl:if>
+      <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:choose>
          <xsl:when test="not(tei:item)"/>
          <xsl:when test="tei:isGlossList(.)"> 
@@ -447,9 +443,8 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:apply-templates select="." mode="xref"/>
 	   <xsl:text>]{</xsl:text>
 	   <xsl:value-of select="@xml:id"/>
-	   <xsl:text>}\hypertarget{</xsl:text>
-	   <xsl:value-of select="@xml:id"/>
-	   <xsl:text>}{}</xsl:text>
+	   <xsl:text>}</xsl:text>
+	   <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
 	   <xsl:apply-templates select="."/>
 	 </xsl:for-each>
 	 <xsl:text>&#10;\end{bibitemlist}&#10;</xsl:text>
@@ -477,6 +472,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:otherwise>
       </xsl:choose>
       <xsl:text>}</xsl:text>
+      <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:choose>
          <xsl:when test="parent::tei:listBibl/@xml:lang='zh-TW' or @xml:lang='zh-TW'">
 	           <xsl:text>{\textChinese </xsl:text>
@@ -501,11 +497,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="marginalNote">
     <xsl:text>\marginnote{</xsl:text>
-    <xsl:if test="@xml:id">
-      <xsl:text>\label{</xsl:text>
-      <xsl:value-of select="@xml:id"/>
-      <xsl:text>}</xsl:text>
-    </xsl:if>
+    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
     <xsl:apply-templates/>
     <xsl:text>}</xsl:text>
   </xsl:template>
@@ -525,11 +517,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="endNote">
     <xsl:text>\endnote{</xsl:text>
-    <xsl:if test="@xml:id">
-      <xsl:text>\label{</xsl:text>
-      <xsl:value-of select="@xml:id"/>
-      <xsl:text>}</xsl:text>
-    </xsl:if>
+    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
     <xsl:apply-templates/>
     <xsl:text>}</xsl:text>
   </xsl:template>
@@ -556,11 +544,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process a note element which has a @place for footnote</desc>
    </doc>
   <xsl:template name="footNote">
-    <xsl:if test="@xml:id">
-      <xsl:text>\hypertarget{</xsl:text>
-      <xsl:value-of select="@xml:id"/>
-      <xsl:text>}{}</xsl:text>
-    </xsl:if>
+    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
     <xsl:choose>
 	<xsl:when test="@target">
 	  <xsl:text>\footnotetext{</xsl:text>
@@ -574,11 +558,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:text>\footnote{</xsl:text>
-	  <xsl:if test="@xml:id">
-	    <xsl:text>\label{</xsl:text>
-	    <xsl:value-of select="@xml:id"/>
-	    <xsl:text>}</xsl:text>
-	  </xsl:if>
+	  <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
 	  <xsl:apply-templates/>
 	  <xsl:text>}</xsl:text>
 	</xsl:otherwise>
@@ -599,7 +579,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:text>\par&#10;</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
-      <xsl:if test="@xml:id"> <xsl:text>\hypertarget{</xsl:text><xsl:value-of select="@xml:id"/><xsl:text>}{}</xsl:text></xsl:if>
+    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
     <xsl:if test="$numberParagraphs='true'">
       <xsl:call-template name="numberParagraph"/>
     </xsl:if>
@@ -655,11 +635,7 @@ of this software, even if advised of the possibility of such damage.
 	 </xsl:when>
          <xsl:otherwise> </xsl:otherwise>
       </xsl:choose>
-      <xsl:if test="@xml:id">
-         <xsl:text>\hypertarget{</xsl:text>
-         <xsl:value-of select="@xml:id"/>
-         <xsl:text>}{}</xsl:text>
-      </xsl:if>
+      <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process elementq</desc>
@@ -683,12 +659,12 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:quote">
       <xsl:choose>
 	<xsl:when test="parent::tei:cit">
-	    <xsl:if test="@xml:id"> <xsl:text>\hypertarget{</xsl:text><xsl:value-of select="@xml:id"/><xsl:text>}{}</xsl:text></xsl:if>
+	  <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:when test="not(tei:is-inline(.))">
 	  <xsl:text>\begin{quote}</xsl:text>
-	    <xsl:if test="@xml:id"> <xsl:text>\hypertarget{</xsl:text><xsl:value-of select="@xml:id"/><xsl:text>}{}</xsl:text></xsl:if>
+	  <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
 	  <xsl:apply-templates/>
 	  <xsl:text>\end{quote}</xsl:text>
 	</xsl:when>

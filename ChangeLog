@@ -1,3 +1,165 @@
+2014-05-16  martindholmes  <mholmes@uvic.ca>
+
+	Adding what I think is a working fix for the bug at https://github.com/TEIC/Stylesheets/issues/15 Only briefly tested for now.
+
+2014-05-16  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	consistency in mode='add' or not(@mode)
+
+	make key MEMBEROFADD more precise, ie just mode=add. thanks to Richard Lewis
+
+	explicit route to attribute
+
+	fix eror in debug message, which shows wrong variable
+
+2014-05-15  Lou Burnard  <lou.burnard@retired.ox.ac.uk>
+
+	no accents in stylenames, apparently
+
+	title not titre
+
+	updates to oulipo profile
+
+2014-05-15  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	name
+
+	type name
+
+	config for OxGarage for markdown and wordpress
+
+	page size changes in generated docx
+
+	Word page size defaults to A4; protect dirnames in transformtei
+
+2014-05-13  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	quotes around variables which may contains spaces (i.e. directory names)
+
+2014-05-12  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	discovered some missing changed results (alterations to test6)
+2014-05-11  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	error in xref in Word generation; and in Ant script to make PDF
+
+2014-05-10  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	generalise handling of generated relationships files for notes
+
+2014-05-09  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	comment
+
+	relationships file needs to be separately constructed for elements in footnotes and endnotes. unfinished task!
+
+2014-05-06  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	starting new version
+
+2014-05-05  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	strip off any filename components from @xml:base before using
+
+2014-05-04  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	add parameter "ignoreXmlBase" which will stop @xml:base being prepended to URLs
+
+	stop calling verbatim escape mechanisms twice on long verbatim attribute values
+
+2014-05-03  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	name of parameter wrong
+
+	break in title before post date; stop ignoring CSS files
+
+	try to make nested lists work better in conversion to Open Office. add test of this
+
+2014-05-01  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	latex ant task copies graphics files
+
+	deal with ampersands from Wordpress
+
+	handling of figures in tei to latex to pdf follows same pattern as elsewhere. forget FIGMAP thing.
+
+	list inside gloss list item in tei to oct  a bit better
+
+2014-05-01  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	the "realiFigure" parameter simply wasnt working.
+
+	some wicked old errors in Oxford profile
+
+	more niceties in wordpress to TEI
+
+	filter out draft posts
+
+2014-04-30  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	handle content:encoded in Wordpress, translate from HTML. phew, thats hard.
+
+2014-04-30  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	tweaking wordpress to tei
+
+	start on Wordpress to TEI
+
+	corrections from Torsten Schassan
+
+2014-04-29  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	keep attributes of <content> as well as children when doing odd2odd
+
+2014-04-28  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	yeah how about testing it next time eh
+
+	make tei to nlm free-standing
+
+	sorting of bibliography now correct
+
+2014-04-28  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	take sortKey into account
+
+	fix sorting of listBibl
+
+	dont introduce spurious space unless justified
+
+	remove output of test38
+
+	allow for @src on video or on child source; if there are multiple source, use just the first
+
+2014-04-27  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	need new version because of LaTeX linking changes
+
+	rethink the way hyperlinks are converted to LaTeX; go back to the native method of label and hyper ref. lots of fall out from that
+
+	converting media
+
+	add @type when converting to media, to show what source element was
+
+	notes on OOXML namespaces we'll need one day
+
+2014-04-26  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	doc nodes can't have attributes.
+
+	use right name for function
+
+	making sure all Schematron constraints get a unique ID
+
+	improve HTML to TEI and make test for it
+
+	function to work out mime type from file name where needed
+
+	scripts for nlm and csv conversions; tweak docbook
+
+2014-04-25  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	fix error in tei to NLM
 2014-04-24  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
 	fix error in bin/ symlinks links and make new release
 

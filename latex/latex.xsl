@@ -213,7 +213,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="style"/>
       <xsl:param name="after"/>
       <xsl:value-of select="$before"/>
-      <xsl:if test="@xml:id"> <xsl:text>\hypertarget{</xsl:text><xsl:value-of select="@xml:id"/><xsl:text>}{}</xsl:text></xsl:if>
+      <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:choose>
 	<xsl:when test="$style=('add','unclear','bibl','docAuthor','titlem','italic','mentioned','term','foreign')">
 	  <xsl:text>\textit{</xsl:text>
@@ -271,7 +271,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:template name="makeBlock">
       <xsl:param name="style"/>
       <xsl:sequence select="concat('\begin{',$style,'}')"/>
-      <xsl:if test="@xml:id"> <xsl:text>\hypertarget{</xsl:text><xsl:value-of select="@xml:id"/><xsl:text>}{}</xsl:text></xsl:if>
+      <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:apply-templates/>
       <xsl:sequence select="concat('\end{',$style,'}')"/>
     </xsl:template>
@@ -322,5 +322,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </xsl:template>
 
+
+    <xsl:function name="tei:makeHyperTarget" as="xs:string">
+      <xsl:param name="id"/>
+      <xsl:value-of select=" if ($id) then concat('\label{',$id,'}') else ''"/>
+    </xsl:function>
 
 </xsl:stylesheet>

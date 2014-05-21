@@ -198,8 +198,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:if test="count(key('GRAPHICS',1))&gt;0">
           <manifest:file-entry manifest:media-type="" manifest:full-path="Pictures/"/>
           <xsl:for-each select="key('GRAPHICS',1)">
-            <xsl:variable name="imagetype" select="tokenize(@url,'\.')[last()]"/>
             <manifest:file-entry>
+            <xsl:variable name="imagetype" select="tokenize(@url,'\.')[last()]"/>
               <xsl:attribute name="manifest:full-path">
                 <xsl:text>Pictures/resource</xsl:text>
                 <xsl:number level="any"/>
@@ -207,16 +207,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:value-of select="$imagetype"/>
               </xsl:attribute>
               <xsl:attribute name="manifest:media-type">
-                <xsl:text>image/</xsl:text>
-                <xsl:choose>
-                  <xsl:when test="$imagetype='png'">png</xsl:when>
-                  <xsl:when test="$imagetype='gif'">gif</xsl:when>
-                  <xsl:when test="$imagetype='jpg'">jpeg</xsl:when>
-                  <xsl:when test="$imagetype='jpeg'">jpg</xsl:when>
-                  <xsl:when test="$imagetype='tiff'">tiff</xsl:when>
-                  <xsl:when test="$imagetype='tif'">tiff</xsl:when>
-                  <xsl:otherwise>jpeg</xsl:otherwise>
-                </xsl:choose>
+		<xsl:value-of  select="tei:generateMimeType(@url,@mimeType)"/>
               </xsl:attribute>
             </manifest:file-entry>
           </xsl:for-each>
@@ -593,36 +584,52 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="tei:list[tei:isGlossList(.)]/tei:item">
-    <text:p text:style-name="List_20_Contents">
+    <xsl:choose>
+      <xsl:when test="count(*)=1 and tei:list">
       <xsl:apply-templates/>
-    </text:p>
+      </xsl:when>
+      <xsl:otherwise>
+	<text:p text:style-name="List_20_Contents">
+	  <xsl:apply-templates/>
+	</text:p>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:list[tei:isGlossList(.)]/tei:label">
     <text:p text:style-name="List_20_Heading">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
+
   <xsl:template match="tei:item/tei:p">
     <xsl:apply-templates/>
   </xsl:template>
+
   <xsl:template match="tei:item">
     <text:list-item>
-      <xsl:choose>
-        <xsl:when test="tei:list or teix:egXML">
-          <xsl:apply-templates/>
-        </xsl:when>
-        <xsl:otherwise>
-          <text:p>
-            <xsl:attribute name="text:style-name">
-              <xsl:choose>
-                <xsl:when test="tei:isOrderedList(..)">P2</xsl:when>
-                <xsl:otherwise>P1</xsl:otherwise>
-              </xsl:choose>
-            </xsl:attribute>
-            <xsl:apply-templates/>
-          </text:p>
-        </xsl:otherwise>
-      </xsl:choose>
+      <xsl:for-each-group select="node()" group-adjacent="if
+							  (self::text())			  then 1
+							  else if  (self::tei:list
+							  or
+							  self::tei:p
+							  or self::teix:egXML)        then 2       else 1        ">
+	<xsl:choose>
+	  <xsl:when test="current-grouping-key()=2">
+	    <xsl:apply-templates select="current-group()"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+            <text:p>
+              <xsl:attribute name="text:style-name">
+		<xsl:choose>
+                  <xsl:when test="tei:isOrderedList(..)">P2</xsl:when>
+                  <xsl:otherwise>P1</xsl:otherwise>
+		</xsl:choose>
+              </xsl:attribute>
+		<xsl:apply-templates select="current-group()"/>
+	      </text:p>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each-group>
     </text:list-item>
   </xsl:template>
   <xsl:template name="displayNote">
