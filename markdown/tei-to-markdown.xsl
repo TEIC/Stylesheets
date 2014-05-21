@@ -186,7 +186,6 @@ of this software, even if advised of the possibility of such damage.
 		</xsl:when>
 		<xsl:otherwise>
 			<xsl:apply-templates/>
-			<xsl:text>TRATA</xsl:text>
 			<xsl:call-template name="newline"/>
 		</xsl:otherwise>
 	</xsl:choose>
