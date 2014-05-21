@@ -34,7 +34,7 @@ http://localhost/a/b/4/test/?o=a
 http://localhost/a/b/4/test/?o=a&u=33&e34=7a
 
 
-## An h2 header:wq
+## An h2 header
 
 
 ## Another h2 header
