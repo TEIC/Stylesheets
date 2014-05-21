@@ -175,9 +175,9 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template name="makeBlock">
-  <xsl:param name="style"/>
-  <xsl:apply-templates/>
-  <xsl:call-template name="newline"/>
+		<xsl:param name="style"/>
+		<xsl:apply-templates/>
+		<xsl:call-template name="newline"/>
 </xsl:template>
 
 <xsl:template name="makeInline">
@@ -238,4 +238,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>&#10;</xsl:text>
     </xsl:template>
 
+	<xsl:template match="*"><xsl:apply-templates/></xsl:template>
+	
 </xsl:stylesheet>
