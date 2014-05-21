@@ -103,6 +103,7 @@ test-to-html: css
 test-from-html:
 	$(SAXON) test38.htm ../html/html2tei.xsl $(SAXONOPT)  | xmllint --format - > test38.xml
 	diff test38.xml expected-results/test38.xml
+
 test-markdown: 
 	@echo BUILD: testing markdown 
 	@echo BUILD: markdown to tei 
@@ -111,7 +112,6 @@ test-markdown:
 	@echo BUILD: tei to markdown
 	$(BINDIR)/teitomarkdown test.xml mdtest2.md
 	diff mdtest2.md expected-results/mdtest2.md
-
 
 test-p4top5: 
 	@echo BUILD: testing p4top5
