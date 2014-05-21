@@ -175,21 +175,9 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template name="makeBlock">
-	<!-- if block element generate newline, else mark with italics perhaps? -->
-  <xsl:param name="style"/>
-	
-	<xsl:choose>
-		<xsl:when test="tei:is-inline(.)">
-			*
-			<xsl:apply-templates/>
-			*
-		</xsl:when>
-		<xsl:otherwise>
-			<xsl:apply-templates/>
-			<xsl:call-template name="newline"/>
-		</xsl:otherwise>
-	</xsl:choose>
-	
+		<xsl:param name="style"/>
+		<xsl:apply-templates/>
+		<xsl:call-template name="newline"/>
 </xsl:template>
 
 <xsl:template name="makeInline">
