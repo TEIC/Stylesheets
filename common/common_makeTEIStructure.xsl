@@ -52,7 +52,6 @@
 								<xsl:call-template name="group-by-section"/>
 							</xsl:when>
 							<xsl:otherwise>
-
 								<xsl:call-template name="inSectionCodeBlock"/>
 							</xsl:otherwise>
 						</xsl:choose>

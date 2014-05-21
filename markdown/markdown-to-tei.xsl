@@ -56,7 +56,7 @@
         </xsl:analyze-string>
       </xsl:when>
       <xsl:when test="starts-with($nLine, '```')">
-        <!-- fenced code block -->
+        <!-- fenced code block (in some flavors delimited with ~~~ instead) -->
             <FCODE/>
       </xsl:when>
       <xsl:when test="starts-with($nLine, '#')">
@@ -97,6 +97,14 @@
  <xsl:function name="tei:parseString" as="node()*">
   <xsl:param name="pS" as="xs:string"/>
 
+  <!-- match
+    bold/italic __bold__ _italic_
+  | bold/italic **bold** *italic*
+  | links with text description [description](link)
+  | inline code `code`
+  | deleted ~~del~~
+  | inline links (not very happy about the regex) 
+  -->
   <xsl:analyze-string select="$pS" flags="x" regex=
   '(__?(.*?)__?)
   |
@@ -107,6 +115,8 @@
    (`(.*?)`)
    |
    (~~(.*?)~~)
+   |
+   (https?://(\w(\w|\d)*\.)*(aero|arpa|biz|com|coop|edu|info|int|gov|mil|museum|name|net|org|pro|localhost)/?((\w|\d|\.)+/?)*\??((\w|\d)*=(\w|\d)*)?(&amp;(\w|\d)*=(\w|\d)*)*)
    '>
    <xsl:matching-substring>
     <xsl:choose>
@@ -140,6 +150,11 @@
         <del>
           <xsl:sequence select="regex-group(11)"/>
         </del>
+      </xsl:when>
+      <xsl:when test="regex-group(12)">
+        <ref target="{regex-group(12)}">
+          <xsl:sequence select="regex-group(12)"/>
+        </ref>
       </xsl:when>
       
     </xsl:choose>
