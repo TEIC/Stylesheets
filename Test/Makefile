@@ -26,7 +26,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-to-html test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt test-p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
+default: test.rng test-to-html test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt test-p4top5 test-markdown test-oddity test-pureant test-scripts test-namespaces test-epub 
 
 test.rng:
 	$(BINDIR)/teitorelaxng --odd test.odd test.rng
@@ -103,6 +103,15 @@ test-to-html: css
 test-from-html:
 	$(SAXON) test38.htm ../html/html2tei.xsl $(SAXONOPT)  | xmllint --format - > test38.xml
 	diff test38.xml expected-results/test38.xml
+
+test-markdown: 
+	@echo BUILD: testing markdown 
+	@echo BUILD: markdown to tei 
+	$(BINDIR)/markdowntotei mdtest1.md mdtest1.xml
+	diff mdtest1.xml expected-results/mdtest1.xml
+	@echo BUILD: tei to markdown
+	$(BINDIR)/teitomarkdown test.xml mdtest2.md
+	diff mdtest2.md expected-results/mdtest2.md
 
 test-p4top5: 
 	@echo BUILD: testing p4top5
