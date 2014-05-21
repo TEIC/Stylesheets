@@ -39,6 +39,6 @@ from the left side). Here's a code sample:
     for i in 1 .. 10 { do-something(i) }
 
 As you probably guessed, indented 4 spaces. By the way, instead of
-indenting the block, you can use delimited blocks, if you like:
+Indenting the block, you can use delimited blocks, if you like.
 
 Done.
