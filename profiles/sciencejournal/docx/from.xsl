@@ -65,7 +65,9 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
     
-    <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+  <xsl:param name="preserveEffects">false</xsl:param>
+  
+  <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>Defines whether or not a word paragraph is a first level heading 
       </desc>
     </doc>

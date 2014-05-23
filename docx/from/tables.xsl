@@ -391,7 +391,10 @@ of this software, even if advised of the possibility of such damage.
 			<xsl:if test="w:tcPr/w:gridSpan">
 			  <xsl:attribute name="cols" select="w:tcPr/w:gridSpan/@w:val"/>
 			</xsl:if>
-			<xsl:variable name="val" select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
+			<xsl:variable name="val">
+			  <xsl:value-of
+			      select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
+			</xsl:variable>
 			<xsl:choose>
 			  <xsl:when test="$val='[No Paragraph Style]'"/>
 			  <xsl:when test="$val='Table text (9)'"/>
@@ -579,5 +582,22 @@ of this software, even if advised of the possibility of such damage.
             </title>
         </xsl:if>
     </xsl:template>
-    
+
+    <xsl:function name="tei:extrapolateTableStyle"  as="node()*">
+      <xsl:param name="context"/>
+<!--
+	<xsl:for-each select="$context/ancestor::w:tbl/w:tblPr">
+	  <xsl:variable name="style" select="w:tblStyle/@w:val"/>
+	  <xsl:variable name="firstRow">
+	    <xsl:if test="w:tblLook/@w:firstRow='1'">
+	      <xsl:copy-of select="$styleDoc//w:style[@w:type='table
+		and @w:styleId=$style]"
+	    </xsl:if>
+	  </xsl:variable>
+        <w:tblStyle w:val="LightShading"/>
+        <w:tblW w:w="0" w:type="auto"/>
+        <w:jc w:val="center"/>
+        <w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/>
+-->
+    </xsl:function>
 </xsl:stylesheet>
