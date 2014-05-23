@@ -68,44 +68,44 @@ of this software, even if advised of the possibility of such damage.
     <xsl:import href="../../default/docx/from.xsl"/>
 
     <xsl:template name="create-tei-header">
-        <teiHeader>
-            <fileDesc>
-                <titleStmt>
-                    <title>
-                        <xsl:call-template name="getDocTitle"/>
-                    </title>
+      <teiHeader>
+        <fileDesc>
+          <titleStmt>
+            <title>
+              <xsl:call-template name="getDocTitle"/>
+            </title>
                     <author>
-                        <xsl:call-template name="getDocAuthor"/>
+                      <xsl:call-template name="getDocAuthor"/>
                     </author>
-                </titleStmt>
-                <editionStmt>
-                    <edition>
-                        <date>
-                            <xsl:call-template name="getDocDate"/>
-                        </date>
+          </titleStmt>
+          <editionStmt>
+            <edition>
+              <date>
+                <xsl:call-template name="getDocDate"/>
+              </date>
                     </edition>
                 </editionStmt>
                 <publicationStmt>
-                    <p>
-</p>
+                  <p>
+		  </p>
                 </publicationStmt>
                 <sourceDesc>
-                    <p>Converted from a Word document </p>
+                  <p>Converted from a Word document </p>
                 </sourceDesc>
             </fileDesc>
             <revisionDesc>
-	           <change>
-		             <date>
-		                <xsl:text>$LastChangedDate: </xsl:text>
-		                <xsl:value-of select="tei:whatsTheDate()"/>
-		                <xsl:text>$</xsl:text>
-		             </date>
-		             <name type="person">
-		                <xsl:call-template name="getDocAuthor"/>
-		             </name>
-	           </change>
+	      <change>
+		<date>
+		  <xsl:text>$LastChangedDate: </xsl:text>
+		  <xsl:value-of select="tei:whatsTheDate()"/>
+		  <xsl:text>$</xsl:text>
+		</date>
+		<name type="person">
+		  <xsl:call-template name="getDocAuthor"/>
+		</name>
+	      </change>
             </revisionDesc>
-        </teiHeader>
+      </teiHeader>
     </xsl:template>
 
     <xsl:template match="tei:text" mode="pass2">

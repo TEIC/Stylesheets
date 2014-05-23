@@ -63,7 +63,6 @@
 	  <xsl:include href="paragraphs.xsl"/>
 	  <xsl:include href="tables.xsl"/>
 	  <xsl:include href="textruns.xsl"/>
-	  <xsl:include href="utility-templates.xsl"/>
 	  <xsl:include href="wordsections.xsl"/>
 	
 	
@@ -590,6 +589,55 @@ of this software, even if advised of the possibility of such damage.
         </head>
     </xsl:template>
     
-    
+
+    <xsl:template name="generateAppInfo">
+      <appInfo>
+	        <application ident="TEI_fromDOCX" version="2.15.0">
+	           <label>DOCX to TEI</label>
+	        </application>
+	        <xsl:if test="doc-available(concat($wordDirectory,'/docProps/custom.xml'))">
+	           <xsl:for-each select="document(concat($wordDirectory,'/docProps/custom.xml'))/prop:Properties">
+	              <xsl:for-each select="prop:property">
+	                 <xsl:choose>
+		                   <xsl:when test="@name='TEI_fromDOCX'"/>
+		                   <xsl:when test="contains(@name,'TEI')">
+		                      <application ident="{@name}" version="{.}">
+		                         <label>
+		                            <xsl:value-of select="@name"/>
+		                         </label>
+		                      </application>
+		                   </xsl:when>
+	                 </xsl:choose>
+	              </xsl:for-each>
+		      <xsl:if test="prop:property[@name='WordTemplateURI']">
+			<application ident="WordTemplate" version="{prop:property[@name='WordTemplate']}">
+			  <label>Word template file</label>
+			  <ptr target="{prop:property[@name='WordTemplateURI']}"/>
+			</application>
+		      </xsl:if>
+	           </xsl:for-each>
+	        </xsl:if>
+      </appInfo>
+    </xsl:template>
+
+    <xsl:template name="getDocTitle">
+      <xsl:value-of select="$docProps/cp:coreProperties/dc:title"/>
+    </xsl:template>
+
+    <xsl:template name="getDocAuthor">
+      <xsl:value-of select="$docProps/cp:coreProperties/dc:creator"/>
+    </xsl:template>
+
+    <xsl:template name="getDocDate">
+      <xsl:value-of select="substring-before($docProps/cp:coreProperties/dcterms:created,'T')"/>
+    </xsl:template>
+
+    <xsl:template name="identifyChange">
+      <xsl:param name="who"/>
+      <xsl:attribute name="resp">
+	<xsl:text>#</xsl:text>
+	<xsl:value-of select="translate($who,' ','_')"/>
+      </xsl:attribute>
+    </xsl:template>
     
 </xsl:stylesheet>

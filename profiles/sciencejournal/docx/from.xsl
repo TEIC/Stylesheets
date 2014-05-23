@@ -65,55 +65,9 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
     
-    <xsl:template match="@rend[.='ITLP_Body_Text']" mode="pass2"/>
-
-    <xsl:template match="@rend[.='ITLP Body Text']" mode="pass2"/>
-
-    <xsl:template match="tei:cell/@rend[.='ITLP_Body_Text background-color(D9D9D9)']" mode="pass2">
-      <xsl:attribute name="role">label</xsl:attribute>
-    </xsl:template>
-
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Caption']" mode="paragraph">
-        <head>
-	  <xsl:apply-templates/>
-        </head>
-    </xsl:template>
-
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Table Heading']" mode="paragraph">
-        <head>
-	  <xsl:apply-templates/>
-        </head>
-    </xsl:template>
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Ex Tasks Bulleted']" mode="paragraph">
-        <item>
-	  <xsl:apply-templates/>
-        </item>
-    </xsl:template>
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP BodyText Bulletted']" mode="paragraph">
-        <item>
-	  <xsl:apply-templates/>
-        </item>
-    </xsl:template>
-
-    <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>Returns a listtype for a given stylename (return empty string to
-	figure it out dynamically)
-      </desc>
-    </doc>
-    
-    <xsl:function name="tei:get-listtype" as="xs:string">
-      <xsl:param name="style"/>
-      <xsl:choose>
-	<xsl:when test="$style='ITLP BodyText Bulletted'">
-	  <xsl:text>unordered</xsl:text>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:function>
-
-    <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+  <xsl:param name="preserveEffects">false</xsl:param>
+  
+  <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>Defines whether or not a word paragraph is a first level heading 
       </desc>
     </doc>
@@ -124,10 +78,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
 	<xsl:when test="$s='heading 1'">true</xsl:when>
 	<xsl:when test="$s='Heading 1'">true</xsl:when>
-	<xsl:when test="$s='Title'">true</xsl:when>
 	<xsl:when test="$s='Heading1'">true</xsl:when>
-	<xsl:when test="$s='ITLP H1'">true</xsl:when>
-	<xsl:when test="$s='ITLP Anonymous Heading 1'">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:function>
@@ -144,31 +95,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="$s=''">false</xsl:when>
 	<xsl:when test="starts-with($s,'heading')">true</xsl:when>
 	<xsl:when test="starts-with($s,'Heading')">true</xsl:when>
-	<xsl:when test="$s='ITLP Anonymous Heading 1'">true</xsl:when>
-	<xsl:when test="$s='ITLP Anonymous Heading 2'">true</xsl:when>
-	<xsl:when test="$s='Title'">true</xsl:when>
 	<xsl:when test="$s='Subtitle'">true</xsl:when>
-	<xsl:when test="$s='ITLP H1'">true</xsl:when>
-	<xsl:when test="$s='ITLP H2'">true</xsl:when>
-	<xsl:when test="$s='ITLP H3'">true</xsl:when>
-	<xsl:when test="$s='Heading1'">true</xsl:when>
-	<xsl:when test="$s='Heading2'">true</xsl:when>
-	<xsl:when test="$s='Heading3'">true</xsl:when>
-	<xsl:when test="$s='Heading4'">true</xsl:when>
-	<xsl:when test="$s='Heading5'">true</xsl:when>
-	<xsl:when test="$s='Heading6'">true</xsl:when>
-	<xsl:when test="$s='Heading7'">true</xsl:when>
-	<xsl:when test="$s='Heading8'">true</xsl:when>
-	<xsl:when test="$s='Heading9'">true</xsl:when>
-	<xsl:when test="$s='heading 1'">true</xsl:when>
-	<xsl:when test="$s='heading 2'">true</xsl:when>
-	<xsl:when test="$s='heading 3'">true</xsl:when>
-	<xsl:when test="$s='heading 4'">true</xsl:when>
-	<xsl:when test="$s='heading 5'">true</xsl:when>
-	<xsl:when test="$s='heading 6'">true</xsl:when>
-	<xsl:when test="$s='heading 7'">true</xsl:when>
-	<xsl:when test="$s='heading 8'">true</xsl:when>
-	<xsl:when test="$s='heading 9'">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:function>
@@ -181,7 +108,6 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:matching-substring>
 	<xsl:non-matching-substring>
 	  <xsl:choose>
-	    <xsl:when test="regex-group(0)='Title'">1</xsl:when>
 	    <xsl:when test="regex-group(0)='Subtitle'">2</xsl:when>
 	    <xsl:otherwise>1</xsl:otherwise>
 	  </xsl:choose>
@@ -222,83 +148,23 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
     </xsl:function>
 
-    <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>Override default behaviour for a styled paragraph</desc>
-    </doc>
+   <xsl:template match="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title" mode="pass2">
+     <xsl:copy>
+    <xsl:choose>
+      <xsl:when test="string-length(.)=0">
+      <xsl:for-each
+	  select="ancestor::tei:TEI/tei:text/tei:body/tei:p[@rend =
+		  'Title'][1]" >
+	<xsl:apply-templates mode="pass2"/>
+      </xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates mode="pass2"/>
+      </xsl:otherwise>
+    </xsl:choose>
+     </xsl:copy>
+   </xsl:template>
 
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Ex Explanation']"
-		  mode="paragraph">
-      <p rend="ExampleExplanation">
-	<xsl:apply-templates/>
-      </p>
-    </xsl:template>
-
-
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Task Text']"
-		  mode="paragraph">
-      <p rend="ExampleTask">
-	<xsl:apply-templates/>
-      </p>
-    </xsl:template>
-
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Step Text']"
-		  mode="paragraph">
-      <p rend="ExampleStep">
-	<xsl:apply-templates/>
-      </p>
-    </xsl:template>
-
-
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Ex Heading']"
-		  mode="paragraph">
-      <p rend="ExampleHeading">
-	<xsl:apply-templates/>
-      </p>
-    </xsl:template>
-
-    <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>Override default behaviour for a styled text run</desc>
-    </doc>
-    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP FileSpec']">
-      <code rend="FileSpec">
-	<xsl:apply-templates/>
-      </code>
-    </xsl:template>
-    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Button']">
-      <code rend="Button">
-	<xsl:apply-templates/>
-      </code>
-    </xsl:template>
-
-    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Input']">
-      <code rend="Input">
-	<xsl:apply-templates/>
-      </code>
-    </xsl:template>
-
-    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Key']">
-      <code rend="Key">
-	<xsl:apply-templates/>
-      </code>
-    </xsl:template>
-
-    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Label']">
-      <code rend="Label">
-	<xsl:apply-templates/>
-      </code>
-    </xsl:template>
-
-    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Menu']">
-      <code rend="Menu">
-	<xsl:apply-templates/>
-      </code>
-    </xsl:template>
-
-    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Software']">
-      <code rend="Software">
-	<xsl:apply-templates/>
-      </code>
-    </xsl:template>
-
+   <xsl:template match="tei:text/tei:body/tei:p[@rend = 'Title'][1]" mode="pass2"/>
   </xsl:stylesheet>
   
