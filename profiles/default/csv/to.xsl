@@ -57,11 +57,11 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
    <xsl:output omit-xml-declaration="yes"/>
-   <xsl:param name="filePrefix">table</xsl:param>
+   <xsl:param name="filePrefix">/table</xsl:param>
    <xsl:variable name="dq">"</xsl:variable>
    <xsl:variable name="qdq">""</xsl:variable>
 
-  <xsl:param name="directory"></xsl:param>
+  <xsl:param name="directory">.</xsl:param>
 
    <xsl:template match="/">
      <xsl:for-each select="//tei:table">
