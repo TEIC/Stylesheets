@@ -163,7 +163,7 @@ installcommon: doc common
 	(cd release/xslcommon/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
 install: linkcss doc installxsl installprofiles installcommon 
-	rm -f doc/index.xml doc/style.xml doc/stylebear teioo.jar
+	rm -rf doc/index.xml doc/style.xml doc/stylebear teioo.jar release
 
 linkcss:
 	(for i in css/*; do test -f `basename $$i` || ln -s $$i `basename $$i`;done)
