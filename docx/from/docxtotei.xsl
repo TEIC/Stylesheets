@@ -242,6 +242,8 @@ of this software, even if advised of the possibility of such damage.
 	    </desc>
 	  </doc>
 	  <xsl:template name="mainProcess">
+	    <xsl:param name="extrarow"  tunnel="yes"/>
+	    <xsl:param name="extracolumn"   tunnel="yes"/>
 	    <!-- 
 		 group all paragraphs that form a first level section.
 	    -->

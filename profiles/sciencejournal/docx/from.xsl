@@ -165,6 +165,12 @@ of this software, even if advised of the possibility of such damage.
      </xsl:copy>
    </xsl:template>
 
-   <xsl:template match="tei:text/tei:body/tei:p[@rend = 'Title'][1]" mode="pass2"/>
+   <xsl:template match="tei:text/tei:body/tei:p[@rend = 'Title']"
+		 mode="pass2">
+     <xsl:if test="preceding-sibling::tei:p[@rend = 'Title']">
+       <xsl:apply-templates mode="pass2"/>
+     </xsl:if>
+   </xsl:template>
+
   </xsl:stylesheet>
   
