@@ -501,7 +501,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:otherwise>
         <!-- Retain one leading space if node isn't first, has
 	     non-space content, and has leading space.-->
-        <xsl:if test="position()!=1 and          matches(.,'^\s') and          normalize-space()!=''">
+        <xsl:if test="(parent::tei:hi/preceding-sibling::node()[1][self::tei:hi] or position()!=1) and          matches(.,'^\s') and          normalize-space()!=''">
           <xsl:call-template name="space"/>
         </xsl:if>
         <xsl:value-of select="tei:escapeChars(normalize-space(.),parent::*)"/>
