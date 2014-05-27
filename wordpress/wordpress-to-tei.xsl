@@ -3,6 +3,7 @@
   <xsl:variable name="allowedtags">
     <address/>
     <blockquote/>
+    <caption/>
     <cite/>
     <col/>
     <dl/>
@@ -73,9 +74,7 @@
             <xsl:sort select="wp:post_date" order="ascending"/>
             <xsl:if test="normalize-space(content:encoded)!='' or wp:attachment_url">
               <div>
-                <head><xsl:apply-templates select="title"/>
-		  <lb/>(<xsl:apply-templates select="wp:post_date"/>)
-		</head>
+                <head><xsl:apply-templates select="title"/></head>
                 <xsl:apply-templates select="wp:attachment_url"/>
                 <xsl:apply-templates select="content:encoded"/>
                 <closer>
@@ -134,6 +133,13 @@
       <xsl:apply-templates/>
     </hi>
   </xsl:template>
+
+  <xsl:template match="caption">
+    <head>
+      <xsl:apply-templates/>
+    </head>
+  </xsl:template>
+
   <xsl:template match="address"/>
   <xsl:template match="blockquote">
     <xsl:choose>

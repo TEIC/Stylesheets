@@ -68,6 +68,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates mode="pass2"/>
   </xsl:template>
 
+  <xsl:template match="tei:list[normalize-space(.)='']" mode="pass2"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>Inner lists in lists must be moved to inside items

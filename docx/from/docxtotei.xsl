@@ -196,7 +196,7 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:result-document href="/tmp/foo.xml">
 	 <xsl:copy-of select="$pass1"/>
 	 </xsl:result-document>
-     -->
+	 -->
      <!-- Do the final parse and create valid TEI -->
 
      <xsl:apply-templates select="$pass1" mode="pass2"/>
@@ -242,6 +242,8 @@ of this software, even if advised of the possibility of such damage.
 	    </desc>
 	  </doc>
 	  <xsl:template name="mainProcess">
+	    <xsl:param name="extrarow"  tunnel="yes"/>
+	    <xsl:param name="extracolumn"   tunnel="yes"/>
 	    <!-- 
 		 group all paragraphs that form a first level section.
 	    -->

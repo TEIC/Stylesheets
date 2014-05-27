@@ -171,28 +171,44 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     <xsl:template name="basicStyles">
       <xsl:param name="parented">false</xsl:param>
-      <xsl:variable name="styles">
-	<xsl:if test="w:rPr/w:rFonts//@w:ascii">
-	  <xsl:if test="(not(matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')) and not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))) or
-			not(w:rPr/w:rFonts/@w:ascii = parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii)">
-	      <s n="font-family">
-		<xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
-	      </s>
-	    <!-- w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
-	    <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
-	  </xsl:if>
-	</xsl:if>
-	<xsl:if test="w:rPr/w:sz">
-	  <s n="font-size">
-	    <xsl:value-of select="number(w:rPr/w:sz/@w:val) div 2"/>
-	    <xsl:text>pt</xsl:text>
-	  </s>
-	</xsl:if>
-	<xsl:if test="w:rPr/w:position/@w:val and not(w:rPr/w:position/@w:val='0')">
-	  <s n="position">
-	    <xsl:value-of select="w:rPr/w:position/@w:val"/>
-	  </s>
-	</xsl:if>
+      <xsl:param name="extrarow"  tunnel="yes"/>
+     <xsl:param name="extracolumn"   tunnel="yes"/>     
+     <xsl:variable name="styles">
+       <xsl:if test="w:rPr/w:rFonts//@w:ascii">
+	 <xsl:if test="(not(matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')) and not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))) or
+		       not(w:rPr/w:rFonts/@w:ascii = parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii)">
+	   <s n="font-family">
+	     <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
+	   </s>
+	   <!-- w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
+	   <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
+	 </xsl:if>
+       </xsl:if>
+       <xsl:choose>
+	 <xsl:when test="w:rPr/w:sz">
+	   <s n="font-size">
+	     <xsl:value-of select="number(w:rPr/w:sz/@w:val) div 2"/>
+	     <xsl:text>pt</xsl:text>
+	   </s>
+	 </xsl:when>
+	 <xsl:when test="ancestor::w:tc and $extrarow/w:rPr/w:sz">
+	   <s n="font-size">
+	     <xsl:value-of select="number($extrarow/w:rPr/w:sz/@w:val) div 2"/>
+	     <xsl:text>pt</xsl:text>
+	   </s>
+	 </xsl:when>
+	 <xsl:when test="ancestor::w:tc and $extracolumn/w:rPr/w:sz">
+	   <s n="font-size">
+	     <xsl:value-of select="number($extracolumn/w:rPr/w:sz/@w:val) div 2"/>
+	     <xsl:text>pt</xsl:text>
+	   </s>
+	 </xsl:when>
+       </xsl:choose>
+       <xsl:if test="w:rPr/w:position/@w:val and not(w:rPr/w:position/@w:val='0')">
+	 <s n="position">
+	   <xsl:value-of select="w:rPr/w:position/@w:val"/>
+	 </s>
+       </xsl:if>
       </xsl:variable>
 
       <xsl:variable name="dir">
@@ -203,38 +219,73 @@ of this software, even if advised of the possibility of such damage.
       </xsl:variable>
      
       <xsl:variable name="effects">
-	<xsl:if test="w:rPr/w:position[number(@w:val)&lt;-2]">
+	<xsl:if test="w:rPr/w:position[number(@w:val)&lt;-2] or
+		      (ancestor::w:tc 
+		      and
+		      ($extracolumn/w:rPr/w:position[number(@w:val)&lt;-2]
+		      or $extrarow/w:rPr/w:position[number(@w:val)&lt;-2])
+		      )">
 	  <n>subscript</n>
 	</xsl:if>
 	
-	<xsl:if test="w:rPr/w:i">
+	<xsl:if test="w:rPr/w:i or
+		      (ancestor::w:tc 
+		      and
+		      ($extracolumn/w:rPr/w:i  or $extrarow/w:rPr/w:i)
+		      )">
 	  <n>italic</n>
 	</xsl:if>
 
 	<xsl:choose>
-	  <xsl:when test="w:rPr/w:b/@w:val='0'">
+	  <xsl:when test="w:rPr/w:b/@w:val='0' or
+		      (ancestor::w:tc 
+		      and
+		      ($extracolumn/w:rPr/w:b/@w:val='0' or $extrarow/w:rPr/w:b/@w:val='0')
+		      )">
 	    <n>normalweight</n>
 	  </xsl:when>
-	  <xsl:when test="w:rPr/w:b">
+	  <xsl:when test="w:rPr/w:b or
+		      (ancestor::w:tc 
+		      and
+		      ($extracolumn/w:rPr/w:b  or $extrarow/w:rPr/w:b)
+		      )">
 	    <n>bold</n>
 	  </xsl:when>
 	</xsl:choose>
 
-	<xsl:if test="w:rPr/w:position[number(@w:val)&gt;2]">
+	<xsl:if test="w:rPr/w:position[number(@w:val)&gt;2] or
+		      (ancestor::w:tc 
+		      and
+		      ($extracolumn/w:rPr/w:position[number(@w:val)&gt;2]
+		      or $extrarow/w:rPr/w:position[number(@w:val)&gt;2])
+		      )">
 	  <n>superscript</n>
 	</xsl:if>
 
-	<xsl:if test="w:rPr/w:vertAlign">
+	<xsl:if test="w:rPr/w:vertAlign or 
+		      (ancestor::w:tc 
+		      and
+		      ($extracolumn/w:rPr/w:vertAlign  or $extrarow/w:rPr/w:vertAlign)
+		      )">
 	  <n>
 	    <xsl:value-of select="w:rPr/w:vertAlign/@w:val"/>
 	  </n>
 	</xsl:if>
 
-	<xsl:if test="w:rPr/w:strike">
+	<xsl:if test="w:rPr/w:strike or
+		      (ancestor::w:tc 
+		      and
+		      ($extracolumn/w:rPr/w:strike  or $extrarow/w:rPr/w:strike)
+		      )">
+
 	  <n>strikethrough</n>
 	</xsl:if>
 
-	<xsl:if test="w:rPr/w:dstrike">
+	<xsl:if test="w:rPr/w:dstrike or
+		      (ancestor::w:tc 
+		      and
+		      ($extracolumn/w:rPr/w:dstrike  or $extrarow/w:rPr/w:dstrike)
+		      )">
 	  <n>strikedoublethrough</n>
 	</xsl:if>
 
@@ -250,11 +301,19 @@ of this software, even if advised of the possibility of such damage.
 	  <n>underdoubleline</n>
 	</xsl:if>
 
-	<xsl:if test="w:rPr/w:smallCaps">
+	<xsl:if test="w:rPr/w:smallCaps or
+		      (ancestor::w:tc 
+		      and
+		      ($extracolumn/w:rPr/w:smallCaps  or $extrarow/w:rPr/w:smallCaps)
+		      )">
 	  <n>smallcaps</n>
 	</xsl:if>
 
-	<xsl:if test="w:rPr/w:caps">
+	<xsl:if test="w:rPr/w:caps or
+		      (ancestor::w:tc 
+		      and
+		      ($extracolumn/w:rPr/w:caps  or $extrarow/w:rPr/w:caps)
+		      )">
 	  <n>capsall</n>
 	</xsl:if>
 

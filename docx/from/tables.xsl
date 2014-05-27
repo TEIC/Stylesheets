@@ -372,8 +372,32 @@ of this software, even if advised of the possibility of such damage.
 	      <table rend="rules">
 		<xsl:call-template name="table-header"/>
 		<xsl:for-each select="w:tr">
+		  <xsl:variable name="overrideRow">
+		    <xsl:choose>
+		      <xsl:when test="not(preceding-sibling::w:tr)">
+			<xsl:copy-of
+			    select="tei:extrapolateTableFirstRow(.)"/>
+		      </xsl:when>
+		      <xsl:when test="not(following-sibling::w:tr)">
+			<xsl:copy-of
+			    select="tei:extrapolateTableLastRow(.)"/>
+		      </xsl:when>
+		    </xsl:choose>
+		  </xsl:variable>
 		  <row>
 		    <xsl:for-each select="w:tc">
+		      <xsl:variable name="overrideColumn">
+			<xsl:choose>
+			  <xsl:when test="not(preceding-sibling::w:tc)">
+			    <xsl:copy-of
+			      select="tei:extrapolateTableFirstColumn(.)"/>
+			  </xsl:when>
+			  <xsl:when test="not(following-sibling::w:tc)">
+			    <xsl:copy-of
+				select="tei:extrapolateTableLastColumn(.)"/>
+			  </xsl:when>
+			</xsl:choose>
+		      </xsl:variable>
 		      <cell>
 			<xsl:if test="preserveEffects='true'">
 			  <xsl:attribute name="tei:align">
@@ -381,6 +405,14 @@ of this software, even if advised of the possibility of such damage.
 			      <xsl:when test="w:p/w:pPr/w:jc">
 				<xsl:value-of
 				  select="w:p[1]/w:pPr/w:jc/@w:val"/>
+			      </xsl:when>
+			      <xsl:when test="$overrideRow/w:pPr/w:jc">
+				<xsl:value-of
+				  select="$overrideRow/w:pPr/w:jc/@w:val"/>
+			      </xsl:when>
+			      <xsl:when test="$overrideColumn/w:pPr/w:jc">
+				<xsl:value-of
+				  select="$overrideColumn/w:pPr/w:jc/@w:val"/>
 			      </xsl:when>
 			      <xsl:otherwise>
 				<xsl:text>left</xsl:text>
@@ -416,7 +448,12 @@ of this software, even if advised of the possibility of such damage.
 			      <xsl:value-of select="w:tcPr/w:gridSpan/@w:val"/>
 			    </xsl:attribute>
 			  </xsl:if>
-			  <xsl:call-template name="mainProcess"/>
+			  <xsl:call-template name="mainProcess">
+			    <xsl:with-param name="extrarow"
+					    select="$overrideRow"  tunnel="yes"/>
+			    <xsl:with-param name="extracolumn"
+					    select="$overrideColumn"  tunnel="yes"/>
+			  </xsl:call-template>
 		      </cell>
 		    </xsl:for-each>
 		  </row>
@@ -583,21 +620,43 @@ of this software, even if advised of the possibility of such damage.
         </xsl:if>
     </xsl:template>
 
-    <xsl:function name="tei:extrapolateTableStyle"  as="node()*">
+    <xsl:function name="tei:extrapolateTableFirstRow"  as="node()*">
       <xsl:param name="context"/>
-<!--
-	<xsl:for-each select="$context/ancestor::w:tbl/w:tblPr">
-	  <xsl:variable name="style" select="w:tblStyle/@w:val"/>
-	  <xsl:variable name="firstRow">
-	    <xsl:if test="w:tblLook/@w:firstRow='1'">
-	      <xsl:copy-of select="$styleDoc//w:style[@w:type='table
-		and @w:styleId=$style]"
-	    </xsl:if>
-	  </xsl:variable>
-        <w:tblStyle w:val="LightShading"/>
-        <w:tblW w:w="0" w:type="auto"/>
-        <w:jc w:val="center"/>
-        <w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/>
--->
+      <xsl:for-each select="$context/ancestor::w:tbl/w:tblPr">
+	<xsl:variable name="style" select="w:tblStyle/@w:val"/>	
+	<xsl:if test="w:tblLook/@w:firstRow='1'">
+	  <xsl:copy-of select="doc($styleDoc)//w:style[@w:type='table' and @w:styleId=$style]/w:tblStylePr[@w:type='firstRow']/*"/>
+	</xsl:if>
+      </xsl:for-each>
+    </xsl:function>
+
+    <xsl:function name="tei:extrapolateTableFirstColumn"  as="node()*">
+      <xsl:param name="context"/>
+      <xsl:for-each select="$context/ancestor::w:tbl/w:tblPr">
+	<xsl:variable name="style" select="w:tblStyle/@w:val"/>	
+	<xsl:if test="w:tblLook/@w:firstColumn='1'">
+	  <xsl:copy-of select="doc($styleDoc)//w:style[@w:type='table' and @w:styleId=$style]/w:tblStylePr[@w:type='firstCol']/*"/>
+	</xsl:if>
+      </xsl:for-each>
+    </xsl:function>
+
+    <xsl:function name="tei:extrapolateTableLastColumn"  as="node()*">
+      <xsl:param name="context"/>
+      <xsl:for-each select="$context/ancestor::w:tbl/w:tblPr">
+	<xsl:variable name="style" select="w:tblStyle/@w:val"/>	
+	<xsl:if test="w:tblLook/@w:lastColumn='1'">
+	  <xsl:copy-of select="doc($styleDoc)//w:style[@w:type='table' and @w:styleId=$style]/w:tblStylePr[@w:type='lastCol']/*"/>
+	</xsl:if>
+      </xsl:for-each>
+    </xsl:function>
+
+    <xsl:function name="tei:extrapolateTableLastRow"  as="node()*">
+      <xsl:param name="context"/>
+      <xsl:for-each select="$context/ancestor::w:tbl/w:tblPr">
+	<xsl:variable name="style" select="w:tblStyle/@w:val"/>	
+	<xsl:if test="w:tblLook/@w:lastRow='1'">
+	  <xsl:copy-of select="doc($styleDoc)//w:style[@w:type='table' and @w:styleId=$style]/w:tblStylePr[@w:type='lastRow']/*"/>
+	</xsl:if>
+      </xsl:for-each>
     </xsl:function>
 </xsl:stylesheet>
