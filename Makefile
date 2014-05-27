@@ -205,6 +205,8 @@ clean:
 	rm -f teioo.jar
 	rm -rf docx/ImageInfo/bin
 	rm -f names.xml licensekey.txt runDoc.sh
+	(for i in sciencejournal/*.html; do rm -f sciencejournal/`basename $$i`;done)
+	(for i in sciencejournal/*.xml; do rm -f sciencejournal/`basename $$i`;done)
 
 tags:
 	etags `find . -name "*.xsl" | grep -v "slides/" | grep -v "latex/" | grep -v "html/" | grep -v "fo/" | grep -v "common2/" | grep -v "doc/" `
