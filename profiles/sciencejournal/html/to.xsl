@@ -30,17 +30,22 @@
       </desc>
    </doc>
 
+
    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
    <xsl:param name="pagebreakStyle">none</xsl:param>
    <xsl:param name="institution"></xsl:param>
    <xsl:param name="numberHeadings">false</xsl:param>
    <xsl:param name="autoToc">false</xsl:param>
-   <xsl:template name="stdfooter"/>
+  <xsl:param name="verbose">true</xsl:param>
+  <xsl:template name="stdfooter"/>
    <xsl:template name="stdheader">
      <xsl:param name="title"/>
    </xsl:template>
    <xsl:key name="TABLESORT" use="1" match="tei:table[@rend='sort']"/>
 
+
+  
+  
    <xsl:template name="javascriptHook">
      <style type="text/css">
        td {vertical-align: top;}

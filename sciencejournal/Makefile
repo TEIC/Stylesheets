@@ -44,16 +44,8 @@ test-sciencejournal:
 	mv test.temp $$i.html; \
 	done \
 
-	$(BINDIR)/docxtotei --profile=sciencejournal 95534.docx temp.xml
-	xmllint --format temp.xml | perl cleanup.pl > 95534.xml  && rm temp.xml
-# do not validate for now
-#	$(JING) test.rng 95534.xml
-	diff 95534.xml expected-results/95534.xml
-	$(BINDIR)/teitohtml --profile=sciencejournal 95534.xml test.html
-	xmllint --encode utf-8 --format test.html | perl cleanup.pl > test.temp
-	mv test.temp 95534.html
-
 
 clean:
 	@echo CLEAN
-	rm 95534.xml
+	rm *.docx.xml
+	rm *.docx.html
