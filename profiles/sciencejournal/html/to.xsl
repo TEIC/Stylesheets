@@ -35,7 +35,7 @@
    <xsl:param name="institution"></xsl:param>
    <xsl:param name="numberHeadings">false</xsl:param>
    <xsl:param name="autoToc">false</xsl:param>
-   <xsl:template name="stdfooter"/>
+  <xsl:template name="stdfooter"/>
    <xsl:template name="stdheader">
      <xsl:param name="title"/>
    </xsl:template>
