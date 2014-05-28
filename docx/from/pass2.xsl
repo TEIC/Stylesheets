@@ -256,7 +256,6 @@ of this software, even if advised of the possibility of such damage.
     <desc>A footnote reference with a footnote inside it is in fact
     just a footnote</desc>
   </doc>
-
   <xsl:template match="tei:hi[@rend='footnote_reference' and count(*)=1 and tei:note]" mode="pass2" priority="99">
     <xsl:apply-templates select="tei:note" mode="pass2"/>
   </xsl:template>
