@@ -225,6 +225,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@type='transclude' and self::tei:ptr">
 	<xsl:apply-templates select="doc(@target)"/>
       </xsl:when>
+    	<!-- omit empty ref elements that do not have @target -->
+    	<xsl:when test="self::tei:ref and not(@target) and not(descendant-or-self::text())"/>
+    	
+    	
       <xsl:otherwise>
 	<xsl:variable name="ptr" select="if (self::tei:ptr) then
 					     true() else false()"/>
