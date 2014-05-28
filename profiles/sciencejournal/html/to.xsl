@@ -30,7 +30,6 @@
       </desc>
    </doc>
 
-
    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
    <xsl:param name="pagebreakStyle">none</xsl:param>
    <xsl:param name="institution"></xsl:param>
@@ -42,9 +41,6 @@
    </xsl:template>
    <xsl:key name="TABLESORT" use="1" match="tei:table[@rend='sort']"/>
 
-
-  
-  
    <xsl:template name="javascriptHook">
      <style type="text/css">
        td {vertical-align: top;}
