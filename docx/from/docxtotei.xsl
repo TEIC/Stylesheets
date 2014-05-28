@@ -489,33 +489,36 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:template>
 
    <xsl:template match="w:hyperlink">
-      <ref>
-	<xsl:attribute name="target">
-	  <xsl:choose>
-	    <xsl:when test="@w:anchor">
-	      <xsl:value-of select="concat('#',replace(@w:anchor,'^_',''))"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:variable name="rid" select="@r:id"/>
-	      <xsl:choose>
-		<xsl:when test="ancestor::w:endnote">
-		  <xsl:value-of
-		      select="document(concat($wordDirectory,'/word/_rels/endnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
-		</xsl:when>
-		<xsl:when test="ancestor::w:footnote">
-		  <xsl:value-of
-		      select="document(concat($wordDirectory,'/word/_rels/footnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:value-of
-		      select="document($relsDoc)//rel:Relationship[@Id=$rid]/@Target"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:attribute>
-	<xsl:apply-templates/>
-      </ref>
+   		<!-- hyperlinks that do not contain any children should *probably* be omitted as in Word they result in nothing visible at all -->
+   		<xsl:if test="child::node()">
+   			<ref>
+   				<xsl:attribute name="target">
+   					<xsl:choose>
+   						<xsl:when test="@w:anchor">
+   							<xsl:value-of select="concat('#',replace(@w:anchor,'^_',''))"/>
+   						</xsl:when>
+   						<xsl:otherwise>
+   							<xsl:variable name="rid" select="@r:id"/>
+   							<xsl:choose>
+   								<xsl:when test="ancestor::w:endnote">
+   									<xsl:value-of
+   										select="document(concat($wordDirectory,'/word/_rels/endnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+   								</xsl:when>
+   								<xsl:when test="ancestor::w:footnote">
+   									<xsl:value-of
+   										select="document(concat($wordDirectory,'/word/_rels/footnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+   								</xsl:when>
+   								<xsl:otherwise>
+   									<xsl:value-of
+   										select="document($relsDoc)//rel:Relationship[@Id=$rid]/@Target"/>
+   								</xsl:otherwise>
+   							</xsl:choose>
+   						</xsl:otherwise>
+   					</xsl:choose>
+   				</xsl:attribute>
+   				<xsl:apply-templates/>
+   			</ref>
+   		</xsl:if>
    </xsl:template>
 
    <xsl:template match="w:instrText">
