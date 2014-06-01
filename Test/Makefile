@@ -26,7 +26,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-markdown test-to-html test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt test-p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
+default: test.rng test-to-html test-p4top5 test-oddity test-scripts test-namespaces test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt  test-markdown  test-epub 
 
 test.rng:
 	$(BINDIR)/teitorelaxng --odd test.odd test.rng

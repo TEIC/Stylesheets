@@ -67,22 +67,14 @@ of this software, even if advised of the possibility of such damage.
     
   <xsl:param name="preserveEffects">false</xsl:param>
   
-  <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>Defines whether or not a word paragraph is a first level heading 
-      </desc>
-    </doc>
-    
-    <xsl:function name="tei:is-firstlevel-heading" as="xs:boolean">
-      <xsl:param name="p"/>      
-      <xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
-      <xsl:choose>
-	<xsl:when test="$s='heading 1'">true</xsl:when>
-	<xsl:when test="$s='Heading 1'">true</xsl:when>
-	<xsl:when test="$s='Heading1'">true</xsl:when>
-	<xsl:otherwise>false</xsl:otherwise>
-      </xsl:choose>
-    </xsl:function>
-    
+
+  <xsl:template name="fromDocxEffectsHook">
+    <xsl:if test="w:rPr/w:rStyle/@w:val='Heading 2 Char' and not(w:rPr/w:b/@w:val='0')">
+      <n>bold</n>
+    </xsl:if>
+  </xsl:template>
+
+   
     <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>Defines whether or not a word paragraph is a  heading 
       </desc>

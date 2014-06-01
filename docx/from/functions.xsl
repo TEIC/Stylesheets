@@ -70,8 +70,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:param name="p"/>
         
         <xsl:choose>
-            <xsl:when test="$p[w:pPr/w:pStyle/@w:val='heading 1']">true</xsl:when>
-            <xsl:when test="$p[w:pPr/w:pStyle/@w:val='Heading 1']">true</xsl:when>
+            <xsl:when test="matches($p/w:pPr/w:pStyle/@w:val,'[Hh]eading[ ]?1')">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>

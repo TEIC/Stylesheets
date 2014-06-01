@@ -117,7 +117,8 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-      <p>A &lt;p&gt; or &lt;seg&gt; which does nothing is not worth having </p>
+      <p>A &lt;p&gt; or &lt;seg&gt; which does nothing is not worth
+      having; and if its reverts to just space, its a space </p>
     </desc>
   </doc>
   <xsl:template match="tei:seg[not(@*)]" mode="pass2">
@@ -130,6 +131,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:value-of select="."/>
       </xsl:when>
       <xsl:when test="parent::tei:hi[count(*)=1]">
+        <xsl:value-of select="."/>
+      </xsl:when>
+      <xsl:when test=".=' '">
         <xsl:value-of select="."/>
       </xsl:when>
       <xsl:otherwise>

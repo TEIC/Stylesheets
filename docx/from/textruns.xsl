@@ -219,6 +219,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:variable>
      
       <xsl:variable name="effects">
+	<xsl:call-template name="fromDocxEffectsHook"/>
 	<xsl:if test="w:rPr/w:position[number(@w:val)&lt;-2] or
 		      (ancestor::w:tc 
 		      and
@@ -714,5 +715,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
+  <xsl:template name="fromDocxEffectsHook"/>
 
 </xsl:stylesheet>

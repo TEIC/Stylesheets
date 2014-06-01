@@ -1278,7 +1278,11 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element seg, pass through @type and @rend as @class</desc>
   </doc>
   <xsl:template match="tei:seg">
-    <span>
+    <xsl:variable name="container" select="if (tei:render-superscript(.)) then 'sup' 
+					   else if (tei:render-subscript(.)) then 'sub' 
+					   else if (@rend='code') then 'code' else 'span'"/>
+
+    <xsl:element name="{$container}">
       <xsl:choose>
         <xsl:when test="@type">
 	  <xsl:call-template name="makeLang"/>
@@ -1296,7 +1300,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="makeAnchor"/>
       </xsl:if>
       <xsl:apply-templates/>
-    </span>
+    </xsl:element>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element space</desc>
