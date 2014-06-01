@@ -206,7 +206,7 @@ test-odt:   test.rng
 	$(JING) test.rng test7.xml
 	diff test7.xml expected-results/test7.xml
 
-test-from-docx:
+test-from-docx: test.rng
 	@echo BUILD: testing from-docx
 	$(BINDIR)/docxtotei test-indexes.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-indexes.xml  && rm temp.xml
