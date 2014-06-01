@@ -501,9 +501,24 @@ of this software, even if advised of the possibility of such damage.
       <xsl:otherwise>
         <!-- Retain one leading space if node isn't first, has
 	     non-space content, and has leading space.-->
-        <xsl:if test="(parent::tei:hi/preceding-sibling::node()[1][self::tei:hi] or position()!=1) and          matches(.,'^\s') and          normalize-space()!=''">
-          <xsl:call-template name="space"/>
-        </xsl:if>
+	<xsl:variable name="context" select="name(parent::*)"/>
+	<xsl:if test="matches(.,'^\s') and  normalize-space()!=''">
+	  <!-- if the text is first thing in a note, zap it,  definitely -->
+	  <xsl:choose>
+	    <xsl:when test="(tei:isFootNote(..) or tei:isEndNote(..))
+			    and position()=1"/>
+	    <!-- but if its in a run on inline objects with the same
+	    name (like a sequence of <hi>), then the space needs
+	    keeping -->
+	    <xsl:when test="(tei:is-inline(parent::*)  and parent::*/preceding-sibling::node()[1][name()=$context])">
+              <xsl:call-template name="space"/>
+	    </xsl:when>
+	    <xsl:when test="position()=1"/>
+            <xsl:otherwise>
+              <xsl:call-template name="space"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:if>
         <xsl:value-of select="tei:escapeChars(normalize-space(.),parent::*)"/>
         <xsl:choose>
           <!-- node is an only child, and has content but it's all space -->
