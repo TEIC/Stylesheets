@@ -75,32 +75,32 @@ of this software, even if advised of the possibility of such damage.
     </name>
   </xsl:template>
 
- <xsl:template match="tei:Oulipen|tei:hi[@rend='Nom-oulipien']" mode="pass3">
-   <persName type="oulipien">
+ <xsl:template match="tei:hi[@rend='Nom-oulipien']" mode="pass3">
+   <persName >
 	   <xsl:apply-templates mode="pass3"/>
    </persName>
  </xsl:template>
 
   <xsl:template match="tei:hi[@rend='Nom-personne-auteur']" mode="pass3">
-    <persName type="auteur">
+    <persName role="auteur">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
   <xsl:template match="tei:hi[@rend='Nom-personne-divers']" mode="pass3">
-    <persName type="divers">
+    <persName >
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
   
   <xsl:template match="tei:hi[@rend='Nom-personne-editeur']" mode="pass3">
-    <orgName type="editeur">
+    <orgName role="editeur">
       <xsl:apply-templates mode="pass3"/>
     </orgName>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='Notions']" mode="pass3">
+  <xsl:template match="tei:hi[@rend='notions']" mode="pass3">
     <term>
       <xsl:apply-templates mode="pass3"/>
     </term>
@@ -114,36 +114,36 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template match="tei:hi[@rend='reunion-invité']" mode="pass3">
-    <persName type="invité">
+    <persName role="invité">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
   <xsl:template match="tei:hi[@rend='reunion-lieu']" mode="pass3">
-    <placeName type="réunion">
+    <placeName role="réunion">
       <xsl:apply-templates mode="pass3"/>
     </placeName>
   </xsl:template>
   
  <xsl:template match="tei:hi[@rend='reunion-presents']" mode="pass3">
-   <persName type="présent">
+   <persName role="présent">
      <xsl:apply-templates mode="pass3"/>
    </persName>
  </xsl:template>
   
   <xsl:template match="tei:hi[@rend='reunion-president']" mode="pass3">
-    <persName type="président">
+    <persName role="président">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
   <xsl:template match="tei:hi[@rend='reunion-secretaire']" mode="pass3">
-    <persName type="secrétaire">
+    <persName role="secrétaire">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='titre-oeuvre']" mode="pass3">
+  <xsl:template match="tei:hi[@rend='titreOeuvre']" mode="pass3">
     <title>
       <xsl:apply-templates mode="pass3"/>
     </title>
@@ -155,7 +155,12 @@ of this software, even if advised of the possibility of such damage.
     </title>
   </xsl:template>
   
-
+  <xsl:template match="tei:hi[@rend='unclear']" mode="pass3">
+    <unclear>
+      <xsl:apply-templates mode="pass3"/>
+    </unclear>
+  </xsl:template>
+  
  <xsl:template match="tei:body" mode="pass3">
    <pb/>
    <xsl:for-each-group select="*" group-adjacent="if
