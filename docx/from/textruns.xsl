@@ -410,7 +410,18 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:value-of select="$t"/>
                 </seg>
             </xsl:when>
-            <xsl:otherwise>
+        	<xsl:when test="parent::w:r/w:rPr/w:rFonts[starts-with(@w:ascii,'Symbol')]">
+        		<seg style="font-family:{parent::w:r/w:rPr/w:rFonts/@w:ascii};">
+        			<xsl:choose>
+        				<!-- Temporary fix just for one character -->
+        				<xsl:when test="string-to-codepoints($t)=61538">&#x03B2;</xsl:when>
+        				<xsl:otherwise>
+        					<xsl:value-of select="$t"/>
+        				</xsl:otherwise>
+        			</xsl:choose>
+        		</seg>
+        	</xsl:when>
+        	<xsl:otherwise>
                 <xsl:copy-of select="$t"/>
             </xsl:otherwise>            
         </xsl:choose>

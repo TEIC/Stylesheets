@@ -102,6 +102,8 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
     
     	<xsl:template match="w:tbl" mode="paragraph">
+
+    		
 	     <xsl:choose>
 	        <xsl:when test="$tableMethod='word'">
 	           <xsl:copy>
@@ -399,11 +401,11 @@ of this software, even if advised of the possibility of such damage.
 			</xsl:choose>
 		      </xsl:variable>
 		      <cell>
-			<xsl:if test="preserveEffects='true'">
-			  <xsl:attribute name="tei:align">
+		      	<xsl:if test="$preserveEffects='true'"> 
+		      		<xsl:attribute name="tei:align">
 			    <xsl:choose>
 			      <xsl:when test="w:p/w:pPr/w:jc">
-				<xsl:value-of
+			      	<xsl:value-of
 				  select="w:p[1]/w:pPr/w:jc/@w:val"/>
 			      </xsl:when>
 			      <xsl:when test="$overrideRow/w:pPr/w:jc">
@@ -419,7 +421,8 @@ of this software, even if advised of the possibility of such damage.
 			      </xsl:otherwise>
 			    </xsl:choose>
 			  </xsl:attribute>
-			</xsl:if>
+	  </xsl:if>
+			
 			<xsl:if test="w:tcPr/w:gridSpan">
 			  <xsl:attribute name="cols" select="w:tcPr/w:gridSpan/@w:val"/>
 			</xsl:if>

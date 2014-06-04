@@ -526,7 +526,6 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="contains(.,'REF _')"></xsl:when>
          <xsl:when test="starts-with(.,'HYPERLINK')"></xsl:when>
          <xsl:when test="starts-with(.,' ADDIN EN.')"/>
-         <xsl:when test="starts-with(.,' ADDIN PAPERS')"/>
 	 <xsl:when test="starts-with(.,' ADDIN ZOTERO')"/>
          <xsl:when test="starts-with(.,' XE')"></xsl:when>
          <xsl:when test="starts-with(.,'XE')"></xsl:when>

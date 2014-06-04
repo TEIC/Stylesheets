@@ -107,6 +107,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:attDef" mode="summary">
+    <xsl:message>here we go</xsl:message>
     <xsl:variable name="name" select="tei:createSpecName(.)"/>
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">

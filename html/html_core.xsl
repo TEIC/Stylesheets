@@ -1281,7 +1281,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="container" select="if (tei:render-superscript(.)) then 'sup' 
 					   else if (tei:render-subscript(.)) then 'sub' 
 					   else if (@rend='code') then 'code' else 'span'"/>
-
     <xsl:element name="{$container}">
       <xsl:choose>
         <xsl:when test="@type">
