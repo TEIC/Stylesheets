@@ -59,9 +59,9 @@ theory of liability, whether in contract, strict liability, or tort
 (including negligence or otherwise) arising in any way out of the use
 of this software, even if advised of the possibility of such damage.
 </p>
-      <p>Author: See AUTHORS</p>
+      <p>Author: See AUTHORS for the basic scheme. This profile constructed by Lou Burnard</p>
       <p>Id: $Id$</p>
-      <p>Copyright: 2013, TEI Consortium</p>
+      <p>Copyright: 2013, TEI Consortium; 2014 Lou Burnard Consulting</p>
     </desc>
   </doc>
 
@@ -106,7 +106,18 @@ of this software, even if advised of the possibility of such damage.
     </term>
   </xsl:template>
   
-  
+  <xsl:template match="tei:p[@rend='listeDesPresents'][1]" mode="pass3">
+    <list type="present">
+      <head><xsl:value-of select="." /></head>
+      <xsl:for-each select="following::tei:p[@rend='listeDesPresents']">
+        <item> <xsl:apply-templates mode="pass3"/></item>
+      </xsl:for-each>
+    </list>
+  </xsl:template>
+ 
+  <xsl:template match="tei:p[@rend='listeDesPresents'][position() > 1]" mode="pass3"/>
+
+    
   <xsl:template match="tei:hi[@rend='reunion-date']" mode="pass3">
     <date type="réunion">
       <xsl:apply-templates mode="pass3"/>
@@ -114,6 +125,12 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template match="tei:hi[@rend='reunion-invité']" mode="pass3">
+    <persName role="invité">
+      <xsl:apply-templates mode="pass3"/>
+    </persName>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='reunion-invite']" mode="pass3">
     <persName role="invité">
       <xsl:apply-templates mode="pass3"/>
     </persName>
@@ -183,7 +200,6 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:apply-templates select="current-group()" mode="pass3"/>
 	 </body>
        </xsl:when>
-
      </xsl:choose>
    </xsl:for-each-group>
  </xsl:template>
