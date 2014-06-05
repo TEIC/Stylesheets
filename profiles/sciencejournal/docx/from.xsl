@@ -65,7 +65,7 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
     
-  <xsl:param name="preserveEffects">false</xsl:param>
+  <xsl:param name="preserveEffects">true</xsl:param>
   
 
   <xsl:template name="fromDocxEffectsHook">

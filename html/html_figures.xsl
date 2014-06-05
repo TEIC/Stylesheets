@@ -125,7 +125,7 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:value-of select="."/>
 	    </xsl:attribute>
 	  </xsl:when>
-	  <xsl:when test="name(.)='align'">
+	  <xsl:when test="local-name(.)='align'">
 	    <xsl:attribute name="align">
 	      <xsl:value-of select="."/>
 	    </xsl:attribute>
