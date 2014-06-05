@@ -95,14 +95,25 @@ of this software, even if advised of the possibility of such damage.
         <xsl:choose>
 	    <xsl:when test="$p/w:pPr/w:numPr[not(w:ins)]">true</xsl:when>
             <xsl:when test="$p/w:pPr/w:pStyle/@w:val='List Paragraph'">false</xsl:when>
-            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Bulletted')]">true</xsl:when>
-            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Bulleted')]">true</xsl:when>
-            <xsl:when test="contains($p/w:pPr/w:pStyle/@w:val,'List')">true</xsl:when>
+            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Bulletted')]"><xsl:value-of select="tei:style-is-list($p/w:pPr/w:pStyle/@w:val)"/></xsl:when>
+            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Bulleted')]"><xsl:value-of select="tei:style-is-list($p/w:pPr/w:pStyle/@w:val)"/></xsl:when>
+            <xsl:when test="contains($p/w:pPr/w:pStyle/@w:val,'List')"><xsl:value-of select="tei:style-is-list($p/w:pPr/w:pStyle/@w:val)"/></xsl:when>
             <xsl:when test="$p/w:pPr/w:pStyle/@w:val='dl'">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+        <desc>Defines whether or not a word style defines a list.</desc></doc>
+    <xsl:function name="tei:style-is-list" as="xs:boolean">
+        <xsl:param name="style"/>    
+        <xsl:choose>
+            <!-- follow the style definition to see if it's a list -->
+            <xsl:when test="document($styleDoc)//w:style[w:name/@w:val=$style]/w:pPr[w:numPr]">true</xsl:when>
+            <xsl:otherwise>false</xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+    
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Defines whether or not a word paragraph is a table of contents.</desc></doc>
     <xsl:function name="tei:is-toc" as="xs:boolean">
