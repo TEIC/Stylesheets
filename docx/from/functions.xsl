@@ -92,24 +92,14 @@ of this software, even if advised of the possibility of such damage.
       <desc>Defines whether or not a word paragraph is a list element.</desc></doc>
     <xsl:function name="tei:is-list" as="xs:boolean">
         <xsl:param name="p"/>    
+	<xsl:variable name="style" select="$p/w:pPr/w:pStyle/@w:val"/>
+	<xsl:variable name="stylePr"
+		      select="document($styleDoc)//w:style[w:name/@w:val=$style]"/>
         <xsl:choose>
-	    <xsl:when test="$p/w:pPr/w:numPr[not(w:ins)]">true</xsl:when>
-            <xsl:when test="$p/w:pPr/w:pStyle/@w:val='List Paragraph'">false</xsl:when>
-            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Bulletted')]"><xsl:value-of select="tei:style-is-list($p/w:pPr/w:pStyle/@w:val)"/></xsl:when>
-            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Bulleted')]"><xsl:value-of select="tei:style-is-list($p/w:pPr/w:pStyle/@w:val)"/></xsl:when>
-            <xsl:when test="contains($p/w:pPr/w:pStyle/@w:val,'List')"><xsl:value-of select="tei:style-is-list($p/w:pPr/w:pStyle/@w:val)"/></xsl:when>
             <xsl:when test="$p/w:pPr/w:pStyle/@w:val='dl'">true</xsl:when>
-            <xsl:otherwise>false</xsl:otherwise>
-        </xsl:choose>
-    </xsl:function>
-
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-        <desc>Defines whether or not a word style defines a list.</desc></doc>
-    <xsl:function name="tei:style-is-list" as="xs:boolean">
-        <xsl:param name="style"/>    
-        <xsl:choose>
-            <!-- follow the style definition to see if it's a list -->
-            <xsl:when test="document($styleDoc)//w:style[w:name/@w:val=$style]/w:pPr[w:numPr]">true</xsl:when>
+	    <xsl:when test="$p/w:pPr/w:numPr/w:ilvl">true</xsl:when>
+	    <xsl:when test="contains($style,'List') and $p/w:pPr/w:numPr[not(w:ins)]">true</xsl:when>
+            <xsl:when test="contains($style,'List') and $stylePr/w:pPr/w:numPr[not(w:ins)]">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>
