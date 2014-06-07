@@ -18,14 +18,12 @@
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
-		xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 version="2.0"
                 exclude-result-prefixes="cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
-         <p> TEI Utility stylesheet for making Word docx files
-        from TEI XML (see docx-tei.xsl)</p>
+         <p> TEI Utility stylesheet for making TEI XML from  Word docx files</p>
          <p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
@@ -192,5 +190,13 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
     </xsl:function>
 
+
+    <xsl:function name="tei:docxError" as="node()+">
+      <xsl:param name="message"/>
+      <note place="margin" type="conversion" resp="#teitodocx" xmlns="http://www.tei-c.org/ns/1.0" >
+	<hi rend="docxError"><xsl:value-of select="$message"/></hi>
+      </note>
+      <xsl:message>docx conversion issue: <xsl:value-of select="$message"/></xsl:message>
+    </xsl:function>
 
 </xsl:stylesheet>

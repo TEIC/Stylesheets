@@ -37,8 +37,7 @@
 	  <xsl:import href="../variables.xsl"/>
 	  <xsl:import href="omml2mml.xsl"/>
 
-	  <xsl:param name="convert-graphics">true</xsl:param>	  
-	  <xsl:param name="convert-headers">true</xsl:param>	  
+	  <xsl:param name="convertGraphics">true</xsl:param>	  
 	  <xsl:param name="mathMethod">mml</xsl:param>	  
 	  <xsl:param name="termMethod">tei</xsl:param>	  
 	  <xsl:param name="tableMethod">tei</xsl:param>	  
@@ -46,6 +45,7 @@
 	  <xsl:param name="preserveWordHeadersFooters">false</xsl:param>    	  
 	  <xsl:param name="preserveSoftPageBreaks">false</xsl:param>    	  
 	  <xsl:param name="preserveEffects">false</xsl:param>	  
+	  <xsl:param name="preserveObject">false</xsl:param>	  
 	  <xsl:param name="verbose">false</xsl:param>	  
 	  <xsl:param name="processChangeInformation">false</xsl:param>
 	  <xsl:param name="pageHeight">890</xsl:param>
@@ -598,7 +598,7 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:template name="generateAppInfo">
       <appInfo>
-	        <application ident="TEI_fromDOCX" version="2.15.0">
+	        <application xml:id="doxtotei" ident="TEI_fromDOCX" version="2.15.0">
 	           <label>DOCX to TEI</label>
 	        </application>
 	        <xsl:if test="doc-available(concat($wordDirectory,'/docProps/custom.xml'))">

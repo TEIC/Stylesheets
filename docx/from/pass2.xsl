@@ -294,8 +294,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="not(*) and string-length(.)=0"/>
       <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']  and tei:g[@ref='x:tab']"/>
       <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]"/>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and
-		      preceding-sibling::node()[2][self::tei:hi[@rend=$r]]"/>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and  preceding-sibling::node()[2][self::tei:hi[@rend=$r]]"/>
       <xsl:when test="($r='bold' or $r='italic') and .=' '">
         <xsl:text> </xsl:text>
 	<xsl:if test="following-sibling::node()[1][self::tei:hi[@rend=$r]]">

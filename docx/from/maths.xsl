@@ -149,13 +149,21 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Handles a w:object by copying it</p>
+         <p>Handles a w:object, possibly by just copying it else
+	 giving error</p>
       </desc>
    </doc>
     <xsl:template match="w:object">
-      <xsl:copy>
-	<xsl:apply-templates mode="iden"/>
-      </xsl:copy>
+      <xsl:choose>
+	<xsl:when test="preserveObject='true'">
+	  <xsl:copy>
+	    <xsl:apply-templates mode="iden"/>
+	  </xsl:copy>
+	  </xsl:when>
+          <xsl:otherwise>
+	    <xsl:sequence select="tei:docxError('unable to handle Word object, possibly  embedded spreadsheet')"/>
+	  </xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
