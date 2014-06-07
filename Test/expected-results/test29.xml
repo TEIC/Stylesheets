@@ -20,7 +20,7 @@
     </fileDesc>
     <encodingDesc>
       <appInfo>
-        <application ident="TEI_fromDOCX" version="2.15.0">
+        <application xml:id="doxtotei" ident="TEI_fromDOCX" version="2.15.0">
           <label>DOCX to TEI</label>
         </application>
       </appInfo>
@@ -157,9 +157,9 @@
         </figure>
         <figure>
           <p>
-            <figure>
-              <desc>unable to handle picture</desc>
-            </figure>
+            <note place="margin" type="conversion" resp="#teitodocx">
+              <hi rend="docxError">unable to handle picture here, no embed or link</hi>
+            </note>
           </p>
           <head>Figure <ref rend="SEQ">2</ref>. An embedded .xslx graph, doesn’t work yet.</head>
         </figure>

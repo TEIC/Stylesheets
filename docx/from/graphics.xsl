@@ -108,7 +108,6 @@ of this software, even if advised of the possibility of such damage.
             </graphic>
           </xsl:when>
             <xsl:when test="@r:link">
-
               <xsl:variable name="rid" select="@r:link"/>
 	      <graphic
 		  url="{document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target}">
@@ -126,7 +125,7 @@ of this software, even if advised of the possibility of such damage.
 	      </graphic>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:sequence select="tei:docxError('unable to handle picture')"/>
+              <xsl:sequence select="tei:docxError('unable to handle picture here, no embed or link')"/>
             </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
