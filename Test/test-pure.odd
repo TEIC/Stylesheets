@@ -47,7 +47,7 @@
         <elementSpec ident="bit">
           <desc>élément textuel du schéma simplissime (peut contenir des bobs) </desc>
           <content allowText="true">
-            <elementRef key="bob" minOccurs="1" maxOccurs="1"/>
+            <elementRef key="bob" maxOccurs="1"/>
           </content>
 	  <constraintSpec ident="test" scheme="isoschematron">
 	    <constraint>
@@ -69,7 +69,7 @@
 	<elementSpec ident="stuff3">
 	  <desc>more</desc>
 	  <content >
-            <alternate allowText="true" minOccurs="0"      maxOccurs="unbounded">
+            <alternate allowText="true" minOccurs="0"      >
                 <elementRef key="bit"/>
 		<elementRef key="bob"/>
 		<elementRef key="t1"/>
@@ -80,7 +80,7 @@
 	<elementSpec ident="stuff4">
 	  <desc>even more</desc>
 	  <content  allowText="true">
-              <alternate  minOccurs="0" maxOccurs="unbounded">
+              <alternate  minOccurs="0" >
                 <elementRef key="bit"/>
                <elementRef key="bob"/>
               <elementRef key="t1"/>
@@ -91,24 +91,24 @@
 	  <elementSpec ident="seg">
 	    <desc>more seg</desc>
 	    <content>
-	      <sequence allowText="true" preserveOrder="false">
-		<elementRef key="orgName" maxOccurs="unbounded" minOccurs="0"/>
-		<elementRef key="persName" maxOccurs="unbounded" minOccurs="0"/>
-		<elementRef key="choice" maxOccurs="unbounded" minOccurs="0"/>
-		<elementRef key="seg" maxOccurs="unbounded" minOccurs="0"/>
-		<elementRef key="trait" maxOccurs="unbounded" minOccurs="0"/>
+	      <sequence allowText="true">
+		<elementRef key="orgName"  minOccurs="0"/>
+		<elementRef key="persName"  minOccurs="0"/>
+		<elementRef key="choice"  minOccurs="0"/>
+		<elementRef key="seg"  minOccurs="0"/>
+		<elementRef key="trait"  minOccurs="0"/>
 	      </sequence>
 	    </content>
 	  </elementSpec>
 
 	  <elementSpec ident="seg2">
 	    <desc>more seg</desc>
-	    <content allowText="true" preserveOrder="false">
-		<elementRef key="orgName" maxOccurs="unbounded" minOccurs="0"/>
-		<elementRef key="persName" maxOccurs="unbounded" minOccurs="0"/>
-		<elementRef key="choice" maxOccurs="unbounded" minOccurs="0"/>
-		<elementRef key="seg" maxOccurs="unbounded" minOccurs="0"/>
-		<elementRef key="trait" maxOccurs="unbounded" minOccurs="0"/>
+	    <content allowText="true" >
+		<elementRef key="orgName"  minOccurs="0"/>
+		<elementRef key="persName"  minOccurs="0"/>
+		<elementRef key="choice"  minOccurs="0"/>
+		<elementRef key="seg"  minOccurs="0"/>
+		<elementRef key="trait"  minOccurs="0"/>
 	    </content>
 	  </elementSpec>
 
