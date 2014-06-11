@@ -401,6 +401,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:copy-of select="$rend/*/@*"/>
 	    <xsl:apply-templates select="current-group()"/>
 	  </xsl:element>
+<!--	  ***<xsl:value-of select="current-group()"/>*** -->
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each-group>
