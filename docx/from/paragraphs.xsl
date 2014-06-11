@@ -118,13 +118,49 @@ of this software, even if advised of the possibility of such damage.
 	  </GLOSSITEM>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:call-template name="paragraph-wp">
-	    <xsl:with-param name="style" select="$style"/>
+		<!-- For unknown reason style name sometimes is enclosed with &lt; &gt; -->
+		<xsl:variable name="st">
+			<xsl:choose>
+				<xsl:when test="substring($style, 1, 1)='&lt;'">
+					<xsl:value-of select="substring($style, 2, string-length($style)-2)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="$style"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:call-template name="paragraph-wp">
+	    <xsl:with-param name="style" select="$st"/>
 	  </xsl:call-template>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
     
+	<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+		<desc>Named template to retrieve the formatting from named Word style to make into TEI style attribute elsewhere.</desc>
+	</doc>
+	<xsl:template name="retrieve-styles">
+		<xsl:param name="style"/>
+		<!-- check if styleDoc has style definition for current style -->
+		<xsl:variable name="styleprop" select="doc($styleDoc)//w:style[@w:styleId=$style]"/>
+		<!-- if yes, gather info about text alignment, bold, italic, font size, face, underlining, sub- and superscript into @style -->
+		<xsl:if test="$styleprop/node()">
+				<xsl:if test="count($styleprop/w:rPr[w:b])>0">
+					<xsl:text>font-weight: bold; </xsl:text>
+				</xsl:if>
+				<xsl:if test="count($styleprop/w:rPr[w:i])>0">
+					<xsl:text>font-style: italic; </xsl:text>
+				</xsl:if>
+				<xsl:if test="count($styleprop/w:rPr[w:u])>0">
+					<xsl:text>text-decoration: underline; </xsl:text>
+				</xsl:if>
+				<xsl:if test="count($styleprop/w:pPr[w:jc])>0">
+					<xsl:text>text-align:</xsl:text>
+					<xsl:value-of select="$styleprop/w:pPr/w:jc/@w:val"/>
+					<xsl:text>; </xsl:text>
+				</xsl:if>
+		</xsl:if>	
+	</xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Named template for handling w:p; we 
@@ -132,20 +168,37 @@ of this software, even if advised of the possibility of such damage.
        and check for change records.</desc>
    </doc>
    <xsl:template name="paragraph-wp">
-     <xsl:param name="style"/>
-     <xsl:element name="p">
-       <xsl:if test="$style and not($style='Default' or $style='Default Style')">
+   	<xsl:param name="style"/>
+   	<xsl:element name="p">
+       <xsl:if test="string($style) and not($style='Default' or $style='Default Style')">
 	 <xsl:attribute name="rend">
 	   <xsl:value-of select="$style"/>
 	 </xsl:attribute>
        </xsl:if>
-	<xsl:if test="$preserveEffects='true' and w:pPr/w:jc">
-	  <xsl:attribute name="style">
-	    <xsl:text>text-align:</xsl:text>
-	    <xsl:value-of select="w:pPr/w:jc/@w:val"/>
-	    <xsl:text>;</xsl:text>
-	  </xsl:attribute>
-	</xsl:if>
+   		<xsl:variable name="retrievedStyles">
+        	<!-- Do we want to preserve word styles? -->
+        	<xsl:if test="$preserveEffects='true' and not(normalize-space($style)='')">
+     	      <xsl:call-template name="retrieve-styles">
+             	<xsl:with-param name="style" select="$style"/>
+              </xsl:call-template>
+         	</xsl:if>
+   		</xsl:variable>
+   		<xsl:variable name="localStyles">
+   			<xsl:if test="$preserveEffects='true' and w:pPr/w:jc">
+        	    <xsl:text>text-align:</xsl:text>
+	            <xsl:value-of select="w:pPr/w:jc/@w:val"/>
+	            <xsl:text>;</xsl:text>
+   			</xsl:if>
+   		</xsl:variable>
+
+   		<!-- merge local and retrieved from styles.xml -->
+   		<xsl:if test="string($retrievedStyles) or string($localStyles)">
+   			<xsl:attribute name="style">
+   				<xsl:value-of select="$retrievedStyles"/>
+   				<xsl:value-of select="$localStyles"/>
+   			</xsl:attribute>
+   		</xsl:if>
+   		
        <xsl:if test="w:pPr/w:pStyle/w:rPr/w:rtl">
 	 <xsl:attribute name="dir"
 			xmlns="http://www.w3.org/2005/11/its">

@@ -589,6 +589,7 @@ of this software, even if advised of the possibility of such damage.
         				
         				<xsl:otherwise>
         					<xsl:value-of select="$t"/>
+        					<xsl:message>Warning: Some Symbol fonts may not convert properly. <xsl:value-of select="$t"/></xsl:message>
         				</xsl:otherwise>
         			</xsl:choose>
         		</seg>
@@ -803,7 +804,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose> 	
     </xsl:when>
     <xsl:when test="@w:font='Wingdings 2' and @w:char='F050'">&#x2713;</xsl:when><!-- tick mark-->
-	<xsl:otherwise> 	  
+      	<xsl:when test="@w:font='Wingdings' and @w:char='F05B'">&#x262F;</xsl:when><!-- yin-yang -->
+      	<xsl:otherwise> 	  
 	  <g style="font-family:{@w:font};" n="{@w:char}"/>
 	</xsl:otherwise>       
       </xsl:choose>
