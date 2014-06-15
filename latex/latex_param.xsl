@@ -220,6 +220,7 @@ characters. The normal characters remain active for LaTeX commands.
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
 \usepackage{colortbl}
+\usepackage{wrapfig}
 \usepackage{ifxetex}
 \ifxetex
   \usepackage{fontspec}
