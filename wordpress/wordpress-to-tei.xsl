@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:wp="http://wordpress.org/export/1.2/" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns="http://www.tei-c.org/ns/1.0" version="2.0" exclude-result-prefixes="#all">
+<xsl:stylesheet
+    xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:wp="http://wordpress.org/export/1.2/"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns="http://www.tei-c.org/ns/1.0"
+xmlns:html="http://www.tei-c.org/ns/1.0"
+version="2.0" exclude-result-prefixes="#all">
   <xsl:variable name="allowedtags">
     <address/>
     <blockquote/>
@@ -25,7 +36,9 @@
     <em/>
     <b/>
     <strong/>
-    <div/>
+    <div>
+      <class/>
+    </div>
     <img>
       <width/>
       <height/>
@@ -36,7 +49,9 @@
     <li/>
     <ul/>
     <br/>
-    <p/>
+    <p>
+      <class/>
+    </p>
     <span/>
     <a>
       <href/>
@@ -70,6 +85,7 @@
       </teiHeader>
       <text>
         <body>
+	  <xsl:variable name="body">
           <xsl:for-each select="channel/item[wp:status='publish']">
             <xsl:sort select="wp:post_date" order="ascending"/>
             <xsl:if test="normalize-space(content:encoded)!='' or wp:attachment_url">
@@ -83,6 +99,9 @@
               </div>
             </xsl:if>
           </xsl:for-each>
+	  </xsl:variable>
+<xsl:message><xsl:copy-of select="$body"/></xsl:message>
+	  <xsl:apply-templates select="$body" mode="pass2"/>
         </body>
       </text>
     </TEI>
@@ -97,7 +116,7 @@
       <xsl:call-template name="unescape">
         <xsl:with-param name="str">
           <xsl:choose>
-            <xsl:when test="starts-with(.,'&lt;p&gt;')">
+            <xsl:when test="starts-with(.,'&lt;p')">
               <xsl:value-of select="replace(.,'&amp;amp;','&amp;')"/>
             </xsl:when>
             <xsl:otherwise>
@@ -107,11 +126,16 @@
         </xsl:with-param>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:for-each-group select="$content/*|$content/text()" group-starting-with="p|text()">
+    <xsl:for-each-group select="$content/*|$content/text()" group-starting-with="div|p|text()">
       <xsl:choose>
         <xsl:when test="not(*) and normalize-space(.)=''"/>
         <xsl:when test="self::p">
           <xsl:apply-templates select="current-group()"/>
+        </xsl:when>
+        <xsl:when test="self::div">
+          <p>
+	    <xsl:apply-templates select="current-group()"/>
+	  </p>
         </xsl:when>
         <xsl:otherwise>
           <p>
@@ -121,6 +145,7 @@
       </xsl:choose>
     </xsl:for-each-group>
   </xsl:template>
+
   <xsl:template match="p">
     <xsl:if test="* or not(normalize-space(.)='')">
       <p>
@@ -128,10 +153,13 @@
       </p>
     </xsl:if>
   </xsl:template>
+
   <xsl:template match="b|strong">
-    <hi rend="bold">
-      <xsl:apply-templates/>
-    </hi>
+    <xsl:if test="* or not(normalize-space(.)='')">
+      <hi rend="bold">
+	<xsl:apply-templates/>
+      </hi>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="caption">
@@ -284,7 +312,14 @@
       <xsl:when test="starts-with($tag,'/')"/>
       <xsl:when test="starts-with($tag,'!--')"/>
       <xsl:when test="$tag">
-        <xsl:variable name="currtag" select="$allowedtags/*[$tag =           local-name()]"/>
+        <xsl:variable name="currtag" select="$allowedtags/*[local-name()=$tag]"/>
+<!--
+	<xsl:message>Start <xsl:value-of select="$start"/>
+Rest <xsl:value-of select="$rest"/>
+Fulltag <xsl:value-of select="$fulltag"/>
+_____
+	</xsl:message>
+-->
         <xsl:choose>
           <xsl:when test="$currtag">
             <xsl:element xmlns="" name="{$currtag/local-name()}">
@@ -329,5 +364,28 @@
         <xsl:value-of select="$str"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+
+  <xsl:template match="*" mode="pass2">
+    <xsl:copy>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="text()|@*" mode="pass2">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="html:p" mode="pass2">
+    <xsl:if test="* or not(normalize-space(.)='')">
+      <p>
+        <xsl:apply-templates mode="pass2"/>
+      </p>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="text()">
+    <xsl:value-of select="translate(.,' ',' ')"/>
   </xsl:template>
 </xsl:stylesheet>
