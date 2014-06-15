@@ -174,7 +174,7 @@ of this software, even if advised of the possibility of such damage.
       <desc/>
    </doc>
   <xsl:template match="tei:closer">
-    <xsl:text>&#10;\begin{quote}</xsl:text>
+    <xsl:text>&#10;&#10;\begin{quote}</xsl:text>
     <xsl:apply-templates/>
     <xsl:text>\end{quote}&#10;</xsl:text>
   </xsl:template>
@@ -223,7 +223,9 @@ of this software, even if advised of the possibility of such damage.
       <desc/>
    </doc>
   <xsl:template match="tei:opener">
- \begin{quote}<xsl:apply-templates/>\end{quote}
+    <xsl:text>&#10;&#10;\begin{quote}</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>\end{quote}</xsl:text>
 </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>the main TEI text</desc>

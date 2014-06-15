@@ -699,7 +699,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element signed</desc>
    </doc>
   <xsl:template match="tei:signed">
-      <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
+      <xsl:text>&#10;&#10;\begin{quote}&#10;</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>\end{quote}&#10;</xsl:text>
   </xsl:template>
