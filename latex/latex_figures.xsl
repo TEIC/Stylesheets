@@ -283,6 +283,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:text>}</xsl:text>
       </xsl:variable>
       <xsl:choose>
+	<xsl:when test="parent::tei:ref">
+	  <xsl:value-of select="$pic"/>
+	</xsl:when>
 	<xsl:when test="@rend='alignright'">
 	  <xsl:text>\begin{wrapfigure}{r}{</xsl:text>
 	  <xsl:value-of select="@width"/>

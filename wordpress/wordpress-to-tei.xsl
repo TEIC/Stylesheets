@@ -25,7 +25,9 @@ version="2.0" exclude-result-prefixes="#all">
     <h3/>
     <hr/>
     <i/>
-    <ol/>
+    <ol>
+      <style/>
+    </ol>
     <sup/>
     <table/>
     <tr/>
@@ -51,6 +53,7 @@ version="2.0" exclude-result-prefixes="#all">
     <br/>
     <p>
       <class/>
+      <style/>
     </p>
     <span/>
     <a>
@@ -100,7 +103,6 @@ version="2.0" exclude-result-prefixes="#all">
             </xsl:if>
           </xsl:for-each>
 	  </xsl:variable>
-<xsl:message><xsl:copy-of select="$body"/></xsl:message>
 	  <xsl:apply-templates select="$body" mode="pass2"/>
         </body>
       </text>
@@ -113,34 +115,60 @@ version="2.0" exclude-result-prefixes="#all">
   </xsl:template>
   <xsl:template match="content:encoded[string-length(.)&gt;0]">
     <xsl:variable name="content">
-      <xsl:call-template name="unescape">
+      <xsl:call-template name="unescape">        <xsl:with-param name="why">1</xsl:with-param>
         <xsl:with-param name="str">
           <xsl:choose>
             <xsl:when test="starts-with(.,'&lt;p')">
               <xsl:value-of select="replace(.,'&amp;amp;','&amp;')"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="replace(concat('&lt;p&gt;',replace(.,'&#10;&#10;','&lt;/p&gt;&lt;p&gt;'),'&lt;/p&gt;'), '&amp;amp;','&amp;')"/>
+              <p><xsl:value-of select="replace(.,'&amp;amp;','&amp;')"/></p>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:with-param>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:for-each-group select="$content/*|$content/text()" group-starting-with="div|p|text()">
+
+    <xsl:for-each-group select="$content/node()" group-adjacent="if
+								 (self::p)
+								 then
+								 1
+								 else
+								 if
+								 (self::div)
+								 then
+								 2
+								 else
+								 if
+								 (self::blockquote)
+								 then
+								 1
+								 else
+								 if
+								 (self::ol)
+								 then 1
+								 else
+								 if
+								 (self::ul)
+								 then
+								 1
+								 else
+								 3"> 
+
+<!--    <xsl:for-each-group select="$content/node()"
+group-starting-with="text()|ol|blockquote|div|p|br|ul"> -->
       <xsl:choose>
         <xsl:when test="not(*) and normalize-space(.)=''"/>
-        <xsl:when test="self::p">
+        <xsl:when test="current-grouping-key()=1">
           <xsl:apply-templates select="current-group()"/>
         </xsl:when>
-        <xsl:when test="self::div">
+        <xsl:when test="current-grouping-key()=2">
           <p>
 	    <xsl:apply-templates select="current-group()"/>
 	  </p>
         </xsl:when>
         <xsl:otherwise>
-          <p>
-            <xsl:apply-templates select="current-group()"/>
-          </p>
+            <p><xsl:apply-templates select="current-group()"/></p>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each-group>
@@ -160,12 +188,6 @@ version="2.0" exclude-result-prefixes="#all">
 	<xsl:apply-templates/>
       </hi>
     </xsl:if>
-  </xsl:template>
-
-  <xsl:template match="caption">
-    <head>
-      <xsl:apply-templates/>
-    </head>
   </xsl:template>
 
   <xsl:template match="address"/>
@@ -295,9 +317,11 @@ version="2.0" exclude-result-prefixes="#all">
   </xsl:template>
 
   <!-- from
-     http://stackoverflow.com/questions/2463155/how-to-unescape-xml-characters-with-help-of-xslt -->
+       http://stackoverflow.com/questions/2463155/how-to-unescape-xml-characters-with-help-of-xslt
+       -->
   <xsl:template name="unescape">
     <xsl:param name="str"/>
+    <xsl:param name="why"/>
     <xsl:variable name="start" select="substring-before($str,'&lt;')"/>
     <xsl:variable name="rest" select="substring-after($str,'&lt;')"/>
     <xsl:variable name="fulltag" select="substring-before($rest,'&gt;')"/>
@@ -314,10 +338,21 @@ version="2.0" exclude-result-prefixes="#all">
       <xsl:when test="$tag">
         <xsl:variable name="currtag" select="$allowedtags/*[local-name()=$tag]"/>
 <!--
-	<xsl:message>Start <xsl:value-of select="$start"/>
-Rest <xsl:value-of select="$rest"/>
-Fulltag <xsl:value-of select="$fulltag"/>
+	<xsl:message>
+WHY: <xsl:value-of select="$why"/>
+
+WHAT: <xsl:value-of select="$str"/>
+
+START: <xsl:value-of select="$start"/>
+
+REST: <xsl:value-of select="$rest"/>
+
+AFTERTAG: <xsl:value-of select="$aftertag"/>
+
+AFTERALL: <xsl:value-of select="$afterall"/>
 _____
+
+
 	</xsl:message>
 -->
         <xsl:choose>
@@ -333,7 +368,7 @@ _____
                 </xsl:if>
               </xsl:for-each>
 	      <xsl:if test="$intag">
-                  <xsl:call-template name="unescape">
+                  <xsl:call-template name="unescape"><xsl:with-param name="why">2</xsl:with-param>
                     <xsl:with-param name="str">
                       <xsl:value-of select="$intag"/>
                     </xsl:with-param>
@@ -341,7 +376,7 @@ _____
 	      </xsl:if>
 	    </xsl:element>
 	    <xsl:if test="$tagparts[last()]='/'"><!-- empty element -->
-              <xsl:call-template name="unescape">
+              <xsl:call-template name="unescape"><xsl:with-param name="why">3</xsl:with-param>
                 <xsl:with-param name="str">
                   <xsl:value-of select="$aftertag"/>
                 </xsl:with-param>
@@ -352,8 +387,8 @@ _____
             <xsl:message>Error: tag <xsl:value-of select="$tag"/> not  recognized</xsl:message>
           </xsl:otherwise>
         </xsl:choose>
-        <xsl:if test="$afterall">
-          <xsl:call-template name="unescape">
+        <xsl:if test="string-length($afterall)&gt;0">
+          <xsl:call-template name="unescape"><xsl:with-param name="why">4</xsl:with-param>
             <xsl:with-param name="str">
               <xsl:value-of select="$afterall"/>
             </xsl:with-param>
@@ -373,7 +408,7 @@ _____
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="text()|@*" mode="pass2">
+  <xsl:template match="@*" mode="pass2">
     <xsl:copy-of select="."/>
   </xsl:template>
 
@@ -385,7 +420,14 @@ _____
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="text()">
-    <xsl:value-of select="translate(.,' ',' ')"/>
+  <xsl:template match="text()" mode="pass2">
+    <xsl:choose>
+      <xsl:when test="parent::html:p">
+	<xsl:value-of disable-output-escaping="yes" select="replace(translate(.,' ',' '),'\.&#10;&#10;','.&lt;lb/&gt;')"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="translate(.,' ',' ')"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>
