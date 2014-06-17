@@ -15,7 +15,7 @@
   </teiHeader>
   <text>
     <body>
-      <schemaSpec ns="" start="stuff stuff2 stuff3 stuff4" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+      <schemaSpec ns="" start="stuff stuff2 stuff3 stuff4 stuff5" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
         xmlns="http://www.tei-c.org/ns/1.0">
         <elementSpec ident="stuff">
           <desc>élément racine d'un schéma simplissime</desc>
@@ -56,23 +56,14 @@
 	  </constraintSpec>
         </elementSpec>
 
-<!--
-	<elementSpec ident="stuff2">
-          <desc>élément racine d'un schéma simplissime</desc>
-          <content allowText="true">
-            <elementRef key="bit"/>
-            <elementRef key="bob"/>
-            <elementRef key="t1"/>
-          </content>
-        </elementSpec>
 
-	<elementSpec ident="stuff3">
-	  <desc>more</desc>
-	  <content >
-            <alternate allowText="true" minOccurs="0"      >
+	<elementSpec ident="stuff5">
+	  <desc>even more</desc>
+	  <content  allowText="true">
+              <alternate  minOccurs="0" maxOccurs="unbounded" >
                 <elementRef key="bit"/>
-		<elementRef key="bob"/>
-		<elementRef key="t1"/>
+               <elementRef key="bob"/>
+              <elementRef key="t1"/>
               </alternate>
           </content>
 	</elementSpec>
@@ -87,6 +78,28 @@
               </alternate>
           </content>
 	</elementSpec>
+
+	<elementSpec ident="stuff3">
+	  <desc>more</desc>
+	  <content >
+            <alternate allowText="true" minOccurs="0"      >
+                <elementRef key="bit"/>
+		<elementRef key="bob"/>
+		<elementRef key="t1"/>
+              </alternate>
+          </content>
+	</elementSpec>
+
+	<elementSpec ident="stuff2">
+          <desc>élément racine d'un schéma simplissime</desc>
+          <content allowText="true">
+            <elementRef key="bit"/>
+            <elementRef key="bob"/>
+            <elementRef key="t1"/>
+          </content>
+        </elementSpec>
+
+<!--
 
 	  <elementSpec ident="seg">
 	    <desc>more seg</desc>
