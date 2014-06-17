@@ -493,6 +493,13 @@ of this software, even if advised of the possibility of such damage.
       </xsl:call-template>
     </br>
   </xsl:template>
+  <xsl:template name="lineBreakAsPara">
+    <br>
+      <xsl:call-template name="makeRendition">
+	<xsl:with-param name="default">false</xsl:with-param>
+      </xsl:call-template>
+    </br>
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element l</desc>
   </doc>

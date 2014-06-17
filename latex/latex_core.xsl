@@ -380,6 +380,9 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template name="lineBreak">
       <xsl:text>{\hskip1pt}\newline </xsl:text>
   </xsl:template>
+   <xsl:template name="lineBreakAsPara"> 
+      <xsl:text>\par  </xsl:text>
+  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element list</desc>

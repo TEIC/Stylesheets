@@ -1224,6 +1224,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@rend='show'">
 	<xsl:call-template name="lineBreak"/>
       </xsl:when>
+      <xsl:when test="@rend='paragraph'">
+	<xsl:call-template name="lineBreakAsPara"/>
+      </xsl:when>
       <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
       <xsl:otherwise>
 	<xsl:call-template name="lineBreak"/>

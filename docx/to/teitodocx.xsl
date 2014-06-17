@@ -2189,6 +2189,11 @@ of this software, even if advised of the possibility of such damage.
 	  <w:br/>
 	</w:r>
   </xsl:template>
+  <xsl:template name="lineBreakAsPara">
+	<w:r>
+	  <w:br/>
+	</w:r>
+  </xsl:template>
 
   <!-- hyperlink -->
   <xsl:template match="tei:ptr[@cRef]">
