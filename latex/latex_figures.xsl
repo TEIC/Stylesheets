@@ -286,14 +286,17 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="parent::tei:ref">
 	  <xsl:value-of select="$pic"/>
 	</xsl:when>
-	<xsl:when test="@rend='alignright'">
+	<xsl:when test="not
+			(following-sibling::tei:graphic[@rend='alignright'])
+			and @rend='alignright'">
 	  <xsl:text>\begin{wrapfigure}{r}{</xsl:text>
 	  <xsl:value-of select="@width"/>
 	  <xsl:text>}</xsl:text>
 	  <xsl:value-of select="$pic"/>
 	  <xsl:text>\end{wrapfigure}</xsl:text>
 	</xsl:when>
-	<xsl:when test="@rend='alignleft'">
+	<xsl:when test="not (following-sibling::tei:graphic[@rend='alignleft'])
+			and @rend='alignleft'">
 	  <xsl:text>\begin{wrapfigure}{l}{</xsl:text>
 	  <xsl:value-of select="@width"/>
 	  <xsl:text>}</xsl:text>
