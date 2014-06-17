@@ -29,6 +29,7 @@ version="2.0" exclude-result-prefixes="#all">
       <style/>
     </ol>
     <sup/>
+    <s/>
     <table/>
     <tr/>
     <td>
@@ -87,24 +88,24 @@ version="2.0" exclude-result-prefixes="#all">
         </fileDesc>
       </teiHeader>
       <text>
-        <body>
 	  <xsl:variable name="body">
-          <xsl:for-each select="channel/item[wp:status='publish']">
-            <xsl:sort select="wp:post_date" order="ascending"/>
-            <xsl:if test="normalize-space(content:encoded)!='' or wp:attachment_url">
-              <div>
-                <head><xsl:apply-templates select="title"/></head>
-                <xsl:apply-templates select="wp:attachment_url"/>
-                <xsl:apply-templates select="content:encoded"/>
-                <closer>
-                  <xsl:apply-templates select="link"/>
-                </closer>
-              </div>
-            </xsl:if>
-          </xsl:for-each>
+            <body>
+              <xsl:for-each select="channel/item[wp:status='publish']">
+		<xsl:sort select="wp:post_date" order="ascending"/>
+		<xsl:if test="normalize-space(content:encoded)!='' or wp:attachment_url">
+		  <div year="{substring(wp:post_date,1,4)}" month="{substring(wp:post_date,6,2)}">
+                    <head><xsl:apply-templates select="title"/></head>
+                    <xsl:apply-templates select="wp:attachment_url"/>
+                    <xsl:apply-templates select="content:encoded"/>
+                    <closer>
+                      <xsl:apply-templates select="link"/>
+                    </closer>
+		  </div>
+		</xsl:if>
+              </xsl:for-each>
+	    </body>
 	  </xsl:variable>
-	  <xsl:apply-templates select="$body" mode="pass2"/>
-        </body>
+	  <xsl:apply-templates select="$body/*"  mode="pass2"/>
       </text>
     </TEI>
   </xsl:template>
@@ -129,46 +130,25 @@ version="2.0" exclude-result-prefixes="#all">
       </xsl:call-template>
     </xsl:variable>
 
-    <xsl:for-each-group select="$content/node()" group-adjacent="if
-								 (self::p)
-								 then
-								 1
-								 else
-								 if
-								 (self::div)
-								 then
-								 2
-								 else
-								 if
-								 (self::blockquote)
-								 then
-								 1
-								 else
-								 if
-								 (self::ol)
-								 then 1
-								 else
-								 if
-								 (self::ul)
-								 then
-								 1
-								 else
-								 3"> 
-
+    <xsl:for-each-group select="$content/node()" 
+			group-adjacent="if (self::p) then 1 else if (self::div) then 2 else if (self::blockquote) then 1 else if (self::ol) then 1 else if (self::ul) then 1 else if (self::text()) then 4 else 3">
 <!--    <xsl:for-each-group select="$content/node()"
 group-starting-with="text()|ol|blockquote|div|p|br|ul"> -->
       <xsl:choose>
-        <xsl:when test="not(*) and normalize-space(.)=''"/>
         <xsl:when test="current-grouping-key()=1">
           <xsl:apply-templates select="current-group()"/>
         </xsl:when>
         <xsl:when test="current-grouping-key()=2">
-          <p>
 	    <xsl:apply-templates select="current-group()"/>
-	  </p>
+        </xsl:when>
+        <xsl:when test="current-grouping-key()=3">
+           <xsl:apply-templates select="current-group()"/>
+	</xsl:when>
+        <xsl:when test="current-grouping-key()=4">
+	    <xsl:copy-of select="current-group()"/>
         </xsl:when>
         <xsl:otherwise>
-            <p><xsl:apply-templates select="current-group()"/></p>
+           <xsl:apply-templates select="current-group()"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each-group>
@@ -279,6 +259,11 @@ group-starting-with="text()|ol|blockquote|div|p|br|ul"> -->
       <xsl:apply-templates/>
     </hi>
   </xsl:template>
+
+  <xsl:template match="s">
+      <xsl:apply-templates/>
+  </xsl:template>
+
   <xsl:template match="img">
     <graphic url="{@src}">
       <xsl:if test="@class">
@@ -322,6 +307,7 @@ group-starting-with="text()|ol|blockquote|div|p|br|ul"> -->
   <xsl:template name="unescape">
     <xsl:param name="str"/>
     <xsl:param name="why"/>
+
     <xsl:variable name="start" select="substring-before($str,'&lt;')"/>
     <xsl:variable name="rest" select="substring-after($str,'&lt;')"/>
     <xsl:variable name="fulltag" select="substring-before($rest,'&gt;')"/>
@@ -343,6 +329,10 @@ WHY: <xsl:value-of select="$why"/>
 
 WHAT: <xsl:value-of select="$str"/>
 
+TAG: {<xsl:value-of select="$tag"/>}
+
+CURRTAG: {<xsl:copy-of select="$currtag"/>}
+
 START: <xsl:value-of select="$start"/>
 
 REST: <xsl:value-of select="$rest"/>
@@ -352,9 +342,10 @@ AFTERTAG: <xsl:value-of select="$aftertag"/>
 AFTERALL: <xsl:value-of select="$afterall"/>
 _____
 
-
 	</xsl:message>
 -->
+
+
         <xsl:choose>
           <xsl:when test="$currtag">
             <xsl:element xmlns="" name="{$currtag/local-name()}">
@@ -367,13 +358,22 @@ _____
                   </xsl:attribute>
                 </xsl:if>
               </xsl:for-each>
-	      <xsl:if test="$intag">
+	      <xsl:choose>
+		<xsl:when test="$intag">
                   <xsl:call-template name="unescape"><xsl:with-param name="why">2</xsl:with-param>
                     <xsl:with-param name="str">
                       <xsl:value-of select="$intag"/>
                     </xsl:with-param>
                   </xsl:call-template>
-	      </xsl:if>
+		</xsl:when>
+		<xsl:when test="string-length($afterall)=0 and $aftertag">
+                  <xsl:call-template name="unescape"><xsl:with-param name="why">6</xsl:with-param>
+                    <xsl:with-param name="str">
+                      <xsl:value-of select="$aftertag"/>
+                    </xsl:with-param>
+                  </xsl:call-template>
+		</xsl:when>
+	      </xsl:choose>
 	    </xsl:element>
 	    <xsl:if test="$tagparts[last()]='/'"><!-- empty element -->
               <xsl:call-template name="unescape"><xsl:with-param name="why">3</xsl:with-param>
@@ -384,11 +384,11 @@ _____
 	    </xsl:if>	    
           </xsl:when>
           <xsl:otherwise>
-            <xsl:message>Error: tag <xsl:value-of select="$tag"/> not  recognized</xsl:message>
+            <xsl:message>Error: tag <xsl:value-of select="($tag,$str)"/> not  recognized</xsl:message>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:if test="string-length($afterall)&gt;0">
-          <xsl:call-template name="unescape"><xsl:with-param name="why">4</xsl:with-param>
+          <xsl:call-template name="unescape"><xsl:with-param name="why">5</xsl:with-param>
             <xsl:with-param name="str">
               <xsl:value-of select="$afterall"/>
             </xsl:with-param>
@@ -408,11 +408,83 @@ _____
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="tei:body" mode="pass2">
+    <xsl:for-each-group select="tei:div" group-by="@year">
+    <div>
+      <head><xsl:value-of select="@year"/></head>
+      <xsl:for-each-group select="current-group()" group-by="@month">
+	<div>
+	  <head>
+	    <xsl:choose>
+	    <xsl:when test="@month='01'">January</xsl:when>
+	    <xsl:when test="@month='02'">February</xsl:when>
+	    <xsl:when test="@month='03'">March</xsl:when>
+	    <xsl:when test="@month='04'">April</xsl:when>
+	    <xsl:when test="@month='05'">May</xsl:when>
+	    <xsl:when test="@month='06'">June</xsl:when>
+	    <xsl:when test="@month='07'">July</xsl:when>
+	    <xsl:when test="@month='08'">August</xsl:when>
+	    <xsl:when test="@month='09'">September</xsl:when>
+	    <xsl:when test="@month='10'">October</xsl:when>
+	    <xsl:when test="@month='11'">November</xsl:when>
+	    <xsl:when test="@month='12'">December</xsl:when>
+	    </xsl:choose>
+	  </head>
+	    <xsl:apply-templates select="current-group()"
+				 mode="pass2"/>
+	</div>
+      </xsl:for-each-group>
+    </div>
+    </xsl:for-each-group>
+  </xsl:template>
+
+  <xsl:template match="tei:div/@year" mode="pass2"/>
+  <xsl:template match="tei:div/@month"  mode="pass2"/>
+  <xsl:template match="tei:div/tei:head" mode="pass2"/>
+  <xsl:template match="tei:div/tei:closer" mode="pass2"/>
+
+  <xsl:template match="tei:div" mode="pass2">
+    <xsl:copy>
+    <xsl:if test="tei:head">
+      <xsl:for-each select="tei:head">
+	<head>
+	  <xsl:apply-templates
+	      select="*|@*|processing-instruction()|comment()|text()"
+	      mode="pass2"/>
+	</head>
+      </xsl:for-each>
+    </xsl:if>
+      <xsl:choose>
+	<xsl:when test="tei:p">
+	  <xsl:apply-templates
+	      select="*|@*|processing-instruction()|comment()|text()"
+	      mode="pass2"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <p>
+	  <xsl:apply-templates
+	      select="*|@*|processing-instruction()|comment()|text()"
+	      mode="pass2"/>
+	  </p>
+	</xsl:otherwise>
+      </xsl:choose>
+    <xsl:if test="tei:closer">
+      <xsl:for-each select="tei:closer">
+	<closer>
+	  <xsl:apply-templates
+	      select="*|@*|processing-instruction()|comment()|text()"
+	      mode="pass2"/>
+	</closer>
+      </xsl:for-each>
+    </xsl:if>
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="@*" mode="pass2">
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="html:p" mode="pass2">
+  <xsl:template match="tei:p" mode="pass2">
     <xsl:if test="* or not(normalize-space(.)='')">
       <p>
         <xsl:apply-templates mode="pass2"/>
@@ -422,8 +494,11 @@ _____
 
   <xsl:template match="text()" mode="pass2">
     <xsl:choose>
-      <xsl:when test="parent::html:p">
-	<xsl:value-of disable-output-escaping="yes" select="replace(translate(.,' ',' '),'\.&#10;&#10;','.&lt;lb/&gt;')"/>
+      <xsl:when test="(parent::tei:div or parent::tei:p)">
+	<xsl:for-each select="tokenize(.,'&#10;&#10;')">
+	  <xsl:if test="position()&gt;1"><lb rend="paragraph"/></xsl:if>
+	  <xsl:value-of select="translate(.,' ',' ')"/>
+	</xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="translate(.,' ',' ')"/>
