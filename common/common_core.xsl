@@ -1236,6 +1236,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="lineBreak">
     <xsl:text> </xsl:text>
   </xsl:template>
+  <xsl:template name="lineBreakAsPara">
+    <xsl:text> </xsl:text>
+  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process forename</desc>
