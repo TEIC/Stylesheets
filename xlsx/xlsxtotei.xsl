@@ -12,7 +12,8 @@
     xmlns:dcmitype="http://purl.org/dc/dcmitype/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:tei-spreadsheet="https://github.com/oucs/tei-spreadsheet"
-    xmlns:fn="http://www.w3.org/2005/xpath-functions">
+    xmlns:fn="http://www.w3.org/2005/xpath-functions"
+    exclude-result-prefixes="#all">
   <xsl:output method="xml" indent="yes"/>
 
   <xsl:param name="inputDir"/>
