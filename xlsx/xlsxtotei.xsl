@@ -11,8 +11,7 @@
     xmlns:dcterms="http://purl.org/dc/terms/"
     xmlns:dcmitype="http://purl.org/dc/dcmitype/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:tei-spreadsheet="https://github.com/oucs/tei-spreadsheet"
-    xmlns:fn="http://www.w3.org/2005/xpath-functions">
+    xmlns:tei-spreadsheet="https://github.com/oucs/tei-spreadsheet">
   <xsl:output method="xml" indent="yes"/>
 
   <xsl:param name="inputDir"/>
@@ -30,7 +29,7 @@
       http://answers.oreilly.com/topic/1694-how-excel-stores-date-and-time-values/
     -->
     
-    <xsl:value-of select='xs:dateTime("1900-01-01T00:00:00") +       $text * 60 * 60 * 24 * xs:dayTimeDuration("PT1S")'/>
+    <xsl:value-of select='format-dateTime(xs:dateTime("1900-01-01T00:00:00") + $text * 60 * 60 * 24 * xs:dayTimeDuration("PT1S"), "[Y0001]/[M01]/[D01] [H01]:[m01]")'/>
   </xsl:function>
   
   
