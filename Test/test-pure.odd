@@ -15,7 +15,7 @@
   </teiHeader>
   <text>
     <body>
-      <schemaSpec ns="" start="t1 t2 t3 t4 t5 t6 t7" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+      <schemaSpec ns="" start="t1 t2 t3 t4 t5 t6 t7 stuff" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
         xmlns="http://www.tei-c.org/ns/1.0">
         <elementSpec ident="stuff">
           <desc>élément racine d'un schéma simplissime</desc>
@@ -114,7 +114,7 @@
 
 	<elementSpec ident="t6">
 	  <!-- -->
-	  <desc>allowtext on alternate has no effect </desc>
+	  <desc>allowtext on alternate produces a text alternation</desc>
 	  <content >
             <alternate allowText="true" minOccurs="0"      >
                 <elementRef key="bit"/>

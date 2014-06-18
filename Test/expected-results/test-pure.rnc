@@ -12,6 +12,10 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 #
 
 sch:ns [ prefix = "tei" uri = "http://www.tei-c.org/ns/1.0" ]
+stuff =
+  
+  ## élément racine d'un schéma simplissime
+  element stuff { (bit | bob | thingummy)+ }
 bob =
   
   ## élément pointeur du schéma simplissime
@@ -69,10 +73,10 @@ t5 =
   element t5 { text | (bit, bob)+ }
 t6 =
   
-  ## allowtext on alternate has no effect 
+  ## allowtext on alternate produces a text alternation
   element t6 { (text | bit | bob)? }
 t7 =
   
   ## allowtext on sequence has no effect 
   element t7 { (bit, bob)? }
-start = t1 | t2 | t3 | t4 | t5 | t6 | t7
+start = t1 | t2 | t3 | t4 | t5 | t6 | t7 | stuff
