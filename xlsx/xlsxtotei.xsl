@@ -31,7 +31,7 @@
       http://answers.oreilly.com/topic/1694-how-excel-stores-date-and-time-values/
     -->
     
-    <xsl:value-of select='xs:dateTime("1900-01-01T00:00:00") +       $text * 60 * 60 * 24 * xs:dayTimeDuration("PT1S")'/>
+    <xsl:value-of select='format-dateTime(xs:dateTime("1900-01-01T00:00:00") + $text * 60 * 60 * 24 * xs:dayTimeDuration("PT1S"), "[Y0001]/[M01]/[D01] [H01]:[m01]")'/>
   </xsl:function>
   
   
