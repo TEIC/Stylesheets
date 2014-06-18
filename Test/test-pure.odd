@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI  xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Pure ODD test</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>Publication Information</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Information about the source</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <schemaSpec ns="" start="t1 t2 t3 t4 t5 t6 t7" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+        xmlns="http://www.tei-c.org/ns/1.0">
+        <elementSpec ident="stuff">
+          <desc>élément racine d'un schéma simplissime</desc>
+          <content>
+            <alternate maxOccurs="unbounded">
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>
+              <elementRef key="thingummy"/>
+            </alternate>
+          </content>
+        </elementSpec>
+        <elementSpec ident="bob">
+          <desc>élément pointeur du schéma simplissime</desc> 
+          <content/>
+          <attList>
+            <attDef ident="href">
+              <desc>fournit l' URI de l'objet cible</desc>
+              <datatype>
+                <rng:data type="anyURI"/>
+                <!-- should be <macroRef key="data.pointer"/>-->
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <elementSpec ident="thingummy">
+          <desc>élément </desc> 
+          <content allowText="true"/>
+        </elementSpec>
+        <elementSpec ident="bit">
+          <desc>élément textuel du schéma simplissime (peut contenir des bobs) </desc>
+          <content allowText="true">
+            <elementRef key="bob" maxOccurs="1"/>
+          </content>
+	  <constraintSpec ident="test" scheme="isoschematron">
+	    <constraint>
+	      <report test="count(bob) !=1" xmlns="http://purl.oclc.org/dsdl/schematron">Only one bob allowed</report>
+	    </constraint>
+	  </constraintSpec>
+        </elementSpec>
+
+        <elementSpec ident="t1">
+          <!--  -->
+          
+          <desc>allowtext on content creates an alternation</desc>
+          <content allowText="true">
+            <elementRef key="bit"/>
+            <elementRef key="bob"/>
+            <elementRef key="t1"/>
+          </content>
+        </elementSpec>
+        
+	<elementSpec ident="t2">
+	  <desc>Within content with allowtext alternation and *Occurs both respected</desc>
+	  <content  allowText="true">
+              <alternate  minOccurs="0" maxOccurs="unbounded" >
+                <elementRef key="bit"/>
+               <elementRef key="bob"/>
+        
+              </alternate>
+          </content>
+	</elementSpec>
+
+	<elementSpec ident="t3">
+	  <desc>Within content with allowtext alternation and *Occurs both respected</desc>
+	  <content  allowText="true">
+              <alternate  minOccurs="0" >
+                <elementRef key="bit"/>
+               <elementRef key="bob"/>
+           
+              </alternate>
+          </content>
+	</elementSpec>
+        
+        <elementSpec ident="t4">
+      
+          <desc>Within content with allowtext alternation and *Occurs both respected</desc>
+          <content allowText="true">
+            <alternate maxOccurs="unbounded">
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>
+              <elementRef key="t1"/>
+            </alternate>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="t5">
+          
+          <desc>sequence within generated alternation is also possible</desc>
+          <content allowText="true">
+            <sequence maxOccurs="unbounded">
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>         
+            </sequence>
+          </content>
+        </elementSpec>
+
+	<elementSpec ident="t6">
+	  <!-- -->
+	  <desc>allowtext on alternate has no effect </desc>
+	  <content >
+            <alternate allowText="true" minOccurs="0"      >
+                <elementRef key="bit"/>
+		<elementRef key="bob"/>
+	
+              </alternate>
+          </content>
+	</elementSpec>
+
+	
+        <elementSpec ident="t7">
+          <!-- -->
+          <desc>allowtext on sequence has no effect </desc>
+          <content >
+            <sequence allowText="true" minOccurs="0"      >
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>
+              
+            </sequence>
+          </content>
+        </elementSpec>
+        
+       
+	
+
+<!--
+
+	  <elementSpec ident="seg">
+	    <desc>more seg</desc>
+	    <content>
+	      <sequence allowText="true">
+		<elementRef key="orgName"  minOccurs="0"/>
+		<elementRef key="persName"  minOccurs="0"/>
+		<elementRef key="choice"  minOccurs="0"/>
+		<elementRef key="seg"  minOccurs="0"/>
+		<elementRef key="trait"  minOccurs="0"/>
+	      </sequence>
+	    </content>
+	  </elementSpec>
+
+	  <elementSpec ident="seg2">
+	    <desc>more seg</desc>
+	    <content allowText="true" >
+		<elementRef key="orgName"  minOccurs="0"/>
+		<elementRef key="persName"  minOccurs="0"/>
+		<elementRef key="choice"  minOccurs="0"/>
+		<elementRef key="seg"  minOccurs="0"/>
+		<elementRef key="trait"  minOccurs="0"/>
+	    </content>
+	  </elementSpec>
+
+	  <elementSpec ident="choice">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+	  <elementSpec ident="orgName">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+	  <elementSpec ident="persName">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+	  <elementSpec ident="t1">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+	  <elementSpec ident="trait">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+
+-->
+      </schemaSpec>
+      
+
+    </body>
+  </text>
+</TEI>
