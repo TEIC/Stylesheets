@@ -15,7 +15,7 @@
   </teiHeader>
   <text>
     <body>
-      <schemaSpec ns="" start="stuff stuff2 stuff3 stuff4 stuff5" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+      <schemaSpec ns="" start="stuff stuff1 stuff2 stuff3 stuff4 stuff5" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
         xmlns="http://www.tei-c.org/ns/1.0">
         <elementSpec ident="stuff">
           <desc>élément racine d'un schéma simplissime</desc>
@@ -96,6 +96,17 @@
             <elementRef key="bit"/>
             <elementRef key="bob"/>
             <elementRef key="t1"/>
+          </content>
+        </elementSpec>
+
+	<elementSpec ident="stuff1">
+          <desc>élément racine d'un schéma simplissime</desc>
+          <content allowText="true">
+	    <sequence maxOccurs="unbounded">
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>
+              <elementRef key="t1"/>
+	    </sequence>
           </content>
         </elementSpec>
 
