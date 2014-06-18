@@ -37,13 +37,10 @@
   <text>
     <body>
       <p rend="Title">Test file for Word indexes</p>
-      <p><anchor xml:id="foo"/>Here we are talking about the Web<index indexName="XE"><term>Web</term></index>, about Web services<index indexName="XE"><term>Web</term><index><term>Web service</term></index></index>, and Web apps<index indexName="XE"><term>Web</term><index><term>Web app</term></index></index>, but also about bugs<index indexName="XE"><term>bugs</term><index><term>horrible bugs<ref>See bugs</ref></term></index></index> and errors<index indexName="XE"><term>error</term></index>. Note that the index terms can be in Word also formatted<index indexName="XE"><term>formatting</term></index>, which is lost in the TEI. We can have ranges though, like this<index indexName="XE" spanTo="#foo"><term>Range</term><index><term>Subrange</term></index></index>.</p>
+      <p><anchor xml:id="foo"/>Here we are talking about the Web<index indexName="XE"><term>Web</term></index>, about Web services<index indexName="XE"><term>Web</term><index><term>Web service</term></index></index>, and Web apps<index indexName="XE"><term>Web</term><index><term>Web app</term></index></index>, but also about bugs<index indexName="XE"><term>bugs</term><index><term>horrible bugs<ref type="xr">See bugs</ref></term></index></index> and errors<index indexName="XE"><term>error</term></index>. Note that the index terms can be in Word also formatted<index indexName="XE"><term>formatting</term></index>, which is lost in the TEI. We can have ranges though, like this<index indexName="XE" spanTo="#foo"><term>Range</term><index><term>Subrange</term></index></index>.</p>
       <p><hi rend="underline">This is a simpler paragraph with a word in </hi><hi rend="italic underline">italic</hi><hi rend="underline"> in the middle, though the whole paragraph is underlined</hi>.</p>
       <div>
         <head>Index</head>
-        <p>
-          <ref> INDEX \c "2" \z "1060" </ref>
-        </p>
         <p rend="index 1">bug. <hi rend="italic">See</hi> error</p>
         <p rend="index 1">error, 1</p>
         <p rend="index 1"><hi rend="bold">formatting</hi>, 1</p>

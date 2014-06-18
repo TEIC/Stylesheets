@@ -40,6 +40,7 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
+  <xsl:variable name="dq">"</xsl:variable>
   <xsl:template match="@*|comment()|processing-instruction()" mode="pass2">
     <xsl:copy-of select="."/>
   </xsl:template>
@@ -351,16 +352,90 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Clean up by merging adjacent &lt;hi&gt;s with the same style
+    value into one.</desc>
+  </doc>
+  <xsl:template match="tei:hi[@style]" mode="pass2">
+    <xsl:variable name="r" select="@style"/>
+    <xsl:choose>
+      <xsl:when test="count(parent::tei:speaker/*)=1 and not         (parent::tei:speaker/text())">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:when test="parent::tei:head and .=' '"/>
+      <xsl:when test="not(*) and string-length(.)=0"/>
+      <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']  and tei:g[@ref='x:tab']"/>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@style=$r]]"/>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and  preceding-sibling::node()[2][self::tei:hi[@style=$r]]"/>
+      <xsl:when test="($r='bold' or $r='italic') and .=' '">
+        <xsl:text> </xsl:text>
+	<xsl:if test="following-sibling::node()[1][self::tei:hi[@style=$r]]">
+	  <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
+	  <xsl:element name="{$ename}">
+	    <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
+	    <xsl:call-template name="nextStyleHi">
+	      <xsl:with-param name="r" select="$r"/>
+	    </xsl:call-template>
+	  </xsl:element>
+	</xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
+        <xsl:element name="{$ename}">
+          <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
+	  <xsl:choose>
+	    <xsl:when test="$ename='gap'">
+	      <desc>
+		<xsl:apply-templates mode="pass2"/>
+		<xsl:call-template name="nextStyleHi">
+		  <xsl:with-param name="r" select="$r"/>
+		</xsl:call-template>
+	      </desc>
+	    </xsl:when>
+	    <xsl:otherwise>
+		<xsl:apply-templates mode="pass2"/>
+		<xsl:call-template name="nextStyleHi">
+		  <xsl:with-param name="r" select="$r"/>
+		</xsl:call-template>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template name="nextStyleHi">
+    <xsl:param name="r"/>
+    <xsl:for-each select="following-sibling::node()[1]">
+      <xsl:choose>
+        <xsl:when test="self::tei:hi[@style=$r]">
+          <xsl:apply-templates mode="pass2"/>
+          <xsl:call-template name="nextStyleHi">
+            <xsl:with-param name="r" select="$r"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:when test="self::tei:seg and .=' ' and       following-sibling::node()[1][self::tei:hi[@style=$r]]">
+          <xsl:apply-templates mode="pass2"/>
+          <xsl:call-template name="nextStyleHi">
+            <xsl:with-param name="r" select="$r"/>
+          </xsl:call-template>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
+
   <xsl:template match="tei:div[tei:head/tei:ANCHOR]" mode="pass2">
     <xsl:copy>
       <xsl:attribute name="xml:id" select="tei:head/tei:ANCHOR[1]/@xml:id"/>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
     </xsl:copy>
   </xsl:template>
+
   <xsl:template match="tei:ANCHOR[parent::tei:head]" mode="pass2"/>
+
   <xsl:template match="tei:ANCHOR[not(parent::tei:head)]" mode="pass2">
     <anchor xml:id="{@xml:id}"/>
   </xsl:template>
+
   <xsl:template match="w:bookmarkStart" mode="pass2">
     <anchor>
       <xsl:attribute name="xml:id">
@@ -368,7 +443,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:attribute>
     </anchor>
   </xsl:template>
+
   <xsl:template match="tei:speech" mode="pass2"/>
+
   <xsl:template match="tei:speech" mode="keep">
     <p>
       <xsl:apply-templates mode="pass2"/>
@@ -480,5 +557,50 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>clean up mess left by w:instrText in the ref element</desc>
+  </doc>
+  <xsl:template match="tei:ref" mode="pass2">
+    <xsl:variable name="target">
+      <xsl:choose>
+	<xsl:when test="contains(@target,'REF _')"/>
+	<xsl:when test="matches(@target,'^[ ]?EN.REFLIST')"/>
+	<xsl:when test="matches(@target,'^[ ]?ADDIN')"/>
+	<xsl:when test="matches(@target,'^[ ]?QUOTE')"/>
+	<xsl:when test="matches(@target,'^[ ]?ref Mendeley Edited')"/>
+	<xsl:when test="matches(@target,'^[ ]?XE')"/>
+	<xsl:when test="contains(@target,'SEQ')"/>
+	<xsl:otherwise>
+	  <xsl:sequence select="tei:processInstruction(@target)"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="matches(@target,'^LINK Excel.Sheet.')">
+	<xsl:sequence select="tei:docxError('cannot embed Excel  spreadsheet')"/>
+      </xsl:when>
+      <xsl:when test="tei:ref">
+	<xsl:apply-templates mode="pass2"/>
+      </xsl:when>
+      <xsl:when test=".=''"/>
+      <xsl:when test="$target='' and @type">
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates mode="pass2"/>
+	</xsl:copy>
+      </xsl:when>
+      <xsl:when test="$target=''">
+	<xsl:apply-templates mode="pass2"/>
+      </xsl:when>
+      <xsl:when test="tei:discardInstruction(.)"/>
+      <xsl:otherwise>
+	<ref target="{$target}">
+	  <xsl:copy-of select="@rend"/>
+	  <xsl:apply-templates mode="pass2"/>
+	</ref>
+      </xsl:otherwise>
+    </xsl:choose>  
+  </xsl:template>
 
 </xsl:stylesheet>

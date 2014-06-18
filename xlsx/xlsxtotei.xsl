@@ -133,6 +133,10 @@ The root element of this office document is a <xsl:value-of select="$office-docu
                 <xsl:when test="@t='inlineStr'">
                   <xsl:value-of select="tei-spreadsheet:parse-bstr(sml:is/sml:t/text())"/>
                 </xsl:when>
+<!-- dates. 
+http://openxmldeveloper.org/blog/b/openxmldeveloper/archive/2012/02/16/dates-in-spreadsheetml.aspx
+The integer part of the number stores the number of days since
+the epoch and the fractional part stores the percentage of the day. -->
                 <xsl:otherwise>
                   <xsl:value-of select="sml:v"/>
                 </xsl:otherwise>

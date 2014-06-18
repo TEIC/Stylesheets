@@ -174,16 +174,28 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="extrarow"  tunnel="yes"/>
      <xsl:param name="extracolumn"   tunnel="yes"/>     
      <xsl:variable name="styles">
-       <xsl:if test="w:rPr/w:rFonts//@w:ascii">
-	 <xsl:if test="(not(matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')) and not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))) or
-		       not(w:rPr/w:rFonts/@w:ascii = parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii)">
+       <xsl:choose>
+	 <xsl:when test="not(w:rPr/w:rFonts/@w:ascii)"/>
+	 <xsl:when test="matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')">
 	   <s n="font-family">
 	     <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
 	   </s>
-	   <!-- w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
+	 </xsl:when>
+	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Cambria'"/>
+	 <xsl:when test="matches(w:rPr/w:rFonts/@w:ascii,'^Times')"/>
+	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Calibri'"/>
+	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Arial'"/>
+	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Verdana'"/>
+	 <xsl:when test="w:rPr/w:rFonts/@w:ascii =  parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii"/>
+	 <xsl:otherwise>
+	   <s n="font-family">
+	       <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
+	   </s>
+	   </xsl:otherwise>
+	 </xsl:choose>
+	   <!-- see also w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
 	   <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
-	 </xsl:if>
-       </xsl:if>
+
        <xsl:choose>
 	 <xsl:when test="w:rPr/w:sz">
 	   <s n="font-size">
@@ -589,6 +601,7 @@ of this software, even if advised of the possibility of such damage.
         				
         				<xsl:otherwise>
         					<xsl:value-of select="$t"/>
+        					<xsl:message>Warning: Some Symbol fonts may not convert properly. <xsl:value-of select="$t"/></xsl:message>
         				</xsl:otherwise>
         			</xsl:choose>
         		</seg>
@@ -803,7 +816,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose> 	
     </xsl:when>
     <xsl:when test="@w:font='Wingdings 2' and @w:char='F050'">&#x2713;</xsl:when><!-- tick mark-->
-	<xsl:otherwise> 	  
+      	<xsl:when test="@w:font='Wingdings' and @w:char='F05B'">&#x262F;</xsl:when><!-- yin-yang -->
+      	<xsl:otherwise> 	  
 	  <g style="font-family:{@w:font};" n="{@w:char}"/>
 	</xsl:otherwise>       
       </xsl:choose>

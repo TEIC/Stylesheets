@@ -800,6 +800,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="lineBreak">
 	<text:line-break/>
   </xsl:template>
+  <xsl:template name="lineBreakAsPara">
+	<text:line-break/>
+  </xsl:template>
   <xsl:template match="tei:biblStruct">
     <text:list-item>
       <text:p text:style-name="P2">
