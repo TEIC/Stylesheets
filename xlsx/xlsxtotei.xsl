@@ -11,24 +11,39 @@
     xmlns:dcterms="http://purl.org/dc/terms/"
     xmlns:dcmitype="http://purl.org/dc/dcmitype/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:tei-spreadsheet="https://github.com/oucs/tei-spreadsheet">
+    xmlns:tei-spreadsheet="https://github.com/oucs/tei-spreadsheet"
+    xmlns:fn="http://www.w3.org/2005/xpath-functions">
   <xsl:output method="xml" indent="yes"/>
 
   <xsl:param name="inputDir"/>
   <xsl:param name="workDir"/>
   <xsl:key name="strings" match="sml:si" use="count(preceding-sibling::*)"/>
-
-
+  <xsl:key name="strings" match="sml:si" use="count(preceding-sibling::*)"/>
+  
+  <xsl:variable name="stylesDir" select="concat($workDir,'/xl/styles.xml')"/>  
+  <xsl:variable name="stylesFile" select="document($stylesDir)/sml:styleSheet"/>  
+  
+  <xsl:function name="tei-spreadsheet:parse-date">
+    <xsl:param name="text"/>
+    <!--
+      Dates are represented as days since 1900-01-01
+      http://answers.oreilly.com/topic/1694-how-excel-stores-date-and-time-values/
+    -->
+    
+    <xsl:value-of select='xs:dateTime("1900-01-01T00:00:00") +       $text * 60 * 60 * 24 * xs:dayTimeDuration("PT1S")'/>
+  </xsl:function>
+  
+  
   <xsl:function name="tei-spreadsheet:parse-bstr">
     <!-- Section 22.4.2.4 of the Office Open XML Standard¹  defines a bstr type
          for reresenting Unicode characters that cannot be represented in XML
          1.0. Hence, a carriage return can be represented as "_x000d_". This
          function replaces such things with normal characters or decimal
          entities for all but the null character (_x0000_).
-
+         
          ¹ http://www.ecma-international.org/publications/standards/Ecma-376.htm -->
     <xsl:param name="text"/>
-
+    
     <xsl:for-each select="tokenize($text, '_x[\da-z]{4}_')">
       <xsl:choose>
         <xsl:when test="matches(., '_x[\da-z]{4}_') and . != '_x0000_'">
@@ -40,7 +55,7 @@
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
+  
   <xsl:function name="tei-spreadsheet:rels">
     <xsl:param name="node"/>
     <xsl:variable name="document-uri">
@@ -59,6 +74,28 @@
     </tei-spreadsheet:rels>
   </xsl:function>
 
+  <xsl:function name="tei-spreadsheet:style-is-date" as="xs:boolean">
+    <xsl:param name="numFmtId"/>
+    <!-- 3.8.31 numFmts (Number Formats) 
+      http://www.ecma-international.org/news/TC45_current_work/Office%20Open%20XML%20Part%204%20-%20Markup%20Language%20Reference.pdf
+     -->  
+    <xsl:choose>
+      <xsl:when test="$numFmtId=14">true</xsl:when>
+      <xsl:when test="$numFmtId=15">true</xsl:when>
+      <xsl:when test="$numFmtId=16">true</xsl:when>
+      <xsl:when test="$numFmtId=17">true</xsl:when>
+      <xsl:when test="$numFmtId=22">true</xsl:when>
+      <xsl:when test="$numFmtId=30">true</xsl:when>
+      <xsl:when test="$numFmtId=31">true</xsl:when>
+      <xsl:when test="$numFmtId=36">true</xsl:when>
+      <xsl:when test="$numFmtId=50">true</xsl:when>
+      <xsl:when test="contains($stylesFile/sml:numFmts/sml:numFmt[@numFmtId=$numFmtId]/@formatCode/string(), 'Y')">true</xsl:when>
+      <xsl:otherwise>false</xsl:otherwise>
+    </xsl:choose>
+    
+  </xsl:function>
+  
+  
   <xsl:template match="/">
     <!-- These are XML documents we expect to be able to find links to from
 	 within the rels document -->
@@ -133,10 +170,24 @@ The root element of this office document is a <xsl:value-of select="$office-docu
                 <xsl:when test="@t='inlineStr'">
                   <xsl:value-of select="tei-spreadsheet:parse-bstr(sml:is/sml:t/text())"/>
                 </xsl:when>
-<!-- dates. 
-http://openxmldeveloper.org/blog/b/openxmldeveloper/archive/2012/02/16/dates-in-spreadsheetml.aspx
-The integer part of the number stores the number of days since
-the epoch and the fractional part stores the percentage of the day. -->
+		<!-- dates. 
+		     http://openxmldeveloper.org/blog/b/openxmldeveloper/archive/2012/02/16/dates-in-spreadsheetml.aspx
+		     The integer part of the number stores the number of days since
+		     the epoch and the fractional part stores the
+		     percentage of the day. 
+		-->
+                <xsl:when test="@s">
+                  <xsl:variable name="stylePosition" select="1+@s"/>
+                  <xsl:variable name="nFId" select="$stylesFile/sml:cellXfs/sml:xf[$stylePosition]/@numFmtId"/>
+                  <xsl:choose>
+                    <xsl:when test="tei-spreadsheet:style-is-date($nFId)">
+                      <xsl:value-of select="tei-spreadsheet:parse-date(sml:v)"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:value-of select="sml:v"/>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:when>
                 <xsl:otherwise>
                   <xsl:value-of select="sml:v"/>
                 </xsl:otherwise>
