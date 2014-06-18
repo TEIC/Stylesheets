@@ -1,3 +1,223 @@
+2014-06-18  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	Merge branch 'master' of https://github.com/tuurma/Stylesheets
+	Conflicts:
+		xlsx/xlsxtotei.xsl
+
+2014-06-18  Magdalena Turska  <magdalena.turska@it.ox.ac.uk>
+
+	format dates in xlsx to tei
+
+2014-06-18  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	drop unwanted namespace decls
+
+	t push origin masterZZMerge branch 'tuurma-master'
+
+	Merge branch 'master' of https://github.com/tuurma/Stylesheets into tuurma-master
+	Conflicts:
+		xlsx/xlsxtotei.xsl
+
+	make odd2dtd work with Pure Odd a bit more properly
+
+2014-06-18  Magdalena Turska  <magdalena.turska@it.ox.ac.uk>
+
+	conversion of dates from xls 1900 format
+
+	conversion of dates from xls 1900 format
+
+2014-06-18  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	changed results from pure ODD schema
+
+	disable odd2dtd on Pure pro tem
+
+	put back pure test
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+	Conflicts:
+		Test/test-pure.odd
+
+	more organized Pure ODD tests
+
+2014-06-18  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+
+2014-06-18  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	odd2dtd needs fixing around allowText
+
+	improve handling of @allowText in pure odd
+
+2014-06-17  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	cover more areas of pure odd, relating to allowText
+
+	default for LineBreakAsPara
+
+	rethink wordpress to TEI for the n-th time. really, its hard getting out of that escaped content rubbish
+
+	a reminder note about dates in XSLX
+
+	dont wrap figures in latex unless they are singletons. that code is rubbish
+
+	allow for a case where <lb/> really means "make like a new paragraph"
+
+2014-06-16  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	improve identification in wordpress
+
+2014-06-15  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	blank line before begin{quote}
+
+	support figure wrap in latex
+
+	fix problem of attributes on p in wordpress to tei
+
+	change message a little in ant script
+
+	rethink the way to handle evil Word w:instrText and <ref> generation. look at <ref> in more detail in pass2
+
+2014-06-11  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	consistent handling of block quote in tei to dock
+
+	handling quotes better
+
+	pure odd test file
+
+	Merge pull request #24 from tuurma/master
+	docxtotei preserving formatting from word styles in @style
+
+2014-06-11  Magdalena Turska  <magdalena.turska@it.ox.ac.uk>
+
+	docxtotei preserving formatting from word styles in @style
+
+2014-06-09  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	Merge pull request #23 from ahankinson/fix-syntaxerror
+	Fixed: Missing quotation mark
+
+2014-06-08  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	working on extra tests for pure ODD
+
+2014-06-07  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	output from docxtotei changes, with added ID
+
+	deal with Word objects better, and give docxtotei a way of showing warnings (marginal note)
+
+2014-06-06  Andrew Hankinson  <andrew.hankinson@gmail.com>
+
+	Fixed: Missing quotation mark
+	A quotation mark was missing in transformtei which caused the help to format incorrectly.
+
+2014-06-05  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	simplify list-identifying function
+
+	use Arial for Oxford slides
+
+	Merge pull request #22 from tuurma/master
+	docx to tei: decide if style is a list, translation list for non-Unicode...
+
+2014-06-05  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	more tweaks for paolo
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+
+2014-06-05  Magdalena Turska  <magdalena.turska@it.ox.ac.uk>
+
+	docx to tei: decide if style is a list, translation list for non-Unicode chars in Symbol font
+
+2014-06-05  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	use local-name of align attribute, in case we have used tei prefix
+
+2014-06-04  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	put back ADDIN PAPERS and remove debug
+
+	Merge pull request #20 from tuurma/master
+	sciencejournal cell alignment (docx2tei), Symbol font (special case solu...
+
+2014-06-04  Magdalena Turska  <magdalena.turska@it.ox.ac.uk>
+
+	sciencejournal cell alignment (docx2tei), Symbol font (special case solution only)
+
+2014-06-04  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	fix attendance lists etc in oulipo profile
+
+2014-06-03  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	Merge pull request #19 from tuurma/master
+	sciencejournal fix
+
+2014-06-02  Lou Burnard  <lou.burnard@retired.ox.ac.uk>
+
+	stylesheet updates
+
+2014-06-01  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	included oxford logo in slides
+
+	another bibliographic database; change of result, lost a <div>; lose useless empty <seg>
+
+	pinning down when something in Word is or isn't in bold. check set for super or subscript
+
+	refine rule about when space at start of piece of text is discarded. obscure.
+
+2014-05-29  Magdalena Turska  <magdalena.turska@it.ox.ac.uk>
+
+	fixed empty titles in html/head
+
+2014-05-28  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	layer of dross removed from footnote reference
+
+	the situation where there is space with a style of footnote reference in Word must be just wrong. suppress the style
+
+2014-05-28  Magdalena Turska  <magdalena.turska@it.ox.ac.uk>
+
+	docx to tei empty w:hyperlinks shouldn't be converted to refs
+
+	sciencejournal tests deleted
+
+2014-05-28  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	move aside sciencejournal tests
+
+2014-05-28  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	Merge pull request #18 from tuurma/master
+	Sciencejournal fix
+
+2014-05-28  Magdalena Turska  <magdalena.turska@it.ox.ac.uk>
+
+	sciencejournal cleanup
+
+	sciencejournal cleanup
+
+	sciencejournal cleanup
+
+	sciencejournal cleanup
+
+	tei-to-html empty refs
+
+	teitohtml omit empty ref elements not containing @target
+
+2014-05-27  Magdalena Turska  <magdalena.turska@it.ox.ac.uk>
+
+	sciencejournal
+
+	Merge remote-tracking branch 'upstream/master'
+
+	sciencejournal test
 2014-05-26  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
 
 	rejig the way lists are detected, again. zap empty lists.
