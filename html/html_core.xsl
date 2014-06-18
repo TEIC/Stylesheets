@@ -401,6 +401,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:copy-of select="$rend/*/@*"/>
 	    <xsl:apply-templates select="current-group()"/>
 	  </xsl:element>
+<!--	  ***<xsl:value-of select="current-group()"/>*** -->
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each-group>
@@ -486,6 +487,13 @@ of this software, even if advised of the possibility of such damage.
     <desc>Line break</desc>
   </doc>
   <xsl:template name="lineBreak">
+    <br>
+      <xsl:call-template name="makeRendition">
+	<xsl:with-param name="default">false</xsl:with-param>
+      </xsl:call-template>
+    </br>
+  </xsl:template>
+  <xsl:template name="lineBreakAsPara">
     <br>
       <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default">false</xsl:with-param>

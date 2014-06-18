@@ -380,6 +380,9 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template name="lineBreak">
       <xsl:text>{\hskip1pt}\newline </xsl:text>
   </xsl:template>
+   <xsl:template name="lineBreakAsPara"> 
+      <xsl:text>\par  </xsl:text>
+  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element list</desc>
@@ -699,7 +702,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element signed</desc>
    </doc>
   <xsl:template match="tei:signed">
-      <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
+      <xsl:text>&#10;&#10;\begin{quote}&#10;</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>\end{quote}&#10;</xsl:text>
   </xsl:template>

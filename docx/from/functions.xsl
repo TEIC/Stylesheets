@@ -18,14 +18,12 @@
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
-		xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 version="2.0"
                 exclude-result-prefixes="cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
-         <p> TEI Utility stylesheet for making Word docx files
-        from TEI XML (see docx-tei.xsl)</p>
+         <p> TEI Utility stylesheet for making TEI XML from  Word docx files</p>
          <p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
@@ -92,17 +90,18 @@ of this software, even if advised of the possibility of such damage.
       <desc>Defines whether or not a word paragraph is a list element.</desc></doc>
     <xsl:function name="tei:is-list" as="xs:boolean">
         <xsl:param name="p"/>    
+	<xsl:variable name="style" select="$p/w:pPr/w:pStyle/@w:val"/>
+	<xsl:variable name="stylePr"
+		      select="document($styleDoc)//w:style[w:name/@w:val=$style]"/>
         <xsl:choose>
-	    <xsl:when test="$p/w:pPr/w:numPr[not(w:ins)]">true</xsl:when>
-            <xsl:when test="$p/w:pPr/w:pStyle/@w:val='List Paragraph'">false</xsl:when>
-            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Bulletted')]">true</xsl:when>
-            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Bulleted')]">true</xsl:when>
-            <xsl:when test="contains($p/w:pPr/w:pStyle/@w:val,'List')">true</xsl:when>
             <xsl:when test="$p/w:pPr/w:pStyle/@w:val='dl'">true</xsl:when>
+	    <xsl:when test="$p/w:pPr/w:numPr/w:ilvl">true</xsl:when>
+	    <xsl:when test="contains($style,'List') and $p/w:pPr/w:numPr[not(w:ins)]">true</xsl:when>
+            <xsl:when test="contains($style,'List') and $stylePr/w:pPr/w:numPr[not(w:ins)]">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>
-
+    
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Defines whether or not a word paragraph is a table of contents.</desc></doc>
     <xsl:function name="tei:is-toc" as="xs:boolean">
@@ -191,5 +190,61 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
     </xsl:function>
 
+
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>insert a note that a docx conversion cannot proceed</desc></doc>
+    <xsl:function name="tei:docxError" as="node()+">
+      <xsl:param name="message"/>
+      <note place="margin" type="conversion" resp="#teitodocx" xmlns="http://www.tei-c.org/ns/1.0" >
+	<hi rend="docxError"><xsl:value-of select="$message"/></hi>
+      </note>
+      <xsl:message>docx conversion issue: <xsl:value-of select="$message"/></xsl:message>
+    </xsl:function>
+
+
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>process a Word w:instrText</desc></doc>
+
+  <xsl:function name="tei:processInstruction"  as="xs:string">
+    <xsl:param name="instr"/>
+    <xsl:choose>
+      <xsl:when test="matches($instr,'REF _')"> <!-- this will also catch NOTEREF _ -->
+	  <xsl:value-of select="concat('#',substring-before(substring-after($instr,'_'),'&#32;'))"/>
+      </xsl:when>
+      <xsl:when test="matches($instr,' HYPERLINK \\l ')">
+	<xsl:variable name="target">
+	  <xsl:value-of   select="translate(tokenize($instr,' ')[4],$dq,'')"/>
+	</xsl:variable>
+	<xsl:value-of select="if (matches($target,'^_')) then  concat('#',substring($target,2)) else $target"/>
+      </xsl:when>
+      <xsl:when test="matches($instr,' HYPERLINK')">
+	<xsl:variable name="target">
+	  <xsl:value-of   select="translate(tokenize($instr,' ')[2],$dq,'')"/>
+	</xsl:variable>
+	<xsl:value-of select="if (matches($target,'^_')) then  concat('#',substring($target,2)) else $target"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="if (matches($instr,'^_')) then  concat('#',substring($instr,2)) else $instr"/>
+      </xsl:otherwise>
+    </xsl:choose>
+</xsl:function>
+  
+
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Whether a w:instrText can be discarded on not. ignore all
+      the bibliographic addins</desc></doc>
+  <xsl:function name="tei:discardInstruction"  as="xs:boolean">
+    <xsl:param name="instr"/>
+    <xsl:choose>
+      <xsl:when test="contains($instr,'REF _')">true</xsl:when>
+      <xsl:when test="matches($instr,'^[ ]?EN.REFLIST')">true</xsl:when>
+      <xsl:when test="matches($instr,'^[ ]?ADDIN')">true</xsl:when>
+      <xsl:when test="matches($instr,'^[ ]?QUOTE')">true</xsl:when>
+      <xsl:when test="matches($instr,'^[ ]?ref Mendeley Edited')">true</xsl:when>
+      <xsl:when test="matches($instr,'^[ ]?XE')">true</xsl:when>
+      <xsl:when test="contains($instr,'SEQ')">true</xsl:when>
+      <xsl:otherwise>false</xsl:otherwise>
+    </xsl:choose>
+</xsl:function>
 
 </xsl:stylesheet>

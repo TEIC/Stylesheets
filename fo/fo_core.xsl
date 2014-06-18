@@ -379,6 +379,9 @@ of this software, even if advised of the possibility of such damage.
       <desc>label element in mode 'print'</desc>
    </doc>
   <xsl:template match="tei:list/tei:label"/>
+  <xsl:template name="lineBreakAsPara">
+    <block/>
+  </xsl:template>
   <xsl:template name="lineBreak">
     <xsl:choose>
       <xsl:when test="parent::tei:hi">

@@ -800,7 +800,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:abbr" mode="get-style">teiabbr</xsl:template>
   <xsl:template match="tei:bibl" mode="get-style">teibibl</xsl:template>
-  <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
+  <xsl:template match="tei:cit" mode="get-style">teiquote</xsl:template>
   <xsl:template match="tei:date" mode="get-style">date</xsl:template>
   <xsl:template match="tei:foreign" mode="get-style">foreign</xsl:template>
   <xsl:template match="tei:formula" mode="get-style">Formula</xsl:template>
@@ -808,7 +808,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:persName" mode="get-style">teipersName</xsl:template>
   <xsl:template match="tei:placeName" mode="get-style">teiplaceName</xsl:template>
   <xsl:template match="tei:q" mode="get-style">teiq</xsl:template>
-  <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
+  <xsl:template match="tei:quote" mode="get-style">teiquote</xsl:template>
   <xsl:template match="tei:ref[@rend and not(@target)]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
   <xsl:template match="tei:seg[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
   
@@ -1124,12 +1124,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="*[not(tei:is-inline(.))] or parent::tei:div">
         <xsl:call-template name="block-element">
-	  <xsl:with-param name="style">Quote</xsl:with-param>
+	  <xsl:with-param name="style">teiquote</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
       <xsl:when test="not(tei:is-inline(.))">
         <xsl:call-template name="block-element">
-	  <xsl:with-param name="style">Quote</xsl:with-param>
+	  <xsl:with-param name="style">teiquote</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
       <xsl:when test="tei:l">
@@ -2189,6 +2189,11 @@ of this software, even if advised of the possibility of such damage.
 	  <w:br/>
 	</w:r>
   </xsl:template>
+  <xsl:template name="lineBreakAsPara">
+	<w:r>
+	  <w:br/>
+	</w:r>
+  </xsl:template>
 
   <!-- hyperlink -->
   <xsl:template match="tei:ptr[@cRef]">
@@ -2920,7 +2925,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="displayNote">
     <xsl:call-template name="block-element">
-        <xsl:with-param name="style">Quote</xsl:with-param>
+        <xsl:with-param name="style">teiquote</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 

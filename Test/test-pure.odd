@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TEI xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:svg="http://www.w3.org/2000/svg"
-  xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns="http://www.tei-c.org/ns/1.0">
+<TEI  xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -16,7 +15,7 @@
   </teiHeader>
   <text>
     <body>
-      <schemaSpec ns="" start="stuff" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+      <schemaSpec ns="" start="stuff stuff1 stuff2 stuff3 stuff4 stuff5" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
         xmlns="http://www.tei-c.org/ns/1.0">
         <elementSpec ident="stuff">
           <desc>élément racine d'un schéma simplissime</desc>
@@ -48,7 +47,7 @@
         <elementSpec ident="bit">
           <desc>élément textuel du schéma simplissime (peut contenir des bobs) </desc>
           <content allowText="true">
-            <elementRef key="bob" minOccurs="1" maxOccurs="1"/>
+            <elementRef key="bob" maxOccurs="1"/>
           </content>
 	  <constraintSpec ident="test" scheme="isoschematron">
 	    <constraint>
@@ -56,8 +55,112 @@
 	    </constraint>
 	  </constraintSpec>
         </elementSpec>
+
+
+	<elementSpec ident="stuff5">
+	  <desc>even more</desc>
+	  <content  allowText="true">
+              <alternate  minOccurs="0" maxOccurs="unbounded" >
+                <elementRef key="bit"/>
+               <elementRef key="bob"/>
+              <elementRef key="t1"/>
+              </alternate>
+          </content>
+	</elementSpec>
+
+	<elementSpec ident="stuff4">
+	  <desc>even more</desc>
+	  <content  allowText="true">
+              <alternate  minOccurs="0" >
+                <elementRef key="bit"/>
+               <elementRef key="bob"/>
+              <elementRef key="t1"/>
+              </alternate>
+          </content>
+	</elementSpec>
+
+	<elementSpec ident="stuff3">
+	  <desc>more</desc>
+	  <content >
+            <alternate allowText="true" minOccurs="0"      >
+                <elementRef key="bit"/>
+		<elementRef key="bob"/>
+		<elementRef key="t1"/>
+              </alternate>
+          </content>
+	</elementSpec>
+
+	<elementSpec ident="stuff2">
+          <desc>élément racine d'un schéma simplissime</desc>
+          <content allowText="true">
+            <elementRef key="bit"/>
+            <elementRef key="bob"/>
+            <elementRef key="t1"/>
+          </content>
+        </elementSpec>
+
+	<elementSpec ident="stuff1">
+          <desc>élément racine d'un schéma simplissime</desc>
+          <content allowText="true">
+	    <sequence maxOccurs="unbounded">
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>
+              <elementRef key="t1"/>
+	    </sequence>
+          </content>
+        </elementSpec>
+
+<!--
+
+	  <elementSpec ident="seg">
+	    <desc>more seg</desc>
+	    <content>
+	      <sequence allowText="true">
+		<elementRef key="orgName"  minOccurs="0"/>
+		<elementRef key="persName"  minOccurs="0"/>
+		<elementRef key="choice"  minOccurs="0"/>
+		<elementRef key="seg"  minOccurs="0"/>
+		<elementRef key="trait"  minOccurs="0"/>
+	      </sequence>
+	    </content>
+	  </elementSpec>
+
+	  <elementSpec ident="seg2">
+	    <desc>more seg</desc>
+	    <content allowText="true" >
+		<elementRef key="orgName"  minOccurs="0"/>
+		<elementRef key="persName"  minOccurs="0"/>
+		<elementRef key="choice"  minOccurs="0"/>
+		<elementRef key="seg"  minOccurs="0"/>
+		<elementRef key="trait"  minOccurs="0"/>
+	    </content>
+	  </elementSpec>
+
+	  <elementSpec ident="choice">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+	  <elementSpec ident="orgName">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+	  <elementSpec ident="persName">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+	  <elementSpec ident="t1">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+	  <elementSpec ident="trait">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+
+-->
       </schemaSpec>
       
+
     </body>
   </text>
 </TEI>

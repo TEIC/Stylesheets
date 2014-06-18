@@ -979,16 +979,14 @@ select="$makeDecls"/></xsl:message>
           <xsl:when test="tei:valList[@type='closed']">
             <xsl:call-template name="valListChildren"/>
           </xsl:when>
-          <xsl:when test="tei:content/* and
-			  tei:content/@allowText='true'">
-	    <zeroOrMore  xmlns="http://relaxng.org/ns/structure/1.0">
-	      <choice>
+          <xsl:when test="(tei:content/tei:elementRef or
+			  tei:content/tei:sequence ) and  tei:content/@allowText='true'">
+	      <choice  xmlns="http://relaxng.org/ns/structure/1.0">
 		<text/>
 		<xsl:apply-templates
 		    select="tei:content/*|tei:content/processing-instruction()"
 		    mode="tangle"/>
 	      </choice>
-	    </zeroOrMore>
 	  </xsl:when>
           <xsl:when test="tei:content/*">
             <xsl:apply-templates
@@ -1085,14 +1083,16 @@ select="$makeDecls"/></xsl:message>
               <xsl:apply-templates select="tei:content/rng:group/*"/>
             </choice>
           </xsl:when>
-          <xsl:when test="tei:content/* and
-			  tei:content/@allowText='true'">
+          <xsl:when test="tei:content/* and tei:content/@allowText='true'">
 	    <zeroOrMore  xmlns="http://relaxng.org/ns/structure/1.0">
 	      <choice>
 		<text/>
 		<xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>
 	      </choice>
 	    </zeroOrMore>
+	  </xsl:when>
+          <xsl:when test="tei:content/tei:alternate and tei:content/@allowText='true'">
+	    <xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>
 	  </xsl:when>
 	  <xsl:when test="tei:content/*">
             <xsl:apply-templates select="tei:content/*"/>
@@ -2142,7 +2142,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:otherwise>
         <xsl:element name="{$suffix}" xmlns="http://relaxng.org/ns/structure/1.0">
           <choice xmlns="http://relaxng.org/ns/structure/1.0">
-            <xsl:if test="ancestor::tei:content/@allowText='true'">
+            <xsl:if test="ancestor-or-self::tei:*/@allowText='true'">
               <text xmlns="http://relaxng.org/ns/structure/1.0"/>
             </xsl:if>
             <xsl:apply-templates  mode="tangle"/>

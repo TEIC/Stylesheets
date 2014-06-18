@@ -296,13 +296,13 @@ test-oddity: css
 	diff test30.dtd expected-results/test30.dtd
 	$(BINDIR)/teitodtd $(FLAG) test-pure.odd test-pure.dtd
 	$(BINDIR)/teitornc $(FLAG) test-pure.odd test-pure.rnc
-	$(BINDIR)/teitohtml $(FLAG) --odd test-pure.odd test-pure.odd.html
 	xmllint --noout --dtdvalid test-pure.dtd test-pure.xml
-	xmllint --encode utf-8 --format test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure.odd.html
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.rnc
 	diff test-pure.rnc expected-results/test-pure.rnc
 	diff test-pure.dtd expected-results/test-pure.dtd
+	$(BINDIR)/teitohtml $(FLAG) --odd test-pure.odd test-pure.odd.html
+	xmllint --encode utf-8 --format test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure.odd.html
 	diff test-pure.odd.html expected-results/test-pure.odd.html
 	$(BINDIR)/teitodtd $(FLAG) test-pure2.odd test-pure2.dtd
 	$(BINDIR)/teitornc $(FLAG) test-pure2.odd test-pure2.rnc
@@ -333,10 +333,6 @@ moreoddity:
 	$(BINDIR)/teitoxsd test.odd test.xsd
 	$(BINDIR)/teitodtd test.odd test.dtd
 	$(BINDIR)/teitornc test.odd test.rnc
-
-pure:
-	$(BINDIR)/teitodtd test-pure.odd test-pure.dtd
-	$(BINDIR)/teitornc test-pure.odd test-pure.rnc
 
 test-namespaces:
 	@echo BUILD: testing namespaces
