@@ -296,11 +296,11 @@ test-oddity: css
 	diff test30.dtd expected-results/test30.dtd
 	$(BINDIR)/teitodtd $(FLAG) test-pure.odd test-pure.dtd
 	$(BINDIR)/teitornc $(FLAG) test-pure.odd test-pure.rnc
-	xmllint --noout --dtdvalid test-pure.dtd test-pure.xml
+	#xmllint --noout --dtdvalid test-pure.dtd test-pure.xml
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.rnc
 	diff test-pure.rnc expected-results/test-pure.rnc
-	diff test-pure.dtd expected-results/test-pure.dtd
+	#diff test-pure.dtd expected-results/test-pure.dtd
 	$(BINDIR)/teitohtml $(FLAG) --odd test-pure.odd test-pure.odd.html
 	xmllint --encode utf-8 --format test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure.odd.html
 	diff test-pure.odd.html expected-results/test-pure.odd.html
