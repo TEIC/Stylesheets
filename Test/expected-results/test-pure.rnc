@@ -12,10 +12,6 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 #
 
 sch:ns [ prefix = "tei" uri = "http://www.tei-c.org/ns/1.0" ]
-stuff =
-  
-  ## élément racine d'un schéma simplissime
-  element stuff { (bit | bob | thingummy)+ }
 bob =
   
   ## élément pointeur du schéma simplissime
@@ -34,7 +30,7 @@ bit =
   
   ## élément textuel du schéma simplissime (peut contenir des bobs) 
   element bit {
-    ((text | bob)*)
+    (text | bob)
     >> sch:pattern [
          id = "odd-1-bit-test-constraint-1"
          "\x{a}" ~
@@ -51,4 +47,32 @@ bit =
          "         "
        ]
   }
-start = stuff
+t1 =
+  
+  ## allowtext on content creates an alternation
+  element t1 { text | bit | bob | t1 }
+t2 =
+  
+  ## Within content with allowtext alternation and *Occurs both respected
+  element t2 { (text | bit | bob)* }
+t3 =
+  
+  ## Within content with allowtext alternation and *Occurs both respected
+  element t3 { (text | bit | bob)? }
+t4 =
+  
+  ## Within content with allowtext alternation and *Occurs both respected
+  element t4 { (text | bit | bob | t1)+ }
+t5 =
+  
+  ## sequence within generated alternation is also possible
+  element t5 { text | (bit, bob)+ }
+t6 =
+  
+  ## allowtext on alternate has no effect 
+  element t6 { (text | bit | bob)? }
+t7 =
+  
+  ## allowtext on sequence has no effect 
+  element t7 { (bit, bob)? }
+start = t1 | t2 | t3 | t4 | t5 | t6 | t7
