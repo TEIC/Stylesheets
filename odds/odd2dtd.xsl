@@ -1111,8 +1111,8 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test="tei:valList[@type='closed']">
 	    <xsl:text> (#PCDATA)</xsl:text>
 	  </xsl:when>
-          <xsl:when test="tei:content/* and
-			  tei:content/@allowText='true'">
+          <xsl:when test="(tei:content/tei:elementRef or
+			  tei:content/tei:sequence ) and  tei:content/@allowText='true'">
 	      <xsl:text>(#PCDATA | </xsl:text>
 	      <xsl:apply-templates select="tei:content/*"/>
 	      <xsl:text>)*</xsl:text>
