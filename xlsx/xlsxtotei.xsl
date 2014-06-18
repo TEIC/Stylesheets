@@ -10,7 +10,6 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:dcterms="http://purl.org/dc/terms/"
     xmlns:dcmitype="http://purl.org/dc/dcmitype/"
-    xmlns:date="http://www.exslt.org/date"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:tei-spreadsheet="https://github.com/oucs/tei-spreadsheet"
     xmlns:fn="http://www.w3.org/2005/xpath-functions">
