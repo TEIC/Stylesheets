@@ -285,8 +285,8 @@ of this software, even if advised of the possibility of such damage.
     <desc>Clean up by merging adjacent &lt;hi&gt;s with the same rend
     value into one.</desc>
   </doc>
-  <xsl:template match="tei:hi[@rend]" mode="pass2">
-    <xsl:variable name="r" select="@rend"/>
+  <xsl:template match="tei:hi[@rend or @style]" mode="pass2">
+    <xsl:variable name="r" select="concat(@rend,@style)"/>
     <xsl:choose>
       <xsl:when test="count(parent::tei:speaker/*)=1 and not         (parent::tei:speaker/text())">
         <xsl:apply-templates/>
@@ -294,11 +294,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="parent::tei:head and .=' '"/>
       <xsl:when test="not(*) and string-length(.)=0"/>
       <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']  and tei:g[@ref='x:tab']"/>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]"/>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and  preceding-sibling::node()[2][self::tei:hi[@rend=$r]]"/>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[concat(@rend,@style)=$r]]"/>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and  preceding-sibling::node()[2][self::tei:hi[concat(@rend,@style)=$r]]"/>
       <xsl:when test="($r='bold' or $r='italic') and .=' '">
         <xsl:text> </xsl:text>
-	<xsl:if test="following-sibling::node()[1][self::tei:hi[@rend=$r]]">
+	<xsl:if test="following-sibling::node()[1][self::tei:hi[concat(@rend,@style)=$r]]">
 	  <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
 	  <xsl:element name="{$ename}">
 	    <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
@@ -336,13 +336,13 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="r"/>
     <xsl:for-each select="following-sibling::node()[1]">
       <xsl:choose>
-        <xsl:when test="self::tei:hi[@rend=$r]">
+        <xsl:when test="self::tei:hi[concat(@rend,@style)=$r]">
           <xsl:apply-templates mode="pass2"/>
           <xsl:call-template name="nextHi">
             <xsl:with-param name="r" select="$r"/>
           </xsl:call-template>
         </xsl:when>
-        <xsl:when test="self::tei:seg and .=' ' and       following-sibling::node()[1][self::tei:hi[@rend=$r]]">
+        <xsl:when test="self::tei:seg and .=' ' and       following-sibling::node()[1][self::tei:hi[concat(@rend,@style)=$r]]">
           <xsl:apply-templates mode="pass2"/>
           <xsl:call-template name="nextHi">
             <xsl:with-param name="r" select="$r"/>
@@ -352,76 +352,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Clean up by merging adjacent &lt;hi&gt;s with the same style
-    value into one.</desc>
-  </doc>
-  <xsl:template match="tei:hi[@style]" mode="pass2">
-    <xsl:variable name="r" select="@style"/>
-    <xsl:choose>
-      <xsl:when test="count(parent::tei:speaker/*)=1 and not         (parent::tei:speaker/text())">
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:when test="parent::tei:head and .=' '"/>
-      <xsl:when test="not(*) and string-length(.)=0"/>
-      <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']  and tei:g[@ref='x:tab']"/>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@style=$r]]"/>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and  preceding-sibling::node()[2][self::tei:hi[@style=$r]]"/>
-      <xsl:when test="($r='bold' or $r='italic') and .=' '">
-        <xsl:text> </xsl:text>
-	<xsl:if test="following-sibling::node()[1][self::tei:hi[@style=$r]]">
-	  <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
-	  <xsl:element name="{$ename}">
-	    <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
-	    <xsl:call-template name="nextStyleHi">
-	      <xsl:with-param name="r" select="$r"/>
-	    </xsl:call-template>
-	  </xsl:element>
-	</xsl:if>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
-        <xsl:element name="{$ename}">
-          <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
-	  <xsl:choose>
-	    <xsl:when test="$ename='gap'">
-	      <desc>
-		<xsl:apply-templates mode="pass2"/>
-		<xsl:call-template name="nextStyleHi">
-		  <xsl:with-param name="r" select="$r"/>
-		</xsl:call-template>
-	      </desc>
-	    </xsl:when>
-	    <xsl:otherwise>
-		<xsl:apply-templates mode="pass2"/>
-		<xsl:call-template name="nextStyleHi">
-		  <xsl:with-param name="r" select="$r"/>
-		</xsl:call-template>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:element>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xsl:template name="nextStyleHi">
-    <xsl:param name="r"/>
-    <xsl:for-each select="following-sibling::node()[1]">
-      <xsl:choose>
-        <xsl:when test="self::tei:hi[@style=$r]">
-          <xsl:apply-templates mode="pass2"/>
-          <xsl:call-template name="nextStyleHi">
-            <xsl:with-param name="r" select="$r"/>
-          </xsl:call-template>
-        </xsl:when>
-        <xsl:when test="self::tei:seg and .=' ' and       following-sibling::node()[1][self::tei:hi[@style=$r]]">
-          <xsl:apply-templates mode="pass2"/>
-          <xsl:call-template name="nextStyleHi">
-            <xsl:with-param name="r" select="$r"/>
-          </xsl:call-template>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:for-each>
-  </xsl:template>
 
   <xsl:template match="tei:div[tei:head/tei:ANCHOR]" mode="pass2">
     <xsl:copy>
