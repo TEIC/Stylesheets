@@ -195,7 +195,8 @@ of this software, even if advised of the possibility of such damage.
       <desc>insert a note that a docx conversion cannot proceed</desc></doc>
     <xsl:function name="tei:docxError" as="node()+">
       <xsl:param name="message"/>
-      <note place="margin" type="conversion" resp="#teitodocx" xmlns="http://www.tei-c.org/ns/1.0" >
+      <hi xmlns="http://www.tei-c.org/ns/1.0" 
+	  style="color:red; font-size: 14pt; font-weight:bold;" rend="ERROR">&#xFFFD;</hi><note place="margin" type="conversion" resp="#teitodocx" xmlns="http://www.tei-c.org/ns/1.0" >
 	<hi rend="docxError"><xsl:value-of select="$message"/></hi>
       </note>
       <xsl:message>docx conversion issue: <xsl:value-of select="$message"/></xsl:message>
