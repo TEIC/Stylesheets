@@ -161,7 +161,9 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:copy>
 	  </xsl:when>
           <xsl:otherwise>
-	    <xsl:sequence select="tei:docxError('unable to handle Word object, possibly  embedded spreadsheet')"/>
+	    <xsl:sequence select="tei:docxError('unable to handle Word
+				  object, possibly  embedded
+				  spreadsheet or equation')"/>
 	  </xsl:otherwise>
       </xsl:choose>
     </xsl:template>
