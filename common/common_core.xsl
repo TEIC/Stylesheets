@@ -1003,6 +1003,8 @@ of this software, even if advised of the possibility of such damage.
 		      @place='marge' or
 		      @place='h' or
 		      @place='inter' or
+		      @place='right' or
+		      @place='left' or
 		      @place='divend' or
 		      @place='marginOuter' or
 		      @place='marginLeft' or
@@ -1022,7 +1024,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
 
       <xsl:when test="@place">
-	<xsl:message terminate="yes">unknown @place for note, <xsl:value-of select="@place"/></xsl:message>
+	<xsl:message>unknown @place for note, <xsl:value-of select="@place"/></xsl:message>
+	<xsl:call-template name="displayNote"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:call-template name="plainNote"/>

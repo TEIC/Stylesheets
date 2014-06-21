@@ -939,8 +939,11 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="@place='margin'	or    @place='marginOuter' or
+      <xsl:when test="@place='margin'
+		      or    @place='marginOuter' or
 		      @place='marginLeft' or
+		      @place='left' or
+		      @place='right' or
 		      @place='marginRight'">
         <span class="note{@place}">
           <xsl:call-template name="makeAnchor">
