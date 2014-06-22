@@ -193,37 +193,39 @@ of this software, even if advised of the possibility of such damage.
 	   </s>
 	   </xsl:otherwise>
 	 </xsl:choose>
-	   <!-- see also w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
-	   <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
-
-       <xsl:choose>
-	 <xsl:when test="w:rPr/w:sz">
-	   <s n="font-size">
-	     <xsl:value-of select="number(w:rPr/w:sz/@w:val) div 2"/>
-	     <xsl:text>pt</xsl:text>
-	   </s>
-	 </xsl:when>
-	 <xsl:when test="ancestor::w:tc and $extrarow/w:rPr/w:sz">
-	   <s n="font-size">
-	     <xsl:value-of select="number($extrarow/w:rPr/w:sz/@w:val) div 2"/>
-	     <xsl:text>pt</xsl:text>
-	   </s>
-	 </xsl:when>
+	 <!-- see also w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
+	 <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
+	 
+	 <xsl:choose>
+	   <xsl:when test="w:rPr/w:sz">
+	     <!--
+	     <s n="font-size">
+	       <xsl:value-of select="number(w:rPr/w:sz/@w:val) div 2"/>
+	       <xsl:text>pt</xsl:text>
+	     </s>
+	     -->
+	   </xsl:when>
+	   <xsl:when test="ancestor::w:tc and $extrarow/w:rPr/w:sz">
+	     <s n="font-size">
+	       <xsl:value-of select="number($extrarow/w:rPr/w:sz/@w:val) div 2"/>
+	       <xsl:text>pt</xsl:text>
+	     </s>
+	   </xsl:when>
 	 <xsl:when test="ancestor::w:tc and $extracolumn/w:rPr/w:sz">
 	   <s n="font-size">
 	     <xsl:value-of select="number($extracolumn/w:rPr/w:sz/@w:val) div 2"/>
 	     <xsl:text>pt</xsl:text>
 	   </s>
 	 </xsl:when>
-       </xsl:choose>
-       <xsl:if test="w:rPr/w:position/@w:val and not(w:rPr/w:position/@w:val='0')">
+	 </xsl:choose>
+	 <xsl:if test="w:rPr/w:position/@w:val and not(w:rPr/w:position/@w:val='0')">
 	 <s n="position">
 	   <xsl:value-of select="w:rPr/w:position/@w:val"/>
 	 </s>
-       </xsl:if>
-      </xsl:variable>
-
-      <xsl:variable name="dir">
+	 </xsl:if>
+     </xsl:variable>
+     
+     <xsl:variable name="dir">
 	<!-- right-to-left text -->
 	<xsl:if test="w:rPr/w:rtl or parent::w:p/w:pPr/w:rPr/w:rtl">
 	  <xsl:text>rtl</xsl:text>
@@ -349,6 +351,9 @@ of this software, even if advised of the possibility of such damage.
 		
       </xsl:variable>
       <xsl:choose>
+	<xsl:when test="normalize-space(.)=''">
+	    <xsl:apply-templates/>
+	</xsl:when>
 	<xsl:when test="$effects/* or ($styles/* and $preserveEffects='true')">
 	  <xsl:element name="{if ($parented='true') then 'seg' else 'hi'}">
 	    <xsl:if test="$dir!='' and $preserveEffects='true'">

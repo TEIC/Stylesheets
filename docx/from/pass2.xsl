@@ -285,14 +285,16 @@ of this software, even if advised of the possibility of such damage.
     <desc>Clean up by merging adjacent &lt;hi&gt;s with the same rend
     value into one.</desc>
   </doc>
-  <xsl:template match="tei:hi[@rend or @style]" mode="pass2">
+
+  <xsl:template match="tei:hi[not (* or text())]"		mode="pass2"/>
+
+  <xsl:template match="tei:hi[(@rend or @style) and (* or text())]" mode="pass2">
     <xsl:variable name="r" select="concat(@rend,@style)"/>
     <xsl:choose>
       <xsl:when test="count(parent::tei:speaker/*)=1 and not         (parent::tei:speaker/text())">
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="parent::tei:head and .=' '"/>
-      <xsl:when test="not(*) and string-length(.)=0"/>
       <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']  and tei:g[@ref='x:tab']"/>
       <xsl:when test="preceding-sibling::node()[1][self::tei:hi[concat(@rend,@style)=$r]]"/>
       <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and  preceding-sibling::node()[2][self::tei:hi[concat(@rend,@style)=$r]]"/>

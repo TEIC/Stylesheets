@@ -184,7 +184,8 @@ of this software, even if advised of the possibility of such damage.
          </xsl:if>
        </xsl:variable>
        <xsl:variable name="localStyles">
-   	 <xsl:if test="$preserveEffects='true' and w:pPr/w:jc">
+   	 <xsl:if test="$preserveEffects='true' and w:pPr/w:jc and
+		       w:pPr/w:jc/@w:val !='both'">
            <xsl:text>text-align:</xsl:text>
 	   <xsl:value-of select="w:pPr/w:jc/@w:val"/>
 	            <xsl:text>;</xsl:text>
