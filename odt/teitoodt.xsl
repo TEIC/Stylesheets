@@ -892,9 +892,16 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:ab">
-    <text:p>
-      <xsl:apply-templates/>
-    </text:p>
+    <xsl:choose>
+      <xsl:when test="tei:ab">
+	  <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+	<text:p>
+	  <xsl:apply-templates/>
+	</text:p>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <!-- tables-->
   <xsl:template match="tei:table">
