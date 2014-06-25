@@ -700,7 +700,7 @@ of this software, even if advised of the possibility of such damage.
 		       </xsl:when>
 		       <xsl:when
 			   test="starts-with(local-name(.),'div') and tei:head">
-			 <xsl:value-of select="tei:sanitize(tei:head/string())"/>
+			 <xsl:value-of select="tei:sanitize(tei:head)"/>
 		       </xsl:when>
 		       <xsl:otherwise>
 			 <xsl:value-of select="tei:sanitize(./string())"/>
