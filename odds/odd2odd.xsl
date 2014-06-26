@@ -1844,30 +1844,31 @@ so that is only put back in if there is some content
   </xsl:template>
 
   <xsl:template match="tei:memberOf" mode="pass3">
-<xsl:choose>
-    <xsl:when test="not(key('odd2odd-IDENTS',@key))">
-            <xsl:if test="$verbose='true'">
-              <xsl:message>Reject unused memberOf pointing to <xsl:value-of select="@ident"/> because that doesn't exist</xsl:message>
-	    </xsl:if>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:for-each select="key('odd2odd-IDENTS',@key)">
-	<xsl:variable name="used">
-	  <xsl:call-template name="odd2odd-amINeeded"/>
-	</xsl:variable>
-	<xsl:choose>
-	  <xsl:when test="$used=''">
-            <xsl:if test="$verbose='true'">
-              <xsl:message>Reject unused memberOf pointing to <xsl:value-of select="@ident"/>  </xsl:message>
-            </xsl:if>
-	  </xsl:when>
-	  <xsl:otherwise>
-            <memberOf key="{@ident}" xmlns="http://www.tei-c.org/ns/1.0"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:for-each>
-    </xsl:otherwise>
-</xsl:choose>
+    <xsl:variable name="keep" select="."/>
+    <xsl:choose>
+      <xsl:when test="not(key('odd2odd-IDENTS',@key))">
+        <xsl:if test="$verbose='true'">
+          <xsl:message>Reject unused memberOf pointing to <xsl:value-of select="@ident"/> because that doesn't exist</xsl:message>
+	</xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="key('odd2odd-IDENTS',@key)">
+	  <xsl:variable name="used">
+	    <xsl:call-template name="odd2odd-amINeeded"/>
+	  </xsl:variable>
+	  <xsl:choose>
+	    <xsl:when test="$used=''">
+              <xsl:if test="$verbose='true'">
+		<xsl:message>Reject unused memberOf pointing to <xsl:value-of select="@ident"/>  </xsl:message>
+              </xsl:if>
+	    </xsl:when>
+	    <xsl:otherwise>
+              <xsl:copy-of select="$keep"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:macroSpec" mode="pass3">
