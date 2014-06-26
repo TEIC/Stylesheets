@@ -1241,6 +1241,11 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:with-param name="style">citquote</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
+      <xsl:when test="tei:list">
+        <xsl:call-template name="makeBlock">
+	  <xsl:with-param name="style">citquote</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
       <xsl:when test="not(tei:is-inline(.))">
         <blockquote>
           <xsl:call-template name="makeRendition"/>
