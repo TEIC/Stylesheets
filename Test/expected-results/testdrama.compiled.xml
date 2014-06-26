@@ -3849,7 +3849,7 @@ or corporate bodies.</desc>
     arbitraria</desc>
   <classes>
     <memberOf key="model.phrase"/>
-    <memberOf key="model.linePart"/>
+    
   </classes>
   <remarks versionDate="2005-10-10" xml:lang="en">
     <p>The principles on which segmentation is carried out, and any special codes or attribute
@@ -3889,7 +3889,7 @@ or corporate bodies.</desc>
   <classes>
       <memberOf key="model.highlighted"/>
       <memberOf key="model.limitedPhrase"/>
-      <memberOf key="model.linePart"/>
+      
   </classes>
   <listRef>
       <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COHQ">3.3. </ref>
@@ -3996,6 +3996,39 @@ or corporate bodies.</desc>
   <listRef>
       <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COGR">3.9. </ref>
   </listRef>
+</classSpec><classSpec module="tei" type="model" ident="model.offsetLike">
+  <desc versionDate="2007-10-09" xml:lang="en">groups elements which can appear only as part of a place name.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">장소명의 부분으로서만 나타날 수 있는 요소를 모아 놓는다.</desc>
+  <desc versionDate="2008-04-06" xml:lang="es">agrupa los elementos que pueden aparecer solamente como
+    parte de un topónimo.</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">場所名の部分として出現可能な要素をまとめる．</desc>
+  <desc versionDate="2009-10-06" xml:lang="fr">regroupe des éléments qui ne peuvent apparaître que sous la forme d'une partie d'un toponyme.</desc>
+  <desc versionDate="2007-11-06" xml:lang="it">raggruppa elementi che risultano solo come parte di un
+    nome di luogo</desc>
+  <classes>
+    <memberOf key="model.nameLike"/>
+  </classes>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPLAC">13.2.3. </ref>
+  </listRef>
+</classSpec><classSpec module="tei" type="model" ident="model.pPart.msdesc">
+  <desc versionDate="2007-10-18" xml:lang="en">groups phrase-level elements used in manuscript description.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">원고 기술에서 사용되는 구-층위 요소를 모아 놓는다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集描述寫本的元素</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">手書き資料における，句レベルの要素をまとめる．</desc>
+  <desc versionDate="2009-05-27" xml:lang="fr">regroupe des éléments de niveau expression utilisés pour décrire
+    des manuscrits</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa les elementos empleados en la descripción de
+    manuscritos.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">raggruppa gli elementi utilizzati per descrivere
+    manoscritti</desc>
+  <classes>
+    <memberOf key="model.phrase"/>
+    <memberOf key="model.limitedPhrase"/>
+  </classes>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/MS.html#MS">10. </ref>
+  </listRef>
 </classSpec><classSpec module="tei" type="model" ident="model.pPart.editorial">
   <desc versionDate="2007-10-18" xml:lang="en">groups phrase-level elements for simple editorial interventions that may be useful both
 in transcribing and in authoring.</desc>
@@ -4028,7 +4061,7 @@ in transcribing and in authoring.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">agrupa solo elementos sintagmáticos utilizados para
     simples correcciones y transcripciones editoriales que no parecen ser útiles para la autoría.</desc>
   <classes>
-    <memberOf key="model.linePart"/>
+    
     <memberOf key="model.pPart.edit"/>
   </classes>
   <listRef>
@@ -4051,11 +4084,6 @@ in transcribing and in authoring.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COED">3.4. </ref>
   </listRef>
-</classSpec><classSpec module="tei" type="model" ident="model.linePart">
-  <desc versionDate="2011-11-20" xml:lang="en">groups transcriptional elements which appear within lines or
-  zones of a source-oriented transcription within a <gi>sourceDoc</gi>
-  element.</desc>
-  <desc xml:lang="fr" versionDate="2007-06-12">regroupe des éléments qui peuvent figurer dans les zones d'une transcription orientée source dans un élément <gi>sourceDoc</gi>.</desc>
 </classSpec><classSpec module="tei" xml:id="CLLOC" type="model" ident="model.ptrLike">
   <desc versionDate="2007-10-18" xml:lang="en">groups elements used for purposes of location and reference.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">위치 및 참조에 대한 요소를 모아 놓는다.</desc>
@@ -4072,6 +4100,23 @@ in transcribing and in authoring.</desc>
   </classes>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COXR">3.6. </ref>
+  </listRef>
+</classSpec><classSpec module="tei" xml:id="VEPHR" type="model" ident="model.lPart">
+  <desc versionDate="2005-11-26" xml:lang="en">groups phrase-level elements which may appear within verse only.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">운문 내에서만 나타날 수 있는 구-층위 요소를 모아 놓는다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集僅可能出現於韻文內的詞組層次元素。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">韻文内にのみある，句レベルの要素をまとめる．</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">regroupe des éléments du niveau de l'expression qui ne
+    peuvent apparaître que dans des vers.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos de nivel sintagmático utilizados sólo
+    para los versos.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi a livello sintagmatico utilizzati solo
+    per i versi</desc>
+  <classes>
+    <memberOf key="model.phrase"/>
+  </classes>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/VE.html#VESE">6.2. </ref>
   </listRef>
 </classSpec><classSpec module="tei" xml:id="METADATA" type="model" ident="model.global.meta">
   <desc versionDate="2007-10-03" xml:lang="en">groups globally available elements which describe the status of other elements.</desc>
@@ -4152,6 +4197,56 @@ elements used to represent reference systems.</desc>
     rapresentano oggetti non Unicode</desc>
 
 
+</classSpec><classSpec module="tei" type="model" xml:id="ODDDECL" ident="model.oddDecl">
+  <desc versionDate="2005-10-10" xml:lang="en">groups elements which generate declarations in some markup language in ODD documents.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">ODD 문서에서 마크업 언어로 선언을 생성하는 요소를 모아 놓는다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集的元素使ODD文件內某些標記語言中產生宣告。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">ODD文書で使用される要素の宣言を生成する要素をまとめる．</desc>
+  <desc versionDate="2009-05-27" xml:lang="fr">regroupe les éléments qui, dans des documents ODD,
+    génèrent des déclarations dans un langage d'encodage.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos que generan declaraciones en un lenguaje
+    de codificación dado en documentos aislados</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che generano dichiarazioni in un dato
+    linguaggio di codifica in documenti isolati</desc>
+  <classes>
+    
+    <memberOf key="model.inter"/>
+  </classes>
+</classSpec><classSpec module="tei" type="model" ident="model.phrase.xml">
+  <desc versionDate="2007-10-03" xml:lang="en">groups phrase-level elements used to encode XML constructs such as element names, attribute
+    names, and attribute values</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">요소명, 속성명, 그리고 속성값과 같이 XML 구성물을 부호화하는 구-층위 요소를 모아 놓는다.</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">XML要素を符号化する，句レベルの要素をまとめる．例えば，要素名，属性 名，属性値など．</desc>
+  <desc versionDate="2008-03-30" xml:lang="fr">regroupe des éléments de niveau expression utilisés pour
+    encoder des constructions XML telles que des noms d'éléments, des noms d'attributs ou des
+    valeurs d'attributs</desc>
+  <desc versionDate="2007-11-06" xml:lang="it">raggruppa elementi a livello di sintagma utilizzati per
+    codificare costrutti XML quali nomi di elementi e nomi e valori di attributi</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos usados para codificar construcciones en
+    XML en el nivel sintagmático, p.ej. nombre de elemento, nombres de atributo, y valores de
+    atributo.</desc>
+  <classes>
+    <memberOf key="model.phrase"/>
+    <memberOf key="model.limitedPhrase"/>
+  </classes>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TD.html#TD">22. </ref>
+  </listRef>
+</classSpec><classSpec module="tei" type="model" ident="model.specDescLike">
+  <desc versionDate="2007-10-22" xml:lang="en">groups elements for referring to specification elements.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">명시 요소를 참조하는 요소를 모아 놓는다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集的元素參照到細節元素</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">特定の要素を参照する要素をまとめる．</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">regroupe les éléments pour se référer aux éléments de
+      spécification</desc>
+  <desc versionDate="2007-11-06" xml:lang="it">raggruppa elementi indicanti i componenti di una data specifica</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos para referir elementos de especificación</desc>
+  <classes>
+    <memberOf key="model.phrase"/>
+  </classes>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TD.html#TD">22. </ref>
+  </listRef>
 </classSpec><classSpec module="tei" xml:id="CLBIBL" type="model" ident="model.biblLike">
   <desc versionDate="2005-10-10" xml:lang="en">groups elements containing a bibliographic description.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">서지 기술을 포함하는 요소를 모아 놓는다.</desc>
@@ -4163,8 +4258,8 @@ elements used to represent reference systems.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che contengono una descrizione bibliografica</desc>
   <classes>
     <memberOf key="model.inter"/>
-    <memberOf key="model.personPart"/>
-    <memberOf key="model.msItemPart"/>
+    
+    
   </classes>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBI">3.11. </ref>
@@ -4294,39 +4389,6 @@ niveau dans une entrée de dictionnaire.</desc>
   <listRef>
       <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DI.html#DIBO">9.1. </ref>
   </listRef>
-</classSpec><classSpec module="tei" xml:id="DITOPLEV" type="model" ident="model.entryPart.top">
-  <desc versionDate="2007-10-02" xml:lang="en">groups high level elements within a structured dictionary entry</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">구조화된 사전 표제어 내의 고급 층위 요소를 모아 놓는다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集一個字典辭條的相關部分，構成一致的分支區段，例如一個特殊字義、同音異義字等。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">構造化されている辞書項目中にある，上位レベルの要素をまとめる．</desc>
-  <desc versionDate="2008-03-30" xml:lang="fr">regroupe des éléments de la macrostructure d'un
-dictionnaire structuré</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">raggruppa le parti di una voce di dizionario che costituiscono una suddivisione coerente, per esempio un dato significato, omonimo, ecc.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">agrupa las partes de una entrada de diccionario que constituyen una subdivisión coherente, p.ej, un significado dado, homónimo, etc.</desc>
-  <remarks versionDate="2007-10-02" xml:lang="en">
-    <p>Members of this class typically contain related parts of a
-dictionary entry which form a coherent
-subdivision, for example a particular sense, homonym, etc.
-</p>
-  </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p>Les membres de cette classe contiennent typiquement des parties d'une entrée de
-                dictionnaire liées et formant une subdivision cohérente, par exemple un sens
-                particulier, un homonyme etc....</p>
-  </remarks>
-  <remarks xml:lang="es" versionDate="2008-04-06">
-    <p>Los miembros de esta clase contienen normalmente partes relativas a entrada de diccionario y que forman una subdivisión coherente, por ejemplo un significado particular, un homónimo, etc.
-</p>
-  </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
-    <p>
-当該クラスのメンバーは，干渉的下位部分である辞書項目に関連するを持つ．
-例えば，特別な意味や，同音同形異義語など．
-</p>
-  </remarks>
-  <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DI.html#DIEN">9.2. </ref>
-  </listRef>
 </classSpec><classSpec module="tei" xml:id="EDITINCL" type="model" ident="model.global.edit">
   <desc versionDate="2007-10-03" xml:lang="en">groups globally available elements which perform a specifically editorial function.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">명확한 편집 기능을 수행하며, 전체적으로 이용 가능한 요소를 모아 놓는다.</desc>
@@ -4377,22 +4439,35 @@ subdivision, for example a particular sense, homonym, etc.
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STEC">1.3. </ref>
   </listRef>
-</classSpec><classSpec module="tei" xml:id="DEMOG" type="model" ident="model.personPart">
-  <desc versionDate="2007-10-03" xml:lang="en">groups elements which form part of the description of a person.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">개인에 대한 기술의 부분을 형성하는 요소를 모아 놓는다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集的元素描述由文本所參照、或參與語言互動的人物特性。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">個人の説明する部分となる要素をまとめる．</desc>
-  <desc versionDate="2009-05-28" xml:lang="fr">regroupe des éléments qui font partie de la description
-    d'une personne</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos que describen determinadas
-    características de las personas a las cuales se hace referencia en el texto o que participan en
-    una interacción verbal.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che descrivono determinate
-    caratteristiche delle persone a cui si fa riferimento nel testo o che partecipano a
-    un'interazione verbale</desc>
+</classSpec><classSpec predeclare="true" module="tei" xml:id="PLACPART" type="model" ident="model.placeNamePart">
+  <desc versionDate="2007-10-03" xml:lang="en">groups elements which form part of a place name.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">장소명의 부분을 형성하는 요소를 모아 놓는다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集構成地點名稱部分的元素。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">場所名の部分となる要素をまとめる．</desc>
+  <desc versionDate="2009-05-28" xml:lang="fr">regroupe des éléments qui font partie d'un nom de lieu.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa los elementos que forman parte del nombre de un
+    lugar</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">raggruppa gli elementi che fanno parte del nome di un
+    luogo</desc>
+  <classes>
+    
+    <memberOf key="model.placeStateLike"/>
+  </classes>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAHPA">15.2.2. </ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPLAC">13.2.3. </ref>
   </listRef>
+</classSpec><classSpec predeclare="true" module="tei" type="model" ident="model.placeStateLike">
+  <desc versionDate="2007-10-09" xml:lang="en">groups elements which describe changing states of a place.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">장소의 변화하는 상태를 기술하는 요소를 모아 놓는다.</desc>
+  <desc versionDate="2008-04-06" xml:lang="es">agrupa los elementos que describen aspectos variables de
+    un lugar.</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">場所の変容を示す要素をまとめる．</desc>
+  <desc versionDate="2009-10-06" xml:lang="fr">regroupe des éléments qui décrivent les transformations d'un lieu</desc>
+  <desc versionDate="2007-11-06" xml:lang="it">raggruppa elementi che descrivono stati mutevoli di un
+    luogo</desc>
+  <classes>
+    <memberOf key="model.nameLike"/>
+  </classes>
 </classSpec><classSpec module="tei" type="model" ident="model.publicationStmtPart.agency">
   <desc versionDate="2014-01-11" xml:lang="en">groups the child
   elements of a <gi>publicationStmt</gi> element of the TEI header
@@ -4475,7 +4550,7 @@ subdivision, for example a particular sense, homonym, etc.
     citazioni</desc>
   <classes>
     <memberOf key="model.qLike"/>
-    <memberOf key="model.msItemPart"/>
+    
   </classes>
 </classSpec><classSpec module="tei" xml:id="HQINTER" type="model" ident="model.qLike">
   <desc versionDate="2005-10-10" xml:lang="en">groups elements related to highlighting which can appear either within or between
@@ -4510,7 +4585,7 @@ subdivision, for example a particular sense, homonym, etc.
     intellettuale, per esempio all'interno di un elemento bibliografico</desc>
   <classes>
     <memberOf key="model.biblPart"/>
-    <memberOf key="model.msItemPart"/>
+    
   </classes>
 </classSpec><classSpec module="tei" xml:id="DIVTOP" type="model" ident="model.divWrapper">
   <desc versionDate="2007-10-02" xml:lang="en">groups elements which can appear at either top or bottom of a
@@ -4644,25 +4719,6 @@ fin d'une division de texte.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DS.html#DSTITL">4.6. </ref>
   </listRef>
-</classSpec><classSpec module="tei" type="model" ident="model.msQuoteLike">
-  <desc versionDate="2009-05-12" xml:lang="en">groups elements which represent passages such as titles quoted from a manuscript as a part
-    of its description.</desc>
-  <desc versionDate="2009-05-27" xml:lang="fr">regroupe des éléments qui représentent des passages d'un manuscrit, tels que
-    des titres cités comme une partie de sa description</desc>
-  <classes>
-    <memberOf key="model.msItemPart"/>
-  </classes>
-</classSpec><classSpec module="tei" xml:id="MSITEMPART" type="model" ident="model.msItemPart">
-  <desc versionDate="2007-10-03" xml:lang="en">groups elements which can appear within a manuscript item description.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">원고 항목 기술 내에서 나타날 수 있는 요소를 모아 놓는다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素集可出現於寫本項目描述中。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">手書き資料の記述項目内で出現可能な要素をまとめる．</desc>
-  <desc versionDate="2009-05-27" xml:lang="fr">regroupe des éléments qui peuvent apparaître dans une
-    description de manuscrit</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">la clase de elementos que pueden aparecer dentro de la
-    descripción de un manuscrito.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">classe di elementi che appaiono all'interno della
-    descrizione di un manoscritto</desc>
 </classSpec><classSpec module="tei" xml:id="CHOOSEABLE" type="model" ident="model.choicePart">
   <desc versionDate="2007-10-18" xml:lang="en">groups elements (other than <gi>choice</gi> itself) which can be used within a
     <gi>choice</gi> alternation.</desc>
@@ -7368,7 +7424,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.quoteLike"/>
-    <memberOf key="model.entryPart.top"/>
+    
   </classes>
   <content>
     <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
@@ -7928,7 +7984,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.pPart.editorial"/>
-    <memberOf key="model.linePart"/>
+    
   </classes>
   <content>
     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
@@ -12467,7 +12523,7 @@ places, in particular where  multiple names are given.</p>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.emphLike"/>
-    <memberOf key="model.msQuoteLike"/>
+    
     <memberOf key="att.canonical"/>
     <memberOf key="att.typed"/>
   </classes>
@@ -14725,7 +14781,7 @@ by the stage direction.</p>
    </desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="model.msItemPart"/>
+    
     <memberOf key="model.biblPart"/>
   </classes>
   <content>
@@ -15963,10 +16019,10 @@ distribution of a text.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.sortable"/>
-    <memberOf key="model.msItemPart"/>
+    
     <memberOf key="model.nameLike"/>
     <memberOf key="model.publicationStmtPart.detail"/>
-    <memberOf key="model.personPart"/>
+    
   </classes>
   <content>
     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">

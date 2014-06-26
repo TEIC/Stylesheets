@@ -1185,6 +1185,7 @@ model.linePart =
   | zone
   | line
 model.ptrLike = ptr | ref
+model.lPart = notAllowed
 model.global.meta =
   index
   | link
@@ -1198,6 +1199,14 @@ model.global.meta =
   | listTranspose
 model.milestoneLike = milestone | gb | pb | lb | cb | anchor | fw
 model.gLike = notAllowed
+model.oddDecl = notAllowed
+model.oddDecl_alternation = notAllowed
+model.oddDecl_sequence = empty
+model.oddDecl_sequenceOptional = empty
+model.oddDecl_sequenceOptionalRepeatable = empty
+model.oddDecl_sequenceRepeatable = notAllowed
+model.phrase.xml = notAllowed
+model.specDescLike = notAllowed
 model.biblLike = bibl | biblStruct | listBibl | biblFull | msDesc
 model.biblLike_alternation =
   bibl | biblStruct | listBibl | biblFull | msDesc
@@ -1388,6 +1397,7 @@ model.divWrapper =
   | docDate
 model.divTopPart = model.headLike | opener | signed
 model.divTop = model.divWrapper | model.divTopPart
+model.frontPart.drama = notAllowed
 model.pLike.front =
   head
   | byline
@@ -1509,7 +1519,7 @@ model.biblPart =
   | edition
   | extent
   | msIdentifier
-model.frontPart = divGen | titlePage
+model.frontPart = model.frontPart.drama | divGen | titlePage
 model.addrPart = model.nameLike | addrLine | street | postCode | postBox
 model.pPart.data =
   model.dateLike
@@ -1518,6 +1528,7 @@ model.pPart.data =
   | model.nameLike
 model.inter =
   model.egLike
+  | model.oddDecl
   | model.biblLike
   | model.labelLike
   | model.listLike
@@ -1531,6 +1542,9 @@ model.phrase =
   | model.pPart.msdesc
   | model.pPart.edit
   | model.ptrLike
+  | model.lPart
+  | model.phrase.xml
+  | model.specDescLike
   | model.pPart.data
 model.limitedPhrase =
   model.hiLike
@@ -1538,6 +1552,7 @@ model.limitedPhrase =
   | model.pPart.msdesc
   | model.pPart.editorial
   | model.ptrLike
+  | model.phrase.xml
   | model.pPart.data
 model.divLike = \div | homer
 model.divGenLike = divGen

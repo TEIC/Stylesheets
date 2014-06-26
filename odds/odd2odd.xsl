@@ -1804,7 +1804,7 @@ so that is only put back in if there is some content
       <xsl:when test="$used=''">
         <xsl:if test="$verbose='true'">
           <xsl:message>Reject unused class <xsl:value-of select="@ident"/>
-               </xsl:message>
+          </xsl:message>
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
@@ -1818,30 +1818,56 @@ so that is only put back in if there is some content
   <xsl:template name="odd2odd-amINeeded">
     <!--
 	How can a class be ok?
-	a) if an element is a member of it
-	b) if its referred to in a content model
-	c) if some other class is a member of it, and that class is OK
+	a) if an element is a member of it and
+	b)  its referred to in a content model
+	c) some other class is a member of it, and that class is OK
+	d) its a member of some other class, and that class is OK
     -->
     <xsl:variable name="k" select="@ident"/>
     <xsl:choose>
       <xsl:when test="$autoGlobal='true' and starts-with(@ident,'att.global')">y</xsl:when>
-      <xsl:when test="self::tei:classSpec and $stripped='true'">y</xsl:when>
-      <xsl:when test="key('odd2odd-ELEMENT_MEMBERED',$k)">y</xsl:when>
-      <xsl:when test="key('odd2odd-REFED',$k)">y</xsl:when>
-      <xsl:when test="key('odd2odd-CLASS_MEMBERED',$k)">
+      <xsl:when test="@type='model' and  key('odd2odd-REFED',$k)">y</xsl:when>
+      <xsl:when test="@type='atts' and key('odd2odd-ELEMENT_MEMBERED',$k)">y</xsl:when>
+      <xsl:when test="@type='atts' and key('odd2odd-CLASS_MEMBERED',$k)">
         <xsl:for-each select="key('odd2odd-CLASS_MEMBERED',$k)">
           <xsl:call-template name="odd2odd-amINeeded"/>
         </xsl:for-each>
+      </xsl:when>
+
+      <xsl:when test="@type='model' and tei:classes/tei:memberOf">
+	<xsl:for-each
+	    select="tei:classes/tei:memberOf/key('odd2odd-IDENTS',@key)">
+            <xsl:call-template name="odd2odd-amINeeded"/>
+	</xsl:for-each>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:memberOf" mode="pass3">
-    <xsl:if test="key('odd2odd-IDENTS',@key)">
-      <xsl:copy>
-        <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
-      </xsl:copy>
-    </xsl:if>
+<xsl:choose>
+    <xsl:when test="not(key('odd2odd-IDENTS',@key))">
+            <xsl:if test="$verbose='true'">
+              <xsl:message>Reject unused memberOf pointing to <xsl:value-of select="@ident"/> because that doesn't exist</xsl:message>
+	    </xsl:if>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:for-each select="key('odd2odd-IDENTS',@key)">
+	<xsl:variable name="used">
+	  <xsl:call-template name="odd2odd-amINeeded"/>
+	</xsl:variable>
+	<xsl:choose>
+	  <xsl:when test="$used=''">
+            <xsl:if test="$verbose='true'">
+              <xsl:message>Reject unused memberOf pointing to <xsl:value-of select="@ident"/>  </xsl:message>
+            </xsl:if>
+	  </xsl:when>
+	  <xsl:otherwise>
+            <memberOf key="{@ident}" xmlns="http://www.tei-c.org/ns/1.0"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+    </xsl:otherwise>
+</xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:macroSpec" mode="pass3">
