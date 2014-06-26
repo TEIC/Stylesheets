@@ -1835,6 +1835,15 @@ so that is only put back in if there is some content
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template match="tei:memberOf" mode="pass3">
+    <xsl:if test="key('odd2odd-IDENTS',@key)">
+      <xsl:copy>
+        <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template match="tei:macroSpec" mode="pass3">
     <xsl:variable name="k">
       <xsl:value-of select="@prefix"/>
