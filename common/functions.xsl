@@ -1476,7 +1476,7 @@ of this software, even if advised of the possibility of such damage.
        <xsl:param name="filename"/>
        <xsl:param name="type"/>
        <xsl:variable name="filesuffix"
-		     select="tokenize($filename,'\.')[last()]"/>
+		     select="lower-case(tokenize($filename,'\.')[last()])"/>
 
 	<xsl:choose>
 	  <xsl:when test="$type"><xsl:message>check <xsl:value-of select="($filename,$filesuffix,$type)"/></xsl:message><xsl:value-of select="$type"/></xsl:when>
