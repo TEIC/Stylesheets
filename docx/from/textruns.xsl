@@ -197,13 +197,11 @@ of this software, even if advised of the possibility of such damage.
 	 <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
 	 
 	 <xsl:choose>
-	   <xsl:when test="w:rPr/w:sz">
-	     <!--
+	   <xsl:when test="w:rPr/w:sz and $preserveFontSizeChanges='true'">
 	     <s n="font-size">
 	       <xsl:value-of select="number(w:rPr/w:sz/@w:val) div 2"/>
 	       <xsl:text>pt</xsl:text>
 	     </s>
-	     -->
 	   </xsl:when>
 	   <xsl:when test="ancestor::w:tc and $extrarow/w:rPr/w:sz">
 	     <s n="font-size">
