@@ -498,7 +498,11 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:elementSpec[@mode='delete']|tei:classSpec[@mode='delete']|tei:macroSpec[@mode='delete']"
-		mode="pass1"/>
+		mode="pass1">
+        <xsl:if test="$verbose='true'">
+          <xsl:message>Phase 1: remove <xsl:value-of select="@ident"/></xsl:message>
+        </xsl:if>
+  </xsl:template>
 
   <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec"
 		mode="pass1">
@@ -571,7 +575,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:for-each
 		select="key('odd2odd-MODULE_MEMBERS_CLASS',$name)">
 	      <xsl:variable name="class" select="@ident"/>
-	      <xsl:if  test="not($ODD/key('odd2odd-REFOBJECTS',$class))">
+	      <xsl:if   test="tei:includeMember($class,$exc,$inc) and not($ODD/key('odd2odd-REFOBJECTS',$class))">
 		<xsl:if test="$verbose='true'">
 		  <xsl:message>Phase 1: import <xsl:value-of select="$class"/> by moduleRef</xsl:message>
 		</xsl:if>
@@ -700,6 +704,11 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="specName" select="tei:uniqueName(.)"/>
     <xsl:variable name="N" select="local-name(.)"/>
       <xsl:choose>
+	<xsl:when test="$ODD/key('odd2odd-DELETE',$specName)">
+          <xsl:if test="$verbose='true'">
+            <xsl:message>Phase 2: delete <xsl:value-of select="$specName"/></xsl:message>
+          </xsl:if>
+        </xsl:when>
 	<xsl:when test="$ODD/key('odd2odd-REPLACE',$specName)">
           <xsl:if test="$verbose='true'">
             <xsl:message>Phase 2: replace <xsl:value-of select="$specName"/></xsl:message>
