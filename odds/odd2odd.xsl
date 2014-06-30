@@ -168,6 +168,17 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:function>
 
+
+  <xsl:function name="tei:checkExclude" as="xs:boolean">
+    <xsl:param name="ident"  as="xs:string"/>
+    <xsl:param name="exc" />
+      <xsl:choose>
+	<xsl:when test="not($exc)">true</xsl:when>
+	<xsl:when test="$exc and $ident cast as xs:string   = tokenize($exc, ' ')">false</xsl:when>
+	<xsl:otherwise>true</xsl:otherwise>
+      </xsl:choose>
+  </xsl:function>
+
   <xsl:function name="tei:workOutSource" as="xs:string*">
     <xsl:param name="e"/>
     <xsl:variable name="loc">
@@ -575,7 +586,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:for-each
 		select="key('odd2odd-MODULE_MEMBERS_CLASS',$name)">
 	      <xsl:variable name="class" select="@ident"/>
-	      <xsl:if   test="tei:includeMember($class,$exc,$inc) and not($ODD/key('odd2odd-REFOBJECTS',$class))">
+	      <xsl:if   test="tei:checkExclude($class,$exc) and not($ODD/key('odd2odd-REFOBJECTS',$class))">
 		<xsl:if test="$verbose='true'">
 		  <xsl:message>Phase 1: import <xsl:value-of select="$class"/> by moduleRef</xsl:message>
 		</xsl:if>
