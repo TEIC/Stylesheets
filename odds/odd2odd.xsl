@@ -80,9 +80,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-MEMBEROFADD" match="tei:memberOf[@mode='add' or not (@mode)]" use="concat(../../@ident,@key)"/>
   <xsl:key name="odd2odd-MEMBEROFDELETE" match="tei:memberOf[@mode='delete']" use="concat(../../@ident,@key)"/>
   <xsl:key name="odd2odd-MODULES" match="tei:moduleRef" use="@key"/>
-  <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:elementSpec" use="@module"/>
-  <xsl:key name="odd2odd-MODULE_MEMBERS_CLASS" match="tei:macroSpec"  use="@module"/>
-  <xsl:key name="odd2odd-MODULE_MEMBERS_CLASS" match="tei:classSpec" use="@module"/>
+  <xsl:key name="odd2odd-MODULE_MEMBERS_ELEMENT" match="tei:elementSpec" use="@module"/>
+  <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:macroSpec"  use="@module"/>
+  <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:classSpec" use="@module"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:elementSpec]"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:macroSpec and not(@name=ancestor::tei:macroSpec/@ident)]"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[parent::tei:datatype]"/>
@@ -584,9 +584,9 @@ of this software, even if advised of the possibility of such damage.
 	    
 	    <!-- get model and attribute classes regardless -->
 	    <xsl:for-each
-		select="key('odd2odd-MODULE_MEMBERS_CLASS',$name)">
+		select="key('odd2odd-MODULE_MEMBERS_NONELEMENT',$name)">
 	      <xsl:variable name="class" select="@ident"/>
-	      <xsl:if   test="tei:checkExclude($class,$exc) and not($ODD/key('odd2odd-REFOBJECTS',$class))">
+	      <xsl:if   test="not($ODD/key('odd2odd-REFOBJECTS',$class))">
 		<xsl:if test="$verbose='true'">
 		  <xsl:message>Phase 1: import <xsl:value-of select="$class"/> by moduleRef</xsl:message>
 		</xsl:if>
@@ -596,7 +596,7 @@ of this software, even if advised of the possibility of such damage.
 
 	    <!-- now elements -->
 	    <xsl:for-each
-		select="key('odd2odd-MODULE_MEMBERS',$name)">
+		select="key('odd2odd-MODULE_MEMBERS_ELEMENT',$name)">
 	      <xsl:variable name="i" select="@ident"/>
 		<xsl:if test="tei:includeMember(@ident,$exc,$inc)
 			      and not($ODD/key('odd2odd-REFOBJECTS',$i))">
