@@ -3,6 +3,7 @@ FLAG=
 BINDIR=../bin
 SAXONOPT=useFixedDate=true
 SAXON=java -Djava.awt.headless=true -jar ../lib/saxon9he.jar
+DOTDOTSAXON=java -Djava.awt.headless=true -jar ../../lib/saxon9he.jar
 JING=java -Djava.awt.headless=true -jar lib/jing-20120724.0.0.jar 
 OXY=/usr/share/oxygen
 SCRIPTS=teitobibtex \
@@ -66,20 +67,20 @@ test-to-html: css
 	diff test22.html expected-results/test22.html
 	$(SAXON) test23.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test23.html
 	diff test23.html expected-results/test23.html
-	(mkdir files; cd files;$(SAXON) ../testnotes1.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
+	(mkdir files; cd files;$(DOTDOTSAXON) ../testnotes1.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/two.html > x ; mv x files/two.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r  files expected-results/testnotes
 	rm -rf files
-	(mkdir files; cd files;$(SAXON) ../testnotes2.xml ../../html/html.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../tei.css)
+	(mkdir files; cd files;$(DOTDOTSAXON) ../testnotes2.xml ../../html/html.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r  files expected-results/testnotes2
 	rm -rf files
-	(mkdir files; cd files;$(SAXON) ../testnotes2.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
+	(mkdir files; cd files;$(DOTDOTSAXON) ../testnotes2.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/two.html > x ; mv x files/two.html
