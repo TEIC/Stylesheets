@@ -1096,6 +1096,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="makeExternalLink">
     <xsl:param name="ptr" as="xs:boolean" select="false()"/>
     <xsl:param name="dest"/>
+    <xsl:param name="title"/>
     <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/></xsl:param>
     <text:a xlink:type="simple" xlink:href="{$dest}">
       <xsl:choose>

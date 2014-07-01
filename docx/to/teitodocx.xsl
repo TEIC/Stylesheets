@@ -2684,6 +2684,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="makeExternalLink">
     <xsl:param name="ptr" as="xs:boolean" select="false()"/>
     <xsl:param name="dest"/>
+    <xsl:param name="title"/>
     <xsl:sequence select="$dest"/>
   </xsl:template>
 
