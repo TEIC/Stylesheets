@@ -795,4 +795,14 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
     <xsl:text>}</xsl:text>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element p with @rend='center'</desc>
+   </doc>
+  <xsl:template match="tei:p[@rend='center']">
+      <xsl:text>&#10;\begin{center}&#10;</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>\end{center}&#10;</xsl:text>
+  </xsl:template>
+
 </xsl:stylesheet>
