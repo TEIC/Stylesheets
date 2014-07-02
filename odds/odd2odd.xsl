@@ -1626,7 +1626,8 @@ so that is only put back in if there is some content
 
   <xsl:template name="odd2odd-createCopy">
     <xsl:if test="$verbose='true'">
-      <xsl:message>Create <xsl:value-of select="local-name()"/> named <xsl:value-of select="@ident"/>            </xsl:message>
+      <xsl:message>Create <xsl:value-of select="local-name()"/> named   <xsl:value-of select="@ident"/>   <xsl:sequence select="if
+      (@module) then concat(' module: ',@module) else ''"/>         </xsl:message>
     </xsl:if>
     <xsl:element xmlns="http://www.tei-c.org/ns/1.0"
 		 name="{local-name()}">
