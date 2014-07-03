@@ -403,8 +403,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
  <!-- no need for empty <p> in sourceDesc -->  
-  <xsl:template match="sourceDesc/p[string-length(.)=0]"/>
-  
+  <!-- xsl:template match="sourceDesc/p[string-length(.)=0]"/-->
+<!-- No, an empty sourceDesc is invalid in tei_all (LB) -->  
+
   <!-- start creating the new choice element -->
   <xsl:template match="corr[@sic]">
     <choice>
