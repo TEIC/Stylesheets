@@ -174,44 +174,56 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="extrarow"  tunnel="yes"/>
      <xsl:param name="extracolumn"   tunnel="yes"/>     
      <xsl:variable name="styles">
-       <xsl:if test="w:rPr/w:rFonts//@w:ascii">
-	 <xsl:if test="(not(matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')) and not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))) or
-		       not(w:rPr/w:rFonts/@w:ascii = parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii)">
+       <xsl:choose>
+	 <xsl:when test="not(w:rPr/w:rFonts/@w:ascii)"/>
+	 <xsl:when test="matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')">
 	   <s n="font-family">
 	     <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
 	   </s>
-	   <!-- w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
-	   <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
-	 </xsl:if>
-       </xsl:if>
-       <xsl:choose>
-	 <xsl:when test="w:rPr/w:sz">
-	   <s n="font-size">
-	     <xsl:value-of select="number(w:rPr/w:sz/@w:val) div 2"/>
-	     <xsl:text>pt</xsl:text>
-	   </s>
 	 </xsl:when>
-	 <xsl:when test="ancestor::w:tc and $extrarow/w:rPr/w:sz">
-	   <s n="font-size">
-	     <xsl:value-of select="number($extrarow/w:rPr/w:sz/@w:val) div 2"/>
-	     <xsl:text>pt</xsl:text>
+	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Cambria'"/>
+	 <xsl:when test="matches(w:rPr/w:rFonts/@w:ascii,'^Times')"/>
+	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Calibri'"/>
+	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Arial'"/>
+	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Verdana'"/>
+	 <xsl:when test="w:rPr/w:rFonts/@w:ascii =  parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii"/>
+	 <xsl:otherwise>
+	   <s n="font-family">
+	       <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
 	   </s>
-	 </xsl:when>
+	   </xsl:otherwise>
+	 </xsl:choose>
+	 <!-- see also w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
+	 <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
+	 
+	 <xsl:choose>
+	   <xsl:when test="w:rPr/w:sz and $preserveFontSizeChanges='true'">
+	     <s n="font-size">
+	       <xsl:value-of select="number(w:rPr/w:sz/@w:val) div 2"/>
+	       <xsl:text>pt</xsl:text>
+	     </s>
+	   </xsl:when>
+	   <xsl:when test="ancestor::w:tc and $extrarow/w:rPr/w:sz">
+	     <s n="font-size">
+	       <xsl:value-of select="number($extrarow/w:rPr/w:sz/@w:val) div 2"/>
+	       <xsl:text>pt</xsl:text>
+	     </s>
+	   </xsl:when>
 	 <xsl:when test="ancestor::w:tc and $extracolumn/w:rPr/w:sz">
 	   <s n="font-size">
 	     <xsl:value-of select="number($extracolumn/w:rPr/w:sz/@w:val) div 2"/>
 	     <xsl:text>pt</xsl:text>
 	   </s>
 	 </xsl:when>
-       </xsl:choose>
-       <xsl:if test="w:rPr/w:position/@w:val and not(w:rPr/w:position/@w:val='0')">
+	 </xsl:choose>
+	 <xsl:if test="w:rPr/w:position/@w:val and not(w:rPr/w:position/@w:val='0')">
 	 <s n="position">
 	   <xsl:value-of select="w:rPr/w:position/@w:val"/>
 	 </s>
-       </xsl:if>
-      </xsl:variable>
-
-      <xsl:variable name="dir">
+	 </xsl:if>
+     </xsl:variable>
+     
+     <xsl:variable name="dir">
 	<!-- right-to-left text -->
 	<xsl:if test="w:rPr/w:rtl or parent::w:p/w:pPr/w:rPr/w:rtl">
 	  <xsl:text>rtl</xsl:text>
@@ -337,6 +349,9 @@ of this software, even if advised of the possibility of such damage.
 		
       </xsl:variable>
       <xsl:choose>
+	<xsl:when test="normalize-space(.)=''">
+	    <xsl:apply-templates/>
+	</xsl:when>
 	<xsl:when test="$effects/* or ($styles/* and $preserveEffects='true')">
 	  <xsl:element name="{if ($parented='true') then 'seg' else 'hi'}">
 	    <xsl:if test="$dir!='' and $preserveEffects='true'">
@@ -410,7 +425,191 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:value-of select="$t"/>
                 </seg>
             </xsl:when>
-            <xsl:otherwise>
+        	<xsl:when test="parent::w:r/w:rPr/w:rFonts[starts-with(@w:ascii,'Symbol')]">
+        		<seg style="font-family:{parent::w:r/w:rPr/w:rFonts/@w:ascii};">
+        			<xsl:choose>
+        				<!-- Fix for non-Unicode characters available in Symbol font -->
+        				<!-- List from http://www.fileformat.info/info/unicode/font/symbol/nonunicode.htm -->
+        				<xsl:when test="string-to-codepoints($t)=61472">&#xF020;</xsl:when>
+        				<xsl:when test="string-to-codepoints($t)=61473">&#xF021;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61474">&#xF022;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61475">&#xF023;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61476">&#xF024;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61477">&#xF025;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61478">&#xF026;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61479">&#xF027;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61480">&#xF028;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61481">&#xF029;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61482">&#xF02A;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61483">&#xF02B;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61484">&#xF02C;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61485">&#xF02D;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61486">&#xF02E;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61487">&#xF02F;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61488">&#xF030;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61489">&#xF031;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61490">&#xF032;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61491">&#xF033;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61492">&#xF034;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61493">&#xF035;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61494">&#xF036;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61495">&#xF037;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61496">&#xF038;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61497">&#xF039;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61498">&#xF03A;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61499">&#xF03B;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61500">&#xF03C;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61501">&#xF03D;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61502">&#xF03E;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61503">&#xF03F;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61504">&#xF040;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61505">&#xF041;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61506">&#xF042;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61507">&#xF043;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61508">&#xF044;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61509">&#xF045;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61510">&#xF046;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61511">&#xF047;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61512">&#xF048;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61513">&#xF049;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61514">&#xF04A;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61515">&#xF04B;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61516">&#xF04C;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61517">&#xF04D;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61518">&#xF04E;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61519">&#xF04F;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61520">&#xF050;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61521">&#xF051;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61522">&#xF052;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61523">&#xF053;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61524">&#xF054;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61525">&#xF055;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61526">&#xF056;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61527">&#xF057;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61528">&#xF058;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61529">&#xF059;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61530">&#xF05A;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61531">&#xF05B;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61532">&#xF05C;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61533">&#xF05D;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61534">&#xF05E;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61535">&#xF05F;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61536">&#xF060;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61537">&#xF061;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61538">&#xF062;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61539">&#xF063;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61540">&#xF064;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61541">&#xF065;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61542">&#xF066;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61543">&#xF067;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61544">&#xF068;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61545">&#xF069;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61546">&#xF06A;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61547">&#xF06B;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61548">&#xF06C;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61549">&#xF06D;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61550">&#xF06E;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61551">&#xF06F;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61552">&#xF070;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61553">&#xF071;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61554">&#xF072;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61555">&#xF073;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61556">&#xF074;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61557">&#xF075;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61558">&#xF076;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61559">&#xF077;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61560">&#xF078;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61561">&#xF079;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61562">&#xF07A;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61601">&#xF0A1;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61602">&#xF0A2;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61603">&#xF0A3;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61604">&#xF0A4;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61605">&#xF0A5;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61606">&#xF0A6;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61607">&#xF0A7;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61608">&#xF0A8;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61609">&#xF0A9;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61610">&#xF0AA;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61611">&#xF0AB;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61612">&#xF0AC;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61613">&#xF0AD;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61614">&#xF0AE;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61615">&#xF0AF;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61616">&#xF0B0;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61617">&#xF0B1;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61618">&#xF0B2;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61619">&#xF0B3;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61620">&#xF0B4;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61621">&#xF0B5;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61622">&#xF0B6;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61623">&#xF0B7;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61627">&#xF0BB;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61628">&#xF0BC;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61629">&#xF0BD;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61630">&#xF0BE;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61631">&#xF0BF;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61632">&#xF0C0;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61633">&#xF0C1;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61634">&#xF0C2;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61635">&#xF0C3;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61636">&#xF0C4;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61637">&#xF0C5;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61638">&#xF0C6;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61639">&#xF0C7;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61640">&#xF0C8;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61641">&#xF0C9;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61642">&#xF0CA;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61643">&#xF0CB;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61644">&#xF0CC;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61645">&#xF0CD;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61646">&#xF0CE;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61647">&#xF0CF;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61648">&#xF0D0;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61649">&#xF0D1;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61655">&#xF0D7;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61656">&#xF0D8;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61657">&#xF0D9;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61658">&#xF0DA;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61659">&#xF0DB;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61660">&#xF0DC;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61661">&#xF0DD;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61662">&#xF0DE;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61663">&#xF0DF;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61664">&#xF0E0;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61665">&#xF0E1;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61666">&#xF0E2;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61667">&#xF0E3;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61668">&#xF0E4;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61669">&#xF0E5;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61670">&#xF0E6;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61671">&#xF0E7;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61672">&#xF0E8;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61673">&#xF0E9;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61674">&#xF0EA;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61675">&#xF0EB;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61676">&#xF0EC;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61677">&#xF0ED;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61684">&#xF0F4;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61685">&#xF0F5;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61686">&#xF0F6;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61687">&#xF0F7;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61688">&#xF0F8;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61689">&#xF0F9;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61690">&#xF0FA;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61691">&#xF0FB;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61692">&#xF0FC;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61693">&#xF0FD;</xsl:when> 
+        				<xsl:when test="string-to-codepoints($t)=61694">&#xF0FE;</xsl:when> 
+        				
+        				<xsl:otherwise>
+        					<xsl:value-of select="$t"/>
+        					<xsl:message>Warning: Some Symbol fonts may not convert properly. <xsl:value-of select="$t"/></xsl:message>
+        				</xsl:otherwise>
+        			</xsl:choose>
+        		</seg>
+        	</xsl:when>
+        	<xsl:otherwise>
                 <xsl:copy-of select="$t"/>
             </xsl:otherwise>            
         </xsl:choose>
@@ -620,7 +819,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose> 	
     </xsl:when>
     <xsl:when test="@w:font='Wingdings 2' and @w:char='F050'">&#x2713;</xsl:when><!-- tick mark-->
-	<xsl:otherwise> 	  
+      	<xsl:when test="@w:font='Wingdings' and @w:char='F05B'">&#x262F;</xsl:when><!-- yin-yang -->
+      	<xsl:otherwise> 	  
 	  <g style="font-family:{@w:font};" n="{@w:char}"/>
 	</xsl:otherwise>       
       </xsl:choose>

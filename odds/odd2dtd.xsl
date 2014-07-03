@@ -1111,20 +1111,25 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test="tei:valList[@type='closed']">
 	    <xsl:text> (#PCDATA)</xsl:text>
 	  </xsl:when>
-          <xsl:when test="tei:content/* and
-			  tei:content/@allowText='true'">
-	      <xsl:text>(#PCDATA | </xsl:text>
+          <xsl:when test="(tei:content/tei:sequence ) and  tei:content/@allowText='true'">
 	      <xsl:apply-templates select="tei:content/*"/>
+	  </xsl:when>
+          <xsl:when test="tei:content/tei:elementRef and  tei:content/@allowText='true'">
+	      <xsl:text>(#PCDATA</xsl:text>
+	      <xsl:for-each select="tei:content/*">
+		<xsl:text>|</xsl:text>
+		<xsl:apply-templates select="."/>
+	      </xsl:for-each>
 	      <xsl:text>)*</xsl:text>
 	  </xsl:when>
           <xsl:when test="tei:content/@allowText='true' and not(tei:content/*)">
             <xsl:text>(#PCDATA)</xsl:text>
 	  </xsl:when>
-          <xsl:when test="tei:content/@allowText='true'">
-            <xsl:text>#PCDATA</xsl:text>
-	  </xsl:when>
           <xsl:when test="tei:content/*">
 	      <xsl:apply-templates select="tei:content/*"/>
+	  </xsl:when>
+          <xsl:when test="tei:content/@allowText='true'">
+            <xsl:text>#PCDATA</xsl:text>
 	  </xsl:when>
 	</xsl:choose>
 	</Contents>
@@ -1626,29 +1631,20 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="text"/>
   </xsl:template>
 
-<!-- for foxglove -->
   <xsl:template match="tei:sequence">
     <xsl:variable name="innards">
-      <xsl:variable name="suffix"
-		    select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+      <xsl:variable name="suffix" 
+		    select="tei:generateIndicators(.,@minOccurs,@maxOccurs)"/>
       <token>
-      <xsl:choose>
-	<xsl:when test="string-length($suffix)=0">
-          <xsl:text>(</xsl:text>
-	  <xsl:call-template name="innards">
-	    <xsl:with-param name="sep">,</xsl:with-param>
-	  </xsl:call-template>
-          <xsl:text>)</xsl:text>          
-	</xsl:when>
-	<xsl:otherwise>
-          <xsl:text>(</xsl:text>
-	  <xsl:call-template name="innards">
-	    <xsl:with-param name="sep">,</xsl:with-param>
-	  </xsl:call-template>
-          <xsl:text>)</xsl:text>
-	  <xsl:value-of select="$suffix"/>
-	</xsl:otherwise>
-      </xsl:choose>
+        <xsl:text>(</xsl:text>
+        <xsl:call-template name="innards">
+	  <xsl:with-param name="sep" select="if   (ancestor-or-self::*[@allowText='true']) then '|' else ','"/>
+	</xsl:call-template>
+        <xsl:text>)</xsl:text>          
+        <xsl:value-of select="if
+			      (ancestor-or-self::*/@allowText='true'
+			      and ($suffix='+' or $suffix='?')) then
+			      '*' else $suffix"/>
       </token>
     </xsl:variable>
     <xsl:choose>
@@ -1670,20 +1666,14 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:alternate">
     <token>
-      <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
-      <xsl:choose>
-	<xsl:when test="string-length($suffix)=0">
-          <xsl:text>(</xsl:text>
-	  <xsl:call-template name="innards"/>
-	  <xsl:text>)</xsl:text>          
-	</xsl:when>
-	<xsl:otherwise>
-          <xsl:text>(</xsl:text>
-	  <xsl:call-template name="innards"/>
-          <xsl:text>)</xsl:text>
-	  <xsl:value-of select="$suffix"/>
-	</xsl:otherwise>
-      </xsl:choose>
+      <xsl:variable name="suffix" select="tei:generateIndicators(.,@minOccurs,@maxOccurs)"/>
+      <xsl:text>(</xsl:text>
+      <xsl:call-template name="innards"/>
+      <xsl:text>)</xsl:text>
+      <xsl:value-of select="if
+			    (ancestor-or-self::*/@allowText='true'
+			    and ($suffix='+' or $suffix='?')) then
+			    '*' else $suffix"/>
     </token>
   </xsl:template>
 
@@ -1701,7 +1691,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="suffix"
-		  select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+		  select="tei:generateIndicators(.,@minOccurs,@maxOccurs)"/>
     <xsl:variable name="ename">
       <xsl:choose>
 	<xsl:when test="self::tei:classRef and $exists=''">
@@ -1783,6 +1773,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:function name="tei:generateIndicators">
+    <xsl:param name="context"/>
     <xsl:param name="min"/>
     <xsl:param name="max"/>
     <xsl:choose>

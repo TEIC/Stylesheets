@@ -2,7 +2,8 @@ VERSION=`cat VERSION`
 FLAG=
 BINDIR=../bin
 SAXONOPT=useFixedDate=true
-SAXON=java -Djava.awt.headless=true -jar lib/saxon9he.jar
+SAXON=java -Djava.awt.headless=true -jar ../lib/saxon9he.jar
+DOTDOTSAXON=java -Djava.awt.headless=true -jar ../../lib/saxon9he.jar
 JING=java -Djava.awt.headless=true -jar lib/jing-20120724.0.0.jar 
 OXY=/usr/share/oxygen
 SCRIPTS=teitobibtex \
@@ -66,20 +67,20 @@ test-to-html: css
 	diff test22.html expected-results/test22.html
 	$(SAXON) test23.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test23.html
 	diff test23.html expected-results/test23.html
-	(mkdir files; cd files; saxon ../testnotes1.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
+	(mkdir files; cd files;$(DOTDOTSAXON) ../testnotes1.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/two.html > x ; mv x files/two.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r  files expected-results/testnotes
 	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/html.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../tei.css)
+	(mkdir files; cd files;$(DOTDOTSAXON) ../testnotes2.xml ../../html/html.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r  files expected-results/testnotes2
 	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
+	(mkdir files; cd files;$(DOTDOTSAXON) ../testnotes2.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/two.html > x ; mv x files/two.html
@@ -296,13 +297,13 @@ test-oddity: css
 	diff test30.dtd expected-results/test30.dtd
 	$(BINDIR)/teitodtd $(FLAG) test-pure.odd test-pure.dtd
 	$(BINDIR)/teitornc $(FLAG) test-pure.odd test-pure.rnc
-	$(BINDIR)/teitohtml $(FLAG) --odd test-pure.odd test-pure.odd.html
 	xmllint --noout --dtdvalid test-pure.dtd test-pure.xml
-	xmllint --encode utf-8 --format test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure.odd.html
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.rnc
 	diff test-pure.rnc expected-results/test-pure.rnc
 	diff test-pure.dtd expected-results/test-pure.dtd
+	$(BINDIR)/teitohtml $(FLAG) --odd test-pure.odd test-pure.odd.html
+	xmllint --encode utf-8 --format test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure.odd.html
 	diff test-pure.odd.html expected-results/test-pure.odd.html
 	$(BINDIR)/teitodtd $(FLAG) test-pure2.odd test-pure2.dtd
 	$(BINDIR)/teitornc $(FLAG) test-pure2.odd test-pure2.rnc
@@ -333,10 +334,6 @@ moreoddity:
 	$(BINDIR)/teitoxsd test.odd test.xsd
 	$(BINDIR)/teitodtd test.odd test.dtd
 	$(BINDIR)/teitornc test.odd test.rnc
-
-pure:
-	$(BINDIR)/teitodtd test-pure.odd test-pure.dtd
-	$(BINDIR)/teitornc test-pure.odd test-pure.rnc
 
 test-namespaces:
 	@echo BUILD: testing namespaces

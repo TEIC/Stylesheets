@@ -65,8 +65,8 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
     
-  <xsl:param name="preserveEffects">false</xsl:param>
-  
+  <xsl:param name="preserveEffects">true</xsl:param>
+  <xsl:param name="preserveFontSizeChanges">true</xsl:param>
 
   <xsl:template name="fromDocxEffectsHook">
     <xsl:if test="w:rPr/w:rStyle/@w:val='Heading 2 Char' and not(w:rPr/w:b/@w:val='0')">

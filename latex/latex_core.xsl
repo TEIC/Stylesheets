@@ -220,7 +220,7 @@ of this software, even if advised of the possibility of such damage.
 	       or (ancestor::tei:back and $numberBackHeadings='')
 	       or (not($numberHeadings='true') and ancestor::tei:body)
 	       or (ancestor::tei:front and  $numberFrontHeadings='')">*</xsl:when>
-	       <xsl:otherwise>[<xsl:value-of select="tei:escapeChars(.,.)"/>]</xsl:otherwise>
+	       <xsl:otherwise>[{<xsl:value-of select="tei:escapeChars(.,.)"/>}]</xsl:otherwise>
             </xsl:choose>
 	    <xsl:text>{</xsl:text>
 	    <xsl:apply-templates/>
@@ -379,6 +379,9 @@ of this software, even if advised of the possibility of such damage.
    </doc>
    <xsl:template name="lineBreak">
       <xsl:text>{\hskip1pt}\newline </xsl:text>
+  </xsl:template>
+   <xsl:template name="lineBreakAsPara"> 
+      <xsl:text>\par  </xsl:text>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -699,7 +702,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element signed</desc>
    </doc>
   <xsl:template match="tei:signed">
-      <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
+      <xsl:text>&#10;&#10;\begin{quote}&#10;</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>\end{quote}&#10;</xsl:text>
   </xsl:template>
@@ -792,4 +795,14 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
     <xsl:text>}</xsl:text>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element p with @rend='center'</desc>
+   </doc>
+  <xsl:template match="tei:p[@rend='center']">
+      <xsl:text>&#10;\begin{center}&#10;</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>\end{center}&#10;</xsl:text>
+  </xsl:template>
+
 </xsl:stylesheet>

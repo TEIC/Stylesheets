@@ -1028,6 +1028,7 @@ Tmodel.offsetLike_sequence = Toffset, TgeogFeat
 Tmodel.offsetLike_sequenceOptional = Toffset?, TgeogFeat?
 Tmodel.offsetLike_sequenceOptionalRepeatable = Toffset*, TgeogFeat*
 Tmodel.offsetLike_sequenceRepeatable = Toffset+, TgeogFeat+
+Tmodel.pPart.msdesc = notAllowed
 Tmodel.pPart.editorial = Tchoice | Tabbr | Texpan | Tex | Tam | Tsubst
 Tmodel.pPart.editorial_alternation =
   Tchoice | Tabbr | Texpan | Tex | Tam | Tsubst
@@ -1151,6 +1152,7 @@ Tmodel.linePart =
   | Tzone
   | Tline
 Tmodel.ptrLike = Tptr | Tref
+Tmodel.lPart = notAllowed
 Tmodel.global.meta =
   Tindex
   | TsubstJoin
@@ -1165,6 +1167,14 @@ Tmodel.global.meta =
 Tmodel.milestoneLike =
   Tmilestone | Tgb | Tpb | Tlb | Tcb | Tfw | Tanchor
 Tmodel.gLike = notAllowed
+Tmodel.oddDecl = notAllowed
+Tmodel.oddDecl_alternation = notAllowed
+Tmodel.oddDecl_sequence = empty
+Tmodel.oddDecl_sequenceOptional = empty
+Tmodel.oddDecl_sequenceOptionalRepeatable = empty
+Tmodel.oddDecl_sequenceRepeatable = notAllowed
+Tmodel.phrase.xml = notAllowed
+Tmodel.specDescLike = notAllowed
 Tmodel.biblLike = Tbibl | TbiblStruct | TlistBibl | TbiblFull
 Tmodel.biblLike_alternation =
   Tbibl | TbiblStruct | TlistBibl | TbiblFull
@@ -1415,6 +1425,7 @@ Tmodel.divWrapper =
   | TdocDate
 Tmodel.divTopPart = Tmodel.headLike | Topener | Tsigned
 Tmodel.divTop = Tmodel.divWrapper | Tmodel.divTopPart
+Tmodel.frontPart.drama = notAllowed
 Tmodel.pLike.front =
   Thead
   | Tbyline
@@ -1525,7 +1536,7 @@ Tmodel.biblPart =
   | Textent
   | TlistRelation
   | TrelationGrp
-Tmodel.frontPart = TdivGen | TtitlePage
+Tmodel.frontPart = Tmodel.frontPart.drama | TdivGen | TtitlePage
 Tmodel.addrPart =
   Tmodel.nameLike | TaddrLine | Tstreet | TpostCode | TpostBox
 Tmodel.pPart.data =
@@ -1536,6 +1547,7 @@ Tmodel.pPart.data =
   | TMenu
 Tmodel.inter =
   Tmodel.egLike
+  | Tmodel.oddDecl
   | Tmodel.biblLike
   | Tmodel.labelLike
   | Tmodel.listLike
@@ -1546,14 +1558,20 @@ Tmodel.phrase =
   Tmodel.segLike
   | Tmodel.highlighted
   | Tmodel.graphicLike
+  | Tmodel.pPart.msdesc
   | Tmodel.pPart.edit
   | Tmodel.ptrLike
+  | Tmodel.lPart
+  | Tmodel.phrase.xml
+  | Tmodel.specDescLike
   | Tmodel.pPart.data
 Tmodel.limitedPhrase =
   Tmodel.hiLike
   | Tmodel.emphLike
+  | Tmodel.pPart.msdesc
   | Tmodel.pPart.editorial
   | Tmodel.ptrLike
+  | Tmodel.phrase.xml
   | Tmodel.pPart.data
 Tmodel.divLike = Tdiv
 Tmodel.divGenLike = TdivGen

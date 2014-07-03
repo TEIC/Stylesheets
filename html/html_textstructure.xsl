@@ -1131,18 +1131,23 @@ of this software, even if advised of the possibility of such damage.
       <desc>[html] make the header of an HTML file </desc>
    </doc>
   <xsl:function name="tei:htmlHead">
-    <xsl:param name="pagetitle"/>
+     
+     <xsl:param name="pagetitle"/>
     <xsl:param name="number"/>
     <xsl:for-each select="$top/*">
     <head>
 	<xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (<xsl:value-of select="$number"/>)</xsl:comment>
-      <title>
+       <!-- No empty <title/> allowed, main browsers don't like it at all -->
+       <xsl:if test="string($pagetitle) or string($htmlTitlePrefix)">
+          <title>
 	<xsl:value-of select="$htmlTitlePrefix"/>
 	<xsl:if test="$htmlTitlePrefix!=''">
 	  <xsl:text> </xsl:text>
 	</xsl:if>
 	<xsl:value-of select="$pagetitle"/>
       </title>
+       </xsl:if>
+       
       <xsl:call-template name="headHook"/>
       <xsl:call-template name="metaHTML">
 	<xsl:with-param name="title" select="$pagetitle"/>

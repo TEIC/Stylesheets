@@ -20,7 +20,7 @@
     </fileDesc>
     <encodingDesc>
       <appInfo>
-        <application ident="TEI_fromDOCX" version="2.15.0">
+        <application xml:id="doxtotei" ident="TEI_fromDOCX" version="2.15.0">
           <label>DOCX to TEI</label>
         </application>
       </appInfo>
@@ -37,7 +37,7 @@
   <text>
     <body>
       <p rend="Title">
-        <ref target="http://nl.ijs.si/tei/convert/"> HYPERLINK "http://nl.ijs.si/tei/convert/" <ref target="http://nl.ijs.si/tei/convert/">DOCX 2 TEI</ref></ref>
+        <ref target="http://nl.ijs.si/tei/convert/">DOCX 2 TEI</ref>
       </p>
       <p rend="Subtitle">Example document</p>
       <p rend="Author">
@@ -46,7 +46,7 @@
       <p rend="Date">2013-06-01</p>
       <p rend="TOC Heading">Contents</p>
       <p rend="toc 1">
-        <ref> TOC \o "1-3" \h \z \u <ref target="#Toc357845414">Introduction	2</ref></ref>
+        <ref target="#Toc357845414">Introduction	2</ref>
       </p>
       <p rend="toc 2">
         <ref target="#Toc357845415">Web interface	2</ref>
@@ -66,24 +66,8 @@
       <p rend="toc 2">
         <ref target="#Toc357845420">Notes	4</ref>
       </p>
-      <p rend="toc 2">
-        <ref target="_Toc357845421">
-          <ref target="_Toc357845421"> </ref>
-          <ref target=""/>
-          <ref target=""/>
-          <ref target="">Indexes</ref>
-        </ref>
-        <ref rend="ref" target="#Toc357845421">4</ref>
-      </p>
-      <p rend="toc 2">
-        <ref target="_Toc357845422">
-          <ref target="_Toc357845422"> </ref>
-          <ref target=""/>
-          <ref target=""/>
-          <ref target="">Bibliography</ref>
-        </ref>
-        <ref rend="ref" target="#Toc357845422">4</ref>
-      </p>
+      <p rend="toc 2">Indexes	4</p>
+      <p rend="toc 2">Bibliography	4</p>
       <p rend="toc 1">
         <ref target="#Toc357845423">Page breaks	4</ref>
       </p>
@@ -135,7 +119,7 @@
               <item>Problems with cross references to tables, footnotes, bookmarks, …</item>
               <item>For included Excel OxGarage produces embeddings/*.xsl, but Stylesheets don’t.</item>
               <item>Bad (generated) Index and “Table of Figures”; maybe: identify, remove &amp; insert divGen?</item>
-              <item>Broken elements should probably be joined (e.g. &lt;name&gt;P&lt;name&gt;&lt;name&gt;odravje&lt;/name&gt; → &lt;name&gt;Podravje&lt;/name&gt;), c.f. also example with  REF adddel \h  \* MERGEFORMAT <add>Add</add> REF adddel \h  \* MERGEFORMAT  REF adddel \h  \* MERGEFORMAT </item>
+              <item>Broken elements should probably be joined (e.g. &lt;name&gt;P&lt;name&gt;&lt;name&gt;odravje&lt;/name&gt; → &lt;name&gt;Podravje&lt;/name&gt;), c.f. also example with <add>Add</add></item>
               <item>Problems with phrase level elements containing initial or final space, which should probably go outside the element (e.g. “foo&lt;term&gt; bar &lt;/term&gt;baz” → “foo &lt;term&gt;bar&lt;/term&gt; baz”)</item>
               <item>Word leaves many dead &lt;anchor&gt;s , these could be cleaned up</item>
               <item>Embedded XSL could also be converted and inserted into TEI?</item>
@@ -147,21 +131,22 @@
       </div>
       <div>
         <head><anchor xml:id="Toc357845417"/>Figures and Tables</head>
-        <p>Here we reference <ref rend="ref" target="#Ref357517373">Figure 1</ref> as well as <ref rend="ref" target="#Ref357517396">Table 1: Overview</ref> and <ref rend="ref" target="#Ref357527198">Table 2</ref>.</p>
+        <p>Here we reference Figure 1 as well as Table 1: Overview and Table 2.</p>
         <figure>
           <head>
             <pb type="soft"/>
             <graphic n="1001" width="7.5631361111111115cm" height="4.4913694444444445cm" url="media/image1.png" rend="inline"/>
           </head>
-          <head><anchor xml:id="Ref357517373"/>Figure <ref rend="SEQ">1</ref>: An included image</head>
+          <head><anchor xml:id="Ref357517373"/>Figure 1: An included image</head>
         </figure>
         <figure>
           <p>
-            <figure>
-              <desc>unable to handle picture</desc>
-            </figure>
+            <hi style="color:red; font-size: 14pt; font-weight:bold;" rend="ERROR">�</hi>
+            <note place="margin" type="conversion" resp="#teitodocx">
+              <hi rend="docxError">unable to handle picture here, no embed or link</hi>
+            </note>
           </p>
-          <head>Figure <ref rend="SEQ">2</ref>. An embedded .xslx graph, doesn’t work yet.</head>
+          <head>Figure 2. An embedded .xslx graph, doesn’t work yet.</head>
         </figure>
         <table rend="rules">
           <row>
@@ -196,7 +181,7 @@
             <cell>0</cell>
             <cell>76</cell>
           </row>
-          <head><anchor xml:id="Toc357777361"/>Table <ref rend="SEQ">1</ref> A Simple table</head>
+          <head><anchor xml:id="Toc357777361"/>Table 1 A Simple table</head>
         </table>
         <table rend="rules">
           <row>
@@ -235,7 +220,7 @@
               <hi rend="bold">Sodni okraji z ozemlja današnje slovenske Primorske</hi>
             </cell>
           </row>
-          <head><anchor xml:id="Toc357777362"/>Table <ref rend="SEQ">2</ref> A bit more Complex table</head>
+          <head><anchor xml:id="Toc357777362"/>Table 2 A bit more Complex table</head>
         </table>
       </div>
       <div>
@@ -255,7 +240,7 @@
         </div>
         <div>
           <head><anchor xml:id="Toc357845421"/>Indexes</head>
-          <p>You need to reveal formatting to see that we are here indexing the Web<index indexName="XE"><term>Web</term></index>, Web services<index indexName="XE"><term>Web</term><index><term>Web service</term></index></index>, and Web apps<index indexName="XE"><term>Web</term><index><term>Web app</term></index></index>, but also bugs<index indexName="XE"><term>bugs</term><index><term>horrible bugs<ref>See bugs</ref></term></index></index> and errors<index indexName="XE"><term>error</term></index>. Note that the index terms can be in Word also formatted<index indexName="XE"><term>formatting</term></index>, which is lost in the TEI. We can have ranges though, like this<index indexName="XE" spanTo="#foo"><term>Range</term><index><term>Subrange</term></index></index>.</p>
+          <p>You need to reveal formatting to see that we are here indexing the Web<index indexName="XE"><term>Web</term></index>, Web services<index indexName="XE"><term>Web</term><index><term>Web service</term></index></index>, and Web apps<index indexName="XE"><term>Web</term><index><term>Web app</term></index></index>, but also bugs<index indexName="XE"><term>bugs</term><index><term>horrible bugs<ref type="xr">See bugs</ref></term></index></index> and errors<index indexName="XE"><term>error</term></index>. Note that the index terms can be in Word also formatted<index indexName="XE"><term>formatting</term></index>, which is lost in the TEI. We can have ranges though, like this<index indexName="XE" spanTo="#foo"><term>Range</term><index><term>Subrange</term></index></index>.</p>
         </div>
         <div>
           <head><anchor xml:id="Toc357845422"/>Bibliography</head>
@@ -324,9 +309,6 @@
         <head><anchor xml:id="Toc357845428"/><pb type="soft"/>Auto-generated sections</head>
         <div>
           <head><anchor xml:id="Toc357845429"/>Index</head>
-          <p>
-            <ref> INDEX \c "2" \z "1060" </ref>
-          </p>
           <p rend="index 1"><pb type="soft"/>bugs</p>
           <p rend="index 2">horrible bugs. <hi rend="italic">See</hi> bugs</p>
           <p rend="index 1">error, 4</p>
@@ -348,7 +330,7 @@
           <head><anchor xml:id="Toc357845431"/>List of Tables</head>
           <figure>
             <p rend="table of figures">
-              <ref> TOC \h \z \c "Table" <ref target="#Toc357777361">Table 1 A Simple table	3</ref></ref>
+              <ref target="#Toc357777361">Table 1 A Simple table	3</ref>
             </p>
             <p rend="table of figures">
               <ref target="#Toc357777362">Table 2 A bit more Complex table	3</ref>

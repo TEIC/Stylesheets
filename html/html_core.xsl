@@ -401,6 +401,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:copy-of select="$rend/*/@*"/>
 	    <xsl:apply-templates select="current-group()"/>
 	  </xsl:element>
+<!--	  ***<xsl:value-of select="current-group()"/>*** -->
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each-group>
@@ -486,6 +487,13 @@ of this software, even if advised of the possibility of such damage.
     <desc>Line break</desc>
   </doc>
   <xsl:template name="lineBreak">
+    <br>
+      <xsl:call-template name="makeRendition">
+	<xsl:with-param name="default">false</xsl:with-param>
+      </xsl:call-template>
+    </br>
+  </xsl:template>
+  <xsl:template name="lineBreakAsPara">
     <br>
       <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default">false</xsl:with-param>
@@ -931,8 +939,11 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="@place='margin'	or    @place='marginOuter' or
+      <xsl:when test="@place='margin'
+		      or    @place='marginOuter' or
 		      @place='marginLeft' or
+		      @place='left' or
+		      @place='right' or
 		      @place='marginRight'">
         <span class="note{@place}">
           <xsl:call-template name="makeAnchor">
@@ -1230,6 +1241,11 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:with-param name="style">citquote</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
+      <xsl:when test="tei:list">
+        <xsl:call-template name="makeBlock">
+	  <xsl:with-param name="style">citquote</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
       <xsl:when test="not(tei:is-inline(.))">
         <blockquote>
           <xsl:call-template name="makeRendition"/>
@@ -1281,7 +1297,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="container" select="if (tei:render-superscript(.)) then 'sup' 
 					   else if (tei:render-subscript(.)) then 'sub' 
 					   else if (@rend='code') then 'code' else 'span'"/>
-
     <xsl:element name="{$container}">
       <xsl:choose>
         <xsl:when test="@type">

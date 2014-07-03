@@ -800,6 +800,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="lineBreak">
 	<text:line-break/>
   </xsl:template>
+  <xsl:template name="lineBreakAsPara">
+	<text:line-break/>
+  </xsl:template>
   <xsl:template match="tei:biblStruct">
     <text:list-item>
       <text:p text:style-name="P2">
@@ -889,9 +892,16 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:ab">
-    <text:p>
-      <xsl:apply-templates/>
-    </text:p>
+    <xsl:choose>
+      <xsl:when test="tei:ab">
+	  <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+	<text:p>
+	  <xsl:apply-templates/>
+	</text:p>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <!-- tables-->
   <xsl:template match="tei:table">
@@ -1086,6 +1096,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="makeExternalLink">
     <xsl:param name="ptr" as="xs:boolean" select="false()"/>
     <xsl:param name="dest"/>
+    <xsl:param name="title"/>
     <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/></xsl:param>
     <text:a xlink:type="simple" xlink:href="{$dest}">
       <xsl:choose>

@@ -37,8 +37,7 @@
 	  <xsl:import href="../variables.xsl"/>
 	  <xsl:import href="omml2mml.xsl"/>
 
-	  <xsl:param name="convert-graphics">true</xsl:param>	  
-	  <xsl:param name="convert-headers">true</xsl:param>	  
+	  <xsl:param name="convertGraphics">true</xsl:param>	  
 	  <xsl:param name="mathMethod">mml</xsl:param>	  
 	  <xsl:param name="termMethod">tei</xsl:param>	  
 	  <xsl:param name="tableMethod">tei</xsl:param>	  
@@ -46,6 +45,8 @@
 	  <xsl:param name="preserveWordHeadersFooters">false</xsl:param>    	  
 	  <xsl:param name="preserveSoftPageBreaks">false</xsl:param>    	  
 	  <xsl:param name="preserveEffects">false</xsl:param>	  
+	  <xsl:param name="preserveFontSizeChanges">false</xsl:param>
+	  <xsl:param name="preserveObject">false</xsl:param>	  
 	  <xsl:param name="verbose">false</xsl:param>	  
 	  <xsl:param name="processChangeInformation">false</xsl:param>
 	  <xsl:param name="pageHeight">890</xsl:param>
@@ -489,50 +490,39 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:template>
 
    <xsl:template match="w:hyperlink">
-      <ref>
-	<xsl:attribute name="target">
-	  <xsl:choose>
-	    <xsl:when test="@w:anchor">
-	      <xsl:value-of select="concat('#',replace(@w:anchor,'^_',''))"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:variable name="rid" select="@r:id"/>
-	      <xsl:choose>
-		<xsl:when test="ancestor::w:endnote">
-		  <xsl:value-of
-		      select="document(concat($wordDirectory,'/word/_rels/endnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
-		</xsl:when>
-		<xsl:when test="ancestor::w:footnote">
-		  <xsl:value-of
-		      select="document(concat($wordDirectory,'/word/_rels/footnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:value-of
-		      select="document($relsDoc)//rel:Relationship[@Id=$rid]/@Target"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:attribute>
-	<xsl:apply-templates/>
-      </ref>
+     <!-- hyperlinks that do not contain any children should *probably* be omitted as in Word they result in nothing visible at all -->
+     <xsl:if test="child::node()">
+       <ref>
+   	 <xsl:attribute name="target">
+   	   <xsl:choose>
+   	     <xsl:when test="@w:anchor">
+   	       <xsl:value-of select="@w:anchor"/>
+   	     </xsl:when>
+   	     <xsl:otherwise>
+   	       <xsl:variable name="rid" select="@r:id"/>
+   	       <xsl:choose>
+   		 <xsl:when test="ancestor::w:endnote">
+   		   <xsl:value-of
+   		       select="document(concat($wordDirectory,'/word/_rels/endnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+   		 </xsl:when>
+   		 <xsl:when test="ancestor::w:footnote">
+   		   <xsl:value-of
+   		       select="document(concat($wordDirectory,'/word/_rels/footnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+   		 </xsl:when>
+   		 <xsl:otherwise>
+   		   <xsl:value-of
+   		       select="document($relsDoc)//rel:Relationship[@Id=$rid]/@Target"/>
+   		 </xsl:otherwise>
+   	       </xsl:choose>
+   	     </xsl:otherwise>
+   	   </xsl:choose>
+   	 </xsl:attribute>
+   	 <xsl:apply-templates/>
+       </ref>
+     </xsl:if>
    </xsl:template>
 
-   <xsl:template match="w:instrText">
-      <xsl:choose>
-         <xsl:when test="contains(.,'REF _')"></xsl:when>
-         <xsl:when test="starts-with(.,'HYPERLINK')"></xsl:when>
-         <xsl:when test="starts-with(.,' ADDIN EN.')"/>
-         <xsl:when test="starts-with(.,' ADDIN PAPERS')"/>
-	 <xsl:when test="starts-with(.,' ADDIN ZOTERO')"/>
-         <xsl:when test="starts-with(.,' XE')"></xsl:when>
-         <xsl:when test="starts-with(.,'XE')"></xsl:when>
-	 <xsl:when test="contains(.,'SEQ')"/>
-         <xsl:otherwise>
-            <xsl:value-of select="."/>
-         </xsl:otherwise>
-      </xsl:choose>
-   </xsl:template>
+   <xsl:template match="w:instrText"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>simple teiHeader. For a more sophisticated header, think about overriding
@@ -595,7 +585,7 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:template name="generateAppInfo">
       <appInfo>
-	        <application ident="TEI_fromDOCX" version="2.15.0">
+	        <application xml:id="doxtotei" ident="TEI_fromDOCX" version="2.15.0">
 	           <label>DOCX to TEI</label>
 	        </application>
 	        <xsl:if test="doc-available(concat($wordDirectory,'/docProps/custom.xml'))">

@@ -1459,8 +1459,11 @@ of this software, even if advised of the possibility of such damage.
   </doc>
      <xsl:function name="tei:sanitize" as="xs:string">
        <xsl:param name="text"/>
+       <xsl:variable name="alltext">
+	 <xsl:value-of select="($text)" separator=""/>
+       </xsl:variable>
        <xsl:variable name="result"
-	   select="replace(normalize-space($text),'[^\w\[\]\\(\)._\s]+','')"/>
+	   select="replace(normalize-space($alltext),'[^\w\[\]\\(\)._\s]+','')"/>
        <xsl:value-of select="if (string-length($result)&gt;127) then
 	 concat(substring($result,1,127),'...') else $result"/>
      </xsl:function>
@@ -1473,7 +1476,7 @@ of this software, even if advised of the possibility of such damage.
        <xsl:param name="filename"/>
        <xsl:param name="type"/>
        <xsl:variable name="filesuffix"
-		     select="tokenize($filename,'\.')[last()]"/>
+		     select="lower-case(tokenize($filename,'\.')[last()])"/>
 
 	<xsl:choose>
 	  <xsl:when test="$type"><xsl:message>check <xsl:value-of select="($filename,$filesuffix,$type)"/></xsl:message><xsl:value-of select="$type"/></xsl:when>

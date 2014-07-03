@@ -118,13 +118,49 @@ of this software, even if advised of the possibility of such damage.
 	  </GLOSSITEM>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:call-template name="paragraph-wp">
-	    <xsl:with-param name="style" select="$style"/>
+		<!-- For unknown reason style name sometimes is enclosed with &lt; &gt; -->
+		<xsl:variable name="st">
+			<xsl:choose>
+				<xsl:when test="substring($style, 1, 1)='&lt;'">
+					<xsl:value-of select="substring($style, 2, string-length($style)-2)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="$style"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:call-template name="paragraph-wp">
+	    <xsl:with-param name="style" select="$st"/>
 	  </xsl:call-template>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
     
+	<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+		<desc>Named template to retrieve the formatting from named Word style to make into TEI style attribute elsewhere.</desc>
+	</doc>
+	<xsl:template name="retrieve-styles">
+		<xsl:param name="style"/>
+		<!-- check if styleDoc has style definition for current style -->
+		<xsl:variable name="styleprop" select="doc($styleDoc)//w:style[@w:styleId=$style]"/>
+		<!-- if yes, gather info about text alignment, bold, italic, font size, face, underlining, sub- and superscript into @style -->
+		<xsl:if test="$styleprop/node()">
+				<xsl:if test="count($styleprop/w:rPr[w:b])>0">
+					<xsl:text>font-weight: bold; </xsl:text>
+				</xsl:if>
+				<xsl:if test="count($styleprop/w:rPr[w:i])>0">
+					<xsl:text>font-style: italic; </xsl:text>
+				</xsl:if>
+				<xsl:if test="count($styleprop/w:rPr[w:u])>0">
+					<xsl:text>text-decoration: underline; </xsl:text>
+				</xsl:if>
+				<xsl:if test="count($styleprop/w:pPr[w:jc])>0">
+					<xsl:text>text-align:</xsl:text>
+					<xsl:value-of select="$styleprop/w:pPr/w:jc/@w:val"/>
+					<xsl:text>; </xsl:text>
+				</xsl:if>
+		</xsl:if>	
+	</xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Named template for handling w:p; we 
@@ -132,20 +168,38 @@ of this software, even if advised of the possibility of such damage.
        and check for change records.</desc>
    </doc>
    <xsl:template name="paragraph-wp">
-     <xsl:param name="style"/>
-     <xsl:element name="p">
-       <xsl:if test="$style and not($style='Default' or $style='Default Style')">
+   	<xsl:param name="style"/>
+   	<xsl:element name="p">
+       <xsl:if test="string($style) and not($style='Default' or $style='Default Style')">
 	 <xsl:attribute name="rend">
 	   <xsl:value-of select="$style"/>
 	 </xsl:attribute>
        </xsl:if>
-	<xsl:if test="$preserveEffects='true' and w:pPr/w:jc">
-	  <xsl:attribute name="style">
-	    <xsl:text>text-align:</xsl:text>
-	    <xsl:value-of select="w:pPr/w:jc/@w:val"/>
-	    <xsl:text>;</xsl:text>
-	  </xsl:attribute>
-	</xsl:if>
+       <xsl:variable name="retrievedStyles">
+         <!-- Do we want to preserve word styles? -->
+         <xsl:if test="$preserveEffects='true' and not(normalize-space($style)='')">
+     	   <xsl:call-template name="retrieve-styles">
+             <xsl:with-param name="style" select="$style"/>
+           </xsl:call-template>
+         </xsl:if>
+       </xsl:variable>
+       <xsl:variable name="localStyles">
+   	 <xsl:if test="$preserveEffects='true' and w:pPr/w:jc and
+		       w:pPr/w:jc/@w:val !='both'">
+           <xsl:text>text-align:</xsl:text>
+	   <xsl:value-of select="w:pPr/w:jc/@w:val"/>
+	            <xsl:text>;</xsl:text>
+   	 </xsl:if>
+       </xsl:variable>
+       
+       <!-- merge local and retrieved from styles.xml -->
+       <xsl:if test="string($retrievedStyles) or string($localStyles)">
+   	 <xsl:attribute name="style">
+   	   <xsl:value-of select="$retrievedStyles"/>
+   	   <xsl:value-of select="$localStyles"/>
+   	 </xsl:attribute>
+       </xsl:if>
+       
        <xsl:if test="w:pPr/w:pStyle/w:rPr/w:rtl">
 	 <xsl:attribute name="dir"
 			xmlns="http://www.w3.org/2005/11/its">
@@ -167,48 +221,46 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:call-template name="process-checking-for-crossrefs"/>
 	 </xsl:otherwise>
        </xsl:choose>
-     </xsl:element>
+	</xsl:element>
    </xsl:template>
    
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Named template for processing of any cross-references found.</desc>
-    </doc>
-    <xsl:template name="process-checking-for-crossrefs">
-      <xsl:choose>
-	<xsl:when
-	    test="w:r/w:fldChar[@w:fldCharType='begin']">
-	  <xsl:for-each-group select="w:*|m:*"
-			      group-starting-with="w:r[w:fldChar/@w:fldCharType[matches(.,'begin|end')]]">
-
-	    <xsl:choose>
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+     <desc>Processing of any cross-references found.</desc>
+   </doc>
+   <xsl:template name="process-checking-for-crossrefs">
+     <xsl:choose>
+       <xsl:when
+	   test="w:r/w:fldChar[@w:fldCharType='begin']">
+	 <xsl:for-each-group select="w:*|m:*"
+			     group-starting-with="w:r[w:fldChar/@w:fldCharType[matches(.,'begin|end')]]">
+	   <xsl:variable name="instructions">
+	     <xsl:value-of select="current-group()//w:instrText" separator=""/>
+	   </xsl:variable>	   
+	   <xsl:choose>
 	      <xsl:when test="self::w:r/w:fldChar[@w:fldCharType='begin']">
-		<xsl:variable name="rends">
-		  <!-- collect all the rends for concatenation later
-		  -->
-		  <xsl:variable name="instruction" select="following-sibling::w:r[w:instrText[not(normalize-space(.)='')]][1]"/>
+		<xsl:variable name="jobs"> <!-- collect all the jobs for concatenation later -->
 		  <xsl:choose>
-		    <xsl:when test="contains($instruction,'NOTEREF')"><r>noteref</r></xsl:when>
-		    <xsl:when test="contains($instruction,'SEQ')"><r>SEQ</r></xsl:when>
-		    <xsl:when test="contains($instruction,'XE')"><r>index</r></xsl:when>
-		    <xsl:when test="contains($instruction,'REF')"><r>ref</r></xsl:when>
+		    <xsl:when test="matches($instructions,'^[ ]?NOTEREF')"><r>noteref</r></xsl:when>
+		    <xsl:when test="matches($instructions,'^[ ]?SEQ')"><r>SEQ</r></xsl:when>
+		    <xsl:when test="matches($instructions,'^[ ]?XE')"><r>index</r></xsl:when>
+		    <xsl:when test="matches($instructions,'^[ ]?REF')"><r>ref</r></xsl:when>
 		  </xsl:choose>
-		  <xsl:if test="contains($instruction,'\r')"><r>instr_r</r></xsl:if>
-		  <xsl:if test="contains($instruction,'\f')"><r>instr_f</r></xsl:if>
-		  <xsl:if test="contains($instruction,'\n')"><r>instr_n</r></xsl:if>
-		  <xsl:if test="contains($instruction,'MERGEFORMAT')"><r>mergeformat</r></xsl:if>
+		  <xsl:if test="contains($instructions,'\r')"><r>instr_r</r></xsl:if>
+		  <xsl:if test="contains($instructions,'\f')"><r>instr_f</r></xsl:if>
+		  <xsl:if test="contains($instructions,'\n')"><r>instr_n</r></xsl:if>
+		  <xsl:if test="contains($instructions,'MERGEFORMAT')"><r>mergeformat</r></xsl:if>
 		</xsl:variable>
 		<xsl:choose>
-		  <xsl:when test="$rends/tei:r='index'">
+		  <xsl:when test="$jobs/tei:r='index'">
 		    <xsl:call-template name="process-index-term">
 		      <xsl:with-param name="term">
-			<xsl:for-each select="current-group()//w:instrText">
-			  <xsl:apply-templates/>
-			</xsl:for-each>
+			<xsl:value-of
+			    select="current-group()//w:instrText" separator=""/>
 		      </xsl:with-param>
 		    </xsl:call-template>
 		  </xsl:when>
 		  <!--
-		  <xsl:when test="$rends/tei:r='SEQ'">
+		  <xsl:when test="$jobs/tei:r='SEQ'">
 		    <xsl:variable name="What"
 		       select="following-sibling::w:r/w:instrText[1]"/>
 		       <xsl:number level="any" count="w:r[w:fldChar/@w:fldCharType='begin'][following-sibling::w:r/w:instrText=$What]"/>
@@ -216,9 +268,9 @@ of this software, even if advised of the possibility of such damage.
 		  -->
 		  <xsl:otherwise>
 		    <ref>
-		      <xsl:if test="$rends/tei:r">
+		      <xsl:if test="$jobs/tei:r">
 			<xsl:attribute name="rend">
-			  <xsl:value-of select="string-join(($rends/tei:r),' ')"/>
+			  <xsl:value-of select="string-join(($jobs/tei:r),' ')"/>
 			</xsl:attribute>
 		      </xsl:if>
 		      <xsl:if test="following-sibling::w:r[w:rPr][1]/w:rStyle">
@@ -226,35 +278,10 @@ of this software, even if advised of the possibility of such damage.
 			  <xsl:value-of select="following-sibling::w:r[w:rPr][1]/w:rStyle/w:rPr/w:rStyle/@w:val"/>
 			</xsl:attribute>
 		      </xsl:if> 
-		      <xsl:for-each select="current-group()">
-			<xsl:if test="self::w:r[w:instrText]">			    
-			  <xsl:variable name="ref">
-			    <xsl:choose>
-			      <xsl:when test="contains(w:instrText,'REF _')"> <!-- this will also catch NOTEREF _ -->
-				<xsl:text>#</xsl:text>
-				<xsl:value-of select="substring-before(substring-after(w:instrText,'_'),'&#32;')"/>
-			      </xsl:when>
-			      <xsl:when test="contains(w:instrText,'HYPERLINK')">
-				<xsl:value-of select="substring-before(substring-after(w:instrText,'&#x0022;'),'&#x0022;')"/>
-			      </xsl:when>
-			    </xsl:choose>
-			  </xsl:variable>
-			  <xsl:if test="not($ref='')">
-			    <xsl:attribute name="target"
-					   select="$ref"/>
-			  </xsl:if>
-			</xsl:if>
-		      </xsl:for-each>
-		      <xsl:for-each select="current-group()">
-			<xsl:choose>
-			  <xsl:when  test="self::w:bookmarkStart">
-			    <xsl:apply-templates select="."/>
-			  </xsl:when>
-			  <xsl:otherwise>
-			    <xsl:apply-templates select="."/>
-			  </xsl:otherwise>
-			</xsl:choose>
-		      </xsl:for-each>
+		      <xsl:if test="not($instructions='')">
+			<xsl:attribute name="target" select="$instructions"/>
+		      </xsl:if>
+		      <xsl:apply-templates select="current-group()"/>
 		    </ref>
 		  </xsl:otherwise>
 		</xsl:choose>
@@ -291,7 +318,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:template name="process-index-term">
       <xsl:param name="term"/>
       <xsl:param name="xr"/>
-
       <xsl:choose>
 	<xsl:when test="starts-with($term,'XE') or starts-with($term,' XE')">
 	  <xsl:variable name="quoted-text" select="concat('[^',$dblq,']+',$dblq,'([^',$dblq,']+)',$dblq,'?.*')"/>
@@ -308,8 +334,7 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:attribute>
 	    </xsl:if>
 	    <xsl:call-template name="process-index-term">
-	      <xsl:with-param name="term"
-			      select="normalize-space($clean-term)"/>
+	      <xsl:with-param name="term"  select="normalize-space($clean-term)"/>
 	      <xsl:with-param name="xr"  select="normalize-space($see)"/>
 	    </xsl:call-template>
 	  </index>
@@ -329,7 +354,7 @@ of this software, even if advised of the possibility of such damage.
 	  <term>
 	    <xsl:value-of select="normalize-space($term)"/>
 	    <xsl:if test="normalize-space($xr)">
-	      <ref>
+	      <ref type="xr">
 		<xsl:value-of select="normalize-space($xr)"/>
 	      </ref>
 	    </xsl:if>

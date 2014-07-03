@@ -127,7 +127,6 @@ the beginning of the document</desc>
 \usepackage{fancyhdr}
 \usepackage{marginnote}
 \renewcommand*{\marginfont}{\itshape\footnotesize}
-\setlength\marginparwidth{.75in}
 \usepackage{graphicx}
 </xsl:text>
 <xsl:if test="key('TREES',1)">
@@ -196,7 +195,7 @@ this must be the name of a TEI element</desc>
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
       <desc>Options to pass to the geometry package to set margins etc</desc>
    </doc>
-   <xsl:param name="latexGeometryOptions">twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
+   <xsl:param name="latexGeometryOptions">twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in,marginparwidth=0.75in</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
       <desc>Depth of nesting of reference documentation when processing ODD</desc>
@@ -220,6 +219,7 @@ characters. The normal characters remain active for LaTeX commands.
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
 \usepackage{colortbl}
+\usepackage{wrapfig}
 \usepackage{ifxetex}
 \ifxetex
   \usepackage{fontspec}

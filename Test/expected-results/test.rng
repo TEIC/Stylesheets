@@ -1678,6 +1678,27 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <ref name="formula"/>
     </choice>
   </define>
+  <define name="model.offsetLike">
+    <notAllowed/>
+  </define>
+  <define name="model.offsetLike_alternation">
+    <notAllowed/>
+  </define>
+  <define name="model.offsetLike_sequence">
+    <empty/>
+  </define>
+  <define name="model.offsetLike_sequenceOptional">
+    <empty/>
+  </define>
+  <define name="model.offsetLike_sequenceOptionalRepeatable">
+    <empty/>
+  </define>
+  <define name="model.offsetLike_sequenceRepeatable">
+    <notAllowed/>
+  </define>
+  <define name="model.pPart.msdesc">
+    <notAllowed/>
+  </define>
   <define name="model.pPart.editorial">
     <choice>
       <ref name="choice"/>
@@ -1996,6 +2017,9 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <ref name="ref"/>
     </choice>
   </define>
+  <define name="model.lPart">
+    <notAllowed/>
+  </define>
   <define name="model.global.meta">
     <choice>
       <ref name="index"/>
@@ -2022,6 +2046,30 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
     </choice>
   </define>
   <define name="model.gLike">
+    <notAllowed/>
+  </define>
+  <define name="model.oddDecl">
+    <notAllowed/>
+  </define>
+  <define name="model.oddDecl_alternation">
+    <notAllowed/>
+  </define>
+  <define name="model.oddDecl_sequence">
+    <empty/>
+  </define>
+  <define name="model.oddDecl_sequenceOptional">
+    <empty/>
+  </define>
+  <define name="model.oddDecl_sequenceOptionalRepeatable">
+    <empty/>
+  </define>
+  <define name="model.oddDecl_sequenceRepeatable">
+    <notAllowed/>
+  </define>
+  <define name="model.phrase.xml">
+    <notAllowed/>
+  </define>
+  <define name="model.specDescLike">
     <notAllowed/>
   </define>
   <define name="model.biblLike">
@@ -2354,6 +2402,52 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <ref name="listForest"/>
     </choice>
   </define>
+  <define name="model.placeNamePart">
+    <notAllowed/>
+  </define>
+  <define name="model.placeNamePart_alternation">
+    <notAllowed/>
+  </define>
+  <define name="model.placeNamePart_sequence">
+    <empty/>
+  </define>
+  <define name="model.placeNamePart_sequenceOptional">
+    <empty/>
+  </define>
+  <define name="model.placeNamePart_sequenceOptionalRepeatable">
+    <empty/>
+  </define>
+  <define name="model.placeNamePart_sequenceRepeatable">
+    <notAllowed/>
+  </define>
+  <define name="model.placeStateLike">
+    <choice>
+      <ref name="model.placeNamePart"/>
+    </choice>
+  </define>
+  <define name="model.placeStateLike_alternation">
+    <choice>
+      <ref name="model.placeNamePart_alternation"/>
+    </choice>
+  </define>
+  <define name="model.placeStateLike_sequence">
+    <ref name="model.placeNamePart_sequence"/>
+  </define>
+  <define name="model.placeStateLike_sequenceOptional">
+    <optional>
+      <ref name="model.placeNamePart_sequenceOptional"/>
+    </optional>
+  </define>
+  <define name="model.placeStateLike_sequenceOptionalRepeatable">
+    <zeroOrMore>
+      <ref name="model.placeNamePart_sequenceOptionalRepeatable"/>
+    </zeroOrMore>
+  </define>
+  <define name="model.placeStateLike_sequenceRepeatable">
+    <oneOrMore>
+      <ref name="model.placeNamePart_sequenceRepeatable"/>
+    </oneOrMore>
+  </define>
   <define name="model.publicationStmtPart.agency">
     <choice>
       <ref name="publisher"/>
@@ -2528,6 +2622,9 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <ref name="model.divTopPart"/>
     </choice>
   </define>
+  <define name="model.frontPart.drama">
+    <notAllowed/>
+  </define>
   <define name="model.pLike.front">
     <choice>
       <ref name="head"/>
@@ -2640,6 +2737,8 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
   <define name="model.nameLike">
     <choice>
       <ref name="model.nameLike.agent"/>
+      <ref name="model.offsetLike"/>
+      <ref name="model.placeStateLike"/>
       <ref name="rs"/>
       <ref name="idno"/>
       <ref name="lang"/>
@@ -2648,6 +2747,8 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
   <define name="model.nameLike_alternation">
     <choice>
       <ref name="model.nameLike.agent_alternation"/>
+      <ref name="model.offsetLike_alternation"/>
+      <ref name="model.placeStateLike_alternation"/>
       <ref name="rs"/>
       <ref name="idno"/>
       <ref name="lang"/>
@@ -2655,6 +2756,8 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
   </define>
   <define name="model.nameLike_sequence">
     <ref name="model.nameLike.agent_sequence"/>
+    <ref name="model.offsetLike_sequence"/>
+    <ref name="model.placeStateLike_sequence"/>
     <ref name="rs"/>
     <ref name="idno"/>
     <ref name="lang"/>
@@ -2662,6 +2765,12 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
   <define name="model.nameLike_sequenceOptional">
     <optional>
       <ref name="model.nameLike.agent_sequenceOptional"/>
+    </optional>
+    <optional>
+      <ref name="model.offsetLike_sequenceOptional"/>
+    </optional>
+    <optional>
+      <ref name="model.placeStateLike_sequenceOptional"/>
     </optional>
     <optional>
       <ref name="rs"/>
@@ -2678,6 +2787,12 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <ref name="model.nameLike.agent_sequenceOptionalRepeatable"/>
     </zeroOrMore>
     <zeroOrMore>
+      <ref name="model.offsetLike_sequenceOptionalRepeatable"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="model.placeStateLike_sequenceOptionalRepeatable"/>
+    </zeroOrMore>
+    <zeroOrMore>
       <ref name="rs"/>
     </zeroOrMore>
     <zeroOrMore>
@@ -2690,6 +2805,12 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
   <define name="model.nameLike_sequenceRepeatable">
     <oneOrMore>
       <ref name="model.nameLike.agent_sequenceRepeatable"/>
+    </oneOrMore>
+    <oneOrMore>
+      <ref name="model.offsetLike_sequenceRepeatable"/>
+    </oneOrMore>
+    <oneOrMore>
+      <ref name="model.placeStateLike_sequenceRepeatable"/>
     </oneOrMore>
     <oneOrMore>
       <ref name="rs"/>
@@ -2727,6 +2848,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
   </define>
   <define name="model.frontPart">
     <choice>
+      <ref name="model.frontPart.drama"/>
       <ref name="divGen"/>
       <ref name="titlePage"/>
     </choice>
@@ -2751,6 +2873,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
   <define name="model.inter">
     <choice>
       <ref name="model.egLike"/>
+      <ref name="model.oddDecl"/>
       <ref name="model.biblLike"/>
       <ref name="model.labelLike"/>
       <ref name="model.listLike"/>
@@ -2770,8 +2893,12 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <ref name="model.segLike"/>
       <ref name="model.highlighted"/>
       <ref name="model.graphicLike"/>
+      <ref name="model.pPart.msdesc"/>
       <ref name="model.pPart.edit"/>
       <ref name="model.ptrLike"/>
+      <ref name="model.lPart"/>
+      <ref name="model.phrase.xml"/>
+      <ref name="model.specDescLike"/>
       <ref name="model.pPart.data"/>
       <ref name="model.ptrLike.form"/>
     </choice>
@@ -2780,8 +2907,10 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
     <choice>
       <ref name="model.hiLike"/>
       <ref name="model.emphLike"/>
+      <ref name="model.pPart.msdesc"/>
       <ref name="model.pPart.editorial"/>
       <ref name="model.ptrLike"/>
+      <ref name="model.phrase.xml"/>
       <ref name="model.pPart.data"/>
     </choice>
   </define>

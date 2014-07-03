@@ -4,6 +4,7 @@
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
 \usepackage{colortbl}
+\usepackage{wrapfig}
 \usepackage{ifxetex}
 \ifxetex
   \usepackage{fontspec}
@@ -121,7 +122,7 @@
 \mathcode`\_=\string"8000
 \catcode`\_=12\relax
 
-\usepackage[a4paper,twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in]{geometry}
+\usepackage[a4paper,twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in,marginparwidth=0.75in]{geometry}
 \usepackage{framed}
 
 \definecolor{shadecolor}{gray}{0.95}
@@ -131,7 +132,6 @@
 \usepackage{fancyhdr}
 \usepackage{marginnote}
 \renewcommand*{\marginfont}{\itshape\footnotesize}
-\setlength\marginparwidth{.75in}
 \usepackage{graphicx}
 
   \usepackage{endnotes}
@@ -321,6 +321,7 @@ The Original Edition of A CHRISTMAS CAROL has been out of print for many years, 
 
 \section*{PREFACE }\par
 I have endeavoured in this Ghostly little book, to raise the Ghost of an Idea, which shall not put my readers out of humour with themselves, with each other, with the season, or with me. May it haunt their houses pleasantly, and no one wish to lay it. 
+
 \begin{quote}
 Their faithful Friend and Servant, C.D. December, 1843.\end{quote}
 
@@ -332,7 +333,7 @@ Their faithful Friend and Servant, C.D. December, 1843.\end{quote}
 \item[Stave IV ]The last of the spirits 
 \item[Stave V]The end of it 
 \end{description} \mainmatter  \section*{(Bits of) A CHRISTMAS CAROL, and other things} 
-\section[Simple rendition tests]{Simple rendition tests}\par
+\section[{Simple rendition tests}]{Simple rendition tests}\par
 ‘Who-e debel you?’ — he at last said — ‘you no speak-e, damme, I kill-e.’ And so saying, the lighted tomahawk began flourishing about me in the dark.\par
 ‘Who-e debel you?’ — he at last said — ‘you no speak-e, damme, I kill-e.’ And so saying, the lighted tomahawk began flourishing about me in the dark. \par 
 \begin{longtable}{P{0.1917570498915401\textwidth}P{0.6582429501084599\textwidth}}
@@ -356,7 +357,7 @@ superscript\tabcellsep This is \textsuperscript{superscript} effect\\
 bold italic red, done separately\tabcellsep {\bfseries {\itshape\bfseries {\itshape\bfseries\color{red}rend test 1}}}\\
 bold italic smallcaps\tabcellsep {\itshape\bfseries\scshape rend test 1} \footnote{Cairns 2003: 11. My work is Muellner 1996.}\end{longtable} \par
  
-\section[Quotations]{Quotations}\par
+\section[{Quotations}]{Quotations}\par
 A paragraph with a footnote containing a block-level object\footnote{We start with a quotation:
 \leftline{This is the way the world ends}
 \leftline{This is the way the world ends}
@@ -365,12 +366,12 @@ A paragraph with a footnote containing a block-level object\footnote{We start wi
 Consider quotations: ‘This is a quote which is run on within the text and will have quote marks of some kind around it.’\par
 Another quotation: \begin{quote}This is a block quote set off as such from the rest of the text\end{quote}\par
 Here, by contrast is an ‘inline quotation’. Another strange thing about quotes is this: \begin{quote}You can put line breaks{\hskip1pt}\newline to determine where the line breaks{\hskip1pt}\newline Inside a block!\end{quote}
-\section[Use of xml:lang]{Use of xml:lang}\par
+\section[{Use of xml:lang}]{Use of xml:lang}\par
 He used a French \textit{radiateur}.\par
 Languages: \textit{Deutsch}; \textit{Italiano}; \textit{Español}; \textit{Français}; \textit{Portugues}; \textit{Russian}; \textit{Svenska}; \textit{日本語}; \textit{中文}.
-\section[del, gap, add, unclear etc]{del, gap, add, unclear etc}\par
+\section[{del, gap, add, unclear etc}]{del, gap, add, unclear etc}\par
 \sout{. The interest \& — affor the amount over so small} the interest afforded ⟨\textit{compared with cash,}⟩ by the Annuity{\hskip1pt}\newline  note paper to those who \textit{tutor}[?] ⟨\textit{think}⟩ it, ⟨\textit{or keep it,}⟩ with a view {\hskip1pt}\newline  to circulation, will, \sout{when compared with cash} ⟨\textit{be it ever so small}⟩ be {\hskip1pt}\newline  so much \uline{profit}: compared with \sout{a} ⟨\textit{the}⟩ preceding higher {\hskip1pt}\newline  rate of interest, the ⟨\textit{reduced}⟩ rate afforded by the Annuity {\hskip1pt}\newline  note paper, to those who, \textit{tutor}[?] if they \textit{tutor}[?] it, {\hskip1pt}\newline  will, \sout{have to depend upon} to the extent of their {\hskip1pt}\newline  respective capitals so invested, have nothing else {\hskip1pt}\newline  to depend upon for their ⟨\textit{respective}⟩ incomes, will, \sout{} ⟨\textit{by}⟩ the {\hskip1pt}\newline  amount of the difference, \textit{foremost}[?] itself as so {\hskip1pt}\newline  much less.
-\section[Drama]{Drama} \begin{description} \item[Roderigo] 
+\section[{Drama}]{Drama} \begin{description} \item[Roderigo] 
 
 Where shall we meet i' the morning?\end{description}
  \begin{description} \item[Iago] 
@@ -392,16 +393,16 @@ No more of drowning, do you hear?\end{description}
 
 I am changed: I'll go sell all my land.\end{description}
 
-\section[Footnotes and endnotes]{Footnotes and endnotes}
-\subsection[1 Zur Entstehung der Philosophischen  	UntersuchungenZu Textauszeichnungen und  	Siglen siehe die Legende.]{1 Zur Entstehung der Philosophischen Untersuchungen\footnote{Zu Textauszeichnungen und Siglen siehe die Legende.}}\par
+\section[{Footnotes and endnotes}]{Footnotes and endnotes}
+\subsection[{1 Zur Entstehung der Philosophischen  	UntersuchungenZu Textauszeichnungen und  	Siglen siehe die Legende.}]{1 Zur Entstehung der Philosophischen Untersuchungen\footnote{Zu Textauszeichnungen und Siglen siehe die Legende.}}\par
 Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod\footnote{It is time to begin the beguine.} Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod\par
 Iriure dolor in hendrerit in vulputate\endnote{Not Vulture} velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit\endnote{Not Blandings} praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-\section[Assorted elements and links]{Assorted elements and links}\par
+\section[{Assorted elements and links}]{Assorted elements and links}\par
 Fit the first The \texttt{<emph>} element is used for linguistic emph\textit{asis}. ‘highlighting’ (\texttt{<soCalled>}) nor with \textit{shouting} (\texttt{<mentioned>}), \textit{transmogrification}, (a technical \texttt{<term>}), for which the \texttt{<gloss>} tag might be used to supply  \textit{a technical definition}).\par
 Now for some links! We will start by cross-referring to a later section.\par
 Here is a simple \texttt{<ptr>} to it: \textit{\hyperref[P1]{9. Lists}}. Here is a simple \texttt{<ref>}, a \hyperref[P1]{reference to it}.\par
 An \xref{http://www.bbc.co.uk}{external link} as ref and as ptr: \url{http://www.bbc.co.uk} and \url{http://www.ox.ac.uk/}.
-\section[Tables]{Tables}\par
+\section[{Tables}]{Tables}\par
 Tables may have cells that span multiple columns and rows. \par 
 \begin{longtable}{P{0.5250764525993884\textwidth}P{0.23394495412844038\textwidth}P{0.09097859327217125\textwidth}}
  \hline\endfoot\hline\endlastfoot \endfirsthead \multicolumn{3}{c}{Pictures from Fagaras mountains(cont.)}\\\hline \endhead \caption{Pictures from Fagaras mountains}\\ \hline \rowcolor{label}Image\tabcellsep Description\tabcellsep Camera direction\\\hline 
@@ -423,7 +424,7 @@ g\tabcellsep g\\
 i\tabcellsep j\tabcellsep \multicolumn{2}{l}{Spans {\bfseries Horizontally}}\\
 k\tabcellsep l\tabcellsep m\tabcellsep n\tabcellsep o\end{longtable} \par
  
-\section[Lists]{Lists}\label{P1}\par
+\section[{Lists}]{Lists}\label{P1}\par
 Various sorts of list are legal within paragraphs, and you can reference \hyperref[birds]{items in lists}... \begin{enumerate}
 \item Dogs
 \item Zebras
@@ -462,7 +463,7 @@ What's wrong with this list?\begin{description}
 \item three
 \end{itemize} 
 \end{description} 
-\section[Pictures]{Pictures} \par 
+\section[{Pictures}]{Pictures} \par 
 \begin{longtable}{P{0.1980173482032218\textwidth}P{0.6519826517967782\textwidth}}
 \tabcellsep \noindent\includegraphics[]{portrait.jpg}\\
 width="2.5in" \tabcellsep \noindent\includegraphics[width=2.5in,]{portrait.jpg}\\
@@ -476,10 +477,10 @@ height="2in" width="1in"\tabcellsep \noindent\includegraphics[width=1in,height=2
 width="10\%"\tabcellsep \noindent\includegraphics[width=0.1\textwidth,]{portrait.jpg}\\
 height="10\%" width="10\%"\tabcellsep \noindent\includegraphics[width=0.1\textwidth,height=0.1\textheight,]{portrait.jpg}\end{longtable} \par
  
-\section[MS catalogue]{MS catalogue}
+\section[{MS catalogue}]{MS catalogue}
 \section{Identification}
 where is it, repository name, identifier
-\section[Extended prose: MARLEY'S GHOST]{Extended prose: MARLEY'S GHOST}\label{S1}% image:bar.jpg
+\section[{Extended prose: MARLEY'S GHOST}]{Extended prose: MARLEY'S GHOST}\label{S1}% image:bar.jpg
 \par
 Marley was dead: to begin with. There is no doubt whatever about that. The register of his burial was signed by the clergyman, the clerk, the undertaker, and the chief mourner. Scrooge signed it. And Scrooge's name was good upon 'Change, for anything he chose to put his hand to. Old Marley was as dead as a door-nail. \par
 Mind! I don't mean to say that I know, of my own knowledge, what there is particularly dead about a door-nail. I might have been inclined, myself, to regard a coffin-nail as the deadest piece of ironmongery in the trade. But the wisdom of our ancestors is in the simile; and my unhallowed  hands shall not disturb it, or the Country's done for. You will therefore permit me to repeat, emphatically, that Marley was as dead as a door-nail.\par
@@ -551,13 +552,13 @@ Foggier yet, and colder! Piercing, searching, biting cold. If the good Saint Dun
 \leftline{God bless you, merry gentleman! }
 \leftline{May nothing you dismay! }\end{quote}
  Scrooge seized the ruler with such energy of action that the singer fled in terror, leaving the keyhole to the fog and even more congenial frost.
-\section[Linking]{Linking}\par
+\section[{Linking}]{Linking}\par
 \url{http://www.bbc.co.uk}\par
 \url{https://staff.oucs.ox.ac.uk}\par
 foo\par
 \xref{http://www.example.com/personography.html\#fred}{Fred}\par
 \xref{http://www.example.com/getBibl.xql?name=Jones&year=76}{Jones 76}
-\section[Testing preservation of ID]{Testing preservation of ID}\par
+\section[{Testing preservation of ID}]{Testing preservation of ID}\par
 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. With references to \begin{itemize}
 \item \hyperref[thisQuotation]{Quotation}
 \item \hyperref[thisCitation]{Citation}
@@ -573,10 +574,10 @@ I wonder what are the xml-ids preserved in a transformation to XHTML, in particu
 \begin{biblfree} \label{thisReference}In \label{thisTitle}\textit{Somewhere}.\end{biblfree}
 \end{quote}
 
-\section[Choice, sic, corr, reg, orig]{Choice, sic, corr, reg, orig}\par
+\section[{Choice, sic, corr, reg, orig}]{Choice, sic, corr, reg, orig}\par
 voro þav sammędd syskin in heilagri {\hskip1pt}\newline  olafr konvngr ok fyrnefnd [ {\corr gvnnhilldr}].\par
 Lastly, That, upon his solemn oath to observe all the above articles, the said man-mountain shall have a daily allowance of meat and drink sufficient for the support of [ {\corr 1728}] of our subjects, with free access to our royal person, and other marks of our  {\reg favor}.
-\section[Verbatim]{Verbatim}\par
+\section[{Verbatim}]{Verbatim}\par
 an egXML in a list: \begin{itemize}
 \item \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{div}\hspace*{6pt}{xml:id}="{test99}"\hspace*{6pt}{rend}="{whatever}">}\mbox{}\newline 
 \hspace*{6pt}{<\textbf{head}>}Choice, sic, corr, reg, orig{</\textbf{head}>}\mbox{}\newline 
@@ -589,7 +590,7 @@ an egXML in a list: \begin{itemize}
 \hspace*{6pt}\hspace*{6pt}{</\textbf{choice}>}.{</\textbf{p}>}\mbox{}\newline 
 {</\textbf{div}>}\end{shaded}\egroup\par 
 \end{itemize} 
-\section[divs with no heads]{divs with no heads}\par
+\section[{divs with no heads}]{divs with no heads}\par
 Ampersands: Fit the first\& Fit the first\& more Fit the first\&amp; more Fit the first\&\& Fit the first\&quot; Fit the first @ \xref{http://www.example.com/?foo=bar&bar=foo&\#3}{http://www.example.com/?foo=bar\&bar=foo\&\#3}.\par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{p}>}Ampersands:\mbox{}\newline 
 {<\textbf{seg}>}Fit the first\&{</\textbf{seg}>}\mbox{}\newline 
 \hspace*{6pt}{<\textbf{seg}>}Fit the first\& more{</\textbf{seg}>}\mbox{}\newline 

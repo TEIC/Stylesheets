@@ -30,7 +30,7 @@
     <text>
       <body>
         <xsl:variable name="Body">
-          <HEAD level="1" magic="true">Start</HEAD>
+          <HEAD xmlns="http://www.tei-c.org/ns/1.0"  level="1" magic="true">Start</HEAD>
           <xsl:call-template name="gatherText"/>
         </xsl:variable>
         <xsl:variable name="Body2">
@@ -39,10 +39,10 @@
           </xsl:for-each>
         </xsl:variable>
         <xsl:for-each select="$Body2">
-          <xsl:for-each-group select="tei:*|comment()" group-starting-with="tei:HEAD[@level='1']">
+          <xsl:for-each-group select="*|comment()" group-starting-with="tei:HEAD[@level='1']">
             <xsl:choose>
               <xsl:when test="self::tei:HEAD[@level='1']">
-                <xsl:call-template name="group-by-section"/>
+		<xsl:call-template name="group-by-section"/>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:call-template name="inSectionCodeBlock"/>
@@ -117,6 +117,7 @@
   </xsl:template>
   <xsl:template name="inSection">
     <xsl:for-each-group select="current-group()" group-adjacent="if (self::tei:GLOSS) then 1      else if (self::tei:ITEM) then 2      else if (self::tei:NITEM) then 3      else if (self::tei:BQUOTE) then 4      else if (self::tei:BCODE) then 5      else if (self::tei:FCODE) then 6      else 7">
+
       <xsl:choose>
         <xsl:when test="current-grouping-key()=1">
           <list type="gloss">

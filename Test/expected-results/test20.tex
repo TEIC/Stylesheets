@@ -4,6 +4,7 @@
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
 \usepackage{colortbl}
+\usepackage{wrapfig}
 \usepackage{ifxetex}
 \ifxetex
   \usepackage{fontspec}
@@ -121,7 +122,7 @@
 \mathcode`\_=\string"8000
 \catcode`\_=12\relax
 
-\usepackage[a4paper,twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in]{geometry}
+\usepackage[a4paper,twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in,marginparwidth=0.75in]{geometry}
 \usepackage{framed}
 
 \definecolor{shadecolor}{gray}{0.95}
@@ -131,7 +132,6 @@
 \usepackage{fancyhdr}
 \usepackage{marginnote}
 \renewcommand*{\marginfont}{\itshape\footnotesize}
-\setlength\marginparwidth{.75in}
 \usepackage{graphicx}
 
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}

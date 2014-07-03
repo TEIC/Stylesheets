@@ -1007,6 +1007,13 @@ model.egLike_sequenceOptional = empty
 model.egLike_sequenceOptionalRepeatable = empty
 model.egLike_sequenceRepeatable = notAllowed
 model.graphicLike = media | graphic | binaryObject | formula
+model.offsetLike = notAllowed
+model.offsetLike_alternation = notAllowed
+model.offsetLike_sequence = empty
+model.offsetLike_sequenceOptional = empty
+model.offsetLike_sequenceOptionalRepeatable = empty
+model.offsetLike_sequenceRepeatable = notAllowed
+model.pPart.msdesc = notAllowed
 model.pPart.editorial = choice | abbr | expan
 model.pPart.editorial_alternation = choice | abbr | expan
 model.pPart.editorial_sequence = choice, abbr, expan
@@ -1028,10 +1035,19 @@ model.pPart.transcriptional_sequenceRepeatable =
   sic+, corr+, reg+, orig+, add+, del+, unclear+
 model.pPart.edit = model.pPart.editorial | model.pPart.transcriptional
 model.ptrLike = ptr | ref
+model.lPart = notAllowed
 model.global.meta =
   index | link | linkGrp | timeline | join | joinGrp | alt | altGrp
 model.milestoneLike = milestone | gb | pb | lb | cb | anchor
 model.gLike = notAllowed
+model.oddDecl = notAllowed
+model.oddDecl_alternation = notAllowed
+model.oddDecl_sequence = empty
+model.oddDecl_sequenceOptional = empty
+model.oddDecl_sequenceOptionalRepeatable = empty
+model.oddDecl_sequenceRepeatable = notAllowed
+model.phrase.xml = notAllowed
+model.specDescLike = notAllowed
 model.biblLike = bibl | biblStruct | listBibl | biblFull
 model.biblLike_alternation = bibl | biblStruct | listBibl | biblFull
 model.biblLike_sequence = bibl, biblStruct, listBibl, biblFull
@@ -1081,6 +1097,21 @@ model.stageLike_sequenceRepeatable = stage+
 model.entryPart = notAllowed
 model.global.edit = gap
 model.divPart = model.lLike | model.pLike | lg | sp
+model.placeNamePart = notAllowed
+model.placeNamePart_alternation = notAllowed
+model.placeNamePart_sequence = empty
+model.placeNamePart_sequenceOptional = empty
+model.placeNamePart_sequenceOptionalRepeatable = empty
+model.placeNamePart_sequenceRepeatable = notAllowed
+model.placeStateLike = model.placeNamePart
+model.placeStateLike_alternation = model.placeNamePart_alternation
+model.placeStateLike_sequence = model.placeNamePart_sequence
+model.placeStateLike_sequenceOptional =
+  model.placeNamePart_sequenceOptional?
+model.placeStateLike_sequenceOptionalRepeatable =
+  model.placeNamePart_sequenceOptionalRepeatable*
+model.placeStateLike_sequenceRepeatable =
+  model.placeNamePart_sequenceRepeatable+
 model.publicationStmtPart.agency = publisher | distributor | authority
 model.publicationStmtPart.detail =
   address | date | pubPlace | idno | availability
@@ -1117,6 +1148,7 @@ model.divWrapper =
   | docDate
 model.divTopPart = model.headLike | opener | signed
 model.divTop = model.divWrapper | model.divTopPart
+model.frontPart.drama = notAllowed
 model.pLike.front =
   head
   | byline
@@ -1153,16 +1185,42 @@ model.addressLike_sequence = email, address
 model.addressLike_sequenceOptional = email?, address?
 model.addressLike_sequenceOptionalRepeatable = email*, address*
 model.addressLike_sequenceRepeatable = email+, address+
-model.nameLike = model.nameLike.agent | rs | idno
+model.nameLike =
+  model.nameLike.agent
+  | model.offsetLike
+  | model.placeStateLike
+  | rs
+  | idno
 model.nameLike_alternation =
-  model.nameLike.agent_alternation | rs | idno
-model.nameLike_sequence = model.nameLike.agent_sequence, rs, idno
+  model.nameLike.agent_alternation
+  | model.offsetLike_alternation
+  | model.placeStateLike_alternation
+  | rs
+  | idno
+model.nameLike_sequence =
+  model.nameLike.agent_sequence,
+  model.offsetLike_sequence,
+  model.placeStateLike_sequence,
+  rs,
+  idno
 model.nameLike_sequenceOptional =
-  model.nameLike.agent_sequenceOptional?, rs?, idno?
+  model.nameLike.agent_sequenceOptional?,
+  model.offsetLike_sequenceOptional?,
+  model.placeStateLike_sequenceOptional?,
+  rs?,
+  idno?
 model.nameLike_sequenceOptionalRepeatable =
-  model.nameLike.agent_sequenceOptionalRepeatable*, rs*, idno*
+  model.nameLike.agent_sequenceOptionalRepeatable*,
+  model.offsetLike_sequenceOptionalRepeatable*,
+  model.placeStateLike_sequenceOptionalRepeatable*,
+  rs*,
+  idno*
 model.nameLike_sequenceRepeatable =
-  model.nameLike.agent_sequenceRepeatable+, rs+, idno+
+  model.nameLike.agent_sequenceRepeatable+,
+  model.offsetLike_sequenceRepeatable+,
+  model.placeStateLike_sequenceRepeatable+,
+  rs+,
+  idno+
 model.global =
   model.global.meta
   | model.milestoneLike
@@ -1180,7 +1238,7 @@ model.biblPart =
   | textLang
   | edition
   | extent
-model.frontPart = divGen | titlePage
+model.frontPart = model.frontPart.drama | divGen | titlePage
 model.addrPart = model.nameLike | addrLine | street | postCode | postBox
 model.pPart.data =
   model.dateLike
@@ -1189,6 +1247,7 @@ model.pPart.data =
   | model.nameLike
 model.inter =
   model.egLike
+  | model.oddDecl
   | model.biblLike
   | model.labelLike
   | model.listLike
@@ -1199,14 +1258,20 @@ model.phrase =
   model.segLike
   | model.highlighted
   | model.graphicLike
+  | model.pPart.msdesc
   | model.pPart.edit
   | model.ptrLike
+  | model.lPart
+  | model.phrase.xml
+  | model.specDescLike
   | model.pPart.data
 model.limitedPhrase =
   model.hiLike
   | model.emphLike
+  | model.pPart.msdesc
   | model.pPart.editorial
   | model.ptrLike
+  | model.phrase.xml
   | model.pPart.data
 model.divLike = \div
 model.divGenLike = divGen

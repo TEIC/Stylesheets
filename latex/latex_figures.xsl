@@ -260,26 +260,54 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:text>\noindent</xsl:text>
 	</xsl:when>
       </xsl:choose>
-      <xsl:text>\includegraphics[</xsl:text>
-      <xsl:call-template name="graphicsAttributes">
-         <xsl:with-param name="mode">latex</xsl:with-param>
-      </xsl:call-template>
-      <xsl:text>]{</xsl:text>
+      <xsl:variable name="pic">
+	<xsl:text>\includegraphics[</xsl:text>
+	<xsl:call-template name="graphicsAttributes">
+          <xsl:with-param name="mode">latex</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>]{</xsl:text>
+	<xsl:choose>
+          <xsl:when test="$realFigures='true'">
+	    <xsl:sequence select="tei:resolveURI(.,@url)"/>
+          </xsl:when>
+          <xsl:otherwise>
+	    <xsl:variable name="F">
+	      <xsl:sequence select="tei:resolveURI(.,@url)"/>
+	    </xsl:variable>
+	    <xsl:text>Pictures/resource</xsl:text>
+	    <xsl:number level="any"/>
+	    <xsl:text>.</xsl:text>
+	    <xsl:value-of select="tokenize($F,'\.')[last()]"/>
+          </xsl:otherwise>
+	</xsl:choose>
+	<xsl:text>}</xsl:text>
+      </xsl:variable>
       <xsl:choose>
-         <xsl:when test="$realFigures='true'">
-	   <xsl:sequence select="tei:resolveURI(.,@url)"/>
-         </xsl:when>
-         <xsl:otherwise>
-	   <xsl:variable name="F">
-	     <xsl:sequence select="tei:resolveURI(.,@url)"/>
-	   </xsl:variable>
-	   <xsl:text>Pictures/resource</xsl:text>
-	   <xsl:number level="any"/>
-	   <xsl:text>.</xsl:text>
-	   <xsl:value-of select="tokenize($F,'\.')[last()]"/>
-         </xsl:otherwise>
+	<xsl:when test="parent::tei:ref">
+	  <xsl:value-of select="$pic"/>
+	</xsl:when>
+	<xsl:when test="not
+			(following-sibling::tei:graphic[@rend='alignright'])
+			and @rend='alignright'">
+	  <xsl:text>\begin{wrapfigure}{r}{</xsl:text>
+	  <xsl:value-of select="@width"/>
+	  <xsl:text>}</xsl:text>
+	  <xsl:value-of select="$pic"/>
+	  <xsl:text>\end{wrapfigure}</xsl:text>
+	</xsl:when>
+	<xsl:when test="not (following-sibling::tei:graphic[@rend='alignleft'])
+			and @rend='alignleft'">
+	  <xsl:text>\begin{wrapfigure}{l}{</xsl:text>
+	  <xsl:value-of select="@width"/>
+	  <xsl:text>}</xsl:text>
+	  <xsl:value-of select="$pic"/>
+	  <xsl:text>\end{wrapfigure}</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$pic"/>
+	</xsl:otherwise>
+
       </xsl:choose>
-      <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[latex] </desc>

@@ -2662,8 +2662,9 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:text>deprecated</xsl:text>
 	    </xsl:attribute>
 	    <xsl:variable name="m">
-	      <tei:seg><xsl:sequence
-	      select="tei:i18n('deprecated')"/></tei:seg>
+	      <tei:seg>
+		<xsl:sequence select="tei:i18n('deprecated')"/>
+	      </tei:seg>
 	    </xsl:variable>
 	    <xsl:for-each select="$m">
 	      <xsl:call-template name="makeExternalLink">

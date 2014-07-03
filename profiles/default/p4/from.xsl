@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -22,12 +23,53 @@
         however caused and on any theory of liability, whether in contract, strict liability, or
         tort (including negligence or otherwise) arising in any way out of the use of this software,
         even if advised of the possibility of such damage. </p>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.tei-c.org/ns/1.0" version="2.0" exclude-result-prefixes="xs">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+    <desc>
+      <p>This software is dual-licensed:
+
+1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
+Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
+
+2. http://www.opensource.org/licenses/BSD-2-Clause
+		
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+* Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+This software is provided by the copyright holders and contributors
+"as is" and any express or implied warranties, including, but not
+limited to, the implied warranties of merchantability and fitness for
+a particular purpose are disclaimed. In no event shall the copyright
+holder or contributors be liable for any direct, indirect, incidental,
+special, exemplary, or consequential damages (including, but not
+limited to, procurement of substitute goods or services; loss of use,
+data, or profits; or business interruption) however caused and on any
+theory of liability, whether in contract, strict liability, or tort
+(including negligence or otherwise) arising in any way out of the use
+of this software, even if advised of the possibility of such damage.
+</p>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
       <p>Author: See AUTHORS</p>
       <p>Id: $Id$</p>
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <!-- 
        
        P4 to P5 converter 
@@ -37,6 +79,7 @@
        $Date$  $Id$
        
   -->
+<<<<<<< HEAD
   <xsl:output method="xml" encoding="utf-8" cdata-section-elements="tei:eg"
     omit-xml-declaration="yes"/>
 
@@ -49,6 +92,15 @@
     />
   </xsl:variable>
 
+=======
+  <xsl:output method="xml" encoding="utf-8" cdata-section-elements="tei:eg" omit-xml-declaration="yes"/>
+  <xsl:variable name="processor">
+    <xsl:value-of select="system-property('xsl:vendor')"/>
+  </xsl:variable>
+  <xsl:variable name="today">
+    <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
+  </xsl:variable>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="*">
     <xsl:choose>
       <xsl:when test="namespace-uri()=''">
@@ -63,6 +115,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+<<<<<<< HEAD
 
 
   <xsl:template match="@*|processing-instruction()|comment()">
@@ -74,45 +127,67 @@
     <xsl:value-of select="."/>
   </xsl:template>
 
+=======
+  <xsl:template match="@*|processing-instruction()|comment()">
+    <xsl:copy/>
+  </xsl:template>
+  <xsl:template match="text()">
+    <xsl:value-of select="."/>
+  </xsl:template>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="teiCorpus.2">
     <teiCorpus>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </teiCorpus>
   </xsl:template>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="witness/@sigil">
     <xsl:attribute name="xml:id">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-
   <xsl:template match="witList">
     <listWit>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </listWit>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="TEI.2">
     <TEI>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </TEI>
   </xsl:template>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="xref">
     <xsl:element namespace="http://www.tei-c.org/ns/1.0" name="ref">
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:element>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="xptr">
     <xsl:element namespace="http://www.tei-c.org/ns/1.0" name="ptr">
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:element>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="figure[@url]">
     <figure>
       <graphic>
@@ -121,10 +196,14 @@
       <xsl:apply-templates/>
     </figure>
   </xsl:template>
+<<<<<<< HEAD
 
   <xsl:template match="figure/@entity"/>
 
 
+=======
+  <xsl:template match="figure/@entity"/>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="figure[@entity]">
     <figure>
       <graphic>
@@ -144,25 +223,38 @@
       <xsl:apply-templates/>
     </figure>
   </xsl:template>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="state">
     <refState>
       <xsl:apply-templates select="@*|*|text()|comment()|processing-instruction()"/>
     </refState>
   </xsl:template>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@targType">
     <xsl:attribute name="type">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- lost elements -->
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>lost elements</desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="dateRange">
     <date>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </date>
   </xsl:template>
+<<<<<<< HEAD
 
 
   <xsl:template match="dateRange/@from">
@@ -173,6 +265,14 @@
     <xsl:copy-of select="."/>
   </xsl:template>
 
+=======
+  <xsl:template match="dateRange/@from">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+  <xsl:template match="dateRange/@to">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="language">
     <xsl:element namespace="http://www.tei-c.org/ns/1.0" name="language">
       <xsl:choose>
@@ -188,6 +288,7 @@
       <xsl:apply-templates select="*|processing-instruction()|comment()|text()"/>
     </xsl:element>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- attributes lost -->
   <!-- dropped from TEI. Added as new change records later -->
@@ -200,33 +301,59 @@
 
   <!-- attributes changed name -->
 
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>attributes lost. dropped from TEI. Added as new change records later </desc>
+  </doc>
+  <xsl:template match="@date.created"/>
+  <xsl:template match="@date.updated"/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>dropped from TEI. No replacement </desc>
+  </doc>
+  <xsl:template match="refsDecl/@doctype"/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>attributes changed name </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="date/@value">
     <xsl:attribute name="when">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@url">
     <xsl:attribute name="target">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="figure/@url">
     <xsl:attribute name="url">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@doc">
     <xsl:attribute name="target">
       <xsl:value-of select="unparsed-entity-uri(.)"/>
     </xsl:attribute>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@id">
     <xsl:choose>
       <xsl:when test="parent::lang">
@@ -241,22 +368,30 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@lang">
     <xsl:attribute name="xml:lang">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
+<<<<<<< HEAD
 
 
   <xsl:template match="change/@date"/>
 
+=======
+  <xsl:template match="change/@date"/>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="date/@certainty">
     <xsl:attribute name="cert">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- all pointing attributes preceded by # -->
 
@@ -266,12 +401,25 @@
 
   <xsl:template
     match="@ana|@active|@adj|@adjFrom|@adjTo|@children|@class|@code|@copyOf|@corresp|@decls|@domains|@end|@exclude|@fVal|@feats|@follow|@hand|@inst|@langKey|@location|@mergedin|@new|@next|@old|@origin|@otherLangs|@parent|@passive|@perf|@prev|@render|@resp|@sameAs|@scheme|@script|@select|@since|@start|@synch|@target|@targetEnd|@value|@value|@who|@wit">
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>all pointing attributes preceded by # </desc>
+  </doc>
+  <xsl:template match="variantEncoding/@location">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+  <xsl:template match="@ana|@active|@adj|@adjFrom|@adjTo|@children|@class|@code|@copyOf|@corresp|@decls|@domains|@end|@exclude|@fVal|@feats|@follow|@hand|@inst|@langKey|@location|@mergedin|@new|@next|@old|@origin|@otherLangs|@parent|@passive|@perf|@prev|@render|@resp|@sameAs|@scheme|@script|@select|@since|@start|@synch|@target|@targetEnd|@value|@value|@who|@wit">
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
     <xsl:variable name="vals">
       <xsl:for-each select="tokenize(.,' ')">
         <a>
           <xsl:choose>
+<<<<<<< HEAD
             <xsl:when
               test="starts-with(.,'http') or starts-with(.,'ftp') or starts-with(.,'mailto')">
+=======
+            <xsl:when test="starts-with(.,'http') or starts-with(.,'ftp') or starts-with(.,'mailto')">
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
               <xsl:sequence select="."/>
             </xsl:when>
             <xsl:otherwise>
@@ -284,15 +432,23 @@
     </xsl:variable>
     <xsl:attribute name="{name(.)}" select="string-join($vals/tei:a,' ')"/>
   </xsl:template>
+<<<<<<< HEAD
 
 
   <!-- fool around with selected elements -->
 
   <!-- imprint is no longer allowed inside bibl -->
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>fool around with selected elements </desc>
+  </doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>imprint is no longer allowed inside bibl </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="bibl/imprint">
     <xsl:apply-templates/>
   </xsl:template>
-
   <xsl:template match="editionStmt/editor">
     <respStmt>
       <resp>
@@ -303,6 +459,7 @@
       </name>
     </respStmt>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- header -->
 
@@ -319,6 +476,22 @@
               </date>
               <label>Date edited</label>
             </change>
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>header </desc>
+  </doc>
+  <xsl:template match="teiHeader">
+    <teiHeader>
+      <xsl:apply-templates select="@*|*|comment()|processing-instruction()"/>
+      <xsl:if test="not(revisionDesc) and (@date.created or @date.updated)">
+        <revisionDesc>
+          <xsl:if test="@date.updated">
+            <change>&gt;
+	    <label>updated</label>
+	    <date><xsl:value-of select="@date.updated"/></date>
+	    <label>Date edited</label>
+	    </change>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
           </xsl:if>
           <xsl:if test="@date.created">
             <change>
@@ -340,13 +513,19 @@
       -->
     </teiHeader>
   </xsl:template>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="revisionDesc">
     <revisionDesc>
       <xsl:apply-templates select="@*|*|comment()|processing-instruction()"/>
     </revisionDesc>
   </xsl:template>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="publicationStmt">
     <publicationStmt>
       <xsl:apply-templates select="@*|*|comment()|processing-instruction()"/>
@@ -357,22 +536,35 @@
       -->
     </publicationStmt>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- space does not have @extent any more -->
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>space does not have @extent any more </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="space/@extent">
     <xsl:attribute name="quantity">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- word key -->
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>word key </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="entryFree/@key">
     <xsl:attribute name="sortKey">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-
-  <!-- tagsDecl has a compulsory namespace child now -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>tagsDecl has a compulsory namespace child now </desc>
+  </doc>
   <xsl:template match="tagsDecl">
     <xsl:if test="*">
       <tagsDecl>
@@ -382,6 +574,7 @@
       </tagsDecl>
     </xsl:if>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- orgTitle inside orgName? redundant -->
   <xsl:template match="orgName/orgTitle">
@@ -393,6 +586,21 @@
 <!-- removed this:  empty sourcedesc  is invalid according to teiAll (LB) -->
   
   <!-- start creating the new choice element -->
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>orgTitle inside orgName? redundant </desc>
+  </doc>
+  <xsl:template match="orgName/orgTitle">
+    <xsl:apply-templates/>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>no need for empty p in sourceDesc </desc>
+  </doc>
+  <xsl:template match="sourceDesc/p[string-length(.)=0]"/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>start creating the new choice element </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="corr[@sic]">
     <choice>
       <corr>
@@ -403,9 +611,13 @@
       </sic>
     </choice>
   </xsl:template>
+<<<<<<< HEAD
 
   <xsl:template match="gap/@desc"/>
 
+=======
+  <xsl:template match="gap/@desc"/>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="gap">
     <gap>
       <xsl:apply-templates select="@*"/>
@@ -416,7 +628,10 @@
       </xsl:if>
     </gap>
   </xsl:template>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="sic[@corr]">
     <choice>
       <sic>
@@ -427,7 +642,10 @@
       </corr>
     </choice>
   </xsl:template>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="abbr[@expan]">
     <choice>
       <abbr>
@@ -438,7 +656,10 @@
       </expan>
     </choice>
   </xsl:template>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="expan[@abbr]">
     <choice>
       <expan>
@@ -449,6 +670,7 @@
       </abbr>
     </choice>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- special consideration for <change> element -->
   <xsl:template match="change">
@@ -457,6 +679,15 @@
 
       <xsl:apply-templates select="date"/>
 
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>special consideration for change element </desc>
+  </doc>
+  <xsl:template match="change">
+    <change>
+      <xsl:apply-templates select="item/@*"/>
+      <xsl:apply-templates select="date"/>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
       <xsl:if test="respStmt/resp">
         <label>
           <xsl:value-of select="respStmt/resp/text()"/>
@@ -472,8 +703,6 @@
       </xsl:for-each>
     </change>
   </xsl:template>
-
-
   <xsl:template match="respStmt[resp]">
     <respStmt>
       <xsl:choose>
@@ -489,25 +718,40 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates/>
+<<<<<<< HEAD
           <name> </name>
+=======
+          <name>
+	  </name>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
         </xsl:otherwise>
       </xsl:choose>
     </respStmt>
   </xsl:template>
-
   <xsl:template match="q/@direct"/>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="q">
     <q>
       <xsl:apply-templates select="@*|*|comment()|processing-instruction()|text()"/>
     </q>
   </xsl:template>
+<<<<<<< HEAD
 
 
   <!-- if we are reading the P4 with a DTD,
        we need to avoid copying the default values
        of attributes -->
 
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>if we are reading the P4 with a DTD,
+       we need to avoid copying the default values
+       of attributes </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@targOrder">
     <xsl:if test="not(lower-case(.) ='u')">
       <xsl:attribute name="targOrder">
@@ -515,8 +759,11 @@
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@opt">
     <xsl:if test="not(lower-case(.) ='n')">
       <xsl:attribute name="opt">
@@ -524,8 +771,11 @@
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@to">
     <xsl:if test="not(lower-case(.) ='ditto')">
       <xsl:attribute name="to">
@@ -533,14 +783,16 @@
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-
   <xsl:template match="interp/@value">
     <xsl:attribute name="inst">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@default">
     <xsl:choose>
       <xsl:when test="lower-case(.)= 'no'"/>
@@ -551,8 +803,11 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@part">
     <xsl:if test="not(lower-case(.) ='n')">
       <xsl:attribute name="part">
@@ -560,8 +815,11 @@
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@full">
     <xsl:if test="not(lower-case(.) ='yes')">
       <xsl:attribute name="full">
@@ -569,8 +827,11 @@
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@from">
     <xsl:if test="not(lower-case(.) ='root')">
       <xsl:attribute name="from">
@@ -578,8 +839,11 @@
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@status">
     <xsl:choose>
       <xsl:when test="parent::teiHeader">
@@ -603,8 +867,11 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@place">
     <xsl:if test="not(lower-case(.) ='unspecified')">
       <xsl:attribute name="place">
@@ -612,8 +879,11 @@
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@sample">
     <xsl:if test="not(lower-case(.) ='complete')">
       <xsl:attribute name="sample">
@@ -621,8 +891,11 @@
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@org">
     <xsl:if test="not(lower-case(.) ='uniform')">
       <xsl:attribute name="org">
@@ -630,7 +903,10 @@
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@type">
     <xsl:if test="not(normalize-space(.)='')">
       <xsl:attribute name="type">
@@ -638,7 +914,6 @@
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-
   <xsl:template match="teiHeader/@type">
     <xsl:if test="not(lower-case(.) ='text')">
       <xsl:attribute name="type">
@@ -646,9 +921,13 @@
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- yes|no to boolean -->
 
+=======
+  <!-- yes|no to boolean -->
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@anchored">
     <xsl:attribute name="anchored">
       <xsl:choose>
@@ -657,6 +936,7 @@
       </xsl:choose>
     </xsl:attribute>
   </xsl:template>
+<<<<<<< HEAD
 
   <xsl:template match="sourceDesc/@default"/>
 
@@ -671,32 +951,61 @@
 
   <!-- assorted atts -->
 
+=======
+  <xsl:template match="sourceDesc/@default"/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>attributes suppressed in P5 </desc>
+  </doc>
+  <xsl:template match="@tei"/>
+  <xsl:template match="@langKey"/>
+  <xsl:template match="@TEIform"/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>assorted atts </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="gi/@TEI">
     <xsl:if test=".='yes'">
       <xsl:attribute name="scheme">TEI</xsl:attribute>
     </xsl:if>
   </xsl:template>
+<<<<<<< HEAD
 
   <xsl:template match="@old"/>
 
   <xsl:template match="ref/@from"/>
 
+=======
+  <xsl:template match="@old"/>
+  <xsl:template match="ref/@from"/>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="@mergedin">
     <xsl:attribute name="mergedIn">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- deal with the loss of div0 -->
 
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>deal with the loss of div0 </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="div0|div1|div2|div3|div4|div5|div6">
     <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:element>
   </xsl:template>
+<<<<<<< HEAD
 
 
   <!-- from Conal Tuohy -->
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>from Conal Tuohy </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="orig[@reg]">
     <choice>
       <orig>
@@ -707,57 +1016,91 @@
       </reg>
     </choice>
   </xsl:template>
+<<<<<<< HEAD
 
   <xsl:template match="reg[@orig]">
     <choice>
       <reg>
         <xsl:apply-templates select="*|@*|processing-instruction()|
     comment()|text()"/>
+=======
+  <xsl:template match="reg[@orig]">
+    <choice>
+      <reg>
+        <xsl:apply-templates select="*|@*|processing-instruction()|     comment()|text()"/>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
       </reg>
       <orig>
         <xsl:value-of select="@orig"/>
       </orig>
     </choice>
   </xsl:template>
+<<<<<<< HEAD
 
   <xsl:template match="@orig|@reg"/>
 
   <!-- remove default values for attributes -->
 
+=======
+  <xsl:template match="@orig|@reg"/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>remove default values for attributes </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="row/@role[.='data']"/>
   <xsl:template match="cell/@role[.='data']"/>
   <xsl:template match="cell/@rows[.='1']"/>
   <xsl:template match="cell/@cols[.='1']"/>
   <xsl:template match="q/@broken[.='no']"/>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="text[not(parent::TEI.2)]">
     <floatingText>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </floatingText>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- from CES -->
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>from CES </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="cesdoc">
     <cesDoc>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </cesDoc>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- found in Perseus -->
 
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>found in Perseus </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="lg1|lg2|lg3|lg4">
     <lg>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </lg>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- from OTA DTD -->
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>from OTA DTD </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="spkr">
     <speaker>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </speaker>
   </xsl:template>
-
   <xsl:template match="letter">
     <floatingText type="letter">
       <body>
@@ -765,9 +1108,15 @@
       </body>
     </floatingText>
   </xsl:template>
+<<<<<<< HEAD
 
   <!--  and index -->
 
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc> and index </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="index">
     <index indexName="level1">
       <xsl:value-of select="@level1"/>
@@ -783,18 +1132,31 @@
       </xsl:if>
     </index>
   </xsl:template>
+<<<<<<< HEAD
 
 
   <!-- JC Additions 2013-06 -->
 
   <!-- foreName wasn't getting lower-cased. -->
+=======
+  <!-- JC Additions 2013-06 -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>foreName wasn't getting lower-cased. </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="foreName">
     <forename>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/>
     </forename>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- events can have @desc -->
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>events can have @desc </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="event/@desc"/>
   <xsl:template match="event">
     <incident>
@@ -806,8 +1168,14 @@
       </xsl:if>
     </incident>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- and vocal can have desc as well -->
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>and vocal can have desc as well </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="vocal/@desc"/>
   <xsl:template match="vocal">
     <vocal>
@@ -819,10 +1187,18 @@
       </xsl:if>
     </vocal>
   </xsl:template>
+<<<<<<< HEAD
 
   <!-- birth/@date wasn't being handled; because @date wasn't enforced as a date datatype
     I check if @date is indeed a date and if it is make it a @when and if not make it an @n
   -->
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>birth/@date wasn't being handled; because @date wasn't enforced as a date datatype
+    I check if @date is indeed a date and if it is make it a @when and if not make it an @n
+  </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="birth/@date">
     <xsl:choose>
       <xsl:when test="string(.) castable as xs:date">
@@ -837,16 +1213,24 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+<<<<<<< HEAD
 
 
   <!-- JC Additions 2013-11 -->
 
   <!-- handList and hand not catered for: they become handNotes and handNote -->
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>handList and hand not catered for: they become handNotes and
+handNote </desc>
+  </doc>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
   <xsl:template match="handList">
     <handNotes>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/>
     </handNotes>
   </xsl:template>
+<<<<<<< HEAD
   <!-- hand inside handList -->
   <xsl:template match="handList/hand">
     <handNote>
@@ -880,4 +1264,22 @@
   
   
 
+=======
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>hand inside handList </desc>
+  </doc>
+  <xsl:template match="handList/hand">
+    <handNote>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/>
+    </handNote>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>@ink on hand</desc>
+  </doc>
+  <xsl:template match="hand/@ink">
+    <xsl:attribute name="medium">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
+>>>>>>> 28e2a2d265c74fe59a5d624647961cd4f2a5ddb2
 </xsl:stylesheet>
