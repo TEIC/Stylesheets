@@ -385,7 +385,7 @@ valList
                   </desc>
                   <classes>
                     <xsl:text>&#10;</xsl:text>
-                    <xsl:comment> Add a 'memberOf key="model.className"' stanza for whatever classes it belongs to  here</xsl:comment>
+                    <xsl:comment> Add a memberOf key="model.className"' stanza for whatever classes it belongs to  here</xsl:comment>
                     <xsl:text>&#10;</xsl:text>
                   </classes>
                   <content>
