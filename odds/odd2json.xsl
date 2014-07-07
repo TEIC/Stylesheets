@@ -260,6 +260,20 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:text>",</xsl:text>
         </xsl:if>
 	<xsl:value-of select="desc"/>
+  <xsl:for-each select="values">
+    <xsl:text>,</xsl:text>
+    <xsl:text>"values":[</xsl:text>
+    <xsl:for-each select="value">
+      <xsl:text>"</xsl:text>
+      <xsl:value-of select="."/>
+      <xsl:text>"</xsl:text>
+      <xsl:if test="not(position()=last())">
+        <xsl:text>,</xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+    <xsl:text>]</xsl:text>
+  </xsl:for-each>
+  
 	<xsl:text>}</xsl:text>
 	<xsl:if test="position()!=last()">,</xsl:if>
       </xsl:for-each>
@@ -404,6 +418,16 @@ of this software, even if advised of the possibility of such damage.
 	<desc>
 	  <xsl:call-template name="desc"/>
 	</desc>
+        <xsl:if test="tei:valList">
+          <values>
+            <xsl:for-each select="tei:valList/tei:valItem">
+              <value>
+                <xsl:value-of select="@ident"/>
+              </value>
+            </xsl:for-each>
+          </values>
+        </xsl:if>
+   
       </tei:attDef>
     </xsl:for-each>
   </xsl:template>
