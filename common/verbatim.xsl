@@ -148,11 +148,18 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
+      <xsl:when test="parent::teix:egXML and not(parent::teix:egXML/*)">
+        <xsl:call-template name="verbatim-Text">
+          <xsl:with-param name="words">
+	    <xsl:value-of select="translate(.,' ','&#160;')"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
       <xsl:when
 	  test="ancestor::*[@xml:space][1]/@xml:space='preserve'">
         <xsl:call-template name="verbatim-Text">
           <xsl:with-param name="words">
-	    <xsl:value-of select="."/>
+	    <xsl:value-of select="translate(.,' ','&#160;')"/>
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:when>

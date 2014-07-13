@@ -40,7 +40,8 @@
 \useinnertheme[shadow=true]{rounded}
 \usecolortheme{beaver}
 \setbeamercolor*{frametitle}{parent=palette primary}
-\usepackage{fancyvrb,fancyhdr,longtable}
+\usepackage{fancyvrb,fancyhdr,longtable,framed}
+\definecolor{shadecolor}{gray}{0.95}
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 \setbeamercovered{transparent}
 \usenavigationsymbolstemplate{}

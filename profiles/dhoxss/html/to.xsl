@@ -31,10 +31,8 @@
    </doc>
 
    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
-
+   <xsl:param name="institution">Digital Humanities at Oxford Summer School</xsl:param>
    <xsl:key name="TABLESORT" use="1" match="tei:table[@rend='sort']"/>
-
-   <xsl:param name="institution">University of Oxford</xsl:param>
 
    <xsl:template name="javascriptHook">
      <style type="text/css">

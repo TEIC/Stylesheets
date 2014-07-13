@@ -10,11 +10,12 @@
 <xsl:strip-space elements="*"/>
 <xsl:output method="text" encoding="utf-8" />
   
-<xsl:variable name="inq">"</xsl:variable>
-<xsl:variable name="outq">\\"</xsl:variable>
-<xsl:function name="tei:String" as="xs:string">
+<!-- JSON string with quotes escaped -->
+<xsl:function name="tei:jsonString" as="xs:string">
     <xsl:param name="content"/>
-  <xsl:value-of select="replace(replace(normalize-space($content),'\\','\\\\'),$inq,$outq)"/>
+    <xsl:variable name="inq">"</xsl:variable>
+    <xsl:variable name="outq">\\"</xsl:variable>
+    <xsl:value-of select="replace(replace(normalize-space($content),'\\','\\\\'),$inq,$outq)"/>
 </xsl:function>
 
 <!-- JSON name:value pair. Third parameter is boolean to say whether

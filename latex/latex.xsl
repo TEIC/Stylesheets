@@ -95,17 +95,17 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="verbatim-Text">
       <xsl:param name="words"/>
       <xsl:choose>
-         <xsl:when test="parent::*/@xml:lang='zh-TW'">
+         <xsl:when test="lang('zh-TW') or lang('zh')">
 	           <xsl:text>{\textChinese </xsl:text>
 		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
 	           <xsl:text>}</xsl:text>
          </xsl:when>
-         <xsl:when test="parent::*/@xml:lang='ja'">
+         <xsl:when test="lang('ja')">
 	           <xsl:text>{\textJapanese </xsl:text>
 		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
 	           <xsl:text>}</xsl:text>
          </xsl:when>
-         <xsl:when test="parent::*/@xml:lang='kr'">
+         <xsl:when test="lang('kr')">
 	           <xsl:text>{\textKorean </xsl:text>
 		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
 	           <xsl:text>}</xsl:text>
@@ -125,7 +125,8 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:function name="tei:escapeCharsVerbatim" as="xs:string">
     <xsl:param name="letters"/>
-    <xsl:value-of select="replace(replace(replace(replace(translate($letters, '\{}','⃥❴❵'),
+    <xsl:value-of select="replace(replace(replace(replace(replace(translate($letters, '\{}','⃥❴❵'),
+		  '&#10;','\\newline&#10;'),
 		  '_','\\textunderscore '),
 		  '\^','\\textasciicircum '),
 		  '~','\\textasciitilde '),

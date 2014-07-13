@@ -143,7 +143,7 @@ of this software, even if advised of the possibility of such damage.
 	       <copy toFile="{$target}" file="{@url}"/>
 	     </xsl:when>
 	     <xsl:otherwise>
-	       <copy toFile="{$target}" file="{$inputDir}/{@url}"/>
+	       <copy overwrite="yes" toFile="{$target}" file="{$inputDir}/{@url}"/>
 	     </xsl:otherwise>
 	   </xsl:choose>
 	 </xsl:for-each>

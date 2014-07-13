@@ -133,7 +133,7 @@ of this software, even if advised of the possibility of such damage.
 	           <xsl:text>\hspace{1em}\hfill\linebreak</xsl:text>
 	           <xsl:text>\bgroup\exampleFont</xsl:text>
 	           <xsl:text>\vskip 10pt\begin{shaded}
-\noindent\obeylines\obeyspaces{}</xsl:text>
+\noindent\obeyspaces{}</xsl:text>
 	           <xsl:apply-templates mode="eg"/>
 	           <xsl:text>\end{shaded}
 \egroup 
@@ -142,11 +142,10 @@ of this software, even if advised of the possibility of such damage.
          <xsl:otherwise>
 	           <xsl:text>\par\hfill\bgroup\exampleFont</xsl:text>
 	           <xsl:text>\vskip 10pt\begin{shaded}
-\obeylines\obeyspaces </xsl:text>
+\obeyspaces </xsl:text>
 	           <xsl:apply-templates mode="eg"/>
 	           <xsl:text>\end{shaded}
 \par\egroup 
-
 </xsl:text>
          </xsl:otherwise>
       </xsl:choose>
