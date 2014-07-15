@@ -286,7 +286,6 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>
       </xsl:variable>
       <xsl:variable name="cmd">
-	<xsl:if test="tei:render-underline(.)">\uline </xsl:if>
 	<xsl:if test="tei:render-strike(.)">\sout </xsl:if>
 	<xsl:for-each select="tokenize(normalize-space(@rend),' ')">
          <xsl:choose>
@@ -300,6 +299,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test=".='quoted'">\textquoted </xsl:when>
             <xsl:when test=".='sub'">\textsubscript </xsl:when>
             <xsl:when test=".='subscript'">\textsubscript </xsl:when>
+            <xsl:when test=".='underline'">\uline </xsl:when>
             <xsl:when test=".='sup'">\textsuperscript </xsl:when>
             <xsl:when test=".='superscript'">\textsuperscript </xsl:when>
             <xsl:when test=".='underwavyline'">\uwave </xsl:when>
