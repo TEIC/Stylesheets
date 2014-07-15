@@ -176,6 +176,11 @@ as a proportion of the page width.</desc>
    </doc>
    <xsl:param name="tableMaxWidth">0.85</xsl:param>
 
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
+      <desc>Which environment to use for quotes (quote, quotation, quoting, ...)</desc>
+   </doc>
+   <xsl:param name="quoteEnv">quote</xsl:param>
+
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
       <desc>Whether to number lines of poetry</desc>
    </doc>
