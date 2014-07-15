@@ -446,7 +446,7 @@ of this software, even if advised of the possibility of such damage.
 	         <xsl:apply-templates select="." mode="ident"/>
 	       </xsl:when>
 	       <xsl:otherwise>
-	         <xsl:value-of select="$BaseFile"/>
+		 <xsl:value-of select="if (matches($BaseFile,'^[A-z]:')) then concat('file:///',$BaseFile) else $BaseFile"/>
 	       </xsl:otherwise>
 	     </xsl:choose>
 	   </xsl:with-param>
