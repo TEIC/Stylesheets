@@ -498,6 +498,17 @@ of this software, even if advised of the possibility of such damage.
       pointing to margin</desc>
    </doc>
   <xsl:template name="marginalNote">
+    <xsl:choose>
+      <xsl:when test="@place='left' or
+		      @place='marginLeft' or
+		      @place='margin-left' or
+		      @place='margin_left'">
+	\reversemarginpar
+      </xsl:when>
+      <xsl:otherwise>
+	\normalmarginpar
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:text>\marginnote{</xsl:text>
     <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
     <xsl:apply-templates/>
