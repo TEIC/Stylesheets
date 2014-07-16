@@ -263,7 +263,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>how to make a horizontal rule</desc>
   </doc>
   <xsl:template name="horizontalRule">
-    <xsl:text>\hline</xsl:text>
+    <xsl:text>\\\rule[0.5ex]{\textwidth}{0.5pt}</xsl:text>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
