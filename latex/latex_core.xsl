@@ -632,6 +632,21 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="@n"/>
             <xsl:text>]</xsl:text>
          </xsl:when>
+         <xsl:when test="$pagebreakStyle='plain'">
+	     <xsl:text>\vspace{1ex}&#10;\par&#10;</xsl:text>
+             <xsl:value-of select="@n"/>
+	     <xsl:text>\vspace{1ex}&#10;</xsl:text>
+         </xsl:when>
+         <xsl:when test="$pagebreakStyle='sidebyside'">
+	     <xsl:text>\cleartoleftpage&#10;</xsl:text>
+	     \begin{figure}[ht!]\makebox[\textwidth][c]{
+	     <xsl:text>\includegraphics[width=\textwidth]{</xsl:text><xsl:value-of select="tei:resolveURI(.,@facs)"/><xsl:text>}</xsl:text>
+	     }\end{figure}
+	     <xsl:text>\cleardoublepage&#10;</xsl:text>
+	     <xsl:text>\vspace{1ex}&#10;\par&#10;</xsl:text>
+             <xsl:value-of select="@n"/>
+	     <xsl:text>\vspace{1ex}&#10;</xsl:text>
+	 </xsl:when>
 	 <xsl:when test="@facs">
 	   <xsl:value-of select="concat('% image:', tei:resolveURI(.,@facs),'&#10;')"/>
 	 </xsl:when>
