@@ -1207,7 +1207,6 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:lb">
     <xsl:choose>
-      <xsl:when test="parent::tei:div"/>
       <xsl:when test="@type='hyphenInWord' and @rend='hidden'"/>
       <xsl:when test="@rend='hidden'">
         <xsl:text> </xsl:text>
