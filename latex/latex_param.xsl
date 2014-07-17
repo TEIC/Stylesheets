@@ -150,7 +150,7 @@ the beginning of the document</desc>
   \usepackage{<xsl:value-of select="$userpackage"/>}
 </xsl:if>
       <xsl:text>
-  \pagestyle{fancy} 
+  \pagestyle{</xsl:text><xsl:value-of select="$pageStyle"/><xsl:text>}
 </xsl:text>
 \usepackage[pdftitle={<xsl:sequence select="tei:generateSimpleTitle(.)"/>},
  pdfauthor={<xsl:sequence select="replace(string-join(tei:generateAuthor(.),''),'\\newline','')"/>}]{hyperref}
@@ -196,6 +196,11 @@ this must be the name of a TEI element</desc>
       <desc>Options to pass to the geometry package to set margins etc</desc>
    </doc>
    <xsl:param name="latexGeometryOptions">twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in,marginparwidth=0.75in</xsl:param>
+
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
+      <desc>The page style to use with the \pagestyle command (empty, plain, fancy, ...).</desc>
+   </doc>
+   <xsl:param name="pageStyle">fancy</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
       <desc>Depth of nesting of reference documentation when processing ODD</desc>
