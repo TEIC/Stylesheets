@@ -117,6 +117,11 @@ of this software, even if advised of the possibility of such damage.
  
   <xsl:template match="tei:p[@rend='listeDesPresents'][position() > 1]" mode="pass3"/>
 
+  <xsl:template match="tei:hi[@rend='ref-document']" mode="pass3">
+    <ref>
+      <xsl:apply-templates mode="pass3"/>
+    </ref>
+  </xsl:template>
     
   <xsl:template match="tei:hi[@rend='reunion-date']" mode="pass3">
     <date type="réunion">
