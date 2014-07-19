@@ -67,7 +67,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="@rend='display' or tei:q/tei:p or
 		      tei:quote/tei:l or tei:quote/tei:p">
-        <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
+        <xsl:text>&#10;\begin{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}&#10;</xsl:text>
             <xsl:if test="@n">
               <xsl:text>(</xsl:text>
               <xsl:value-of select="@n"/>
@@ -77,7 +77,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates select="*[not(self::tei:bibl)]"/>
 	    <xsl:text>\par&#10;</xsl:text>
             <xsl:apply-templates select="tei:bibl"/>
-        <xsl:text>&#10;\end{quote}&#10;</xsl:text>
+        <xsl:text>&#10;\end{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}&#10;</xsl:text>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="$preQuote"/>
@@ -133,7 +133,7 @@ of this software, even if advised of the possibility of such damage.
 	           <xsl:text>\hspace{1em}\hfill\linebreak</xsl:text>
 	           <xsl:text>\bgroup\exampleFont</xsl:text>
 	           <xsl:text>\vskip 10pt\begin{shaded}
-\noindent\obeylines\obeyspaces{}</xsl:text>
+\noindent\obeyspaces{}</xsl:text>
 	           <xsl:apply-templates mode="eg"/>
 	           <xsl:text>\end{shaded}
 \egroup 
@@ -142,11 +142,10 @@ of this software, even if advised of the possibility of such damage.
          <xsl:otherwise>
 	           <xsl:text>\par\hfill\bgroup\exampleFont</xsl:text>
 	           <xsl:text>\vskip 10pt\begin{shaded}
-\obeylines\obeyspaces </xsl:text>
+\obeyspaces </xsl:text>
 	           <xsl:apply-templates mode="eg"/>
 	           <xsl:text>\end{shaded}
 \par\egroup 
-
 </xsl:text>
          </xsl:otherwise>
       </xsl:choose>
@@ -510,9 +509,9 @@ of this software, even if advised of the possibility of such damage.
       display style note</desc>
    </doc>
   <xsl:template name="displayNote">
-    <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
+    <xsl:text>&#10;\begin{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}&#10;</xsl:text>
     <xsl:apply-templates/>
-    <xsl:text>\end{quote}&#10;</xsl:text>
+    <xsl:text>\end{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}&#10;</xsl:text>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -646,9 +645,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:q|tei:said">
       <xsl:choose>
 	<xsl:when test="not(tei:is-inline(.))">
-	  <xsl:text>&#10;\begin{quote}</xsl:text>
+	  <xsl:text>&#10;\begin{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}</xsl:text>
 	  <xsl:apply-templates/>
-	  <xsl:text>\end{quote}&#10;</xsl:text>
+	  <xsl:text>\end{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}&#10;</xsl:text>
 	</xsl:when>
          <xsl:otherwise>
 	   <xsl:call-template name="makeQuote"/>
@@ -666,10 +665,10 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:when test="not(tei:is-inline(.))">
-	  <xsl:text>\begin{quote}</xsl:text>
+	  <xsl:text>\begin{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}</xsl:text>
 	  <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
 	  <xsl:apply-templates/>
-	  <xsl:text>\end{quote}</xsl:text>
+	  <xsl:text>\end{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
 	   <xsl:call-template name="makeQuote"/>
@@ -682,9 +681,9 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element p with @rend='display'</desc>
    </doc>
   <xsl:template match="tei:p[@rend='display']"> 
-      <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
+      <xsl:text>&#10;\begin{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}&#10;</xsl:text>
       <xsl:apply-templates/>
-      <xsl:text>\end{quote}&#10;</xsl:text>
+      <xsl:text>\end{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}&#10;</xsl:text>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -702,9 +701,9 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element signed</desc>
    </doc>
   <xsl:template match="tei:signed">
-      <xsl:text>&#10;&#10;\begin{quote}&#10;</xsl:text>
+      <xsl:text>&#10;&#10;\begin{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}&#10;</xsl:text>
       <xsl:apply-templates/>
-      <xsl:text>\end{quote}&#10;</xsl:text>
+      <xsl:text>\end{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}&#10;</xsl:text>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

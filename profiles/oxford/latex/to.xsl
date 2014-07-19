@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
-                xmlns:m="http://www.w3.org/1998/Math/MathML"
-                xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="tei m"
-                version="2.0">
-    <!-- import base conversion style -->
+    xmlns:teix="http://www.tei-c.org/ns/Examples"
+    xmlns:m="http://www.w3.org/1998/Math/MathML"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    exclude-result-prefixes="tei m teix"
+    version="2.0">
+  <!-- import base conversion style -->
 
     <xsl:import href="../../../latex/latex.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -58,5 +59,6 @@ of this software, even if advised of the possibility of such damage.
 \setlength{\headheight}{14pt}
 </xsl:template>
 
+<xsl:template match="teix:egXML[@rend='invisible']"/>
     
 </xsl:stylesheet>

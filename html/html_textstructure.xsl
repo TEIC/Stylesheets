@@ -446,7 +446,7 @@ of this software, even if advised of the possibility of such damage.
 	         <xsl:apply-templates select="." mode="ident"/>
 	       </xsl:when>
 	       <xsl:otherwise>
-	         <xsl:value-of select="$BaseFile"/>
+		 <xsl:value-of select="$BaseFile"/>
 	       </xsl:otherwise>
 	     </xsl:choose>
 	   </xsl:with-param>
@@ -1787,15 +1787,13 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="outputChunkName">
       <xsl:param name="ident"/>
-      <xsl:choose>
-        <xsl:when test="not($outputDir ='')">
-            <xsl:value-of select="$outputDir"/>
-            <xsl:if test="not(substring($outputDir,string-length($outputDir),string-length($outputDir))='/')">
-               <xsl:text>/</xsl:text>
-            </xsl:if>
-        </xsl:when>
-      </xsl:choose>
-      <xsl:value-of select="if (matches($ident,'^[A-z]:')) then concat('file:///',$ident) else $ident"/>
+      <xsl:if test="not($outputDir ='')">
+	<xsl:value-of select="if (matches($outputDir,'^[A-Za-z]:')) then concat('file:///',$outputDir) else $outputDir"/>
+        <xsl:if test="not(substring($outputDir,string-length($outputDir),string-length($outputDir))='/')">
+          <xsl:text>/</xsl:text>
+        </xsl:if>
+      </xsl:if>
+      <xsl:value-of select="if (matches($ident,'^[A-Za-z]:')) then concat('file:///',$ident) else $ident"/>
       <xsl:value-of select="$outputSuffix"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
