@@ -130,13 +130,14 @@
 \usepackage[normalem]{ulem}
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
-\usepackage{marginnote}
-\renewcommand*{\marginfont}{\itshape\footnotesize}
 \usepackage{graphicx}
+\usepackage{marginnote}
+
+\renewcommand*{\marginfont}{\itshape\footnotesize}
 
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 
-  \pagestyle{fancy} 
+  \pagestyle{fancy}
 
 \usepackage[pdftitle={title of corpus},
  pdfauthor={author}]{hyperref}
@@ -280,6 +281,19 @@
 \def\TheDate{1970-01-01}
 \title{title of corpus}
 \author{author}\makeatletter 
+\makeatletter
+\newcommand*{\cleartoleftpage}{%
+  \clearpage
+    \if@twoside
+    \ifodd\c@page
+      \hbox{}\newpage
+      \if@twocolumn
+        \hbox{}\newpage
+      \fi
+    \fi
+  \fi
+}
+\makeatother
 \makeatletter
 \thispagestyle{empty}
 \markright{\@title}\markboth{\@title}{\@author}

@@ -130,9 +130,10 @@
 \usepackage[normalem]{ulem}
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
-\usepackage{marginnote}
-\renewcommand*{\marginfont}{\itshape\footnotesize}
 \usepackage{graphicx}
+\usepackage{marginnote}
+
+\renewcommand*{\marginfont}{\itshape\footnotesize}
 
   \usepackage{endnotes}
   
@@ -140,7 +141,7 @@
     
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 
-  \pagestyle{fancy} 
+  \pagestyle{fancy}
 
 \usepackage[pdftitle={A Christmas Carol},
  pdfauthor={Charles Dickens}]{hyperref}
@@ -285,6 +286,19 @@
 \title{A Christmas Carol}
 \author{Charles Dickens}\makeatletter 
 \makeatletter
+\newcommand*{\cleartoleftpage}{%
+  \clearpage
+    \if@twoside
+    \ifodd\c@page
+      \hbox{}\newpage
+      \if@twocolumn
+        \hbox{}\newpage
+      \fi
+    \fi
+  \fi
+}
+\makeatother
+\makeatletter
 \thispagestyle{empty}
 \markright{\@title}\markboth{\@title}{\@author}
 \renewcommand\small{\@setfontsize\small{9pt}{11pt}\abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
@@ -365,12 +379,12 @@ A paragraph with a footnote containing a block-level object\footnote{We start wi
 \leftline{Not with a bang but a whimper.} which is from TS Eliot's \textit{Hollow men}}\par
 Consider quotations: ‘This is a quote which is run on within the text and will have quote marks of some kind around it.’\par
 Another quotation: \begin{quote}This is a block quote set off as such from the rest of the text\end{quote}\par
-Here, by contrast is an ‘inline quotation’. Another strange thing about quotes is this: \begin{quote}You can put line breaks{\hskip1pt}\newline to determine where the line breaks{\hskip1pt}\newline Inside a block!\end{quote}
+Here, by contrast is an ‘inline quotation’. Another strange thing about quotes is this: \begin{quote}You can put line breaks{\hskip1pt}\\{}to determine where the line breaks{\hskip1pt}\\{}Inside a block!\end{quote}
 \section[{Use of xml:lang}]{Use of xml:lang}\par
 He used a French \textit{radiateur}.\par
 Languages: \textit{Deutsch}; \textit{Italiano}; \textit{Español}; \textit{Français}; \textit{Portugues}; \textit{Russian}; \textit{Svenska}; \textit{日本語}; \textit{中文}.
 \section[{del, gap, add, unclear etc}]{del, gap, add, unclear etc}\par
-\sout{. The interest \& — affor the amount over so small} the interest afforded ⟨\textit{compared with cash,}⟩ by the Annuity{\hskip1pt}\newline  note paper to those who \textit{tutor}[?] ⟨\textit{think}⟩ it, ⟨\textit{or keep it,}⟩ with a view {\hskip1pt}\newline  to circulation, will, \sout{when compared with cash} ⟨\textit{be it ever so small}⟩ be {\hskip1pt}\newline  so much \uline{profit}: compared with \sout{a} ⟨\textit{the}⟩ preceding higher {\hskip1pt}\newline  rate of interest, the ⟨\textit{reduced}⟩ rate afforded by the Annuity {\hskip1pt}\newline  note paper, to those who, \textit{tutor}[?] if they \textit{tutor}[?] it, {\hskip1pt}\newline  will, \sout{have to depend upon} to the extent of their {\hskip1pt}\newline  respective capitals so invested, have nothing else {\hskip1pt}\newline  to depend upon for their ⟨\textit{respective}⟩ incomes, will, \sout{} ⟨\textit{by}⟩ the {\hskip1pt}\newline  amount of the difference, \textit{foremost}[?] itself as so {\hskip1pt}\newline  much less.
+\sout{. The interest \& — affor the amount over so small} the interest afforded ⟨\textit{compared with cash,}⟩ by the Annuity{\hskip1pt}\\{} note paper to those who \textit{tutor}[?] ⟨\textit{think}⟩ it, ⟨\textit{or keep it,}⟩ with a view {\hskip1pt}\\{} to circulation, will, \sout{when compared with cash} ⟨\textit{be it ever so small}⟩ be {\hskip1pt}\\{} so much \uline{profit}: compared with \sout{a} ⟨\textit{the}⟩ preceding higher {\hskip1pt}\\{} rate of interest, the ⟨\textit{reduced}⟩ rate afforded by the Annuity {\hskip1pt}\\{} note paper, to those who, \textit{tutor}[?] if they \textit{tutor}[?] it, {\hskip1pt}\\{} will, \sout{have to depend upon} to the extent of their {\hskip1pt}\\{} respective capitals so invested, have nothing else {\hskip1pt}\\{} to depend upon for their ⟨\textit{respective}⟩ incomes, will, \sout{} ⟨\textit{by}⟩ the {\hskip1pt}\\{} amount of the difference, \textit{foremost}[?] itself as so {\hskip1pt}\\{} much less.
 \section[{Drama}]{Drama} \begin{description} \item[Roderigo] 
 
 Where shall we meet i' the morning?\end{description}
@@ -575,7 +589,7 @@ I wonder what are the xml-ids preserved in a transformation to XHTML, in particu
 \end{quote}
 
 \section[{Choice, sic, corr, reg, orig}]{Choice, sic, corr, reg, orig}\par
-voro þav sammędd syskin in heilagri {\hskip1pt}\newline  olafr konvngr ok fyrnefnd [ {\corr gvnnhilldr}].\par
+voro þav sammędd syskin in heilagri {\hskip1pt}\\{} olafr konvngr ok fyrnefnd [ {\corr gvnnhilldr}].\par
 Lastly, That, upon his solemn oath to observe all the above articles, the said man-mountain shall have a daily allowance of meat and drink sufficient for the support of [ {\corr 1728}] of our subjects, with free access to our royal person, and other marks of our  {\reg favor}.
 \section[{Verbatim}]{Verbatim}\par
 an egXML in a list: \begin{itemize}
