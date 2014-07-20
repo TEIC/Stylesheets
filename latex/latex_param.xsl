@@ -194,8 +194,7 @@ as a proportion of the page width.</desc>
    <xsl:param name="everyHowManyLines">5</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
-      <desc>When numbering poetry, when to restart the sequence;
-this must be the name of a TEI element</desc>
+      <desc>When numbering poetry, when to restart the sequence; this must be the name of a TEI element</desc>
    </doc>
    <xsl:param name="resetVerseLineNumbering">div1</xsl:param>
 
@@ -208,6 +207,11 @@ this must be the name of a TEI element</desc>
       <desc>The page style to use with the \pagestyle command (empty, plain, fancy, ...).</desc>
    </doc>
    <xsl:param name="pageStyle">fancy</xsl:param>
+
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
+      <desc>Configuration to pass to hypersetup.</desc>
+   </doc>
+   <xsl:param name="hyperSetup">linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
       <desc>Depth of nesting of reference documentation when processing ODD</desc>
@@ -614,7 +618,7 @@ characters. The normal characters remain active for LaTeX commands.
 \fancyfoot[LE]{}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{\TheID}
-\hypersetup{linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true}
+\hypersetup{</xsl:text><xsl:value-of select="$hyperSetup"/><xsl:text>}
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}</xsl:text>
    </xsl:template>
 
