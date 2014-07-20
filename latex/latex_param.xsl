@@ -125,10 +125,12 @@ the beginning of the document</desc>
 \usepackage[normalem]{ulem}
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
-\usepackage{marginnote}
-\renewcommand*{\marginfont}{\itshape\footnotesize}
 \usepackage{graphicx}
+\usepackage{marginnote}
 </xsl:text>
+<xsl:if test="not($marginFont='')">
+\renewcommand*{\marginfont}{<xsl:value-of select="$marginFont"/>}
+</xsl:if>
 <xsl:if test="key('TREES',1)">
   \usepackage{pstricks,pst-node,pst-tree}
 </xsl:if>
@@ -384,6 +386,8 @@ characters. The normal characters remain active for LaTeX commands.
 <xsl:param name="gothicFont">Lucida Blackletter</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for calligraphic</desc>   </doc>
 <xsl:param name="calligraphicFont">Lucida Calligraphy</xsl:param>
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Command to set margin font</desc>   </doc>
+<xsl:param name="marginFont">\itshape\footnotesize</xsl:param>
   <xsl:param name="longtables">true</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
