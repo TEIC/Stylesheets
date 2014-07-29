@@ -1046,8 +1046,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
         <xsl:when test="not(@rend or @type)">true</xsl:when>
         <xsl:when test="@rend='unordered'">true</xsl:when>
+        <xsl:when test="@rend='bulleted'">true</xsl:when>
         <xsl:when test="@type='unordered'">true</xsl:when>
-        <xsl:when test="@type='simple'">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
