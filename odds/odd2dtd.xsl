@@ -1221,6 +1221,13 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="$thisclass"/>
             <xsl:text>.attributes</xsl:text>
             <xsl:text> ''&gt;</xsl:text>
+	   <xsl:for-each select="tei:attList/tei:attDef">
+	     <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
+	     <xsl:value-of select="$thisclass"/>
+	     <xsl:text>.attribute.</xsl:text>
+	     <xsl:value-of select="translate(@ident,':','')"/>
+	     <xsl:text> ''&gt;&#10;</xsl:text>
+	   </xsl:for-each>
          </xsl:when>
          <xsl:otherwise>
 	   <xsl:for-each select="tei:attList/tei:attDef">
