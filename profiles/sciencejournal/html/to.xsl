@@ -39,6 +39,8 @@
    <xsl:template name="stdheader">
      <xsl:param name="title"/>
    </xsl:template>
+
+
    <xsl:key name="TABLESORT" use="1" match="tei:table[@rend='sort']"/>
 
    <xsl:template name="javascriptHook">

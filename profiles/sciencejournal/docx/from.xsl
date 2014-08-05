@@ -68,6 +68,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="preserveEffects">true</xsl:param>
   <xsl:param name="preserveFontSizeChanges">true</xsl:param>
 
+ <xsl:template match="tei:TEI" mode="pass2">
+  <xsl:variable name="pass2">
+   <xsl:copy>
+    <xsl:apply-templates mode="pass2"/>
+   </xsl:copy>
+  </xsl:variable>
+  <xsl:apply-templates select="$pass2" mode="pass3"/>
+ </xsl:template>
+
   <xsl:template name="fromDocxEffectsHook">
     <xsl:if test="w:rPr/w:rStyle/@w:val='Heading 2 Char' and not(w:rPr/w:b/@w:val='0')">
       <n>bold</n>
@@ -142,6 +151,26 @@ of this software, even if advised of the possibility of such damage.
      </xsl:copy>
    </xsl:template>
 
+   <xsl:template match="tei:anchor" mode="pass3">
+     <xsl:choose>
+       <xsl:when test="not(preceding-sibling::text()) and not(parent::*/@xml:id)">
+	 <xsl:copy-of select="@xml:id"/>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:copy-of select="."/>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template>
+ <!-- and copy everything else -->
+
+ <xsl:template match="@*|comment()|processing-instruction()|text()" mode="pass3">
+  <xsl:copy-of select="."/>
+ </xsl:template>
+ <xsl:template match="*" mode="pass3">
+  <xsl:copy>
+   <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+  </xsl:copy>
+ </xsl:template>
 
   </xsl:stylesheet>
   

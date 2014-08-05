@@ -231,19 +231,28 @@ of this software, even if advised of the possibility of such damage.
 </xsl:function>
   
 
-        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+ <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Whether a w:instrText can be discarded on not. ignore all
       the bibliographic addins</desc></doc>
   <xsl:function name="tei:discardInstruction"  as="xs:boolean">
     <xsl:param name="instr"/>
     <xsl:choose>
       <xsl:when test="contains($instr,'REF _')">true</xsl:when>
-      <xsl:when test="matches($instr,'^[ ]?EN.REFLIST')">true</xsl:when>
-      <xsl:when test="matches($instr,'^[ ]?ADDIN')">true</xsl:when>
       <xsl:when test="matches($instr,'^[ ]?QUOTE')">true</xsl:when>
-      <xsl:when test="matches($instr,'^[ ]?ref Mendeley Edited')">true</xsl:when>
       <xsl:when test="matches($instr,'^[ ]?XE')">true</xsl:when>
       <xsl:when test="contains($instr,'SEQ')">true</xsl:when>
+      <xsl:otherwise>false</xsl:otherwise>
+    </xsl:choose>
+</xsl:function>
+
+ <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Whether a w:instrText is a bibliographic addin</desc></doc>
+  <xsl:function name="tei:biblioInstruction"  as="xs:boolean">
+    <xsl:param name="instr"/>
+    <xsl:choose>
+      <xsl:when test="matches($instr,'^[ ]?EN.REFLIST')">true</xsl:when>
+      <xsl:when test="matches($instr,'^[ ]?ADDIN')">true</xsl:when>
+      <xsl:when test="matches($instr,'^[ ]?ref Mendeley Edited')">true</xsl:when>
       <xsl:otherwise>false</xsl:otherwise>
     </xsl:choose>
 </xsl:function>

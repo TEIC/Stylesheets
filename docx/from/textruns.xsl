@@ -177,7 +177,7 @@ of this software, even if advised of the possibility of such damage.
        <xsl:choose>
 	 <xsl:when test="not(w:rPr/w:rFonts/@w:ascii)"/>
 	 <xsl:when test="matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')">
-	   <s n="font-family">
+	   <s><xsl:text>font-family:</xsl:text>
 	     <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
 	   </s>
 	 </xsl:when>
@@ -188,7 +188,7 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Verdana'"/>
 	 <xsl:when test="w:rPr/w:rFonts/@w:ascii =  parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii"/>
 	 <xsl:otherwise>
-	   <s n="font-family">
+	   <s><xsl:text>font-family:</xsl:text>
 	       <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
 	   </s>
 	   </xsl:otherwise>
@@ -198,26 +198,26 @@ of this software, even if advised of the possibility of such damage.
 	 
 	 <xsl:choose>
 	   <xsl:when test="w:rPr/w:sz and $preserveFontSizeChanges='true'">
-	     <s n="font-size">
+	     <s><xsl:text>font-size:</xsl:text>
 	       <xsl:value-of select="number(w:rPr/w:sz/@w:val) div 2"/>
 	       <xsl:text>pt</xsl:text>
 	     </s>
 	   </xsl:when>
 	   <xsl:when test="ancestor::w:tc and $extrarow/w:rPr/w:sz">
-	     <s n="font-size">
+	     <s><xsl:text>font-size:</xsl:text>
 	       <xsl:value-of select="number($extrarow/w:rPr/w:sz/@w:val) div 2"/>
 	       <xsl:text>pt</xsl:text>
 	     </s>
 	   </xsl:when>
 	 <xsl:when test="ancestor::w:tc and $extracolumn/w:rPr/w:sz">
-	   <s n="font-size">
+	   <s><xsl:text>font-size:</xsl:text>
 	     <xsl:value-of select="number($extracolumn/w:rPr/w:sz/@w:val) div 2"/>
 	     <xsl:text>pt</xsl:text>
 	   </s>
 	 </xsl:when>
 	 </xsl:choose>
 	 <xsl:if test="w:rPr/w:position/@w:val and not(w:rPr/w:position/@w:val='0')">
-	 <s n="position">
+	 <s><xsl:text>position:</xsl:text>
 	   <xsl:value-of select="w:rPr/w:position/@w:val"/>
 	 </s>
 	 </xsl:if>
@@ -375,12 +375,7 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:choose>
 	    <xsl:if test="$styles/* and $preserveEffects='true'">
 	      <xsl:attribute name="style">
-		<xsl:for-each select="$styles/*">
-		  <xsl:value-of select="@n"/>
-		  <xsl:text>:</xsl:text>
-		  <xsl:value-of select="."/>
-		  <xsl:text>;</xsl:text>
-		</xsl:for-each>
+		<xsl:value-of select="($styles/*)" separator=";"/>
 	      </xsl:attribute>
 	    </xsl:if>
 	    <xsl:apply-templates/>

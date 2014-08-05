@@ -496,19 +496,18 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:ref" mode="pass2">
     <xsl:variable name="target">
       <xsl:choose>
-	<xsl:when test="contains(@target,'REF _')"/>
-	<xsl:when test="matches(@target,'^[ ]?EN.REFLIST')"/>
-	<xsl:when test="matches(@target,'^[ ]?ADDIN')"/>
-	<xsl:when test="matches(@target,'^[ ]?QUOTE')"/>
-	<xsl:when test="matches(@target,'^[ ]?ref Mendeley Edited')"/>
-	<xsl:when test="matches(@target,'^[ ]?XE')"/>
-	<xsl:when test="contains(@target,'SEQ')"/>
+	<xsl:when test="tei:discardInstruction(@target)"/>
 	<xsl:otherwise>
 	  <xsl:sequence select="tei:processInstruction(@target)"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:choose>
+      <xsl:when test="tei:biblioInstruction($target)">
+	<xsl:processing-instruction name="biblio">
+	  <xsl:value-of select="$target"/>
+	</xsl:processing-instruction>
+      </xsl:when>
       <xsl:when test="matches(@target,'^LINK Excel.Sheet.')">
 	<xsl:sequence select="tei:docxError('cannot embed Excel  spreadsheet')"/>
       </xsl:when>
@@ -525,7 +524,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="$target=''">
 	<xsl:apply-templates mode="pass2"/>
       </xsl:when>
-      <xsl:when test="tei:discardInstruction(.)"/>
       <xsl:otherwise>
 	<ref target="{$target}">
 	  <xsl:copy-of select="@rend"/>
