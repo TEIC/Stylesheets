@@ -193,7 +193,7 @@ of this software, even if advised of the possibility of such damage.
        </xsl:for-each>
      </xsl:variable>		  
      
-     <!--
+   	<!--
 	 <xsl:result-document href="/tmp/foo.xml">
 	 <xsl:copy-of select="$pass1"/>
 	 </xsl:result-document>
@@ -229,7 +229,7 @@ of this software, even if advised of the possibility of such damage.
 	    <text>
 	      <!-- Create forme work -->
 	      <xsl:call-template name="extract-forme-work"/>
-	      
+
 	      <!-- create TEI body -->
 	      <body>
 		<xsl:call-template name="mainProcess"/>
@@ -250,17 +250,24 @@ of this software, even if advised of the possibility of such damage.
 	    -->
 	    <xsl:for-each-group select="w:sdt|w:p|w:tbl"
 				group-starting-with="w:p[tei:is-firstlevel-heading(.)]">
-	      
-	      <xsl:choose>
+	    	<xsl:choose>
 		
 		<!-- We are dealing with a first level section, we now have
 		     to further divide the section into subsections that we can then
 		     finally work on -->
-		
+	      	<xsl:when test="tei:is-front(.)">
+	      		<front>
+	      			<xsl:apply-templates select="." mode="inSectionGroup"/>
+	      						
+	      			<xsl:message> 	      GROUP	<xsl:value-of select="."/>		<xsl:value-of select="position()"/>    			</xsl:message>	    	
+	      		</front>
+	      	</xsl:when>
+	      	
 		<xsl:when test="tei:is-heading(.)">
-		  <xsl:call-template name="group-by-section"/>
+			<xsl:call-template name="group-by-section"/>
 		</xsl:when>
-		
+	      	
+	      	
 		<!-- We have found some loose paragraphs. These are most probably
 		     front matter paragraps. We can simply convert them without further
 		     trying to split them up into sub sections. -->
@@ -343,6 +350,7 @@ of this software, even if advised of the possibility of such damage.
 				else  if (tei:is-figure(.)) then 3
 				else  if (tei:is-line(.)) then 4
 				else  if (tei:is-caption(.)) then 5
+				else  if (tei:is-front(.)) then 6
 				else position() + 100">
 	      
 	      <!-- For each defined grouping call a specific template. If there is no
@@ -364,7 +372,10 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:when test="current-grouping-key()=5">
 		  <xsl:call-template name="captionSection"/>
 		</xsl:when>
-		<!-- it is not a defined grouping .. apply templates -->
+	      	<xsl:when test="current-grouping-key()=6">
+	      		<xsl:call-template name="frontSection"/>
+	      	</xsl:when>
+	      	<!-- it is not a defined grouping .. apply templates -->
 		<xsl:otherwise>
 		  <xsl:apply-templates select="." mode="paragraph"/>
 		</xsl:otherwise>
@@ -383,6 +394,17 @@ of this software, even if advised of the possibility of such damage.
       </figure>
     </xsl:template>
 
+
+	<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+		<desc>Creating a group of a front/title page</desc>
+	</doc>
+	<xsl:template name="frontSection">
+		<titlePage>
+			<xsl:apply-templates select="." mode="paragraph"/>
+		</titlePage>
+	</xsl:template>
+
+	
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Creating a group of a caption (figure or table)</desc>
    </doc>
