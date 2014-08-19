@@ -483,7 +483,7 @@ of this software, even if advised of the possibility of such damage.
   
   <xsl:template match="tei:p[matches(@rend, '.+[Tt]itle') and ancestor::tei:front]"
     mode="pass2">
-    <aaa/>
+ 
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -515,6 +515,12 @@ of this software, even if advised of the possibility of such damage.
     </docDate>
   </xsl:template>
   
+  <xsl:template match="tei:titlePage[not(ancestor::tei:front)]"
+    mode="pass2">
+    <!-- strip unnecessary title Pages -->
+    <xsl:message>STRIP TP</xsl:message>
+       <xsl:apply-templates mode="pass2"/>
+   </xsl:template>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Name for output element. If @rend starts with "TEI " or "tei:", rename the

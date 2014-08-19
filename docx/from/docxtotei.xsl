@@ -193,7 +193,7 @@ of this software, even if advised of the possibility of such damage.
        </xsl:for-each>
      </xsl:variable>		  
      
-   	<!--
+     <!--
 	 <xsl:result-document href="/tmp/foo.xml">
 	 <xsl:copy-of select="$pass1"/>
 	 </xsl:result-document>
@@ -229,7 +229,7 @@ of this software, even if advised of the possibility of such damage.
 	    <text>
 	      <!-- Create forme work -->
 	      <xsl:call-template name="extract-forme-work"/>
-
+	      
 	      <!-- create TEI body -->
 	      <body>
 		<xsl:call-template name="mainProcess"/>
@@ -250,23 +250,24 @@ of this software, even if advised of the possibility of such damage.
 	    -->
 	    <xsl:for-each-group select="w:sdt|w:p|w:tbl"
 				group-starting-with="w:p[tei:is-firstlevel-heading(.)]">
-	    	<xsl:choose>
+	      
+	      <xsl:choose>
 		
 		<!-- We are dealing with a first level section, we now have
 		     to further divide the section into subsections that we can then
 		     finally work on -->
+		
+		<xsl:when test="tei:is-heading(.)">
+		  <xsl:call-template name="group-by-section"/>
+		</xsl:when>
+		
 	      	<xsl:when test="tei:is-front(.)">
 	      		<front>
 	      			<xsl:apply-templates select="." mode="inSectionGroup"/>
-	      						
+	      			
 	      			<xsl:message> 	      GROUP	<xsl:value-of select="."/>		<xsl:value-of select="position()"/>    			</xsl:message>	    	
 	      		</front>
 	      	</xsl:when>
-	      	
-		<xsl:when test="tei:is-heading(.)">
-			<xsl:call-template name="group-by-section"/>
-		</xsl:when>
-	      	
 	      	
 		<!-- We have found some loose paragraphs. These are most probably
 		     front matter paragraps. We can simply convert them without further
@@ -394,17 +395,6 @@ of this software, even if advised of the possibility of such damage.
       </figure>
     </xsl:template>
 
-
-	<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-		<desc>Creating a group of a front/title page</desc>
-	</doc>
-	<xsl:template name="frontSection">
-		<titlePage>
-			<xsl:apply-templates select="." mode="paragraph"/>
-		</titlePage>
-	</xsl:template>
-
-	
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Creating a group of a caption (figure or table)</desc>
    </doc>
@@ -438,6 +428,19 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>
       </lg>
     </xsl:template>
+
+	<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+		<desc>Creating a group of a front/title page</desc>
+	</doc>
+	<xsl:template name="frontSection">
+		<titlePage>
+			<xsl:for-each select="current-group()">
+				<xsl:apply-templates select="." mode="paragraph"/>
+			</xsl:for-each>
+		</titlePage>
+	</xsl:template>
+	
+	
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Groups the document by headings and thereby creating the document structure. 

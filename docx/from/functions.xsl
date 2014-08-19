@@ -94,8 +94,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:choose>
             <xsl:when test="matches($s,'[Tt]itle.*')">true</xsl:when>
             <xsl:when test="matches($s,'[Ss]ubtitle.*')">true</xsl:when>
-            <xsl:when test="matches($s,'[Dd]ate')">true</xsl:when>
-            <xsl:when test="matches($s,'[Aa]uthor')">true</xsl:when>
+            <xsl:when test="matches($s,'[Dd]ate.*')">true</xsl:when>
+            <xsl:when test="matches($s,'[Aa]uthor.*')">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>

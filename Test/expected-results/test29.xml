@@ -35,15 +35,19 @@
     </revisionDesc>
   </teiHeader>
   <text>
-    <body>
-      <p rend="Title">
-        <ref target="http://nl.ijs.si/tei/convert/">DOCX 2 TEI</ref>
-      </p>
-      <p rend="Subtitle">Example document</p>
-      <p rend="Author">
-        <hi rend="bold smallcaps">Tomaž Erjavec</hi>
-      </p>
-      <p rend="Date">2013-06-01</p>
+    <front>
+      <titlePage>
+        <docTitle>
+          <titlePart type="Title">
+            <ref target="http://nl.ijs.si/tei/convert/">DOCX 2 TEI</ref>
+          </titlePart>
+          <titlePart type="Subtitle">Example document</titlePart>
+        </docTitle>
+        <docAuthor>
+          <hi rend="bold smallcaps">Tomaž Erjavec</hi>
+        </docAuthor>
+        <docDate>2013-06-01</docDate>
+      </titlePage>
       <p rend="TOC Heading">Contents</p>
       <p rend="toc 1">
         <ref target="#Toc357845414">Introduction	2</ref>
@@ -98,6 +102,8 @@
       <p>
         <pb/>
       </p>
+    </front>
+    <body>
       <div>
         <head><anchor xml:id="Toc357845414"/><pb type="soft"/>Introduction</head>
         <p>This document is meant as an exemplar and test .docx file for a docx2tei profile of the <ref target="http://www.tei-c.org/Tools/Stylesheets/">TEI Stylesheets</ref>. Its other function is as the source for a .dotx Word template than can serve for authoring new or editing existing Word files (primarily books) with the intention of converting them to TEI with, say, <ref target="http://www.tei-c.org/oxgarage/">OxGarage</ref>.</p>
