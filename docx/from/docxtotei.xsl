@@ -264,8 +264,6 @@ of this software, even if advised of the possibility of such damage.
 	      	<xsl:when test="tei:is-front(.)">
 	      		<front>
 	      			<xsl:apply-templates select="." mode="inSectionGroup"/>
-	      			
-	      			<xsl:message> 	      GROUP	<xsl:value-of select="."/>		<xsl:value-of select="position()"/>    			</xsl:message>	    	
 	      		</front>
 	      	</xsl:when>
 	      	
