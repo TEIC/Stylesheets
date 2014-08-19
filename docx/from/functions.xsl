@@ -86,6 +86,20 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
     </xsl:function>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+        <desc>Defines whether or not a word paragraph is a front page element.</desc></doc>
+    <xsl:function name="tei:is-front" as="xs:boolean">
+        <xsl:param name="p"/>
+        <xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
+        <xsl:choose>
+            <xsl:when test="matches($s,'[Tt]itle.*')">true</xsl:when>
+            <xsl:when test="matches($s,'[Ss]ubtitle.*')">true</xsl:when>
+            <xsl:when test="matches($s,'[Dd]ate.*')">true</xsl:when>
+            <xsl:when test="matches($s,'[Aa]uthor.*')">true</xsl:when>
+            <xsl:otherwise>false</xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+    
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Defines whether or not a word paragraph is a list element.</desc></doc>
     <xsl:function name="tei:is-list" as="xs:boolean">
@@ -108,6 +122,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:param name="p"/>        
         <xsl:choose>
             <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'toc')]">true</xsl:when>
+            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'TOC')]">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>
