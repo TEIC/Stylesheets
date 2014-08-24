@@ -100,7 +100,7 @@ medioverlay=
 nocompress=
 schema=
 # ---
-version=`cat $APPHOME/VERSION`
+version=`cat "$APPHOME/VERSION"`
 SAXONJAR=$APPHOME/lib//saxon9he.jar
 TRANGJAR=$APPHOME/lib/trang.jar
 from=`echo $script | sed 's/to.*//'`
@@ -174,7 +174,7 @@ else
   SDIR=`(cd $REALD; pwd)`
   REALSOURCE=$SDIR/`basename $TEISOURCE`
   echo using $REALSOURCE as default source
-  localsource=" -DdefaultSource=$REALSOURCE "
+  localsource=' -DdefaultSource="$REALSOURCE" '
 fi
 
 in=${1:?"no input file supplied; for usage syntax $0 --help"}
@@ -194,11 +194,11 @@ if ! test -f "$indir/$infile"
 then 
     die "Input file $infile does not exist"
 fi
-if ! test -f $SAXONJAR
+if ! test -f "$SAXONJAR"
 then 
     die "Saxon jar file $SAXONJAR does not exist"
 fi
-if ! test -f $APPHOME/$format/build-$direction.xml 
+if ! test -f "$APPHOME/$format/build-$direction.xml"
 then
     die "No support for $from to $to: ant task $APPHOME/$format/build-$direction.xml does not exist"
 fi
@@ -213,12 +213,12 @@ case $format in
 esac
 
 echo Convert $infile to $outdir/$outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
-ant $antflag -f $APPHOME/$format/build-$direction.xml \
-	-lib ${SAXONJAR} $debug \
+ant $antflag -f "$APPHOME/$format/build-$direction.xml" \
+	-lib "${SAXONJAR}" $debug \
     $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress $localsource \
         -Dodd=$odd \
-        -Dsaxon.jar=${SAXONJAR} \
-        -Dtrang.jar=${TRANGJAR} \
+        -Dsaxon.jar="${SAXONJAR}" \
+        -Dtrang.jar="${TRANGJAR}" \
         -Dverbose=$verbose \
 	-DinputFile="$indir/$infile" \
 	-DoutputFile="$outdir/$outfile" \
