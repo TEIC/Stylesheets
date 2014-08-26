@@ -175,7 +175,7 @@ of this software, even if advised of the possibility of such damage.
      <xsl:param name="extracolumn"   tunnel="yes"/>     
      <xsl:variable name="styles">
        <xsl:choose>
-	 <xsl:when test="not(w:rPr/w:rFonts/@w:ascii)"/>
+	 <xsl:when test="w:rPr/w:rFonts  and not(w:rPr/w:rFonts/@w:ascii)"/>
 	 <xsl:when test="matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')">
 	   <s><xsl:text>font-family:</xsl:text>
 	     <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>

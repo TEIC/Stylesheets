@@ -439,7 +439,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="$highlight"/>
 	</xsl:with-param>
       </xsl:call-template>
-      <xsl:call-template name="processAttributes"/>
+      <xsl:call-template name="verbatim-processAttributes"/>
       <xsl:if test="(local-name(.)='TEI' and not (local-name(parent::*)='teiCorpus')) or local-name(.)='teiCorpus'">
 	<xsl:text> xmlns="http://www.tei-c.org/ns/1.0"</xsl:text>
       </xsl:if>  
@@ -613,7 +613,10 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
 
-  <xsl:template name="processAttributes">
+  <xsl:template name="verbatim-processAttributes">
+    <xsl:variable name="esize">
+      <xsl:value-of select="string-length(name())+count(ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')])-1"/>
+    </xsl:variable>
     <xsl:variable name="indent">
       <xsl:call-template name="verbatim-makeIndent"/>
     </xsl:variable>
@@ -625,53 +628,68 @@ of this software, even if advised of the possibility of such damage.
 	</a>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:for-each select="$Atts/*[1]">
-      <xsl:call-template name="nextAttribute">
-	<xsl:with-param name="indent" select="$indent"/>
-	<xsl:with-param name="sofar" select="@size"/>
-      </xsl:call-template>
-    </xsl:for-each>
+      <xsl:choose>
+	<xsl:when
+	    test="parent::*/ancestor::tei:cell[not(@rend='wovenodd-col2')]">
+	  <xsl:for-each select="$Atts/*[1]">
+	    <xsl:call-template name="verbatim-nextAttribute">
+	      <xsl:with-param name="force" select="true()"/>
+	      <xsl:with-param name="indent" select="$indent"/>
+	      <xsl:with-param name="sofar" select="$esize + @size"/>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	  </xsl:when>
+	<xsl:otherwise>
+	  <xsl:for-each select="$Atts/*[1]">
+	    <xsl:call-template name="verbatim-nextAttribute">
+	      <xsl:with-param name="indent" select="$indent"/>
+	      <xsl:with-param name="sofar" select="$esize + @size"/>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	</xsl:otherwise>
+      </xsl:choose>
+
   </xsl:template>
 
 
-<xsl:template name="nextAttribute">
-  <!-- 		    or
-     parent::*/ancestor::tei:cell[not(@rend='wovenodd-col2')]"> -->
-  <xsl:param name="indent"/>
-  <xsl:param name="sofar">0</xsl:param>
-  <xsl:value-of select="$spaceCharacter"/>
-  <xsl:call-template name="Attribute">
-    <xsl:with-param name="content" select="string(@name)"/>
-  </xsl:call-template>
-  <xsl:text>="</xsl:text>
-  <xsl:call-template name="AttributeValue">
-    <xsl:with-param name="content">
-      <xsl:apply-templates select="@value" mode="attributetext"/>
-    </xsl:with-param>
-  </xsl:call-template>
-  <xsl:text>"</xsl:text>
-  <xsl:for-each select="following-sibling::a[1]">
-    <xsl:choose>
-      <xsl:when test="$sofar + @size &gt;$attLength">
-      <xsl:call-template name="verbatim-lineBreak">
-        <xsl:with-param name="id">5</xsl:with-param>
-      </xsl:call-template>
-      <xsl:copy-of select="$indent"/>
-      <xsl:call-template name="nextAttribute">
-	<xsl:with-param name="indent" select="$indent"/>
-	<xsl:with-param name="sofar">0</xsl:with-param>
-      </xsl:call-template>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:call-template name="nextAttribute">
-	<xsl:with-param name="indent" select="$indent"/>
-	<xsl:with-param name="sofar" select="$sofar +@size"/>
-      </xsl:call-template>
-    </xsl:otherwise>
-  </xsl:choose>
-  </xsl:for-each>
-</xsl:template>
-
+  <xsl:template name="verbatim-nextAttribute">
+    <xsl:param name="indent"/>
+    <xsl:param name="force" select="false()"/>
+    <xsl:param name="sofar">0</xsl:param>
+    <xsl:value-of select="$spaceCharacter"/>
+    <xsl:call-template name="Attribute">
+      <xsl:with-param name="content" select="string(@name)"/>
+    </xsl:call-template>
+    <xsl:text>="</xsl:text>
+    <xsl:call-template name="AttributeValue">
+      <xsl:with-param name="content">
+	<xsl:apply-templates select="@value" mode="attributetext"/>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:text>"</xsl:text>
+    <xsl:for-each select="following-sibling::a[1]">
+      <xsl:choose>
+	<xsl:when test="$force or ($sofar + @size &gt;$attLength)">
+	  <xsl:call-template name="verbatim-lineBreak">
+            <xsl:with-param name="id">5</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:copy-of select="$indent"/>
+	  <xsl:call-template name="verbatim-nextAttribute">
+	    <xsl:with-param name="indent" select="$indent"/>
+	    <xsl:with-param name="force" select="$force"/>
+	    <xsl:with-param name="sofar">0</xsl:with-param>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="verbatim-nextAttribute">
+	    <xsl:with-param name="indent" select="$indent"/>
+	    <xsl:with-param name="sofar" select="$sofar +@size"/>
+	  </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
+  
 
   <xsl:template match="@*" mode="attributetext">
     <xsl:choose>
