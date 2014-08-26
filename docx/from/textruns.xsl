@@ -176,7 +176,7 @@ of this software, even if advised of the possibility of such damage.
      <xsl:variable name="styles">
        <xsl:choose>
 	 <xsl:when test="w:rPr/w:rFonts  and not(w:rPr/w:rFonts/@w:ascii)"/>
-	 <xsl:when test="matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')">
+	 <xsl:when test="w:rPr/w:rFonts/@w:ascii  and matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')">
 	   <s><xsl:text>font-family:</xsl:text>
 	     <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
 	   </s>
@@ -186,7 +186,9 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Calibri'"/>
 	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Arial'"/>
 	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Verdana'"/>
-	 <xsl:when test="w:rPr/w:rFonts/@w:ascii =  parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii"/>
+	 <xsl:when test="w:rPr/w:rFonts/@w:ascii =
+			 parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii"/>
+	 <xsl:when test="not(w:rPr/w:rFonts)"/>
 	 <xsl:otherwise>
 	   <s><xsl:text>font-family:</xsl:text>
 	       <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
