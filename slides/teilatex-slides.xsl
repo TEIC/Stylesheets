@@ -56,7 +56,6 @@ XSL LaTeX stylesheet to make slides
   <xsl:param name="classParameters"/>
   <xsl:param name="beamerClass">PaloAlto</xsl:param>
   <xsl:param name="pause">true</xsl:param>
-  <xsl:param name="attsOnSameLine">2</xsl:param>
   <xsl:param name="attLength">35</xsl:param>
   <xsl:param name="spaceCharacter">\hspace*{4pt}</xsl:param>
 

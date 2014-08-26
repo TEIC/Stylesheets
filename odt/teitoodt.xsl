@@ -1004,7 +1004,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="spaceCharacter"> </xsl:param>
   <xsl:param name="showNamespaceDecls">true</xsl:param>
   <xsl:param name="wrapLength">65</xsl:param>
-  <xsl:param name="attsOnSameLine">3</xsl:param>
   <xsl:key name="Namespaces" match="*[ancestor::teix:egXML]" use="namespace-uri()"/>
   <xsl:key name="Namespaces" match="*[not(ancestor::*)]" use="namespace-uri()"/>
   <xsl:template name="newLine">

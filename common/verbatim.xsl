@@ -47,7 +47,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="forceWrap">false</xsl:param>
   <xsl:param name="wrapLength">65</xsl:param>
   <xsl:param name="attLength">40</xsl:param>
-  <xsl:param name="attsOnSameLine">3</xsl:param>
   <xsl:param name="omitNSDecls">http://www.tei-c.org/ns/1.0</xsl:param>
   <xsl:key name="NSUsed" match="*" use="namespace-uri()"/>
   <xsl:key name="NSUsed" match="@*" use="namespace-uri()"/>
@@ -440,7 +439,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="$highlight"/>
 	</xsl:with-param>
       </xsl:call-template>
-      <xsl:apply-templates select="@*" mode="verbatim"/>
+      <xsl:call-template name="processAttributes"/>
       <xsl:if test="(local-name(.)='TEI' and not (local-name(parent::*)='teiCorpus')) or local-name(.)='teiCorpus'">
 	<xsl:text> xmlns="http://www.tei-c.org/ns/1.0"</xsl:text>
       </xsl:if>  
@@ -613,33 +612,67 @@ of this software, even if advised of the possibility of such damage.
       <xsl:sequence select="for $i in 1 to $depth return $spaceCharacter"/>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="@*" mode="verbatim">
-    <xsl:variable name="L">
-      <xsl:for-each select="../@*">
-        <xsl:value-of select="."/>
+
+  <xsl:template name="processAttributes">
+    <xsl:variable name="indent">
+      <xsl:call-template name="verbatim-makeIndent"/>
+    </xsl:variable>
+    <xsl:variable name="Atts">
+      <xsl:for-each select="@*">
+	<a size="{string-length(name())+string-length(.)+3}"
+	   name="{name()}" 
+	   value="{.}">
+	</a>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:if test="(position()&gt;1 and (position()-1) mod  $attsOnSameLine =0)
- or  string-length($L)&gt;$attLength 
- or  ancestor::tei:cell[not(@rend='wovenodd-col2')] 
- or  string-length(.)+string-length(name(.)) &gt;     $attLength">
+    <xsl:for-each select="$Atts/*[1]">
+      <xsl:call-template name="nextAttribute">
+	<xsl:with-param name="indent" select="$indent"/>
+	<xsl:with-param name="sofar" select="@size"/>
+      </xsl:call-template>
+    </xsl:for-each>
+  </xsl:template>
+
+
+<xsl:template name="nextAttribute">
+  <!-- 		    or
+     parent::*/ancestor::tei:cell[not(@rend='wovenodd-col2')]"> -->
+  <xsl:param name="indent"/>
+  <xsl:param name="sofar">0</xsl:param>
+  <xsl:value-of select="$spaceCharacter"/>
+  <xsl:call-template name="Attribute">
+    <xsl:with-param name="content" select="string(@name)"/>
+  </xsl:call-template>
+  <xsl:text>="</xsl:text>
+  <xsl:call-template name="AttributeValue">
+    <xsl:with-param name="content">
+      <xsl:apply-templates select="@value" mode="attributetext"/>
+    </xsl:with-param>
+  </xsl:call-template>
+  <xsl:text>"</xsl:text>
+  <xsl:for-each select="following-sibling::a[1]">
+    <xsl:choose>
+      <xsl:when test="$sofar + @size &gt;$attLength">
       <xsl:call-template name="verbatim-lineBreak">
         <xsl:with-param name="id">5</xsl:with-param>
       </xsl:call-template>
-      <xsl:call-template name="verbatim-makeIndent"/>
-    </xsl:if>
-    <xsl:value-of select="$spaceCharacter"/>
-    <xsl:call-template name="Attribute">
-      <xsl:with-param name="content" select="name()"/>
-    </xsl:call-template>
-    <xsl:text>="</xsl:text>
-    <xsl:call-template name="AttributeValue">
-      <xsl:with-param name="content">
-	<xsl:apply-templates select="." mode="attributetext"/>
-      </xsl:with-param>
-    </xsl:call-template>
-    <xsl:text>"</xsl:text>
-  </xsl:template>
+      <xsl:copy-of select="$indent"/>
+      <xsl:call-template name="nextAttribute">
+	<xsl:with-param name="indent" select="$indent"/>
+	<xsl:with-param name="sofar">0</xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="nextAttribute">
+	<xsl:with-param name="indent" select="$indent"/>
+	<xsl:with-param name="sofar" select="$sofar +@size"/>
+      </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>
+  </xsl:for-each>
+</xsl:template>
+
+
   <xsl:template match="@*" mode="attributetext">
     <xsl:choose>
       <xsl:when test="string-length(.)&gt;$attLength and contains(.,' ')">

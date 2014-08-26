@@ -7,7 +7,6 @@
   exclude-result-prefixes="tei teix xsl">
   
 <xsl:import href="../../../slides/teilatex-slides.xsl"/>
-<xsl:param name="attsOnSameLine">6</xsl:param>
 <xsl:param name="latexLogo"></xsl:param>
 <xsl:param name="logoFile"></xsl:param>
 <xsl:param name="spaceCharacter">\hspace*{6pt}</xsl:param>
