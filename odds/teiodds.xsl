@@ -1279,6 +1279,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:apply-templates>
       </xsl:for-each>
     </div>
+    <xsl:apply-templates mode="expandRNG" select="node()"/>
     <xsl:comment>End of import of <xsl:value-of select="@href"/>
     </xsl:comment>
   </xsl:template>
