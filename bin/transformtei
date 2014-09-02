@@ -174,7 +174,7 @@ else
   SDIR=`(cd $REALD; pwd)`
   REALSOURCE=$SDIR/`basename $TEISOURCE`
   echo using $REALSOURCE as default source
-  localsource=' -DdefaultSource="$REALSOURCE" '
+  localsource=" -DdefaultSource=\"$REALSOURCE\" "
 fi
 
 in=${1:?"no input file supplied; for usage syntax $0 --help"}
