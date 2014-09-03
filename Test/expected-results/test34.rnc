@@ -1165,17 +1165,17 @@ tei_model.availabilityPart = tei_licence
 tei_model.certLike = notAllowed
 tei_model.descLike = tei_desc
 tei_model.glossLike = tei_gloss
-tei_model.quoteLike = tei_quote | tei_cit | foo_cit | bar_cit | tei_q
+tei_model.quoteLike = tei_quote | tei_cit | foo_cit | bar_cit | blah_q
 tei_model.quoteLike_alternation =
-  tei_quote | tei_cit | foo_cit | bar_cit | tei_q
+  tei_quote | tei_cit | foo_cit | bar_cit | blah_q
 tei_model.quoteLike_sequence =
-  tei_quote, tei_cit, foo_cit, bar_cit, tei_q
+  tei_quote, tei_cit, foo_cit, bar_cit, blah_q
 tei_model.quoteLike_sequenceOptional =
-  tei_quote?, tei_cit?, foo_cit?, bar_cit?, tei_q?
+  tei_quote?, tei_cit?, foo_cit?, bar_cit?, blah_q?
 tei_model.quoteLike_sequenceOptionalRepeatable =
-  tei_quote*, tei_cit*, foo_cit*, bar_cit*, tei_q*
+  tei_quote*, tei_cit*, foo_cit*, bar_cit*, blah_q*
 tei_model.quoteLike_sequenceRepeatable =
-  tei_quote+, tei_cit+, foo_cit+, bar_cit+, tei_q+
+  tei_quote+, tei_cit+, foo_cit+, bar_cit+, blah_q+
 tei_model.qLike =
   tei_model.quoteLike | tei_said | tei_q | tei_floatingText
 tei_model.qLike_alternation =
@@ -4179,7 +4179,7 @@ bar_cit =
   
   ## This element encodes a new citation (CASE 2) 
   element bar:cit { tei_ref, tei_macro.specialPara+, text }
-tei_q =
+blah_q =
   
   ## This element encodes a new quote (CASE 4) 
   element blah:q { tei_ref, tei_macro.specialPara+, text }
