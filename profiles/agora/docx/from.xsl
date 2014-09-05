@@ -6,7 +6,6 @@
 
 <!-- 1 : here's what we do in pass2 -->
 
-
  <xsl:template match="tei:TEI" mode="pass2">
   <xsl:variable name="Doctext">
    <xsl:copy>
@@ -25,14 +24,29 @@
   <xsl:apply-templates select="$Doctext2" mode="pass4"/>
  </xsl:template>
 
-
-
- <!-- fix paragraph styles which should be TEI elements -->
- <xsl:template match="tei:p[@rend='epigraph']" mode="pass2">
+ 
+ <!-- paragraph styles which should be TEI elements -->
+ <!--xsl:template match="tei:p[@rend='epigraph']" mode="pass2">
   <epigraph>
-    <xsl:value-of select="."/>
+   <ab>
+    <xsl:apply-templates mode="pass2"/>
+   </ab>
+  </epigraph>
+ </xsl:template-->
+ 
+ <xsl:template match="tei:p[@rend='epigraph'][1]" mode="pass2">
+  <epigraph>
+   <p>
+    <xsl:apply-templates mode="pass2"/>
+   </p>
+   <xsl:for-each select="following::tei:p[@rend='epigraph']">
+    <p> <xsl:apply-templates mode="pass2"/></p>
+   </xsl:for-each>
   </epigraph>
  </xsl:template>
+ 
+ <xsl:template match="tei:p[@rend='epigraph'][position() > 1]" mode="pass2"/>
+ 
 
  <xsl:template match="tei:p[@rend='Quote']" mode="pass2">
   <quote>
@@ -57,53 +71,74 @@
     <xsl:number level="any"/>
    </xsl:attribute>
    <xsl:apply-templates mode="pass2"/>
+
   </xsl:element>
  </xsl:template>
+
 
 <!-- templates for pass3 start here -->
 
  <!-- jiggle around the paragraphs which should be in front -->
 
  <xsl:template match="tei:text" mode="pass3">
-  <text>
+  <text>  
    <front>
     <titlePage>
      <docTitle>
-      <titlePart type="main">
-	<xsl:value-of select="//tei:p[@rend='Title']/text()"/>
-       <xsl:apply-templates select="//tei:p[@rend='Title']/*" mode="pass3"/>
+         <titlePart type="main">
+        <xsl:for-each select="//tei:p[@rend='Title']/node()">
+        
+           <xsl:copy-of select="."/>        
+        </xsl:for-each> 
       </titlePart>
       <titlePart type="sub">
-       <xsl:copy-of select="//tei:p[@rend='Subtitle']/text()"/>
-       <xsl:copy-of select="//tei:p[@rend='Subtitle']/*"/>
-      </titlePart>
+       <xsl:for-each select="//tei:p[@rend='Subtitle']/node()">
+        
+          <xsl:copy-of select="."/>        
+       </xsl:for-each> </titlePart>
 
      </docTitle>
+     
      <docAuthor>
-      <xsl:value-of select="//tei:p[@rend='author']/text()"/>
-       <xsl:copy-of select="//tei:p[@rend='author']/*"/>
+      <xsl:for-each select="//tei:p[@rend='author']/node()">
+       <xsl:copy-of select="."/>    
+       </xsl:for-each>      
      </docAuthor>
-    </titlePage>
-    <div type="abstract">
-     <xsl:for-each select="//tei:p[@rend='abstract']">
-      <p>
+     
+     <xsl:if test="//tei:p[@rend='translator']">
+     <titlePart type="translator">
+      <xsl:for-each select="//tei:p[@rend='translator']">
        <xsl:apply-templates mode="pass3"/>
-      </p>
+      </xsl:for-each>
+     </titlePart>
+     </xsl:if>
+    
+    </titlePage>
+    
+    <xsl:if test="//tei:p[@rend='abstract']">
+     <div type="abstract">
+     <xsl:for-each select="//tei:p[@rend='abstract']">
+    <xsl:copy-of select="."/>
      </xsl:for-each>
-    </div>
+    </div></xsl:if>
    </front>
+   
    <body>
     <xsl:apply-templates mode="pass3" select="tei:body/*"/>
    </body>
-   <back>
-    <listBibl>
-     <xsl:for-each select="//tei:p[@rend='Bibliography']">
+   
+    <xsl:if test="//tei:p[@rend='bibliography']">
+     <back>
+      <div type="bibliography"><head>References</head>
+      <listBibl>
+     <xsl:for-each select="//tei:p[@rend='bibliography']">
       <bibl>
        <xsl:apply-templates mode="pass3"/>
       </bibl>
      </xsl:for-each>
-    </listBibl>
-   </back>
+    </listBibl></div>
+     </back>
+   </xsl:if>
   </text>
  </xsl:template>
 
@@ -111,11 +146,13 @@
 
  <xsl:template match="tei:p[@rend='Title']" mode="pass3"/>
  <xsl:template match="tei:p[@rend='author']" mode="pass3"/>
+ <xsl:template match="tei:p[@rend='translator']" mode="pass3"/>
  <xsl:template match="tei:p[@rend='Subtitle']" mode="pass3"/>
  <xsl:template match="tei:p[@rend='abstract']" mode="pass3"/>
  <xsl:template match="tei:p[@rend='bibliography']" mode="pass3"/>
  <xsl:template match="tei:p[@rend='Bibliography']" mode="pass3"/>
-
+ <xsl:template match="tei:div/tei:p[@rend='bibliography']" mode="pass3"/>
+ 
  <!-- suppress empty head elements -->
 
  <xsl:template match="tei:head" mode="pass3">
@@ -129,6 +166,7 @@
 
  <!-- fix up the default header -->
  <xsl:template match="tei:encodingDesc" mode="pass3"/>
+
  <xsl:template match="tei:titleStmt/tei:author" mode="pass3">
   <xsl:choose>
    <xsl:when test="tei:surname and tei:name">
@@ -147,7 +185,15 @@
   </xsl:choose>
  </xsl:template>
 
-
+ <xsl:template match="tei:fileDesc/tei:sourceDesc" mode="pass3">
+  <sourceDesc>   <p>A Source description is required</p>
+  </sourceDesc>  
+ </xsl:template>
+ 
+<xsl:template match="tei:publicationStmt" mode="pass3">
+   <publicationStmt> <p>A  Publication Statement is required</p></publicationStmt>
+ </xsl:template>
+ 
  <!-- fix other styles which should be TEI elements -->
  <xsl:template match="tei:hi[@rend='Quote']" mode="pass3">
   <quote>
@@ -190,32 +236,65 @@
   <xsl:apply-templates mode="pass3"/>
  </xsl:template>
 
-<!--
- <xsl:template match="tei:seg" mode="pass3">
-  <xsl:value-of select="."/>
- </xsl:template>
--->
+<!-- pass 4 final tweaks -->
 
-<xsl:template match="tei:note/tei:p" mode="pass4">
+<!-- add level indicator to divs -->
+
+ <xsl:template match="//tei:body/tei:div/tei:div/tei:div/tei:div[child::tei:head]" mode="pass4">
+  <xsl:element name="div">
+   <xsl:attribute  name="type">level4</xsl:attribute>
+   <xsl:apply-templates mode="pass4"/>
+  </xsl:element>
+ </xsl:template>
+ 
+ <xsl:template match="//tei:body/tei:div/tei:div/tei:div[child::tei:head]" mode="pass4">
+  <xsl:element name="div">
+   <xsl:attribute  name="type">level3</xsl:attribute>
+     <xsl:apply-templates mode="pass4"/>
+  </xsl:element>
+ </xsl:template>
+
+ <xsl:template match="//tei:body/tei:div/tei:div[child::tei:head]" mode="pass4">
+  <xsl:element name="div">
+   <xsl:attribute  name="type">level2</xsl:attribute>
+   <xsl:apply-templates mode="pass4"/>
+  </xsl:element>
+ </xsl:template>
+ 
+ <xsl:template match="//tei:body/tei:div[child::tei:head]" mode="pass4">
+  <xsl:element name="div">
+   <xsl:attribute  name="type">level1</xsl:attribute>
+   <xsl:apply-templates mode="pass4"/>
+  </xsl:element>
+ </xsl:template>
+ 
+ <xsl:template match="//tei:body/tei:div[child::tei:epigraph]" mode="pass4">
+  <xsl:apply-templates mode="pass4"/>
+  </xsl:template>
+ 
+<!-- kill paragraphs inside notes -->
+<xsl:template match="tei:note/tei:p" mode="pass3">
 <xsl:apply-templates mode="pass4"/>
 </xsl:template>
 
-
+<!-- number paragraphs within body -->
+ 
  <xsl:template match="tei:p" mode="pass4">
-  <xsl:if test="ancestor::tei:body">
+ 
    <xsl:element name="p">
-    <xsl:attribute name="xml:id">
+    <xsl:if test="ancestor::tei:body">
+      <xsl:attribute name="xml:id">
      <xsl:text>P</xsl:text>
      <xsl:number from="tei:body" count="tei:p[not(ancestor::tei:note)]" level="any"/>
     </xsl:attribute>
+</xsl:if>
     <xsl:apply-templates mode="pass4"/>
    </xsl:element>
-
-  </xsl:if>
- </xsl:template>
+   </xsl:template>
+ 
  <xsl:template match="tei:hi[matches(@rend,'color')]" mode="pass3"/>
 
- <!-- contexta magic references -->
+ <!-- add contexta magic references -->
 
  <xsl:template match="tei:hi[@rend='reference']" mode="pass4">
   <xsl:variable name="magicString">

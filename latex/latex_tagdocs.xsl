@@ -255,7 +255,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="ancestor::tei:div[1]/@xml:id"/>
             <xsl:text>}</xsl:text>
             <xsl:apply-templates/>
-            <xsl:text>\end{specHead} </xsl:text>
+	    <xsl:text>\end{specHead} </xsl:text>
          </xsl:when>
          <xsl:when test="@cols='2'">
     \item[]<xsl:apply-templates/>

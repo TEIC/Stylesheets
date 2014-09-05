@@ -979,16 +979,14 @@ select="$makeDecls"/></xsl:message>
           <xsl:when test="tei:valList[@type='closed']">
             <xsl:call-template name="valListChildren"/>
           </xsl:when>
-          <xsl:when test="tei:content/* and
-			  tei:content/@allowText='true'">
-	    <zeroOrMore  xmlns="http://relaxng.org/ns/structure/1.0">
-	      <choice>
+          <xsl:when test="(tei:content/tei:elementRef or
+			  tei:content/tei:sequence ) and  tei:content/@allowText='true'">
+	      <choice  xmlns="http://relaxng.org/ns/structure/1.0">
 		<text/>
 		<xsl:apply-templates
 		    select="tei:content/*|tei:content/processing-instruction()"
 		    mode="tangle"/>
 	      </choice>
-	    </zeroOrMore>
 	  </xsl:when>
           <xsl:when test="tei:content/*">
             <xsl:apply-templates
@@ -1085,14 +1083,16 @@ select="$makeDecls"/></xsl:message>
               <xsl:apply-templates select="tei:content/rng:group/*"/>
             </choice>
           </xsl:when>
-          <xsl:when test="tei:content/* and
-			  tei:content/@allowText='true'">
+          <xsl:when test="tei:content/* and tei:content/@allowText='true'">
 	    <zeroOrMore  xmlns="http://relaxng.org/ns/structure/1.0">
 	      <choice>
 		<text/>
 		<xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>
 	      </choice>
 	    </zeroOrMore>
+	  </xsl:when>
+          <xsl:when test="tei:content/tei:alternate and tei:content/@allowText='true'">
+	    <xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>
 	  </xsl:when>
 	  <xsl:when test="tei:content/*">
             <xsl:apply-templates select="tei:content/*"/>
@@ -1279,6 +1279,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:apply-templates>
       </xsl:for-each>
     </div>
+    <xsl:apply-templates mode="expandRNG" select="node()"/>
     <xsl:comment>End of import of <xsl:value-of select="@href"/>
     </xsl:comment>
   </xsl:template>
@@ -1924,12 +1925,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="(self::s:report or self::s:assert) and ancestor::tei:elementSpec">
         <pattern xmlns="http://www.ascc.net/xml/schematron">
           <xsl:attribute name="name">
-            <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
-            <xsl:text>-constraint-</xsl:text>
-            <xsl:value-of select="ancestor::tei:constraintSpec/@ident"/>
-            <xsl:if test="count(../s:report|s:assert) &gt;1">
-              <xsl:number count="s:report|s:assert"/>
-            </xsl:if>
+	    <xsl:value-of select="tei:makePatternID(.)"/>
           </xsl:attribute>
           <rule>
             <xsl:attribute name="context">
@@ -1957,14 +1953,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="self::s:rule">
         <pattern
           xmlns="http://www.ascc.net/xml/schematron">
-          <xsl:attribute name="name">
-            <xsl:value-of select="ancestor::tei:constraintSpec/parent::*/@ident"/>
-            <xsl:text>-constraint-</xsl:text>
-            <xsl:value-of select="ancestor::tei:constraintSpec/@ident"/>
-            <xsl:if test="count(../s:rule) &gt;1">
-              <xsl:number count="s:rule"/>
-            </xsl:if>
-          </xsl:attribute>
+          <xsl:attribute name="name" select="tei:makePatternID(.)"/>
           <xsl:apply-templates mode="justcopy" select="."/>
         </pattern>
       </xsl:when>
@@ -1976,28 +1965,14 @@ select="$makeDecls"/></xsl:message>
       </xsl:when>
       <xsl:when test="self::sch:rule">
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron">
-          <xsl:attribute name="id">
-            <xsl:value-of select="ancestor::tei:constraintSpec/parent::*/@ident"/>
-            <xsl:text>-constraint-</xsl:text>
-            <xsl:value-of select="ancestor::tei:constraintSpec/@ident"/>
-            <xsl:if test="count(../sch:rule) &gt;1">
-              <xsl:number count="sch:rule"/>
-            </xsl:if>
-          </xsl:attribute>
+          <xsl:attribute name="id" select="tei:makePatternID(.)"/>
           <xsl:apply-templates mode="justcopy" select="."/>
         </pattern>
       </xsl:when>
       <xsl:when test="(self::sch:report or self::sch:assert) and
 		      ancestor::tei:elementSpec">
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron">
-          <xsl:attribute name="id">
-            <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
-            <xsl:text>-constraint-</xsl:text>
-            <xsl:value-of select="../../@ident"/>
-            <xsl:if test="count(../sch:report|../sch:assert) &gt;1">
-              <xsl:number count="sch:report|sch:assert"/>
-            </xsl:if>
-          </xsl:attribute>
+          <xsl:attribute name="id" select="tei:makePatternID(.)"/>
           <rule>
             <xsl:attribute name="context">
 	      <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>
@@ -2168,7 +2143,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:otherwise>
         <xsl:element name="{$suffix}" xmlns="http://relaxng.org/ns/structure/1.0">
           <choice xmlns="http://relaxng.org/ns/structure/1.0">
-            <xsl:if test="ancestor::tei:content/@allowText='true'">
+            <xsl:if test="ancestor-or-self::tei:*/@allowText='true'">
               <text xmlns="http://relaxng.org/ns/structure/1.0"/>
             </xsl:if>
             <xsl:apply-templates  mode="tangle"/>

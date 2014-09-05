@@ -68,7 +68,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-    <xsl:param name="shadowGraphics">true</xsl:param>
+    <xsl:param name="shadowGraphics">false</xsl:param>
     <xsl:param name="glossListSeparator">break</xsl:param>
     <xsl:param name="pagebreakStyle">active</xsl:param>
     <xsl:template match="teix:egXML|tei:p[@rend='eg']">

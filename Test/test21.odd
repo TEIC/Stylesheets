@@ -279,6 +279,13 @@
         <!-- explicit ns -->
         <elementSpec ident="incipit" ns="http://www.tei-c.org/ns/1.0" mode="delete"/>
 
+	<!-- change a class attribute which has a constraint, make sure its not duplicated -->
+	<elementSpec ident="addSpan" mode="change" module="transcr">
+          <attList>
+            <attDef ident="spanTo" mode="change" usage="req"/>
+          </attList>
+	</elementSpec>   
+
 	<!-- delete an attribute which is locally modified in source -->
 	<elementSpec ident="title" mode="change">
                    <content>

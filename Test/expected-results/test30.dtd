@@ -97,11 +97,6 @@ source CDATA  #IMPLIED'>
 <!ENTITY % model.resourceLike_sequenceOptional "facsimile?, sourceDoc?"> 
 <!ENTITY % model.resourceLike_sequenceOptionalRepeatable "facsimile*, sourceDoc*"> 
 <!ENTITY % model.resourceLike_sequenceRepeatable "facsimile+, sourceDoc+"> 
-<!ENTITY % model.orgStateLike "state"> 
-<!ENTITY % model.orgStateLike_sequence "state"> 
-<!ENTITY % model.orgStateLike_sequenceOptional "state?"> 
-<!ENTITY % model.orgStateLike_sequenceOptionalRepeatable "state*"> 
-<!ENTITY % model.orgStateLike_sequenceRepeatable "state+"> 
 <!ENTITY % Tatt.datable.custom.attribute.when-custom '
 when-custom CDATA  #IMPLIED'>
 
@@ -559,6 +554,11 @@ to %data.word;  #IMPLIED'>
 <!ENTITY % model.offsetLike_sequenceOptional "offset?, geogFeat?"> 
 <!ENTITY % model.offsetLike_sequenceOptionalRepeatable "offset*, geogFeat*"> 
 <!ENTITY % model.offsetLike_sequenceRepeatable "offset+, geogFeat+"> 
+<!ENTITY % model.pPart.msdesc ""> 
+<!ENTITY % model.pPart.msdesc_sequence ""> 
+<!ENTITY % model.pPart.msdesc_sequenceOptional ""> 
+<!ENTITY % model.pPart.msdesc_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.pPart.msdesc_sequenceRepeatable ""> 
 <!ENTITY % model.pPart.editorial "choice |abbr |expan |ex |am |subst"> 
 <!ENTITY % model.pPart.editorial_sequence "choice, abbr, expan, ex, am, subst"> 
 <!ENTITY % model.pPart.editorial_sequenceOptional "choice?, abbr?, expan?, ex?, am?, subst?"> 
@@ -584,6 +584,11 @@ to %data.word;  #IMPLIED'>
 <!ENTITY % model.ptrLike_sequenceOptional "ptr?, ref?"> 
 <!ENTITY % model.ptrLike_sequenceOptionalRepeatable "ptr*, ref*"> 
 <!ENTITY % model.ptrLike_sequenceRepeatable "ptr+, ref+"> 
+<!ENTITY % model.lPart ""> 
+<!ENTITY % model.lPart_sequence ""> 
+<!ENTITY % model.lPart_sequenceOptional ""> 
+<!ENTITY % model.lPart_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.lPart_sequenceRepeatable ""> 
 <!ENTITY % model.global.meta "index |substJoin |listTranspose |link |linkGrp |timeline |join |joinGrp |alt |altGrp"> 
 <!ENTITY % model.global.meta_sequence "index, substJoin, listTranspose, link, linkGrp, timeline, join, joinGrp, alt, altGrp"> 
 <!ENTITY % model.global.meta_sequenceOptional "index?, substJoin?, listTranspose?, link?, linkGrp?, timeline?, join?, joinGrp?, alt?, altGrp?"> 
@@ -599,6 +604,21 @@ to %data.word;  #IMPLIED'>
 <!ENTITY % model.gLike_sequenceOptional ""> 
 <!ENTITY % model.gLike_sequenceOptionalRepeatable ""> 
 <!ENTITY % model.gLike_sequenceRepeatable ""> 
+<!ENTITY % model.oddDecl ""> 
+<!ENTITY % model.oddDecl_sequence ""> 
+<!ENTITY % model.oddDecl_sequenceOptional ""> 
+<!ENTITY % model.oddDecl_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.oddDecl_sequenceRepeatable ""> 
+<!ENTITY % model.phrase.xml ""> 
+<!ENTITY % model.phrase.xml_sequence ""> 
+<!ENTITY % model.phrase.xml_sequenceOptional ""> 
+<!ENTITY % model.phrase.xml_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.phrase.xml_sequenceRepeatable ""> 
+<!ENTITY % model.specDescLike ""> 
+<!ENTITY % model.specDescLike_sequence ""> 
+<!ENTITY % model.specDescLike_sequenceOptional ""> 
+<!ENTITY % model.specDescLike_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.specDescLike_sequenceRepeatable ""> 
 <!ENTITY % model.biblLike "bibl |biblStruct |listBibl |biblFull"> 
 <!ENTITY % model.biblLike_sequence "bibl, biblStruct, listBibl, biblFull"> 
 <!ENTITY % model.biblLike_sequenceOptional "bibl?, biblStruct?, listBibl?, biblFull?"> 
@@ -644,11 +664,6 @@ to %data.word;  #IMPLIED'>
 <!ENTITY % model.entryPart_sequenceOptional ""> 
 <!ENTITY % model.entryPart_sequenceOptionalRepeatable ""> 
 <!ENTITY % model.entryPart_sequenceRepeatable ""> 
-<!ENTITY % model.entryPart.top "cit"> 
-<!ENTITY % model.entryPart.top_sequence "cit"> 
-<!ENTITY % model.entryPart.top_sequenceOptional "cit?"> 
-<!ENTITY % model.entryPart.top_sequenceOptionalRepeatable "cit*"> 
-<!ENTITY % model.entryPart.top_sequenceRepeatable "cit+"> 
 <!ENTITY % model.global.edit "gap |addSpan |damageSpan |delSpan |space"> 
 <!ENTITY % model.global.edit_sequence "gap, addSpan, damageSpan, delSpan, space"> 
 <!ENTITY % model.global.edit_sequenceOptional "gap?, addSpan?, damageSpan?, delSpan?, space?"> 
@@ -759,6 +774,11 @@ to %data.word;  #IMPLIED'>
 <!ENTITY % model.divTop_sequenceOptional "%model.divWrapper;?, %model.divTopPart;?"> 
 <!ENTITY % model.divTop_sequenceOptionalRepeatable "%model.divWrapper;*, %model.divTopPart;*"> 
 <!ENTITY % model.divTop_sequenceRepeatable "%model.divWrapper;+, %model.divTopPart;+"> 
+<!ENTITY % model.frontPart.drama ""> 
+<!ENTITY % model.frontPart.drama_sequence ""> 
+<!ENTITY % model.frontPart.drama_sequenceOptional ""> 
+<!ENTITY % model.frontPart.drama_sequenceOptionalRepeatable ""> 
+<!ENTITY % model.frontPart.drama_sequenceRepeatable ""> 
 <!ENTITY % model.pLike.front "head |byline |argument |epigraph |docTitle |titlePart |docAuthor |docEdition |docImprint |docDate"> 
 <!ENTITY % model.pLike.front_sequence "head, byline, argument, epigraph, docTitle, titlePart, docAuthor, docEdition, docImprint, docDate"> 
 <!ENTITY % model.pLike.front_sequenceOptional "head?, byline?, argument?, epigraph?, docTitle?, titlePart?, docAuthor?, docEdition?, docImprint?, docDate?"> 
@@ -779,16 +799,6 @@ to %data.word;  #IMPLIED'>
 <!ENTITY % model.titlepagePart_sequenceOptional "graphic?, binaryObject?, byline?, argument?, epigraph?, docTitle?, titlePart?, docAuthor?, imprimatur?, docEdition?, docImprint?, docDate?"> 
 <!ENTITY % model.titlepagePart_sequenceOptionalRepeatable "graphic*, binaryObject*, byline*, argument*, epigraph*, docTitle*, titlePart*, docAuthor*, imprimatur*, docEdition*, docImprint*, docDate*"> 
 <!ENTITY % model.titlepagePart_sequenceRepeatable "graphic+, binaryObject+, byline+, argument+, epigraph+, docTitle+, titlePart+, docAuthor+, imprimatur+, docEdition+, docImprint+, docDate+"> 
-<!ENTITY % model.msQuoteLike "title"> 
-<!ENTITY % model.msQuoteLike_sequence "title"> 
-<!ENTITY % model.msQuoteLike_sequenceOptional "title?"> 
-<!ENTITY % model.msQuoteLike_sequenceOptionalRepeatable "title*"> 
-<!ENTITY % model.msQuoteLike_sequenceRepeatable "title+"> 
-<!ENTITY % model.msItemPart "%model.biblLike; |%model.quoteLike; |%model.respLike; |%model.msQuoteLike; |textLang |idno"> 
-<!ENTITY % model.msItemPart_sequence "%model.biblLike;, %model.quoteLike;, %model.respLike;, %model.msQuoteLike;, textLang, idno"> 
-<!ENTITY % model.msItemPart_sequenceOptional "%model.biblLike;?, %model.quoteLike;?, %model.respLike;?, %model.msQuoteLike;?, textLang?, idno?"> 
-<!ENTITY % model.msItemPart_sequenceOptionalRepeatable "%model.biblLike;*, %model.quoteLike;*, %model.respLike;*, %model.msQuoteLike;*, textLang*, idno*"> 
-<!ENTITY % model.msItemPart_sequenceRepeatable "%model.biblLike;+, %model.quoteLike;+, %model.respLike;+, %model.msQuoteLike;+, textLang+, idno+"> 
 <!ENTITY % model.choicePart "sic |corr |reg |orig |unclear |abbr |expan |ex |am |seg"> 
 <!ENTITY % model.choicePart_sequence "sic, corr, reg, orig, unclear, abbr, expan, ex, am, seg"> 
 <!ENTITY % model.choicePart_sequenceOptional "sic?, corr?, reg?, orig?, unclear?, abbr?, expan?, ex?, am?, seg?"> 
@@ -918,11 +928,6 @@ source CDATA  #IMPLIED'>
 <!ENTITY % model.resourceLike_sequenceOptional "facsimile?, sourceDoc?"> 
 <!ENTITY % model.resourceLike_sequenceOptionalRepeatable "facsimile*, sourceDoc*"> 
 <!ENTITY % model.resourceLike_sequenceRepeatable "facsimile+, sourceDoc+"> 
-<!ENTITY % model.orgStateLike "state"> 
-<!ENTITY % model.orgStateLike_sequence "state"> 
-<!ENTITY % model.orgStateLike_sequenceOptional "state?"> 
-<!ENTITY % model.orgStateLike_sequenceOptionalRepeatable "state*"> 
-<!ENTITY % model.orgStateLike_sequenceRepeatable "state+"> 
 <!ENTITY % Tatt.personal.attribute.full '
 full (yes|abb|init) "yes" '>
 

@@ -626,9 +626,11 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:apply-templates/>
 	     </xsl:with-param>
 	   </xsl:call-template>
-	   <xsl:call-template name="makeText">
+	   <xsl:if test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
+	     <xsl:call-template name="makeText">
 	     <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	   </xsl:call-template>
+	   </xsl:if>
          </xsl:when>
          <xsl:when test="@level='a'">
 	   <xsl:call-template name="emphasize">
@@ -1001,6 +1003,8 @@ of this software, even if advised of the possibility of such damage.
 		      @place='marge' or
 		      @place='h' or
 		      @place='inter' or
+		      @place='right' or
+		      @place='left' or
 		      @place='divend' or
 		      @place='marginOuter' or
 		      @place='marginLeft' or
@@ -1020,7 +1024,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
 
       <xsl:when test="@place">
-	<xsl:message terminate="yes">unknown @place for note, <xsl:value-of select="@place"/></xsl:message>
+	<xsl:message>unknown @place for note, <xsl:value-of select="@place"/></xsl:message>
+	<xsl:call-template name="displayNote"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:call-template name="plainNote"/>
@@ -1202,7 +1207,6 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:lb">
     <xsl:choose>
-      <xsl:when test="parent::tei:div"/>
       <xsl:when test="@type='hyphenInWord' and @rend='hidden'"/>
       <xsl:when test="@rend='hidden'">
         <xsl:text> </xsl:text>
@@ -1222,6 +1226,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@rend='show'">
 	<xsl:call-template name="lineBreak"/>
       </xsl:when>
+      <xsl:when test="@rend='paragraph'">
+	<xsl:call-template name="lineBreakAsPara"/>
+      </xsl:when>
       <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
       <xsl:otherwise>
 	<xsl:call-template name="lineBreak"/>
@@ -1229,6 +1236,9 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <xsl:template name="lineBreak">
+    <xsl:text> </xsl:text>
+  </xsl:template>
+  <xsl:template name="lineBreakAsPara">
     <xsl:text> </xsl:text>
   </xsl:template>
 

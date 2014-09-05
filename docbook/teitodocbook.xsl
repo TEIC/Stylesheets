@@ -552,4 +552,6 @@ of this software, even if advised of the possibility of such damage.
     </emphasis>
   </xsl:template>
 
+  <xsl:template match="encodingDesc"/>
+
 </xsl:stylesheet>

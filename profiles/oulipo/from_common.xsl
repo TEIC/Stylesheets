@@ -59,9 +59,9 @@ theory of liability, whether in contract, strict liability, or tort
 (including negligence or otherwise) arising in any way out of the use
 of this software, even if advised of the possibility of such damage.
 </p>
-      <p>Author: See AUTHORS</p>
+      <p>Author: See AUTHORS for the basic scheme. This profile constructed by Lou Burnard</p>
       <p>Id: $Id$</p>
-      <p>Copyright: 2013, TEI Consortium</p>
+      <p>Copyright: 2013, TEI Consortium; 2014 Lou Burnard Consulting</p>
     </desc>
   </doc>
 
@@ -69,18 +69,120 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:encodingDesc" mode="pass2"/>
   <xsl:template match="tei:editionStmt" mode="pass2"/>
 
- <xsl:template match="tei:Personne|tei:hi[@rend='Oulipen']" mode="pass3">
-   <persName type="other">
+  <xsl:template match="tei:hi[@rend='Nom-manifestation']" mode="pass3">
+    <name type="event">
+      <xsl:apply-templates mode="pass3"/>
+    </name>
+  </xsl:template>
+
+ <xsl:template match="tei:hi[@rend='Nom-oulipien']" mode="pass3">
+   <persName >
 	   <xsl:apply-templates mode="pass3"/>
    </persName>
  </xsl:template>
 
- <xsl:template match="tei:Oulipen|tei:hi[@rend='Oulipen']" mode="pass3">
-   <persName type="oulipen">
-	   <xsl:apply-templates mode="pass3"/>
+  <xsl:template match="tei:hi[@rend='Nom-personne-auteur']" mode="pass3">
+    <persName role="auteur">
+      <xsl:apply-templates mode="pass3"/>
+    </persName>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='Nom-personne-divers']" mode="pass3">
+    <persName >
+      <xsl:apply-templates mode="pass3"/>
+    </persName>
+  </xsl:template>
+  
+  
+  <xsl:template match="tei:hi[@rend='Nom-personne-editeur']" mode="pass3">
+    <orgName role="editeur">
+      <xsl:apply-templates mode="pass3"/>
+    </orgName>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='notions']" mode="pass3">
+    <term>
+      <xsl:apply-templates mode="pass3"/>
+    </term>
+  </xsl:template>
+  
+  <xsl:template match="tei:p[@rend='listeDesPresents'][1]" mode="pass3">
+    <list type="present">
+      <head><xsl:value-of select="." /></head>
+      <xsl:for-each select="following::tei:p[@rend='listeDesPresents']">
+        <item> <xsl:apply-templates mode="pass3"/></item>
+      </xsl:for-each>
+    </list>
+  </xsl:template>
+ 
+  <xsl:template match="tei:p[@rend='listeDesPresents'][position() > 1]" mode="pass3"/>
+
+  <xsl:template match="tei:hi[@rend='ref-document']" mode="pass3">
+    <ref>
+      <xsl:apply-templates mode="pass3"/>
+    </ref>
+  </xsl:template>
+    
+  <xsl:template match="tei:hi[@rend='reunion-date']" mode="pass3">
+    <date type="réunion">
+      <xsl:apply-templates mode="pass3"/>
+    </date>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='reunion-invité']" mode="pass3">
+    <persName role="invité">
+      <xsl:apply-templates mode="pass3"/>
+    </persName>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='reunion-invite']" mode="pass3">
+    <persName role="invité">
+      <xsl:apply-templates mode="pass3"/>
+    </persName>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='reunion-lieu']" mode="pass3">
+    <placeName role="réunion">
+      <xsl:apply-templates mode="pass3"/>
+    </placeName>
+  </xsl:template>
+  
+ <xsl:template match="tei:hi[@rend='reunion-presents']" mode="pass3">
+   <persName role="présent">
+     <xsl:apply-templates mode="pass3"/>
    </persName>
  </xsl:template>
-
+  
+  <xsl:template match="tei:hi[@rend='reunion-president']" mode="pass3">
+    <persName role="président">
+      <xsl:apply-templates mode="pass3"/>
+    </persName>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='reunion-secretaire']" mode="pass3">
+    <persName role="secrétaire">
+      <xsl:apply-templates mode="pass3"/>
+    </persName>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='titreOeuvre']" mode="pass3">
+    <title>
+      <xsl:apply-templates mode="pass3"/>
+    </title>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='titre-divers']" mode="pass3">
+    <title type="divers">
+      <xsl:apply-templates mode="pass3"/>
+    </title>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend='unclear']" mode="pass3">
+    <unclear>
+      <xsl:apply-templates mode="pass3"/>
+    </unclear>
+  </xsl:template>
+  
  <xsl:template match="tei:body" mode="pass3">
    <pb/>
    <xsl:for-each-group select="*" group-adjacent="if
@@ -103,7 +205,6 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:apply-templates select="current-group()" mode="pass3"/>
 	 </body>
        </xsl:when>
-
      </xsl:choose>
    </xsl:for-each-group>
  </xsl:template>

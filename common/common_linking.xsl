@@ -225,7 +225,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@type='transclude' and self::tei:ptr">
 	<xsl:apply-templates select="doc(@target)"/>
       </xsl:when>
-      <xsl:otherwise>
+    	<!-- omit empty ref elements that do not have @target -->
+    	<xsl:when test="self::tei:ref and not(@target) and not(descendant-or-self::text())"/>
+    	<xsl:otherwise>
 	<xsl:variable name="ptr" select="if (self::tei:ptr) then
 					     true() else false()"/>
 	<xsl:variable name="xmllang" select="@xml:lang"/>
@@ -278,6 +280,7 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:otherwise>
 		    <xsl:call-template name="makeExternalLink">
 		      <xsl:with-param name="ptr" select="$ptr"/>
+		      <xsl:with-param name="title" select="@n"/>
 		      <xsl:with-param name="dest">
 			<xsl:sequence select="tei:resolveURI($here,$a)"/>
 		      </xsl:with-param>
@@ -534,11 +537,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="makeExternalLink">
       <xsl:param name="ptr" as="xs:boolean"  select="false()"/>
       <xsl:param name="dest"/>
+      <xsl:param name="title"/>
       <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/>
       </xsl:param>
       <xsl:element name="{$linkElement}" namespace="{$linkElementNamespace}">
 	<xsl:if test="(self::tei:ptr or self::tei:ref) and @xml:id">
 	  <xsl:attribute name="id" select="@xml:id"/>
+	</xsl:if>
+	<xsl:if test="$title">
+	  <xsl:attribute name="title" select="$title"/>
 	</xsl:if>
 	<xsl:call-template name="makeRendition">
 	  <xsl:with-param name="default" select="$class"/>
@@ -557,7 +564,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:attribute>
 	 <xsl:choose>
 	   <xsl:when test="@n">
-	     <xsl:attribute name="title">
+	     <xsl:attribute name="title"  namespace="{$linkAttributeNamespace}">
 	       <xsl:value-of select="@n"/>
 	     </xsl:attribute>
 	   </xsl:when>
@@ -689,16 +696,22 @@ of this software, even if advised of the possibility of such damage.
 				 select="$eventualtarget"/>
 		 <xsl:call-template name="htmlAttributes"/>
 		 <xsl:for-each select="id($W)">
+		   <xsl:attribute name="title" namespace="{$linkAttributeNamespace}">
 		     <xsl:choose>
-		       <xsl:when test="starts-with(local-name(.),'div')">
-			 <xsl:attribute name="title">
-			   <xsl:value-of
-			       select="translate(normalize-space(tei:head[1]),'&gt;&lt;','')"/>
-			 </xsl:attribute>
+		       <xsl:when test="@n">
+			 <xsl:value-of select="@n"/>
 		       </xsl:when>
+		       <xsl:when
+			   test="starts-with(local-name(.),'div') and tei:head">
+			 <xsl:value-of select="tei:sanitize(tei:head)"/>
+		       </xsl:when>
+		       <xsl:otherwise>
+			 <xsl:value-of select="tei:sanitize(./string())"/>
+                       </xsl:otherwise>
 		     </xsl:choose>
+		   </xsl:attribute>
 		 </xsl:for-each>
-	       <xsl:copy-of select="$linktext"/>
+		 <xsl:copy-of select="$linktext"/>
 	       </xsl:element>
 	     </xsl:otherwise>
 	   </xsl:choose>
