@@ -1179,7 +1179,7 @@ of this software, even if advised of the possibility of such damage.
       .attr("width", treewidth + 50)
       .attr("height", treedepth + extray)
       .append("svg:g")
-      .attr("transform", "translate(0, extray)"); 
+      .attr("transform", function(d) { return "translate(" + 0 + "," +  (extray + 25) + ")"; })
       var tree = d3.layout.tree().size([treewidth,treedepth]);
       var nodes = tree.nodes(treeData);
        var links = tree.links(nodes);
