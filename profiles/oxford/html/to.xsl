@@ -36,7 +36,7 @@
 
    <xsl:param name="institution">University of Oxford</xsl:param>
 
-    <xsl:param name="treestyle">d3</xsl:param>
+    <xsl:param name="treestyle">d3dynamic</xsl:param>
 
    <xsl:template name="javascriptHook">
      <style type="text/css">
