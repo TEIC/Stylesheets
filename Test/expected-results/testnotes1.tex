@@ -4,7 +4,6 @@
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
 \usepackage{colortbl}
-\usepackage{wrapfig}
 \usepackage{ifxetex}
 \ifxetex
   \usepackage{fontspec}
@@ -122,7 +121,7 @@
 \mathcode`\_=\string"8000
 \catcode`\_=12\relax
 
-\usepackage[a4paper,twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in,marginparwidth=0.75in]{geometry}
+\usepackage[a4paper,twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in]{geometry}
 \usepackage{framed}
 
 \definecolor{shadecolor}{gray}{0.95}
@@ -130,10 +129,10 @@
 \usepackage[normalem]{ulem}
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
-\usepackage{graphicx}
 \usepackage{marginnote}
-
 \renewcommand*{\marginfont}{\itshape\footnotesize}
+\setlength\marginparwidth{.75in}
+\usepackage{graphicx}
 
   \usepackage{endnotes}
   
@@ -141,7 +140,7 @@
     
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 
-  \pagestyle{fancy}
+  \pagestyle{fancy} 
 
 \usepackage[pdftitle={The title},
  pdfauthor={}]{hyperref}
@@ -275,7 +274,8 @@
   {\end{list}\end{raggedright}}
 \newenvironment{specHead}[2]%
  {\vspace{20pt}\hrule\vspace{10pt}%
-  \label{#1}\markright{#2}%
+  \hypertarget{#1}{}%
+  \markright{#2}%
 
   \pdfbookmark[2]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
@@ -285,19 +285,6 @@
 \def\TheDate{1970-01-01}
 \title{The title}
 \author{}\makeatletter 
-\makeatletter
-\newcommand*{\cleartoleftpage}{%
-  \clearpage
-    \if@twoside
-    \ifodd\c@page
-      \hbox{}\newpage
-      \if@twocolumn
-        \hbox{}\newpage
-      \fi
-    \fi
-  \fi
-}
-\makeatother
 \makeatletter
 \thispagestyle{empty}
 \markright{\@title}\markboth{\@title}{\@author}
@@ -338,24 +325,16 @@ A free-standing note \end{quote}
 \par
 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet {\small\itshape [Note: plain note in first paragraph]}  Lorem ipsum dolor sit amet\par
 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet\footnote{Foot note in second paragraph}\par
-Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
-	\normalmarginpar
-      \marginnote{Marginal note in third paragraph} ipsum dolor sit amet Lorem ipsum dolor sit amet\par
+Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet\marginnote{Marginal note in third paragraph} ipsum dolor sit amet Lorem ipsum dolor sit amet\par
 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
 \begin{quote}
 Display note in fourth paragraph dolor sit amet Lorem ipsum dolor sit amet dolor sit amet Lorem ipsum dolor sit amet dolor sit amet Lorem ipsum dolor sit amet dolor sit amet Lorem ipsum dolor sit amet dolor sit amet Lorem ipsum dolor sit amet\end{quote}
  ipsum dolor sit amet Lorem ipsum dolor sit amet\par
 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet {\small\itshape [Note: Inline note in fifth paragraph]}  ipsum dolor sit amet Lorem ipsum dolor sit amet\par
 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet\endnote{End note in sixth paragraph} ipsum dolor sit amet Lorem ipsum dolor sit amet\par
-Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
-	\reversemarginpar
-      \marginnote{Left margin note in seventh paragraph} ipsum dolor sit amet Lorem ipsum dolor sit amet\par
-Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit Lorem amet ipsum dolor sit amet
-	\normalmarginpar
-      \marginnote{Outer margin note in eighth paragraph} ipsum dolor sit amet Lorem ipsum dolor sit amet\par
-Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
-	\normalmarginpar
-      \marginnote{Right margin note in nineth paragraph} ipsum dolor sit amet Lorem ipsum dolor sit amet \par 
+Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet\marginnote{Left margin note in seventh paragraph} ipsum dolor sit amet Lorem ipsum dolor sit amet\par
+Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit Lorem amet ipsum dolor sit amet\marginnote{Outer margin note in eighth paragraph} ipsum dolor sit amet Lorem ipsum dolor sit amet\par
+Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet\marginnote{Right margin note in nineth paragraph} ipsum dolor sit amet Lorem ipsum dolor sit amet \par 
 \begin{longtable}{P{0.017465753424657532\textwidth}P{0.8325342465753425\textwidth}}
  \hline\endfoot\hline\endlastfoot \endfirsthead \multicolumn{2}{c}{Table with notes(cont.)}\\\hline \endhead \caption{Table with notes}\\ 1\tabcellsep text\footnote{with footnote}\\
 2\tabcellsep text {\small\itshape [Note: with ordinary note]} \\
@@ -370,13 +349,13 @@ Display note (no other content in cell)\end{quote}
 Display note\end{quote}
 \end{longtable} \par
  
-\section[{Section one}]{Section one}\label{one}\par
-\label{p1}the words
-\subsection[{subsection heading}]{subsection heading}\label{two}\par
+\section[Section one]{Section one}\label{one}\par
+the words
+\subsection[subsection heading]{subsection heading}\label{two}\par
 hello\par
 A note here \footnote{A footnote in section 1}\par
 
-\section[{Section two}]{Section two}\label{three}\par
+\section[Section two]{Section two}\label{three}\par
 A note \footnote{A footnote in section 2}
 \theendnotes
 \end{document}

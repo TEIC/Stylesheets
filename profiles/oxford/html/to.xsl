@@ -34,10 +34,6 @@
 
    <xsl:key name="TABLESORT" use="1" match="tei:table[@rend='sort']"/>
 
-   <xsl:param name="institution">University of Oxford</xsl:param>
-
-    <xsl:param name="treestyle">d3</xsl:param>
-
    <xsl:template name="javascriptHook">
      <style type="text/css">
        td {vertical-align: top;}

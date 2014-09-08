@@ -10,7 +10,6 @@
                 version="2.0"
                 exclude-result-prefixes="tei rng teix sch xi xs
 					 #default">
-  <xsl:import href="../common/functions.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -99,7 +98,19 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
 		 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
                <xsl:otherwise>
-		 <xsl:variable name="patID" select="tei:makePatternID(.)"/>
+		 <xsl:variable name="patID">
+		   <xsl:choose>
+		     <xsl:when test="ancestor::tei:elementSpec">
+		       <xsl:value-of select="concat(ancestor::tei:elementSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
+		     </xsl:when>
+		     <xsl:when test="ancestor::tei:classSpec">
+		       <xsl:value-of select="concat(ancestor::tei:classSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
+		     </xsl:when>
+		     <xsl:when test="ancestor::tei:macroSpec">
+		       <xsl:value-of select="concat(ancestor::tei:macroSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
+		     </xsl:when>
+                     </xsl:choose>
+                  </xsl:variable>
 		 <xsl:if test="sch:rule">
 		   <pattern id="{$patID}">
 		     <xsl:apply-templates select="sch:rule"/>
@@ -172,8 +183,5 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
-  <xsl:template match="tei:TEI">
-    <xsl:apply-templates/>
-  </xsl:template>  
+  
 </xsl:stylesheet>

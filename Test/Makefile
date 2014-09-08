@@ -2,8 +2,7 @@ VERSION=`cat VERSION`
 FLAG=
 BINDIR=../bin
 SAXONOPT=useFixedDate=true
-SAXON=java -Djava.awt.headless=true -jar ../lib/saxon9he.jar
-DOTDOTSAXON=java -Djava.awt.headless=true -jar ../../lib/saxon9he.jar
+SAXON=java -Djava.awt.headless=true -jar lib/Saxon-HE-9.4.0.6.jar 
 JING=java -Djava.awt.headless=true -jar lib/jing-20120724.0.0.jar 
 OXY=/usr/share/oxygen
 SCRIPTS=teitobibtex \
@@ -27,7 +26,14 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-to-html test-p4top5 test-oddity test-scripts test-namespaces test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt  test-markdown  test-epub 
+default: test.rng test-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt p4top5 test-oddity test-pureant test-scripts test-namespaces test-epub 
+
+p4top5: 
+	@echo BUILD: testing p4top5
+	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
+	diff test17.tei expected-results/test17.tei
+	$(SAXON) A54031.tcp ../tcp/tcp2tei.xsl | xmllint --format - > A54031.xml
+	diff A54031.xml expected-results/A54031.xml
 
 test.rng:
 	$(BINDIR)/teitorelaxng --odd test.odd test.rng
@@ -37,7 +43,7 @@ test.rng:
 css:
 	(cd ..; for i in css/*; do test -f `basename $$i` || ln -s $$i `basename $$i`;done)
 
-test-to-html: css
+test-html: css
 	@echo BUILD: testing html
 	$(SAXON)  test.xml ../html/html.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
 	diff test.html expected-results/test.html
@@ -67,20 +73,20 @@ test-to-html: css
 	diff test22.html expected-results/test22.html
 	$(SAXON) test23.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > test23.html
 	diff test23.html expected-results/test23.html
-	(mkdir files; cd files;$(DOTDOTSAXON) ../testnotes1.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
+	(mkdir files; cd files; saxon ../testnotes1.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/two.html > x ; mv x files/two.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r  files expected-results/testnotes
 	rm -rf files
-	(mkdir files; cd files;$(DOTDOTSAXON) ../testnotes2.xml ../../html/html.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../tei.css)
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/html.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r  files expected-results/testnotes2
 	rm -rf files
-	(mkdir files; cd files;$(DOTDOTSAXON) ../testnotes2.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
 	xmllint --format files/two.html > x ; mv x files/two.html
@@ -100,26 +106,6 @@ test-to-html: css
 	diff test31.html expected-results/test31.html
 	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFile=../tei.css $(SAXONOPT)  | xmllint --format - > test32.html
 	diff test32.html expected-results/test32.html
-
-test-from-html:
-	$(SAXON) test38.htm ../html/html2tei.xsl $(SAXONOPT)  | xmllint --format - > test38.xml
-	diff test38.xml expected-results/test38.xml
-
-test-markdown: 
-	@echo BUILD: testing markdown 
-	@echo BUILD: markdown to tei 
-	$(BINDIR)/markdowntotei mdtest1.md mdtest1.xml
-	diff mdtest1.xml expected-results/mdtest1.xml
-	@echo BUILD: tei to markdown
-	$(BINDIR)/teitomarkdown test.xml mdtest2.md
-	diff mdtest2.md expected-results/mdtest2.md
-
-test-p4top5: 
-	@echo BUILD: testing p4top5
-	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
-	diff test17.tei expected-results/test17.tei
-	$(SAXON) A54031.tcp ../tcp/tcp2tei.xsl | xmllint --format - > A54031.xml
-	diff A54031.xml expected-results/A54031.xml
 
 testsplit:
 	$(SAXON) test6.xml ../html/html.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
@@ -202,12 +188,13 @@ test-odt:   test.rng
 	unzip -o -q test.xml.odt content.xml
 	xmllint --format content.xml > content.xml.odt.listing
 	diff test.xml.odt.listing expected-results/test.xml.odt.listing
-	diff content.xml.odt.listing expected-results/content.xml.odt.listing
+	rm test.xml.odt.listing
+	rm content.xml
 	$(BINDIR)/odttotei test7.odt test7.xml
 	$(JING) test.rng test7.xml
 	diff test7.xml expected-results/test7.xml
 
-test-from-docx: test.rng
+test-from-docx:
 	@echo BUILD: testing from-docx
 	$(BINDIR)/docxtotei test-indexes.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-indexes.xml  && rm temp.xml
@@ -225,18 +212,12 @@ test-from-docx: test.rng
 	xmllint --format temp.xml | perl cleanup.pl > test18.xml  && rm temp.xml
 	$(JING) test.rng test18.xml
 	diff test18.xml expected-results/test18.xml
-	$(BINDIR)/docxtotei test39.docx temp.xml
-	xmllint --format temp.xml | perl cleanup.pl > test39.xml  && rm temp.xml
-	diff test39.xml expected-results/test39.xml
 	$(BINDIR)/docxtotei --profile=transcription test-rtf2tei.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-rtf2tei.xml  && rm temp.xml
 	diff test-rtf2tei.xml expected-results/test-rtf2tei.xml
 	$(BINDIR)/docxtotei --profile=transcription test29.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test29.xml  && rm temp.xml
 	diff test29.xml expected-results/test29.xml
-	$(BINDIR)/docxtotei --profile=tei test37.docx temp.xml
-	xmllint --format temp.xml | perl cleanup.pl > test37.xml  && rm temp.xml
-	diff test37.xml expected-results/test37.xml
 
 test-to-docx:
 	@echo BUILD: testing to-docx
@@ -257,13 +238,6 @@ test-to-docx:
 
 test-oddity: css
 	@echo BUILD: testing oddity
-	$(BINDIR)/teitohtml5 $(FLAG) --summaryDoc --odd test.odd test.odd.html
-	xmllint --encode utf-8 --format test.odd.html | perl cleanup.pl> test.temp ; mv test.temp test.odd.html
-	diff test.odd.html expected-results/test.odd.html
-	$(BINDIR)/teitoodd test.odd test.processedodd
-	$(SAXON) test.processedodd ../odds/extract-isosch.xsl > test.isosch
-	perl -i -p -e 's/generated .* by /generated by /' test.isosch
-	diff test.isosch expected-results/test.isosch
 	$(BINDIR)/teitornc  $(FLAG) test21.odd test21.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test21.odd.rnc
 	diff test21.odd.rnc expected-results/test21.odd.rnc 
@@ -273,6 +247,9 @@ test-oddity: css
 	$(BINDIR)/teitohtml5 $(FLAG) --summaryDoc --lang=es --profile=tei --odd test15.odd test15.odd.html
 	xmllint --encode utf-8 --format test15.odd.html | perl cleanup.pl> test.temp ; mv test.temp test15.odd.html
 	diff test15.odd.html expected-results/test15.odd.html
+	$(BINDIR)/teitohtml5 $(FLAG) --summaryDoc --odd test.odd test.odd.html
+	xmllint --encode utf-8 --format test.odd.html | perl cleanup.pl> test.temp ; mv test.temp test.odd.html
+	diff test.odd.html expected-results/test.odd.html
 	$(SAXON) -it:main -o:oddbyexample.odd  -xsl:../tools/oddbyexample.xsl corpus=`pwd`/bare 
 	perl -p -i -e 's+<p>generated by oddbyexample.*</p>+<p></p>+' oddbyexample.odd
 	perl -p -i -e 's+<date>.*</date>+<date></date>+' oddbyexample.odd
@@ -300,13 +277,13 @@ test-oddity: css
 	diff test30.dtd expected-results/test30.dtd
 	$(BINDIR)/teitodtd $(FLAG) test-pure.odd test-pure.dtd
 	$(BINDIR)/teitornc $(FLAG) test-pure.odd test-pure.rnc
+	$(BINDIR)/teitohtml $(FLAG) --odd test-pure.odd test-pure.odd.html
 	xmllint --noout --dtdvalid test-pure.dtd test-pure.xml
+	xmllint --encode utf-8 --format test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure.odd.html
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.rnc
 	diff test-pure.rnc expected-results/test-pure.rnc
 	diff test-pure.dtd expected-results/test-pure.dtd
-	$(BINDIR)/teitohtml $(FLAG) --odd test-pure.odd test-pure.odd.html
-	xmllint --encode utf-8 --format test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure.odd.html
 	diff test-pure.odd.html expected-results/test-pure.odd.html
 	$(BINDIR)/teitodtd $(FLAG) test-pure2.odd test-pure2.dtd
 	$(BINDIR)/teitornc $(FLAG) test-pure2.odd test-pure2.rnc
@@ -337,6 +314,10 @@ moreoddity:
 	$(BINDIR)/teitoxsd test.odd test.xsd
 	$(BINDIR)/teitodtd test.odd test.dtd
 	$(BINDIR)/teitornc test.odd test.rnc
+
+pure:
+	$(BINDIR)/teitodtd test-pure.odd test-pure.dtd
+	$(BINDIR)/teitornc test-pure.odd test-pure.rnc
 
 test-namespaces:
 	@echo BUILD: testing namespaces
@@ -407,8 +388,8 @@ profile:
 
 clean:
 	(cd ..; for i in css/*; do rm -f `basename $$i`;done)
-	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd test.zip test*.dtd test-indexes.xml test37.xml test38.xml test39.xml
-	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5 test*.processedodd *.isosch
+	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd test.zip test*.dtd test-indexes.xml test37.xml
+	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5 test*.processedodd
 	rm -f oddbyexample.* index*div*html
 	rm -f testdrama.compiled.xml
 	rm -f test5.odt test7.xml test18.xml test19.xml test-index.xml test7.zip test11.xml test9.docx test9.odt content.xml.odt.listing content.xml.odt test.xml.docx.core test7.docx
@@ -417,4 +398,4 @@ clean:
 	rm -rf charts/ embeddings/ media/ _rels/ \[Content_Types\].xml
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype files
 	rm -f test.xlsx.xml *.result.tex *.result.pdf _slidelogo.png
-	rm -f content.xml
+

@@ -211,7 +211,7 @@ tei_att.datable.attribute.calendar =
   ## indicates the system or calendar to which the date represented by the content of this element belongs.
   attribute calendar { tei_data.pointer }?
 sch:pattern [
-  id = "foo-att.datable-calendar-calendar-constraint-1"
+  id = "calendar-constraint-calendar"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -643,7 +643,7 @@ tei_att.typed.attribute.subtype =
   ## provides a sub-categorization of the element, if needed
   attribute subtype { tei_data.enumerated }?
 sch:pattern [
-  id = "foo-att.typed-subtypeTyped-constraint-2"
+  id = "att.typed-constraint-subtypeTyped"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -672,7 +672,7 @@ tei_att.pointing.attribute.targetLang =
   ## specifies the language of the content to be found at the destination referenced by target, using a language tag generated according to BCP 47.
   attribute targetLang { tei_data.language }?
 sch:pattern [
-  id = "foo-att.pointing-targetLang-targetLang-constraint-3"
+  id = "targetLang-constraint-targetLang"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -759,7 +759,7 @@ tei_att.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { tei_data.pointer }?
 sch:pattern [
-  id = "foo-att.spanning-spanTo-spanTo-2-constraint-4"
+  id = "spanTo-constraint-spanTo-2"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -808,8 +808,7 @@ tei_att.styleDef.attribute.schemeVersion =
   ## supplies a version number for the style language provided in scheme.
   attribute schemeVersion { tei_data.versionNumber }?
 sch:pattern [
-  id =
-    "foo-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-5"
+  id = "schemeVersion-constraint-schemeVersionRequiresScheme"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1006,13 +1005,6 @@ tei_model.egLike_sequenceOptional = empty
 tei_model.egLike_sequenceOptionalRepeatable = empty
 tei_model.egLike_sequenceRepeatable = notAllowed
 tei_model.graphicLike = tei_media | tei_graphic | tei_binaryObject
-tei_model.offsetLike = notAllowed
-tei_model.offsetLike_alternation = notAllowed
-tei_model.offsetLike_sequence = empty
-tei_model.offsetLike_sequenceOptional = empty
-tei_model.offsetLike_sequenceOptionalRepeatable = empty
-tei_model.offsetLike_sequenceRepeatable = notAllowed
-tei_model.pPart.msdesc = notAllowed
 tei_model.pPart.editorial = tei_choice | tei_abbr | tei_expan
 tei_model.pPart.editorial_alternation =
   tei_choice | tei_abbr | tei_expan
@@ -1068,7 +1060,6 @@ tei_model.pPart.transcriptional_sequenceRepeatable =
 tei_model.pPart.edit =
   tei_model.pPart.editorial | tei_model.pPart.transcriptional
 tei_model.ptrLike = tei_ptr | tei_ref
-tei_model.lPart = notAllowed
 tei_model.global.meta =
   tei_index
   | tei_link
@@ -1081,14 +1072,6 @@ tei_model.global.meta =
 tei_model.milestoneLike =
   tei_milestone | tei_gb | tei_pb | tei_lb | tei_cb | tei_anchor
 tei_model.gLike = notAllowed
-tei_model.oddDecl = notAllowed
-tei_model.oddDecl_alternation = notAllowed
-tei_model.oddDecl_sequence = empty
-tei_model.oddDecl_sequenceOptional = empty
-tei_model.oddDecl_sequenceOptionalRepeatable = empty
-tei_model.oddDecl_sequenceRepeatable = notAllowed
-tei_model.phrase.xml = notAllowed
-tei_model.specDescLike = notAllowed
 tei_model.biblLike =
   tei_bibl | tei_biblStruct | tei_listBibl | tei_biblFull
 tei_model.biblLike_alternation =
@@ -1141,22 +1124,6 @@ tei_model.stageLike_sequenceRepeatable = tei_stage+
 tei_model.entryPart = notAllowed
 tei_model.global.edit = tei_gap
 tei_model.divPart = tei_model.lLike | tei_model.pLike | tei_lg | tei_sp
-tei_model.placeNamePart = notAllowed
-tei_model.placeNamePart_alternation = notAllowed
-tei_model.placeNamePart_sequence = empty
-tei_model.placeNamePart_sequenceOptional = empty
-tei_model.placeNamePart_sequenceOptionalRepeatable = empty
-tei_model.placeNamePart_sequenceRepeatable = notAllowed
-tei_model.placeStateLike = tei_model.placeNamePart
-tei_model.placeStateLike_alternation =
-  tei_model.placeNamePart_alternation
-tei_model.placeStateLike_sequence = tei_model.placeNamePart_sequence
-tei_model.placeStateLike_sequenceOptional =
-  tei_model.placeNamePart_sequenceOptional?
-tei_model.placeStateLike_sequenceOptionalRepeatable =
-  tei_model.placeNamePart_sequenceOptionalRepeatable*
-tei_model.placeStateLike_sequenceRepeatable =
-  tei_model.placeNamePart_sequenceRepeatable+
 tei_model.publicationStmtPart.agency =
   tei_publisher | tei_distributor | tei_authority
 tei_model.publicationStmtPart.detail =
@@ -1212,7 +1179,6 @@ tei_model.divWrapper =
   | tei_docDate
 tei_model.divTopPart = tei_model.headLike | tei_opener | tei_signed
 tei_model.divTop = tei_model.divWrapper | tei_model.divTopPart
-tei_model.frontPart.drama = notAllowed
 tei_model.pLike.front =
   tei_head
   | tei_byline
@@ -1259,42 +1225,19 @@ tei_model.addressLike_sequenceOptional = tei_email?, tei_address?
 tei_model.addressLike_sequenceOptionalRepeatable =
   tei_email*, tei_address*
 tei_model.addressLike_sequenceRepeatable = tei_email+, tei_address+
-tei_model.nameLike =
-  tei_model.nameLike.agent
-  | tei_model.offsetLike
-  | tei_model.placeStateLike
-  | tei_rs
-  | tei_idno
+tei_model.nameLike = tei_model.nameLike.agent | tei_rs | tei_idno
 tei_model.nameLike_alternation =
-  tei_model.nameLike.agent_alternation
-  | tei_model.offsetLike_alternation
-  | tei_model.placeStateLike_alternation
-  | tei_rs
-  | tei_idno
+  tei_model.nameLike.agent_alternation | tei_rs | tei_idno
 tei_model.nameLike_sequence =
-  tei_model.nameLike.agent_sequence,
-  tei_model.offsetLike_sequence,
-  tei_model.placeStateLike_sequence,
-  tei_rs,
-  tei_idno
+  tei_model.nameLike.agent_sequence, tei_rs, tei_idno
 tei_model.nameLike_sequenceOptional =
-  tei_model.nameLike.agent_sequenceOptional?,
-  tei_model.offsetLike_sequenceOptional?,
-  tei_model.placeStateLike_sequenceOptional?,
-  tei_rs?,
-  tei_idno?
+  tei_model.nameLike.agent_sequenceOptional?, tei_rs?, tei_idno?
 tei_model.nameLike_sequenceOptionalRepeatable =
   tei_model.nameLike.agent_sequenceOptionalRepeatable*,
-  tei_model.offsetLike_sequenceOptionalRepeatable*,
-  tei_model.placeStateLike_sequenceOptionalRepeatable*,
   tei_rs*,
   tei_idno*
 tei_model.nameLike_sequenceRepeatable =
-  tei_model.nameLike.agent_sequenceRepeatable+,
-  tei_model.offsetLike_sequenceRepeatable+,
-  tei_model.placeStateLike_sequenceRepeatable+,
-  tei_rs+,
-  tei_idno+
+  tei_model.nameLike.agent_sequenceRepeatable+, tei_rs+, tei_idno+
 tei_model.global =
   tei_model.global.meta
   | tei_model.milestoneLike
@@ -1310,8 +1253,7 @@ tei_model.biblPart =
   | tei_textLang
   | tei_edition
   | tei_extent
-tei_model.frontPart =
-  tei_model.frontPart.drama | tei_divGen | tei_titlePage
+tei_model.frontPart = tei_divGen | tei_titlePage
 tei_model.addrPart =
   tei_model.nameLike
   | tei_addrLine
@@ -1325,7 +1267,6 @@ tei_model.pPart.data =
   | tei_model.nameLike
 tei_model.inter =
   tei_model.egLike
-  | tei_model.oddDecl
   | tei_model.biblLike
   | tei_model.labelLike
   | tei_model.listLike
@@ -1336,20 +1277,14 @@ tei_model.phrase =
   tei_model.segLike
   | tei_model.highlighted
   | tei_model.graphicLike
-  | tei_model.pPart.msdesc
   | tei_model.pPart.edit
   | tei_model.ptrLike
-  | tei_model.lPart
-  | tei_model.phrase.xml
-  | tei_model.specDescLike
   | tei_model.pPart.data
 tei_model.limitedPhrase =
   tei_model.hiLike
   | tei_model.emphLike
-  | tei_model.pPart.msdesc
   | tei_model.pPart.editorial
   | tei_model.ptrLike
-  | tei_model.phrase.xml
   | tei_model.pPart.data
 tei_model.divLike = tei_div
 tei_model.divGenLike = tei_divGen
@@ -1913,7 +1848,7 @@ tei_ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "foo-ptr-ptrAtts-constraint-1"
+         id = "ptr-constraint-ptrAtts"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1947,7 +1882,7 @@ tei_ref =
   element ref {
     tei_macro.paraContent
     >> sch:pattern [
-         id = "foo-ref-refAtts-constraint-2"
+         id = "ref-constraint-refAtts"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2463,7 +2398,7 @@ tei_relatedItem =
   element relatedItem {
     ((tei_model.biblLike | tei_model.ptrLike)?)
     >> sch:pattern [
-         id = "foo-relatedItem-targetorcontent1-constraint-3"
+         id = "relatedItem-constraint-targetorcontent11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2485,7 +2420,7 @@ tei_relatedItem =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-relatedItem-targetorcontent1-constraint-6"
+         id = "relatedItem-constraint-targetorcontent12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2535,7 +2470,7 @@ tei_lg =
       | tei_lg)*,
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-lg-atleast1oflggapl-constraint-7"
+         id = "lg-constraint-atleast1oflggapl"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2973,7 +2908,7 @@ tei_quotation =
   element quotation {
     (tei_model.pLike*)
     >> sch:pattern [
-         id = "foo-quotation-quotationContents-constraint-4"
+         id = "quotation-constraint-quotationContents"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3919,7 +3854,7 @@ tei_link =
   element link {
     empty
     >> sch:pattern [
-         id = "foo-link-linkTargets3-constraint-8"
+         id = "link-constraint-linkTargets3"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4060,7 +3995,7 @@ tei_join =
   element join {
     ((tei_model.descLike | tei_model.certLike)*)
     >> sch:pattern [
-         id = "foo-join-joinTargets3-constraint-9"
+         id = "join-constraint-joinTargets3"
          "\x{a}" ~
          "            "
          sch:rule [

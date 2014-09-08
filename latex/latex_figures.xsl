@@ -164,7 +164,11 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element table</desc>
    </doc>
   <xsl:template match="tei:table">
-    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
+      <xsl:if test="@xml:id">
+         <xsl:text>\label{</xsl:text>
+         <xsl:value-of select="@xml:id"/>
+         <xsl:text>}</xsl:text>
+      </xsl:if>
       <xsl:text> \par </xsl:text>
       <xsl:choose>
          <xsl:when test="ancestor::tei:table or $longtables='false'"> 
@@ -195,7 +199,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="makeTable"/> 
      <xsl:text>\end{tabular} 
       \caption{</xsl:text>
-      <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
+      <xsl:if test="@xml:id">\label{<xsl:value-of select="@xml:id"/>}</xsl:if>
       <xsl:apply-templates mode="ok" select="tei:head"/>
       <xsl:text>}
      \end{small} 
@@ -228,7 +232,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
          <xsl:when test="tei:head or tei:p">
             <xsl:text>&#10;\caption{</xsl:text>
-	    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
+            <xsl:if test="@xml:id">\label{<xsl:value-of select="@xml:id"/>}</xsl:if>
             <xsl:for-each select="tei:head">
 	      <xsl:apply-templates/>
 	    </xsl:for-each>
@@ -251,7 +255,8 @@ of this software, even if advised of the possibility of such damage.
       <desc>[latex] Make picture</desc>
    </doc>
   <xsl:template name="makePic">
-    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
+      <xsl:if test="@xml:id">\hypertarget{<xsl:value-of
+      select="@xml:id"/>}{}</xsl:if>
       <xsl:choose>
 	<xsl:when test="@rend='noindent'">
 	  <xsl:text>\noindent</xsl:text>
@@ -260,54 +265,28 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:text>\noindent</xsl:text>
 	</xsl:when>
       </xsl:choose>
-      <xsl:variable name="pic">
-	<xsl:text>\includegraphics[</xsl:text>
-	<xsl:call-template name="graphicsAttributes">
-          <xsl:with-param name="mode">latex</xsl:with-param>
-	</xsl:call-template>
-	<xsl:text>]{</xsl:text>
-	<xsl:choose>
-          <xsl:when test="$realFigures='true'">
-	    <xsl:sequence select="tei:resolveURI(.,@url)"/>
-          </xsl:when>
-          <xsl:otherwise>
-	    <xsl:variable name="F">
-	      <xsl:sequence select="tei:resolveURI(.,@url)"/>
-	    </xsl:variable>
-	    <xsl:text>Pictures/resource</xsl:text>
-	    <xsl:number level="any"/>
-	    <xsl:text>.</xsl:text>
-	    <xsl:value-of select="tokenize($F,'\.')[last()]"/>
-          </xsl:otherwise>
-	</xsl:choose>
-	<xsl:text>}</xsl:text>
-      </xsl:variable>
+      <xsl:text>\includegraphics[</xsl:text>
+      <xsl:call-template name="graphicsAttributes">
+         <xsl:with-param name="mode">latex</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text>]{</xsl:text>
       <xsl:choose>
-	<xsl:when test="parent::tei:ref">
-	  <xsl:value-of select="$pic"/>
-	</xsl:when>
-	<xsl:when test="not
-			(following-sibling::tei:graphic[@rend='alignright'])
-			and @rend='alignright'">
-	  <xsl:text>\begin{wrapfigure}{r}{</xsl:text>
-	  <xsl:value-of select="@width"/>
-	  <xsl:text>}</xsl:text>
-	  <xsl:value-of select="$pic"/>
-	  <xsl:text>\end{wrapfigure}</xsl:text>
-	</xsl:when>
-	<xsl:when test="not (following-sibling::tei:graphic[@rend='alignleft'])
-			and @rend='alignleft'">
-	  <xsl:text>\begin{wrapfigure}{l}{</xsl:text>
-	  <xsl:value-of select="@width"/>
-	  <xsl:text>}</xsl:text>
-	  <xsl:value-of select="$pic"/>
-	  <xsl:text>\end{wrapfigure}</xsl:text>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="$pic"/>
-	</xsl:otherwise>
-
+         <xsl:when test="$realFigures='true'">
+	   <xsl:sequence select="tei:resolveURI(.,@url)"/>
+         </xsl:when>
+         <xsl:otherwise>
+	   <xsl:variable name="F">
+	     <xsl:sequence select="tei:resolveURI(.,@url)"/>
+	   </xsl:variable>
+	   <xsl:variable name="target">
+	     <xsl:text>image</xsl:text>
+	     <xsl:number level="any"/>
+	     <xsl:text>.</xsl:text>
+	   </xsl:variable>
+	   <xsl:value-of select="tokenize($F,'\.')[last()]"/>
+         </xsl:otherwise>
       </xsl:choose>
+      <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[latex] </desc>

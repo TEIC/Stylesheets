@@ -198,8 +198,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:if test="count(key('GRAPHICS',1))&gt;0">
           <manifest:file-entry manifest:media-type="" manifest:full-path="Pictures/"/>
           <xsl:for-each select="key('GRAPHICS',1)">
-            <manifest:file-entry>
             <xsl:variable name="imagetype" select="tokenize(@url,'\.')[last()]"/>
+            <manifest:file-entry>
               <xsl:attribute name="manifest:full-path">
                 <xsl:text>Pictures/resource</xsl:text>
                 <xsl:number level="any"/>
@@ -207,7 +207,16 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:value-of select="$imagetype"/>
               </xsl:attribute>
               <xsl:attribute name="manifest:media-type">
-		<xsl:value-of  select="tei:generateMimeType(@url,@mimeType)"/>
+                <xsl:text>image/</xsl:text>
+                <xsl:choose>
+                  <xsl:when test="$imagetype='png'">png</xsl:when>
+                  <xsl:when test="$imagetype='gif'">gif</xsl:when>
+                  <xsl:when test="$imagetype='jpg'">jpeg</xsl:when>
+                  <xsl:when test="$imagetype='jpeg'">jpg</xsl:when>
+                  <xsl:when test="$imagetype='tiff'">tiff</xsl:when>
+                  <xsl:when test="$imagetype='tif'">tiff</xsl:when>
+                  <xsl:otherwise>jpeg</xsl:otherwise>
+                </xsl:choose>
               </xsl:attribute>
             </manifest:file-entry>
           </xsl:for-each>
@@ -584,52 +593,36 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="tei:list[tei:isGlossList(.)]/tei:item">
-    <xsl:choose>
-      <xsl:when test="count(*)=1 and tei:list">
+    <text:p text:style-name="List_20_Contents">
       <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:otherwise>
-	<text:p text:style-name="List_20_Contents">
-	  <xsl:apply-templates/>
-	</text:p>
-      </xsl:otherwise>
-    </xsl:choose>
+    </text:p>
   </xsl:template>
   <xsl:template match="tei:list[tei:isGlossList(.)]/tei:label">
     <text:p text:style-name="List_20_Heading">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
-
   <xsl:template match="tei:item/tei:p">
     <xsl:apply-templates/>
   </xsl:template>
-
   <xsl:template match="tei:item">
     <text:list-item>
-      <xsl:for-each-group select="node()" group-adjacent="if
-							  (self::text())			  then 1
-							  else if  (self::tei:list
-							  or
-							  self::tei:p
-							  or self::teix:egXML)        then 2       else 1        ">
-	<xsl:choose>
-	  <xsl:when test="current-grouping-key()=2">
-	    <xsl:apply-templates select="current-group()"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-            <text:p>
-              <xsl:attribute name="text:style-name">
-		<xsl:choose>
-                  <xsl:when test="tei:isOrderedList(..)">P2</xsl:when>
-                  <xsl:otherwise>P1</xsl:otherwise>
-		</xsl:choose>
-              </xsl:attribute>
-		<xsl:apply-templates select="current-group()"/>
-	      </text:p>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:for-each-group>
+      <xsl:choose>
+        <xsl:when test="tei:list or teix:egXML">
+          <xsl:apply-templates/>
+        </xsl:when>
+        <xsl:otherwise>
+          <text:p>
+            <xsl:attribute name="text:style-name">
+              <xsl:choose>
+                <xsl:when test="tei:isOrderedList(..)">P2</xsl:when>
+                <xsl:otherwise>P1</xsl:otherwise>
+              </xsl:choose>
+            </xsl:attribute>
+            <xsl:apply-templates/>
+          </text:p>
+        </xsl:otherwise>
+      </xsl:choose>
     </text:list-item>
   </xsl:template>
   <xsl:template name="displayNote">
@@ -800,9 +793,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="lineBreak">
 	<text:line-break/>
   </xsl:template>
-  <xsl:template name="lineBreakAsPara">
-	<text:line-break/>
-  </xsl:template>
   <xsl:template match="tei:biblStruct">
     <text:list-item>
       <text:p text:style-name="P2">
@@ -892,16 +882,9 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:ab">
-    <xsl:choose>
-      <xsl:when test="tei:ab">
-	  <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:otherwise>
-	<text:p>
-	  <xsl:apply-templates/>
-	</text:p>
-      </xsl:otherwise>
-    </xsl:choose>
+    <text:p>
+      <xsl:apply-templates/>
+    </text:p>
   </xsl:template>
   <!-- tables-->
   <xsl:template match="tei:table">
@@ -1004,6 +987,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="spaceCharacter"> </xsl:param>
   <xsl:param name="showNamespaceDecls">true</xsl:param>
   <xsl:param name="wrapLength">65</xsl:param>
+  <xsl:param name="attsOnSameLine">3</xsl:param>
   <xsl:key name="Namespaces" match="*[ancestor::teix:egXML]" use="namespace-uri()"/>
   <xsl:key name="Namespaces" match="*[not(ancestor::*)]" use="namespace-uri()"/>
   <xsl:template name="newLine">
@@ -1095,7 +1079,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="makeExternalLink">
     <xsl:param name="ptr" as="xs:boolean" select="false()"/>
     <xsl:param name="dest"/>
-    <xsl:param name="title"/>
     <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/></xsl:param>
     <text:a xlink:type="simple" xlink:href="{$dest}">
       <xsl:choose>

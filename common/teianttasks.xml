@@ -277,11 +277,9 @@
       <echo level="info">ZIP: put files from ${outputTempDir} together into @{out}</echo>
       <delete file="@{out}"/>
       <!-- needs zip64Mode="never"  in Ant 1.9.2 onwards -->
-      <zip zip64Mode="never" 
-	destfile="@{out}" basedir="${outputTempDir}" 	   
+      <zip destfile="@{out}" basedir="${outputTempDir}" 	   
 	   compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
-      <zip zip64Mode="never" 
-	destfile="@{out}" basedir="${outputTempDir}"
+      <zip destfile="@{out}" basedir="${outputTempDir}"
 	   includes="mimetype" update="true" keepcompression="true" compress="false"/>
     </sequential>
   </macrodef>
@@ -368,8 +366,6 @@
 	<!-- for ODD docs -->
         <param name="summaryDoc" expression="${summaryDoc}" if="summaryDoc"/>
         <param name="displayMode" expression="rnc"/>
-	<!-- for ones which need an output filename and/or directory-->
-	<param name="directory" expression="${outputDir}"/>
       </xslt>
     </sequential>
   </macrodef>

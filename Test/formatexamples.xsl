@@ -9,6 +9,7 @@
   <!-- import base conversion style -->
 
   <xsl:import href="/usr/share/xml/tei/stylesheet/common/verbatim.xsl"/>
+  <xsl:param name="attsOnSameLine">2</xsl:param>
   <xsl:param name="attLength">35</xsl:param>
   <xsl:param name="spaceCharacter">&#160;</xsl:param>
 

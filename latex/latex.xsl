@@ -95,17 +95,17 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="verbatim-Text">
       <xsl:param name="words"/>
       <xsl:choose>
-         <xsl:when test="lang('zh-TW') or lang('zh')">
+         <xsl:when test="parent::*/@xml:lang='zh-TW'">
 	           <xsl:text>{\textChinese </xsl:text>
 		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
 	           <xsl:text>}</xsl:text>
          </xsl:when>
-         <xsl:when test="lang('ja')">
+         <xsl:when test="parent::*/@xml:lang='ja'">
 	           <xsl:text>{\textJapanese </xsl:text>
 		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
 	           <xsl:text>}</xsl:text>
          </xsl:when>
-         <xsl:when test="lang('kr')">
+         <xsl:when test="parent::*/@xml:lang='kr'">
 	           <xsl:text>{\textKorean </xsl:text>
 		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
 	           <xsl:text>}</xsl:text>
@@ -125,8 +125,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:function name="tei:escapeCharsVerbatim" as="xs:string">
     <xsl:param name="letters"/>
-    <xsl:value-of select="replace(replace(replace(replace(replace(translate($letters, '\{}','⃥❴❵'),
-		  '&#10;','\\newline&#10;'),
+    <xsl:value-of select="replace(replace(replace(replace(translate($letters, '\{}','⃥❴❵'),
 		  '_','\\textunderscore '),
 		  '\^','\\textasciicircum '),
 		  '~','\\textasciitilde '),
@@ -149,7 +148,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:escapeCharsPartial" as="xs:string" override="yes">
     <xsl:param name="letters"/>
       <xsl:value-of
-	  select="replace($letters,'([%#])','\\$1')"/>
+	  select="replace($letters,'([#])','\\$1')"/>
 
   </xsl:function>
 
@@ -214,7 +213,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="style"/>
       <xsl:param name="after"/>
       <xsl:value-of select="$before"/>
-      <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:choose>
 	<xsl:when test="$style=('add','unclear','bibl','docAuthor','titlem','italic','mentioned','term','foreign')">
 	  <xsl:text>\textit{</xsl:text>
@@ -263,7 +261,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>how to make a horizontal rule</desc>
   </doc>
   <xsl:template name="horizontalRule">
-    <xsl:text>\\\rule[0.5ex]{\textwidth}{0.5pt}</xsl:text>
+    <xsl:text>\hline</xsl:text>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -272,7 +270,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:template name="makeBlock">
       <xsl:param name="style"/>
       <xsl:sequence select="concat('\begin{',$style,'}')"/>
-      <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:apply-templates/>
       <xsl:sequence select="concat('\end{',$style,'}')"/>
     </xsl:template>
@@ -323,10 +320,5 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </xsl:template>
 
-
-    <xsl:function name="tei:makeHyperTarget" as="xs:string">
-      <xsl:param name="id"/>
-      <xsl:value-of select=" if ($id) then concat('\label{',$id,'}') else ''"/>
-    </xsl:function>
 
 </xsl:stylesheet>

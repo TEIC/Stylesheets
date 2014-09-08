@@ -56,6 +56,7 @@ XSL LaTeX stylesheet to make slides
   <xsl:param name="classParameters"/>
   <xsl:param name="beamerClass">PaloAlto</xsl:param>
   <xsl:param name="pause">true</xsl:param>
+  <xsl:param name="attsOnSameLine">2</xsl:param>
   <xsl:param name="attLength">35</xsl:param>
   <xsl:param name="spaceCharacter">\hspace*{4pt}</xsl:param>
 
@@ -228,7 +229,11 @@ XSL LaTeX stylesheet to make slides
    </xsl:template>
 
   <xsl:template name="makePic">
-    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
+      <xsl:if test="@xml:id">
+         <xsl:text>\hypertarget{</xsl:text>
+         <xsl:value-of select="@xml:id"/>
+         <xsl:text>}{}</xsl:text>
+      </xsl:if>
       <xsl:if test="@rend='centre'">
          <xsl:text>\centerline{</xsl:text>
       </xsl:if>
@@ -261,13 +266,12 @@ XSL LaTeX stylesheet to make slides
       <xsl:apply-templates/>
    </xsl:template>
 
-<!--
    <xsl:template match="tei:eg">
       <xsl:text>\begin{Verbatim}[fontsize=\scriptsize,frame=single,fillcolor=\color{yellow}]&#10;</xsl:text>
       <xsl:apply-templates mode="eg"/>
       <xsl:text>\end{Verbatim}&#10;</xsl:text>
    </xsl:template>
--->
+
   <xsl:template match="text()" mode="eg">
       <xsl:choose>
          <xsl:when test="starts-with(.,'&#xA;')">
@@ -343,7 +347,7 @@ XSL LaTeX stylesheet to make slides
       <xsl:choose>
          <xsl:when test="tei:head">
             <xsl:text>&#10;\par\noindent\textit{</xsl:text>
-	    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
+            <xsl:if test="@xml:id">\label{<xsl:value-of select="@xml:id"/>}</xsl:if>
             <xsl:for-each select="tei:head">
 	      <xsl:apply-templates/>
 	    </xsl:for-each>

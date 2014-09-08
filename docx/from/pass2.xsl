@@ -40,7 +40,6 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:variable name="dq">"</xsl:variable>
   <xsl:template match="@*|comment()|processing-instruction()" mode="pass2">
     <xsl:copy-of select="."/>
   </xsl:template>
@@ -68,8 +67,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:cell[count(*)=1]/tei:p" mode="pass2">
     <xsl:apply-templates mode="pass2"/>
   </xsl:template>
-
-  <xsl:template match="tei:list[normalize-space(.)='']" mode="pass2"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
@@ -118,8 +115,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-      <p>A &lt;p&gt; or &lt;seg&gt; which does nothing is not worth
-      having; and if its reverts to just space, its a space </p>
+      <p>A &lt;p&gt; or &lt;seg&gt; which does nothing is not worth having </p>
     </desc>
   </doc>
   <xsl:template match="tei:seg[not(@*)]" mode="pass2">
@@ -132,9 +128,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:value-of select="."/>
       </xsl:when>
       <xsl:when test="parent::tei:hi[count(*)=1]">
-        <xsl:value-of select="."/>
-      </xsl:when>
-      <xsl:when test=".=' '">
         <xsl:value-of select="."/>
       </xsl:when>
       <xsl:otherwise>
@@ -153,9 +146,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:for-each select="tei:fw">
         <xsl:copy-of select="."/>
       </xsl:for-each>
-      <xsl:apply-templates select="//tei:front" mode="pass2"/>
+      <xsl:apply-templates select="tei:front" mode="pass2"/>
       <body>
-        <xsl:for-each select="tei:body/tei:*[not(local-name(.)='front')]">
+        <xsl:for-each select="tei:body/tei:*">
           <xsl:apply-templates select="." mode="pass2"/>
         </xsl:for-each>
       </body>
@@ -261,6 +254,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>A footnote reference with a footnote inside it is in fact
     just a footnote</desc>
   </doc>
+
   <xsl:template match="tei:hi[@rend='footnote_reference' and count(*)=1 and tei:note]" mode="pass2" priority="99">
     <xsl:apply-templates select="tei:note" mode="pass2"/>
   </xsl:template>
@@ -285,22 +279,21 @@ of this software, even if advised of the possibility of such damage.
     <desc>Clean up by merging adjacent &lt;hi&gt;s with the same rend
     value into one.</desc>
   </doc>
-
-  <xsl:template match="tei:hi[not (* or text())]"		mode="pass2"/>
-
-  <xsl:template match="tei:hi[(@rend or @style) and (* or text())]" mode="pass2">
-    <xsl:variable name="r" select="concat(@rend,@style)"/>
+  <xsl:template match="tei:hi[@rend]" mode="pass2">
+    <xsl:variable name="r" select="@rend"/>
     <xsl:choose>
       <xsl:when test="count(parent::tei:speaker/*)=1 and not         (parent::tei:speaker/text())">
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="parent::tei:head and .=' '"/>
+      <xsl:when test="not(*) and string-length(.)=0"/>
       <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']  and tei:g[@ref='x:tab']"/>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[concat(@rend,@style)=$r]]"/>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and  preceding-sibling::node()[2][self::tei:hi[concat(@rend,@style)=$r]]"/>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]"/>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and
+		      preceding-sibling::node()[2][self::tei:hi[@rend=$r]]"/>
       <xsl:when test="($r='bold' or $r='italic') and .=' '">
         <xsl:text> </xsl:text>
-	<xsl:if test="following-sibling::node()[1][self::tei:hi[concat(@rend,@style)=$r]]">
+	<xsl:if test="following-sibling::node()[1][self::tei:hi[@rend=$r]]">
 	  <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
 	  <xsl:element name="{$ename}">
 	    <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
@@ -338,13 +331,13 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="r"/>
     <xsl:for-each select="following-sibling::node()[1]">
       <xsl:choose>
-        <xsl:when test="self::tei:hi[concat(@rend,@style)=$r]">
+        <xsl:when test="self::tei:hi[@rend=$r]">
           <xsl:apply-templates mode="pass2"/>
           <xsl:call-template name="nextHi">
             <xsl:with-param name="r" select="$r"/>
           </xsl:call-template>
         </xsl:when>
-        <xsl:when test="self::tei:seg and .=' ' and       following-sibling::node()[1][self::tei:hi[concat(@rend,@style)=$r]]">
+        <xsl:when test="self::tei:seg and .=' ' and       following-sibling::node()[1][self::tei:hi[@rend=$r]]">
           <xsl:apply-templates mode="pass2"/>
           <xsl:call-template name="nextHi">
             <xsl:with-param name="r" select="$r"/>
@@ -354,30 +347,24 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
 
-
   <xsl:template match="tei:div[tei:head/tei:ANCHOR]" mode="pass2">
     <xsl:copy>
       <xsl:attribute name="xml:id" select="tei:head/tei:ANCHOR[1]/@xml:id"/>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
     </xsl:copy>
   </xsl:template>
-
   <xsl:template match="tei:ANCHOR[parent::tei:head]" mode="pass2"/>
-
   <xsl:template match="tei:ANCHOR[not(parent::tei:head)]" mode="pass2">
     <anchor xml:id="{@xml:id}"/>
   </xsl:template>
-
   <xsl:template match="w:bookmarkStart" mode="pass2">
     <anchor>
       <xsl:attribute name="xml:id">
-        <xsl:value-of select="replace(@w:name,'^_','')"/>
+        <xsl:value-of select="substring(@w:name,2)"/>
       </xsl:attribute>
     </anchor>
   </xsl:template>
-
   <xsl:template match="tei:speech" mode="pass2"/>
-
   <xsl:template match="tei:speech" mode="keep">
     <p>
       <xsl:apply-templates mode="pass2"/>
@@ -410,28 +397,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:copy>
       <xsl:apply-templates select="@*" mode="pass2"/>
       <xsl:apply-templates mode="pass2"/>
-      <xsl:if test="preceding-sibling::*[1][self::tei:CAPTION] and 
-        following-sibling::*[1][self::tei:CAPTION]">
-        <xsl:message>
-          <xsl:text>WARN: Possible confusion on where these captions belong: [[</xsl:text>
-          <xsl:value-of select="concat(preceding-sibling::*[1],']] and [[',
-            following-sibling::*[1],']]')"/>
-        </xsl:message>
+      <xsl:if test="following-sibling::*[1][self::tei:CAPTION]">
+	<xsl:apply-templates
+	    select="following-sibling::*[1][self::tei:CAPTION]/*" mode="pass2"/>
       </xsl:if>
-      <xsl:choose>
-        <xsl:when test="following-sibling::*[1][self::tei:CAPTION]">
-          <xsl:apply-templates
-            select="following-sibling::*[1][self::tei:CAPTION]/*" mode="pass2"/>
-        </xsl:when>
-        <xsl:when test="preceding-sibling::*[1][self::tei:CAPTION]">
-          <xsl:apply-templates
-            select="preceding-sibling::*[1][self::tei:CAPTION]/*" mode="pass2"/>
-        </xsl:when>
-      </xsl:choose>
     </xsl:copy>
   </xsl:template>
-  
-  
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Rename &lt;p&gt; to a more specific name based on @rend</desc>
@@ -446,8 +417,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>a div with no content but an empty head isn't needed</desc>
   </doc>
-  <xsl:template match="tei:div[count(*)=1 and tei:head[not(node())]]"
-		mode="pass2" priority="21"/>
+  <xsl:template match="tei:div[count(*)=1 and tei:head[not(node())]]" mode="pass2"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>a singleton div with an empty head and no div children is bypassed</desc>
@@ -480,48 +450,6 @@ of this software, even if advised of the possibility of such damage.
     </head>
   </xsl:template>
 
-  
-  <xsl:template match="tei:p[matches(@rend, '.+[Tt]itle') and ancestor::tei:front]"
-    mode="pass2">
- 
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Title is supposed to be the document title, its siblings form other title parts</desc>
-  </doc>
-  <xsl:template match="tei:p[@rend='Title' and ancestor::tei:front]"
-    mode="pass2">
-    <docTitle>
-      <titlePart type="{@rend}">
-      <xsl:apply-templates mode="pass2"/>
-      </titlePart>
-      <xsl:for-each select="following-sibling::*[self::tei:p[matches(@rend,'.*[Tt]itle')]]">
-        <titlePart type="{@rend}"><xsl:apply-templates mode="pass2"/></titlePart>
-      </xsl:for-each>
-    </docTitle>
-  </xsl:template>
-  
-  <xsl:template match="tei:p[@rend='Author' and ancestor::tei:front]"
-    mode="pass2">
-    <docAuthor>
-      <xsl:apply-templates mode="pass2"/>
-    </docAuthor>
-  </xsl:template>
-  
-  <xsl:template match="tei:p[@rend='Date' and ancestor::tei:front]"
-    mode="pass2">
-    <docDate>
-      <xsl:apply-templates mode="pass2"/>
-    </docDate>
-  </xsl:template>
-  
-  <xsl:template match="tei:titlePage[not(ancestor::tei:front)]"
-    mode="pass2">
-    <!-- strip unnecessary title Pages -->
-    <xsl:message>STRIP TP</xsl:message>
-       <xsl:apply-templates mode="pass2"/>
-   </xsl:template>
-  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Name for output element. If @rend starts with "TEI " or "tei:", rename the
     &lt;hi&gt; to the element name instead</desc>
@@ -531,7 +459,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="$context">
       <xsl:choose>
 	<xsl:when test="@rend='italic' and ancestor::tei:bibl">title</xsl:when>
-  <xsl:when test="starts-with(@rend,'tei:')">
+	<xsl:when test="starts-with(@rend,'tei:')">
 	  <xsl:value-of select="substring(@rend,5)"/>
 	</xsl:when>
 	<xsl:when test="starts-with(@rend,'TEI ')">
@@ -547,48 +475,5 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>clean up mess left by w:instrText in the ref element</desc>
-  </doc>
-  <xsl:template match="tei:ref" mode="pass2">
-    <xsl:variable name="target">
-      <xsl:choose>
-	<xsl:when test="tei:discardInstruction(@target)"/>
-	<xsl:otherwise>
-	  <xsl:sequence select="tei:processInstruction(@target)"/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="tei:biblioInstruction($target)">
-	<xsl:processing-instruction name="biblio">
-	  <xsl:value-of select="$target"/>
-	</xsl:processing-instruction>
-      </xsl:when>
-      <xsl:when test="matches(@target,'^LINK Excel.Sheet.')">
-	<xsl:sequence select="tei:docxError('cannot embed Excel  spreadsheet')"/>
-      </xsl:when>
-      <xsl:when test="tei:ref">
-	<xsl:apply-templates mode="pass2"/>
-      </xsl:when>
-      <xsl:when test=".=''"/>
-      <xsl:when test="$target='' and @type">
-	<xsl:copy>
-	  <xsl:copy-of select="@*"/>
-	  <xsl:apply-templates mode="pass2"/>
-	</xsl:copy>
-      </xsl:when>
-      <xsl:when test="$target=''">
-	<xsl:apply-templates mode="pass2"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<ref target="{$target}">
-	  <xsl:copy-of select="@rend"/>
-	  <xsl:apply-templates mode="pass2"/>
-	</ref>
-      </xsl:otherwise>
-    </xsl:choose>  
-  </xsl:template>
 
 </xsl:stylesheet>

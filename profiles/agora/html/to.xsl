@@ -33,7 +33,6 @@
 
 <!-- set stylesheet parameters -->
    <xsl:param name="numberHeadings">false</xsl:param>
-  <xsl:param name="numberBackHeadings"></xsl:param>
    <xsl:param name="numberFigures">false</xsl:param>
    <xsl:param name="numberTables">false</xsl:param>
   <xsl:param name="numberParagraphs">false</xsl:param>
@@ -56,8 +55,7 @@
 
 
 <xsl:template name="copyrightStatement">
-<xsl:value-of select="//tei:sourceDesc/tei:title[@level='a']"/>
-<xsl:text>This page is made available under the Creative Commons General Public License "Attribution, Non-Commercial, Share-Alike", version 3.0 (CCPL BY-NC-SA) </xsl:text>
+This page is made available under the Creative Commons General Public License "Attribution, Non-Commercial, Share-Alike", version 3.0 (CCPL BY-NC-SA) 
 </xsl:template>
 
 
@@ -130,7 +128,29 @@
     </div>  
   </xsl:template>
 
-
+<!-- replace template for listbibl 
+<xsl:template match="tei:listBibl">
+ <ul class="listBibl">
+        <xsl:for-each select="tei:bibl|tei:biblItem">
+          <li>
+	    <xsl:choose>
+	    <xsl:when test="@n">
+	      <xsl:attribute name="id">
+		<xsl:value-of select="@n"/>
+</xsl:attribute></xsl:when>
+<xsl:otherwise>
+            <xsl:call-template name="makeAnchor">
+              <xsl:with-param name="name">
+                <xsl:apply-templates mode="ident" select="."/>
+              </xsl:with-param>
+            </xsl:call-template>
+</xsl:otherwise></xsl:choose>
+            <xsl:apply-templates select="."/>
+          </li>
+        </xsl:for-each>
+      </ul>
+</xsl:template>
+-->
   <xsl:template match="tei:div[@type='abstract']">
     <div class="abstract">
       <xsl:if test='not(tei:head)'>

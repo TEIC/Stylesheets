@@ -93,7 +93,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="preserveWordSections">true</xsl:param>
     <xsl:param name="preserveWordHeadersFooters">true</xsl:param>
     <xsl:param name="preserveEffects">true</xsl:param>
-    <xsl:param name="preserveObject">true</xsl:param>	  
 
     <xsl:output indent="no"/>
 

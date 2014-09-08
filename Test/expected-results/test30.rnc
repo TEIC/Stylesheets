@@ -248,7 +248,7 @@ Tatt.datable.attribute.calendar =
   ## indicates the system or calendar to which the date represented by the content of this element belongs.
   attribute calendar { Tdata.pointer }?
 sch:pattern [
-  id = "testbasic-att.datable-calendar-calendar-constraint-1"
+  id = "calendar-constraint-calendar"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -632,7 +632,7 @@ Tatt.typed.attribute.subtype =
   ## provides a sub-categorization of the element, if needed
   attribute subtype { Tdata.enumerated }?
 sch:pattern [
-  id = "testbasic-att.typed-subtypeTyped-constraint-2"
+  id = "att.typed-constraint-subtypeTyped"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -661,7 +661,7 @@ Tatt.pointing.attribute.targetLang =
   ## specifies the language of the content to be found at the destination referenced by target, using a language tag generated according to BCP 47.
   attribute targetLang { Tdata.language }?
 sch:pattern [
-  id = "testbasic-att.pointing-targetLang-targetLang-constraint-3"
+  id = "targetLang-constraint-targetLang"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -748,7 +748,7 @@ Tatt.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { Tdata.pointer }?
 sch:pattern [
-  id = "testbasic-att.spanning-spanTo-spanTo-2-constraint-4"
+  id = "spanTo-constraint-spanTo-2"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -796,8 +796,7 @@ Tatt.styleDef.attribute.schemeVersion =
   ## supplies a version number for the style language provided in scheme.
   attribute schemeVersion { Tdata.versionNumber }?
 sch:pattern [
-  id =
-    "testbasic-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-5"
+  id = "schemeVersion-constraint-schemeVersionRequiresScheme"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1028,7 +1027,6 @@ Tmodel.offsetLike_sequence = Toffset, TgeogFeat
 Tmodel.offsetLike_sequenceOptional = Toffset?, TgeogFeat?
 Tmodel.offsetLike_sequenceOptionalRepeatable = Toffset*, TgeogFeat*
 Tmodel.offsetLike_sequenceRepeatable = Toffset+, TgeogFeat+
-Tmodel.pPart.msdesc = notAllowed
 Tmodel.pPart.editorial = Tchoice | Tabbr | Texpan | Tex | Tam | Tsubst
 Tmodel.pPart.editorial_alternation =
   Tchoice | Tabbr | Texpan | Tex | Tam | Tsubst
@@ -1152,7 +1150,6 @@ Tmodel.linePart =
   | Tzone
   | Tline
 Tmodel.ptrLike = Tptr | Tref
-Tmodel.lPart = notAllowed
 Tmodel.global.meta =
   Tindex
   | TsubstJoin
@@ -1167,14 +1164,6 @@ Tmodel.global.meta =
 Tmodel.milestoneLike =
   Tmilestone | Tgb | Tpb | Tlb | Tcb | Tfw | Tanchor
 Tmodel.gLike = notAllowed
-Tmodel.oddDecl = notAllowed
-Tmodel.oddDecl_alternation = notAllowed
-Tmodel.oddDecl_sequence = empty
-Tmodel.oddDecl_sequenceOptional = empty
-Tmodel.oddDecl_sequenceOptionalRepeatable = empty
-Tmodel.oddDecl_sequenceRepeatable = notAllowed
-Tmodel.phrase.xml = notAllowed
-Tmodel.specDescLike = notAllowed
 Tmodel.biblLike = Tbibl | TbiblStruct | TlistBibl | TbiblFull
 Tmodel.biblLike_alternation =
   Tbibl | TbiblStruct | TlistBibl | TbiblFull
@@ -1425,7 +1414,6 @@ Tmodel.divWrapper =
   | TdocDate
 Tmodel.divTopPart = Tmodel.headLike | Topener | Tsigned
 Tmodel.divTop = Tmodel.divWrapper | Tmodel.divTopPart
-Tmodel.frontPart.drama = notAllowed
 Tmodel.pLike.front =
   Thead
   | Tbyline
@@ -1536,7 +1524,7 @@ Tmodel.biblPart =
   | Textent
   | TlistRelation
   | TrelationGrp
-Tmodel.frontPart = Tmodel.frontPart.drama | TdivGen | TtitlePage
+Tmodel.frontPart = TdivGen | TtitlePage
 Tmodel.addrPart =
   Tmodel.nameLike | TaddrLine | Tstreet | TpostCode | TpostBox
 Tmodel.pPart.data =
@@ -1547,7 +1535,6 @@ Tmodel.pPart.data =
   | TMenu
 Tmodel.inter =
   Tmodel.egLike
-  | Tmodel.oddDecl
   | Tmodel.biblLike
   | Tmodel.labelLike
   | Tmodel.listLike
@@ -1558,20 +1545,14 @@ Tmodel.phrase =
   Tmodel.segLike
   | Tmodel.highlighted
   | Tmodel.graphicLike
-  | Tmodel.pPart.msdesc
   | Tmodel.pPart.edit
   | Tmodel.ptrLike
-  | Tmodel.lPart
-  | Tmodel.phrase.xml
-  | Tmodel.specDescLike
   | Tmodel.pPart.data
 Tmodel.limitedPhrase =
   Tmodel.hiLike
   | Tmodel.emphLike
-  | Tmodel.pPart.msdesc
   | Tmodel.pPart.editorial
   | Tmodel.ptrLike
-  | Tmodel.phrase.xml
   | Tmodel.pPart.data
 Tmodel.divLike = Tdiv
 Tmodel.divGenLike = TdivGen
@@ -2110,7 +2091,7 @@ Tptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "testbasic-ptr-ptrAtts-constraint-1"
+         id = "ptr-constraint-ptrAtts"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2144,7 +2125,7 @@ Tref =
   element ref {
     Tmacro.paraContent
     >> sch:pattern [
-         id = "testbasic-ref-refAtts-constraint-2"
+         id = "ref-constraint-refAtts"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2659,7 +2640,7 @@ TrelatedItem =
   element relatedItem {
     ((Tmodel.biblLike | Tmodel.ptrLike)?)
     >> sch:pattern [
-         id = "testbasic-relatedItem-targetorcontent1-constraint-3"
+         id = "relatedItem-constraint-targetorcontent11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2681,7 +2662,7 @@ TrelatedItem =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relatedItem-targetorcontent1-constraint-6"
+         id = "relatedItem-constraint-targetorcontent12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2728,7 +2709,7 @@ Tlg =
       | Tlg)*,
      (Tmodel.divBottom, Tmodel.global*)*)
     >> sch:pattern [
-         id = "testbasic-lg-atleast1oflggapl-constraint-7"
+         id = "lg-constraint-atleast1oflggapl"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3154,7 +3135,7 @@ Tquotation =
   element quotation {
     (Tmodel.pLike*)
     >> sch:pattern [
-         id = "testbasic-quotation-quotationContents-constraint-4"
+         id = "quotation-constraint-quotationContents"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4232,7 +4213,7 @@ Trelation =
   element relation {
     (Tdesc?)
     >> sch:pattern [
-         id = "testbasic-relation-reforkeyorname-constraint-8"
+         id = "relation-constraint-reforkeyorname"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4250,7 +4231,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-activemutual-constraint-5"
+         id = "relation-constraint-activemutual"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4269,7 +4250,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-activepassive-constraint-6"
+         id = "relation-constraint-activepassive"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4563,7 +4544,7 @@ TaddSpan =
   element addSpan {
     empty
     >> sch:pattern [
-         id = "testbasic-addSpan-spanTo-constraint-9"
+         id = "addSpan-constraint-spanTo"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4583,7 +4564,7 @@ TaddSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-addSpan-spanTo_fr-constraint-10"
+         id = "addSpan-constraint-spanTo_fr"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4623,7 +4604,7 @@ TdamageSpan =
   element damageSpan {
     empty
     >> sch:pattern [
-         id = "testbasic-damageSpan-spanTo-constraint-11"
+         id = "damageSpan-constraint-spanTo"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4644,7 +4625,7 @@ TdamageSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-damageSpan-spanTo_fr-constraint-12"
+         id = "damageSpan-constraint-spanTo_fr"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4673,7 +4654,7 @@ TdelSpan =
   element delSpan {
     empty
     >> sch:pattern [
-         id = "testbasic-delSpan-spanTo-constraint-13"
+         id = "delSpan-constraint-spanTo"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4693,7 +4674,7 @@ TdelSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-delSpan-spanTo_fr-constraint-14"
+         id = "delSpan-constraint-spanTo_fr"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4807,7 +4788,7 @@ Tsubst =
   element subst {
     ((Tadd | Tdel | Tmodel.milestoneLike)+)
     >> sch:pattern [
-         id = "testbasic-subst-substContents1-constraint-15"
+         id = "subst-constraint-substContents1"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5038,7 +5019,7 @@ Tlink =
   element link {
     empty
     >> sch:pattern [
-         id = "testbasic-link-linkTargets3-constraint-16"
+         id = "link-constraint-linkTargets3"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5179,7 +5160,7 @@ Tjoin =
   element join {
     ((Tmodel.descLike | Tmodel.certLike)*)
     >> sch:pattern [
-         id = "testbasic-join-joinTargets3-constraint-17"
+         id = "join-constraint-joinTargets3"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5736,7 +5717,7 @@ Tplatypus =
      ##
      attribute bill { "duck" }?)
     >> sch:pattern [
-         id = "testbasic-platypus-bill-silly-test-constraint-7"
+         id = "platypus-constraint-silly-test"
          "\x{a}" ~
          "            "
          sch:rule [

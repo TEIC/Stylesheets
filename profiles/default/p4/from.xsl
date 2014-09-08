@@ -403,9 +403,8 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
  <!-- no need for empty <p> in sourceDesc -->  
-  <!-- xsl:template match="sourceDesc/p[string-length(.)=0]"/-->
-<!-- No, an empty sourceDesc is invalid in tei_all (LB) -->  
-
+  <xsl:template match="sourceDesc/p[string-length(.)=0]"/>
+  
   <!-- start creating the new choice element -->
   <xsl:template match="corr[@sic]">
     <choice>
@@ -848,37 +847,10 @@ of this software, even if advised of the possibility of such damage.
   
   <!-- handList and hand not catered for: they become handNotes and handNote -->
   <xsl:template match="handList"><handNotes><xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/></handNotes></xsl:template>
-
-  <!-- hand inside handList -->
-  <xsl:template match="handList/hand">
-    <handNote>
-      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/>
-      <xsl:if test="@scribe"><xsl:text>  Scribe: </xsl:text><xsl:value-of select="@scribe"/></xsl:if>
-      <xsl:if test="@style"><xsl:text>  Style: </xsl:text><xsl:value-of select="@style"/></xsl:if>
-      <xsl:if test="@character"><xsl:text>  Character: </xsl:text><xsl:value-of select="@character"/></xsl:if>
-      <xsl:if test="@first"><xsl:text>  Main hand : </xsl:text><xsl:value-of select="@first"/></xsl:if>
-      <xsl:if test="@mainLang"><xsl:text> Main language: </xsl:text><xsl:value-of select="@mainLang"/>
-      </xsl:if>
-      <xsl:if test="@resp"><xsl:text>  Responsibiity: </xsl:text><xsl:value-of select="@resp"/></xsl:if>
-      
-    </handNote>
-  </xsl:template>
-
-  <!-- @ink on hand -->
-  <xsl:template match="hand/@ink">
-    <xsl:attribute name="medium">
-      <xsl:value-of select="."/>
-      <xsl:text>_ink</xsl:text>
-    </xsl:attribute>
-  </xsl:template>
+    <!-- hand inside handList -->
+  <xsl:template match="handList/hand"><handNote><xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/></handNote></xsl:template>
   
-  <!-- suppress other attributes  on hand -->
-  <xsl:template match="hand/@scribe"/>
-  <xsl:template match="hand/@style"/>
-  <xsl:template match="hand/@character"/>
-  <xsl:template match="hand/@first"/>
-  <xsl:template match="hand/@mainLang"/>
-  <xsl:template match="hand/@resp"/>
-  
+<!-- @ink on hand -->
+<xsl:template match="hand/@ink"><xsl:attribute name="medium"><xsl:value-of select="."/></xsl:attribute></xsl:template>
   
 </xsl:stylesheet>

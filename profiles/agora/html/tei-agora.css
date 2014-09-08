@@ -150,6 +150,7 @@ div.stdheader {
 .bannerright {
    float: right;
    margin-right : 5px;
+   color: #FFFFFF;
    font-family : Arial, Helvetica, sans-serif;
    font-size : 0.8em;
    font-weight : bold;
@@ -240,16 +241,8 @@ h2.subtitle {
 
 
 /* components of the breadcrumb trail */
-
-li:before {
-    content: "* "
-}
-li.breadcrumb:before { content: "▶" }
-
-li.breadcrumb-first:before { content: "▶"}
-
 a.breadcrumb{
-
+   color: #FFFFFF;
    text-decoration: none;
    padding-right : 5px;
    font-family: Arial,Helvetica,sans-serif;
@@ -263,7 +256,8 @@ ul.breadcrumb
    font-size: 1.1em;
 }
 
-
+li.breadcrumb:before: "▶";
+li.breadcrumb-first:before: "▶";
 li.breadcrumb
 {
    padding-left: 12px;
@@ -285,7 +279,7 @@ div.breadcrumb {
 
 .skiplinks{
    font-family: arial, sans-serif;
-
+   color: #FFFFFF;
    font-weight : bold;
    font-size : 0.8em;
    text-decoration: none;
@@ -314,18 +308,18 @@ a:hover
 
 a.navbar:link
 {
-
+   color: #FFFFFF;
    text-decoration: none;
 }
 
 a.navbar:visited
 {
-
+   color: #FFFFFF;
    text-decoration: none;
 }
 
 a.navbar:hover {
-
+   color: #FFFFFF;
    text-decoration: underline;
 }
 
@@ -523,7 +517,11 @@ img.display {
    text-align:center;
 }
 
-
+.floatimage {
+   float : centre;
+   margin-right : 6px;
+   vertical-align : top;
+}
 /* specialized divs */
 div.letter {
    margin-left: 2em;
@@ -691,12 +689,12 @@ div.tocBody {
 
 ul.listBibl {
     list-style : none;
-
+    list-item-style: none;
 }
 
 ol.listBibl {
     list-style : none;
-
+    list-item-style: none;
 }
 
 /* a listBibl rend='labels' */
@@ -871,14 +869,12 @@ span.element {
 span.unclear {
     font-weight: bold;
 }
-/*
 span.wordtypeNN, span.wordtypeNNS {
     color: green;
     }
 span.wordtypeVVD,span.wordtypeVVN,span.wordtypeVVN,span.wordtypeVVZ,span.wordtypeVVG, span.wordtypeVV {
     color: red;
     }
-*/
 
 li.headless {
     display: none;
@@ -1068,8 +1064,8 @@ span.underline{
     text-decoration: underline;
 }
 span.underwavyline{
- text-decoration: underline;
-/*  text-decoration-style: wavy;*/
+ text-decoration-line: underline;
+  text-decoration-style: wavy;
 }
 span.underdoubleline{
     text-decoration: underline;
@@ -1103,7 +1099,7 @@ font-size:smaller;
 table td {
     border: solid black 1pt;
     padding: 1ex 1ex 1ex 1ex;
- /*   text-align: center; */
+    text-align: center;
     font-size:medium;
     }
     

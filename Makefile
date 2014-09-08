@@ -1,10 +1,10 @@
 SFUSER=rahtz
 JING=jing
-SAXON=java -jar lib/saxon9he.jar
-DOTDOTSAXON=java -jar ../../lib/saxon9he.jar
+SAXON=java -jar Test/lib/Saxon-HE-9.4.0.6.jar
+DOTDOTSAXON=java -jar ../Test/lib/Saxon-HE-9.4.0.6.jar
 SAXON_ARGS=-ext:on
 
-DIRS=bibtex common docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt pdf profiles/default rdf relaxng rnc slides tbx tcp tite tools txt html xsd xlsx pdf
+DIRS=bibtex common docx dtd docbook epub epub3 fo html html5 json latex latex nlm odd odds odt pdf profiles/default rdf relaxng rnc slides tbx tcp tite tools txt html xsd xlsx pdf
 
 SCRIPTS=bin/*to*
 PREFIX=/usr
@@ -124,7 +124,10 @@ installxsl: build teioo.jar
 	cp bin/transformtei ${PREFIX}/bin
 	perl -p -i -e 's+^APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/transformtei
 	chmod 755 ${PREFIX}/bin/transformtei
-	for i in $(SCRIPTS); do  (cd ${PREFIX}/bin; rm -f `basename $$i`;  ln -s transformtei `basename $$i`); done
+	for i in $(SCRIPTS); do \
+	  rm -f ${PREFIX}/bin/`basename $$i`; \
+	  ln -s ${PREFIX}/bin/transformtei ${PREFIX}/bin/`basename $$i`; \
+	done
 
 installprofiles: install-profiles-files install-profiles-docs
 
@@ -163,7 +166,6 @@ installcommon: doc common
 	(cd release/xslcommon/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
 install: linkcss doc installxsl installprofiles installcommon 
-	rm -rf doc/index.xml doc/style.xml doc/stylebear teioo.jar
 
 linkcss:
 	(for i in css/*; do test -f `basename $$i` || ln -s $$i `basename $$i`;done)
@@ -206,8 +208,6 @@ clean:
 	rm -f teioo.jar
 	rm -rf docx/ImageInfo/bin
 	rm -f names.xml licensekey.txt runDoc.sh
-	(for i in sciencejournal/*.html; do rm -f sciencejournal/`basename $$i`;done)
-	(for i in sciencejournal/*.xml; do rm -f sciencejournal/`basename $$i`;done)
 
 tags:
 	etags `find . -name "*.xsl" | grep -v "slides/" | grep -v "latex/" | grep -v "html/" | grep -v "fo/" | grep -v "common2/" | grep -v "doc/" `

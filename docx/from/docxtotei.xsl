@@ -37,7 +37,8 @@
 	  <xsl:import href="../variables.xsl"/>
 	  <xsl:import href="omml2mml.xsl"/>
 
-	  <xsl:param name="convertGraphics">true</xsl:param>	  
+	  <xsl:param name="convert-graphics">true</xsl:param>	  
+	  <xsl:param name="convert-headers">true</xsl:param>	  
 	  <xsl:param name="mathMethod">mml</xsl:param>	  
 	  <xsl:param name="termMethod">tei</xsl:param>	  
 	  <xsl:param name="tableMethod">tei</xsl:param>	  
@@ -45,8 +46,6 @@
 	  <xsl:param name="preserveWordHeadersFooters">false</xsl:param>    	  
 	  <xsl:param name="preserveSoftPageBreaks">false</xsl:param>    	  
 	  <xsl:param name="preserveEffects">false</xsl:param>	  
-	  <xsl:param name="preserveFontSizeChanges">false</xsl:param>
-	  <xsl:param name="preserveObject">false</xsl:param>	  
 	  <xsl:param name="verbose">false</xsl:param>	  
 	  <xsl:param name="processChangeInformation">false</xsl:param>
 	  <xsl:param name="pageHeight">890</xsl:param>
@@ -64,6 +63,7 @@
 	  <xsl:include href="paragraphs.xsl"/>
 	  <xsl:include href="tables.xsl"/>
 	  <xsl:include href="textruns.xsl"/>
+	  <xsl:include href="utility-templates.xsl"/>
 	  <xsl:include href="wordsections.xsl"/>
 	
 	
@@ -123,7 +123,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:variable name="docProps" select="doc(concat($wordDirectory,'/docProps/core.xml'))"/>
 	  <xsl:variable name="numberFile" select="concat($wordDirectory,'/word/numbering.xml')"/>
 	  <xsl:variable name="relsDoc" select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
-	  <xsl:variable name="relsFile"  select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
+	  <xsl:variable name="relsFile" select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
 	  <xsl:variable name="styleDoc" select="concat($wordDirectory,'/word/styles.xml')"/>
 	<xsl:strip-space elements="*"/>
 	  <xsl:preserve-space elements="w:t"/>
@@ -197,7 +197,7 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:result-document href="/tmp/foo.xml">
 	 <xsl:copy-of select="$pass1"/>
 	 </xsl:result-document>
-	 -->
+     -->
      <!-- Do the final parse and create valid TEI -->
 
      <xsl:apply-templates select="$pass1" mode="pass2"/>
@@ -243,8 +243,6 @@ of this software, even if advised of the possibility of such damage.
 	    </desc>
 	  </doc>
 	  <xsl:template name="mainProcess">
-	    <xsl:param name="extrarow"  tunnel="yes"/>
-	    <xsl:param name="extracolumn"   tunnel="yes"/>
 	    <!-- 
 		 group all paragraphs that form a first level section.
 	    -->
@@ -261,12 +259,6 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:call-template name="group-by-section"/>
 		</xsl:when>
 		
-	      	<xsl:when test="tei:is-front(.)">
-	      		<front>
-	      			<xsl:apply-templates select="." mode="inSectionGroup"/>
-	      		</front>
-	      	</xsl:when>
-	      	
 		<!-- We have found some loose paragraphs. These are most probably
 		     front matter paragraps. We can simply convert them without further
 		     trying to split them up into sub sections. -->
@@ -349,7 +341,6 @@ of this software, even if advised of the possibility of such damage.
 				else  if (tei:is-figure(.)) then 3
 				else  if (tei:is-line(.)) then 4
 				else  if (tei:is-caption(.)) then 5
-				else  if (tei:is-front(.)) then 6
 				else position() + 100">
 	      
 	      <!-- For each defined grouping call a specific template. If there is no
@@ -371,10 +362,7 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:when test="current-grouping-key()=5">
 		  <xsl:call-template name="captionSection"/>
 		</xsl:when>
-	      	<xsl:when test="current-grouping-key()=6">
-	      		<xsl:call-template name="frontSection"/>
-	      	</xsl:when>
-	      	<!-- it is not a defined grouping .. apply templates -->
+		<!-- it is not a defined grouping .. apply templates -->
 		<xsl:otherwise>
 		  <xsl:apply-templates select="." mode="paragraph"/>
 		</xsl:otherwise>
@@ -426,19 +414,6 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>
       </lg>
     </xsl:template>
-
-	<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-		<desc>Creating a group of a front/title page</desc>
-	</doc>
-	<xsl:template name="frontSection">
-		<titlePage>
-			<xsl:for-each select="current-group()">
-				<xsl:apply-templates select="." mode="paragraph"/>
-			</xsl:for-each>
-		</titlePage>
-	</xsl:template>
-	
-	
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Groups the document by headings and thereby creating the document structure. 
@@ -513,39 +488,47 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:template>
 
    <xsl:template match="w:hyperlink">
-     <!-- hyperlinks that do not contain any children should *probably* be omitted as in Word they result in nothing visible at all -->
-     <xsl:if test="child::node()">
-       <ref>
-   	 <xsl:attribute name="target">
-   	   <xsl:choose>
-   	     <xsl:when test="@w:anchor">
-   	       <xsl:value-of select="@w:anchor"/>
-   	     </xsl:when>
-   	     <xsl:otherwise>
-   	       <xsl:variable name="rid" select="@r:id"/>
-   	       <xsl:choose>
-   		 <xsl:when test="ancestor::w:endnote">
-   		   <xsl:value-of
-   		       select="document(concat($wordDirectory,'/word/_rels/endnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
-   		 </xsl:when>
-   		 <xsl:when test="ancestor::w:footnote">
-   		   <xsl:value-of
-   		       select="document(concat($wordDirectory,'/word/_rels/footnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
-   		 </xsl:when>
-   		 <xsl:otherwise>
-   		   <xsl:value-of
-   		       select="document($relsDoc)//rel:Relationship[@Id=$rid]/@Target"/>
-   		 </xsl:otherwise>
-   	       </xsl:choose>
-   	     </xsl:otherwise>
-   	   </xsl:choose>
-   	 </xsl:attribute>
-   	 <xsl:apply-templates/>
-       </ref>
-     </xsl:if>
+      <ref>
+	<xsl:attribute name="target">
+	  <xsl:choose>
+	    <xsl:when test="@w:anchor">
+	      <xsl:value-of select="concat('#',@w:anchor)"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:variable name="rid" select="@r:id"/>
+	      <xsl:choose>
+		<xsl:when test="ancestor::w:endnote">
+		  <xsl:value-of
+		      select="document(concat($wordDirectory,'/word/_rels/endnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+		</xsl:when>
+		<xsl:when test="ancestor::w:footnote">
+		  <xsl:value-of
+		      select="document(concat($wordDirectory,'/word/_rels/footnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of
+		      select="document($relsDoc)//rel:Relationship[@Id=$rid]/@Target"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:attribute>
+	<xsl:apply-templates/>
+      </ref>
    </xsl:template>
 
-   <xsl:template match="w:instrText"/>
+   <xsl:template match="w:instrText">
+      <xsl:choose>
+         <xsl:when test="contains(.,'REF _')"></xsl:when>
+         <xsl:when test="starts-with(.,'HYPERLINK')"></xsl:when>
+         <xsl:when test="starts-with(.,' XE')"></xsl:when>
+         <xsl:when test="starts-with(.,'XE')"></xsl:when>
+	 <xsl:when test="contains(.,'SEQ')"/>
+         <xsl:otherwise>
+            <xsl:value-of select="."/>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>simple teiHeader. For a more sophisticated header, think about overriding
@@ -605,55 +588,6 @@ of this software, even if advised of the possibility of such damage.
         </head>
     </xsl:template>
     
-
-    <xsl:template name="generateAppInfo">
-      <appInfo>
-	        <application xml:id="doxtotei" ident="TEI_fromDOCX" version="2.15.0">
-	           <label>DOCX to TEI</label>
-	        </application>
-	        <xsl:if test="doc-available(concat($wordDirectory,'/docProps/custom.xml'))">
-	           <xsl:for-each select="document(concat($wordDirectory,'/docProps/custom.xml'))/prop:Properties">
-	              <xsl:for-each select="prop:property">
-	                 <xsl:choose>
-		                   <xsl:when test="@name='TEI_fromDOCX'"/>
-		                   <xsl:when test="contains(@name,'TEI')">
-		                      <application ident="{@name}" version="{.}">
-		                         <label>
-		                            <xsl:value-of select="@name"/>
-		                         </label>
-		                      </application>
-		                   </xsl:when>
-	                 </xsl:choose>
-	              </xsl:for-each>
-		      <xsl:if test="prop:property[@name='WordTemplateURI']">
-			<application ident="WordTemplate" version="{prop:property[@name='WordTemplate']}">
-			  <label>Word template file</label>
-			  <ptr target="{prop:property[@name='WordTemplateURI']}"/>
-			</application>
-		      </xsl:if>
-	           </xsl:for-each>
-	        </xsl:if>
-      </appInfo>
-    </xsl:template>
-
-    <xsl:template name="getDocTitle">
-      <xsl:value-of select="$docProps/cp:coreProperties/dc:title"/>
-    </xsl:template>
-
-    <xsl:template name="getDocAuthor">
-      <xsl:value-of select="$docProps/cp:coreProperties/dc:creator"/>
-    </xsl:template>
-
-    <xsl:template name="getDocDate">
-      <xsl:value-of select="substring-before($docProps/cp:coreProperties/dcterms:created,'T')"/>
-    </xsl:template>
-
-    <xsl:template name="identifyChange">
-      <xsl:param name="who"/>
-      <xsl:attribute name="resp">
-	<xsl:text>#</xsl:text>
-	<xsl:value-of select="translate($who,' ','_')"/>
-      </xsl:attribute>
-    </xsl:template>
+    
     
 </xsl:stylesheet>

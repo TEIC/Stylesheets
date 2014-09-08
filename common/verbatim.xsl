@@ -47,6 +47,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="forceWrap">false</xsl:param>
   <xsl:param name="wrapLength">65</xsl:param>
   <xsl:param name="attLength">40</xsl:param>
+  <xsl:param name="attsOnSameLine">3</xsl:param>
   <xsl:param name="omitNSDecls">http://www.tei-c.org/ns/1.0</xsl:param>
   <xsl:key name="NSUsed" match="*" use="namespace-uri()"/>
   <xsl:key name="NSUsed" match="@*" use="namespace-uri()"/>
@@ -147,18 +148,11 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
-      <xsl:when test="parent::teix:egXML and not(parent::teix:egXML/*)">
-        <xsl:call-template name="verbatim-Text">
-          <xsl:with-param name="words">
-	    <xsl:value-of select="translate(.,' ','&#160;')"/>
-	  </xsl:with-param>
-	</xsl:call-template>
-      </xsl:when>
       <xsl:when
 	  test="ancestor::*[@xml:space][1]/@xml:space='preserve'">
         <xsl:call-template name="verbatim-Text">
           <xsl:with-param name="words">
-	    <xsl:value-of select="translate(.,' ','&#160;')"/>
+	    <xsl:value-of select="."/>
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
@@ -439,7 +433,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="$highlight"/>
 	</xsl:with-param>
       </xsl:call-template>
-      <xsl:call-template name="verbatim-processAttributes"/>
+      <xsl:apply-templates select="@*" mode="verbatim"/>
       <xsl:if test="(local-name(.)='TEI' and not (local-name(parent::*)='teiCorpus')) or local-name(.)='teiCorpus'">
 	<xsl:text> xmlns="http://www.tei-c.org/ns/1.0"</xsl:text>
       </xsl:if>  
@@ -612,85 +606,30 @@ of this software, even if advised of the possibility of such damage.
       <xsl:sequence select="for $i in 1 to $depth return $spaceCharacter"/>
     </xsl:if>
   </xsl:template>
-
-  <xsl:template name="verbatim-processAttributes">
-    <xsl:variable name="esize">
-      <xsl:value-of select="string-length(name())+count(ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')])-1"/>
-    </xsl:variable>
-    <xsl:variable name="indent">
-      <xsl:call-template name="verbatim-makeIndent"/>
-    </xsl:variable>
-    <xsl:variable name="Atts">
-      <xsl:for-each select="@*">
-	<a size="{string-length(name())+string-length(.)+3}"
-	   name="{name()}" 
-	   value="{.}">
-	</a>
+  <xsl:template match="@*" mode="verbatim">
+    <xsl:variable name="L">
+      <xsl:for-each select="../@*">
+        <xsl:value-of select="."/>
       </xsl:for-each>
     </xsl:variable>
-      <xsl:choose>
-	<xsl:when
-	    test="parent::*/ancestor::tei:cell[not(@rend='wovenodd-col2')]">
-	  <xsl:for-each select="$Atts/*[1]">
-	    <xsl:call-template name="verbatim-nextAttribute">
-	      <xsl:with-param name="force" select="true()"/>
-	      <xsl:with-param name="indent" select="$indent"/>
-	      <xsl:with-param name="sofar" select="$esize + @size"/>
-	    </xsl:call-template>
-	  </xsl:for-each>
-	  </xsl:when>
-	<xsl:otherwise>
-	  <xsl:for-each select="$Atts/*[1]">
-	    <xsl:call-template name="verbatim-nextAttribute">
-	      <xsl:with-param name="indent" select="$indent"/>
-	      <xsl:with-param name="sofar" select="$esize + @size"/>
-	    </xsl:call-template>
-	  </xsl:for-each>
-	</xsl:otherwise>
-      </xsl:choose>
-
-  </xsl:template>
-
-
-  <xsl:template name="verbatim-nextAttribute">
-    <xsl:param name="indent"/>
-    <xsl:param name="force" select="false()"/>
-    <xsl:param name="sofar">0</xsl:param>
+    <xsl:if test="count(../@*)&gt;number($attsOnSameLine) or      string-length($L)&gt;$attLength or     ancestor::tei:cell[not(@rend='wovenodd-col2')] or     namespace-uri()='http://www.w3.org/2005/11/its' or     string-length(.)+string-length(name(.)) &gt;     $attLength">
+      <xsl:call-template name="verbatim-lineBreak">
+        <xsl:with-param name="id">5</xsl:with-param>
+      </xsl:call-template>
+      <xsl:call-template name="verbatim-makeIndent"/>
+    </xsl:if>
     <xsl:value-of select="$spaceCharacter"/>
     <xsl:call-template name="Attribute">
-      <xsl:with-param name="content" select="string(@name)"/>
+      <xsl:with-param name="content" select="name()"/>
     </xsl:call-template>
     <xsl:text>="</xsl:text>
     <xsl:call-template name="AttributeValue">
       <xsl:with-param name="content">
-	<xsl:apply-templates select="@value" mode="attributetext"/>
+	<xsl:apply-templates select="." mode="attributetext"/>
       </xsl:with-param>
     </xsl:call-template>
     <xsl:text>"</xsl:text>
-    <xsl:for-each select="following-sibling::a[1]">
-      <xsl:choose>
-	<xsl:when test="$force or ($sofar + @size &gt;$attLength)">
-	  <xsl:call-template name="verbatim-lineBreak">
-            <xsl:with-param name="id">5</xsl:with-param>
-	  </xsl:call-template>
-	  <xsl:copy-of select="$indent"/>
-	  <xsl:call-template name="verbatim-nextAttribute">
-	    <xsl:with-param name="indent" select="$indent"/>
-	    <xsl:with-param name="force" select="$force"/>
-	    <xsl:with-param name="sofar">0</xsl:with-param>
-	  </xsl:call-template>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:call-template name="verbatim-nextAttribute">
-	    <xsl:with-param name="indent" select="$indent"/>
-	    <xsl:with-param name="sofar" select="$sofar +@size"/>
-	  </xsl:call-template>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
   </xsl:template>
-  
-
   <xsl:template match="@*" mode="attributetext">
     <xsl:choose>
       <xsl:when test="string-length(.)&gt;$attLength and contains(.,' ')">
@@ -700,8 +639,12 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text> </xsl:text>
           </xsl:with-param>
           <xsl:with-param name="text">
+	    <xsl:call-template name="verbatim-Text">
+	      <xsl:with-param name="words">
 		<xsl:value-of select="."/>
-	  </xsl:with-param>
+	      </xsl:with-param>
+	    </xsl:call-template>
+          </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
