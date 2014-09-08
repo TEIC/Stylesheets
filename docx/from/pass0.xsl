@@ -102,6 +102,13 @@ of this software, even if advised of the possibility of such damage.
       </xsl:attribute>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>don't call it a footnote reference if it has no footnote reference</desc>
+  </doc>
+  <xsl:template match="w:rStyle[@w:val='FootnoteReference' and
+		       not(parent::w:r/w:footnoteReference)]" mode="pass0">
+  </xsl:template>
+
   <xsl:function name="tei:getWordStyleName">
     <xsl:param name="val"/>
     <xsl:for-each select="document($styleDoc)">

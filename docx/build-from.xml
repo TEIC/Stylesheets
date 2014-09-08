@@ -28,7 +28,7 @@
   <property name="docxtoTEI" value="${profiledir}/${profile}/docx/from.xsl"/>
 
   <target name="convert">
-    <echo>Convert using ${docxtoTEI}</echo>
+    <echo>	 using ${docxtoTEI}</echo>
     <unzip src="${inputFile}" dest="${outputTempDir}"/>
     <xslt force="yes" style="${docxtoTEI}" in="${outputTempDir}/word/document.xml" out="${outputFile}">
       <xmlcatalog>

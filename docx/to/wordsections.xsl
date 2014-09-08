@@ -115,13 +115,13 @@ of this software, even if advised of the possibility of such damage.
 		  <!-- landscape -->
 		  <xsl:when test="tei:orientation/@type='landscape'">
 		    <xsl:attribute name="w:orient">landscape</xsl:attribute>
-		    <xsl:attribute name="w:w">15840</xsl:attribute>
-		    <xsl:attribute name="w:h">12240</xsl:attribute>
+		    <xsl:attribute name="w:h">11901</xsl:attribute>
+		    <xsl:attribute name="w:w">16817</xsl:attribute>
 		  </xsl:when>
 		  <!-- portrait -->
 		  <xsl:otherwise>
-		    <xsl:attribute name="w:w">12240</xsl:attribute>
-		    <xsl:attribute name="w:h">15840</xsl:attribute>
+		    <xsl:attribute name="w:h">16817</xsl:attribute>
+		    <xsl:attribute name="w:w">11901</xsl:attribute>
 		  </xsl:otherwise>
 		</xsl:choose>
 	      </w:pgSz>

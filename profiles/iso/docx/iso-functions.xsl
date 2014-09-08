@@ -115,7 +115,8 @@ of this software, even if advised of the possibility of such damage.
     
     <xsl:function name="tei:is-firstlevel-heading" as="xs:boolean">
       <xsl:param name="p"/>
-      
+          <xsl:variable name="Heading">heading</xsl:variable>
+	  <xsl:variable name="Heading1">heading 1</xsl:variable>      
       <xsl:choose>
 	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$Heading1]">true</xsl:when>
 	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$ANNEX]">true</xsl:when>

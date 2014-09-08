@@ -12,7 +12,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
+    exclude-result-prefixes="#all"
     version="2.0">
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="classatts.xsl"/>
@@ -565,13 +565,33 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="rng:define" mode="pass3">
       <xsl:choose>
-         <xsl:when test="key('REFED',@name) or key('XPATTERNS',@name)">
-	   <define xmlns="http://relaxng.org/ns/structure/1.0" >
-	     <xsl:apply-templates  select="@*"    mode="pass3"/>
-	     <xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
+         <xsl:when test="key('REFED',@name) or
+			 key('XPATTERNS',@name)">
+	   <xsl:choose>
+	     <xsl:when test="count(key('DEFED',@name))=1 or @combine='choice'">
+	       <define xmlns="http://relaxng.org/ns/structure/1.0" >
+		 <xsl:apply-templates  select="@*"    mode="pass3"/>
+		 <xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
 		   mode="pass3"/>
-	   </define>
+	       </define>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:variable name="others">
+		 <xsl:for-each select="key('DEFED',@name)">
+		   <n><xsl:value-of select="count(ancestor::rng:div)"/></n>
+		 </xsl:for-each>
+	       </xsl:variable>
+	       <xsl:if test="count(ancestor::rng:div)     &lt; max($others/*)">
+		 <define xmlns="http://relaxng.org/ns/structure/1.0" >
+		   <xsl:apply-templates  select="@*"    mode="pass3"/>
+		   <xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
+		   mode="pass3"/>
+		 </define>
+	       </xsl:if>
+	     </xsl:otherwise>
+	   </xsl:choose>
 	 </xsl:when>
+
 	 <xsl:otherwise>
 	   <xsl:if test="$verbose='true'">
 	     <xsl:message>ZAP definition of unused pattern <xsl:value-of select="@name"/></xsl:message>

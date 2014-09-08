@@ -132,6 +132,9 @@ of this software, even if advised of the possibility of such damage.
                      <xsl:when test="ends-with(@width,'cm')">
                         <xsl:value-of select="@width"/>
                      </xsl:when>
+                     <xsl:when test="ends-with(@width,'mm')">
+                        <xsl:value-of select="@width"/>
+                     </xsl:when>
                      <xsl:otherwise>
                         <xsl:value-of select="@width"/>
                         <xsl:text>pt</xsl:text>
@@ -191,6 +194,9 @@ of this software, even if advised of the possibility of such damage.
                         <xsl:value-of select="@height"/>
                      </xsl:when>
                      <xsl:when test="ends-with(@height,'cm')">
+                        <xsl:value-of select="@height"/>
+                     </xsl:when>
+                     <xsl:when test="ends-with(@height,'mm')">
                         <xsl:value-of select="@height"/>
                      </xsl:when>
                      <xsl:otherwise>

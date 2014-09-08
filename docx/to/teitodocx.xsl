@@ -275,6 +275,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="styleDoc"><xsl:value-of select="concat($wordDirectory, '/word/styles.xml')"/></xsl:variable>
   <xsl:variable name="numberDoc"><xsl:value-of select="concat($wordDirectory, '/word/numbering.xml')"/></xsl:variable>
   <xsl:variable name="relDoc"><xsl:value-of select="concat($wordDirectory, '/word/_rels/document.xml.rels')"/></xsl:variable>
+  <xsl:variable name="relDocFoot"><xsl:value-of select="concat($wordDirectory, '/word/_rels/footnotes.xml.rels')"/></xsl:variable>
+  <xsl:variable name="relDocEnd"><xsl:value-of select="concat($wordDirectory, '/word/_rels/endnotes.xml.rels')"/></xsl:variable>
   <xsl:variable name="coreFile"><xsl:value-of select="concat($wordDirectory, '/docProps/core.xml')"/></xsl:variable>
   <xsl:variable name="appFile"><xsl:value-of select="concat($wordDirectory, '/docProps/app.xml')"/></xsl:variable>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -798,7 +800,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:abbr" mode="get-style">teiabbr</xsl:template>
   <xsl:template match="tei:bibl" mode="get-style">teibibl</xsl:template>
-  <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
+  <xsl:template match="tei:cit" mode="get-style">teiquote</xsl:template>
   <xsl:template match="tei:date" mode="get-style">date</xsl:template>
   <xsl:template match="tei:foreign" mode="get-style">foreign</xsl:template>
   <xsl:template match="tei:formula" mode="get-style">Formula</xsl:template>
@@ -806,7 +808,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:persName" mode="get-style">teipersName</xsl:template>
   <xsl:template match="tei:placeName" mode="get-style">teiplaceName</xsl:template>
   <xsl:template match="tei:q" mode="get-style">teiq</xsl:template>
-  <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
+  <xsl:template match="tei:quote" mode="get-style">teiquote</xsl:template>
   <xsl:template match="tei:ref[@rend and not(@target)]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
   <xsl:template match="tei:seg[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
   
@@ -1122,12 +1124,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="*[not(tei:is-inline(.))] or parent::tei:div">
         <xsl:call-template name="block-element">
-	  <xsl:with-param name="style">Quote</xsl:with-param>
+	  <xsl:with-param name="style">teiquote</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
       <xsl:when test="not(tei:is-inline(.))">
         <xsl:call-template name="block-element">
-	  <xsl:with-param name="style">Quote</xsl:with-param>
+	  <xsl:with-param name="style">teiquote</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
       <xsl:when test="tei:l">
@@ -2187,6 +2189,11 @@ of this software, even if advised of the possibility of such damage.
 	  <w:br/>
 	</w:r>
   </xsl:template>
+  <xsl:template name="lineBreakAsPara">
+	<w:r>
+	  <w:br/>
+	</w:r>
+  </xsl:template>
 
   <!-- hyperlink -->
   <xsl:template match="tei:ptr[@cRef]">
@@ -2223,8 +2230,9 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:when>
 	  </xsl:choose>
 	  <xsl:choose>
-	    <xsl:when test="starts-with(.,'#')  and  id(substring($target,2))">
-	      <xsl:apply-templates select="id(substring($target,2))" mode="xref"/>
+	    <xsl:when test="starts-with($target,'#')  and  id(substring($target,2))">
+	      <xsl:apply-templates select="id(substring($target,2))"
+				   mode="xref"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:sequence select="tei:resolveURI(.,$target)"/>
@@ -2676,6 +2684,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="makeExternalLink">
     <xsl:param name="ptr" as="xs:boolean" select="false()"/>
     <xsl:param name="dest"/>
+    <xsl:param name="title"/>
     <xsl:sequence select="$dest"/>
   </xsl:template>
 
@@ -2917,7 +2926,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="displayNote">
     <xsl:call-template name="block-element">
-        <xsl:with-param name="style">Quote</xsl:with-param>
+        <xsl:with-param name="style">teiquote</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 

@@ -11,6 +11,7 @@
                 version="2.0"
                 xpath-default-namespace="http://www.tei-c.org/ns/1.0"
                 exclude-result-prefixes="#all">
+  <xsl:import href="../common/functions.xsl"/>
   <d:doc scope="stylesheet" type="stylesheet">
     <d:desc>
       <d:p> TEI stylesheet for simplifying TEI ODD markup </d:p>
@@ -93,7 +94,6 @@ of this software, even if advised of the possibility of such damage.
         is a direct child of <d:pre>&lt;schemaSpec</d:pre>.</d:p>
     </d:desc>
   </d:doc>
-
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:param name="verbose" select="'false'"/>
   <xsl:param name="lang"/>
@@ -257,12 +257,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:when test="parent::constraintSpec/@xml:lang
                   and not(parent::constraintSpec/@xml:lang = $lang)"/>
           <xsl:otherwise> 
-            <xsl:variable name="patID">
-              <xsl:variable name="idents">
-                <xsl:value-of select="../ancestor::*[@ident]/@ident" separator="-"/>
-              </xsl:variable>
-              <xsl:value-of select="concat( $idents,'-constraint-',../@ident)"/>
-            </xsl:variable>
+            <xsl:variable name="patID" select="tei:makePatternID(.)"/>
             <xsl:if test="sch:pattern">
               <xsl:apply-templates/>
             </xsl:if>
@@ -289,6 +284,10 @@ of this software, even if advised of the possibility of such damage.
           <xsl:with-param name="content" select="'deprecated:'"/>
         </xsl:call-template>
       </xsl:if>
+      <!-- Things that can be deprecated: -->
+      <!--   attDef classSpec constraintSpec elementSpec macroSpec -->
+      <!--   moduleSpec schemaSpec valDesc valItem valList -->
+      <!-- right now we only handle the few that actually appear -->
       <xsl:for-each select="key('DEPRECATEDs',1)">
         <xsl:variable name="amsg1" select="'WARNING: use of deprecated attribute —'"/>
         <xsl:variable name="vmsg1" select="'WARNING: use of deprecated attribute value — The'"/>
@@ -435,5 +434,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
+  <xsl:template match="tei:TEI">
+    <xsl:apply-templates/>
+  </xsl:template>
 
 </xsl:stylesheet>

@@ -395,6 +395,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
       <desc>[html] Banner for top of page<param name="mode">layout mode</param>
       </desc>
    </doc>
+    
   <xsl:template name="pageHeader">
       <xsl:param name="mode"/>
       <xsl:choose>

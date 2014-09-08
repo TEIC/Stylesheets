@@ -57,7 +57,6 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:param name="classParameters"></xsl:param>
   <xsl:param name="longtables">false</xsl:param>
-  <xsl:param name="attsOnSameLine">2</xsl:param>
   <xsl:param name="attLength">35</xsl:param>
   <xsl:param name="spaceCharacter">\hspace*{4pt}</xsl:param>
   <xsl:param name="documentclass">acm_proc_article-sp</xsl:param>  
@@ -112,12 +111,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="div[@type='abstract']"/>
 
   <xsl:template match="table">
-\begin{table}
-      <xsl:if test="@xml:id">
-         <xsl:text>\label{</xsl:text>
-         <xsl:value-of select="@xml:id"/>
-         <xsl:text>}</xsl:text>
-      </xsl:if>
+    \begin{table}
+    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:text> \par </xsl:text>
       <xsl:text>\begin{tabular}</xsl:text>
       <xsl:call-template name="makeTable"/> 
@@ -128,6 +123,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="makeExternalLink">
       <xsl:param name="ptr" as="xs:boolean"  select="false()"/>
       <xsl:param name="dest"/>
+      <xsl:param name="title"/>
       <xsl:choose>
          <xsl:when test="$ptr">
             <xsl:text>{\small\ttfamily </xsl:text>
@@ -167,7 +163,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
          <xsl:when test="head or p">
             <xsl:text>&#10;\caption{</xsl:text>
-            <xsl:if test="@xml:id">\label{<xsl:value-of select="@xml:id"/>}</xsl:if>
+	    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
             <xsl:for-each select="head">
 	      <xsl:apply-templates/>
 	    </xsl:for-each>

@@ -49,7 +49,6 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
    <xsl:output method="text"/>
-<xsl:param name="attsOnSameLine">6</xsl:param>
 <xsl:param name="latexLogo"></xsl:param>
 <xsl:param name="logoFile"></xsl:param>
 <xsl:param name="spaceCharacter">\hspace*{6pt}</xsl:param>
@@ -69,7 +68,7 @@ of this software, even if advised of the possibility of such damage.
 <xsl:template name="latexPackages">
 \setmonofont[Scale=0.86]{Lucida Sans Typewriter}
 \setromanfont{Minion Pro}
-\setsansfont{Myriad Pro}
+\setsansfont{Arial Unicode MS}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \useinnertheme[shadow=true]{rounded}
 \usecolortheme{whale}
@@ -87,7 +86,9 @@ of this software, even if advised of the possibility of such damage.
 \let\endlastfoot\relax
 \parskip3pt
 \setbeamertemplate{footline}
-{\hspace{1em}\textcolor{gray}{\insertframenumber/\inserttotalframenumber}\hfill\includegraphics[height=10ex]{<xsl:value-of select="$logoFile"/>}\hspace{1em}}
+{\hspace{1em}%
+\IfFileExists{oxlogo.png}{\includegraphics[height=10ex]{oxlogo.png}}{}%
+\textcolor{gray}{\insertframenumber/\inserttotalframenumber}\hfill\includegraphics[height=10ex]{<xsl:value-of select="$logoFile"/>}\hspace{1em}}
 </xsl:template>
 
 <xsl:template match="tei:gi">

@@ -7,7 +7,6 @@
   exclude-result-prefixes="tei teix xsl">
   
 <xsl:import href="../../../slides/teilatex-slides.xsl"/>
-<xsl:param name="attsOnSameLine">6</xsl:param>
 <xsl:param name="latexLogo"></xsl:param>
 <xsl:param name="logoFile"></xsl:param>
 <xsl:param name="spaceCharacter">\hspace*{6pt}</xsl:param>
@@ -40,7 +39,8 @@
 \useinnertheme[shadow=true]{rounded}
 \usecolortheme{beaver}
 \setbeamercolor*{frametitle}{parent=palette primary}
-\usepackage{fancyvrb,fancyhdr,longtable}
+\usepackage{fancyvrb,fancyhdr,longtable,framed}
+\definecolor{shadecolor}{gray}{0.95}
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 \setbeamercovered{transparent}
 \usenavigationsymbolstemplate{}
