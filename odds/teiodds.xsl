@@ -2447,5 +2447,12 @@ select="$makeDecls"/></xsl:message>
     </xsl:variable>
     <xsl:value-of select="normalize-space($generatedTitleAttrVal)"/>
   </xsl:template>
+
+  <xsl:template match="tei:gloss" mode="inLanguage">
+    <xsl:value-of select="."/>
+  </xsl:template>
+  <xsl:template match="tei:desc" mode="inLanguage">
+    <xsl:apply-templates/>
+  </xsl:template>
   
 </xsl:stylesheet>
