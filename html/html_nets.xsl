@@ -158,7 +158,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:variable name="TREEID" select="generate-id()"/>
             <div class="treediagram" style="width:{$treewidth} {@style}" id="viz{$TREEID}"/>
             <script type="text/javascript">
-      var treeData = {<xsl:call-template name="treelabel"/>};
+      var treeData = [{<xsl:call-template name="treelabel"/>}];
       var svg = d3.select("#viz<xsl:value-of select="$TREEID"/>").append("svg:svg")
 	.attr("width", width + margin.right + margin.left)
 	.attr("height", height + margin.top + margin.bottom)
@@ -185,7 +185,10 @@ d3.select(self.frameElement).style("height", "500px");
 
   <xsl:template name="treelabel">
     <xsl:text>"name":'</xsl:text>
-    <xsl:apply-templates select="tei:label"/>
+    <xsl:value-of select="tei:label"/>
+    <xsl:text>', </xsl:text>
+    <xsl:text>"style":'</xsl:text>
+    <xsl:value-of select="tei:label/@rend"/>
     <xsl:text>', </xsl:text>
     <xsl:choose>
       <xsl:when test="tei:label/@xml:id">

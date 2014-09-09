@@ -1189,6 +1189,10 @@ of this software, even if advised of the possibility of such damage.
 	  font: 12px sans-serif;
 	}
 
+	.highlight {
+	 fill: red;
+	}
+
 	.link {
 	  fill: none;
 	  stroke: #ccc;
@@ -1238,7 +1242,8 @@ function update(source) {
 
   nodeEnter.append("text")
 	  .attr("x", function(d) { return d.children || d._children ? -13 : 13; })
-	  .attr("dy", ".35em")
+	  .attr("dy", "1em")
+	  .attr("class", function(d) { return d.style; })
 	  .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
 	  .text(function(d) { return d.name; })
 	  .style("fill-opacity", 1e-6);
