@@ -1179,7 +1179,7 @@ of this software, even if advised of the possibility of such damage.
 		cursor: pointer;
 	}
 
-	.node circle {
+	.node rect {
 	  fill: #fff;
 	  stroke: steelblue;
 	  stroke-width: 3px;
@@ -1205,8 +1205,10 @@ of this software, even if advised of the possibility of such damage.
 // ************** Generate the tree diagram	 *****************
 var margin = {top: 20, right: 120, bottom: 20, left: 120},
 	width = 960 - margin.right - margin.left,
-	height = 500 - margin.top - margin.bottom;
+	height = 1000 - margin.top - margin.bottom;
 	
+var rectw = 70,recth=30;
+
 var i = 0,
 	duration = 750,
 	root;
@@ -1236,15 +1238,17 @@ function update(source) {
 	  .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
 	  .on("click", click);
 
-  nodeEnter.append("circle")
-	  .attr("r", 1e-6)
+  nodeEnter.append("rect")
+ 	  .attr("width", rectw)
+ 	  .attr("height", recth)
+ 	  .attr("transform", function(d) { return "translate(0,-" + recth/2 + ")"; })
 	  .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
   nodeEnter.append("text")
-	  .attr("x", function(d) { return d.children || d._children ? -13 : 13; })
-	  .attr("dy", "1em")
+	  .attr("x", "13")
+	  .attr("dy", "0em")
 	  .attr("class", function(d) { return d.style; })
-	  .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+	  .attr("text-anchor", "start")
 	  .text(function(d) { return d.name; })
 	  .style("fill-opacity", 1e-6);
 
@@ -1253,8 +1257,10 @@ function update(source) {
 	  .duration(duration)
 	  .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
 
-  nodeUpdate.select("circle")
-	  .attr("r", 10)
+  nodeUpdate.select("rect")
+ 	  .attr("width", rectw)
+ 	  .attr("height", recth)
+ 	  .attr("transform", function(d) { return "translate(0,-" + recth/2 + ")"; })
 	  .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
   nodeUpdate.select("text")
@@ -1266,8 +1272,10 @@ function update(source) {
 	  .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
 	  .remove();
 
-  nodeExit.select("circle")
-	  .attr("r", 1e-6);
+  nodeExit.select("rect")
+ 	  .attr("width", rectw)
+ 	  .attr("height", recth)
+ 	  .attr("transform", function(d) { return "translate(0,-" + recth/2 + ")"; });
 
   nodeExit.select("text")
 	  .style("fill-opacity", 1e-6);
