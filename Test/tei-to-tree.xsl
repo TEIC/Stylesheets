@@ -6,10 +6,33 @@
     version="2.0">
   <xsl:output indent="yes"/>
 
-  <xsl:param name="element">l</xsl:param>
+<xsl:variable name="special-nodes" select="//div/head"/>
+
+  <xsl:template match="*" mode="iden">
+    <xsl:copy>
+      <xsl:apply-templates
+	  select="@*|*|processing-instruction()|comment()|text()"  mode="iden"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="comment()|@*|processing-instruction()|text()" mode="iden">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+<xsl:template match="*[. intersect $special-nodes]" mode="iden">
+  <xsl:copy>
+    <xsl:attribute name="special">highlight</xsl:attribute>
+      <xsl:apply-templates
+	  select="@*|*|processing-instruction()|comment()|text()"  mode="iden"/>
+  </xsl:copy>
+</xsl:template>
+
 
   <xsl:template match="/">
-    <xsl:for-each select="//body">
+    <xsl:variable name="deco">
+      <xsl:apply-templates mode="iden"/>
+    </xsl:variable>
+    <xsl:for-each select="$deco//body">
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader type="text">
     <fileDesc>
@@ -55,12 +78,11 @@
 
   <xsl:template name="label">    
     <label>
-      <xsl:if test="name()=$element">
-	<xsl:attribute name="style">font-weight:bold; border: solid
-	red 1pt;padding: 2pt; margin: 2pt;</xsl:attribute>
+      <xsl:if test="@special">
+	<xsl:attribute name="rend" select="@special"/>
       </xsl:if>
       <xsl:value-of select="name()"/>
-      <xsl:for-each select="@*">
+      <xsl:for-each select="@*[not(name()='special')]">
 	<xsl:text> </xsl:text>
 	<xsl:value-of select="name()"/>
 	<xsl:text>="</xsl:text>
