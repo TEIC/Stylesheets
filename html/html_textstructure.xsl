@@ -1205,9 +1205,9 @@ of this software, even if advised of the possibility of such damage.
 // ************** Generate the tree diagram	 *****************
 var margin = {top: 20, right: 120, bottom: 20, left: 120},
 	width = 960 - margin.right - margin.left,
-	height = 1000 - margin.top - margin.bottom;
+	height = 750 - margin.top - margin.bottom;
 	
-var rectw = 70,recth=30;
+var rectw = 120,recth=30;
 
 var i = 0,
 	duration = 750,

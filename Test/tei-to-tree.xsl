@@ -6,7 +6,7 @@
     version="2.0">
   <xsl:output indent="yes"/>
 
-<xsl:variable name="special-nodes" select="//div/head"/>
+  <xsl:variable name="special-nodes" select="//div[head]"/>
 
   <xsl:template match="*" mode="iden">
     <xsl:copy>
@@ -43,7 +43,7 @@
         <p>Stylesheets test file</p>
       </publicationStmt>
       <sourceDesc>
-        <p>Transcribed from the 1893 reprint of the first edition by Lou Burnard.</p>
+        <p></p>
       </sourceDesc>
     </fileDesc>
   </teiHeader>
