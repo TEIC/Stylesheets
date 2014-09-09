@@ -450,9 +450,9 @@ of this software, even if advised of the possibility of such damage.
     </dd>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element item/label</desc>
+    <desc>Process element label inside item or leaf</desc>
   </doc>
-  <xsl:template match="tei:item/tei:label">
+  <xsl:template match="tei:item/tei:label|tei:eTree/tei:label|tei:eLeaf/tei:label">
     <span>
       <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default">false</xsl:with-param>

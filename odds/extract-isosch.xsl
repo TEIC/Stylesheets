@@ -286,6 +286,10 @@ of this software, even if advised of the possibility of such damage.
           <xsl:with-param name="content" select="'deprecated:'"/>
         </xsl:call-template>
       </xsl:if>
+      <!-- Things that can be deprecated: -->
+      <!--   attDef classSpec constraintSpec elementSpec macroSpec -->
+      <!--   moduleSpec schemaSpec valDesc valItem valList -->
+      <!-- right now we only handle the few that actually appear -->
       <xsl:for-each select="key('DEPRECATEDs',1)">
         <xsl:variable name="amsg1" select="'WARNING: use of deprecated attribute —'"/>
         <xsl:variable name="vmsg1" select="'WARNING: use of deprecated attribute value — The'"/>

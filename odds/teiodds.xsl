@@ -13,7 +13,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
-  version="2.0">
+    version="2.0">
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -178,7 +178,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="name(.) = 'odds'">
 	<xsl:choose>
-	  <xsl:when test=".='date'"> This formatted version of the Guidelines was created on
+  	  <xsl:when test=".='date'"> This formatted version of the Guidelines was created on
 	  <xsl:call-template name="showDate"/>. </xsl:when>
 	</xsl:choose>
       </xsl:when>
@@ -1279,6 +1279,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:apply-templates>
       </xsl:for-each>
     </div>
+    <xsl:apply-templates mode="expandRNG" select="node()"/>
     <xsl:comment>End of import of <xsl:value-of select="@href"/>
     </xsl:comment>
   </xsl:template>
@@ -1678,6 +1679,23 @@ select="$makeDecls"/></xsl:message>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <xsl:variable name="glossAndDesc">
+      <!-- This variable will hold the string value of the <gloss> and -->
+      <!-- <desc> of the constrcut we are currently dealing with, in   -->
+      <!-- the language we are currently dealing with, so as to put it -->
+      <!-- on the title= attribute when we output its name in an <a>.  -->
+      <xsl:choose>
+        <xsl:when test="starts-with( $partialname, 'model.')">
+          <xsl:apply-templates select="key('CLASSES', $partialname)" mode="glossDesc"/>
+        </xsl:when>
+        <xsl:when test="starts-with( $partialname, 'att.')">
+          <xsl:apply-templates select="key('CLASSES', replace( $partialname, '\.attributes$',''))" mode="glossDesc"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="key('ELEMENTS', $partialname )" mode="glossDesc"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
 
     <xsl:choose>
       <xsl:when test="not(key('IDENTS',$partialname))">
@@ -1708,7 +1726,7 @@ select="$makeDecls"/></xsl:message>
 
 
       <xsl:when test="$oddmode='html'">
-        <a xmlns="http://www.w3.org/1999/xhtml" class="{$class}"
+        <a xmlns="http://www.w3.org/1999/xhtml" class="{$class}" title="{$glossAndDesc}"
           href="{concat('ref-',$partialname,'.html')}">
           <xsl:value-of select="$link"/>
         </a>
@@ -1860,7 +1878,7 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
   <!-- list inside <desc> -->
-  <xsl:template match="tei:desc/tei:list/tei:item">
+  <xsl:template match="tei:desc/tei:list/tei:item" mode="glossDescTitle #default">
     <xsl:text> * </xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
@@ -1908,13 +1926,73 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tei:gloss" mode="inLanguage">
+  <!-- process <gloss> and <desc> to make title= attribute values -->
+  <xsl:template match="tei:gloss" mode="glossDescTitle">
+    <!-- At the moment the only descendants of a <gloss> that appears in <elementSpec> or <classSpec> -->
+    <!-- are 3 <gloss> and 1 <ident>, so we can get away with just taking the value, rather than -->
+    <!-- applying templates. -->
+    <xsl:value-of select="normalize-space(.)"/>
+  </xsl:template>
+  <xsl:template match="tei:desc" mode="glossDescTitle">
+    <!-- 
+	 As of 2014-08-12, revision 12970, the only descendants of a
+	 <desc> that appears in an <elementSpec> or a <classSpec> are:
+           329 gi
+            79 term
+            68 att
+            11 soCalled
+             6 mentioned
+             5 ident
+             2 q
+             2 val
+             1 foreign
+             1 ref
+             1 title
+         You might think that from here we can just <apply-templates>
+         and be done with it. But if we do that, we end up with an infinite-
+	 loop of called templates problem. To wit, inside the <desc> we are
+	 processing there are (e.g.) <gi> elements. They get caught by a
+	 template in html/html_oddprocessing.xsl, which goes about calling
+	 linkTogether, which goes about applying templates (in mode glossDesc)
+	 to the <elementSpec> that defines the element mentioned in the content
+	 of the <gi>. That, in turn, would apply templates to the <desc> that
+	 we started with.
+    -->
+    <xsl:apply-templates mode="#current"/>
+  </xsl:template>
+  <xsl:template match="tei:gi" mode="glossDescTitle">
+    <xsl:text>&lt;</xsl:text>
+    <xsl:value-of select="normalize-space(.)"/>
+    <xsl:text>></xsl:text>
+  </xsl:template>
+  <xsl:template match="tei:att" mode="glossDescTitle">
+    <xsl:text>@</xsl:text>
+    <xsl:value-of select="normalize-space(.)"/>
+  </xsl:template>
+  <xsl:template match="tei:term|tei:ref|tei:ident|tei:code|tei:foreign" mode="glossDescTitle">
     <xsl:value-of select="."/>
   </xsl:template>
-  <xsl:template match="tei:desc" mode="inLanguage">
-    <xsl:apply-templates/>
+  <xsl:template match="tei:mentioned|tei:q" mode="glossDescTitle">
+    <xsl:text>“</xsl:text>
+    <xsl:value-of select="normalize-space(.)"/>
+    <xsl:text>”</xsl:text>
   </xsl:template>
-
+  <xsl:template match="tei:val" mode="glossDescTitle">
+    <xsl:text>"</xsl:text>
+    <xsl:value-of select="normalize-space(.)"/>
+    <xsl:text>"</xsl:text>
+  </xsl:template>
+  <xsl:template match="tei:soCalled" mode="glossDescTitle">
+    <xsl:text>‘</xsl:text>
+    <xsl:value-of select="normalize-space(.)"/>
+    <xsl:text>’</xsl:text>
+  </xsl:template>
+  <xsl:template match="tei:title" mode="glossDescTitle">
+    <xsl:text>_</xsl:text>
+    <xsl:value-of select="translate( normalize-space(.), ' ', '_' )"/>
+    <xsl:text>_</xsl:text>
+  </xsl:template>
+  
   <xsl:template name="processSchematron">
     <xsl:choose>
       <xsl:when test="ancestor::teix:egXML"/>
@@ -2111,8 +2189,8 @@ select="$makeDecls"/></xsl:message>
 
    <!-- for Pure ODD -->
 
-<xsl:template match="tei:sequence" mode="#default tangle">
-    <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+   <xsl:template match="tei:sequence" mode="#default tangle">
+     <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:choose>
       <xsl:when test="string-length($suffix)=0">
         <group  xmlns="http://relaxng.org/ns/structure/1.0">
@@ -2300,46 +2378,46 @@ select="$makeDecls"/></xsl:message>
   </xsl:function>
 
 
-<xsl:function name="tei:generateRefPrefix" as="xs:string">
-  <xsl:param name="context"/>
-  <!-- where we meet a pointer, we have a choice of how to proceed
-       
-       a) if there is no auto-prefixing, just use as is
-       b) if the thing exists in the IDENTS table (which includes prefixes), and starts with the prefix, then use it as is
-       c) if it exists in the IDENTS table and has a prefix, use that
-       d) otherwise, if it exists in the IDENTS table use the general prefix
-       e) otherwise, just use what we are given
-  -->
-  <xsl:for-each select="$context">
-    <xsl:variable name="lookup" select="replace(@name|@key,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
-    <xsl:variable name="myprefix"
-		  select="ancestor::*[@prefix][1]/@prefix"/>
-    <xsl:variable name="fullname" select="@name|@key"/>
-    <xsl:choose>
-      <xsl:when test="ancestor::tei:content[@autoPrefix='false']">
-	<xsl:value-of select="$fullname"/>
-      </xsl:when>
-      <xsl:when test="key('IDENTS',$lookup)">
-	<xsl:for-each select="key('IDENTS',$lookup)">
-	  <xsl:choose>
-	    <xsl:when test="@prefix and starts-with($fullname,@prefix)">
-	      <xsl:value-of select="$fullname"/>
-	    </xsl:when>
-	    <xsl:when test="@prefix">
-	      <xsl:value-of select="concat(@prefix,$fullname)"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:value-of select="concat($generalPrefix,$fullname)"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:value-of select="$fullname"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:for-each>
-</xsl:function>
+  <xsl:function name="tei:generateRefPrefix" as="xs:string">
+    <xsl:param name="context"/>
+    <!-- where we meet a pointer, we have a choice of how to proceed
+	 
+	 a) if there is no auto-prefixing, just use as is
+	 b) if the thing exists in the IDENTS table (which includes prefixes), and starts with the prefix, then use it as is
+	 c) if it exists in the IDENTS table and has a prefix, use that
+	 d) otherwise, if it exists in the IDENTS table use the general prefix
+	 e) otherwise, just use what we are given
+    -->
+    <xsl:for-each select="$context">
+      <xsl:variable name="lookup" select="replace(@name|@key,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
+      <xsl:variable name="myprefix"
+		    select="ancestor::*[@prefix][1]/@prefix"/>
+      <xsl:variable name="fullname" select="@name|@key"/>
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:content[@autoPrefix='false']">
+	  <xsl:value-of select="$fullname"/>
+	</xsl:when>
+	<xsl:when test="key('IDENTS',$lookup)">
+	  <xsl:for-each select="key('IDENTS',$lookup)">
+	    <xsl:choose>
+	      <xsl:when test="@prefix and starts-with($fullname,@prefix)">
+		<xsl:value-of select="$fullname"/>
+	      </xsl:when>
+	      <xsl:when test="@prefix">
+		<xsl:value-of select="concat(@prefix,$fullname)"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="concat($generalPrefix,$fullname)"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$fullname"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
 
   <xsl:function name="tei:includeMember" as="xs:boolean">
     <xsl:param name="ident"  as="xs:string"/>
@@ -2354,4 +2432,27 @@ select="$makeDecls"/></xsl:message>
       </xsl:choose>
   </xsl:function>
 
+  <xsl:template match="tei:elementSpec|tei:classSpec" mode="glossDesc">
+    <!-- We should probably be more careful about the possibility -->
+    <!-- of sub-languages (e.g., having descriptions in both 'en-US' and -->
+    <!-- 'en-UK'). However, as of now there are no cases of any sublanguages -->
+    <!-- that would cause a problem here. -->
+    <xsl:variable name="generatedTitleAttrVal">
+      <xsl:if test="tei:gloss[ lang( $targetLanguage ) ]">
+        <xsl:text>(</xsl:text>
+        <xsl:apply-templates select="tei:gloss[ lang( $targetLanguage ) ]" mode="glossDescTitle"/>
+        <xsl:text>) </xsl:text>
+      </xsl:if>
+      <xsl:apply-templates select="tei:desc[ lang( $targetLanguage ) ]" mode="glossDescTitle"/>
+    </xsl:variable>
+    <xsl:value-of select="normalize-space($generatedTitleAttrVal)"/>
+  </xsl:template>
+
+  <xsl:template match="tei:gloss" mode="inLanguage">
+    <xsl:value-of select="."/>
+  </xsl:template>
+  <xsl:template match="tei:desc" mode="inLanguage">
+    <xsl:apply-templates/>
+  </xsl:template>
+  
 </xsl:stylesheet>
