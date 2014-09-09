@@ -168,7 +168,9 @@ of this software, even if advised of the possibility of such damage.
           <xsl:when test="$nsu eq 'http://www.tei-c.org/ns/1.0'">tei:</xsl:when>
           <xsl:when test="$nsu eq 'http://www.tei-c.org/ns/Examples'">teix:</xsl:when>
           <xsl:when test="ancestor-or-self::schemaSpec//sch:ns[@uri eq $nsu]">
-            <xsl:value-of select="concat( ancestor-or-self::schemaSpec//sch:ns[@uri eq $nsu]/@prefix, ':')"/>
+            <!-- oops ... what *should* we do if there's more than 1? Just taking the first seems lame, but -->
+            <!-- I can't think of what else we might do right now. -Syd, 2014-07-23 -->
+            <xsl:value-of select="concat( ancestor-or-self::schemaSpec//sch:ns[@uri eq $nsu][1]/@prefix, ':')"/>
           </xsl:when>
           <xsl:when test="namespace::* = $nsu">
             <xsl:value-of select="concat( local-name( namespace::*[ . eq $nsu ][1] ), ':')"/>
