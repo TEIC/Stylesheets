@@ -66,7 +66,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
     <desc>which Javascript library to use for drawing trees</desc>
   </doc>
-  <xsl:param name="treestyle">google</xsl:param>
+  <xsl:param name="treestyle">googlechart</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
     <desc>  CSS class for links derived from &lt;ptr&gt;    </desc>

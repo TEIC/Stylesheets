@@ -418,3 +418,7 @@ clean:
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype files
 	rm -f test.xlsx.xml *.result.tex *.result.pdf _slidelogo.png
 	rm -f content.xml
+
+oddtree:
+	saxon /usr/share/xml/tei/odd/p5subset.xml odd-to-tree.xsl  > oddtree.xml
+	teitohtml --profile=oxford oddtree.xml oddtree.html

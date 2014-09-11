@@ -6,33 +6,11 @@
     version="2.0">
   <xsl:output indent="no"/>
 
-  <xsl:variable name="special-nodes" select="//div[head]"/>
-
-  <xsl:template match="*" mode="iden">
-    <xsl:copy>
-      <xsl:apply-templates
-	  select="@*|*|processing-instruction()|comment()|text()"  mode="iden"/>
-    </xsl:copy>
-  </xsl:template>
-
-  <xsl:template match="comment()|@*|processing-instruction()|text()" mode="iden">
-    <xsl:copy-of select="."/>
-  </xsl:template>
-
-<xsl:template match="*[. intersect $special-nodes]" mode="iden">
-  <xsl:copy>
-    <xsl:attribute name="special">highlight</xsl:attribute>
-      <xsl:apply-templates
-	  select="@*|*|processing-instruction()|comment()|text()"  mode="iden"/>
-  </xsl:copy>
-</xsl:template>
-
+  
 
   <xsl:template match="/">
-    <xsl:variable name="deco">
-      <xsl:apply-templates mode="iden"/>
-    </xsl:variable>
-    <xsl:for-each select="$deco//body">
+   
+    <xsl:for-each select="//body">
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader type="text">
     <fileDesc>
@@ -50,13 +28,64 @@
   <text>
     <body>
       <p>
-	  <xsl:call-template name="subtree"/>
+	<eTree rend="d3CollapsableTree">
+	  <label>TEI</label>
+	  <xsl:for-each select=".//moduleSpec">
+	    <eTree>
+	      <label><xsl:value-of select="@ident"/></label>
+	      <xsl:if test="//classSpec[@module=current()/@ident]">
+		<eTree>
+		  <label>Classes</label>
+		  <xsl:for-each
+		      select="//classSpec[@module=current()/@ident]">
+		    <xsl:call-template name="innards"/>
+		  </xsl:for-each>
+		</eTree>
+	      </xsl:if>
+	      <xsl:if test="//elementSpec[@module=current()/@ident]">
+		<eTree>
+		  <label>Elements</label>
+		  <xsl:for-each
+		      select="//elementSpec[@module=current()/@ident]">
+		    <xsl:call-template name="innards"/>
+		  </xsl:for-each>
+		</eTree>
+	      </xsl:if>
+	      <xsl:if test="//macroSpec[@module=current()/@ident]">
+		<eTree>
+		  <label>Macros</label>
+		  <xsl:for-each
+		      select="//macroSpec[@module=current()/@ident]">
+		    <eLeaf><label><xsl:value-of
+		    select="@ident"/></label></eLeaf>
+		  </xsl:for-each>
+		</eTree>
+	      </xsl:if>
+
+	    </eTree>
+	  </xsl:for-each>
+	</eTree>
       </p>
     </body>
   </text>
 </TEI>
-    </xsl:for-each></xsl:template>
+    </xsl:for-each>
+</xsl:template>
 
+<xsl:template name="innards">
+		    <xsl:element name="{if (attList/attDef) then
+				       'eTree' else 'eLeaf'}">
+		      <label><xsl:value-of
+		    select="@ident"/></label>
+		      <xsl:if test="attList/attDef">
+			  <xsl:for-each select="attList/attDef">
+			    <eLeaf>
+			      <label>@<xsl:value-of select="@ident"/></label>
+			    </eLeaf>
+			  </xsl:for-each>
+		      </xsl:if>
+		    </xsl:element>
+</xsl:template>
 
   <xsl:template name="subtree">
     <xsl:choose>

@@ -46,8 +46,10 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element eTree</desc>
   </doc>
   <xsl:template match="tei:forest|tei:eTree|tei:eLeaf">
+    <xsl:variable name="thistreestyle" select="if (ancestor-or-self::eTree/@rend) then ancestor-or-self::eTree[last()]/@rend
+					       else $treestyle"/>
     <xsl:choose>
-      <xsl:when test="$treestyle='google'">
+      <xsl:when test="$thistreestyle='googlechart'">
         <xsl:if test="not(preceding::tei:eTree or preceding::tei:forest)">
           <script type="text/javascript" src="https://www.google.com/jsapi"/>
           <script type="text/javascript">
@@ -72,7 +74,7 @@ of this software, even if advised of the possibility of such damage.
           <span id="chart{$TREEID}"/>
         </xsl:if>
       </xsl:when>
-      <xsl:when test="$treestyle='d3'">
+      <xsl:when test="$thistreestyle='d3VerticalTree'">
         <xsl:choose>
           <xsl:when test="not(ancestor::tei:eTree or ancestor::tei:forest)">
 	    <xsl:variable name="maxlabel"
@@ -139,16 +141,18 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:choose>
       </xsl:when>
 
-      <xsl:when test="$treestyle='d3dynamic'">
+      <xsl:when test="$thistreestyle='d3CollapsableTree'">
         <xsl:choose>
           <xsl:when test="not(ancestor::tei:eTree or ancestor::tei:forest)">
 	    <xsl:variable name="maxlabel"
 			  select="(max(descendant::tei:label/string-length()))"/>
-            <xsl:variable name="treewidth"
+            <xsl:variable name="treeheight"
 			  select="max(descendant-or-self::*[self::tei:eTree
 				  or
 				  self::tei:eLeaf]/(count(tei:eLeaf)+count(tei:eTree)))
-				  * 175"/>
+				  * 150"/>
+            <xsl:variable name="treewidth"
+			  select="count(descendant-or-self::*[self::tei:eTree]) * 130"/>
             <xsl:variable name="treedepth"
 			  select="max(descendant::*[(self::tei:eTree
 				  or self::tei:eLeaf) and
@@ -159,19 +163,10 @@ of this software, even if advised of the possibility of such damage.
             <div class="treediagram" style="width:{$treewidth} {@style}" id="viz{$TREEID}"/>
             <script type="text/javascript">
       var treeData = [{<xsl:call-template name="treelabel"/>}];
-      var svg = d3.select("#viz<xsl:value-of select="$TREEID"/>").append("svg:svg")
-	.attr("width", width + margin.right + margin.left)
-	.attr("height", height + margin.top + margin.bottom)
-  .append("g")
-	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+     root = treeData[0];
+     drawCollapsibleTree("#viz<xsl:value-of select="$TREEID"/>",root,<xsl:value-of select="$treewidth"/>,<xsl:value-of select="$treeheight"/>);
 
-root = treeData[0];
-root.x0 = height / 2;
-root.y0 = 0;
-  
-update(root);
-
-d3.select(self.frameElement).style("height", "500px");
+     d3.select(self.frameElement).style("height", "500px");
 
     </script>
           </xsl:when>
@@ -184,9 +179,7 @@ d3.select(self.frameElement).style("height", "500px");
   </xsl:template>
 
   <xsl:template name="treelabel">
-    <xsl:text>"name":'</xsl:text>
-    <xsl:value-of select="tei:label"/>
-    <xsl:text>', </xsl:text>
+    <xsl:text>"name":'</xsl:text><xsl:for-each select="tei:label"><xsl:apply-templates/></xsl:for-each><xsl:text>', </xsl:text>
     <xsl:text>"style":'</xsl:text>
     <xsl:value-of select="tei:label/@rend"/>
     <xsl:text>', </xsl:text>
