@@ -66,7 +66,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 <xsl:template name="latexPackages">
-\setmonofont[Scale=0.86]{Lucida Sans Typewriter}
+\setmonofont[Scale=0.86]{Courier New}
 \setromanfont{Trebuchet MS}
 \setsansfont{Arial}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
