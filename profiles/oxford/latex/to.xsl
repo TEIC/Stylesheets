@@ -54,8 +54,8 @@ of this software, even if advised of the possibility of such damage.
 <xsl:param name="parIndent">0pt</xsl:param>
    <xsl:template name="latexPreambleHook">
 \defaultfontfeatures{Scale=MatchLowercase}
-\setromanfont{Minion Pro}
-\setsansfont{Myriad Pro}
+\setromanfont{Trebuchet MS}
+\setsansfont{Trebuchet MS}
 \setlength{\headheight}{14pt}
 </xsl:template>
 

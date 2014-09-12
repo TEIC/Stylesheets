@@ -67,8 +67,8 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:template name="latexPackages">
 \setmonofont[Scale=0.86]{Lucida Sans Typewriter}
-\setromanfont{Minion Pro}
-\setsansfont{Arial Unicode MS}
+\setromanfont{Trebuchet MS}
+\setsansfont{Arial}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \useinnertheme[shadow=true]{rounded}
 \usecolortheme{whale}
