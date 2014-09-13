@@ -538,17 +538,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="applyRendition"/>
 
 
-  <xsl:template match="tei:gloss" mode="inLanguage">
+  <xsl:template match="tei:gloss|tei:desc" mode="inLanguage">
       <seg>
          <xsl:copy-of select="@xml:lang"/>
          <xsl:value-of select="."/>
-      </seg>
-  </xsl:template>
-
-  <xsl:template match="tei:desc" mode="inLanguage">
-      <seg>
-         <xsl:copy-of select="@xml:lang"/>
-         <xsl:apply-templates/>
       </seg>
   </xsl:template>
 

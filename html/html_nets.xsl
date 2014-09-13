@@ -162,9 +162,8 @@ of this software, even if advised of the possibility of such damage.
             <xsl:variable name="TREEID" select="generate-id()"/>
             <div class="treediagram" style="width:{$treewidth} {@style}" id="viz{$TREEID}"/>
             <script type="text/javascript">
-      var treeData = [{<xsl:call-template name="treelabel"/>}];
-     root = treeData[0];
-     drawCollapsibleTree("#viz<xsl:value-of select="$TREEID"/>",root,<xsl:value-of select="$treewidth"/>,<xsl:value-of select="$treeheight"/>);
+     treeData = {<xsl:call-template name="treelabel"/>};
+     drawCollapsibleTree("#viz<xsl:value-of select="$TREEID"/>",<xsl:value-of select="$treewidth"/>,<xsl:value-of select="$treeheight"/>);
 
      d3.select(self.frameElement).style("height", "500px");
 

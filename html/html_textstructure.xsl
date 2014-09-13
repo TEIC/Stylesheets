@@ -1190,9 +1190,9 @@ of this software, even if advised of the possibility of such damage.
 	      var margin = {top: 0, right: 0, bottom: 0, left: 30};
 	      var width, height, tree, svg, diagonal;
 	      var rectw = 120,recth=50;
-	      var i = 0,	duration = 750,	root;
+	      var i = 0,	duration = 750,	treeData;
 	     
-function drawCollapsibleTree (ID, root, w,h) {
+function drawCollapsibleTree (ID, w,h) {
    width = w - margin.right - margin.left;
    height = h - margin.top - margin.bottom;
    tree = d3.layout.tree()
@@ -1200,21 +1200,21 @@ function drawCollapsibleTree (ID, root, w,h) {
 
    diagonal = d3.svg.diagonal()
 	.projection(function(d) { return [d.y, d.x]; });
-   root.x0 = height / 2;
-   root.y0 = 0;
+   treeData.x0 = height / 2;
+   treeData.y0 = 0;
    svg = d3.select(ID).append("svg:svg")
 	.attr("width", width + margin.right + margin.left)
 	.attr("height", height + margin.top + margin.bottom)
      .append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-   update(root);
+   update(treeData);
 }
 
 
 function update(source) {
 
   // Compute the new tree layout.
-  var nodes = tree.nodes(root).reverse(),
+  var nodes = tree.nodes(treeData).reverse(),
 	  links = tree.links(nodes);
 
   // Normalize for fixed-depth.
