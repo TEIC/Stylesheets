@@ -83,6 +83,18 @@ XSL LaTeX stylesheet to make slides
 \let\backmatter\relax
 \let\endfoot\relax
 \let\endlastfoot\relax
+<xsl:if test="key('ENDNOTES',1)">
+  \usepackage{endnotes}
+  <xsl:choose>
+    <xsl:when test="key('FOOTNOTES',1)">
+      \def\theendnote{\@alph\c@endnote}
+    </xsl:when>
+    <xsl:otherwise>
+      \def\theendnote{\@arabic\c@endnote}
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:if>
+
 </xsl:template>
 
    <xsl:template name="latexBegin"/>

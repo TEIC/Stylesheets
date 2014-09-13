@@ -141,6 +141,10 @@
 \let\endfoot\relax
 \let\endlastfoot\relax
 
+  \usepackage{endnotes}
+  
+      \def\theendnote{\@alph\c@endnote}
+    
 \date{}
 \institute{}
 \def\TheFullDate{1970-01-01}
@@ -205,6 +209,13 @@ Some text introducing \textit{all things bibliographic}, followed by some more t
 \end{exampleblock}
 \par\egroup
   
+\end{frame}
+
+\begin{frame}
+\frametitle{Lists}\begin{description}
+
+\item[{[label here]}]item here
+\end{description} 
 \end{frame}
 
 \theendnotes

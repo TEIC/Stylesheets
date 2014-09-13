@@ -348,9 +348,9 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:item" mode="gloss"> 
       <xsl:text>
-\item[</xsl:text>
+\item[{</xsl:text>
       <xsl:apply-templates select="preceding-sibling::tei:label[1]" mode="gloss"/>
-      <xsl:text>]</xsl:text>
+      <xsl:text>}]</xsl:text>
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
