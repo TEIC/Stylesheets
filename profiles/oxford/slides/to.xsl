@@ -66,9 +66,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 <xsl:template name="latexPackages">
-\setmonofont[Scale=0.86]{Courier New}
+\setmonofont{DejaVu Sans Mono}
 \setromanfont{Trebuchet MS}
-\setsansfont{Arial}
+\setsansfont{DejaVuSans}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \useinnertheme[shadow=true]{rounded}
 \usecolortheme{orchid}  
