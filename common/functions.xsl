@@ -1405,6 +1405,20 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:function>
   
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>work out unique ID for generated Schematron</desc>
+  </doc>
+  <xsl:function name="tei:makePatternID" as="xs:string">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:variable name="num">
+	<xsl:number level="any"/>
+      </xsl:variable>
+      <xsl:value-of
+	  select="(../ancestor::*[@ident]/@ident,'constraint',../@ident,$num)"
+	  separator="-"/>
+    </xsl:for-each>
+  </xsl:function>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>find nearest language code</desc>
