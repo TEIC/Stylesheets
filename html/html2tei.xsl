@@ -5,6 +5,7 @@
 		xmlns:tei="http://www.tei-c.org/ns/1.0" 
 		xmlns:m="http://www.w3.org/1998/Math/MathML"
 		exclude-result-prefixes="tei xs m" version="2.0" 
+		xmlns:html="http://www.w3.org/1999/xhtml"
 		xpath-default-namespace="http://www.w3.org/1999/xhtml">
   <xsl:import href="../common/common_makeTEIStructure.xsl"/>
   <xsl:import href="../common/functions.xsl"/>
@@ -128,7 +129,7 @@
     <xsl:variable name="object">
       <xsl:element name="{if (self::img) then 'graphic' else 'media'}">
         <xsl:attribute name="url" select="@src"/>
-        <xsl:attribute name="type" select="local-name()"/>
+        <xsl:attribute name="rend" select="(local-name(),@class)"/>
         <xsl:attribute name="mimeType" select="tei:generateMimeType(@src,@type)"/>
         <xsl:for-each select="@width">
           <xsl:attribute name="width">
@@ -179,6 +180,13 @@
       <xsl:apply-templates/>
     </hi>
   </xsl:template>
+  <xsl:template
+      match="@align|table/@border|table/@cellpadding|table/@cellspacing|table/@width">
+    <xsl:attribute name="html:{local-name()}">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
+
   <xsl:template match="@class">
     <xsl:attribute name="rend" select="."/>
   </xsl:template>
