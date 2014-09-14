@@ -66,8 +66,10 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 <xsl:template name="latexPackages">
+\usepackage{framed}
+\definecolor{shadecolor}{gray}{0.95}
 \setmonofont{DejaVu Sans Mono}
-\setromanfont{Trebuchet MS}
+\setromanfont{DejaVuSerif}
 \setsansfont{DejaVuSans}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \useinnertheme[shadow=true]{rounded}
