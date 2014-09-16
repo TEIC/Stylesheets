@@ -975,6 +975,18 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:call-template>
       </xsl:when>
 
+      <xsl:when test="tokenize(@place,' ')=('sup','above')">
+	<xsl:call-template name="makeInline">
+	  <xsl:with-param name="style">sup</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+
+      <xsl:when test="tokenize(@place,' ')=('sub','below')">
+	<xsl:call-template name="makeInline">
+	  <xsl:with-param name="style">sub</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+
       <xsl:when test="@place='comment'">
 	<xsl:call-template name="commentNote"/>
       </xsl:when>
@@ -994,7 +1006,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="tei:isFootNote(.)">
 	<xsl:call-template name="footNote"/>
       </xsl:when>
-
       <xsl:when test="tokenize(@place,' ')=('margin', 
 		      'margin/inline',
 		      'marg1',
@@ -1019,7 +1030,11 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="marginalNote"/>
       </xsl:when>
 
-      <xsl:when test="(@place='display' or not(tei:is-inline(.)) or tei:q)">
+      <xsl:when test="tokenize(@place,' ')=('top','opposite','overleaf','inspace')">
+	<xsl:call-template name="marginalNote"/>
+      </xsl:when>
+
+      <xsl:when test="tokenize(@place,' ')=('display') or not(tei:is-inline(.)) or tei:q">
 	<xsl:call-template name="displayNote"/>
       </xsl:when>
 

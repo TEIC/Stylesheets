@@ -939,19 +939,14 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="@place='margin'
-		      or    @place='marginOuter' or
-		      @place='marginLeft' or
-		      @place='left' or
-		      @place='right' or
-		      @place='marginRight'">
-        <span class="note{@place}">
+      <xsl:otherwise>
+        <span class="notemarginLeft {@place}">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
           <xsl:apply-templates/>
         </span>
-      </xsl:when>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
     
