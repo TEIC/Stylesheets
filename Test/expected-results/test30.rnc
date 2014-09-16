@@ -8,9 +8,9 @@ namespace sch = "http://purl.oclc.org/dsdl/schematron"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
 # Schema 
-# Edition: Version 2.6.0. Last updated on
-#	20th January 2014, revision 12802
-# Edition Location: http://www.tei-c.org/Vault/P5/Version 2.6.0/
+# Edition: Version 2.7.0. Last updated on
+#	16th September 2014, revision 13036
+# Edition Location: http://www.tei-c.org/Vault/P5/Version 2.7.0/
 #
 
 #
@@ -445,7 +445,9 @@ Tatt.handFeatures.attribute.scriptRef =
 Tatt.handFeatures.attribute.medium =
   
   ## describes the tint or type of ink, e.g. brown, or other writing medium, e.g. pencil
-  attribute medium { Tdata.enumerated }?
+  attribute medium {
+    list { Tdata.enumerated+ }
+  }?
 Tatt.handFeatures.attribute.scope =
   
   ## specifies how widely this hand is used in the manuscript.
@@ -573,8 +575,10 @@ Tatt.naming.attributes =
   Tatt.naming.attribute.nymRef
 Tatt.naming.attribute.role =
   
-  ## may be used to specify further information about the entity referenced by this name, for example the occupation of a person, or the status of a place.
-  attribute role { Tdata.enumerated }?
+  ## may be used to specify further information about the entity referenced by this name in the form of a set of whitespace-separated values, for example the occupation of a person, or the status of a place.
+  attribute role {
+    list { Tdata.enumerated+ }
+  }?
 Tatt.naming.attribute.nymRef =
   
   ## (reference to the canonical name) provides a means of locating the canonical form (nym) of the names associated with the object named by the element bearing it.
@@ -1534,8 +1538,8 @@ Tmodel.biblPart =
   | TtextLang
   | Tedition
   | Textent
+  | Tavailability
   | TlistRelation
-  | TrelationGrp
 Tmodel.frontPart = Tmodel.frontPart.drama | TdivGen | TtitlePage
 Tmodel.addrPart =
   Tmodel.nameLike | TaddrLine | Tstreet | TpostCode | TpostBox
@@ -1598,6 +1602,7 @@ Tmodel.editorialDeclPart =
   | Tsegmentation
   | TstdVals
   | Tinterpretation
+  | Tpunctuation
 Tmodel.profileDescPart =
   Tabstract
   | Tcreation
@@ -1692,7 +1697,7 @@ Tp =
   element p { Tmacro.paraContent, Tatt.global.attribute.xmlid, empty }
 Tforeign =
   
-  ## (foreign) identifies a word or phrase as belonging to some language other than that of the surrounding text. [3.3.2.1. ]
+  ## identifies a word or phrase as belonging to some language other than that of the surrounding text. [3.3.2.1. ]
   element foreign { Tmacro.phraseSeq, Tatt.global.attributes, empty }
 Temph =
   
@@ -1897,7 +1902,7 @@ Torig =
   }
 Tgap =
   
-  ## (gap) indicates a point where material has been omitted in a transcription, whether for editorial reasons described in the TEI header, as part of sampling practice, or because the material is illegible, invisible, or inaudible. [3.4.3. ]
+  ## indicates a point where material has been omitted in a transcription, whether for editorial reasons described in the TEI header, as part of sampling practice, or because the material is illegible, invisible, or inaudible. [3.4.3. ]
   element gap {
     (Tmodel.descLike | Tmodel.certLike)*,
     Tatt.global.attributes,
@@ -1978,11 +1983,12 @@ Trs =
     Tatt.global.attributes,
     Tatt.naming.attributes,
     Tatt.typed.attributes,
+    Tatt.responsibility.attributes,
     empty
   }
 Temail =
   
-  ## (electronic mail address) contains an e-mail address identifying a location to which e-mail messages can be delivered. [3.5.2. ]
+  ## (electronic mail address) contains an email address identifying a location to which email messages can be delivered. [3.5.2. ]
   element email { Tmacro.phraseSeq, Tatt.global.attributes, empty }
 Taddress =
   
@@ -2175,7 +2181,7 @@ Tref =
   }
 Tlist =
   
-  ## (list) contains any sequence of items organized as a list. [3.7. ]
+  ## contains any sequence of items organized as a list. [3.7. ]
   element list {
     ((Tmodel.divTop | Tmodel.global)*,
      ((Titem, Tmodel.global*)+
@@ -2185,23 +2191,26 @@ Tlist =
      (Tmodel.divBottom, Tmodel.global*)*),
     Tatt.global.attributes,
     Tatt.sortable.attributes,
+    Tatt.typed.attribute.subtype,
     
-    ## describes the form of the list.
-    ## Suggested values include: 1] ordered; 2] bulleted; 3] simple; 4] gloss
-    [ a:defaultValue = "simple" ]
+    ## describes the nature of the items in the list.
+    ## Suggested values include: 1] gloss; 2] index; 3] instructions; 4] litany; 5] syllogism
     attribute type {
       
-      ## list items are numbered or lettered.
-      "ordered"
+      ## each list item glosses some term or concept, which is given by a label element preceding the list item.
+      "gloss"
       | 
-        ## list items are marked with a bullet or other typographic device.
-        "bulleted"
+        ## each list item is an entry in an index such as the alphabetical topical index at the back of a print volume.
+        "index"
       | 
-        ## list items are not numbered or bulleted.
-        "simple"
+        ## each list item is a step in a sequence of instructions, as in a recipe.
+        "instructions"
       | 
-        ## each list item glosses some term or concept, which is given by a label element preceding the list item.
-        "gloss"
+        ## each list item is one of a sequence of petitions, supplications or invocations, typically in a religious ritual.
+        "litany"
+      | 
+        ## each list item is part of an argument consisting of two or more propositions and a final conclusion derived from them.
+        "syllogism"
       | xsd:Name
     }?,
     empty
@@ -2399,7 +2408,8 @@ Tanalytic =
      | Tmodel.ptrLike
      | Tdate
      | TtextLang
-     | Tidno)*,
+     | Tidno
+     | Tavailability)*,
     Tatt.global.attributes,
     empty
   }
@@ -2414,6 +2424,7 @@ Tmonogr =
       | ((Ttitle | Tmodel.ptrLike | Tidno)+,
          (TtextLang | Tauthor | Teditor | Tmeeting | TrespStmt)*)
       | (Tauthority, Tidno))?,
+     Tavailability*,
      Tmodel.noteLike*,
      (Tedition,
       (Tidno
@@ -2440,7 +2451,8 @@ Tseries =
      | TbiblScope
      | Tidno
      | TtextLang
-     | Tmodel.global)*,
+     | Tmodel.global
+     | Tavailability)*,
     Tatt.global.attributes,
     empty
   }
@@ -2479,6 +2491,7 @@ Tresp =
     Tmacro.phraseSeq.limited,
     Tatt.global.attributes,
     Tatt.canonical.attributes,
+    Tatt.datable.attributes,
     empty
   }
 Ttitle =
@@ -2554,7 +2567,7 @@ Tpublisher =
   element publisher { Tmacro.phraseSeq, Tatt.global.attributes, empty }
 TbiblScope =
   
-  ## (scope of bibliographic reference) defines the scope of a bibliographic reference, for example as a list of page numbers, or a named subdivision of a larger work. [3.11.2.4. ]
+  ## (scope of bibliographic reference) defines the scope of a bibliographic reference, for example as a list of page numbers, or a named subdivision of a larger work. [3.11.2.5. ]
   element biblScope {
     Tmacro.phraseSeq,
     Tatt.global.attributes,
@@ -2587,7 +2600,7 @@ TbiblScope =
   }
 TcitedRange =
   
-  ## (cited range) defines the range of cited content, often represented by pages or other units [3.11.2.4. ]
+  ## (cited range) defines the range of cited content, often represented by pages or other units [3.11.2.5. ]
   element citedRange {
     Tmacro.phraseSeq,
     Tatt.global.attributes,
@@ -2646,7 +2659,9 @@ TlistBibl =
   
   ## (citation list) contains a list of bibliographic citations of any kind. [3.11.1.  2.2.7.  15.3.2. ]
   element listBibl {
-    (Tmodel.headLike*, (Tmodel.biblLike | Tmodel.milestoneLike)+),
+    (Tmodel.headLike*,
+     (Tmodel.biblLike | Tmodel.milestoneLike)+,
+     (Trelation | TlistRelation)*),
     Tatt.global.attributes,
     Tatt.sortable.attributes,
     Tatt.declarable.attributes,
@@ -2871,7 +2886,7 @@ Tatt.patternReplacement.attribute.replacementPattern =
   attribute replacementPattern { Tdata.replacement }
 TteiHeader =
   
-  ## (TEI header) supplies the descriptive and declarative information making up an electronic title page prefixed to every TEI-conformant text. [2.1.1.  15.1. ]
+  ## (TEI header) supplies the descriptive and declarative information making up an electronic title page for every TEI-conformant document. [2.1.1.  15.1. ]
   element teiHeader {
     (TfileDesc, Tmodel.teiHeaderPart*, TrevisionDesc?),
     Tatt.global.attributes,
@@ -2938,7 +2953,7 @@ TeditionStmt =
   }
 Tedition =
   
-  ## (edition) describes the particularities of one edition of a text. [2.2.2. ]
+  ## describes the particularities of one edition of a text. [2.2.2. ]
   element edition { Tmacro.phraseSeq, Tatt.global.attributes, empty }
 Textent =
   
@@ -3189,9 +3204,6 @@ Tquotation =
         ## all quotation marks have been retained
         "all"
     }?,
-    
-    ## specifies how quotation marks are indicated within the text.
-    [ a:defaultValue = "unknown" ] attribute form { Tdata.enumerated }?,
     empty
   }
 Thyphenation =
@@ -3245,6 +3257,38 @@ Tinterpretation =
     Tmodel.pLike+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
+    empty
+  }
+Tpunctuation =
+  
+  ## specifies editorial practice adopted with respect to punctuation marks in the original. [2.3.3.  3.2. ]
+  element punctuation {
+    Tmodel.pLike*,
+    Tatt.declarable.attributes,
+    Tatt.global.attributes,
+    
+    ## indicates whether or not punctation marks have been retained as content within the text.
+    attribute marks {
+      
+      ## no punctuation marks have been retained
+      "none"
+      | 
+        ## some punctuation marks have been retained
+        "some"
+      | 
+        ## all punctuation marks have been retained
+        "all"
+    }?,
+    
+    ## indicates whether punctation marks have been captured inside or outside of an adjacent element.
+    attribute placement {
+      
+      ## punctuation marks are captured inside adjacent elements
+      "internal"
+      | 
+        ## punctuation marks are captured outside adjacent elements
+        "external"
+    }?,
     empty
   }
 TtagsDecl =
@@ -3567,7 +3611,7 @@ TrevisionDesc =
   }
 Tchange =
   
-  ## documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.5.  2.4.1. ]
+  ## documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.5.  2.4.1.  11.7. ]
   element change {
     Tmacro.specialPara,
     Tatt.ascribed.attributes,
@@ -3775,7 +3819,7 @@ TplaceName =
   }
 Tbloc =
   
-  ## (bloc) contains the name of a geo-political unit consisting of two or more nation states or countries. [13.2.3. ]
+  ## contains the name of a geo-political unit consisting of two or more nation states or countries. [13.2.3. ]
   element bloc {
     Tmacro.phraseSeq,
     Tatt.global.attributes,
@@ -3786,7 +3830,7 @@ Tbloc =
   }
 Tcountry =
   
-  ## (country) contains the name of a geo-political unit, such as a nation, country, colony, or commonwealth, larger than or administratively superior to a region and smaller than a bloc. [13.2.3. ]
+  ## contains the name of a geo-political unit, such as a nation, country, colony, or commonwealth, larger than or administratively superior to a region and smaller than a bloc. [13.2.3. ]
   element country {
     Tmacro.phraseSeq,
     Tatt.global.attributes,
@@ -3832,7 +3876,13 @@ Toffset =
   
   ## marks that part of a relative temporal or spatial expression which indicates the direction of the offset between the two place names, dates, or times involved in the expression. [13.2.3. ]
   element offset {
-    Tmacro.xtext, Tatt.global.attributes, Tatt.typed.attributes, empty
+    Tmacro.phraseSeq,
+    Tatt.datable.attributes,
+    Tatt.editLike.attributes,
+    Tatt.global.attributes,
+    Tatt.naming.attributes,
+    Tatt.typed.attributes,
+    empty
   }
 TgeogName =
   
@@ -3851,15 +3901,16 @@ TgeogFeat =
   ## (geographical feature name) contains a common noun identifying some geographical feature contained within a geographic name, such as valley, mount, etc. [13.2.3. ]
   element geogFeat {
     Tmacro.phraseSeq,
+    Tatt.datable.attributes,
+    Tatt.editLike.attributes,
     Tatt.global.attributes,
     Tatt.naming.attributes,
     Tatt.typed.attributes,
-    Tatt.datable.attributes,
     empty
   }
 Taffiliation =
   
-  ## (affiliation) contains an informal description of a person's present or past affiliation with some organization, for example an employer or sponsor. [15.2.2. ]
+  ## contains an informal description of a person's present or past affiliation with some organization, for example an employer or sponsor. [15.2.2. ]
   element affiliation {
     Tmacro.phraseSeq,
     Tatt.global.attributes,
@@ -3870,7 +3921,7 @@ Taffiliation =
   }
 Tage =
   
-  ## (age) specifies the age of a person. [13.3.2.1. ]
+  ## specifies the age of a person. [13.3.2.1. ]
   element age {
     Tmacro.phraseSeq.limited,
     Tatt.global.attributes,
@@ -3883,7 +3934,7 @@ Tage =
   }
 Tbirth =
   
-  ## (birth) contains information about a person's birth, such as its date and place. [15.2.2. ]
+  ## contains information about a person's birth, such as its date and place. [15.2.2. ]
   element birth {
     Tmacro.phraseSeq,
     Tatt.global.attributes,
@@ -3894,7 +3945,7 @@ Tbirth =
   }
 Tclimate =
   
-  ## (climate) contains information about the physical climate of a place. [13.3.4.3. ]
+  ## contains information about the physical climate of a place. [13.3.4.3. ]
   element climate {
     (Tmodel.headLike*,
      (Tmodel.pLike+ | Tmodel.labelLike+),
@@ -3909,7 +3960,7 @@ Tclimate =
   }
 Tdeath =
   
-  ## (death) contains information about a person's death, such as its date and place. [15.2.2. ]
+  ## contains information about a person's death, such as its date and place. [15.2.2. ]
   element death {
     Tmacro.phraseSeq,
     Tatt.global.attributes,
@@ -3931,7 +3982,7 @@ Teducation =
   }
 Tevent =
   
-  ## (event) contains data relating to any kind of significant event associated with a person, place, or organization. [13.3.1. ]
+  ## contains data relating to any kind of significant event associated with a person, place, or organization. [13.3.1. ]
   element event {
     (Tmodel.headLike*,
      (Tmodel.pLike+ | Tmodel.labelLike+),
@@ -4012,7 +4063,7 @@ TlistOrg =
   element listOrg {
     (Tmodel.headLike*,
      (Torg | TlistOrg)+,
-     (TlistRelation | TrelationGrp | Trelation)*),
+     (Trelation | TlistRelation)*),
     Tatt.global.attributes,
     Tatt.typed.attributes,
     Tatt.declarable.attributes,
@@ -4025,7 +4076,7 @@ TlistEvent =
   element listEvent {
     (Tmodel.headLike*,
      (Tevent | TlistEvent)+,
-     (Trelation | TrelationGrp | TlistRelation)*),
+     (Trelation | TlistRelation)*),
     Tatt.global.attributes,
     Tatt.typed.attributes,
     Tatt.declarable.attributes,
@@ -4038,7 +4089,7 @@ TlistPerson =
   element listPerson {
     (Tmodel.headLike*,
      (Tmodel.personLike | TlistPerson)+,
-     (Trelation | TlistRelation | TrelationGrp)*),
+     (Trelation | TlistRelation)*),
     Tatt.global.attributes,
     Tatt.typed.attributes,
     Tatt.declarable.attributes,
@@ -4051,7 +4102,7 @@ TlistPlace =
   element listPlace {
     (Tmodel.headLike*,
      (Tmodel.placeLike | TlistPlace)+,
-     (TlistRelation | TrelationGrp | Trelation)*),
+     (Trelation | TlistRelation)*),
     Tatt.global.attributes,
     Tatt.typed.attributes,
     Tatt.declarable.attributes,
@@ -4130,17 +4181,8 @@ TlistRelation =
   
   ## provides information about relationships identified amongst people, places, and organizations, either informally as prose or as formally expressed relation links. [13.3.2.3. ]
   element listRelation {
-    (Tmodel.pLike+ | Trelation+),
-    Tatt.global.attributes,
-    Tatt.typed.attributes,
-    Tatt.sortable.attributes,
-    empty
-  }
-TrelationGrp =
-  
-  ## (relation group) provides information about relationships identified amongst people, places, and organizations, either informally as prose or as formally expressed relation links. [13.3.2.3. ]
-  element relationGrp {
-    (Tmodel.pLike+ | Trelation+),
+    (Tmodel.headLike*,
+     (Tmodel.pLike | (Trelation | TlistRelation)+)),
     Tatt.global.attributes,
     Tatt.typed.attributes,
     Tatt.sortable.attributes,
@@ -4173,7 +4215,7 @@ TpersonGrp =
   
   ## (personal group) describes a group of individuals treated as a single person for analytic purposes. [15.2.2. ]
   element personGrp {
-    (Tmodel.pLike+ | Tmodel.personPart*),
+    (Tmodel.pLike+ | (Tmodel.personPart | Tmodel.global)*),
     Tatt.global.attributes,
     Tatt.sortable.attributes,
     
@@ -4293,22 +4335,7 @@ Trelation =
     Tatt.editLike.attributes,
     Tatt.canonical.attributes,
     Tatt.sortable.attributes,
-    
-    ## categorizes the relationship in some respect, e.g. as social, personal or other.
-    ## Suggested values include: 1] social; 2] personal; 3] other
-    [ a:defaultValue = "personal" ]
-    attribute type {
-      
-      ## relationship concerned with social roles
-      "social"
-      | 
-        ## relationship concerned with personal roles, e.g. kinship, marriage, etc.
-        "personal"
-      | 
-        ## other kinds of relationship
-        "other"
-      | xsd:Name
-    }?,
+    Tatt.typed.attributes,
     
     ## supplies a name for the kind of relationship of which this is an instance.
     attribute name { Tdata.enumerated }?,
@@ -4331,7 +4358,7 @@ Trelation =
   }
 Tresidence =
   
-  ## (residence) describes a person's present or past places of residence. [15.2.2. ]
+  ## describes a person's present or past places of residence. [15.2.2. ]
   element residence {
     Tmacro.phraseSeq,
     Tatt.global.attributes,
@@ -4374,7 +4401,7 @@ TsocecStatus =
   }
 Tstate =
   
-  ## contains a description of some status or quality attributed to a person, place, or organization often at some specific time or for a specific date range. [13.3.1.  13.3.2.1.  13.3.2.1. ]
+  ## contains a description of some status or quality attributed to a person, place, or organization often at some specific time or for a specific date range. [13.3.1.  13.3.2.1. ]
   element state {
     (Tstate+
      | (Tmodel.headLike*,
@@ -4405,7 +4432,7 @@ Tterrain =
   }
 Ttrait =
   
-  ## contains a description of some status or quality attributed to a person, place, or organization typically, but not necessarily, independent of the volition or action of the holder and usually not at some specific time or for a specific date range. [13.3.1.  13.3.2.1.  13.3.2.1. ]
+  ## contains a description of some status or quality attributed to a person, place, or organization typically, but not necessarily, independent of the volition or action of the holder and usually not at some specific time or for a specific date range. [13.3.1.  13.3.2.1. ]
   element trait {
     (Ttrait+
      | (Tmodel.headLike*,
@@ -4440,7 +4467,7 @@ TlistNym =
   element listNym {
     (Tmodel.headLike*,
      (Tnym | TlistNym)+,
-     (TlistRelation | TrelationGrp | Trelation)*),
+     (Trelation | TlistRelation)*),
     Tatt.global.attributes,
     Tatt.typed.attributes,
     Tatt.declarable.attributes,
@@ -4466,7 +4493,8 @@ Tatt.coordinated.attributes =
   Tatt.coordinated.attribute.ulx,
   Tatt.coordinated.attribute.uly,
   Tatt.coordinated.attribute.lrx,
-  Tatt.coordinated.attribute.lry
+  Tatt.coordinated.attribute.lry,
+  Tatt.coordinated.attribute.points
 Tatt.coordinated.attribute.start =
   
   ## indicates the element within a transcription of the text containing at least the start of the writing represented by this zone or surface.
@@ -4487,6 +4515,12 @@ Tatt.coordinated.attribute.lry =
   
   ## gives the y coordinate value for the lower right corner of a rectangular space.
   attribute lry { Tdata.numeric }?
+Tatt.coordinated.attribute.points =
+  
+  ## identifies a two dimensional area within the bounding box specified by the other attributes by means of a series of pairs of numbers, each of which gives the x,y coordinates of a point on a line enclosing the area.
+  attribute points {
+    list { Tdata.point, Tdata.point, Tdata.point, Tdata.point* }
+  }?
 Tfacsimile =
   
   ## contains a representation of some written source in the form of a set of images rather than as transcribed or encoded text. [11.1. ]
@@ -4530,7 +4564,6 @@ TsurfaceGrp =
   element surfaceGrp {
     (Tmodel.global | Tsurface | TsurfaceGrp)+,
     Tatt.global.attributes,
-    Tatt.coordinated.attributes,
     Tatt.declaring.attributes,
     Tatt.typed.attributes,
     empty
@@ -4547,11 +4580,6 @@ Tzone =
     Tatt.global.attributes,
     Tatt.coordinated.attributes,
     Tatt.typed.attributes,
-    
-    ## identifies a two dimensional area within the bounding box specified by the other attributes by means of a series of pairs of numbers, each of which gives the x,y coordinates of a point on a line enclosing the area.
-    attribute points {
-      list { Tdata.point, Tdata.point, Tdata.point, Tdata.point* }
-    }?,
     
     ## indicates the amount by which this zone has been rotated clockwise, with respect to the normal orientation of the parent surface element as implied by the dimensions given in the msDesc element or by the coordinates of the surface itself. The orientation is expressed in arc degrees.
     [ a:defaultValue = "0" ] attribute rotate { Tdata.count }?,
@@ -4572,7 +4600,7 @@ TaddSpan =
            "               "
            sch:assert [
              test = "@spanTo"
-             "The spanTo= attribute of "
+             "The @spanTo attribute of "
              sch:name [ ]
              " is required."
            ]
@@ -4682,7 +4710,7 @@ TdelSpan =
            "               "
            sch:assert [
              test = "@spanTo"
-             "The spanTo= attribute of "
+             "The @spanTo attribute of "
              sch:name [ ]
              " is required."
            ]
@@ -5046,8 +5074,8 @@ Tlink =
            "\x{a}" ~
            "               "
            sch:assert [
-             test = "contains(@target,' ')"
-             "You must supply at least two values for  @target or @targets on "
+             test = "contains(normalize-space(@target),' ')"
+             "You must supply at least two values for @target or  on "
              sch:name [ ]
              "\x{a}" ~
              "               "
@@ -5140,7 +5168,7 @@ Twhen =
   }
 Ttimeline =
   
-  ## (timeline) provides a set of ordered points in time which can be linked to elements of a spoken text to create a temporal alignment of that text. [16.5.2. ]
+  ## provides a set of ordered points in time which can be linked to elements of a spoken text to create a temporal alignment of that text. [16.5.2. ]
   element timeline {
     Twhen+,
     Tatt.global.attributes,
@@ -5211,10 +5239,10 @@ Tjoin =
     [ a:defaultValue = "root" ]
     attribute scope {
       
-      ## the rooted subtrees indicated by the targets attribute are joined, each subtree become a child of the virtual element created by the join
+      ## the rooted subtrees indicated by the target attribute are joined, each subtree become a child of the virtual element created by the join
       "root"
       | 
-        ## the children of the subtrees indicated by the targets attribute become the children of the virtual element (i.e. the roots of the subtrees are discarded)
+        ## the children of the subtrees indicated by the target attribute become the children of the virtual element (i.e. the roots of the subtrees are discarded)
         "branches"
     }?,
     empty

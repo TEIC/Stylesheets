@@ -7,9 +7,9 @@ namespace sch = "http://purl.oclc.org/dsdl/schematron"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
 # Schema 
-# Edition: Version 2.6.0. Last updated on
-#	20th January 2014, revision 12802
-# Edition Location: http://www.tei-c.org/Vault/P5/Version 2.6.0/
+# Edition: Version 2.7.0. Last updated on
+#	16th September 2014, revision 13036
+# Edition Location: http://www.tei-c.org/Vault/P5/Version 2.7.0/
 #
 
 #
@@ -487,7 +487,9 @@ att.handFeatures.attribute.scriptRef =
 att.handFeatures.attribute.medium =
   
   ## décrit la teinte ou le type d'encre, par exemple brune, ou un autre outil d'écriture, par exemple un crayon.
-  attribute medium { data.enumerated }?
+  attribute medium {
+    list { data.enumerated+ }
+  }?
 att.handFeatures.attribute.scope =
   
   ## Spécifie la fréquence d'apparition de cette main dans le manuscrit.
@@ -620,8 +622,10 @@ att.naming.attribute.altname =
   attribute altname { text }?
 att.naming.attribute.role =
   
-  ## may be used to specify further information about the entity referenced by this name, for example the occupation of a person, or the status of a place.
-  attribute role { data.enumerated }?
+  ## may be used to specify further information about the entity referenced by this name in the form of a set of whitespace-separated values, for example the occupation of a person, or the status of a place.
+  attribute role {
+    list { data.enumerated+ }
+  }?
 att.naming.attribute.nymRef =
   
   ## (référence au nom canonique) indique comment localiser la forme canonique (nym) des noms qui sont associés à l'objet nommé par l'élément qui le contient.
@@ -1515,9 +1519,9 @@ model.biblPart =
   | relatedItem
   | textLang
   | listRelation
-  | relationGrp
   | edition
   | extent
+  | availability
   | msIdentifier
 model.frontPart = model.frontPart.drama | divGen | titlePage
 model.addrPart = model.nameLike | addrLine | street | postCode | postBox
@@ -1585,6 +1589,7 @@ model.editorialDeclPart =
   | segmentation
   | stdVals
   | interpretation
+  | punctuation
 model.profileDescPart =
   abstract
   | creation
@@ -1991,6 +1996,7 @@ rs =
     att.global.attributes,
     att.naming.attributes,
     att.typed.attributes,
+    att.responsibility.attributes,
     empty
   }
 email =
@@ -2215,23 +2221,26 @@ ref =
      (model.divBottom, model.global*)*),
     att.global.attributes,
     att.sortable.attributes,
+    att.typed.attribute.subtype,
     
-    ## décrit la forme de la liste.
-    ## Suggested values include: 1] ordered; 2] bulleted; 3] simple; 4] gloss
-    [ a:defaultValue = "simple" ]
+    ## describes the nature of the items in the list.
+    ## Suggested values include: 1] gloss; 2] index; 3] instructions; 4] litany; 5] syllogism
     attribute type {
       
-      ## le classement des items de la liste est alphanumérique
-      "ordered"
+      ## chaque item de la liste commente un terme ou un concept qui est donné par un élément label précédant l'item de la liste.
+      "gloss"
       | 
-        ## les items de la liste sont marqués par une puce ou avec un autre signe typographique.
-        "bulleted"
+        ## each list item is an entry in an index such as the alphabetical topical index at the back of a print volume.
+        "index"
       | 
-        ## les items de la liste ne sont pas numérotés ni précédés d'une puce.
-        "simple"
+        ## each list item is a step in a sequence of instructions, as in a recipe.
+        "instructions"
       | 
-        ## chaque item de la liste commente un terme ou un concept qui est donné par un élément label précédant l'item de la liste.
-        "gloss"
+        ## each list item is one of a sequence of petitions, supplications or invocations, typically in a religious ritual.
+        "litany"
+      | 
+        ## each list item is part of an argument consisting of two or more propositions and a final conclusion derived from them.
+        "syllogism"
       | xsd:Name
     }?,
     empty
@@ -2428,7 +2437,8 @@ analytic =
      | model.ptrLike
      | date
      | textLang
-     | idno)*,
+     | idno
+     | availability)*,
     att.global.attributes,
     empty
   }
@@ -2443,6 +2453,7 @@ monogr =
       | ((title | model.ptrLike | idno)+,
          (textLang | author | editor | meeting | respStmt)*)
       | (authority, idno))?,
+     availability*,
      model.noteLike*,
      (edition,
       (idno | model.ptrLike | editor | sponsor | funder | respStmt)*)*,
@@ -2464,7 +2475,8 @@ series =
      | biblScope
      | idno
      | textLang
-     | model.global)*,
+     | model.global
+     | availability)*,
     att.global.attributes,
     empty
   }
@@ -2491,14 +2503,16 @@ editor =
     att.canonical.attribute.key,
     att.canonical.attribute.ref,
     
-    ## may be used to specify further information about the entity referenced by this name, for example the occupation of a person, or the status of a place.
+    ## may be used to specify further information about the entity referenced by this name in the form of a set of whitespace-separated values, for example the occupation of a person, or the status of a place.
     attribute role {
-      
-      ##
-      "them"
-      | 
-        ##
-        "us"
+      list {
+        (
+         ##
+         "them"
+         | 
+           ##
+           "us")+
+      }
     }?,
     empty
   }
@@ -2518,6 +2532,7 @@ resp =
     macro.phraseSeq.limited,
     att.global.attributes,
     att.canonical.attributes,
+    att.datable.attributes,
     empty
   }
 title =
@@ -2573,7 +2588,7 @@ publisher =
   element publisher { macro.phraseSeq, att.global.attributes, empty }
 biblScope =
   
-  ## (extension d'une référence bibliographique) définit l'extension d'une référence bibliographique, comme par exemple une liste de numéros de page, ou le nom d'une subdivision d'une oeuvre plus grande. [3.11.2.4. ]
+  ## (extension d'une référence bibliographique) définit l'extension d'une référence bibliographique, comme par exemple une liste de numéros de page, ou le nom d'une subdivision d'une oeuvre plus grande. [3.11.2.5. ]
   element biblScope {
     macro.phraseSeq,
     att.global.attributes,
@@ -2606,7 +2621,7 @@ biblScope =
   }
 citedRange =
   
-  ## (cited range) defines the range of cited content, often represented by pages or other units [3.11.2.4. ]
+  ## (cited range) defines the range of cited content, often represented by pages or other units [3.11.2.5. ]
   element citedRange {
     macro.phraseSeq,
     att.global.attributes,
@@ -2662,7 +2677,9 @@ listBibl =
   
   ## (liste de références bibliographiques) contient une liste de références bibliographiques de toute nature. [3.11.1.  2.2.7.  15.3.2. ]
   element listBibl {
-    (model.headLike*, (model.biblLike | model.milestoneLike)+),
+    (model.headLike*,
+     (model.biblLike | model.milestoneLike)+,
+     (relation | listRelation)*),
     att.global.attributes,
     att.sortable.attributes,
     att.declarable.attributes,
@@ -3141,7 +3158,13 @@ offset =
   
   ## (distance relative) la partie d'une expression temporelle ou spatiale qui indique la distance et/ou la direction entre les deux lieux, dates ou heures sur lesquels porte l'expression. [13.2.3. ]
   element offset {
-    macro.xtext, att.global.attributes, att.typed.attributes, empty
+    macro.phraseSeq,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    empty
   }
 geogName =
   
@@ -3160,10 +3183,11 @@ geogFeat =
   ## (nom de caractéristique géographique) contient un nom commun identifiant une caractéristique géographique contenue dans un nom de lieu, comme vallée, mont, etc. [13.2.3. ]
   element geogFeat {
     macro.phraseSeq,
+    att.datable.attributes,
+    att.editLike.attributes,
     att.global.attributes,
     att.naming.attributes,
     att.typed.attributes,
-    att.datable.attributes,
     empty
   }
 affiliation =
@@ -3319,9 +3343,7 @@ listOrg =
   
   ## (liste d'organisations) contient une liste d'éléments, chacun d'eux fournissant des informations sur une organisation identifiable. [13.2.2. ]
   element listOrg {
-    (model.headLike*,
-     (org | listOrg)+,
-     (listRelation | relationGrp | relation)*),
+    (model.headLike*, (org | listOrg)+, (relation | listRelation)*),
     att.global.attributes,
     att.typed.attributes,
     att.declarable.attributes,
@@ -3332,9 +3354,7 @@ listEvent =
   
   ## (liste d'événements) contient une liste de descriptions, chacune d'entre elles fournissant des informations sur un événement connu. [13.3.1. ]
   element listEvent {
-    (model.headLike*,
-     (event | listEvent)+,
-     (relation | relationGrp | listRelation)*),
+    (model.headLike*, (event | listEvent)+, (relation | listRelation)*),
     att.global.attributes,
     att.typed.attributes,
     att.declarable.attributes,
@@ -3347,7 +3367,7 @@ listPerson =
   element listPerson {
     (model.headLike*,
      (model.personLike | listPerson)+,
-     (relation | listRelation | relationGrp)*),
+     (relation | listRelation)*),
     att.global.attributes,
     att.typed.attributes,
     att.declarable.attributes,
@@ -3360,7 +3380,7 @@ listPlace =
   element listPlace {
     (model.headLike*,
      (model.placeLike | listPlace)+,
-     (listRelation | relationGrp | relation)*),
+     (relation | listRelation)*),
     att.global.attributes,
     att.typed.attributes,
     att.declarable.attributes,
@@ -3439,17 +3459,8 @@ listRelation =
   
   ## donne des informations sur les relations qui existent entre des personnes, des lieux, ou des organisations, soit de manière informelle en prose, soit de manière formelle. [13.3.2.3. ]
   element listRelation {
-    (model.pLike+ | relation+),
-    att.global.attributes,
-    att.typed.attributes,
-    att.sortable.attributes,
-    empty
-  }
-relationGrp =
-  
-  ## (groupe de relations) donne des informations sur les relations qui existent entre des personnes, des lieux, ou des organisations, soit de manière informelle en prose, soit de manière formelle. [13.3.2.3. ]
-  element relationGrp {
-    (model.pLike+ | relation+),
+    (model.headLike*,
+     (model.pLike | (relation | listRelation)+)),
     att.global.attributes,
     att.typed.attributes,
     att.sortable.attributes,
@@ -3489,7 +3500,7 @@ personGrp =
   
   ## (groupe de personnes) décrit un groupe d'individus traité comme une personne unique à des fins d'analyse. [15.2.2. ]
   element personGrp {
-    (model.pLike+ | model.personPart*),
+    (model.pLike+ | (model.personPart | model.global)*),
     att.global.attributes,
     att.sortable.attributes,
     
@@ -3609,22 +3620,7 @@ relation =
     att.editLike.attributes,
     att.canonical.attributes,
     att.sortable.attributes,
-    
-    ## caractérise la relation sous un certain aspect, par exemple social, personnel ou autre.
-    ## Suggested values include: 1] social; 2] personal; 3] other
-    [ a:defaultValue = "personal" ]
-    attribute type {
-      
-      ## forme de relation sociale.
-      "social"
-      | 
-        ## forme de relation personnelle, comme parenté, mariage, etc.
-        "personal"
-      | 
-        ## autres formes de relation.
-        "other"
-      | xsd:Name
-    }?,
+    att.typed.attributes,
     
     ## fournit un nom pour le type de relation dont elle est une instance.
     attribute name { data.enumerated }?,
@@ -3690,7 +3686,7 @@ socecStatus =
   }
 state =
   
-  ## (statut) contient la description d'un statut ou d'une qualité actuels attribués à une personne, un lieu ou une organisation. [13.3.1.  13.3.2.1.  13.3.2.1. ]
+  ## (statut) contient la description d'un statut ou d'une qualité actuels attribués à une personne, un lieu ou une organisation. [13.3.1.  13.3.2.1. ]
   element state {
     (state+
      | (model.headLike*,
@@ -3721,7 +3717,7 @@ terrain =
   }
 trait =
   
-  ## (trait distinctif) contient la description d'une caractéristique culturelle et en principe permanente, attribuée à une personne ou à un lieu. [13.3.1.  13.3.2.1.  13.3.2.1. ]
+  ## (trait distinctif) contient la description d'une caractéristique culturelle et en principe permanente, attribuée à une personne ou à un lieu. [13.3.1.  13.3.2.1. ]
   element trait {
     (trait+
      | (model.headLike*,
@@ -3754,9 +3750,7 @@ listNym =
   
   ## (liste de noms canoniques) contient une liste de noms normalisés pour tous types d'objets. [13.3.5. ]
   element listNym {
-    (model.headLike*,
-     (nym | listNym)+,
-     (listRelation | relationGrp | relation)*),
+    (model.headLike*, (nym | listNym)+, (relation | listRelation)*),
     att.global.attributes,
     att.typed.attributes,
     att.declarable.attributes,
@@ -4092,9 +4086,6 @@ quotation =
         ## tous les guillemets ont été conservés.
         "all"
     }?,
-    
-    ## précise comment les guillemets sont indiqués dans le texte.
-    [ a:defaultValue = "unknown" ] attribute form { data.enumerated }?,
     empty
   }
 hyphenation =
@@ -4148,6 +4139,38 @@ interpretation =
     model.pLike+,
     att.global.attributes,
     att.declarable.attributes,
+    empty
+  }
+punctuation =
+  
+  ## specifies editorial practice adopted with respect to punctuation marks in the original. [2.3.3.  3.2. ]
+  element punctuation {
+    model.pLike*,
+    att.declarable.attributes,
+    att.global.attributes,
+    
+    ## indicates whether or not punctation marks have been retained as content within the text.
+    attribute marks {
+      
+      ## no punctuation marks have been retained
+      "none"
+      | 
+        ## some punctuation marks have been retained
+        "some"
+      | 
+        ## all punctuation marks have been retained
+        "all"
+    }?,
+    
+    ## indicates whether punctation marks have been captured inside or outside of an adjacent element.
+    attribute placement {
+      
+      ## punctuation marks are captured inside adjacent elements
+      "internal"
+      | 
+        ## punctuation marks are captured outside adjacent elements
+        "external"
+    }?,
     empty
   }
 tagsDecl =
@@ -4465,7 +4488,7 @@ revisionDesc =
   }
 change =
   
-  ## résume une modification ou une correction apportée à une version particulière d’un texte électronique partagé entre plusieurs chercheurs. [2.5.  2.4.1. ]
+  ## résume une modification ou une correction apportée à une version particulière d’un texte électronique partagé entre plusieurs chercheurs. [2.5.  2.4.1.  11.7. ]
   element change {
     macro.specialPara,
     att.ascribed.attributes,
@@ -4573,8 +4596,8 @@ link =
            "\x{a}" ~
            "               "
            sch:assert [
-             test = "contains(@target,' ')"
-             "You must supply at least two values for  @target or @targets on "
+             test = "contains(normalize-space(@target),' ')"
+             "You must supply at least two values for @target or  on "
              sch:name [ ]
              "\x{a}" ~
              "               "
@@ -4756,10 +4779,10 @@ join =
     [ a:defaultValue = "root" ]
     attribute scope {
       
-      ## les sous-arbres dotés de leur racine qui sont désignés par l'attribut targets sont joints ; chaque sous-arbre devient un fils de l'élément virtuel créé par la jointure.
+      ## les sous-arbres dotés de leur racine qui sont désignés par l'attribut target sont joints ; chaque sous-arbre devient un fils de l'élément virtuel créé par la jointure.
       "root"
       | 
-        ## les fils des sous-arbres désignés par l'attribut targets deviennent les fils de l'élément virtuel (c'est-à-dire que les racines des sous-arbres disparaissent).
+        ## les fils des sous-arbres désignés par l'attribut target deviennent les fils de l'élément virtuel (c'est-à-dire que les racines des sous-arbres disparaissent).
         "branches"
     }?,
     empty
@@ -4843,6 +4866,7 @@ msDesc =
     att.global.attributes,
     att.sortable.attributes,
     att.typed.attributes,
+    att.declaring.attributes,
     empty
   }
 catchwords =
@@ -5108,16 +5132,15 @@ collection =
   }
 altIdentifier =
   
-  ## (alternative identifier) contains an alternative or former structured identifier used for a manuscript, such as a former catalogue number. [10.4. ]
+  ## (autre identifiant) Contient un autre ou un ancien identifiant pour un manuscrit, par exemple un numéro anciennement utilisé dans un catalogue. [10.4. ]
   element altIdentifier {
-    (country?,
-     region?,
-     settlement?,
+    (model.placeNamePart_sequenceOptional,
      institution?,
      repository?,
      collection?,
      idno,
      note?),
+    att.global.attributes,
     att.typed.attributes,
     empty
   }
@@ -5224,7 +5247,7 @@ rubric =
 summary =
   
   ## contains an overview of the available information concerning some aspect of an item (for example, its intellectual content, history, layout, typography etc.) as a complement or alternative to the more detailed information carried by more specific elements. [10.6. ]
-  element summary { macro.phraseSeq, att.global.attributes, empty }
+  element summary { macro.specialPara, att.global.attributes, empty }
 physDesc =
   
   ## (description physique) contient la description physique complète d'un manuscrit ou d'une partie d'un manuscrit, éventuellement structurée en utilisant les éléments plus spécialisés appartenant à la classe model.physDescPart. [10.7. ]
@@ -5253,10 +5276,10 @@ supportDesc =
     att.global.attributes,
     
     ## (matériau) contient un nom abrégé propre au projet désignant le matériau qui a principalement servi pour fabriquer le support.
-    ## Suggested values include: 1] paper(paper) ; 2] parch(parchment) ; 3] mixed
+    ## Suggested values include: 1] paper; 2] parch(parchment) ; 3] mixed
     attribute material {
       
-      ## (paper) 
+      ##
       "paper"
       | 
         ## (parchemin) 
@@ -5511,7 +5534,27 @@ msPart =
     ((altIdentifier | msIdentifier),
      model.headLike*,
      (model.pLike+
-      | (msContents?, physDesc?, history?, additional?, msPart*))),
+      | (msContents?, physDesc?, history?, additional?, msPart*)))
+    >> sch:pattern [
+         id =
+           "test21-msPart-deprecate-altIdentifier-child-constraint-11"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:msPart"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test = "child::tei:altIdentifier"
+             role = "nonfatal"
+             "WARNING: use of deprecated method — the use of the altIdentifier element as a direct child of the msPart element will be removed from the TEI on 2016-09-09"
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     att.global.attributes,
     empty
   }
@@ -5534,7 +5577,8 @@ att.coordinated.attributes =
   att.coordinated.attribute.ulx,
   att.coordinated.attribute.uly,
   att.coordinated.attribute.lrx,
-  att.coordinated.attribute.lry
+  att.coordinated.attribute.lry,
+  att.coordinated.attribute.points
 att.coordinated.attribute.start =
   
   ## désigne l'élément qui, dans la transcription du texte, contient au moins le début de la section de texte représentée dans la zone ou surface.
@@ -5555,6 +5599,12 @@ att.coordinated.attribute.lry =
   
   ## donne la valeur y de l'ordonnée du coin inférieur droit d'un rectangle.
   attribute lry { data.numeric }?
+att.coordinated.attribute.points =
+  
+  ## identifies a two dimensional area within the bounding box specified by the other attributes by means of a series of pairs of numbers, each of which gives the x,y coordinates of a point on a line enclosing the area.
+  attribute points {
+    list { data.point, data.point, data.point, data.point* }
+  }?
 facsimile =
   
   ## contient une représentation d'une source écrite quelconque sous la forme d'un ensemble d'images plutôt que sous la forme d'un texte transcrit ou encodé. [11.1. ]
@@ -5598,7 +5648,6 @@ surfaceGrp =
   element surfaceGrp {
     (model.global | surface | surfaceGrp)+,
     att.global.attributes,
-    att.coordinated.attributes,
     att.declaring.attributes,
     att.typed.attributes,
     empty
@@ -5615,11 +5664,6 @@ zone =
     att.global.attributes,
     att.coordinated.attributes,
     att.typed.attributes,
-    
-    ## identifies a two dimensional area within the bounding box specified by the other attributes by means of a series of pairs of numbers, each of which gives the x,y coordinates of a point on a line enclosing the area.
-    attribute points {
-      list { data.point, data.point, data.point, data.point* }
-    }?,
     
     ## indicates the amount by which this zone has been rotated clockwise, with respect to the normal orientation of the parent surface element as implied by the dimensions given in the msDesc element or by the coordinates of the surface itself. The orientation is expressed in arc degrees.
     [ a:defaultValue = "0" ] attribute rotate { data.count }?,
@@ -5640,7 +5684,7 @@ addSpan =
            "               "
            sch:assert [
              test = "@spanTo"
-             "The spanTo= attribute of "
+             "The @spanTo attribute of "
              sch:name [ ]
              " is required."
            ]
@@ -5777,7 +5821,7 @@ delSpan =
            "               "
            sch:assert [
              test = "@spanTo"
-             "The spanTo= attribute of "
+             "The @spanTo attribute of "
              sch:name [ ]
              " is required."
            ]

@@ -87,7 +87,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
    </pattern>
    <pattern id="test-addSpan-constraint-spanTo-11">
       <rule context="tei:addSpan">
-         <assert test="@spanTo">The spanTo= attribute of <name/> is required.</assert>
+         <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
    <pattern id="test-damageSpan-constraint-spanTo-13">
@@ -98,7 +98,7 @@ The @spanTo attribute of <name/> is required.</assert>
    </pattern>
    <pattern id="test-delSpan-constraint-spanTo-15">
       <rule context="tei:delSpan">
-         <assert test="@spanTo">The spanTo= attribute of <name/> is required.</assert>
+         <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
    <pattern id="test-subst-constraint-substContents1-17">
@@ -109,7 +109,7 @@ The @spanTo attribute of <name/> is required.</assert>
    </pattern>
    <pattern id="test-link-constraint-linkTargets3-20">
       <rule context="tei:link">
-         <assert test="contains(@target,' ')">You must supply at least two values for  @target or @targets on <name/>
+         <assert test="contains(normalize-space(@target),' ')">You must supply at least two values for @target or  on <name/>
          </assert>
       </rule>
    </pattern>
@@ -127,12 +127,6 @@ You must supply at least two values for @target on <name/>
    <pattern>
       <rule context="tei:biblScope">
          <report test="@type" role="nonfatal">WARNING: use of deprecated attribute — @type of the biblScope element will be removed from the TEI on 2014-12-17.
-                </report>
-      </rule>
-   </pattern>
-   <pattern>
-      <rule context="tei:quotation">
-         <report test="@form" role="nonfatal">WARNING: use of deprecated attribute — @form of the quotation element will be removed from the TEI on 2014-04-28.
                 </report>
       </rule>
    </pattern>
