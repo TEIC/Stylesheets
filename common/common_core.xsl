@@ -995,26 +995,26 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="footNote"/>
       </xsl:when>
 
-      <xsl:when test="@place='margin' or 
-		      @place='margin/inline' or
-		      @place='marg1' or
-		      @place='marg2' or
-		      @place='marg3' or
-		      @place='marge' or
-		      @place='h' or
-		      @place='inter' or
-		      @place='right' or
-		      @place='left' or
-		      @place='divend' or
-		      @place='marginOuter' or
-		      @place='marginLeft' or
-		      @place='marginRight' or
-		      @place='margin-left' or
-		      @place='margin-right' or
-		      @place='margin_left' or
-		      @place='margin_right' or
-		      @place='margin-top' or
-		      @place='margin-bottom'
+      <xsl:when test="tokenize(@place,' ')=('margin', 
+		      'margin/inline',
+		      'marg1',
+		      'marg2',
+		      'marg3',
+		      'marge',
+		      'h',
+		      'inter',
+		      'right',
+		      'left',
+		      'divend',
+		      'marginOuter',
+		      'marginLeft',
+		      'marginRight',
+		      'margin-left',
+		      'margin-right',
+		      'margin_left',
+		      'margin_right',
+		      'margin-top',
+		      'margin-bottom')
 		      ">
 	<xsl:call-template name="marginalNote"/>
       </xsl:when>
@@ -1208,25 +1208,25 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:lb">
     <xsl:choose>
       <xsl:when test="@type='hyphenInWord' and @rend='hidden'"/>
-      <xsl:when test="@rend='hidden'">
+      <xsl:when test="tokenize(@rend,' ')=('hidden')">
         <xsl:text> </xsl:text>
       </xsl:when>
       <xsl:when test="@rend='-' or @type='hyphenInWord'">
         <xsl:text>-</xsl:text>
 	<xsl:call-template name="lineBreak"/>
       </xsl:when>
-      <xsl:when test="@rend='above'">
+      <xsl:when test="tokenize(@rend,' ')=('above')">
         <xsl:text>⌜</xsl:text>
       </xsl:when>
-      <xsl:when test="@rend='below'">
+      <xsl:when test="tokenize(@rend,' ')=('below')">
         <xsl:text>⌞</xsl:text>
       </xsl:when>
       <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or
 		      tei:is-first(.))"/>
-      <xsl:when test="@rend='show'">
+      <xsl:when test="tokenize(@rend,' ')=('show')">
 	<xsl:call-template name="lineBreak"/>
       </xsl:when>
-      <xsl:when test="@rend='paragraph'">
+      <xsl:when test="tokenize(@rend,' ')=('paragraph')">
 	<xsl:call-template name="lineBreakAsPara"/>
       </xsl:when>
       <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
@@ -1369,7 +1369,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:milestone">
     <xsl:choose>
-      <xsl:when test="@rend='hr'">
+      <xsl:when test="tokenize(@rend,' ')=('hr')">
 	<xsl:call-template name="horizontalRule"/>
       </xsl:when>
       <xsl:when test="@unit='line'">

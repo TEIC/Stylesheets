@@ -927,7 +927,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:apply-templates/>
 	  </td>
 	</xsl:when>
-	<xsl:when test="@rend='multicol'">
+	<xsl:when test="tokenize(@rend,' ')=('multicol')">
 	  <xsl:apply-templates select="*[not(local-name(.)='div')]"/>
 	  <table>
 	    <tr>
@@ -2031,7 +2031,7 @@ function click(d) {
 	              <xsl:call-template name="col3"/>
 	           </div>
          </xsl:when>
-         <xsl:when test="@rend='frontpage'">
+         <xsl:when test="tokenize(@rend,' ')=('frontpage')">
 	           <div class="column-wrapper">
 	              <div id="rh-col">
 	                 <xsl:for-each select="descendant-or-self::tei:TEI/tei:text/tei:body">
@@ -2153,7 +2153,7 @@ function click(d) {
 	      <xsl:when test="tei:text/tei:group">
 		<xsl:apply-templates select="tei:text/tei:group"/>
 	      </xsl:when>
-	      <xsl:when test="@rend='multicol'">
+	      <xsl:when test="tokenize(@rend,' ')=('multicol')">
 		<table>
 		  <tr>
 		    <xsl:apply-templates select="tei:text/tei:body"/>

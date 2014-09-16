@@ -160,7 +160,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates select="tei:*[not(self::tei:q or self::tei:quote)]"/>
         </div>
       </xsl:when>
-      <xsl:when test="@rend='display'">
+      <xsl:when test="tokenize(@rend,' ')=('display')">
         <blockquote>
           <xsl:call-template name="makeRendition"/>
           <xsl:variable name="contents">
