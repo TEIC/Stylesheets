@@ -939,6 +939,22 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </div>
       </xsl:when>
+      <xsl:when test="tokenize(@place,' ')=('margin','marginRight','margin-right','margin_right')">
+        <span class="notemarginRight">
+          <xsl:call-template name="makeAnchor">
+            <xsl:with-param name="name" select="$identifier"/>
+          </xsl:call-template>
+          <xsl:apply-templates/>
+	</span>
+      </xsl:when>
+      <xsl:when test="tokenize(@place,' ')=('margin','marginLeft','margin-left','margin_left')">
+        <span class="notemarginLeft">
+          <xsl:call-template name="makeAnchor">
+            <xsl:with-param name="name" select="$identifier"/>
+          </xsl:call-template>
+          <xsl:apply-templates/>
+	</span>
+      </xsl:when>
       <xsl:otherwise>
         <span class="notemarginLeft {@place}">
           <xsl:call-template name="makeAnchor">
