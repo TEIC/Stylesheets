@@ -141,9 +141,6 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test="tei:lem">
 	    <xsl:value-of select="tei:lem"/>
 	  </xsl:when>
-	  <xsl:when test="not($lem='')">
-	    <xsl:value-of select="$lem"/>
-	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:value-of select="tei:rdg[1]"/>
 	  </xsl:otherwise>
@@ -162,5 +159,14 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:if test="following-sibling::tei:rdg">; </xsl:if>
       </xsl:for-each>
     </xsl:template>
+
+
+   <xsl:template name="makeAppEntry">
+     <xsl:param name="lemma"/>
+     <xsl:call-template name="appLemma"/>
+     <xsl:text>] </xsl:text>
+     <xsl:call-template name="appLemmaWitness"/>
+     <xsl:call-template name="appReadings"/>
+   </xsl:template>
 
 </xsl:stylesheet>

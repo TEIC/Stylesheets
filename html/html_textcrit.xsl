@@ -108,7 +108,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:with-param name="name" select="$identifier"/>
          </xsl:call-template>
 	 <span class="lemma">
-	   <xsl:value-of select="$lemma"/>
+	   <xsl:call-template name="appLemma"/>
 	 </span>
 	 <xsl:text>] </xsl:text>
 	 <span class="lemmawitness">

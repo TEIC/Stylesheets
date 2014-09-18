@@ -4,7 +4,7 @@ SAXON=java -jar lib/saxon9he.jar
 DOTDOTSAXON=java -jar ../../lib/saxon9he.jar
 SAXON_ARGS=-ext:on
 
-DIRS=bibtex common docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt pdf profiles/default rdf relaxng rnc slides tbx tcp tite tools txt html xsd xlsx pdf
+DIRS=bibtex cocoa common docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt pdf profiles/default rdf relaxng rnc slides tbx tcp tite tools txt html xsd xlsx pdf
 
 SCRIPTS=bin/*to*
 PREFIX=/usr
