@@ -52,13 +52,12 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-   <xsl:template name="appReading">
+   <xsl:template name="makeAppEntry">
      <xsl:param name="lemma"/>
-     <xsl:param name="lemmawitness"/>
-     <xsl:param name="readings"/>
      <footnote>
        <footnote-citation>
 	 <inline font-size="8pt" vertical-align="super">
+	     <xsl:call-template name="appN"/>
 	 </inline>
        </footnote-citation>
        <list-block>
@@ -72,12 +71,16 @@ of this software, even if advised of the possibility of such damage.
 	   <list-item-label end-indent="label-end()">
 	     <block>
 	       <inline font-size="{$footnoteSize}" vertical-align="super">
+		 <xsl:call-template name="appN"/>
 	       </inline>
 	     </block>
 	   </list-item-label>
 	   <list-item-body start-indent="body-start()">
 	     <block font-size="{$footnoteSize}">
-	       <xsl:copy-of select="$readings"/>
+	       <xsl:value-of select="$lemma"/>
+	       <xsl:text>] </xsl:text>
+	       <xsl:call-template name="appLemmaWitness"/>
+	       <xsl:call-template name="appReadings"/>
 	     </block>
 	   </list-item-body>
 	 </list-item>

@@ -56,14 +56,12 @@ of this software, even if advised of the possibility of such damage.
          <p>Creating an apparatus criticus reading.</p>
       </desc>
    </doc>
-   <xsl:template name="appReading">
+   <xsl:template name="makeAppEntry">
      <xsl:param name="lemma"/>
-     <xsl:param name="lemmawitness"/>
-     <xsl:param name="readings"/>
      <xsl:text>\edtext{</xsl:text>
      <xsl:value-of select="$lemma"/>
      <xsl:text>}{\Afootnote{</xsl:text>
-     <xsl:copy-of select="$readings"/>
+     <xsl:call-template name="appReadings"/>
      <xsl:text>}}</xsl:text>
    </xsl:template>
 
