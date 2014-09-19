@@ -45,10 +45,9 @@ theory of liability, whether in contract, strict liability, or tort
 of this software, even if advised of the possibility of such damage.
 </p>
          <p>Author: James Cummings</p>
-         <p>Id: $Id$</p>
          <p>Copyright: 2010, TEI Consortium</p>
 <p>
-Usage:  saxon -it main styesheet.xsl input-uri=filename.csv
+Usage:  saxon -it:main from.xsl input-uri=filename.csv
 
 <ul>
 <li> It assumes cells are comma separated and 
