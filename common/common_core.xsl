@@ -613,6 +613,7 @@ of this software, even if advised of the possibility of such damage.
 			 (ancestor::tei:biblStruct  or ancestor::tei:biblFull)">
 	     <xsl:call-template name="makeText">
 	       <xsl:with-param name="letters">
+		 <xsl:text> </xsl:text>
 	       </xsl:with-param>
 	     </xsl:call-template>
 	   </xsl:if>
@@ -628,7 +629,9 @@ of this software, even if advised of the possibility of such damage.
 	   </xsl:call-template>
 	   <xsl:if test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
 	     <xsl:call-template name="makeText">
-	     <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
+	     <xsl:with-param name="letters">
+	     <xsl:text> </xsl:text>
+	     </xsl:with-param>
 	   </xsl:call-template>
 	   </xsl:if>
          </xsl:when>
