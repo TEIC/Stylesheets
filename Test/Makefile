@@ -27,7 +27,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: test.rng test-to-html test-p4top5 test-oddity test-scripts test-namespaces test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt  test-markdown  test-epub 
+default: test.rng test-to-html test-p4top5 test-oddity test-scripts test-namespaces test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt  test-markdown test-cocoa test-epub 
 
 test.rng:
 	$(BINDIR)/teitorelaxng --odd test.odd test.rng
@@ -113,6 +113,11 @@ test-markdown:
 	@echo BUILD: tei to markdown
 	$(BINDIR)/teitomarkdown test.xml mdtest2.md
 	diff mdtest2.md expected-results/mdtest2.md
+
+test-cocoa: 
+	@echo BUILD: testing cocoa  to TEI
+	$(BINDIR)/cocoatotei cocoatest.txt cocoatest.xml
+	diff cocoatest.xml expected-results/cocoatest.xml
 
 test-p4top5: 
 	@echo BUILD: testing p4top5
@@ -418,6 +423,7 @@ clean:
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype files
 	rm -f test.xlsx.xml *.result.tex *.result.pdf _slidelogo.png
 	rm -f content.xml
+	rm -f cocoatest.xml
 
 oddtree:
 	saxon /usr/share/xml/tei/odd/p5subset.xml odd-to-tree.xsl  > oddtree.xml
