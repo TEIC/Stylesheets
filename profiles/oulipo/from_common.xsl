@@ -60,7 +60,7 @@ theory of liability, whether in contract, strict liability, or tort
 of this software, even if advised of the possibility of such damage.
 </p>
       <p>Author: See AUTHORS for the basic scheme. This profile constructed by Lou Burnard</p>
-      <p>Id: $Id$</p>
+      
       <p>Copyright: 2013, TEI Consortium; 2014 Lou Burnard Consulting</p>
     </desc>
   </doc>

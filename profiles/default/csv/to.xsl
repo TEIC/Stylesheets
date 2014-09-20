@@ -40,7 +40,7 @@ theory of liability, whether in contract, strict liability, or tort
 of this software, even if advised of the possibility of such damage.
 </p>
          <p>Author: James Cummings </p>
-         <p>Id: $Id$</p>
+         
          <p>Copyright: 2010, TEI Consortium</p>
 	<p>
 		Usage:  saxon filename.xsl tei2csv.xsl 
