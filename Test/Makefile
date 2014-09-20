@@ -118,6 +118,8 @@ test-cocoa:
 	@echo BUILD: testing cocoa  to TEI
 	$(BINDIR)/cocoatotei cocoatest.txt cocoatest.xml
 	diff cocoatest.xml expected-results/cocoatest.xml
+	$(BINDIR)/cocoatotei cocoatest2.txt cocoatest2.xml
+	diff cocoatest2.xml expected-results/cocoatest2.xml
 
 test-p4top5: 
 	@echo BUILD: testing p4top5
@@ -423,7 +425,7 @@ clean:
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype files
 	rm -f test.xlsx.xml *.result.tex *.result.pdf _slidelogo.png
 	rm -f content.xml
-	rm -f cocoatest.xml
+	rm -f cocoatest*.xml
 
 oddtree:
 	saxon /usr/share/xml/tei/odd/p5subset.xml odd-to-tree.xsl  > oddtree.xml

@@ -117,6 +117,11 @@
       <xsl:value-of select="@value"/>
     </head>
   </xsl:template>
+  <xsl:template match="Y" mode="pass1">
+    <date>
+      <xsl:value-of select="@value"/>
+    </date>
+  </xsl:template>
   <xsl:template match="L" mode="pass1">
     <xsl:analyze-string select="@value" regex="^[0-9]+$">
       <xsl:matching-substring>
@@ -183,7 +188,7 @@
     </div>
   </xsl:template>
   <xsl:template name="maintext">
-    <xsl:for-each-group select="current-group() except ." group-starting-with="milestone[not(@level)]">
+    <xsl:for-each-group select="current-group()" group-starting-with="milestone[not(@level)]">
       <xsl:choose>
         <xsl:when test="self::milestone">
           <xsl:choose>
@@ -265,14 +270,34 @@
     <lb/>
   </xsl:template>
 
+  <xsl:template match="author" mode="pass2"/>
+  <xsl:template match="date" mode="pass2"/>
+  <xsl:template match="title[1]" mode="pass2"/>
   <xsl:template match="body" mode="pass2">
             <TEI>
               <teiHeader>
                 <fileDesc>
                   <titleStmt>
-                    <title/>
-                    <author/>
+                    <title>
+		      <xsl:for-each select="title[1]">
+			<xsl:apply-templates mode="pass2"/>
+		      </xsl:for-each>
+		    </title>
+                    <author>
+		      <xsl:for-each select="author">
+			<xsl:apply-templates mode="pass2"/>
+		      </xsl:for-each>
+		    </author>
                   </titleStmt>
+		  <xsl:if test="date">
+		    <editionStmt>
+		      <edition>
+			<xsl:for-each select="date">
+			  <xsl:apply-templates mode="pass2"/>
+			</xsl:for-each>
+		    </edition>
+		    </editionStmt>
+		  </xsl:if>		  
                   <publicationStmt>
                     <p/>
                   </publicationStmt>
@@ -282,7 +307,11 @@
                 </fileDesc>
               </teiHeader>
               <text>
-		<xsl:apply-templates select="@*|*|text()|comment()|processing-instruction" mode="pass2"/>
+		<body>
+		  <xsl:apply-templates
+		      select="@*|*|text()|comment()|processing-instruction"
+		      mode="pass2"/>
+		</body>
 	      </text>
 	    </TEI>
   </xsl:template>
