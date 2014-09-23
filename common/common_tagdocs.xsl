@@ -2677,7 +2677,8 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:element>
 	</xsl:element>
 	<xsl:element namespace="{$outputNS}" name="{$cellName}">
-	  <xsl:attribute name="{$colspan}">2</xsl:attribute>
+	  <xsl:attribute name="{$colspan}" select="if (ancestor-or-self::tei:attDef)
+	    then 1 else 2"/>
 	  <xsl:attribute name="{$rendName}">
 	    <xsl:sequence select="if (ancestor::tei:attDef) then
 				  'odd_value' else 'wovenodd-col2'"/>
