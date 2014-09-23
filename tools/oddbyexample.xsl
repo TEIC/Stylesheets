@@ -81,9 +81,8 @@ valList
   <!-- the document corpus -->
   <xsl:param name="corpus">./</xsl:param>
   <!-- the source of the TEI (just needs *Spec)-->
-  <xsl:param name="defaultSource"
-    >http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
-  <!-- should we make valList for @rend -->
+  <xsl:param name="defaultSource">http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
+  <!-- should we make valList for @rend and @rendition -->
   <xsl:param name="enumerateRend">false</xsl:param>
   <!-- should we make valList for @type -->
   <xsl:param name="enumerateType">false</xsl:param>
@@ -563,6 +562,7 @@ valList
         <xsl:when test="@ident = ($attributeList)">true</xsl:when>
         <xsl:when test="@ident='n'">false</xsl:when>
         <xsl:when test="@ident='rend' and $enumerateRend='true'">true</xsl:when>
+        <xsl:when test="@ident='rendition' and $enumerateRend='true'">true</xsl:when>
         <xsl:when test="@ident='type' and $enumerateType='true'">true</xsl:when>
         <xsl:when test="valList[@type='closed']">true</xsl:when>
         <xsl:when test="datatype/rng:ref[@name='data.enumerated']">true</xsl:when>
