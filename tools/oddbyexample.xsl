@@ -80,6 +80,8 @@ valList
   <xsl:param name="keepGlobals">false</xsl:param>
   <!-- the document corpus -->
   <xsl:param name="corpus">./</xsl:param>
+  <!-- files starting with what prefix? -->
+  <xsl:param name="prefix"/>
   <!-- the source of the TEI (just needs *Spec)-->
   <xsl:param name="defaultSource">http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
   <!-- should we make valList for @rend and @rendition -->
@@ -130,7 +132,7 @@ valList
       <xsl:choose>
         <xsl:when test="$corpusList=''">
           <xsl:value-of
-            select="concat($corpus,'?select=*.',$suffix,';recurse=yes;on-error=warning')"/>
+            select="concat($corpus,'?select=',$prefix, '*.',$suffix,';recurse=yes;on-error=warning')"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="$corpusList"/>
