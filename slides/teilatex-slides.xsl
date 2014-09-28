@@ -73,6 +73,8 @@ XSL LaTeX stylesheet to make slides
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \usepackage{times}
 \usepackage{fancyvrb}
+\setromanfont{Times Roman}
+\setsansfont{Helvetica}
 \usepackage{fancyhdr}
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 \xdefinecolor{blue1}{rgb}{0, 0, 0.7}

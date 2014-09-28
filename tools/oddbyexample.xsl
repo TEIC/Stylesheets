@@ -80,8 +80,10 @@ valList
   <xsl:param name="keepGlobals">false</xsl:param>
   <!-- the document corpus -->
   <xsl:param name="corpus">./</xsl:param>
-  <!-- files starting with what prefix? -->
+  <!-- file names starting with what prefix? -->
   <xsl:param name="prefix"/>
+  <!-- should elements in teiHeader be included?-->
+  <xsl:param name="includeHeader">true</xsl:param>
   <!-- the source of the TEI (just needs *Spec)-->
   <xsl:param name="defaultSource">http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
   <!-- should we make valList for @rend and @rendition -->
@@ -210,7 +212,6 @@ valList
       <xsl:apply-templates select="*|@*|text()" mode="copy"/>
     </xsl:copy>
   </xsl:template>
-
 
   <xsl:template name="processAll">
     <xsl:variable name="count">
@@ -394,16 +395,16 @@ valList
                     <xsl:comment>Add RNG content model here</xsl:comment>
                     <xsl:text>&#10;</xsl:text>
                   </content>
-                  <xsl:if test="key('Atts',local-name())">
-                    <attList>
-                      <xsl:comment>Add attDefs:</xsl:comment>
-                      <xsl:text>&#10;</xsl:text>
-                      <xsl:for-each-group select="key('Atts',local-name())" group-by="local-name()">
-                        <xsl:sort/>
-                        <attDef ident="{local-name()}" mode="add"/>
-                      </xsl:for-each-group>
-                    </attList>
-                  </xsl:if>
+		    <xsl:if test="key('Atts',local-name())">
+		      <attList>
+			<xsl:comment>Add attDefs:</xsl:comment>
+			  <xsl:text>&#10;</xsl:text>
+			  <xsl:for-each-group select="key('Atts',local-name())" group-by="local-name()">
+                            <xsl:sort/>
+                            <attDef ident="{local-name()}" mode="add"/>
+			  </xsl:for-each-group>
+		      </attList>
+		    </xsl:if>
                 </elementSpec>
               </xsl:otherwise>
             </xsl:choose>
@@ -561,6 +562,7 @@ valList
   <xsl:template name="checktype">
     <xsl:attribute name="enumerated">
       <xsl:choose>
+	<xsl:when test="ancestor::teiHeader and not($includeHeader='true')">false</xsl:when>
         <xsl:when test="@ident = ($attributeList)">true</xsl:when>
         <xsl:when test="@ident='n'">false</xsl:when>
         <xsl:when test="@ident='rend' and $enumerateRend='true'">true</xsl:when>
