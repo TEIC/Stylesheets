@@ -358,14 +358,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Nested STAGE can be bypassed</desc>
-  </doc>
-
-  <xsl:template match="STAGE/STAGE">
-    <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>STAGE with a HEAD _after_ it brings the stage inside the head</desc>
   </doc>
   <xsl:template match="STAGE[following-sibling::HEAD]">
