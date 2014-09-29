@@ -457,7 +457,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="PUBLICATIONSTMT">
     <publicationStmt>
-      <xsl:apply-templates select="*" />
+      <xsl:apply-templates select="PUBLISHER|AUTHORITY|DISTRIBUTOR" />
+      <xsl:apply-templates select="*[not(self::PUBLISHER or
+				   self::AUTHORITY or self::AUTHORITY)]" />
       <xsl:if test="parent::FILEDESC">
         <xsl:call-template name="makeID"/>
       </xsl:if>
