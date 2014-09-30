@@ -220,7 +220,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="@rend='none'">
           <xsl:copy-of select="@*"/>
 	</xsl:when>
-	<xsl:when test="starts-with(@facs,'eebopage:')">
+	<xsl:when test="starts-with(@facs,'tcp:')">
           <xsl:copy-of select="@*"/>
 	  <xsl:attribute name="rend">none</xsl:attribute>
 	</xsl:when>
