@@ -511,15 +511,35 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>			   
   </xsl:template>
 
-  <xsl:template match="rng:optional|rng:zeroOrMore|rng:oneOrMore" mode="pass3">
+  <xsl:template match="rng:optional|rng:zeroOrMore|rng:oneOrMore"
+		mode="pass3">
       <xsl:choose>
 	<xsl:when test="not(*)"/>
 	<xsl:when test="count(*)=1 and rng:empty"/>
-	<xsl:when test="rng:zeroOrMore and count(*)=1">
-	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
-	</xsl:when>
-	<xsl:when test="count(*)=1 and rng:group[count(*)=1 and	rng:zeroOrMore]">
-	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+	<xsl:when test="count(*)=1">
+	  <xsl:variable name="what" select="rng:ref/@name"/>
+	  <xsl:choose>
+          <xsl:when test="self::rng:zeroOrMore and 
+			$what=following-sibling::*[1][self::rng:optional
+			and count(*)=1]/rng:zeroOrMore/rng:ref/@name">
+	      <xsl:message>Kill <xsl:value-of
+	      select="(ancestor::rng:element/@name,rng:ref/@name)"/>
+	      because its repeated in following rule</xsl:message>
+	    </xsl:when>
+	    <xsl:when test="rng:zeroOrMore">
+	      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+	    </xsl:when>
+	    <xsl:when test="rng:group[count(*)=1 and rng:zeroOrMore]">
+	      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
+		<xsl:apply-templates
+		    select="*|@*|processing-instruction()|comment()|text()"
+		    mode="pass3"/>
+	      </xsl:element>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
