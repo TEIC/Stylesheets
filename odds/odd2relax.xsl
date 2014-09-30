@@ -519,12 +519,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="count(*)=1">
 	  <xsl:variable name="what" select="rng:ref/@name"/>
 	  <xsl:choose>
-          <xsl:when test="self::rng:zeroOrMore and 
-			$what=following-sibling::*[1][self::rng:optional
-			and count(*)=1]/rng:zeroOrMore/rng:ref/@name">
+          <xsl:when test="$what=following-sibling::*[1][count(*)=1]/rng:*/rng:ref/@name">
 	      <xsl:message>Kill <xsl:value-of
-	      select="(ancestor::rng:element/@name,rng:ref/@name)"/>
-	      because its repeated in following rule</xsl:message>
+	      select="(ancestor::rng:element/@name,rng:ref/@name)"/> because its repeated in following rule</xsl:message>
 	    </xsl:when>
 	    <xsl:when test="rng:zeroOrMore">
 	      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
