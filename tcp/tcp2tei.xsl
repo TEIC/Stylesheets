@@ -449,13 +449,27 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="PUBLICATIONSTMT">
     <publicationStmt>
-      <xsl:apply-templates select="PUBLISHER|AUTHORITY|DISTRIBUTOR" />
-      <xsl:apply-templates select="*[not(self::PUBLISHER or
-				   self::AUTHORITY or self::AUTHORITY)]" />
-      <xsl:if test="parent::FILEDESC">
-        <xsl:call-template name="makeID"/>
-      </xsl:if>
-      <xsl:call-template name="idnoHook"/>
+      <xsl:choose>
+	<xsl:when test="PUBLISHER or AUTHORITY or DISTRIBUTOR">
+	  <xsl:apply-templates select="PUBLISHER|AUTHORITY|DISTRIBUTOR" />
+	  <xsl:apply-templates select="*[not(self::PUBLISHER or
+				       self::DISTRIBUTOR or
+				       self::AUTHORITY)]" />
+	    <xsl:if test="parent::FILEDESC">
+              <xsl:call-template name="makeID"/>
+	    </xsl:if>
+	  <xsl:call-template name="idnoHook"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <p>
+	    <xsl:apply-templates/>
+	    <xsl:if test="parent::FILEDESC">
+              <xsl:call-template name="makeID"/>
+	    </xsl:if>
+	  <xsl:call-template name="idnoHook"/>
+	  </p>
+	</xsl:otherwise>
+      </xsl:choose>
     </publicationStmt>
   </xsl:template>
 
@@ -1132,10 +1146,22 @@ of this software, even if advised of the possibility of such damage.
     </projectDesc>
   </xsl:template>
   <xsl:template match="PUBPLACE">
-    <pubPlace>
-      <xsl:apply-templates  select="@*"/>
-      <xsl:apply-templates />
-    </pubPlace>
+      <xsl:choose>
+	<xsl:when test="parent::PUBLICATIONSTMT/PUBLISHER or
+			parent::PUBLICATIONSTMT/AUTHORITY or
+			parent::PUBLICATIONSTMT/DISTRIBUTOR">
+	  <pubPlace>
+	    <xsl:apply-templates  select="@*"/>
+	    <xsl:apply-templates/>
+	  </pubPlace>
+	  </xsl:when>
+	<xsl:otherwise>
+	  <name  type="place">
+	    <xsl:apply-templates  select="@*"/>
+	    <xsl:apply-templates/>
+	  </name>
+	</xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
   <xsl:template match="RDGGRP">
     <rdgGrp>
