@@ -2605,24 +2605,23 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
 
-<!--
   <xsl:template match="tei:p[tei:p]" mode="pass3">
-    <xsl:for-each-group select="node()" group-starting-with="tei:p">
+    <xsl:variable name="here" select="."/>
+    <xsl:for-each-group select="node()" 
+			group-adjacent="if (self::tei:p) then 1 else 2">
       <xsl:choose>
-        <xsl:when test="self::tei:p">
-              <xsl:apply-templates select="current-group()" mode="pass3"/>
+        <xsl:when test="current-grouping-key()=1">
+            <xsl:apply-templates select="current-group()"  mode="pass3"/>
         </xsl:when>
         <xsl:otherwise>
 	  <p>
-            <xsl:for-each select="..">
-              <xsl:copy-of select="@*"/>
-              <xsl:apply-templates select="current-group()" mode="pass3"/>
-            </xsl:for-each>
+            <xsl:copy-of select="$here/@*"/>
+	    <xsl:apply-templates select="current-group()" mode="pass3"/>
 	  </p>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each-group>
 
   </xsl:template>
--->
+
 </xsl:stylesheet>
