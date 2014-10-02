@@ -48,7 +48,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
    <xsl:key name="G" match="tei:graphic[not(ancestor::teix:egXML)]"  use="1"/>
    <xsl:key name="G" match="tei:media[not(ancestor::teix:egXML)]"  use="1"/>
-   <xsl:key name="PB" match="tei:pb[@facs[not(starts-with(.,'tcp:'))] and not(@rend='none')]" use="1"/>
+   <xsl:key name="PB" match="tei:pb[@facs]" use="1"/>
    <xsl:key name="Timeline" match="tei:timeline" use="1"/>
    <xsl:param name="mediaoverlay">false</xsl:param>
    <xsl:param name="coverimage"/>
@@ -87,37 +87,44 @@ of this software, even if advised of the possibility of such damage.
 	   </xsl:for-each>
 	 </xsl:if>
 	 <xsl:for-each select="key('PB',1)">
-	   <xsl:variable name="F">
-	     <xsl:choose>
-	       <xsl:when test="starts-with(@facs,'#')">
-		 <xsl:for-each
-		     select="id(substring(@facs,2))">
-		   <xsl:value-of select="tei:resolveURI(.,descendant-or-self::*[@url][1]/@url)"/>
-		 </xsl:for-each>
-	       </xsl:when>
-	       <xsl:otherwise>
-		 <xsl:value-of select="tei:resolveURI(.,@facs)"/>
-	       </xsl:otherwise>
-	     </xsl:choose>
-	   </xsl:variable>
-	   <xsl:variable name="target">
-	     <xsl:value-of select="$outputDir"/>
-	     <xsl:text>/</xsl:text>
-	     <xsl:value-of select="$mediaDir"/>
-	     <xsl:text>/pageimage</xsl:text>
-	     <xsl:number level="any"/>
-	     <xsl:text>.</xsl:text>
-	     <xsl:value-of select="tokenize($F,'\.')[last()]"/>
-	   </xsl:variable>
 	   <xsl:choose>
-	     <xsl:when test="contains($F,':')">
-	       <get src="{$F}" dest="{$target}"/>
-	     </xsl:when>
-	     <xsl:when test="starts-with($F,'/')">
-	       <copy toFile="{$target}" file="{@url}"/>
-	     </xsl:when>
+	     <xsl:when test="@rend='none'"/>
+	     <xsl:when test="starts-with(@facs,'tcp:')"/>
+	     <xsl:when test="starts-with(@facs,'unknown:')"/>
 	     <xsl:otherwise>
-	       <copy toFile="{$target}" file="{$inputDir}/{$F}"/>
+	       <xsl:variable name="F">
+		 <xsl:choose>
+		   <xsl:when test="starts-with(@facs,'#')">
+		     <xsl:for-each
+			 select="id(substring(@facs,2))">
+		       <xsl:value-of select="tei:resolveURI(.,descendant-or-self::*[@url][1]/@url)"/>
+		     </xsl:for-each>
+		   </xsl:when>
+		   <xsl:otherwise>
+		     <xsl:value-of select="tei:resolveURI(.,@facs)"/>
+		   </xsl:otherwise>
+		 </xsl:choose>
+	       </xsl:variable>
+	       <xsl:variable name="target">
+		 <xsl:value-of select="$outputDir"/>
+		 <xsl:text>/</xsl:text>
+		 <xsl:value-of select="$mediaDir"/>
+		 <xsl:text>/pageimage</xsl:text>
+		 <xsl:number level="any"/>
+		 <xsl:text>.</xsl:text>
+		 <xsl:value-of select="tokenize($F,'\.')[last()]"/>
+	       </xsl:variable>
+	       <xsl:choose>
+		 <xsl:when test="contains($F,':')">
+		   <get src="{$F}" dest="{$target}"/>
+		 </xsl:when>
+		 <xsl:when test="starts-with($F,'/')">
+		   <copy toFile="{$target}" file="{@url}"/>
+		 </xsl:when>
+		 <xsl:otherwise>
+		   <copy toFile="{$target}" file="{$inputDir}/{$F}"/>
+		 </xsl:otherwise>
+	       </xsl:choose>
 	     </xsl:otherwise>
 	   </xsl:choose>
 	 </xsl:for-each>

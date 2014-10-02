@@ -415,12 +415,18 @@ height: </xsl:text>
               </xsl:for-each>
               <!-- page images -->
               <xsl:for-each select="key('PBGRAPHICS',1)">
-                <xsl:variable name="img" select="@facs"/>
-                <xsl:variable name="ID">
-                  <xsl:number level="any"/>
-                </xsl:variable>
-                <item href="{$img}" id="pbimage-{$ID}" media-type="{tei:generateMimeType($img,@mimeType)}"/>
-              </xsl:for-each>
+		<xsl:choose>
+		  <xsl:when test="@rend='none'"/>
+		  <xsl:otherwise>
+                    <xsl:variable name="img" select="@facs"/>
+                    <xsl:variable name="ID">
+                      <xsl:number level="any"/>
+                    </xsl:variable>
+                    <item href="{$img}" id="pbimage-{$ID}"
+			  media-type="{tei:generateMimeType($img,@mimeType)}"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:for-each>
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
               <xsl:call-template name="epubManifestHook"/>
             </manifest>

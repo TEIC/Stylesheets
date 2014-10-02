@@ -45,7 +45,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:graphic[not(ancestor::teix:egXML or starts-with(@url,'film:'))]" use="1" name="G"/>
   <xsl:key match="tei:media[not(ancestor::teix:egXML)]" use="1" name="G"/>
   <xsl:key name="GRAPHICS" use="1" match="tei:graphic|tei:media"/>
-  <xsl:key name="PBGRAPHICS" use="1" match="tei:pb[@facs and not(@rend='none')]"/>
+  <xsl:key name="PBGRAPHICS" use="1" match="tei:pb[@facs]"/>
   <xsl:key name="Timeline" match="tei:timeline" use="1"/>
   <xsl:key name="Object" match="tei:when" use="substring(@corresp,2)"/>
   <xsl:key name="objectOnPage" match="tei:*[@xml:id]" use="generate-id(preceding::tei:pb[1])"/>
@@ -536,7 +536,12 @@ of this software, even if advised of the possibility of such damage.
 	 </xsl:if>
 
 	 <xsl:for-each select="key('PB',1)">
-	   <xsl:if test="@facs">
+	   <xsl:choose>
+	     <xsl:when test="@rend='none'"/>
+	     <xsl:when test="not(@facs)"/>
+	     <xsl:when test="starts-with(@facs,'tcp:')"/>
+	     <xsl:when test="starts-with(@facs,'unknown:')"/>
+	     <xsl:otherwise>
 	     <xsl:variable name="F">
 	     <xsl:choose>
 	       <xsl:when test="starts-with(@facs,'#')">
@@ -570,7 +575,8 @@ of this software, even if advised of the possibility of such damage.
 	       <copy toFile="{$target}" file="{$inputDir}/{$F}"/>
 	     </xsl:otherwise>
 	   </xsl:choose>
-	   </xsl:if>
+	     </xsl:otherwise>
+	   </xsl:choose>
 	 </xsl:for-each>
 
 	 <xsl:for-each select="tokenize($extraGraphicsFiles,',')">

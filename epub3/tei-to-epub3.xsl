@@ -439,11 +439,17 @@ height: </xsl:text>
               </xsl:for-each>
               <!-- page images -->
               <xsl:for-each select="key('PBGRAPHICS',1)">
-                <xsl:variable name="img" select="@facs"/>
-                <xsl:variable name="ID">
-                  <xsl:number level="any"/>
-                </xsl:variable>
-                <item href="{$img}" id="pbimage-{$ID}" media-type="{tei:generateMimeType($img,@mimeType)}"/>
+		<xsl:choose>
+		  <xsl:when test="@rend='none'"/>
+		  <xsl:otherwise>
+                    <xsl:variable name="img" select="@facs"/>
+                    <xsl:variable name="ID">
+                      <xsl:number level="any"/>
+                    </xsl:variable>
+                    <item href="{$img}" id="pbimage-{$ID}"
+			  media-type="{tei:generateMimeType($img,@mimeType)}"/>
+		  </xsl:otherwise>
+		</xsl:choose>
               </xsl:for-each>
 	      <xsl:for-each select="tokenize($extraGraphicsFiles,',')">
                 <item href="{.}" id="graphic-{.}" media-type="{tei:generateMimeType(.,'')}"/>
