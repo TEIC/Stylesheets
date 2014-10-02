@@ -69,7 +69,10 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="pass1">
       <xsl:apply-templates/>
     </xsl:variable>
-    <xsl:apply-templates select="$pass1" mode="pass2"/>
+    <xsl:variable name="pass2">
+      <xsl:apply-templates select="$pass1" mode="pass2"/>
+    </xsl:variable>
+      <xsl:apply-templates select="$pass2" mode="pass3"/>
   </xsl:template>
 
   <!-- default identity transform -->
@@ -220,7 +223,7 @@ of this software, even if advised of the possibility of such damage.
           </label>
 	</p>
       </xsl:when>
-      <xsl:when test="parent::LIST or parent::SPEAKER">
+      <xsl:when test="parent::LIST or parent::SPEAKER or parent::LABEL">
           <note place="margin" type="milestone">
             <xsl:value-of select="@UNIT"/>
             <xsl:text> </xsl:text>
@@ -525,10 +528,24 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="LANGUSAGE/@ID" />
   <xsl:template match="PB/@REF">
+
+      <xsl:choose>
+	<xsl:when test="string-length(/ETS/EEBO/IDG/VID)&gt;0">
     <xsl:attribute name="facs">
       <xsl:value-of
-	  select="('tcp',translate(normalize-space(/ETS/EEBO/IDG/VID),' ',''),normalize-space(replace(.,'^\.','')))" separator=":"/>
+	      select="('tcp',translate(normalize-space(/ETS/EEBO/IDG/VID),'  ',''),normalize-space(replace(.,'^\.','')))"
+	      separator=":"/>
     </xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+    <xsl:attribute name="facs">
+	  <xsl:value-of
+	      select="('tcp',normalize-space(replace(.,'^\.','')))"
+	      separator=':'/>
+    </xsl:attribute>
+      </xsl:otherwise>
+    </xsl:choose>
+
   </xsl:template>
 
   <xsl:template match="KEYWORDS">
@@ -1797,6 +1814,30 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   
   <xsl:template match="NOTE/@TYPE[.=../MILESTONE/@UNIT]" />
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	a note following by a closer as content of body? please, wrap
+	it in a p
+      </p>
+    </desc>
+  </doc>
+  
+  <xsl:template match="LETTER/NOTE" >
+    <xsl:choose>
+      <xsl:when test="count(parent::LETTER/*)=2 and
+		      following-sibling::CLOSER">
+	<p><note>
+	  <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+	</note></p>
+      </xsl:when>
+      <xsl:otherwise>
+	<note>
+	  <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+	</note>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
   
   <xsl:template match="@UNIT">
     <xsl:attribute name="unit">
@@ -2135,6 +2176,12 @@ of this software, even if advised of the possibility of such damage.
       </abbr>
     </choice>
   </xsl:template>
+  <xsl:template match="PUBLICATIONSTMT/DATE">
+    <date>
+      <xsl:value-of select="replace(.,'\.$','')"/>
+    </date>
+  </xsl:template>
+
   <!-- special consideration for <change> element -->
   <xsl:template match="CHANGE">
     <change>
@@ -2414,6 +2461,18 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:for-each>
 	</add>
       </xsl:when>
+      <xsl:when test="parent::tei:p">
+	<xsl:for-each select="tei:p">
+	  <p>
+	    <xsl:apply-templates select="@*" mode="pass2"/>
+	    <add>
+	      <xsl:apply-templates
+		  select="*|text()|processing-instruction()|comment()"
+		  mode="pass2"/>
+	    </add>
+	  </p>
+	</xsl:for-each>
+      </xsl:when>
       <xsl:otherwise>
 	<addSpan>
 	  <xsl:attribute name="spanTo">
@@ -2533,4 +2592,37 @@ of this software, even if advised of the possibility of such damage.
       </note>
     </xsl:for-each>
   </xsl:template>
+
+<!-- pass 3 -->
+  <xsl:template match="@*|comment()|processing-instruction()|text()"   mode="pass3">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="pass3">
+    <xsl:copy>
+      <xsl:apply-templates
+	  select="*|@*|comment()|processing-instruction()|text()" mode="pass3"/>
+    </xsl:copy>
+  </xsl:template>
+
+<!--
+  <xsl:template match="tei:p[tei:p]" mode="pass3">
+    <xsl:for-each-group select="node()" group-starting-with="tei:p">
+      <xsl:choose>
+        <xsl:when test="self::tei:p">
+              <xsl:apply-templates select="current-group()" mode="pass3"/>
+        </xsl:when>
+        <xsl:otherwise>
+	  <p>
+            <xsl:for-each select="..">
+              <xsl:copy-of select="@*"/>
+              <xsl:apply-templates select="current-group()" mode="pass3"/>
+            </xsl:for-each>
+	  </p>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each-group>
+
+  </xsl:template>
+-->
 </xsl:stylesheet>
