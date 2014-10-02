@@ -85,6 +85,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:pb[@facs]" mode="preflight">
     <xsl:copy>
       <xsl:choose>
+	<xsl:when test="starts-with(@facs,'tcp:')"/>
+	<xsl:when test="starts-with(@facs,'unknown:')"/>
 	<xsl:when test="@rend='none'">
           <xsl:copy-of select="@*"/>
 	</xsl:when>

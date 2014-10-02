@@ -1108,6 +1108,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:when test="$pagebreakStyle='simple'">
 	      <xsl:copy-of select="$Words"/>
 	    </xsl:when>
+	    <xsl:when test="rend='none'"/>
 	    <xsl:when test="$pagebreakStyle='display' and @facs">
 	      <div class="facsimage">
 		<img src="{@facs}"/>
