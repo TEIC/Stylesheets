@@ -879,7 +879,7 @@ height: </xsl:text>
 	</dc:date>
       </xsl:for-each>
       <dc:date id="epub-publication">
-	<xsl:sequence select="replace(tei:generateDate(.)[1],' .EEBO-TCP Phase .*','')"/>
+	<xsl:sequence select="replace(tei:generateDate(.)[1],'[^0-9\-]+','')"/>
       </dc:date>
       <dc:rights>
 	<xsl:call-template name="generateLicence"/>
