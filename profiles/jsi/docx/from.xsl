@@ -964,7 +964,7 @@ of this software, even if advised of the possibility of such damage.
 	  </seg>
 	</hi>
 	(maybe this happes only with LibreOffice Writer?)   -->
-   <xsl:template match="tei:hi[@rend='footnote_reference'][tei:seg/tei:note]" mode="pass4">
+   <xsl:template match="tei:hi[tei:match(@rend,'footnote_reference')][tei:seg/tei:note]" mode="pass4">
      <xsl:apply-templates select="tei:seg/tei:note" mode="pass4"/>
    </xsl:template>
 

@@ -828,7 +828,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="tei:render-typewriter(.)">
         <w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
       </xsl:when>
-      <xsl:when test="contains(@rend, 'Special') or matches(@iso:style,'font-family')">
+      <xsl:when test="tei:match(@rend, 'Special') or matches(@iso:style,'font-family')">
         <xsl:call-template name="getStyleFonts">
           <xsl:with-param name="css" select="@iso:style"/>
         </xsl:call-template>
@@ -847,7 +847,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="self::tbx:hi[@style='bold']">
         <w:i/>
       </xsl:when>
-      <xsl:when test="contains(@rend,'normalweight')">
+      <xsl:when test="tei:match(@rend,'normalweight')">
         <w:b w:val="0"/>
       </xsl:when>
     </xsl:choose>
@@ -871,7 +871,7 @@ of this software, even if advised of the possibility of such damage.
       <w:smallCaps/>
     </xsl:if>
     <!-- all caps -->
-    <xsl:if test="contains(@rend,'capsall')">
+    <xsl:if test="tei:match(@rend,'allcaps')">
       <w:caps/>
     </xsl:if>
     <!-- strikethrough -->
@@ -879,10 +879,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="$renderAddDel='true' and ancestor-or-self::tei:del">
         <w:strike/>
       </xsl:when>
-      <xsl:when test="contains(@rend,'strikethrough')">
+      <xsl:when test="tei:match(@rend,'strikethrough')">
         <w:strike/>
       </xsl:when>
-      <xsl:when test="contains(@rend,'strikedoublethrough')">
+      <xsl:when test="tei:match(@rend,'doublestrikethrough')">
         <w:dstrike/>
       </xsl:when>
     </xsl:choose>
@@ -903,13 +903,13 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
     <!-- underline -->
     <xsl:choose>
-      <xsl:when test="contains(@rend,'underline') ">
+      <xsl:when test="tei:match(@rend,'underline') ">
         <w:u w:val="single"/>
       </xsl:when>
-      <xsl:when test="contains(@rend,'underwavyline') ">
+      <xsl:when test="tei:match(@rend,'wavyunderline') ">
         <w:u w:val="wave"/>
       </xsl:when>
-      <xsl:when test="contains(@rend,'underdoubleline')">
+      <xsl:when test="tei:match(@rend,'doubleunderline')">
         <w:u w:val="double"/>
       </xsl:when>
     </xsl:choose>
@@ -925,10 +925,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="self::tbx:hi[@style='subscript']">
         <w:vertAlign w:val="subscript"/>
       </xsl:when>
-      <xsl:when test="contains(@rend,'subscript')">
+      <xsl:when test="tei:match(@rend,'subscript')">
         <w:vertAlign w:val="subscript"/>
       </xsl:when>
-      <xsl:when test="contains(@rend,'sub')">
+      <xsl:when test="tei:match(@rend,'sub')">
         <w:vertAlign w:val="subscript"/>
       </xsl:when>
     </xsl:choose>
@@ -936,10 +936,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="self::tbx:hi[@style='superscript']">
         <w:vertAlign w:val="superscript"/>
       </xsl:when>
-      <xsl:when test="contains(@rend,'superscript')">
+      <xsl:when test="tei:match(@rend,'superscript')">
         <w:vertAlign w:val="superscript"/>
       </xsl:when>
-      <xsl:when test="contains(@rend,'sup')">
+      <xsl:when test="tei:match(@rend,'sup')">
         <w:vertAlign w:val="superscript"/>
       </xsl:when>
     </xsl:choose>
@@ -1153,7 +1153,7 @@ of this software, even if advised of the possibility of such damage.
   <!-- 
         GI
     -->
-  <xsl:template match="tei:hi[@rend='specList-elementSpec']">
+  <xsl:template match="tei:hi[tei:match(@rend,'specList-elementSpec')]">
     <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="tei:gi|tei:tag">
@@ -1173,7 +1173,7 @@ of this software, even if advised of the possibility of such damage.
   <!-- 
         Handle examples
     -->
-  <xsl:template match="teix:egXML|tei:p[@rend='eg']">
+  <xsl:template match="teix:egXML|tei:p[tei:match(@rend,'eg')]">
     <xsl:param name="simple">false</xsl:param>
     <xsl:param name="highlight"/>
     <xsl:call-template name="block-element">
@@ -1246,7 +1246,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="w:tblPr">
           <xsl:copy-of select="w:tblPr"/>
         </xsl:when>
-        <xsl:when test="@rend='attDef'">
+        <xsl:when test="tei:match(@rend,'attDef')">
           <w:tblPr>
             <w:tblW w:w="0" w:type="auto"/>
             <w:jc w:val="left"/>
@@ -1260,7 +1260,7 @@ of this software, even if advised of the possibility of such damage.
             </w:tblBorders>
           </w:tblPr>
         </xsl:when>
-        <xsl:when test="@rend='attList'">
+        <xsl:when test="tei:match(@rend,'attList')">
           <w:tblPr>
             <w:tblW w:w="0" w:type="auto"/>
             <w:jc w:val="left"/>
@@ -1274,7 +1274,7 @@ of this software, even if advised of the possibility of such damage.
             </w:tblBorders>
           </w:tblPr>
         </xsl:when>
-        <xsl:when test="@rend='norules'">
+        <xsl:when test="tei:match(@rend,'norules')">
           <w:tblPr>
 	    <w:tblW>
 	      <xsl:choose>
@@ -1301,7 +1301,7 @@ of this software, even if advised of the possibility of such damage.
             </w:tblBorders>
           </w:tblPr>
         </xsl:when>
-        <xsl:when test="@rend='wovenodd'">
+        <xsl:when test="tei:match(@rend,'wovenodd')">
           <w:tblPr>
             <w:tblW w:w="0" w:type="auto"/>
             <w:jc w:val="left"/>
@@ -1770,7 +1770,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </w:p>
       </xsl:for-each>
-      <xsl:for-each select="preceding-sibling::tei:p[@rend='Table units']">
+      <xsl:for-each select="preceding-sibling::tei:p[tei:match(@rend,'Table units')]">
         <w:p>
           <w:pPr>
             <w:pStyle>
@@ -2179,7 +2179,7 @@ of this software, even if advised of the possibility of such damage.
       <w:tab/>
     </w:r>
   </xsl:template>
-  <xsl:template match="tei:c[@rend='ptab']">
+  <xsl:template match="tei:c[tei:match(@rend,'ptab')]">
     <w:r>
       <w:ptab w:relativeTo="margin" w:alignment="{@type}" w:leader="none"/>
     </w:r>
@@ -2394,7 +2394,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="starts-with($target,'#')">
           <xsl:variable name="goto" select="substring($target,2)"/>
           <xsl:choose>
-            <xsl:when test="contains(@rend,'noteref')">
+            <xsl:when test="tei:match(@rend,'noteref')">
               <xsl:text>NOTEREF </xsl:text>
             </xsl:when>
             <xsl:otherwise>
@@ -2404,14 +2404,14 @@ of this software, even if advised of the possibility of such damage.
           <xsl:value-of select="$goto"/>
 	    <xsl:for-each select="id($goto)">
 	      <xsl:choose>
-		<xsl:when test="contains(@rend,'instr_')">
-		  <xsl:if test="contains(@rend,'instr_f')">
+		<xsl:when test="tei:match(@rend,'instr_')">
+		  <xsl:if test="tei:match(@rend,'instr_f')">
 		    <xsl:text> \f</xsl:text>
 		  </xsl:if>
-		  <xsl:if test="contains(@rend,'instr_r')">
+		  <xsl:if test="tei:match(@rend,'instr_r')">
 		    <xsl:text> \r</xsl:text>
 		  </xsl:if>
-		  <xsl:if test="contains(@rend,'instr_n')">
+		  <xsl:if test="tei:match(@rend,'instr_n')">
 		    <xsl:text> \n</xsl:text>
 		  </xsl:if>
 		</xsl:when>
@@ -2422,7 +2422,7 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:choose>
 	    </xsl:for-each>
 	    <xsl:text> \h</xsl:text>
-	    <xsl:if test="contains(@rend,'mergeformat')">
+	    <xsl:if test="tei:match(@rend,'mergeformat')">
 	      <xsl:text> \* MERGEFORMAT</xsl:text>
 	    </xsl:if>
         </xsl:when>
@@ -2456,7 +2456,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:copy-of select="$anchor/w:r/w:rPr/*[not(self::w:rStyle)]"/>
         <!-- oucs0037: why are we overriding special font styles??
 	       Comment this out for now! -->
-        <!--	  <xsl:if test="ancestor::tei:p[@rend='Special']">
+        <!--	  <xsl:if test="ancestor::tei:p[tei:match(@rend,'Special')]">
 	    <w:rFonts w:ascii="Courier New" w:hAnsi="Courier New"/>
 	  </xsl:if> -->
         <xsl:if test="$rPr/w:r/w:rPr/w:rStyle/@w:val='Hyperlink'">
@@ -2635,7 +2635,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:pb" mode="pass0">
     <xsl:choose>
-      <xsl:when test="@rend='none'"/>
+      <xsl:when test="tei:match(@rend,'none')"/>
       <xsl:when test="$pagebreakStyle='none'"/>
       <xsl:when test="$pagebreakStyle='visible'">
 	  <note place="margin" xmlns="http://www.tei-c.org/ns/1.0">
@@ -2655,7 +2655,7 @@ of this software, even if advised of the possibility of such damage.
     </w:r>
   </xsl:template>
       
-   <xsl:template match="tei:att|tei:hi[@rend='att']">
+   <xsl:template match="tei:att|tei:hi[tei:match(@rend,'att')]">
     <xsl:call-template name="makeInline">
       <xsl:with-param name="before">@</xsl:with-param>
       <xsl:with-param name="style">italic</xsl:with-param>

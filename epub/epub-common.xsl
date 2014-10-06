@@ -50,7 +50,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="Object" match="tei:when" use="substring(@corresp,2)"/>
   <xsl:key name="objectOnPage" match="tei:*[@xml:id]" use="generate-id(preceding::tei:pb[1])"/>
   <xsl:key name="PB"
-	   match="tei:pb[not(@facs='') and not(starts-with(@facs,'tcp:')) and not(@rend='none')]" use="1"/>
+	   match="tei:pb[not(@facs='') and not(starts-with(@facs,'tcp:')) and not(tei:match(@rend,'none'))]" use="1"/>
   <xsl:key name="Timeline" match="tei:timeline" use="1"/>
   <xsl:param name="mediaoverlay">false</xsl:param>
   <xsl:param name="coverimage"/>
@@ -165,7 +165,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="addLangAtt"/>
 
-  <xsl:template match="tei:lb[@rend='space']">
+  <xsl:template match="tei:lb[tei:match(@rend,'space')]">
     <xsl:text> </xsl:text>
   </xsl:template>
 
@@ -537,7 +537,7 @@ of this software, even if advised of the possibility of such damage.
 
 	 <xsl:for-each select="key('PB',1)">
 	   <xsl:choose>
-	     <xsl:when test="@rend='none'"/>
+	     <xsl:when test="tei:match(@rend,'none')"/>
 	     <xsl:when test="not(@facs)"/>
 	     <xsl:when test="starts-with(@facs,'tcp:')"/>
 	     <xsl:when test="starts-with(@facs,'unknown:')"/>

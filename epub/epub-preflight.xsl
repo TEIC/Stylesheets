@@ -87,7 +87,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
 	<xsl:when test="starts-with(@facs,'tcp:')"/>
 	<xsl:when test="starts-with(@facs,'unknown:')"/>
-	<xsl:when test="@rend='none'">
+	<xsl:when test="tei:match(@rend,'none')">
           <xsl:copy-of select="@*"/>
 	</xsl:when>
         <xsl:when test="$fixgraphicsurl='true'">

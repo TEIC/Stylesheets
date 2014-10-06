@@ -32,7 +32,7 @@
 
    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
 
-   <xsl:key name="TABLESORT" use="1" match="tei:table[@rend='sort']"/>
+   <xsl:key name="TABLESORT" use="1" match="tei:table[tei:match(@rend,'sort')]"/>
 
    <xsl:param name="institution">University of Oxford</xsl:param>
 

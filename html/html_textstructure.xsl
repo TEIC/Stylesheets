@@ -906,7 +906,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:variable>
       
       <xsl:choose>
-	<xsl:when test="parent::tei:*/@rend='multicol'">
+	<xsl:when test="parent::tei:*/tei:match(@rend,'multicol')">
 	  <td style="vertical-align:top;">
 	    <xsl:if test="not($Depth = '')">
 	      <xsl:element name="h{$Depth + $divOffset}">
@@ -935,7 +935,7 @@ of this software, even if advised of the possibility of such damage.
 	    </tr>
 	  </table>
 	</xsl:when>
-	<xsl:when test="@rend='nohead' or $headertext=''">
+	<xsl:when test="tei:match(@rend,'nohead') or $headertext=''">
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:otherwise>
@@ -2018,13 +2018,13 @@ function click(d) {
     <div id="hdr2">
       <xsl:call-template name="hdr2"/>
     </div>
-    <xsl:if test="not($contentStructure='all' or @rend='all')">
+    <xsl:if test="not($contentStructure='all' or tei:match(@rend,'all'))">
          <div id="hdr3">
 	   <xsl:call-template name="hdr3"/>
          </div>
       </xsl:if>
       <xsl:choose>
-         <xsl:when test="$contentStructure='all' or @rend='all'">
+         <xsl:when test="$contentStructure='all' or tei:match(@rend,'all')">
 	           <div class="column-wrapper">
 	              <xsl:call-template name="col1"/>
 	              <xsl:call-template name="col2"/>
@@ -2641,7 +2641,7 @@ function click(d) {
             <xsl:variable name="depth">
                <xsl:apply-templates mode="depth" select="."/>
             </xsl:variable>
-            <xsl:if test="(number($splitLevel)&gt;number($depth)  or $force='true' or ancestor::tei:TEI/@rend='nosplit')">
+            <xsl:if test="(number($splitLevel)&gt;number($depth)  or $force='true' or ancestor::tei:TEI/tei:match(@rend,'nosplit'))">
                <xsl:for-each select="tei:div[tei:head or $autoHead='true']">
                   <xsl:call-template name="tocEntry">
                      <xsl:with-param name="style" select="$style"/>
@@ -2943,7 +2943,7 @@ function click(d) {
       <xsl:param name="mode"/>
       <xsl:attribute name="class" select="$alignNavigationPanel"/>
       <xsl:call-template name="generateUpLink"/>
-      <xsl:if test="not(ancestor-or-self::tei:TEI[@rend='nomenu'])">
+      <xsl:if test="not(ancestor-or-self::tei:TEI[tei:match(@rend,'nomenu')])">
 	<xsl:call-template name="previousLink"/>
 	<xsl:call-template name="nextLink"/>
       </xsl:if>

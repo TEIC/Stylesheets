@@ -140,7 +140,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:cit">
     <xsl:choose>
-      <xsl:when test="(@rend='display' and tei:quote) or
+      <xsl:when test="(tei:match(@rend,'display') and tei:quote) or
 		      tei:quote/tei:l or tei:quote/tei:p">
         <div>
           <xsl:call-template name="makeRendition">
@@ -383,7 +383,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <xsl:variable name="container" select="if (tei:render-superscript(.)) then 'sup' 
 					   else if (tei:render-subscript(.)) then 'sub' 
-					   else if (@rend='code') then 'code' else 'span'"/>
+					   else if (tei:match(@rend,'code')) then 'code' else 'span'"/>
     <xsl:for-each-group select="*|text()"
 			group-adjacent="if (self::tei:note or
 					self::tei:q/tei:l or
@@ -510,7 +510,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:call-template name="makeRendition"/>
       <xsl:choose>
-        <xsl:when test="ancestor::tei:div[contains(@rend,'linenumber')]">
+        <xsl:when test="ancestor::tei:div[tei:match(@rend,'linenumber')]">
           <xsl:variable name="n">
             <xsl:number/>
           </xsl:variable>
@@ -612,7 +612,7 @@ of this software, even if advised of the possibility of such damage.
           </dl>
         </p>
       </xsl:when>
-      <xsl:when test="@type='gloss' and @rend='multicol'">
+      <xsl:when test="@type='gloss' and tei:match(@rend,'multicol')">
         <xsl:variable name="nitems">
           <xsl:value-of select="count(tei:item)div 2"/>
         </xsl:variable>
@@ -859,24 +859,24 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
 	<xsl:when test="$footnoteFile='true'">
 	  <a class="notelink" title="{normalize-space($note-title)}" href="{$masterFile}-notes.html#{$identifier}">
-	    <xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">
+	    <xsl:element name="{if (tei:match(@rend,'nosup')) then 'span' else 'sup'}">
 	      <xsl:call-template name="noteN"/>
 	    </xsl:element>
 	  </a>
 	  <xsl:if test="following-sibling::node()[1][self::tei:note]">
-	    <xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">
+	    <xsl:element name="{if (tei:match(@rend,'nosup')) then 'span' else 'sup'}">
 	      <xsl:text>,</xsl:text>
 	    </xsl:element>
 	  </xsl:if>
 	</xsl:when>
 	<xsl:otherwise>
 	  <a class="notelink" title="{normalize-space($note-title)}" href="#{$identifier}">
-	    <xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">				  
+	    <xsl:element name="{if (tei:match(@rend,'nosup')) then 'span' else 'sup'}">				  
 	      <xsl:call-template name="noteN"/>
 	    </xsl:element>
 	  </a>
 	  <xsl:if test="following-sibling::node()[1][self::tei:note]">
-	    <xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">
+	    <xsl:element name="{if (tei:match(@rend,'nosup')) then 'span' else 'sup'}">
 	      <xsl:text>,</xsl:text>
 	    </xsl:element>
 	  </xsl:if>
@@ -1183,7 +1183,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:choose>
         </xsl:for-each-group>
       </xsl:when>
-      <xsl:when test="$generateDivFromP='true' or teix:egXML or ancestor::tei:head">
+      <xsl:when test="teix:egXML or ancestor::tei:head">
 	<xsl:element name="{$wrapperElement}">
 	  <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="default">p</xsl:with-param>
@@ -1247,7 +1247,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:quote">
     <xsl:choose>
-      <xsl:when test="parent::tei:cit[@rend='display'] or
+      <xsl:when test="parent::tei:cit[tei:match(@rend,'display')] or
 		      parent::tei:cit and (tei:p or tei:l)">
         <xsl:call-template name="makeBlock">
 	  <xsl:with-param name="style">citquote</xsl:with-param>
@@ -1308,7 +1308,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:seg">
     <xsl:variable name="container" select="if (tei:render-superscript(.)) then 'sup' 
 					   else if (tei:render-subscript(.)) then 'sub' 
-					   else if (@rend='code') then 'code' else 'span'"/>
+					   else if (tei:match(@rend,'code')) then 'code' else 'span'"/>
     <xsl:element name="{$container}">
       <xsl:choose>
         <xsl:when test="@type">

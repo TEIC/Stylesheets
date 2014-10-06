@@ -226,9 +226,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:choose>
 	  <xsl:when test="starts-with(@rend,'specList-')">true</xsl:when>
 	  <xsl:when test="starts-with(parent::tei:hi/@rend,'specList-')">true</xsl:when>
-	  <xsl:when test="@rend='label'">true</xsl:when>
-	  <xsl:when test="contains(@rend,'bold')">true</xsl:when>
-	  <xsl:when test="parent::tei:hi[contains(@rend,'bold')]">true</xsl:when>
+	  <xsl:when test="tei:match(@rend,'label')">true</xsl:when>
+	  <xsl:when test="tei:match(@rend,'bold')">true</xsl:when>
+	  <xsl:when test="parent::tei:hi[tei:match(@rend,'bold')]">true</xsl:when>
 	  <xsl:when test="self::tei:term">true</xsl:when>
 	  <xsl:otherwise>false</xsl:otherwise>
 	</xsl:choose>
@@ -244,7 +244,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="element"/>
       <xsl:for-each select="$element">
 	<xsl:choose>
-	  <xsl:when test="contains(@rend,'italic')">true</xsl:when>
+	  <xsl:when test="tei:match(@rend,'italic')">true</xsl:when>
 	  <xsl:when test="self::tei:emph">true</xsl:when>
 	  <xsl:when test="self::tbx:hi[@style='italics']">true</xsl:when>
 	  <xsl:when test="parent::tei:item and self::tei:gloss">false</xsl:when>

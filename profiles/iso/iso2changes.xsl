@@ -248,7 +248,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:attribute>
   </xsl:template>
 
-   <xsl:template match="tei:ref[@rend='TableFootnoteXref']" mode="show">
+   <xsl:template match="tei:ref[tei:match(@rend,'TableFootnoteXref')]" mode="show">
      <span class="superscript">
        <xsl:apply-templates mode="show"/>
      </span>

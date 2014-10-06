@@ -167,7 +167,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
-  <xsl:template match="tei:eg[@rend='kwic']/tei:lb"/>
+  <xsl:template match="tei:eg[tei:match(@rend,'kwic')]/tei:lb"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
@@ -428,7 +428,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:cit">
     <xsl:choose>
-      <xsl:when test="@rend='display'">
+      <xsl:when test="tei:match(@rend,'display')">
 	<block font-size="8pt">
 	  <xsl:apply-templates/>
 	</block>
@@ -676,7 +676,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="tei:text">
             <xsl:apply-templates/>
          </xsl:when>
-         <xsl:when test="@rend='literal'">
+         <xsl:when test="tei:match(@rend,'literal')">
             <block white-space-collapse="false" wrap-option="no-wrap" font-size="{$exampleSize}"
                    space-before.optimum="4pt"
                    space-after.optimum="4pt"
@@ -685,7 +685,7 @@ of this software, even if advised of the possibility of such damage.
                <xsl:apply-templates/>
             </block>
          </xsl:when>
-         <xsl:when test="@rend='eg'">
+         <xsl:when test="tei:match(@rend,'eg')">
             <block text-align="start" font-size="{$exampleSize}" space-before.optimum="4pt"
                    text-indent="0pt"
                    space-after.optimum="4pt"
@@ -711,7 +711,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>decorative initial letter</desc>
    </doc>
-  <xsl:template match="tei:seg[@rend='decorInit']">
+  <xsl:template match="tei:seg[tei:match(@rend,'decorInit')]">
     <inline background-color="yellow"              font-size="36pt">
       <xsl:apply-templates/>
     </inline>

@@ -469,9 +469,9 @@ of this software, even if advised of the possibility of such damage.
 	   </div>
 	   <div>
 	     <head>Schema <xsl:value-of select="@ident"/>: changed components</head>
-	     <xsl:for-each select="tei:classSpec[@mode='change' or @rend='change']  
-				   | tei:macroSpec[(@mode='change' or @rend='change')]  
-				   | tei:elementSpec[(@mode='change' or @rend='change')]">
+	     <xsl:for-each select="tei:classSpec[@mode='change' or tei:match(@rend,'change')]  
+				   | tei:macroSpec[(@mode='change' or tei:match(@rend,'change'))]  
+				   | tei:elementSpec[(@mode='change' or tei:match(@rend,'change'))]">
 	       <xsl:sort select="@ident"/>
 	       <xsl:apply-templates mode="weave" select="."/>
 	     </xsl:for-each>

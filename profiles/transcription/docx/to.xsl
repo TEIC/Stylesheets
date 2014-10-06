@@ -171,8 +171,8 @@ of this software, even if advised of the possibility of such damage.
     <desc>Changing additions and left/right rendering to notes placed in margin</desc>
   </doc>
     <xsl:template match="add[@place='leftMargin' or
-			 @place='rightMargin']|hi[@rend='leftMargin' or
-			 @rend='rightMargin']" mode="pass0">
+			 @place='rightMargin']|hi[tei:match(@rend,'leftMargin') or
+			 tei:match(@rend,'rightMargin')]" mode="pass0">
       <note xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:attribute name="place">
 	  <xsl:choose>
@@ -203,19 +203,19 @@ of this software, even if advised of the possibility of such damage.
   </doc>
     <xsl:template match="del[@rend]" mode="pass0">
       <xsl:choose>
-        <xsl:when test="@rend='overstrike'">
+        <xsl:when test="tei:match(@rend,'overstrike')">
           <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
             <xsl:apply-templates mode="pass0"/> <xsl:text> </xsl:text>
             <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">biffé</hi>
           </note>
         </xsl:when>
-        <xsl:when test="@rend='underlined'">
+        <xsl:when test="tei:match(@rend,'underlined')">
           <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
             <xsl:apply-templates mode="pass0"/> <xsl:text> </xsl:text>
             <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">annulé par soulignement</hi>
           </note>
         </xsl:when>
-        <xsl:when test="@rend='underlined_dotted'">
+        <xsl:when test="tei:match(@rend,'underlined_dotted')">
           <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
             <xsl:apply-templates mode="pass0"/> <xsl:text> </xsl:text>
             <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">annulé par exponctuation</hi>

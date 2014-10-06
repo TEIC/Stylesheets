@@ -32,7 +32,7 @@
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso      tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
 
 
-   <xsl:template match="tei:seg[@rend='specChildModule']">
+   <xsl:template match="tei:seg[tei:match(@rend,'specChildModule')]">
     <w:r>
       <w:rPr>
         <w:rStyle w:val="tei{local-name()}"/>

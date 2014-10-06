@@ -2324,7 +2324,7 @@ of this software, even if advised of the possibility of such damage.
     </hi>
   </xsl:template>
 
-  <xsl:template match="FIGDESC/HI[@REND='sup']">
+  <xsl:template match="FIGDESC/HI[@rend='sup']">
     <xsl:apply-templates/>
   </xsl:template>
 

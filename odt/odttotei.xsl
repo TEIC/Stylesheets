@@ -1361,7 +1361,7 @@ These seem to have no obvious translation
 	 
 	 <xsl:if
 	     test="style:text-properties[@style:text-underline-type='double']">
-	   <xsl:text>underdoubleline </xsl:text>
+	   <xsl:text>doubleunderline </xsl:text>
 	 </xsl:if>
 	 
 	 <xsl:if

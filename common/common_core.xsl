@@ -1009,31 +1009,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="tei:isFootNote(.)">
 	<xsl:call-template name="footNote"/>
       </xsl:when>
-      <xsl:when test="tokenize(@place,' ')=('margin', 
-		      'margin/inline',
-		      'marg1',
-		      'marg2',
-		      'marg3',
-		      'marge',
-		      'h',
-		      'inter',
-		      'right',
-		      'left',
-		      'divend',
-		      'marginOuter',
-		      'marginLeft',
-		      'marginRight',
-		      'margin-left',
-		      'margin-right',
-		      'margin_left',
-		      'margin_right',
-		      'margin-top',
-		      'margin-bottom')
-		      ">
-	<xsl:call-template name="marginalNote"/>
-      </xsl:when>
-
-      <xsl:when test="tokenize(@place,' ')=('top','opposite','overleaf','inspace')">
+      <xsl:when test="tei:isMarginal(@place)">
 	<xsl:call-template name="marginalNote"/>
       </xsl:when>
 
@@ -1088,13 +1064,13 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:bibl">
     <xsl:choose>
-      <xsl:when test="parent::tei:cit[@rend='display'] or
+      <xsl:when test="parent::tei:cit[tei:match(@rend,'display')] or
 		      (parent::tei:cit and tei:p) or  parent::tei:q[tei:is-inline(.)]">
         <xsl:call-template name="makeInline">
 	  <xsl:with-param name="style">citbibl</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
-      <xsl:when test="parent::tei:q/parent::tei:head or parent::tei:q[@rend='inline']">
+      <xsl:when test="parent::tei:q/parent::tei:head or parent::tei:q[tei:match(@rend,'inline')]">
         <xsl:call-template name="makeBlock">
 	  <xsl:with-param name="style">citbibl</xsl:with-param>
 	</xsl:call-template>
@@ -1225,11 +1201,11 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:lb">
     <xsl:choose>
-      <xsl:when test="@type='hyphenInWord' and @rend='hidden'"/>
+      <xsl:when test="@type='hyphenInWord' and tei:match(@rend,'hidden')"/>
       <xsl:when test="tokenize(@rend,' ')=('hidden')">
         <xsl:text> </xsl:text>
       </xsl:when>
-      <xsl:when test="@rend='-' or @type='hyphenInWord'">
+      <xsl:when test="tei:match(@rend,'-') or @type='hyphenInWord'">
         <xsl:text>-</xsl:text>
 	<xsl:call-template name="lineBreak"/>
       </xsl:when>
@@ -1441,6 +1417,4 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="following-sibling::tei:author">, </xsl:when>
     </xsl:choose>
   </xsl:template>
-
-  
 </xsl:stylesheet>

@@ -46,7 +46,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="useNSPrefixes">false</xsl:param>
   <xsl:param name="pagebreakStyle">active</xsl:param>
   <xsl:param name="defaultHeaderFooterFile">../../profiles/oucscourses/docx/headersfooters.xml</xsl:param>
-  <xsl:template match="teix:egXML|p[@rend='eg']">
+  <xsl:template match="teix:egXML|p[tei:match(@rend,'eg')]">
     <xsl:param name="simple">false</xsl:param>
     <xsl:param name="highlight"/>
     <xsl:call-template name="block-element">
@@ -58,7 +58,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template match="table[@rend='roomlabel']">
+  <xsl:template match="table[tei:match(@rend,'roomlabel')]">
     <xsl:variable name="data">
       <sessions>
         <xsl:for-each select="row">
@@ -128,7 +128,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each-group>
   </xsl:template>
 
-  <xsl:template match="table[@rend='roomlabel2']">
+  <xsl:template match="table[tei:match(@rend,'roomlabel2')]">
     <!-- room, date, start, end, title, person -->
     <xsl:variable name="data">
       <sessions>

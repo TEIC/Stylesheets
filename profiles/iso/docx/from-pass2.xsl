@@ -77,7 +77,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="parent::tei:num">
                 <xsl:value-of select="."/>
             </xsl:when>
-            <xsl:when test="parent::tei:seg[@rend='nonumber']">
+            <xsl:when test="parent::tei:seg[tei:match(@rend,'nonumber')]">
                 <xsl:value-of select="."/>
             </xsl:when>
             <!-- do not search for numbers inside math -->
@@ -243,7 +243,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each-group>
       </xsl:copy>
     </xsl:template>
-  <xsl:template match="tei:note/tei:p/tei:hi[@rend='FootnoteReference']"
+  <xsl:template match="tei:note/tei:p/tei:hi[tei:match(@rend,'FootnoteReference')]"
 		mode="pass2" priority="1001">
   </xsl:template>
 
@@ -332,13 +332,13 @@ of this software, even if advised of the possibility of such damage.
       </xsl:template>
   -->
 
-  <xsl:template match="tbx:descrip/tei:hi[@rend='domain']" mode="pass2"/>
+  <xsl:template match="tbx:descrip/tei:hi[tei:match(@rend,'domain')]" mode="pass2"/>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
    <desc>Remove space before a moved domain</desc></doc>
   <xsl:template match="tbx:descrip/text()" mode="pass2">
     <xsl:choose>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:hi/@rend='domain']">
+      <xsl:when test="preceding-sibling::node()[1][self::tei:hi/tei:match(@rend,'domain')]">
 	<xsl:value-of select="normalize-space(.)"/>
       </xsl:when>
       <xsl:otherwise>
@@ -351,10 +351,10 @@ of this software, even if advised of the possibility of such damage.
    <desc>Move domain and source to separate containers</desc></doc>
 
   <xsl:template match="tbx:descripGrp" mode="pass2">
-    <xsl:if test="tbx:descrip/tei:hi[@rend='domain']">
+    <xsl:if test="tbx:descrip/tei:hi[tei:match(@rend,'domain')]">
       <descripGrp xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
 	<descrip type="subjectField">
-	  <xsl:for-each select="tbx:descrip/tei:hi[@rend='domain']">
+	  <xsl:for-each select="tbx:descrip/tei:hi[tei:match(@rend,'domain')]">
 	    <xsl:value-of select="translate(.,'&lt;&gt;〈〉','')"/>
 	  </xsl:for-each>
 	</descrip>
@@ -364,10 +364,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates mode="pass2"/>
     </xsl:copy>
-    <xsl:if test="tbx:descrip/tei:hi[@rend='source']">
+    <xsl:if test="tbx:descrip/tei:hi[tei:match(@rend,'source')]">
       <xsl:for-each select="tbx:descrip">
 	<admin xmlns="http://www.lisa.org/TBX-Specification.33.0.html" type="source">
-	  <xsl:for-each select="tei:hi[@rend='source']|tei:ref">
+	  <xsl:for-each select="tei:hi[tei:match(@rend,'source')]|tei:ref">
 	    <xsl:copy-of select="."/>
 	  </xsl:for-each>
 	</admin>
@@ -375,7 +375,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="tbx:descrip/tei:hi[@rend='source']" mode="pass2"/>
+  <xsl:template match="tbx:descrip/tei:hi[tei:match(@rend,'source')]" mode="pass2"/>
 
   <xsl:template match="tbx:descrip/tei:ref" mode="pass2">
     <xsl:copy>
@@ -462,9 +462,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tbx:descripGrp" mode="pass2">
     <xsl:copy>
       <xsl:apply-templates select="tbx:descrip"/>
-      <xsl:if test="tbx:descrip/tei:hi[@rend='source']">
+      <xsl:if test="tbx:descrip/tei:hi[tei:match(@rend,'source')]">
 	<termNote type="source">
-	  <xsl:copy-of select="tbx:descrip/tei:hi[@rend='source']"/>
+	  <xsl:copy-of select="tbx:descrip/tei:hi[tei:match(@rend,'source')]"/>
 	</termNote>
       </xsl:if>
     </xsl:copy>

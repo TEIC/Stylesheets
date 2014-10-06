@@ -59,6 +59,6 @@ of this software, even if advised of the possibility of such damage.
 \setlength{\headheight}{14pt}
 </xsl:template>
 
-<xsl:template match="teix:egXML[@rend='invisible']"/>
+<xsl:template match="teix:egXML[tei:match(@rend,'invisible')]"/>
     
 </xsl:stylesheet>

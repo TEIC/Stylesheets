@@ -112,7 +112,7 @@ of this software, even if advised of the possibility of such damage.
     
     <xsl:template match="tei:figure">
       <xsl:choose>
-	<xsl:when test="@rend='inline' or @place='inline'">
+	<xsl:when test="tei:match(@rend,'inline') or @place='inline'">
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:otherwise>

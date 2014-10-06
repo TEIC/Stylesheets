@@ -302,15 +302,15 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="deriveColSpecs">
       <xsl:choose>
-	 <xsl:when test="@rend='wovenodd'">
+	 <xsl:when test="tei:match(@rend,'wovenodd')">
 	   <table-column column-number="1" column-width="25%"/>
 	   <table-column column-number="2" column-width="75%"/>
 	 </xsl:when>
-	 <xsl:when test="@rend='attDef'">
+	 <xsl:when test="tei:match(@rend,'attDef')">
 	   <table-column column-number="1" column-width="10%"/>
 	   <table-column column-number="2" column-width="90%"/>
 	 </xsl:when>
-	 <xsl:when test="@rend='attList'">
+	 <xsl:when test="tei:match(@rend,'attList')">
 	   <table-column column-number="1" column-width="10%"/>
 	   <table-column column-number="2" column-width="90%"/>
 	 </xsl:when>

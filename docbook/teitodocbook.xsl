@@ -136,7 +136,7 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template match="q|quote|said">
-  <xsl:element name="{if (@rend='block') then 'blockquote' else 'quote'}">
+  <xsl:element name="{if (tei:match(@rend,'block')) then 'blockquote' else 'quote'}">
     <xsl:apply-templates select="@*|*|text()|comment()"/>
   </xsl:element>
 </xsl:template>

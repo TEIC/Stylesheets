@@ -202,7 +202,7 @@ of this software, even if advised of the possibility of such damage.
       </publicationStmt>
     </xsl:template>
 
-    <xsl:template match="tei:c[@rend='tab']" mode="pass2">
+    <xsl:template match="tei:c[tei:match(@rend,'tab')]" mode="pass2">
       <xsl:text> </xsl:text>
     </xsl:template>
 

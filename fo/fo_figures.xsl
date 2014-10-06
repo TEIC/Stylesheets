@@ -106,7 +106,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:figure">
       <xsl:choose>
-         <xsl:when test="@rend='display' or tei:head or tei:p">
+         <xsl:when test="tei:match(@rend,'display') or tei:head or tei:p">
             <float>
                <xsl:call-template name="addID"/>
                <block text-align="center">
@@ -196,7 +196,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>MathML in display formulae</desc>
    </doc>
-  <xsl:template match="tei:formula[@rend='display']/m:math">
+  <xsl:template match="tei:formula[tei:match(@rend,'display')]/m:math">
       <m:math display="block">
          <xsl:copy-of select="@*"/>
          <xsl:apply-templates mode="math"/>
@@ -205,7 +205,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>subequations</desc>
    </doc>
-  <xsl:template match="tei:formula[@rend='subeqn']/m:math">
+  <xsl:template match="tei:formula[tei:match(@rend,'subeqn')]/m:math">
       <xsl:apply-templates mode="math"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -243,17 +243,17 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:table">
       <xsl:choose>
-         <xsl:when test="@rend='eqnarray' and $foEngine='passivetex'">
+         <xsl:when test="tei:match(@rend,'eqnarray') and $foEngine='passivetex'">
             <fotex:eqnarray>
                <xsl:apply-templates select=".//tei:formula"/>
             </fotex:eqnarray>
          </xsl:when>
-         <xsl:when test=".//tei:formula[@rend='subeqn'] and $foEngine='passivetex'">
+         <xsl:when test=".//tei:formula[tei:match(@rend,'subeqn')] and $foEngine='passivetex'">
             <fotex:eqnarray>
                <xsl:apply-templates select=".//tei:formula"/>
             </fotex:eqnarray>
          </xsl:when>
-         <xsl:when test="$inlineTables or @rend='inline'">
+         <xsl:when test="$inlineTables or tei:match(@rend,'inline')">
             <xsl:if test="tei:head">
                <block>
                   <xsl:call-template name="tableCaptionstyle"/>
@@ -274,7 +274,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
-  <xsl:template match="tei:table[@rend='eqnarray']">
+  <xsl:template match="tei:table[tei:match(@rend,'eqnarray')]">
       <xsl:choose>
          <xsl:when test="$foEngine='passivetex'">
             <fotex:eqnarray>
@@ -320,7 +320,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:attribute>
       </xsl:if>
       <xsl:choose>
-         <xsl:when test="ancestor::tei:table[1][@rend='frame' or @rend='wovenodd']">
+         <xsl:when test="ancestor::tei:table[1][tei:match(@rend,'frame') or tei:match(@rend,'wovenodd')]">
             <xsl:if test="not(parent::tei:row/preceding-sibling::tei:row)">
                <xsl:attribute name="border-before-style">solid</xsl:attribute>
             </xsl:if>
@@ -333,7 +333,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:otherwise>
   </xsl:otherwise>
       </xsl:choose>
-      <xsl:if test="not(ancestor::tei:table/@rend='tight')">
+      <xsl:if test="not(ancestor::tei:table/tei:match(@rend,'tight'))">
          <xsl:attribute name="padding">
             <xsl:value-of select="$tableCellPadding"/>
          </xsl:attribute>

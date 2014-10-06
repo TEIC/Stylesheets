@@ -145,12 +145,12 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="@place='inline' and head">
             <xsl:text>\begin{figure}[H]&#10;</xsl:text>
 	</xsl:when>
-	<xsl:when test="@rend='display' or not(@place='inline') or head or p">
+	<xsl:when test="tei:match(@rend,'display') or not(@place='inline') or head or p">
 	  <xsl:text>\begin{figure*}[htbp]&#10;</xsl:text>
 	</xsl:when>
       </xsl:choose>
       <xsl:choose>
-	<xsl:when test="@rend='center'">
+	<xsl:when test="tei:match(@rend,'center')">
 	  <xsl:text>\begin{center}</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>\noindent</xsl:otherwise>
@@ -170,14 +170,14 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>}</xsl:text>
          </xsl:when>
       </xsl:choose>
-      <xsl:if test="@rend='center'">
+      <xsl:if test="tei:match(@rend,'center')">
             <xsl:text>\end{center}</xsl:text>
       </xsl:if>
       <xsl:choose>
 	<xsl:when test="@place='inline' and head">
             <xsl:text>\end{figure}&#10;</xsl:text>
 	</xsl:when>
-         <xsl:when test="@rend='display' or not(@place='inline')">
+         <xsl:when test="tei:match(@rend,'display') or not(@place='inline')">
 	   <xsl:text>\end{figure*}&#10;</xsl:text>
          </xsl:when>
       </xsl:choose>

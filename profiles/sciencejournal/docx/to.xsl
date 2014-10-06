@@ -71,7 +71,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="shadowGraphics">true</xsl:param>
     <xsl:param name="glossListSeparator">break</xsl:param>
     <xsl:param name="pagebreakStyle">active</xsl:param>
-    <xsl:template match="teix:egXML|tei:p[@rend='eg']">
+    <xsl:template match="teix:egXML|tei:p[tei:match(@rend,'eg')]">
         <xsl:param name="simple">false</xsl:param>
         <xsl:param name="highlight"/>
         <xsl:call-template name="block-element">

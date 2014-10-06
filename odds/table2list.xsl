@@ -51,28 +51,28 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-  <xsl:template match="tei:table[@rend='valList'         or @rend='attDef'        or @rend='attList'         or @rend='specDesc']">
+  <xsl:template match="tei:table[tei:match(@rend,'valList')         or tei:match(@rend,'attDef')        or tei:match(@rend,'attList')         or tei:match(@rend,'specDesc')]">
       <list type="termlist">
          <xsl:apply-templates/>
       </list>
   </xsl:template>
-  <xsl:template match="tei:table[@rend='attList'      or @rend='valList'      or @rend='attDef'      or @rend='specDesc']/tei:row">
+  <xsl:template match="tei:table[tei:match(@rend,'attList')      or tei:match(@rend,'valList')      or tei:match(@rend,'attDef')      or tei:match(@rend,'specDesc')]/tei:row">
       <item>
          <xsl:apply-templates/>
       </item>
   </xsl:template>
-  <xsl:template match="tei:table[@rend='attList'       or @rend='specDesc'       or @rend='valList'       or @rend='attDef']/tei:row/tei:cell[1]">
+  <xsl:template match="tei:table[tei:match(@rend,'attList')       or tei:match(@rend,'specDesc')       or tei:match(@rend,'valList')       or tei:match(@rend,'attDef')]/tei:row/tei:cell[1]">
       <xsl:choose>
-         <xsl:when test="parent::tei:row/parent::tei:table[@rend='attList']">
+         <xsl:when test="parent::tei:row/parent::tei:table[tei:match(@rend,'attList')]">
             <hi rend="bold">@<xsl:apply-templates/>
             </hi>
          </xsl:when>
-         <xsl:when test="ancestor::tei:table[@rend='valList']">
+         <xsl:when test="ancestor::tei:table[tei:match(@rend,'valList')]">
             <hi rend="bold">
                <xsl:apply-templates/>
             </hi>
          </xsl:when>
-         <xsl:when test="ancestor::tei:table[@rend='specDesc']">
+         <xsl:when test="ancestor::tei:table[tei:match(@rend,'specDesc')]">
             <hi rend="bold">@<xsl:apply-templates/>
             </hi>
          </xsl:when>
@@ -83,7 +83,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
-  <xsl:template match="tei:table[@rend='attList'        or @rend='valList'        or @rend='specDesc'        or @rend='attDef']/tei:row/tei:cell[2]">
+  <xsl:template match="tei:table[tei:match(@rend,'attList')        or tei:match(@rend,'valList')        or tei:match(@rend,'specDesc')        or tei:match(@rend,'attDef')]/tei:row/tei:cell[2]">
       <c rend="tab">
          <xsl:text>	</xsl:text>
       </c>

@@ -141,8 +141,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'smallcaps')]">true</xsl:when>
-        <xsl:when test="ancestor-or-self::*[@rend][@rend='sc']">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'smallcaps')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'sc')]">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -155,7 +155,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="$element">
       <xsl:choose>
         <xsl:when test="self::tei:soCalled">true</xsl:when>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'quotes')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'quotes')]">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -178,9 +178,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="tokenize(@rend,' ')=('important')">true</xsl:when>
         <xsl:when test="tokenize(@rend,' ')=('Heading_2_Char')">true</xsl:when>
         <xsl:when test="tokenize(@rend,' ')=('specChildModule')">true</xsl:when>
-        <xsl:when test="ancestor-or-self::tei:cell[@rend='wovenodd-col1']">true</xsl:when>
+        <xsl:when test="ancestor-or-self::tei:cell[tei:match(@rend,'wovenodd-col1')]">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[@role='label']">true</xsl:when>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'bold')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'bold')]">true</xsl:when>
         <xsl:when test="parent::tei:hi[starts-with(@rend,'specList-')]">true</xsl:when>
         <xsl:when test="self::tei:cell and parent::tei:row[@role='label']">true</xsl:when>
         <xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
@@ -225,7 +225,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'italic')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'italic')]">true</xsl:when>
         <xsl:when test="self::tei:emph">true</xsl:when>
         <xsl:when test="self::tei:hi[not(@rend)]">true</xsl:when>
         <xsl:when test="self::tbx:hi[@style='italics']">true</xsl:when>
@@ -253,8 +253,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:val">true</xsl:when>
         <xsl:when test="self::tei:code">true</xsl:when>
         <xsl:when test="self::tei:ident">true</xsl:when>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'typewriter')]">true</xsl:when>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'code')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'typewriter')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'code')]">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -267,9 +267,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-        <xsl:when test="ancestor-or-self::*[@rend][@rend='ul']">true</xsl:when>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'underline')]">true</xsl:when>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'UL')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'ul')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'underline')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'UL')]">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -281,8 +281,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'sup')]">true</xsl:when>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'superscript')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'sup')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'superscript')]">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -295,8 +295,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'sup')]">true</xsl:when>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'subscript')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'sup')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'subscript')]">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -309,7 +309,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-        <xsl:when test="ancestor-or-self::*[@rend][contains(@rend,'strikethrough')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'strikethrough')]">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -326,17 +326,17 @@ of this software, even if advised of the possibility of such damage.
         <xsl:for-each select="$element">
           <xsl:choose>
             <xsl:when test="not(self::*)">true</xsl:when>
-            <xsl:when test="contains(@rend,'inline') and not(tei:p or tei:l)">true</xsl:when>
+            <xsl:when test="tei:match(@rend,'inline') and not(tei:p or tei:l)">true</xsl:when>
             <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
             <xsl:when test="self::tei:note[tei:isEndNote(.)]">true</xsl:when>
             <xsl:when test="self::tei:note[tei:isFootNote(.)]">true</xsl:when>
-            <xsl:when test="@rend='display' or @rend='block'">false</xsl:when>
+            <xsl:when test="tei:match(@rend,'display') or tei:match(@rend,'block')">false</xsl:when>
             <xsl:when test="@type='display' or @type='block'">false</xsl:when>
             <xsl:when test="tei:table or tei:figure or tei:list or tei:lg    or tei:q/tei:l or tei:l or tei:p or tei:biblStruct or tei:sp or tei:floatingText">false</xsl:when>
             <xsl:when test="parent::tei:div">false</xsl:when>
             <xsl:when test="parent::tei:titlePage">false</xsl:when>
             <xsl:when test="self::tei:cit[not(@rend)]">true</xsl:when>
-            <xsl:when test="parent::tei:cit[@rend='display']">false</xsl:when>
+            <xsl:when test="parent::tei:cit[tei:match(@rend,'display')]">false</xsl:when>
             <xsl:when test="parent::tei:cit and (tei:p or tei:l)">false</xsl:when>
             <xsl:when test="parent::tei:cit and parent::cit/tei:bibl">false</xsl:when>
             <xsl:when test="parent::tei:body">false</xsl:when>
@@ -1495,5 +1495,43 @@ of this software, even if advised of the possibility of such damage.
           <xsl:otherwise>image/jpeg</xsl:otherwise>
         </xsl:choose>
      </xsl:function>
+
+
+  <xsl:function name="tei:isMarginal" as="xs:boolean">
+    <xsl:param name="place"/>
+    <xsl:choose>
+      <xsl:when test="tokenize($place,' ')=('margin', 
+		      'margin/inline',
+		      'marg1',
+		      'marg2',
+		      'marg3',
+		      'marge',
+		      'h',
+		      'inter',
+		      'right',
+		      'left',
+		      'divend',
+		      'marginOuter',
+		      'marginLeft',
+		      'marginRight',
+		      'margin-left',
+		      'margin-right',
+		      'margin_left',
+		      'margin_right',
+		      'margin-top',
+		      'margin-bottom',
+		      'top','opposite',
+		      'overleaf',
+		      'inspace')">true</xsl:when>
+      <xsl:otherwise>false</xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="tei:match" as="xs:boolean">
+    <xsl:param name="att"/>
+    <xsl:param name="value"/>
+    <xsl:sequence select="if (tokenize($att,' ')=($value)) then true()
+      else false()"/>
+  </xsl:function>
 
 </xsl:stylesheet>

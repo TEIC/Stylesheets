@@ -26,7 +26,7 @@
 
  
  <!-- paragraph styles which should be TEI elements -->
- <!--xsl:template match="tei:p[@rend='epigraph']" mode="pass2">
+ <!--xsl:template match="tei:p[tei:match(@rend,'epigraph')]" mode="pass2">
   <epigraph>
    <ab>
     <xsl:apply-templates mode="pass2"/>
@@ -34,21 +34,21 @@
   </epigraph>
  </xsl:template-->
  
- <xsl:template match="tei:p[@rend='epigraph'][1]" mode="pass2">
+ <xsl:template match="tei:p[tei:match(@rend,'epigraph')][1]" mode="pass2">
   <epigraph>
    <p>
     <xsl:apply-templates mode="pass2"/>
    </p>
-   <xsl:for-each select="following::tei:p[@rend='epigraph']">
+   <xsl:for-each select="following::tei:p[tei:match(@rend,'epigraph')]">
     <p> <xsl:apply-templates mode="pass2"/></p>
    </xsl:for-each>
   </epigraph>
  </xsl:template>
  
- <xsl:template match="tei:p[@rend='epigraph'][position() > 1]" mode="pass2"/>
+ <xsl:template match="tei:p[tei:match(@rend,'epigraph')][position() > 1]" mode="pass2"/>
  
 
- <xsl:template match="tei:p[@rend='Quote']" mode="pass2">
+ <xsl:template match="tei:p[tei:match(@rend,'Quote')]" mode="pass2">
   <quote>
    <p>
     <xsl:apply-templates mode="pass2"/>
@@ -56,7 +56,7 @@
   </quote>
  </xsl:template>
 
- <xsl:template match="tei:p[@rend='CentredQuote']" mode="pass2">
+ <xsl:template match="tei:p[tei:match(@rend,'CentredQuote')]" mode="pass2">
   <quote rend="center">
    <p>
     <xsl:apply-templates mode="pass2"/>
@@ -86,13 +86,13 @@
     <titlePage>
      <docTitle>
          <titlePart type="main">
-        <xsl:for-each select="//tei:p[@rend='Title']/node()">
+        <xsl:for-each select="//tei:p[tei:match(@rend,'Title')]/node()">
         
            <xsl:copy-of select="."/>        
         </xsl:for-each> 
       </titlePart>
       <titlePart type="sub">
-       <xsl:for-each select="//tei:p[@rend='Subtitle']/node()">
+       <xsl:for-each select="//tei:p[tei:match(@rend,'Subtitle')]/node()">
         
           <xsl:copy-of select="."/>        
        </xsl:for-each> </titlePart>
@@ -100,14 +100,14 @@
      </docTitle>
      
      <docAuthor>
-      <xsl:for-each select="//tei:p[@rend='author']/node()">
+      <xsl:for-each select="//tei:p[tei:match(@rend,'author')]/node()">
        <xsl:copy-of select="."/>    
        </xsl:for-each>      
      </docAuthor>
      
-     <xsl:if test="//tei:p[@rend='translator']">
+     <xsl:if test="//tei:p[tei:match(@rend,'translator')]">
      <titlePart type="translator">
-      <xsl:for-each select="//tei:p[@rend='translator']">
+      <xsl:for-each select="//tei:p[tei:match(@rend,'translator')]">
        <xsl:apply-templates mode="pass3"/>
       </xsl:for-each>
      </titlePart>
@@ -115,9 +115,9 @@
     
     </titlePage>
     
-    <xsl:if test="//tei:p[@rend='abstract']">
+    <xsl:if test="//tei:p[tei:match(@rend,'abstract')]">
      <div type="abstract">
-     <xsl:for-each select="//tei:p[@rend='abstract']">
+     <xsl:for-each select="//tei:p[tei:match(@rend,'abstract')]">
     <xsl:copy-of select="."/>
      </xsl:for-each>
     </div></xsl:if>
@@ -127,11 +127,11 @@
     <xsl:apply-templates mode="pass3" select="tei:body/*"/>
    </body>
    
-    <xsl:if test="//tei:p[@rend='bibliography']">
+    <xsl:if test="//tei:p[tei:match(@rend,'bibliography')]">
      <back>
       <div type="bibliography"><head>References</head>
       <listBibl>
-     <xsl:for-each select="//tei:p[@rend='bibliography']">
+     <xsl:for-each select="//tei:p[tei:match(@rend,'bibliography')]">
       <bibl>
        <xsl:apply-templates mode="pass3"/>
       </bibl>
@@ -144,14 +144,14 @@
 
  <!-- suppress paragraphs which have been jiggled into front/back -->
 
- <xsl:template match="tei:p[@rend='Title']" mode="pass3"/>
- <xsl:template match="tei:p[@rend='author']" mode="pass3"/>
- <xsl:template match="tei:p[@rend='translator']" mode="pass3"/>
- <xsl:template match="tei:p[@rend='Subtitle']" mode="pass3"/>
- <xsl:template match="tei:p[@rend='abstract']" mode="pass3"/>
- <xsl:template match="tei:p[@rend='bibliography']" mode="pass3"/>
- <xsl:template match="tei:p[@rend='Bibliography']" mode="pass3"/>
- <xsl:template match="tei:div/tei:p[@rend='bibliography']" mode="pass3"/>
+ <xsl:template match="tei:p[tei:match(@rend,'Title')]" mode="pass3"/>
+ <xsl:template match="tei:p[tei:match(@rend,'author')]" mode="pass3"/>
+ <xsl:template match="tei:p[tei:match(@rend,'translator')]" mode="pass3"/>
+ <xsl:template match="tei:p[tei:match(@rend,'Subtitle')]" mode="pass3"/>
+ <xsl:template match="tei:p[tei:match(@rend,'abstract')]" mode="pass3"/>
+ <xsl:template match="tei:p[tei:match(@rend,'bibliography')]" mode="pass3"/>
+ <xsl:template match="tei:p[tei:match(@rend,'Bibliography')]" mode="pass3"/>
+ <xsl:template match="tei:div/tei:p[tei:match(@rend,'bibliography')]" mode="pass3"/>
  
  <!-- suppress empty head elements -->
 
@@ -195,31 +195,31 @@
  </xsl:template>
  
  <!-- fix other styles which should be TEI elements -->
- <xsl:template match="tei:hi[@rend='Quote']" mode="pass3">
+ <xsl:template match="tei:hi[tei:match(@rend,'Quote')]" mode="pass3">
   <quote>
    <xsl:apply-templates mode="pass3"/>
   </quote>
  </xsl:template>
 
- <xsl:template match="tei:hi[@rend='foreign']" mode="pass3">
+ <xsl:template match="tei:hi[tei:match(@rend,'foreign')]" mode="pass3">
   <foreign>
    <xsl:apply-templates mode="pass3"/>
   </foreign>
  </xsl:template>
 
-<xsl:template match="tei:hi[@rend='Article_Title_Char']" mode="pass3">
+<xsl:template match="tei:hi[tei:match(@rend,'Article_Title_Char')]" mode="pass3">
 <title level="a">
    <xsl:apply-templates mode="pass3"/>
 </title>
 </xsl:template>
 
-<xsl:template match="tei:hi[@rend='Date_Pub']" mode="pass3">
+<xsl:template match="tei:hi[tei:match(@rend,'Date_Pub')]" mode="pass3">
 <date>
    <xsl:apply-templates mode="pass3"/>
 </date>
 </xsl:template>
 
-<xsl:template match="tei:bibl/tei:hi[@rend='italic']" mode="pass3">
+<xsl:template match="tei:bibl/tei:hi[tei:match(@rend,'italic')]" mode="pass3">
 <title>
    <xsl:apply-templates mode="pass3"/>
 </title>
@@ -228,11 +228,11 @@
 
  <!-- now some word artefacts we want to suppress -->
 
- <xsl:template match="tei:hi[@rend='footnote_reference']" mode="pass3">
+ <xsl:template match="tei:hi[tei:match(@rend,'footnote_reference')]" mode="pass3">
   <xsl:apply-templates mode="pass3"/>
  </xsl:template>
 
- <xsl:template match="tei:hi[@rend='FootnoteReference']" mode="pass3">
+ <xsl:template match="tei:hi[tei:match(@rend,'FootnoteReference')]" mode="pass3">
   <xsl:apply-templates mode="pass3"/>
  </xsl:template>
 
@@ -296,7 +296,7 @@
 
  <!-- add contexta magic references -->
 
- <xsl:template match="tei:hi[@rend='reference']" mode="pass4">
+ <xsl:template match="tei:hi[tei:match(@rend,'reference')]" mode="pass4">
   <xsl:variable name="magicString">
    <xsl:value-of select="substring-before(substring-after(., '&lt;'),'&gt;')"/>
   </xsl:variable>
@@ -323,13 +323,13 @@
   </xsl:element>
  </xsl:template>
 
- <xsl:template match="tei:hi[@rend='reference']/tei:seg" mode="pass4">
+ <xsl:template match="tei:hi[tei:match(@rend,'reference')]/tei:seg" mode="pass4">
 <hi rend="{@rend}">
 <xsl:value-of select="."/>
 </hi>
 </xsl:template>
 
- <xsl:template match="tei:hi[@rend='reference']/text()" mode="pass4">
+ <xsl:template match="tei:hi[tei:match(@rend,'reference')]/text()" mode="pass4">
 <xsl:value-of select='substring-before(.,"&lt;")'/>
 <xsl:if test="not(contains(.,'&lt;'))">
 <xsl:value-of select="."/>
@@ -341,7 +341,7 @@
  <!-- now some attribute values we want to kill -->
  <xsl:template match="@rend[.='Body Text First Indent']" mode="pass3"/>
  <xsl:template match="@rend[.='Body Text']" mode="pass3"/>
- <xsl:template match="tei:p[@rend='FootnoteText']" mode="pass3">
+ <xsl:template match="tei:p[tei:match(@rend,'FootnoteText')]" mode="pass3">
   <xsl:apply-templates mode="pass3"/>
  </xsl:template>
 

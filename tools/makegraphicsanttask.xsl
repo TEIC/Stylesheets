@@ -88,7 +88,7 @@ of this software, even if advised of the possibility of such damage.
 	 </xsl:if>
 	 <xsl:for-each select="key('PB',1)">
 	   <xsl:choose>
-	     <xsl:when test="@rend='none'"/>
+	     <xsl:when test="tei:match(@rend,'none')"/>
 	     <xsl:when test="starts-with(@facs,'tcp:')"/>
 	     <xsl:when test="starts-with(@facs,'unknown:')"/>
 	     <xsl:otherwise>

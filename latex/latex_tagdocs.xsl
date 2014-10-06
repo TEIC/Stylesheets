@@ -131,9 +131,9 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template name="egXMLStartHook"/>
    <xsl:template name="egXMLEndHook"/>
 
-   <xsl:template match="tei:seg[@rend='specChildren']">
+   <xsl:template match="tei:seg[tei:match(@rend,'specChildren')]">
       <xsl:choose>
-         <xsl:when test=".//tei:seg[@rend='specChildModule']">
+         <xsl:when test=".//tei:seg[tei:match(@rend,'specChildModule')]">
             <xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
             <xsl:apply-templates/>
             <xsl:text>\end{sansreflist}</xsl:text>
@@ -145,7 +145,7 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
 
    <!--
-<xsl:template match="tei:seg[@rend='specChildren']">
+<xsl:template match="tei:seg[tei:match(@rend,'specChildren')]">
 <xsl:text>\mbox{ }\\ \begin{description}</xsl:text>
 <xsl:apply-templates/>
 <xsl:text>\end{description}</xsl:text>
@@ -170,25 +170,25 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
    </xsl:template>
 
-   <xsl:template match="tei:seg[@rend='unusedattribute']">
+   <xsl:template match="tei:seg[tei:match(@rend,'unusedattribute')]">
       <xsl:text>\unusedattribute{</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>}</xsl:text>
    </xsl:template>
 
-   <xsl:template match="tei:seg[@rend='specChild']">
+   <xsl:template match="tei:seg[tei:match(@rend,'specChild')]">
       <xsl:apply-templates/>
    </xsl:template>
 
-   <xsl:template match="tei:seg[@rend='specChildModule']">
+   <xsl:template match="tei:seg[tei:match(@rend,'specChildModule')]">
     \item[<xsl:apply-templates/>]
    </xsl:template>
 
-   <xsl:template match="tei:seg[@rend='specChildElements']">
+   <xsl:template match="tei:seg[tei:match(@rend,'specChildElements')]">
       <xsl:apply-templates/>
    </xsl:template>
 
-   <xsl:template match="tei:seg[@rend='parent']">
+   <xsl:template match="tei:seg[tei:match(@rend,'parent')]">
       <xsl:choose>
          <xsl:when test="*">
             <xsl:apply-templates/>
@@ -199,27 +199,27 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
    </xsl:template>
 
-   <xsl:template match="tei:hi[@rend='parent']">
+   <xsl:template match="tei:hi[tei:match(@rend,'parent')]">
       <xsl:apply-templates/>
    </xsl:template>
 
-   <xsl:template match="tei:hi[@rend='showmembers1']">
+   <xsl:template match="tei:hi[tei:match(@rend,'showmembers1')]">
       <xsl:apply-templates/>
    </xsl:template>
 
-   <xsl:template match="tei:hi[@rend='showmembers2']">
+   <xsl:template match="tei:hi[tei:match(@rend,'showmembers2')]">
       <xsl:apply-templates/>
    </xsl:template>
 
-   <xsl:template match="tei:hi[@rend='showmembers3']">
+   <xsl:template match="tei:hi[tei:match(@rend,'showmembers3')]">
       <xsl:apply-templates/>
    </xsl:template>
 
-   <xsl:template match="tei:hi[@rend='showmembers4']">
+   <xsl:template match="tei:hi[tei:match(@rend,'showmembers4')]">
       <xsl:apply-templates/>
    </xsl:template>
 
-   <xsl:template match="tei:table[@rend='wovenodd' or @rend='attDef']">
+   <xsl:template match="tei:table[tei:match(@rend,'wovenodd') or tei:match(@rend,'attDef')]">
       <xsl:text>
 \begin{reflist}</xsl:text>
       <xsl:apply-templates/>
@@ -227,26 +227,26 @@ of this software, even if advised of the possibility of such damage.
 \end{reflist}  </xsl:text>
    </xsl:template>
 
-   <xsl:template match="tei:table[@rend='valList'       or @rend='attList'       or @rend='specDesc']">
+   <xsl:template match="tei:table[tei:match(@rend,'valList')       or tei:match(@rend,'attList')       or tei:match(@rend,'specDesc')]">
       <xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>
 \end{sansreflist}  </xsl:text>
    </xsl:template>
 
-   <xsl:template match="tei:table[@rend='wovenodd'      or @rend='attList'      or @rend='valList'      or @rend='attDef'      or @rend='specDesc']/tei:row">
+   <xsl:template match="tei:table[tei:match(@rend,'wovenodd')      or tei:match(@rend,'attList')      or tei:match(@rend,'valList')      or tei:match(@rend,'attDef')      or tei:match(@rend,'specDesc')]/tei:row">
       <xsl:apply-templates/>
    </xsl:template>
 
-   <xsl:template match="tei:table[@rend='wovenodd'       or @rend='attList'       or @rend='specDesc'       or @rend='valList'       or @rend='attDef']/tei:row/tei:cell[1]">
+   <xsl:template match="tei:table[tei:match(@rend,'wovenodd')       or tei:match(@rend,'attList')       or tei:match(@rend,'specDesc')       or tei:match(@rend,'valList')       or tei:match(@rend,'attDef')]/tei:row/tei:cell[1]">
       <xsl:choose>
-         <xsl:when test="parent::tei:row/parent::tei:table[@rend='attList']">
+         <xsl:when test="parent::tei:row/parent::tei:table[tei:match(@rend,'attList')]">
     \item[@<xsl:apply-templates/>]
   </xsl:when>
-         <xsl:when test="ancestor::tei:table[@rend='valList']">
+         <xsl:when test="ancestor::tei:table[tei:match(@rend,'valList')]">
     \item[<xsl:apply-templates/>]
   </xsl:when>
-         <xsl:when test="ancestor::tei:table[@rend='specDesc']">
+         <xsl:when test="ancestor::tei:table[tei:match(@rend,'specDesc')]">
     \item[@<xsl:apply-templates/>]
   </xsl:when>
          <xsl:when test="@cols='2' and not(parent::tei:row/preceding-sibling::tei:row)">
@@ -272,36 +272,36 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
    </xsl:template>
 
-   <xsl:template match="tei:table[@rend='wovenodd'        or @rend='attList'        or @rend='valList'        or @rend='specDesc'        or @rend='attDef']/tei:row/tei:cell[2]">
+   <xsl:template match="tei:table[tei:match(@rend,'wovenodd')        or tei:match(@rend,'attList')        or tei:match(@rend,'valList')        or tei:match(@rend,'specDesc')        or tei:match(@rend,'attDef')]/tei:row/tei:cell[2]">
       <xsl:apply-templates/>
    </xsl:template>
 
 
-   <xsl:template match="tei:list[@rend='specList']">
+   <xsl:template match="tei:list[tei:match(@rend,'specList')]">
 \begin{sansreflist}
   <xsl:apply-templates/>
 \end{sansreflist}
 </xsl:template>
 
-   <xsl:template match="tei:hi[@rend='specList-elementSpec']">
+   <xsl:template match="tei:hi[tei:match(@rend,'specList-elementSpec')]">
       <xsl:text>[\textbf{&lt;</xsl:text>
       <xsl:value-of select="."/>
       <xsl:text>&gt;}]</xsl:text>
    </xsl:template>
 
-   <xsl:template match="tei:hi[@rend='specList-macroSpec']">
+   <xsl:template match="tei:hi[tei:match(@rend,'specList-macroSpec')]">
       <xsl:text>[\textbf{</xsl:text>
       <xsl:value-of select="."/>
       <xsl:text>}]</xsl:text>
    </xsl:template>
 
-   <xsl:template match="tei:hi[@rend='specList-classSpec']">
+   <xsl:template match="tei:hi[tei:match(@rend,'specList-classSpec')]">
       <xsl:text>[\textbf{</xsl:text>
       <xsl:value-of select="."/>
       <xsl:text>}]</xsl:text>
    </xsl:template>
 
-   <xsl:template match="tei:hi[@rend='label'  or @rend='defaultVal']">
+   <xsl:template match="tei:hi[tei:match(@rend,'label')  or tei:match(@rend,'defaultVal')]">
       <xsl:text>{</xsl:text>
       <xsl:choose>
          <xsl:when test="@xml:lang='zh-TW'">
@@ -320,7 +320,7 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
 
 
-   <xsl:template match="tei:hi[@rend='attribute']">
+   <xsl:template match="tei:hi[tei:match(@rend,'attribute')]">
       <xsl:text>\textit{</xsl:text>
       <xsl:value-of select="."/>
       <xsl:text>}</xsl:text>

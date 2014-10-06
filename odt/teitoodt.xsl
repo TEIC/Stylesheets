@@ -727,47 +727,47 @@ of this software, even if advised of the possibility of such damage.
     <text:span>
       <xsl:attribute name="text:style-name">
         <xsl:choose>
-          <xsl:when test="@rend='normalweight'">
+          <xsl:when test="tei:match(@rend,'normalweight')">
             <xsl:text>Standard</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='code' or @rend='typewriter'">
+          <xsl:when test="tei:match(@rend,'code') or tei:match(@rend,'typewriter')">
             <xsl:text>Source_20_Text</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='sup' or @rend='superscript'">
+          <xsl:when test="tei:match(@rend,'sup') or tei:match(@rend,'superscript')">
             <xsl:text>Superscript</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='sub' or @rend='subscript'">
+          <xsl:when test="tei:match(@rend,'sub') or tei:match(@rend,'subscript')">
             <xsl:text>Subscript</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='bold'">
+          <xsl:when test="tei:match(@rend,'bold')">
             <xsl:text>Highlight</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='label'">
+          <xsl:when test="tei:match(@rend,'label')">
             <xsl:text>Highlight</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='it' or @rend='i' or @rend='italic'">
+          <xsl:when test="tei:match(@rend,'it') or tei:match(@rend,'i') or tei:match(@rend,'italic')">
             <xsl:text>Emphasis</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='underline'">
+          <xsl:when test="tei:match(@rend,'underline')">
             <xsl:text>Underline</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='sc' or @rend='smallcaps'">
+          <xsl:when test="tei:match(@rend,'sc') or tei:match(@rend,'smallcaps')">
             <xsl:text>SmallCaps</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='sc' or @rend='capsall'">
+          <xsl:when test="tei:match(@rend,'sc') or tei:match(@rend,'allcaps')">
             <xsl:text>AllCaps</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='strikethrough'">
+          <xsl:when test="tei:match(@rend,'strikethrough')">
             <xsl:text>StrikeThrough</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='strikedoublethrough'">
-            <xsl:text>StrikeDoubleThrough</xsl:text>
+          <xsl:when test="tei:match(@rend,'doublestrikethrough')">
+            <xsl:text>Doublestrikethrough</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='underline'">
+          <xsl:when test="tei:match(@rend,'underline')">
             <xsl:text>UnderLine</xsl:text>
           </xsl:when>
-          <xsl:when test="@rend='underdoubleline'">
-            <xsl:text>UnderDoubleLine</xsl:text>
+          <xsl:when test="tei:match(@rend,'doubleunderline')">
+            <xsl:text>Doubleunderline</xsl:text>
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>Emphasis</xsl:text>
@@ -943,7 +943,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </text:span>
   </xsl:template>
-  <xsl:template match="tei:seg[@rend='parent']">
+  <xsl:template match="tei:seg[tei:match(@rend,'parent')]">
     <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="tei:ident">
@@ -953,7 +953,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:cit">
     <xsl:choose>
-      <xsl:when test="@rend='display'">
+      <xsl:when test="tei:match(@rend,'display')">
 	<text:p text:style-name="tei_cit">
 	  <xsl:apply-templates/>
 	</text:p>

@@ -110,7 +110,7 @@ of this software, even if advised of the possibility of such damage.
      <xsl:apply-templates/>
    </xsl:template>
 
-   <xsl:template match="tei:note[@rend='example']">
+   <xsl:template match="tei:note[tei:match(@rend,'example')]">
       <p>EXAMPLE <xsl:apply-templates/>
       </p>
    </xsl:template>
@@ -239,22 +239,22 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:when test=".='smallcaps'">
 	      <s>font-variant:small-caps;</s>
 	    </xsl:when>
-	    <xsl:when test=".='capsall'">
+	    <xsl:when test=".='allcaps'">
 	      <s>text-transform:capitalize;</s>
 	    </xsl:when>
 	    <xsl:when test=".='strikethrough'">
 	      <s>text-decoration:line-through;</s>
 	    </xsl:when>
-	    <xsl:when test=".='strikedoublethrough'">
+	    <xsl:when test=".='doublestrikethrough'">
 	      <s>text-decoration:line-through;</s>
 	    </xsl:when>
-	    <xsl:when test=".='underwavyline'">
+	    <xsl:when test=".='wavyunderline'">
 	      <s>text-decoration:wavy;</s>
 	    </xsl:when>
 	    <xsl:when test=".='underline'">
 	      <s>text-decoration:underline;</s>
 	    </xsl:when>
-	    <xsl:when test=".='underdoubleline'">
+	    <xsl:when test=".='doubleunderline'">
 	      <s>border-bottom: 3px double;</s>
 	    </xsl:when>
 	    <xsl:when test="starts-with(.,'color(')">

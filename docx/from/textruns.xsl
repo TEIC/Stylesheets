@@ -301,7 +301,7 @@ of this software, even if advised of the possibility of such damage.
 		      and
 		      ($extracolumn/w:rPr/w:dstrike  or $extrarow/w:rPr/w:dstrike)
 		      )">
-	  <n>strikedoublethrough</n>
+	  <n>doublestrikethrough</n>
 	</xsl:if>
 
 	<xsl:if test="w:rPr/w:u[@w:val='single']">
@@ -309,11 +309,11 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:if>
 
 	<xsl:if test="w:rPr/w:u[@w:val='wave']">
-	  <n>underwavyline</n>
+	  <n>wavyunderline</n>
 	</xsl:if>
 
 	<xsl:if test="w:rPr/w:u[@w:val='double']">
-	  <n>underdoubleline</n>
+	  <n>doubleunderline</n>
 	</xsl:if>
 
 	<xsl:if test="w:rPr/w:smallCaps or
@@ -329,7 +329,7 @@ of this software, even if advised of the possibility of such damage.
 		      and
 		      ($extracolumn/w:rPr/w:caps  or $extrarow/w:rPr/w:caps)
 		      )">
-	  <n>capsall</n>
+	  <n>allcaps</n>
 	</xsl:if>
 
 	<xsl:if test="w:rPr/w:color and

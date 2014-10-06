@@ -1465,7 +1465,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:variable>
       <xsl:variable name="atts">
 	<xsl:choose>
-	  <xsl:when test="@rend='noatts'">-</xsl:when>
+	  <xsl:when test="tei:match(@rend,'noatts')">-</xsl:when>
 	  <xsl:otherwise>
 	    <xsl:value-of select="normalize-space(@atts)"/>
 	  </xsl:otherwise>
@@ -1733,7 +1733,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="displayAttList">
     <xsl:param name="mode"/>
     <xsl:call-template name="showAttClasses"/>
-    <xsl:for-each-group select="tei:attRef[not(@rend='none')]"
+    <xsl:for-each-group select="tei:attRef[not(tei:match(@rend,'none'))]"
 			group-by="@class">
       <xsl:call-template name="linkTogether">
 	<xsl:with-param name="name" select="current-grouping-key()"/>

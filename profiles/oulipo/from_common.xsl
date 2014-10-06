@@ -69,115 +69,115 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:encodingDesc" mode="pass2"/>
   <xsl:template match="tei:editionStmt" mode="pass2"/>
 
-  <xsl:template match="tei:hi[@rend='Nom-manifestation']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'Nom-manifestation')]" mode="pass3">
     <name type="event">
       <xsl:apply-templates mode="pass3"/>
     </name>
   </xsl:template>
 
- <xsl:template match="tei:hi[@rend='Nom-oulipien']" mode="pass3">
+ <xsl:template match="tei:hi[tei:match(@rend,'Nom-oulipien')]" mode="pass3">
    <persName >
 	   <xsl:apply-templates mode="pass3"/>
    </persName>
  </xsl:template>
 
-  <xsl:template match="tei:hi[@rend='Nom-personne-auteur']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'Nom-personne-auteur')]" mode="pass3">
     <persName role="auteur">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='Nom-personne-divers']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'Nom-personne-divers')]" mode="pass3">
     <persName >
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
   
-  <xsl:template match="tei:hi[@rend='Nom-personne-editeur']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'Nom-personne-editeur')]" mode="pass3">
     <orgName role="editeur">
       <xsl:apply-templates mode="pass3"/>
     </orgName>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='notions']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'notions')]" mode="pass3">
     <term>
       <xsl:apply-templates mode="pass3"/>
     </term>
   </xsl:template>
   
-  <xsl:template match="tei:p[@rend='listeDesPresents'][1]" mode="pass3">
+  <xsl:template match="tei:p[tei:match(@rend,'listeDesPresents')][1]" mode="pass3">
     <list type="present">
       <head><xsl:value-of select="." /></head>
-      <xsl:for-each select="following::tei:p[@rend='listeDesPresents']">
+      <xsl:for-each select="following::tei:p[tei:match(@rend,'listeDesPresents')]">
         <item> <xsl:apply-templates mode="pass3"/></item>
       </xsl:for-each>
     </list>
   </xsl:template>
  
-  <xsl:template match="tei:p[@rend='listeDesPresents'][position() > 1]" mode="pass3"/>
+  <xsl:template match="tei:p[tei:match(@rend,'listeDesPresents')][position() > 1]" mode="pass3"/>
 
-  <xsl:template match="tei:hi[@rend='ref-document']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'ref-document')]" mode="pass3">
     <ref>
       <xsl:apply-templates mode="pass3"/>
     </ref>
   </xsl:template>
     
-  <xsl:template match="tei:hi[@rend='reunion-date']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'reunion-date')]" mode="pass3">
     <date type="réunion">
       <xsl:apply-templates mode="pass3"/>
     </date>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='reunion-invité']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'reunion-invité')]" mode="pass3">
     <persName role="invité">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='reunion-invite']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'reunion-invite')]" mode="pass3">
     <persName role="invité">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='reunion-lieu']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'reunion-lieu')]" mode="pass3">
     <placeName role="réunion">
       <xsl:apply-templates mode="pass3"/>
     </placeName>
   </xsl:template>
   
- <xsl:template match="tei:hi[@rend='reunion-presents']" mode="pass3">
+ <xsl:template match="tei:hi[tei:match(@rend,'reunion-presents')]" mode="pass3">
    <persName role="présent">
      <xsl:apply-templates mode="pass3"/>
    </persName>
  </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='reunion-president']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'reunion-president')]" mode="pass3">
     <persName role="président">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='reunion-secretaire']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'reunion-secretaire')]" mode="pass3">
     <persName role="secrétaire">
       <xsl:apply-templates mode="pass3"/>
     </persName>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='titreOeuvre']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'titreOeuvre')]" mode="pass3">
     <title>
       <xsl:apply-templates mode="pass3"/>
     </title>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='titre-divers']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'titre-divers')]" mode="pass3">
     <title type="divers">
       <xsl:apply-templates mode="pass3"/>
     </title>
   </xsl:template>
   
-  <xsl:template match="tei:hi[@rend='unclear']" mode="pass3">
+  <xsl:template match="tei:hi[tei:match(@rend,'unclear')]" mode="pass3">
     <unclear>
       <xsl:apply-templates mode="pass3"/>
     </unclear>
@@ -234,13 +234,13 @@ of this software, even if advised of the possibility of such damage.
  <xsl:function name="tei:is-front"   as="xs:boolean">
     <xsl:param name="p"/>
       <xsl:choose>
-	<xsl:when test="$p[@rend='Title']">true</xsl:when>
-	<xsl:when test="$p[@rend='P4']">true</xsl:when>
-	<xsl:when test="$p[@rend='Présents']">true</xsl:when>
-	<xsl:when test="$p[@rend='Excusés']">true</xsl:when>
-	<xsl:when test="$p[@rend='Président']">true</xsl:when>
-	<xsl:when test="$p[@rend='Secrétaire']">true</xsl:when>
-	<xsl:when test="$p[@rend='opener']">true</xsl:when>
+	<xsl:when test="$p[tei:match(@rend,'Title')]">true</xsl:when>
+	<xsl:when test="$p[tei:match(@rend,'P4')]">true</xsl:when>
+	<xsl:when test="$p[tei:match(@rend,'Présents')]">true</xsl:when>
+	<xsl:when test="$p[tei:match(@rend,'Excusés')]">true</xsl:when>
+	<xsl:when test="$p[tei:match(@rend,'Président')]">true</xsl:when>
+	<xsl:when test="$p[tei:match(@rend,'Secrétaire')]">true</xsl:when>
+	<xsl:when test="$p[tei:match(@rend,'opener')]">true</xsl:when>
 	<xsl:when test="$p[self::tei:opener]">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
@@ -250,7 +250,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="p"/>
       <xsl:choose>
 	<xsl:when test="$p[self::tei:closer]">true</xsl:when>
-	<xsl:when test="$p[@rend='closer']">true</xsl:when>
+	<xsl:when test="$p[tei:match(@rend,'closer')]">true</xsl:when>
 	<xsl:when test="$p[self::tei:byline]">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>

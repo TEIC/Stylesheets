@@ -443,7 +443,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="(local-name(.)='TEI' and not (local-name(parent::*)='teiCorpus')) or local-name(.)='teiCorpus'">
 	<xsl:text> xmlns="http://www.tei-c.org/ns/1.0"</xsl:text>
       </xsl:if>  
-      <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[@rend='full']">
+      <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[tei:match(@rend,'full')]">
 	<xsl:choose>
 	  <xsl:when test="not(parent::*)">
 	    <xsl:call-template name="nsList"/>
@@ -630,7 +630,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
       <xsl:choose>
 	<xsl:when
-	    test="parent::*/ancestor::tei:cell[not(@rend='wovenodd-col2')]">
+	    test="parent::*/ancestor::tei:cell[not(tei:match(@rend,'wovenodd-col2'))]">
 	  <xsl:for-each select="$Atts/*[1]">
 	    <xsl:call-template name="verbatim-nextAttribute">
 	      <xsl:with-param name="force" select="true()"/>

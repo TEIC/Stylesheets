@@ -31,19 +31,19 @@
 
 
 <!-- deal with weird @rend values -->
-<xsl:template match="tei:hi[@rend='bo']">
+<xsl:template match="tei:hi[tei:match(@rend,'bo')]">
 \textbf{<xsl:apply-templates/>}
 </xsl:template>
-<xsl:template match="tei:hi[@rend='smcap']">
+<xsl:template match="tei:hi[tei:match(@rend,'smcap')]">
 \textsc{<xsl:apply-templates/>}
 </xsl:template>
-<xsl:template match="tei:hi[@rend='del']">
+<xsl:template match="tei:hi[tei:match(@rend,'del')]">
 \sout{<xsl:apply-templates/>}
 </xsl:template>
-<xsl:template match="tei:hi[@rend='ul2']">
+<xsl:template match="tei:hi[tei:match(@rend,'ul2')]">
 \uuline{<xsl:apply-templates/>}
 </xsl:template>
-<xsl:template match="tei:hi[@rend='ulw']">
+<xsl:template match="tei:hi[tei:match(@rend,'ulw')]">
 \uwave{<xsl:apply-templates/>}
 </xsl:template>
 

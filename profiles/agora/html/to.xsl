@@ -74,22 +74,22 @@
 <xsl:template match="tei:pb"/>
     
 <!-- deal with weird @rend values -->
-<xsl:template match="tei:hi[@rend='del']">
+<xsl:template match="tei:hi[tei:match(@rend,'del')]">
 <s><xsl:apply-templates/></s>
 </xsl:template>
-<xsl:template match="tei:hi[@rend='ul2']">
+<xsl:template match="tei:hi[tei:match(@rend,'ul2')]">
 <u style="border-bottom: 1px double #000"><xsl:apply-templates/></u>
 </xsl:template>
 
-<xsl:template match="tei:hi[@rend='ulw']">
+<xsl:template match="tei:hi[tei:match(@rend,'ulw')]">
 <u style="border-bottom: 1px dotted #000"><xsl:apply-templates/></u>
 </xsl:template>
 
-<xsl:template match="tei:hi[@rend='shadow']">
+<xsl:template match="tei:hi[tei:match(@rend,'shadow')]">
 <u style="background-color: gray"><xsl:apply-templates/></u>
 </xsl:template>
 
-<xsl:template match="tei:lb[@rend='indent']">
+<xsl:template match="tei:lb[tei:match(@rend,'indent')]">
 <br/><xsl:text>    </xsl:text>
 </xsl:template>
 

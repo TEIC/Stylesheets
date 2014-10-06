@@ -197,7 +197,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="." mode="pass2"/>
   </xsl:template>
   <xsl:template match="tei:lb" mode="inglossitem"/>
-  <xsl:template match="tei:hi[@rend='bold']" mode="inglossitem"/>
+  <xsl:template match="tei:hi[tei:match(@rend,'bold')]" mode="inglossitem"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>Top of a weird gloss list </p>
@@ -250,7 +250,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>zap footnote reference which only contains a space</desc>
   </doc>
-  <xsl:template match="tei:hi[@rend='footnote_reference' and
+  <xsl:template match="tei:hi[tei:match(@rend,'footnote_reference') and
 		       count(*)=1 and tei:seg and
 		       normalize-space(.)='']" mode="pass2"
 		priority="99">
@@ -261,17 +261,17 @@ of this software, even if advised of the possibility of such damage.
     <desc>A footnote reference with a footnote inside it is in fact
     just a footnote</desc>
   </doc>
-  <xsl:template match="tei:hi[@rend='footnote_reference' and count(*)=1 and tei:note]" mode="pass2" priority="99">
+  <xsl:template match="tei:hi[tei:match(@rend,'footnote_reference') and count(*)=1 and tei:note]" mode="pass2" priority="99">
     <xsl:apply-templates select="tei:note" mode="pass2"/>
   </xsl:template>
 
-  <xsl:template match="tei:hi[@rend='Endnote_anchor']" mode="pass2" priority="99">
+  <xsl:template match="tei:hi[tei:match(@rend,'Endnote_anchor')]" mode="pass2" priority="99">
     <xsl:apply-templates mode="pass2"/>
   </xsl:template>
-  <xsl:template match="tei:hi[@rend='EndnoteReference']" mode="pass2" priority="99">
+  <xsl:template match="tei:hi[tei:match(@rend,'EndnoteReference')]" mode="pass2" priority="99">
     <xsl:apply-templates mode="pass2"/>
   </xsl:template>
-  <xsl:template match="tei:hi[@rend='EndnoteCharacters']" mode="pass2" priority="99">
+  <xsl:template match="tei:hi[tei:match(@rend,'EndnoteCharacters')]" mode="pass2" priority="99">
     <xsl:apply-templates mode="pass2"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -464,7 +464,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:head[not(node())]" mode="pass2"/>
 
-  <xsl:template match="tei:figure/tei:p[@rend='caption' or @rend='Figure title']/text()[starts-with(.,'Figure  ')]" mode="pass2">
+  <xsl:template match="tei:figure/tei:p[tei:match(@rend,'caption') or tei:match(@rend,'Figure title')]/text()[starts-with(.,'Figure  ')]" mode="pass2">
     <xsl:value-of select="substring(.,9)"/>
   </xsl:template>
 
@@ -473,7 +473,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="@rend[.='Normal (Web)']" mode="pass2"/>
 
 
-  <xsl:template match="tei:p[@rend='caption' or @rend='Figure title']"
+  <xsl:template match="tei:p[tei:match(@rend,'caption') or tei:match(@rend,'Figure title')]"
 		mode="pass2">
     <head>
       <xsl:apply-templates mode="pass2"/>
@@ -489,7 +489,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Title is supposed to be the document title, its siblings form other title parts</desc>
   </doc>
-  <xsl:template match="tei:p[@rend='Title' and ancestor::tei:front]"
+  <xsl:template match="tei:p[tei:match(@rend,'Title') and ancestor::tei:front]"
     mode="pass2">
     <docTitle>
       <titlePart type="{@rend}">
@@ -501,14 +501,14 @@ of this software, even if advised of the possibility of such damage.
     </docTitle>
   </xsl:template>
   
-  <xsl:template match="tei:p[@rend='Author' and ancestor::tei:front]"
+  <xsl:template match="tei:p[tei:match(@rend,'Author') and ancestor::tei:front]"
     mode="pass2">
     <docAuthor>
       <xsl:apply-templates mode="pass2"/>
     </docAuthor>
   </xsl:template>
   
-  <xsl:template match="tei:p[@rend='Date' and ancestor::tei:front]"
+  <xsl:template match="tei:p[tei:match(@rend,'Date') and ancestor::tei:front]"
     mode="pass2">
     <docDate>
       <xsl:apply-templates mode="pass2"/>
@@ -530,7 +530,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
-	<xsl:when test="@rend='italic' and ancestor::tei:bibl">title</xsl:when>
+	<xsl:when test="tei:match(@rend,'italic') and ancestor::tei:bibl">title</xsl:when>
   <xsl:when test="starts-with(@rend,'tei:')">
 	  <xsl:value-of select="substring(@rend,5)"/>
 	</xsl:when>
@@ -540,7 +540,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="self::tei:p">
 	  <xsl:text>p</xsl:text>
 	</xsl:when>
-	<xsl:when test="@rend='foreign'">
+	<xsl:when test="tei:match(@rend,'foreign')">
 	  <xsl:text>foreign</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>hi</xsl:otherwise>

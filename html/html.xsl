@@ -168,8 +168,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="makeLang"/>
     <xsl:choose>
       <xsl:when test="(self::tei:q or self::tei:said or
-		      self::tei:quote) and (@rend='inline' or
-		      @rend='display') and
+		      self::tei:quote) and (tei:match(@rend,'inline') or
+		      tei:match(@rend,'display')) and
 		      not(@rendition) and not(key('TAGREND',local-name(.)))">
 	<xsl:sequence select="tei:processClass(local-name(),'')"/>
       </xsl:when>
@@ -337,13 +337,13 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="tei:l">div</xsl:when>
         <xsl:when test="tei:list">div</xsl:when>
         <xsl:when test="tei:moduleSpec">div</xsl:when>
-        <xsl:when test="tei:note[@place='display']">div</xsl:when>
-        <xsl:when test="tei:note[@place='margin']">div</xsl:when>
+        <xsl:when test="parent::tei:note[@place='display'  or tei:isMarginal(@place)]">div</xsl:when>
+        <xsl:when test="tei:note[@place='display'  or tei:isMarginal(@place)]">div</xsl:when>
         <xsl:when test="tei:note[tei:q]">div</xsl:when>
         <xsl:when test="tei:q/tei:figure">div</xsl:when>
         <xsl:when test="tei:q/tei:list">div</xsl:when>
-        <xsl:when test="tei:q[@rend='display']">div</xsl:when>
-        <xsl:when test="tei:q[@rend='inline' and tei:note/@place]">div</xsl:when>
+        <xsl:when test="tei:q[tei:match(@rend,'display')]">div</xsl:when>
+        <xsl:when test="tei:q[tei:match(@rend,'inline') and tei:note/@place]">div</xsl:when>
         <xsl:when test="tei:q[tei:l]">div</xsl:when>
         <xsl:when test="tei:q[tei:lg]">div</xsl:when>
         <xsl:when test="tei:q[tei:p]">div</xsl:when>
@@ -838,9 +838,9 @@ of this software, even if advised of the possibility of such damage.
 	<!-- 4. we are part of an inner text -->
 	<xsl:when test="ancestor::tei:floatingText">true</xsl:when>
 	<!-- 3. we have special rendering on the document -->
-	<xsl:when test="ancestor::tei:TEI/@rend='all' 
-			or ancestor::tei:TEI/@rend='frontpage' 
-			or ancestor::tei:TEI/@rend='nosplit'">true</xsl:when>
+	<xsl:when test="ancestor::tei:TEI/tei:match(@rend,'all') 
+			or ancestor::tei:TEI/tei:match(@rend,'frontpage') 
+			or ancestor::tei:TEI/tei:match(@rend,'nosplit')">true</xsl:when>
 	<!-- 2. we are a singleton -->
 	<xsl:when test="parent::tei:body[count(*)=1] and not(tei:div or
 			tei:div2)">true</xsl:when>
@@ -849,7 +849,7 @@ of this software, even if advised of the possibility of such damage.
 			not(parent::tei:body/preceding-sibling::tei:front)
 			and not	(preceding-sibling::*)">true</xsl:when>
 	<!-- 0. we are down the hierarchy -->
-	<xsl:when test="@rend='nosplit'">true</xsl:when>
+	<xsl:when test="tei:match(@rend,'nosplit')">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>

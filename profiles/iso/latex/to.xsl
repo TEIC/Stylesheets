@@ -239,16 +239,16 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="@xml:id='tab-mods'">
             <xsl:text>L{.15\textwidth}P{.4\textwidth}L{.35\textwidth}</xsl:text>
          </xsl:when>
-         <xsl:when test="@rend='wovenodd'">
+         <xsl:when test="tei:match(@rend,'wovenodd')">
             <xsl:text>L{.15\textwidth}P{.85\textwidth}</xsl:text>
          </xsl:when>
-         <xsl:when test="@rend='attList'">
+         <xsl:when test="tei:match(@rend,'attList')">
             <xsl:text>L{.15\textwidth}P{.65\textwidth}</xsl:text>
          </xsl:when>
-         <xsl:when test="@rend='attDef'">
+         <xsl:when test="tei:match(@rend,'attDef')">
             <xsl:text>L{.1\textwidth}P{.5\textwidth}</xsl:text>
          </xsl:when>
-         <xsl:when test="@rend='valList'">
+         <xsl:when test="tei:match(@rend,'valList')">
             <xsl:text>L{.1\textwidth}P{.4\textwidth}</xsl:text>
          </xsl:when>
          <xsl:when test="@preamble">
@@ -263,7 +263,7 @@ of this software, even if advised of the possibility of such damage.
 </xsl:text>
       <xsl:call-template name="tableHline"/>
       <xsl:choose>
-         <xsl:when test="tei:head and not(@rend='display')">
+         <xsl:when test="tei:head and not(tei:match(@rend,'display'))">
             <xsl:if test="not(ancestor::tei:table)">
 	              <xsl:text>\endfirsthead </xsl:text>
 	              <xsl:text>\multicolumn{</xsl:text>

@@ -91,7 +91,7 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:template match="tei:sp">
       <xsl:choose>
-	<xsl:when test="tei:ab and tei:speaker and ancestor::tei:text/@rend='firstfolio'">
+	<xsl:when test="tei:ab and tei:speaker and ancestor::tei:text/tei:match(@rend,'firstfolio')">
 	  <div class="spProseFirstFolio">
 	    <xsl:for-each select="tei:speaker">
 	      <span>
@@ -170,7 +170,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:with-param name="default">
 	<xsl:choose>
 	  <xsl:when
-	      test="ancestor::tei:text/@rend='firstfolio'">stage</xsl:when>
+	      test="ancestor::tei:text/tei:match(@rend,'firstfolio')">stage</xsl:when>
 	  <xsl:otherwise>stage it</xsl:otherwise>
 	</xsl:choose>
 	</xsl:with-param>

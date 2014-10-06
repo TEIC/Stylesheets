@@ -197,7 +197,7 @@ of this software, even if advised of the possibility of such damage.
 	   test="/*/tei:teiHeader//tei:editorialDecl/tei:quotation[@marks='all']">
 	 <xsl:apply-templates/>
        </xsl:when>
-       <xsl:when test="@rend='inline'">
+       <xsl:when test="tei:match(@rend,'inline')">
 	 <xsl:value-of select="$preQuote"/>
 	 <xsl:apply-templates/>
 	 <xsl:value-of select="$postQuote"/>

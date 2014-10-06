@@ -41,7 +41,7 @@
    </xsl:template>
 
 
-   <xsl:key name="TABLESORT" use="1" match="tei:table[@rend='sort']"/>
+   <xsl:key name="TABLESORT" use="1" match="tei:table[tei:match(@rend,'sort')]"/>
 
    <xsl:template name="javascriptHook">
      <style type="text/css">

@@ -190,7 +190,7 @@ XSL LaTeX stylesheet to make slides
    <xsl:template name="makeFrame">
       <xsl:text>&#10;\begin{frame}</xsl:text>
       <xsl:choose>
-         <xsl:when test="@rend='fragile'">
+         <xsl:when test="tei:match(@rend,'fragile')">
             <xsl:text>[fragile]</xsl:text>
          </xsl:when>
          <xsl:when test=".//tei:eg">
@@ -243,7 +243,7 @@ XSL LaTeX stylesheet to make slides
 
   <xsl:template name="makePic">
     <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
-      <xsl:if test="@rend='centre'">
+      <xsl:if test="tei:match(@rend,'centre')">
          <xsl:text>\centerline{</xsl:text>
       </xsl:if>
       <xsl:text>\includegraphics[</xsl:text>
@@ -256,7 +256,7 @@ XSL LaTeX stylesheet to make slides
       <xsl:text>]{</xsl:text>
       <xsl:sequence select="tei:resolveURI(.,@url)"/>
       <xsl:text>}</xsl:text>
-      <xsl:if test="@rend='centre'">
+      <xsl:if test="tei:match(@rend,'centre')">
          <xsl:text>}</xsl:text>
       </xsl:if>
    </xsl:template>
@@ -267,7 +267,7 @@ XSL LaTeX stylesheet to make slides
       <xsl:text>}</xsl:text>
    </xsl:template>
 
-   <xsl:template match="tei:item[@rend='pause' or parent::tei:list/@rend='pause']">
+   <xsl:template match="tei:item[tei:match(@rend,'pause') or parent::tei:list/tei:match(@rend,'pause')]">
       <xsl:if test="$pause='true'">
          <xsl:text>\pause </xsl:text>
       </xsl:if>
@@ -298,22 +298,22 @@ XSL LaTeX stylesheet to make slides
       <xsl:param name="highlight"/>
       <xsl:variable name="fontsize">
          <xsl:choose>
-            <xsl:when test="@rend='teeny'">
+            <xsl:when test="tei:match(@rend,'teeny')">
 	              <xsl:text>{5.5pt}{6pt}</xsl:text>
             </xsl:when>
-            <xsl:when test="@rend='tiny'">
+            <xsl:when test="tei:match(@rend,'tiny')">
 	              <xsl:text>{6.5pt}{7pt}</xsl:text>
             </xsl:when>
-            <xsl:when test="@rend='small'">
+            <xsl:when test="tei:match(@rend,'small')">
 	              <xsl:text>{7pt}{8pt}</xsl:text>
             </xsl:when>
-            <xsl:when test="@rend='smaller'">
+            <xsl:when test="tei:match(@rend,'smaller')">
 	              <xsl:text>{7.5pt}{8pt}</xsl:text>
             </xsl:when>
-            <xsl:when test="@rend='larger'">
+            <xsl:when test="tei:match(@rend,'larger')">
 	              <xsl:text>{9.5pt}{10.5pt}</xsl:text>
             </xsl:when>
-            <xsl:when test="@rend='large'">
+            <xsl:when test="tei:match(@rend,'large')">
 	              <xsl:text>{10.5pt}{11.5pt}</xsl:text>
             </xsl:when>
             <xsl:otherwise>
@@ -333,7 +333,7 @@ XSL LaTeX stylesheet to make slides
 \par\egroup
   </xsl:template>
 
-  <xsl:template match="tei:p[@rend='box']">
+  <xsl:template match="tei:p[tei:match(@rend,'box')]">
       <xsl:text>\par\begin{exampleblock}{}&#10;</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>\end{exampleblock}\par&#10;</xsl:text>

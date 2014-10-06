@@ -150,7 +150,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:comment>no nav </xsl:comment>
   </xsl:template>
 
-  <xsl:template match="tei:hi[@rend='math']">
+  <xsl:template match="tei:hi[tei:match(@rend,'math')]">
     <span class="math">
       <xsl:apply-templates/>
     </span>

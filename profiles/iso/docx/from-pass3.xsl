@@ -146,7 +146,7 @@ of this software, even if advised of the possibility of such damage.
    
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
    <desc>Clean up leftover markup in source field</desc></doc>
-   <xsl:template match="tei:hi[@rend='source']/text()" mode="pass3">
+   <xsl:template match="tei:hi[tei:match(@rend,'source')]/text()" mode="pass3">
      <xsl:choose>
        <xsl:when test=".=']'"/>
        <xsl:when test=".='[SOURCE: '"/>
@@ -165,7 +165,7 @@ of this software, even if advised of the possibility of such damage.
      </xsl:choose>
    </xsl:template>
 
-   <xsl:template match="tei:hi[@rend='source']" mode="pass3">
+   <xsl:template match="tei:hi[tei:match(@rend,'source')]" mode="pass3">
      <xsl:apply-templates mode="pass3"/>
    </xsl:template>
 

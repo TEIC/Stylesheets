@@ -440,7 +440,7 @@ height: </xsl:text>
               <!-- page images -->
               <xsl:for-each select="key('PBGRAPHICS',1)">
 		<xsl:choose>
-		  <xsl:when test="@rend='none'"/>
+		  <xsl:when test="tei:match(@rend,'none')"/>
 		  <xsl:otherwise>
                     <xsl:variable name="img" select="@facs"/>
                     <xsl:variable name="ID">

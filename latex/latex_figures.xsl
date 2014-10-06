@@ -148,7 +148,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
       <xsl:if test="following-sibling::tei:row">
          <xsl:text>\\</xsl:text>
-         <xsl:if test="@role='label' or parent::tei:table/@rend='rules'">\hline </xsl:if>
+         <xsl:if test="@role='label' or parent::tei:table/tei:match(@rend,'rules')">\hline </xsl:if>
          <xsl:text>&#10;</xsl:text>
       </xsl:if>
   </xsl:template>
@@ -180,16 +180,16 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element table[@rend='display']</desc>
+      <desc>Process element table[tei:match(@rend,'display')]</desc>
    </doc>
-  <xsl:template match="tei:table[@rend='display']" mode="xref">
+  <xsl:template match="tei:table[tei:match(@rend,'display')]" mode="xref">
       <xsl:text>Table </xsl:text>
-      <xsl:number count="tei:table[@rend='display']" level="any"/>
+      <xsl:number count="tei:table[tei:match(@rend,'display')]" level="any"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element table[@rend='display']</desc>
+      <desc>Process element table[tei:match(@rend,'display')]</desc>
    </doc>
-  <xsl:template match="tei:table[@rend='display']">
+  <xsl:template match="tei:table[tei:match(@rend,'display')]">
       <xsl:text>\begin{table}</xsl:text>
       <xsl:text>\begin{center} \begin{small} \begin{tabular}</xsl:text>
       <xsl:call-template name="makeTable"/> 
@@ -210,12 +210,12 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="@place='inline' and tei:head">
             <xsl:text>\begin{figure}[H]&#10;</xsl:text>
 	</xsl:when>
-	<xsl:when test="@rend='display' or not(@place='inline') or tei:head or tei:p">
+	<xsl:when test="tei:match(@rend,'display') or not(@place='inline') or tei:head or tei:p">
 	  <xsl:text>\begin{figure}[htbp]&#10;</xsl:text>
 	</xsl:when>
       </xsl:choose>
       <xsl:choose>
-	<xsl:when test="@rend='center'">
+	<xsl:when test="tei:match(@rend,'center')">
 	  <xsl:text>\begin{center}</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>\noindent</xsl:otherwise>
@@ -235,14 +235,14 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>}</xsl:text>
          </xsl:when>
       </xsl:choose>
-      <xsl:if test="@rend='center'">
+      <xsl:if test="tei:match(@rend,'center')">
             <xsl:text>\end{center}</xsl:text>
       </xsl:if>
       <xsl:choose>
 	<xsl:when test="@place='inline' and tei:head">
             <xsl:text>\end{figure}&#10;</xsl:text>
 	</xsl:when>
-         <xsl:when test="@rend='display' or not(@place='inline')">
+         <xsl:when test="tei:match(@rend,'display') or not(@place='inline')">
 	   <xsl:text>\end{figure}&#10;</xsl:text>
          </xsl:when>
       </xsl:choose>
@@ -253,7 +253,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="makePic">
     <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:choose>
-	<xsl:when test="@rend='noindent'">
+	<xsl:when test="tei:match(@rend,'noindent')">
 	  <xsl:text>\noindent</xsl:text>
 	</xsl:when>
 	<xsl:when test="not(preceding-sibling::*)">
@@ -287,16 +287,16 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="$pic"/>
 	</xsl:when>
 	<xsl:when test="not
-			(following-sibling::tei:graphic[@rend='alignright'])
-			and @rend='alignright'">
+			(following-sibling::tei:graphic[tei:match(@rend,'alignright')])
+			and tei:match(@rend,'alignright')">
 	  <xsl:text>\begin{wrapfigure}{r}{</xsl:text>
 	  <xsl:value-of select="@width"/>
 	  <xsl:text>}</xsl:text>
 	  <xsl:value-of select="$pic"/>
 	  <xsl:text>\end{wrapfigure}</xsl:text>
 	</xsl:when>
-	<xsl:when test="not (following-sibling::tei:graphic[@rend='alignleft'])
-			and @rend='alignleft'">
+	<xsl:when test="not (following-sibling::tei:graphic[tei:match(@rend,'alignleft')])
+			and tei:match(@rend,'alignleft')">
 	  <xsl:text>\begin{wrapfigure}{l}{</xsl:text>
 	  <xsl:value-of select="@width"/>
 	  <xsl:text>}</xsl:text>
@@ -333,7 +333,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="tableHline"/>
       </xsl:if>
       <xsl:choose>
-         <xsl:when test="tei:head and not(@rend='display')">
+         <xsl:when test="tei:head and not(tei:match(@rend,'display'))">
             <xsl:if test="not(ancestor::tei:table or $longtables='false')">
                <xsl:text>\endfirsthead </xsl:text>
                <xsl:text>\multicolumn{</xsl:text>
@@ -357,7 +357,7 @@ of this software, even if advised of the possibility of such damage.
 
    <xsl:template name="tableHline">
       <xsl:choose>
-         <xsl:when test="ancestor::tei:table or $longtables='false' or @rend='display'"> \hline </xsl:when>
+         <xsl:when test="ancestor::tei:table or $longtables='false' or tei:match(@rend,'display')"> \hline </xsl:when>
          <xsl:otherwise> \hline\endfoot\hline\endlastfoot </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
