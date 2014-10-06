@@ -2065,6 +2065,13 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </teiHeader>
   </xsl:template>
+
+  <xsl:template match="CELL/@ROLE | ROW/@ROLE">
+    <xsl:attribute name="role">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
+
   <xsl:template match="@ROLE">
     <xsl:attribute name="ana">
       <xsl:text>#role_</xsl:text>
