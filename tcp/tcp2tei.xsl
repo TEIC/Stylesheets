@@ -223,7 +223,7 @@ of this software, even if advised of the possibility of such damage.
           </label>
 	</p>
       </xsl:when>
-      <xsl:when test="parent::LIST or parent::SPEAKER or parent::LABEL">
+      <xsl:when test="parent::LIST or parent::SPEAKER or parent::LABEL   or parent::BIBL">
           <note place="margin" type="milestone">
             <xsl:value-of select="@UNIT"/>
             <xsl:text> </xsl:text>
