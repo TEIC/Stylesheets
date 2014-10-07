@@ -53,7 +53,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="ID"/>
   <xsl:key name="ROLES" match="P/@ROLE" use="1"/>
   <xsl:key name="ROLES" match="ITEM/@ROLE" use="1"/>
-  <xsl:param name="intype"> ',)</xsl:param>
+  <xsl:param name="intype"> ',)?</xsl:param>
   <xsl:param name="debug">false</xsl:param>
   <xsl:param name="headerDirectory"></xsl:param>
   <xsl:variable name="HERE" select="/"/>
@@ -172,16 +172,25 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="parent::NOTE and not(@N)"/>
       <xsl:when test="@UNIT and (not(@N) or @N='')">
         <note place="margin">
+	    <xsl:apply-templates select="@ID"/>
           <xsl:value-of select="@UNIT"/>
         </note>
       </xsl:when>
+      <xsl:when test="parent::L and @ID">
+          <label type="milestone">
+	    <xsl:apply-templates select="@ID"/>
+            <xsl:value-of select="@N"/>
+          </label>
+      </xsl:when>
       <xsl:when test="not(@UNIT) and @N">
         <note place="margin" type="milestone">
+	    <xsl:apply-templates select="@ID"/>
           <xsl:value-of select="@N"/>
         </note>
       </xsl:when>
       <xsl:when test="@UNIT='unspec' and @N">
         <note place="margin" type="milestone">
+	    <xsl:apply-templates select="@ID"/>
           <xsl:value-of select="@N"/>
         </note>
       </xsl:when>
@@ -205,6 +214,7 @@ of this software, even if advised of the possibility of such damage.
 	 @UNIT='verse'  or 
 	 @UNIT='year'           ">
         <note place="margin" type="milestone" subtype="{@UNIT}">
+	    <xsl:apply-templates select="@ID"/>
 <!--
 	  <xsl:if test="$debug='true'">
 	    <xsl:message>Milestone 1: <xsl:value-of
@@ -217,6 +227,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="parent::SP">
 	<p>
           <label type="milestone">
+	    <xsl:apply-templates select="@ID"/>
             <xsl:value-of select="@UNIT"/>
             <xsl:text> </xsl:text>
             <xsl:value-of select="@N"/>
@@ -225,6 +236,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="parent::LIST or parent::SPEAKER or parent::LABEL   or parent::BIBL">
           <note place="margin" type="milestone">
+	    <xsl:apply-templates select="@ID"/>
             <xsl:value-of select="@UNIT"/>
             <xsl:text> </xsl:text>
             <xsl:value-of select="@N"/>
@@ -239,6 +251,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:if>
 -->
           <label place="margin" type="milestone">
+	    <xsl:apply-templates select="@ID"/>
             <xsl:value-of select="@UNIT"/>
             <xsl:text> </xsl:text>
             <xsl:value-of select="@N"/>
@@ -392,6 +405,11 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>no type attribute on postscript</desc>
+  </doc>
+  <xsl:template match="POSTSCRIPT/@TYPE"/>
 
   <!-- TCP non-controversial transforms -->
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2395,6 +2413,28 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
   
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	zap empty postscript
+      </p>
+    </desc>
+  </doc>
+  <xsl:template match="tei:closer[not(* or text())]"/>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	The subtype attribute cant have spaces
+      </p>
+    </desc>
+  </doc>
+  <xsl:template match="@subtype" mode="pass2">
+    <xsl:attribute name="subtype">
+      <xsl:value-of select="translate(.,' ','_')"/>
+    </xsl:attribute>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
