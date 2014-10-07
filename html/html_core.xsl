@@ -465,6 +465,9 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:label">
     <span>
+      <xsl:if test="@xml:id">
+	<xsl:call-template name="makeAnchor"/>
+      </xsl:if>
       <xsl:call-template name="makeRendition"/>
       <xsl:apply-templates/>
     </span>
