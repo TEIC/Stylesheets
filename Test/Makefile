@@ -96,9 +96,9 @@ test-to-html: css
 	$(SAXON) test28.xml ../html/html.xsl splitLevel=0  STDOUT=false $(SAXONOPT) 
 	xmllint --format index.html > x ; mv x index.html
 	diff index.html expected-results/test28.html
-	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFile=../tei.css $(SAXONOPT)  | xmllint --format - > test31.html
+	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFiles=../tei.css $(SAXONOPT)  | xmllint --format - > test31.html
 	diff test31.html expected-results/test31.html
-	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFile=../tei.css $(SAXONOPT)  | xmllint --format - > test32.html
+	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFiles=../tei.css $(SAXONOPT)  | xmllint --format - > test32.html
 	diff test32.html expected-results/test32.html
 
 test-from-html:

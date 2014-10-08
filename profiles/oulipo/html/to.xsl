@@ -40,7 +40,7 @@
 <xsl:param name="lang">fr</xsl:param>
 
 <!--<xsl:param
-    name="cssInlineFile">../profiles/oulipo/html/oulipo.css</xsl:param>-->
+    name="cssInlineFiles">../profiles/oulipo/html/oulipo.css</xsl:param>-->
 
 <xsl:variable name="OU"></xsl:variable>
 

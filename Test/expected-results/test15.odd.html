@@ -852,8 +852,210 @@ display: block;
 margin: 1ex 0ex 1ex 0ex;
 }
 
-/* ODD-specific styles */
-/* tables for reference display */
+/* for ePub */
+div.EpubCoverPage {
+-webkit-hyphens:none;
+font-family: serif;
+height:860;
+font-size:30pt;
+font-weight: bold;
+padding-top: 15pt;
+margin: 12pt;
+border: solid red 1pt;
+text-align:center;
+}
+/* general purpose block aligns */
+.centerbold {
+text-align:center;
+font-weight: bold;
+}
+.center {
+text-align:center;
+}
+.right {
+text-align:right;
+}
+.left {
+text-align:left;
+}
+
+/* &lt;hi&gt; rend values */
+span.typewriter{
+font-family: monospace;
+}
+span.normalweight{
+font-weight: normal;
+}
+span.smallcaps{
+font-variant: small-caps;
+}
+span.bold{
+font-weight: bold;
+}
+span.italic{
+font-style:italic;
+}
+span.allcaps{
+text-transform: uppercase;
+}
+span.strikethrough{
+text-decoration: line-through;
+}
+span.doublestrikethrough{
+text-decoration: line-through;
+}
+span.underline{
+text-decoration: underline;
+}
+span.wavyunderline{
+text-decoration-line: underline;
+text-decoration-style: wavy;
+}
+span.doubleunderline{
+text-decoration: underline;
+}
+span.superscript {
+vertical-align: super;
+font-size: smaller;
+}
+span.subscript {
+vertical-align: bottom;
+font-size: smaller;
+}
+span.numberParagraph:before {
+content:"[";
+}
+span.numberParagraph:after {
+content:"] ";
+}
+span.numberParagraph {
+font-size: smaller;
+color: grey;
+}
+
+/* misc inline*/
+
+span.foreign {
+font-style: italic;
+}
+
+/* generic rendition */
+.plain {
+text-decoration: none;
+}
+
+.small {
+font-size: small;
+}
+.term {
+font-style: italic;
+}
+.hi {
+font-style: italic;
+}
+.emph {
+font-weight: bold;
+}
+.label {
+font-weight: bold;
+}
+.mentioned {
+font-style: italic;
+}
+
+/* transcription */
+
+div.sourceDoc {
+}
+
+div.surfaceGrp {
+border-bottom-width: 1pt;
+border-bottom-color: green;
+border-bottom-style: solid;
+clear:both;
+}
+
+div.surface {
+clear:both;
+border-width: 1pt;
+border-style: solid;
+border-color: grey;
+margin-bottom: 1ex;
+}
+
+div.zone {
+border-width: 1pt;
+border-style: solid;
+border-color: lightgrey;
+margin-bottom: 0.5ex;
+}
+
+div.line {
+}
+
+div.facsimage {
+float: right;
+}
+div.facsimage img {
+max-height: 100%;
+width: auto
+}
+
+span.damage {
+border-bottom: 1px dashed red;
+}
+/* app crit */
+div.appcrit {
+border-top: solid black 1pt;
+margin-top: 2pt;
+padding-top: 2pt;
+margin-bottom: 2pt;
+margin-left: 1em;
+}
+div.app {
+margin-top: 1pt;
+font-size: smaller;
+}
+span.lemma {
+}
+span.lemmawitness {
+font-weight: bold;
+}
+
+
+/* ODD reference display
+This software is dual-licensed:
+
+1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
+Unported License http://creativecommons.org/licenses/by-sa/3.0/
+
+2. http://www.opensource.org/licenses/BSD-2-Clause
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+* Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+This software is provided by the copyright holders and contributors
+"as is" and any express or implied warranties, including, but not
+limited to, the implied warranties of merchantability and fitness for
+a particular purpose are disclaimed. In no event shall the copyright
+holder or contributors be liable for any direct, indirect, incidental,
+special, exemplary, or consequential damages (including, but not
+limited to, procurement of substitute goods or services; loss of use,
+data, or profits; or business interruption) however caused and on any
+theory of liability, whether in contract, strict liability, or tort
+(including negligence or otherwise) arising in any way out of the use
+of this software, even if advised of the possibility of such damage.
+*/
 table.wovenodd {
 width: 100%;
 clear: both;
@@ -880,6 +1082,48 @@ table.wovenodd tr {
 border-spacing:0px;
 border-collapse:collapse;
 }
+table.wovenodd tr td table.elementList {
+border-spacing:0px;
+border:none;
+}
+table.wovenodd tr td table.elementList tr {
+border-spacing:0px;
+border:none;
+}
+table.wovenodd tr td table.elementList tr td {
+border-spacing:0px;
+border:none;
+}
+table.classList {
+table-layout: fixed;
+width: 95%;
+margin: 0pt;
+margin-left: 1em;
+padding: 0pt;
+}
+table.classList td.odd_label {
+width: 20%;
+vertical-align: top;
+font-weight: normal;
+}
+table.elementList {
+table-layout: fixed;
+width: 95%;
+margin: 0pt;
+margin-left: 1em;
+padding: 0pt;
+}
+table.elementList td.odd_label {
+width: 15%;
+vertical-align: top;
+font-weight: normal;
+}
+table.elementList td.odd_label:before {
+content: "&lt;";
+}
+table.elementList td.odd_label:after {
+content: "&gt;";
+}
 table.wovenodd tr td table.attList {
 border-spacing:0px;
 border:none;
@@ -900,7 +1144,7 @@ padding: 0pt;
 }
 td.odd_label {
 vertical-align: top;
-width: 10%;
+width: 15em;
 font-weight: bold;
 }
 td.odd_value {
@@ -918,7 +1162,7 @@ font-weight: normal;
 }
 table.attDef td.odd_value {
 vertical-align: top;
-width: 90%;
+max-width: 90%;
 }
 table.attList td.odd_label:before {
 content: "@";
@@ -1198,7 +1442,7 @@ color: #000066;
 font-weight: bold;
 font-size: large;
 }
-/* End of A - Z styles */
+
 div.specChildren {
 margin: 0em;
 padding: 0em;
@@ -1210,6 +1454,21 @@ div.specChild {
 margin-bottom: 4pt;
 margin-left: 25px;
 text-indent: -30px;
+}
+span.emptySlash:after {
+content: "/";
+}
+/* status notation */
+.deprecated {
+border: solid red 2pt;
+font-weight: bold;
+}
+.unusedattribute {
+text-decoration: line-through;
+color: gray;
+}
+.unusedattribute:before{
+content: "@";
 }
 span.emptySlash:after {
 content: "/";
@@ -1235,175 +1494,6 @@ border: solid blue 1pt;
 }
 .status_unstable {
 border: solid orange 1pt;
-}
-/* for ePub */
-div.EpubCoverPage {
--webkit-hyphens:none;
-font-family: serif;
-height:860;
-font-size:30pt;
-font-weight: bold;
-padding-top: 15pt;
-margin: 12pt;
-border: solid red 1pt;
-text-align:center;
-}
-/* general purpose block aligns */
-.centerbold {
-text-align:center;
-font-weight: bold;
-}
-.center {
-text-align:center;
-}
-.right {
-text-align:right;
-}
-.left {
-text-align:left;
-}
-
-/* &lt;hi&gt; rend values */
-span.typewriter{
-font-family: monospace;
-}
-span.normalweight{
-font-weight: normal;
-}
-span.smallcaps{
-font-variant: small-caps;
-}
-span.bold{
-font-weight: bold;
-}
-span.italic{
-font-style:italic;
-}
-span.callcaps{
-text-transform: uppercase;
-}
-span.strikethrough{
-text-decoration: line-through;
-}
-span.doublestrikethrough{
-text-decoration: line-through;
-}
-span.underline{
-text-decoration: underline;
-}
-span.wavyunderline{
-text-decoration-line: underline;
-text-decoration-style: wavy;
-}
-span.doubleunderline{
-text-decoration: underline;
-}
-span.superscript {
-vertical-align: super;
-font-size: smaller;
-}
-span.subscript {
-vertical-align: bottom;
-font-size: smaller;
-}
-span.numberParagraph:before {
-content:"[";
-}
-span.numberParagraph:after {
-content:"] ";
-}
-span.numberParagraph {
-font-size: smaller;
-color: grey;
-}
-
-/* misc inline*/
-
-span.foreign {
-font-style: italic;
-}
-
-/* generic rendition */
-.plain {
-text-decoration: none;
-}
-
-.small {
-font-size: small;
-}
-.term {
-font-style: italic;
-}
-.hi {
-font-style: italic;
-}
-.emph {
-font-weight: bold;
-}
-.label {
-font-weight: bold;
-}
-.mentioned {
-font-style: italic;
-}
-
-/* transcription */
-
-div.sourceDoc {
-}
-
-div.surfaceGrp {
-border-bottom-width: 1pt;
-border-bottom-color: green;
-border-bottom-style: solid;
-clear:both;
-}
-
-div.surface {
-clear:both;
-border-width: 1pt;
-border-style: solid;
-border-color: grey;
-margin-bottom: 1ex;
-}
-
-div.zone {
-border-width: 1pt;
-border-style: solid;
-border-color: lightgrey;
-margin-bottom: 0.5ex;
-}
-
-div.line {
-}
-
-div.facsimage {
-float: right;
-}
-div.facsimage img {
-max-height: 100%;
-width: auto
-}
-
-span.damage {
-border-bottom: 1px dashed red;
-}
-/* app crit */
-div.appcrit {
-border-top: solid black 1pt;
-margin-top: 2pt;
-padding-top: 2pt;
-margin-bottom: 2pt;
-margin-left: 1em;
-}
-div.app {
-margin-top: 1pt;
-font-size: smaller;
-}
-span.lemma {
-}
-span.lemmawitness {
-font-weight: bold;
 }
 
 </style>

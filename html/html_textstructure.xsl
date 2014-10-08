@@ -1421,14 +1421,16 @@ function click(d) {
 	</link>
       </xsl:if>
       
-      <xsl:if test="$cssInlineFile">
+      <xsl:if test="$cssInlineFiles">
 	<style type="text/css" title="inline_css">
-	  <xsl:for-each select="tokenize(unparsed-text($cssInlineFile),
-				'\r?\n')">
-	    <xsl:if test="not(starts-with(.,'$Id:'))">
-	      <xsl:value-of select="normalize-space(.)"/>
-	    </xsl:if>
-	    <xsl:text>&#10;</xsl:text>
+	  <xsl:for-each   select="tokenize(normalize-space($cssInlineFiles),' ')">
+	    <xsl:for-each select="tokenize(unparsed-text(.),
+				  '\r?\n')">
+	      <xsl:if test="not(starts-with(.,'$Id:') or starts-with(.,'@import'))">
+		<xsl:value-of select="normalize-space(.)"/>
+	      </xsl:if>
+	      <xsl:text>&#10;</xsl:text>
+	    </xsl:for-each>
 	  </xsl:for-each>
 	</style>
       </xsl:if>

@@ -145,6 +145,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template name="purgeCSS">
     <xsl:choose>
+      <xsl:when test="starts-with(.,'@import')"/>
       <xsl:when test="contains(.,'line-height:')"/>
       <xsl:when test="contains(.,'max-width:')"/>
       <xsl:when test="contains(.,'height:')"/>
