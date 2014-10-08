@@ -1,4 +1,4 @@
-/* tables for reference display 
+/* ODD reference display 
 This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
@@ -417,7 +417,7 @@ span.listhead {
     font-weight: bold;
     font-size: large;
 }
-/* End of A - Z styles */
+
 div.specChildren {
     margin: 0em;
     padding: 0em;
@@ -444,4 +444,29 @@ span.emptySlash:after {
 }
 .unusedattribute:before{
     content: "@";
+}
+span.emptySlash:after {
+    content: "/";
+}
+/* status notation */
+.status_deprecated:after {
+    content: " (deprecated)";
+    color: red;
+}
+.status_changed:after {
+    content: " (changed)";
+    color: blue;
+}
+.status_unstable:after {
+    content: " (unstable)";
+    color: orange;
+}
+.status_deprecated {
+    border: solid red 1pt;
+}
+.status_changed {
+    border: solid blue 1pt;
+}
+.status_unstable {
+    border: solid orange 1pt;
 }
