@@ -1202,25 +1202,25 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:lb">
     <xsl:choose>
       <xsl:when test="@type='hyphenInWord' and tei:match(@rend,'hidden')"/>
-      <xsl:when test="tokenize(@rend,' ')=('hidden')">
+      <xsl:when test="tei:match(@rend,'hidden')">
         <xsl:text> </xsl:text>
       </xsl:when>
       <xsl:when test="tei:match(@rend,'-') or @type='hyphenInWord'">
         <xsl:text>-</xsl:text>
 	<xsl:call-template name="lineBreak"/>
       </xsl:when>
-      <xsl:when test="tokenize(@rend,' ')=('above')">
+      <xsl:when test="tei:match(@rend,'above')">
         <xsl:text>⌜</xsl:text>
       </xsl:when>
-      <xsl:when test="tokenize(@rend,' ')=('below')">
+      <xsl:when test="tei:match(@rend,'below')">
         <xsl:text>⌞</xsl:text>
       </xsl:when>
       <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or
 		      tei:is-first(.))"/>
-      <xsl:when test="tokenize(@rend,' ')=('show')">
+      <xsl:when test="tei:match(@rend,'show')">
 	<xsl:call-template name="lineBreak"/>
       </xsl:when>
-      <xsl:when test="tokenize(@rend,' ')=('paragraph')">
+      <xsl:when test="tei:match(@rend,'paragraph')">
 	<xsl:call-template name="lineBreakAsPara"/>
       </xsl:when>
       <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
@@ -1363,7 +1363,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:milestone">
     <xsl:choose>
-      <xsl:when test="tokenize(@rend,' ')=('hr')">
+      <xsl:when test="tei:match(@rend,'hr')">
 	<xsl:call-template name="horizontalRule"/>
       </xsl:when>
       <xsl:when test="@unit='line'">

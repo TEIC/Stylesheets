@@ -203,7 +203,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
     <xsl:template match="del[@rend]" mode="pass0">
       <xsl:choose>
-        <xsl:when test="tei:match(@rend,'overstrike')">
+        <xsl:when test="tei:match(@rend,'strikethrough')">
           <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
             <xsl:apply-templates mode="pass0"/> <xsl:text> </xsl:text>
             <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">biffé</hi>
@@ -215,7 +215,7 @@ of this software, even if advised of the possibility of such damage.
             <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">annulé par soulignement</hi>
           </note>
         </xsl:when>
-        <xsl:when test="tei:match(@rend,'underlined_dotted')">
+        <xsl:when test="tei:match(@rend,'dottedunderline')">
           <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
             <xsl:apply-templates mode="pass0"/> <xsl:text> </xsl:text>
             <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">annulé par exponctuation</hi>

@@ -167,17 +167,17 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-        <xsl:when test="tokenize(@rend,' ')=('odd_label')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'odd_label')">true</xsl:when>
         <xsl:when test="parent::tei:hi[starts-with(@rend,'specList-')]">true</xsl:when>
         <xsl:when test="self::tei:docAuthor">true</xsl:when>
         <xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
         <xsl:when test="starts-with(@rend,'specList-')">true</xsl:when>
         <xsl:when test="starts-with(parent::tei:hi/@rend,'specList-')">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('label')">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('wovenodd')">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('important')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'label')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'wovenodd')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'important')">true</xsl:when>
         <xsl:when test="tokenize(@rend,' ')=('Heading_2_Char')">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('specChildModule')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'specChildModule')">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[tei:match(@rend,'wovenodd-col1')]">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[@role='label']">true</xsl:when>
         <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'bold')]">true</xsl:when>
@@ -229,10 +229,10 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:emph">true</xsl:when>
         <xsl:when test="self::tei:hi[not(@rend)]">true</xsl:when>
         <xsl:when test="self::tbx:hi[@style='italics']">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('ital')">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('it')">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('i')">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('att')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'ital')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'it')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'i')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'att')">true</xsl:when>
         <xsl:when test="self::tei:att">true</xsl:when>
         <xsl:when test="self::tei:speaker">true</xsl:when>
         <xsl:when test="self::tei:gloss">true</xsl:when>
@@ -1030,8 +1030,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
-        <xsl:when test="tokenize(@rend,' ')=('numbered')">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('ordered')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'numbered')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'ordered')">true</xsl:when>
         <xsl:when test="@type='ordered'">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
@@ -1045,8 +1045,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="$context">
       <xsl:choose>
         <xsl:when test="not(@rend or @type)">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('unordered')">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('bulleted')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'unordered')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'bulleted')">true</xsl:when>
         <xsl:when test="@type='unordered'">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
@@ -1059,8 +1059,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
-        <xsl:when test="tokenize(@rend,' ')=('valList')">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('gloss')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'valList')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'gloss')">true</xsl:when>
         <xsl:when test="@type='gloss'">true</xsl:when>
         <xsl:when test="tei:label">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
@@ -1075,7 +1075,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="$context">
       <xsl:choose>
         <xsl:when test="@type='valList'">true</xsl:when>
-        <xsl:when test="tokenize(@rend,' ')=('glosstable')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'glosstable')">true</xsl:when>
         <xsl:when test="@type='glosstable'">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
@@ -1088,7 +1088,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
-        <xsl:when test="tokenize(@rend,' ')=('inline')">true</xsl:when>
+        <xsl:when test="tei:match(@rend,'inline')">true</xsl:when>
         <xsl:when test="@type='inline'">true</xsl:when>
         <xsl:when test="ancestor::tei:head or parent::tei:label">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>

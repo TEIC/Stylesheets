@@ -815,7 +815,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tei:del[tei:match(@rend,'overstrike')]">
+  <xsl:template match="tei:del[tei:match(@rend,'strikethrough')]">
     <xsl:text>\sout{</xsl:text>
     <xsl:apply-templates/>
     <xsl:text>}</xsl:text>
