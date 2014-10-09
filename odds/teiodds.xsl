@@ -2206,6 +2206,11 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  
+  <xsl:template match="tei:textNode"   mode="#default tangle">
+    <text xmlns="http://relaxng.org/ns/structure/1.0"/>
+  </xsl:template>
+
   <xsl:template match="tei:alternate"  mode="#default tangle">
     <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:choose>
