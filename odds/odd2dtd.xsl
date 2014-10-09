@@ -1017,7 +1017,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test=".//rng:anyName">
 	    <xsl:text> ANY</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="@allowText='true' and not(*)">
+	  <xsl:when test="tei:textNode or (@allowText='true' and not(*))">
 	    <xsl:text> CDATA</xsl:text>
 	  </xsl:when>
 	  <xsl:when test="processing-instruction()[name()='NameList']">
@@ -1114,13 +1114,16 @@ of this software, even if advised of the possibility of such damage.
           <xsl:when test="(tei:content/tei:sequence ) and  tei:content/@allowText='true'">
 	      <xsl:apply-templates select="tei:content/*"/>
 	  </xsl:when>
-          <xsl:when test="tei:content/tei:elementRef and  tei:content/@allowText='true'">
+          <xsl:when test="tei:content/tei:elementRef and tei:content/@allowText='true'">
 	      <xsl:text>(#PCDATA</xsl:text>
 	      <xsl:for-each select="tei:content/*">
 		<xsl:text>|</xsl:text>
 		<xsl:apply-templates select="."/>
 	      </xsl:for-each>
 	      <xsl:text>)*</xsl:text>
+	  </xsl:when>
+          <xsl:when test="tei:content/tei:textNode and count(tei:content/*)=1">
+            <xsl:text>(#PCDATA)</xsl:text>
 	  </xsl:when>
           <xsl:when test="tei:content/@allowText='true' and not(tei:content/*)">
             <xsl:text>(#PCDATA)</xsl:text>
@@ -1682,6 +1685,10 @@ of this software, even if advised of the possibility of such damage.
 			    and ($suffix='+' or $suffix='?')) then
 			    '*' else $suffix"/>
     </token>
+  </xsl:template>
+
+  <xsl:template match="tei:textNode">
+    <xsl:text>#PCDATA</xsl:text>
   </xsl:template>
 
   <xsl:template match="tei:interleave">
