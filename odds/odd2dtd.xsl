@@ -1688,7 +1688,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:textNode">
-    <xsl:text>#PCDATA</xsl:text>
+    <token>#PCDATA</token>
   </xsl:template>
 
   <xsl:template match="tei:interleave">
