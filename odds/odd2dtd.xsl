@@ -970,7 +970,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test=".//rng:anyName">
 	    <xsl:text> ANY</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="tei:textNode or (@allowText='true' and not(*))">
+	  <xsl:when test="tei:textNode">
 	    <xsl:text> CDATA</xsl:text>
 	  </xsl:when>
 	  <xsl:when test="processing-instruction()[name()='NameList']">
@@ -1064,21 +1064,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test="tei:valList[@type='closed']">
 	    <xsl:text> (#PCDATA)</xsl:text>
 	  </xsl:when>
-          <xsl:when test="(tei:content/tei:sequence ) and  tei:content/@allowText='true'">
-	      <xsl:apply-templates select="tei:content/*"/>
-	  </xsl:when>
-          <xsl:when test="tei:content/tei:elementRef and tei:content/@allowText='true'">
-	      <xsl:text>(#PCDATA</xsl:text>
-	      <xsl:for-each select="tei:content/*">
-		<xsl:text>|</xsl:text>
-		<xsl:apply-templates select="."/>
-	      </xsl:for-each>
-	      <xsl:text>)*</xsl:text>
-	  </xsl:when>
           <xsl:when test="tei:content/tei:textNode and count(tei:content/*)=1">
-            <xsl:text>(#PCDATA)</xsl:text>
-	  </xsl:when>
-          <xsl:when test="tei:content/@allowText='true' and not(tei:content/*)">
             <xsl:text>(#PCDATA)</xsl:text>
 	  </xsl:when>
           <xsl:when test="tei:content/*">
@@ -1549,8 +1535,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="innards">
       <token>
 	<xsl:choose>
-	  <xsl:when test="tei:textNode or parent::*/tei:textNode or
-			  ancestor-or-self::*[@allowText='true']">
+	  <xsl:when test="tei:textNode or parent::*/tei:textNode">
             <xsl:call-template name="innards"/>
 	  </xsl:when>
 	  <xsl:otherwise>
@@ -1586,10 +1571,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>(</xsl:text>
       <xsl:call-template name="innards"/>
       <xsl:text>)</xsl:text>
-      <xsl:value-of select="if
-			    (ancestor-or-self::*/@allowText='true'
-			    and ($suffix='+' or $suffix='?')) then
-			    '*' else $suffix"/>
+      <xsl:value-of select="$suffix"/>
     </token>
   </xsl:template>
 
@@ -1649,7 +1631,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:variable>
 	  <xsl:value-of select="$members/*" separator="|"/>
 	</xsl:when>
-	<xsl:when test="parent::*/@allowText='true' or parent::*/tei:textNode">
+	<xsl:when test="parent::*/tei:textNode">
 	  <xsl:value-of select="$ename"/>
 	</xsl:when>
         <xsl:when test="@expand">
@@ -1673,7 +1655,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="$ename"/>
       </xsl:otherwise>
       </xsl:choose>
-      <xsl:if test="not(parent::*/tei:textNode or parent::*/@allowText='true')">
+      <xsl:if test="not(parent::*/tei:textNode)">
 	<xsl:value-of select="$suffix"/>
       </xsl:if>
     </token>
@@ -1682,11 +1664,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="innards">
     <xsl:param name="sep">|</xsl:param>
     <xsl:variable name="innards">
-      <xsl:if test="ancestor::tei:*/@allowText='true'">
-	<token>
-	  <xsl:text>#PCDATA</xsl:text>
-	</token>
-      </xsl:if>
       <xsl:apply-templates/>
     </xsl:variable>
     <xsl:value-of select="$innards/*" separator="{$sep}"/>
@@ -1747,7 +1724,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="max"/>
     <xsl:choose>
       <xsl:when test="$context/tei:textNode">*</xsl:when>
-      <xsl:when test="$context/parent::*/@allowText='true'">*</xsl:when>
       <xsl:when test="$min='0' and $max='1'">?</xsl:when>
       <xsl:when test="$min='0' and not($max)">?</xsl:when>
       <xsl:when test="$min='1' and $max='unbounded'">+</xsl:when>

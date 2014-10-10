@@ -2485,7 +2485,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:text>ANY</xsl:text>
         </xsl:element>
       </xsl:when>
-      <xsl:when test="tei:content/@allowText='true' and not(tei:content/*)">
+      <xsl:when test="tei:content/tei:textNode and count(tei:content/*)=1">
         <xsl:element namespace="{$outputNS}" name="{$segName}">
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
