@@ -15,10 +15,10 @@
   </teiHeader>
   <text>
     <body>
-      <schemaSpec ns="" start="t1 t2 t3 t4 t5 t6 t7 stuff" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+      <schemaSpec ns="" start="t1 t2 t3 t4 t5 t6 t7 t8 stuff" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
         xmlns="http://www.tei-c.org/ns/1.0">
         <elementSpec ident="stuff">
-          <desc>élément racine d'un schéma simplissime</desc>
+          <desc>simple elements</desc>
           <content>
             <alternate maxOccurs="unbounded">
               <elementRef key="bit"/>
@@ -28,7 +28,7 @@
           </content>
         </elementSpec>
         <elementSpec ident="bob">
-          <desc>élément pointeur du schéma simplissime</desc> 
+          <desc>empty element with attribute</desc>
           <content/>
           <attList>
             <attDef ident="href">
@@ -41,13 +41,13 @@
           </attList>
         </elementSpec>
         <elementSpec ident="thingummy">
-          <desc>élément </desc> 
+          <desc>element with just text </desc> 
           <content>
 	    <textNode/>
 	  </content>
         </elementSpec>
         <elementSpec ident="bit">
-          <desc>élément textuel du schéma simplissime (peut contenir des bobs) </desc>
+          <desc>mixed content, text or one element</desc>
           <content>
 	    <alternate>
 	      <textNode/>
@@ -62,9 +62,7 @@
         </elementSpec>
 
         <elementSpec ident="t1">
-          <!--  -->
-          
-          <desc>allowtext on content creates an alternation</desc>
+          <desc>mixed content with multiple elements</desc>
           <content>
 	    <alternate>
 	      <textNode/>
@@ -76,7 +74,7 @@
         </elementSpec>
         
 	<elementSpec ident="t2">
-	  <desc>Within content with allowtext alternation and *Occurs both respected</desc>
+	  <desc>mixed content with *Occurs</desc>
 	  <content>
             <alternate  minOccurs="0" maxOccurs="unbounded" >
 	      <textNode/>
@@ -87,7 +85,7 @@
 	</elementSpec>
 
 	<elementSpec ident="t3">
-	  <desc>Within content with allowtext alternation and *Occurs both respected</desc>
+	  <desc>mixed content with only minOccurs</desc>
 	  <content >
               <alternate  minOccurs="0" >
 		<textNode/>
@@ -98,8 +96,7 @@
 	</elementSpec>
         
         <elementSpec ident="t4">
-      
-          <desc>Within content with allowtext alternation and *Occurs both respected</desc>
+	  <desc>mixed content with only maxOccurs</desc>      
           <content>
             <alternate maxOccurs="unbounded">
 	      <textNode/>
@@ -112,7 +109,7 @@
         
         <elementSpec ident="t5">
           
-          <desc>sequence within generated alternation is also possible</desc>
+          <desc>sequence within alternation </desc>
           <content>	  
 	      <alternate>
 	      	<textNode/>
@@ -124,22 +121,10 @@
           </content>
         </elementSpec>
 
-	<elementSpec ident="t6">
-	  <!-- -->
-	  <desc>allowtext on alternate produces a text alternation</desc>
-	  <content >
-            <alternate minOccurs="0"      >
-	      <textNode/>
-              <elementRef key="bit"/>
-	      <elementRef key="bob"/>
-              </alternate>
-          </content>
-	</elementSpec>
 
-	
-        <elementSpec ident="t7">
+        <elementSpec ident="t6">
           <!-- -->
-          <desc>allowtext on sequence has no effect </desc>
+          <desc>sequence with textNode</desc>
           <content >
             <sequence minOccurs="0">
 	      <textNode/>
@@ -151,13 +136,10 @@
         
        
 	
-
-<!--
-
-	  <elementSpec ident="seg">
-	    <desc>more seg</desc>
+	<elementSpec ident="t7">
+	    <desc>sequence of elements</desc>
 	    <content>
-	      <sequence allowText="true">
+	      <sequence>
 		<elementRef key="orgName"  minOccurs="0"/>
 		<elementRef key="persName"  minOccurs="0"/>
 		<elementRef key="choice"  minOccurs="0"/>
@@ -167,14 +149,17 @@
 	    </content>
 	  </elementSpec>
 
-	  <elementSpec ident="seg2">
-	    <desc>more seg</desc>
-	    <content allowText="true" >
+	  <elementSpec ident="t8">
+	    <desc>sequence with textnode, and minOccurs on elements</desc>
+	    <content>
+	      <sequence>
+		<textNode/>
 		<elementRef key="orgName"  minOccurs="0"/>
 		<elementRef key="persName"  minOccurs="0"/>
 		<elementRef key="choice"  minOccurs="0"/>
 		<elementRef key="seg"  minOccurs="0"/>
 		<elementRef key="trait"  minOccurs="0"/>
+	      </sequence>
 	    </content>
 	  </elementSpec>
 
@@ -190,16 +175,16 @@
 	    <desc>dummy</desc>
 	    <content/>
 	  </elementSpec>
-	  <elementSpec ident="t1">
-	    <desc>dummy</desc>
-	    <content/>
-	  </elementSpec>
 	  <elementSpec ident="trait">
 	    <desc>dummy</desc>
 	    <content/>
 	  </elementSpec>
+	  <elementSpec ident="seg">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
 
--->
+
       </schemaSpec>
       
 
