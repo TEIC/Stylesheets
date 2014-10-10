@@ -252,11 +252,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="datatypeMacros">
       <xsl:if test="key('DataMacroModule',@ident)">
 	<xsl:sequence select="tei:dtdcomment('Start datatype macro declarations')"/>
-	<xsl:for-each select="key('DataMacroModule',@ident)">
-          <xsl:if test="@type='dt'">
-            <xsl:apply-templates mode="tangle" select="."/>
-         </xsl:if>
-	</xsl:for-each>
+        <xsl:apply-templates mode="tangle" select="key('DataMacroModule',@ident)"/>
 	<xsl:sequence select="tei:dtdcomment('End of datatype macro declarations')"/>
       </xsl:if>
   </xsl:template>
@@ -414,12 +410,10 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:sequence select="tei:dtdcomment('end patterns')"/>
       </xsl:if>
 
-      <xsl:if test="tei:classSpec[not(@predeclare='true')]">
+      <xsl:if test="not(tei:classSpec[@predeclare='true'])">
 	<xsl:sequence select="tei:dtdcomment('start classes')"/>
-         <xsl:apply-templates mode="tangle"
-			      select="tei:classSpec[not(@predeclare='true')   and @type='atts']"/>
-         <xsl:apply-templates mode="tangle" select="tei:classSpec[not(@predeclare='true')
-				      and @type='model']"/>
+         <xsl:apply-templates mode="tangle"  select="tei:classSpec[@type='atts']"/>
+         <xsl:apply-templates mode="tangle" select="tei:classSpec[@type='model']"/>
 	 <xsl:sequence select="tei:dtdcomment('stop classes')"/>
       </xsl:if>
       
@@ -428,8 +422,8 @@ of this software, even if advised of the possibility of such damage.
          <xsl:sort select="@ident"/>
       </xsl:apply-templates>
       <xsl:sequence select="tei:dtdcomment('end elements')"/>
-
   </xsl:template>
+
   <xsl:template match="tei:macroSpec[@xml:id='TEIGIS']" mode="tangle"/>
   <xsl:template name="NameList">
       <xsl:choose>
@@ -1753,6 +1747,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="max"/>
     <xsl:choose>
       <xsl:when test="$context/tei:textNode">*</xsl:when>
+      <xsl:when test="$context/parent::*/@allowText='true'">*</xsl:when>
       <xsl:when test="$min='0' and $max='1'">?</xsl:when>
       <xsl:when test="$min='0' and not($max)">?</xsl:when>
       <xsl:when test="$min='1' and $max='unbounded'">+</xsl:when>
@@ -1764,7 +1759,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:function name="tei:dtdcomment">
     <xsl:param name="text"/>
-    <xsl:value-of select="concat('&#10;&lt;!-- ',$text,'  --&gt;&#10;')"/>
+    <xsl:value-of select="concat('&#10;&lt;!-- ',$text,' --&gt;&#10;')"/>
   </xsl:function>
 
 </xsl:stylesheet>
