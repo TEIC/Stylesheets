@@ -74,8 +74,11 @@
         <elementSpec ident="bit">
           <desc>élément textuel du schéma simplissime (peut contenir des bobs) </desc>
           <classes><memberOf key="stuffPart"/></classes>
-          <content allowText="true">
-            <elementRef key="bob" minOccurs="0" maxOccurs="unbounded"/>
+          <content>
+	    <alternate  minOccurs="0" maxOccurs="unbounded">
+	      <textNode/>
+              <elementRef key="bob"/>
+	    </alternate>
           </content>
         </elementSpec>
       </schemaSpec>
