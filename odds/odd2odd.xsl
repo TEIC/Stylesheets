@@ -547,30 +547,38 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="odd2odd-createCopy"/>
   </xsl:template>
 
-  <xsl:template match="tei:macroRef|tei:classRef|tei:elementRef"	mode="pass1">
-    <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
-    <xsl:variable name="name" select="@key"/>
-    <xsl:for-each select="document($sourceDoc,$top)">
-      <xsl:choose>
-	<xsl:when test="key('odd2odd-IDENTS',$name)">
-	  <xsl:for-each select="key('odd2odd-IDENTS',$name)">
-          <xsl:if test="$verbose='true'">
-            <xsl:message>Phase 1: import <xsl:value-of  select="$name"/> by direct reference</xsl:message>
-          </xsl:if>
+  <xsl:template match="tei:macroRef|tei:classRef|tei:elementRef"
+		mode="pass1">
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:content">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
+	<xsl:variable name="name" select="@key"/>
+	<xsl:for-each select="document($sourceDoc,$top)">
+	  <xsl:choose>
+	    <xsl:when test="key('odd2odd-IDENTS',$name)">
+	      <xsl:for-each select="key('odd2odd-IDENTS',$name)">
+		<xsl:if test="$verbose='true'">
+		  <xsl:message>Phase 1: import <xsl:value-of  select="$name"/> by direct reference</xsl:message>
+		</xsl:if>
 	    <xsl:apply-templates mode="pass1" select="."/>
-	  </xsl:for-each>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:call-template name="die">
-	    <xsl:with-param name="message">
-	      <xsl:text>Reference to </xsl:text>
-	      <xsl:value-of select="$name"/>
-	      <xsl:text>: not found in source</xsl:text>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:call-template name="die">
+		<xsl:with-param name="message">
+		  <xsl:text>Reference to </xsl:text>
+		  <xsl:value-of select="$name"/>
+		  <xsl:text>: not found in source</xsl:text>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="odd2odd-expandModule">
