@@ -2290,30 +2290,30 @@ select="$makeDecls"/></xsl:message>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="number(@maxOccurs)&gt;1">
-	<xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
-	<xsl:for-each select="1 to $max">
-	    <xsl:copy-of select="$c"/>
-	</xsl:for-each>
-      </xsl:when>
-      <xsl:when test="string-length($wrapperElement)=0">
-	<xsl:copy-of select="$c"/>
-      </xsl:when>
+    <xsl:variable name="min" select="if (@minOccurs='0') then 1 else @minOccurs" as="xs:integer"/>
+    <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
+    <xsl:for-each select="1 to $min">
+      <xsl:choose>
+	<xsl:when test="string-length($wrapperElement)=0">
+	  <xsl:copy-of select="$c"/>
+	</xsl:when>
       <xsl:otherwise>
         <xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
 	  <xsl:copy-of select="$c"/>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
+
   <xsl:function name="tei:generateIndicators" as="xs:string">
     <xsl:param name="min"/>
     <xsl:param name="max"/>
     <xsl:choose>
       <xsl:when test="$min='0' and $max='1'">optional</xsl:when>
       <xsl:when test="$min='0' and not($max)">optional</xsl:when>
-      <xsl:when test="$min='1' and $max='unbounded'">oneOrMore</xsl:when>
+      <xsl:when test="number($min) ge 1 and $max='unbounded'">oneOrMore</xsl:when>
+      <xsl:when test="number($min) ge 1 and not($max)">oneOrMore</xsl:when>
       <xsl:when test="not($min) and $max='unbounded'">oneOrMore</xsl:when>
       <xsl:when test="$min='0' and $max='unbounded'">zeroOrMore</xsl:when>
       <xsl:otherwise>
