@@ -84,8 +84,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:elementSpec" name="ELEMENTS" use="tei:altIdent"/>
   <xsl:key match="tei:classSpec" name="CLASSES" use="@ident"/>
   <xsl:key match="rng:ref" name="REFS"  use="@name"/>
-  <xsl:key match="tei:elementRef[not(ancestor::tei:content)]" name="REFS"  use="@key"/>
-  <xsl:key match="tei:classRef[not(ancestor::tei:content)]" name="REFS"  use="@key"/>
+  <xsl:key match="tei:elementRef" name="REFS"  use="@key"/>
+  <xsl:key match="tei:classRef" name="REFS"  use="@key"/>
   <xsl:key match="rng:ref[contains(@name,'_')]" name="REFS" use="substring-before(@name,'_')"/>
 
   <xsl:key
@@ -98,6 +98,7 @@ of this software, even if advised of the possibility of such damage.
       use="@name"/>
 
   <xsl:key match="tei:macroSpec/tei:content//rng:ref" name="MACROREFS"  use="@name"/>
+  <xsl:key match="tei:macroSpec/tei:content//tei:macroRef" name="MACROREFS"  use="@key"/>
 
   <xsl:key match="tei:elementSpec|tei:classSpec" name="CLASSMEMBERS" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key match="tei:elementSpec" name="CLASSMEMBERS-ELEMENTS" use="tei:classes/tei:memberOf/@key"/>
