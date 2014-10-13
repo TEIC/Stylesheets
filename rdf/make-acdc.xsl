@@ -30,7 +30,7 @@
       </XSL:otherwise>
     </XSL:choose>
   </XSL:template>
-  <XSL:template name="bitOut">
+  <XSL:template name="schemaOut">
     <XSL:param name="grammar">true</XSL:param>
     <XSL:param name="content"/>
     <XSL:copy-of select="$content"/>

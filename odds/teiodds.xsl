@@ -406,7 +406,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:apply-templates select="tei:constraintSpec"/>
       </xsl:when>
       <xsl:when test="@type='atts'">
-        <xsl:call-template name="bitOut">
+        <xsl:call-template name="schemaOut">
           <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
             <Wrapper>
@@ -478,7 +478,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:message> .... model class <xsl:value-of select="@ident"/>
       </xsl:message>
     </xsl:if>
-    <xsl:call-template name="bitOut">
+    <xsl:call-template name="schemaOut">
       <xsl:with-param name="grammar">true</xsl:with-param>
       <xsl:with-param name="content">
         <Wrapper>
@@ -838,7 +838,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:if>
       </xsl:message>
     </xsl:if>
-    <xsl:call-template name="bitOut">
+    <xsl:call-template name="schemaOut">
       <xsl:with-param name="grammar"/>
       <xsl:with-param name="content">
         <Wrapper>
@@ -1003,7 +1003,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates select="tei:constraintSpec"/>
+    <xsl:call-template name="schematronInContent"/>
   </xsl:template>
 
 
@@ -1105,7 +1105,7 @@ select="$makeDecls"/></xsl:message>
           <xsl:message> macroSpec <xsl:value-of select="@ident"/>
           </xsl:message>
         </xsl:if>
-        <xsl:call-template name="bitOut">
+        <xsl:call-template name="schemaOut">
           <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
             <Wrapper>
@@ -1179,7 +1179,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:if test="$verbose='true'">
       <xsl:message> .... import module [<xsl:value-of select="$This"/> <xsl:value-of select="@url"/>] </xsl:message>
     </xsl:if>
-    <xsl:call-template name="bitOut">
+    <xsl:call-template name="schemaOut">
       <xsl:with-param name="grammar">true</xsl:with-param>
       <xsl:with-param name="content">
         <Wrapper>
@@ -1749,8 +1749,6 @@ select="$makeDecls"/></xsl:message>
   <xsl:template match="tei:constraintSpec/tei:equiv"/>
 
 
-  <xsl:template match="tei:constraintSpec"/>
-
   <xsl:template match="tei:altIdent"/>
 
   <xsl:template match="a:*">
@@ -1762,7 +1760,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:message> .. default attribute settings for <xsl:value-of select="@ident"/>
       </xsl:message>
     </xsl:if>
-    <xsl:call-template name="bitOut">
+    <xsl:call-template name="schemaOut">
       <xsl:with-param name="grammar">true</xsl:with-param>
       <xsl:with-param name="content">
         <Wrapper>
@@ -2430,5 +2428,27 @@ select="$makeDecls"/></xsl:message>
   <xsl:template match="tei:desc" mode="inLanguage">
     <xsl:apply-templates/>
   </xsl:template>
+
+
+  <xsl:template name="schematronInContent">
+    <xsl:for-each select="tei:constraintSpec/tei:constraint/*">
+      <xsl:call-template name="processSchematron"/>
+    </xsl:for-each>
+  </xsl:template>
+
+
+
+  <xsl:template match="tei:constrainSpec|tei:constraint">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="s:*">
+      <xsl:call-template name="processSchematron"/>
+  </xsl:template>
+
+  <xsl:template match="sch:*">
+      <xsl:call-template name="processSchematron"/>
+  </xsl:template>
+
   
 </xsl:stylesheet>

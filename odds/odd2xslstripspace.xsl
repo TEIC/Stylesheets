@@ -82,7 +82,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
    
-   <xsl:template name="bitOut">
+   <xsl:template name="schemaOut">
       <xsl:param name="grammar"/>
       <xsl:param name="element"/>
       <xsl:param name="content"/>

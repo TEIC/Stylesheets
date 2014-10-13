@@ -321,20 +321,20 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:choose>
          <xsl:when test="$outputDir='' or $outputDir='-'">
-            <xsl:call-template name="schemaOut"/>
+            <xsl:call-template name="writeSchema"/>
          </xsl:when>
          <xsl:otherwise>
             <xsl:call-template name="generateOutput">
                <xsl:with-param name="suffix">.dtd</xsl:with-param>
                <xsl:with-param name="method">text</xsl:with-param>
                <xsl:with-param name="body">
-                  <xsl:call-template name="schemaOut"/>
+                  <xsl:call-template name="writeSchema"/>
                </xsl:with-param>
             </xsl:call-template>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
-  <xsl:template name="schemaOut">
+  <xsl:template name="writeSchema">
       <xsl:call-template name="dtdComment">
          <xsl:with-param name="text">
             <xsl:text>DTD generated from ODD source </xsl:text>
@@ -1474,7 +1474,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
-  <xsl:template name="bitOut">
+  <xsl:template name="schemaOut">
       <xsl:param name="grammar"/>
       <xsl:param name="element"/>
       <xsl:param name="content"/>

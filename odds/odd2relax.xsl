@@ -367,7 +367,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
-  <xsl:template name="bitOut">
+  <xsl:template name="schemaOut">
       <xsl:param name="grammar"/>
       <xsl:param name="element"/>
       <xsl:param name="content"/>
@@ -383,23 +383,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="processing-instruction()" mode="tangle">
     <xsl:copy-of select="."/>
   </xsl:template>
-
-  <xsl:template match="tei:constraintSpec[@scheme='schematron']">
-      <xsl:apply-templates/>
-  </xsl:template>
-
-  <xsl:template match="tei:constraintSpec[@scheme='isoschematron']">
-      <xsl:apply-templates/>
-  </xsl:template>
-
-  <xsl:template match="s:*">
-      <xsl:call-template name="processSchematron"/>
-  </xsl:template>
-
-  <xsl:template match="sch:*">
-      <xsl:call-template name="processSchematron"/>
-  </xsl:template>
-
 
 <!-- pass 2, clean up unused elements -->
   <xsl:template  match="rng:anyName[parent::rng:define]"

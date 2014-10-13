@@ -356,7 +356,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:element>
           <xsl:value-of select="$spaceCharacter"/>
         </xsl:if>
-        <xsl:call-template name="bitOut">
+        <xsl:call-template name="schemaOut">
           <xsl:with-param name="grammar"/>
           <xsl:with-param name="element">code</xsl:with-param>
           <xsl:with-param name="content">
@@ -824,7 +824,7 @@ of this software, even if advised of the possibility of such damage.
               </rng:element>
             </Wrapper>
 	</xsl:variable>
-        <xsl:call-template name="bitOut">
+        <xsl:call-template name="schemaOut">
           <xsl:with-param name="grammar"/>
           <xsl:with-param name="content" select="$content"/>
         </xsl:call-template>
@@ -833,17 +833,10 @@ of this software, even if advised of the possibility of such damage.
           <xsl:text>:</xsl:text>
           <xsl:call-template name="valListChildren"/>
         </xsl:for-each>
-        <xsl:if test="s:*">
-          <xsl:element namespace="{$outputNS}" name="{$divName}">
-            <xsl:attribute name="{$rendName}">
-              <xsl:text>pre</xsl:text>
-            </xsl:attribute>
-            <xsl:apply-templates select="s:*" mode="verbatim"/>
-          </xsl:element>
-        </xsl:if>
       </xsl:element>
     </xsl:element>
   </xsl:template>
+
   <xsl:template match="tei:constraintSpec[parent::tei:elementSpec or
 		       parent::tei:classSpec or parent::tei:attDef]" mode="weave">
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
@@ -1268,7 +1261,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:attribute name="{$rendName}">
           <xsl:text>wovenodd-col2</xsl:text>
         </xsl:attribute>
-        <xsl:call-template name="bitOut">
+        <xsl:call-template name="schemaOut">
           <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
             <Wrapper>
@@ -2713,4 +2706,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:element>
     </xsl:if>
   </xsl:template>
+
+  <xsl:template name="processSchematron"/>
+
 </xsl:stylesheet>

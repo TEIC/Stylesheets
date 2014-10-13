@@ -288,7 +288,7 @@ of this software, even if advised of the possibility of such damage.
          <param name="element">element</param>
       </desc>
    </doc>
-  <xsl:template name="bitOut">
+  <xsl:template name="schemaOut">
       <xsl:param name="grammar"/>
       <xsl:param name="content"/>
       <xsl:param name="element">pre</xsl:param>
