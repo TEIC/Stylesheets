@@ -41,12 +41,12 @@
   <xsl:param name="xrefName"/>
   <xsl:key match="tei:moduleRef" name="ModuleRefs" use="1"/>
   <xsl:key match="tei:moduleRef" name="MODULEREFS" use="@key"/>
-  <xsl:key match="tei:classRef" name="ClassRefs" use="1"/>
-  <xsl:key match="tei:classRef" name="CLASSREFS" use="@key"/>
-  <xsl:key match="tei:macroRef" name="MacroRefs" use="1"/>
+  <xsl:key match="tei:classRef[not(ancestor::tei:content)]" name="ClassRefs" use="1"/>
+  <xsl:key match="tei:classRef[not(ancestor::tei:content)]" name="CLASSREFS" use="@key"/>
+  <xsl:key match="tei:macroRef[not(ancestor::tei:content)]" name="MacroRefs" use="1"/>
   <xsl:key match="tei:macroRef" name="MACROREFS" use="@key"/>
-  <xsl:key match="tei:elementRef" name="ElementRefs" use="1"/>
-  <xsl:key match="tei:elementRef" name="ELEMENTREFS" use="@key"/>
+  <xsl:key match="tei:elementRef[not(ancestor::tei:content)]" name="ElementRefs" use="1"/>
+  <xsl:key match="tei:elementRef[not(ancestor::tei:content)]" name="ELEMENTREFS" use="@key"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making JSON from ODD </p>

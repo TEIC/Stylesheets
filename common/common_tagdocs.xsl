@@ -2597,6 +2597,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
+
+
   <xsl:template name="followRef">
       <xsl:if test=".//rng:text or .//rng:data">
 	<Element prefix="{@prefix}"  type="TEXT"/>
@@ -2605,6 +2607,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="not(starts-with(@name,'any')        or starts-with(@name,'macro.any') or starts-with(@key,'macro.any')       or @name='AnyThing')">
         <xsl:variable name="Name"
 	  select="replace(@name|@key,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
+	<xsl:variable name="except" select="@except"/>
+	<xsl:variable name="include" select="@include"/>
         <xsl:for-each select="key('IDENTS',$Name)">
           <xsl:choose>
             <xsl:when test="self::tei:elementSpec">
@@ -2623,23 +2627,34 @@ of this software, even if advised of the possibility of such damage.
               </xsl:for-each>
             </xsl:when>
             <xsl:when test="self::tei:classSpec">
-              <xsl:call-template name="followMembers"/>
+              <xsl:call-template name="followMembers">
+		<xsl:with-param name="include" select="$include"/>
+		<xsl:with-param name="except" select="$except"/>
+	      </xsl:call-template>
             </xsl:when>
           </xsl:choose>
         </xsl:for-each>
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
+
   <xsl:template name="followMembers">
+    <xsl:param name="include"/>
+    <xsl:param name="except"/>
     <xsl:for-each select="key('CLASSMEMBERS',@ident)">
       <xsl:choose>
         <xsl:when test="self::tei:elementSpec">
-          <Element prefix="{@prefix}"  module="{@module}"
-		   type="{local-name()}"
-		   name="{tei:createSpecName(.)}"/>
+	      <xsl:if test="tei:includeMember(@ident,$except,$include)">
+		<Element prefix="{@prefix}"  module="{@module}"
+			 type="{local-name()}"
+			 name="{tei:createSpecName(.)}"/>
+	      </xsl:if>
         </xsl:when>
         <xsl:when test="self::tei:classSpec">
-          <xsl:call-template name="followMembers"/>
+          <xsl:call-template name="followMembers">
+		<xsl:with-param name="include" select="$include"/>
+		<xsl:with-param name="except" select="$except"/>
+	  </xsl:call-template>
         </xsl:when>
       </xsl:choose>
     </xsl:for-each>
