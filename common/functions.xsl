@@ -1007,7 +1007,11 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
-        <xsl:when test="@place = ('foot','bottom','parend','tablefoot')  and not(parent::tei:bibl or  ancestor::tei:teiHeader)">true</xsl:when>
+	<xsl:when test="ancestor::tei:listBibl">false</xsl:when>
+        <xsl:when test="@place='foot'">true</xsl:when>
+        <xsl:when test="@place='bottom'">true</xsl:when>
+        <xsl:when test="@place='parend'">true</xsl:when>
+        <xsl:when test="@place='tablefoot'">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>

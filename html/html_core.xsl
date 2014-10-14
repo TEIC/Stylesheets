@@ -596,7 +596,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:list">
     <xsl:if test="tei:head">
-      <xsl:element name="{if (not(tei:isInline(.))) then 'div' else 'span' }">
+      <xsl:element name="{if (tei:isInline(.)) then 'span' else 'div' }">
         <xsl:attribute name="class">listhead</xsl:attribute>
         <xsl:apply-templates select="tei:head"/>
       </xsl:element>
@@ -1229,7 +1229,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="count(*)=1 and tei:floatingText">
           <xsl:apply-templates/>
       </xsl:when>
-      <xsl:when test="tei:floatingText or not(tei:isInline(.)) or *[not(tei:isInline(.))]">
+      <xsl:when test="count(parent::tei:p/*)=1 or tei:floatingText or not(tei:isInline(.)) or *[not(tei:isInline(.))]">
         <div>
 	  <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="auto">blockquote</xsl:with-param>
