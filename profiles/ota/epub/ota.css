@@ -459,9 +459,12 @@ span.previousLink {
 span.upLink {
     font-style: italic;
 }
-p, div.p {
+p, div.p, span.p {
     margin-top: 0.5em;
     line-height: 125%;
+}
+span.p {
+    display: block;
 }
 /* bibl */
 span.titlem {
@@ -475,6 +478,10 @@ span.titleu {
 span.titles {
 }
 
+span.notemargin,
+span.notemarginOuter,
+span.notemarginLeft,
+span.notemarginRight,
 div.notemargin,span.notemargin {
     display: block;
     font-size: smaller;
@@ -485,6 +492,15 @@ div.notemargin,span.notemargin {
     float:right; 
     border: solid green 1pt; 
     margin: 6pt;
+}
+span.notemargin,
+span.notemarginOuter,
+span.notemarginRight,
+span.notemargin,div.notemargin {
+    float:right; 
+}
+span.notemarginLeft {
+    float:left; 
 }
 
 div.floatingText_back {

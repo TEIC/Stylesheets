@@ -1186,7 +1186,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:choose>
         </xsl:for-each-group>
       </xsl:when>
-      <xsl:when test="teix:egXML or ancestor::tei:head">
+      <xsl:when test="teix:egXML or ancestor::tei:head or $wrapperElement='span'">
 	<xsl:element name="{$wrapperElement}">
 	  <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="default">p</xsl:with-param>
