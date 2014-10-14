@@ -1229,7 +1229,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="count(*)=1 and tei:floatingText">
           <xsl:apply-templates/>
       </xsl:when>
-      <xsl:when test="count(parent::tei:p/*)=1 or tei:floatingText or not(tei:isInline(.)) or *[not(tei:isInline(.))]">
+      <xsl:when test="(not(parent::tei:p/text()) and count(parent::tei:p/*)=1) or tei:floatingText or not(tei:isInline(.)) or *[not(tei:isInline(.))]">
         <div>
 	  <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="auto">blockquote</xsl:with-param>
