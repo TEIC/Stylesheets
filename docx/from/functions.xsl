@@ -64,7 +64,7 @@ of this software, even if advised of the possibility of such damage.
     
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Defines whether or not a word paragraph is a first level heading.</desc></doc>
-    <xsl:function name="tei:is-firstlevel-heading" as="xs:boolean">
+    <xsl:function name="tei:isFirstlevel-heading" as="xs:boolean">
         <xsl:param name="p"/>
         
         <xsl:choose>

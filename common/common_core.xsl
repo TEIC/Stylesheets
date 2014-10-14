@@ -967,6 +967,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:note">
     <xsl:choose>
       <xsl:when test="@place='none'"/>
+
       <xsl:when test="not(@place) and (parent::tei:head or ancestor::tei:bibl or
 		      ancestor::tei:biblFull or ancestor::tei:biblStruct)">
 	<xsl:call-template name="makeText">
@@ -994,7 +995,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="commentNote"/>
       </xsl:when>
 
-      <xsl:when test="@place='inline' and not(tei:is-inline(.))">
+      <xsl:when test="@place='inline' and not(tei:isInline(.))">
 	<xsl:call-template name="displayNote"/>
       </xsl:when>
       
@@ -1009,11 +1010,13 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="tei:isFootNote(.)">
 	<xsl:call-template name="footNote"/>
       </xsl:when>
+
       <xsl:when test="tei:isMarginal(@place)">
 	<xsl:call-template name="marginalNote"/>
       </xsl:when>
 
-      <xsl:when test="tokenize(@place,' ')=('display') or not(tei:is-inline(.)) or tei:q">
+      <xsl:when test="tokenize(@place,' ')=('display') or
+		      not(tei:isInline(.)) or tei:q">
 	<xsl:call-template name="displayNote"/>
       </xsl:when>
 
@@ -1021,6 +1024,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:message>unknown @place for note, <xsl:value-of select="@place"/></xsl:message>
 	<xsl:call-template name="displayNote"/>
       </xsl:when>
+
       <xsl:otherwise>
 	<xsl:call-template name="plainNote"/>
       </xsl:otherwise>
@@ -1065,7 +1069,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:bibl">
     <xsl:choose>
       <xsl:when test="parent::tei:cit[tei:match(@rend,'display')] or
-		      (parent::tei:cit and tei:p) or  parent::tei:q[tei:is-inline(.)]">
+		      (parent::tei:cit and tei:p) or  parent::tei:q[tei:isInline(.)]">
         <xsl:call-template name="makeInline">
 	  <xsl:with-param name="style">citbibl</xsl:with-param>
 	</xsl:call-template>
@@ -1075,7 +1079,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:with-param name="style">citbibl</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
-      <xsl:when test="not(tei:is-inline(.))">
+      <xsl:when test="not(tei:isInline(.))">
         <xsl:call-template name="makeBlock">
 	  <xsl:with-param name="style">biblfree</xsl:with-param>
 	</xsl:call-template>
@@ -1215,15 +1219,15 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="tei:match(@rend,'below')">
         <xsl:text>⌞</xsl:text>
       </xsl:when>
-      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or
-		      tei:is-first(.))"/>
+      <xsl:when test="not(tei:isInline(..)) and (tei:isLast(.) or
+		      tei:isFirst(.))"/>
       <xsl:when test="tei:match(@rend,'show')">
 	<xsl:call-template name="lineBreak"/>
       </xsl:when>
       <xsl:when test="tei:match(@rend,'paragraph')">
 	<xsl:call-template name="lineBreakAsPara"/>
       </xsl:when>
-      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
+      <xsl:when test="not(tei:isInline(..)) and (tei:isLast(.) or tei:isFirst(.))"/>
       <xsl:otherwise>
 	<xsl:call-template name="lineBreak"/>
       </xsl:otherwise>
@@ -1343,7 +1347,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:with-param name="style">sub</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
-      <xsl:when test="not(tei:is-inline(*[last()]))">
+      <xsl:when test="not(tei:isInline(*[last()]))">
 	<xsl:call-template name="makeBlock">
 	  <xsl:with-param name="style">add</xsl:with-param>
 	</xsl:call-template>

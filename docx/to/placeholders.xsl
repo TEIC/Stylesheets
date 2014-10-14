@@ -168,7 +168,7 @@ of this software, even if advised of the possibility of such damage.
         
     </desc>
    </doc>
-    <xsl:template match="*[not(tei:is-inline(.))]" priority="-10">
+    <xsl:template match="*[not(tei:isInline(.))]" priority="-10">
         <xsl:param name="style"/>
         <xsl:param name="pPr" as="node()*"/>
         <xsl:param name="nop"/>
@@ -205,7 +205,7 @@ of this software, even if advised of the possibility of such damage.
     </desc>
    </doc>
 
-    <xsl:template match="*[tei:is-inline(.)]" priority="-10">
+    <xsl:template match="*[tei:isInline(.)]" priority="-10">
         <xsl:param name="character-style"/>
         <xsl:param name="style"/>
         <xsl:param name="pPr" as="node()*"/>

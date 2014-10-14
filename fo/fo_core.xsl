@@ -505,7 +505,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="plainNote">
-    <xsl:element name="{if (tei:is-inline(.)) then 'inline' else 'block'}">
+    <xsl:element name="{if (tei:isInline(.)) then 'inline' else 'block'}">
       <xsl:attribute name="font-size" select="$footnoteSize"/>
       <xsl:attribute name="font-style">italic</xsl:attribute>
       <xsl:text> [</xsl:text>
@@ -611,7 +611,7 @@ of this software, even if advised of the possibility of such damage.
       <desc/>
    </doc>
   <xsl:template match="tei:pb">
-      <xsl:variable name="e" select="if (tei:is-inline(..)) then
+      <xsl:variable name="e" select="if (tei:isInline(..)) then
 	'inline' else 'block'"/>
       <xsl:choose>
          <xsl:when test="parent::tei:list"/>
@@ -647,7 +647,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:quote">
     <xsl:choose>
-      <xsl:when test="not(tei:is-inline(.))">
+      <xsl:when test="not(tei:isInline(.))">
       <block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}"
              start-indent="{$exampleMargin}"
              font-size="{$quoteSize}"
@@ -694,7 +694,7 @@ of this software, even if advised of the possibility of such damage.
                <xsl:apply-templates/>
             </block>
          </xsl:when>
-	 <xsl:when test="not(tei:is-inline(.))">
+	 <xsl:when test="not(tei:isInline(.))">
 	   <block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}"
 		  start-indent="{$exampleMargin}"
 		  font-size="{$quoteSize}"

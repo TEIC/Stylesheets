@@ -670,7 +670,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:q|tei:said">
       <xsl:choose>
-	<xsl:when test="not(tei:is-inline(.))">
+	<xsl:when test="not(tei:isInline(.))">
 	  <xsl:text>&#10;\begin{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}</xsl:text>
 	  <xsl:apply-templates/>
 	  <xsl:text>\end{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}&#10;</xsl:text>
@@ -690,7 +690,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
 	  <xsl:apply-templates/>
 	</xsl:when>
-	<xsl:when test="not(tei:is-inline(.))">
+	<xsl:when test="not(tei:isInline(.))">
 	  <xsl:text>\begin{</xsl:text><xsl:value-of select="$quoteEnv"/><xsl:text>}</xsl:text>
 	  <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
 	  <xsl:apply-templates/>

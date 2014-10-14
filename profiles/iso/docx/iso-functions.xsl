@@ -113,7 +113,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
     </doc>
     
-    <xsl:function name="tei:is-firstlevel-heading" as="xs:boolean">
+    <xsl:function name="tei:isFirstlevel-heading" as="xs:boolean">
       <xsl:param name="p"/>
           <xsl:variable name="Heading">heading</xsl:variable>
 	  <xsl:variable name="Heading1">heading 1</xsl:variable>      
@@ -258,7 +258,7 @@ of this software, even if advised of the possibility of such damage.
     
     
     <!-- whether an element is block-level or inline -->
-    <xsl:function name="tei:is-inline" as="xs:boolean">
+    <xsl:function name="tei:isInline" as="xs:boolean">
       <xsl:param name="element"/>
       <xsl:for-each select="$element">
 	<xsl:choose>
@@ -344,7 +344,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:otherwise>
 	    <xsl:choose>
 	      <xsl:when test="empty($element/..)">false</xsl:when>
-	      <xsl:when test="tei:is-inline($element/..)">true</xsl:when>
+	      <xsl:when test="tei:isInline($element/..)">true</xsl:when>
 	      <xsl:otherwise>false</xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:otherwise>

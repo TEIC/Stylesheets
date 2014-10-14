@@ -349,7 +349,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="tei:q[tei:p]">div</xsl:when>
         <xsl:when test="tei:q[tei:sp]">div</xsl:when>
         <xsl:when test="tei:q[tei:floatingText]">div</xsl:when>
-        <xsl:when test="tei:quote[not(tei:is-inline(.))]">div</xsl:when>
+        <xsl:when test="tei:quote[not(tei:isInline(.))]">div</xsl:when>
         <xsl:when test="tei:specGrp">div</xsl:when>
         <xsl:when test="tei:specGrpRef">div</xsl:when>
         <xsl:when test="tei:specList">div</xsl:when>
@@ -418,7 +418,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template name="makeBlock">
     <xsl:param name="style"/>
-    <xsl:element name="{if (tei:is-inline(.)) then 'span' else 'div'}">
+    <xsl:element name="{if (tei:isInline(.)) then 'span' else 'div'}">
       <xsl:call-template name="microdata"/>
       <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default" select="$style"/>

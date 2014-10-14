@@ -104,7 +104,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether a section is "identifiable"</desc>
   </doc>
-  <xsl:function name="tei:is-identifiable" as="xs:boolean">
+  <xsl:function name="tei:isIdentifiable" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
@@ -124,7 +124,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether a section is "transcribable"</desc>
   </doc>
-  <xsl:function name="tei:is-transcribable" as="xs:boolean">
+  <xsl:function name="tei:isTranscribable" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
@@ -318,7 +318,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Is given an element and defines whether or not this element is to be rendered inline.</desc>
   </doc>
-  <xsl:function name="tei:is-inline" as="xs:boolean">
+  <xsl:function name="tei:isInline" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:choose>
       <xsl:when test="empty($element)">true</xsl:when>
@@ -326,6 +326,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:for-each select="$element">
           <xsl:choose>
             <xsl:when test="not(self::*)">true</xsl:when>
+            <xsl:when test="parent::tei:bibl/parent::tei:q">true</xsl:when>
             <xsl:when test="tei:match(@rend,'inline') and not(tei:p or tei:l)">true</xsl:when>
             <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
             <xsl:when test="self::tei:note[tei:isEndNote(.)]">true</xsl:when>
@@ -338,8 +339,8 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="self::tei:cit[not(@rend)]">true</xsl:when>
             <xsl:when test="parent::tei:cit[tei:match(@rend,'display')]">false</xsl:when>
             <xsl:when test="parent::tei:cit and (tei:p or tei:l)">false</xsl:when>
-            <xsl:when test="parent::tei:cit and parent::cit/tei:bibl">false</xsl:when>
             <xsl:when test="parent::tei:body">false</xsl:when>
+            <xsl:when test="parent::tei:cit and parent::cit/tei:bibl">false</xsl:when>
             <xsl:when test="parent::tei:titlePage">false</xsl:when>
             <xsl:when test="self::tei:docAuthor and parent::tei:byline">true</xsl:when>
             <xsl:when test="self::tei:note[tei:cit/tei:bibl]">false</xsl:when>
@@ -355,7 +356,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="self::tei:am">true</xsl:when>
             <xsl:when test="self::tei:att">true</xsl:when>
             <xsl:when test="self::tei:author">true</xsl:when>
-            <xsl:when test="self::tei:bibl and not (tei:is-inline(preceding-sibling::*[1]))">false</xsl:when>
+            <xsl:when test="self::tei:bibl and not (tei:isInline(preceding-sibling::*[1]))">false</xsl:when>
             <xsl:when test="self::tei:bibl and not (parent::tei:listBibl)">true</xsl:when>
             <xsl:when test="self::tei:biblScope">true</xsl:when>
             <xsl:when test="self::tei:br">true</xsl:when>
@@ -445,7 +446,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="self::m:oMath">true</xsl:when>
             <xsl:when test="parent::tei:note[tei:isEndNote(.)]">false</xsl:when>
             <xsl:when test="empty($element/..)">false</xsl:when>
-            <xsl:when test="not(self::tei:p) and tei:is-inline($element/..)">true</xsl:when>
+            <xsl:when test="not(self::tei:p) and tei:isInline($element/..)">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
           </xsl:choose>
         </xsl:for-each>
@@ -461,7 +462,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether an element has any more (useful) text in its parent</desc>
   </doc>
-  <xsl:function name="tei:is-last" as="xs:boolean">
+  <xsl:function name="tei:isLast" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
@@ -474,7 +475,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether an element has any  (useful) text before it</desc>
   </doc>
-  <xsl:function name="tei:is-first" as="xs:boolean">
+  <xsl:function name="tei:isFirst" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
@@ -510,7 +511,7 @@ of this software, even if advised of the possibility of such damage.
 	    <!-- but if its in a run on inline objects with the same
 	    name (like a sequence of <hi>), then the space needs
 	    keeping -->
-	    <xsl:when test="(tei:is-inline(parent::*)  and parent::*/preceding-sibling::node()[1][name()=$context])">
+	    <xsl:when test="(tei:isInline(parent::*)  and parent::*/preceding-sibling::node()[1][name()=$context])">
               <xsl:call-template name="space"/>
 	    </xsl:when>
 	    <xsl:when test="position()=1"/>
@@ -1006,7 +1007,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
-        <xsl:when test="(@place)=('foot','bottom','parend','tablefoot')     and not(parent::tei:bibl or  ancestor::tei:teiHeader)">true</xsl:when>
+        <xsl:when test="@place = ('foot','bottom','parend','tablefoot')  and not(parent::tei:bibl or  ancestor::tei:teiHeader)">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>

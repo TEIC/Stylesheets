@@ -593,7 +593,7 @@ of this software, even if advised of the possibility of such damage.
 	    <tei:TERM>
 	      <xsl:value-of select="tei:term"/>
 	    </tei:TERM>	    
-	    <xsl:for-each select="ancestor-or-self::*[tei:is-identifiable(.)][1]">
+	    <xsl:for-each select="ancestor-or-self::*[tei:isIdentifiable(.)][1]">
 	      <tei:LINK>
 		  <xsl:apply-templates mode="generateLink"
 				       select="."/>

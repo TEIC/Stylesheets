@@ -249,7 +249,7 @@ of this software, even if advised of the possibility of such damage.
 		 group all paragraphs that form a first level section.
 	    -->
 	    <xsl:for-each-group select="w:sdt|w:p|w:tbl"
-				group-starting-with="w:p[tei:is-firstlevel-heading(.)]">
+				group-starting-with="w:p[tei:isFirstlevel-heading(.)]">
 	      
 	      <xsl:choose>
 		
