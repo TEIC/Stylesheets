@@ -5,8 +5,8 @@
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     version="2.0">
   <xsl:output indent="no"/>
-
-  <xsl:variable name="special-nodes" select="//l[position()=2]"/>
+  <xsl:variable name="What">//*</xsl:variable>
+  <xsl:variable name="special-nodes" select="//*"/>
 
   <xsl:template match="*" mode="iden">
     <xsl:copy>
@@ -37,7 +37,7 @@
   <teiHeader type="text">
     <fileDesc>
       <titleStmt>
-        <title type="main">tree</title>
+        <title type="main"><xsl:value-of select="$What"/></title>
       </titleStmt>
       <publicationStmt>
         <p>Stylesheets test file</p>

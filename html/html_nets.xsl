@@ -141,6 +141,26 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:choose>
       </xsl:when>
 
+      <xsl:when test="$thistreestyle='d3DragDropTree'">
+        <xsl:variable name="TREEID" select="generate-id()"/>
+	
+        <xsl:choose>
+          <xsl:when test="not(ancestor::tei:eTree or ancestor::tei:forest)">
+	    <div  id="viz{$TREEID}"></div>
+	    <script src="dndTree.js"></script>
+            <script type="text/javascript">
+	      treeData = {<xsl:call-template name="treelabel"/>};
+	      dragndrop("#viz<xsl:value-of select="$TREEID"/>");
+	    </script>
+	  </xsl:when>
+          <xsl:otherwise>{<xsl:call-template
+	  name="treelabel"/><xsl:text>} </xsl:text>
+	  <xsl:if test="following-sibling::tei:*">, 
+	  </xsl:if>
+	  </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+
       <xsl:when test="$thistreestyle='d3CollapsableTree'">
         <xsl:choose>
           <xsl:when test="not(ancestor::tei:eTree or ancestor::tei:forest)">
@@ -150,7 +170,7 @@ of this software, even if advised of the possibility of such damage.
 			  select="max(descendant-or-self::*[self::tei:eTree
 				  or
 				  self::tei:eLeaf]/(count(tei:eLeaf)+count(tei:eTree)))
-				  * 150"/>
+				  * 155"/>
             <xsl:variable name="treewidth"
 			  select="count(descendant-or-self::*[self::tei:eTree]) * 130"/>
             <xsl:variable name="treedepth"
@@ -172,7 +192,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:otherwise>{<xsl:call-template
 	  name="treelabel"/><xsl:text>} </xsl:text>
 	  <xsl:if test="following-sibling::tei:*">, 
-</xsl:if>
+	  </xsl:if>
 	  </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
@@ -216,7 +236,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:value-of select="if (self::tei:forest) then 'invisible' else ''"/>
     <xsl:text>", </xsl:text>
     <xsl:text>"type":"</xsl:text>
-    <xsl:value-of select="(@type, if (self::tei:eLeaf) then 'leaf'  else '')"/>
+    <xsl:value-of select="(if (@type) then @type else '', if (self::tei:eLeaf) then 'leaf'  else '')"/>
     <xsl:text>" </xsl:text>
     <xsl:if test="tei:eTree|tei:eLeaf">
       <xsl:text>,"children":[</xsl:text>

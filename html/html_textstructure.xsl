@@ -1152,6 +1152,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="metaHTML">
 	<xsl:with-param name="title" select="$pagetitle"/>
       </xsl:call-template>
+
       <xsl:choose>
 	<xsl:when test="count(key('TREES',1))=0"/>
 	<xsl:when test="$treestyle='googlechart'">
@@ -1160,6 +1161,53 @@ of this software, even if advised of the possibility of such damage.
 	google.load('visualization', '1', {packages:['orgchart']});
 	google.setOnLoadCallback(drawCharts);
 	  </script>
+	</xsl:when>
+	<xsl:when test="$treestyle='d3DragDropTree'">
+	  <!-- from  http://www.robschmuecker.com/d3-js-drag-and-drop-zoomable-tree/ -->
+          <script type="text/javascript"
+		  src="http://d3js.org/d3.v3.min.js"/>
+	  <style type="text/css">
+  
+	.node {
+    cursor: pointer;
+  }
+
+  .overlay{
+      background-color:#EEE;
+  }
+   
+  .node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+   
+  .node text {
+    font-size:10px; 
+    font-family:sans-serif;
+  }
+   
+  .link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+  }
+
+  .templink {
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
+  }
+
+  .ghostCircle.show{
+      display:block;
+  }
+
+  .ghostCircle, .activeDrag .ghostCircle{
+       display: none;
+  }
+
+</style>
 	</xsl:when>
 	<xsl:when test="$treestyle='d3CollapsableTree'">
           <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"/>
@@ -1175,6 +1223,9 @@ of this software, even if advised of the possibility of such damage.
 	    <style>	    	      
 	      .treediagram {background-color: #eee}
 	      .node {	      cursor: pointer;	      }	      
+	      .nodediv.desc {
+	           font: 8px sans-serif;
+	      }
 	      .nodediv {
 	      border: solid black 1px;
 	      background-color: white; 
@@ -1307,8 +1358,6 @@ function click(d) {
   }
   update(d);
 }
-
-	    
 	  </script>
 	</xsl:when>
 	<xsl:when test="$treestyle='d3verticaltree'">
