@@ -169,8 +169,10 @@ of this software, even if advised of the possibility of such damage.
 
     </script>
           </xsl:when>
-          <xsl:otherwise>{<xsl:call-template name="treelabel"/><xsl:text>}, 
-	    </xsl:text>
+          <xsl:otherwise>{<xsl:call-template
+	  name="treelabel"/><xsl:text>} </xsl:text>
+	  <xsl:if test="following-sibling::tei:*">, 
+</xsl:if>
 	  </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
@@ -178,10 +180,10 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="treelabel">
-    <xsl:text>"name":'</xsl:text><xsl:for-each select="tei:label"><xsl:apply-templates/></xsl:for-each><xsl:text>', </xsl:text>
-    <xsl:text>"style":'</xsl:text>
+    <xsl:text>"name":"</xsl:text><xsl:for-each select="tei:label"><xsl:apply-templates/></xsl:for-each><xsl:text>", </xsl:text>
+    <xsl:if test="tei:label/@rend"><xsl:text>"style":"</xsl:text>
     <xsl:value-of select="tei:label/@rend"/>
-    <xsl:text>', </xsl:text>
+    <xsl:text>", </xsl:text></xsl:if>
     <xsl:choose>
       <xsl:when test="tei:label/@xml:id">
 	<xsl:text>"id":"</xsl:text>
@@ -206,17 +208,14 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:text>", </xsl:text>
       </xsl:when>
     </xsl:choose>
-    <xsl:text>"showlink":'</xsl:text>
+    <xsl:text>"showlink":"</xsl:text>
     <xsl:value-of select="if (self::tei:forest) then 'invisible' else ''"/>
-    <xsl:text>', </xsl:text>
-    <xsl:text>"type":'</xsl:text>
-    <xsl:apply-templates select="@type"/>
-    <xsl:if test="self::tei:eLeaf">
-      <xsl:text> leaf</xsl:text>
-    </xsl:if>
-    <xsl:text>', </xsl:text>
+    <xsl:text>", </xsl:text>
+    <xsl:text>"type":"</xsl:text>
+    <xsl:value-of select="(@type, if (self::tei:eLeaf) then 'leaf'  else '')"/>
+    <xsl:text>" </xsl:text>
     <xsl:if test="tei:eTree|tei:eLeaf">
-      <xsl:text>"children":[</xsl:text>
+      <xsl:text>,"children":[</xsl:text>
       <xsl:apply-templates select="*[not(self::tei:label)]"/>
       <xsl:text>]</xsl:text>
     </xsl:if>
