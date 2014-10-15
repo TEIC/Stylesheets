@@ -6,7 +6,7 @@
     version="2.0">
   <xsl:output indent="no"/>
 
-  <xsl:variable name="special-nodes" select="//div[head]"/>
+  <xsl:variable name="special-nodes" select="//l[position()=2]"/>
 
   <xsl:template match="*" mode="iden">
     <xsl:copy>

@@ -41,7 +41,7 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:variable name="squo">'</xsl:variable>
+  <xsl:variable name="quo">'</xsl:variable>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element eTree</desc>
   </doc>
@@ -180,7 +180,11 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="treelabel">
-    <xsl:text>"name":"</xsl:text><xsl:for-each select="tei:label"><xsl:apply-templates/></xsl:for-each><xsl:text>", </xsl:text>
+    <xsl:text>"name":'</xsl:text>
+      <xsl:for-each select="tei:label">
+	<xsl:apply-templates/>
+      </xsl:for-each>
+    <xsl:text>', </xsl:text>
     <xsl:if test="tei:label/@rend"><xsl:text>"style":"</xsl:text>
     <xsl:value-of select="tei:label/@rend"/>
     <xsl:text>", </xsl:text></xsl:if>
@@ -230,7 +234,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:eLeaf/tei:label/text()|tei:eTree/tei:label/text()">
-    <xsl:value-of select="replace(.,$squo,concat('\\',$squo))"/>
+    <xsl:value-of select="replace(.,$quo,concat('\\',$quo))"/>
   </xsl:template>
 
 
