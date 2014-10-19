@@ -155,9 +155,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>(</xsl:text>
     </xsl:if>
     <xsl:text>{"title": "</xsl:text>
-    <xsl:sequence select="tei:generateMetadataTitle(.)"/>
+    <xsl:sequence select="tei:generateMetadataTitle(*)"/>
     <xsl:text>","edition": "</xsl:text>
-    <xsl:sequence select="tei:generateEdition(.)"/>
+    <xsl:sequence select="tei:generateEdition(*)"/>
     <xsl:text>","generator": "odd2json",
     "date":"</xsl:text>
     <xsl:call-template name="showDate"/>
