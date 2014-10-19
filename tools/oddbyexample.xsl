@@ -223,7 +223,11 @@ valList
     <xsl:variable name="stage1">
       <stage1>
         <tei>
-          <xsl:for-each select="document($defaultSource)">
+          <xsl:for-each select="doc($defaultSource)">
+	    <xsl:if test="$verbose='true'">
+	      <xsl:message>reading main source from <xsl:value-of
+	      select="$defaultSource"/></xsl:message>
+	    </xsl:if>
             <xsl:for-each select="key('CLASSES',1)">
               <classSpec>
                 <xsl:copy-of select="@ident"/>
