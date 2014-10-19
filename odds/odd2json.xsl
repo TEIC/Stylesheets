@@ -87,7 +87,7 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
-   <xsl:param name="callback">teijs</xsl:param>
+   <xsl:param name="callback"></xsl:param>
    <xsl:param name="showChildren">false</xsl:param>
 
    <xsl:template name="emphasize">
