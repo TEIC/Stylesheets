@@ -261,6 +261,9 @@ test-to-docx:
 	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > testnotes1.xml.docx.document
 	diff testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document
 	rm testnotes1.xml.docx.document
+	$(SAXON) testoucscourses.xml ../profiles/default/p4/from.xsl > testoucscoursesp5.xml
+	$(BINDIR)/teitodocx --profile=oucscourses testoucscoursesp5.xml testoucscourses.xml.docx
+	rm testoucscourses.xml.docx testoucscoursesp5.xml
 
 test-oddity: css
 	@echo BUILD: testing oddity
@@ -430,3 +433,4 @@ clean:
 oddtree:
 	saxon /usr/share/xml/tei/odd/p5subset.xml odd-to-tree.xsl  > oddtree.xml
 	teitohtml --profile=oxford oddtree.xml oddtree.html
+
