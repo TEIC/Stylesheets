@@ -7,7 +7,7 @@
     exclude-result-prefixes="tei html"
     version="2.0">
     <!-- import base conversion style -->
-    <xsl:import href="../../../verbatimxml/teitoverbatimxml.xsl"/>
+    <xsl:import href="../../../verbatimxml/teitoverbatim.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
