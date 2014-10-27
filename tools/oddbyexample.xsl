@@ -239,7 +239,7 @@ valList
                     <xsl:call-template name="checktype"/>
                   </attDef>
                 </xsl:for-each>
-                <xsl:call-template name="classatts"/>
+                <xsl:call-template name="attributesFromClasses"/>
 		<xsl:for-each select="classes/memberOf">
 		  <classmember ident="{@key}"/>
 		</xsl:for-each>
@@ -256,7 +256,7 @@ valList
                     <xsl:call-template name="checktype"/>
                   </attDef>
                 </xsl:for-each>
-                <xsl:call-template name="classatts"/>
+                <xsl:call-template name="attributesFromClasses"/>
               </elementSpec>
             </xsl:for-each>
           </xsl:for-each>
@@ -292,6 +292,7 @@ valList
         <!-- for every attribute class, see if its members should be
 	     deleted, by seeing if they are used anywhere-->
         <xsl:for-each select="$stage1/stage1/tei/classSpec">
+
           <xsl:variable name="classatts">
             <xsl:for-each select="attDef">
               <xsl:variable name="this" select="@ident"/>
@@ -300,8 +301,6 @@ valList
                   <xsl:if test="key('UsedAtt',concat(@ident,$this))">
                     <xsl:text>true</xsl:text>
                   </xsl:if>
-                  <!-- tutaj dodac test, czy nie jest to aby member innej klasy, 
-                    bo jesli tak, trzeba sprawdzic czy ktorys z jej atrybutow nie jest used -->
                 </xsl:for-each>
               </xsl:variable>
               <xsl:choose>
@@ -335,8 +334,10 @@ valList
               </xsl:choose>
             </xsl:for-each>
           </xsl:variable>
+
           <xsl:choose>
-            <xsl:when test="$classatts/attDef[@mode='delete'] and not($classatts/keep)">
+            <xsl:when test="$classatts/attDef[@mode='delete'] and
+			    not($classatts/keep)">
               <classSpec ident="{@ident}" module="{@module}" type="atts" mode="delete">
                 <xsl:copy-of select="classmember"/>
                 <attList>
@@ -550,7 +551,7 @@ valList
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template name="classatts">
+  <xsl:template name="attributesFromClasses">
     <xsl:for-each select="classes/memberOf">
       <xsl:for-each select="key('IDENTS',@key)">
         <xsl:for-each select=".//tei:attDef">
@@ -559,7 +560,7 @@ valList
             <xsl:call-template name="checktype"/>
           </attDef>
         </xsl:for-each>
-        <xsl:call-template name="classatts"/>
+        <xsl:call-template name="attributesFromClasses"/>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
@@ -635,13 +636,15 @@ valList
 
   <!-- ignore elementSpec @mode='delete' -->
   <xsl:template match="elementSpec[@mode='delete']" mode="stage3"/>
+
+  <!-- keep a class if someone else wants it -->
   <xsl:template match="classSpec[@mode='delete']" mode="stage3">
     <xsl:copy>
       <xsl:copy-of select="@ident"/>
       <xsl:copy-of select="@module"/>
       <xsl:copy-of select="@type"/>
       <xsl:choose>
-        <xsl:when test="../classSpec[@ident=current()/classmember/@ident]">
+        <xsl:when test="../classSpec[not(@mode='delete') and @ident=current()/classmember/@ident]">
           <xsl:attribute name="mode">change</xsl:attribute>
           <xsl:copy-of select="attList"/>
         </xsl:when>
