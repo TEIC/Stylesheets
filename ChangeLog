@@ -1,3 +1,236 @@
+2014-10-20  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+	RELEASE 7.25
+
+	changed test files
+
+2014-10-19  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	test results
+
+	odd2json changes to get title right
+
+	default to JSON not js
+
+	show source being read
+
+2014-10-17  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	force line break in gloss list where item content is a list
+
+2014-10-15  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	put more options into odd to tree; add d3 drag n drop tree to options for tree rendering
+
+	move utilities into right place
+
+	make cleaner JSON
+
+	updated test results after CSS change
+
+2014-10-14  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	avoid too brutal a test
+
+	not understanding how to compare multiple values of @place
+
+	rename functions consistently
+
+	<p> within margin note changed to span, which needs extra CSS
+
+2014-10-13  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	add teitoschematron script
+
+2014-10-13  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	rename bitOut to schemaOut, and clear up constraintSpec processinh in weave mode
+
+	undo overenthusiastic filtering of classRefs
+
+	making sure pure odd comes out right in documentation
+
+2014-10-11  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	handle minOccurs default
+
+	handle *Ref properly in <content> in odd2odd
+
+	rethink handling of maxOccurs and minOccurs
+
+	remove phrase "all rights reserved" as its meaningless
+
+2014-10-10  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	remove all reference to @allowText
+
+2014-10-10  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	fix typo which was zapping datatypes from DTDs
+
+	switch to using textNode in test files
+
+	correct error in odd2dtd over handling classes; fixed tests
+
+	correcting DTD generation from Pure ODD
+
+2014-10-09  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	textNode in DTD
+
+	starting trying to do textNode in DTD
+
+	start implementing <textNode>
+
+2014-10-08  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	clean up mess around CSS
+
+	keep odd CSS separate
+
+	more working on checking @rend  against possibility of multiple values
+
+2014-10-07  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	recast expression
+
+	if a label has an xml:id, means @id in HTML
+
+	tweaking TCP conversion for more edge cases
+
+2014-10-06  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	bibl as parent of label means make a marginal note
+
+	@role on row
+
+	leave @role alone on cell and row
+
+	need access to functions in doc/param.xsl
+
+	redo the way we look at @rend, allowing always for multiple values
+	change values for some of the rend attributes
+
+2014-10-02  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	change to rule over whether pb makes a span or div
+	from ancestor::lg to parent::lg
+
+	make sure dc:date in epub only has numbers in
+
+	add code to TCP to conversion to unravel nested <p>
+
+	changed results
+
+2014-10-02  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	tortuous TCP processing rules
+
+2014-10-02  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	ota profile does not need to do anything special with pb
+
+	@facs targets starting with tcp: dont get processed
+
+	being more explicit about images on <pb>
+
+2014-10-01  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	a publicationStmt with no publisher generates a wrapper <p>
+	in TCP to TEI conversion. child pubPlace turns to a <name>
+
+2014-09-30  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	simplify previous change to allow for more circumstances
+
+	catch one more situation of ambiguous content
+	when a zeroOrMore is following by an optional with an identical
+	zeroOrMore
+
+2014-09-30  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	chanegd test file
+
+	use protocol tcp: instead of eebopage:
+
+2014-09-29  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	allow stage/stage in TCP; find funny dates in TCP for epub
+
+	fixes to epub and TCP conversion
+
+	make sure publicationStmt obeys new rules about order of elements
+
+2014-09-28  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	changed slides to default to Helvetica
+
+	extra parameter to permit oddbyexample ignore the header when calculating results for attribute lists
+
+2014-09-24  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	allow for filename prefix when running oddbyexample
+
+2014-09-23  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	treat @rendition like @rend in oddbyexample
+
+2014-09-23  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	fix error making table row about deprecation in tagdoc output
+	mistakenly made 2-column span if on atttribute
+
+2014-09-21  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	start new version
+
+2014-09-20  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+	RELEASE 7.24
+	amusing ourselves fixing Cocoa converter a bit
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+	Conflicts:
+		profiles/default/csv/from.xsl
+
+	clean up,  embed and test Cocoa conversion
+
+	discard  $Id$ in comments; Git doesn't expand them
+
+2014-09-19  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	more fallout from <title> processing
+
+	correct typos
+
+	changed result after fixing series title
+
+	put space after series title
+
+2014-09-18  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	start support for cocoa to tei
+
+	some changes arising from textcrit changes
+
+2014-09-18  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	clean up handling of <app>
+	 make it consistent across output formats
+
+2014-09-17  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	more results changed cos of P5 release
+
+2014-09-16  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	fall  out from marginal note changes
+
+	fallout of marginal note handling
+
+	changed results from P5 2.7.0 release
+
+	better handling of @place on <note>. avoid throwing away marginal notes!
+
+	allow for multi-value @rend, and test better against possibilities
 2014-09-16  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
 
 	allow for multi-value @rend, and test better against possibilities

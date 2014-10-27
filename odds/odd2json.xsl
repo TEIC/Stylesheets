@@ -87,7 +87,7 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
-   <xsl:param name="callback">teijs</xsl:param>
+   <xsl:param name="callback"></xsl:param>
    <xsl:param name="showChildren">false</xsl:param>
 
    <xsl:template name="emphasize">
@@ -155,9 +155,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>(</xsl:text>
     </xsl:if>
     <xsl:text>{"title": "</xsl:text>
-    <xsl:sequence select="tei:generateMetadataTitle(.)"/>
+    <xsl:sequence select="tei:generateMetadataTitle(*)"/>
     <xsl:text>","edition": "</xsl:text>
-    <xsl:sequence select="tei:generateEdition(.)"/>
+    <xsl:sequence select="tei:generateEdition(*)"/>
     <xsl:text>","generator": "odd2json",
     "date":"</xsl:text>
     <xsl:call-template name="showDate"/>

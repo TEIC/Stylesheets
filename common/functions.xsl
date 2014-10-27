@@ -696,7 +696,8 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type='subordinate')]"/>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
+	    <xsl:for-each
+		select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
 	      <xsl:choose>
 		<xsl:when test="tei:title[@type='main']">
 		  <xsl:apply-templates select="tei:title[@type='main']"/>

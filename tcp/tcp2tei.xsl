@@ -224,17 +224,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:value-of select="@N"/>
         </note>
       </xsl:when>
-      <xsl:when test="parent::SP">
-	<p>
-          <label type="milestone">
-	    <xsl:apply-templates select="@ID"/>
-            <xsl:value-of select="@UNIT"/>
-            <xsl:text> </xsl:text>
-            <xsl:value-of select="@N"/>
-          </label>
-	</p>
-      </xsl:when>
-      <xsl:when test="parent::LIST or parent::SPEAKER or parent::LABEL   or parent::BIBL">
+      <xsl:when test="parent::SP or parent::LIST or parent::SPEAKER or parent::LABEL   or parent::BIBL">
           <note place="margin" type="milestone">
 	    <xsl:apply-templates select="@ID"/>
             <xsl:value-of select="@UNIT"/>
@@ -2498,15 +2488,6 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:add[tei:p]" mode="pass2">
     <xsl:choose>
-      <xsl:when test="count(tei:p)=1">
-	<add>
-	  <xsl:for-each select="tei:p">
-	    <xsl:apply-templates
-		select="*|text()|processing-instruction()|comment()"
-		mode="pass2"/>
-	  </xsl:for-each>
-	</add>
-      </xsl:when>
       <xsl:when test="parent::tei:p">
 	<xsl:for-each select="tei:p">
 	  <p>
@@ -2518,6 +2499,15 @@ of this software, even if advised of the possibility of such damage.
 	    </add>
 	  </p>
 	</xsl:for-each>
+      </xsl:when>
+      <xsl:when test="count(tei:p)=1">
+	<add>
+	  <xsl:for-each select="tei:p">
+	    <xsl:apply-templates
+		select="*|text()|processing-instruction()|comment()"
+		mode="pass2"/>
+	  </xsl:for-each>
+	</add>
       </xsl:when>
       <xsl:otherwise>
 	<addSpan>
