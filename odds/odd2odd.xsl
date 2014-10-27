@@ -1336,7 +1336,6 @@ so that is only put back in if there is some content
   <xsl:template name="odd2odd-processAttributes">
     <xsl:param name="ORIGINAL"/>
     <xsl:param name="objectName"/>
-
     <!-- we are sitting in the ODD -->
     <!-- first put in the ones we know take precedence as replacements -->
     <xsl:for-each select="tei:attList/tei:attDef[@mode='replace' and @ident=$ORIGINAL/tei:attList//tei:attDef/@ident]">
@@ -1361,7 +1360,7 @@ so that is only put back in if there is some content
     <!-- any direct attRef elements -->
     <xsl:apply-templates mode="justcopy"
 			   select="tei:attList/tei:attRef"/>
-    <!-- now look at each of the original element's attributes and see
+    <!-- now look at each of the original object's attributes and see
     if we have an update -->
     <xsl:for-each select="$ORIGINAL/tei:attList">
       <!-- original source  context -->
