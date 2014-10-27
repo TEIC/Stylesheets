@@ -60,14 +60,17 @@ of the TEI you need to validate that corpus
   <!-- How does this work?
 
 1) start a variable and copy in all of the TEI 
+
 2) read the corpus and get a list of all the elements and their
-attributes that it uses, put that in the same variable
+attributes that it uses, put that in the same variable.
+
 3) process the variable and read the TEI section. if an element or
  attribute is not present in the corpus section, put out a delete
  customization; 
  if the attributes of an attribute class are never used 
  that class may be deleted only if it doesn't claim membership in any other class 
- or, if it does, none of the attributes from that other class is used too
+ or, if it does, none of the attributes from that other class is used.
+
 4) for every attribute which is of type "enumerated", construct a
 valList
 
@@ -114,6 +117,7 @@ valList
   <xsl:key name="attVals" match="@*" use="concat(local-name(parent::*),local-name())"/>
   <xsl:key name="ELEMENTS" use="1" match="elementSpec"/>
   <xsl:key name="CLASSES" use="1" match="classSpec[@type='atts']"/>
+  <xsl:key name="DOCIDENTS" use="@ident" match="docs/*[@ident]"/>
   <xsl:key name="IDENTS" use="@ident" match="*[@ident]"/>
   <xsl:key name="MEMBERS" use="@key" match="elementSpec/classes/memberOf"/>
   <xsl:key name="CLASSMEMBERS" use="@key" match="classSpec/classes/memberOf"/>
@@ -190,14 +194,14 @@ valList
     </xsl:variable>
     <xsl:apply-templates select="$stage4" mode="stage4"/>
 
-    <!-- debug
+<!--
 	   <xsl:result-document href="/tmp/stage3.xml">
 	   <xsl:copy-of select="$stage3"/>
 	   </xsl:result-document>
 	   <xsl:result-document href="/tmp/stage4.xml">
 	   <xsl:copy-of select="$stage4"/>
 	   </xsl:result-document>
-      -->
+-->
 
   </xsl:template>
 
@@ -239,7 +243,6 @@ valList
                     <xsl:call-template name="checktype"/>
                   </attDef>
                 </xsl:for-each>
-                <xsl:call-template name="attributesFromClasses"/>
 		<xsl:for-each select="classes/memberOf">
 		  <classmember ident="{@key}"/>
 		</xsl:for-each>
@@ -267,10 +270,10 @@ valList
             <xsl:variable name="ident" select="current-grouping-key()"/>
             <elementSpec>
               <xsl:attribute name="ident">
-                <xsl:copy-of select="current-grouping-key()"/>
+                <xsl:value-of select="$ident"/>
               </xsl:attribute>
               <xsl:for-each-group select="key('Atts',$ident)" group-by="local-name()">
-                <attDef ident="{name()}">
+                <attDef ident="{current-grouping-key()}">
                   <valList type="closed">
                     <xsl:for-each-group select="key('attVals',concat($ident,local-name()))"
                       group-by=".">
@@ -287,21 +290,19 @@ valList
         </docs>
       </stage1>
     </xsl:variable>
+
     <xsl:variable name="stage2">
       <stage2>
-        <!-- for every attribute class, see if its members should be
+        <!-- for every attribute class, see if its attributes should be
 	     deleted, by seeing if they are used anywhere-->
         <xsl:for-each select="$stage1/stage1/tei/classSpec">
-
+	  
           <xsl:variable name="classatts">
+	    <xsl:if test="classmember"><keep/></xsl:if>
             <xsl:for-each select="attDef">
               <xsl:variable name="this" select="@ident"/>
               <xsl:variable name="used">
-                <xsl:for-each select="../member">
-                  <xsl:if test="key('UsedAtt',concat(@ident,$this))">
-                    <xsl:text>true</xsl:text>
-                  </xsl:if>
-                </xsl:for-each>
+		<xsl:call-template name="checkUsed"/>
               </xsl:variable>
               <xsl:choose>
                 <xsl:when test="$keepGlobals='true' and $this='n'">
@@ -336,6 +337,15 @@ valList
           </xsl:variable>
 
           <xsl:choose>
+
+            <xsl:when test="$classatts/attDef[@mode='delete'] and $classatts/keep">
+              <classSpec ident="{@ident}" module="{@module}" type="atts" mode="change">
+                <attList>
+                  <xsl:copy-of select="$classatts/attDef"/>
+                </attList>
+              </classSpec>
+            </xsl:when>
+
             <xsl:when test="$classatts/attDef[@mode='delete'] and
 			    not($classatts/keep)">
               <classSpec ident="{@ident}" module="{@module}" type="atts" mode="delete">
@@ -345,13 +355,7 @@ valList
                 </attList>
               </classSpec>
             </xsl:when>
-            <xsl:when test="$classatts/attDef[@mode='delete'] and $classatts/keep">
-              <classSpec ident="{@ident}" module="{@module}" type="atts" mode="change">
-                <attList>
-                  <xsl:copy-of select="$classatts/attDef"/>
-                </attList>
-              </classSpec>
-            </xsl:when>
+
             <xsl:when test="$classatts/keep">
               <classSpec ident="{@ident}" module="{@module}" type="atts" mode="keep"/>
             </xsl:when>
@@ -456,10 +460,12 @@ valList
             <moduleRef key="tei"/>
             <xsl:for-each-group select="$stage2/stage2/*[@mode='keep']" group-by="@module">
               <xsl:sort select="current-grouping-key()"/>
+	      <xsl:variable name="m" select="current-grouping-key()"/>
               <xsl:choose>
-                <xsl:when test="@module='tei'"/>
+                <xsl:when test="$m='tei'"/>
+		<xsl:when test="count(current-group()/*)=0"/>
                 <xsl:otherwise>
-                  <moduleRef key="{@module}"/>
+                  <moduleRef key="{$m}"   />
                 </xsl:otherwise>
               </xsl:choose>
               <xsl:for-each select="current-group()[self::elementSpec]">
@@ -533,6 +539,20 @@ valList
     </TEI>
   </xsl:template>
 
+  <xsl:template name="checkUsed">
+    <xsl:variable name="this" select="@ident"/>
+    <xsl:for-each select="../member">
+      <xsl:if test="key('UsedAtt',concat(@ident,$this))">
+	<xsl:value-of select="key('UsedAtt',concat(@ident,$this))/(ancestor-or-self::*[@ident]/@ident)"/>
+      </xsl:if>
+    </xsl:for-each>
+    <xsl:for-each select="../classmember">
+      <xsl:for-each select="key('DOCIDENTS',@ident)/attDef">
+	<xsl:call-template name="checkUsed"/>
+      </xsl:for-each>
+    </xsl:for-each>
+  </xsl:template>
+
   <xsl:template name="classmembers">
     <xsl:choose>
       <xsl:when test="@ident='att.global'">
@@ -551,6 +571,7 @@ valList
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="attributesFromClasses">
     <xsl:for-each select="classes/memberOf">
       <xsl:for-each select="key('IDENTS',@key)">
