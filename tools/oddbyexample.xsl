@@ -110,6 +110,8 @@ valList
   <xsl:key name="attVals" match="@*" use="concat(local-name(parent::*),local-name())"/>
   <xsl:key name="ELEMENTS" use="1" match="elementSpec"/>
   <xsl:key name="CLASSES" use="1" match="classSpec[@type='atts']"/>
+  <xsl:key name="OTHERS" use="1" match="classSpec[not(@module='tei') and @type='model']"/>
+  <xsl:key name="OTHERS" use="1" match="macroSpec[not(@module='tei')]"/>
   <xsl:key name="DOCIDENTS" use="@ident" match="docs/*[@ident]"/>
   <xsl:key name="IDENTS" use="@ident" match="*[@ident]"/>
   <xsl:key name="MEMBERS" use="@key" match="elementSpec/classes/memberOf"/>
@@ -188,8 +190,16 @@ valList
                 <xsl:if test="$verbose='true'">
                   <xsl:message>reading main source from <xsl:value-of select="$defaultSource"/></xsl:message>
                 </xsl:if>
+                <xsl:for-each select="key('OTHERS',1)">
+                  <xsl:copy>
+                    <xsl:copy-of select="@ident"/>
+                    <xsl:copy-of select="@type"/>
+                    <xsl:copy-of select="@module"/>
+		  </xsl:copy>
+		</xsl:for-each>
                 <xsl:for-each select="key('CLASSES',1)">
                   <classSpec>
+                    <xsl:copy-of select="@type"/>
                     <xsl:copy-of select="@ident"/>
                     <xsl:copy-of select="@module"/>
                     <xsl:copy-of select="classes/memberOf"/>
@@ -247,9 +257,12 @@ valList
         </xsl:variable>
         <xsl:variable name="stage2">
           <stage2>
+	    <!-- copy over model classes and macros -->
+            <xsl:copy-of select="$stage1/stage1/tei/classSpec[@type='model']"/>
+            <xsl:copy-of select="$stage1/stage1/tei/macroSpec"/>
             <!-- for every attribute class, see if its attributes should be
 	     deleted, by seeing if they are used anywhere-->
-            <xsl:for-each select="$stage1/stage1/tei/classSpec">
+            <xsl:for-each select="$stage1/stage1/tei/classSpec[@type='atts']">
               <xsl:variable name="classatts">
                 <xsl:if test="classmember">
                   <keep/>
@@ -405,8 +418,7 @@ valList
 	    -->
                 <moduleRef key="tei"/>
                 <xsl:for-each-group
-		    select="$stage2/stage2/*[@mode='change' or
-			    @mode='add' or @mode='keep']" group-by="@module">
+		    select="$stage2/stage2/*" group-by="@module">
                   <xsl:sort select="current-grouping-key()"/>
                   <xsl:variable name="m" select="current-grouping-key()"/>
                   <xsl:choose>
@@ -415,14 +427,24 @@ valList
                     <xsl:otherwise>
 		      <xsl:comment>module <xsl:value-of select="$m"/></xsl:comment>
                       <xsl:for-each
-			  select="current-group()[self::elementSpec]">
+			  select="current-group()[self::macroSpec]">
 			<xsl:sort select="@ident"/>
-			<elementRef key="{@ident}"/>
+			<xsl:if test="not(@mode='delete')">
+			  <macroRef key="{@ident}"/>
+			</xsl:if>
 		      </xsl:for-each>
                       <xsl:for-each
-			  select="current-group()[self::classSpec]">
+			  select="current-group()[self::elementSpec]">
 			<xsl:sort select="@ident"/>
-			<classRef key="{@ident}"/>
+			<xsl:if test="not(@mode='delete')">
+			  <elementRef key="{@ident}"/>
+			</xsl:if>
+		      </xsl:for-each>
+                      <xsl:for-each select="current-group()[self::classSpec]">
+			<xsl:sort select="@ident"/>
+			<xsl:if test="not(@mode='delete')">
+			  <classRef key="{@ident}"/>
+			</xsl:if>
 		      </xsl:for-each>
 
                     </xsl:otherwise>
@@ -471,6 +493,7 @@ valList
                   <xsl:copy-of  select="current-group()/elementSpec[@mode='delete']"/>
                   <xsl:apply-templates select="current-group()[self::classSpec] "/>
                 </xsl:for-each-group>
+
                 <xsl:for-each select="$stage2/stage2/elementSpec[@mode='add']">
                   <xsl:text>
 
@@ -492,27 +515,21 @@ valList
         </TEI>
     </xsl:variable>
 
-    <xsl:variable name="stage4">
-      <xsl:apply-templates select="$stage3" mode="stage3"/>
-    </xsl:variable>
+    <xsl:apply-templates select="$stage3" mode="stage3"/>
 
-    <xsl:apply-templates select="$stage4" mode="stage4"/>
 <!--
-	   <xsl:result-document href="/tmp/stage0.xml">
-	   <xsl:copy-of select="$stage0"/>
-	   </xsl:result-document>
-	   <xsl:result-document href="/tmp/stage1.xml">
-	   <xsl:copy-of select="$stage1"/>
-	   </xsl:result-document>
-	   <xsl:result-document href="/tmp/stage2.xml">
-	   <xsl:copy-of select="$stage2"/>
-	   </xsl:result-document>
-	   <xsl:result-document href="/tmp/stage3.xml">
-	   <xsl:copy-of select="$stage3"/>
-	   </xsl:result-document>
-	   <xsl:result-document href="/tmp/stage4.xml">
-	   <xsl:copy-of select="$stage4"/>
-	   </xsl:result-document>
+    <xsl:result-document href="/tmp/stage0.xml">
+    <xsl:copy-of select="$stage0"/>
+  </xsl:result-document>
+    <xsl:result-document href="/tmp/stage1.xml">
+    <xsl:copy-of select="$stage1"/>
+  </xsl:result-document>
+    <xsl:result-document href="/tmp/stage2.xml">
+    <xsl:copy-of select="$stage2"/>
+  </xsl:result-document>
+    <xsl:result-document href="/tmp/stage3.xml">
+    <xsl:copy-of select="$stage3"/>
+  </xsl:result-document>
 -->
   </xsl:for-each>
   </xsl:template>
@@ -600,13 +617,7 @@ valList
   </xsl:template>
   <xsl:template match="classSpec">
     <xsl:choose>
-      <xsl:when test="@mode='delete'">
-        <xsl:copy>
-          <xsl:copy-of select="@*"/>
-          <xsl:copy-of select="classmember"/>
-          <xsl:copy-of select="attList"/>
-        </xsl:copy>
-      </xsl:when>
+      <xsl:when test="@mode='delete'"/>
       <xsl:when test="attList/attDef">
         <xsl:copy>
           <xsl:copy-of select="@*"/>
@@ -615,11 +626,8 @@ valList
       </xsl:when>
     </xsl:choose>
   </xsl:template>
-  <!-- odd 2 nuodd -->
+
   <xsl:template match="@*|text()|comment()|processing-instruction()" mode="stage3">
-    <xsl:copy-of select="."/>
-  </xsl:template>
-  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="stage4">
     <xsl:copy-of select="."/>
   </xsl:template>
   <xsl:template match="*" mode="stage3">
@@ -627,13 +635,7 @@ valList
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="stage3"/>
     </xsl:copy>
   </xsl:template>
-  <xsl:template match="*" mode="stage4">
-    <xsl:copy>
-      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="stage4"/>
-    </xsl:copy>
-  </xsl:template>
-  <!-- ignore elementSpec @mode='delete' -->
-  <xsl:template match="elementSpec[@mode='delete']" mode="stage3"/>
+
   <!-- keep a class if someone else wants it -->
   <xsl:template match="classSpec[@mode='delete']" mode="stage3">
     <xsl:copy>
@@ -651,132 +653,5 @@ valList
       </xsl:choose>
     </xsl:copy>
   </xsl:template>
-  <xsl:template match="moduleRef/@include" mode="stage3"/>
-  <xsl:template match="moduleRef/@except" mode="stage3"/>
-  <!-- for any moduleRef, look up all the members of it in P5;
-       if they are not deleted by this odd, add them to a list to be
-       included -->
-  <xsl:template match="moduleRef[@key]" mode="stage3">
-    <xsl:variable name="orig" select="/"/>
-    <xsl:variable name="here" select="."/>
-    <xsl:copy>
-      <xsl:apply-templates select="@*" mode="stage3"/>
-      <xsl:variable name="module" select="@key"/>
-      <xsl:choose>
-        <xsl:when test="$method='include' and @include">
-          <xsl:copy-of select="@include"/>
-        </xsl:when>
-        <xsl:when test="$method='except' and @except">
-          <xsl:copy-of select="@except"/>
-        </xsl:when>
-        <xsl:when test="$method='include' and @except">
-          <xsl:variable name="not">
-            <xsl:for-each select="tokenize($here/@except,' ')">
-              <not ident="{.}"/>
-            </xsl:for-each>
-          </xsl:variable>
-          <xsl:variable name="includelist">
-            <xsl:for-each select="document($defaultSource)">
-              <xsl:for-each select="key('EbyM',$module)">
-                <xsl:sort select="@ident"/>
-                <xsl:variable name="e" select="@ident"/>
-                <xsl:if test="not($not/not[@ident=$e])">
-                  <xsl:value-of select="$e"/>
-                  <xsl:text> </xsl:text>
-                </xsl:if>
-              </xsl:for-each>
-            </xsl:for-each>
-          </xsl:variable>
-          <xsl:if test="not($includelist='')">
-            <xsl:attribute name="include" select="normalize-space($includelist)"/>
-          </xsl:if>
-        </xsl:when>
-        <xsl:when test="$method='include'">
-          <xsl:variable name="includelist">
-            <xsl:for-each select="document($defaultSource)">
-              <xsl:for-each select="key('EbyM',$module)">
-                <xsl:sort select="@ident"/>
-                <xsl:variable name="e" select="@ident"/>
-                <xsl:for-each select="$orig">
-                  <xsl:choose>
-                    <xsl:when test="key('deletedE',$e)"/>
-                    <xsl:otherwise>
-                      <xsl:value-of select="$e"/>
-                      <xsl:text> </xsl:text>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:for-each>
-              </xsl:for-each>
-            </xsl:for-each>
-          </xsl:variable>
-          <xsl:if test="not($includelist='')">
-            <xsl:attribute name="include" select="normalize-space($includelist)"/>
-          </xsl:if>
-        </xsl:when>
-        <xsl:when test="$method='except' and @include">
-          <xsl:variable name="yes">
-            <xsl:for-each select="tokenize($here/@include,' ')">
-              <yes ident="{.}"/>
-            </xsl:for-each>
-          </xsl:variable>
-          <xsl:variable name="exceptlist">
-            <xsl:for-each select="document($defaultSource)">
-              <xsl:for-each select="key('EbyM',$module)">
-                <xsl:sort select="@ident"/>
-                <xsl:variable name="e" select="@ident"/>
-                <xsl:for-each select="$orig">
-                  <xsl:if test="not($yes/yes[@ident=$e])">
-                    <xsl:value-of select="$e"/>
-                    <xsl:text> </xsl:text>
-                  </xsl:if>
-                </xsl:for-each>
-              </xsl:for-each>
-            </xsl:for-each>
-          </xsl:variable>
-          <xsl:if test="not($exceptlist='')">
-            <xsl:attribute name="except" select="normalize-space($exceptlist)"/>
-          </xsl:if>
-        </xsl:when>
-        <xsl:when test="$method='except'">
-          <xsl:variable name="exceptlist">
-            <xsl:for-each select="document($defaultSource)">
-              <xsl:for-each select="key('EbyM',$module)">
-                <xsl:sort select="@ident"/>
-                <xsl:variable name="e" select="@ident"/>
-                <xsl:for-each select="$orig">
-                  <xsl:if test="key('deletedE',$e)">
-                    <xsl:value-of select="$e"/>
-                    <xsl:text> </xsl:text>
-                  </xsl:if>
-                </xsl:for-each>
-              </xsl:for-each>
-            </xsl:for-each>
-          </xsl:variable>
-          <xsl:if test="not($exceptlist='')">
-            <xsl:attribute name="except" select="normalize-space($exceptlist)"/>
-          </xsl:if>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:message terminate="yes">Method <xsl:value-of select="$method"/> not
-            supported</xsl:message>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:copy>
-  </xsl:template>
-  <xsl:template mode="stage4" match="specGrp[not(*)]"/>
-  <xsl:template mode="stage4" match="specGrpRef">
-    <xsl:choose>
-      <xsl:when test="starts-with(@target,'#')">
-        <xsl:for-each select="id(substring(@target,2))">
-          <xsl:if test="*">
-            <specGrpRef target="#{@xml:id}"/>
-          </xsl:if>
-        </xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:copy-of select="."/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xsl:function name="tei:shallWeKeep"/>
+
 </xsl:stylesheet>
