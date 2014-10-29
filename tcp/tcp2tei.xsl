@@ -171,7 +171,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="parent::NOTE and not(@N)"/>
       <xsl:when test="@UNIT and (not(@N) or @N='')">
-        <note place="margin">
+        <note place="margin"  type="milestone">
 	    <xsl:apply-templates select="@ID"/>
           <xsl:value-of select="@UNIT"/>
         </note>
