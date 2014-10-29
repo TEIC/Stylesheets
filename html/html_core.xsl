@@ -1484,13 +1484,13 @@ of this software, even if advised of the possibility of such damage.
                     </xsl:when>
 		    <xsl:otherwise>
 		      <xsl:if test="key('FOOTNOTES',1)">
-			<div class="noteHeading">
+			<div class="noteHeading footnotes">
 			  <xsl:sequence select="tei:i18n('noteHeading')"/>
 			</div>
 			<xsl:apply-templates mode="printnotes" select="key('FOOTNOTES',1)"/>
 		      </xsl:if>
 		      <xsl:if test="key('ENDNOTES',1)">
-			<div class="noteHeading">
+			<div class="noteHeading endnotes">
 			  <xsl:sequence select="tei:i18n('noteHeading')"/>
 			</div>
 			<xsl:apply-templates mode="printnotes" select="key('ENDNOTES',1)"/>

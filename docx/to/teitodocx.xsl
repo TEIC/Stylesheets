@@ -263,8 +263,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="HEADERS" match="tei:fw[@type='header']" use="@xml:id"/>
   <xsl:key name="ALLFOOTERS" match="tei:fw[@type='footer']" use="1"/>
   <xsl:key name="ALLHEADERS" match="tei:fw[@type='header']" use="1"/>
-  <xsl:key name="ENDNOTES" match="tei:note[@place='end']" use="1"/>
-  <xsl:key name="FOOTNOTES" match="tei:note[@place='foot' or @place='bottom' ]" use="1"/>
+  <xsl:key name="ENDNOTES" match="tei:note[tei:isEndNote(.)]" use="1"/>
+  <xsl:key name="FOOTNOTES" match="tei:note[tei:isFootNote(.) ]" use="1"/>
   <xsl:key name="OL" match="tei:list[tei:isOrderedList(.)]" use="1"/>
   <xsl:key name="BLIP" match="a:blip" use="1"/>
   <xsl:key name="Styles" match="w:style/w:name" use="@w:val"/>
