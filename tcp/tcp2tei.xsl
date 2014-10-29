@@ -847,10 +847,10 @@ of this software, even if advised of the possibility of such damage.
     </entryFree>
   </xsl:template>
   <xsl:template match="EXTFIGURE">
-    <extFigure>
+    <figure>
       <xsl:apply-templates  select="@*"/>
       <xsl:apply-templates />
-    </extFigure>
+    </figure>
   </xsl:template>
   <xsl:template match="FALT">
     <fAlt>
@@ -1913,6 +1913,10 @@ of this software, even if advised of the possibility of such damage.
   </doc>
 
   <xsl:template match="P[parent::*/count(P[not(FIGURE)])&gt;1][FIGURE]">
+    <xsl:apply-templates select="FIGURE"/>
+  </xsl:template>
+
+  <xsl:template match="NOTE[count(*)=1]/P[count(*)=1 and FIGURE]">
     <xsl:apply-templates select="FIGURE"/>
   </xsl:template>
 
