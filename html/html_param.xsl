@@ -810,15 +810,28 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:element name="{$element}">
-	    <xsl:copy-of select="$CLASS/html:tmp1/@*"/>
-	    <xsl:if test="position()=1">
-	      <xsl:copy-of select="$ID/html:tmp2/@*"/>
-	    </xsl:if>
-	    <xsl:copy-of select="current-group()"/>
-	  </xsl:element>
+	      <xsl:copy-of select="$CLASS/html:tmp1/@*"/>
+	      <xsl:if test="position()=1">
+		<xsl:copy-of select="$ID/html:tmp2/@*"/>
+	      </xsl:if>
+	      <xsl:apply-templates select="current-group()" mode="copyhtml"/>
+	    </xsl:element>
+	      <xsl:copy-of select="current-group()/self::html:aside"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each-group>
+  </xsl:template>
+
+  <xsl:template match="comment()|@*|processing-instruction()|text()" mode="copyhtml">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="html:aside" mode="copyhtml"/>
+
+  <xsl:template match="*" mode="copyhtml">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
+    </xsl:copy>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
