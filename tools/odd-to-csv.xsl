@@ -9,6 +9,7 @@
     version="2.0">
   <xsl:import href="../common/functions.xsl"/>
   <xsl:output method="text"/>
+  <xsl:param name="module"/>
   <xsl:param name="method">ref</xsl:param>
   <xsl:param name="classtype">model</xsl:param>
   <xsl:param name="includeheader">true</xsl:param>
@@ -42,11 +43,12 @@
     </xsl:choose>
   </xsl:template>
 
-<xsl:function name="tei:catalogueByRef" as="node()">
+<xsl:function name="tei:catalogueByRef" as="node()*">
     <xsl:for-each select="$TOP//elementSpec">
       <xsl:choose>
 	<xsl:when test="@ident='egXML'"/>
 	<xsl:when test="$includeheader='false' and @module='header'"/>
+	<xsl:when test="not($module ='') and not(@module=$module)"/>
 	<xsl:otherwise>
 	<xsl:variable name="element" select="@ident"/>
 	<xsl:for-each select="content//rng:ref">
@@ -111,6 +113,7 @@
       <xsl:choose>
 	<xsl:when test="@ident='egXML'"/>
 	<xsl:when test="$includeheader='false' and @module='header'"/>
+	<xsl:when test="not($module ='') and not(@module=$module)"/>
 	<xsl:otherwise>
 	  <xsl:call-template name="expandClass">
 	    <xsl:with-param name="distance" select="1"/>

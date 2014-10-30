@@ -934,14 +934,13 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </span>
       </xsl:when>
-      <xsl:when test="@place='margin' and (tei:p or tei:list or
-		      tei:table or tei:lg or ..//tei:q/tei:l or *[not(tei:isInline(.))])">
-        <div class="note{@place}">
+      <xsl:when test="*[not(tei:isInline(.))]">
+        <aside class="note{@place}">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
           <xsl:apply-templates/>
-        </div>
+	</aside>
       </xsl:when>
       <xsl:when test="tokenize(@place,' ')=('margin','marginRight','margin-right','margin_right')">
         <span class="notemarginRight">
@@ -1484,13 +1483,13 @@ of this software, even if advised of the possibility of such damage.
                     </xsl:when>
 		    <xsl:otherwise>
 		      <xsl:if test="key('FOOTNOTES',1)">
-			<div class="noteHeading">
+			<div class="noteHeading footnotes">
 			  <xsl:sequence select="tei:i18n('noteHeading')"/>
 			</div>
 			<xsl:apply-templates mode="printnotes" select="key('FOOTNOTES',1)"/>
 		      </xsl:if>
 		      <xsl:if test="key('ENDNOTES',1)">
-			<div class="noteHeading">
+			<div class="noteHeading endnotes">
 			  <xsl:sequence select="tei:i18n('noteHeading')"/>
 			</div>
 			<xsl:apply-templates mode="printnotes" select="key('ENDNOTES',1)"/>
