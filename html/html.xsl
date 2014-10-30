@@ -326,7 +326,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="$element">
       <xsl:choose>
         <xsl:when test="tei:specList">div</xsl:when>
-        <xsl:when test="parent::tei:note[@place='display'  or tei:isMarginal(@place)]">span</xsl:when>
+        <xsl:when test="parent::tei:note[@place='display']">span</xsl:when>
         <xsl:when test="parent::tei:figure and (tei:q/tei:l or tei:figure or parent::tei:figure/parent::tei:div)">div</xsl:when>
         <xsl:when test="ancestor::tei:notesStmt">div</xsl:when>
         <xsl:when test="tei:table">div</xsl:when>
