@@ -637,7 +637,7 @@ valList
   </xsl:template>
 
   <!-- keep a class if someone else wants it -->
-  <xsl:template match="classSpec/@module" mode="stagee3"/>
+  <xsl:template match="classSpec/@module" mode="stage3"/>
 
   <xsl:template match="classSpec[@mode='delete']" mode="stage3">
     <xsl:copy>
