@@ -417,7 +417,6 @@ valList
                 <moduleRef key="tei"/>
                 <xsl:for-each-group
 		    select="$stage2/stage2/*" group-by="@module">
-                  <xsl:sort select="current-grouping-key()"/>
                   <xsl:variable name="m" select="current-grouping-key()"/>
                   <xsl:choose>
                     <xsl:when test="$m='tei'"/>
@@ -559,7 +558,6 @@ valList
     <xsl:choose>
       <xsl:when test="@ident='att.global'">
         <xsl:for-each select="key('ELEMENTS',1)">
-          <xsl:sort select="@ident"/>
           <member ident="{@ident}"/>
         </xsl:for-each>
       </xsl:when>
