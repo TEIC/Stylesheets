@@ -279,6 +279,9 @@ valList
                     <xsl:when test="$keepGlobals='true' and $this='rendition'">
                       <keep/>
                     </xsl:when>
+                    <xsl:when test="$keepGlobals='true' and $this='style'">
+                      <keep/>
+                    </xsl:when>
                     <xsl:when test="$keepGlobals='true' and $this='xml:id'">
                       <keep/>
                     </xsl:when>
@@ -465,6 +468,7 @@ valList
                               <xsl:when test="$keepGlobals='true' and $ident='xml:lang'"/>
                               <xsl:when test="$keepGlobals='true' and $ident='n'"/>
                               <xsl:when test="$keepGlobals='true' and $ident='rendition'"/>
+                              <xsl:when test="$keepGlobals='true' and $ident='style'"/>
                               <xsl:when test="$keepGlobals='true' and $ident='rend'"/>
                               <xsl:when test="not(key('UsedAtt',concat($ident,'@',$e)))">
                                 <attDef ident="{$ident}" mode="delete"/>
