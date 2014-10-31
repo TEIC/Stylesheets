@@ -305,8 +305,7 @@ valList
               </xsl:variable>
               <xsl:choose>
                 <xsl:when test="$classatts/attDef[@mode='delete'] and $classatts/keep">
-  <!--                <classSpec ident="{@ident}" module="{@module}" type="atts" mode="change">
--->                     <classSpec ident="{@ident}"  type="atts" mode="change">
+                    <classSpec ident="{@ident}"  type="atts" mode="change">
               <attList>
                       <xsl:copy-of select="$classatts/attDef"/>
                     </attList>
@@ -321,8 +320,7 @@ valList
                   </classSpec>
                 </xsl:when>
                 <xsl:when test="$classatts/keep">
-   <!--               <classSpec ident="{@ident}" module="{@module}" type="atts" mode="keep"/>
- -->                    <classSpec ident="{@ident}"  type="atts" mode="keep"/>
+                  <classSpec ident="{@ident}"  type="atts" mode="keep"/>
            </xsl:when>
               </xsl:choose>
             </xsl:for-each>
