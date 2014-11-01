@@ -926,13 +926,22 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="noteID"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="@place='margin' and parent::tei:hi and not(*)">
-        <span class="note{@place}">
+      <xsl:when test="not(ancestor::tei:p or ancestor::tei:head)">
+        <span class="{if (@place) then if (contains(@place,'right'))
+		     then 'notemarginRight' else 'notemarginLeft' else 'notemarginLeft'}">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
           <xsl:apply-templates/>
-        </span>
+	</span>
+      </xsl:when>
+      <xsl:when test="@place='margin' and parent::tei:hi and not(*)">
+        <aside class="note{@place}">
+          <xsl:call-template name="makeAnchor">
+            <xsl:with-param name="name" select="$identifier"/>
+          </xsl:call-template>
+          <xsl:apply-templates/>
+	</aside>
       </xsl:when>
       <xsl:when test="*[not(tei:isInline(.))]">
         <aside class="note{@place}">
@@ -943,28 +952,28 @@ of this software, even if advised of the possibility of such damage.
 	</aside>
       </xsl:when>
       <xsl:when test="tokenize(@place,' ')=('margin','marginRight','margin-right','margin_right')">
-        <span class="notemarginRight">
+        <aside class="notemarginRight">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
           <xsl:apply-templates/>
-	</span>
+	</aside>
       </xsl:when>
       <xsl:when test="tokenize(@place,' ')=('margin','marginLeft','margin-left','margin_left')">
-        <span class="notemarginLeft">
+        <aside class="notemarginLeft">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
           <xsl:apply-templates/>
-	</span>
+	</aside>
       </xsl:when>
       <xsl:otherwise>
-        <span class="notemarginLeft {@place}">
+        <aside class="notemarginLeft {@place}">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
           <xsl:apply-templates/>
-        </span>
+        </aside>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

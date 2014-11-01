@@ -832,8 +832,8 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="html:dl|html:aside|html:div|html:p|html:pre|html:figure" mode="copyhtml">
-    <span class="{local-name()}" style="display:block">
+  <xsl:template match="html:aside|html:h1|html:h2|html:h3|html:h4|html:h5|html:h6|html:dl|html:div|html:p|html:pre|html:figure" mode="copyhtml">
+    <span style="display:block">
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
     </span>
   </xsl:template>
@@ -849,8 +849,22 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
     </span>
   </xsl:template>
 
-  <xsl:template match="html:li" mode="copyhtml">
-    <span class="{local-name()}" style="display:list-item">
+
+  <xsl:template match="html:table|html:tr|html:thead|html:tbody|html:td|html:th|html:caption|html:li" mode="copyhtml">
+    <span class="{local-name()}">
+      <xsl:attribute name="style">
+	<xsl:text>display:</xsl:text>
+	<xsl:choose>
+	  <xsl:when test="local-name()='table'">table</xsl:when>
+	  <xsl:when test="local-name()='tr'">table-row</xsl:when>
+	  <xsl:when test="local-name()='thead'">table-header-group</xsl:when>
+	  <xsl:when test="local-name()='tbody'">table-row-group</xsl:when>
+	  <xsl:when test="local-name()='td'">table-cell</xsl:when>
+	  <xsl:when test="local-name()='th'">table-cell</xsl:when>
+	  <xsl:when test="local-name()='caption'">table-caption</xsl:when>
+	  <xsl:when test="local-name()='li'">list-item</xsl:when>
+	</xsl:choose>
+      </xsl:attribute>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
     </span>
   </xsl:template>
