@@ -771,7 +771,8 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] break up a block content (h1, p etc) so that it
-    breaks around nested  HTML blocks</desc>
+    breaks around nested  HTML blocks, and turns nested asides
+    into spans</desc>
   </doc>
   <xsl:template  name="splitHTMLBlocks">
     <xsl:param name="copyid">true</xsl:param>
@@ -816,7 +817,6 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
 	      </xsl:if>
 	      <xsl:apply-templates select="current-group()" mode="copyhtml"/>
 	    </xsl:element>
-	      <xsl:copy-of select="current-group()/self::html:aside"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each-group>
@@ -826,12 +826,33 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="html:aside" mode="copyhtml"/>
-
   <xsl:template match="*" mode="copyhtml">
     <xsl:copy>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
     </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="html:dl|html:aside|html:div|html:p|html:pre|html:figure" mode="copyhtml">
+    <span class="{local-name()}" style="display:block">
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
+    </span>
+  </xsl:template>
+
+  <xsl:template match="html:ol" mode="copyhtml">
+    <span class="{local-name()}" style="list-style-type:decimal;margin-left: 40px ; display: block">
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
+    </span>
+  </xsl:template>
+  <xsl:template match="html:ul" mode="copyhtml">
+    <span class="{local-name()}" style="margin-left: 40px ; display: block">
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
+    </span>
+  </xsl:template>
+
+  <xsl:template match="html:li" mode="copyhtml">
+    <span class="{local-name()}" style="display:list-item">
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
+    </span>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
