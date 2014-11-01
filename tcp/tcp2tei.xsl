@@ -2192,10 +2192,17 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="PUBLICATIONSTMT/DATE">
     <date>
-      <xsl:if test="contains(.,' (')">
-	<xsl:attribute name="when" select="normalize-space(substring-before(.,' ('))"/>
-      </xsl:if>
-      <xsl:value-of select="replace(.,'\.$','')"/>
+      <xsl:attribute name="when">
+	<xsl:choose>
+	  <xsl:when test="contains(.,' (')">
+	    <xsl:value-of select="normalize-space(substring-before(.,' ('))"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="replace(.,'[\?\.]$','')"/>
+	  </xsl:otherwise>
+      </xsl:choose>
+      </xsl:attribute>
+      <xsl:value-of select="."/>
     </date>
   </xsl:template>
 
