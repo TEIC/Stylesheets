@@ -874,22 +874,24 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[common] Work out the publish date of the document </desc>
   </doc>
+  <xsl:function name="tei:checkNormalizedDate">
+    <xsl:param name="context"/>
+    <xsl:value-of select="if ($context/@when) then $context/@when else $context"/>
+  </xsl:function>
+
   <xsl:function name="tei:generateDate">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
         <xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate">
-          <xsl:apply-templates mode="date" select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate"/>
-        </xsl:when>
-        <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[@when]">
-          <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[@when][1]/@when"/>
+          <xsl:apply-templates mode="date" select="tei:checkNormalizedDate(ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate)"/>
         </xsl:when>
         <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date">
-          <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[1]"/>
+          <xsl:value-of select="tei:checkNormalizedDate(ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[1])"/>
         </xsl:when>
         <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date">
-          <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date"/>
+          <xsl:value-of select="tei:checkNormalizedDate(ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date)"/>
         </xsl:when>
         <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
           <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
