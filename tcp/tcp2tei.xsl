@@ -1916,10 +1916,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="FIGURE"/>
   </xsl:template>
 
-  <xsl:template match="NOTE[count(*)=1]/P[count(*)=1 and FIGURE]">
-    <xsl:apply-templates select="FIGURE"/>
-  </xsl:template>
-
   <xsl:template match="EVENT">
     <incident>
       <xsl:apply-templates select="@*|*|text()|comment()|processing-instruction()"/>
@@ -2196,6 +2192,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="PUBLICATIONSTMT/DATE">
     <date>
+      <xsl:if test="contains(.,' (')">
+	<xsl:attribute name="when" select="normalize-space(substring-before(.,' ('))"/>
+      </xsl:if>
       <xsl:value-of select="replace(.,'\.$','')"/>
     </date>
   </xsl:template>
@@ -2606,10 +2605,8 @@ of this software, even if advised of the possibility of such damage.
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-      <p>
-	a singleton label inside a paragraph, containing a list, can
-	be ignored.
-      </p>
+      <p>a singleton label inside a paragraph, containing a list, can
+	be ignored.      </p>
     </desc>
   </doc>
   <xsl:template match="tei:label[tei:list and parent::tei:p]" mode="pass2">
