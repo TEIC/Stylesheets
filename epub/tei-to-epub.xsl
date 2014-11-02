@@ -3,7 +3,7 @@
   <xsl:import href="../html/html.xsl"/>
   <xsl:import href="epub-common.xsl"/>
   <xsl:import href="epub-preflight.xsl"/>
-  <xsl:output method="xml" encoding="utf-8" indent="no"/>
+  <xsl:output method="xml" encoding="utf-8" indent="no" omit-xml-declaration="yes"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p>

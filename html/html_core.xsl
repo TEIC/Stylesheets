@@ -926,7 +926,16 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="noteID"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="not(ancestor::tei:p or ancestor::tei:head)">
+      <xsl:when test="@type='milestone'">
+        <span class="{if (@place) then if (contains(@place,'right'))
+		     then 'notemarginRight' else 'notemarginLeft' else 'notemarginLeft'}">
+          <xsl:call-template name="makeAnchor">
+            <xsl:with-param name="name" select="$identifier"/>
+          </xsl:call-template>
+          <xsl:apply-templates/>
+	</span>
+      </xsl:when>
+      <xsl:when test="not(parent::tei:p or parent::tei:head)">
         <span class="{if (@place) then if (contains(@place,'right'))
 		     then 'notemarginRight' else 'notemarginLeft' else 'notemarginLeft'}">
           <xsl:call-template name="makeAnchor">
@@ -1155,7 +1164,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element p</desc>
   </doc>
   <xsl:template match="tei:p">
-    <xsl:variable name="wrapperElement" select="tei:is-DivOrP(.)"/>
+    <xsl:variable name="wrapperElement" select="tei:isDivOrP(.)"/>
     <xsl:choose>
       <xsl:when test="$filePerPage='true'">
         <xsl:for-each-group select="node()" group-starting-with="tei:pb">

@@ -822,6 +822,7 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
     </xsl:for-each-group>
   </xsl:template>
 
+  <xsl:template match="@rowspan|@colspan" mode="copyhtml"/>
   <xsl:template match="comment()|@*|processing-instruction()|text()" mode="copyhtml">
     <xsl:copy-of select="."/>
   </xsl:template>
