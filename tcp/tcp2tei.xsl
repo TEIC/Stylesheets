@@ -2103,7 +2103,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="substring-before(.,' (')"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="replace(.,'[\?\.]$','')"/>
+            <xsl:value-of select="replace(.,'[\?\.\[\]]','')"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
