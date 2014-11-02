@@ -536,7 +536,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="LANGUSAGE/@ID" />
   <xsl:template match="PB/@REF">
-    <xsl:attribute name="n" select="."/>
     <xsl:choose>
       <xsl:when test="string-length(/ETS/EEBO/IDG/VID)&gt;0">
 	<xsl:attribute name="facs">
