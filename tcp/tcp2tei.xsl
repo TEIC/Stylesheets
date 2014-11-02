@@ -2188,7 +2188,8 @@ of this software, even if advised of the possibility of such damage.
       </abbr>
     </choice>
   </xsl:template>
-  <xsl:template match="PUBLICATIONSTMT/DATE">
+
+  <xsl:template match="FILEDESC/PUBLICATIONSTMT/DATE">
     <date>
       <xsl:attribute name="when">
 	<xsl:choose>
