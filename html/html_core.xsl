@@ -935,6 +935,15 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
 	</span>
       </xsl:when>
+      <xsl:when test="parent::tei:q/parent::tei:epigraph or parent::tei:l">
+        <div class="{if (@place) then if (contains(@place,'right'))
+		     then 'notemarginRight' else 'notemarginLeft' else 'notemarginLeft'}">
+          <xsl:call-template name="makeAnchor">
+            <xsl:with-param name="name" select="$identifier"/>
+          </xsl:call-template>
+          <xsl:apply-templates/>
+	</div>
+      </xsl:when>
       <xsl:when test="not(parent::tei:p or parent::tei:head)">
         <span class="{if (@place) then if (contains(@place,'right'))
 		     then 'notemarginRight' else 'notemarginLeft' else 'notemarginLeft'}">
