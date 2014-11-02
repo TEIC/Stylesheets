@@ -536,24 +536,23 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="LANGUSAGE/@ID" />
   <xsl:template match="PB/@REF">
-
-      <xsl:choose>
-	<xsl:when test="string-length(/ETS/EEBO/IDG/VID)&gt;0">
-    <xsl:attribute name="facs">
-      <xsl:value-of
+    <xsl:attribute name="n" select="."/>
+    <xsl:choose>
+      <xsl:when test="string-length(/ETS/EEBO/IDG/VID)&gt;0">
+	<xsl:attribute name="facs">
+	  <xsl:value-of
 	      select="('tcp',translate(normalize-space(/ETS/EEBO/IDG/VID),'  ',''),normalize-space(replace(.,'^\.','')))"
 	      separator=":"/>
-    </xsl:attribute>
+	</xsl:attribute>
       </xsl:when>
       <xsl:otherwise>
-    <xsl:attribute name="facs">
+	<xsl:attribute name="facs">
 	  <xsl:value-of
 	      select="('tcp',normalize-space(replace(.,'^\.','')))"
 	      separator=':'/>
-    </xsl:attribute>
+	</xsl:attribute>
       </xsl:otherwise>
     </xsl:choose>
-
   </xsl:template>
 
   <xsl:template match="KEYWORDS">
