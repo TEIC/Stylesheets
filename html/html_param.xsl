@@ -822,25 +822,33 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
     </xsl:for-each-group>
   </xsl:template>
 
-  <xsl:template match="@rowspan|@colspan" mode="copyhtml"/>
+  <xsl:template match="@rowspan|@colspan|@class" mode="copyhtml"/>
   <xsl:template match="comment()|@*|processing-instruction()|text()" mode="copyhtml">
     <xsl:copy-of select="."/>
   </xsl:template>
 
   <xsl:template match="*" mode="copyhtml">
     <xsl:copy>
+      <xsl:copy-of select="@class"/>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
     </xsl:copy>
   </xsl:template>
 
   <xsl:template match="html:aside|html:h1|html:h2|html:h3|html:h4|html:h5|html:h6|html:dl|html:div|html:p|html:pre|html:figure" mode="copyhtml">
     <span style="display:block">
+      <xsl:attribute name="class">
+	<xsl:value-of select="(@class, local-name())"/>
+      </xsl:attribute>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
     </span>
   </xsl:template>
 
   <xsl:template match="html:ol" mode="copyhtml">
-    <span class="{local-name()}" style="list-style-type:decimal;margin-left: 40px ; display: block">
+    <span style="list-style-type:decimal;margin-left: 40px ; display:
+		 block">
+      <xsl:attribute name="class">
+	<xsl:value-of select="(@class, local-name())"/>
+      </xsl:attribute>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
     </span>
   </xsl:template>
@@ -852,7 +860,10 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
 
 
   <xsl:template match="html:table|html:tr|html:thead|html:tbody|html:td|html:th|html:caption|html:li" mode="copyhtml">
-    <span class="{local-name()}">
+    <span>
+      <xsl:attribute name="class">
+	<xsl:value-of select="(@class, local-name())"/>
+      </xsl:attribute>
       <xsl:attribute name="style">
 	<xsl:text>display:</xsl:text>
 	<xsl:choose>
