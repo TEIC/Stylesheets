@@ -853,7 +853,10 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
     </span>
   </xsl:template>
   <xsl:template match="html:ul" mode="copyhtml">
-    <span class="{local-name()}" style="margin-left: 40px ; display: block">
+    <span class="{local-name()}" style="margin-left: 40px ; display:block">
+      <xsl:attribute name="class">
+	<xsl:value-of select="(@class, local-name())"/>
+      </xsl:attribute>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
     </span>
   </xsl:template>
