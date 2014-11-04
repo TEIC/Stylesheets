@@ -936,10 +936,11 @@ of this software, even if advised of the possibility of such damage.
 	</span>
       </xsl:when>
       <xsl:when test="parent::tei:item or
-		      parent::tei:q/parent::tei:epigraph or
-		      parent::tei:p/parent::tei:sp or
+		      parent::tei:cell or
+		      parent::tei:salute or
 		      parent::tei:head/parent::tei:list or 
 		      parent::tei:q/parent::tei:div or 
+		      parent::tei:div or 
 		      parent::tei:l">
         <div class="{if (@place) then if (contains(@place,'right'))
 		     then 'notemarginRight' else 'notemarginLeft' else 'notemarginLeft'}">
@@ -1631,7 +1632,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] Create a point to which we can link in the HTML<param name="name">value for identifier</param>
+    <desc>[html] Create a point to which we can link in the HTML <param name="name">value for identifier</param>
       </desc>
   </doc>
   <xsl:template name="makeAnchor">
