@@ -834,7 +834,7 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="html:aside|html:h1|html:h2|html:h3|html:h4|html:h5|html:h6|html:dl|html:div|html:p|html:pre|html:figure" mode="copyhtml">
+  <xsl:template match="html:dt|html:dd|html:aside|html:h1|html:h2|html:h3|html:h4|html:h5|html:h6|html:div|html:p|html:pre|html:figure" mode="copyhtml">
     <span style="display:block">
       <xsl:attribute name="class">
 	<xsl:value-of select="(@class, local-name())"/>
@@ -849,6 +849,11 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
       <xsl:attribute name="class">
 	<xsl:value-of select="(@class, local-name())"/>
       </xsl:attribute>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
+    </span>
+  </xsl:template>
+  <xsl:template match="html:dl" mode="copyhtml">
+    <span class="{local-name()}" style="margin-left: 40px ; display: block">
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
     </span>
   </xsl:template>
