@@ -1265,6 +1265,10 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>abbreviation marker and expansion inside expan</desc>
+   </doc>
+  <xsl:template match="tei:expan/tei:am"/>
   <xsl:template match="tei:expan/tei:ex">
     <xsl:call-template name="makeInline">
       <xsl:with-param name="before">(</xsl:with-param>

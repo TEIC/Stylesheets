@@ -383,6 +383,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="self::tei:floatingText">false</xsl:when>
             <xsl:when test="self::tei:foreign">true</xsl:when>
             <xsl:when test="self::tei:forename">true</xsl:when>
+            <xsl:when test="self::tei:g">true</xsl:when>
             <xsl:when test="self::tei:gap">true</xsl:when>
             <xsl:when test="self::tei:genName">true</xsl:when>
             <xsl:when test="self::tei:geogName">true</xsl:when>

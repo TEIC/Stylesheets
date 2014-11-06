@@ -17,6 +17,7 @@
   <xsl:import href="common_msdescription.xsl"/>
   <xsl:import href="common_figures.xsl"/>
   <xsl:import href="common_textcrit.xsl"/>
+  <xsl:import href="common_gaiji.xsl"/>
   <xsl:import href="i18n.xsl"/>
   <xsl:import href="functions.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
