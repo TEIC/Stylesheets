@@ -178,6 +178,8 @@ deb: debversion
 	rm -f tei*xsl*_*changes
 	rm -f tei*xsl*_*build
 	(cd debian-tei-xsl; debclean;debuild --no-lintian  -nc -b -uc -us)
+tag:
+	git tag -a v`cat VERSION` -m 'release version `cat VERSION`'
 
 sfupload:
 	rsync -e ssh tei-xsl-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
