@@ -217,12 +217,16 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each-group>
       </xsl:when>
       <xsl:otherwise>
-	<div>
-	  <xsl:call-template name="makeRendition">      
-	    <xsl:with-param name="default">p-in-sp</xsl:with-param>
-	  </xsl:call-template>
-	  <xsl:apply-templates/>
-	</div>
+	<xsl:call-template name="splitHTMLBlocks">
+	  <xsl:with-param name="element">p</xsl:with-param>
+	  <xsl:with-param name="class">p-in-sp</xsl:with-param>
+	  <xsl:with-param name="content">
+	    <xsl:if test="$numberParagraphs='true'">
+	      <xsl:call-template name="numberParagraph"/>
+	    </xsl:if>
+	    <xsl:apply-templates/>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

@@ -321,16 +321,15 @@ of this software, even if advised of the possibility of such damage.
     should be (ie plain &lt;p&gt; or &lt;div class="p"&gt; if the
     content is complex).</desc>
   </doc>
-  <xsl:function name="tei:is-DivOrP" as="node()*">
+  <xsl:function name="tei:isDivOrP" as="node()*">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
         <xsl:when test="tei:specList">div</xsl:when>
-        <xsl:when test="parent::tei:note[@place='display']">span</xsl:when>
+        <xsl:when test="parent::tei:note[@place='display']">div</xsl:when>
         <xsl:when test="parent::tei:figure and (tei:q/tei:l or tei:figure or parent::tei:figure/parent::tei:div)">div</xsl:when>
         <xsl:when test="ancestor::tei:notesStmt">div</xsl:when>
         <xsl:when test="tei:table">div</xsl:when>
-        <xsl:when test="parent::tei:note[not(@place or @rend)]">span</xsl:when>
         <xsl:when test="$outputTarget='epub' or $outputTarget='epub3'">div</xsl:when>
         <xsl:when test="tei:eg">div</xsl:when>
         <xsl:when test="tei:figure">div</xsl:when>

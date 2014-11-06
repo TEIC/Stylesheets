@@ -926,13 +926,46 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="noteID"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="@place='margin' and parent::tei:hi and not(*)">
-        <span class="note{@place}">
+      <xsl:when test="@type='milestone'">
+        <span class="{if (@place) then if (contains(@place,'right'))
+		     then 'notemarginRight' else 'notemarginLeft' else 'notemarginLeft'}">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
           <xsl:apply-templates/>
-        </span>
+	</span>
+      </xsl:when>
+      <xsl:when test="parent::tei:item or
+		      parent::tei:cell or
+		      parent::tei:salute or
+		      parent::tei:head/parent::tei:list or 
+		      parent::tei:q/parent::tei:div or 
+		      parent::tei:div or 
+		      parent::tei:l">
+        <div class="{if (@place) then if (contains(@place,'right'))
+		     then 'notemarginRight' else 'notemarginLeft' else 'notemarginLeft'}">
+          <xsl:call-template name="makeAnchor">
+            <xsl:with-param name="name" select="$identifier"/>
+          </xsl:call-template>
+          <xsl:apply-templates/>
+	</div>
+      </xsl:when>
+      <xsl:when test="not(parent::tei:p or parent::tei:head)">
+        <span class="{if (@place) then if (contains(@place,'right'))
+		     then 'notemarginRight' else 'notemarginLeft' else 'notemarginLeft'}">
+          <xsl:call-template name="makeAnchor">
+            <xsl:with-param name="name" select="$identifier"/>
+          </xsl:call-template>
+          <xsl:apply-templates/>
+	</span>
+      </xsl:when>
+      <xsl:when test="@place='margin' and parent::tei:hi and not(*)">
+        <aside class="note{@place}">
+          <xsl:call-template name="makeAnchor">
+            <xsl:with-param name="name" select="$identifier"/>
+          </xsl:call-template>
+          <xsl:apply-templates/>
+	</aside>
       </xsl:when>
       <xsl:when test="*[not(tei:isInline(.))]">
         <aside class="note{@place}">
@@ -943,28 +976,28 @@ of this software, even if advised of the possibility of such damage.
 	</aside>
       </xsl:when>
       <xsl:when test="tokenize(@place,' ')=('margin','marginRight','margin-right','margin_right')">
-        <span class="notemarginRight">
+        <aside class="notemarginRight">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
           <xsl:apply-templates/>
-	</span>
+	</aside>
       </xsl:when>
       <xsl:when test="tokenize(@place,' ')=('margin','marginLeft','margin-left','margin_left')">
-        <span class="notemarginLeft">
+        <aside class="notemarginLeft">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
           <xsl:apply-templates/>
-	</span>
+	</aside>
       </xsl:when>
       <xsl:otherwise>
-        <span class="notemarginLeft {@place}">
+        <aside class="notemarginLeft {@place}">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
           <xsl:apply-templates/>
-        </span>
+        </aside>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1146,7 +1179,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element p</desc>
   </doc>
   <xsl:template match="tei:p">
-    <xsl:variable name="wrapperElement" select="tei:is-DivOrP(.)"/>
+    <xsl:variable name="wrapperElement" select="tei:isDivOrP(.)"/>
     <xsl:choose>
       <xsl:when test="$filePerPage='true'">
         <xsl:for-each-group select="node()" group-starting-with="tei:pb">
@@ -1228,7 +1261,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="count(*)=1 and tei:floatingText">
           <xsl:apply-templates/>
       </xsl:when>
-      <xsl:when test="(not(parent::tei:p/text()) and count(parent::tei:p/*)=1) or tei:floatingText or not(tei:isInline(.)) or *[not(tei:isInline(.))]">
+      <xsl:when test="(not(parent::tei:p/text()) and count(parent::tei:p/*)=1) or tei:floatingText or not(tei:isInline(.))">
         <div>
 	  <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="auto">blockquote</xsl:with-param>
@@ -1599,7 +1632,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] Create a point to which we can link in the HTML<param name="name">value for identifier</param>
+    <desc>[html] Create a point to which we can link in the HTML <param name="name">value for identifier</param>
       </desc>
   </doc>
   <xsl:template name="makeAnchor">

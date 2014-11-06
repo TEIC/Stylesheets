@@ -771,7 +771,8 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] break up a block content (h1, p etc) so that it
-    breaks around nested  HTML blocks</desc>
+    breaks around nested  HTML blocks, and turns nested asides
+    into spans</desc>
   </doc>
   <xsl:template  name="splitHTMLBlocks">
     <xsl:param name="copyid">true</xsl:param>
@@ -816,22 +817,76 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
 	      </xsl:if>
 	      <xsl:apply-templates select="current-group()" mode="copyhtml"/>
 	    </xsl:element>
-	      <xsl:copy-of select="current-group()/self::html:aside"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each-group>
   </xsl:template>
 
+  <xsl:template match="@rowspan|@colspan|@class" mode="copyhtml"/>
   <xsl:template match="comment()|@*|processing-instruction()|text()" mode="copyhtml">
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="html:aside" mode="copyhtml"/>
-
   <xsl:template match="*" mode="copyhtml">
     <xsl:copy>
+      <xsl:copy-of select="@class"/>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
     </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="html:dt|html:dd|html:aside|html:h1|html:h2|html:h3|html:h4|html:h5|html:h6|html:div|html:p|html:pre|html:figure" mode="copyhtml">
+    <span style="display:block">
+      <xsl:attribute name="class">
+	<xsl:value-of select="(@class, local-name())"/>
+      </xsl:attribute>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
+    </span>
+  </xsl:template>
+
+  <xsl:template match="html:ol" mode="copyhtml">
+    <span style="list-style-type:decimal;margin-left: 40px ; display:
+		 block">
+      <xsl:attribute name="class">
+	<xsl:value-of select="(@class, local-name())"/>
+      </xsl:attribute>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
+    </span>
+  </xsl:template>
+  <xsl:template match="html:dl" mode="copyhtml">
+    <span class="{local-name()}" style="margin-left: 40px ; display: block">
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
+    </span>
+  </xsl:template>
+  <xsl:template match="html:ul" mode="copyhtml">
+    <span class="{local-name()}" style="margin-left: 40px ; display:block">
+      <xsl:attribute name="class">
+	<xsl:value-of select="(@class, local-name())"/>
+      </xsl:attribute>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
+    </span>
+  </xsl:template>
+
+
+  <xsl:template match="html:table|html:tr|html:thead|html:tbody|html:td|html:th|html:caption|html:li" mode="copyhtml">
+    <span>
+      <xsl:attribute name="class">
+	<xsl:value-of select="(@class, local-name())"/>
+      </xsl:attribute>
+      <xsl:attribute name="style">
+	<xsl:text>display:</xsl:text>
+	<xsl:choose>
+	  <xsl:when test="local-name()='table'">table</xsl:when>
+	  <xsl:when test="local-name()='tr'">table-row</xsl:when>
+	  <xsl:when test="local-name()='thead'">table-header-group</xsl:when>
+	  <xsl:when test="local-name()='tbody'">table-row-group</xsl:when>
+	  <xsl:when test="local-name()='td'">table-cell</xsl:when>
+	  <xsl:when test="local-name()='th'">table-cell</xsl:when>
+	  <xsl:when test="local-name()='caption'">table-caption</xsl:when>
+	  <xsl:when test="local-name()='li'">list-item</xsl:when>
+	</xsl:choose>
+      </xsl:attribute>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
+    </span>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

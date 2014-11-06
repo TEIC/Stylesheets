@@ -146,10 +146,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="purgeCSS">
     <xsl:choose>
       <xsl:when test="starts-with(.,'@import')"/>
-      <xsl:when test="contains(.,'line-height:')"/>
+      <!--
       <xsl:when test="contains(.,'max-width:')"/>
       <xsl:when test="contains(.,'height:')"/>
-      <!--
+      <xsl:when test="contains(.,'line-height:')"/>
       <xsl:when test="contains(.,'clear:')"/>
       <xsl:when test="contains(.,'padding')"/>
       <xsl:when test="contains(.,'float:')"/>
@@ -157,7 +157,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="contains(.,'width:')"/>
       <xsl:when test="contains(.,'margin')"/>
       <xsl:when test="contains(.,'border')"/>
--->
+      -->
       <xsl:otherwise>
         <xsl:value-of select="."/>
         <xsl:text>&#10;</xsl:text>
@@ -509,15 +509,7 @@ of this software, even if advised of the possibility of such damage.
      <xsl:result-document href="{concat($directory,'/copy.xml')}">
      <project xmlns="" basedir="." default="dist" name="imagecopy">
        <target name="dist">
-	 <xsl:if test="key('PB',1) or key('G',1)">
-	   <mkdir>
-	     <xsl:attribute name="dir">
-	       <xsl:value-of select="replace($outputDir,'file:///','')"/>
-	       <xsl:text>/</xsl:text>
-	       <xsl:value-of select="$mediaDir"/>
-	     </xsl:attribute>
-	   </mkdir>
-	 </xsl:if>
+	 <xsl:variable name="contents">
 	 <xsl:if test="not($coverimage='')">
 	     <copy toFile="{$coverDir}/{tokenize($coverimage,'/')[last()]}" file="{$coverimage}"/>
 	 </xsl:if>
@@ -624,7 +616,17 @@ of this software, even if advised of the possibility of such damage.
 	     </xsl:otherwise>
 	   </xsl:choose>
 	 </xsl:for-each>
-
+	 </xsl:variable>
+	 <xsl:if test="not($contents='')">
+	   <mkdir>
+	     <xsl:attribute name="dir">
+	       <xsl:value-of select="replace($outputDir,'file:///','')"/>
+	       <xsl:text>/</xsl:text>
+	       <xsl:value-of select="$mediaDir"/>
+	     </xsl:attribute>
+	   </mkdir>
+	 </xsl:if>
+	 <xsl:copy-of select="$contents"/>
        </target>
      </project>
      </xsl:result-document>
