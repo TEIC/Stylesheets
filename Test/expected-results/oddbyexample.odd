@@ -17,18 +17,17 @@
       <body>
          <schemaSpec ident="oddbyexample" start="TEI ">
             <moduleRef key="tei"/>
-            <!--module textcrit-->
-            <elementRef key="app"/>
+            <!--Checking module textcrit-->
             <classRef key="att.textCritical"/>
             <classRef key="model.rdgLike"/>
             <classRef key="model.rdgPart"/>
+            <moduleRef key="textcrit" include="app"/>
             <elementSpec ident="app" mode="change">
                <attList>
                   <attDef ident="type" mode="delete"/>
                   <attDef ident="from" mode="delete"/>
                   <attDef ident="to" mode="delete"/>
                   <attDef ident="loc" mode="delete"/>
-                  <attDef ident="rend" mode="delete"/>
                </attList>
             </elementSpec>
             <classSpec ident="att.textCritical" type="atts" mode="change">
@@ -39,9 +38,9 @@
                   <attDef ident="hand" mode="delete"/>
                </attList>
             </classSpec>
-            <!--module namesdates-->
+            <!--Checking module namesdates-->
             <classRef key="model.persNamePart"/>
-            <!--module dictionaries-->
+            <!--Checking module dictionaries-->
             <classRef key="att.lexicographic"/>
             <classRef key="model.entryLike"/>
             <classRef key="model.formPart"/>
@@ -60,7 +59,7 @@
                   <attDef ident="opt" mode="delete"/>
                </attList>
             </classSpec>
-            <!--module tagdocs-->
+            <!--Checking module tagdocs-->
             <macroRef key="macro.anyXML"/>
             <macroRef key="macro.schemaPattern"/>
             <classRef key="att.combinable"/>
@@ -120,17 +119,6 @@
                   <attDef ident="instant" mode="delete"/>
                </attList>
             </classSpec>
-            <classSpec ident="att.global" type="atts" mode="change">
-               <attList>
-                  <attDef ident="xml:id" mode="delete"/>
-                  <attDef ident="n" mode="delete"/>
-                  <attDef ident="xml:lang" mode="delete"/>
-                  <attDef ident="style" mode="delete"/>
-                  <attDef ident="rendition" mode="delete"/>
-                  <attDef ident="xml:base" mode="delete"/>
-                  <attDef ident="xml:space" mode="delete"/>
-               </attList>
-            </classSpec>
             <classSpec ident="att.media" type="atts" mode="change">
                <attList>
                   <attDef ident="width" mode="delete"/>
@@ -181,71 +169,32 @@
                   <attDef ident="sort" mode="delete"/>
                </attList>
             </classSpec>
-            <!--module core-->
-            <elementRef key="p"/>
-            <elementRef key="title"/>
+            <!--Checking module core-->
+            <moduleRef key="core" include="p title"/>
             <elementSpec ident="title" mode="change">
                <attList>
                   <attDef ident="level" mode="delete"/>
                   <attDef ident="type" mode="delete"/>
-                  <attDef ident="rend" mode="delete"/>
                </attList>
             </elementSpec>
-            <!--module header-->
-            <elementRef key="fileDesc"/>
-            <elementRef key="publicationStmt"/>
-            <elementRef key="sourceDesc"/>
-            <elementRef key="teiHeader"/>
-            <elementRef key="titleStmt"/>
+            <!--Checking module header-->
+            <moduleRef key="header"
+                       include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
             <elementSpec ident="teiHeader" mode="change">
                <attList>
                   <attDef ident="type" mode="delete"/>
-                  <attDef ident="rend" mode="delete"/>
                </attList>
             </elementSpec>
-            <elementSpec ident="fileDesc" mode="change">
-               <attList>
-                  <attDef ident="rend" mode="delete"/>
-               </attList>
-            </elementSpec>
-            <elementSpec ident="titleStmt" mode="change">
-               <attList>
-                  <attDef ident="rend" mode="delete"/>
-               </attList>
-            </elementSpec>
-            <elementSpec ident="publicationStmt" mode="change">
-               <attList>
-                  <attDef ident="rend" mode="delete"/>
-               </attList>
-            </elementSpec>
-            <elementSpec ident="sourceDesc" mode="change">
-               <attList>
-                  <attDef ident="rend" mode="delete"/>
-               </attList>
-            </elementSpec>
-            <!--module verse-->
-            <!--module msdescription-->
-            <!--module transcr-->
-            <!--module linking-->
-            <!--module analysis-->
-            <!--module textstructure-->
-            <elementRef key="TEI"/>
-            <elementRef key="body"/>
-            <elementRef key="text"/>
+            <!--Checking module verse-->
+            <!--Checking module msdescription-->
+            <!--Checking module transcr-->
+            <!--Checking module linking-->
+            <!--Checking module analysis-->
+            <!--Checking module textstructure-->
+            <moduleRef key="textstructure" include="TEI text body"/>
             <elementSpec ident="TEI" mode="change">
                <attList>
                   <attDef ident="version" mode="delete"/>
-                  <attDef ident="rend" mode="delete"/>
-               </attList>
-            </elementSpec>
-            <elementSpec ident="text" mode="change">
-               <attList>
-                  <attDef ident="rend" mode="delete"/>
-               </attList>
-            </elementSpec>
-            <elementSpec ident="body" mode="change">
-               <attList>
-                  <attDef ident="rend" mode="delete"/>
                </attList>
             </elementSpec>
          </schemaSpec>

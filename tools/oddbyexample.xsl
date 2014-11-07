@@ -420,9 +420,7 @@ valList
                 <p>Unpublished first draft </p>
               </publicationStmt>
               <sourceDesc>
-                <p>Derived from an analysis of <xsl:value-of select="$count"/>
-                  files from <xsl:value-of select="$corpus"/>
-                </p>
+                <p>Derived from an analysis of <xsl:value-of select="$count"/> files from <xsl:value-of select="$corpus"/></p>
               </sourceDesc>
             </fileDesc>
           </teiHeader>
