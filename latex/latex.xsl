@@ -137,7 +137,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="letters"/>
     <xsl:param name="context"/>
       <xsl:value-of
-	  select="replace(replace(replace(replace(replace(translate($letters,'&#10;',' '), 
+	  select="replace(replace(replace(replace(replace(translate($letters,'ſ&#10;','s '), 
 		  '\\','\\textbackslash '),
 		  '_','\\textunderscore '),
 		  '\^','\\textasciicircum '),

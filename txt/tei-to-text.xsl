@@ -188,7 +188,7 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:value-of select="$result"/>
        </xsl:when>
        <xsl:otherwise>
-	 <xsl:sequence select="concat(normalize-space($letters),'&#10;')"/>
+	 <xsl:sequence select="concat(normalize-space(translate($letters,'ſ','s')),'&#10;')"/>
        </xsl:otherwise>
        </xsl:choose>
   </xsl:function>

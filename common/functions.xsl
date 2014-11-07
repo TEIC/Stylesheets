@@ -548,7 +548,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:escapeChars" as="xs:string">
     <xsl:param name="letters"/>
     <xsl:param name="context"/>
-    <xsl:value-of select="$letters"/>
+    <xsl:value-of select="translate($letters,'ſ','s')"/>
   </xsl:function>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[common] process target urls, looking for magic patterns</desc>
