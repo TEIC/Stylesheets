@@ -543,7 +543,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[common] allow for further handling of text. By default,
-      just normalize, but some formats may escape some characters.</desc>
+      just convert long s to short s, but some formats may escape some characters.</desc>
   </doc>
   <xsl:function name="tei:escapeChars" as="xs:string">
     <xsl:param name="letters"/>
