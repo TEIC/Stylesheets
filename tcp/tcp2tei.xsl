@@ -2391,6 +2391,17 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:note[count(*)=1 and not(text())]/tei:p">
     <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="pass2"/>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	A singleton floatingText inside a q can skip the q
+      </p>
+    </desc>
+  </doc>
+  <xsl:template match="tei:q[count(*)=1 and not(text()) and tei:floatingText]">
+    <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="pass2"/>
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
