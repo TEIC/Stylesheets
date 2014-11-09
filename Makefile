@@ -2,6 +2,7 @@ SFUSER=rahtz
 JING=jing
 SAXON=java -jar lib/saxon9he.jar
 DOTDOTSAXON=java -jar ../../lib/saxon9he.jar
+DOTSAXON=java -jar ../lib/saxon9he.jar
 SAXON_ARGS=-ext:on
 
 DIRS=bibtex cocoa common docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt pdf profiles/default rdf relaxng rnc schematron slides tbx tcp tite tools txt html xsd xlsx pdf verbatimxml
@@ -97,7 +98,7 @@ oxygendoc:
 	if test -f $(OXY)/stylesheetDocumentation.sh; then perl -pe "s+-Djava.awt+-Duser.home=/tmp/ -Djava.awt+; s+OXYGEN_HOME=.*+OXYGEN_HOME=/usr/share/oxygen+" < $(OXY)/stylesheetDocumentation.sh > ./runDoc.sh; chmod 755 runDoc.sh;  cp -f $(OXY)/licensekey.txt .;  $(MAKE) ${DOCTARGETS} ${PROFILEDOCTARGETS}; rm -f licensekey.txt runDoc.sh; fi
 
 teioo.jar:
-	(cd odt;  mkdir TEIP5; $(DOTDOTSAXON) -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
+	(cd odt;  mkdir TEIP5; $(DOTSAXON) -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
 
 test: clean build common names debversion
 	@echo BUILD Run tests
@@ -118,7 +119,7 @@ release: common doc oxygendoc build profiles
 
 installxsl: build teioo.jar
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
-	cp -r lib teioo.jar ${PREFIX}/share/xml/tei/stylesheet
+	(tar cf - lib teioo.jar) | (cd ${PREFIX}/share/xml/tei/stylesheet; tar xf - )
 	(cd release/xsl; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
 	mkdir -p ${PREFIX}/bin
 	cp bin/transformtei ${PREFIX}/bin
