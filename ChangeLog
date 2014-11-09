@@ -1,3 +1,206 @@
+2014-11-07  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	make new release 7.26
+
+	fall out from long s
+
+	we can safely drop a wrapper q around a floatingText
+
+	turn long s into short s
+
+	results files changed because of adding gaiji module, IDs vary
+
+	update oddbyexample output
+
+2014-11-06  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	explicit sypport for <g>, improve <expan>
+
+	changed test results
+
+2014-11-06  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+
+	revert to using @include rather than elementRefs (since the latter loses declaration order)
+
+2014-11-04  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	more special cases for marginal notes; process p in sp more like other p
+
+	drop double-nested Q
+
+	changed results (order of attributes)
+
+	gloss lists
+
+2014-11-03  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	changed results
+
+	more special cases of notes in block objects
+
+2014-11-02  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	and another
+
+	more situations where a marg note is a div
+
+	plain <q> is much more often a span. changed tests to show this
+
+	change in TCP processing
+
+2014-11-02  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	tcp dates
+
+	tcp dates
+
+2014-11-02  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	allow for month names in dates
+
+	limit date hacking
+
+	no, dont force @n
+
+	keep @n on <pb> in TCP
+
+	a set of tweaks to make valid and nicer epub from TCP
+
+2014-11-01  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	changed results
+
+	use aside for all marginal notes inside <p> or <head>, adjust into <span> in pass 2
+
+	update TCP sample text
+
+	create @when on publication date
+
+	dont special-case generateDate in OTA profile
+
+	when producing dates, check for existence of @when
+
+	add @when to <date> if it contains parenthetical info
+
+	adjust splitHTMLBlocks code to render marginal notes using only span
+
+2014-10-31  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	typo
+
+	restore @module to classSpec and only remove it at the last minute
+
+	@style is global too
+
+	trust version control, Luke
+
+2014-10-31  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	update test resuylts
+
+	remoue redundant module= which was upsetting schematron
+
+2014-10-31  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	dont sort things
+
+2014-10-30  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	changed results
+
+	rules about when a p is div
+
+2014-10-30  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	avoid dependency on local file names
+
+	move <aside> to end of current paragraph
+
+	change expected results from extra note tests
+
+2014-10-30  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	make output p5 conformant
+
+2014-10-30  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	restore oddbyexample
+
+2014-10-30  Lou Burnard  <lou.burnard@retired.ox.ac.uk>
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+	Conflicts:
+		tools/oddbyexample.xsl
+
+2014-10-29  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	starting to look at using <aside> for marginal notes
+
+	make <aside> like marginal note
+
+	singleton figure in singleton p in note can skip its p
+
+2014-10-29  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	make footnote lists used consistent criteria
+
+	add @type onto all milestone->note transforms
+
+2014-10-28  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	make sure oddbyexample copies over macros and model classes which are not in tei module
+
+2014-10-28  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	rewrite oddbyexample a lot. dont use moduleRef any more
+
+2014-10-27  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	deleted attributes have no effect when making schenas
+
+	allow for subsets by module
+
+	rethinking bits of oddbyexample, to do with inherited class attributes
+
+2014-10-27  Lou Burnard  <lou.burnard@retired.ox.ac.uk>
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+
+2014-10-27  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	typo
+
+	keep better track of deleted attributes
+
+	milestone inside speech should be marginal note too
+
+2014-10-24  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	improve ODD to CSV
+
+2014-10-23  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	can't use profiles for simple transforms
+
+	add test for "oucs" course docs
+
+	typo
+
+	declare tei: prefix
+
+2014-10-22  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	typo
+
+	supporting output format of verbatimxml
+
+2014-10-21  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	useful script for analyzing odd
+
+	preparing for new version
 2014-10-20  Sebastian Rahtz  <Sebastian.Rahtz@it.ox.ac.uk>
 	RELEASE 7.25
 

@@ -222,7 +222,7 @@ of this software, even if advised of the possibility of such damage.
       <p>A Q with just a Q inside it is redundant</p>
     </desc>
   </doc>
-  <xsl:template match="Q[count(*)=1]/Q">
+  <xsl:template match="Q[not(text()) and count(*)=1]/Q">
     <xsl:apply-templates/>
   </xsl:template>
   
@@ -1529,35 +1529,36 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template match="@PLACE">
+    <xsl:variable name="p" select="lower-case(.)"/>
     <xsl:choose>
-      <xsl:when test=".='marg' or .='marg;' or .='marg)' or .='marg='         or .='ma / rg' or .='6marg'">
+      <xsl:when test="$p='marg' or $p='marg;' or $p='marg)' or $p='marg='         or $p='ma / rg' or $p='6marg'">
         <xsl:attribute name="place">margin</xsl:attribute>
       </xsl:when>
-      <xsl:when test=". = 'unspecified'"/>
-      <xsl:when test=".='foot;' or .='foor;' or .='foot'">
+      <xsl:when test="$p = 'unspecified'"/>
+      <xsl:when test="$p='foot;' or $p='foor;' or $p='foot'">
         <xsl:attribute name="place">bottom</xsl:attribute>
       </xsl:when>
-      <xsl:when test=".='foot1' or .='foot2'">
+      <xsl:when test="$p='foot1' or $p='foot2'">
         <xsl:attribute name="place">bottom</xsl:attribute>
-        <xsl:attribute name="type" select="."/>
+        <xsl:attribute name="type" select="$p"/>
       </xsl:when>
-      <xsl:when test=".='inter'">
-        <xsl:attribute name="rend" select="."/>
+      <xsl:when test="$p='inter'">
+        <xsl:attribute name="rend" select="$p"/>
       </xsl:when>
-      <xsl:when test=".='‡' or .='†' or .='‖' or .='6'  or .='“' or         .='1' or .='*'">
+      <xsl:when test="$p='‡' or $p='†' or $p='‖' or $p='6'  or $p='“' or         $p='1' or $p='*'">
         <xsl:attribute name="n">
-          <xsl:value-of select="."/>
+          <xsl:value-of select="$p"/>
         </xsl:attribute>
       </xsl:when>
       <xsl:otherwise>
         <xsl:attribute name="place">
-          <xsl:value-of select="."/>
+          <xsl:value-of select="$p"/>
         </xsl:attribute>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <xsl:template match="@SAMPLE">
-    <xsl:if test="not(. = 'complete')">
+    <xsl:if test="not(. = 'COMPLETE')">
       <xsl:attribute name="sample">
         <xsl:value-of select="."/>
       </xsl:attribute>
@@ -2029,7 +2030,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="SOURCEDESC/p[string-length(.)=0]"/>
   <xsl:template match="GAP/@DESC">
     <xsl:attribute name="reason">
-      <xsl:value-of select="."/>
+      <xsl:value-of select="lower-case(.)"/>
+      <xsl:if test="parent::GAP/@REASON">
+	<xsl:text>: </xsl:text>
+	<xsl:value-of select="parent::GAP/@REASON"/>
+      </xsl:if>
     </xsl:attribute>
   </xsl:template>
   <xsl:template match="GAP/@DISP">
@@ -2039,7 +2044,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="GAP">
     <gap>
-      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates select="@EXTENT"/>
+      <xsl:apply-templates select="@DESC"/>
+      <xsl:apply-templates select="@DISP"/>
     </gap>
   </xsl:template>
   <!--  creating a choice element -->
