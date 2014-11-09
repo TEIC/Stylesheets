@@ -222,7 +222,7 @@ of this software, even if advised of the possibility of such damage.
       <p>A Q with just a Q inside it is redundant</p>
     </desc>
   </doc>
-  <xsl:template match="Q[count(*)=1]/Q">
+  <xsl:template match="Q[not(text()) and count(*)=1]/Q">
     <xsl:apply-templates/>
   </xsl:template>
   
