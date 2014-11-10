@@ -197,7 +197,11 @@ of this software, even if advised of the possibility of such damage.
      <xsl:copy-of select="."/>
    </xsl:template>
    
-   <xsl:template match="lb|pb|gb" mode="preflight"/>
+   <xsl:template match="lb[@rend='none']"/>
+
+   <xsl:template match="lb|pb|gb" mode="preflight">
+     <xsl:text> </xsl:text>
+   </xsl:template>
 
    <xsl:template match="*" mode="preflight">
      <xsl:copy>
