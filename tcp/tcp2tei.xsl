@@ -2044,8 +2044,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="GAP">
     <gap>
-      <xsl:apply-templates select="@EXTENT"/>
       <xsl:apply-templates select="@DESC"/>
+      <xsl:apply-templates select="@RESP"/>
+      <xsl:apply-templates select="@EXTENT"/>
       <xsl:apply-templates select="@DISP"/>
     </gap>
   </xsl:template>
