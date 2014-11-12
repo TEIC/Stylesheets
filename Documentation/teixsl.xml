@@ -9,7 +9,7 @@
       </titleStmt>
       <editionStmt>
         <edition>
-          <date>2013-11-17</date>
+          <date>2014-11-12</date>
         </edition>
       </editionStmt>
       <publicationStmt>
@@ -57,58 +57,100 @@ the <ref target="mailto:info@tei-c.org">TEI Consortium</ref>.
         <p/>
       </sourceDesc>
     </fileDesc>
-    <revisionDesc>
-      <change>
-        <date>$Date$.</date>
-        <name>$Author$, $Revision$</name>
-      </change>
-    </revisionDesc>
   </teiHeader>
   <text>
     <body>
       <div xml:id="intro">
         <head>Introduction</head>
-        <p>This is a family of XSLT 2.0 stylesheets to transform TEI XML documents
-to various formats, including XHTML, LaTeX, XSL Formatting Objects,
-ePub, plain text, RDF, JSON;
-and to/from Word OOXML (docx) and OpenOfice (odt).
-They concentrate on the core TEI
-modules which are used for simple transcription and <q>born
-digital</q> writing. It is important to understand that they do <hi>not</hi>:
-<list><item>cover <hi>all</hi> TEI elements and possible attribute values</item><item>attempt to define a standard TEI processing or rendering
-model</item></list>
-and should not be treated as the definitive view of the TEI Consortium.</p>
+        <p>This is a family of XSLT 2.0 stylesheets to transform TEI
+        XML documents to various textual formats formats, including
+        XHTML, LaTeX, XSL Formatting Objects, ePub, plain text, RDF,
+        and JSON; and to/from Word OOXML (docx) and OpenOfice (odt).
+        They concentrate on the core TEI modules which are used for
+        simple transcription and <q>born digital</q> writing. It is
+        important to understand that they do <hi>not</hi>:
+        <list><item>cover <hi>all</hi> TEI elements and possible
+        attribute values</item><item>attempt to define a standard TEI
+        processing or rendering model</item></list> and should not be
+        treated as the definitive view of the TEI Consortium.</p>
       </div>
           <div xml:id="profiles">
             <head>Profiles</head>
-            <p>The stylesheets support a set of <ident>profiles</ident>, which are
-project starting points. They are implemented as a set of directories each of which may have a file
-<ident>to.xsl</ident> for one or more of the supported output formats
-(<ident>csv</ident>,
-<ident>docbook</ident>,
-<ident>docx</ident>,
-<ident>dtd</ident>,
-<ident>epub3</ident>,
-<ident>epub</ident>,
-<ident>fo</ident>,
-<ident>html5</ident>,
-<ident>html</ident>,
-<ident>ibooks</ident>,
-<ident>json</ident>,
-<ident>latex</ident>,
-<ident>lite</ident>,
-<ident>oddhtml</ident>,
-<ident>odt</ident>,
-<ident>p4</ident>,
-<ident>rdf</ident>,
-<ident>relaxng</ident>,
-<ident>tcp</ident>,
-<ident>txt</ident>, and
-<ident>xlsx</ident>). There may also be a <ident>from.xsl</ident>
-to go <emph>from</emph> the selected format to TEI XML.</p>
+            <p>The stylesheets support a set of
+            <ident>profiles</ident>, which are project starting points
+            or customizations. They are implemented as a set of
+            directories each of which may have a file
+            <ident>to.xsl</ident> for one or more of the supported
+            output formats.  There may also be a
+            <ident>from.xsl</ident> to go <emph>from</emph> the
+            selected format to TEI XML.</p>
+	    <p>The profile <code>default</code> is used if no other
+	    setup is selected, and is the fallback when a profile is
+	    requested but does not contain any customization directory
+	    for the chosen format.</p>
           </div>
 
-      <div xmlLid="using">
+
+      <div xml:id="formats">
+	<head>Formats and file structure</head>
+	<p>The stylesheets code is divided into directories by input
+	or output <emph>format</emph>, as described in the table
+	below. In addition there are some general-purpose directories:
+	<list type="gloss"><label>common</label><item>templates which
+	are independent of output type, used by the other
+	transformations</item> <label>odds</label><item>processing of
+	TEI ODD files</item> <label>slides</label><item>creation of
+	LaTeX code for <q>beamer</q>
+	slides</item><label>tools</label><item>assorted free-standing
+	utilities</item></list> Within each directory there is usually
+	a separate file for the templates which implement each of the
+	TEI modules (eg <ident>html_textstructure.xsl</ident>,
+	<ident>html_linking.xsl</ident>, or
+	<ident>html_drama.xsl</ident>); these are included by a master
+	file eg <ident>html.xsl</ident>. This also includes a
+	parameterization layer in the file eg
+	<ident>html_param.xsl</ident>, and the parameterization file
+	from the <ident>common</ident> directory. The file (eg)
+	<ident>html.xsl</ident> does any necessary declaration of
+	constants and XSL keys.</p>
+
+<table>
+<row role="label"><cell>name</cell><cell>Description</cell><cell>from TEI</cell><cell>to TEI</cell></row>
+<row><cell>bibtex</cell><cell>LaTeX BibTeX</cell><cell>x</cell><cell></cell></row>
+<row><cell>cocoa</cell><cell>Cocoa simple markup</cell><cell>x</cell><cell></cell></row>
+<row><cell>csv</cell><cell>Comma-separated values (TEI tables only)</cell><cell>x</cell><cell>x</cell></row>
+<row><cell>docbook</cell><cell>Docbook 5.0</cell><cell>x</cell><cell>x</cell></row>
+<row><cell>docx</cell><cell>Microsoft Word (OOXML)</cell><cell>x</cell><cell>x</cell></row>
+<row><cell>dtd</cell><cell>XML DTD (from ODD)</cell><cell>x</cell><cell></cell></row>
+<row><cell>epub3</cell><cell>ePub version 3</cell><cell>x</cell><cell></cell></row>
+<row><cell>epub</cell><cell>ePub</cell><cell>x</cell><cell></cell></row>
+<row><cell>fo</cell><cell>XSL Formatting Objects</cell><cell>x</cell><cell></cell></row>
+<row><cell>html5</cell><cell>HTML5 </cell><cell>x</cell><cell></cell></row>
+<row><cell>html</cell><cell>HTML (also used by ePub)</cell><cell>x</cell><cell></cell></row>
+<row><cell>json</cell><cell>JSON (minimal)</cell><cell>x</cell><cell></cell></row>
+<row><cell>latex</cell><cell>LaTeX</cell><cell>x</cell><cell></cell></row>
+<row><cell>markdown</cell>Markdown<cell></cell><cell>x</cell><cell>x</cell></row>
+<row><cell>nlm</cell><cell>NLM</cell><cell>x</cell><cell></cell></row>
+<row><cell>odd</cell><cell>TEI compiled ODD</cell><cell>x</cell><cell></cell></row>
+<row><cell>odt</cell><cell>OpenOffice (ODF)</cell><cell>x</cell><cell>x</cell></row>
+<row><cell>p4</cell><cell>TEI P4</cell><cell></cell><cell>x</cell></row>
+<row><cell>pdf</cell><cell>PDF (generated by running LaTeX)</cell><cell>x</cell><cell></cell></row>
+<row><cell>rdf</cell><cell>RDF (CIDOC CRM)</cell><cell>x</cell><cell></cell></row>
+<row><cell>relaxng</cell><cell>RELAX NG schema (from ODD)</cell><cell>x</cell><cell></cell></row>
+<row><cell>rnc</cell><cell>RELAX NG schema (compact format)</cell><cell>x</cell><cell></cell></row>
+<row><cell>schematron</cell><cell>Schematron schema (from ODD)</cell><cell>x</cell><cell></cell></row>
+<row><cell>tbx</cell><cell>TBX</cell><cell>x</cell><cell></cell></row>
+<row><cell>tcp</cell><cell>Text Creation Partnership P4 XML</cell><cell></cell><cell>x</cell></row>
+<row><cell>tite</cell><cell>TEI Tite capture format</cell><cell></cell><cell>x</cell></row>
+<row><cell>txt</cell><cell>Plain text</cell><cell>x</cell><cell></cell></row>
+<row><cell>verbatimxml </cell><cell>Pretty-printed XML</cell><cell>x</cell><cell></cell></row>
+<row><cell>wordpress</cell><cell>Wordpress</cell><cell></cell><cell>x</cell></row>
+<row><cell>xlsx</cell><cell>Excel (OOXML)</cell><cell></cell><cell>x</cell></row>
+<row><cell>xsd</cell><cell>W3C schema (from ODD)</cell><cell>x</cell><cell></cell></row>
+</table>
+</div>
+
+      <div xml:id="using">
         <head>Using the stylesheets</head>
         <p>The stylesheets are embedded in various services, or can be used on their own to perform
 	the transformations. </p>
@@ -181,31 +223,42 @@ different profiles supported for the current conversion path.</p>
           <head>Command-line scripts</head>
           <p>When the stylesheet package is installed, either by running <code>make install</code> from source,
 or installing a Debian package, there are Linux/OSX command-line shell scripts available
-(<ident>docbooktotei</ident>,
-<ident>docxtotei</ident>,
-<ident>odttotei</ident>,
-<ident>tcptotei</ident>,
-<ident>teitobibtex</ident>,
-<ident>teitodocbook</ident>,
-<ident>teitodocx</ident>,
-<ident>teitodtd</ident>,
-<ident>teitoepub</ident>,
-<ident>teitoepub3</ident>,
-<ident>teitofo</ident>,
-<ident>teitohtml</ident>,
-<ident>teitohtml5</ident>,
-<ident>teitojson</ident>,
-<ident>teitolatex</ident>,
-<ident>teitoodd</ident>,
-<ident>teitoodt</ident>,
-<ident>teitopdf</ident>,
-<ident>teitordf</ident>,
-<ident>teitorelaxng</ident>,
-<ident>teitornc</ident>,
-<ident>teitoslides</ident>,
-<ident>teitotxt</ident>,
-<ident>teitoxsd</ident>, and
-<ident>xlsxtotei</ident>)
+(<code>cocoatotei</code>,
+<code>docbooktotei</code>,
+<code>docxtotei</code>,
+<code>htmltotei</code>,
+<code>markdowntotei</code>,
+<code>odttotei</code>,
+<code>p4totei</code>,
+<code>tcptotei</code>,
+<code>teitobibtex</code>,
+<code>teitocsv</code>,
+<code>teitodocbook</code>,
+<code>teitodocx</code>,
+<code>teitodtd</code>,
+<code>teitoepub</code>,
+<code>teitoepub3</code>,
+<code>teitofo</code>,
+<code>teitohtml</code>,
+<code>teitohtml5</code>,
+<code>teitojson</code>,
+<code>teitolatex</code>,
+<code>teitolite</code>,
+<code>teitomarkdown</code>,
+<code>teitonlm</code>,
+<code>teitoodd</code>,
+<code>teitoodt</code>,
+<code>teitopdf</code>,
+<code>teitordf</code>,
+<code>teitorelaxng</code>,
+<code>teitornc</code>,
+<code>teitoschematron</code>,
+<code>teitoslides</code>,
+<code>teitotxt</code>,
+<code>teitoverbatimxml</code>,
+<code>teitoxsd</code>,
+<code>wordpresstotei</code>, and
+<code>xlsxtotei</code>)
 for converting to/from Word, to/from OpenOffice, and to DTD, ePub,
 HTML, RDF, Relax NG, plain text, W3C schema etc.  These are
 implemented using Ant tasks, so a local installation of Java 1.6+ and Ant
@@ -257,28 +310,9 @@ multiple output files, one per top-level <gi>div</gi> or <gi>div1</gi>.
 </p>
         </div>
       </div>
-      <div xml:id="structure">
-        <head>File structure and customization</head>
-        <p>The stylesheets files consist of a number of scripts, and seven 
-main directories where most of the work is done:
-<list type="gloss"><label>common</label><item>templates which are independent of output
-type, used by the other transformations</item><label>html</label><item>templates for making HTML output (also used
-for ePub)</item><label>latex</label><item>templates for making LaTeX output</item><label>docx</label><item>conversion to and from Word OOXML format</item><label>odt</label><item>conversion to and from OpenOffice ODF format</item><label>fo</label><item>templates for making XSL FO output</item><label>odds</label><item>processing of TEI ODD files</item></list>
-Within each directory there is usually a separate file for the templates
-which implement each of the TEI modules (eg
-<ident>html_textstructure.xsl</ident>,
-<ident>html_linking.xsl</ident>, or <ident>html_drama.xsl</ident>); these
-are included by a master file eg <ident>html.xsl</ident>. This also
-includes a parameterization layer in the file eg
-<ident>html_param.xsl</ident>, and the parameterization file from
-the <ident>common</ident> directory. The file (eg) <ident>html.xsl</ident> does
-any necessary declaration of constants and XSL keys.</p>
-        <p>There are further directories  for other conversions, some which
-are built on top of the html one above:
-<list type="gloss"><label>bibtex</label><item>conversion to BibTeX</item><label>docbook</label><item>conversion to/from Docbook</item><label>dtd</label><item>ODD conversion to DTD </item><label>epub</label><item>conversion to ePub</item><label>epub3</label><item>conversion to ePub3</item><label>html5</label><item>conversion to HTML5 </item><label>json</label><item>conversion to JSON</item><label>nlm</label><item>conversion to NLM </item><label>rdf</label><item>conversion to RDF (CIDOC CRM)</item><label>slides</label><item>conversion to LaTeX and HTML slides</item><label>tbx</label><item>conversion to TBX</item><label>tcp</label><item>conversion from Text Creation Partnership P4 XML</item><label>tite</label><item>conversion from TEI Tite to normal TEI P5</item><label>txt</label><item>conversion to plain text</item><label>xlsx</label><item>conversion from Microsoft Office spreadsheet format</item></list>
-</p>
+
         <div xml:id="start">
-          <head>Documentation of conversions and start points</head>
+          <head>Documentation of common conversions and start points</head>
           <list>
             <item>
               <ref target="profiles/default/csv/from.html">Default conversion from CSV</ref>
@@ -336,7 +370,7 @@ are built on top of the html one above:
             </item>
           </list>
         </div>
-      </div>
+
       <div xml:id="parameters">
         <head>Parameters and customizable templates</head>
         <p>The TEI stylesheets are designed to be customized. There

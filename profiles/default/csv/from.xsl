@@ -107,8 +107,7 @@ All output is converted to UTF-8.</li>
 		 <xsl:for-each select="$lines">
 		   <row>
 		     <xsl:variable name="lineItems" select="jc:splitCSV(.)"
-				   as="xs:string+"/>
-		     
+				   as="xs:string+"/>		     
 		     <xsl:for-each select="$lineItems">
 		       <xsl:variable name="pos" select="position()"/>
 		       <cell n="{$pos}">

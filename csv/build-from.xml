@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project basedir="." default="dist" name="markdowntotei">
+<project basedir="." default="dist" name="csvtotei">
   <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -19,12 +19,12 @@
         Copyright: 2011, TEI Consortium<
 -->
   <!--
- Convert Markdown documents into TEI
+ Convert CSV files into TEI tables.
  -->
-  <property name="markdowntotei" value="${profiledir}/${profile}/markdown/from.xsl"/>
+  <property name="csvtotei" value="${profiledir}/${profile}/csv/from.xsl"/>
 
 <target name="dist" >
-  <xslt force="yes" style="${markdowntotei}" in="dummy.xml" out="${outputFile}">
+  <xslt force="yes" style="${csvtotei}" in="dummy.xml" out="${outputFile}">
     <xmlcatalog>
       <catalogpath>
         <pathelement location="$catalogfile"/>

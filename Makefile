@@ -5,7 +5,7 @@ DOTDOTSAXON=java -jar ../../lib/saxon9he.jar
 DOTSAXON=java -jar ../lib/saxon9he.jar
 SAXON_ARGS=-ext:on
 
-DIRS=bibtex cocoa common docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt pdf profiles/default rdf relaxng rnc schematron slides tbx tcp tite tools txt html xsd xlsx pdf verbatimxml
+DIRS=bibtex cocoa common csv docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt p4 pdf profiles/default rdf relaxng rnc schematron slides tbx tcp tite tools txt html xsd xlsx pdf verbatimxml
 
 SCRIPTS=bin/*to*
 PREFIX=/usr
@@ -80,14 +80,14 @@ profiles:
 	test -d release/xslprofiles/xml/tei/stylesheet || mkdir -p release/xslprofiles/xml/tei/stylesheet
 	tar cf - profiles | (cd release/xslprofiles/xml/tei/stylesheet; tar xf - )
 
-doc: oxygendoc
+doc: oxygendoc linkcss
 	@echo BUILD Compile documentation
 	test -d release/xslcommon/doc/tei-xsl || mkdir -p release/xslcommon/doc/tei-xsl
-	$(SAXON) -o:doc/index.xml doc/teixsl.xml doc/param.xsl 
-	$(SAXON) -o:doc/style.xml doc/teixsl.xml  doc/paramform.xsl 
-	$(SAXON) -o:release/xslcommon/doc/tei-xsl/index.html doc/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
-	$(SAXON) -o:release/xslcommon/doc/tei-xsl/style.html doc/style.xml  profiles/default/html/to.xsl 
-	cp doc/*.png doc/teixsl.xml doc/style.xml release/xslcommon/doc/tei-xsl
+	$(SAXON) -o:Documentation/index.xml Documentation/teixsl.xml Documentation/param.xsl 
+	$(SAXON) -o:Documentation/style.xml Documentation/teixsl.xml  Documentation/paramform.xsl 
+	$(SAXON) -o:release/xslcommon/doc/tei-xsl/index.html Documentation/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
+	$(SAXON) -o:release/xslcommon/doc/tei-xsl/style.html Documentation/style.xml  profiles/default/html/to.xsl 
+	cp Documentation/*.png Documentation/teixsl.xml Documentation/style.xml release/xslcommon/doc/tei-xsl
 	cp VERSION tei.css ChangeLog LICENCE release/xslcommon/doc/tei-xsl
 
 oxygendoc:
@@ -144,13 +144,13 @@ install-profiles-files:
 
 ${PROFILEDOCTARGETS}:
 	echo process doc for $@
-	ODIR=release/xslprofiles/doc/tei-xsl/`dirname $@` ./runDoc.sh $@ -cfg:doc/oxydoc.cfg
+	ODIR=release/xslprofiles/doc/tei-xsl/`dirname $@` ./runDoc.sh $@ -cfg:Documentation/oxydococ.cfg
 	(cd `dirname $@`; tar cf - release) | tar xf -
 	rm -rf `dirname $@`/release
 
 ${DOCTARGETS}:
 	echo process doc for $@
-	ODIR=release/xsl/doc/tei-xsl/`dirname $@` ./runDoc.sh $@ -cfg:doc/oxydoc.cfg
+	ODIR=release/xsl/doc/tei-xsl/`dirname $@` ./runDoc.sh $@ -cfg:Documentation/oxydococ.cfg
 	(cd `dirname $@`; tar cf - release) | tar xf -
 	rm -rf `dirname $@`/release
 
@@ -164,14 +164,14 @@ installcommon: doc common
 	(cd release/xslcommon/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
 install: linkcss doc installxsl installprofiles installcommon 
-	rm -rf doc/index.xml doc/style.xml doc/stylebear teioo.jar
+	rm -rf Documentation/index.xml Documentation/style.xml Documentation/stylebear teioo.jar
 
 linkcss:
 	(for i in css/*; do test -f `basename $$i` || ln -s $$i `basename $$i`;done)
 
 
 debversion:
-	sh ./util/mydch debian-tei-xsl/debian/changelog
+	sh ./tools/mydch debian-tei-xsl/debian/changelog
 
 deb: debversion
 	@echo BUILD Make Debian packages
@@ -188,7 +188,7 @@ sfupload:
 log:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
 	echo changes since $$LastDate; \
-	./util/git-to-changelog --since=$$LastDate > newchanges)
+	./tools/git-to-changelog --since=$$LastDate > newchanges)
 	mv ChangeLog oldchanges
 	cat newchanges oldchanges > ChangeLog
 	rm newchanges oldchanges
@@ -200,7 +200,7 @@ clean:
 	find . -name "*~"  | xargs rm
 	rm -f tei-xsl-*.zip	
 	rm -rf tei-xsl_*
-	rm -f doc/stylebear doc/style.xml doc/customize.xml doc/teixsl.html doc/index.xml
+	rm -f Documentation/stylebear Documentation/style.xml Documentation/customize.xml Documentation/teixsl.html Documentation/index.xml
 	rm -rf release dist
 	(cd Test; make clean)
 	rm -rf tei-p5-xsl_*
@@ -213,5 +213,4 @@ clean:
 	(for i in sciencejournal/*.xml; do rm -f sciencejournal/`basename $$i`;done)
 
 tags:
-	etags `find . -name "*.xsl" | grep -v "slides/" | grep -v "latex/" | grep -v "html/" | grep -v "fo/" | grep -v "common2/" | grep -v "doc/" `
-
+	etags `find . -name "*.xsl"

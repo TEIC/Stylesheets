@@ -151,7 +151,16 @@ of this software, even if advised of the possibility of such damage.
 
    <xsl:template match="facsimile"/>
 
-   <!-- for when we need some context -->
+  <!-- handle text nodes and perform any necessary character
+       conversion -->
+
+<!-- also use this chance to break text into words and put them one
+per line, if requested by "oneword" parameter -->
+
+<!-- if makeCSV is requested, each word is in a line of a CSV file
+     by itself followed by its position within the hierachy of the XML
+     document
+-->
   <xsl:function name="tei:escapeChars" as="xs:string">
     <xsl:param name="letters"/>
     <xsl:param name="context"/>
