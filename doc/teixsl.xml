@@ -82,7 +82,14 @@ and should not be treated as the definitive view of the TEI Consortium.</p>
           <div xml:id="profiles">
             <head>Profiles</head>
             <p>The stylesheets support a set of <ident>profiles</ident>, which are
-project starting points. They are implemented as a set of directories each of which may have a file
+project starting points. Each profile is a subdirectory of the <ident>profiles</ident> directory. 
+Each profile represents a specific set of customizations of the basic stylesheet functions, each for 
+a particular audience or purpose. For example, the <ident>ota</ident> profile is customized for working 
+              with texts from the Oxford Text Archive, and the <ident>dhoxss</ident> profile is for 
+              materials related to the Digital Humanities Oxford Summer School. Most users will 
+              want to work with the <ident>default</ident> profile.</p>
+            
+<p>Inside each profile directory as a set of directories each of which may have a file
 <ident>to.xsl</ident> for one or more of the supported output formats
 (<ident>csv</ident>,
 <ident>docbook</ident>,
@@ -108,7 +115,7 @@ project starting points. They are implemented as a set of directories each of wh
 to go <emph>from</emph> the selected format to TEI XML.</p>
           </div>
 
-      <div xmlLid="using">
+      <div xml:id="using">
         <head>Using the stylesheets</head>
         <p>The stylesheets are embedded in various services, or can be used on their own to perform
 	the transformations. </p>
