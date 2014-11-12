@@ -77,17 +77,30 @@ the <ref target="mailto:info@tei-c.org">TEI Consortium</ref>.
           <div xml:id="profiles">
             <head>Profiles</head>
             <p>The stylesheets support a set of
-            <ident>profiles</ident>, which are project starting points
-            or customizations. They are implemented as a set of
+            <ident>profiles</ident>, which are project starting
+            points. Each profile is a subdirectory of the
+            <ident>profiles</ident> directory.  Each profile
+            represents a specific set of customizations of the basic
+            stylesheet functions, each for a particular audience or
+            purpose. For example, the <ident>ota</ident> profile is
+            customized for working with texts from the Oxford Text
+            Archive, and the <ident>dhoxss</ident> profile is for
+            materials related to the Digital Humanities Oxford Summer
+            School. Most users will want to work with the
+            <ident>default</ident> profile.</p>
+
+	    <p>The profile <code>default</code> is used if no other
+	    setup is selected, and is the fallback when a profile is
+	    requested but does not contain any customization directory
+	    for the chosen format.</p>
+
+            <p>The profiles are implemented as a set of
             directories each of which may have a file
             <ident>to.xsl</ident> for one or more of the supported
             output formats.  There may also be a
             <ident>from.xsl</ident> to go <emph>from</emph> the
             selected format to TEI XML.</p>
-	    <p>The profile <code>default</code> is used if no other
-	    setup is selected, and is the fallback when a profile is
-	    requested but does not contain any customization directory
-	    for the chosen format.</p>
+
           </div>
 
 

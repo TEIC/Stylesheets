@@ -213,4 +213,4 @@ clean:
 	(for i in sciencejournal/*.xml; do rm -f sciencejournal/`basename $$i`;done)
 
 tags:
-	etags `find . -name "*.xsl"
+	etags `find . -name "*.xsl"`
