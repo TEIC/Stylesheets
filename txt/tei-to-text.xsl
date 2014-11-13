@@ -125,7 +125,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-   <xsl:output method="text"/>
+   <xsl:output encoding="utf-8" method="text"/>
    <xsl:param name="makeCSV">false</xsl:param>
    <xsl:param name="oneword">false</xsl:param>
    <xsl:variable name="q">"</xsl:variable>
