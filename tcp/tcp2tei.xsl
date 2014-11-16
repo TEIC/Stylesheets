@@ -119,11 +119,15 @@ of this software, even if advised of the possibility of such damage.
     </xsl:analyze-string>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>TCP simple discard</desc>
+    <desc>TCP simple discard, you cant use hi in a description</desc>
   </doc>
   <xsl:template match="FIGDESC/HI">
     <xsl:apply-templates/>
   </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>discard temporary header material</desc>
+  </doc>
+  <xsl:template match="TEMPHEAD|IDG"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>TCP controversial discards</desc>
   </doc>
@@ -131,9 +135,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="LABEL/@ROLE"/>
   <xsl:template match="TITLE/@TYPE"/>
   <xsl:template match="GROUP/@TYPE"/>
-  <xsl:template match="TEMPHEAD"/>
   <xsl:template match="TITLE/@I2"/>
-  <xsl:template match="IDG"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>multiple values for @lang are discarded</desc>
   </doc>
@@ -392,9 +394,10 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
       </xsl:variable>
       <xsl:variable name="hfile" select="concat($headerDirectory,$name,'.hdr')"/>
-      <xsl:message> attempt to load header <xsl:value-of select="$hfile"/></xsl:message>
       <xsl:choose>
+	<xsl:when test="TEIHEADER"/>
         <xsl:when test="doc-available($hfile)">
+	  <xsl:message> attempt to load header <xsl:value-of select="$hfile"/></xsl:message>
           <xsl:for-each select="doc($hfile)">
             <xsl:apply-templates select="*"/>
           </xsl:for-each>
@@ -1233,12 +1236,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates/>
     </teiFsd2>
-  </xsl:template>
-  <xsl:template match="TEIHEADER">
-    <teiHeader>
-      <xsl:apply-templates select="@*"/>
-      <xsl:apply-templates/>
-    </teiHeader>
   </xsl:template>
   <xsl:template match="TERMENTRY">
     <termEntry>
