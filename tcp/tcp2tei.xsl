@@ -106,12 +106,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:matching-substring>
         <xsl:value-of select="regex-group(1)"/>
         <xsl:if test="$parent='CELL'">-</xsl:if>
-        <lb>
-          <xsl:if test="not($parent='CELL')">
-            <xsl:attribute name="rend">hidden</xsl:attribute>
-            <xsl:attribute name="type">hyphenInWord</xsl:attribute>
-          </xsl:if>
-        </lb>
+	<xsl:text>&#x00AD;</xsl:text>
       </xsl:matching-substring>
       <xsl:non-matching-substring>
         <xsl:value-of select="."/>
