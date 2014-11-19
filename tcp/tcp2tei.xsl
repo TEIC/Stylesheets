@@ -96,7 +96,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>text nodes are examined to find soft-hyphen characters,
-      which are replaced by explicit "lb".
+      which are replaced by Unicode character.
       </p>
     </desc>
   </doc>
@@ -109,7 +109,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:text>&#x00AD;</xsl:text>
       </xsl:matching-substring>
       <xsl:non-matching-substring>
-        <xsl:value-of select="."/>
+	<xsl:value-of select="normalize-unicode(.,'NFC')"/>
       </xsl:non-matching-substring>
     </xsl:analyze-string>
   </xsl:template>
@@ -264,11 +264,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="TITLESTMT/TITLE/text()[last()]">
     <xsl:choose>
       <xsl:when test="matches(.,':$')">
-        <xsl:value-of select="substring(.,1,string-length(.)-1)"/>
+	<xsl:value-of select="normalize-unicode(substring(.,1,string-length(.)-1),'NFC')"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="."/>
-      </xsl:otherwise>
+	<xsl:value-of select="normalize-unicode(.,'NFC')"/>
+       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2048,7 +2048,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="CORR[@SIC]">
     <choice>
       <corr>
-        <xsl:value-of select="text()"/>
+        <xsl:apply-templates select="text()"/>
       </corr>
       <sic>
         <xsl:value-of select="@SIC"/>
@@ -2171,7 +2171,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
         <xsl:when test="RESP/NAME">
           <resp>
-            <xsl:value-of select="resp/text()"/>
+            <xsl:apply-templates select="resp/text()"/>
           </resp>
           <xsl:for-each select="RESP/NAME">
             <name>
@@ -2563,4 +2563,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each-group>
   </xsl:template>
+
+
+
 </xsl:stylesheet>
