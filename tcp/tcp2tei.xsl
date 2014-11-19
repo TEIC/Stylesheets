@@ -751,6 +751,8 @@ of this software, even if advised of the possibility of such damage.
       <listPrefixDef>
         <prefixDef ident="tcp" matchPattern="([0-9\-]+):([0-9IVX]+)" replacementPattern="http://eebo.chadwyck.com/downloadtiff?vid=$1&amp;page=$2">
 	</prefixDef>
+        <prefixDef ident="char" matchPattern="(.+)" replacementPattern="https://raw.githubusercontent.com/textcreationpartnership/Texts/master/tcpchars.xml#$1">
+	</prefixDef>
       </listPrefixDef>
     </encodingDesc>
   </xsl:template>
