@@ -156,7 +156,7 @@ ${DOCTARGETS}:
 
 installcommon: doc common
 	mkdir -p ${PREFIX}/lib/cgi-bin
-	cp doc/stylebear ${PREFIX}/lib/cgi-bin/stylebear
+	cp Documentation/stylebear ${PREFIX}/lib/cgi-bin/stylebear
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear
 	mkdir -p ${PREFIX}/share/doc/
 	mkdir -p ${PREFIX}/share/xml/
