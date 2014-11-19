@@ -14,7 +14,7 @@
 
   <d:doc scope="stylesheet" type="stylesheet">
     <d:desc>
-      <d:p> TEI stylesheet for simplifying TEI ODD markup </d:p>
+      <d:p> TEI stylesheet for extracting Schematron rules from  TEI ODD </d:p>
       <d:p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
@@ -48,7 +48,6 @@ theory of liability, whether in contract, strict liability, or tort
 of this software, even if advised of the possibility of such damage.
 </d:p>
       <d:p>Author: See AUTHORS</d:p>
-      <d:p>Id: $Id$</d:p>
       <d:p>Copyright: 2014, TEI Consortium</d:p>
       <d:p/>
       <d:p>Modified 2014-01-01/09 by Syd Bauman:
