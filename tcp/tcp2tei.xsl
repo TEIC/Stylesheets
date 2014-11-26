@@ -104,10 +104,10 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="parent" select="local-name(parent::*)"/>
     <xsl:analyze-string regex="([^∣¦]*)([∣¦])" select=".">
       <xsl:matching-substring>
-        <xsl:value-of select="regex-group(1)"/>
+        <xsl:value-of select="normalize-unicode(regex-group(1),'NFC')"/>
 	<xsl:choose>
         <xsl:when test="$parent='CELL'">-</xsl:when>
-	<xsl:when test="regex-group(2)=' ¦'">
+	<xsl:when test="regex-group(2)='¦'">
 	  <g ref="char:EOLunhyphen">
 	    <xsl:text>&#x00AD;</xsl:text>
 	  </g>
