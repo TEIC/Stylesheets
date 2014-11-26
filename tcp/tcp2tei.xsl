@@ -102,11 +102,22 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="text()">
     <xsl:variable name="parent" select="local-name(parent::*)"/>
-    <xsl:analyze-string regex="([^∣]*)∣" select="translate(.,'¦','∣')">
+    <xsl:analyze-string regex="([^∣¦]*)([∣¦])" select=".">
       <xsl:matching-substring>
         <xsl:value-of select="regex-group(1)"/>
-        <xsl:if test="$parent='CELL'">-</xsl:if>
-	<xsl:text>&#x00AD;</xsl:text>
+	<xsl:choose>
+        <xsl:when test="$parent='CELL'">-</xsl:when>
+	<xsl:when test="regex-group(2)=' ¦'">
+	  <g ref="char:EOLunhyphen">
+	    <xsl:text>&#x00AD;</xsl:text>
+	  </g>
+	</xsl:when>
+	<xsl:otherwise>
+	  <g ref="char:EOLhyphen">
+	    <xsl:text>&#x00AD;</xsl:text>
+	  </g>
+	</xsl:otherwise>
+	</xsl:choose>
       </xsl:matching-substring>
       <xsl:non-matching-substring>
 	<xsl:value-of select="normalize-unicode(.,'NFC')"/>
