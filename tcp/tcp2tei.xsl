@@ -106,16 +106,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:matching-substring>
         <xsl:value-of select="normalize-unicode(regex-group(1),'NFC')"/>
 	<xsl:choose>
-        <xsl:when test="$parent='CELL'">-</xsl:when>
 	<xsl:when test="regex-group(2)='¦'">
-	  <g ref="char:EOLunhyphen">
-	    <xsl:text>&#x00AD;</xsl:text>
-	  </g>
+	  <g ref="char:EOLunhyphen"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <g ref="char:EOLhyphen">
-	    <xsl:text>&#x00AD;</xsl:text>
-	  </g>
+	  <g ref="char:EOLhyphen"/>
 	</xsl:otherwise>
 	</xsl:choose>
       </xsl:matching-substring>
