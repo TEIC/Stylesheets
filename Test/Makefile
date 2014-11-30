@@ -316,6 +316,7 @@ test-oddity: css
 	$(BINDIR)/teitohtml $(FLAG) --odd test-pure.odd test-pure.odd.html
 	xmllint --encode utf-8 --format test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure.odd.html
 	diff test-pure.odd.html expected-results/test-pure.odd.html
+foo:
 	$(BINDIR)/teitodtd $(FLAG) test-pure2.odd test-pure2.dtd
 	$(BINDIR)/teitornc $(FLAG) test-pure2.odd test-pure2.rnc
 	$(BINDIR)/teitohtml $(FLAG) --odd test-pure2.odd test-pure2.odd.html

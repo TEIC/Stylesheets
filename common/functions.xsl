@@ -242,6 +242,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether to render something in typewriter-like code.</desc>
   </doc>

@@ -340,6 +340,9 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>DTD generated from ODD source </xsl:text>
             <xsl:call-template name="showDate"/>
             <xsl:text>. </xsl:text>
+		  <xsl:value-of
+		      select="(/tei:TEI/tei:text/tei:front/tei:titlePage/tei:docDate,'.')"
+		      separator=""/>
 	    <xsl:call-template name="copyright"/>
             <xsl:call-template name="makeTEIVersion"/>
             <xsl:sequence select="tei:makeDescription(.,true())"/>
