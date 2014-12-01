@@ -1998,12 +1998,12 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="ROW/@ROLE">
     <xsl:attribute name="role">
-      <xsl:value-of select="."/>
+      <xsl:value-of select="lower-case(.)"/>
     </xsl:attribute>
   </xsl:template>
   <xsl:template match="CELL/@ROLE">
     <xsl:attribute name="role">
-      <xsl:value-of select="."/>
+      <xsl:value-of select="lower-case(.)"/>
     </xsl:attribute>
   </xsl:template>
   <!-- space does not have @EXTENT any more -->
@@ -2274,6 +2274,8 @@ of this software, even if advised of the possibility of such damage.
   <!-- remove default values for attributes -->
   <xsl:template match="ROW/@ROLE[.='data']"/>
   <xsl:template match="CELL/@ROLE[.='data']"/>
+  <xsl:template match="ROW/@ROLE[.='DATA']"/>
+  <xsl:template match="CELL/@ROLE[.='DATA']"/>
   <xsl:template match="CELL/@ROWS[.='1']"/>
   <xsl:template match="CELL/@COLS[.='1']"/>
   <xsl:template match="Q/@BROKEN[.='no']"/>
