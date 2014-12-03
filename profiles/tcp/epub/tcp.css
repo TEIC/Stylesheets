@@ -1,5 +1,5 @@
 /* 
-ePub Texts from ECCO
+ePub Texts from standard OTA
 */
 
 
@@ -36,7 +36,7 @@ span.head {
 }
 
 h1 {
-   font-weight: 600;
+   font-weight: 500;
    font-size: 16pt;
    line-height: 120%;
 }
@@ -47,13 +47,13 @@ h2 {
    font-size: 15pt;
    line-height: 120%;
    margin-top: 18pt;
-   font-weight: 600;
+   font-weight: 500;
 }
 
 h3 {
    font-size: larger;
    line-height: 120%;
-   font-weight: 600;
+   font-weight: 500;
    font-style: italic;
 }
 
@@ -66,19 +66,19 @@ div.h8 {
     margin-top: 6pt;
 }
 h1.maintitle {
-    font-weight: 600;
+    font-weight: 500;
     bottom: 5px;
 }
 
 h1.title {
     margin-left: 100px;
-    font-weight: 600;
+    font-weight: 500;
     bottom: 5px;
 }
 
 h2.subtitle {
     margin-left: 100px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 a:link, a:visited {
@@ -142,6 +142,7 @@ div.noteHeading {
     border-top: 1pt;
     border-style: solid;
     padding-top: 6pt;
+    font-size: larger;
     font-weight: bold;
 }
 div.noteBody {
@@ -333,13 +334,17 @@ p.box {
 
 td.label {
     font-weight: bold;
-    color: white;
-    background-color: black;
+    background-color: #D3D3D3;
 }
 tr.label td {
     font-weight: bold;
     color: white;
     background-color: black;
+}
+
+td {
+    padding: 2pt;
+    vertical-align: top;
 }
 
 span.label {
@@ -453,9 +458,12 @@ span.previousLink {
 span.upLink {
     font-style: italic;
 }
-p, div.p {
+p, div.p, span.p {
     margin-top: 0.5em;
     line-height: 125%;
+}
+span.p {
+    display: block;
 }
 /* bibl */
 span.titlem {
@@ -469,7 +477,11 @@ span.titleu {
 span.titles {
 }
 
-aside,div.notemargin,span.margnote {
+aside,span.notemargin,
+span.notemarginOuter,
+span.notemarginLeft,
+span.notemarginRight,
+div.notemargin,span.notemargin {
     display: block;
     font-size: smaller;
     clear: right;
@@ -477,8 +489,17 @@ aside,div.notemargin,span.margnote {
     font-style: italic;
     width: 15%;
     float:right; 
-    border: solid green 1pt; 
+    background-color: #F8F8FF;
     margin: 6pt;
+}
+span.notemargin,
+span.notemarginOuter,
+span.notemarginRight,
+span.notemargin,div.notemargin {
+    float:right; 
+}
+span.notemarginLeft {
+    float:left; 
 }
 
 div.floatingText_back {
@@ -493,20 +514,18 @@ div.floatingText {
     padding: 6pt;
     border: solid black 1pt;
 }
-span.pagebreak {
-    background-color: green;
-    font-weight: bold;
-}
-div.pagebreak {
+div.pagebreak,span.pagebreak {
     display: block;
-    border: solid red 1pt;
+    color: grey;
+    float: right;
+
 }
 span.element {
     font-weight: bold;
     color: black;
 }
 span.unclear {
-    font-weight: bold;
+    border-bottom: 1px dashed #DD0000;
 }
 .stage {
     color: rgba(0, 0, 0, 0.7);
@@ -575,6 +594,11 @@ span.invisible {
 div.inlineq {
     display: inline;
 }
+
+div.q {
+   margin: 1em;
+}
+
 /* figures */
 .figure { 
     display: block;
@@ -587,8 +611,6 @@ div.inlineq {
     display: block;
     font-style: italic;
 }
-
-
 /* misc */
 div.argument {
     border-top: 1px solid black;
@@ -606,6 +628,41 @@ li {
     margin-top: 3pt;
     margin-bottom: 3pt;
 }
+/* specific to folio */
+div.spProseFirstFolio {
+    margin-top: 3pt;
+    text-indent: 1em;
+}
+div.firstfoliofm {
+    font-size: large;
+}
+div.firstfolio h3  {text-align: center ; 
+		    border-top: 1px solid black;
+		    border-bottom: 1px solid black;
+		    padding-top: 12px;
+		    padding-bottom: 12px;
+}
+div.firstfolio h1  {text-align: center ; }
+
+div.firstfoliosong {
+    margin-left: 2em;
+    text-indent: 0em;
+
+}
+span.decorInit {
+    font-size : 6em;
+    font-family: cursive;
+    font-weight : bold;
+    vertical-align: top;
+    height: 1em;
+    line-height: 1em;
+    float : left;
+    width : 1em;
+    color : #c00;
+    margin: 0em;
+    padding: 0px; 
+}
+
 /* for ePub */
 div.EpubCoverPage {
     -webkit-hyphens:none;
@@ -618,3 +675,27 @@ div.EpubCoverPage {
     border: solid red 1pt; 
     text-align:center;
    }
+table.braced {
+    border-spacing: 4pt;
+    border-collapse: separate;
+}
+table.braced tbody tr td:first-child {
+    border-right: solid black 1pt;
+    border-radius: 10px;
+}
+table.braced tbody tr td {
+    vertical-align: center;
+}
+
+span.listhead {
+    display: block;
+    margin-top: 0em;
+    margin-right: 1em;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-weight: bold;
+}
+
+table {
+    font-size: smaller;
+}
