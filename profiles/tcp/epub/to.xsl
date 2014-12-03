@@ -66,7 +66,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="numberTables">false</xsl:param>
     <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="footnoteBackLink">true</xsl:param>
-    <xsl:param name="cssFile">../profiles/ecco/epub/ecco.css</xsl:param>
+    <xsl:param name="cssFile">../profiles/tcp/epub/tcp.css</xsl:param>
     <xsl:param name="subject">Oxford Text Archive</xsl:param>
     <xsl:param name="pagebreakStyle">none</xsl:param>
 
@@ -124,7 +124,7 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
 
   <xsl:template name="generateSubjectHook">
-    <dc:subject>ECCO</dc:subject>
+    <dc:subject>TCP</dc:subject>
     <dc:subject>University of Oxford Text Archive</dc:subject>
   </xsl:template>
 
