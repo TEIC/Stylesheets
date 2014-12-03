@@ -168,7 +168,7 @@ per line, if requested by "oneword" parameter -->
        <xsl:when test="$oneword='true'">
 	 <xsl:variable name="foo">
 	    <xsl:analyze-string
-		select="normalize-space($letters)"
+		select="normalize-space(translate($letters,'ſ','s'))"
 		regex="(\w+)">
 	      <xsl:matching-substring>
 		<xsl:value-of select="regex-group(1)"/>
@@ -202,10 +202,19 @@ per line, if requested by "oneword" parameter -->
        </xsl:choose>
   </xsl:function>
 
-   <xsl:template match="@*|text()" mode="preflight">
+   <xsl:template match="@*" mode="preflight">
+     <xsl:copy-of select="."/>
+   </xsl:template>
+
+   <xsl:template match="text()" mode="preflight">
      <xsl:copy-of select="."/>
    </xsl:template>
    
+   <xsl:template
+       match="g|seg[@rend='decorInit']|hi[@rend='sup']|hi[@rend='sub']" mode="preflight">
+     <xsl:apply-templates/>
+   </xsl:template>
+
    <xsl:template match="lb[@rend='hidden']" mode="preflight"/>
 
    <xsl:template match="lb|pb|gb" mode="preflight">
