@@ -67,7 +67,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="pagebreakStyle">visible</xsl:param>
 
     <xsl:param name="splitLevel">-1</xsl:param>
-    <xsl:param name="cssFile">tcptext.css</xsl:param>
+    <xsl:param name="cssFile">../../tcp.css</xsl:param>
     <xsl:param name="sort">author</xsl:param>
     <xsl:param name="htmlTitlePrefix">[TCP] </xsl:param>
 
