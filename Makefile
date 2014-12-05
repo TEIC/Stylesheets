@@ -181,7 +181,7 @@ deb: debversion
 	(cd debian-tei-xsl; debclean;debuild --no-lintian  -nc -b -uc -us)
 tag:
 	git tag -a v`cat VERSION` -m 'release version `cat VERSION`'
-	git push origin —tags
+	git push --follow-tags
 
 sfupload:
 	rsync -e ssh tei-xsl-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets

@@ -1163,7 +1163,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="$thisclass"/>
             <xsl:text>.attributes</xsl:text>
             <xsl:text> ''&gt;</xsl:text>
-	   <xsl:for-each select="tei:attList/tei:attDef">
+	   <xsl:for-each select="tei:attList/tei:attDef[not(@mode='delete')]">
 	     <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
 	     <xsl:value-of select="$thisclass"/>
 	     <xsl:text>.attribute.</xsl:text>
@@ -1172,7 +1172,7 @@ of this software, even if advised of the possibility of such damage.
 	   </xsl:for-each>
          </xsl:when>
          <xsl:otherwise>
-	   <xsl:for-each select="tei:attList/tei:attDef">
+	   <xsl:for-each select="tei:attList/tei:attDef[not(@mode='delete')]">
 	     <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
 	     <xsl:value-of select="$thisclass"/>
 	     <xsl:text>.attribute.</xsl:text>
@@ -1185,7 +1185,7 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:value-of select="$thisclass"/>
 	   <xsl:text>.attributes '</xsl:text>
 	   <xsl:call-template name="attclasses"/>
-	   <xsl:for-each select="tei:attList/tei:attDef">
+	   <xsl:for-each select="tei:attList/tei:attDef[not(@mode='delete')]">
 	     <xsl:text>&#10; %</xsl:text>
 	     <xsl:value-of select="$thisclass"/>
 	     <xsl:text>.attribute.</xsl:text>
