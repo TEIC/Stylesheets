@@ -60,6 +60,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each-group>
     </tagsDecl>
   </xsl:variable>
+
+<!-- multi-stage transform, 3 passes on each text -->
   <xsl:template match="/">
     <xsl:variable name="pass1">
       <xsl:apply-templates/>
@@ -69,7 +71,8 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <xsl:apply-templates select="$pass2" mode="pass3"/>
   </xsl:template>
-  <!-- default identity transform -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>default identity transform</desc></doc>
   <xsl:template match="*">
     <xsl:choose>
       <xsl:when test="namespace-uri()=''">
@@ -96,8 +99,9 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>text nodes are examined to find soft-hyphen characters,
-      which are replaced by Unicode character.
-      </p>
+      which are replaced an empty &lt;g&gt;. To be on the safe side,
+      apply Unicode  NFC normalization to text (some decomposed
+      characters seen in headers).      </p>
     </desc>
   </doc>
   <xsl:template match="text()">
@@ -120,7 +124,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:analyze-string>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>TCP simple discard, you cant use hi in a description</desc>
+    <desc>TCP simple discard, you cannot use hi in a description</desc>
   </doc>
   <xsl:template match="FIGDESC/HI">
     <xsl:apply-templates/>
@@ -130,7 +134,8 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="TEMPHEAD|IDG"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>TCP controversial discards</desc>
+    <desc>TCP controversial discards. Drop a set of attributes which
+    don't work in P5</desc>
   </doc>
   <xsl:template match="PB/@MS"/>
   <xsl:template match="LABEL/@ROLE"/>
@@ -145,6 +150,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>
       <p>Milestones:
 	a) if there is no @n, just @unit  == marginal note
+
 	b) if there is no @unit, just a @n,  == marginal note, @type='milestone'
 
 	c) if @unit is from a closed list of words (page, line, folio), it
@@ -233,8 +239,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>
       <p>A HEAD/@TYPE='sub' can lose itself if it consists of
       Q with L inside; though if thats all there is, it looks like
-      an epigraph
-      </p>
+      an epigraph      </p>
     </desc>
   </doc>
   <xsl:template match="HEAD[@TYPE='sub']">
@@ -285,7 +290,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Just a HEAD inside an ARGUMENT can be a paragraph</desc>
+    <desc>Just a HEAD inside an ARGUMENT can be replaced by a paragraph</desc>
   </doc>
   <xsl:template match="ARGUMENT[count(*)=1]/HEAD">
     <p>
@@ -293,7 +298,7 @@ of this software, even if advised of the possibility of such damage.
     </p>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Just a HEAD inside an HEADNOTE can be a paragraph</desc>
+    <desc>Just a HEAD inside an HEADNOTE can be replaced by a paragraph</desc>
   </doc>
   <xsl:template match="HEADNOTE[count(*)=1]/HEAD">
     <p>
@@ -309,7 +314,7 @@ of this software, even if advised of the possibility of such damage.
     </argument>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Just a HEAD inside an TAILNOTE can be a paragraph</desc>
+    <desc>Just a HEAD inside an TAILNOTE can be replaced by a paragraph</desc>
   </doc>
   <xsl:template match="TAILNOTE[count(*)=1]/HEAD">
     <p>
@@ -2506,7 +2511,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>
       <p>
 	a list inside a label in a gloss list (alternate way of doing
-	gloss lists will have to turn into a table
+	gloss lists) will have to turn into a table
       </p>
     </desc>
   </doc>
@@ -2555,6 +2560,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="*|@*|comment()|processing-instruction()|text()" mode="pass3"/>
     </xsl:copy>
   </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>split up nested paragraphs</desc>
+  </doc>
   <xsl:template match="tei:p[tei:p]" mode="pass3">
     <xsl:variable name="here" select="."/>
     <xsl:for-each-group select="node()" group-adjacent="if (self::tei:p) then 1 else 2">
