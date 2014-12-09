@@ -37,58 +37,58 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exist="http://exist.sourc
      where there's no match. In 2.3, the list is fixed, so we'd have to convert 
      all our non-matching ones to "other". -->
         <xsl:choose>
-          <xsl:when test="TEI/tei:match(@rend,'article')">
+          <xsl:when test="TEI/@rend='article'">
   <xsl:attribute name="article-type">research-article</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'review_article')">
+<xsl:when test="TEI/@rend='review_article'">
   <xsl:attribute name="article-type">review-article</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'fiction')">
+<xsl:when test="TEI/@rend='fiction'">
   <xsl:attribute name="article-type">fiction</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'poetry')">
+<xsl:when test="TEI/@rend='poetry'">
   <xsl:attribute name="article-type">poetry</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'review')">
+<xsl:when test="TEI/@rend='review'">
   <xsl:attribute name="article-type">book-review</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'books_received')">
+<xsl:when test="TEI/@rend='books_received'">
   <xsl:attribute name="article-type">books-received</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'note')">
+<xsl:when test="TEI/@rend='note'">
   <xsl:attribute name="article-type">brief-report</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'discussion')">
+<xsl:when test="TEI/@rend='discussion'">
   <xsl:attribute name="article-type">discussion</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'editorial')">
+<xsl:when test="TEI/@rend='editorial'">
   <xsl:attribute name="article-type">editorial</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'preface')">
+<xsl:when test="TEI/@rend='preface'">
   <xsl:attribute name="article-type">editorial</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'column')">
+<xsl:when test="TEI/@rend='column'">
   <xsl:attribute name="article-type">discussion</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'afterword')">
+<xsl:when test="TEI/@rend='afterword'">
   <xsl:attribute name="article-type">editorial</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'announcement')">
+<xsl:when test="TEI/@rend='announcement'">
   <xsl:attribute name="article-type">announcement</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'corrigendum')">
+<xsl:when test="TEI/@rend='corrigendum'">
   <xsl:attribute name="article-type">correction</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'advertisement')">
+<xsl:when test="TEI/@rend='advertisement'">
   <xsl:attribute name="article-type">announcement</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'doc_list')">
+<xsl:when test="TEI/@rend='doc_list'">
   <xsl:attribute name="article-type">collection</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'site_page')">
+<xsl:when test="TEI/@rend='site_page'">
   <xsl:attribute name="article-type">editorial</xsl:attribute>
 </xsl:when>
-<xsl:when test="TEI/tei:match(@rend,'obituary')">
+<xsl:when test="TEI/@rend='obituary'">
   <xsl:attribute name="article-type">obituary</xsl:attribute>
 </xsl:when>
           <xsl:otherwise><xsl:attribute name="article-type">other</xsl:attribute></xsl:otherwise>
@@ -383,14 +383,14 @@ to simplify a bit. -->
             </xsl:element>
           </xsl:otherwise>
         </xsl:choose>
-        <xsl:if test="tei:match(@rend,'block') and ref">
+        <xsl:if test="@rend='block' and ref">
           <xsl:element name="attrib">
             <xsl:apply-templates select="ref" />
           </xsl:element>
         </xsl:if>
       </xsl:element>
     </xsl:if>
-    <xsl:if test="not(tei:match(@rend,'block')) and ref">
+    <xsl:if test="not(@rend='block') and ref">
        <xsl:apply-templates select="ref" />
     </xsl:if>
   </xsl:template>
@@ -732,19 +732,19 @@ have a shot at styling it. -->
   
 <!--  Text style markup. -->
 <!--  Bold. -->
-  <xsl:template match="hi[tei:match(@rend,'bold')]">
+  <xsl:template match="hi[@rend='bold']">
     <xsl:element name="bold"><xsl:apply-templates /></xsl:element>
   </xsl:template>
 <!--  Italics. -->
-  <xsl:template match="hi[tei:match(@rend,'italic')]">
+  <xsl:template match="hi[@rend='italic']">
     <xsl:element name="italic"><xsl:apply-templates /></xsl:element>
   </xsl:template> 
 <!--  Underline. -->
-  <xsl:template match="hi[tei:match(@rend,'underline')]">
+  <xsl:template match="hi[@rend='underline']">
     <xsl:element name="underline"><xsl:apply-templates /></xsl:element>
   </xsl:template>
 <!--  Overline. -->
-  <xsl:template match="hi[tei:match(@rend,'overline')]">
+  <xsl:template match="hi[@rend='overline']">
     <xsl:element name="overline"><xsl:apply-templates /></xsl:element>
   </xsl:template>
 
@@ -778,7 +778,7 @@ have a shot at styling it. -->
       </xsl:matching-substring>
       <xsl:non-matching-substring>
 	<xsl:variable name="base" select="$context/ancestor-or-self::*[@xml:base][1]/@xml:base"/>
-        <xsl:sequence select="if (starts-with($base,'file:') or $ignoreXmlBase='true') then
+        <xsl:sequence select="if (starts-with($base,'file:')) then
 			      $target else concat($base,$target)"/>
       </xsl:non-matching-substring>
     </xsl:analyze-string>
