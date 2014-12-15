@@ -55,6 +55,7 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:param name="treestyle">d3VerticalTree</xsl:param>
     <xsl:param name="publisher">University of Oxford TCP</xsl:param>
+    <xsl:param name="institution">Text Encoding Partnership EEBO, ECCO and Evans texts</xsl:param>
     <xsl:param name="numberHeadings">false</xsl:param>
     <xsl:param name="numberHeadingsDepth">-1</xsl:param>
     <xsl:param name="numberBackHeadings"></xsl:param>
