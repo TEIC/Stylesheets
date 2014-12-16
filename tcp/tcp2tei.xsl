@@ -742,12 +742,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </editionStmt>
   </xsl:template>
-  <xsl:template match="EDITORIALDECL">
-    <editorialDecl>
-      <xsl:apply-templates select="@*"/>
-      <xsl:apply-templates/>
-    </editorialDecl>
-  </xsl:template>
   <xsl:template match="ELEMDECL">
     <elemDecl>
       <xsl:apply-templates select="@*"/>
@@ -2611,7 +2605,7 @@ of this software, even if advised of the possibility of such damage.
 	       EEBO-TCP Phase II text, in whole or in part.</p>
 		</xsl:when>
 		<xsl:otherwise>
-               <p n="P1">This keyboarded and encoded edition of the
+               <p>This keyboarded and encoded edition of the
 	       work described above is co-owned by the institutions
 	       providing financial support to the Early English Books
 	       Online Text Creation Partnership. This Phase I text is
