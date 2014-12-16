@@ -133,11 +133,16 @@ of this software, even if advised of the possibility of such damage.
     <desc>discard temporary header material</desc>
   </doc>
   <xsl:template match="TEMPHEAD|IDG"/>
+  <xsl:template match="PB/@MS">
+    <xsl:if test=".='Y'">
+      <xsl:attribute name="rendition">simple:additions</xsl:attribute>
+    </xsl:if>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>TCP controversial discards. Drop a set of attributes which
     don't work in P5</desc>
   </doc>
-  <xsl:template match="PB/@MS"/>
   <xsl:template match="LABEL/@ROLE"/>
   <xsl:template match="TITLE/@TYPE"/>
   <xsl:template match="GROUP/@TYPE"/>
@@ -162,6 +167,19 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template match="MILESTONE">
+    <label type="milestone">
+      <xsl:apply-templates select="@ID"/>
+      <xsl:apply-templates select="@REND"/>
+      <xsl:if test="@UNIT">
+	<seg type="milestoneunit">
+	  <xsl:value-of select="@UNIT"/>
+	  <xsl:text> </xsl:text>
+	</seg>
+      </xsl:if>
+      <xsl:value-of select="@N"/>
+    </label>
+  </xsl:template>
+  <xsl:template match="OLDMILESTONE">
     <xsl:choose>
       <xsl:when test="parent::NOTE and not(@N)"/>
       <xsl:when test="@UNIT and (not(@N) or @N='')">
@@ -515,24 +533,24 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
   <xsl:template match="SUP">
-    <hi rend="sup">
+    <seg rend="sup">
       <xsl:apply-templates/>
-    </hi>
+    </seg>
   </xsl:template>
   <xsl:template match="SUB">
-    <hi rend="sub">
+    <seg rend="sub">
       <xsl:apply-templates/>
-    </hi>
+    </seg>
   </xsl:template>
   <xsl:template match="BELOW">
-    <hi rend="below">
+    <seg rend="below">
       <xsl:apply-templates/>
-    </hi>
+    </seg>
   </xsl:template>
   <xsl:template match="ABOVE">
-    <hi rend="above">
+    <seg rend="above">
       <xsl:apply-templates/>
-    </hi>
+    </seg>
   </xsl:template>
   <xsl:template match="HEADER">
     <teiHeader>
