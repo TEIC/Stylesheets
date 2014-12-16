@@ -476,14 +476,13 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="parent::ETS or parent::EEBO or parent::GROUP">
         <text>
-          <xsl:apply-templates select="@*"/>
-          <xsl:apply-templates select="*"/>
+        <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/>
         </text>
       </xsl:when>
       <xsl:otherwise>
         <floatingText>
           <xsl:apply-templates select="@*"/>
-          <xsl:apply-templates select="*"/>
+          <xsl:apply-templates select="*|processing-instruction()|comment()|text()"/>
         </floatingText>
       </xsl:otherwise>
     </xsl:choose>
@@ -754,6 +753,19 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates/>
     </elemDecl>
+  </xsl:template>
+  <xsl:template match="EDITORIALDECL">
+            <editorialDecl>
+               <p>EEBO-TCP is a partnership between the Universities of Michigan and Oxford and the publisher ProQuest to create accurately transcribed and encoded texts based on the image sets published by ProQuest via their Early English Books Online (EEBO) database (http://eebo.chadwyck.com). The general aim of EEBO-TCP is to encode one copy (usually the first edition) of every monographic English-language title published between 1473 and 1700 available in EEBO.</p>
+               <p>EEBO-TCP aimed to produce large quantities of textual data within the usual project restraints of time and funding, and therefore chose to create diplomatic transcriptions (as opposed to critical editions) with light-touch, mainly structural encoding based on the Text Encoding Initiative (http://www.tei-c.org).</p>
+               <p>The EEBO-TCP project was divided into two phases. The 25,363 texts created during Phase 1 of the project have been released into the public domain as of 1 January 2015. Anyone can now take and use these texts for their own purposes, but we respectfully request that due credit and attribution is given to their original source.</p>
+               <p>Users should be aware of the process of creating the TCP texts, and therefore of any assumptions that can be made about the data.</p>
+               <p>Text selection was based on the New Cambridge Bibliography of English Literature (NCBEL). If an author (or for an anonymous work, the title) appears in NCBEL, then their works are eligible for inclusion. Selection was intended to range over a wide variety of subject areas, to reflect the true nature of the print record of the period. In general, first editions of a works in English were prioritized, although there are a number of works in other languages, notably Latin and Welsh, included and sometimes a second or later edition of a work was chosen if there was a compelling reason to do so.</p>
+               <p>Image sets were sent to external keying companies for transcription and basic encoding. Quality assurance was then carried out by editorial teams in Oxford and Michigan. 5% (or 5 pages, whichever is the greater) of each text was proofread for accuracy and those which did not meet QA standards were returned to the keyers to be redone. After proofreading, the encoding was enhanced and/or corrected and characters marked as illegible were corrected where possible up to a limit of 100 instances per text. Any remaining illegibles were encoded as &lt;gap&gt;s. Understanding these processes should make clear that, while the overall quality of TCP data is very good, some errors will remain and some readable characters will be marked as illegible. Users should bear in mind that in all likelihood such instances will never have been looked at by a TCP editor.</p>
+               <p>The texts were encoded and linked to page images in accordance with level 4 of the TEI in Libraries guidelines.</p>
+            <p>Copies of the texts have been issued variously as SGML (TCP schema; ASCII text with mnemonic sdata character entities); displayable XML (TCP schema; characters represented either as UTF-8 Unicode or text strings within braces); or lossless XML (TEI P5, characters represented either as UTF-8 Unicode or TEI g elements).</p>
+               <p>Keying and markup guidelines are available at the <ref target="http://www.textcreationpartnership.org/docs/.">Text Creation Partnership web site</ref>.</p>
+         </editorialDecl>
   </xsl:template>
   <xsl:template match="ENCODINGDESC">
     <encodingDesc>
@@ -2272,8 +2284,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="DIV0|DIV1|DIV2|DIV3|DIV4|DIV5|DIV6|DIV7">
     <div>
-      <xsl:apply-templates select="@*"/>
-      <xsl:apply-templates select="*"/>
+      <xsl:apply-templates select="*|@*|comment()|processing-instruction()|text()"/>
     </div>
   </xsl:template>
   <!-- remove default values for attributes -->
@@ -2580,6 +2591,38 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each-group>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>generate appropriate availability</desc>
+  </doc>
 
+  <xsl:template match="tei:availability" mode="pass3">
+<xsl:variable name="d" select="/*/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date"/>
+            <availability>
+	      <xsl:choose>
+		<xsl:when test="contains($d,'Phase 2')">
+               <p>This keyboarded and encoded edition of the work
+	       described above is co-owned by the institutions
+	       providing financial support to the Early English Books
+	       Online Text Creation Partnership. Searching, reading,
+	       printing, or downloading EEBO-TCP texts is reserved for
+	       the authorized users of these project partner
+	       institutions. Permission must be granted for subsequent
+	       distribution, in print or electronically, of this
+	       EEBO-TCP Phase II text, in whole or in part.</p>
+		</xsl:when>
+		<xsl:otherwise>
+               <p n="P1">This keyboarded and encoded edition of the
+	       work described above is co-owned by the institutions
+	       providing financial support to the Early English Books
+	       Online Text Creation Partnership. This Phase I text is
+	       available for reuse, according to the terms of <ref
+	       target="https://creativecommons.org/publicdomain/zero/1.0/">Creative
+	       Commons 0 1.0 Universal</ref>. The text can be copied,
+	       modified, distributed and performed, even for
+	       commercial purposes, all without asking permission.</p>
+		</xsl:otherwise>
+	      </xsl:choose>
+            </availability>   
+  </xsl:template>
 
 </xsl:stylesheet>

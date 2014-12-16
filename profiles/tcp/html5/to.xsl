@@ -65,6 +65,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="footnoteBackLink">true</xsl:param>
     <xsl:param name="subject">University of Oxford TCP</xsl:param>
+    <xsl:param name="homeURL">http://www.ota.ox.ac.uk/tcp/</xsl:param>
     <xsl:param name="pagebreakStyle">visible</xsl:param>
 
     <xsl:param name="splitLevel">-1</xsl:param>
