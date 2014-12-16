@@ -230,6 +230,9 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:when test="starts-with(.,'#')">
 	      <xsl:sequence select="substring-after(.,'#')"/>
 	    </xsl:when>
+	    <xsl:when test="starts-with(.,'simple:')">
+	      <xsl:value-of select="substring(.,8)"/>
+	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:for-each select="document(.)">
 		<xsl:sequence select="@xml:id"/>

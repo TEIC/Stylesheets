@@ -53,8 +53,9 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-  <xsl:key name="ALL-EXTRENDITION" match="@rendition[not(starts-with(.,'#'))]" use="1"/>
-  <xsl:key name="EXTRENDITION"     match="@rendition[not(starts-with(.,'#'))]" use="."/>
+  <xsl:key name="ALL-EXTRENDITION" match="@rendition[not(starts-with(.,'simple:') or starts-with(.,'#'))]" use="1"/>
+  <xsl:key name="EXTRENDITION"
+	   match="@rendition[not(starts-with(.,'simple:') or starts-with(.,'#'))]" use="."/>
   <xsl:key name="ALL-LOCALRENDITION" match="tei:rendition" use='1'/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

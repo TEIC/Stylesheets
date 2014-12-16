@@ -455,7 +455,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:item/tei:label|tei:eTree/tei:label|tei:eLeaf/tei:label">
     <span>
       <xsl:call-template name="makeRendition">
-	<xsl:with-param name="default">false</xsl:with-param>
+	<xsl:with-param name="default" select="@type"/>
       </xsl:call-template>
       <xsl:apply-templates/>
     </span>
@@ -468,7 +468,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="@xml:id">
 	<xsl:call-template name="makeAnchor"/>
       </xsl:if>
-      <xsl:call-template name="makeRendition"/>
+      <xsl:call-template name="makeRendition">
+	<xsl:with-param name="default" select="@type"/>
+      </xsl:call-template>
       <xsl:apply-templates/>
     </span>
   </xsl:template>
