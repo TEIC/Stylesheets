@@ -153,19 +153,16 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="@LANG[.='32' or contains(.,' ')]"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-      <p>Milestones:
-	a) if there is no @n, just @unit  == marginal note
-
-	b) if there is no @unit, just a @n,  == marginal note, @type='milestone'
-
-	c) if @unit is from a closed list of words (page, line, folio), it
-	seems editorial, add as subtype on @note
-
-	d) otherwise, make a  label from @unit + @n, and put in a
-	marginal note, @type='milestone'
-      </p>
+      <p>Milestones: convert to label, unless child of body      </p>
     </desc>
   </doc>
+  <xsl:template match="BODY/MILESTONE">
+    <milestone>
+          <xsl:apply-templates
+	      select="@*|*|processing-instruction()|comment()|text()"/>
+    </milestone>
+  </xsl:template>
+
   <xsl:template match="MILESTONE">
     <label type="milestone">
       <xsl:apply-templates select="@ID"/>
@@ -179,6 +176,23 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@N"/>
     </label>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>Previous way of doing milestones:
+	a) if there is no @n, just @unit  == marginal note
+
+	b) if there is no @unit, just a @n,  == marginal note, @type='milestone'
+
+	c) if @unit is from a closed list of words (page, line, folio), it
+	seems editorial, add as subtype on @note
+
+	d) otherwise, make a  label from @unit + @n, and put in a
+	marginal note, @type='milestone'
+      </p>
+    </desc>
+  </doc>
+
   <xsl:template match="OLDMILESTONE">
     <xsl:choose>
       <xsl:when test="parent::NOTE and not(@N)"/>
