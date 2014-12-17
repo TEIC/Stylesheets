@@ -483,8 +483,12 @@ of this software, even if advised of the possibility of such damage.
       </group>
     </text>
   </xsl:template>
-  <xsl:template match="LETTER">
-    <floatingText type="letter">
+  <xsl:template match="FLOATEXT|LICENSE|LETTER">
+    <floatingText>
+      <xsl:if test="not(@TYPE)">
+	<xsl:attribute name="type" select="lower-case(name())"/>
+      </xsl:if>
+      <xsl:apply-templates select="@*"/>
       <body>
         <xsl:apply-templates select="*|processing-instruction()|comment()|text()"/>
       </body>

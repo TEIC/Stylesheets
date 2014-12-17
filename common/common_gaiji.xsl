@@ -51,6 +51,11 @@ of this software, even if advised of the possibility of such damage.
       <desc>glyph element</desc>
    </doc>
   <xsl:template match="tei:g">
-    <xsl:apply-templates/>
+    <xsl:choose>
+	<xsl:when test="@ref='char:EOLhyphen">&#x00AD;</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>
