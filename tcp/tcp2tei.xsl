@@ -156,17 +156,16 @@ of this software, even if advised of the possibility of such damage.
       <p>Milestones: convert to label, unless child of body      </p>
     </desc>
   </doc>
-  <xsl:template match="FW/MILESTONE|LIST/MILESTONE|BODY/MILESTONE|DIV1/MILESTONE|LABEL/MILESTONE|BIBL/MILESTONE|DIV2/MILESTONE|DIV3/MILESTONE">
-    <milestone type="tcpmilestone">
-      <xsl:if test="not(@UNIT)">
-	<xsl:attribute name="unit">unspecified</xsl:attribute>
-      </xsl:if>
+  <xsl:template match="MILESTONE">
+<xsl:choose>
+  <xsl:when
+      test="not(@UNIT) and (parent::FW|parent::LIST|parent::BODY|parent::DIV1|parent::LABEL|parent::BIBL|parent::DIV2|parent::DIV3)">
+    <milestone type="tcpmilestone" unit="unspecified">
       <xsl:apply-templates
 	  select="@*|*|processing-instruction()|comment()|text()"/>
     </milestone>
-  </xsl:template>
-
-  <xsl:template match="MILESTONE">
+  </xsl:when>
+  <xsl:otherwise>
     <label type="milestone">
       <xsl:apply-templates select="@ID"/>
       <xsl:apply-templates select="@REND"/>
@@ -178,6 +177,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:value-of select="@N"/>
     </label>
+  </xsl:otherwise>
+</xsl:choose>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
