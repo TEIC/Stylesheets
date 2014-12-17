@@ -461,20 +461,6 @@ of this software, even if advised of the possibility of such damage.
     </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element label</desc>
-  </doc>
-  <xsl:template match="tei:label">
-    <span>
-      <xsl:if test="@xml:id">
-	<xsl:call-template name="makeAnchor"/>
-      </xsl:if>
-      <xsl:call-template name="makeRendition">
-	<xsl:with-param name="default" select="@type"/>
-      </xsl:call-template>
-      <xsl:apply-templates/>
-    </span>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element label in print mode</desc>
   </doc>
   <xsl:template match="tei:label" mode="print">
@@ -603,6 +589,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates select="tei:head"/>
       </xsl:element>
     </xsl:if>
+    <xsl:apply-templates select="tei:milestone"/>
     <xsl:choose>
       <xsl:when test="@type='catalogue'">
         <p>
