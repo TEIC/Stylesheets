@@ -2751,7 +2751,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:choose>
 	      <xsl:when test="$style='italic'"/>
 	      <xsl:when test="$style='bold'"/>
-	      <xsl:when test="$style=''">
+	      <xsl:when test="not($style)">
 		<xsl:text>tei</xsl:text>
 		<xsl:value-of select="local-name()"/>
 	      </xsl:when>
