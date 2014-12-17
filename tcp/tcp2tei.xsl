@@ -156,10 +156,13 @@ of this software, even if advised of the possibility of such damage.
       <p>Milestones: convert to label, unless child of body      </p>
     </desc>
   </doc>
-  <xsl:template match="BODY/MILESTONE">
-    <milestone>
-          <xsl:apply-templates
-	      select="@*|*|processing-instruction()|comment()|text()"/>
+  <xsl:template match="FW/MILESTONE|LIST/MILESTONE|BODY/MILESTONE|DIV1/MILESTONE|LABEL/MILESTONE|BIBL/MILESTONE|DIV2/MILESTONE|DIV3/MILESTONE">
+    <milestone type="tcpmilestone">
+      <xsl:if test="not(@UNIT)">
+	<xsl:attribute name="unit">unspecified</xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates
+	  select="@*|*|processing-instruction()|comment()|text()"/>
     </milestone>
   </xsl:template>
 
