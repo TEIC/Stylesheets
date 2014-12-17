@@ -494,7 +494,7 @@ of this software, even if advised of the possibility of such damage.
       trim trailing space on the last text node in an element,
       trim both if a text node is both first and last, i.e., is the only text node in the element.</desc>
   </doc>
-  <xsl:template match="text()">
+  <xsl:template match="text()" mode="#default plain">
     <xsl:choose>
       <xsl:when test="ancestor::*[@xml:space][1]/@xml:space='preserve'">
         <xsl:value-of select="tei:escapeChars(.,parent::*)"/>
