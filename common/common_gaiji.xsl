@@ -52,7 +52,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:g">
     <xsl:choose>
-	<xsl:when test="@ref='char:EOLhyphen">&#x00AD;</xsl:when>
+	<xsl:when test="@ref='char:EOLhyphen'">&#x00AD;</xsl:when>
 	<xsl:otherwise>
 	  <xsl:apply-templates/>
 	</xsl:otherwise>
