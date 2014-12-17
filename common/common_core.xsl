@@ -1367,6 +1367,15 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element label</desc>
+  </doc>
+  <xsl:template match="tei:label">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="style" select="@type"/>
+    </xsl:call-template>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>processing milestone elements</desc>
    </doc>
   <xsl:template match="tei:milestone">
@@ -1378,11 +1387,16 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:text> </xsl:text>
       </xsl:when>
       <xsl:otherwise>
-         <xsl:text>&#x261B;</xsl:text>
-         <xsl:value-of select="@unit"/>
-         <xsl:text> </xsl:text>
-         <xsl:value-of select="@n"/>
-         <xsl:text>&#x261A;</xsl:text>
+	<xsl:call-template name="makeInline">
+	  <xsl:with-param name="style" select="@type"/>
+	  <xsl:with-param name="before">
+	    <xsl:if test="not(@unit='unspecified')">
+              <xsl:value-of select="@unit"/>
+              <xsl:text> </xsl:text>
+	    </xsl:if>
+	  </xsl:with-param>
+	  <xsl:with-param name="after" select="@n"/>
+	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
