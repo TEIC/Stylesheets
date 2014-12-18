@@ -153,28 +153,38 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="@LANG[.='32' or contains(.,' ')]"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-      <p>Milestones: convert to label, unless child of body      </p>
+      <p>Milestones: convert to label, unless it has no @unit or occurs in some funny places</p>
     </desc>
   </doc>
   <xsl:template match="MILESTONE">
 <xsl:choose>
-  <xsl:when
-      test="not(@UNIT) and (parent::FW|parent::LIST|parent::BODY|parent::DIV1|parent::LABEL|parent::BIBL|parent::DIV2|parent::DIV3)">
+  <xsl:when test="not(@UNIT) or ( parent::LABEL or (parent::LIST and preceding-sibling::ITEM))">
     <milestone type="tcpmilestone" unit="unspecified">
-      <xsl:apply-templates
-	  select="@*|*|processing-instruction()|comment()|text()"/>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/>
+    </milestone>
+  </xsl:when>
+  <xsl:when test="parent::LIST and not(preceding-sibling::ITEM)">
+    <head type="tcpmilestone">
+      <seg type="milestoneunit">
+	  <xsl:value-of select="@UNIT"/>
+	  <xsl:text> </xsl:text>
+      </seg>
+      <xsl:value-of select="@N"/>
+    </head>
+  </xsl:when>
+  <xsl:when test="@UNIT and (parent::SP or parent::SPEAKER or parent::DIV1 or parent::DIV2 or parent::DIV3 or parent::DIV4 or parent::DIV5 or parent::BODY)">
+    <milestone type="tcpmilestone" unit="unspecified">
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/>
     </milestone>
   </xsl:when>
   <xsl:otherwise>
     <label type="milestone">
       <xsl:apply-templates select="@ID"/>
       <xsl:apply-templates select="@REND"/>
-      <xsl:if test="@UNIT">
-	<seg type="milestoneunit">
+      <seg type="milestoneunit">
 	  <xsl:value-of select="@UNIT"/>
 	  <xsl:text> </xsl:text>
-	</seg>
-      </xsl:if>
+      </seg>
       <xsl:value-of select="@N"/>
     </label>
   </xsl:otherwise>
