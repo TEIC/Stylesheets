@@ -157,40 +157,78 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template match="MILESTONE">
-<xsl:choose>
-  <xsl:when test="not(@UNIT) or ( parent::LABEL or (parent::LIST and preceding-sibling::ITEM))">
-    <milestone type="tcpmilestone" unit="unspecified">
-      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/>
-    </milestone>
-  </xsl:when>
-  <xsl:when test="parent::LIST and not(preceding-sibling::ITEM)">
-    <head type="tcpmilestone">
-      <seg type="milestoneunit">
-	  <xsl:value-of select="@UNIT"/>
-	  <xsl:text> </xsl:text>
-      </seg>
-      <xsl:value-of select="@N"/>
-    </head>
-  </xsl:when>
-  <xsl:when test="@UNIT and (parent::SP or parent::SPEAKER or parent::DIV1 or parent::DIV2 or parent::DIV3 or parent::DIV4 or parent::DIV5 or parent::BODY)">
-    <milestone type="tcpmilestone" unit="unspecified">
-      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/>
-    </milestone>
-  </xsl:when>
-  <xsl:otherwise>
-    <label type="milestone">
-      <xsl:apply-templates select="@ID"/>
-      <xsl:apply-templates select="@REND"/>
-      <seg type="milestoneunit">
-	  <xsl:value-of select="@UNIT"/>
-	  <xsl:text> </xsl:text>
-      </seg>
-      <xsl:value-of select="@N"/>
-    </label>
-  </xsl:otherwise>
-</xsl:choose>
+    <xsl:choose>
+      <xsl:when test="not(@UNIT) or ( parent::LABEL or (parent::LIST and preceding-sibling::ITEM))">
+	<xsl:call-template name="makenewmilestone"/>
+      </xsl:when>
+      <xsl:when test="parent::LIST and not(preceding-sibling::ITEM)">
+	<head type="tcpmilestone">
+	  <seg type="milestoneunit">
+	    <xsl:value-of select="@UNIT"/>
+	    <xsl:text> </xsl:text>
+	  </seg>
+	  <xsl:value-of select="@N"/>
+	</head>
+      </xsl:when>
+      <xsl:when test="parent::BIBL and @UNIT">
+	<note type="tcpmilestone">
+	  <seg type="milestoneunit">
+	    <xsl:value-of select="@UNIT"/>
+	    <xsl:text> </xsl:text>
+	  </seg>
+	  <xsl:value-of select="@N"/>
+	</note>
+      </xsl:when>
+      <xsl:when test="@UNIT='Ans;w.' and not(@N)">
+	<milestone type="tcpmilestone" n="Ans;w." unit="unspecified"/>
+      </xsl:when>
+      <xsl:when test="@UNIT and (parent::SP or parent::SPEAKER or parent::DIV1 or parent::DIV2 or parent::DIV3 or parent::DIV4 or parent::DIV5 or parent::BODY)">
+	<xsl:call-template name="makenewmilestone"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<label type="milestone">
+	  <xsl:apply-templates select="@ID"/>
+	  <xsl:apply-templates select="@REND"/>
+	  <seg type="milestoneunit">
+	    <xsl:value-of select="@UNIT"/>
+	    <xsl:text> </xsl:text>
+	  </seg>
+	  <xsl:value-of select="@N"/>
+	</label>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
-
+  
+  <xsl:template name="makenewmilestone">
+	<milestone type="tcpmilestone">
+	  <xsl:choose>
+	    <xsl:when test="@UNIT='years after chriſt' or @UNIT='years before chriſt'">
+	      <xsl:attribute name="unit">unspecified</xsl:attribute>
+	      <xsl:attribute name="n">
+		<xsl:value-of select="(@N,@UNIT)"/>
+	      </xsl:attribute>
+	    </xsl:when>	
+	    <xsl:when test="matches(@UNIT,'[\-A-z0-9]')">
+	      <xsl:apply-templates select="@N"/>
+	      <xsl:apply-templates select="@UNIT"/>
+	    </xsl:when>
+	    <xsl:when test="not(@UNIT)">
+	      <xsl:attribute name="unit">unspecified</xsl:attribute>
+	      <xsl:attribute name="n">
+		<xsl:value-of select="@N"/>
+	      </xsl:attribute>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:attribute name="unit">unspecified</xsl:attribute>
+	      <xsl:attribute name="n">
+		<xsl:value-of select="(@UNIT,@N)"/>
+	      </xsl:attribute>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <xsl:apply-templates select="@*[not(name()='@N' or name()='UNIT')]|*|processing-instruction()|comment()|text()"/>
+	</milestone>
+      </xsl:template>
+	
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>Previous way of doing milestones:
@@ -1835,7 +1873,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="@UNIT">
     <xsl:attribute name="unit">
-      <xsl:value-of select="."/>
+      <xsl:value-of select="translate(.,'ſ','s')"/>
     </xsl:attribute>
   </xsl:template>
   <xsl:template match="TEICORPUS.2">
