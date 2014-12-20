@@ -112,7 +112,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:call-template name="hdr"/>
       </div>
 
-      <div id="mainMenu">
+      <div id="main-menu">
 	<xsl:call-template name="additionalMenu"/>
       </div>
 

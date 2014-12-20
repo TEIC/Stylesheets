@@ -69,7 +69,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="searchURL"/>
   <xsl:param name="searchWords"/>
   <xsl:param name="showNamespaceDecls">false</xsl:param>
-  <xsl:param name="showTitleAuthor">1</xsl:param>
+  <xsl:param name="showTitleAuthor">true</xsl:param>
   <xsl:param name="splitBackmatter">yes</xsl:param>
   <xsl:param name="splitFrontmatter">yes</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>

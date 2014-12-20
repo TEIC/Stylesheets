@@ -304,11 +304,6 @@ will generate an &lt;h2&gt;</p>
       <xsl:call-template name="searchbox"/>
       <xsl:call-template name="printLink"/>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
-      <desc>Width of left-hand column when $pageLayout is "Table"</desc>
-
-   </doc>
-  <xsl:param name="linksWidth">15%</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>[html] Logo</desc>
    </doc>
@@ -536,11 +531,17 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
 
    </doc>
   <xsl:param name="showTitleAuthor">false</xsl:param>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
+      <desc>Add a comment to web page showing when it was generated,
+      stylesheet version, etc</desc>
+   </doc>
+  <xsl:param name="generationComment">true</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
       <desc>Be talkative while working.</desc>
-
    </doc>
-
   <xsl:param name="verbose">false</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">

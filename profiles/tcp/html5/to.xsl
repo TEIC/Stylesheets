@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
-    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="tei html"
+    exclude-result-prefixes="tei"
     version="2.0">
     <!-- import base conversion style -->
 
@@ -53,67 +53,77 @@ of this software, even if advised of the possibility of such damage.
    <xsl:output method="xhtml" omit-xml-declaration="yes"
 	       encoding="utf-8"/>
 
-    <xsl:param name="treestyle">d3VerticalTree</xsl:param>
-    <xsl:param name="publisher">University of Oxford TCP</xsl:param>
-    <xsl:param name="institution">Text Encoding Partnership EEBO, ECCO and Evans texts</xsl:param>
+   <xsl:param name="pageLayout">Complex</xsl:param>
+    <xsl:param name="autoToc">true</xsl:param>
+    <xsl:param name="cssFile">../tcp.css</xsl:param>
+    <xsl:param name="footnoteBackLink">true</xsl:param>
+    <xsl:param name="homeURL">http://www.ota.ox.ac.uk/tcp/</xsl:param>
+    <xsl:param name="htmlTitlePrefix">[TCP] </xsl:param>
+    <xsl:param name="institution">Text Creation Partnership EEBO, ECCO and Evans texts</xsl:param>
+    <xsl:param name="numberBackHeadings"></xsl:param>
+    <xsl:param name="numberFigures">false</xsl:param>
+    <xsl:param name="numberFrontHeadings"></xsl:param>
     <xsl:param name="numberHeadings">false</xsl:param>
     <xsl:param name="numberHeadingsDepth">-1</xsl:param>
-    <xsl:param name="numberBackHeadings"></xsl:param>
-    <xsl:param name="numberFrontHeadings"></xsl:param>
-    <xsl:param name="numberFigures">false</xsl:param>
     <xsl:param name="numberTables">false</xsl:param>
-    <xsl:param name="autoToc">true</xsl:param>
-    <xsl:param name="footnoteBackLink">true</xsl:param>
-    <xsl:param name="subject">University of Oxford TCP</xsl:param>
-    <xsl:param name="homeURL">http://www.ota.ox.ac.uk/tcp/</xsl:param>
     <xsl:param name="pagebreakStyle">visible</xsl:param>
-
-    <xsl:param name="splitLevel">-1</xsl:param>
-    <xsl:param name="cssFile">../tcp.css</xsl:param>
+    <xsl:param name="parentURL">http://www.textcreationpartnership.org/tcp-eebo/</xsl:param>
+    <xsl:param name="parentWords">Text Creation Partnership</xsl:param>
+    <xsl:param name="publisher">University of Oxford TCP</xsl:param>
+    <xsl:param name="showTitleAuthor">true</xsl:param>
     <xsl:param name="sort">author</xsl:param>
-    <xsl:param name="htmlTitlePrefix">[TCP] </xsl:param>
+    <xsl:param name="splitLevel">-1</xsl:param>
+    <xsl:param name="subject">University of Oxford TCP</xsl:param>
+    <xsl:param name="treestyle">d3VerticalTree</xsl:param>
+    <xsl:param name="generationComment">false</xsl:param>
+    <xsl:param name="separator"> | </xsl:param>
 
   <xsl:template name="mainPage">
     <xsl:param name="currentID"/>
     <div class="show-all" id="main">
       <!-- header -->
 
-      <div id="hdr">
+      <div id="hdr" class="stdheader">
         <xsl:call-template name="hdr"/>
+	<xsl:call-template name="makeHTMLHeading">
+	  <xsl:with-param name="class">author</xsl:with-param>
+	  <xsl:with-param name="text">
+	    <xsl:call-template name="generateAuthorList"/>
+	    <xsl:sequence select="tei:generateDate(.)"/>
+	    <xsl:sequence select="tei:generateEdition(.)"/>
+	  </xsl:with-param>
+	</xsl:call-template>
       </div>
 
-      <div id="mainMenu">
+      <div id="main-menu">
+	<p><i>University of     <span class="bold">O</span>xford 
+      <span class="bold">T</span>ext 
+      <span class="bold">A</span>rchive</i></p>
+      <ul class="OTAnav">
+        <li class="navLink"><a    href="http://www.ota.ox.ac.uk/">Home</a> | 	</li>
+	<li     class="navLink"><a href="http://www.ota.ox.ac.uk/about/contact.xml">Contact</a>       </li>
+	<li class="navLink"><a href="http://www.ota.ox.ac.uk/tcp">OTA TCP Catalogue</a>	| </li>
+	<li class="navlink"><a
+				href="http://www.textcreationpartnership.org/tcp-eebo/">Text
+	Creation Partnership</a></li>
+      </ul><hr/>
+	<xsl:call-template name="mainTOC"/>
+	<hr/>
+	<p class="small">This material was created by the Text Creation Partnership in partnership with ProQuest's Early English Books Online, Gale Cengage's Eighteenth Century Collections Online, and Readex's Evans Early American Imprints.</p>
       </div>
 
 
       <div id="onecol" class="main-content">
-        <h1>
-          <xsl:sequence select="tei:generateTitle(.)"/>
-        </h1>
-
-	<xsl:choose>
-	  <xsl:when test="local-name(.)='div'">
-	    <h1>
-	      <xsl:apply-templates mode="section" select="tei:head"/>
-	    </h1>
-	    <xsl:apply-templates/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:call-template name="mainFrame">
-	      <xsl:with-param name="currentID" select="$currentID"/>
-	      <xsl:with-param name="minimal">true</xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:otherwise>
-	</xsl:choose>
+	<xsl:call-template name="mainFrame">
+	  <xsl:with-param name="currentID" select="$currentID"/>
+	  <xsl:with-param name="minimal">true</xsl:with-param>
+	</xsl:call-template>
       </div>
 
 
       <div class="clear" id="em"/>
     </div>
 
-    <div>
-      <xsl:call-template name="stdfooter"/>
-    </div>
 
   </xsl:template>
 
@@ -130,56 +140,5 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="."/>
    </xsl:template>
 
-   <xsl:template name="cssHook">
-     <style type="text/css">
-   div.contamination {
-   font-style:italic;
-   }
-   div.derivation-syntactic {
-   font-style:italic;
-   }
-   div.extant {
-   font-weight:bold;
-   }
-   div.hypothetical {
-   font-style:italic;
-   }
-   div.lost {
-   color: red;
-   }
-   div.main {
-   font-weight: bold;
-   }
-   pre,div.pre,div.pre_eg,pre.eg,div.eg {
-   clear:both;
-   margin-top: 1em;
-   margin-bottom:1em;
-   border-top-width: 4px;
-   border-bottom-width: 4px;
-   border-left-width: 2px;
-   border-right-width: 2px;
-   border-style: solid;
-   padding-top: 10px;
-   padding-right: 10px;
-   padding-bottom: 10px;
-   padding-left: 10px;
-   color: #000000;
-   line-height: 1.1em;
-   font-family: monospace;
-   font-size: 10pt;
-   white-space: pre;
-   }
-   .leaf {
-    background-color: lightgrey;
-   }
-   .node { 
-   font-weight: normal;
-   font-size: 8pt;
-   }
-   .treediagram {
-   }
-   
-     </style>
-   </xsl:template>
 
 </xsl:stylesheet>

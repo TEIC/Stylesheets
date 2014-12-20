@@ -2457,6 +2457,7 @@ function click(d) {
             <xsl:value-of select="$date"/>
             <br/>
             <xsl:call-template name="copyrightStatement"/>
+	    <xsl:if test="$generationComment='true'">
             <xsl:comment>
                <xsl:text>
 	  Generated </xsl:text>
@@ -2480,6 +2481,7 @@ function click(d) {
 		 </xsl:otherwise>
 	       </xsl:choose>
             </xsl:comment>
+	    </xsl:if>
          </address>
       </div>
   </xsl:template>
@@ -2518,15 +2520,19 @@ function click(d) {
 	     <xsl:with-param name="level">2</xsl:with-param>
 	   </xsl:call-template>
 	   
-
 	   <xsl:if test="$showTitleAuthor='true'">
 	     <xsl:if test="$verbose='true'">
 	       <xsl:message>displaying author and date</xsl:message>
 	     </xsl:if>
-	     <xsl:call-template name="generateAuthorList"/>
-	     <xsl:sequence select="tei:generateDate(.)"/>
-	     <xsl:sequence select="tei:generateEdition(.)"/>
-	   </xsl:if>
+	     <xsl:call-template name="makeHTMLHeading">
+	       <xsl:with-param name="class">subtitle</xsl:with-param>
+	       <xsl:with-param name="text">
+		 <xsl:call-template name="generateAuthorList"/>
+		 <xsl:sequence select="tei:generateDate(.)"/>
+		 <xsl:sequence select="tei:generateEdition(.)"/>
+	       </xsl:with-param>
+	     </xsl:call-template>
+	     </xsl:if>
 	 </xsl:when>
 	 <xsl:otherwise>
 	   <xsl:call-template name="makeHTMLHeading">
