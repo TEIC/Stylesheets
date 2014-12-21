@@ -144,13 +144,13 @@ install-profiles-files:
 
 ${PROFILEDOCTARGETS}:
 	echo process doc for $@
-	ODIR=release/xslprofiles/doc/tei-xsl/`dirname $@` ./runDoc.sh $@ -cfg:Documentation/oxydococ.cfg
+	ODIR=release/xslprofiles/doc/tei-xsl/`dirname $@` ./runDoc.sh $@ -cfg:Documentation/oxydoc.cfg
 	(cd `dirname $@`; tar cf - release) | tar xf -
 	rm -rf `dirname $@`/release
 
 ${DOCTARGETS}:
 	echo process doc for $@
-	ODIR=release/xsl/doc/tei-xsl/`dirname $@` ./runDoc.sh $@ -cfg:Documentation/oxydococ.cfg
+	ODIR=release/xsl/doc/tei-xsl/`dirname $@` ./runDoc.sh $@ -cfg:Documentation/oxydoc.cfg
 	(cd `dirname $@`; tar cf - release) | tar xf -
 	rm -rf `dirname $@`/release
 
