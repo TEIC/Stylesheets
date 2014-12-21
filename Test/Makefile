@@ -293,7 +293,7 @@ test-oddity: css
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test2.xml
 	$(JING) -c oddbyexample.rnc bare/test.xml
 	$(JING) oddbyexample.xsd bare/test.xml
-	xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
+	#xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 	$(SAXON) -s:testdrama.odd -xsl:../odds/odd2odd.xsl -o:testdrama.compiled.xml \
 	localsource=`pwd`/p5subset.xml $(SAXONOPT) 
 	perl -p -i -e 's+ xml:base=".*testdrama.odd"++' testdrama.compiled.xml
