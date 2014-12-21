@@ -19,7 +19,6 @@ SCRIPTS=teitobibtex \
 	teitoodt \
 	teitopdf \
 	teitordf \
-	teitoslides \
 	teitotxt 
 
 SCHEMASCRIPTS=teitornc \

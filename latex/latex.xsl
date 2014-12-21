@@ -193,10 +193,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="text()" mode="eg">
       <xsl:choose>
          <xsl:when test="starts-with(.,'&#xA;')">
-            <xsl:value-of select="substring-after(tei:escapeCharsVerbatim(.),'&#xA;')"/>
+            <xsl:value-of select="substring-after(.,'&#xA;')"/>
          </xsl:when>
          <xsl:otherwise>
-	   <xsl:value-of select="tei:escapeCharsVerbatim(.)"/>
+	   <xsl:value-of select="."/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
