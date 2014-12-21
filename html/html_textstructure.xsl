@@ -76,8 +76,8 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
          <xsl:when test="starts-with(local-name(),'div')">
             <xsl:if test="not(preceding-sibling::tei:*) or preceding-sibling::tei:titlePage">
-               <xsl:call-template name="doDivBody">
-		 <xsl:with-param name="Depth">2</xsl:with-param>
+               <xsl:call-template name="makeDivBody">
+		 <xsl:with-param name="depth">2</xsl:with-param>
 		 <xsl:with-param name="nav">true</xsl:with-param>
 	       </xsl:call-template>
             </xsl:if>
@@ -317,8 +317,8 @@ of this software, even if advised of the possibility of such damage.
                   </xsl:call-template>
                </xsl:when>
                <xsl:when test="starts-with(local-name(),'div')   or      $pageLayout='Complex'">
-                  <xsl:call-template name="doDivBody">
-		    <xsl:with-param name="Depth">2</xsl:with-param>
+                  <xsl:call-template name="makeDivBody">
+		    <xsl:with-param name="depth">2</xsl:with-param>
 		    <xsl:with-param name="nav">true</xsl:with-param>
 		  </xsl:call-template>
                </xsl:when>
@@ -637,8 +637,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="tei:keepDivOnPage(.) or 
 		      number($depth)  &gt; number($splitLevel)">
-	<xsl:call-template name="doDivBody">
-	  <xsl:with-param name="Depth" select="$depth"/>
+	<xsl:call-template name="makeDivBody">
+	  <xsl:with-param name="depth" select="$depth"/>
 	</xsl:call-template>
       </xsl:when>
       <!-- 1. We have gone far enough -->
@@ -662,8 +662,8 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:call-template name="doDivBody">
-	  <xsl:with-param name="Depth" select="$depth"/>
+	<xsl:call-template name="makeDivBody">
+	  <xsl:with-param name="depth" select="$depth"/>
 	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -733,6 +733,11 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
          <xsl:when test="ancestor::tei:group and $splitLevel=0">
 	   <xsl:call-template name="makeDivPage">
+	     <xsl:with-param name="depth">-1</xsl:with-param>
+	   </xsl:call-template>
+         </xsl:when>
+         <xsl:when test="ancestor::tei:group">
+	   <xsl:call-template name="makeDivBody">
 	     <xsl:with-param name="depth">-1</xsl:with-param>
 	   </xsl:call-template>
          </xsl:when>
@@ -858,30 +863,30 @@ of this software, even if advised of the possibility of such damage.
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] Make a section heading
-      <param name="Depth">which head level to make</param>
+      <param name="depth">which head level to make</param>
       </desc>
    </doc>
-  <xsl:template name="doDivBody">
-      <xsl:param name="Depth"/>
+  <xsl:template name="makeDivBody">
+      <xsl:param name="depth"/>
       <xsl:param name="nav">false</xsl:param>
       <xsl:choose>
 	<xsl:when test="$filePerPage='true'">
 	    <xsl:call-template name="startDivHook"/>
 	    <xsl:call-template name="divContents">
-	      <xsl:with-param name="Depth" select="$Depth"/>
+	      <xsl:with-param name="depth" select="$depth"/>
 	      <xsl:with-param name="nav" select="$nav"/>
 	    </xsl:call-template>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:element name="{if ($outputTarget='html5' and number($Depth)
+	  <xsl:element name="{if ($outputTarget='html5' and number($depth)
 			     &lt; 1) then 'section' else 'div'}">
 	    <xsl:call-template name="microdata"/>
 	    <xsl:call-template name="divClassAttribute">
-	      <xsl:with-param name="depth" select="$Depth"/>
+	      <xsl:with-param name="depth" select="$depth"/>
 	    </xsl:call-template>	
 	    <xsl:call-template name="startDivHook"/>
 	    <xsl:call-template name="divContents">
-	      <xsl:with-param name="Depth" select="$Depth"/>
+	      <xsl:with-param name="depth" select="$depth"/>
 	      <xsl:with-param name="nav" select="$nav"/>
 	    </xsl:call-template>
 	  </xsl:element>
@@ -894,7 +899,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
   <xsl:template name="divContents">
-      <xsl:param name="Depth"/>
+      <xsl:param name="depth"/>
       <xsl:param name="nav">false</xsl:param>
       <xsl:variable name="ident">
 	<xsl:apply-templates mode="ident" select="."/>
@@ -908,8 +913,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
 	<xsl:when test="parent::tei:*/tei:match(@rend,'multicol')">
 	  <td style="vertical-align:top;">
-	    <xsl:if test="not($Depth = '')">
-	      <xsl:element name="h{$Depth + $divOffset}">
+	    <xsl:if test="not($depth = '')">
+	      <xsl:element name="h{$depth + $divOffset}">
 		<xsl:for-each select="tei:head[1]">		
 		  <xsl:call-template name="makeRendition">
 		    <xsl:with-param name="default">false</xsl:with-param>
@@ -939,11 +944,11 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:if test="not($Depth = '')">
+	  <xsl:if test="not($depth = '')">
 	    <xsl:variable name="Heading">
-	      <xsl:variable name="ename" select="if (number($Depth)+$divOffset &gt;6) then 'div'
+	      <xsl:variable name="ename" select="if (number($depth)+$divOffset &gt;6) then 'div'
 						       else
-						       concat('h',number($Depth)+$divOffset)">
+						       concat('h',number($depth)+$divOffset)">
 	      </xsl:variable>
 	      <xsl:call-template name="splitHTMLBlocks">
 		<xsl:with-param name="element" select="$ename"/>
@@ -956,7 +961,7 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:call-template>
 	      </xsl:variable>
 	      <xsl:choose>
-	      <xsl:when test="$outputTarget='html5' and number($Depth)  &lt; 1">
+	      <xsl:when test="$outputTarget='html5' and number($depth)  &lt; 1">
 		<header>
 		  <xsl:copy-of select="$Heading"/>
 		</header>
@@ -1670,7 +1675,7 @@ function click(d) {
 			 </xsl:call-template>
 		       </xsl:element>
 		     </xsl:if>
-                     <xsl:call-template name="doDivBody"/>
+                     <xsl:call-template name="makeDivBody"/>
                      <xsl:if test="$bottomNavigationPanel='true'">
 		       <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
 			 <xsl:call-template name="xrefpanel">
@@ -2945,7 +2950,7 @@ function click(d) {
                   <xsl:call-template name="subtoc"/>
                </xsl:if>
                <xsl:call-template name="startHook"/>
-               <xsl:call-template name="doDivBody"/>
+               <xsl:call-template name="makeDivBody"/>
                <xsl:call-template name="printNotes"/>
                <xsl:if test="$bottomNavigationPanel='true'">
 		 <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">

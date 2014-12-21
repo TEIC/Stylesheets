@@ -101,10 +101,8 @@ of this software, even if advised of the possibility of such damage.
       <span class="bold">A</span>rchive</i></p>
       <ul class="OTAnav">
         <li class="navLink"><a    href="http://www.ota.ox.ac.uk/">Home</a> | 	</li>
-	<li     class="navLink"><a href="http://www.ota.ox.ac.uk/about/contact.xml">Contact</a>       </li>
 	<li class="navLink"><a href="http://www.ota.ox.ac.uk/tcp">OTA TCP Catalogue</a>	| </li>
-	<li class="navlink"><a
-				href="http://www.textcreationpartnership.org/tcp-eebo/">Text
+	<li class="navlink"><a href="http://www.textcreationpartnership.org/tcp-eebo/">Text
 	Creation Partnership</a></li>
       </ul><hr/>
 	<xsl:call-template name="mainTOC"/>
