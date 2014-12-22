@@ -8,7 +8,7 @@ Texts from TCP, ePUB or HTML
 body{
    color: #000000;
    background-color: #FFFFFF;
-   margin: 10pt;
+   margin: 0px;
    padding:0;
    font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
 }
@@ -17,11 +17,11 @@ body{
 
 /* the main title */
 div.stdheader {
-    background: url('tcplogo.png') no-repeat 1px ;
-    background-color: lightgrey;
+    background: url('tcplogo.png') no-repeat 35px ;
+    background-color: #002147;
     border: 1pt solid black;
-    padding-left: 350px;
-    min-height: 125px;
+    padding-left: 400px;
+    height: 125px;
 }
 div.stdfooter {
     margin-top: 20px;
@@ -33,19 +33,40 @@ div.stdfooter {
     width: 55%;
 }
 #main-menu {
-    margin-top: 10px;
+    margin-top: 4px;
+    margin-left: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
     float: left;
     width: 25%;
+    border: 1pt solid grey;
+}
+
+#main-menu p:not(.small) {
+   font-size: 1.2em;
+   text-align: left;
+   font-variant: small-caps;
+}
+
+#main-menu * i {
+   font-style: normal;
 }
 
 section.title_page {
     border: 1pt solid grey;
     margin-top: 4px;
     margin-bottom: 4px;
-    padding: 4px;
+    padding-left: 12px;
     font-size: larger;
 }
 
+hr {
+    border: none;
+    height: 1px;
+    /* Set the hr color */
+    color: #333; /* old IE */
+    background-color: #333; /* Modern Browsers */
+}
 
 span.head {
 }
@@ -81,8 +102,9 @@ div.h8 {
     margin-top: 6pt;
 }
 h1.maintitle {
-    font-weight: bold;
+    font-weight: normal;
     bottom: 5px;
+    color: #fff;
 }
 
 h1.title {
@@ -98,6 +120,8 @@ h2.subtitle {
 
 a:link, a:visited {
     text-decoration: none;
+    color: #22609f;
+
 }
 a:hover
 {
@@ -518,7 +542,6 @@ div.pagebreak,span.pagebreak {
     color: grey;
     float: right;
     margin-left: 15px;
-
 }
 span.element {
     font-weight: bold;
@@ -634,12 +657,10 @@ span.decorInit {
     font-family: serif;
     font-weight : bold;
     vertical-align: top;
-    height: 1em;
     line-height: 1em;
     float : left;
-    width : 1em;
     color : #c00;
-    margin: 0em;
+    margin-right: 4px;
     padding: 0px; 
 }
 
@@ -664,7 +685,7 @@ table.braced tbody tr td:first-child {
     border-radius: 10px;
 }
 table.braced tbody tr td {
-    vertical-align: center;
+    vertical-align: middle;
 }
 
 span.listhead {
