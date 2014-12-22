@@ -104,27 +104,24 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element eg|tei:q[tei:match(@rend,'eg')]</desc>
    </doc>
   <xsl:template match="tei:seg[tei:match(@rend,'pre')]|tei:eg|tei:q[tei:match(@rend,'eg')]">
-      <xsl:choose>
-         <xsl:when test="ancestor::tei:cell and count(*)=1 and string-length(.)&lt;60">
-	           <xsl:variable name="stuff">
-	              <xsl:apply-templates mode="eg"/>
-	           </xsl:variable>
-	           <xsl:text>\fbox{\ttfamily </xsl:text>
-	           <xsl:value-of select="tei:escapeCharsVerbatim($stuff)"/>
-	           <xsl:text>} </xsl:text>
+    <xsl:variable name="stuff">
+      <xsl:apply-templates mode="eg"/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:cell and count(*)=1 and string-length(.)&lt;60">
+	<xsl:text>\fbox{\ttfamily </xsl:text>
+	<xsl:value-of select="tei:escapeCharsVerbatim($stuff)"/>
+	<xsl:text>} </xsl:text>
          </xsl:when>
          <xsl:when test="ancestor::tei:cell and not(*)  and string-length(.)&lt;60">
-	           <xsl:variable name="stuff">
-	              <xsl:apply-templates mode="eg"/>
-	           </xsl:variable>
-	           <xsl:text>\fbox{\ttfamily </xsl:text>
-	           <xsl:value-of select="tei:escapeCharsVerbatim($stuff)"/>
-	           <xsl:text>} </xsl:text>
+	   <xsl:text>\fbox{\ttfamily </xsl:text>
+	   <xsl:value-of select="tei:escapeCharsVerbatim($stuff)"/>
+	   <xsl:text>} </xsl:text>
          </xsl:when>
          <xsl:when test="ancestor::tei:cell or tei:match(@rend,'pre')">
 	           <xsl:text>\mbox{}\hfill\\[-10pt]\begin{Verbatim}[fontsize=\small]
 </xsl:text>
-	           <xsl:apply-templates mode="eg"/>
+	           <xsl:copy-of select="$stuff"/>
 	           <xsl:text>
 \end{Verbatim}
 </xsl:text>
@@ -134,7 +131,7 @@ of this software, even if advised of the possibility of such damage.
 	           <xsl:text>\bgroup\exampleFont</xsl:text>
 	           <xsl:text>\vskip 10pt\begin{shaded}
 \noindent\obeyspaces{}</xsl:text>
-	           <xsl:apply-templates mode="eg"/>
+	           <xsl:value-of select="tei:escapeCharsVerbatim($stuff)"/>
 	           <xsl:text>\end{shaded}
 \egroup 
 </xsl:text>
@@ -143,7 +140,7 @@ of this software, even if advised of the possibility of such damage.
 	           <xsl:text>\par\hfill\bgroup\exampleFont</xsl:text>
 	           <xsl:text>\vskip 10pt\begin{shaded}
 \obeyspaces </xsl:text>
-	           <xsl:apply-templates mode="eg"/>
+	           <xsl:value-of select="tei:escapeCharsVerbatim($stuff)"/>
 	           <xsl:text>\end{shaded}
 \par\egroup 
 </xsl:text>
