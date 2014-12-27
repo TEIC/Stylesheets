@@ -118,7 +118,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:call-template>
 
 	<div class="stdfooter">
-	  <xsl:apply-templates select="/*/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:avalability"/>
+	  <xsl:apply-templates select="/*/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability/*"/>
 	</div>
       </div>
 
