@@ -116,6 +116,10 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:with-param name="currentID" select="$currentID"/>
 	  <xsl:with-param name="minimal">true</xsl:with-param>
 	</xsl:call-template>
+
+	<div class="stdfooter">
+	  <xsl:apply-templates select="/*/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:avalability"/>
+	</div>
       </div>
 
 
