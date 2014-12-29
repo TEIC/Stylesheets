@@ -143,4 +143,10 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
 
 
+  <xsl:function name="tei:escapeChars" as="xs:string">
+    <xsl:param name="letters"/>
+    <xsl:param name="context"/>
+    <xsl:value-of select="translate($letters,'ſ','s')"/>
+  </xsl:function>
+
 </xsl:stylesheet>
