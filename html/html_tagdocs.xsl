@@ -120,4 +120,114 @@ of this software, even if advised of the possibility of such damage.
     </span>
   </xsl:template>
 
+
+<xsl:template match="tei:specGrp">
+  <p><b>Specification group [<xsl:value-of select="@xml:id"/>]</b></p>
+  <table class="border">
+    <xsl:apply-templates/>
+  </table>
+</xsl:template>
+
+
+<xsl:template match="tei:classSpec">
+  <tr>
+    <td><xsl:sequence select="tei:showMode(@ident,@mode)"/></td>
+    <td>
+      <xsl:if test="*">
+	<table class="border">
+	  <xsl:apply-templates/>
+	</table>
+      </xsl:if>
+    </td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="tei:elementSpec">
+  <tr>
+    <td>&lt;<xsl:sequence select="tei:showMode(@ident,@mode)"/>&gt;</td>
+    <td>
+      <xsl:if test="*">
+	<table class="border">
+	  <xsl:apply-templates/>
+	</table>
+      </xsl:if>
+    </td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="tei:attDef">
+  <tr>
+    <td>@<xsl:sequence select="tei:showMode(@ident,@mode)"/></td>
+    <td>
+      <xsl:if test="*">
+      <table class="border">
+	<xsl:apply-templates/>
+      </table>
+      </xsl:if>
+    </td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="tei:valItem">
+  <tr>
+    <td><xsl:sequence select="tei:showMode(@ident,@mode)"/></td>
+    <td><xsl:value-of select="tei:desc"/>    </td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="tei:constraintSpec">
+  <tr>
+    <td>[#<xsl:value-of select="@ident"/>]</td>
+    <td>
+	<xsl:variable name="c">
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <xsl:copy-of select="tei:constraint"/>
+	  </egXML>
+	</xsl:variable>
+	<xsl:for-each select="$c">
+	  <xsl:apply-templates/>
+	</xsl:for-each>
+    </td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="tei:elementRef">
+  <tr>
+    <td>+ &lt;<xsl:value-of select="@key"/>&gt;</td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="tei:classRef">
+  <tr>
+    <td>+ <xsl:value-of select="@key"/></td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="tei:macroRef">
+  <tr>
+    <td>+ <xsl:value-of select="@key"/></td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="tei:specGrp/tei:p">
+  <tr>
+    <td colspan="3" class="norules"><xsl:apply-templates/></td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="tei:moduleRef">
+  <tr>
+    <td>Module: <xsl:value-of select="@key"/></td>
+  </tr>
+</xsl:template>
+
+<xsl:function name="tei:showMode">
+<xsl:param name="value"/>
+<xsl:param name="mode"/>
+<span class="{if ($mode='delete') then 'red del' else if ($mode='change')
+  then 'orange' else 'green'}">
+<xsl:value-of select="$value"/>
+</span>
+</xsl:function>
+
 </xsl:stylesheet>

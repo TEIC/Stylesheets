@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="tei html"
+    exclude-result-prefixes="tei html skos"
     version="2.0">
     <!-- import base conversion style -->
-
     <xsl:import href="../../../html5/html5.xsl"/>
     <xsl:import href="../../../html5/microdata.xsl"/>
 
@@ -60,5 +60,21 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="copyrightStatement"></xsl:template>
   <xsl:param name="parentURL">http://www.tei-c.org/</xsl:param>
   <xsl:param name="parentWords">TEI</xsl:param>
+
+<xsl:template match="skos:exactMatch">
+  <tt>'<xsl:value-of select="."/>'</tt>
+</xsl:template>
+
+<xsl:template match="tei:valItem">
+  <tr>
+    <td><xsl:sequence select="tei:showMode(@ident,@mode)"/></td>
+    <td><xsl:value-of select="tei:desc"/>
+    <xsl:if test="skos:exactMatch">
+      [also   <xsl:apply-templates select="skos:exactMatch"/>]
+    </xsl:if>
+    </td>
+  </tr>
+</xsl:template>
+
 
 </xsl:stylesheet>
