@@ -584,8 +584,8 @@ of this software, even if advised of the possibility of such damage.
         </xsl:attribute>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:attribute name="n">
-          <xsl:value-of select="normalize-space(replace(.,'^\.',''))"/>
+        <xsl:attribute name="facs">
+          <xsl:value-of select="concat('unknown:',normalize-space(.))"/>
         </xsl:attribute>
       </xsl:otherwise>
     </xsl:choose>
