@@ -50,7 +50,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="Object" match="tei:when" use="substring(@corresp,2)"/>
   <xsl:key name="objectOnPage" match="tei:*[@xml:id]" use="generate-id(preceding::tei:pb[1])"/>
   <xsl:key name="PB"
-	   match="tei:pb[not(@facs='') and not(starts-with(@facs,'tcp:')) and not(tei:match(@rend,'none'))]" use="1"/>
+	   match="tei:pb[not(@facs='') and not(starts-with(@facs,'tcp:')) and not(starts-with(@facs,'unknown:')) and not(tei:match(@rend,'none'))]" use="1"/>
   <xsl:key name="Timeline" match="tei:timeline" use="1"/>
   <xsl:param name="mediaoverlay">false</xsl:param>
   <xsl:param name="coverimage"/>

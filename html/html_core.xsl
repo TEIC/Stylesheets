@@ -1139,6 +1139,9 @@ of this software, even if advised of the possibility of such damage.
 		<img src="{@facs}"/>
 	      </div>
 	    </xsl:when>
+	    <xsl:when test="starts-with(@facs,'unknown:')">
+	      <xsl:copy-of select="$Words"/>
+	    </xsl:when>
 	    <xsl:when test="@facs">
 	      <xsl:variable name="IMG">
 		<xsl:choose>

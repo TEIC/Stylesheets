@@ -2375,7 +2375,10 @@ function click(d) {
 	</body>
       </html>
     </xsl:result-document>
-    <xsl:if test="@facs">
+    <xsl:choose>
+      <xsl:when test="not(@facs)"/>
+      <xsl:when test="starts-with(@facs,'unknown:')"/>
+      <xsl:otherwise>
       <xsl:variable name="outNameFacs">
 	<xsl:call-template name="outputChunkName">
 	  <xsl:with-param name="ident">
@@ -2399,7 +2402,8 @@ function click(d) {
 	  </body>
 	</html>
       </xsl:result-document>      
-    </xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="html:PAGEBREAK" mode="copy"/>
