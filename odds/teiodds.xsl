@@ -2043,6 +2043,9 @@ select="$makeDecls"/></xsl:message>
           </rule>
         </pattern>
       </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates mode="justcopy" select="."/>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
