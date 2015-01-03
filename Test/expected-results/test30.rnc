@@ -5764,7 +5764,7 @@ Tplatypus =
      ##
      attribute bill { "duck" }?)
     >> sch:pattern [
-         id = "testbasic-platypus-bill-silly-test-constraint-7"
+         id = "testbasic-platypus-bill-silly-test-constraint-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5794,3 +5794,23 @@ TMenu =
     text, Tatt.global.attribute.xmlid, Tatt.global.attribute.rend, empty
   }
 start = TTEI | Tdiv
+sch:pattern [
+  id = "testbasic-outerconstraint-constraint-6"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "tei:TEI"
+    "\x{a}" ~
+    "		       "
+    sch:report [
+      test = "count(*)=1"
+      "\x{a}" ~
+      "		      I need more than 1 child for a TEI element\x{a}" ~
+      "		    "
+    ]
+    "\x{a}" ~
+    "		    "
+  ]
+  "\x{a}" ~
+  "   "
+]

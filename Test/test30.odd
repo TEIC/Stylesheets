@@ -17,6 +17,15 @@
   <text>
     <body>
       <schemaSpec ident="testbasic" prefix="T" xml:lang="en" start="TEI div">
+	      <constraintSpec scheme="isoschematron" ident="outerconstraint">
+		<constraint>
+		  <sch:rule context="tei:TEI">
+		    <sch:report test="count(*)=1">
+		      I need more than 1 child for a TEI element
+		    </sch:report>
+		  </sch:rule>
+		</constraint>
+	      </constraintSpec>
         <moduleRef key="core"/>
         <moduleRef key="tei"/>
         <moduleRef key="header"/>
