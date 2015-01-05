@@ -577,18 +577,19 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="LANGUSAGE/@ID"/>
   <xsl:template match="PB/@REF">
-    <xsl:choose>
-      <xsl:when test="string-length(/ETS/EEBO/IDG/VID)&gt;0">
         <xsl:attribute name="facs">
-          <xsl:value-of select="('tcp',translate(normalize-space(/ETS/EEBO/IDG/VID),'  ',''),normalize-space(replace(.,'^\.','')))" separator=":"/>
-        </xsl:attribute>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:attribute name="facs">
-          <xsl:value-of select="concat('unknown:',normalize-space(.))"/>
-        </xsl:attribute>
-      </xsl:otherwise>
-    </xsl:choose>
+	  <xsl:choose>
+	    <xsl:when test="//HEADER//IDNO[@TYPE='evans citation']">
+	      <xsl:value-of select="concat('unknown:',normalize-space(.))"/>
+	    </xsl:when>
+	    <xsl:when test="string-length(/ETS/EEBO/IDG/VID)&gt;0">
+              <xsl:value-of select="('tcp',translate(normalize-space(/ETS/EEBO/IDG/VID),'  ',''),normalize-space(replace(.,'^\.','')))" separator=":"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+              <xsl:value-of select="normalize-space(.)"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:attribute>
   </xsl:template>
   <xsl:template match="KEYWORDS">
     <xsl:if test="*">
