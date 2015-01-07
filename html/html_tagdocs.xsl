@@ -197,11 +197,28 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:template match="tei:model">
   <tr>
-    <td>[model] <xsl:value-of select="tei:desc"/></td>
+    <td>[model] <i><xsl:value-of select="tei:desc"/></i></td>
     <td><xsl:value-of
-    select="(@predicate,@behaviour,@class,@output)" separator=" ; "/></td>
+    select="(@predicate,@behaviour,@class,@output)" separator=" ; "/> 
+    <xsl:apply-templates select="tei:rendition"/>
+    </td>
   </tr>
 </xsl:template>
+
+<xsl:template match="tei:modelGrp">
+  <tr>
+    <td>[modelGrp] <xsl:value-of select="tei:desc"/></td>
+    <td><xsl:value-of
+    select="(@predicate,@behaviour,@class,@output)" separator=" ; "/></td>
+    <xsl:apply-templates select="tei:rendition"/>
+  </tr>
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:model/tei:rendition|tei:modelGrp/tei:rendition">
+  (<tt><xsl:apply-templates/></tt>)
+</xsl:template>
+
 <xsl:template match="tei:constraintSpec">
   <tr>
     <td>[#<xsl:value-of select="@ident"/>]</td>
