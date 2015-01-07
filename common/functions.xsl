@@ -329,6 +329,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="parent::tei:div">false</xsl:when>
             <xsl:when test="parent::tei:titlePage">false</xsl:when>
             <xsl:when test="parent::tei:body">false</xsl:when>
+            <xsl:when test="parent::tei:front">false</xsl:when>
             <xsl:when test="not(self::*)">true</xsl:when>
             <xsl:when test="parent::tei:bibl/parent::tei:q">true</xsl:when>
             <xsl:when test="tei:match(@rend,'inline') and not(tei:p or tei:l)">true</xsl:when>
