@@ -175,6 +175,15 @@ of this software, even if advised of the possibility of such damage.
   </tr>
 </xsl:template>
 
+<xsl:template match="tei:elementSpec[@mode='change' and not(*)]"/>
+
+<xsl:template match="tei:model">
+  <tr>
+    <td>[model] <xsl:value-of select="tei:desc"/></td>
+    <td><xsl:value-of
+    select="(@predicate,@behaviour,@class,@output)" separator=" ; "/></td>
+  </tr>
+</xsl:template>
 <xsl:template match="tei:constraintSpec">
   <tr>
     <td>[#<xsl:value-of select="@ident"/>]</td>
