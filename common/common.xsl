@@ -199,9 +199,9 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:apply-templates/>
        </xsl:when>
        <xsl:otherwise>
-	 <xsl:value-of select="$preQuote"/>
+	 <xsl:value-of select="$preQuote" disable-output-escaping="yes"/>
 	 <xsl:apply-templates/>
-	 <xsl:value-of select="$postQuote"/>
+	 <xsl:value-of select="$postQuote" disable-output-escaping="yes"/>
        </xsl:otherwise>
      </xsl:choose>
    </xsl:template>
