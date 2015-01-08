@@ -52,8 +52,6 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
   <xsl:param name="splitLevel">-1</xsl:param>
-  <xsl:param name="cssFile"></xsl:param>
-  <xsl:param name="cssInlineFiles">../tei.css ../odd.css</xsl:param>
   <xsl:param name="institution"></xsl:param>
   <xsl:param name="feedbackURL"/>
   <xsl:param name="searchURL"/>
@@ -76,5 +74,11 @@ of this software, even if advised of the possibility of such damage.
   </tr>
 </xsl:template>
 
+<xsl:template match="tei:att">
+    <span>
+      <xsl:call-template name="makeRendition"/>
+      <xsl:apply-templates/>
+    </span>
+  </xsl:template>
 
 </xsl:stylesheet>
