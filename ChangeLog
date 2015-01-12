@@ -1,3 +1,127 @@
+2015-01-12  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	dont need odt-dir, just dir already present
+
+	Merge pull request #71 from mpetris/master
+	profile for DHConvalidator
+
+2015-01-12  mpetris  <marco.petris@web.de>
+
+	Merge pull request #1 from TEIC/master
+	reintegrate latest changes from base
+
+2015-01-12  Marco Petris  <marco.petris@web.de>
+
+	clean up
+
+2015-01-09  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	changed test results
+
+2015-01-08  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	updated FO results
+
+	Merge pull request #69 from bwbohl/feature_FO__footNoteSeperator
+	add xsl-footnote-seperator as static content
+
+	Merge pull request #68 from bwbohl/fix_FO_footNoteSizes
+	add 'pt' to footNoteSize and footNoteNumSize
+
+	Merge pull request #70 from bwbohl/feature_FO_tocConfig
+	added XSL-FO TOC config options
+
+	number chapters in front matter using roman
+
+2015-01-08  Benjamin W. Bohl  <bohl@edirom.de>
+
+	added XSL-FO TOC config options
+	this includes parameters in the fo_params for:
+	- tocJustify
+	- tocLeaderPattern
+	- tocLeaderPAtternContent (for own pattern)
+	- tocRuleStyle
+	- tocRuleThickness
+
+	Revert "Merge branch 'fix_FO_footNoteSizes' into feature_FO__footNoteSeperator"
+	This reverts commit eea0243ae3360ab318f34a32d56c717351ac065d, reversing
+	changes made to 197fedbcd79fde60b8758118da975d66706cced9.
+
+	Merge branch 'fix_FO_footNoteSizes' into feature_FO__footNoteSeperator
+
+	Merge remote-tracking branch 'upstream/master' into feature_FO__footNoteSeperator
+
+	add xsl-footnote-seperator as static content
+	identical in front, body, and back
+
+	add 'pt' to footNoteSite and footNoteNumSize
+	$footNoteSize and $footNoteNumSize were being calculated without
+	appending dimension. Added 'pt' after value.
+
+2015-01-07  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	display processing model better
+
+2015-01-07  sebastianrahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	documenting plain ODD
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+
+2015-01-07  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	typo, missing space
+
+	Merge pull request #66 from bwbohl/fix_isInline
+	Fix tei:isInline() return 'false' on (parent:: | self::)(tei:front | tei:body | tei:back)
+
+	show date consistently
+
+2015-01-07  Benjamin W. Bohl  <bohl@edirom.de>
+
+	tei:isInline false on self::(front|tei:body|back)
+	if tei:pb is direct child of tei:front, tei:body or tei:back it should
+	be rendered as block (e.g. in FO transformations)
+
+	tei:isInine() should return false on tei:back
+
+	tei:isInine() should return false on tei:front
+
+2015-01-05  sebastianrahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	restore CSS
+
+2015-01-05  Marco Petris  <marco.petris@web.de>
+
+	profile for DHConvalidator
+
+2015-01-04  Syd Bauman  <s.bauman@neu.edu>
+
+	Found that some cells in an Excel spreadsheet were losing some or all of their content. Upon investigating found that problem only occured when the <si> referred to in the xl/sharedStrings.xml file had <r> children, not just a single <t> child. Found the template that handles those <si> elements, and found that if there were any <r> children, it was only processing <r> those that themselves had <rPr> children. I.e., si/r[rPr] were being processed, but si/r[not(rPr)] were not. Now, I don't know what <si>, <t>, <r>, or <rPr> mean, but processing all the <r> children rather than just those that themselves have <rPr> children solved my problem.
+
+2015-01-03  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	pass through unrecognized schematron elements
+
+	add test of constraint as child of schemaSpec
+
+2015-01-02  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	deal with URL schema unknown:
+
+	invent new url schema of unknown:
+
+	typo
+
+	dont make tcp: refs for page images unless a VID was found
+
+2014-12-31  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	rendering of uncooked tagdoc elements to HTML, with some CSS additions
+
+2014-12-29  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	reverse default translation of long s
 2014-12-29  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
 
 	reverse default translation of long s
