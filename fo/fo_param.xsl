@@ -409,12 +409,14 @@ there are no bookmarks or other such features. Possible values are
    </doc>
   <xsl:param name="footnoteSize">
       <xsl:value-of select="$bodyMaster * 0.9"/>
+      <xsl:text>pt</xsl:text>
   </xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>Font size for footnote numbers</desc>
    </doc>
   <xsl:param name="footnotenumSize">
     <xsl:value-of select="$bodyMaster * 0.7"/>
+    <xsl:text>pt</xsl:text>
   </xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>Colour for display of element names</desc>
