@@ -181,7 +181,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="name(.) = 'odds'">
 	<xsl:choose>
   	  <xsl:when test=".='date'"> This formatted version of the Guidelines was created on
-	  <xsl:call-template name="showDate"/>. </xsl:when>
+	  <xsl:call-template name="whatsTheDate"/>. </xsl:when>
 	</xsl:choose>
       </xsl:when>
       <xsl:otherwise>
@@ -1811,16 +1811,6 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
-
-  <xsl:template name="showDate">
-    <xsl:choose>
-      	<xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
-	<xsl:otherwise>
-    <xsl:value-of
-	select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
-	</xsl:otherwise>
-    </xsl:choose>
-</xsl:template>
 
   <xsl:template name="sectionNumber">
     <xsl:for-each

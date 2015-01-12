@@ -173,20 +173,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
   
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[common] work out the date and time, unless we have been
-      told not to</desc>
-   </doc>
-  <xsl:template name="whatsTheDate">
-    <xsl:choose>
-      	<xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of
-	      select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
-	</xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[common] whether to put quotes around something. check the

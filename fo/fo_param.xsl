@@ -658,7 +658,39 @@ or columns</desc>
       <desc>Page number on which TOC should start</desc>
    </doc>
   <xsl:param name="tocStartPage">1</xsl:param>
-
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="boolean">
+    <desc>TOC justify</desc>
+  </doc>
+  <xsl:param name="tocJustify">false</xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="string">
+    <desc>TOC leader pattern, options are:
+      - rule	A rule. If this choice is selected, the "rule-thickness" and "rule-style" properties are used to set the leader's style.
+      - dots	A repeating sequence of dots. The choice of dot character is dependent on the user agent.
+      - use-content	A repeating pattern as specified by $tocLeaderPatternContent.
+      inherit</desc>
+  </doc>
+  <xsl:param name="tocLeaderPattern">space</xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="string">
+    <desc>TOC leader pattern content, will only be applied if $tocLeaderPattern is set to 'use-content'</desc>
+  </doc>
+  <xsl:param name="tocLeaderPatternContent">-.</xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>TOC rule style as specified by FO:
+      none	No rule, forces rule-thickness to 0.
+      dotted	A series of dots.
+      dashed	A series of short line segments.
+      solid	A single line segment.
+      double	Two solid lines. The sum of the two lines and the space between them equals the value of "rule-thickness".
+      groove	The rule looks as though it were carved into the canvas. (Top/left half of the rule's thickness is the color specified; the other half is white.)
+      ridge	The opposite of "groove", the rule looks as though it were coming out of the canvas. (Bottom/right half of the rule's thickness is the color specified; the other half is white.)
+      inherit	</desc>
+  </doc>
+  <xsl:param name="tocRuleStyle">none</xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>TOC rule thickness: Pattern: [\+\-]?\d+(\.?\d+)?(pc|px|pt|mm|cm|in|em)</desc>
+  </doc>
+  <xsl:param name="tocRuleThickness">0pt</xsl:param>
   <xsl:template name="Element">
     <xsl:param name="content"/>
     <inline>

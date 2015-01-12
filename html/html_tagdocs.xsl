@@ -128,6 +128,13 @@ of this software, even if advised of the possibility of such damage.
   </table>
 </xsl:template>
 
+<xsl:template match="tei:schemaSpec">
+  <p><b>Specification [<xsl:value-of select="@xml:id"/>]</b></p>
+  <table class="border">
+    <xsl:apply-templates/>
+  </table>
+</xsl:template>
+
 
 <xsl:template match="tei:classSpec">
   <tr>
@@ -144,11 +151,17 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:template match="tei:elementSpec">
   <tr>
-    <td>&lt;<xsl:sequence select="tei:showMode(@ident,@mode)"/>&gt;</td>
+    <td>&lt;<xsl:sequence
+    select="tei:showMode(@ident,@mode)"/>&gt;</td>
     <td>
       <xsl:if test="*">
 	<table class="border">
-	  <xsl:apply-templates/>
+	  <xsl:if test="tei:desc or tei:gloss">
+	    <tr><td colspan="3">
+	      <xsl:apply-templates  select="tei:desc |tei:gloss"/>
+	    </td></tr>
+	  </xsl:if>
+	  <xsl:apply-templates select="*[not(self::tei:desc or self::tei:gloss)]"/>
 	</table>
       </xsl:if>
     </td>
@@ -160,9 +173,14 @@ of this software, even if advised of the possibility of such damage.
     <td>@<xsl:sequence select="tei:showMode(@ident,@mode)"/></td>
     <td>
       <xsl:if test="*">
-      <table class="border">
-	<xsl:apply-templates/>
-      </table>
+	<table class="border">
+	  <xsl:if test="tei:desc or tei:gloss">
+	    <tr><td colspan="3">
+	      <xsl:apply-templates  select="tei:desc |tei:gloss"/>
+	    </td></tr>
+	  </xsl:if>
+	  <xsl:apply-templates select="*[not(self::tei:desc or self::tei:gloss)]"/>
+	</table>
       </xsl:if>
     </td>
   </tr>
@@ -173,6 +191,32 @@ of this software, even if advised of the possibility of such damage.
     <td><xsl:sequence select="tei:showMode(@ident,@mode)"/></td>
     <td><xsl:value-of select="tei:desc"/>    </td>
   </tr>
+</xsl:template>
+
+<xsl:template match="tei:elementSpec[@mode='change' and not(*)]"/>
+
+<xsl:template match="tei:model">
+  <tr>
+    <td>[model] <i><xsl:value-of select="tei:desc"/></i></td>
+    <td><xsl:value-of
+    select="(@predicate,@behaviour,@class,@output)" separator=" ; "/> 
+    <xsl:apply-templates select="tei:rendition"/>
+    </td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="tei:modelGrp">
+  <tr>
+    <td>[modelGrp] <xsl:value-of select="tei:desc"/></td>
+    <td><xsl:value-of
+    select="(@predicate,@behaviour,@class,@output)" separator=" ; "/></td>
+    <xsl:apply-templates select="tei:rendition"/>
+  </tr>
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:model/tei:rendition|tei:modelGrp/tei:rendition">
+  (<tt><xsl:apply-templates/></tt>)
 </xsl:template>
 
 <xsl:template match="tei:constraintSpec">
@@ -218,6 +262,31 @@ of this software, even if advised of the possibility of such damage.
 <xsl:template match="tei:moduleRef">
   <tr>
     <td>Module: <xsl:value-of select="@key"/></td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="tei:content">
+  <tr>
+    <td colspan="3">
+    <div class="pre"><xsl:apply-templates mode="verbatim"/></div></td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="tei:exemplum">
+  <tr>
+    <td colspan="3"><xsl:apply-templates/></td>
+  </tr>
+</xsl:template>
+<xsl:template match="tei:classes">
+  <tr>
+    <td>Classes</td>
+    <td colspan="2">
+      <ul>
+	<xsl:for-each select="tei:memberOf">
+	  <xsl:value-of select="@key"/>
+	</xsl:for-each>
+      </ul>
+    </td>
   </tr>
 </xsl:template>
 

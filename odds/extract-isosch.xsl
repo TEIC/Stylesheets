@@ -11,6 +11,7 @@
                 version="2.0"
                 xpath-default-namespace="http://www.tei-c.org/ns/1.0"
                 exclude-result-prefixes="#all">
+  <xsl:import href="../common/functions.xsl"/>
 
   <d:doc scope="stylesheet" type="stylesheet">
     <d:desc>
@@ -200,8 +201,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="P5deco" as="element( tei:TEI )"/>
     <schema queryBinding="xslt2">
       <title>ISO Schematron rules</title>
-      <xsl:comment> This file generated <xsl:value-of
-        select="current-dateTime()"/> by 'extract-isosch.xsl'. </xsl:comment>
+      <xsl:comment> This file generated <xsl:call-template
+      name="whatsTheDate"/> by 'extract-isosch.xsl'. </xsl:comment>
 
       <xsl:call-template name="blockComment">
         <xsl:with-param name="content" select="'namespaces, declared:'"/>

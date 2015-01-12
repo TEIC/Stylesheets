@@ -111,6 +111,12 @@ of this software, even if advised of the possibility of such damage.
                      <xsl:call-template name="headers-footers-oneside-back"/>
                   </xsl:otherwise>
                </xsl:choose>
+              <!-- insert footNote Seperator -->
+              <static-content flow-name="xsl-footnote-separator">
+                <block>
+                  <leader leader-pattern="rule" leader-length="100%" rule-style="solid" rule-thickness="0.5pt"/>
+                </block>
+              </static-content>
                <!-- now start the main flow -->
           <flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
                   <xsl:apply-templates/>
@@ -153,6 +159,12 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:call-template name="headers-footers-oneside"/>
 	     </xsl:otherwise>
 	   </xsl:choose>
+	   <!-- insert footNote Seperator -->
+	   <static-content flow-name="xsl-footnote-separator">
+	     <block>
+	       <leader leader-pattern="rule" leader-length="100%" rule-style="solid" rule-thickness="0.5pt"/>
+	     </block>
+	   </static-content>
 	   <!-- now start the main  flow -->
 	   <flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
 	     <xsl:if test="not($flowMarginLeft='')">
@@ -377,6 +389,12 @@ of this software, even if advised of the possibility of such damage.
 		   <xsl:call-template name="headers-footers-oneside"/>
 		 </xsl:otherwise>
                </xsl:choose>
+	     <!-- insert footNote Seperator -->
+	     <static-content flow-name="xsl-footnote-separator">
+	       <block>
+	         <leader leader-pattern="rule" leader-length="100%" rule-style="solid" rule-thickness="0.5pt"/>
+	       </block>
+	     </static-content>
                <!-- now start the main flow -->
 	       <flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
 		 <xsl:for-each select="tei:*">
@@ -1322,6 +1340,9 @@ of this software, even if advised of the possibility of such damage.
          <xsl:attribute name="text-indent">
             <xsl:value-of select="$tocindent"/>
          </xsl:attribute>
+        <xsl:if test="$tocJustify = 'true'">
+          <xsl:attribute name="text-align-last">justify</xsl:attribute>
+        </xsl:if>
          <xsl:variable name="Number">
             <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $level">
                <xsl:call-template name="calculateNumber">
@@ -1334,7 +1355,18 @@ of this software, even if advised of the possibility of such damage.
          <inline>
             <xsl:apply-templates mode="section" select="tei:head"/>
          </inline>
-         <leader rule-thickness="0pt"/>
+          <leader>
+            <xsl:attribute name="leader-pattern" select="$tocLeaderPattern"/>
+            <xsl:choose>
+              <xsl:when test="$tocLeaderPattern = 'use-content'">
+                <xsl:value-of select="$tocLeaderPatternContent"/>
+              </xsl:when>
+              <xsl:when test="$tocLeaderPattern = 'rule'">
+                <xsl:attribute name="rule-style" select="$tocRuleStyle"/>
+                <xsl:attribute name="rule-thickness" select="$tocRuleThickness"/>
+              </xsl:when>
+            </xsl:choose>
+          </leader>
          <inline>
             <xsl:call-template name="linkStyle"/>
             <xsl:variable name="pagref">
