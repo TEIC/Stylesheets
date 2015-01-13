@@ -565,7 +565,7 @@ of this software, even if advised of the possibility of such damage.
 
    <!-- title  -->
    <xsl:template match="tei:title" mode="simple">
-      <xsl:value-of select="."/>
+      <xsl:apply-templates select="text()"/>
    </xsl:template>
 
    <xsl:template match="tei:title">
