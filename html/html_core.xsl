@@ -313,7 +313,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:att">
     <span>
       <xsl:call-template name="makeRendition"/>
-      <xsl:text>@</xsl:text>
       <xsl:apply-templates/>
     </span>
   </xsl:template>
