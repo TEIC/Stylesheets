@@ -690,7 +690,6 @@ of this software, even if advised of the possibility of such damage.
           <marker marker-class-name="section{$level}">
             <xsl:if test="$numberHeadings='true'">
               <xsl:value-of select="$Number"/>
-              <xsl:call-template name="headingNumberSuffix"/>
             </xsl:if>
             <xsl:value-of select="tei:head"/>
           </marker>
