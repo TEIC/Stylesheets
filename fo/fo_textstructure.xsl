@@ -656,49 +656,51 @@ of this software, even if advised of the possibility of such damage.
                </xsl:call-template>
             </xsl:if>
          </xsl:variable>
+        
+        <xsl:if test="$divRunningheads='true'">
+          <!-- markers for use in running heads -->
+          <xsl:choose>
+            <xsl:when test="$level=0">
+              <marker marker-class-name="section1"/>
+              <marker marker-class-name="section2"/>
+              <marker marker-class-name="section3"/>
+              <marker marker-class-name="section4"/>
+              <marker marker-class-name="section5"/>
+            </xsl:when>
+            <xsl:when test="$level=1">
+              <marker marker-class-name="section2"/>
+              <marker marker-class-name="section3"/>
+              <marker marker-class-name="section4"/>
+              <marker marker-class-name="section5"/>
+            </xsl:when>
+            <xsl:when test="$level=2">
+              <marker marker-class-name="section3"/>
+              <marker marker-class-name="section4"/>
+              <marker marker-class-name="section5"/>
+            </xsl:when>
+            <xsl:when test="$level=3">
+              <marker marker-class-name="section4"/>
+              <marker marker-class-name="section5"/>
+            </xsl:when>
+            <xsl:when test="$level=4">
+              <marker marker-class-name="section5"/>
+            </xsl:when>
+            <xsl:when test="$level=5"/>                     
+          </xsl:choose>
+          <marker marker-class-name="section{$level}">
+            <xsl:if test="$numberHeadings='true'">
+              <xsl:value-of select="$Number"/>
+              <xsl:call-template name="headingNumberSuffix"/>
+            </xsl:if>
+            <xsl:value-of select="tei:head"/>
+          </marker>
+        </xsl:if>
          <!--
 <xsl:message>**  Calculated   [<xsl:value-of select="$Number"/>] [<xsl:value-of select="$headingNumberSuffix"/>] for <xsl:value-of select="@xml:id"/></xsl:message>
 -->
       <xsl:value-of select="$Number"/>
          <xsl:apply-templates mode="section" select="tei:head"/>
-         <xsl:if test="$divRunningheads='true'">
-<!-- markers for use in running heads -->
-        <xsl:choose>
-               <xsl:when test="$level=0">
-                  <marker marker-class-name="section1"/>
-                  <marker marker-class-name="section2"/>
-                  <marker marker-class-name="section3"/>
-                  <marker marker-class-name="section4"/>
-                  <marker marker-class-name="section5"/>
-               </xsl:when>
-               <xsl:when test="$level=1">
-                  <marker marker-class-name="section2"/>
-                  <marker marker-class-name="section3"/>
-                  <marker marker-class-name="section4"/>
-                  <marker marker-class-name="section5"/>
-               </xsl:when>
-               <xsl:when test="$level=2">
-                  <marker marker-class-name="section3"/>
-                  <marker marker-class-name="section4"/>
-                  <marker marker-class-name="section5"/>
-               </xsl:when>
-               <xsl:when test="$level=3">
-                  <marker marker-class-name="section4"/>
-                  <marker marker-class-name="section5"/>
-               </xsl:when>
-               <xsl:when test="$level=4">
-                  <marker marker-class-name="section5"/>
-               </xsl:when>
-               <xsl:when test="$level=5"/>                     
-            </xsl:choose>
-            <marker marker-class-name="section{$level}">
-               <xsl:if test="$numberHeadings='true'">
-                  <xsl:value-of select="$Number"/>
-                  <xsl:call-template name="headingNumberSuffix"/>
-               </xsl:if>
-               <xsl:value-of select="tei:head"/>
-            </marker>
-         </xsl:if>
+         
          <xsl:choose>
             <xsl:when test="$foEngine='passivetex'">
 <!-- Passive TeX extension, to get PDF bookmarks -->
