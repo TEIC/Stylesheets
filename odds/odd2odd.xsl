@@ -898,6 +898,7 @@ of this software, even if advised of the possibility of such damage.
           <!-- element content -->
           <content xmlns="http://www.tei-c.org/ns/1.0">
             <xsl:choose>
+              <xsl:when test="not(tei:content/*)"/>
               <xsl:when test="tei:content/rng:*">
                 <xsl:apply-templates mode="odd2odd-copy" select="tei:content/*"/>
               </xsl:when>
