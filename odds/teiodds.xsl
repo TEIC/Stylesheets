@@ -1413,8 +1413,8 @@ select="$makeDecls"/></xsl:message>
           </xsl:choose>
         </choice>
       </xsl:when>
-      <xsl:when test="tei:datatype/rng:*">
-        <xsl:apply-templates select="tei:datatype/rng:*"/>
+      <xsl:when test="tei:datatype/*">
+        <xsl:apply-templates select="tei:datatype/*"/>
       </xsl:when>
       <xsl:otherwise>
         <text xmlns="http://relaxng.org/ns/structure/1.0"/>
