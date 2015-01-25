@@ -2159,6 +2159,14 @@ select="$makeDecls"/></xsl:message>
    <xsl:template match="tei:sequence" mode="#default tangle">
      <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:choose>
+      <xsl:when test="@preserveOrder='false' and
+		      string-length($suffix)=0">
+        <group  xmlns="http://relaxng.org/ns/structure/1.0">
+	  <choice>
+            <xsl:apply-templates   mode="tangle"/>
+	  </choice>
+        </group>
+      </xsl:when>
       <xsl:when test="string-length($suffix)=0">
         <group  xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:apply-templates   mode="tangle"/>

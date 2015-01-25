@@ -1544,7 +1544,8 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:otherwise>
             <xsl:text>(</xsl:text>
             <xsl:call-template name="innards">
-	      <xsl:with-param name="sep">,</xsl:with-param> 
+	      <xsl:with-param name="sep" select="if
+		(@preserveOrder='false') then '|' else ','"/>
 	    </xsl:call-template>
             <xsl:text>)</xsl:text>          
             <xsl:value-of select="tei:generateIndicators(.,@minOccurs,@maxOccurs)"/> 
