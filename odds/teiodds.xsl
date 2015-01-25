@@ -2162,9 +2162,9 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="@preserveOrder='false' and
 		      string-length($suffix)=0">
         <group  xmlns="http://relaxng.org/ns/structure/1.0">
-	  <choice>
+	  <interleave>
             <xsl:apply-templates   mode="tangle"/>
-	  </choice>
+	  </interleave>
         </group>
       </xsl:when>
       <xsl:when test="string-length($suffix)=0">
