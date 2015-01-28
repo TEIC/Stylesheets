@@ -837,7 +837,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="tei:constraintSpec[parent::tei:elementSpec or
+  <xsl:template match="tei:constraintSpec[parent::tei:schemaSpec or parent::tei:elementSpec or
 		       parent::tei:classSpec or parent::tei:attDef]" mode="weave">
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
