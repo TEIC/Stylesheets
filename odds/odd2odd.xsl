@@ -1311,14 +1311,14 @@ so that is only put back in if there is some content
             <xsl:for-each select="tei:attList">
               <xsl:copy>
                 <xsl:copy-of select="@*"/>
-                <xsl:apply-templates mode="justcopy" select="tei:attDef[@mode='add' or not(@mode)]"/>
+                <xsl:apply-templates mode="justcopy" select="tei:attDef"/>
                 <xsl:apply-templates mode="justcopy" select="tei:attRef"/>
                 <xsl:apply-templates mode="justcopy" select="tei:attList"/>
               </xsl:copy>
             </xsl:for-each>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attDef[@mode='add' or not(@mode)]"/>
+            <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attDef"/>
             <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attRef"/>
             <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attList"/>
           </xsl:otherwise>
