@@ -87,7 +87,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:macroSpec and not(@name=ancestor::tei:macroSpec/@ident)]"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[parent::tei:datatype]"/>
   <xsl:key name="odd2odd-REFED" use="@class" match="tei:attRef"/>
-  <xsl:key name="odd2odd-REFED" use="substring-before(@name,'.attribute.')" match="tei:attRef"/>
+  <xsl:key name="odd2odd-ATTREFED" use="substring-before(@name,'.attribute.')" match="tei:attRef"/>
   <xsl:key name="odd2odd-REFED" use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
   <xsl:key name="odd2odd-REFED" use="@key" match="tei:macroRef"/>
   <xsl:key name="odd2odd-REFED" use="@key" match="tei:classRef"/>
@@ -1894,6 +1894,7 @@ so that is only put back in if there is some content
     <xsl:choose>
       <xsl:when test="$autoGlobal='true' and starts-with(@ident,'att.global')">y</xsl:when>
       <xsl:when test="@type='model' and  key('odd2odd-REFED',$k)">y</xsl:when>
+      <xsl:when test="@type='atts' and  key('odd2odd-ATTREFED',$k)">y</xsl:when>
       <xsl:when test="@type='atts' and key('odd2odd-ELEMENT_MEMBERED',$k)">y</xsl:when>
       <xsl:when test="@type='atts' and key('odd2odd-CLASS_MEMBERED',$k)">
         <xsl:for-each select="key('odd2odd-CLASS_MEMBERED',$k)">
