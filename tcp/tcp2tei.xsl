@@ -1934,7 +1934,7 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template match="P[parent::*/count(P[not(FIGURE)])&gt;1][FIGURE]">
-    <xsl:apply-templates select="FIGURE"/>
+    <xsl:apply-templates select="*"/>
   </xsl:template>
   <xsl:template match="EVENT">
     <incident>
