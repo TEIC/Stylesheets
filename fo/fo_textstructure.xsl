@@ -97,6 +97,9 @@ of this software, even if advised of the possibility of such damage.
          <xsl:otherwise>
             <page-sequence format="{$formatBackpage}" text-align="{$alignment}" hyphenate="{$hyphenate}"
                            language="{$language}">
+              <xsl:if test="$lineheightApplicationRules = 'all'">
+                <xsl:attribute name="line-height" select="$lineheightBackpage"/>
+              </xsl:if>
                <xsl:call-template name="choosePageMaster">
                   <xsl:with-param name="where">
                      <xsl:value-of select="$backMulticolumns"/>
@@ -143,8 +146,11 @@ of this software, even if advised of the possibility of such damage.
        <xsl:otherwise>
 	 <!-- start page sequence -->
 	 <page-sequence format="{$formatBodypage}" text-align="{$alignment}" hyphenate="{$hyphenate}"
-			language="{$language}"
-			initial-page-number="1">
+	         language="{$language}"
+	         initial-page-number="1">
+	   <xsl:if test="$lineheightApplicationRules = 'all'">
+	     <xsl:attribute name="line-height" select="$lineheightBodypage"/>
+	   </xsl:if>
 	   <xsl:call-template name="choosePageMaster">
 	     <xsl:with-param name="where">
 	       <xsl:value-of select="$bodyMulticolumns"/>
@@ -356,6 +362,9 @@ of this software, even if advised of the possibility of such damage.
 	     <page-sequence format="{$formatFrontpage}" force-page-count="end-on-even"
 			    hyphenate="{$hyphenate}"
 			    language="{$language}">
+	       <xsl:if test="$lineheightApplicationRules = 'all'">
+	         <xsl:attribute name="line-height" select="$lineheightBackpage"/>
+	       </xsl:if>
 	       <xsl:call-template name="choosePageMaster">
 		 <xsl:with-param name="where">
 		   <xsl:value-of select="$frontMulticolumns"/>

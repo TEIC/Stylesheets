@@ -188,6 +188,18 @@ of this software, even if advised of the possibility of such damage.
     <desc>Set line-height for back matter
     </desc>
   </doc>
+  <xsl:param name="lineheightApplicationRules" select="('p')"></xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
+    <desc>
+      Sequence of identifiers for lineheight application (has to be evaluated as XPath). Add the following values to the sequence in order to:
+      <ul>
+        <li>'p' : apply lineheight to tei:p elements, excluding those in tei:note, and in tei:quote elements returning false from tei:isInline.</li>
+        <li>'footnote' :  in addition to 'p' apply lineheight to all tei:note elements with @place ='foot'</li>
+        <li>'block-quote' : in addition to 'p' apply lineheight to block quotes</li>
+        <li>'all' : apply lineheight parameters respectively to the whole page sequences</li>
+      </ul>
+    </desc>
+  </doc>
   <xsl:param name="lineheightBackpage">1</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
     <desc>Set line-height for main matter
