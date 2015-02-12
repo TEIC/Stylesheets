@@ -585,6 +585,21 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:p">
       <block>
+         <xsl:if test="not(parent::tei:note)">
+            <xsl:attribute name="line-height">
+               <xsl:choose>
+                  <xsl:when test="ancestor::tei:front">
+                     <xsl:value-of select="$lineheightFrontpage"/>
+                  </xsl:when>
+                  <xsl:when test="ancestor::tei:body">
+                     <xsl:value-of select="$lineheightBodypage"/>
+                  </xsl:when>
+                  <xsl:when test="ancestor::tei:back">
+                     <xsl:value-of select="$lineheightBackpage"/>
+                  </xsl:when>
+               </xsl:choose>
+            </xsl:attribute>
+         </xsl:if>
          <xsl:if test="preceding-sibling::tei:p">
             <xsl:attribute name="text-indent">
                <xsl:value-of select="$parIndent"/>

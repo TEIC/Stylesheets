@@ -183,6 +183,23 @@ of this software, even if advised of the possibility of such damage.
 </desc>
    </doc>
   <xsl:param name="formatFrontpage">i</xsl:param>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
+    <desc>Set line-height for back matter
+    </desc>
+  </doc>
+  <xsl:param name="lineheightBackpage">1</xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
+    <desc>Set line-height for main matter
+    </desc>
+  </doc>
+  <xsl:param name="lineheightBodypage">1</xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
+    <desc>Set line-height for front matter
+    </desc>
+  </doc>
+  <xsl:param name="lineheightFrontpage">1</xsl:param>
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
       <desc>Put front matter in multiple columns</desc>
    </doc>
