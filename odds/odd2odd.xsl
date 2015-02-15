@@ -214,8 +214,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:value-of select="$currentDirectory"/>
-	  <xsl:value-of select="$loc"/>
+	  <xsl:value-of select="string-join(($currentDirectory, $loc), '/')"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
