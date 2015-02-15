@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project basedir="." default="dist" name="teitolite">
+<project basedir="." default="dist" name="teitosimple">
   <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -23,16 +23,8 @@
  -->
   <import file="../common/teianttasks.xml"/>
 
-  <target name="dist" depends="odd,notodd"/>
-
-  <target name="odd" if="processODD">
-    <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
-    <buildgeneric type="lite" xsl="${profiledir}/${profile}/lite/to.xsl" in="${inputFile}.processedodd" out="${outputFile}"/>
-    <delete file="${inputFile}.processedodd"/>
-  </target>
-
-  <target name="notodd" unless="processODD">
-    <buildgeneric type="lite" xsl="${profiledir}/${profile}/lite/to.xsl" in="${inputFile}" out="${outputFile}"/>
+  <target name="dist">
+    <buildgeneric type="lite" xsl="${profiledir}/${profile}/simple/to.xsl" in="${inputFile}" out="${outputFile}"/>
   </target>
 
 </project>
