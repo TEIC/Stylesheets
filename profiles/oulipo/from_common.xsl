@@ -65,10 +65,14 @@
             <p>Expéditeur : <ref target=" FORMTEXT "><anchor xml:id="Text11"/>     </ref></p>
             <p>Destinataires : <ref target=" FORMTEXT "><anchor xml:id="Text12"/>     </ref></p>
         -->
+
+  
   <xsl:template match="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"
     mode="pass3">
-    <title>    
-      <xsl:text>Réunion du </xsl:text>
+   
+    <title>
+    
+      <xsl:text> Réunion du </xsl:text>
       <date>
         <xsl:value-of
           select='substring-before(substring-after(//tei:body/tei:p[4],":"),"(")'
@@ -86,29 +90,12 @@
       </name>
     </respStmt>
   </xsl:template>
+  
   <xsl:template match="tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:p"
     mode="pass3">
-    <p>Encodé a partir du scan <xsl:value-of
-        select='substring-after(//tei:body/tei:p[1],":")'/>
-      <xsl:text> pp. </xsl:text>
-      <xsl:value-of select='substring-after(//tei:body/tei:p[2],":")'/>
-    </p>
-  </xsl:template>
-  
-  <xsl:template match="tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:p"
-    mode="pass3">
-  <p>Edition numérique distribué par le projet ANR DifDePo</p>
-  </xsl:template>
-  
-  <xsl:template match="tei:teiHeader/tei:revisionDesc" mode="pass3">
     <xsl:variable name="partix">
       <xsl:value-of
         select='substring-before(substring-after(//tei:body/tei:p[6],":"),"(")'
-      />
-    </xsl:variable>
-    <xsl:variable name="format">
-      <xsl:value-of
-        select='substring-before(substring-after(//tei:body/tei:p[3],":"),"(")'
       />
     </xsl:variable>
     <xsl:variable name="invites">
@@ -136,44 +123,63 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <profileDesc>
-      <particDesc>
-        <ab>
-          <xsl:for-each select="tokenize($partix,' ')">
-            <xsl:if test="normalize-space(.) ne ''">
-              <persName>
-                <xsl:attribute name="ref">
-                  <xsl:text>#</xsl:text>
-                  <xsl:sequence select="normalize-space(.)"/>
-                </xsl:attribute>
-              </persName>
-            </xsl:if>
-          </xsl:for-each>
-          <persName role="invité">
-            <xsl:value-of select="normalize-space($invites)"/>
-          </persName>
-          <persName role="président">
-            <xsl:value-of select="normalize-space($pres)"/>
-          </persName>
-          <persName role="secretaire">
-            <xsl:value-of select="normalize-space($sec)"/>
-          </persName>
-          <xsl:if test="string-length($exp) gt 1">
-            <persName role="expéditeur">
-              <xsl:value-of select="normalize-space($exp)"/>
-            </persName>
-          </xsl:if>
-          <xsl:if test="string-length($dest) gt 1">
-            <persName role="destinataire">
-              <xsl:value-of select="normalize-space($dest)"/>
-            </persName>
-          </xsl:if>
-        </ab>
-      </particDesc>
-    </profileDesc>
+    <bibl>Encodé a partir du scan <xsl:value-of
+        select='substring-after(//tei:body/tei:p[1],":")'/>
+      <xsl:text> pp. </xsl:text>
+      <xsl:value-of select='substring-after(//tei:body/tei:p[2],":")'/>
+    </bibl>
+    <bibl><meeting><date><xsl:attribute name="when">
+      <xsl:value-of select='tei:whenify(normalize-space(substring-before(substring-after(//tei:body/tei:p[4],":"),"(")))'/></xsl:attribute></date>
+      <placeName>  <xsl:value-of select='substring-after( //tei:body/tei:p[5], ":")'/></placeName>
+      <list type="present"><xsl:for-each select="tokenize($partix,' ')">
+        <xsl:if test="normalize-space(.) ne ''">
+          <item><persName>
+            <xsl:attribute name="ref">
+              <xsl:text>#</xsl:text>
+              <xsl:sequence select="normalize-space(.)"/>
+            </xsl:attribute>
+          </persName></item>
+        </xsl:if>
+      </xsl:for-each>
+       <item> <persName role="invité">
+          <xsl:value-of select="normalize-space($invites)"/>
+        </persName></item>
+        <item><persName role="président">
+          <xsl:attribute name="ref">
+            <xsl:text>#</xsl:text>
+            <xsl:sequence select="normalize-space($pres)"/>
+          </xsl:attribute>
+        </persName></item>
+        <item><persName role="secretaire">
+          <xsl:attribute name="ref">
+            <xsl:text>#</xsl:text>
+          <xsl:value-of select="normalize-space($sec)"/></xsl:attribute>
+        </persName></item>
+        <xsl:if test="string-length($exp) gt 1">
+          <item><persName role="expéditeur">
+            <xsl:value-of select="normalize-space($exp)"/>
+          </persName></item>
+        </xsl:if>
+        <xsl:if test="string-length($dest) gt 1">
+         <item> <persName role="destinataire">
+            <xsl:value-of select="normalize-space($dest)"/>
+          </persName></item>
+        </xsl:if></list></meeting></bibl>
   </xsl:template>
-  <xsl:template match="tei:revisionDesc/tei:change/tei:date" mode="pass3">
-    <xsl:value-of select="tei:whatsTheDate()"/>
+  
+  <xsl:template match="tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:p"
+    mode="pass3">
+  <p>Edition numérique distribué par le projet ANR DifDePo</p>
+  </xsl:template>
+  
+  
+  <xsl:template match="//tei:change" mode="pass3">
+    <change>
+      <xsl:attribute name="when">
+        <xsl:value-of select="tei:whatsTheDate()"/>
+      </xsl:attribute>
+      Converted from Docx to TEI
+    </change>
   </xsl:template>
   <xsl:template match="tei:appInfo" mode="pass2"/>
   <xsl:template match="tei:encodingDesc" mode="pass2"/>
@@ -313,6 +319,14 @@
       <xsl:when test="$p[self::tei:byline]">true</xsl:when>
       <xsl:otherwise>false</xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+  
+  <xsl:function name="tei:whenify">
+    <xsl:param name="str"/>
+    <xsl:message><xsl:value-of select="$str"/></xsl:message>
+    <xsl:value-of select="substring($str,7,4)"/><xsl:text>-</xsl:text>
+    <xsl:value-of select="substring($str,4,2)"/><xsl:text>-</xsl:text>
+    <xsl:value-of select="substring($str,1,2)"/>
   </xsl:function>
  <!-- <xsl:template match="tei:persName[.=' ']">
     <xsl:value-of select="."/>
