@@ -119,8 +119,8 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:value-of
 		select="translate($word-directory,'\\','/')"/>
 	  </xsl:variable>
-	  <xsl:variable name="customFile" select="concat($wordDirectory,'/docProps/custom.xml')"/>
-	  <xsl:variable name="docProps" select="doc(concat($wordDirectory,'/docProps/core.xml'))"/>
+	  <xsl:variable name="customProps" select="concat($wordDirectory,'/docProps/custom.xml')"/>
+	  <xsl:variable name="docProps" select="concat($wordDirectory,'/docProps/core.xml')"/>
 	  <xsl:variable name="numberFile" select="concat($wordDirectory,'/word/numbering.xml')"/>
 	  <xsl:variable name="relsDoc" select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
 	  <xsl:variable name="relsFile"  select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
@@ -611,8 +611,8 @@ of this software, even if advised of the possibility of such damage.
 	        <application xml:id="doxtotei" ident="TEI_fromDOCX" version="2.15.0">
 	           <label>DOCX to TEI</label>
 	        </application>
-	        <xsl:if test="doc-available(concat($wordDirectory,'/docProps/custom.xml'))">
-	           <xsl:for-each select="document(concat($wordDirectory,'/docProps/custom.xml'))/prop:Properties">
+	        <xsl:if test="doc-available($customProps)">
+	           <xsl:for-each select="doc($customProps)/prop:Properties">
 	              <xsl:for-each select="prop:property">
 	                 <xsl:choose>
 		                   <xsl:when test="@name='TEI_fromDOCX'"/>
@@ -637,15 +637,36 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <xsl:template name="getDocTitle">
-      <xsl:value-of select="$docProps/cp:coreProperties/dc:title"/>
+      <xsl:choose>
+	<xsl:when test="doc-available($docProps)">
+	  <xsl:value-of select="doc($docProps)/cp:coreProperties/dc:title"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>unknown title</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
     <xsl:template name="getDocAuthor">
-      <xsl:value-of select="$docProps/cp:coreProperties/dc:creator"/>
+      <xsl:choose>
+	<xsl:when test="doc-available($docProps)">
+	  <xsl:value-of select="doc($docProps)/cp:coreProperties/dc:creator"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>unknown author</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
     <xsl:template name="getDocDate">
-      <xsl:value-of select="substring-before($docProps/cp:coreProperties/dcterms:created,'T')"/>
+      <xsl:choose>
+	<xsl:when test="doc-available($docProps)">
+	  <xsl:value-of select="substring-before(doc($docProps)/cp:coreProperties/dcterms:created,'T')"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>unknown date</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
     <xsl:template name="identifyChange">
