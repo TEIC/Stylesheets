@@ -537,9 +537,11 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:if test="tei:constraintSpec">
 	     <div>
 	       <head>Constraints</head>
-	       <xsl:apply-templates mode="weave" select="tei:constraintSpec">
-		 <xsl:sort select="@ident"/>
-	       </xsl:apply-templates>
+	       <table rend="wovenodd">
+		 <xsl:apply-templates mode="weave" select="tei:constraintSpec">
+		   <xsl:sort select="@ident"/>
+		 </xsl:apply-templates>
+	       </table>
 	     </div>
 	   </xsl:if>
 	 </xsl:otherwise>
