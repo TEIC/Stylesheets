@@ -223,19 +223,22 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:function name="tei:processInstruction"  as="xs:string">
     <xsl:param name="instr"/>
+    <xsl:variable name="instr">
+      <xsl:value-of select="replace($instr, '^\s+|\s+$', '')"></xsl:value-of>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="matches($instr,'REF _')"> <!-- this will also catch NOTEREF _ -->
 	  <xsl:value-of select="concat('#',substring-before(substring-after($instr,'_'),'&#32;'))"/>
       </xsl:when>
-      <xsl:when test="matches($instr,' HYPERLINK \\l ')">
+      <xsl:when test="matches($instr,'HYPERLINK \\l ')">
 	<xsl:variable name="target">
-	  <xsl:value-of   select="translate(tokenize($instr,' ')[4],$dq,'')"/>
+	  <xsl:value-of   select="translate(tokenize($instr,' ')[3],$dq,'')"/>
 	</xsl:variable>
 	<xsl:value-of select="if (matches($target,'^_')) then  concat('#',substring($target,2)) else $target"/>
       </xsl:when>
-      <xsl:when test="matches($instr,' HYPERLINK')">
+      <xsl:when test="matches($instr,'HYPERLINK')">
 	<xsl:variable name="target">
-	  <xsl:value-of   select="translate(tokenize($instr,' ')[2],$dq,'')"/>
+	  <xsl:value-of   select="translate(tokenize($instr,' ')[1],$dq,'')"/>
 	</xsl:variable>
 	<xsl:value-of select="if (matches($target,'^_')) then  concat('#',substring($target,2)) else $target"/>
       </xsl:when>
