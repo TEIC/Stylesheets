@@ -325,5 +325,5 @@ an egXML in a list:
 # divs with no heads
 
 Ampersands: Fit the first& Fit the first& more Fit the first&amp; more Fit the first&& Fit the first&quot; Fit the first @ http://www.example.com/?foo=bar&bar=foo&#3.
-Ampersands: Fit the first& Fit the first& more Fit the first&amp; more Fit the first&& Fit the first&quot; (as opposed to ) Fit the first @ http://www.example.com/?foo=bar&bar=foo&#3.
+Ampersands: Fit the first& Fit the first& more Fit the first&amp; more Fit the first&& Fit the first&quot; (as opposed to &quot;) Fit the first @ http://www.example.com/?foo=bar&bar=foo&#3.
 Fit the second
