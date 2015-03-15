@@ -1562,5 +1562,8 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   
+<xsl:template match="processing-instruction()[name(.)='entity']" mode="#all">
+    <xsl:value-of select="tei:escapeChars(concat('&amp;',normalize-space(.),';'),parent::*)"/>
+</xsl:template>
 
 </xsl:stylesheet>

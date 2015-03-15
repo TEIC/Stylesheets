@@ -152,7 +152,8 @@ the beginning of the document</desc>
   \pagestyle{</xsl:text><xsl:value-of select="$pageStyle"/><xsl:text>}
 </xsl:text>
 \usepackage[pdftitle={<xsl:sequence select="tei:generateSimpleTitle(.)"/>},
- pdfauthor={<xsl:sequence select="replace(string-join(tei:generateAuthor(.),''),'\\newline','')"/>}]{hyperref}
+ pdfauthor={<xsl:sequence
+ select="replace(string-join(tei:generateAuthor(.),''),'\\[A-z]+','')"/>}]{hyperref}
 \hyperbaseurl{<xsl:value-of select="$baseURL"/>}
 <xsl:if test="count(key('APP',1))&gt;0">
 \usepackage{eledmac}

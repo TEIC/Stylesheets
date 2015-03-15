@@ -65,7 +65,7 @@ of this software, even if advised of the possibility of such damage.
       </li>
   </xsl:template>
 
-  <xsl:template match="tei:affiliation">
+  <xsl:template match="tei:affiliation|tei:email">
       <br/>
       <xsl:apply-templates/>
   </xsl:template>

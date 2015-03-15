@@ -858,18 +858,18 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:name|tei:persName|tei:placeName|tei:orgName">
       <xsl:choose>
-         <xsl:when test="not(ancestor::tei:person|ancestor::tei:biblStruct)">
+         <xsl:when test="ancestor::tei:person|ancestor::tei:biblStruct">
+	   <xsl:call-template name="makeSpan"/>
+	   <xsl:if test="following-sibling::*[1][self::tei:name|self::tei:persName]">
+	     <xsl:call-template name="makeText">
+	       <xsl:with-param name="letters">, </xsl:with-param>
+	     </xsl:call-template>
+	   </xsl:if>
+	 </xsl:when>
+	 <xsl:otherwise>
 	   <xsl:call-template name="makeInline">
 	     <xsl:with-param name="style" select="local-name()"/>
 	   </xsl:call-template>
-	 </xsl:when>
-         <xsl:when test="following-sibling::tei:name|following-sibling::tei:persName">
-	   <xsl:call-template name="makeText">
-	     <xsl:with-param name="letters">, </xsl:with-param>
-	   </xsl:call-template>
-         </xsl:when>
-	 <xsl:otherwise>
-	   <xsl:call-template name="makeSpan"/>
 	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -1426,7 +1426,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element author in "author" mode"</desc>
    </doc>
   <xsl:template match="tei:author" mode="author">
-    <xsl:apply-templates select="*[not(self::tei:email)]|text()"/>
+    <xsl:apply-templates select="*[not(self::tei:email or self::tei:affiliation)]|text()"/>
     <xsl:choose>
       <xsl:when test="count(following-sibling::tei:author)=1">
 	<xsl:if test="count(preceding-sibling::tei:author)&gt;1">
