@@ -565,6 +565,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:processing-instruction name="biblio">
 	  <xsl:value-of select="$target"/>
 	</xsl:processing-instruction>
+	<xsl:value-of select="./text()"/>
       </xsl:when>
       <xsl:when test="matches(@target,'^LINK Excel.Sheet.')">
 	<xsl:sequence select="tei:docxError('cannot embed Excel  spreadsheet')"/>
