@@ -243,6 +243,9 @@ test-from-docx: test.rng
 	$(BINDIR)/docxtotei --profile=tei test37.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test37.xml  && rm temp.xml
 	diff test37.xml expected-results/test37.xml
+	$(BINDIR)/docxtotei --profile=tei test40.docx temp.xml
+	xmllint --format temp.xml | perl cleanup.pl > test40.xml  && rm temp.xml
+	diff test40.xml expected-results/test40.xml
 
 test-to-docx:
 	@echo BUILD: testing to-docx
@@ -414,7 +417,7 @@ profile:
 
 clean:
 	(cd ..; for i in css/*; do rm -f `basename $$i`;done)
-	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *vrb *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd test.zip test*.dtd test-indexes.xml test37.xml test38.xml test39.xml
+	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *vrb *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd test.zip test*.dtd test-indexes.xml test37.xml test38.xml test39.xml test40.xml
 	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5 test*.processedodd *.isosch
 	rm -f oddbyexample.* index*div*html
 	rm -f testdrama.compiled.xml
