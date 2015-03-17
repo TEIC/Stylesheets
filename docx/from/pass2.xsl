@@ -565,6 +565,17 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:processing-instruction name="biblio">
 	  <xsl:value-of select="$target"/>
 	</xsl:processing-instruction>
+        <xsl:choose>
+          <xsl:when test="count(text()) &lt; 2">
+            <xsl:value-of select="text()"/>
+            <xsl:apply-templates select="tei:ref" mode="pass2"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="text()[1]"/>
+            <xsl:apply-templates select="tei:ref" mode="pass2"/>
+            <xsl:value-of select="remove(text(), 1)"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:when test="matches(@target,'^LINK Excel.Sheet.')">
 	<xsl:sequence select="tei:docxError('cannot embed Excel  spreadsheet')"/>
