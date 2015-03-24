@@ -237,6 +237,8 @@
       <xsl:copy-of select="$hiConversion/*[key('hi', @xml:id, current()/root())][not(key('renditionsInUse', @xml:id, current()/root()))]"/>
     </tagsDecl>
   </xsl:template>
+  
+  <xsl:template match="tei:revisionDesc"/>
 
   <!-- ===== -->
   <!-- front -->
@@ -1104,7 +1106,7 @@
     </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="tei:TEI/@rend[. = 'jTEI']"/>
+  <xsl:template match="tei:TEI/@rend[. = ('jTEI', 'jTEI.internal')]"/>
   <xsl:template match="comment()|processing-instruction()"/>
   
   <xsl:template match="tei:code/@lang|tei:row/@role|tei:cell/@role|tei:graphic/@width|tei:graphic/@height"/>
