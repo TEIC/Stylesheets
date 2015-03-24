@@ -78,8 +78,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
 
-  <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec" name="LOCALIDENTS" use="@ident"/>
-  <xsl:key match="tei:macroSpec" name="MACROS" use="@ident"/>
+  <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec" name="LOCALIDENTS" use="@ident"/>
+  <xsl:key match="tei:dataSpec|tei:macroSpec" name="MACROS" use="@ident"/>
   <xsl:key match="tei:elementSpec" name="ELEMENTS" use="@ident"/>
   <xsl:key match="tei:elementSpec" name="ELEMENTS" use="tei:altIdent"/>
   <xsl:key match="tei:classSpec" name="CLASSES" use="@ident"/>
@@ -99,13 +99,13 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:key match="tei:macroSpec/tei:content//rng:ref" name="MACROREFS"  use="@name"/>
   <xsl:key match="tei:macroSpec/tei:content//tei:macroRef" name="MACROREFS"  use="@key"/>
+  <xsl:key match="tei:dataSpec/tei:content//tei:dataRef" name="MACROREFS"  use="@key"/>
 
   <xsl:key match="tei:elementSpec|tei:classSpec" name="CLASSMEMBERS" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key match="tei:elementSpec" name="CLASSMEMBERS-ELEMENTS" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key match="tei:classSpec" name="CLASSMEMBERS-CLASSES" use="tei:classes/tei:memberOf/@key"/>
-  <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec" name="IDENTS" use="concat(@prefix,@ident)"/>
+  <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec" name="IDENTS" use="concat(@prefix,@ident)"/>
 
-  <xsl:key match="tei:macroSpec[@type='dt']" name="DATATYPES" use="1"/>
   <xsl:key match="tei:macroSpec" name="MACRODOCS" use="1"/>
   <xsl:key match="tei:attDef" name="ATTDOCS" use="1"/>
   <xsl:key match="tei:attDef" name="ATTRIBUTES" use="@ident"/>
@@ -118,6 +118,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:classSpec" name="ClassModule" use="@module"/>
   <xsl:key match="tei:macroSpec" name="MacroModule" use="@module"/>
   <xsl:key match="tei:macroSpec[@type='dt']" name="DataMacroModule" use="@module"/>
+  <xsl:key match="tei:dataSpec" name="MacroModule" use="@module"/>
+  <xsl:key match="tei:dataSpec" name="DataMacroModule" use="@module"/>
   <xsl:key match="tei:moduleSpec" name="Modules" use="1"/>
   <xsl:key match="tei:moduleSpec" name="MODULES" use="@ident"/>
   <xsl:key match="tei:classSpec[@predeclare='true']" name="predeclaredClasses" use="1"/>
@@ -1023,20 +1025,20 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
 
-  <xsl:template match="tei:elementSpec/@ident"/>
-
-  <xsl:template match="tei:elementSpec/tei:desc"/>
-
-  <xsl:template match="tei:classSpec/tei:desc"/>
-
-  <xsl:template match="tei:macroSpec/tei:desc"/>
-
-  <xsl:template match="tei:elementSpec/tei:gloss"/>
-
   <xsl:template match="tei:classSpec/tei:gloss"/>
-
   <xsl:template match="tei:macroSpec/tei:gloss"/>
+  <xsl:template match="tei:elementSpec/tei:gloss"/>
+  <xsl:template match="tei:dataSpec/tei:gloss"/>
+  <xsl:template match="tei:classSpec/tei:desc"/>
+  <xsl:template match="tei:macroSpec/tei:desc"/>
+  <xsl:template match="tei:elementSpec/tei:desc"/>
+  <xsl:template match="tei:dataSpec/tei:desc"/>
+  <xsl:template match="tei:classSpec/@ident"/>
+  <xsl:template match="tei:macroSpec/@ident"/>
+  <xsl:template match="tei:elementSpec/@ident"/>
+  <xsl:template match="tei:dataSpec/@ident"/>
 
+  
 
   <xsl:template match="tei:index">
       <xsl:call-template name="makeAnchor">
@@ -1046,7 +1048,7 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
 
-  <xsl:template match="tei:macroSpec" mode="tangle">
+  <xsl:template match="tei:dataSpec|tei:macroSpec" mode="tangle">
     <xsl:param name="filename"/>
     <xsl:variable name="macroPrefix">
       <xsl:choose>
@@ -1102,7 +1104,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="$verbose='true'">
-          <xsl:message> macroSpec <xsl:value-of select="@ident"/>
+          <xsl:message> macro/data Spec <xsl:value-of select="@ident"/>
           </xsl:message>
         </xsl:if>
         <xsl:call-template name="schemaOut">
@@ -1145,9 +1147,6 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
 
   </xsl:template>
-
-
-  <xsl:template match="tei:macroSpec/@ident"/>
 
   <xsl:template match="tei:macroSpec/content/rng:*"/>
 
@@ -2206,7 +2205,7 @@ select="$makeDecls"/></xsl:message>
   <xsl:template match="tei:interleave"   mode="#default tangle">
     <xsl:message>met an interleave</xsl:message>
   </xsl:template>
-  <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef"   mode="#default tangle">
+  <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef|tei:dataRef"   mode="#default tangle">
     <xsl:variable name="prefixedName" select="tei:generateRefPrefix(.)"/>
     <xsl:variable name="wrapperElement"
 		  select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>

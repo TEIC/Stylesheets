@@ -176,7 +176,7 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:message>start importing moduleRef components</xsl:message>
 	   </xsl:if>
 	   <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
-	   <xsl:for-each select="tei:macroSpec">
+	   <xsl:for-each select="tei:macroSpec|tei:dataSpec">
 	     <xsl:apply-templates mode="tangle" select="."/>
 	   </xsl:for-each>
 	   <xsl:apply-templates mode="tangle" select="tei:elementSpec|tei:classSpec"/>
