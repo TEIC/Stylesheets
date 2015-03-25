@@ -13,6 +13,7 @@
             <XSL:when test=".='margin-outer'">margin</XSL:when>
             <XSL:when test=".='marg1'">margin</XSL:when>
             <XSL:when test=".='marg2'">margin</XSL:when>
+            <XSL:when test=".='marg3'">margin</XSL:when>
             <XSL:when test=".='marg4'">margin</XSL:when>
             <XSL:when test=".='left'">margin-left</XSL:when>
             <XSL:when test=".='right'">margin-right</XSL:when>

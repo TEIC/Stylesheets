@@ -123,13 +123,24 @@
 	<xsl:apply-templates/>
     </xsl:template>
 
+    <xsl:template match="TEI">
+      <xsl:copy>
+	<xsl:attribute name="rendition">tei:teisimple</xsl:attribute>
+        <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+      </xsl:copy>
+    </xsl:template>
+
     <xsl:template match="text">
       <xsl:copy>
+	<!--
 	<xsl:variable name="pass1">
-	  <xsl:apply-templates/>
+
 	</xsl:variable>
 	<xsl:apply-templates select="$pass1" mode="pb"/>
+	-->
+	  <xsl:apply-templates/>
       </xsl:copy>
+
     </xsl:template>
 
     <!-- merge into name, keep attributes and add @type with translated name of original elements -->
@@ -304,11 +315,12 @@
     
     <xsl:template match="div" mode="pb">
       <xsl:variable name="me" select="."/>
-      <xsl:for-each select=".//pb[preceding::node()[">
+      <xsl:for-each select=".//pb[preceding::node()]">
       <xsl:copy>
         <xsl:apply-templates
 	    select="*|@*|processing-instruction()|comment()|text()" mode="pb"/>
       </xsl:copy>	
+      </xsl:for-each>
     </xsl:template>
 
     <xsl:template match="*" mode="pb">
