@@ -13,7 +13,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
-    exclude-result-prefixes="xs xd" version="2.0"
+    exclude-result-prefixes="#all" version="2.0"
     xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
     xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
     xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
@@ -504,7 +504,7 @@
 
         <table:table table:style-name="{$tableId}">
 <!--       Table column widths.          -->
-          <xsl:variable name="numCols" select="sum(for $c in descendant::row[1]/cell return if (@cols) then xs:integer(@cols) else 1)"/>
+          <xsl:variable name="numCols" select="sum(for $c in descendant::row[1]/cell return if ($c/@cols) then xs:integer($c/@cols) else 1)"/>
           <xsl:for-each select="1 to $numCols">
             <table:table-column table:style-name="{concat($tableId, '_col_', .)}"/>
           </xsl:for-each>
