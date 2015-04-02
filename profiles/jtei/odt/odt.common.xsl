@@ -716,7 +716,7 @@
           <xsl:for-each select="graphic">
             <xsl:variable name="imagetype" select="tokenize(@url,'\.')[last()]"/>
             <xsl:text>Pictures/resource</xsl:text>
-            <xsl:number level="any"/>
+            <xsl:value-of select="$graphicNum"/>
             <xsl:text>.</xsl:text>
             <xsl:value-of select="$imagetype"/>
           </xsl:for-each>
