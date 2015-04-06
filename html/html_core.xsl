@@ -588,7 +588,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates select="tei:head"/>
       </xsl:element>
     </xsl:if>
-    <xsl:apply-templates select="tei:milestone"/>
     <xsl:choose>
       <xsl:when test="@type='catalogue'">
         <p>
@@ -644,27 +643,18 @@ of this software, even if advised of the possibility of such damage.
         </table>
       </xsl:when>
       <xsl:when test="tei:isInlineList(.)">
-        <!--<xsl:if test="not(tei:item)">None</xsl:if>-->
-        <xsl:apply-templates mode="inline" select="tei:item"/>
+        <xsl:apply-templates select="*[not(self::tei:head)]"  mode="inline"/>
       </xsl:when>
       <xsl:when test="@type='inline' or @type='runin'">
         <p>
-          <xsl:apply-templates mode="inline" select="tei:item"/>
+          <xsl:apply-templates select="*[not(self::tei:head)]"  mode="inline"/>
         </p>
       </xsl:when>
-      <xsl:when test="tei:isUnorderedList(.)">
-	<ul>
-          <xsl:call-template name="makeRendition">
-            <xsl:with-param name="default">false</xsl:with-param>
-          </xsl:call-template>
-          <xsl:apply-templates select="tei:item"/>
-        </ul>
-      </xsl:when>
       <xsl:when test="@type='bibl'">
-        <xsl:apply-templates mode="bibl" select="tei:item"/>
+        <xsl:apply-templates select="*[not(self::tei:head)]"  mode="bibl"/>
       </xsl:when>
-      <xsl:when test="tei:isOrderedList(.)">
-        <ol>
+      <xsl:otherwise>
+	<xsl:element name="{if (tei:isOrderedList(.)) then 'ol' else 'ul'}">
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>
           </xsl:call-template>
@@ -673,16 +663,8 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="substring-after(@type,':')"/>
             </xsl:attribute>
           </xsl:if>
-          <xsl:apply-templates select="tei:item"/>
-        </ol>
-      </xsl:when>
-      <xsl:otherwise>
-        <ul>
-          <xsl:call-template name="makeRendition">
-            <xsl:with-param name="default">false</xsl:with-param>
-          </xsl:call-template>
-          <xsl:apply-templates select="tei:item"/>
-        </ul>
+          <xsl:apply-templates select="*[not(self::tei:head)]" />
+	</xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
