@@ -904,12 +904,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="ident">
 	<xsl:apply-templates mode="ident" select="."/>
       </xsl:variable>
-      <xsl:variable name="headertext">
-	<xsl:call-template name="header">
-	  <xsl:with-param name="display">full</xsl:with-param>
-	</xsl:call-template>
-      </xsl:variable>
-      
       <xsl:choose>
 	<xsl:when test="parent::tei:*/tei:match(@rend,'multicol')">
 	  <td style="vertical-align:top;">
@@ -940,37 +934,25 @@ of this software, even if advised of the possibility of such damage.
 	    </tr>
 	  </table>
 	</xsl:when>
-	<xsl:when test="tei:match(@rend,'nohead') or $headertext=''">
+	<xsl:when test="tei:match(@rend,'nohead')">
 	  <xsl:apply-templates/>
 	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:if test="not($depth = '')">
-	    <xsl:variable name="Heading">
-	      <xsl:variable name="ename" select="if (number($depth)+$divOffset &gt;6) then 'div'
-						       else
-						       concat('h',number($depth)+$divOffset)">
-	      </xsl:variable>
+	<xsl:when test="not(tei:head)">
 	      <xsl:call-template name="splitHTMLBlocks">
-		<xsl:with-param name="element" select="$ename"/>
+		<xsl:with-param name="element" select="if (number($depth)+$divOffset &gt;6) then 'div'
+					       else
+					       concat('h',number($depth)+$divOffset)"/>
 		<xsl:with-param name="content">
-		  <xsl:apply-templates select="tei:head"/>
 		  <xsl:call-template name="sectionHeadHook"/>
-		  <xsl:copy-of select="$headertext"/>	 
+		  <xsl:call-template name="header">
+		    <xsl:with-param name="display">full</xsl:with-param>
+		  </xsl:call-template>
 		</xsl:with-param>
 		<xsl:with-param name="copyid">false</xsl:with-param>
 	      </xsl:call-template>
-	      </xsl:variable>
-	      <xsl:choose>
-	      <xsl:when test="$outputTarget='html5' and number($depth)  &lt; 1">
-		<header>
-		  <xsl:copy-of select="$Heading"/>
-		</header>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:copy-of select="$Heading"/>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	    
+	      <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>   
 	    <xsl:if test="$topNavigationPanel='true' and
 			  $nav='true'">
 	       <xsl:element name="{if ($outputTarget='html5') then 'nav'
@@ -981,8 +963,9 @@ of this software, even if advised of the possibility of such damage.
 		 </xsl:call-template>
 	       </xsl:element>
 	     </xsl:if>
-	   </xsl:if>
+	   
 	   <xsl:apply-templates/>
+
 	   <xsl:if test="$bottomNavigationPanel='true' and
 			 $nav='true'">
 	     <xsl:element name="{if ($outputTarget='html5') then 'nav' else

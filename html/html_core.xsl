@@ -332,7 +332,10 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template match="tei:head">
-    <xsl:variable name="parent" select="local-name(..)"/>
+    <xsl:variable name="parentName" select="local-name(..)"/>
+    <xsl:variable name="depth">
+      <xsl:apply-templates mode="depth" select=".."/>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="parent::tei:group or parent::tei:body or parent::tei:front or parent::tei:back">
 	<xsl:call-template name="splitHTMLBlocks">
@@ -351,8 +354,37 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="not(starts-with($parent,'div'))">
+      <xsl:when test="not(starts-with($parentName,'div'))">
         <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:when test="not(preceding-sibling::tei:head) and starts-with($parentName,'div') and (tei:keepDivOnPage(..) or 
+		      number($depth)  &gt; number($splitLevel))">
+	  <xsl:variable name="Heading">
+	    <xsl:for-each select="..">
+	      <xsl:call-template name="splitHTMLBlocks">
+		<xsl:with-param name="element" select="if (number($depth)+$divOffset &gt;6) then 'div'
+					       else
+					       concat('h',number($depth)+$divOffset)"/>
+		<xsl:with-param name="content">
+		  <xsl:call-template name="sectionHeadHook"/>
+		  <xsl:call-template name="header">
+		    <xsl:with-param name="display">full</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:with-param>
+		<xsl:with-param name="copyid">false</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:variable>
+	  <xsl:choose>
+	    <xsl:when test="$outputTarget='html5' and number($depth)  &lt; 1">
+	      <header>
+		<xsl:copy-of select="$Heading"/>
+	      </header>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:copy-of select="$Heading"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
