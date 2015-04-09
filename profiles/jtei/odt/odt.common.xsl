@@ -87,7 +87,12 @@
         
         <!--                We need to grab the paper title and authors from the header. -->
         <text:p text:style-name="teiHead0">
-          <xsl:apply-templates select="/TEI/teiHeader[1]/fileDesc[1]/titleStmt[1]/title[@type='main']"/>
+          <xsl:for-each select="/TEI/teiHeader[1]/fileDesc[1]/titleStmt[1]/title[@type='main'], /TEI/teiHeader[1]/fileDesc[1]/titleStmt[1]/title[not(@type='main')]">
+            <xsl:apply-templates/>
+            <xsl:if test="position() != last()">
+              <xsl:text>: </xsl:text>
+            </xsl:if>
+          </xsl:for-each>
         </text:p>
         
         <text:p text:style-name="teiHead0">
