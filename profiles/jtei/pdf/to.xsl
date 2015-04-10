@@ -1026,6 +1026,9 @@
       <xsl:for-each select="@cols">
         <xsl:attribute name="number-columns-spanned"><xsl:value-of select="."/></xsl:attribute>
       </xsl:for-each>
+      <xsl:for-each select="@rows">
+        <xsl:attribute name="number-rows-spanned"><xsl:value-of select="."/></xsl:attribute>
+      </xsl:for-each>
       <xsl:if test="(self::*|parent::tei:row)/@role = 'label'">
         <xsl:attribute name="font-weight">bold</xsl:attribute>
         <xsl:attribute name="text-align">center</xsl:attribute>
