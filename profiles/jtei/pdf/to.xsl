@@ -10,8 +10,6 @@
 
   <xsl:output method="xml" indent="no" encoding="UTF-8"/>
   
-  <xsl:param name="source.url"/>  
-
   <!-- an index of elements that insert quotation marks -->
   <xsl:key name="quotation.elements" match="tei:quote|tei:q|tei:soCalled|tei:title[@level = ('a', 'u')]" use="local-name()"/>
   
@@ -440,7 +438,7 @@
   </xsl:template>
   
   <xsl:template match="tei:figure/tei:graphic">
-    <fo:external-graphic content-width="scale-down-to-fit" content-height="scale-down-to-fit" inline-progression-dimension.maximum="80%" src="{string-join(($source.url, @url), '/')}"/>
+    <fo:external-graphic content-width="scale-down-to-fit" content-height="scale-down-to-fit" inline-progression-dimension.maximum="80%" src="{resolve-uri(@url, base-uri())}"/>
   </xsl:template>
   
   <xsl:template match="eg:egXML">
