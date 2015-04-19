@@ -428,7 +428,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:cit">
     <xsl:choose>
-      <xsl:when test="tei:match(@rend,'display')">
+      <xsl:when test="tei:match(@rend,'display') or tei:match(@rend,'block')">
 	<block font-size="8pt">
 	  <xsl:apply-templates/>
 	</block>

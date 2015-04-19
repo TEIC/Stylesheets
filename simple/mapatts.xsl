@@ -5,19 +5,23 @@
          <XSL:choose>
             <XSL:when test=".='supralinear'">above</XSL:when>
             <XSL:when test=".='pageTop'">top</XSL:when>
+            <XSL:when test=".='top-center'">top-centre</XSL:when>
             <XSL:when test=".='bot-right'">bottom-right</XSL:when>
             <XSL:when test=".='bot-left'">bottom-left</XSL:when>
-            <XSL:when test=".='bot-center'">bottom-center</XSL:when>
+            <XSL:when test=".='bottom-center'">bottom-centre</XSL:when>
+            <XSL:when test=".='bot-center'">bottom-centre</XSL:when>
             <XSL:when test=".='foot'">bottom</XSL:when>
             <XSL:when test=".='tablefoot'">tablebottom</XSL:when>
-            <XSL:when test=".='margin-outer'">margin</XSL:when>
-            <XSL:when test=".='marg1'">margin</XSL:when>
-            <XSL:when test=".='marg2'">margin</XSL:when>
-            <XSL:when test=".='marg3'">margin</XSL:when>
-            <XSL:when test=".='marg4'">margin</XSL:when>
-            <XSL:when test=".='left'">margin-left</XSL:when>
+            <XSL:when test=".='margin-outer'">margin-right</XSL:when>
             <XSL:when test=".='right'">margin-right</XSL:when>
+            <XSL:when test=".='margin'">margin-right</XSL:when>
+            <XSL:when test=".='marg1'">margin-right</XSL:when>
+            <XSL:when test=".='marg2'">margin-right</XSL:when>
+            <XSL:when test=".='marg3'">margin-right</XSL:when>
+            <XSL:when test=".='marg4'">margin-right</XSL:when>
+            <XSL:when test=".='left'">margin-left</XSL:when>
             <XSL:when test=".='in'">inline</XSL:when>
+            <XSL:when test=".='display'">block</XSL:when>
             <XSL:otherwise>
                <XSL:value-of select="."/>
             </XSL:otherwise>

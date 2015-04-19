@@ -338,6 +338,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="parent::tei:bibl/parent::tei:q">true</xsl:when>
             <xsl:when test="tei:match(@rend,'inline') and not(tei:p or tei:l)">true</xsl:when>
             <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
+            <xsl:when test="self::tei:note[@place='block']">false</xsl:when>
             <xsl:when test="self::tei:note[tei:isEndNote(.)]">true</xsl:when>
             <xsl:when test="self::tei:note[tei:isFootNote(.)]">true</xsl:when>
             <xsl:when test="tei:match(@rend,'display') or tei:match(@rend,'block')">false</xsl:when>
