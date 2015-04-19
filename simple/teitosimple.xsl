@@ -132,12 +132,6 @@
 
     <xsl:template match="text">
       <xsl:copy>
-	<!--
-	<xsl:variable name="pass1">
-
-	</xsl:variable>
-	<xsl:apply-templates select="$pass1" mode="pb"/>
-	-->
 	  <xsl:apply-templates/>
       </xsl:copy>
 
@@ -302,39 +296,5 @@
       </hi>
     </xsl:template>
 
-    <xsl:template 
-	match="pb[not(preceding-sibling::*) or
-	       normalize-space(preceding-sibling::text())='' and not(parent::front or
-	       parent::body or parent::back or parent::floatingText)]"
-	mode="pb"/>
-       
-    <xsl:template match="@*|text()|comment()|processing-instruction()"
-		  mode="pb">
-      <xsl:copy-of select="."/>
-    </xsl:template>
-    
-    <xsl:template match="div" mode="pb">
-      <xsl:variable name="me" select="."/>
-      <xsl:for-each select=".//pb[preceding::node()]">
-      <xsl:copy>
-        <xsl:apply-templates
-	    select="*|@*|processing-instruction()|comment()|text()" mode="pb"/>
-      </xsl:copy>	
-      </xsl:for-each>
-    </xsl:template>
-
-    <xsl:template match="*" mode="pb">
-      <xsl:copy>
-        <xsl:apply-templates
-	    select="*|@*|processing-instruction()|comment()|text()" mode="pb"/>
-      </xsl:copy>	
-    </xsl:template>
-
-    <xsl:template match="front|body|back|floatingText" mode="pb">
-      <xsl:copy>
-        <xsl:apply-templates
-	    select="*|@*|processing-instruction()|comment()|text()" mode="pb"/>
-      </xsl:copy>
-    </xsl:template>
 
 </xsl:stylesheet>
