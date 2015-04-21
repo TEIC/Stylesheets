@@ -461,7 +461,7 @@
       <xsl:apply-templates select="node()" mode="egXML"/>
     </fo:block>
   </xsl:template>
-  
+
   <xsl:template match="tei:eg">
     <!-- determine maximal amount of preceding whitespace that can be stripped out -->
     <xsl:variable name="stripIndent" select="min((for $line in tokenize(., '\n')[.] return string-length(replace($line, '^(\s+).*', '$1'))))"/>
@@ -1128,7 +1128,7 @@
       <xsl:call-template name="getAuthorInstance">
         <xsl:with-param name="dateOrTitle" select="$dateOrTitle"/>
       </xsl:call-template>
-      <xsl:apply-templates select="$dateOrTitle|node()[. >> $dateOrTitle]"/>
+      <xsl:apply-templates select="$dateOrTitle|node()[. >> ($dateOrTitle,current())[1]]"/>
     </fo:block>
   </xsl:template>
   
@@ -1140,6 +1140,7 @@
     <xsl:variable name="bibl.prev" select="preceding-sibling::*[1]/self::tei:bibl"/>
     <xsl:variable name="authorInstance.prev" select="preceding-sibling::*[1]/self::tei:bibl/node()[. &lt;&lt; $bibl.prev/(tei:date|tei:title)[1]]"/>
     <xsl:choose>
+      <xsl:when test="not($authorInstance.current)"/>
       <xsl:when test="$bibl.prev and (local:authors.serialize($authorInstance.current/self::*) = local:authors.serialize($authorInstance.prev/self::*))">
         <xsl:text>———. </xsl:text>
       </xsl:when>
