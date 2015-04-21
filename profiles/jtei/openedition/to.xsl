@@ -509,11 +509,9 @@
   <xsl:template match="tei:eg">
     <p rend="noindent">
       <code lang="xml">
-        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
         <xsl:apply-templates mode="egXML">
           <xsl:with-param name="resetIndent" select="text()[1]/replace(tokenize(., '&#10;')[normalize-space()][1], '(^\s+).*', '$1')" tunnel="yes"/>
         </xsl:apply-templates>
-        <xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
       </code>
     </p>
   </xsl:template>
