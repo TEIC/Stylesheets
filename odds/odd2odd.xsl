@@ -122,15 +122,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-REPLACEATT"     match="tei:attDef[@mode='replace']" use="concat(../../@ident,'_',@ident)"/>
 
   
-  <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="@ident"/>
+  <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="1"/>
 
   <xsl:variable name="whichSchemaSpec">
     <xsl:choose>
-      <xsl:when test="$selectedSchema">
+      <xsl:when test="not($selectedSchema='')">
         <xsl:value-of select="$selectedSchema"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="key('odd2odd-SCHEMASPECS',1)[1]/@ident"/>
+        <xsl:value-of select="key('LISTSCHEMASPECS',1)[1]/@ident"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -1709,10 +1709,12 @@ so that is only put back in if there is some content
   </xsl:template>
 
   <xsl:template name="odd2odd-getversion">
+    <xsl:message>check schema <xsl:value-of select="$whichSchemaSpec"/></xsl:message>
     <xsl:choose>
-      <xsl:when test="key('odd2odd-SCHEMASPECS',$selectedSchema)">
+      <xsl:when test="key('odd2odd-SCHEMASPECS',$whichSchemaSpec)">
+    <xsl:message>found schema <xsl:value-of select="$whichSchemaSpec"/></xsl:message>
 	<xsl:for-each
-	    select="key('odd2odd-SCHEMASPECS',$selectedSchema)">
+	    select="key('odd2odd-SCHEMASPECS',$whichSchemaSpec)">
 	  <xsl:variable name="source" select="tei:workOutSource(.)"/>
 	  <xsl:for-each select="document($source)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
 	    <xsl:value-of select="."/>
