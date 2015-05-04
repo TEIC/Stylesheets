@@ -370,10 +370,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:copy-of select="."/>
 </xsl:template>
 
-<xsl:template name="whatsTheDate">
-  <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
-</xsl:template>
-
 <xsl:template match="gi">
   <tag>
     <xsl:text>&lt;</xsl:text>

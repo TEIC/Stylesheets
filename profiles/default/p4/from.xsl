@@ -325,7 +325,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="not(revisionDesc) and (@date.created or @date.updated)">
 	<revisionDesc>
 	  <xsl:if test="@date.updated">
-	    <change>>
+	    <change>
 	    <label>updated</label>
 	    <date>
 	      <xsl:value-of select="@date.updated"/>

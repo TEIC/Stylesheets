@@ -510,7 +510,7 @@ of this software, even if advised of the possibility of such damage.
 	    keeping -->
 	    <xsl:when test="(tei:isInline(parent::*)  and
 			    parent::*/preceding-sibling::node()[1][name()=$context])">
-		      <xsl:call-template name="space"/>>
+		      <xsl:call-template name="space"/>
               <xsl:call-template name="space"/>
 	    </xsl:when>
 	    <xsl:when test="position()=1"/>
@@ -1544,7 +1544,7 @@ of this software, even if advised of the possibility of such damage.
  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Returns the current date.</desc>
   </doc>
-  <xsl:function name="tei:whatsTheDate">
+  <xsl:function name="tei:whatsTheDate" as="node()+">
     <xsl:choose>
       	<xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
 	<xsl:otherwise>

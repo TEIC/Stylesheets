@@ -121,7 +121,7 @@ of this software, even if advised of the possibility of such damage.
 	                    <xsl:text>DTD module </xsl:text>
 	                    <xsl:value-of select="@ident"/>
 	                    <xsl:text>. generated from ODD source </xsl:text>
-	                    <xsl:call-template name="whatsTheDate"/>
+	                    <xsl:sequence select="tei:whatsTheDate()"/>
 	                    <xsl:text>. </xsl:text>
 			    <xsl:call-template name="copyright"/>
 	                    <xsl:call-template name="makeTEIVersion"/>
@@ -177,7 +177,7 @@ of this software, even if advised of the possibility of such damage.
 		                      <xsl:text>TEI P5 entity declaration module for </xsl:text>
 		                      <xsl:value-of select="@ident"/>
 		                      <xsl:text>. generated from ODD source </xsl:text>
-		                      <xsl:call-template name="whatsTheDate"/>
+		                      <xsl:sequence select="tei:whatsTheDate()"/>
 		                      <xsl:text>.&#10;</xsl:text>
 				      <xsl:call-template name="copyright"/>
 		                      <xsl:call-template name="makeTEIVersion"/>
@@ -338,7 +338,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="dtdComment">
          <xsl:with-param name="text">
             <xsl:text>DTD generated from ODD source </xsl:text>
-            <xsl:call-template name="whatsTheDate"/>
+            <xsl:sequence select="tei:whatsTheDate()"/>
             <xsl:text>. </xsl:text>
 		  <xsl:value-of
 		      select="(/tei:TEI/tei:text/tei:front/tei:titlePage/tei:docDate,'.')"
