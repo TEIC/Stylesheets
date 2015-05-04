@@ -505,10 +505,12 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:choose>
 	    <xsl:when test="(tei:isFootNote(..) or tei:isEndNote(..))
 			    and position()=1"/>
-	    <!-- but if its in a run on inline objects with the same
+	    <!-- but if its in a run of inline objects with the same
 	    name (like a sequence of <hi>), then the space needs
 	    keeping -->
-	    <xsl:when test="(tei:isInline(parent::*)  and parent::*/preceding-sibling::node()[1][name()=$context])">
+	    <xsl:when test="(tei:isInline(parent::*)  and
+			    parent::*/preceding-sibling::node()[1][name()=$context])">
+		      <xsl:call-template name="space"/>>
               <xsl:call-template name="space"/>
 	    </xsl:when>
 	    <xsl:when test="position()=1"/>

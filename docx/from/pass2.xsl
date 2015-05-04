@@ -288,8 +288,10 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:hi[not (* or text())]"		mode="pass2"/>
 
-  <xsl:template match="tei:hi[(@rend or @style) and (* or text())]" mode="pass2">
+  <xsl:template match="tei:hi[(@rend or @style) and (* or text())]"
+		mode="pass2">
     <xsl:variable name="r" select="concat(@rend,@style)"/>
+
     <xsl:choose>
       <xsl:when test="count(parent::tei:speaker/*)=1 and not         (parent::tei:speaker/text())">
         <xsl:apply-templates/>
@@ -302,38 +304,58 @@ of this software, even if advised of the possibility of such damage.
         <xsl:text> </xsl:text>
 	<xsl:if test="following-sibling::node()[1][self::tei:hi[concat(@rend,@style)=$r]]">
 	  <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
-	  <xsl:element name="{$ename}">
+	  <xsl:variable name="newHi">
+	    <xsl:element name="{$ename}">
 	    <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
 	    <xsl:call-template name="nextHi">
 	      <xsl:with-param name="r" select="$r"/>
 	    </xsl:call-template>
-	  </xsl:element>
+	    </xsl:element>
+	  </xsl:variable>
+	  <xsl:sequence select="tei:checkXMLSpace($newHi)"/>
 	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
-        <xsl:element name="{$ename}">
-          <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
-	  <xsl:choose>
-	    <xsl:when test="$ename='gap'">
-	      <desc>
-		<xsl:apply-templates mode="pass2"/>
-		<xsl:call-template name="nextHi">
-		  <xsl:with-param name="r" select="$r"/>
-		</xsl:call-template>
-	      </desc>
-	    </xsl:when>
-	    <xsl:otherwise>
-		<xsl:apply-templates mode="pass2"/>
-		<xsl:call-template name="nextHi">
-		  <xsl:with-param name="r" select="$r"/>
-		</xsl:call-template>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:element>
+	  <xsl:variable name="newHi">
+            <xsl:element name="{$ename}">
+              <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
+	      <xsl:choose>
+		<xsl:when test="$ename='gap'">
+		  <desc>
+		    <xsl:apply-templates mode="pass2"/>
+		    <xsl:call-template name="nextHi">
+		      <xsl:with-param name="r" select="$r"/>
+		    </xsl:call-template>
+		  </desc>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:apply-templates mode="pass2"/>
+		  <xsl:call-template name="nextHi">
+		    <xsl:with-param name="r" select="$r"/>
+		  </xsl:call-template>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:element>
+	  </xsl:variable>
+	  <xsl:sequence select="tei:checkXMLSpace($newHi)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  
+    <xsl:function name="tei:checkXMLSpace">
+      <xsl:param name="el"/>
+      <xsl:for-each select="$el/*">
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:if test="starts-with(text()[1],' ') or ends-with(text()[last()],' ')">
+	    <xsl:attribute name="xml:space">preserve</xsl:attribute>
+	  </xsl:if>
+	  <xsl:copy-of select="*|text()|processing-instruction()|comment()"/>
+	</xsl:copy>
+      </xsl:for-each>
+    </xsl:function>
+      
   <xsl:template name="nextHi">
     <xsl:param name="r"/>
     <xsl:for-each select="following-sibling::node()[1]">
