@@ -459,15 +459,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Returns the current date.</desc>
-  </doc>
-  <xsl:function name="tei:whatsTheDate">
-    <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
-  </xsl:function>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Whether an element has any more (useful) text in its parent</desc>
-  </doc>
   <xsl:function name="tei:isLast" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
@@ -1548,12 +1539,10 @@ of this software, even if advised of the possibility of such damage.
       else false()"/>
   </xsl:function>
 
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[common] work out the date and time, unless we have been
-      told not to</desc>
-   </doc>
-  <xsl:template name="whatsTheDate">
+ <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Returns the current date.</desc>
+  </doc>
+  <xsl:function name="tei:whatsTheDate">
     <xsl:choose>
       	<xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
 	<xsl:otherwise>
@@ -1561,7 +1550,11 @@ of this software, even if advised of the possibility of such damage.
 	      select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
 	</xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
+  </xsl:function>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Whether an element has any more (useful) text in its parent</desc>
+  </doc>
   
 <xsl:template match="processing-instruction()[name(.)='entity']" mode="#all">
     <xsl:value-of select="tei:escapeChars(concat('&amp;',normalize-space(.),';'),parent::*)"/>

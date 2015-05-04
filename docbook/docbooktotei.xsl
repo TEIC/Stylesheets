@@ -145,7 +145,7 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:apply-templates select="pubdate"/>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:call-template name="whatsTheDate"/> 
+		  <xsl:sequence select="tei:whatsTheDate()"/>
 		</xsl:otherwise>
 	      </xsl:choose>
             </date>
