@@ -573,7 +573,7 @@ of this software, even if advised of the possibility of such damage.
 	    <p>unknown</p>
 	  </publicationStmt>
 	  <sourceDesc>
-	    <p>Converted from a Word document </p>
+	    <p>Converted from a Word document</p>
 	  </sourceDesc>
 	</fileDesc>
 	<encodingDesc>

@@ -380,11 +380,17 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:value-of select="($styles/*)" separator=";"/>
 	      </xsl:attribute>
 	    </xsl:if>
+	    <xsl:if test="w:t[@xml:space='preserve']">
+	      <xsl:attribute name="xml:space">preserve</xsl:attribute>
+  	    </xsl:if>
 	    <xsl:apply-templates/>
 	  </xsl:element>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:apply-templates/>
+	    <xsl:if test="w:t[@xml:space='preserve'] and $parented='true'">
+	      <xsl:attribute name="xml:space">preserve</xsl:attribute>
+	    </xsl:if>
+	    <xsl:apply-templates/>
 	</xsl:otherwise> 
       </xsl:choose>
     </xsl:template>

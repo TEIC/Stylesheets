@@ -45,13 +45,34 @@ of this software, even if advised of the possibility of such damage.
     <xsl:copy-of select="."/>
   </xsl:template>
   <xsl:template match="*" mode="pass2">
-    <xsl:copy>
-      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
-    </xsl:copy>
+    <xsl:variable name="temp">
+      <xsl:copy>
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+      </xsl:copy>
+    </xsl:variable>
+    <xsl:apply-templates mode="spacepass" select="$temp"/>
+</xsl:template>
+
+  <xsl:template match="@*|comment()|processing-instruction()" mode="spacepass">
+    <xsl:copy-of select="."/>
   </xsl:template>
-  <xsl:template match="text()" mode="pass2">
+  <xsl:template match="*" mode="spacepass">
+      <xsl:copy>
+	<xsl:apply-templates select="@*" mode="spacepass"/>
+	<xsl:if test="(starts-with(text()[1],' ') or
+		      ends-with(text()[last()],' ')) and not(*)">
+	  <xsl:attribute name="xml:space">preserve</xsl:attribute>
+	</xsl:if>
+	<xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="spacepass"/>
+      </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="@xml:space[.='preserve']" mode="spacepass"/>
+
+    <xsl:template match="text()" mode="pass2">
     <xsl:value-of select="."/>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>zap empty p</p>
@@ -304,20 +325,16 @@ of this software, even if advised of the possibility of such damage.
         <xsl:text> </xsl:text>
 	<xsl:if test="following-sibling::node()[1][self::tei:hi[concat(@rend,@style)=$r]]">
 	  <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
-	  <xsl:variable name="newHi">
 	    <xsl:element name="{$ename}">
 	    <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
 	    <xsl:call-template name="nextHi">
 	      <xsl:with-param name="r" select="$r"/>
 	    </xsl:call-template>
 	    </xsl:element>
-	  </xsl:variable>
-	  <xsl:sequence select="tei:checkXMLSpace($newHi)"/>
 	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
-	  <xsl:variable name="newHi">
             <xsl:element name="{$ename}">
               <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
 	      <xsl:choose>
@@ -337,25 +354,11 @@ of this software, even if advised of the possibility of such damage.
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:element>
-	  </xsl:variable>
-	  <xsl:sequence select="tei:checkXMLSpace($newHi)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
-    <xsl:function name="tei:checkXMLSpace">
-      <xsl:param name="el"/>
-      <xsl:for-each select="$el/*">
-	<xsl:copy>
-	  <xsl:copy-of select="@*"/>
-	  <xsl:if test="starts-with(text()[1],' ') or ends-with(text()[last()],' ')">
-	    <xsl:attribute name="xml:space">preserve</xsl:attribute>
-	  </xsl:if>
-	  <xsl:copy-of select="*|text()|processing-instruction()|comment()"/>
-	</xsl:copy>
-      </xsl:for-each>
-    </xsl:function>
-      
+     
   <xsl:template name="nextHi">
     <xsl:param name="r"/>
     <xsl:for-each select="following-sibling::node()[1]">

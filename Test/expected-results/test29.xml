@@ -15,7 +15,7 @@
         <p>unknown</p>
       </publicationStmt>
       <sourceDesc>
-        <p>Converted from a Word document </p>
+        <p>Converted from a Word document</p>
       </sourceDesc>
     </fileDesc>
     <encodingDesc>
@@ -112,7 +112,7 @@
           <item>The more is done with Word styles, the better; and formatting and esp. layout is not well preserved.</item>
           <item>The division before the first heading, with Title, Subtitle, Author and Date goes to the element tei:front, with the rest of the text in this division ignored; the first heading and the rest is tei:body.</item>
           <item>Styles starting with “tei:” are substituted by their TEI element, c.f. Section “TEI elements”;</item>
-          <item>Some styles also have shorthand notation, e.g. a series of Bibliography-style paragraphs go into tei:listBilb/tei:bibl+  and tei:orgName goes to tei:name[@type=”org”], and some styles get extra processing, </item>
+          <item xml:space="preserve">Some styles also have shorthand notation, e.g. a series of Bibliography-style paragraphs go into tei:listBilb/tei:bibl+  and tei:orgName goes to tei:name[@type=”org”], and some styles get extra processing, </item>
         </list>
         <div>
           <head><anchor xml:id="Toc357845415"/>Web interface</head>
@@ -240,7 +240,7 @@
           <head><anchor xml:id="Toc357845420"/>Notes</head>
           <p rend="MarginNoteLeft">Margin Note Left</p>
           <p rend="MarginNoteRight">Margin Note Right</p>
-          <p>Footnotes are probably ok,<note place="foot" xml:id="ftn1" n="1"><p rend="footnote text"> Although there used to be problems with them in HTML, but we've yet to get there..</p></note> more problematic are marginal notes. However, one DOCX2TEI profile has a template.docx file that defines 4 MarginNote styles, used here. But I couldn’t find any from.xsl that would actually do anything with them. So, now they get @place=”margin_xx” where xx ∈ {left, right, inner, outer}.<note place="foot" xml:id="ftn2" n="2"><p rend="footnote text"> Again, worries how to set this in HTML…</p></note> </p>
+          <p>Footnotes are probably ok,<note place="foot" xml:id="ftn1" n="1"><p rend="footnote text" xml:space="preserve"> Although there used to be problems with them in HTML, but we've yet to get there..</p></note> more problematic are marginal notes. However, one DOCX2TEI profile has a template.docx file that defines 4 MarginNote styles, used here. But I couldn’t find any from.xsl that would actually do anything with them. So, now they get @place=”margin_xx” where xx ∈ {left, right, inner, outer}.<note place="foot" xml:id="ftn2" n="2"><p rend="footnote text" xml:space="preserve"> Again, worries how to set this in HTML…</p></note> </p>
           <p rend="MarginNoteInner">Margin Note Inner</p>
           <p rend="MarginNoteOuter">Margin Note Outer</p>
         </div>
