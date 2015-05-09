@@ -223,6 +223,9 @@ test-from-docx: test.rng
 	xmllint --format temp.xml | perl cleanup.pl> test11.xml  && rm temp.xml
 	$(JING) test.rng test11.xml
 	diff test11.xml expected-results/test11.xml
+	$(BINDIR)/docxtotei --profile=sciencejournal test11.docx temp.xml
+	xmllint --format temp.xml | perl cleanup.pl> test11a.xml  && rm temp.xml
+	diff test11a.xml expected-results/test11a.xml
 	$(BINDIR)/docxtotei test19.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test19.xml  && rm temp.xml
 	$(JING) test.rng test19.xml

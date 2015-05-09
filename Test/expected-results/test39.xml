@@ -166,15 +166,15 @@
           <head><anchor xml:id="Toc382049200"/>Notes</head>
           <p rend="MarginNoteLeft">Margin Note Left</p>
           <p rend="MarginNoteRight">Margin Note Right</p>
-          <p>Here is a standard footnote<anchor xml:id="Ref378325988"/><note place="foot" xml:id="ftn1" n="1"><p rend="footnote text" xml:space="preserve"> Small footnote (we don’t want a paragraph inside it).</p></note> and another,<note place="foot" xml:id="ftn2" n="2"><p rend="footnote text" xml:space="preserve"> A footnote with two paragraphs. This is the first.</p><p rend="footnote text">And this is the second.</p></note> which should be converted without problems. We can also use endnotes<hi rend="endnote_reference"><note place="end"><p rend="endnote text" xml:space="preserve"> This is an example of an endnote.</p></note></hi> although the difference between the two is moot in on-line editions. </p>
+          <p>Here is a standard footnote<anchor xml:id="Ref378325988"/><note place="foot" xml:id="ftn1" n="1"><p rend="footnote text"> Small footnote (we don’t want a paragraph inside it).</p></note> and another,<note place="foot" xml:id="ftn2" n="2"><p rend="footnote text"> A footnote with two paragraphs. This is the first.</p><p rend="footnote text">And this is the second.</p></note> which should be converted without problems. We can also use endnotes<hi rend="endnote_reference"><note place="end"><p rend="endnote text"> This is an example of an endnote.</p></note></hi> although the difference between the two is moot in on-line editions. </p>
           <p rend="MarginNoteInner">Margin Note Inner</p>
           <p rend="MarginNoteOuter">Margin Note Outer</p>
           <p>Critical editions can also use marginal notes. Following one of the existing TEI profiles we define 4 <hi rend="italic">MarginNote</hi> styles (<hi rend="italic">MarginNoteLeft, MarginNoteRight, MarginNoteInner, MarginNoteOuter</hi>), which are used to the left and right of this text. They are converted to <hi rend="underline">note[@place = "margin_xx"]</hi> where xx ∈ {left, right, inner, outer}. Note that the exact positioning of these notes is rather tricky.</p>
         </div>
         <div>
           <head><anchor xml:id="Toc382049201"/>Figures</head>
-          <p xml:space="preserve">Figures and esp. tables are the more problematic aspects of conversion, as there are many ways to include them into a Word document. The pictures have to be embedded in the Word document. Because the conversion takes as input a Word document, references to external images are not supported. </p>
-          <p xml:space="preserve">The included pictures should be in as high resolution as possible – it is not a good idea to copy &amp; paste them into Word, as this often loses resolution. Also, avoid embedding TIFF images if the TEI is to be afterwards converted to HTML as most Web browsers do not display TIFF. </p>
+          <p>Figures and esp. tables are the more problematic aspects of conversion, as there are many ways to include them into a Word document. The pictures have to be embedded in the Word document. Because the conversion takes as input a Word document, references to external images are not supported. </p>
+          <p>The included pictures should be in as high resolution as possible – it is not a good idea to copy &amp; paste them into Word, as this often loses resolution. Also, avoid embedding TIFF images if the TEI is to be afterwards converted to HTML as most Web browsers do not display TIFF. </p>
           <p>If the figure has a caption, it should be made with “Insert Caption” so that it is in the correct style (<hi rend="italic">Caption</hi>) and has automatic figure numbering. Note that the captions has to be <hi rend="italic">below</hi> the image in order to get converted.</p>
           <p>So, in short, the conversion supports embedded images with captions and references to them, c.f. Figure 1, which can be also referred to as the Figure below.</p>
           <figure>
@@ -341,7 +341,7 @@
       </div>
       <div>
         <head><anchor xml:id="Ref357527304"/><anchor xml:id="Ref381286210"/><anchor xml:id="Toc382049206"/>TEI element styles</head>
-        <p xml:space="preserve">In addition to standard Word styles, there is a special group of styles that start with “tei:” followed by (typically) the name of a TEI element. These styles are in the Word document given lots of eye watering effects to distinguish them from other text. </p>
+        <p>In addition to standard Word styles, there is a special group of styles that start with “tei:” followed by (typically) the name of a TEI element. These styles are in the Word document given lots of eye watering effects to distinguish them from other text. </p>
         <p>In some cases the styles are mapped to more complicated structures. An example is the <hi rend="italic">tei:lg</hi> style: if a series of paragraphs uses this style then each series ending with an empty paragraph is converted to <hi rend="underline">lg</hi>, with <hi rend="underline">l</hi> for the individual paragraph. To see the details for each style it is easiest to compare this file with the derived TEI. </p>
         <div>
           <head><anchor xml:id="Toc382049207"/>Paragraph level styles</head>
@@ -393,7 +393,7 @@
               <item><anchor xml:id="foo"/><anchor xml:id="adddel"/>For deletions and additions in the source text use <hi rend="italic">tei:del</hi> (<hi rend="underline">del</hi>) and <hi rend="italic">tei:add</hi> (<hi rend="underline">add</hi>):<lb/>“<del>Delete</del> text <del>Delete</del> <add>Add</add>, text <add>Add</add> <del>Delete</del>, text <del>Delete</del> <add>Add</add> <del>Delete</del> <add>Add</add>, text <add>Add</add>”.</item>
               <item>For abbreviations and their expansions use <hi rend="italic">tei:abbr</hi> (<hi rend="underline">abbr</hi>) and <hi rend="italic">tei:expan</hi> (<hi rend="underline">expan</hi>):<lb/>“<abbr>Abbreviation</abbr> text <abbr>Abbreviation</abbr> <expan>Expansion</expan>, text <expan>Expansion</expan>”.</item>
               <item>For original and regularised text use <hi rend="italic">tei:orig</hi> (orig) and <hi rend="italic">tei:reg</hi> (<hi rend="underline">reg</hi>):<lb/>“<orig>Orig</orig> text <orig>Orig</orig> <reg>Regularised</reg>, text <reg>Regularised</reg>”.</item>
-              <item>For abbreviations and their expansions use <hi rend="italic">tei:abbr</hi> (<hi rend="underline">abbr</hi>) and <hi rend="italic">tei:expan</hi> (<hi rend="underline">expan</hi>):<lb/>“<sic xml:space="preserve">Sic </sic>text <sic>Sic</sic> <corr xml:space="preserve">Corr </corr><sic>Sic</sic> <corr xml:space="preserve">Corr </corr><sic>Sic</sic> <corr>Corr</corr>, text <corr>Corr</corr>”.</item>
+              <item>For abbreviations and their expansions use <hi rend="italic">tei:abbr</hi> (<hi rend="underline">abbr</hi>) and <hi rend="italic">tei:expan</hi> (<hi rend="underline">expan</hi>):<lb/>“<sic xml:space="preserve">Sic </sic>text <sic>Sic</sic> <corr>Corr </corr><sic>Sic</sic> <corr>Corr </corr><sic>Sic</sic> <corr>Corr</corr>, text <corr>Corr</corr>”.</item>
             </list>
           </div>
         </div>
@@ -413,13 +413,13 @@
         <list type="ordered">
           <item>Fix bugs &amp; add features, c.f. below</item>
           <item>Make a better converter than the current one? Maybe install OxGarage?</item>
-          <item>Split current profile into two: <list type="ordered"><item xml:space="preserve">for social studies (focus on tables, figures, indexes, names, potentially soft pbs) </item><item>for humanities (facsimile, text-critical and other <hi rend="italic">tei:</hi> styles).</item></list></item>
+          <item>Split current profile into two: <list type="ordered"><item>for social studies (focus on tables, figures, indexes, names, potentially soft pbs) </item><item>for humanities (facsimile, text-critical and other <hi rend="italic">tei:</hi> styles).</item></list></item>
         </list>
-        <p xml:space="preserve">  Including facsimiles:</p>
+        <p>  Including facsimiles:</p>
         <list type="unordered">
           <item>extend the idea of tei: styles to section headings (pass 4?): <lb/>if it is “tei:facsimile” this is the facsimile.</item>
-          <item xml:space="preserve">it can be empty (or maybe just a p) – then a facsimile with hard pb number of surfaces is created </item>
-          <item xml:space="preserve">can have figures directly (with captions or not) </item>
+          <item>it can be empty (or maybe just a p) – then a facsimile with hard pb number of surfaces is created </item>
+          <item>can have figures directly (with captions or not) </item>
           <item>or has a <hi rend="italic">tei:surface</hi> which is a numbered list of surfaces</item>
           <item>each surface has a description and / or URI of image (can be local if plugged into downloaded conversion); how are they marked? (if it looks like an uri it is an uri?)</item>
         </list>
@@ -438,7 +438,7 @@
       </div>
       <div>
         <head><anchor xml:id="Toc382049214"/>Appendix 1. Auto-generated sections</head>
-        <p xml:space="preserve">Word can auto-generate various tables of contents. Not clear if this is worth including in the TEI document (except if pageification is kept), as they would probably be better automatically generated from a tei:divGen. </p>
+        <p>Word can auto-generate various tables of contents. Not clear if this is worth including in the TEI document (except if pageification is kept), as they would probably be better automatically generated from a tei:divGen. </p>
         <div>
           <head><anchor xml:id="Toc382049215"/>Index</head>
           <p rend="index 1">bugs</p>

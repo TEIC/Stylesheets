@@ -53,21 +53,29 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates mode="spacepass" select="$temp"/>
 </xsl:template>
 
-  <xsl:template match="@*|comment()|processing-instruction()" mode="spacepass">
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="spacepass">
     <xsl:copy-of select="."/>
   </xsl:template>
   <xsl:template match="*" mode="spacepass">
       <xsl:copy>
 	<xsl:apply-templates select="@*" mode="spacepass"/>
-	<xsl:if test="(starts-with(text()[1],' ') or
+	<xsl:choose>
+	  <xsl:when test="$preserveSpace='true'">
+	  </xsl:when>
+	  <xsl:when test="tei:isInline(.)  and (starts-with(text()[1],' ') or
 		      ends-with(text()[last()],' ')) and not(*)">
-	  <xsl:attribute name="xml:space">preserve</xsl:attribute>
-	</xsl:if>
+	    <xsl:attribute name="xml:space">preserve</xsl:attribute>
+	  </xsl:when>
+	</xsl:choose>
 	<xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="spacepass"/>
       </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="@xml:space[.='preserve']" mode="spacepass"/>
+  <xsl:template match="@xml:space[.='preserve']" mode="spacepass">
+    <xsl:if test="$preserveSpace='true'">
+      <xsl:copy-of select="."/>
+    </xsl:if>
+  </xsl:template>
 
     <xsl:template match="text()" mode="pass2">
     <xsl:value-of select="."/>
