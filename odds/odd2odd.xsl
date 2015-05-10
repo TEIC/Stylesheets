@@ -1709,10 +1709,8 @@ so that is only put back in if there is some content
   </xsl:template>
 
   <xsl:template name="odd2odd-getversion">
-    <xsl:message>check schema <xsl:value-of select="$whichSchemaSpec"/></xsl:message>
     <xsl:choose>
       <xsl:when test="key('odd2odd-SCHEMASPECS',$whichSchemaSpec)">
-    <xsl:message>found schema <xsl:value-of select="$whichSchemaSpec"/></xsl:message>
 	<xsl:for-each
 	    select="key('odd2odd-SCHEMASPECS',$whichSchemaSpec)">
 	  <xsl:variable name="source" select="tei:workOutSource(.)"/>
