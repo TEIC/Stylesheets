@@ -46,7 +46,8 @@
 	  <xsl:param name="preserveSoftPageBreaks">false</xsl:param>    	  
 	  <xsl:param name="preserveEffects">false</xsl:param>	  
 	  <xsl:param name="preserveFontSizeChanges">false</xsl:param>
-	  <xsl:param name="preserveObject">false</xsl:param>	  
+	  <xsl:param name="preserveObject">false</xsl:param>
+	  <xsl:param name="preserveSpace">false</xsl:param>
 	  <xsl:param name="verbose">false</xsl:param>	  
 	  <xsl:param name="processChangeInformation">false</xsl:param>
 	  <xsl:param name="pageHeight">890</xsl:param>
@@ -193,11 +194,11 @@ of this software, even if advised of the possibility of such damage.
        </xsl:for-each>
      </xsl:variable>		  
      
-     <!--
+
 	 <xsl:result-document href="/tmp/foo.xml">
 	 <xsl:copy-of select="$pass1"/>
 	 </xsl:result-document>
-	 -->
+
      <!-- Do the final parse and create valid TEI -->
 
      <xsl:apply-templates select="$pass1" mode="pass2"/>
@@ -573,7 +574,7 @@ of this software, even if advised of the possibility of such damage.
 	    <p>unknown</p>
 	  </publicationStmt>
 	  <sourceDesc>
-	    <p>Converted from a Word document </p>
+	    <p>Converted from a Word document</p>
 	  </sourceDesc>
 	</fileDesc>
 	<encodingDesc>

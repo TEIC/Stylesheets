@@ -66,6 +66,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
     
   <xsl:param name="preserveEffects">true</xsl:param>
+  <xsl:param name="preserveSpace">true</xsl:param>
   <xsl:param name="preserveFontSizeChanges">true</xsl:param>
 
  <xsl:template match="tei:TEI" mode="pass2">

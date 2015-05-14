@@ -1,3 +1,100 @@
+2015-05-09  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	revisited whitespace preservation again, and added top-level param preserveSpace (set to false by default, true in profile sciencejournal)
+
+2015-05-07  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	be more generous adding xml:space=preserve to elements from docx
+
+2015-05-04  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	use tei:whatsTheDate function conistently, and remove a couple of spurious characters
+
+	add xml:space=preserve into <hi> elements which start or end with space. issue 106. I hope this is the right answer
+
+	we dont need a function and a template doing the same thing
+
+	closing issue 99, the processing of a ref with a PI inside it assuming a structure we dont have
+
+2015-04-26  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+
+	fix working out of schema version
+
+2015-04-22  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #105 from rvdb/master
+	relaxed processing of bibliography entries without author or date
+
+2015-04-22  rvdb  <ron.vandenbranden@kantl.be>
+
+	relaxed processing of bibliography entries without author or date
+
+2015-04-21  rvdb  <ron.vandenbranden@kantl.be>
+
+	don't wrap <eg> content in <![CDATA[]> (avoid double escaping of &lt; and &gt;)
+
+2015-04-21  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #104 from rvdb/master
+	don't wrap <eg> content in <![CDATA[]> (avoid double escaping of &lt; an...
+
+	Merge pull request #100 from rvdb/master
+	-improved rendering of <eg>: always displayed as block, irrelevant leadi...
+
+2015-04-21  rvdb  <ron.vandenbranden@kantl.be>
+
+	-improved rendering of <eg>: always displayed as block, irrelevant leading whitespace (due to indentation) is removed -added support for list[@rend='simple'] and lb in PDF
+
+2015-04-19  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	adjust mapping for TEI Simple
+
+	tei simple mapping changes
+
+2015-04-18  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	kill line-height
+
+2015-04-17  sebastianrahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	adjust line heights
+
+2015-04-11  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #95 from rvdb/master
+	calculate base URL for embedded graphics directly from current file URL
+
+2015-04-11  rvdb  <ron.vandenbranden@kantl.be>
+
+	calculate base URL for embedded graphics directly from current file URL
+
+2015-04-10  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #94 from rvdb/master
+	added row spanning for table cells
+
+2015-04-10  rvdb  <ron.vandenbranden@kantl.be>
+
+	added row spanning for table cells
+
+2015-04-09  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #93 from rvdb/master
+	-improved processing of main and subtitles
+
+2015-04-09  rvdb  <ron.vandenbranden@kantl.be>
+
+	added pdf transformation to jTEI profile
+
+2015-04-08  martindholmes  <mholmes@uvic.ca>
+
+	Fixing a typo in a comment. PDF transformations create PDFs, not HTML.
+
+2015-04-06  rvdb  <ron.vandenbranden@kantl.be>
+
+	-improved processing of main and subtitles -skip seriesStmt and some attributes on row that aren't permitted in OpenEdition
 2015-04-06  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
 
 	quite a signicant change to the way the <head> element is treated in HTML. instead of being special-cased at the start of a <div>, it is now simply handled with the ordinary apply-templates. this is to allow <pb> elements to occur before the heading

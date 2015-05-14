@@ -2460,7 +2460,7 @@ function click(d) {
                <xsl:text> using XSLT stylesheets version </xsl:text>
 	       <xsl:value-of select="tei:stylesheetVersion(/)"/>
 	       based on <xsl:value-of select="$teixslHome"/>
-	       on <xsl:call-template name="whatsTheDate"/>.
+	       on <xsl:sequence select="tei:whatsTheDate()"/>.
 	       <xsl:choose>
 		 <xsl:when test="$useFixedDate='true'">
 		   <xsl:value-of

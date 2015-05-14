@@ -160,7 +160,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:sequence select="tei:generateEdition(*)"/>
     <xsl:text>","generator": "odd2json",
     "date":"</xsl:text>
-    <xsl:call-template name="whatsTheDate"/>
+    <xsl:sequence select="tei:whatsTheDate()"/>
     <xsl:text>","modules": [</xsl:text>
     <xsl:for-each select="key('Modules',1)">
       <xsl:sort select="@ident"/>

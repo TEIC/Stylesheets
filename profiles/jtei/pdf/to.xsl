@@ -401,6 +401,10 @@
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>
+  
+  <xsl:template match="tei:lb">
+    <fo:block/>
+  </xsl:template>
 
   <!-- generate endnote pointer after subsequent punctuaton  -->
   <xsl:template match="tei:note">
@@ -420,7 +424,7 @@
 
   <!-- group figure contents and headings in a block --> 
   <xsl:template match="tei:figure">
-    <fo:block xsl:use-attribute-sets="block.spacing.properties">
+    <fo:block xsl:use-attribute-sets="block.spacing.properties" keep-together="always">
       <xsl:for-each select="@xml:id">
         <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
       </xsl:for-each>
@@ -457,34 +461,39 @@
       <xsl:apply-templates select="node()" mode="egXML"/>
     </fo:block>
   </xsl:template>
-  
-  <!-- <eg> processing: borrowed from tei2odt, with a modification: strip accidental white-space -->
+
   <xsl:template match="tei:eg">
-    <!-- try to determine accidental white-space (due to the XML formatting), and strip it from the <eg> lines -->
-    <xsl:variable name="stripIndent" select="replace((text()[1][matches(., '^\s*\n(\s+)')], preceding::text()[not(normalize-space())][1])[1], '^\s*\n(\s+).*', '$1', 's')"/>
-    <xsl:choose>
-      <xsl:when test="parent::tei:figure">
-        <fo:block xsl:use-attribute-sets="monospace.properties">
-          <xsl:analyze-string select="." regex="\n">
+    <!-- determine maximal amount of preceding whitespace that can be stripped out -->
+    <xsl:variable name="stripIndent" select="min((for $line in tokenize(., '\n')[.] return string-length(replace($line, '^(\s+).*', '$1'))))"/>
+    <fo:block xsl:use-attribute-sets="egXML.properties monospace.properties">
+      <xsl:analyze-string select="." regex="\n">
+        <xsl:matching-substring>
+          <fo:block/>
+        </xsl:matching-substring>
+        <xsl:non-matching-substring>
+          <xsl:analyze-string select="if ($stripIndent > 0) then replace(., concat('^\s{', $stripIndent, '}'), '') else ." regex="\s">
             <xsl:matching-substring>
-              <fo:block/>
+              <!-- zero-width space + normal space gives best balance between preserve-space and wrapping -->
+              <xsl:text>&#8203; </xsl:text>
             </xsl:matching-substring>
-            <xsl:non-matching-substring>
-              <xsl:analyze-string select="if (string-length($stripIndent) > 0) then replace(concat('@', .), concat('^@(', $stripIndent, ')?'), '', 's') else ." regex="\s">
-                <xsl:matching-substring>
-                  <xsl:text>&#160;</xsl:text>
-                </xsl:matching-substring>
-                <xsl:non-matching-substring><xsl:copy-of select="."/></xsl:non-matching-substring>
-              </xsl:analyze-string>
-            </xsl:non-matching-substring>
+            <xsl:non-matching-substring><xsl:copy-of select="."/></xsl:non-matching-substring>
           </xsl:analyze-string>
-        </fo:block>
-      </xsl:when>
-      <xsl:otherwise>
-        <fo:inline xsl:use-attribute-sets="monospace.properties"><xsl:apply-templates/></fo:inline>
-      </xsl:otherwise>
-    </xsl:choose>
+        </xsl:non-matching-substring>
+      </xsl:analyze-string>
+    </fo:block>
   </xsl:template>
+  
+  <!-- last resort for long words that don't wrap: manual wrap function (currently unused) -->
+  <xsl:function name="local:manualWrap">
+    <xsl:param name="string"/>
+    <xsl:variable name="limit" select="80"/>
+    <xsl:choose>
+      <xsl:when test="string-length($string) > $limit">
+        <xsl:value-of select="string-join((substring($string, 1, $limit), local:manualWrap(substring($string, $limit + 1))), '&#8203; ')"/>
+      </xsl:when>
+      <xsl:otherwise><xsl:value-of select="$string"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
   
   <xsl:template match="*" mode="egXML">
     <xsl:choose>
@@ -939,7 +948,15 @@
       <fo:list-item-label text-align="end" end-indent="label-end()">
         <fo:block>
           <xsl:choose>
-            <xsl:when test="not(tokenize(parent::tei:list/@rend, '\s+') = 'ordered')">
+            <xsl:when test="tokenize(parent::tei:list/@rend, '\s+') = 'simple'"/>
+            <xsl:when test="tokenize(parent::tei:list/@rend, '\s+') = 'ordered'">
+              <xsl:variable name="nr"><xsl:number level="multiple" format="1.1.1.1.1"/></xsl:variable>
+              <xsl:value-of select="$nr"/>
+              <xsl:if test="string-length($nr) = 1">
+                <xsl:text>.</xsl:text>
+              </xsl:if>
+            </xsl:when>
+            <xsl:otherwise>
               <xsl:variable name="depth" select="count(ancestor::tei:list[not(tokenize(@rend, '\s+') = 'ordered')])"/>
               <xsl:attribute name="font-family">DejaVu</xsl:attribute>
               <xsl:choose>
@@ -956,13 +973,6 @@
                   <xsl:text>–</xsl:text>
                 </xsl:otherwise>
               </xsl:choose>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:variable name="nr"><xsl:number level="multiple" format="1.1.1.1.1"/></xsl:variable>
-              <xsl:value-of select="$nr"/>
-              <xsl:if test="string-length($nr) = 1">
-                <xsl:text>.</xsl:text>
-              </xsl:if>
             </xsl:otherwise>
           </xsl:choose>
         </fo:block>
@@ -1118,7 +1128,7 @@
       <xsl:call-template name="getAuthorInstance">
         <xsl:with-param name="dateOrTitle" select="$dateOrTitle"/>
       </xsl:call-template>
-      <xsl:apply-templates select="$dateOrTitle|node()[. >> $dateOrTitle]"/>
+      <xsl:apply-templates select="$dateOrTitle|node()[. >> ($dateOrTitle,current())[1]]"/>
     </fo:block>
   </xsl:template>
   
@@ -1130,6 +1140,7 @@
     <xsl:variable name="bibl.prev" select="preceding-sibling::*[1]/self::tei:bibl"/>
     <xsl:variable name="authorInstance.prev" select="preceding-sibling::*[1]/self::tei:bibl/node()[. &lt;&lt; $bibl.prev/(tei:date|tei:title)[1]]"/>
     <xsl:choose>
+      <xsl:when test="not($authorInstance.current)"/>
       <xsl:when test="$bibl.prev and (local:authors.serialize($authorInstance.current/self::*) = local:authors.serialize($authorInstance.prev/self::*))">
         <xsl:text>———. </xsl:text>
       </xsl:when>

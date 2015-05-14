@@ -183,7 +183,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="name(.) = 'odds'">
 	<xsl:choose>
   	  <xsl:when test=".='date'"> This formatted version of the Guidelines was created on
-	  <xsl:call-template name="whatsTheDate"/>. </xsl:when>
+	  <xsl:sequence select="tei:whatsTheDate()"/>. </xsl:when>
 	</xsl:choose>
       </xsl:when>
       <xsl:otherwise>

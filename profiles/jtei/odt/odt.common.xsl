@@ -264,13 +264,13 @@
         <xsl:choose>
           <xsl:when test="normalize-space(.) = '' and not(*)"></xsl:when>
           <!-- [RvdB] give right styling to simple/simplified paragraphs inside lists -->
-          <xsl:when test="(parent::item and not(child::cit or child::table or child::teix:egXML or child::figure or child::list[not(matches(@rend, 'inline'))])) or @rend = 'teiListItem'">
+          <xsl:when test="(parent::item and not(child::cit or child::table or child::teix:egXML or child::figure or child::list[not(matches(@rend, 'inline'))] or child::eg)) or @rend = 'teiListItem'">
             <text:p text:style-name="teiListItem">
               <xsl:apply-templates/>
             </text:p>
           </xsl:when>  
           <xsl:when test="parent::note"><xsl:apply-templates/></xsl:when>
-          <xsl:when test="not(child::cit or child::table or child::teix:egXML or child::figure or child::list[not(matches(@rend, 'inline'))])">
+          <xsl:when test="not(child::cit or child::table or child::teix:egXML or child::figure or child::list[not(matches(@rend, 'inline'))] or child::eg)">
                 <text:p text:style-name="teiPara"><xsl:apply-templates/></text:p>
             </xsl:when>
             <xsl:otherwise>
@@ -299,10 +299,10 @@
           <xsl:if test="$inputPara/parent::item">
             <xsl:attribute name="rend">teiListItem</xsl:attribute>
           </xsl:if>
-          <xsl:copy-of select="$inputPara/(*|text())[not(self::cit or self::table or self::teix:egXML or self::figure or self::list[not(matches(@rend, 'inline'))]) and not(preceding-sibling::cit or preceding-sibling::table or preceding-sibling::teix:egXML or preceding-sibling::figure or preceding-sibling::list[not(matches(@rend, 'inline'))])]"/>
+          <xsl:copy-of select="$inputPara/(*|text())[not(self::cit or self::table or self::teix:egXML or self::figure or self::list[not(matches(@rend, 'inline'))] or self::eg) and not(preceding-sibling::cit or preceding-sibling::table or preceding-sibling::teix:egXML or preceding-sibling::figure or preceding-sibling::list[not(matches(@rend, 'inline'))] or preceding-sibling::eg)]"/>
         </tei:p>
 <!--        Now we work through each cit and its following bits. -->
-      <xsl:for-each select="cit | table | teix:egXML | figure | list[not(matches(@rend, 'inline'))]">
+      <xsl:for-each select="cit | table | teix:egXML | figure | list[not(matches(@rend, 'inline'))] | eg">
             <xsl:variable name="pos" select="position()"/>
             <xsl:copy-of select="."/>
             <tei:p>
@@ -310,7 +310,7 @@
               <xsl:if test="$inputPara/parent::item">
                 <xsl:attribute name="rend">teiListItem</xsl:attribute>
               </xsl:if>
-              <xsl:copy-of select="$inputPara/(*|text())[not(self::cit or self::table or self::teix:egXML or self::figure or self::list[not(matches(@rend, 'inline'))]) and count(preceding-sibling::cit | preceding-sibling::table | preceding-sibling::teix:egXML | preceding-sibling::figure | preceding-sibling::list[not(matches(@rend, 'inline'))]) = $pos]"/>
+              <xsl:copy-of select="$inputPara/(*|text())[not(self::cit or self::table or self::teix:egXML or self::figure or self::list[not(matches(@rend, 'inline'))] or self::eg) and count(preceding-sibling::cit | preceding-sibling::table | preceding-sibling::teix:egXML | preceding-sibling::figure | preceding-sibling::list[not(matches(@rend, 'inline'))] | preceding-sibling::eg) = $pos]"/>
             </tei:p>
         </xsl:for-each>
     </xsl:template>
@@ -554,33 +554,28 @@
         <text:p text:style-name="{if (@role='label' or parent::row[@role='label']) then 'teiParaTinyMarginsHeader' else 'teiParaTinyMargins'}"><xsl:apply-templates/></text:p>
       </table:table-cell>
     </xsl:template>
-    
+
 <!--    Standard code is a bit tricky. -->
   <xsl:template match="eg">
-    <xsl:choose>
-      <xsl:when test="parent::figure">
-        <text:p text:style-name="teiCodeBlock">
-          <xsl:if test="following-sibling::head"><xsl:attribute name="fo:keep-with-next">always</xsl:attribute></xsl:if>
-          <xsl:if test="parent::figure/@xml:id">
-            <text:bookmark text:name="{parent::figure/@xml:id}"/>
-          </xsl:if>
-        <xsl:analyze-string select="." regex="\n">
-          <xsl:matching-substring>
-            <text:line-break/>
-          </xsl:matching-substring>
-          <xsl:non-matching-substring>
-            <xsl:analyze-string select="." regex="\s">
-              <xsl:matching-substring><text:s/></xsl:matching-substring>
-              <xsl:non-matching-substring><xsl:copy-of select="."/></xsl:non-matching-substring>
-            </xsl:analyze-string>
-          </xsl:non-matching-substring>
-        </xsl:analyze-string>
-        </text:p>
-      </xsl:when>
-      <xsl:otherwise>
-        <text:span text:style-name="teiCode"><xsl:apply-templates/></text:span>
-      </xsl:otherwise>
-    </xsl:choose>
+    <!-- determine maximal amount of preceding whitespace that can be stripped out -->
+    <xsl:variable name="stripIndent" select="min((for $line in tokenize(., '\n')[.] return string-length(replace($line, '^(\s+).*', '$1'))))"/>
+    <text:p text:style-name="teiCodeBlock">
+      <xsl:if test="parent::figure and following-sibling::head"><xsl:attribute name="fo:keep-with-next">always</xsl:attribute></xsl:if>
+      <xsl:if test="parent::figure/@xml:id">
+        <text:bookmark text:name="{parent::figure/@xml:id}"/>
+      </xsl:if>
+      <xsl:analyze-string select="." regex="\n">
+        <xsl:matching-substring>
+          <text:line-break/>
+        </xsl:matching-substring>
+        <xsl:non-matching-substring>
+          <xsl:analyze-string select="if ($stripIndent > 0) then replace(., concat('^\s{', $stripIndent, '}'), '') else ." regex="\s">
+            <xsl:matching-substring><text:s/></xsl:matching-substring>
+            <xsl:non-matching-substring><xsl:copy-of select="."/></xsl:non-matching-substring>
+          </xsl:analyze-string>
+        </xsl:non-matching-substring>
+      </xsl:analyze-string>
+    </text:p>
   </xsl:template>
     
 <!--    egXML is going to be quite exciting. -->

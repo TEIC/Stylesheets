@@ -45,13 +45,42 @@ of this software, even if advised of the possibility of such damage.
     <xsl:copy-of select="."/>
   </xsl:template>
   <xsl:template match="*" mode="pass2">
-    <xsl:copy>
-      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
-    </xsl:copy>
+    <xsl:variable name="temp">
+      <xsl:copy>
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+      </xsl:copy>
+    </xsl:variable>
+    <xsl:apply-templates mode="spacepass" select="$temp"/>
+</xsl:template>
+
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="spacepass">
+    <xsl:copy-of select="."/>
   </xsl:template>
-  <xsl:template match="text()" mode="pass2">
+  <xsl:template match="*" mode="spacepass">
+      <xsl:copy>
+	<xsl:apply-templates select="@*" mode="spacepass"/>
+	<xsl:choose>
+	  <xsl:when test="$preserveSpace='true'">
+	  </xsl:when>
+	  <xsl:when test="tei:isInline(.)  and (starts-with(text()[1],' ') or
+		      ends-with(text()[last()],' ')) and not(*)">
+	    <xsl:attribute name="xml:space">preserve</xsl:attribute>
+	  </xsl:when>
+	</xsl:choose>
+	<xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="spacepass"/>
+      </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="@xml:space[.='preserve']" mode="spacepass">
+    <xsl:if test="$preserveSpace='true'">
+      <xsl:copy-of select="."/>
+    </xsl:if>
+  </xsl:template>
+
+    <xsl:template match="text()" mode="pass2">
     <xsl:value-of select="."/>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>zap empty p</p>
@@ -288,8 +317,10 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:hi[not (* or text())]"		mode="pass2"/>
 
-  <xsl:template match="tei:hi[(@rend or @style) and (* or text())]" mode="pass2">
+  <xsl:template match="tei:hi[(@rend or @style) and (* or text())]"
+		mode="pass2">
     <xsl:variable name="r" select="concat(@rend,@style)"/>
+
     <xsl:choose>
       <xsl:when test="count(parent::tei:speaker/*)=1 and not         (parent::tei:speaker/text())">
         <xsl:apply-templates/>
@@ -302,38 +333,40 @@ of this software, even if advised of the possibility of such damage.
         <xsl:text> </xsl:text>
 	<xsl:if test="following-sibling::node()[1][self::tei:hi[concat(@rend,@style)=$r]]">
 	  <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
-	  <xsl:element name="{$ename}">
+	    <xsl:element name="{$ename}">
 	    <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
 	    <xsl:call-template name="nextHi">
 	      <xsl:with-param name="r" select="$r"/>
 	    </xsl:call-template>
-	  </xsl:element>
+	    </xsl:element>
 	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
-        <xsl:element name="{$ename}">
-          <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
-	  <xsl:choose>
-	    <xsl:when test="$ename='gap'">
-	      <desc>
-		<xsl:apply-templates mode="pass2"/>
-		<xsl:call-template name="nextHi">
-		  <xsl:with-param name="r" select="$r"/>
-		</xsl:call-template>
-	      </desc>
-	    </xsl:when>
-	    <xsl:otherwise>
-		<xsl:apply-templates mode="pass2"/>
-		<xsl:call-template name="nextHi">
-		  <xsl:with-param name="r" select="$r"/>
-		</xsl:call-template>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:element>
+            <xsl:element name="{$ename}">
+              <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
+	      <xsl:choose>
+		<xsl:when test="$ename='gap'">
+		  <desc>
+		    <xsl:apply-templates mode="pass2"/>
+		    <xsl:call-template name="nextHi">
+		      <xsl:with-param name="r" select="$r"/>
+		    </xsl:call-template>
+		  </desc>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:apply-templates mode="pass2"/>
+		  <xsl:call-template name="nextHi">
+		    <xsl:with-param name="r" select="$r"/>
+		  </xsl:call-template>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  
+     
   <xsl:template name="nextHi">
     <xsl:param name="r"/>
     <xsl:for-each select="following-sibling::node()[1]">
@@ -565,14 +598,13 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:processing-instruction name="biblio">
 	  <xsl:value-of select="$target"/>
 	</xsl:processing-instruction>
-        <xsl:choose>
+	<xsl:choose>
           <xsl:when test="count(text()) &lt; 2">
-            <xsl:value-of select="text()"/>
-            <xsl:apply-templates select="tei:ref" mode="pass2"/>
+            <xsl:apply-templates mode="pass2"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="text()[1]"/>
-            <xsl:apply-templates select="tei:ref" mode="pass2"/>
+            <xsl:apply-templates select="*" mode="pass2"/>
             <xsl:value-of select="remove(text(), 1)"/>
           </xsl:otherwise>
         </xsl:choose>

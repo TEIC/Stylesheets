@@ -201,8 +201,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="P5deco" as="element( tei:TEI )"/>
     <schema queryBinding="xslt2">
       <title>ISO Schematron rules</title>
-      <xsl:comment> This file generated <xsl:call-template
-      name="whatsTheDate"/> by 'extract-isosch.xsl'. </xsl:comment>
+      <xsl:comment> This file generated <xsl:sequence select="tei:whatsTheDate()"/> by 'extract-isosch.xsl'. </xsl:comment>
 
       <xsl:call-template name="blockComment">
         <xsl:with-param name="content" select="'namespaces, declared:'"/>
