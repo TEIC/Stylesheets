@@ -65,7 +65,13 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:template match="tei:valItem">
   <tr>
-    <td><xsl:sequence select="tei:showMode(@ident,@mode)"/></td>
+    <td><xsl:sequence select="tei:showMode(@ident,@mode)"/>
+	  <xsl:if test="tei:paramList">
+	    <xsl:text> (</xsl:text>
+	    <xsl:value-of select="tei:paramList/tei:paramSpec/@ident" separator=","/>
+	    <xsl:text>)</xsl:text>
+	  </xsl:if>
+    </td>
     <td><xsl:value-of select="tei:desc"/>
     <xsl:if test="skos:exactMatch">
       [also   <xsl:apply-templates select="skos:exactMatch"/>]
