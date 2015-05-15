@@ -390,7 +390,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:specGrpRef" mode="pass0">
-    <xsl:sequence select="if ($verbose='true')then tei:message(concat('Phase  0: expand specGrpRef ',@target)) else ()"/>
+    <xsl:sequence select="if ($verbose='true')then tei:message(concat('Phase 0: expand specGrpRef ',@target)) else ()"/>
     <xsl:choose>
       <xsl:when test="starts-with(@target,'#')">
 	<xsl:apply-templates  mode="pass0"
@@ -491,7 +491,7 @@ of this software, even if advised of the possibility of such damage.
     	<xsl:result-document href="/tmp/odd2odd-pass1.xml">
 	  <xsl:copy-of select="$pass1"/>
 	</xsl:result-document>
-    -->
+	-->
     <xsl:for-each select="$pass1">
       <xsl:apply-templates mode="pass2"/>
     </xsl:for-each>
@@ -725,6 +725,7 @@ of this software, even if advised of the possibility of such damage.
          - otherwise copy 
         done
   -->
+
     <xsl:variable name="specName" select="tei:uniqueName(.)"/>
     <xsl:variable name="N" select="local-name(.)"/>
       <xsl:choose>
@@ -747,7 +748,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:otherwise>
           <xsl:if test="$verbose='true'">
-	    <xsl:message>Phase 2: keep <xsl:value-of  select="$specName"/></xsl:message>
+	    <xsl:message>Phase 2: keep <xsl:value-of  select="($N,$specName)"/></xsl:message>
           </xsl:if>
           <xsl:apply-templates mode="justcopy" select="."/>
         </xsl:otherwise>
@@ -791,9 +792,6 @@ of this software, even if advised of the possibility of such damage.
 	   for change individually.
       -->
         <xsl:for-each select="$ODD/key('odd2odd-CHANGE',$elementName)">
-	  <xsl:if test="$verbose='true'">
-	    <xsl:message>Change <xsl:value-of select="$elementName"/></xsl:message>
-	  </xsl:if>
           <xsl:copy-of select="@ns"/>
           <!-- if there is an altIdent, use it -->
           <xsl:apply-templates mode="justcopy" select="tei:altIdent"/>
@@ -924,7 +922,19 @@ of this software, even if advised of the possibility of such damage.
               <xsl:with-param name="objectName" select="$elementName"/>
             </xsl:call-template>
           </attList>
-          <!-- exemplum, remarks and listRef are either replacements or not -->
+	  
+
+      <!-- models -->
+          <xsl:choose>
+            <xsl:when test="tei:modelGrp|tei:model|tei:modelSequence">
+              <xsl:apply-templates mode="justcopy" select="tei:modelGrp|tei:model|tei:modelSequence"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:modelGrp|$ORIGINAL/tei:model|$ORIGINAL/tei:modelSequence"/>
+            </xsl:otherwise>
+          </xsl:choose>
+
+      <!-- exempla -->
           <xsl:choose>
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:exemplum">
@@ -1323,6 +1333,7 @@ so that is only put back in if there is some content
           </xsl:otherwise>
         </xsl:choose>
       </attList>
+      <xsl:apply-templates mode="odd2odd-copy" select="tei:modelGrp|tei:model|tei:modelSequence"/>
       <xsl:if test="$stripped='false'">
         <xsl:apply-templates mode="justcopy" select="tei:exemplum"/>
         <xsl:apply-templates mode="justcopy" select="tei:remarks"/>
@@ -1776,7 +1787,7 @@ so that is only put back in if there is some content
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tei:valDesc|tei:equiv|tei:gloss|tei:desc|tei:remarks|tei:exemplum|tei:listRef" mode="pass3">
+  <xsl:template match="tei:valDesc|tei:equiv|tei:gloss|tei:desc|tei:remarks|tei:exemplum|tei:modelGrp|tei:model|tei:modelSequence|tei:listRef" mode="pass3">
     <xsl:choose>
       <xsl:when test="$stripped='true'"> </xsl:when>
       <xsl:otherwise>
