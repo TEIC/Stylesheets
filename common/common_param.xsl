@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="m tei xsi sch" version="2.0">
+<xsl:stylesheet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+		xmlns:m="http://www.w3.org/1998/Math/MathML"
+		xmlns:tei="http://www.tei-c.org/ns/1.0"
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		    exclude-result-prefixes="#all"
+ version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p>TEI stylesheet customization module, common for all output

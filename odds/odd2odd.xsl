@@ -10,7 +10,7 @@
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     version="2.0" 
-    exclude-result-prefixes="teix a s tei xs rng sch xsi">
+    exclude-result-prefixes="#all">
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -319,8 +319,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:message>Phase 0: summarize specGrp <xsl:value-of select="@xml:id"/>
       </xsl:message>
     </xsl:if>
-    <table xmlns="http://www.tei-c.org/ns/1.0">
-      <xsl:for-each select="*">
+    <xsl:if test="tei:specGrpRef|tei:elementSpec|tei:classSpec|tei:macroSpec|tei:moduleRef">
+    <table xmlns="http://www.tei-c.org/ns/1.0" rend="specGrpSummary">
+      <xsl:for-each select="tei:specGrpRef|tei:elementSpec|tei:classSpec|tei:macroSpec|tei:moduleRef">
         <row>
           <xsl:choose>
             <xsl:when test="self::tei:specGrpRef">
@@ -363,6 +364,7 @@ of this software, even if advised of the possibility of such damage.
         </row>
       </xsl:for-each>
     </table>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="tei:schemaSpec" mode="pass0">
@@ -1842,8 +1844,7 @@ so that is only put back in if there is some content
 	<xsl:variable name="m" select="."/>
 	  <xsl:for-each select="document($orig)/key('odd2odd-MODULES',$m)">
 	    <xsl:copy>
-	      <xsl:attribute name="n"
-			     select="ancestor::tei:div[last()]/@xml:id"/>
+	      <xsl:attribute name="n"   select="ancestor::tei:div[last()]/@xml:id"/>
 	      <xsl:copy-of select="@*"/>
 	    </xsl:copy>
 	  </xsl:for-each>
@@ -1983,6 +1984,10 @@ so that is only put back in if there is some content
 
   <xsl:template match="@*|text()" mode="pass4">
     <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="@mode" mode="pass4">
+      <xsl:attribute name="rend" select="."/>
   </xsl:template>
 
   <xsl:template match="*" mode="pass4">

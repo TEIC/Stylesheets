@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
-xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns:ann="http://relaxng.org/ns/compatibility/annotations/1.0"
+ xmlns:sch="http://purl.oclc.org/dsdl/schematron"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:cals="http://www.oasis-open.org/specs/tm9901"
 xmlns:tei="http://www.tei-c.org/ns/1.0"
@@ -21,7 +22,8 @@ xmlns:mml="http://www.w3.org/1998/Math/MathML"
 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
 xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" version="2.0"
-exclude-result-prefixes="sch cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
+    exclude-result-prefixes="#all"
+>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI Utility stylesheet defining functions for use in all
