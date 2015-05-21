@@ -196,9 +196,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <xsl:variable name="source">
       <xsl:choose>
-	<xsl:when test="starts-with($loc,'/')">
-	  <xsl:value-of select="$loc"/>
-	</xsl:when>
 	<xsl:when test="starts-with($loc,'file:')">
 	  <xsl:value-of select="$loc"/>
 	</xsl:when>
@@ -213,8 +210,11 @@ of this software, even if advised of the possibility of such damage.
 	      select="replace($loc,'tei:',$defaultTEIServer)"/>
 	  <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
 	</xsl:when>
+	<xsl:when test="$currentDirectory=''">
+	  <xsl:value-of select="resolve-uri($loc,base-uri($top))"/>
+	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:value-of select="string-join(($currentDirectory, $loc), '/')"/>
+	  <xsl:value-of select="resolve-uri(string-join(($currentDirectory, $loc), '/'),base-uri($top))"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -223,7 +223,8 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="die">
 	  <xsl:with-param name="message">
 	    <xsl:text>Source </xsl:text>
-	   <xsl:value-of select='$source'/>
+	   <xsl:value-of select='($source,$loc,name($top),base-uri($top))'
+			 separator=" + "/>
 	   <xsl:text> not readable</xsl:text>
 	  </xsl:with-param>
 	</xsl:call-template>
