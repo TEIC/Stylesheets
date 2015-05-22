@@ -134,6 +134,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="$input-with-NSs" mode="schematron-extraction">
       <xsl:with-param name="P5deco" select="$input-with-NSs/TEI"/>
     </xsl:apply-templates>
+    <xsl:apply-templates select="$input-with-NSs//paramList"/>
+      
     <!-- Note: to see decorated tree for debugging, change mode of above -->
     <!-- from "schematron-extraction" to "copy". -->
   </xsl:template>
@@ -455,5 +457,21 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:function>
 
+  <xsl:template match="paramList">
+    <xsl:variable name="N">
+      <xsl:number from="elementSpec" level="any"/>
+    </xsl:variable>
+    <xsl:message>Param List <xsl:value-of
+    select="($N,ancestor::elementSpec/@ident)"/>: <xsl:value-of
+    select="(paramSpec/@ident)"/></xsl:message><!--
+    <pattern id="teipm-{ancestor::elementSpec/@ident}-paramList-{$N}">
+          <rule context="tei:*[@calendar]">
+            <assert test="string-length(.) gt 0">
+@calendar indicates the system or calendar to which the date represented by the content of this element
+belongs, but this <name/> element has no textual content.</assert>
+          </rule>
+        </pattern>
+-->
+  </xsl:template>
 
 </xsl:stylesheet>
