@@ -187,7 +187,6 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template match="tei:valItem">
-<xsl:message>Valitem rocessing</xsl:message>
   <tr>
     <td><xsl:sequence select="tei:showMode(@ident,@mode)"/>
 	  <xsl:if test="tei:paramList">
