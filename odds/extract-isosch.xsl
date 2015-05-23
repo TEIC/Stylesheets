@@ -134,7 +134,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="$input-with-NSs" mode="schematron-extraction">
       <xsl:with-param name="P5deco" select="$input-with-NSs/TEI"/>
     </xsl:apply-templates>
-    <xsl:apply-templates select="$input-with-NSs//paramList"/>
       
     <!-- Note: to see decorated tree for debugging, change mode of above -->
     <!-- from "schematron-extraction" to "copy". -->
@@ -351,6 +350,9 @@ of this software, even if advised of the possibility of such damage.
           </xsl:when>
         </xsl:choose>
       </xsl:for-each>
+
+      <xsl:apply-templates select="//paramList"/>
+
     </schema>
   </xsl:template>
   
@@ -461,17 +463,24 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="N">
       <xsl:number from="elementSpec" level="any"/>
     </xsl:variable>
-    <xsl:message>Param List <xsl:value-of
-    select="($N,ancestor::elementSpec/@ident)"/>: <xsl:value-of
-    select="(paramSpec/@ident)"/></xsl:message><!--
+    <xsl:variable name="B">
+      <xsl:value-of select="parent::valItem/@ident"/>
+    </xsl:variable>
     <pattern id="teipm-{ancestor::elementSpec/@ident}-paramList-{$N}">
-          <rule context="tei:*[@calendar]">
-            <assert test="string-length(.) gt 0">
-@calendar indicates the system or calendar to which the date represented by the content of this element
-belongs, but this <name/> element has no textual content.</assert>
+          <rule context="tei:param[parent::tei:model/@behaviour='{$B}']">
+            <assert role="error">
+	      <xsl:attribute name="test">
+		<xsl:text>@name='</xsl:text>
+		<xsl:value-of select="(paramSpec/@ident)" separator="'   or  @name='"/>
+		<xsl:text>'</xsl:text>
+	      </xsl:attribute>
+	      Parameter name '<value-of select="@name"/>'  (on <value-of select="ancestor::tei:elementSpec/@ident"/>) not allowed.
+	      Must  be  drawn from the list: <xsl:value-of separator=", " select="(paramSpec/@ident)" />
+	    </assert>
+	    
           </rule>
         </pattern>
--->
+
   </xsl:template>
 
 </xsl:stylesheet>
