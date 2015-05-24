@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <XSL:stylesheet xmlns:XSL="http://www.w3.org/1999/XSL/Transform" version="2.0">
-   <XSL:template match="@place">
+   <XSL:template mode="pass2 #default" match="@place">
       <XSL:attribute name="place">
          <XSL:choose>
             <XSL:when test=".='supralinear'">above</XSL:when>
@@ -28,7 +28,7 @@
          </XSL:choose>
       </XSL:attribute>
    </XSL:template>
-   <XSL:template match="@unit">
+   <XSL:template mode="pass2 #default" match="@unit">
       <XSL:attribute name="unit">
          <XSL:choose>
             <XSL:when test=".='char'">chars</XSL:when>
@@ -42,7 +42,7 @@
          </XSL:choose>
       </XSL:attribute>
    </XSL:template>
-   <XSL:template match="@rend">
+   <XSL:template mode="pass2 #default" match="@rend">
       <XSL:attribute name="rendition">
          <XSL:choose>
             <XSL:when test=".='upper-roman'">simple:allcaps</XSL:when>
@@ -90,7 +90,7 @@
          </XSL:choose>
       </XSL:attribute>
    </XSL:template>
-   <XSL:template match="@role">
+   <XSL:template mode="pass2 #default" match="@role">
       <XSL:attribute name="role">
          <XSL:choose>
             <XSL:when test=".='LABEL'">label</XSL:when>

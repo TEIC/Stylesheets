@@ -215,7 +215,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:GLOSSITEM" mode="pass2">
     <label>
       <xsl:for-each select="tei:hi">
-        <xsl:apply-templates/>
+        <xsl:apply-templates mode="pass2"/>
       </xsl:for-each>
     </label>
     <item>
@@ -344,7 +344,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:otherwise>
         <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
             <xsl:element name="{$ename}">
-              <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
+              <xsl:apply-templates mode="pass2" select="@*[not(starts-with(.,'tei:'))]"/>
 	      <xsl:choose>
 		<xsl:when test="$ename='gap'">
 		  <desc>

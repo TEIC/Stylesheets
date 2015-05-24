@@ -612,7 +612,7 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:template name="generateAppInfo">
       <appInfo>
-	        <application xml:id="doxtotei" ident="TEI_fromDOCX" version="2.15.0">
+	        <application xml:id="docxtotei" ident="TEI_fromDOCX" version="2.15.0">
 	           <label>DOCX to TEI</label>
 	        </application>
 	        <xsl:if test="doc-available($customProps)">
