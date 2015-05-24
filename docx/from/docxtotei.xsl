@@ -36,7 +36,10 @@
 	  <xsl:import href="functions.xsl"/>
 	  <xsl:import href="../variables.xsl"/>
 	  <xsl:import href="omml2mml.xsl"/>
-
+	  <xsl:import href="pass0.xsl"/>
+	  <xsl:import href="pass2.xsl"/>
+	
+	  
 	  <xsl:param name="convertGraphics">true</xsl:param>	  
 	  <xsl:param name="mathMethod">mml</xsl:param>	  
 	  <xsl:param name="termMethod">tei</xsl:param>	  
@@ -53,9 +56,7 @@
 	  <xsl:param name="pageHeight">890</xsl:param>
 	  <xsl:param name="pageWidth">576</xsl:param>
 
-	  <xsl:include href="pass0.xsl"/>
-	  <xsl:include href="pass2.xsl"/>
-	
+
 	  <xsl:include href="fields.xsl"/>
 	  <xsl:include href="toc.xsl"/>
 	  <xsl:include href="graphics.xsl"/>

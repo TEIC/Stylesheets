@@ -259,6 +259,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="matches($instr,'^[ ]?QUOTE')">true</xsl:when>
       <xsl:when test="matches($instr,'^[ ]?XE')">true</xsl:when>
       <xsl:when test="contains($instr,'SEQ')">true</xsl:when>
+      <xsl:when test="contains($instr,'FORMTEXT')">true</xsl:when>
       <xsl:otherwise>false</xsl:otherwise>
     </xsl:choose>
 </xsl:function>
