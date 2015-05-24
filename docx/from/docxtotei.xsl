@@ -196,11 +196,11 @@ of this software, even if advised of the possibility of such damage.
      </xsl:variable>		  
      
 
-<!--
+     <!--
 	 <xsl:result-document href="/tmp/foo.xml">
 	 <xsl:copy-of select="$pass1"/>
 	 </xsl:result-document>
--->
+     -->
 
      <!-- Do the final parse and create valid TEI -->
 
