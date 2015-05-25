@@ -71,5 +71,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="table-rendition">
     <xsl:attribute name="rendition">simple:rules</xsl:attribute>
   </xsl:template>
-  </xsl:stylesheet>
   
+  <xsl:template match="w:document">
+    <TEI rendition="simple:simple">
+      <!-- create teiHeader -->
+      <xsl:call-template name="create-tei-header"/>
+      
+      <!-- convert main and back matter -->
+      <xsl:apply-templates select="w:body"/>
+    </TEI>
+  </xsl:template>
+
+  </xsl:stylesheet>
