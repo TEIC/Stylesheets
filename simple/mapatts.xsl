@@ -12,13 +12,12 @@
             <XSL:when test=".='bot-center'">bottom-centre</XSL:when>
             <XSL:when test=".='foot'">bottom</XSL:when>
             <XSL:when test=".='tablefoot'">tablebottom</XSL:when>
-            <XSL:when test=".='margin-outer'">margin-right</XSL:when>
             <XSL:when test=".='right'">margin-right</XSL:when>
             <XSL:when test=".='marg1'">margin-right</XSL:when>
             <XSL:when test=".='marg2'">margin-right</XSL:when>
             <XSL:when test=".='marg3'">margin-right</XSL:when>
             <XSL:when test=".='marg4'">margin-right</XSL:when>
-            <XSL:when test=".='margin'">margin-outer</XSL:when>
+            <XSL:when test=".='margin-outer'">margin</XSL:when>
             <XSL:when test=".='left'">margin-left</XSL:when>
             <XSL:when test=".='in'">inline</XSL:when>
             <XSL:when test=".='display'">block</XSL:when>
