@@ -210,6 +210,10 @@ of this software, even if advised of the possibility of such damage.
 	      select="replace($loc,'tei:',$defaultTEIServer)"/>
 	  <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
 	</xsl:when>
+	<xsl:when test="base-uri($top)=''">
+	  <xsl:value-of select="$currentDirectory"/>
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
 	<xsl:when test="$currentDirectory=''">
 	  <xsl:value-of select="resolve-uri($loc,base-uri($top))"/>
 	</xsl:when>
