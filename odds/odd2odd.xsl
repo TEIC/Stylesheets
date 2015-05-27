@@ -569,7 +569,7 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:if test="$verbose='true'">
 		  <xsl:message>Phase 1: import <xsl:value-of  select="$name"/> by direct reference</xsl:message>
 		</xsl:if>
-	    <xsl:apply-templates mode="pass1" select="."/>
+		<xsl:apply-templates mode="pass1" select="."/>
 	      </xsl:for-each>
 	    </xsl:when>
 	    <xsl:otherwise>
@@ -1845,6 +1845,7 @@ so that is only put back in if there is some content
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates mode="pass3" select="text()|comment()|*"/>
+      <xsl:copy-of select="document($orig)//tei:schemaSpec/tei:rendition"/>
       <xsl:for-each select="distinct-values(//*[@module]/@module)">
 	<xsl:variable name="m" select="."/>
 	  <xsl:for-each select="document($orig)/key('odd2odd-MODULES',$m)">
