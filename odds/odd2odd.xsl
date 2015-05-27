@@ -494,11 +494,11 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>
       </xsl:copy>
     </xsl:variable>
-    <!--
+<!--
     	<xsl:result-document href="/tmp/odd2odd-pass1.xml">
 	  <xsl:copy-of select="$pass1"/>
 	</xsl:result-document>
-	-->
+-->
     <xsl:for-each select="$pass1">
       <xsl:apply-templates mode="pass2"/>
     </xsl:for-each>
@@ -1794,7 +1794,7 @@ so that is only put back in if there is some content
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tei:valDesc|tei:equiv|tei:gloss|tei:desc|tei:remarks|tei:exemplum|tei:modelGrp|tei:model|tei:modelSequence|tei:listRef" mode="pass3">
+  <xsl:template match="tei:valDesc|tei:equiv|tei:gloss|tei:desc|tei:remarks|tei:exemplum|tei:modelGrp|tei:model|tei:modelSequence|tei:rendition|tei:listRef" mode="pass3">
     <xsl:choose>
       <xsl:when test="$stripped='true'"> </xsl:when>
       <xsl:otherwise>
