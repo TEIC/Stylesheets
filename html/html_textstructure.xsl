@@ -1658,7 +1658,9 @@ function click(d) {
 			 </xsl:call-template>
 		       </xsl:element>
 		     </xsl:if>
-                     <xsl:call-template name="makeDivBody"/>
+                     <xsl:call-template name="makeDivBody">
+		       <xsl:with-param name="depth" select="count(ancestor::tei:div)"/>
+		     </xsl:call-template>
                      <xsl:if test="$bottomNavigationPanel='true'">
 		       <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
 			 <xsl:call-template name="xrefpanel">
@@ -2937,7 +2939,9 @@ function click(d) {
                   <xsl:call-template name="subtoc"/>
                </xsl:if>
                <xsl:call-template name="startHook"/>
-               <xsl:call-template name="makeDivBody"/>
+               <xsl:call-template name="makeDivBody">
+		 <xsl:with-param name="depth" select="count(ancestor::tei:div)"/>
+	       </xsl:call-template>
                <xsl:call-template name="printNotes"/>
                <xsl:if test="$bottomNavigationPanel='true'">
 		 <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
