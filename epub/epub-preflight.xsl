@@ -44,10 +44,6 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[epub] Local mode to rewrite names of graphics inclusions;
-      default is identity transform</desc>
-  </doc>
   <xsl:template match="@*|text()|comment()|processing-instruction()" mode="preflight">
     <xsl:copy-of select="."/>
   </xsl:template>
