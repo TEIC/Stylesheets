@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
 		xmlns:dc="http://purl.org/dc/elements/1.1/"
 		xmlns:iso="http://www.iso.org/ns/1.0"
@@ -174,5 +175,11 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
     <dc:subject>University of Oxford Text Archive</dc:subject>
   </xsl:template>
+
+  <xsl:function name="tei:escapeChars" as="xs:string">
+    <xsl:param name="letters"/>
+    <xsl:param name="context"/>
+    <xsl:value-of select="translate($letters,'ſ','s')"/>
+  </xsl:function>
 
 </xsl:stylesheet>
