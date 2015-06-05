@@ -472,7 +472,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process any element and work out a unique identififying string</desc>
+      <desc>Process any element and work out a unique identifying string</desc>
    </doc>
   <xsl:template match="*" mode="ident">
     <xsl:variable name="BaseFile">
@@ -498,7 +498,8 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:variable>
 	<xsl:value-of select="$BaseFile"/>
 	<xsl:text>-</xsl:text>
-	<xsl:value-of select="substring-after(substring-after($xpath,'_text.'),'_')"/>
+	    <xsl:value-of
+		select="substring-after(substring-after($xpath,'_text.'),'_')"/>
       </xsl:when>
       <xsl:when test="self::tei:TEI and parent::tei:teiCorpus">
 	<xsl:value-of select="$masterFile"/>

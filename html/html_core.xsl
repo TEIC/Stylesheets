@@ -469,6 +469,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element item</desc>
   </doc>
+  <xsl:template match="tei:label" mode="gloss"/>
   <xsl:template match="tei:item" mode="gloss">
     <dt>
       <xsl:if test="@xml:id">
@@ -620,6 +621,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates select="tei:head"/>
       </xsl:element>
     </xsl:if>
+    <xsl:variable name="listcontents">
     <xsl:choose>
       <xsl:when test="@type='catalogue'">
         <p>
@@ -627,7 +629,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:call-template name="makeRendition">
               <xsl:with-param name="default">false</xsl:with-param>
             </xsl:call-template>
-            <xsl:for-each select="tei:item">
+            <xsl:for-each select="*[not(self::tei:head)]">
               <p/>
               <xsl:apply-templates mode="gloss" select="."/>
             </xsl:for-each>
@@ -636,7 +638,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="@type='gloss' and tei:match(@rend,'multicol')">
         <xsl:variable name="nitems">
-          <xsl:value-of select="count(tei:item)div 2"/>
+          <xsl:value-of select="count(tei:item) div 2"/>
         </xsl:variable>
         <p>
           <table>
@@ -663,7 +665,8 @@ of this software, even if advised of the possibility of such damage.
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>
           </xsl:call-template>
-          <xsl:apply-templates mode="gloss" select="tei:item"/>
+          <xsl:apply-templates mode="gloss"
+			       select="*[not(self::tei:head)]"/>
         </dl>
       </xsl:when>
       <xsl:when test="tei:isGlossTable(.)">
@@ -671,7 +674,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>
           </xsl:call-template>
-          <xsl:apply-templates mode="glosstable" select="tei:item"/>
+          <xsl:apply-templates mode="glosstable" select="*[not(self::tei:head)]"/>
         </table>
       </xsl:when>
       <xsl:when test="tei:isInlineList(.)">
@@ -699,9 +702,27 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:element>
       </xsl:otherwise>
     </xsl:choose>
+    </xsl:variable>
+    <xsl:apply-templates mode="inlist" select="$listcontents"/>
   </xsl:template>
+
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="inlist">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="ul/span" mode="inlist"/>
+  <xsl:template match="ol/span" mode="inlist"/>
+  <xsl:template match="dl/span" mode="inlist"/>
+
+  <xsl:template match="*[not(self::tei:span)]" mode="inlist">
+    <xsl:copy>
+      <xsl:copy-of select="preceding-sibling::*[1][self::tei:span]"/>
+      <xsl:apply-templates mode="inlist" select="@*|*|text()|comment()|processing-instruction()"/>
+    </xsl:copy>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element list/tei:label</desc>
+    <desc>Bypass element list/label</desc>
   </doc>
   <xsl:template match="tei:list/tei:label"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -942,8 +963,10 @@ of this software, even if advised of the possibility of such damage.
 		      parent::tei:salute or
 		      parent::tei:head/parent::tei:list or 
 		      parent::tei:q/parent::tei:div or 
-		      parent::tei:div or 
-		      parent::tei:l">
+                      parent::tei:div or 
+                      parent::tei:l or
+		      parent::tei:bibl/parent::tei:q/parent::tei:p
+		       ">
         <div class="{if (@place) then if (contains(@place,'right'))
 		     then 'notemarginRight' else 'notemarginLeft' else 'notemarginLeft'}">
           <xsl:call-template name="makeAnchor">
