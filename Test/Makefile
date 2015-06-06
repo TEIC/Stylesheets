@@ -85,7 +85,7 @@ test-to-html: css
 	xmllint --format files/two.html > x ; mv x files/two.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r  files expected-results/testnotes3
-	$(SAXON) -o:test24.html test24.xml ../html/html.xsl $(SAXONOPT)
+	$(SAXON) test24.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > test24.html
 	diff test24.html expected-results/test24.html
 	$(SAXON) test25.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > test25.html 
 	diff test25.html expected-results/test25.html

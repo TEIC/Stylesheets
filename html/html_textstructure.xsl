@@ -2330,7 +2330,6 @@ function click(d) {
 	<xsl:apply-templates select="tei:text/tei:body"/>
 	<xsl:comment>TEI back</xsl:comment>
 	<xsl:apply-templates select="tei:text/tei:back"/>
-      <xsl:call-template name="printNotes"/>
       </xsl:otherwise>
     </xsl:choose>
       <xsl:call-template name="printNotes"/>
