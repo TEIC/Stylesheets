@@ -57,7 +57,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-    <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
+    <xsl:param name="publisher">University of Oxford Text Archive</xsl:param>
     <xsl:param name="numberHeadings">false</xsl:param>
     <xsl:param name="numberHeadingsDepth">-1</xsl:param>
     <xsl:param name="numberBackHeadings"></xsl:param>
@@ -131,4 +131,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="autoBlockQuote">true</xsl:param>
   <xsl:param name="autoBlockQuoteLength">150</xsl:param>
 
+  <xsl:function name="tei:escapeChars" as="xs:string">
+     <xsl:param name="letters"/>
+     <xsl:param name="context"/>
+     <xsl:value-of select="translate($letters,'ſ','s')"/>
+  </xsl:function>
 </xsl:stylesheet>
