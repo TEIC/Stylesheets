@@ -722,12 +722,18 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="html:ol/html:span" mode="inlist"/>
   <xsl:template match="html:dl/html:span" mode="inlist"/>
 
-  <xsl:template match="*[not(self::html:span)]" mode="inlist">
-	<xsl:copy>
-	  <xsl:apply-templates mode="inlist" select="@*"/>
-	  <xsl:copy-of select="preceding-sibling::*[1][self::html:span]"/>
-	  <xsl:apply-templates mode="inlist" select="*|text()|comment()|processing-instruction()"/>
-	</xsl:copy>
+  <xsl:template match="html:li|html:dt" mode="inlist">
+    <xsl:copy>
+      <xsl:apply-templates mode="inlist" select="@*"/>
+      <xsl:copy-of select="preceding-sibling::*[1][self::html:span]"/>
+      <xsl:apply-templates mode="inlist" select="*|text()|comment()|processing-instruction()"/>
+    </xsl:copy>
+  </xsl:template>
+  <xsl:template match="*" mode="inlist">
+    <xsl:copy>
+      <xsl:apply-templates mode="inlist" select="@*"/>
+      <xsl:apply-templates mode="inlist" select="*|text()|comment()|processing-instruction()"/>
+    </xsl:copy>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
