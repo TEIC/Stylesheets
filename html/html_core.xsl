@@ -703,6 +703,14 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
     </xsl:variable>
+    <!--
+	<xsl:variable name="n">
+      <xsl:number level="any"/>
+    </xsl:variable>
+    <xsl:result-document href="/tmp/list{$n}.xml">
+      <xsl:copy-of select="$listcontents"/>
+      </xsl:result-document>
+      -->
     <xsl:apply-templates mode="inlist" select="$listcontents"/>
   </xsl:template>
 
@@ -710,15 +718,16 @@ of this software, even if advised of the possibility of such damage.
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="ul/span" mode="inlist"/>
-  <xsl:template match="ol/span" mode="inlist"/>
-  <xsl:template match="dl/span" mode="inlist"/>
+  <xsl:template match="html:ul/html:span" mode="inlist"/>
+  <xsl:template match="html:ol/html:span" mode="inlist"/>
+  <xsl:template match="html:dl/html:span" mode="inlist"/>
 
-  <xsl:template match="*[not(self::tei:span)]" mode="inlist">
-    <xsl:copy>
-      <xsl:copy-of select="preceding-sibling::*[1][self::tei:span]"/>
-      <xsl:apply-templates mode="inlist" select="@*|*|text()|comment()|processing-instruction()"/>
-    </xsl:copy>
+  <xsl:template match="*[not(self::html:span)]" mode="inlist">
+	<xsl:copy>
+	  <xsl:apply-templates mode="inlist" select="@*"/>
+	  <xsl:copy-of select="preceding-sibling::*[1][self::html:span]"/>
+	  <xsl:apply-templates mode="inlist" select="*|text()|comment()|processing-instruction()"/>
+	</xsl:copy>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
