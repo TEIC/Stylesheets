@@ -217,8 +217,8 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="$currentDirectory=''">
 	  <xsl:value-of select="resolve-uri($loc,base-uri($top))"/>
 	</xsl:when>
-        <xsl:when test="$loc = $DEFAULTSOURCE">
-          <xsl:value-of select="resolve-uri($loc)"/>
+  <xsl:when test="starts-with($loc,'/')">
+      <xsl:value-of select="resolve-uri($loc)"/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:value-of select="resolve-uri(string-join(($currentDirectory, $loc), '/'),base-uri($top))"/>
