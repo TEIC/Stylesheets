@@ -1407,7 +1407,7 @@ select="$makeDecls"/></xsl:message>
               <data type="Name"/>
 	    </xsl:when>
             <xsl:otherwise>
-              <xsl:apply-templates select="tei:datatype/rng:*"/>
+              <xsl:apply-templates select="tei:datatype/*"/>
             </xsl:otherwise>
           </xsl:choose>
         </choice>
@@ -2146,7 +2146,43 @@ select="$makeDecls"/></xsl:message>
   <xsl:template match="tei:interleave"   mode="#default tangle">
     <xsl:message>met an interleave</xsl:message>
   </xsl:template>
-  <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef|tei:dataRef"   mode="#default tangle">
+
+  <xsl:template match="tei:dataRef"   mode="#default tangle">
+    <xsl:variable name="wrapperElement"
+		  select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <xsl:variable name="min" select="if (not(@minOccurs)) then 1 else
+				     if (@minOccurs='0') then 1 else @minOccurs" as="xs:integer"/>
+    <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
+    <xsl:variable name="c">
+      <xsl:choose>
+	<xsl:when test="@name">
+	  <data type="{@name}"/>
+	</xsl:when>
+	<xsl:when test="@key">
+	  <xsl:variable name="context" select="."/>
+	    <xsl:for-each select="key('CLASSMEMBERS',@key)">
+	      <xsl:if test="key('IDENTS',@ident)">
+		<xsl:apply-templates select="*"/>
+	      </xsl:if>
+	    </xsl:for-each>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:for-each select="1 to $min">
+      <xsl:choose>
+	<xsl:when test="string-length($wrapperElement)=0">
+	  <xsl:copy-of select="$c"/>
+	</xsl:when>
+      <xsl:otherwise>
+        <xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
+	  <xsl:copy-of select="$c"/>
+        </xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef"   mode="#default tangle">
     <xsl:variable name="prefixedName" select="tei:generateRefPrefix(.)"/>
     <xsl:variable name="wrapperElement"
 		  select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
