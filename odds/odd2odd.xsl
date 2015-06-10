@@ -205,6 +205,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="starts-with($loc,'https:')">
 	  <xsl:value-of select="$loc"/>
 	</xsl:when>
+	<xsl:when test="starts-with($loc,'/')">
+	  <xsl:value-of select="resolve-uri($loc)"/>
+	</xsl:when>
 	<xsl:when test="starts-with($loc,'tei:')">
 	  <xsl:value-of
 	      select="replace($loc,'tei:',$defaultTEIServer)"/>
