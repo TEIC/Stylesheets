@@ -666,7 +666,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:with-param name="default">false</xsl:with-param>
           </xsl:call-template>
           <xsl:apply-templates mode="gloss"
-			       select="*[not(self::tei:head)]"/>
+			       select="*[not(self::tei:head or self::tei:trailer)]"/>
         </dl>
       </xsl:when>
       <xsl:when test="tei:isGlossTable(.)">
@@ -674,19 +674,20 @@ of this software, even if advised of the possibility of such damage.
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>
           </xsl:call-template>
-          <xsl:apply-templates mode="glosstable" select="*[not(self::tei:head)]"/>
+          <xsl:apply-templates mode="glosstable"
+			       select="*[not(self::tei:head  or self::tei:trailer)]"/>
         </table>
       </xsl:when>
       <xsl:when test="tei:isInlineList(.)">
-        <xsl:apply-templates select="*[not(self::tei:head)]"  mode="inline"/>
+        <xsl:apply-templates select="*[not(self::tei:head or self::tei:trailer)]"  mode="inline"/>
       </xsl:when>
       <xsl:when test="@type='inline' or @type='runin'">
         <p>
-          <xsl:apply-templates select="*[not(self::tei:head)]"  mode="inline"/>
+          <xsl:apply-templates select="*[not(self::tei:head or self::tei:trailer)]"  mode="inline"/>
         </p>
       </xsl:when>
       <xsl:when test="@type='bibl'">
-        <xsl:apply-templates select="*[not(self::tei:head)]"  mode="bibl"/>
+        <xsl:apply-templates select="*[not(self::tei:head or self::tei:trailer)]"  mode="bibl"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:element name="{if (tei:isOrderedList(.)) then 'ol' else 'ul'}">
@@ -698,8 +699,9 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="substring-after(@type,':')"/>
             </xsl:attribute>
           </xsl:if>
-          <xsl:apply-templates select="*[not(self::tei:head)]" />
+          <xsl:apply-templates select="*[not(self::tei:head or self::tei:trailer)]" />
 	</xsl:element>
+          <xsl:apply-templates select="tei:trailer" />
       </xsl:otherwise>
     </xsl:choose>
     </xsl:variable>
@@ -721,11 +723,14 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="html:ul/html:span" mode="inlist"/>
   <xsl:template match="html:ol/html:span" mode="inlist"/>
   <xsl:template match="html:dl/html:span" mode="inlist"/>
+  <xsl:template match="html:ul/html:br" mode="inlist"/>
+  <xsl:template match="html:ol/html:br" mode="inlist"/>
+  <xsl:template match="html:dl/html:br" mode="inlist"/>
 
   <xsl:template match="html:li|html:dt" mode="inlist">
     <xsl:copy>
       <xsl:apply-templates mode="inlist" select="@*"/>
-      <xsl:copy-of select="preceding-sibling::*[1][self::html:span]"/>
+      <xsl:copy-of select="preceding-sibling::*[1][self::html:span] | preceding-sibling::*[1][self::html:br]"/>
       <xsl:apply-templates mode="inlist" select="*|text()|comment()|processing-instruction()"/>
     </xsl:copy>
   </xsl:template>
@@ -980,6 +985,7 @@ of this software, even if advised of the possibility of such damage.
 		      parent::tei:q/parent::tei:div or 
                       parent::tei:div or 
                       parent::tei:l or
+		      parent::tei:bibl/parent::tei:q/parent::tei:epigraph or
 		      parent::tei:bibl/parent::tei:q/parent::tei:p
 		       ">
         <div class="{if (@place) then if (contains(@place,'right'))
