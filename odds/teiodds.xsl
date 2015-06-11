@@ -1349,10 +1349,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:apply-templates/>
   </xsl:template>
 
-
-
   <xsl:template name="attributeData">
-        <xsl:message>looking at <xsl:value-of select="(@name,@key)"/> on    <xsl:value-of select="(ancestor-or-self::*/@ident)"/></xsl:message>
     <xsl:choose>
       <xsl:when test="tei:valList[@type='closed']">
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
