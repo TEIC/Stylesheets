@@ -1401,6 +1401,9 @@ select="$makeDecls"/></xsl:message>
             <xsl:when test="tei:datatype/rng:ref[@name='data.enumerated']">
               <data type="Name"/>
             </xsl:when>
+	    <xsl:when test="tei:dataRef">
+              <xsl:apply-templates select="tei:dataRef"/>
+	    </xsl:when>
 	    <xsl:when test="not(tei:datatype)">
               <data type="Name"/>
 	    </xsl:when>
@@ -1412,6 +1415,9 @@ select="$makeDecls"/></xsl:message>
       </xsl:when>
       <xsl:when test="tei:datatype/*">
         <xsl:apply-templates select="tei:datatype/*"/>
+      </xsl:when>
+      <xsl:when test="tei:dataRef">
+        <xsl:apply-templates select="tei:dataRef"/>
       </xsl:when>
       <xsl:otherwise>
         <text xmlns="http://relaxng.org/ns/structure/1.0"/>
