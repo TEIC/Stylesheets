@@ -599,13 +599,15 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="$target"/>
 	</xsl:processing-instruction>
 	<xsl:choose>
-          <xsl:when test="(count(.//text()) &lt; 2) or (count(tei:ref) &gt; 1)">
+          <xsl:when test="(count(.//text()) &lt; 3) or (count(tei:ref) &gt; 1)">
             <xsl:apply-templates mode="pass2"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="(.//text())[1]"/>
+            <xsl:value-of select="./text()[1]|(.//node()[not(self::tei:ref) and self::text()])[1]"/>
             <xsl:apply-templates select="*" mode="pass2"/>
-            <xsl:value-of select="remove(text(), 1)"/>
+            <xsl:if test="./text()[last()]">
+              <xsl:value-of select="(.//node()[not(self::tei:ref) and self::text()])[last()]"/>
+            </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
