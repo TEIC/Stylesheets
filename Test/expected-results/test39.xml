@@ -15,12 +15,12 @@
         <p>unknown</p>
       </publicationStmt>
       <sourceDesc>
-        <p>Converted from a Word document </p>
+        <p>Converted from a Word document</p>
       </sourceDesc>
     </fileDesc>
     <encodingDesc>
       <appInfo>
-        <application xml:id="doxtotei" ident="TEI_fromDOCX" version="2.15.0">
+        <application xml:id="docxtotei" ident="TEI_fromDOCX" version="2.15.0">
           <label>DOCX to TEI</label>
         </application>
       </appInfo>
@@ -147,7 +147,7 @@
           <head><anchor xml:id="Toc382049197"/>Basic formatting</head>
           <p>Plain paragraphs are converted to <hi rend="underline">p</hi>. Empty paragraphs are removed even if they contain white-space, e.g:</p>
           <p>All types of links (to <ref target="http://nl.ijs.si/tei/convert/">web pages</ref>, <ref target="mailto:tomaz.erjavec@ijs.si">mail addresses</ref>, and document-internal cross-references, e.g. to the section on TEI element styles) should be converted correctly. References to documents on disk will of course not work.</p>
-          <p>Formatting is converted to the value of <hi rend="underline">hi/@rend</hi>: <hi rend="bold">bold</hi>, <hi rend="italic">italic</hi>, <hi rend="underline">underline</hi>, and <hi rend="strikethrough">strikethrough</hi> are preserved, also if more than one style is used, e.g. <hi rend="italic bold underline">italic bold underline</hi>. Colours are also converted: <hi rend="background(yellow)">rumeno ozadje</hi>, <hi rend="color(FF0000)">rdeča</hi>, <hi rend="color(92D050)">svetlozelena</hi>, <hi rend="color(C00000)">temno rdeča</hi>, <hi rend="color(FFC000)">oranžna</hi>, <hi rend="color(FFFF00)">rumena</hi>, <hi rend="color(00B0F0)">svetlomodra</hi>, <hi rend="color(0070C0)">modra</hi>, <hi rend="color(7030A0)">vijolična, </hi><hi rend="italic bold underline color(76923C)">podčrtana, krepka in nenavadna</hi>. The exact details, such as the colour of <hi rend="wavyunderline">underline</hi> and more <hi rend="bold">fancy text effects</hi> are not preserved. </p>
+          <p>Formatting is converted to the value of <hi rend="underline">hi/@rend</hi>: <hi rend="bold">bold</hi>, <hi rend="italic">italic</hi>, <hi rend="underline">underline</hi>, and <hi rend="strikethrough">strikethrough</hi> are preserved, also if more than one style is used, e.g. <hi rend="italic bold underline">italic bold underline</hi>. Colours are also converted: <hi rend="background(yellow)">rumeno ozadje</hi>, <hi rend="color(FF0000)">rdeča</hi>, <hi rend="color(92D050)">svetlozelena</hi>, <hi rend="color(C00000)">temno rdeča</hi>, <hi rend="color(FFC000)">oranžna</hi>, <hi rend="color(FFFF00)">rumena</hi>, <hi rend="color(00B0F0)">svetlomodra</hi>, <hi rend="color(0070C0)">modra</hi>, <hi rend="color(7030A0)" xml:space="preserve">vijolična, </hi><hi rend="italic bold underline color(76923C)">podčrtana, krepka in nenavadna</hi>. The exact details, such as the colour of <hi rend="wavyunderline">underline</hi> and more <hi rend="bold">fancy text effects</hi> are not preserved. </p>
         </div>
         <div>
           <head><anchor xml:id="Toc382049198"/>Character level styles</head>
@@ -382,7 +382,7 @@
             <item>Basic style (elements) supported are <hi rend="italic">tei:bibl</hi> (<hi rend="underline">bibl</hi>), <hi rend="italic">tei:foreign</hi> (<hi rend="underline">foreign</hi>), <hi rend="italic">tei:q</hi> (<hi rend="underline">q</hi>), e.g.:<lb/>“text <bibl>Bibl</bibl> text <foreign>Foreign</foreign> text <q>Quoted</q> text”.</item>
             <item>There is also <hi rend="italic">tei:quote</hi>, which is used when a <hi rend="underline">quote</hi> is to be used on the character level (note that for paragraph level <hi rend="underline">quote</hi> one must use the default Word <hi rend="italic">Quote</hi> style, as explained in the Section on Paragraph level styles),  e.g.:<lb/>“text <quote>Longer quoted text</quote> and some text”.</item>
             <item>Named entities are marked with <hi rend="italic">tei:name</hi> (<hi rend="underline">name</hi>), <hi rend="italic">tei:persName</hi> (<hi rend="underline">name[@type="person"]</hi>), <hi rend="italic">tei:placeName</hi> (<hi rend="underline">name[@type="place"]</hi>), <hi rend="italic">tei:orgName</hi> (<hi rend="underline">name[@type="org"]</hi>), e.g.:<lb/>“text <name>Name</name> text <persName>Person</persName> text <placeName>Place</placeName> text <orgName>Organisation</orgName> text”.</item>
-            <item>Text-critical elements with eponymous names (note that the text marked with <hi rend="italic">tei:gap</hi> goes to <hi rend="underline">gap/desc</hi>, i.e. a description of the gapped text<hi rend="underline">)</hi>, e.g.:<lb/>“text <damage>Damage</damage> text <gap><desc>Gap (description of) </desc></gap> text <supplied>Supplied</supplied> text <surplus>Surplus</surplus> text <unclear>Unclear</unclear> text”.</item>
+            <item>Text-critical elements with eponymous names (note that the text marked with <hi rend="italic">tei:gap</hi> goes to <hi rend="underline">gap/desc</hi>, i.e. a description of the gapped text<hi rend="underline">)</hi>, e.g.:<lb/>“text <damage>Damage</damage> text <gap><desc xml:space="preserve">Gap (description of) </desc></gap> text <supplied>Supplied</supplied> text <surplus>Surplus</surplus> text <unclear>Unclear</unclear> text”.</item>
           </list>
           <p>Note that if we have several such elements in a row there should be at least one character in between marked with <hi rend="italic">Normal</hi> style in order to separate them. For example, (<bibl>Pančur, 2011, 45-47; Erjavec, 2012, 30</bibl>) will produce one <hi rend="underline">bibl</hi>, whereas (<bibl>Pančur, 2011, 45-47</bibl>; <bibl>Erjavec, 2012, 30</bibl>) will produce two; the difference is in the semicolon, it is marked with the <hi rend="italic">tei:bibl</hi> style in the former and <hi rend="italic">Normal</hi> in the latter.<note place="foot" xml:id="ftn3" n="3"><p rend="footnote text"> It is also possible to have character-level styles in notes, e.g., <bibl>AUMÜLLER, Jutta: Assimilation: Kontroversen um ein migrationspolitisches Konzept. Bielefeld: Transcript Verlag, 2009</bibl>.</p></note></p>
           <div>
@@ -393,7 +393,7 @@
               <item><anchor xml:id="foo"/><anchor xml:id="adddel"/>For deletions and additions in the source text use <hi rend="italic">tei:del</hi> (<hi rend="underline">del</hi>) and <hi rend="italic">tei:add</hi> (<hi rend="underline">add</hi>):<lb/>“<del>Delete</del> text <del>Delete</del> <add>Add</add>, text <add>Add</add> <del>Delete</del>, text <del>Delete</del> <add>Add</add> <del>Delete</del> <add>Add</add>, text <add>Add</add>”.</item>
               <item>For abbreviations and their expansions use <hi rend="italic">tei:abbr</hi> (<hi rend="underline">abbr</hi>) and <hi rend="italic">tei:expan</hi> (<hi rend="underline">expan</hi>):<lb/>“<abbr>Abbreviation</abbr> text <abbr>Abbreviation</abbr> <expan>Expansion</expan>, text <expan>Expansion</expan>”.</item>
               <item>For original and regularised text use <hi rend="italic">tei:orig</hi> (orig) and <hi rend="italic">tei:reg</hi> (<hi rend="underline">reg</hi>):<lb/>“<orig>Orig</orig> text <orig>Orig</orig> <reg>Regularised</reg>, text <reg>Regularised</reg>”.</item>
-              <item>For abbreviations and their expansions use <hi rend="italic">tei:abbr</hi> (<hi rend="underline">abbr</hi>) and <hi rend="italic">tei:expan</hi> (<hi rend="underline">expan</hi>):<lb/>“<sic>Sic </sic>text <sic>Sic</sic> <corr>Corr </corr><sic>Sic</sic> <corr>Corr </corr><sic>Sic</sic> <corr>Corr</corr>, text <corr>Corr</corr>”.</item>
+              <item>For abbreviations and their expansions use <hi rend="italic">tei:abbr</hi> (<hi rend="underline">abbr</hi>) and <hi rend="italic">tei:expan</hi> (<hi rend="underline">expan</hi>):<lb/>“<sic xml:space="preserve">Sic </sic>text <sic>Sic</sic> <corr>Corr </corr><sic>Sic</sic> <corr>Corr </corr><sic>Sic</sic> <corr>Corr</corr>, text <corr>Corr</corr>”.</item>
             </list>
           </div>
         </div>
@@ -429,7 +429,7 @@
             <item><hi rend="underline">pb</hi>’s at start / end of elements should be promoted upwards as far as they go (and containing elements zapped if then empty) //fixed locally in pass4//</item>
             <item>footnotes are numbered wrongly, as the take note/@n = w:footnoteReference/@w:id but w:id is not necessarily the correct number of the footnote //fixed locally in pass2//</item>
             <item>Embedded Excel spreadsheets are not converted.</item>
-            <item>Problems with (phrase level) elements containing initial or final space, which should go outside the element, e.g. “foo&lt;term&gt; bar &lt;/term&gt;baz” → “foo &lt;term&gt;bar&lt;/term&gt; baz”, otherwise some injudicious use of normalize-space quickly produces run-together text, e.g. “foo&lt;term&gt;bar&lt;/term&gt;baz”. Example: “text<sic> Sic </sic>text” </item>
+            <item>Problems with (phrase level) elements containing initial or final space, which should go outside the element, e.g. “foo&lt;term&gt; bar &lt;/term&gt;baz” → “foo &lt;term&gt;bar&lt;/term&gt; baz”, otherwise some injudicious use of normalize-space quickly produces run-together text, e.g. “foo&lt;term&gt;bar&lt;/term&gt;baz”. Example: “text<sic xml:space="preserve"> Sic </sic>text” </item>
             <item>
               <pb/>
             </item>

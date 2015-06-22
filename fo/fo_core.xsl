@@ -428,7 +428,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:cit">
     <xsl:choose>
-      <xsl:when test="tei:match(@rend,'display')">
+      <xsl:when test="tei:match(@rend,'display') or tei:match(@rend,'block')">
 	<block font-size="8pt">
 	  <xsl:apply-templates/>
 	</block>
@@ -561,6 +561,24 @@ of this software, even if advised of the possibility of such damage.
             <block end-indent="0pt" start-indent="0pt" text-align="start" font-style="normal"
                    text-indent="{$parIndent}"
                    font-size="{$footnoteSize}">
+              <xsl:attribute name="line-height">
+                <xsl:choose>
+                  <xsl:when test="$lineheightApplicationRules = ('footnote', 'all')">
+                    <xsl:choose>
+                      <xsl:when test="ancestor::tei:front">
+                        <xsl:value-of select="$lineheightFrontpage"/>
+                      </xsl:when>
+                      <xsl:when test="ancestor::tei:body">
+                        <xsl:value-of select="$lineheightBodypage"/>
+                      </xsl:when>
+                      <xsl:when test="ancestor::tei:back">
+                        <xsl:value-of select="$lineheightBackpage"/>
+                      </xsl:when>
+                    </xsl:choose>
+                  </xsl:when>
+                  <xsl:otherwise>normal</xsl:otherwise>
+                </xsl:choose>
+              </xsl:attribute>
               <xsl:if test="@xml:id">
                   <xsl:attribute name="id">
                      <xsl:value-of select="@xml:id"/>
@@ -585,6 +603,21 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:p">
       <block>
+         <xsl:if test="not(parent::tei:note)">
+            <xsl:attribute name="line-height">
+               <xsl:choose>
+                  <xsl:when test="ancestor::tei:front">
+                     <xsl:value-of select="$lineheightFrontpage"/>
+                  </xsl:when>
+                  <xsl:when test="ancestor::tei:body">
+                     <xsl:value-of select="$lineheightBodypage"/>
+                  </xsl:when>
+                  <xsl:when test="ancestor::tei:back">
+                     <xsl:value-of select="$lineheightBackpage"/>
+                  </xsl:when>
+               </xsl:choose>
+            </xsl:attribute>
+         </xsl:if>
          <xsl:if test="preceding-sibling::tei:p">
             <xsl:attribute name="text-indent">
                <xsl:value-of select="$parIndent"/>
@@ -653,6 +686,24 @@ of this software, even if advised of the possibility of such damage.
              font-size="{$quoteSize}"
              space-before.optimum="{$exampleBefore}"
              space-after.optimum="{$exampleAfter}">
+        <xsl:attribute name="line-height">
+          <xsl:choose>
+            <xsl:when test="$lineheightApplicationRules = ('block-quote', 'all')and (not(parent::tei:note) or $lineheightApplicationRules = 'note')">
+              <xsl:choose>
+                <xsl:when test="ancestor::tei:front">
+                  <xsl:value-of select="$lineheightFrontpage"/>
+                </xsl:when>
+                <xsl:when test="ancestor::tei:body">
+                  <xsl:value-of select="$lineheightBodypage"/>
+                </xsl:when>
+                <xsl:when test="ancestor::tei:back">
+                  <xsl:value-of select="$lineheightBackpage"/>
+                </xsl:when>
+              </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>normal</xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
 	<xsl:if test="@xml:id">
 	  <xsl:attribute name="id">
 	    <xsl:value-of select="@xml:id"/>

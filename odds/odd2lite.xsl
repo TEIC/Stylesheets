@@ -460,7 +460,8 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="$summaryDoc='true'">
 	   <div>
 	     <head>Schema <xsl:value-of select="@ident"/>: Added components</head>
-	     <xsl:for-each select="tei:classSpec[@rend ='add']  
+	     <xsl:for-each select="tei:constraintSpec[@rend ='add']  
+				   | tei:classSpec[@rend ='add']  
 				   | tei:macroSpec[@rend ='add']  
 				   | tei:elementSpec[@rend ='add']">
 	       <xsl:sort select="@ident"/>
@@ -469,7 +470,8 @@ of this software, even if advised of the possibility of such damage.
 	   </div>
 	   <div>
 	     <head>Schema <xsl:value-of select="@ident"/>: changed components</head>
-	     <xsl:for-each select="tei:classSpec[@mode='change' or tei:match(@rend,'change')]  
+	     <xsl:for-each select="tei:constraintSpec[@mode='change' or			   tei:match(@rend,'change')]  
+				   | tei:classSpec[@mode='change' or tei:match(@rend,'change')]  
 				   | tei:macroSpec[(@mode='change' or tei:match(@rend,'change'))]  
 				   | tei:elementSpec[(@mode='change' or tei:match(@rend,'change'))]">
 	       <xsl:sort select="@ident"/>
@@ -479,7 +481,8 @@ of this software, even if advised of the possibility of such damage.
 	   <div>
 	   <head>Schema <xsl:value-of select="@ident"/>:  unchanged components</head>
 	   <table>
-	     <xsl:for-each select="tei:classSpec[not(@mode or @rend)]  
+	     <xsl:for-each select="tei:constraintSpec[not(@mode or @rend)]  
+				   | tei:classSpec[not(@mode or @rend)]  
 				   | tei:macroSpec[not(@mode or  @rend)]  
 				   | tei:elementSpec[not(@mode or @rend)]">
 	       <xsl:sort select="@ident"/>
@@ -529,6 +532,16 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:apply-templates mode="weave" select="tei:macroSpec">
 		 <xsl:sort select="@ident"/>
 	       </xsl:apply-templates>
+	     </div>
+	   </xsl:if>
+	   <xsl:if test="tei:constraintSpec">
+	     <div>
+	       <head>Constraints</head>
+	       <table rend="wovenodd">
+		 <xsl:apply-templates mode="weave" select="tei:constraintSpec">
+		   <xsl:sort select="@ident"/>
+		 </xsl:apply-templates>
+	       </table>
 	     </div>
 	   </xsl:if>
 	 </xsl:otherwise>

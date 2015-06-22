@@ -15,7 +15,7 @@
     <xsl:param name="divOffset">1</xsl:param>
     <xsl:param name="langAttributeName">lang</xsl:param>
     <xsl:param name="doclang"/>
-    <xsl:output method="xml" encoding="utf-8"/>
+
     <xsl:template match="/">
 	<xsl:call-template name="processTEI"/>
     </xsl:template>

@@ -146,7 +146,7 @@ of this software, even if advised of the possibility of such damage.
                </xsl:attribute>
                <xsl:comment>
                   <xsl:text>&#10;Schema generated from ODD source </xsl:text>
-                  <xsl:call-template name="whatsTheDate"/>
+                  <xsl:sequence select="tei:whatsTheDate()"/>
                   <xsl:text>. </xsl:text>
 		  <xsl:value-of
 		      select="(/tei:TEI/tei:text/tei:front/tei:titlePage/tei:docDate,'.')"
@@ -176,7 +176,7 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:message>start importing moduleRef components</xsl:message>
 	   </xsl:if>
 	   <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
-	   <xsl:for-each select="tei:macroSpec">
+	   <xsl:for-each select="tei:macroSpec|tei:dataSpec">
 	     <xsl:apply-templates mode="tangle" select="."/>
 	   </xsl:for-each>
 	   <xsl:apply-templates mode="tangle" select="tei:elementSpec|tei:classSpec"/>
@@ -238,7 +238,7 @@ of this software, even if advised of the possibility of such damage.
                               datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
                         <xsl:comment>
                            <xsl:text>Schema generated </xsl:text>
-                           <xsl:call-template name="whatsTheDate"/>
+                           <xsl:sequence select="tei:whatsTheDate()"/>
                            <xsl:call-template name="makeTEIVersion"/>
 			   <xsl:call-template name="copyright"/>
                            <xsl:sequence select="tei:makeDescription(.,true())"/>
@@ -611,6 +611,53 @@ of this software, even if advised of the possibility of such damage.
       <xsl:copy>
          <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
       </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="tei:valList"   mode="#default tangle">
+    <xsl:for-each select="tei:valItem">
+        <rng:value>
+          <xsl:value-of select="tei:createSpecName(.)"/>
+        </rng:value>
+    </xsl:for-each>
+  </xsl:template>
+
+    <xsl:template match="tei:dataRef"   mode="#default tangle">
+      <xsl:variable name="wrapperElement"
+		  select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <xsl:variable name="min" select="if (not(@minOccurs)) then 1 else
+				     if (@minOccurs='0') then 1 else @minOccurs" as="xs:integer"/>
+    <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
+    <xsl:variable name="c">
+      <xsl:choose>
+	<xsl:when test="@name">
+	  <rng:data type="{@name}">
+	    <xsl:if test="@restriction">
+	      <rng:param name ="pattern" >
+		<xsl:value-of select="@restriction"/>
+	      </rng:param>
+	    </xsl:if>
+	  </rng:data>
+	</xsl:when>
+	<xsl:when test="@key">
+	  <xsl:variable name="context" select="."/>
+	    <xsl:for-each select="key('LOCALIDENTS',@key)">
+		<xsl:apply-templates select="*"/>
+	    </xsl:for-each>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:for-each select="1 to $min">
+      <xsl:choose>
+	<xsl:when test="string-length($wrapperElement)=0">
+	  <xsl:copy-of select="$c"/>
+	</xsl:when>
+      <xsl:otherwise>
+        <xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
+	  <xsl:copy-of select="$c"/>
+        </xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
 
 

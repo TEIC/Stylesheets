@@ -367,24 +367,23 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:value-of select="$effects/*" separator=" "/>
 		</xsl:attribute>
 	      </xsl:when>
-	      <!--
-	      <xsl:when test="$preserveEffects='true'">
-		<xsl:attribute name="rend">
-		  <xsl:text>preserveEffects</xsl:text>
-		</xsl:attribute>
-	      </xsl:when>
-	      -->
 	    </xsl:choose>
 	    <xsl:if test="$styles/* and $preserveEffects='true'">
 	      <xsl:attribute name="style">
 		<xsl:value-of select="($styles/*)" separator=";"/>
 	      </xsl:attribute>
 	    </xsl:if>
+	    <xsl:if test="w:t[@xml:space='preserve']">
+	      <xsl:attribute name="xml:space">preserve</xsl:attribute>
+  	    </xsl:if>
 	    <xsl:apply-templates/>
 	  </xsl:element>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:apply-templates/>
+	    <xsl:if test="w:t[@xml:space='preserve'] and $parented='true'">
+	      <xsl:attribute name="xml:space">preserve</xsl:attribute>
+	    </xsl:if>
+	    <xsl:apply-templates/>
 	</xsl:otherwise> 
       </xsl:choose>
     </xsl:template>
@@ -406,13 +405,13 @@ of this software, even if advised of the possibility of such damage.
         <xsl:variable name="t">
             <xsl:choose>
                 <xsl:when test="@xml:space='preserve' and string-length(normalize-space(.))=0">
-                    <seg><xsl:text> </xsl:text></seg>
+		  <seg><xsl:value-of select="."/></seg>
                 </xsl:when>
                 <xsl:when test="@xml:space='preserve'">
                     <xsl:value-of select="."/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="normalize-space(.)"/>
+                  <xsl:value-of select="normalize-space(.)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>

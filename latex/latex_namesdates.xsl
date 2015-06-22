@@ -58,7 +58,7 @@ of this software, even if advised of the possibility of such damage.
     \item <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="tei:affiliation">
+  <xsl:template match="tei:affiliation|tei:email">
       <xsl:text>\mbox{}\\ </xsl:text>
       <xsl:apply-templates/>
   </xsl:template>

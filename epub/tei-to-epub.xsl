@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:smil="http://www.w3.org/ns/SMIL" xmlns:opf="http://www.idpf.org/2007/opf" xmlns:iso="http://www.iso.org/ns/1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/" version="2.0" exclude-result-prefixes="iso tei teix dc              html opf ncx smil">
+<xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:smil="http://www.w3.org/ns/SMIL" xmlns:opf="http://www.idpf.org/2007/opf" xmlns:iso="http://www.iso.org/ns/1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/" version="2.0" exclude-result-prefixes="#all">
   <xsl:import href="../html/html.xsl"/>
   <xsl:import href="epub-common.xsl"/>
   <xsl:import href="epub-preflight.xsl"/>
@@ -44,7 +44,6 @@ theory of liability, whether in contract, strict liability, or tort
 of this software, even if advised of the possibility of such damage.
 </p>
       <p>Author: See AUTHORS</p>
-      
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
@@ -93,7 +92,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="stage1">
       <xsl:apply-templates mode="preflight"/>
     </xsl:variable>
-
     <xsl:for-each select="$stage1">
       <xsl:call-template name="processTEIHook"/>
       <xsl:variable name="coverImageOutside">
@@ -145,7 +143,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:call-template name="mainTOC"/>
           </TOC>
         </xsl:variable>
-	<!--
+        <!--
 	    <xsl:result-document href="/tmp/TOC">
 	    <xsl:copy-of select="$TOC"/>
 	    </xsl:result-document>
@@ -245,28 +243,27 @@ height: </xsl:text>
           <xsl:message>write file OPS/content.opf</xsl:message>
         </xsl:if>
         <xsl:result-document href="{concat($directory,'/OPS/content.opf')}" method="xml">
-	  <xsl:variable name="A">
-	    <xsl:sequence select="tei:generateAuthor(.)"/>
-	  </xsl:variable>
-	<xsl:variable name="printA">
-	  <xsl:analyze-string select="$A" regex="([^,]+), ([^,]+), (.+)">
-	    <xsl:matching-substring>
-	      <xsl:value-of select="regex-group(1)"/>
-	      <xsl:text>, </xsl:text>
-	      <xsl:value-of select="regex-group(2)"/>
-	    </xsl:matching-substring>
-	    <xsl:non-matching-substring>
-	      <xsl:value-of select="."/>
-	    </xsl:non-matching-substring>
-	  </xsl:analyze-string>
-	</xsl:variable>
-
+          <xsl:variable name="A">
+            <xsl:sequence select="tei:generateAuthor(.)"/>
+          </xsl:variable>
+          <xsl:variable name="printA">
+            <xsl:analyze-string select="$A" regex="([^,]+), ([^,]+), (.+)">
+              <xsl:matching-substring>
+                <xsl:value-of select="regex-group(1)"/>
+                <xsl:text>, </xsl:text>
+                <xsl:value-of select="regex-group(2)"/>
+              </xsl:matching-substring>
+              <xsl:non-matching-substring>
+                <xsl:value-of select="."/>
+              </xsl:non-matching-substring>
+            </xsl:analyze-string>
+          </xsl:variable>
           <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="{$opfPackageVersion}">
-	    <xsl:call-template name="opfmetadata">
-	      <xsl:with-param name="author" select="$A"/>
-	      <xsl:with-param name="printAuthor" select="$printA"/>
-	      <xsl:with-param name="coverImageOutside" select="$coverImageOutside"/>
-	    </xsl:call-template>
+            <xsl:call-template name="opfmetadata">
+              <xsl:with-param name="author" select="$A"/>
+              <xsl:with-param name="printAuthor" select="$printA"/>
+              <xsl:with-param name="coverImageOutside" select="$coverImageOutside"/>
+            </xsl:call-template>
             <manifest>
               <!-- deal with intricacies of overlay files -->
               <xsl:variable name="TL" select="key('Timeline',1)"/>
@@ -340,9 +337,7 @@ height: </xsl:text>
               </xsl:for-each>
               <item href="titlepageback.html" id="titlepageback" media-type="application/xhtml+xml"/>
               <item id="print.css" href="print.css" media-type="text/css"/>
-              <item id="apt" href="page-template.xpgt"
-		    media-type="application/adobe-page-template+xml"
-		    fallback-style="css"/>
+              <item id="apt" href="page-template.xpgt" media-type="application/adobe-page-template+xml" fallback-style="css"/>
               <item id="start" href="index.html" media-type="application/xhtml+xml"/>
               <xsl:choose>
                 <xsl:when test="$filePerPage='true'">
@@ -415,18 +410,17 @@ height: </xsl:text>
               </xsl:for-each>
               <!-- page images -->
               <xsl:for-each select="key('PBGRAPHICS',1)">
-		<xsl:choose>
-		  <xsl:when test="tei:match(@rend,'none')"/>
-		  <xsl:otherwise>
+                <xsl:choose>
+                  <xsl:when test="tei:match(@rend,'none')"/>
+                  <xsl:otherwise>
                     <xsl:variable name="img" select="@facs"/>
                     <xsl:variable name="ID">
                       <xsl:number level="any"/>
                     </xsl:variable>
-                    <item href="{$img}" id="pbimage-{$ID}"
-			  media-type="{tei:generateMimeType($img,@mimeType)}"/>
-		  </xsl:otherwise>
-		</xsl:choose>
-	      </xsl:for-each>
+                    <item href="{$img}" id="pbimage-{$ID}" media-type="{tei:generateMimeType($img,@mimeType)}"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:for-each>
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
               <xsl:call-template name="epubManifestHook"/>
             </manifest>
@@ -504,7 +498,7 @@ height: </xsl:text>
               <reference type="text" href="titlepage.html" title="Cover"/>
               <reference type="text" title="Start" href="index.html"/>
               <xsl:choose>
-                <xsl:when test="$filePerPage='true'"></xsl:when>
+                <xsl:when test="$filePerPage='true'"/>
                 <xsl:otherwise>
                   <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                     <xsl:if test="html:a and not (starts-with(html:a[1]/@href,'#'))">
@@ -570,14 +564,14 @@ height: </xsl:text>
 		      border: solid red 1pt; 
 		      text-align:center;
 		    </xsl:attribute>
-		    <div class="titlepage">
-		      <div class="covertitle">
-			<xsl:sequence select="tei:generateTitle(.)"/>
-		      </div>
-		      <p class="coverauthor">
-			<xsl:sequence select="tei:generateAuthor(.)"/>
-		      </p>
-		    </div>
+                    <div class="titlepage">
+                      <div class="covertitle">
+                        <xsl:sequence select="tei:generateTitle(.)"/>
+                      </div>
+                      <p class="coverauthor">
+                        <xsl:sequence select="tei:generateAuthor(.)"/>
+                      </p>
+                    </div>
                   </div>
                 </xsl:when>
                 <xsl:otherwise>
@@ -600,10 +594,9 @@ height: </xsl:text>
                 <xsl:call-template name="metaHTML">
                   <xsl:with-param name="title">Title page</xsl:with-param>
                 </xsl:call-template>
-                   <xsl:call-template name="linkCSS">
-		  <xsl:with-param
-		      name="file">stylesheet.css</xsl:with-param>
-		</xsl:call-template>
+                <xsl:call-template name="linkCSS">
+                  <xsl:with-param name="file">stylesheet.css</xsl:with-param>
+                </xsl:call-template>
                 <title>Title page</title>
               </head>
               <body>
@@ -641,7 +634,7 @@ height: </xsl:text>
               <xsl:call-template name="metaHTML">
                 <xsl:with-param name="title">About this book</xsl:with-param>
               </xsl:call-template>
-                  <title>About this book</title>
+              <title>About this book</title>
             </head>
             <body>
               <div style="text-align: left; font-size: larger">
@@ -834,68 +827,61 @@ height: </xsl:text>
     <link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="page-template.xpgt"/>
     <xsl:call-template name="generateLocalCSS"/>
   </xsl:template>
-
   <xsl:template name="opfmetadata">
     <xsl:param name="author"/>
     <xsl:param name="printAuthor"/>
     <xsl:param name="coverImageOutside"/>
-    <metadata xmlns="http://www.idpf.org/2007/opf"
-	      xmlns:dc="http://purl.org/dc/elements/1.1/" 
-	      xmlns:dcterms="http://purl.org/dc/terms/" 
-	      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	      xmlns:opf="http://www.idpf.org/2007/opf">
+    <metadata xmlns="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opf="http://www.idpf.org/2007/opf">
       <dc:title>
-	<xsl:sequence select="tei:generateSimpleTitle(.)"/>
+        <xsl:sequence select="tei:generateSimpleTitle(.)"/>
       </dc:title>
       <dc:language xsi:type="dcterms:RFC3066">
-      <xsl:call-template name="generateLanguage"/>
+        <xsl:call-template name="generateLanguage"/>
       </dc:language>
       <xsl:call-template name="generateSubject"/>
       <dc:identifier id="dcidid" opf:scheme="URI">
-	<xsl:call-template name="generateID"/>
+        <xsl:call-template name="generateID"/>
       </dc:identifier>
       <dc:description>
-	<xsl:sequence select="tei:generateSimpleTitle(.)"/>
-	<xsl:text> / </xsl:text>
-	<xsl:value-of select="$author"/>
+        <xsl:sequence select="tei:generateSimpleTitle(.)"/>
+        <xsl:text> / </xsl:text>
+        <xsl:value-of select="$author"/>
       </dc:description>
       <dc:creator>
-	<xsl:choose>
-	  <xsl:when test="$printAuthor=''">Anonymous/Unknown</xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="$printAuthor"/>
-	  </xsl:otherwise>
-	</xsl:choose>
+        <xsl:choose>
+          <xsl:when test="$printAuthor=''">Anonymous/Unknown</xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$printAuthor"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </dc:creator>
       <dc:publisher>
-	<xsl:sequence select="tei:generatePublisher(.,$publisher)"/>
+        <xsl:sequence select="tei:generatePublisher(.,$publisher)"/>
       </dc:publisher>
       <xsl:for-each select="tei:teiHeader/tei:profileDesc/tei:creation/tei:date[@notAfter]">
-	<dc:date opf:event="creation">
-	  <xsl:value-of select="@notAfter"/>
-	</dc:date>
+        <dc:date opf:event="creation">
+          <xsl:value-of select="@notAfter"/>
+        </dc:date>
       </xsl:for-each>
       <xsl:for-each select="tei:teiHeader/tei:fileDesc/tei:sourceDesc//tei:date[@when][1]">
-	<dc:date opf:event="original-publication">
-	  <xsl:value-of select="@when"/>
-	</dc:date>
+        <dc:date opf:event="original-publication">
+          <xsl:value-of select="@when"/>
+        </dc:date>
       </xsl:for-each>
       <dc:date opf:event="epub-publication" xsi:type="dcterms:W3CDTF">
-	<xsl:sequence select="tei:generateDate(.)"/>
+        <xsl:sequence select="tei:generateDate(.)"/>
       </dc:date>
       <dc:rights>
-	<xsl:call-template name="generateLicence"/>
+        <xsl:call-template name="generateLicence"/>
       </dc:rights>
       <xsl:if test="not($coverImageOutside='')">
-	<meta name="cover" content="cover-image"/>
+        <meta name="cover" content="cover-image"/>
       </xsl:if>
     </metadata>
   </xsl:template>
-
   <xsl:template name="makeLang">
     <xsl:if test="@xml:lang">
       <xsl:attribute name="xml:lang" select="@xml:lang"/>
     </xsl:if>
   </xsl:template>
-
 </xsl:stylesheet>

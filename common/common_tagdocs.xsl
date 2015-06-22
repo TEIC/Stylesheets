@@ -837,7 +837,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="tei:constraintSpec[parent::tei:elementSpec or
+  <xsl:template match="tei:constraintSpec[parent::tei:schemaSpec or parent::tei:elementSpec or
 		       parent::tei:classSpec or parent::tei:attDef]" mode="weave">
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -1628,21 +1628,17 @@ of this software, even if advised of the possibility of such damage.
         <xsl:text>valList</xsl:text>
       </xsl:attribute>
       <xsl:for-each select="tei:valItem">
-        <xsl:variable name="name">
-          <xsl:choose>
-            <xsl:when test="tei:altIdent">
-              <xsl:value-of select="tei:altIdent"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="@ident"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
+        <xsl:variable name="name" select="if (tei:altIdent) then tei:altIdent else @ident"/>
         <xsl:element namespace="{$outputNS}" name="{$dtName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>odd_label</xsl:text>
           </xsl:attribute>
           <xsl:value-of select="$name"/>
+	  <xsl:if test="tei:paramList">
+	    <xsl:text> (</xsl:text>
+	    <xsl:value-of select="tei:paramList/tei:paramSpec/@ident" separator=","/>
+	    <xsl:text>)</xsl:text>
+	  </xsl:if>
         </xsl:element>
         <xsl:element namespace="{$outputNS}" name="{$ddName}">
           <xsl:attribute name="{$rendName}">

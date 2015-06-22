@@ -1933,8 +1933,8 @@ of this software, even if advised of the possibility of such damage.
       </p>
     </desc>
   </doc>
-  <xsl:template match="P[parent::*/count(P[not(FIGURE)])&gt;1][FIGURE]">
-    <xsl:apply-templates select="FIGURE"/>
+  <xsl:template match="P[count(FIGURE)=count(*) and not (text()) and parent::*/count(P[not(FIGURE)])&gt;1]">
+    <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="EVENT">
     <incident>

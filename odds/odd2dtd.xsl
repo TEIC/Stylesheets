@@ -121,7 +121,7 @@ of this software, even if advised of the possibility of such damage.
 	                    <xsl:text>DTD module </xsl:text>
 	                    <xsl:value-of select="@ident"/>
 	                    <xsl:text>. generated from ODD source </xsl:text>
-	                    <xsl:call-template name="whatsTheDate"/>
+	                    <xsl:sequence select="tei:whatsTheDate()"/>
 	                    <xsl:text>. </xsl:text>
 			    <xsl:call-template name="copyright"/>
 	                    <xsl:call-template name="makeTEIVersion"/>
@@ -177,7 +177,7 @@ of this software, even if advised of the possibility of such damage.
 		                      <xsl:text>TEI P5 entity declaration module for </xsl:text>
 		                      <xsl:value-of select="@ident"/>
 		                      <xsl:text>. generated from ODD source </xsl:text>
-		                      <xsl:call-template name="whatsTheDate"/>
+		                      <xsl:sequence select="tei:whatsTheDate()"/>
 		                      <xsl:text>.&#10;</xsl:text>
 				      <xsl:call-template name="copyright"/>
 		                      <xsl:call-template name="makeTEIVersion"/>
@@ -338,7 +338,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="dtdComment">
          <xsl:with-param name="text">
             <xsl:text>DTD generated from ODD source </xsl:text>
-            <xsl:call-template name="whatsTheDate"/>
+            <xsl:sequence select="tei:whatsTheDate()"/>
             <xsl:text>. </xsl:text>
 		  <xsl:value-of
 		      select="(/tei:TEI/tei:text/tei:front/tei:titlePage/tei:docDate,'.')"
@@ -375,9 +375,9 @@ of this software, even if advised of the possibility of such damage.
          <xsl:call-template name="NameList"/>
       </xsl:if>
 
-      <xsl:if test="tei:macroSpec[@type='dt']">
+      <xsl:if test="tei:dataSpec|tei:macroSpec[@type='dt']">
 	<xsl:sequence select="tei:dtdcomment('start datatypes')"/>
-	<xsl:apply-templates mode="tangle" select="tei:macroSpec[@type='dt']"/>
+	<xsl:apply-templates mode="tangle" select="tei:dataSpec|tei:macroSpec[@type='dt']"/>
 	<xsl:sequence select="tei:dtdcomment('end datatypes')"/>
       </xsl:if>
 
@@ -764,6 +764,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:list">
       <xsl:text> CDATA</xsl:text>
   </xsl:template>
+  <xsl:template match="tei:dataSpec/tei:content/rng:list">
+      <xsl:text> CDATA</xsl:text>
+  </xsl:template>
   <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:choice">
       <xsl:choose>
          <xsl:when test="rng:value and rng:data">
@@ -787,6 +790,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="rng:text" mode="simple">
       <xsl:choose>
+         <xsl:when test="parent::tei:content/parent::tei:dataSpec">
+            <xsl:text> CDATA</xsl:text>
+         </xsl:when>
          <xsl:when test="parent::tei:content/parent::tei:macroSpec[@type='dt']">
             <xsl:text> CDATA</xsl:text>
          </xsl:when>
@@ -1544,7 +1550,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:otherwise>
             <xsl:text>(</xsl:text>
             <xsl:call-template name="innards">
-	      <xsl:with-param name="sep">,</xsl:with-param> 
+	      <xsl:with-param name="sep">,</xsl:with-param>
 	    </xsl:call-template>
             <xsl:text>)</xsl:text>          
             <xsl:value-of select="tei:generateIndicators(.,@minOccurs,@maxOccurs)"/> 

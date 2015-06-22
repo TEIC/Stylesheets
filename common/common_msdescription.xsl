@@ -373,9 +373,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="Notes">
         <tei:list type="ordered">
           <xsl:for-each select="../tei:handNote">
-            <item>
+            <tei:item>
               <xsl:copy-of select="*|text()"/>
-            </item>
+            </tei:item>
           </xsl:for-each>
         </tei:list>
       </xsl:variable>
