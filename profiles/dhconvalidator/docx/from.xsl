@@ -78,6 +78,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:template match="@rend[.='Body Text Indent']" mode="pass2"/>
     
     <xsl:template name="getDocDate">
-      <xsl:value-of select="$docProps/cp:coreProperties/dcterms:created"/>
+      <xsl:value-of select="doc($docProps)/cp:coreProperties/dcterms:created"/>
     </xsl:template>
 </xsl:stylesheet>
