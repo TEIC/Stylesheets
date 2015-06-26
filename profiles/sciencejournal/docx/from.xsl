@@ -20,7 +20,7 @@
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 version="2.0"
-                exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx pic rel a         tei teidocx xs iso">
+                exclude-result-prefixes="#all">
     <!-- import base conversion style -->
 
 
@@ -152,13 +152,14 @@ of this software, even if advised of the possibility of such damage.
      </xsl:copy>
    </xsl:template>
 
+   <!-- try to remove unnecessary anchor elements -->
    <xsl:template match="tei:anchor" mode="pass3">
      <xsl:choose>
-       <xsl:when test="not(preceding-sibling::text()) and not(parent::*/@xml:id)">
-	 <xsl:copy-of select="@xml:id"/>
+       <xsl:when test="preceding-sibling::node()  or parent::*/@xml:id">
+	 <xsl:copy-of select="."/>
        </xsl:when>
        <xsl:otherwise>
-	 <xsl:copy-of select="."/>
+	 <xsl:copy-of select="@xml:id"/>
        </xsl:otherwise>
      </xsl:choose>
    </xsl:template>
