@@ -640,8 +640,15 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:when>
 	<xsl:when test="@key">
 	  <xsl:variable name="context" select="."/>
-	    <xsl:for-each select="key('LOCALIDENTS',@key)">
-		<xsl:apply-templates select="*"/>
+	  <xsl:for-each select="key('LOCALIDENTS',@key)">
+	    <xsl:choose>
+	      <xsl:when test="tei:datatype">
+		<xsl:apply-templates select="tei:datatype/*"/>
+	      </xsl:when>
+	      <xsl:when test="tei:dataRef">
+		<xsl:apply-templates select="tei:dataRef"/>
+	      </xsl:when>
+	    </xsl:choose>
 	    </xsl:for-each>
 	</xsl:when>
       </xsl:choose>

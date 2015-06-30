@@ -73,6 +73,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-DELETEATT" match="tei:attDef[@mode='delete']" use="concat(ancestor::tei:elementSpec/@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-DELETECONSTRAINT" match="tei:constraintSpec[@mode='delete']" use="concat(../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-ELEMENT_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:elementSpec"/>
+  <xsl:key name="odd2odd-IDENTS" match="tei:dataSpec" use="@ident"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:macroSpec" use="@ident"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:classSpec" use="@ident"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:elementSpec" use="@ident"/>
@@ -81,6 +82,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-MEMBEROFDELETE" match="tei:memberOf[@mode='delete']" use="concat(../../@ident,@key)"/>
   <xsl:key name="odd2odd-MODULES" match="tei:moduleRef" use="@key"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_ELEMENT" match="tei:elementSpec" use="@module"/>
+  <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:dataSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:macroSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:classSpec" use="@module"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:elementSpec]"/>
@@ -89,6 +91,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-REFED" use="@class" match="tei:attRef"/>
   <xsl:key name="odd2odd-ATTREFED" use="substring-before(@name,'.attribute.')" match="tei:attRef"/>
   <xsl:key name="odd2odd-REFED" use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
+  <xsl:key name="odd2odd-REFED" use="@key" match="tei:dataRef"/>
   <xsl:key name="odd2odd-REFED" use="@key" match="tei:macroRef"/>
   <xsl:key name="odd2odd-REFED" use="@key" match="tei:classRef"/>
   <xsl:key name="odd2odd-REFED" use="@key" match="tei:elementRef"/>
@@ -105,20 +108,19 @@ of this software, even if advised of the possibility of such damage.
    present), in case of duplication of names across schemes -->
 
   <xsl:key name="odd2odd-CHANGE"     match="tei:classSpec[@mode='change']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-CHANGE"     match="tei:dataSpec[@mode='change']"   use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-CHANGE"     match="tei:elementSpec[@mode='change']" use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-CHANGE"     match="tei:macroSpec[@mode='change']"   use="tei:uniqueName(.)"/>
 
-  <xsl:key name="odd2odd-CHANGE" match="tei:elementSpec[@mode='change']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-CHANGE"    match="tei:macroSpec[@mode='change']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-DELETE"        match="tei:classSpec[@mode='delete']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-DELETE"   match="tei:classSpec[@mode='delete']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-DELETE"   match="tei:macroSpec[@mode='delete']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-DELETE"   match="tei:dataSpec[@mode='delete']" use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-DELETE"   match="tei:elementSpec[@mode='delete']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-DELETE"      match="tei:macroSpec[@mode='delete']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-REPLACE"      match="tei:classSpec[@mode='replace']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-REPLACE" match="tei:elementSpec[@mode='replace']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-REPLACE"
-	   match="tei:macroSpec[@mode='replace']"
-	   use="tei:uniqueName(.)"/>
 
+  <xsl:key name="odd2odd-REPLACE"  match="tei:classSpec[@mode='replace']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-REPLACE"  match="tei:dataSpec[@mode='replace']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:elementSpec[@mode='replace']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-REPLACE"  match="tei:macroSpec[@mode='replace']"   use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-REPLACEATT"     match="tei:attDef[@mode='replace']" use="concat(../../@ident,'_',@ident)"/>
 
   
@@ -327,9 +329,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:message>Phase 0: summarize specGrp <xsl:value-of select="@xml:id"/>
       </xsl:message>
     </xsl:if>
-    <xsl:if test="tei:specGrpRef|tei:elementSpec|tei:classSpec|tei:macroSpec|tei:moduleRef">
+    <xsl:if test="tei:specGrpRef|tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec|tei:moduleRef">
     <table xmlns="http://www.tei-c.org/ns/1.0" rend="specGrpSummary">
-      <xsl:for-each select="tei:specGrpRef|tei:elementSpec|tei:classSpec|tei:macroSpec|tei:moduleRef">
+      <xsl:for-each select="tei:specGrpRef|tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec|tei:moduleRef">
         <row>
           <xsl:choose>
             <xsl:when test="self::tei:specGrpRef">
@@ -349,6 +351,14 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="self::tei:classSpec">
               <cell>
 		Class <ident type="class"><xsl:value-of select="@ident"/></ident>
+	      </cell>
+              <cell>
+                <xsl:value-of select="@mode"/>
+              </cell>
+            </xsl:when>
+            <xsl:when test="self::tei:dataSpec">
+              <cell>
+		Data <ident type="macro"><xsl:value-of select="@ident"/></ident>
 	      </cell>
               <cell>
                 <xsl:value-of select="@mode"/>
@@ -440,7 +450,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="tei:elementSpec[@mode='change']|tei:classSpec[@mode='change']|tei:macroSpec[@mode='change']"
+  <xsl:template match="tei:elementSpec[@mode='change']|tei:classSpec[@mode='change']|tei:macroSpec[@mode='change']|tei:dataSpec[@mode='change']"
 		mode="pass0">
     <xsl:choose>
       <xsl:when test="count(key('odd2odd-CHANGE',@ident))&gt;1">
@@ -517,14 +527,14 @@ of this software, even if advised of the possibility of such damage.
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="tei:elementSpec[@mode='delete']|tei:classSpec[@mode='delete']|tei:macroSpec[@mode='delete']"
+  <xsl:template match="tei:elementSpec[@mode='delete']|tei:classSpec[@mode='delete']|tei:macroSpec[@mode='delete']|tei:dataSpec[@mode='delete']"
 		mode="pass1">
         <xsl:if test="$verbose='true'">
           <xsl:message>Phase 1: remove <xsl:value-of select="@ident"/></xsl:message>
         </xsl:if>
   </xsl:template>
 
-  <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec"
+  <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec"
 		mode="pass1">
     <xsl:variable name="specName" select="@ident"/>
     <xsl:choose>
@@ -549,22 +559,30 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:classSpec[@mode='add' or (not(@mode) and ancestor::tei:schemaSpec)]" mode="pass1">
     <xsl:call-template name="odd2odd-createCopy"/>
   </xsl:template>
+
   <xsl:template match="tei:macroSpec[@mode='add' or (not(@mode) and ancestor::tei:schemaSpec)]" mode="pass1">
+    <xsl:call-template name="odd2odd-createCopy"/>
+  </xsl:template>
+  <xsl:template match="tei:dataSpec[@mode='add' or (not(@mode) and ancestor::tei:schemaSpec)]" mode="pass1">
     <xsl:call-template name="odd2odd-createCopy"/>
   </xsl:template>
   <xsl:template match="tei:elementSpec[@mode='add' or (not(@mode) and ancestor::tei:schemaSpec)]" mode="pass1">
     <xsl:call-template name="odd2odd-createCopy"/>
   </xsl:template>
 
-  <xsl:template match="tei:macroRef|tei:classRef|tei:elementRef"
+  <xsl:template match="tei:dataRef|tei:macroRef|tei:classRef|tei:elementRef"
 		mode="pass1">
     <xsl:choose>
       <xsl:when test="ancestor::tei:content">
 	<xsl:copy-of select="."/>
       </xsl:when>
+      <xsl:when test="@name">
+	<xsl:copy-of select="."/>
+      </xsl:when>
       <xsl:otherwise>
 	<xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
 	<xsl:variable name="name" select="@key"/>
+	<xsl:variable name="id" select="ancestor::*[@ident]/@ident"/>
 	<xsl:for-each select="document($sourceDoc,$top)">
 	  <xsl:choose>
 	    <xsl:when test="key('odd2odd-IDENTS',$name)">
@@ -580,6 +598,8 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:with-param name="message">
 		  <xsl:text>Reference to </xsl:text>
 		  <xsl:value-of select="$name"/>
+		  <xsl:text> in </xsl:text>
+		  <xsl:value-of select="$id"/>
 		  <xsl:text>: not found in source</xsl:text>
 		</xsl:with-param>
 	      </xsl:call-template>
@@ -627,10 +647,11 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:for-each>
   </xsl:template>
 
-   <xsl:template match="tei:elementSpec[@mode='change']|tei:classSpec[@mode='change']|tei:macroSpec[@mode='change']"
+   <xsl:template match="tei:elementSpec[@mode='change']|tei:classSpec[@mode='change']|tei:macroSpec[@mode='change']|tei:dataSpec[@mode='change']"
 		mode="pass1"/>
 
-   <xsl:template match="tei:elementSpec[@mode='replace']|tei:classSpec[@mode='replace']|tei:macroSpec[@mode='replace']"
+   <xsl:template
+       match="tei:elementSpec[@mode='replace']|tei:classSpec[@mode='replace']|tei:macroSpec[@mode='replace']|tei:dataSpec[@mode='replace']"
 		mode="pass1"/>
 
    <xsl:template match="tei:classSpec/tei:attList/tei:attDef"	 mode="pass1">
@@ -974,7 +995,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:for-each>
     </xsl:copy>
   </xsl:template>
-  <xsl:template match="tei:macroSpec" mode="odd2odd-change">
+  <xsl:template match="tei:dataSpec|tei:macroSpec" mode="odd2odd-change">
     <xsl:variable name="specName" select="tei:uniqueName(.)"/>
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
@@ -1025,9 +1046,21 @@ of this software, even if advised of the possibility of such damage.
           </xsl:choose>
           <!-- content -->
           <xsl:choose>
+            <xsl:when test="tei:dataRef">
+              <xsl:apply-templates mode="justcopy"
+				   select="tei:dataRef">
+		<xsl:with-param name="rend">replace</xsl:with-param>
+	      </xsl:apply-templates>
+            </xsl:when>
             <xsl:when test="tei:content">
               <xsl:apply-templates mode="justcopy"
 				   select="tei:content">
+		<xsl:with-param name="rend">replace</xsl:with-param>
+	      </xsl:apply-templates>
+            </xsl:when>
+	    <xsl:when test="$ORIGINAL/tei:dataRef">
+              <xsl:apply-templates mode="odd2odd-copy"
+				   select="$ORIGINAL/tei:dataRef">
 		<xsl:with-param name="rend">replace</xsl:with-param>
 	      </xsl:apply-templates>
             </xsl:when>
@@ -1644,7 +1677,7 @@ so that is only put back in if there is some content
     </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:specGrpRef"/>
-  <xsl:template match="tei:macroSpec|tei:classSpec">
+  <xsl:template match="tei:dataSpec|tei:macroSpec|tei:classSpec">
     <xsl:if test="not(ancestor::tei:schemaSpec)">
       <xsl:copy-of select="."/>
     </xsl:if>
@@ -1718,6 +1751,9 @@ so that is only put back in if there is some content
 	  <xsl:apply-templates mode="odd2odd-copy" select="@*|*|processing-instruction()|text()"/>
 	</xsl:when>
 	<xsl:when test="local-name()='macroSpec'">
+	  <xsl:apply-templates mode="odd2odd-copy" select="@*|*|processing-instruction()|text()"/>
+	</xsl:when>
+	<xsl:when test="local-name()='dataSpec'">
 	  <xsl:apply-templates mode="odd2odd-copy" select="@*|*|processing-instruction()|text()"/>
 	</xsl:when>
 	<xsl:otherwise>
@@ -1980,6 +2016,25 @@ so that is only put back in if there is some content
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="tei:dataSpec" mode="pass3">
+    <xsl:variable name="k">
+      <xsl:value-of select="@prefix"/>
+      <xsl:value-of select="@ident"/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="key('odd2odd-REFED',$k)">
+	<dataSpec xmlns="http://www.tei-c.org/ns/1.0" >
+          <xsl:copy-of select="@*"/>
+          <xsl:apply-templates mode="pass3"/>
+	</dataSpec>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:if test="$verbose='true'">
+          <xsl:message>Reject unused macro <xsl:value-of select="$k"/></xsl:message>
+        </xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
   <xsl:template match="processing-instruction()" mode="pass3">
     <xsl:copy-of select="."/>
