@@ -1025,18 +1025,18 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
 
-  <xsl:template match="tei:classSpec/tei:gloss"/>
-  <xsl:template match="tei:macroSpec/tei:gloss"/>
-  <xsl:template match="tei:elementSpec/tei:gloss"/>
-  <xsl:template match="tei:dataSpec/tei:gloss"/>
-  <xsl:template match="tei:classSpec/tei:desc"/>
-  <xsl:template match="tei:macroSpec/tei:desc"/>
-  <xsl:template match="tei:elementSpec/tei:desc"/>
-  <xsl:template match="tei:dataSpec/tei:desc"/>
   <xsl:template match="tei:classSpec/@ident"/>
-  <xsl:template match="tei:macroSpec/@ident"/>
-  <xsl:template match="tei:elementSpec/@ident"/>
+  <xsl:template match="tei:classSpec/tei:desc"/>
+  <xsl:template match="tei:classSpec/tei:gloss"/>
   <xsl:template match="tei:dataSpec/@ident"/>
+  <xsl:template match="tei:dataSpec/tei:desc"/>
+  <xsl:template match="tei:dataSpec/tei:gloss"/>
+  <xsl:template match="tei:elementSpec/@ident"/>
+  <xsl:template match="tei:elementSpec/tei:desc"/>
+  <xsl:template match="tei:elementSpec/tei:gloss"/>
+  <xsl:template match="tei:macroSpec/@ident"/>
+  <xsl:template match="tei:macroSpec/tei:desc"/>
+  <xsl:template match="tei:macroSpec/tei:gloss"/>
 
   
 
@@ -1148,7 +1148,7 @@ select="$makeDecls"/></xsl:message>
 
   </xsl:template>
 
-  <xsl:template match="tei:macroSpec/content/rng:*"/>
+  <xsl:template match="tei:macroSpec/tei:content/rng:*"/>
 
   <xsl:template match="tei:memberOf" mode="tangleModel">
     <!--
