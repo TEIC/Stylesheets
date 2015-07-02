@@ -1104,8 +1104,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="$verbose='true'">
-          <xsl:message> macro/data Spec <xsl:value-of select="@ident"/>
-          </xsl:message>
+          <xsl:message> macro/data Spec <xsl:value-of select="@ident"/>: <xsl:copy-of select="$entityContent"/></xsl:message>
         </xsl:if>
         <xsl:call-template name="schemaOut">
           <xsl:with-param name="grammar">true</xsl:with-param>
@@ -1147,8 +1146,6 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
 
   </xsl:template>
-
-  <xsl:template match="tei:macroSpec/tei:content/rng:*"/>
 
   <xsl:template match="tei:memberOf" mode="tangleModel">
     <!--
@@ -1291,7 +1288,7 @@ select="$makeDecls"/></xsl:message>
 
   <!-- end expand RELAX NG section -->
 
-  <xsl:template match="tei:remarks" mode="tangle"/>
+  <xsl:template match="tei:remarks" mode="#default tangle"/>
 
 
   <xsl:template match="tei:specGrp" mode="ok">
@@ -1401,9 +1398,6 @@ select="$makeDecls"/></xsl:message>
             <xsl:when test="tei:datatype/rng:ref[@name='data.enumerated']">
               <data type="Name"/>
             </xsl:when>
-	    <xsl:when test="tei:dataRef">
-              <xsl:apply-templates select="tei:dataRef"/>
-	    </xsl:when>
 	    <xsl:when test="not(tei:datatype)">
               <data type="Name"/>
 	    </xsl:when>
@@ -1415,9 +1409,6 @@ select="$makeDecls"/></xsl:message>
       </xsl:when>
       <xsl:when test="tei:datatype/*">
         <xsl:apply-templates select="tei:datatype/*"/>
-      </xsl:when>
-      <xsl:when test="tei:dataRef">
-        <xsl:apply-templates select="tei:dataRef"/>
       </xsl:when>
       <xsl:otherwise>
         <text xmlns="http://relaxng.org/ns/structure/1.0"/>

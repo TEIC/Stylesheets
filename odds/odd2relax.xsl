@@ -639,14 +639,16 @@ of this software, even if advised of the possibility of such damage.
 	  </rng:data>
 	</xsl:when>
 	<xsl:when test="@key">
-	  <xsl:variable name="context" select="."/>
+	  <xsl:variable name="key" select="@key"/>
+	  <xsl:variable name="whence" select="local-name()"/>
 	  <xsl:for-each select="key('LOCALIDENTS',@key)">
+	    <xsl:message>Key ends up pointing at <xsl:value-of select="($whence,$key,@ident)"/></xsl:message>
 	    <xsl:choose>
+	      <xsl:when test="tei:content">
+		<xsl:apply-templates select="tei:content/*"/>
+	      </xsl:when>
 	      <xsl:when test="tei:datatype">
 		<xsl:apply-templates select="tei:datatype/*"/>
-	      </xsl:when>
-	      <xsl:when test="tei:dataRef">
-		<xsl:apply-templates select="tei:dataRef"/>
 	      </xsl:when>
 	    </xsl:choose>
 	    </xsl:for-each>
