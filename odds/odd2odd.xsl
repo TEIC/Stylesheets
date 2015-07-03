@@ -85,11 +85,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:dataSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:macroSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:classSpec" use="@module"/>
+  <xsl:key name="odd2odd-ATTREFED" use="substring-before(@name,'.attribute.')" match="tei:attRef"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:elementSpec]"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:macroSpec and not(@name=ancestor::tei:macroSpec/@ident)]"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[parent::tei:datatype]"/>
   <xsl:key name="odd2odd-REFED" use="@class" match="tei:attRef"/>
-  <xsl:key name="odd2odd-ATTREFED" use="substring-before(@name,'.attribute.')" match="tei:attRef"/>
   <xsl:key name="odd2odd-REFED" use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
   <xsl:key name="odd2odd-REFED" use="@key" match="tei:dataRef"/>
   <xsl:key name="odd2odd-REFED" use="@key" match="tei:macroRef"/>
@@ -507,11 +507,11 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>
       </xsl:copy>
     </xsl:variable>
-<!--
+    <!--
     	<xsl:result-document href="/tmp/odd2odd-pass1.xml">
 	  <xsl:copy-of select="$pass1"/>
 	</xsl:result-document>
--->
+    -->
     <xsl:for-each select="$pass1">
       <xsl:apply-templates mode="pass2"/>
     </xsl:for-each>
@@ -571,9 +571,12 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:dataRef|tei:macroRef|tei:classRef|tei:elementRef"
-		mode="pass1">
+		mode="pass1">	
     <xsl:choose>
       <xsl:when test="ancestor::tei:content">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:datatype">
 	<xsl:copy-of select="."/>
       </xsl:when>
       <xsl:when test="@name">
@@ -647,7 +650,8 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:for-each>
   </xsl:template>
 
-   <xsl:template match="tei:elementSpec[@mode='change']|tei:classSpec[@mode='change']|tei:macroSpec[@mode='change']|tei:dataSpec[@mode='change']"
+   <xsl:template
+       match="tei:elementSpec[@mode='change']|tei:classSpec[@mode='change']|tei:macroSpec[@mode='change']|tei:dataSpec[@mode='change']"
 		mode="pass1"/>
 
    <xsl:template
@@ -808,7 +812,9 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:elementSpec/@mode" mode="odd2odd-change">
     <xsl:copy/>
-  </xsl:template>
+  </xsl:template>	  <xsl:variable name="key" select="@key"/>
+	  <xsl:variable name="whence" select="local-name()"/>
+
 
   <xsl:template match="tei:elementSpec" mode="odd2odd-change">
     <xsl:variable name="elementName" select="tei:uniqueName(.)"/>
@@ -995,6 +1001,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:for-each>
     </xsl:copy>
   </xsl:template>
+
   <xsl:template match="tei:dataSpec|tei:macroSpec" mode="odd2odd-change">
     <xsl:variable name="specName" select="tei:uniqueName(.)"/>
     <xsl:variable name="ORIGINAL" select="."/>
@@ -2018,7 +2025,6 @@ so that is only put back in if there is some content
 
   <xsl:template match="tei:dataSpec" mode="pass3">
     <xsl:variable name="k">
-      <xsl:value-of select="@prefix"/>
       <xsl:value-of select="@ident"/>
     </xsl:variable>
     <xsl:choose>
@@ -2030,7 +2036,7 @@ so that is only put back in if there is some content
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="$verbose='true'">
-          <xsl:message>Reject unused macro <xsl:value-of select="$k"/></xsl:message>
+          <xsl:message>Reject unused dataSpec <xsl:value-of select="$k"/></xsl:message>
         </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
