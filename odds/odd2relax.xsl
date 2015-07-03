@@ -613,14 +613,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="tei:valList"   mode="#default tangle">
-    <xsl:for-each select="tei:valItem">
-        <rng:value>
-          <xsl:value-of select="tei:createSpecName(.)"/>
-        </rng:value>
-    </xsl:for-each>
-  </xsl:template>
-
     <xsl:template match="tei:dataRef"   mode="#default tangle">
       <xsl:variable name="wrapperElement"
 		  select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>

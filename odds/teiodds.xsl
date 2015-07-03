@@ -971,15 +971,6 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="Contents">
       <TEMPTREE>
         <xsl:choose>
-          <xsl:when test="tei:valList[@type='closed' and @repeatable='true']">
-            <list xmlns="http://relaxng.org/ns/structure/1.0">
-              <oneOrMore>
-                <choice>
-                  <xsl:call-template name="valListChildren"/>
-                </choice>
-              </oneOrMore>
-            </list>
-          </xsl:when>
           <xsl:when test="tei:valList[@type='closed']">
             <xsl:call-template name="valListChildren"/>
           </xsl:when>
@@ -1346,31 +1337,14 @@ select="$makeDecls"/></xsl:message>
     <xsl:apply-templates/>
   </xsl:template>
 
+  <xsl:template match="tei:valList"   mode="#default tangle">
+    <xsl:call-template name="valListChildren"/>
+  </xsl:template>
+
   <xsl:template name="attributeData">
     <xsl:choose>
       <xsl:when test="tei:valList[@type='closed']">
-        <choice xmlns="http://relaxng.org/ns/structure/1.0">
-          <xsl:for-each select="tei:valList/tei:valItem">
-            <value>
-              <xsl:choose>
-                <xsl:when test="tei:altIdent=@ident">
-                  <xsl:value-of select="@ident"/>
-                </xsl:when>
-                <xsl:when test="tei:altIdent">
-                  <xsl:value-of select="normalize-space(tei:altIdent)"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="@ident"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </value>
-            <xsl:if test="not($oddmode='tei')">
-              <a:documentation>
-		<xsl:sequence select="tei:makeDescription(.,true())"/>
-              </a:documentation>
-            </xsl:if>
-          </xsl:for-each>
-        </choice>
+        <xsl:call-template name="valListChildren"/>
       </xsl:when>
       <xsl:when test="tei:valList[@type='semi']">
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
@@ -1575,6 +1549,7 @@ select="$makeDecls"/></xsl:message>
         </optional>
       </xsl:otherwise>
     </xsl:choose>
+    
   </xsl:template>
 
   <xsl:template name="generateClassParents">
