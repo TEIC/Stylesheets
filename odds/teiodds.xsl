@@ -1338,7 +1338,9 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
   <xsl:template match="tei:valList"   mode="#default tangle">
-    <xsl:call-template name="valListChildren"/>
+    <xsl:for-each select="..">
+      <xsl:call-template name="valListChildren"/>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="attributeData">
