@@ -764,9 +764,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:list">
       <xsl:text> CDATA</xsl:text>
   </xsl:template>
-  <xsl:template match="tei:dataSpec/tei:content/rng:list">
-      <xsl:text> CDATA</xsl:text>
-  </xsl:template>
+
   <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:choice">
       <xsl:choose>
          <xsl:when test="rng:value and rng:data">
@@ -787,6 +785,13 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text> CDATA</xsl:text>
          </xsl:otherwise>
       </xsl:choose>
+  </xsl:template>
+  <xsl:template
+      match="tei:dataSpec/tei:content/tei:valList[@type='closed']"
+      mode="#default tangle">
+    <xsl:text>(</xsl:text>
+      <xsl:value-of select="tei:valItem/@ident" separator="|"/>
+      <xsl:text>)</xsl:text>
   </xsl:template>
   <xsl:template match="rng:text" mode="simple">
       <xsl:choose>
