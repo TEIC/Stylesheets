@@ -685,6 +685,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:datatype">
       <xsl:choose>
+         <xsl:when test="tei:dataRef/@name='ID'">
+            <xsl:text> ID</xsl:text>
+         </xsl:when>
          <xsl:when test="rng:data/@type='ID'">
             <xsl:text> ID</xsl:text>
          </xsl:when>
@@ -793,6 +796,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="tei:valItem/@ident" separator="|"/>
       <xsl:text>)</xsl:text>
   </xsl:template>
+
   <xsl:template match="rng:text" mode="simple">
       <xsl:choose>
          <xsl:when test="parent::tei:content/parent::tei:dataSpec">
@@ -1464,7 +1468,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="tei:datatype/@minOccurs or tei:datatype/@maxOccurs">
             <xsl:text> CDATA </xsl:text>
          </xsl:when>
-         <xsl:when test="tei:datatype/rng:*">
+         <xsl:when test="tei:datatype/*">
             <xsl:apply-templates select="tei:datatype"/>
          </xsl:when>
          <xsl:otherwise>
