@@ -106,7 +106,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:classSpec" name="CLASSMEMBERS-CLASSES" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec" name="IDENTS" use="concat(@prefix,@ident)"/>
 
-  <xsl:key match="tei:macroSpec" name="MACRODOCS" use="1"/>
+  <xsl:key match="tei:macroSpec|tei:dataSpec" name="MACRODOCS" use="1"/>
   <xsl:key match="tei:attDef" name="ATTDOCS" use="1"/>
   <xsl:key match="tei:attDef" name="ATTRIBUTES" use="@ident"/>
   <xsl:key match="tei:classSpec//tei:attDef" name="ATTRIBUTES-CLASS" use="@ident"/>

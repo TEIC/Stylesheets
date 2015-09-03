@@ -184,6 +184,26 @@
 	    <content/>
 	  </elementSpec>
 
+<!-- now some datatype tests -->
+        
+        <elementSpec ident="one">
+          <desc>an empty element with purified attributes</desc>
+          <content/>
+          <attList>
+            <attDef ident="count">
+              <desc>how often the one element is used</desc>
+<datatype>              <dataRef name="nonNegativeInteger"/></datatype>
+            </attDef>
+            <attDef ident="teicount">
+              <desc>another way of saying same thing</desc>
+<datatype>              <dataRef key="teidata.count"/></datatype>
+            </attDef>
+            <attDef ident="trixie">
+              <desc>an integral percentage</desc>
+          <datatype>    <dataRef name="nonNegativeInteger" restriction="[0-9][0-9]?"/>             </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
 
       </schemaSpec>
       
