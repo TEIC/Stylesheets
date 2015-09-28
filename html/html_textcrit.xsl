@@ -54,11 +54,48 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
+  
+  <xsl:template name="injectNote">
+    <xsl:param name="lemma"/>
+    <xsl:param name="identifier"/>
+    <xsl:param name="appN"/>
+    <xsl:apply-templates select="$lemma" mode="injectNote">
+      <xsl:with-param name="identifier" select="$identifier"/>
+      <xsl:with-param name="appN" select="$appN"/>
+    </xsl:apply-templates>
+  </xsl:template>
+  
+  <xsl:template match="node()|@*" mode="injectNote">
+    <xsl:param name="identifier"/>
+    <xsl:param name="appN"/>
+    <xsl:copy>
+      <xsl:apply-templates select="node()|@*" mode="injectNote"><xsl:with-param name="identifier" select="$identifier"/></xsl:apply-templates>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="html:div[not(following-sibling::html:div)]" mode="injectNote">
+    <xsl:param name="identifier"/>
+    <xsl:param name="appN"/>
+    <xsl:copy>
+      <xsl:apply-templates select="node()|@*" mode="injectNote"/>
+      <xsl:choose>
+        <xsl:when test="$footnoteFile='true'">
+          <a class="notelink" href="{$masterFile}-notes.html#{$identifier}">
+            <sup><xsl:value-of select="$appN"/></sup>
+          </a>
+        </xsl:when>
+        <xsl:otherwise>
+          <a class="notelink" href="#{$identifier}">
+            <sup><xsl:value-of select="$appN"/></sup>
+          </a>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
 
    <xsl:template name="makeAppEntry">
      <xsl:param name="lemma"/>
      <!--<xsl:message>App: <xsl:value-of select="($lemma,$lemmawitness,$readings)" separator="|"/></xsl:message>-->
-     <xsl:value-of select="$lemma"/>
       <xsl:variable name="identifier">
          <xsl:text>App</xsl:text>
          <xsl:choose>
@@ -70,23 +107,36 @@ of this software, even if advised of the possibility of such damage.
 	   </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
-
-      <xsl:choose>
-       <xsl:when test="$footnoteFile='true'">
-	 <a class="notelink" href="{$masterFile}-notes.html#{$identifier}">
-	   <sup>
-	     <xsl:call-template name="appN"/>
-	   </sup>
-	 </a>
+     <xsl:choose>
+       <xsl:when test="$lemma/html:div">
+         <xsl:call-template name="injectNote">
+           <xsl:with-param name="lemma" select="$lemma"/>
+           <xsl:with-param name="identifier" select="$identifier"/>
+           <xsl:with-param name="appN"><xsl:call-template name="appN"/></xsl:with-param>
+         </xsl:call-template>
        </xsl:when>
+       <xsl:when test="normalize-space($lemma) = '' and .//tei:l"/>
        <xsl:otherwise>
-	 <a class="notelink" href="#{$identifier}">
-	   <sup>
-	     <xsl:call-template name="appN"/>
-	   </sup>
-	 </a>
+         <xsl:copy-of select="$lemma"/>
+         <xsl:choose>
+           <xsl:when test="$footnoteFile='true'">
+             <a class="notelink" href="{$masterFile}-notes.html#{$identifier}">
+               <sup>
+                 <xsl:call-template name="appN"/>
+               </sup>
+             </a>
+           </xsl:when>
+           <xsl:otherwise>
+             <a class="notelink" href="#{$identifier}">
+               <sup>
+                 <xsl:call-template name="appN"/>
+               </sup>
+             </a>
+           </xsl:otherwise>
+         </xsl:choose>
        </xsl:otherwise>
-      </xsl:choose>
+     </xsl:choose>
+      
 
   </xsl:template>
 
@@ -105,16 +155,39 @@ of this software, even if advised of the possibility of such damage.
       </xsl:variable>
       <div class="app">
          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name" select="$identifier"/>
+           <xsl:with-param name="name" select="$identifier"/>
          </xsl:call-template>
-	 <span class="lemma">
-	   <xsl:call-template name="appLemma"/>
-	 </span>
-	 <xsl:text>] </xsl:text>
-	 <span class="lemmawitness">
-	   <xsl:call-template name="appLemmaWitness"/>
-	 </span>
-	<xsl:call-template name="appReadings"/>
+        <xsl:choose>
+          <xsl:when test="tei:lem//tei:l">
+            <xsl:choose>
+              <xsl:when test="count(tei:lem//tei:l) = 1">
+                <xsl:text>l. </xsl:text><xsl:value-of select="tei:lem//tei:l/@n"/><xsl:text> </xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:variable name="lines" select="tei:lem//tei:l[@n]"/>
+                <xsl:text>ll. </xsl:text><xsl:value-of select="$lines[1]/@n"/>–<xsl:value-of select="$lines[last()]/@n"/><xsl:text> </xsl:text></xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+          <xsl:when test="not(tei:lem) and tei:rdg[1]//tei:l">
+            <xsl:choose>
+              <xsl:when test="count(tei:rdg[1]//tei:l) = 1">
+                <xsl:text>l. </xsl:text><xsl:value-of select="tei:rdg[1]//tei:l/@n"/><xsl:text> </xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:variable name="lines" select="tei:rdg[1]//tei:l[@n]"/>
+                <xsl:text>ll. </xsl:text><xsl:value-of select="$lines[1]/@n"/>–<xsl:value-of select="$lines[last()]/@n"/><xsl:text> </xsl:text></xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+          <xsl:otherwise>
+            <span class="lemma">
+              <xsl:call-template name="appLemma"/>
+            </span>
+            <xsl:text>] </xsl:text>
+          </xsl:otherwise></xsl:choose>
+        <xsl:if test="*[1]/@wit or *[1]/@source"><span class="lemmawitness">
+    	   <xsl:call-template name="appLemmaWitness"/>
+    	 </span><xsl:text> </xsl:text></xsl:if>
+	     <xsl:call-template name="appReadings"/>
      </div>
      
    </xsl:template>

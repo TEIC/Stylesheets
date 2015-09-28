@@ -63,11 +63,11 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <xsl:template match="tei:app">
-    <xsl:if test="not(@from)">
+    <xsl:if test="not(@from) and (tei:lem or (tei:rdg and not(@exclude)) or (tei:note and not(tei:lem or descendant::tei:rdg)))">
       <xsl:call-template name="makeAppEntry">
-	<xsl:with-param name="lemma">
-	  <xsl:call-template name="appLemma"/>
-	</xsl:with-param>
+       	<xsl:with-param name="lemma">
+       	  <xsl:call-template name="appLemma"/>
+       	</xsl:with-param>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
@@ -119,7 +119,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="@n"/>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:number from="tei:text" level="any"/>
+            <xsl:value-of select="count(preceding::tei:app) + 1"/>
          </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
@@ -128,10 +128,10 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template name="appLemmaWitness">
      <xsl:choose>
        <xsl:when test="tei:lem">
-	 <xsl:value-of select="tei:getWitness(tei:lem/@wit)"/>
+         <xsl:value-of select="tei:getWitness(tei:lem/@wit)"/><xsl:value-of select="tei:getWitness(tei:lem/@source)"/>
        </xsl:when>
        <xsl:otherwise>
-	 <xsl:value-of select="tei:getWitness(tei:rdg[1]/@wit)"/>
+         <xsl:value-of select="tei:getWitness(tei:rdg[1]/@wit)"/><xsl:value-of select="tei:getWitness(tei:rdg[1]/@source)"/>
        </xsl:otherwise>
      </xsl:choose>
    </xsl:template>
@@ -139,33 +139,58 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template name="appLemma">
 	<xsl:choose>
 	  <xsl:when test="tei:lem">
-	    <xsl:value-of select="tei:lem"/>
+	    <xsl:apply-templates select="tei:lem"/>
 	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="tei:rdg[1]"/>
-	  </xsl:otherwise>
+	  <xsl:when test="not(@exclude) and tei:rdg[not(@exclude)]">
+	    <xsl:apply-templates select="tei:rdg[1]"/>
+	  </xsl:when>
+	  <xsl:otherwise/>
 	</xsl:choose>
    </xsl:template>
 
    <xsl:template name="appReadings">
-      <xsl:variable name="start" select="if (not(tei:lem)) then 1 else 0"/>
-      <xsl:for-each select="tei:rdg[position() &gt; $start]">
-	<xsl:text>; </xsl:text>
-	<xsl:apply-templates/>
-	<xsl:if test="@cause='omission'">[]</xsl:if>
+     <xsl:variable name="start" select="if (not(tei:lem)) then 1 else 0"/>
+     <xsl:variable name="first" select="if (tei:lem) then tei:lem else tei:rdg[1]"/>
+     <xsl:if test="*[1]/local-name() = 'note'">
+       <xsl:apply-templates select="*[1]/node()"/><xsl:text> </xsl:text>
+     </xsl:if>
+     <xsl:if test="$first/following-sibling::*[1]/local-name() = 'note'">
+       <xsl:apply-templates select="$first/following-sibling::*[1]/node()"/><xsl:text> </xsl:text>
+     </xsl:if>
+      <xsl:for-each select="$first/(following-sibling::tei:rdg|following-sibling::tei:rdgGrp/tei:rdg)">
+	<xsl:choose>
+	  <xsl:when test="descendant::tei:l"/>
+	  <xsl:otherwise><xsl:apply-templates/></xsl:otherwise>
+	</xsl:choose>
+	<xsl:if test="@cause='omission' or empty(node())">[]</xsl:if>
 	<xsl:text> (</xsl:text>
-	<xsl:value-of select="tei:getWitness(@wit)"/>
+        <xsl:choose>
+          <xsl:when test="@wit"><xsl:value-of select="tei:getWitness(@wit)"/></xsl:when>
+          <xsl:when test="@source"><xsl:value-of select="tei:getWitness(@source)"/></xsl:when>
+          <xsl:when test="parent::tei:rdgGrp/@wit"><xsl:value-of select="tei:getWitness(../@wit)"/></xsl:when>
+          <xsl:when test="parent::tei:rdgGrp/@source"><xsl:value-of select="tei:getWitness(../@source)"/></xsl:when>
+        </xsl:choose>
 	<xsl:text>)</xsl:text>
-	<xsl:if test="following-sibling::tei:rdg">; </xsl:if>
+  <xsl:if test="following-sibling::*[1]/local-name() = 'note'"><xsl:text> </xsl:text><xsl:value-of select="following-sibling::*[1]"/></xsl:if>
+	<xsl:if test="following-sibling::tei:rdg|following-sibling::tei:rdgGrp|parent::tei:rdgGrp/(following-sibling::tei:rdg|following-sibling::tei:rdgGrp)">; </xsl:if>
       </xsl:for-each>
     </xsl:template>
 
 
    <xsl:template name="makeAppEntry">
      <xsl:param name="lemma"/>
-     <xsl:call-template name="appLemma"/>
-     <xsl:text>] </xsl:text>
-     <xsl:call-template name="appLemmaWitness"/>
+     <xsl:choose>
+       <xsl:when test="tei:lem/tei:l">
+         <xsl:choose>
+           <xsl:when test="count(tei:lem/tei:l) = 1">
+             <xsl:text>l. </xsl:text><xsl:value-of select="tei:lem/tei:l/@n"/><xsl:text> </xsl:text>
+           </xsl:when>
+           <xsl:otherwise><xsl:text>ll. </xsl:text><xsl:value-of select="tei:lem/tei:l[1]/@n"/>–<xsl:value-of select="tei:lem/tei:l[last()]/@n"/><xsl:text> </xsl:text></xsl:otherwise>
+         </xsl:choose>
+       </xsl:when>
+       <xsl:otherwise><xsl:call-template name="appLemma"/>
+     <xsl:text>] </xsl:text></xsl:otherwise></xsl:choose>
+     <xsl:call-template name="appLemmaWitness"/><xsl:text> </xsl:text>
      <xsl:call-template name="appReadings"/>
    </xsl:template>
 
