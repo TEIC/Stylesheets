@@ -103,6 +103,7 @@ of this software, even if advised of the possibility of such damage.
   </d:doc>
   <xsl:param name="ns-prefix-prefix" select="'eip-'"/>
   <xsl:variable name="P5" select="/"/>
+  <xsl:variable name="xslns">http://www.w3.org/1999/XSL/Transform</xsl:variable>
   
   <xsl:key name="DECLARED_NSs" 
            match="sch:ns[ not( ancestor::teix:egXML ) ]"
@@ -211,6 +212,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:choose>
           <xsl:when test="ancestor::constraintSpec/@xml:lang
                   and not(ancestor::constraintSpec/@xml:lang = $lang)"/>
+          <xsl:when test="@prefix = 'xsl'"/>
           <xsl:otherwise>
             <ns><xsl:apply-templates select="@*|node()" mode="copy"/></ns>
           </xsl:otherwise>
@@ -222,7 +224,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:call-template>
       <xsl:variable name="NSs" select="distinct-values( //tei:*[@nsu]/concat( @nsp, '␝', @nsu ) )"/>
       <xsl:variable name="NSpres" select="distinct-values( //tei:*[@nsu]/@nsp )"/>
-      <xsl:for-each select="$NSs[ not(. eq '␝') ]">
+      <xsl:for-each select="$NSs[ not(. eq '␝')  and not(contains(.,$xslns)) ]">
         <xsl:sort/>
         <ns prefix="{substring-before( .,':␝')}" uri="{substring-after( .,'␝')}"/>
       </xsl:for-each>      
