@@ -798,32 +798,69 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
-          <xsl:sequence select="tei:i18n('Declaration')"/>
+          <xsl:sequence select="tei:i18n('Pure ODD')"/>
         </xsl:element>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>wovenodd-col2</xsl:text>
         </xsl:attribute>
-	<xsl:variable name="content">
-            <Wrapper>
-              <rng:element name="{$name}">
-                <xsl:if test="not(key('SCHEMASPECS',1))">
-                  <xsl:if test="$autoGlobal='true'">
-                    <rng:ref name="att.global.attributes"/>
-                  </xsl:if>
-                  <xsl:for-each select="..">
-                    <xsl:call-template name="showClassAtts"/>
-                  </xsl:for-each>
+        <xsl:variable name="content">
+          <Wrapper>
+            <xsl:for-each select="*">
+              <xsl:copy-of select="."/>
+            </xsl:for-each>
+          </Wrapper>
+        </xsl:variable>
+        <xsl:call-template name="pureODDOut">
+          <xsl:with-param name="grammar"/>
+          <xsl:with-param name="content" select="$content"/>
+        </xsl:call-template>
+        <xsl:for-each select="tei:valList[@type='closed']">
+          <xsl:sequence select="tei:i18n('Legal values are')"/>
+          <xsl:text>:</xsl:text>
+          <xsl:call-template name="valListChildren"/>
+        </xsl:for-each>
+      </xsl:element>
+    </xsl:element>
+    <xsl:element namespace="{$outputNS}" name="{$rowName}">
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>wovenodd-col1</xsl:text>
+        </xsl:attribute>
+        <xsl:element namespace="{$outputNS}" name="{$hiName}">
+          <xsl:attribute name="{$rendName}">
+            <xsl:text>label</xsl:text>
+          </xsl:attribute>
+          <xsl:attribute name="{$langAttributeName}">
+            <xsl:value-of select="$documentationLanguage"/>
+          </xsl:attribute>
+          <xsl:sequence select="tei:i18n('Schema Declaration')"/>
+        </xsl:element>
+      </xsl:element>
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>wovenodd-col2</xsl:text>
+        </xsl:attribute>
+        <xsl:variable name="content">
+          <Wrapper>
+            <rng:element name="{$name}">
+              <xsl:if test="not(key('SCHEMASPECS',1))">
+                <xsl:if test="$autoGlobal='true'">
+                  <rng:ref name="att.global.attributes"/>
                 </xsl:if>
-                <xsl:apply-templates mode="tangle"
-				     select="../tei:attList"/>
-		<xsl:for-each select="..">
-		  <xsl:call-template name="defineContent"/>
-		</xsl:for-each>
-              </rng:element>
-            </Wrapper>
-	</xsl:variable>
+                <xsl:for-each select="..">
+                  <xsl:call-template name="showClassAtts"/>
+                </xsl:for-each>
+              </xsl:if>
+              <xsl:apply-templates mode="tangle"
+                select="../tei:attList"/>
+              <xsl:for-each select="..">
+                <xsl:call-template name="defineContent"/>
+              </xsl:for-each>
+            </rng:element>
+          </Wrapper>
+        </xsl:variable>
         <xsl:call-template name="schemaOut">
           <xsl:with-param name="grammar"/>
           <xsl:with-param name="content" select="$content"/>
