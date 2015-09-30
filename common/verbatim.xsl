@@ -392,6 +392,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="highlight"/>
     <xsl:choose>
       <xsl:when test="parent::xhtml:Wrapper"/>
+      <xsl:when test="parent::Wrapper"/>
       <!--      <xsl:when test="child::node()[last()]/self::text()[not(.='')] and child::node()[1]/self::text()[not(.='')]"/>-->
       <xsl:when
 	  test="ancestor::*[@xml:space][1]/@xml:space='preserve'"/>
