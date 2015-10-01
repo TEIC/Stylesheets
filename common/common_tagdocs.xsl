@@ -798,7 +798,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
-          <xsl:sequence select="tei:i18n('Pure ODD')"/>
+          <xsl:sequence select="tei:i18n('ContentModel')"/>
         </xsl:element>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
