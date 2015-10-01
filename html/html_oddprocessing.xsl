@@ -80,6 +80,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="ATT-CLASS-MODULE" match="tei:classSpec[@type='atts']" use="@module"/>
   <xsl:key name="ELEMENT-MODULE" match="tei:elementSpec" use="@module"/>
   <xsl:key name="MACRO-MODULE" match="tei:macroSpec" use="@module"/>
+  <xsl:key name="MACRO-MODULE" match="tei:dataSpec" use="@module"/>
   <xsl:key name="ELEMENT-ALPHA" match="tei:elementSpec" use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),1,1)"/>
   <xsl:key name="MODEL-CLASS-ALPHA" match="tei:classSpec[@type='model']" use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),7,1)"/>
   <xsl:key name="ATT-CLASS-ALPHA" match="tei:classSpec[@type='atts']" use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),5,1)"/>
@@ -371,13 +372,18 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="$summaryDoc='true'">
         <h2>Schema <xsl:value-of select="@ident"/>: changed components</h2>
-        <xsl:for-each select="tei:classSpec[@mode='change' or tei:match(@rend,'change')]        | tei:macroSpec[(@mode='change' or tei:match(@rend,'change'))]        | tei:elementSpec[(@mode='change' or tei:match(@rend,'change'))]">
+        <xsl:for-each select="tei:classSpec[@mode='change' or tei:match(@rend,'change')]       
+          | tei:macroSpec[(@mode='change' or tei:match(@rend,'change'))]  
+          | tei:dataSpec[(@mode='change' or tei:match(@rend,'change'))]    
+          | tei:elementSpec[(@mode='change' or tei:match(@rend,'change'))]">
           <xsl:sort select="lower-case(@ident)"/>
           <xsl:apply-templates mode="weave" select="."/>
         </xsl:for-each>
         <h2>Schema <xsl:value-of select="@ident"/>:  unchanged  components</h2>
         <table>
-          <xsl:for-each select="tei:classSpec[not(@mode or @rend)]          | tei:macroSpec[not(@mode or  @rend)]          | tei:elementSpec[not(@mode or @rend)]">
+          <xsl:for-each select="tei:classSpec[not(@mode or @rend)]  
+            | tei:dataSpec[not(@mode or  @rend)]         
+            | tei:macroSpec[not(@mode or  @rend)]          | tei:elementSpec[not(@mode or @rend)]">
             <xsl:sort select="lower-case(@ident)"/>
             <tr>
               <td id="{@ident}"><a href="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html"><xsl:value-of select="@ident"/></a>:
@@ -435,6 +441,18 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:for-each>
 	  </ul>
         </xsl:if>
+        <xsl:if test="tei:dataSpec">
+          <h2>Schema <xsl:value-of select="@ident"/>: Datatypes</h2>
+          <ul class="toc">
+            <xsl:for-each select="tei:dataSpec">
+              <xsl:sort select="lower-case(@ident)"/>
+              <li>
+                <xsl:call-template name="refDocLink"/>
+                <xsl:apply-templates mode="weave" select="."/>
+              </li>
+            </xsl:for-each>
+          </ul>
+        </xsl:if>
       </xsl:when>
       <xsl:otherwise>
         <h2>Schema <xsl:value-of select="@ident"/>: Elements</h2>
@@ -450,6 +468,12 @@ of this software, even if advised of the possibility of such damage.
         <xsl:if test="tei:classSpec[@type='atts']">
           <h2>Schema <xsl:value-of select="@ident"/>: Attribute classes</h2>
           <xsl:apply-templates mode="weave" select="tei:classSpec[@type='atts']">
+            <xsl:sort select="lower-case(@ident)"/>
+          </xsl:apply-templates>
+        </xsl:if>
+        <xsl:if test="tei:dataSpec">
+          <h2>Schema <xsl:value-of select="@ident"/>: Datatypes</h2>
+          <xsl:apply-templates mode="weave" select="tei:dataSpec">
             <xsl:sort select="lower-case(@ident)"/>
           </xsl:apply-templates>
         </xsl:if>
@@ -584,11 +608,22 @@ of this software, even if advised of the possibility of such damage.
           <xsl:sort select="tei:altIdent|@ident"/>
         </xsl:apply-templates>
       </xsl:if>
+      <xsl:if test="tei:dataSpec">
+        <h2>
+          <xsl:sequence select="tei:i18n('Datatypes defined')"/>
+        </h2>
+        <xsl:apply-templates mode="weave" select="tei:dataSpec">
+          <xsl:sort select="tei:altIdent|@ident"/>
+        </xsl:apply-templates>
+      </xsl:if>
       <xsl:apply-templates select="tei:specGrpRef"/>
     </div>
   </xsl:template>
-  <xsl:template name="listSpecs">
-    <xsl:for-each select="..//tei:schemaSpec">
+  
+  <!-- the following template seems to be never used (LB 1 oct 15) -->
+  
+  <!--<xsl:template name="listSpecs">
+       <xsl:for-each select="..//tei:schemaSpec">
       <hr/>
       <xsl:for-each select="tei:classSpec">
         <xsl:sort select="tei:altIdent"/>
@@ -614,6 +649,18 @@ of this software, even if advised of the possibility of such damage.
         </xsl:element>
       </xsl:for-each>
       <hr/>
+      <xsl:for-each select="tei:dataSpec">
+        <xsl:sort select="tei:altIdent"/>
+        <xsl:sort select="lower-case(@ident)"/>
+        <xsl:variable name="name" select="concat(tei:createSpecPrefix(.),tei:createSpecName(.))"/>
+        <xsl:element name="{$tocElement}">
+          <xsl:attribute name="class">toclist0</xsl:attribute>
+          <a class="toclist" href="#{$name}">	    
+            <xsl:value-of select="$name"/>
+          </a>
+        </xsl:element>
+      </xsl:for-each>
+      <hr/>
       <xsl:for-each select="tei:macroSpec">
         <xsl:sort select="tei:altIdent"/>
         <xsl:sort select="lower-case(@ident)"/>
@@ -626,7 +673,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:element>
       </xsl:for-each>
     </xsl:for-each>
-  </xsl:template>
+  </xsl:template>-->
   <xsl:template match="tei:elementSpec[@mode='delete']">
     <dt>Element <xsl:value-of select="@ident"/>
       </dt>

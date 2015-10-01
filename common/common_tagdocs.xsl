@@ -922,7 +922,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process the specification elements elements, classes and macros<param name="atts">attributes we have been asked to display</param>
       </desc>
   </doc>
-  <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec" mode="show">
+  <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec" mode="show">
     <xsl:param name="atts"/>
     <xsl:variable name="name" select="tei:createSpecName(.)"/>
     <xsl:variable name="linkname" select="concat(tei:createSpecPrefix(.),$name)"/>
@@ -1206,6 +1206,19 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element dataSpec</desc>
+  </doc>
+  <xsl:template match="tei:dataSpec">
+    <xsl:if test="parent::tei:specGrp">
+      <xsl:element namespace="{$outputNS}" name="{$dtName}">
+        <xsl:value-of select="@ident"/>
+      </xsl:element>
+      <xsl:element namespace="{$outputNS}" name="{$ddName}">
+        <xsl:apply-templates mode="tangle" select="."/>
+      </xsl:element>
+    </xsl:if>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element macroSpec in weavebody mode</desc>
   </doc>
   <xsl:template match="tei:macroSpec" mode="weavebody">
@@ -1275,6 +1288,73 @@ of this software, even if advised of the possibility of such damage.
       </xsl:element>
     </xsl:element>
   </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element macroSpec in weavebody mode</desc>
+  </doc>
+  <xsl:template match="tei:dataSpec" mode="weavebody">
+    <xsl:variable name="name" select="tei:createSpecName(.)"/>
+    <xsl:element namespace="{$outputNS}" name="{$sectionName}">
+      <xsl:call-template name="makeSectionHead">
+        <xsl:with-param name="id">
+          <xsl:value-of select="concat(tei:createSpecPrefix(.),$name)"/>
+        </xsl:with-param>
+        <xsl:with-param name="name">
+          <xsl:value-of select="$name"/>
+        </xsl:with-param>
+      </xsl:call-template>
+      <xsl:call-template name="specHook">
+        <xsl:with-param name="name">
+          <xsl:value-of select="$name"/>
+        </xsl:with-param>
+      </xsl:call-template>
+      <xsl:element namespace="{$outputNS}" name="{$tableName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>wovenodd</xsl:text>
+        </xsl:attribute>
+        <xsl:element namespace="{$outputNS}" name="{$rowName}">
+          <xsl:element namespace="{$outputNS}" name="{$cellName}">
+            <xsl:attribute name="{$colspan}">2</xsl:attribute>
+            <xsl:element namespace="{$outputNS}" name="{$hiName}">
+              <xsl:attribute name="{$rendName}">
+                <xsl:text>label</xsl:text>
+              </xsl:attribute>
+              <xsl:value-of select="$name"/>
+            </xsl:element>
+            <xsl:text>&#160;</xsl:text>
+            <xsl:sequence select="tei:makeDescription(.,true())"/>
+          </xsl:element>
+        </xsl:element>
+        <xsl:call-template name="validUntil"/>
+        <xsl:call-template name="moduleInfo"/>
+             <xsl:element namespace="{$outputNS}" name="{$rowName}">
+              <xsl:element namespace="{$outputNS}" name="{$cellName}">
+                <xsl:attribute name="{$rendName}">
+                  <xsl:text>wovenodd-col1</xsl:text>
+                </xsl:attribute>
+                <xsl:element namespace="{$outputNS}" name="{$hiName}">
+                  <xsl:attribute name="{$rendName}">
+                    <xsl:text>label</xsl:text>
+                  </xsl:attribute>
+                  <xsl:attribute name="{$langAttributeName}">
+                    <xsl:value-of select="$documentationLanguage"/>
+                  </xsl:attribute>
+                  <xsl:sequence select="tei:i18n('Used by')"/>
+                </xsl:element>
+              </xsl:element>
+              <xsl:element namespace="{$outputNS}" name="{$cellName}">
+                <xsl:attribute name="{$rendName}">
+                  <xsl:text>wovenodd-col2</xsl:text>
+                </xsl:attribute>
+                <xsl:call-template name="generateModelParents">
+                  <xsl:with-param name="showElements">true</xsl:with-param>
+                </xsl:call-template>
+              </xsl:element>
+            </xsl:element>
+        <xsl:apply-templates mode="weave"/>
+      </xsl:element>
+    </xsl:element>
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element macroSpec/tei:content</desc>
   </doc>
@@ -1329,6 +1409,63 @@ of this software, even if advised of the possibility of such damage.
       </xsl:element>
     </xsl:element>
   </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element dataSpec/tei:content</desc>
+  </doc>
+  <xsl:template match="tei:dataSpec/tei:content" mode="weave">
+    <xsl:element namespace="{$outputNS}" name="{$rowName}">
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>wovenodd-col1</xsl:text>
+        </xsl:attribute>
+        <xsl:element namespace="{$outputNS}" name="{$hiName}">
+          <xsl:attribute name="{$rendName}">
+            <xsl:text>label</xsl:text>
+          </xsl:attribute>
+          <xsl:attribute name="{$langAttributeName}">
+            <xsl:value-of select="$documentationLanguage"/>
+          </xsl:attribute>
+          <xsl:sequence select="tei:i18n('Declaration')"/>
+        </xsl:element>
+      </xsl:element>
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>wovenodd-col2</xsl:text>
+        </xsl:attribute>
+        <xsl:call-template name="schemaOut"><!-- change this -->
+          <xsl:with-param name="grammar">true</xsl:with-param>
+          <xsl:with-param name="content">
+            <Wrapper>
+              <xsl:variable name="entCont">
+                <Stuff>
+                  <xsl:apply-templates select="rng:*"/>
+                </Stuff>
+              </xsl:variable>
+              <xsl:variable name="entCount">
+                <xsl:for-each select="$entCont/html:Stuff">
+                  <xsl:value-of select="count(*)"/>
+                </xsl:for-each>
+              </xsl:variable>
+              <xsl:choose>
+                <!-- wtf? -->
+                <xsl:when test=".=&quot;TEI.singleBase&quot;"/>
+                <xsl:otherwise>
+                  <rng:define name="{../@ident}">
+                    <xsl:if test="starts-with(.,'component')">
+                      <xsl:attribute name="combine">choice</xsl:attribute>
+                    </xsl:if>
+                    <xsl:copy-of select="rng:*"/>
+                  </rng:define>
+                </xsl:otherwise>
+              </xsl:choose>
+            </Wrapper>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:element>
+    </xsl:element>
+  </xsl:template>
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element moduleSpec</desc>
   </doc>
@@ -1883,6 +2020,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:macroSpec">
           <xsl:call-template name="ProcessDirectRefs"/>
         </xsl:when>
+        <xsl:when test="self::tei:dataSpec">
+          <xsl:call-template name="ProcessDirectRefs"/>
+        </xsl:when>
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
@@ -1893,7 +2033,7 @@ of this software, even if advised of the possibility of such damage.
           <Element prefix="{@prefix}"  type="{local-name()}" module="{@module}"
 		     name="{tei:createSpecName(.)}"/>
         </xsl:when>
-        <xsl:when test="self::tei:macroSpec">
+        <xsl:when test="self::tei:macroSpec|self::tei:dataSpec">
           <xsl:call-template name="ProcessDirectRefs"/>
         </xsl:when>
       </xsl:choose>
@@ -2036,7 +2176,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:element>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec" mode="weave">
+  <xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec|tei:dataSpec" mode="weave">
     <xsl:call-template name="refdoc"/>
   </xsl:template>
   <xsl:template match="tei:divGen[@type='modelclasscat']">
@@ -2629,7 +2769,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test=".//rng:text or .//rng:data">
 	<Element prefix="{@prefix}"  type="TEXT"/>
       </xsl:if>
-    <xsl:for-each select=".//rng:ref|.//tei:elementRef|.//tei:classRef|.//tei:macroRef">
+    <xsl:for-each select=".//rng:ref|.//tei:elementRef|.//tei:classRef|.//tei:macroRef|.//tei:dataRef">
       <xsl:if test="not(starts-with(@name,'any')        or starts-with(@name,'macro.any') or starts-with(@key,'macro.any')       or @name='AnyThing')">
         <xsl:variable name="Name"
 	  select="replace(@name|@key,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
@@ -2641,6 +2781,18 @@ of this software, even if advised of the possibility of such damage.
               <Element prefix="{@prefix}"  module="{@module}" type="{local-name()}"   name="{tei:createSpecName(.)}"/>
             </xsl:when>
             <xsl:when test="self::tei:macroSpec">
+              <xsl:for-each select="tei:content">
+                <xsl:choose>
+                  <xsl:when test="(rng:text or rng:data) and count(rng:*)=1">
+                    <Element prefix="{@prefix}"  type="TEXT"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:call-template name="followRef"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:for-each>
+            </xsl:when>
+            <xsl:when test="self::tei:dataSpec">
               <xsl:for-each select="tei:content">
                 <xsl:choose>
                   <xsl:when test="(rng:text or rng:data) and count(rng:*)=1">
