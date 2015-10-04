@@ -549,6 +549,29 @@ of this software, even if advised of the possibility of such damage.
      </xsl:if>
    </xsl:template>
 
+   <!-- Process contentParts which link to customXML. Can contain,
+        e.g., MathML.
+        https://msdn.microsoft.com/en-us/library/documentformat.openxml.wordprocessing.contentpart%28v=office.14%29.aspx
+        -->
+   <xsl:template match="w:contentPart">
+     <xsl:variable name="rid" select="@r:id"/>
+     <!-- Get the rel information -->
+     <xsl:variable name="rel" select="document($relsDoc)//rel:Relationship[@Id=$rid]"/>
+     <!-- Note that -->
+     <!--   https://msdn.microsoft.com/en-us/library/documentformat.openxml.wordprocessing.contentpart%28v=office.14%29.aspx -->
+     <!-- lists 2 possible values for the type (.../2006/customXml and -->
+     <!-- .../2006/relationships/customXml) I believe this is the correct -->
+     <!-- one. -->
+     <xsl:if test="$rel/@Type = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml' and $rel/@Target">
+       <xsl:apply-templates select="document(concat($wordDirectory, 'word/', $rel/@Target))"/>
+     </xsl:if>
+   </xsl:template>
+
+   <!-- Pass through any MathML content. -->
+   <xsl:template match="mml:math">
+     <xsl:copy-of select="."/>
+   </xsl:template>
+
    <xsl:template match="w:instrText"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
