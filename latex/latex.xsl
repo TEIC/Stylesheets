@@ -116,6 +116,41 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
 
   </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Overrides the nsList template in common/verbatim.xsl, escaping the namespace URIs for latex.</desc>
+  </doc>
+  <xsl:template name="nsList">
+    <xsl:variable name="ns">
+      <all>
+        <names>
+          <xsl:apply-templates select="." mode="ns"/>
+        </names>
+        <text>
+          <xsl:copy-of select="."/>
+        </text>
+      </all>
+    </xsl:variable>
+    
+    <xsl:for-each select="$ns/all/names">
+      <xsl:for-each-group select="ns" group-by="@name">
+        <xsl:if test="key('NSUsed',@value)">
+          <xsl:call-template name="verbatim-lineBreak">
+            <xsl:with-param name="id">22</xsl:with-param>
+          </xsl:call-template>
+          <xsl:sequence select="concat('&#160;&#160;&#160;xmlns:',@name,'=',$dq,tei:escapeCharsVerbatim(@value),$dq)"/>
+        </xsl:if>
+      </xsl:for-each-group>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Overrides the NameSpaceURI template in common/verbatim.xsl, escaping the namespace URIs for latex.</desc>
+  </doc>
+  <xsl:template name="NamespaceURI">
+    <xsl:param name="uri"/>
+    <xsl:value-of select="tei:escapeCharsVerbatim($uri)"/>
+  </xsl:template>
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

@@ -580,7 +580,9 @@ of this software, even if advised of the possibility of such damage.
         </xsl:call-template>
         <xsl:if test="$start='true' and not(namespace-uri()=namespace-uri(..))">
           <xsl:text> xmlns="</xsl:text>
-          <xsl:value-of select="namespace-uri()"/>
+          <xsl:call-template name="NamespaceURI">
+            <xsl:with-param name="uri" select="namespace-uri()"/>
+          </xsl:call-template>
           <xsl:text>"</xsl:text>
           <!-- 
 	       <xsl:call-template name="verbatim-lineBreak">
@@ -797,7 +799,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="Attribute">
     <xsl:param name="content"/>
       <xsl:copy-of select="$content"/>
-  </xsl:template>
+  </xsl:template> 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>show an XML namespace in a verbatim context</desc>
@@ -805,6 +807,14 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="Namespace">
     <xsl:param name="content"/>
       <xsl:copy-of select="$content"/>
+  </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Print the namespace URI</desc>
+  </doc>
+  <xsl:template name="NamespaceURI">
+    <xsl:param name="uri"/>
+    <xsl:value-of select="$uri"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
