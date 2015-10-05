@@ -63,6 +63,8 @@
         </xd:desc>
     </xd:doc>
   
+  <xsl:preserve-space elements="teix:*"/>
+  
   <xsl:variable name="theDoc" select="/"/>
 
   <xsl:template match="teiHeader"/>
