@@ -34,7 +34,7 @@ belongs, but this <name/> element has no textual content.</assert>
     </pattern>
    <pattern id="test-att.pointing-targetLang-constraint-targetLang-3">
           <rule context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
-            <assert test="count(@target)">@targetLang can only be used if @target is specified.</assert>
+            <assert test="@target">@targetLang should only be used on <name/> if @target is specified.</assert>
           </rule>
         </pattern>
    <pattern id="test-att.spanning-spanTo-constraint-spanTo-2-4">
@@ -51,30 +51,44 @@ The element indicated by @spanTo (<value-of select="@spanTo"/>) must follow the 
             </assert>
           </rule>
         </pattern>
-   <pattern id="test-ptr-constraint-ptrAtts-6">
+   <pattern id="test-p-constraint-abstractModel-p-6">
+      <rule context="tei:p">
+         <report test="(ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure)">
+        Abstract model violation: Paragraphs may not contain other paragraphs or ab elements.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="test-p-constraint-abstractModel-structure-l-7">
+      <rule context="tei:p">
+         <report test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="test-ptr-constraint-ptrAtts-8">
       <rule context="tei:ptr">
          <report test="@target and @cRef">Only one of the
 attributes @target and @cRef may be supplied on <name/>.</report>
       </rule>
    </pattern>
-   <pattern id="test-ref-constraint-refAtts-7">
+   <pattern id="test-ref-constraint-refAtts-9">
       <rule context="tei:ref">
          <report test="@target and @cRef">Only one of the
 	attributes @target' and @cRef' may be supplied on <name/>
          </report>
       </rule>
    </pattern>
-   <pattern id="test-list-constraint-gloss-list-must-have-labels-8">
+   <pattern id="test-list-constraint-gloss-list-must-have-labels-10">
       <rule context="tei:list[@type='gloss']">
 	        <assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</assert>
       </rule>
     </pattern>
-   <pattern id="test-biblStruct-constraint-deprecate-altIdentifier-child-9">
+   <pattern id="test-biblStruct-constraint-deprecate-altIdentifier-child-11">
       <rule context="tei:biblStruct">
          <report test="child::tei:idno" role="nonfatal">WARNING: use of deprecated method — the use of the idno element as a direct child of the biblStruct element will be removed from the TEI on 2016-09-18</report>
       </rule>
    </pattern>
-   <pattern id="test-relatedItem-constraint-targetorcontent1-10">
+   <pattern id="test-relatedItem-constraint-targetorcontent1-12">
       <rule context="tei:relatedItem">
          <report test="@target and count( child::* ) &gt; 0">
 If the @target attribute on <name/> is used, the
@@ -83,47 +97,89 @@ relatedItem element must be empty</report>
         or a child element to indicate the related bibliographic item</assert>
       </rule>
    </pattern>
-   <pattern id="test-lg-constraint-atleast1oflggapl-11">
+   <pattern id="test-l-constraint-abstractModel-structure-l-13">
+      <rule context="tei:l">
+         <report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
+        Abstract model violation: Lines may not contain lines or lg elements.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="test-lg-constraint-atleast1oflggapl-14">
       <rule context="tei:lg">
          <assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
         must contain at least one child l, lg or gap element.</assert>
       </rule>
    </pattern>
-   <pattern id="test-quotation-constraint-quotationContents-12">
+   <pattern id="test-lg-constraint-abstractModel-structure-l-15">
+      <rule context="tei:lg">
+         <report test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
+        Abstract model violation: Lines may not contain line groups.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="test-quotation-constraint-quotationContents-16">
       <rule context="tei:quotation">
          <report test="not(@marks) and not (tei:p)">
 On <name/>, either the @marks attribute should be used, or a paragraph of description provided</report>
       </rule>
    </pattern>
-   <pattern id="test-addSpan-constraint-spanTo-13">
+   <pattern id="test-addSpan-constraint-spanTo-17">
       <rule context="tei:addSpan">
          <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
-   <pattern id="test-damageSpan-constraint-spanTo-15">
+   <pattern id="test-damageSpan-constraint-spanTo-19">
       <rule context="tei:damageSpan">
          <assert test="@spanTo">
 The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
-   <pattern id="test-delSpan-constraint-spanTo-17">
+   <pattern id="test-delSpan-constraint-spanTo-21">
       <rule context="tei:delSpan">
          <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
-   <pattern id="test-subst-constraint-substContents1-19">
+   <pattern id="test-subst-constraint-substContents1-23">
       <rule context="tei:subst">
          <assert test="child::tei:add and child::tei:del">
             <name/> must have at least one child add and at least one child del</assert>
       </rule>
    </pattern>
-   <pattern id="test-link-constraint-linkTargets3-22">
+   <pattern id="test-div-constraint-abstractModel-structure-l-26">
+      <rule context="tei:div">
+         <report test="ancestor::tei:l">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="test-div-constraint-abstractModel-structure-p-27">
+      <rule context="tei:div">
+         <report test="ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)">
+        Abstract model violation: p and ab may not contain higher-level structural elements such as div.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="test-link-constraint-linkTargets3-28">
       <rule context="tei:link">
          <assert test="contains(normalize-space(@target),' ')">You must supply at least two values for @target or  on <name/>
          </assert>
       </rule>
    </pattern>
-   <pattern id="test-join-constraint-joinTargets3-23">
+   <pattern id="test-ab-constraint-abstractModel-structure-p-29">
+      <rule context="tei:ab">
+         <report test="(ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
+        Abstract model violation: ab may not contain paragraphs or other ab elements.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="test-ab-constraint-abstractModel-structure-l-30">
+      <rule context="tei:ab">
+         <report test="ancestor::tei:l or ancestor::tei:lg">
+        Abstract model violation: Lines may not contain higher-level divisions such as p or ab.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="test-join-constraint-joinTargets3-31">
       <rule context="tei:join">
          <assert test="contains(@target,' ')">
 You must supply at least two values for @target on <name/>

@@ -4,7 +4,7 @@ BINDIR=../bin
 SAXONOPT=useFixedDate=true
 SAXON=java -Djava.awt.headless=true -jar ../lib/saxon9he.jar
 DOTDOTSAXON=java -Djava.awt.headless=true -jar ../../lib/saxon9he.jar
-JING=java -Djava.awt.headless=true -jar lib/jing-20120724.0.0.jar 
+JING=java -Djava.awt.headless=true -jar lib/jing-20120724.0.0.jar
 OXY=/usr/share/oxygen
 SCRIPTS=teitobibtex \
 	teitodocbook \
@@ -19,18 +19,20 @@ SCRIPTS=teitobibtex \
 	teitoodt \
 	teitopdf \
 	teitordf \
-	teitotxt 
+	teitotxt
 
 SCHEMASCRIPTS=teitornc \
 	teitorelaxng \
 	teitoxsd \
-	teitodtd 
+	teitodtd
 
-default: test.rng test-to-html test-p4top5 test-oddity test-scripts test-namespaces test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt  test-markdown test-cocoa test-epub 
+default: test.rng test-to-html test-p4top5 test-oddity test-scripts test-namespaces test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt  test-markdown test-cocoa test-epub
 
 test.rng:
 	$(BINDIR)/teitorelaxng --odd test.odd test.rng
-	perl -p -e 's/generated from ODD source.*//' test.rng | xmllint --format - > temp; mv temp test.rng
+	perl -i -p -e 's/generated from ODD source.*//' test.rng
+	xmllint --format test.rng > temp; mv temp test.rng
+	perl -i -pe 'BEGIN{undef $$/;} s/<!--\n ?Schema[^>]+>//smg' test.rng
 	diff test.rng expected-results/test.rng
 
 css:
@@ -87,12 +89,12 @@ test-to-html: css
 	diff -r  files expected-results/testnotes3
 	$(SAXON) test24.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > test24.html
 	diff test24.html expected-results/test24.html
-	$(SAXON) test25.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > test25.html 
+	$(SAXON) test25.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > test25.html
 	diff test25.html expected-results/test25.html
 	$(SAXON) test27.xml ../html/html.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../css/msdescription.css  | xmllint --format - > test27.html
 	diff test27.html expected-results/test27.html
 	rm -rf files
-	$(SAXON) test28.xml ../html/html.xsl splitLevel=0  STDOUT=false $(SAXONOPT) 
+	$(SAXON) test28.xml ../html/html.xsl splitLevel=0  STDOUT=false $(SAXONOPT)
 	xmllint --format index.html > x ; mv x index.html
 	diff index.html expected-results/test28.html
 	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFiles=../tei.css $(SAXONOPT)  | xmllint --format - > test31.html
@@ -104,23 +106,23 @@ test-from-html:
 	$(SAXON) test38.htm ../html/html2tei.xsl $(SAXONOPT)  | xmllint --format - > test38.xml
 	diff test38.xml expected-results/test38.xml
 
-test-markdown: 
-	@echo BUILD: testing markdown 
-	@echo BUILD: markdown to tei 
+test-markdown:
+	@echo BUILD: testing markdown
+	@echo BUILD: markdown to tei
 	$(BINDIR)/markdowntotei mdtest1.md mdtest1.xml
 	diff mdtest1.xml expected-results/mdtest1.xml
 	@echo BUILD: tei to markdown
 	$(BINDIR)/teitomarkdown test.xml mdtest2.md
 	diff mdtest2.md expected-results/mdtest2.md
 
-test-cocoa: 
+test-cocoa:
 	@echo BUILD: testing cocoa  to TEI
 	$(BINDIR)/cocoatotei cocoatest.txt cocoatest.xml
 	diff cocoatest.xml expected-results/cocoatest.xml
 	$(BINDIR)/cocoatotei cocoatest2.txt cocoatest2.xml
 	diff cocoatest2.xml expected-results/cocoatest2.xml
 
-test-p4top5: 
+test-p4top5:
 	@echo BUILD: testing p4top5
 	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
 	diff test17.tei expected-results/test17.tei
@@ -162,13 +164,13 @@ test-fo:
 	diff test5.fo expected-results/test5.fo
 	$(SAXON) testnotes1.xml ../fo/fo.xsl  $(SAXONOPT)   | xmllint --format - > testnotes1.fo
 	$(JING) fo.xsd testnotes1.fo
-	diff testnotes1.fo expected-results/testnotes1.fo 
+	diff testnotes1.fo expected-results/testnotes1.fo
 	$(SAXON) -o:test24.fo test24.xml ../fo/fo.xsl $(SAXONOPT)
-	$(JING) fo.xsd test24.fo 
+	$(JING) fo.xsd test24.fo
 	diff test24.fo expected-results/test24.fo
 	$(SAXON) -o:test25.fo test25.xml ../fo/fo.xsl $(SAXONOPT)
 	diff test25.fo expected-results/test25.fo
-	$(SAXON) test27.xml ../fo/fo.xsl $(SAXONOPT) | xmllint --format - > test27.fo 
+	$(SAXON) test27.xml ../fo/fo.xsl $(SAXONOPT) | xmllint --format - > test27.fo
 	diff test27.fo expected-results/test27.fo
 
 test-epub:
@@ -203,7 +205,7 @@ test-xlsx:
 test-odt:   test.rng
 	(cd ..; $(MAKE) names)
 	@echo BUILD: testing odt
-	$(BINDIR)/teitoodt test.xml 
+	$(BINDIR)/teitoodt test.xml
 	unzip -t test.xml.odt > test.xml.odt.listing
 	unzip -o -q test.xml.odt content.xml
 	xmllint --format content.xml > content.xml.odt.listing
@@ -252,17 +254,17 @@ test-from-docx: test.rng
 
 test-to-docx:
 	@echo BUILD: testing to-docx
-	$(BINDIR)/teitodocx test.xml 
+	$(BINDIR)/teitodocx test.xml
 	unzip -p test.xml.docx word/document.xml | xmllint --format - > test.xml.docx.document
 	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > test.xml.docx.core
 	diff test.xml.docx.document expected-results/test.xml.docx.document
 	diff test.xml.docx.core expected-results/test.xml.docx.core
 	rm test.xml.docx.document
-	$(BINDIR)/teitodocx test6.xml 
+	$(BINDIR)/teitodocx test6.xml
 	unzip -p test6.xml.docx word/document.xml | xmllint --format - > test6.xml.docx.document
 	diff test6.xml.docx.document expected-results/test6.xml.docx.document
 	rm test6.xml.docx.document
-	$(BINDIR)/teitodocx testnotes1.xml 
+	$(BINDIR)/teitodocx testnotes1.xml
 	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > testnotes1.xml.docx.document
 	diff testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document
 	rm testnotes1.xml.docx.document
@@ -281,10 +283,12 @@ test-oddity: css
 	diff test.isosch expected-results/test.isosch
 	$(BINDIR)/teitornc  $(FLAG) test21.odd test21.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test21.odd.rnc
-	diff test21.odd.rnc expected-results/test21.odd.rnc 
+	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test21.odd.rnc
+	diff test21.odd.rnc expected-results/test21.odd.rnc
 	$(BINDIR)/teitornc  $(FLAG) test15.odd test15.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
-	diff test15.odd.rnc expected-results/test15.odd.rnc 
+	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test15.odd.rnc
+	diff test15.odd.rnc expected-results/test15.odd.rnc
 	$(BINDIR)/teitohtml5 $(FLAG) --summaryDoc --lang=es --profile=tei --odd test15.odd test15.odd.html
 	xmllint --encode utf-8 --format test15.odd.html | perl cleanup.pl> test.temp ; mv test.temp test15.odd.html
 	diff test15.odd.html expected-results/test15.odd.html
@@ -300,14 +304,17 @@ test-oddity: css
 	$(JING) oddbyexample.xsd bare/test.xml
 	#xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 	$(SAXON) -s:testdrama.odd -xsl:../odds/odd2odd.xsl -o:testdrama.compiled.xml \
-	localsource=`pwd`/p5subset.xml $(SAXONOPT) 
+	localsource=`pwd`/p5subset.xml $(SAXONOPT)
 	perl -p -i -e 's+ xml:base=".*testdrama.odd"++' testdrama.compiled.xml
+	perl -i -pe 'BEGIN{undef $$/;} s/<\?TEIVERSION[^?]+\?>//smg' testdrama.compiled.xml
 	diff testdrama.compiled.xml expected-results/testdrama.compiled.xml
 	$(BINDIR)/teitornc $(FLAG) test30.odd test30.rnc
 	$(BINDIR)/teitodtd $(FLAG) test30.odd test30.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test30.rnc
+	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test30.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test30.dtd
-	$(JING) -c test30.rnc test36.xml
+	perl -i -pe 'BEGIN{undef $$/;} s/<!--\nDTD[^>]*-->\n//smg' test30.dtd
+	$(JING) -c -i test30.rnc test36.xml
 	xmllint --noout --dtdvalid test30.dtd test36.xml
 	diff test30.rnc expected-results/test30.rnc
 	diff test30.dtd expected-results/test30.dtd
@@ -315,7 +322,9 @@ test-oddity: css
 	$(BINDIR)/teitornc $(FLAG) test-pure.odd test-pure.rnc
 	xmllint --noout --dtdvalid test-pure.dtd test-pure.xml
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.dtd
+	perl -i -pe 'BEGIN{undef $$/;} s/<!--\nDTD[^>]*-->\n//smg' test-pure.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.rnc
+	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test-pure.rnc
 	diff test-pure.rnc expected-results/test-pure.rnc
 	diff test-pure.dtd expected-results/test-pure.dtd
 	$(BINDIR)/teitohtml $(FLAG) --odd test-pure.odd test-pure.odd.html
@@ -327,7 +336,9 @@ test-oddity: css
 	xmllint --noout --dtdvalid test-pure2.dtd test-pure2.xml
 	xmllint --encode utf-8 --format test-pure2.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure2.odd.html
 	perl -p -i -e 's/generated from ODD source .*//' test-pure2.dtd
+	perl -i -pe 'BEGIN{undef $$/;} s/<!--\nDTD[^>]*-->\n//smg' test-pure2.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test-pure2.rnc
+	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test-pure2.rnc
 	diff test-pure2.rnc expected-results/test-pure2.rnc
 	diff test-pure2.dtd expected-results/test-pure2.dtd
 	diff test-pure2.odd.html expected-results/test-pure2.odd.html
@@ -347,7 +358,7 @@ test-oddity: css
 	rm test.odd2xslstripspace
 
 moreoddity:
-	$(BINDIR)/teitoxsd test.odd test.xsd
+	$(BINDIR)/teitoxsd --localsource=/Users/hcayless/Development/TEIC/TEI/P5/p5subset.xml test.odd test.xsd
 	$(BINDIR)/teitodtd test.odd test.dtd
 	$(BINDIR)/teitornc test.odd test.rnc
 
@@ -357,12 +368,14 @@ test-namespaces:
 # what we think we are testing.
 	$(BINDIR)/teitornc test33.odd test33.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test33.rnc
+	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test33.rnc
 	diff test33.rnc expected-results/test33.rnc
 	$(SAXON) test33.odd ../odds/odd2json.xsl > test33.json
 	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test33.json
 	diff test33.json expected-results/test33.json
 	$(BINDIR)/teitornc test34.odd test34.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test34.rnc
+	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test34.rnc
 	diff test34.rnc expected-results/test34.rnc
 	$(SAXON) test34.odd ../odds/odd2json.xsl > test34.json
 	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.json
@@ -376,6 +389,7 @@ test-namespaces:
 	diff test34.odd.html expected-results/test34.odd.html
 	$(BINDIR)/teitornc test35.odd test35.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test35.rnc
+	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test35.rnc
 	diff test35.rnc expected-results/test35.rnc
 
 test-scripts:
@@ -392,7 +406,7 @@ test-pureant:
 	-f ../docx/build-to.xml \
 	-lib $(OXY)/lib/saxon9ee.jar \
 	-DoutputFile=`pwd`/test7.docx \
-	-DinputFile=`pwd`/test7.xml -Dprofile=default 
+	-DinputFile=`pwd`/test7.xml -Dprofile=default
 	java -Djava.awt.headless=true -Xmx256m \
 	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
 	-Dant.home=$(OXY)/tools/ant \
@@ -400,7 +414,7 @@ test-pureant:
 	-f ../docx/build-from.xml \
 	-lib $(OXY)/lib/saxon9ee.jar \
 	-DoutputFile=`pwd`/test29.xml \
-	-DinputFile=`pwd`/test29.docx -Dprofile=default 
+	-DinputFile=`pwd`/test29.docx -Dprofile=default
 
 test-oxgarage:
 	@echo BUILD: testing oxgarage
@@ -436,4 +450,3 @@ clean:
 oddtree:
 	saxon /usr/share/xml/tei/odd/p5subset.xml odd-to-tree.xsl  > oddtree.xml
 	teitohtml --profile=oxford oddtree.xml oddtree.html
-

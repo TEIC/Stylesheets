@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0">
-  <!--
-Schema 
-TEI Edition: Version 2.8.0. Last updated on
-	6th April 2015, revision 13197
-TEI Edition Location: http://www.tei-c.org/Vault/P5/Version 2.8.0/
   
--->
   <!---->
   <define name="macro.paraContent">
     <zeroOrMore>
@@ -17,7 +11,7 @@ TEI Edition Location: http://www.tei-c.org/Vault/P5/Version 2.8.0/
         <ref name="model.inter"/>
         <ref name="model.global"/>
         <ref name="lg"/>
-        <ref name="l"/>
+        <ref name="model.lLike"/>
       </choice>
     </zeroOrMore>
   </define>
@@ -68,6 +62,27 @@ TEI Edition Location: http://www.tei-c.org/Vault/P5/Version 2.8.0/
         <ref name="model.gLike"/>
       </choice>
     </zeroOrMore>
+  </define>
+  <define name="macro.anyXML">
+    <element>
+      <anyName>
+        <except>
+          <nsName ns="http://www.tei-c.org/ns/1.0"/>
+          <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+        </except>
+      </anyName>
+      <zeroOrMore>
+        <attribute>
+          <anyName/>
+        </attribute>
+      </zeroOrMore>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="macro.anyXML"/>
+        </choice>
+      </zeroOrMore>
+    </element>
   </define>
   <define name="data.certainty">
     <choice>
@@ -209,7 +224,7 @@ TEI Edition Location: http://www.tei-c.org/Vault/P5/Version 2.8.0/
   <define name="att.canonical.attribute.ref">
     <optional>
       <attribute name="ref">
-        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(reference) provides an explicit means of locating a full definition for the entity being named by means of one or more URIs.</a:documentation>
+        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(reference) provides an explicit means of locating a full definition or identity for the entity being named by means of one or more URIs.</a:documentation>
         <list>
           <oneOrMore>
             <ref name="data.pointer"/>
@@ -537,7 +552,7 @@ belongs, but this <sch:name/> element has no textual content.</sch:assert>
           <value>Y</value>
           <a:documentation>(yes) the element is fragmented in some (unspecified) respect</a:documentation>
           <value>N</value>
-          <a:documentation>(no) either the element is not fragmented, or no claim is made as to its completeness.</a:documentation>
+          <a:documentation>(no) the element is not fragmented, or no claim is made as to its completeness</a:documentation>
           <value>I</value>
           <a:documentation>(initial) this is the initial part of a fragmented element</a:documentation>
           <value>M</value>
@@ -992,7 +1007,7 @@ Suggested values include: 1] m(metre) ; 2] kg(kilogram) ; 3] s(second) ; 4] Hz(h
   <define name="att.placement.attribute.place">
     <optional>
       <attribute name="place">
-        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies where this item is placed
+        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies where this item is placed.
 Suggested values include: 1] below; 2] bottom; 3] margin; 4] top; 5] opposite; 6] overleaf; 7] above; 8] end; 9] inline; 10] inspace</a:documentation>
         <list>
           <oneOrMore>
@@ -1065,7 +1080,7 @@ Suggested values include: 1] below; 2] bottom; 3] margin; 4] top; 5] opposite; 6
   </define>
   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.pointing-targetLang-targetLang-constraint-3">
     <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
-      <sch:assert test="count(@target)">@targetLang can only be used if @target is specified.</sch:assert>
+      <sch:assert test="@target">@targetLang should only be used on <sch:name/> if @target is specified.</sch:assert>
     </sch:rule>
   </pattern>
   <define name="att.pointing.attribute.target">
@@ -1813,6 +1828,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <ref name="restore"/>
       <ref name="supplied"/>
       <ref name="surplus"/>
+      <ref name="secl"/>
       <ref name="mod"/>
       <ref name="redo"/>
       <ref name="retrace"/>
@@ -1833,6 +1849,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <ref name="restore"/>
       <ref name="supplied"/>
       <ref name="surplus"/>
+      <ref name="secl"/>
       <ref name="mod"/>
       <ref name="redo"/>
       <ref name="retrace"/>
@@ -1852,6 +1869,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
     <ref name="restore"/>
     <ref name="supplied"/>
     <ref name="surplus"/>
+    <ref name="secl"/>
     <ref name="mod"/>
     <ref name="redo"/>
     <ref name="retrace"/>
@@ -1893,6 +1911,9 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
     </optional>
     <optional>
       <ref name="surplus"/>
+    </optional>
+    <optional>
+      <ref name="secl"/>
     </optional>
     <optional>
       <ref name="mod"/>
@@ -1945,6 +1966,9 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <ref name="surplus"/>
     </zeroOrMore>
     <zeroOrMore>
+      <ref name="secl"/>
+    </zeroOrMore>
+    <zeroOrMore>
       <ref name="mod"/>
     </zeroOrMore>
     <zeroOrMore>
@@ -1993,6 +2017,9 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
     </oneOrMore>
     <oneOrMore>
       <ref name="surplus"/>
+    </oneOrMore>
+    <oneOrMore>
+      <ref name="secl"/>
     </oneOrMore>
     <oneOrMore>
       <ref name="mod"/>
@@ -2981,6 +3008,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
     <choice>
       <ref name="encodingDesc"/>
       <ref name="profileDesc"/>
+      <ref name="xenoData"/>
     </choice>
   </define>
   <define name="model.sourceDescPart">
@@ -3137,6 +3165,20 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
     <element name="p">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.5. Speech Contents]</a:documentation>
       <ref name="macro.paraContent"/>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-p-abstractModel-p-constraint-1">
+        <rule context="tei:p">
+          <report xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="(ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure)">
+        Abstract model violation: Paragraphs may not contain other paragraphs or ab elements.
+      </report>
+        </rule>
+      </pattern>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-p-abstractModel-structure-l-constraint-2">
+        <rule context="tei:p">
+          <report xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.
+      </report>
+        </rule>
+      </pattern>
       <ref name="att.global.attributes"/>
       <ref name="att.declaring.attributes"/>
       <ref name="att.fragmentable.attributes"/>
@@ -3515,8 +3557,7 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
   </define>
   <define name="address">
     <element name="address">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a postal address, for example of a publisher, an organization, or an individual. [3.5.2. Addresses 2.2.4. Publication, Distribution,
-Licensing, etc. 3.11.2.4. Imprint, Size of a Document, and Reprint Information]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a postal address, for example of a publisher, an organization, or an individual. [3.5.2. Addresses 2.2.4. Publication, Distribution, Licensing, etc. 3.11.2.4. Imprint, Size of a Document, and Reprint Information]</a:documentation>
       <group>
         <zeroOrMore>
           <ref name="model.global"/>
@@ -3536,8 +3577,7 @@ Licensing, etc. 3.11.2.4. Imprint, Size of a Document, and Reprint Information]<
   </define>
   <define name="addrLine">
     <element name="addrLine">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(address line) contains one line of a postal address. [3.5.2. Addresses 2.2.4. Publication, Distribution,
-Licensing, etc. 3.11.2.4. Imprint, Size of a Document, and Reprint Information]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(address line) contains one line of a postal address. [3.5.2. Addresses 2.2.4. Publication, Distribution, Licensing, etc. 3.11.2.4. Imprint, Size of a Document, and Reprint Information]</a:documentation>
       <ref name="macro.phraseSeq"/>
       <ref name="att.global.attributes"/>
       <empty/>
@@ -3634,8 +3674,7 @@ Measures]</a:documentation>
   </define>
   <define name="date">
     <element name="date">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a date in any format. [3.5.4. Dates and Times 2.2.4. Publication, Distribution,
-Licensing, etc. 2.5. The Revision Description 3.11.2.4. Imprint, Size of a Document, and Reprint Information 15.2.3. The Setting Description 13.3.6. Dates and Times]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a date in any format. [3.5.4. Dates and Times 2.2.4. Publication, Distribution, Licensing, etc. 2.6. The Revision Description 3.11.2.4. Imprint, Size of a Document, and Reprint Information 15.2.3. The Setting Description 13.3.6. Dates and Times]</a:documentation>
       <zeroOrMore>
         <choice>
           <text/>
@@ -3699,7 +3738,7 @@ Sample values include: 1] suspension; 2] contraction; 3] brevigraph; 4] superscr
     <element name="ptr">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(pointer) defines a pointer to another location. [3.6. Simple Links and Cross-References 16.1. Links]</a:documentation>
       <empty/>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-ptr-ptrAtts-constraint-1">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-ptr-ptrAtts-constraint-3">
         <rule context="tei:ptr">
           <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="@target and @cRef">Only one of the
 attributes @target and @cRef may be supplied on <name/>.</report>
@@ -3718,7 +3757,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
     <element name="ref">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(reference) defines a reference to another location, possibly modified by additional text or comment. [3.6. Simple Links and Cross-References 16.1. Links]</a:documentation>
       <ref name="macro.paraContent"/>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-ref-refAtts-constraint-2">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-ref-refAtts-constraint-4">
         <rule context="tei:ref">
           <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="@target and @cRef">Only one of the
 	attributes @target' and @cRef' may be supplied on <name/>
@@ -3817,7 +3856,7 @@ Suggested values include: 1] gloss; 2] index; 3] instructions; 4] litany; 5] syl
   </define>
   <define name="item">
     <element name="item">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains one component of a list. [3.7. Lists 2.5. The Revision Description]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains one component of a list. [3.7. Lists 2.6. The Revision Description]</a:documentation>
       <ref name="macro.specialPara"/>
       <ref name="att.global.attributes"/>
       <ref name="att.sortable.attributes"/>
@@ -4305,8 +4344,7 @@ Sample values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] sho
   </define>
   <define name="publisher">
     <element name="publisher">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides the name of the organization responsible for the publication or distribution of a bibliographic item. [3.11.2.4. Imprint, Size of a Document, and Reprint Information 2.2.4. Publication, Distribution,
-Licensing, etc.]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides the name of the organization responsible for the publication or distribution of a bibliographic item. [3.11.2.4. Imprint, Size of a Document, and Reprint Information 2.2.4. Publication, Distribution, Licensing, etc.]</a:documentation>
       <ref name="macro.phraseSeq"/>
       <ref name="att.global.attributes"/>
       <empty/>
@@ -4387,7 +4425,7 @@ Licensing, etc.]</a:documentation>
           </choice>
         </zeroOrMore>
       </group>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-biblStruct-deprecate-altIdentifier-child-constraint-3">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-biblStruct-deprecate-altIdentifier-child-constraint-5">
         <rule context="tei:biblStruct">
           <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="child::tei:idno" role="nonfatal">WARNING: use of deprecated method — the use of the idno element as a direct child of the biblStruct element will be removed from the TEI on 2016-09-18</sch:report>
         </rule>
@@ -4433,7 +4471,7 @@ Licensing, etc.]</a:documentation>
           <ref name="model.ptrLike"/>
         </choice>
       </optional>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-relatedItem-targetorcontent1-constraint-4">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-relatedItem-targetorcontent1-constraint-6">
         <rule context="tei:relatedItem">
           <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="@target and count( child::* ) &gt; 0">
 If the @target attribute on <sch:name/> is used, the
@@ -4460,7 +4498,22 @@ relatedItem element must be empty</sch:report>
   <define name="l">
     <element name="l">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(verse line) contains a single, possibly incomplete, line of verse. [3.12.1. Core Tags for Verse 3.12. Passages of Verse or Drama 7.2.5. Speech Contents]</a:documentation>
-      <ref name="macro.paraContent"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="model.gLike"/>
+          <ref name="model.phrase"/>
+          <ref name="model.inter"/>
+          <ref name="model.global"/>
+        </choice>
+      </zeroOrMore>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-l-abstractModel-structure-l-constraint-7">
+        <rule context="tei:l">
+          <report xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
+        Abstract model violation: Lines may not contain lines or lg elements.
+      </report>
+        </rule>
+      </pattern>
       <ref name="att.global.attributes"/>
       <ref name="att.fragmentable.attributes"/>
       <empty/>
@@ -4504,6 +4557,13 @@ relatedItem element must be empty</sch:report>
         <rule context="tei:lg">
           <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
         must contain at least one child l, lg or gap element.</sch:assert>
+        </rule>
+      </pattern>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-lg-abstractModel-structure-l-constraint-8">
+        <rule context="tei:lg">
+          <report xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
+        Abstract model violation: Lines may not contain line groups.
+      </report>
         </rule>
       </pattern>
       <ref name="att.global.attributes"/>
@@ -4811,8 +4871,7 @@ Sample values include: 1] text; 2] corpus</a:documentation>
   </define>
   <define name="publicationStmt">
     <element name="publicationStmt">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(publication statement) groups information concerning the publication or distribution of an electronic or other text. [2.2.4. Publication, Distribution,
-Licensing, etc. 2.2. The File Description]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(publication statement) groups information concerning the publication or distribution of an electronic or other text. [2.2.4. Publication, Distribution, Licensing, etc. 2.2. The File Description]</a:documentation>
       <choice>
         <oneOrMore>
           <group>
@@ -4834,8 +4893,7 @@ Licensing, etc. 2.2. The File Description]</a:documentation>
   </define>
   <define name="distributor">
     <element name="distributor">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies the name of a person or other agency responsible for the distribution of a text. [2.2.4. Publication, Distribution,
-Licensing, etc.]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies the name of a person or other agency responsible for the distribution of a text. [2.2.4. Publication, Distribution, Licensing, etc.]</a:documentation>
       <ref name="macro.phraseSeq"/>
       <ref name="att.global.attributes"/>
       <empty/>
@@ -4843,8 +4901,7 @@ Licensing, etc.]</a:documentation>
   </define>
   <define name="authority">
     <element name="authority">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(release authority) supplies the name of a person or other agency responsible for making a work available, other than a publisher or distributor. [2.2.4. Publication, Distribution,
-Licensing, etc.]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(release authority) supplies the name of a person or other agency responsible for making a work available, other than a publisher or distributor. [2.2.4. Publication, Distribution, Licensing, etc.]</a:documentation>
       <ref name="macro.phraseSeq.limited"/>
       <ref name="att.global.attributes"/>
       <empty/>
@@ -4852,8 +4909,7 @@ Licensing, etc.]</a:documentation>
   </define>
   <define name="idno">
     <element name="idno">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(identifier) supplies any form of identifier used to identify some object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized way. [2.2.4. Publication, Distribution,
-Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Document, and Reprint Information]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(identifier) supplies any form of identifier used to identify some object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized way. [2.2.4. Publication, Distribution, Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Document, and Reprint Information]</a:documentation>
       <zeroOrMore>
         <choice>
           <text/>
@@ -4874,8 +4930,7 @@ Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Documen
   </define>
   <define name="availability">
     <element name="availability">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies information about the availability of a text, for example any restrictions on its use or distribution, its copyright status, any licence applying to it, etc. [2.2.4. Publication, Distribution,
-Licensing, etc.]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies information about the availability of a text, for example any restrictions on its use or distribution, its copyright status, any licence applying to it, etc. [2.2.4. Publication, Distribution, Licensing, etc.]</a:documentation>
       <oneOrMore>
         <choice>
           <ref name="model.availabilityPart"/>
@@ -4902,8 +4957,7 @@ Licensing, etc.]</a:documentation>
   </define>
   <define name="licence">
     <element name="licence">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains information about a licence or other legal agreement applicable to the text. [2.2.4. Publication, Distribution,
-Licensing, etc.]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains information about a licence or other legal agreement applicable to the text. [2.2.4. Publication, Distribution, Licensing, etc.]</a:documentation>
       <ref name="macro.specialPara"/>
       <ref name="att.global.attributes"/>
       <ref name="att.pointing.attributes"/>
@@ -5126,9 +5180,9 @@ Licensing, etc.]</a:documentation>
       <zeroOrMore>
         <ref name="model.pLike"/>
       </zeroOrMore>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-quotation-quotationContents-constraint-5">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-quotation-quotationContents-constraint-9">
         <rule context="tei:quotation">
-          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="not(@marks) and not (tei:p)">
+          <report xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="not(@marks) and not (tei:p)">
 On <name/>, either the @marks attribute should be used, or a paragraph of description provided</report>
         </rule>
       </pattern>
@@ -5326,13 +5380,18 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
           <ref name="data.enumerated"/>
         </attribute>
       </optional>
+      <optional>
+        <attribute name="selector">
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a selector or series of selectors specifying the elements to which the contained style description applies, expressed in the language specified in the scheme attribute.</a:documentation>
+          <ref name="data.text"/>
+        </attribute>
+      </optional>
       <empty/>
     </element>
   </define>
   <define name="styleDefDecl">
     <element name="styleDefDecl">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(style definition language declaration) specifies the name of the formal language in which style or renditional information is supplied elsewhere in the document. The specific version of the scheme may also be supplied. [2.3.5. The Default Style Definition
-Language Declaration]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(style definition language declaration) specifies the name of the formal language in which style or renditional information is supplied elsewhere in the document. The specific version of the scheme may also be supplied. [2.3.5. The Default Style Definition Language Declaration]</a:documentation>
       <zeroOrMore>
         <ref name="model.pLike"/>
       </zeroOrMore>
@@ -5684,7 +5743,7 @@ Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Gri
       <ref name="macro.phraseSeq.limited"/>
       <ref name="att.global.attributes"/>
       <attribute name="scheme">
-        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">identifies the classification system in use, as defined by for example by a taxonomy element, or some other resource..</a:documentation>
+        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">identifies the classification system in use, as defined by for example by a taxonomy element, or some other resource.</a:documentation>
         <ref name="data.pointer"/>
       </attribute>
       <empty/>
@@ -5791,9 +5850,26 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
       <empty/>
     </element>
   </define>
+  <define name="xenoData">
+    <element name="xenoData">
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(outside metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]</a:documentation>
+      <zeroOrMore>
+        <group>
+          <choice>
+            <text/>
+            <ref name="macro.anyXML"/>
+          </choice>
+        </group>
+      </zeroOrMore>
+      <ref name="att.global.attributes"/>
+      <ref name="att.declarable.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <empty/>
+    </element>
+  </define>
   <define name="revisionDesc">
     <element name="revisionDesc">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(revision description) summarizes the revision history for a file. [2.5. The Revision Description 2.1.1. The TEI Header and Its Components]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(revision description) summarizes the revision history for a file. [2.6. The Revision Description 2.1.1. The TEI Header and Its Components]</a:documentation>
       <choice>
         <ref name="list"/>
         <ref name="listChange"/>
@@ -5808,7 +5884,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
   </define>
   <define name="change">
     <element name="change">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.5. The Revision Description 2.4.1. Creation 11.7. Changes]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.6. The Revision Description 2.4.1. Creation 11.7. Changes]</a:documentation>
       <ref name="macro.specialPara"/>
       <ref name="att.ascribed.attributes"/>
       <ref name="att.datable.attributes"/>
@@ -5830,7 +5906,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
   </define>
   <define name="listChange">
     <element name="listChange">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.5. The Revision Description 11.7. Changes]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.7. Changes]</a:documentation>
       <oneOrMore>
         <choice>
           <ref name="listChange"/>
@@ -6337,6 +6413,25 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
       <optional>
         <attribute name="reason">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">one or more words indicating why this text is believed to be superfluous, e.g. repeated, interpolated etc.</a:documentation>
+          <list>
+            <oneOrMore>
+              <ref name="data.word"/>
+            </oneOrMore>
+          </list>
+        </attribute>
+      </optional>
+      <empty/>
+    </element>
+  </define>
+  <define name="secl">
+    <element name="secl">
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(secluded text) Secluded. Marks text present in the source which the editor believes to be genuine but out of its original place (which is unknown). [11.3.1.7. Text Omitted from or Supplied in the Transcription]</a:documentation>
+      <ref name="macro.paraContent"/>
+      <ref name="att.global.attributes"/>
+      <ref name="att.editLike.attributes"/>
+      <optional>
+        <attribute name="reason">
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">one or more words indicating why this text has been secluded, e.g. interpolated etc.</a:documentation>
           <list>
             <oneOrMore>
               <ref name="data.word"/>
@@ -7218,6 +7313,20 @@ Suggested values include: 1] initial; 2] final</a:documentation>
           </zeroOrMore>
         </optional>
       </group>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-div-abstractModel-structure-l-constraint-10">
+        <rule context="tei:div">
+          <report xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="ancestor::tei:l">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div.
+      </report>
+        </rule>
+      </pattern>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-div-abstractModel-structure-p-constraint-11">
+        <rule context="tei:div">
+          <report xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)">
+        Abstract model violation: p and ab may not contain higher-level structural elements such as div.
+      </report>
+        </rule>
+      </pattern>
       <ref name="att.global.attributes"/>
       <ref name="att.divLike.attributes"/>
       <ref name="att.typed.attributes"/>
@@ -8156,6 +8265,20 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
     <element name="ab">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(anonymous block) contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph. [16.3. Blocks, Segments, and Anchors]</a:documentation>
       <ref name="macro.paraContent"/>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-ab-abstractModel-structure-p-constraint-12">
+        <rule context="tei:ab">
+          <report xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="(ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
+        Abstract model violation: ab may not contain paragraphs or other ab elements.
+      </report>
+        </rule>
+      </pattern>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-ab-abstractModel-structure-l-constraint-13">
+        <rule context="tei:ab">
+          <report xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="ancestor::tei:l or ancestor::tei:lg">
+        Abstract model violation: Lines may not contain higher-level divisions such as p or ab.
+      </report>
+        </rule>
+      </pattern>
       <ref name="att.global.attributes"/>
       <ref name="att.typed.attributes"/>
       <ref name="att.declaring.attributes"/>

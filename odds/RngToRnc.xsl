@@ -247,7 +247,7 @@
 <!-- Declarations -->
       <xsl:if test="$has-default-ns">
             <xsl:call-template name="make-ns-declaration">
-               <xsl:with-param name="is-default" select="true ()"/>
+               <xsl:with-param name="is-default" select="true()"/>
                <xsl:with-param name="prefix" select="$default-ns-id"/>
                <xsl:with-param name="uri" select="$default-ns"/>
             </xsl:call-template>

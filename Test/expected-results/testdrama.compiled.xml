@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en" n="testdrama"><?TEIVERSION Version 2.8.0. Last updated on
-	6th April 2015, revision 13197?>
+<?xml version="1.0" encoding="utf-8"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en" n="testdrama">
    <teiHeader>
       <fileDesc>
          <titleStmt>
@@ -126,7 +125,7 @@
     <attDef ident="ref" usage="opt">
       <gloss versionDate="2008-09-05" xml:lang="en">reference</gloss>
       <gloss versionDate="2009-05-25" xml:lang="fr">référence</gloss>
-      <desc versionDate="2008-09-05" xml:lang="en">provides an explicit means of locating a full definition for the entity being named by
+      <desc versionDate="2008-09-05" xml:lang="en">provides an explicit means of locating a full definition or identity for the entity being named by
         means of one or more URIs.</desc>
       <desc versionDate="2009-05-25" xml:lang="fr">fournit un moyen explicite de localiser une
         définition complète de l'entité nommée au moyen d'un ou plusieurs URIs.</desc>
@@ -747,9 +746,13 @@ belongs, but this <sch:name/> element has no textual content.</sch:assert>
       <exemplum versionDate="2008-04-06" xml:lang="fr">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Bouiller_Rapport"> L'année
           1960 fut, en vertu du calendrier grégorien, bissextile ; le 22 juin tomba ainsi le jour
-          de l'été, le <date calendar="#Gregorian"> 22 juin</date>.
+          de l'été, le <date calendar="#Gregorian">22 juin</date>.
         </egXML>
       </exemplum>
+      <remarks xml:lang="en" versionDate="2015-05-29"><p>Note that the <att>calendar</att> attribute (unlike
+        <att>datingMethod</att> defined in <ident type="class">att.datable.custom</ident>) defines
+      the calendar system of the date in the original material defined by the parent element, <emph>not</emph>
+      the calendar to which the date is normalized.</p></remarks>
     </attDef>
     <attDef ident="period" usage="opt">
       <desc versionDate="2011-11-25" xml:lang="en">supplies a pointer to some location defining a named
@@ -1018,6 +1021,8 @@ Information with a Text</ref>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
+      
+      
       <defaultVal>N</defaultVal>
       <valList type="closed">
         <valItem ident="Y">
@@ -1026,7 +1031,7 @@ Information with a Text</ref>
         </valItem>
         <valItem ident="N">
           <gloss versionDate="2013-01-07" xml:lang="en">no</gloss>
-          <desc versionDate="2013-01-07" xml:lang="en">either the element is not fragmented, or no claim is made as to its completeness.</desc>
+          <desc versionDate="2013-01-07" xml:lang="en">the element is not fragmented, or no claim is made as to its completeness</desc>
         </valItem>
         <valItem ident="I">
           <gloss versionDate="2013-01-07" xml:lang="en">initial</gloss>
@@ -1429,7 +1434,7 @@ associated with a dated element, at the time indicated.</desc>
 <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPERSE">13.3.2. The Person Element</ref>
 <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHCO">11.3.1.1. Core Elements for Transcriptional Work</ref>
   </listRef>
-</classSpec><classSpec module="tei" type="atts" ident="att.global.rendition">
+</classSpec><classSpec predeclare="true" module="tei" type="atts" ident="att.global.rendition">
   <desc versionDate="2014-12-02" xml:lang="en">provides rendering attributes common to all elements in the TEI encoding scheme.</desc>
   
   <classes/>
@@ -2678,8 +2683,8 @@ this name in the form of a set of whitespace-separated values, for example the o
   della pagina o dell'oggetto di origine</desc>
   <attList>
     <attDef ident="place" usage="rec">
-      <desc versionDate="2012-10-07" xml:lang="en">specifies where this item is placed</desc>
-      <desc xml:lang="fr" versionDate="2007-06-12">specifie  où cet  item se trouve</desc>
+      <desc versionDate="2012-10-07" xml:lang="en">specifies where this item is placed.</desc>
+      <desc xml:lang="fr" versionDate="2007-06-12">specifie  où cet  item se trouve.</desc>
       <datatype maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
@@ -2916,7 +2921,7 @@ Value Lists</ref>
       <constraintSpec ident="targetLang" scheme="isoschematron">
         <constraint>
           <sch:rule context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
-            <sch:assert test="count(@target)">@targetLang can only be used if @target is specified.</sch:assert>
+            <sch:assert test="@target">@targetLang should only be used on <sch:name/> if @target is specified.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -3213,7 +3218,7 @@ subject, predicate etc. may be more appropriate. Such constraints will typically
         <p>Dictionary order often differs from the collation sequence of machine-readable character
             sets; in English-language dictionaries, an entry for <mentioned>4-H</mentioned> will often
             appear alphabetized under <q>fourh</q>, and <mentioned>McCoy</mentioned> may be
-            alphabetized under<q>maccoy</q>, while <mentioned>A1</mentioned>,
+            alphabetized under <q>maccoy</q>, while <mentioned>A1</mentioned>,
             <mentioned>A4</mentioned>, and <mentioned>A5</mentioned> may all appear in numeric order
             <soCalled>alphabetized</soCalled> between <q>a-</q> and <q>AA</q>. The sort key is
             required if the orthography of the dictionary entry does not suffice to determine its
@@ -4582,8 +4587,7 @@ niveau dans une entrée de dictionnaire.</desc>
     <p>See also <ident type="class">model.publicationStmtPart.detail</ident>.</p>
   </remarks>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
   </listRef>
 </classSpec><classSpec module="tei" type="model" ident="model.publicationStmtPart.detail">
   <desc versionDate="2014-01-11" xml:lang="en">groups the agency-specific child elements of the <gi>publicationStmt</gi> element of the TEI header.</desc>
@@ -4602,16 +4606,14 @@ Licensing, etc.</ref>
     <p>See also <ident type="class">model.publicationStmtPart.agency</ident>.</p>
   </remarks>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
   </listRef>
 </classSpec><classSpec module="tei" type="model" ident="model.availabilityPart">
   <desc versionDate="2013-03-18" xml:lang="en">groups elements such as licences and paragraphs of text which may appear as part of an
   availability statement</desc>
   <desc xml:lang="fr" versionDate="2007-06-12">regroupe des éléments tels que les licences ou les paragraphes indiquant la disponibilité d'un ouvrage.</desc>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
   </listRef>
 </classSpec><classSpec module="tei" type="model" ident="model.certLike">
   <desc versionDate="2011-11-10" xml:lang="en">groups elements which are used to indicate uncertainty or
@@ -5275,7 +5277,7 @@ and appear multiple times.</desc>
         <ref name="model.inter"/>
         <ref name="model.global"/>
         <ref name="lg"/>
-        <ref name="l"/>
+        <ref name="model.lLike"/>
       </choice>
     </zeroOrMore>
   </content>
@@ -5404,6 +5406,32 @@ used for transcribing extant documents.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STEC">1.3. The TEI Class System</ref>
   </listRef>
+</macroSpec><macroSpec type="pe" ident="macro.anyXML" module="tei">
+  <desc versionDate="2008-09-05" xml:lang="en">defines a content model within which any XML elements are
+  permitted</desc>
+  <desc versionDate="2009-07-16" xml:lang="fr">définit un modèle de contenu dans lequel tous les
+    éléments XML sont autorisés.</desc>
+  <content>
+    <element xmlns="http://relaxng.org/ns/structure/1.0">
+      <anyName>
+        <except>
+          <nsName ns="http://www.tei-c.org/ns/1.0"/>
+          <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+        </except>
+      </anyName>
+      <zeroOrMore>
+        <attribute>
+          <anyName/>
+        </attribute>
+      </zeroOrMore>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="macro.anyXML"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </content>
 </macroSpec><macroSpec module="tei" type="dt" ident="data.certainty">
   <desc versionDate="2007-10-18" xml:lang="en">defines the range of attribute values expressing a degree of certainty.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">확실성 정도를 표현하는 속성 값의 범위를 정의한다.</desc>
@@ -5789,7 +5817,7 @@ value.</desc>
     </choice>
   </content>
   <remarks versionDate="2009-06-29" xml:lang="en">
-    <p>The values for this attribute are language <soCalled>tags</soCalled> as defined in <ref target="http://tools.ietf.org/html/bcp47">BCP 47</ref>. Currently BCP 47 comprises RFC 4646
+    <p>The values for this attribute are language <soCalled>tags</soCalled> as defined in <ref target="http://tools.ietf.org/html/bcp47">BCP 47</ref>. Currently BCP 47 comprises RFC 5646
       and RFC 4647; over time, other IETF documents may succeed these as the best current practice.</p>
     <p>A <soCalled>language tag</soCalled>, per BCP 47, is assembled from a sequence of components
       or <term>subtags</term> separated by the hyphen character (<mentioned>-</mentioned>, U+002D).
@@ -5805,8 +5833,8 @@ value.</desc>
           recommends this code be omitted unless it is necessary to make a distinction you need.</item><label>region</label><item>Either an ISO 3166 country code or a UN M.49 region code that is registered with IANA
           (not all such codes are registered, e.g. UN codes for economic groupings or codes for
           countries for which there is already an ISO 3166 2-letter code are not registered). The
-          former consist of 2 letters, and it is recommended they be written in upper case. The list
-          of codes can be found at <ptr target="http://www.iso.org/iso/home/standards/country_codes/iso-3166-1_decoding_table.htm"/>. The latter consist of 3 digits; the list of codes can be found at <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>.</item><label>variant</label><item>An IANA-registered variation. These codes <quote rend="quoted">are used to indicate
+          former consist of 2 letters, and it is recommended they be written in upper case; the list
+          of codes can be searched or browsed at <ptr target="https://www.iso.org/obp/ui/#search/code/"/>. The latter consist of 3 digits; the list of codes can be found at <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>.</item><label>variant</label><item>An IANA-registered variation. These codes <quote rend="quoted">are used to indicate
             additional, well-recognized variations that define a language or its dialects that are
             not covered by other available subtags</quote>.</item><label>extension</label><item>An extension has the format of a single letter followed by a hyphen followed by
           additional subtags. These exist to allow for future extension to BCP 47, but as of this
@@ -6268,13 +6296,13 @@ resource, either within the current document or elsewhere.</desc>
       de valeurs dans la spécification de l'attribut associé, exprimée par un élément
       <gi>valList</gi>.</p>
   </remarks>
-</macroSpec><classSpec module="tei" type="model" ident="model.correspActionPart">
+</macroSpec><classSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="model" ident="model.correspActionPart">
     <desc versionDate="2014-11-11" xml:lang="en">groups elements which define the
         parts (usually names, dates and places) of one action related to the correspondence.</desc>
-</classSpec><classSpec module="tei" type="model" ident="model.correspContextPart">
+</classSpec><classSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="model" ident="model.correspContextPart">
     <desc versionDate="2014-11-11" xml:lang="en">groups elements which may 
         appear as part of the correspContext element</desc>
-</classSpec><classSpec module="tei" type="model" ident="model.correspDescPart">
+</classSpec><classSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="model" ident="model.correspDescPart">
     <desc versionDate="2014-01-13" xml:lang="en">groups together metadata
         elements for describing correspondence</desc>
 </classSpec><classSpec module="tei" type="atts" ident="att.source" predeclare="true">
@@ -6726,6 +6754,20 @@ Elements</ref>
   <content>
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
   </content>
+  <constraintSpec ident="abstractModel-p" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="(ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure)">
+        Abstract model violation: Paragraphs may not contain other paragraphs or ab elements.
+      </report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="abstractModel-structure-l" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.
+      </report>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NJAL">
       <p>Hallgerd was outside. <q>There is blood on your axe,</q> she said. <q>What have you
@@ -9167,8 +9209,7 @@ TOURS</addrLine>
   </remarks>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#CONAAD">3.5.2. Addresses</ref>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOI">3.11.2.4. Imprint, Size of a Document, and Reprint Information</ref>
   </listRef>
 </elementSpec><elementSpec module="core" ident="addrLine">
@@ -9258,8 +9299,7 @@ Licensing, etc.</ref>
   </remarks>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#CONAAD">3.5.2. Addresses</ref>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOI">3.11.2.4. Imprint, Size of a Document, and Reprint Information</ref>
   </listRef>
 </elementSpec><elementSpec module="core" ident="street">
@@ -9878,9 +9918,8 @@ Measures</ref>
   </exemplum>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#CONADA">3.5.4. Dates and Times</ref>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD6">2.5. The Revision Description</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD6">2.6. The Revision Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOI">3.11.2.4. Imprint, Size of a Document, and Reprint Information</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAHSE">15.2.3. The Setting Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDDATE">13.3.6. Dates and Times</ref>
@@ -10498,7 +10537,8 @@ attributes @target and @cRef may be supplied on <name/>.</report>
       <list rend="numbered">
         <item>a butcher</item>
         <item>a baker</item>
-        <item>a candlestick maker, with <list rend="bulleted"><item>rings on his fingers</item><item>bells on his toes</item></list>
+        <item>a candlestick maker, with 
+	  <list rend="bulleted"><item>rings on his fingers</item><item>bells on his toes</item></list>
             </item>
       </list>
     </egXML>
@@ -10606,7 +10646,8 @@ attributes @target and @cRef may be supplied on <name/>.</report>
         <list rend="numbered">
           <item n="1">Concerning thieves. First, that no thief is to be spared who is caught with
             the stolen goods, [if he is] over twelve years and [if the value of the goods is] over
-            eightpence. <list rend="numbered"><item n="1.1">And if anyone does spare one, he is to pay for the thief with his
+            eightpence. 
+            <list rend="numbered"><item n="1.1">And if anyone does spare one, he is to pay for the thief with his
                 wergild — and the thief is to be no nearer a settlement on that account — or to
                 clear himself by an oath of that amount.</item><item n="1.2">If, however, he [the thief] wishes to defend himself or to escape, he is
                 not to be spared [whether younger or older than twelve].</item><item n="1.3">If a thief is put into prison, he is to be in prison 40 days, and he may
@@ -10618,7 +10659,8 @@ attributes @target and @cRef may be supplied on <name/>.</report>
                </item>
           <item n="2">Concerning lordless men. And we pronounced about these lordless men, from whom
             no justice can be obtained, that one should order their kindred to fetch back such a
-            person to justice and to find him a lord in public meeting. <list rend="numbered"><item n="2.1">And if they then will not, or cannot, produce him on that appointed day,
+            person to justice and to find him a lord in public meeting. 
+            <list rend="numbered"><item n="2.1">And if they then will not, or cannot, produce him on that appointed day,
                 he is then to be a fugitive afterwards, and he who encounters him is to strike him
                 down as a thief.</item><item n="2.2">And he who harbours him after that, is to pay for him with his wergild
                 or to clear himself by an oath of that amount.</item></list>
@@ -10627,7 +10669,8 @@ attributes @target and @cRef may be supplied on <name/>.</report>
             his guilty man, so that the king is appealed to, is to repay the value of the goods and
             120 shillings to the king; and he who appeals to the king before he demands justice as
             often as he ought, is to pay the same fine as the other would have done, if he had
-            refused him justice. <list rend="numbered"><item n="3.1">And the lord who is an accessory to a theft by his slave, and it becomes
+            refused him justice. 
+            <list rend="numbered"><item n="3.1">And the lord who is an accessory to a theft by his slave, and it becomes
                 known about him, is to forfeit the slave and be liable to his wergild on the first
                 occasionp if he does it more often, he is to be liable to pay all that he owns.</item><item n="3.2">And likewise any of the king's treasurers or of our reeves, who has been
                 an accessory of thieves who have committed theft, is to liable to the same.</item></list>
@@ -10647,7 +10690,8 @@ attributes @target and @cRef may be supplied on <name/>.</report>
       <p>These decrees, most blessed Pope Hadrian, we propounded in the public council ... and they
         confirmed them in our hand in your stead with the sign of the Holy Cross, and afterwards
         inscribed with a careful pen on the paper of this page, affixing thus the sign of the Holy
-        Cross. <list rend="simple"><item>I, Eanbald, by the grace of God archbishop of the holy church of York, have
+        Cross. 
+        <list rend="simple"><item>I, Eanbald, by the grace of God archbishop of the holy church of York, have
             subscribed to the pious and catholic validity of this document with the sign of the Holy
             Cross.</item><item>I, Ælfwold, king of the people across the Humber, consenting have subscribed with
             the sign of the Holy Cross.</item><item>I, Tilberht, prelate of the church of Hexham, rejoicing have subscribed with the
@@ -10759,7 +10803,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
   </remarks>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COLI">3.7. Lists</ref>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD6">2.5. The Revision Description</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD6">2.6. The Revision Description</ref>
   </listRef>
 </elementSpec><elementSpec module="core" ident="label">
   <gloss versionDate="2009-01-06" xml:lang="fr">étiquette</gloss>
@@ -13295,8 +13339,7 @@ epistemology, methodology and history of
   </remarks>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOI">3.11.2.4. Imprint, Size of a Document, and Reprint Information</ref>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
   </listRef>
 </elementSpec><elementSpec module="core" ident="biblScope">
   <gloss versionDate="2012-12-13" xml:lang="en">scope of bibliographic reference</gloss>
@@ -13895,8 +13938,23 @@ relatedItem element must be empty</sch:report>
     <memberOf key="att.fragmentable"/>
   </classes>
   <content>
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="model.inter"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
   </content>
+  <constraintSpec ident="abstractModel-structure-l" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
+        Abstract model violation: Lines may not contain lines or lg elements.
+      </report>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#l-td-eg-1">
       <l met="x/x/x/x/x/" real="/xx/x/x/x/">Shall I compare thee to a summer's day?</l>
@@ -13980,6 +14038,13 @@ relatedItem element must be empty</sch:report>
     <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
       <sch:assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
         must contain at least one child l, lg or gap element.</sch:assert>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="abstractModel-structure-l" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
+        Abstract model violation: Lines may not contain line groups.
+      </report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -14948,7 +15013,7 @@ element in the TEI Header.
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOI">3.11.2.4. Imprint, Size of a Document, and Reprint Information</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ms.html#mslangs">10.6.6. Languages and Writing Systems</ref>
   </listRef>
-</elementSpec><classSpec module="header" type="atts" ident="att.patternReplacement">
+</elementSpec><classSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" type="atts" ident="att.patternReplacement">
   <desc versionDate="2012-11-22" xml:lang="en">provides attributes for regular-expression matching and replacement.</desc>
   <attList>
     <attDef ident="matchPattern" usage="req">
@@ -15041,7 +15106,7 @@ element in the TEI Header.
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54">2.3.6. The Reference System Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54S">2.3.6.2. Search-and-Replace Method</ref>
   </listRef>
-</classSpec><elementSpec module="header" ident="teiHeader">
+</classSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="teiHeader">
   <gloss versionDate="2013-02-02" xml:lang="en">TEI header</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">en-tête TEI</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">TEI 헤더</gloss>
@@ -15286,7 +15351,7 @@ element in the TEI Header.
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD11">2.1.1. The TEI Header and Its Components</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCDEF">15.1. Varieties of Composite Text</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="fileDesc">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="fileDesc">
   <gloss versionDate="2007-07-05" xml:lang="en">file description</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">description bibliographique du fichier</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">파일 기술</gloss>
@@ -15396,7 +15461,7 @@ element in the TEI Header.
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD2">2.2. The File Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD11">2.1.1. The TEI Header and Its Components</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="titleStmt">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="titleStmt">
   <gloss versionDate="2005-01-14" xml:lang="en">title statement</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">mention de titre</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">제목 진술</gloss>
@@ -15483,7 +15548,7 @@ element in the TEI Header.
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD21">2.2.1. The Title Statement</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD2">2.2. The File Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="sponsor">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="sponsor">
   <gloss versionDate="2007-06-12" xml:lang="fr">commanditaire</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">specifies the name of a sponsoring organization or institution.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">indique le nom d’une institution ou d’un organisme
@@ -15546,7 +15611,7 @@ element in the TEI Header.
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD21">2.2.1. The Title Statement</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="funder">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="funder">
   <gloss versionDate="2007-07-04" xml:lang="en">funding body</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">financeur</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">재정 지원 조직체</gloss>
@@ -15615,7 +15680,7 @@ element in the TEI Header.
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD21">2.2.1. The Title Statement</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="principal">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="principal">
   <gloss versionDate="2005-01-14" xml:lang="en">principal researcher</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">chercheur principal</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">책임 연구자</gloss>
@@ -15660,7 +15725,7 @@ creation of an electronic text.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD21">2.2.1. The Title Statement</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="editionStmt">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="editionStmt">
   <gloss versionDate="2005-01-14" xml:lang="en">edition statement</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">mention d'édition</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">편집 진술</gloss>
@@ -15754,7 +15819,7 @@ creation of an electronic text.</desc>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD22">2.2.2. The Edition Statement</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD2">2.2. The File Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="edition">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="edition">
   <gloss versionDate="2009-01-05" xml:lang="fr">édition</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">편집, 판</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">版本</gloss>
@@ -15800,7 +15865,7 @@ creation of an electronic text.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD22">2.2.2. The Edition Statement</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="extent">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="extent">
   <gloss versionDate="2007-06-12" xml:lang="fr">étendue</gloss>
   <desc versionDate="2013-01-07" xml:lang="en">describes the approximate size of a text stored on some carrier medium or of some other object, digital  or non-digital,  specified in any convenient units.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr"> décrit la taille approximative d’un texte stocké sur son
@@ -15860,7 +15925,7 @@ material</measure>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOI">3.11.2.4. Imprint, Size of a Document, and Reprint Information</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ms.html#msph1">10.7.1. Object Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="publicationStmt">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="publicationStmt">
   <gloss versionDate="2005-01-14" xml:lang="en">publication statement</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">mention de publication</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">출판 진술</gloss>
@@ -15986,11 +16051,10 @@ material</measure>
       可用性，日付が，この順番で出現することが望ましい． </p>
   </remarks>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD2">2.2. The File Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="distributor">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="distributor">
   <gloss versionDate="2007-06-12" xml:lang="fr">diffuseur</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">supplies the name of a person or other agency responsible for the
 distribution of a text.</desc>
@@ -16030,10 +16094,9 @@ distribution of a text.</desc>
     </egXML>
   </exemplum>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="authority">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="authority">
   <gloss versionDate="2005-01-14" xml:lang="en">release authority</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">responsable de la publication.</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">배포권자</gloss>
@@ -16077,10 +16140,9 @@ Licensing, etc.</ref>
     </egXML>
   </exemplum>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="idno">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="idno">
   <gloss versionDate="2010-04-30" xml:lang="en">identifier</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">identifiant</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">식별 숫자</gloss>
@@ -16170,12 +16232,11 @@ means of a <gi>glyph</gi> or <gi>char</gi> element referenced here as <code>#sym
     <code>URI</code>.</p>
   </remarks>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD26">2.2.5. The Series Statement</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOI">3.11.2.4. Imprint, Size of a Document, and Reprint Information</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="availability">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="availability">
   <gloss versionDate="2007-06-12" xml:lang="fr">disponibilité</gloss>
   <desc versionDate="2011-11-17" xml:lang="en">supplies information about the availability of a text, for example any restrictions on its
     use or distribution, its copyright status, any licence applying to it, etc.</desc>
@@ -16328,10 +16389,9 @@ Licensing, etc.</ref>
     <p rend="dataDesc"> 永続的な形式で示されるべきである． </p>
   </remarks>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="licence">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="licence">
   <desc versionDate="2011-04-25" xml:lang="en">contains information about a licence or other legal agreement
   applicable to the text.</desc>
   <desc xml:lang="fr" versionDate="2013-02-27">contient des informations
@@ -16390,10 +16450,9 @@ définissant les droits d'utilisation.</desc>
     applicability of the licence.</p>
   </remarks>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution,
-Licensing, etc.</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4. Publication, Distribution, Licensing, etc.</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="seriesStmt">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="seriesStmt">
   <gloss versionDate="2005-01-14" xml:lang="en">series statement</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">mention de collection</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">연속간행물 진술</gloss>
@@ -16486,7 +16545,7 @@ Licensing, etc.</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD26">2.2.5. The Series Statement</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD2">2.2. The File Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="notesStmt">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="notesStmt">
   <gloss versionDate="2007-07-04" xml:lang="en">notes statement</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">mention de notes</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">주석 진술</gloss>
@@ -16563,7 +16622,7 @@ Licensing, etc.</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD27">2.2.6. The Notes Statement</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD2">2.2. The File Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="sourceDesc">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="sourceDesc">
   <gloss versionDate="2007-07-04" xml:lang="en">source description</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">description de la source</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">원전 기술</gloss>
@@ -16636,7 +16695,7 @@ Licensing, etc.</ref>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD3">2.2.7. The Source Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="biblFull">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="biblFull">
   <gloss versionDate="2007-07-04" xml:lang="en">fully-structured bibliographic citation</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">완전히 구조화된 서지 인용 정보</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -16763,7 +16822,7 @@ Licensing, etc.</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD3">2.2.7. The Source Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="encodingDesc">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="encodingDesc">
   <gloss versionDate="2007-07-04" xml:lang="en">encoding description</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">description de l'encodage</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">부호화 기술</gloss>
@@ -16825,7 +16884,7 @@ formatting or layout information preserved.</p>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD5">2.3. The Encoding Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD11">2.1.1. The TEI Header and Its Components</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="projectDesc">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="projectDesc">
   <gloss versionDate="2005-01-14" xml:lang="en">project description</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">description du projet</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">프로젝트 기술</gloss>
@@ -16904,7 +16963,7 @@ formatting or layout information preserved.</p>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD5">2.3. The Encoding Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="samplingDecl">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="samplingDecl">
   <gloss versionDate="2005-01-14" xml:lang="en">sampling declaration</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">déclaration d'échantillonnage</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">표본 추출 선언</gloss>
@@ -16979,7 +17038,7 @@ formatting or layout information preserved.</p>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD5">2.3. The Encoding Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="editorialDecl">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="editorialDecl">
   <gloss versionDate="2005-01-14" xml:lang="en">editorial practice declaration</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">déclaration des pratiques éditoriales</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">편집 실행 선언</gloss>
@@ -17057,7 +17116,7 @@ during the encoding of a text.</desc>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD5">2.3. The Encoding Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="correction">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="correction">
   <gloss versionDate="2005-01-14" xml:lang="en">correction principles</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">règles de correction</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">수정 원리</gloss>
@@ -17234,7 +17293,7 @@ during the encoding of a text.</desc>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD53">2.3.3. The Editorial Practices Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="normalization">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="normalization">
   <gloss versionDate="2009-01-05" xml:lang="fr">normalisation</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">indicates the extent of normalization or regularization of the original source carried out
     in converting it to electronic form.</desc>
@@ -17380,7 +17439,7 @@ during the encoding of a text.</desc>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD53">2.3.3. The Editorial Practices Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="quotation">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="quotation">
   <gloss versionDate="2007-06-12" xml:lang="fr">citation</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">specifies editorial practice adopted with respect to quotation marks in the original.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">décrit la pratique éditoriale adoptée par rapport aux
@@ -17520,7 +17579,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD53">2.3.3. The Editorial Practices Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="hyphenation">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="hyphenation">
   <gloss versionDate="2009-04-27" xml:lang="fr">césurage</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">summarizes the way in which hyphenation in a source text has been treated in an encoded
     version of it.</desc>
@@ -17652,7 +17711,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD53">2.3.3. The Editorial Practices Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="segmentation">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="segmentation">
   <gloss versionDate="2007-06-12" xml:lang="fr">segmentation</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">describes the principles according to which the text has been segmented, for example into
     sentences, tone-units, graphemic strata, etc.</desc>
@@ -17698,7 +17757,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD53">2.3.3. The Editorial Practices Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="stdVals">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="stdVals">
   <gloss versionDate="2007-07-04" xml:lang="en">standard values</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">valeurs normalisées</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">표준 값</gloss>
@@ -17753,7 +17812,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD53">2.3.3. The Editorial Practices Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="interpretation">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="interpretation">
   <gloss versionDate="2007-06-12" xml:lang="fr">Interprétation</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">describes the scope of any analytic or interpretive information added to the text in
     addition to the transcription.</desc>
@@ -17804,7 +17863,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD53">2.3.3. The Editorial Practices Declaration</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="punctuation">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="punctuation">
   <desc versionDate="2013-06-20" xml:lang="en">specifies editorial practice adopted with respect to punctuation marks in the original.</desc>
   <classes>
     <memberOf key="att.declarable"/>
@@ -17865,7 +17924,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD53">2.3.3. The Editorial Practices Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COPU">3.2. Treatment of Punctuation</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="tagsDecl">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="tagsDecl">
   <gloss versionDate="2005-01-14" xml:lang="en">tagging declaration</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">déclaration de balisage</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">태깅 선언</gloss>
@@ -17963,7 +18022,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD57">2.3.4. The Tagging Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD5">2.3. The Encoding Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="tagUsage">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="tagUsage">
   <gloss versionDate="2009-01-05" xml:lang="fr">usage des balises.</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">supplies information about the usage of a specific element within a text.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">donne des informations sur l’utilisation d’un élément
@@ -18119,7 +18178,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD57">2.3.4. The Tagging Declaration</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="namespace">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="namespace">
   <gloss versionDate="2009-01-05" xml:lang="fr">espace de noms</gloss>
   <desc versionDate="2006-02-07" xml:lang="en">supplies the formal name of the namespace to which the elements documented by its children
     belong.</desc>
@@ -18184,7 +18243,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD57">2.3.4. The Tagging Declaration</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="rendition">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="rendition">
   <gloss versionDate="2007-06-12" xml:lang="fr">rendu</gloss>
   <desc versionDate="2007-09-22" xml:lang="en">supplies information about the rendition or appearance of one or more elements in the source
     text.</desc>
@@ -18234,6 +18293,42 @@ the target element</desc>
         </valItem>
       </valList>
     </attDef>
+    <attDef ident="selector">
+      <desc versionDate="2015-06-14" xml:lang="en">
+        contains a selector or series of selectors specifying the elements to which the contained style 
+        description applies, expressed in the language specified in the <att>scheme</att> attribute.
+      </desc>
+      <datatype maxOccurs="1">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.text"/>
+      </datatype>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <rendition scheme="css" selector="text, front, back, body, div, p, ab">  
+            display: block;
+          </rendition>
+        </egXML>
+      </exemplum>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">  
+          <rendition scheme="css" selector="*[rend*=italic]">
+            font-style: italic;
+          </rendition>
+        </egXML>
+      </exemplum>
+      <remarks versionDate="2015-06-14" xml:lang="en">
+        <p>Since the default value of the <att>scheme</att> attribute is assumed to be CSS, the default 
+        expectation for this attribute, in the absence of <att>scheme</att>, is that CSS selector
+        syntax will be used.</p>
+      </remarks>
+      <remarks versionDate="2015-06-14" xml:lang="en">
+        <p>While <att>rendition</att> is used to point from an element in the transcribed source to a 
+        <gi>rendition</gi> element in the header which describes how it appears, the <att>selector</att>
+        attribute allows the encoder to point in the other direction: from a <gi>rendition</gi> in the
+        header to a collection of elements which all share the same renditional features. In both cases,
+        the intention is to record the appearance of the source text, not to prescribe any particular 
+        output rendering.</p>
+      </remarks>
+    </attDef>
   </attList>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -18271,7 +18366,7 @@ the target element</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD57">2.3.4. The Tagging Declaration</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="styleDefDecl">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="styleDefDecl">
   <gloss versionDate="2012-10-06" xml:lang="en">style definition language declaration</gloss>
   <desc versionDate="2013-04-12" xml:lang="en">specifies the name of the formal language in which style or
   renditional information is supplied elsewhere in the document. The
@@ -18298,10 +18393,9 @@ the target element</desc>
     </egXML>
   </exemplum>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD57-1a">2.3.5. The Default Style Definition
-Language Declaration</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD57-1a">2.3.5. The Default Style Definition Language Declaration</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="refsDecl">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="refsDecl">
   <gloss versionDate="2005-01-14" xml:lang="en">references declaration</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">Déclaration du système de références</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">참조 선언</gloss>
@@ -18386,7 +18480,7 @@ Language Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD5">2.3. The Encoding Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54">2.3.6. The Reference System Declaration</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="cRefPattern">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="cRefPattern">
   <gloss versionDate="2007-07-09" xml:lang="en">canonical reference pattern</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">Modèle de référence canonique</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">표준 참조 유형</gloss>
@@ -18450,7 +18544,7 @@ Language Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54">2.3.6. The Reference System Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54S">2.3.6.2. Search-and-Replace Method</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="prefixDef">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="prefixDef">
   <gloss versionDate="2012-11-22" xml:lang="en">prefixing scheme used in <ident type="datatype">data.pointer</ident> values</gloss>
   <desc versionDate="2012-12-26" xml:lang="en">defines a prefixing scheme used in <ident type="datatype">data.pointer</ident> values,
   showing how abbreviated URIs using the scheme may be expanded into full URIs.</desc>
@@ -18494,7 +18588,7 @@ Language Declaration</ref>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SAPU">16.2.3. Using Abbreviated Pointers</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="listPrefixDef">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="listPrefixDef">
   <gloss versionDate="2012-11-22" xml:lang="en">list of prefix definitions</gloss>
   <desc versionDate="2012-11-23" xml:lang="en">contains a list of definitions of prefixing schemes used in <ident type="datatype">data.pointer</ident> values, showing how abbreviated URIs using each scheme may be expanded into full URIs.</desc>
   <classes>
@@ -18539,7 +18633,7 @@ Language Declaration</ref>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SAPU">16.2.3. Using Abbreviated Pointers</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="refState">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="refState">
   <gloss versionDate="2007-07-04" xml:lang="en">reference state</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">참조 상태</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">estado de la referencia</gloss>
@@ -18648,7 +18742,7 @@ Language Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54M">2.3.6.3. Milestone Method</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54">2.3.6. The Reference System Declaration</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="classDecl">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="classDecl">
   <gloss versionDate="2005-01-14" xml:lang="en">classification declarations</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">déclaration de classification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">분류 선언</gloss>
@@ -18715,7 +18809,7 @@ codes used elsewhere in the text.</desc>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD55">2.3.7. The Classification Declaration</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD5">2.3. The Encoding Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="taxonomy">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="taxonomy">
   <gloss versionDate="2009-05-04" xml:lang="fr">taxinomie</gloss>
   <desc versionDate="2011-11-02" xml:lang="en">defines a typology either implicitly, by means of a bibliographic
     citation, or explicitly by a structured taxonomy.</desc>
@@ -18926,7 +19020,7 @@ codes used elsewhere in the text.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD55">2.3.7. The Classification Declaration</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="category">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="category">
   <gloss versionDate="2009-01-05" xml:lang="fr">catégorie</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains an individual descriptive category, possibly nested within a superordinate
     category, within a user-defined taxonomy.</desc>
@@ -19047,7 +19141,7 @@ codes used elsewhere in the text.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD55">2.3.7. The Classification Declaration</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="catDesc">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="catDesc">
   <gloss versionDate="2005-01-14" xml:lang="en">category description</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">Description de la catégorie</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">범주 기술</gloss>
@@ -19155,7 +19249,7 @@ codes used elsewhere in the text.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD55">2.3.7. The Classification Declaration</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="geoDecl">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="geoDecl">
   <gloss versionDate="2007-09-23" xml:lang="en">geographic coordinates declaration</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">지리적 좌표 선언</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">declaración de las coordenadas geográficas</gloss>
@@ -19276,7 +19370,7 @@ codes used elsewhere in the text.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HDGDECL">2.3.8. The Geographic Coordinates Declaration</ref>
   </listRef>
-</elementSpec><elementSpec ident="appInfo" module="header">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" ident="appInfo" module="header">
   <gloss versionDate="2007-07-31" xml:lang="en">application information</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">애플리케이션 정보</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">información de la aplicación</gloss>
@@ -19312,7 +19406,7 @@ codes used elsewhere in the text.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HDAPP">2.3.10. The Application Information Element</ref>
   </listRef>
-</elementSpec><elementSpec ident="application" module="header">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" ident="application" module="header">
   <desc versionDate="2007-07-31" xml:lang="en">provides information about an application which has acted upon the document.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">문서에 사용한 애플리케이션에 관한 정보를 제시한다.</desc>
   <desc versionDate="2008-04-06" xml:lang="es">proporciona información sobre la aplicación que ha
@@ -19414,7 +19508,7 @@ codes used elsewhere in the text.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HDAPP">2.3.10. The Application Information Element</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="profileDesc">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="profileDesc">
   <gloss versionDate="2005-01-14" xml:lang="en">text-profile description</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">description du profil</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">텍스트-개요 기술</gloss>
@@ -19541,7 +19635,7 @@ elements of  <gi>profileDesc</gi> unless these are documenting multiple texts.</
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD4">2.4. The Profile Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD11">2.1.1. The TEI Header and Its Components</ref>
   </listRef>
-</elementSpec><elementSpec module="header" xml:id="HANDNOTE" ident="handNote">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" xml:id="HANDNOTE" ident="handNote">
   <gloss versionDate="2005-01-14" xml:lang="en">note on hand</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">기법에 관한 설명</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">書寫特徵</gloss>
@@ -19592,7 +19686,7 @@ elements of  <gi>profileDesc</gi> unless these are documenting multiple texts.</
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ms.html#msph2">10.7.2. Writing, Decoration, and Other Notations</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="abstract">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="abstract">
   <desc versionDate="2012-12-27" xml:lang="en">contains a summary or formal abstract prefixed to an existing source document by the encoder.</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -19631,7 +19725,7 @@ represented and manipulated, even without the use of a computer.
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD4ABS">2.4.4. Abstracts</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="creation">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="creation">
   <gloss versionDate="2007-06-12" xml:lang="fr">création</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains information about the creation of a text.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">contient des informations concernant la création d’un
@@ -19729,7 +19823,7 @@ represented and manipulated, even without the use of a computer.
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD4C">2.4.1. Creation</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD4">2.4. The Profile Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="langUsage">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="langUsage">
   <gloss versionDate="2005-01-14" xml:lang="en">language usage</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">langue utilisée</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">언어 사용</gloss>
@@ -19794,7 +19888,7 @@ langues, registres, dialectes, etc. présents à l’intérieur d’un texte.</d
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD4">2.4. The Profile Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="language">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="language">
   <gloss versionDate="2009-01-05" xml:lang="fr">langue</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">characterizes a single language or sublanguage used within a text.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">caractérise une langue ou une variété de langue utilisée
@@ -19914,7 +20008,7 @@ langues, registres, dialectes, etc. présents à l’intérieur d’un texte.</d
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD41">2.4.2. Language Usage</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="textClass">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="textClass">
   <gloss versionDate="2005-01-14" xml:lang="en">text classification</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">classification du texte</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">텍스트 분류</gloss>
@@ -20016,7 +20110,7 @@ langues, registres, dialectes, etc. présents à l’intérieur d’un texte.</d
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD43">2.4.3. The Text Classification</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="keywords">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="keywords">
   <gloss versionDate="2009-04-28" xml:lang="fr">mot clé</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains a list of keywords or phrases identifying the topic or nature of a text.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">contient une liste de mots clés ou d’expressions
@@ -20113,7 +20207,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD43">2.4.3. The Text Classification</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="classCode">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="classCode">
   <gloss versionDate="2007-07-04" xml:lang="en">classification code</gloss>
   <gloss versionDate="2008-03-30" xml:lang="fr">code de classification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">분류 부호</gloss>
@@ -20142,7 +20236,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
     <attDef ident="scheme" usage="req">
       <desc versionDate="2013-12-20" xml:lang="en">identifies the
       classification system in use, as defined by for example by a <gi>taxonomy</gi> element, or
-      some other resource..</desc>
+      some other resource.</desc>
       <desc versionDate="2009-04-22" xml:lang="fr">identifie le système de classification ou la
         taxinomie utilisée.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">사용하고 있는 분류 체계 또는 분류법을 표시한다.</desc>
@@ -20173,7 +20267,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD43">2.4.3. The Text Classification</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="catRef">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="catRef">
   <gloss versionDate="2005-01-14" xml:lang="en">category reference</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">référence à la catégorie</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">범주 참조</gloss>
@@ -20289,7 +20383,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD43">2.4.3. The Text Classification</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="calendarDesc">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="calendarDesc">
   <gloss versionDate="2011-08-12" xml:lang="en">calendar description</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">descripción de las calendarios</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">description des calendriers</gloss>
@@ -20450,7 +20544,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD4">2.4. The Profile Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD44">2.4.5. Calendar Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="calendar">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="calendar">
   <gloss xml:lang="fr" versionDate="2007-06-12">calendrier</gloss>
   <gloss xml:lang="es" versionDate="2008-04-06">calendario</gloss>
   <gloss xml:lang="it" versionDate="2007-01-21">calendario</gloss>
@@ -20485,7 +20579,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD44">2.4.5. Calendar Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="correspDesc">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="correspDesc">
   <gloss versionDate="2014-01-13" xml:lang="en">correspondence
     description</gloss>
   <desc versionDate="2015-01-29" xml:lang="en">contains a description
@@ -20511,18 +20605,26 @@ should be supplied for the <att>scheme</att> attribute.</p>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <correspDesc>
-        <correspAction type="sending">
+        <correspAction type="sent">
           <persName>Carl Maria von Weber</persName>
           <settlement>Dresden</settlement>
           <date when="1817-06-23">23 June 1817</date>
         </correspAction>
-        <correspAction type="receiving">
+        <correspAction type="received">
           <persName>Caroline Brandt</persName>
           <settlement>Prag</settlement>
         </correspAction>
         <correspContext>
-          <ref type="prev" target="http://www.weber-gesamtausgabe.de/A041209">Previous letter of <persName>Carl Maria von Weber</persName> to <persName>Caroline Brandt</persName>: <date from="1817-06-19" to="1817-06-20">June 19/20, 1817</date></ref>
-          <ref type="next" target="http://www.weber-gesamtausgabe.de/A041217">Next letter of <persName>Carl Maria von Weber</persName> to <persName>Caroline Brandt</persName>: <date when="1817-06-27">June 27, 1817</date></ref>
+          <ref type="prev" target="http://www.weber-gesamtausgabe.de/A041209">Previous letter of 
+            <persName>Carl Maria von Weber</persName> 
+            to <persName>Caroline Brandt</persName>: 
+            <date from="1817-06-19" to="1817-06-20">June 19/20, 1817</date>
+          </ref>
+          <ref type="next" target="http://www.weber-gesamtausgabe.de/A041217">Next letter of 
+            <persName>Carl Maria von Weber</persName> to 
+            <persName>Caroline Brandt</persName>: 
+            <date when="1817-06-27">June 27, 1817</date>
+          </ref>
         </correspContext>
       </correspDesc>
     </egXML>
@@ -20530,7 +20632,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD44CD">2.4.6. Correspondence Description</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="correspAction">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="correspAction">
     <desc versionDate="2014-09-05" xml:lang="en">contains a structured description of the place,  
         the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence</desc>
     <classes>
@@ -20579,7 +20681,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
     </attList>
     <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <correspAction type="sentBy">
+            <correspAction type="sent">
                 <persName>Adelbert von Chamisso</persName>
                 <settlement>Vertus</settlement>
                 <date when="1807-01-29"/>
@@ -20589,7 +20691,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
     <listRef>
         <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD44CD">2.4.6. Correspondence Description</ref>
     </listRef>
-</elementSpec><elementSpec module="header" ident="correspContext">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="correspContext">
     <gloss xml:lang="en" versionDate="2014-01-13">correspondence context</gloss>
     <gloss xml:lang="de" versionDate="2014-01-13">Korrespondenzstelle</gloss>
     
@@ -20616,15 +20718,195 @@ should be supplied for the <att>scheme</att> attribute.</p>
     <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <correspContext>
-                <ref target="http://weber-gesamtausgabe.de/A040962">Previous letter of <persName>Carl Maria von Weber</persName> to <persName>Caroline Brandt</persName>: <date when="1816-12-30">December 30, 1816</date></ref> 
-                <ref target="http://weber-gesamtausgabe.de/A041003">Next letter of <persName>Carl Maria von Weber</persName> to <persName>Caroline Brandt</persName>: <date when="1817-01-05">January 5, 1817</date></ref>
+                <ref target="http://weber-gesamtausgabe.de/A040962">
+                    Previous letter of 
+                    <persName>Carl Maria von Weber</persName> to 
+                    <persName>Caroline Brandt</persName>: 
+                    <date when="1816-12-30">December 30, 1816</date>
+                </ref> 
+                <ref target="http://weber-gesamtausgabe.de/A041003">
+                    Next letter of 
+                    <persName>Carl Maria von Weber</persName> to 
+                    <persName>Caroline Brandt</persName>: 
+                    <date when="1817-01-05">January 5, 1817</date>
+                </ref>
             </correspContext>
         </egXML>
     </exemplum>
     <listRef>
         <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD44CD">2.4.6. Correspondence Description</ref>
     </listRef>
-</elementSpec><elementSpec module="header" ident="revisionDesc">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="xenoData">
+  <gloss versionDate="2015-05-30" xml:lang="en">outside metadata</gloss>
+  <desc versionDate="2015-05-30" xml:lang="en">provides a container
+  element into which metadata in non-TEI formats may be
+  placed.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.declarable"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="model.teiHeaderPart"/>
+  </classes>
+  <content>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <group>
+        <choice>
+          <text/>
+          <ref name="macro.anyXML"/>
+        </choice>
+      </group>
+    </zeroOrMore>
+  </content>
+  <exemplum xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" versionDate="2015-05-30" xml:lang="en">
+    <p>This example presumes that the prefix <code>dc</code> has been
+    bound to the namespace
+    <code>http://purl.org/dc/elements/1.1/</code> and the prefix <code>rdf</code> 
+    is bound to the namespace <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+      <xenoData>
+        <rdf:RDF><rdf:Description rdf:about="http://www.worldcat.org/oclc/606621663"><dc:title>The description of a new world, called the blazing-world</dc:title>
+        	<dc:creator>The Duchess of Newcastle</dc:creator>
+        	<dc:date>1667</dc:date>
+        	<dc:identifier>British Library, 8407.h.10</dc:identifier>
+        	<dc:subject>utopian fiction</dc:subject></rdf:Description></rdf:RDF>
+      </xenoData>
+      <xenoData>
+        	<rdf:RDF><rdf:Description rdf:about=""><dc:title>The Description of a New World, Called the Blazing-World, 1668</dc:title>
+        	<dc:creator>Cavendish, Margaret (Lucas), Duchess of Newcastle</dc:creator>
+        	<dc:publisher>Women Writers Project</dc:publisher>
+        	<dc:date>2002-02-12</dc:date>
+        	<dc:subject>utopian fiction</dc:subject></rdf:Description></rdf:RDF>
+      </xenoData>
+    </egXML>
+  </exemplum>
+  
+  
+  
+  
+  
+   
+  <exemplum xmlns:cc="http://web.resource.org/cc/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" versionDate="2015-05-30" xml:lang="en">
+    <p>In this example, the prefix
+    <code>rdf</code> is bound to the namespace <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>, the prefix
+    <code>dc</code> is bound to the namespace <code>http://purl.org/dc/elements/1.1/</code>, and the prefix
+    <code>cc</code> is bound to the namespace <code>http://web.resource.org/cc/</code>.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"><xenoData>
+	<rdf:RDF>
+	  <cc:Work rdf:about="">
+	    <dc:title>Applied Software Project Management  - review</dc:title>
+	    <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text"/>
+	    <dc:license rdf:resource="http://creativecommons.org/licenses/by-sa/2.0/uk/"/>
+	  </cc:Work>
+	  <cc:License rdf:about="http://creativecommons.org/licenses/by-sa/2.0/uk/">
+	    <cc:permits rdf:resource="http://web.resource.org/cc/Reproduction"/>
+	    <cc:permits rdf:resource="http://web.resource.org/cc/Distribution"/>
+	    <cc:requires rdf:resource="http://web.resource.org/cc/Notice"/>
+	    <cc:requires rdf:resource="http://web.resource.org/cc/Attribution"/>
+	    <cc:permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/>
+	    <cc:requires rdf:resource="http://web.resource.org/cc/ShareAlike"/>
+	  </cc:License>
+	</rdf:RDF>
+</xenoData></egXML>
+  </exemplum>
+  <exemplum xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" versionDate="2015-07-11" xml:lang="en">
+    <p>In this example, the prefix
+    <code>dc</code> is again bound to the namespace
+    <code>http://www.openarchives.org/OAI/2.0/oai_dc/</code>, and the prefix
+    <code>oai_dc</code> is bound to the namespace <code>http://www.openarchives.org/OAI/2.0/oai_dc/</code>.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"> <xenoData>
+      <oai_dc:dc xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dc:title>The colonial despatches of Vancouver Island and British
+	Columbia 1846-1871: 11566, CO 60/2, p. 291; received 13 November.
+	Trevelyan to Merivale (Permanent Under-Secretary)</dc:title>
+	<dc:date>1858-11-12</dc:date>
+	<dc:creator>Trevelyan</dc:creator>
+	<dc:publisher>University of Victoria Humanities Computing and Media
+	Centre, and UVic Libraries</dc:publisher>
+	<dc:type>InteractiveResource</dc:type>
+	<dc:format>application/xhtml+xml</dc:format>
+	<dc:type>text</dc:type>
+	<dc:identifier>http://bcgenesis.uvic.ca/getDoc.htm?id=B585TE13.scx</dc:identifier>
+	<dc:rights>This document is licensed under a Creative Commons …</dc:rights>
+	<dc:language>(SCHEME=ISO639) en</dc:language>
+	<dc:source>Transcribed from microfilm and/or original documents, and
+	marked up in TEI P5 XML. The interactive XHTML resource is generated
+	from the XHTML using XQuery and XSLT.</dc:source>
+	<dc:source>repository: CO</dc:source>
+	<dc:source>coNumber: 60</dc:source>
+	<dc:source>coVol: 2</dc:source>
+	<dc:source>page: 291</dc:source>
+	<dc:source>coRegistration: 11566</dc:source>
+	<dc:source>received: received 13 November</dc:source>
+	<dc:subject>Trevelyan, Sir Charles Edward</dc:subject>
+	<dc:subject>Merivale, Herman</dc:subject>
+	<dc:subject>Elliot, T. Frederick</dc:subject>
+	<dc:subject>Moody, Colonel Richard Clement</dc:subject>
+	<dc:subject>Lytton, Sir Edward George Earle Bulwer</dc:subject>
+	<dc:subject>Jadis, Vane</dc:subject>
+	<dc:subject>Carnarvon, Earl</dc:subject>
+	<dc:subject>British Columbia</dc:subject>
+	<dc:description>British Columbia correspondence: Public Offices
+	document (normally correspondence between government
+	departments)</dc:description>
+      </oai_dc:dc>
+    </xenoData>
+    </egXML>
+  </exemplum>
+  <exemplum xmlns:mods="http://www.loc.gov/mods/v3" versionDate="2015-06-25" xml:lang="en">
+    <p>In this example, the prefix <code>mods</code> is bound to the
+    namespace <code>http://www.loc.gov/mods/v3</code>.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+      <xenoData>
+	<mods:mods>
+	  <mods:titleInfo>
+	    <mods:title>Academic adaptation and cross-cultural
+	    learning experiences of Chinese students at American
+	    universities</mods:title>
+	    <mods:subTitle>a narrative inquiry</mods:subTitle>
+	  </mods:titleInfo>
+	  <mods:name type="personal" authority="local">
+	    <mods:namePart/>
+	    <mods:role>
+	      <mods:roleTerm authority="marcrelator" type="text">Author</mods:roleTerm>
+	    </mods:role>
+	    <mods:affiliation>Northeastern University</mods:affiliation>
+	    <mods:namePart type="given">Hong</mods:namePart>
+	    <mods:namePart type="family">Zhang</mods:namePart>
+	  </mods:name>
+	  <mods:name type="personal" authority="local">
+	    <mods:namePart/>
+	    <mods:role>
+	      <mods:roleTerm authority="local" type="text">Advisor</mods:roleTerm>
+	    </mods:role>
+	    <mods:namePart type="given">Liliana</mods:namePart>
+	    <mods:namePart type="family">Meneses</mods:namePart>
+	  </mods:name>
+	  <!-- ... -->
+	  <mods:typeOfResource>text</mods:typeOfResource>
+	  <mods:genre>doctoral theses</mods:genre>
+	  <mods:originInfo>
+	    <mods:place>
+	      <mods:placeTerm type="text">Boston (Mass.)</mods:placeTerm>
+	    </mods:place>
+	    <mods:publisher>Northeastern University</mods:publisher>
+	    <mods:copyrightDate encoding="w3cdtf" keyDate="yes">2013</mods:copyrightDate>
+	  </mods:originInfo>
+	  <mods:language>
+	    <mods:languageTerm authority="iso639-2b" type="code">eng</mods:languageTerm>
+	  </mods:language>
+	  <mods:physicalDescription>
+	    <mods:form authority="marcform">electronic</mods:form>
+	    <mods:digitalOrigin>born digital</mods:digitalOrigin>
+	  </mods:physicalDescription>
+	  <!-- ... -->
+	</mods:mods>
+      </xenoData>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD9">2.5. Non-TEI Metadata</ref>
+  </listRef>
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="revisionDesc">
   <gloss versionDate="2005-01-14" xml:lang="en">revision description</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">descriptif des révisions</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">수정 기술</gloss>
@@ -20697,10 +20979,10 @@ should be supplied for the <att>scheme</att> attribute.</p>
     <p> 直近の変更をリストの先頭に記録する． </p>
   </remarks>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD6">2.5. The Revision Description</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD6">2.6. The Revision Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD11">2.1.1. The TEI Header and Its Components</ref>
   </listRef>
-</elementSpec><elementSpec module="header" ident="change">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="change">
   <desc versionDate="2011-10-31" xml:lang="en">documents a change or set of changes made during the production
   of a source document, or during the revision of an electronic file.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">résume une modification ou une correction apportée à une
@@ -20817,7 +21099,7 @@ supplied to printer.</change>
     <p>修正は一貫した並びで記録されるべきである．例えば，最新のものが 最初に書かれる，など． </p>
   </remarks>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD6">2.5. The Revision Description</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD6">2.6. The Revision Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD4C">2.4.1. Creation</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PH-changes">11.7. Changes</ref>
   </listRef>
@@ -20920,7 +21202,7 @@ the <gi>revisionDesc</gi> element, it documents only changes made
 during the evolution of the encoded representation of that text.</p>
   </remarks>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD6">2.5. The Revision Description</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD6">2.6. The Revision Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PH-changes">11.7. Changes</ref>
   </listRef>
 </elementSpec><elementSpec module="textstructure" ident="TEI">
@@ -21705,8 +21987,9 @@ TEI namespace <code>http://www.tei-c.org/ns/1.0</code> on it, using
     </egXML>
   </exemplum>
   <remarks versionDate="2012-04-17" xml:lang="en">
-    <p>A floating text has the same content as any other and may thus be interrupted by another
-      floating text, or contain a group of tesselated texts. </p>
+    <p>A floating text has the same content as any other <gi>text</gi>
+    and may thus be interrupted by another floating text, or contain a
+    <gi>group</gi> of tesselated texts.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Un texte "flottant" a le même contenu que tout autre texte : il peut donc être interrompu par
@@ -21798,6 +22081,20 @@ TEI namespace <code>http://www.tei-c.org/ns/1.0</code> on it, using
       </optional>
     </group>
   </content>
+  <constraintSpec ident="abstractModel-structure-l" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:l">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div.
+      </report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="abstractModel-structure-p" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)">
+        Abstract model violation: p and ab may not contain higher-level structural elements such as div.
+      </report>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <body>
@@ -24170,12 +24467,15 @@ and then a Captain of several Ships</byline>
       </titlePage>
     </egXML>
   </exemplum>
-  <remarks versionDate="2013-11-12" xml:lang="en">
-    <p>The document author's name often occurs within a byline,
-but the <gi>docAuthor</gi> element may be used whether the
-      <gi>byline</gi> element is used or not. It should be used only for
-      the author(s) of the entire document, not for author(s) of any subset or 
-      part of it.</p>
+  <remarks versionDate="2015-06-28" xml:lang="en">
+    <p>The document author's name often occurs within a byline, but
+    the <gi>docAuthor</gi> element may be used whether the
+    <gi>byline</gi> element is used or not. It should be used only for
+    the author(s) of the entire document, not for author(s) of any
+    subset or part of it. (Attributions of authorship of a subset or
+    part of the document, for example of a chapter in a textbook or an
+    article in a newspaper, may be encoded with <gi>byline</gi>
+    without <gi>docAuthor</gi>.)</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Le nom de l'auteur d'un document apparaît souvent au sein d'un élément
@@ -25305,6 +25605,20 @@ she has done so inadvertently.
   <content>
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
   </content>
+  <constraintSpec ident="abstractModel-structure-p" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="(ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
+        Abstract model violation: ab may not contain paragraphs or other ab elements.
+      </report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="abstractModel-structure-l" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:l or ancestor::tei:lg">
+        Abstract model violation: Lines may not contain higher-level divisions such as p or ab.
+      </report>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <div type="book" n="Genesis">
@@ -28416,7 +28730,7 @@ technical direction applies.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DR.html#DRTEC">7.3.1. Technical Information</ref>
   </listRef>
-</elementSpec><moduleSpec n="ST" xml:id="DSTTEI2" ident="tei" type="core"/><moduleSpec n="CO" xml:id="DCO" ident="core"/><moduleSpec n="HD" xml:id="DHD" ident="header"/><moduleSpec n="DS" xml:id="DDS" ident="textstructure"/><moduleSpec n="SA" xml:id="DSA" ident="linking"/><moduleSpec n="DR" xml:id="DDR" ident="drama"/></schemaSpec>
+</elementSpec><moduleSpec n="ST" xml:id="DSTTEI2" ident="tei" type="core"/><moduleSpec n="CO" xml:id="DCO" ident="core"/><moduleSpec xmlns:xi="http://www.w3.org/2001/XInclude" n="HD" xml:id="DHD" ident="header"/><moduleSpec n="DS" xml:id="DDS" ident="textstructure"/><moduleSpec n="SA" xml:id="DSA" ident="linking"/><moduleSpec n="DR" xml:id="DDR" ident="drama"/></schemaSpec>
 </body>
 </text>
 </TEI>
