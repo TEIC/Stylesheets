@@ -1,10 +1,10 @@
 default namespace = "http://foo.foo/foo"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 namespace ns1 = "http://www.isocat.org/ns/dcr"
-namespace ns2 = "http://www.tei-c.org/ns/Examples"
 namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 namespace tei = "http://www.tei-c.org/ns/1.0"
+namespace teix = "http://www.tei-c.org/ns/Examples"
 namespace xi = "http://www.w3.org/2001/XInclude"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
@@ -32,7 +32,7 @@ tei_macro.specialPara =
    | tei_model.divPart
    | tei_model.global)*
 tei_macro.anyXML =
-  element * - (tei:* | ns2:egXML) {
+  element * - (tei:* | teix:egXML) {
     attribute * { text }*,
     (text | tei_macro.anyXML)*
   }
