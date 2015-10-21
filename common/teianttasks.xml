@@ -391,8 +391,29 @@
       </xslt>
     </sequential>
   </macrodef>
-
+  
   <macrodef name="odd2odd">
+    <attribute name="in"/>
+    <attribute name="out"/>
+    <sequential>
+      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{out}">
+        <xmlcatalog>
+          <catalogpath>
+            <pathelement location="$catalogfile"/>
+          </catalogpath>
+        </xmlcatalog>
+        <factory name="net.sf.saxon.TransformerFactoryImpl">
+          <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
+        </factory>
+        <param name="lang" expression="${lang}" if="lang"/>
+        <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+        <param name="verbose" expression="${verbose}" if="verbose"/>
+        <param name="selectedSchema" expression="${selectedSchema}" if="selectedSchema"/>
+      </xslt>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="odd2lite">
     <attribute name="in"/>
     <attribute name="out"/>
     <sequential>

@@ -24,7 +24,7 @@
   <import file="../common/teianttasks.xml"/>
 
   <target name="odd" if="processODD">
-    <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
+    <odd2lite in="${inputFile}" out="${inputFile}.processedodd"/>
     <buildgeneric type="docbook" xsl="${profiledir}/${profile}/docbook/to.xsl" in="${inputFile}.processedodd" out="${outputFile}"/>
     <delete file="${inputFile}.processedodd"/>
   </target>

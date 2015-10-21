@@ -133,7 +133,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <!-- then process decorated tree -->
     <xsl:apply-templates select="$input-with-NSs" mode="schematron-extraction">
-      <xsl:with-param name="P5deco" select="$input-with-NSs/TEI"/>
+      <xsl:with-param name="P5deco" select="$input-with-NSs/tei:TEI"/>
     </xsl:apply-templates>
       
     <!-- Note: to see decorated tree for debugging, change mode of above -->
@@ -151,12 +151,12 @@ of this software, even if advised of the possibility of such damage.
     <d:desc>First pass ... elements that might have an ns= attribute
     get new nsu= (namespace URI) and nsp= (namespace prefix) attributes</d:desc>
   </d:doc>
-  <xsl:template match="attDef|elementSpec|schemaSpec" mode="NSdecoration">
+  <xsl:template match="tei:attDef|tei:elementSpec|tei:schemaSpec" mode="NSdecoration">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:variable name="nsu">
         <xsl:choose>
-          <xsl:when test="self::attDef">
+          <xsl:when test="self::tei:attDef">
             <xsl:value-of select="if ( @ns ) then @ns else ''"/>
           </xsl:when>
           <xsl:otherwise>
@@ -169,10 +169,10 @@ of this software, even if advised of the possibility of such damage.
           <xsl:when test="$nsu eq ''"/>
           <xsl:when test="$nsu eq 'http://www.tei-c.org/ns/1.0'">tei:</xsl:when>
           <xsl:when test="$nsu eq 'http://www.tei-c.org/ns/Examples'">teix:</xsl:when>
-          <xsl:when test="ancestor-or-self::schemaSpec//sch:ns[@uri eq $nsu]">
+          <xsl:when test="ancestor-or-self::tei:schemaSpec//sch:ns[@uri eq $nsu]">
             <!-- oops ... what *should* we do if there's more than 1? Just taking the first seems lame, but -->
             <!-- I can't think of what else we might do right now. -Syd, 2014-07-23 -->
-            <xsl:value-of select="concat( ancestor-or-self::schemaSpec//sch:ns[@uri eq $nsu][1]/@prefix, ':')"/>
+            <xsl:value-of select="concat( ancestor-or-self::tei:schemaSpec//sch:ns[@uri eq $nsu][1]/@prefix, ':')"/>
           </xsl:when>
           <xsl:when test="namespace::* = $nsu">
             <xsl:value-of select="concat( local-name( namespace::*[ . eq $nsu ][1] ), ':')"/>
