@@ -114,11 +114,14 @@
         <elementSpec ident="Menu" mode="add" ns="http://www.oucs.ox.ac.uk/ns">
           <classes>
             <memberOf key="model.pPart.data"/>
-            <memberOf key="att.global"/>
           </classes>
           <content>
             <rng:text/>
           </content>
+          <attList>
+            <attRef class="att.global" name="xml:id"/>
+            <attRef class="att.global.rendition" name="rend"/>
+          </attList>
         </elementSpec>
         <elementSpec ident="p" mode="change">
           <classes mode="replace">
