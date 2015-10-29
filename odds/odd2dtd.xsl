@@ -1055,6 +1055,9 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
+    <xsl:if test="contains($ename,'xmlid')">
+      <xsl:message><xsl:value-of select="$ename"/></xsl:message>
+    </xsl:if>
       <xsl:text>&#10;&lt;!--doc:</xsl:text>
       <xsl:sequence select="tei:makeDescription(.,true())"/>
       <xsl:text> --&gt;&#10;</xsl:text>
