@@ -316,7 +316,7 @@ test-oddity: css
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test30.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test30.dtd
 	perl -i -pe 'BEGIN{undef $$/;} s/<!--\nDTD[^>]*-->\n//smg' test30.dtd
-	$(JING) -c test30.rnc test36.xml
+	$(JING) -c -i test30.rnc test36.xml
 	xmllint --noout --dtdvalid test30.dtd test36.xml
 	diff test30.rnc expected-results/test30.rnc
 	diff test30.dtd expected-results/test30.dtd
