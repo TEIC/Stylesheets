@@ -846,9 +846,8 @@
         </xsl:attribute>
         <xsl:variable name="content">
           <Wrapper>
-            <xsl:for-each select="*">
-              <xsl:copy-of select="."/>
-            </xsl:for-each>
+            <xsl:copy-of select="../tei:classes"/><xsl:text>
+</xsl:text> <xsl:copy-of select="."/>
           </Wrapper>
         </xsl:variable>
         <xsl:call-template name="pureODDOut">
