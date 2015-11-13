@@ -91,7 +91,7 @@ doc: oxygendoc linkcss
 	cp VERSION tei.css ChangeLog LICENCE release/xslcommon/doc/tei-xsl
 
 oxygendoc:
-	# when building Debain packages, the script runs under
+	# when building Debian packages, the script runs under
 	# fakeroot, and the oxygen script then tries to look in /root/.com.oxygenxml, and fails.  
 	# The answer is to tweak the stylesheetDocumentation.sh script 
 	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh and make stylesheet documentation if it exists
