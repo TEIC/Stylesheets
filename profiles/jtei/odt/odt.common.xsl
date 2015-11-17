@@ -391,7 +391,7 @@
 <!--    This template goes along with the one above, removing any leading punctuation from a text node that 
         follows a quoted span, because that punctuation should have been pulled into the quotes. -->
   <xsl:template match="text()[matches(., '^[\.,!\?]')][preceding-sibling::*[1][self::quote[not(parent::cit)] or self::q or self::title[@level='a'] or self::title[@level='u'] or self::soCalled]]"><xsl:value-of select="replace(., '^[\.,!\?]', '')"/></xsl:template>
-    
+  
     <xsl:template match="supplied">[<xsl:apply-templates/>]</xsl:template>
   
 <!-- Gaps are turned into ellipses; if they directly follow a period, we don't add a leading 
@@ -504,47 +504,47 @@
     
 <!--    Tables. -->
     <xsl:template match="table">
-      <xsl:variable name="current" select="."/>
-      <xsl:variable name="referenceNode" select="$theDoc//table[deep-equal((@*|node()), $current/(@*|node()))]"/>
-      <xsl:variable name="tableNum" select="count($referenceNode/preceding::table) + 1"/>
-      <xsl:variable name="tableId" select="concat('Table_', $tableNum)"/>
-
-        <table:table table:style-name="{$tableId}">
-<!--       Table column widths.          -->
-          <xsl:variable name="numCols" select="sum(for $c in descendant::row[1]/cell return if ($c/@cols) then xs:integer($c/@cols) else 1)"/>
-          <xsl:for-each select="1 to $numCols">
-            <table:table-column table:style-name="{concat($tableId, '_col_', .)}"/>
-          </xsl:for-each>
-          
-<!--        We also have to handle header rows separately, because they need to be in a 
+        <xsl:variable name="current" select="."/>
+        <xsl:variable name="referenceNode" select="$theDoc//table[deep-equal((@*|node()), $current/(@*|node()))]"/>
+        <xsl:variable name="tableNum" select="count($referenceNode/preceding::table) + 1"/>
+        <xsl:variable name="tableId" select="concat('Table_', $tableNum)"/>
+        <xsl:variable name="numCols" select="sum(for $c in descendant::row[1]/cell return if ($c/@cols) then xs:integer($c/@cols) else 1)"/>
+        <!-- [RvdB] solution for tables with multiple (non-adjacent) header rows: group by header row and wrap groups in separate tables (which still look as a single table) -->
+        <xsl:for-each-group select="*" group-starting-with="row[@role='label']">
+            <table:table table:style-name="{$tableId}">
+            <!--       Table column widths.          -->
+            <xsl:for-each select="1 to $numCols">
+                <table:table-column table:style-name="{concat($tableId, '_col_', .)}"/>
+            </xsl:for-each>
+            <!--        We also have to handle header rows separately, because they need to be in a 
             special grouping element. -->
-            <xsl:if test="row[@role='label']">
+            <xsl:if test="current-group()/self::row[@role='label']">
                 <table:table-header-rows>
-                    <xsl:for-each select="row[@role='label']">
-                      <table:table-row><xsl:apply-templates/></table:table-row>
+                    <xsl:for-each select="current-group()/self::row[@role='label']">
+                        <table:table-row><xsl:apply-templates/></table:table-row>
                     </xsl:for-each>
                 </table:table-header-rows>
             </xsl:if>
-            <table:table-rows><xsl:apply-templates/></table:table-rows>
-            
+            <table:table-rows><xsl:apply-templates select="current-group()"/></table:table-rows>
         </table:table>
-        
-        <!--        We have to deal with a table headers manually and put it after the table. -->
-        <xsl:for-each select="head">
-          <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}">
-            <xsl:if test="parent::table/@xml:id and position() = 1">
-              <text:bookmark text:name="{parent::table/@xml:id}"/>
-            </xsl:if>
-            <xsl:if test="not(matches(., '^[Tt]able')) and not(@type='license')">
-              <xsl:value-of select="concat('Table ', $tableNum, ': ')"/>
-            </xsl:if><xsl:apply-templates select="*|text()"/></text:p>
-        </xsl:for-each>
-    </xsl:template>
+    </xsl:for-each-group>
     
+    <!--        We have to deal with a table headers manually and put it after the table. -->
+    <xsl:for-each select="head">
+      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}">
+        <xsl:if test="parent::table/@xml:id and position() = 1">
+          <text:bookmark text:name="{parent::table/@xml:id}"/>
+        </xsl:if>
+        <xsl:if test="not(matches(., '^[Tt]able')) and not(@type='license')">
+          <xsl:value-of select="concat('Table ', $tableNum, ': ')"/>
+        </xsl:if><xsl:apply-templates select="*|text()"/></text:p>
+    </xsl:for-each>
+  </xsl:template>
+  
 <!--    Suppress normal processing of the table head element and table header rows. -->
     <xsl:template match="table/head"/>
-    <xsl:template match="row[@role='label']"/>
-    
+    <xsl:template match="row[@role='label']"/>    
+  
     <xsl:template match="row[not(@role='label')]">
         <table:table-row><xsl:apply-templates/></table:table-row>
     </xsl:template>
@@ -553,7 +553,13 @@
       <table:table-cell table:style-name="{if (@role='label' or parent::row[@role='label']) then if (following-sibling::cell) then 'table_head_left' else 'table_head_right' else if (following-sibling::cell) then 'table_cell_left' else 'table_cell_right'}">
         <xsl:if test="@cols"><xsl:attribute name="table:number-columns-spanned"><xsl:value-of select="@cols"/></xsl:attribute></xsl:if>
         <xsl:if test="@rows"><xsl:attribute name="table:number-rows-spanned"><xsl:value-of select="@rows"/></xsl:attribute></xsl:if>
-        <text:p text:style-name="{if (@role='label' or parent::row[@role='label']) then 'teiParaTinyMarginsHeader' else 'teiParaTinyMargins'}"><xsl:apply-templates/></text:p>
+        <!-- [RvdB] egXML generates its own <text:p/>, so skip it here -->
+        <xsl:choose>
+            <xsl:when test="teix:egXML">
+                <xsl:apply-templates/>
+            </xsl:when>
+            <xsl:otherwise><text:p text:style-name="{if (@role='label' or parent::row[@role='label']) then 'teiParaTinyMarginsHeader' else 'teiParaTinyMargins'}"><xsl:apply-templates/></text:p></xsl:otherwise>
+        </xsl:choose>
       </table:table-cell>
     </xsl:template>
 
@@ -904,15 +910,12 @@
         <xsl:for-each select="$context">
           <xsl:choose>
             <xsl:when test="self::text()">
-              <xsl:variable name="processed">
-                <xsl:apply-templates select="."/>
-              </xsl:variable>
               <xsl:choose>
                 <xsl:when test="position() = 1">
-                  <xsl:value-of select="replace(replace($processed, '^\s+', ''), '\s+$', ' ')"/>                  
+                  <xsl:value-of select="replace(replace(., '^\s+', ''), '\s+$', ' ')"/>                  
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="replace($processed, '\s+$', ' ')"/>                  
+                  <xsl:value-of select="replace(., '\s+$', ' ')"/>                  
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:when>
