@@ -123,18 +123,17 @@
     <rendition xml:id="citation" scheme="css">font:0.916em/1.636 Verdana,sans-serif;margin: 1.091em 0;padding: 0 0 0 4.363em;text-align: left;border-collapse: separate;</rendition>
     <rendition xml:id="gloss" scheme="css">list-style-type:none;</rendition>
     <rendition xml:id="inlinelabel" scheme="css">font-weight:normal;</rendition>
-    <rendition xml:id="glosslabel" scheme="css">font-weight:bold;background:none;padding-left:0;list-style-type:none;margin: 1em 0;</rendition>
-    <rendition xml:id="glossitem" scheme="css">margin-left:2em;background:none;padding-left:0;list-style-type:none;</rendition>
-    <rendition xml:id="simpleitem" scheme="css">background:none;padding-left:0;</rendition>
+    <rendition xml:id="glosslabel" scheme="css">font-weight:bold;list-style-type:none;margin: 1em 0;</rendition>
+    <rendition xml:id="glossitem" scheme="css">margin-left:2em;list-style-type:none;</rendition>
+    <rendition xml:id="simpleitem" scheme="css">list-style-type:none;</rendition>
     <rendition xml:id="numberlabel" scheme="css">float:left;width:3em;padding-left:0;background:none;</rendition>
     <rendition xml:id="numberitem" scheme="css">margin-left:3em;padding-left:0;background:none;</rendition>
     <rendition xml:id="foreign" scheme="css">font-style:italic;</rendition>
-    <rendition xml:id="table" scheme="css">width:100%;</rendition>
     <rendition xml:id="tr-label" scheme="css">background-color: silver;font-weight:bold;</rendition>
     <rendition xml:id="td-label" scheme="css">font-weight:bold;</rendition>
     
-    <rendition xml:id="table.border" scheme="css">width:100%;border: 1px solid black;border-collapse:collapse;</rendition>
-    <rendition xml:id="tr-label.border" scheme="css">background-color: silver;font-weight:bold;</rendition>
+    <rendition xml:id="table.border" scheme="css">border: 1px solid black;border-collapse:collapse;</rendition>
+    <rendition xml:id="tr-label.border" scheme="css">background-color: silver;font-weight:bold;border:1px solid black;</rendition>
     <rendition xml:id="td-label.border" scheme="css">font-weight:bold;border:1px solid black;</rendition>
     
     <rendition xml:id="td.border" scheme="css">border: 1px solid black;</rendition>
@@ -1008,7 +1007,7 @@
   <xsl:template match="tei:cell">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
-      <xsl:for-each select="(@role,parent::tei:row/@role,.)[1]">
+      <xsl:for-each select="(@role,parent::tei:row/@role,.)[not(. = 'data')][1]">
         <xsl:call-template name="get.rendition"/>
       </xsl:for-each>
       <xsl:apply-templates/>      
@@ -1039,7 +1038,7 @@
   </xsl:template>
   
   <!-- untag all other <bibl> contents (except for <ref>) -->
-  <xsl:template match="tei:listBibl//tei:bibl/*[not(self::tei:ref or self::tei:ptr or self::tei:hi)]" priority="0">
+  <xsl:template match="tei:listBibl//tei:bibl/*" priority="-0.5">
     <xsl:apply-templates/>
   </xsl:template>
   
@@ -1117,7 +1116,7 @@
   <xsl:template match="tei:code/@lang|tei:row/@role|tei:row/@rows|tei:row/@cols|tei:cell/@role|tei:graphic/@width|tei:graphic/@height"/>
   
   <!-- text() following an element for which smart quotes are being generated: skip starting punctuation (this is pulled into the quotation marks) -->
-  <xsl:template match="text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}]]')]
+  <xsl:template match="text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}—]]')]
     [preceding-sibling::node()[not(self::tei:note)][1]
     [. intersect key('quotation.elements', local-name())]]
     |
@@ -1140,7 +1139,7 @@
   
   <!-- pull subsequent punctuation into generated quotation marks -->
   <xsl:template name="include.punctuation">
-    <xsl:value-of select="following-sibling::node()[not(self::tei:note)][1]/self::text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}]]')]/replace(., '^\s*([\p{P}-[\p{Ps}\p{Pe}]]+).*', '$1', 's')"/>
+    <xsl:value-of select="following-sibling::node()[not(self::tei:note)][1]/self::text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}—]]')]/replace(., '^\s*([\p{P}-[\p{Ps}\p{Pe}]]+).*', '$1', 's')"/>
   </xsl:template>
   
   <xsl:template name="enumerate">
