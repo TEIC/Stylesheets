@@ -247,10 +247,15 @@
   </xsl:template>
   
   <xsl:template name="back">
-    <fo:block border-top="solid 1px black" xsl:use-attribute-sets="block.spacing.properties" keep-with-next="always"/>
-    <xsl:apply-templates select="/tei:TEI/tei:text/tei:back/tei:div[@type='bibliography']"/>
-    <xsl:call-template name="appendixes"/>
-    <xsl:call-template name="endnotes"/>
+    <xsl:variable name="variable.content">
+      <xsl:apply-templates select="/tei:TEI/tei:text/tei:back/tei:div[@type='bibliography']"/>
+      <xsl:call-template name="appendixes"/>
+      <xsl:call-template name="endnotes"/>      
+    </xsl:variable>
+    <xsl:if test="$variable.content[normalize-space()]">
+      <fo:block border-top="solid 1px black" xsl:use-attribute-sets="block.spacing.properties" keep-with-next="always"/>  
+      <xsl:copy-of select="$variable.content"/>
+    </xsl:if>
     <fo:block border-top="solid 1px black" xsl:use-attribute-sets="block.spacing.properties" keep-with-next="always"/>
     <xsl:apply-templates select="/tei:TEI/tei:text/tei:front/tei:div[@type='abstract']"/>
     <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass"/>
@@ -1013,7 +1018,7 @@
     <fo:block xsl:use-attribute-sets="block.spacing.properties">
       <xsl:apply-templates select="tei:head"/>
       <fo:table id="{(@xml:id, generate-id())[1]}" xsl:use-attribute-sets="table.properties" table-layout="fixed">
-        <!-- mimic @table-layout="auto" by determining optimal column width based on maximal word length per column (FOP only supports fixed column width) -->
+        <!-- mimic @table-layout="auto" by determining optimal column width based on maximal word length per column -->
         <xsl:call-template name="generate.cols"/>
         <fo:table-body>
           <xsl:apply-templates select="node()[not(self::tei:head)]"/>
@@ -1261,12 +1266,14 @@
   </xsl:function>
 
   <xsl:template name="endnotes">
-    <fo:block>
-      <fo:block xsl:use-attribute-sets="heading.properties">
-        <xsl:text>Notes</xsl:text>
+    <xsl:if test=".//tei:text//tei:note">
+      <fo:block>
+        <fo:block xsl:use-attribute-sets="heading.properties">
+          <xsl:text>Notes</xsl:text>
+        </fo:block>
+        <xsl:apply-templates select=".//tei:text//tei:note" mode="endnotes"/>
       </fo:block>
-      <xsl:apply-templates select=".//tei:text//tei:note" mode="endnotes"/>
-    </fo:block>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template match="tei:note" mode="endnotes">
