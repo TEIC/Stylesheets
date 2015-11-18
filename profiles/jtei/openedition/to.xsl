@@ -834,6 +834,10 @@
     </hi>
   </xsl:template>
   
+  <xsl:template match="tei:orgName">
+    <xsl:apply-templates/>
+  </xsl:template>
+  
   <!-- transform other 'flagged' elements (see index in 'hi' key) to hi with corresponding @rendition -->
   <xsl:template match="*[key('hi', local-name())]" priority="-.5">
     <hi>
