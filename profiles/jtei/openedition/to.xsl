@@ -676,7 +676,7 @@
     <xsl:variable name="current" select="."/>
     <xsl:variable name="labels">
       <xsl:for-each select="tokenize(@target, '\s+')">
-        <xsl:variable name="target" select="key('ids', substring-after(., '#'), $current/root())"/>
+        <xsl:variable name="target" select="key('ids', substring-after(., '#'), $docRoot/root())"/>
         <label type="{$target/name()}" n="{substring-after(current(), '#')}">
           <xsl:apply-templates select="$target" mode="label">
             <xsl:with-param name="crossref.ptr" select="$current"/>
