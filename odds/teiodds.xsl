@@ -86,16 +86,26 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="rng:ref" name="REFS"  use="@name"/>
   <xsl:key match="tei:elementRef" name="REFS"  use="@key"/>
   <xsl:key match="tei:classRef" name="REFS"  use="@key"/>
+  <xsl:key match="tei:macroRef" name="REFS"  use="@key"/>
+  <xsl:key match="tei:dataRef" name="REFS"  use="@key"/>
   <xsl:key match="rng:ref[contains(@name,'_')]" name="REFS" use="substring-before(@name,'_')"/>
 
   <xsl:key
       match="tei:elementSpec/tei:attList//tei:attDef/tei:datatype/rng:ref"
       name="REFSTO-ELEMENT" 
       use="@name"/>
+  <xsl:key
+    match="tei:elementSpec/tei:attList//tei:attDef/tei:datatype/tei:dataRef"
+    name="REFSTO-ELEMENT" 
+    use="@key"/>
   <xsl:key 
       match="tei:classSpec/tei:attList//tei:attDef/tei:datatype/rng:ref" 
       name="REFSTO-CLASS" 
       use="@name"/>
+  <xsl:key 
+    match="tei:classSpec/tei:attList//tei:attDef/tei:datatype/tei:dataRef" 
+    name="REFSTO-CLASS" 
+    use="@key"/>
 
   <xsl:key match="tei:macroSpec/tei:content//rng:ref" name="MACROREFS"  use="@name"/>
   <xsl:key match="tei:macroSpec/tei:content//tei:macroRef" name="MACROREFS"  use="@key"/>
@@ -1166,16 +1176,7 @@ select="$makeDecls"/></xsl:message>
           </rng:data>
         </xsl:when>
         <xsl:when test="@key">
-          <xsl:for-each select="key('LOCALIDENTS', @key)">
-            <xsl:choose>
-              <xsl:when test="tei:content">
-                <xsl:apply-templates select="tei:content/*"/>
-              </xsl:when>
-              <xsl:when test="tei:datatype">
-                <xsl:apply-templates select="tei:datatype/*"/>
-              </xsl:when>
-            </xsl:choose>
-          </xsl:for-each>
+          <rng:ref name="{@key}"/>
         </xsl:when>
       </xsl:choose>
     </xsl:variable>

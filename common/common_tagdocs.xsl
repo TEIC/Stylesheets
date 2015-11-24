@@ -857,10 +857,7 @@
         <xsl:variable name="content">
           <PureODD>
             <xsl:apply-templates select="../tei:classes" mode="PureODD"/>
-            <xsl:text>
-</xsl:text> <xsl:apply-templates select="." mode="PureODD"/>
-            <xsl:text>
-</xsl:text> <xsl:apply-templates select="../tei:attList" mode="PureODD"/>
+            <xsl:apply-templates select="." mode="PureODD"/>
           </PureODD>
         </xsl:variable>
         <xsl:call-template name="pureODDOut">
