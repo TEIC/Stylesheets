@@ -1039,7 +1039,7 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
 
-  <xsl:template match="tei:dataSpec|tei:macroSpec" mode="tangle">
+  <xsl:template match="tei:dataSpec | tei:macroSpec" mode="tangle">
     <xsl:param name="filename"/>
     <xsl:variable name="macroPrefix">
       <xsl:choose>
@@ -1055,87 +1055,142 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="entityContent">
       <TEMPTREE>
         <xsl:choose>
-	  <xsl:when test="tei:valList[@type='closed']">
+          <xsl:when test="tei:valList[@type = 'closed']">
             <xsl:call-template name="valListChildren"/>
-	  </xsl:when>
+          </xsl:when>
           <xsl:when test="tei:content/rng:group/rng:ref">
-	    <xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>	    
-	  </xsl:when>
+            <xsl:apply-templates select="tei:content/* | tei:content/processing-instruction()"/>
+          </xsl:when>
           <xsl:when test="tei:content/rng:group">
             <choice xmlns="http://relaxng.org/ns/structure/1.0">
               <xsl:apply-templates select="tei:content/rng:group/*"/>
             </choice>
           </xsl:when>
-	  <xsl:when test="tei:content/*">
+          <xsl:when test="tei:content/*">
             <xsl:apply-templates select="tei:content/*"/>
-	  </xsl:when>
-	  <xsl:when test="tei:content/processing-instruction()">
+          </xsl:when>
+          <xsl:when test="tei:content/processing-instruction()">
             <xsl:apply-templates select="tei:content/processing-instruction()"/>
-	  </xsl:when>
+          </xsl:when>
         </xsl:choose>
       </TEMPTREE>
     </xsl:variable>
     <xsl:variable name="entityCount">
       <xsl:for-each select="$entityContent/TEMPTREE">
-        <xsl:value-of select="count(rng:*|processing-instruction())"/>
+        <xsl:value-of select="count(rng:* | processing-instruction())"/>
       </xsl:for-each>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="starts-with($entityContent,&#34;'&#34;)">
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Omit <xsl:value-of select="$entityContent"/> for <xsl:value-of select="@ident"/>
+        <xsl:if test="$verbose = 'true'">
+          <xsl:message>Omit <xsl:value-of select="$entityContent"/> for <xsl:value-of
+              select="@ident"/>
           </xsl:message>
         </xsl:if>
       </xsl:when>
       <xsl:when test="$entityCount = 0 and starts-with($entityContent,&#34;-&#34;)">
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Omit <xsl:value-of select="$entityContent"/> for <xsl:value-of select="@ident"/>
+        <xsl:if test="$verbose = 'true'">
+          <xsl:message>Omit <xsl:value-of select="$entityContent"/> for <xsl:value-of
+              select="@ident"/>
           </xsl:message>
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:if test="$verbose='true'">
-          <xsl:message> macro/data Spec <xsl:value-of select="@ident"/>: <xsl:copy-of select="$entityContent"/></xsl:message>
+        <xsl:if test="$verbose = 'true'">
+          <xsl:message> macro/data Spec <xsl:value-of select="@ident"/>: <xsl:copy-of
+              select="$entityContent"/></xsl:message>
         </xsl:if>
         <xsl:call-template name="schemaOut">
           <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
             <Wrapper>
               <define xmlns="http://relaxng.org/ns/structure/1.0" name="{$macroPrefix}{@ident}">
-                <xsl:if test="$parameterize='true'">
-                  <xsl:if test="starts-with(@ident,'macro.component')     or @predeclare='true'">
+                <xsl:if test="$parameterize = 'true'">
+                  <xsl:if test="starts-with(@ident, 'macro.component') or @predeclare = 'true'">
                     <xsl:attribute name="combine">choice</xsl:attribute>
                   </xsl:if>
                 </xsl:if>
                 <xsl:choose>
-                  <xsl:when test="starts-with(@ident,'type')">
+                  <xsl:when test="starts-with(@ident, 'type')">
                     <xsl:apply-templates mode="justcopy" select="$entityContent/TEMPTREE/node()"/>
                   </xsl:when>
-                  <xsl:when test="$entityCount=0">
+                  <xsl:when test="$entityCount = 0">
                     <choice>
                       <empty/>
                     </choice>
                   </xsl:when>
-                  <xsl:when test="$entityCount=1">
+                  <xsl:when test="$entityCount = 1">
                     <xsl:apply-templates mode="justcopy" select="$entityContent/TEMPTREE/node()"/>
                   </xsl:when>
-                  <xsl:when test="tei:content/rng:text|tei:content/rng:ref">
+                  <xsl:when test="tei:content/rng:text | tei:content/rng:ref">
                     <choice>
                       <xsl:apply-templates mode="justcopy" select="$entityContent/TEMPTREE/node()"/>
                     </choice>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:apply-templates mode="justcopy"  select="$entityContent/TEMPTREE/node()"/>
+                    <xsl:apply-templates mode="justcopy" select="$entityContent/TEMPTREE/node()"/>
                   </xsl:otherwise>
                 </xsl:choose>
               </define>
-	      <xsl:apply-templates select="tei:constraintSpec"/>
+              <xsl:apply-templates select="tei:constraintSpec"/>
             </Wrapper>
           </xsl:with-param>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
 
+  </xsl:template>
+  
+  <xsl:template match="tei:dataRef" mode="#default tangle">
+    <xsl:variable name="wrapperElement" select="tei:generateIndicators(@minOccurs, @maxOccurs)"/>
+    <xsl:variable name="min"
+      select="
+      if (not(@minOccurs)) then
+      1
+      else
+      if (@minOccurs = '0') then
+      1
+      else
+      @minOccurs"
+      as="xs:integer"/>
+    <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
+    <xsl:variable name="c">
+      <xsl:choose>
+        <xsl:when test="@name">
+          <rng:data type="{@name}">
+            <xsl:if test="@restriction">
+              <rng:param name="pattern">
+                <xsl:value-of select="@restriction"/>
+              </rng:param>
+            </xsl:if>
+          </rng:data>
+        </xsl:when>
+        <xsl:when test="@key">
+          <xsl:for-each select="key('LOCALIDENTS', @key)">
+            <xsl:choose>
+              <xsl:when test="tei:content">
+                <xsl:apply-templates select="tei:content/*"/>
+              </xsl:when>
+              <xsl:when test="tei:datatype">
+                <xsl:apply-templates select="tei:datatype/*"/>
+              </xsl:when>
+            </xsl:choose>
+          </xsl:for-each>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:for-each select="1 to $min">
+      <xsl:choose>
+        <xsl:when test="string-length($wrapperElement) = 0">
+          <xsl:copy-of select="$c"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
+            <xsl:copy-of select="$c"/>
+          </xsl:element>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template match="tei:memberOf" mode="tangleModel">

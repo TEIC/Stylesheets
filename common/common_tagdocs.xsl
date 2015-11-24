@@ -829,6 +829,7 @@
       <xsl:apply-templates mode="PureODD"/>
     </xsl:element>
   </xsl:template>
+  <xsl:template match="tei:gloss|tei:desc|tei:exemplum|tei:remarks|tei:attRef" mode="PureODD"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element elementSpec/tei:content</desc>
   </doc>
@@ -858,6 +859,8 @@
             <xsl:apply-templates select="../tei:classes" mode="PureODD"/>
             <xsl:text>
 </xsl:text> <xsl:apply-templates select="." mode="PureODD"/>
+            <xsl:text>
+</xsl:text> <xsl:apply-templates select="../tei:attList" mode="PureODD"/>
           </PureODD>
         </xsl:variable>
         <xsl:call-template name="pureODDOut">
