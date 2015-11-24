@@ -820,6 +820,15 @@
       </xsl:element>
     </xsl:element>
   </xsl:template>
+  
+  <xsl:template match="tei:*" mode="PureODD">
+    <xsl:element name="{local-name(.)}">
+      <xsl:for-each select="@*">
+        <xsl:copy/>
+      </xsl:for-each>
+      <xsl:apply-templates mode="PureODD"/>
+    </xsl:element>
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element elementSpec/tei:content</desc>
   </doc>
@@ -845,10 +854,11 @@
           <xsl:text>wovenodd-col2</xsl:text>
         </xsl:attribute>
         <xsl:variable name="content">
-          <Wrapper>
-            <xsl:copy-of select="../tei:classes"/><xsl:text>
-</xsl:text> <xsl:copy-of select="."/>
-          </Wrapper>
+          <PureODD>
+            <xsl:apply-templates select="../tei:classes" mode="PureODD"/>
+            <xsl:text>
+</xsl:text> <xsl:apply-templates select="." mode="PureODD"/>
+          </PureODD>
         </xsl:variable>
         <xsl:call-template name="pureODDOut">
           <xsl:with-param name="grammar"/>
@@ -857,7 +867,7 @@
         <xsl:for-each select="tei:valList[@type='closed']">
           <xsl:sequence select="tei:i18n('Legal values are')"/>
           <xsl:text>:</xsl:text>
-          <xsl:call-template name="valListChildren"/>
+          <xsl:call-template name="valListItems"/>
         </xsl:for-each>
       </xsl:element>
     </xsl:element>
@@ -906,7 +916,7 @@
         <xsl:for-each select="tei:valList[@type = 'closed']">
           <xsl:sequence select="tei:i18n('Legal values are')"/>
           <xsl:text>:</xsl:text>
-          <xsl:call-template name="valListChildren"/>
+          <xsl:call-template name="valListItems"/>
         </xsl:for-each>
       </xsl:element>
     </xsl:element>
@@ -1416,59 +1426,23 @@
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
-          <xsl:sequence select="tei:i18n('Declaration')"/>
+          <xsl:sequence select="tei:i18n('Pure ODD')"/>
         </xsl:element>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>wovenodd-col2</xsl:text>
         </xsl:attribute>
-        <xsl:call-template name="schemaOut">
+        <xsl:call-template name="pureODDOut">
           <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
-            <Wrapper>
-              <xsl:variable name="entCont">
-                <Stuff>
-                  <xsl:apply-templates select="rng:*"/>
-                </Stuff>
-              </xsl:variable>
-              <xsl:variable name="entCount">
-                <xsl:for-each select="$entCont/html:Stuff">
-                  <xsl:value-of select="count(*)"/>
-                </xsl:for-each>
-              </xsl:variable>
-              <xsl:choose>
-                <xsl:when test=". = &quot;TEI.singleBase&quot;"/>
-                <xsl:otherwise>
-                  <rng:define name="{../@ident}">
-                    <xsl:if test="starts-with(., 'component')">
-                      <xsl:attribute name="combine">choice</xsl:attribute>
-                    </xsl:if>
-                    <xsl:copy-of select="rng:*"/>
-                  </rng:define>
-                </xsl:otherwise>
-              </xsl:choose>
-            </Wrapper>
+            <PureODD>
+              <xsl:apply-templates select="." mode="PureODD"/>
+            </PureODD>
           </xsl:with-param>
         </xsl:call-template>
       </xsl:element>
     </xsl:element>
-  </xsl:template>
-  
-  <xsl:template name="pureODDOut">
-    <xsl:param name="grammar"/>
-    <xsl:param name="content"/>
-    <xsl:param name="element">pre</xsl:param>
-    <xsl:element name="{$element}">
-      <xsl:attribute name="class">eg</xsl:attribute>
-      <xsl:apply-templates mode="verbatim" select="$content/*/*"/>
-    </xsl:element>
-  </xsl:template>
-  
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element dataSpec/tei:content</desc>
-  </doc>
-  <xsl:template match="tei:dataSpec/tei:content" mode="weave">
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
@@ -1488,38 +1462,74 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>wovenodd-col2</xsl:text>
         </xsl:attribute>
+        <xsl:apply-templates select="parent::*" mode="tangle"/>
+      </xsl:element>
+    </xsl:element>
+  </xsl:template>
+  
+  <xsl:template name="pureODDOut">
+    <xsl:param name="grammar"/>
+    <xsl:param name="content"/>
+    <xsl:param name="element">pre</xsl:param>
+    <xsl:element name="{$element}">
+      <xsl:attribute name="class">eg</xsl:attribute>
+      <xsl:apply-templates mode="verbatim" select="$content/*/*"></xsl:apply-templates>
+    </xsl:element>
+  </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element dataSpec/tei:content</desc>
+  </doc>
+  <xsl:template match="tei:dataSpec/tei:content" mode="weave">
+    <xsl:element namespace="{$outputNS}" name="{$rowName}">
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>wovenodd-col1</xsl:text>
+        </xsl:attribute>
+        <xsl:element namespace="{$outputNS}" name="{$hiName}">
+          <xsl:attribute name="{$rendName}">
+            <xsl:text>label</xsl:text>
+          </xsl:attribute>
+          <xsl:attribute name="{$langAttributeName}">
+            <xsl:value-of select="$documentationLanguage"/>
+          </xsl:attribute>
+          <xsl:sequence select="tei:i18n('Pure ODD')"/>
+        </xsl:element>
+      </xsl:element>
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>wovenodd-col2</xsl:text>
+        </xsl:attribute>
         <xsl:call-template name="pureODDOut">
-          <!-- changed this from schemaOut-->
           <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
-            <Wrapper>
-              <xsl:variable name="entCont">
-                <Stuff>
-                  <!--       <xsl:apply-templates select="rng:*"/>
-        -->
-                  <xsl:apply-templates select="*"/>
-                </Stuff>
-              </xsl:variable>
-              <xsl:variable name="entCount">
-                <xsl:for-each select="$entCont/html:Stuff">
-                  <xsl:value-of select="count(*)"/>
-                </xsl:for-each>
-              </xsl:variable>
-              <xsl:choose>
-                <!-- wtf? -->
-                <xsl:when test=". = &quot;TEI.singleBase&quot;"/>
-                <xsl:otherwise>
-                  <rng:define name="{../@ident}">
-                    <xsl:if test="starts-with(., 'component')">
-                      <xsl:attribute name="combine">choice</xsl:attribute>
-                    </xsl:if>
-                    <xsl:copy-of select="rng:*"/>
-                  </rng:define>
-                </xsl:otherwise>
-              </xsl:choose>
-            </Wrapper>
+            <PureODD>
+              <xsl:apply-templates select="." mode="PureODD"/>
+            </PureODD>
           </xsl:with-param>
         </xsl:call-template>
+      </xsl:element>
+    </xsl:element>
+    <xsl:element namespace="{$outputNS}" name="{$rowName}">
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>wovenodd-col1</xsl:text>
+        </xsl:attribute>
+        <xsl:element namespace="{$outputNS}" name="{$hiName}">
+          <xsl:attribute name="{$rendName}">
+            <xsl:text>label</xsl:text>
+          </xsl:attribute>
+          <xsl:attribute name="{$langAttributeName}">
+            <xsl:value-of select="$documentationLanguage"/>
+          </xsl:attribute>
+          <xsl:sequence select="tei:i18n('Declaration')"/>
+        </xsl:element>
+      </xsl:element>
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>wovenodd-col2</xsl:text>
+        </xsl:attribute>
+        <xsl:apply-templates select="parent::*" mode="tangle"/>
       </xsl:element>
     </xsl:element>
   </xsl:template>
@@ -1845,14 +1855,14 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
-        <xsl:call-template name="valListChildren"/>
+        <xsl:call-template name="valListItems"/>
       </xsl:element>
     </xsl:element>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[odds] all the values in a valList</desc>
   </doc>
-  <xsl:template name="valListChildren">
+  <xsl:template name="valListItems">
     <xsl:element namespace="{$outputNS}" name="{$dlName}">
       <xsl:attribute name="{$rendName}">
         <xsl:text>valList</xsl:text>

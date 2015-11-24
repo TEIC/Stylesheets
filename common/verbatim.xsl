@@ -394,13 +394,14 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="parent::xhtml:Wrapper"/>
       <xsl:when test="parent::Wrapper"/>
       <!--      <xsl:when test="child::node()[last()]/self::text()[not(.='')] and child::node()[1]/self::text()[not(.='')]"/>-->
-      <xsl:when
-	  test="ancestor::*[@xml:space][1]/@xml:space='preserve'"/>
-      <xsl:when test="not(parent::*)  or parent::teix:egXML">
+      <xsl:when test="ancestor::*[@xml:space][1]/@xml:space = 'preserve'"/>
+      <xsl:when test="not(parent::*) or parent::teix:egXML or parent::PureODD">
         <xsl:choose>
-          <xsl:when test="preceding-sibling::node()[1][self::text()]
-			  and
-			  following-sibling::node()[1][self::text()]"/>
+          <xsl:when
+            test="
+              preceding-sibling::node()[1][self::text()]
+              and
+              following-sibling::node()[1][self::text()]"/>
           <xsl:when test="preceding-sibling::*">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">-1</xsl:with-param>
@@ -435,48 +436,49 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="eContents">
       <xsl:text>&lt;</xsl:text>
       <xsl:call-template name="verbatim-makeElementName">
-	<xsl:with-param name="start">true</xsl:with-param>
-	<xsl:with-param name="highlight">
-	  <xsl:value-of select="$highlight"/>
-	</xsl:with-param>
+        <xsl:with-param name="start">true</xsl:with-param>
+        <xsl:with-param name="highlight">
+          <xsl:value-of select="$highlight"/>
+        </xsl:with-param>
       </xsl:call-template>
       <xsl:call-template name="verbatim-processAttributes"/>
-      <xsl:if test="(local-name(.)='TEI' and not (local-name(parent::*)='teiCorpus')) or local-name(.)='teiCorpus'">
-	<xsl:text> xmlns="http://www.tei-c.org/ns/1.0"</xsl:text>
-      </xsl:if>  
-      <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[tei:match(@rend,'full')]">
-	<xsl:choose>
-	  <xsl:when test="not(parent::*)">
-	    <xsl:call-template name="nsList"/>
-	  </xsl:when>
-	  <xsl:when test="parent::teix:egXML and not(preceding-sibling::*)">
-	    <xsl:call-template name="nsList"/>
-	  </xsl:when>
-	</xsl:choose>
+      <xsl:if
+        test="(local-name(.) = 'TEI' and not(local-name(parent::*) = 'teiCorpus')) or local-name(.) = 'teiCorpus'">
+        <xsl:text> xmlns="http://www.tei-c.org/ns/1.0"</xsl:text>
+      </xsl:if>
+      <xsl:if test="$showNamespaceDecls = 'true' or parent::teix:egXML[tei:match(@rend, 'full')]">
+        <xsl:choose>
+          <xsl:when test="not(parent::*)">
+            <xsl:call-template name="nsList"/>
+          </xsl:when>
+          <xsl:when test="parent::teix:egXML and not(preceding-sibling::*)">
+            <xsl:call-template name="nsList"/>
+          </xsl:when>
+        </xsl:choose>
       </xsl:if>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="child::node()">
-	<xsl:call-template name="Element">
-	  <xsl:with-param name="content">
-	    <xsl:copy-of select="$eContents"/>
-	    <xsl:text>&gt;</xsl:text>
-	  </xsl:with-param>
-	</xsl:call-template>
+        <xsl:call-template name="Element">
+          <xsl:with-param name="content">
+            <xsl:copy-of select="$eContents"/>
+            <xsl:text>&gt;</xsl:text>
+          </xsl:with-param>
+        </xsl:call-template>
         <xsl:apply-templates mode="verbatim">
           <xsl:with-param name="highlight">
             <xsl:value-of select="$highlight"/>
           </xsl:with-param>
         </xsl:apply-templates>
         <xsl:choose>
-	  <xsl:when test="ancestor::*[@xml:space][1]/@xml:space='preserve'"/>
-          <xsl:when test="child::node()[last()]/self::text() and child::node()[1]/self::text()"/>
-          <xsl:when test="not(parent::*)  or parent::teix:egXML">
+          <xsl:when test="ancestor::*[@xml:space][1]/@xml:space = 'preserve'"/>
+          <!--<xsl:when test="child::node()[last()]/self::text() and child::node()[1]/self::text()"/>-->
+          <xsl:when test="not(parent::*) or parent::teix:egXML or parent::PureODD">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">23</xsl:with-param>
             </xsl:call-template>
           </xsl:when>
-          <xsl:when test="child::node()[last()]/self::text()[normalize-space(.)='']">
+          <xsl:when test="child::node()[last()]/self::text()[normalize-space(.) = '']">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">3</xsl:with-param>
             </xsl:call-template>
@@ -495,26 +497,26 @@ of this software, even if advised of the possibility of such damage.
             <xsl:call-template name="verbatim-makeIndent"/>
           </xsl:when>
         </xsl:choose>
-	<xsl:call-template name="Element">
-	  <xsl:with-param name="content">
-	    <xsl:text>&lt;/</xsl:text>
-	    <xsl:call-template name="verbatim-makeElementName">
-	      <xsl:with-param name="start">false</xsl:with-param>
-	      <xsl:with-param name="highlight">
-		<xsl:value-of select="$highlight"/>
-	      </xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:text>&gt;</xsl:text>
-	  </xsl:with-param>
-	</xsl:call-template>
+        <xsl:call-template name="Element">
+          <xsl:with-param name="content">
+            <xsl:text>&lt;/</xsl:text>
+            <xsl:call-template name="verbatim-makeElementName">
+              <xsl:with-param name="start">false</xsl:with-param>
+              <xsl:with-param name="highlight">
+                <xsl:value-of select="$highlight"/>
+              </xsl:with-param>
+            </xsl:call-template>
+            <xsl:text>&gt;</xsl:text>
+          </xsl:with-param>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:call-template name="Element">
-	  <xsl:with-param name="content">
-	    <xsl:copy-of select="$eContents"/>
-	    <xsl:text>/&gt;</xsl:text>
-	  </xsl:with-param>
-	</xsl:call-template>
+        <xsl:call-template name="Element">
+          <xsl:with-param name="content">
+            <xsl:copy-of select="$eContents"/>
+            <xsl:text>/&gt;</xsl:text>
+          </xsl:with-param>
+        </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -644,10 +646,21 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:when>
 	<xsl:otherwise>
 	  <xsl:for-each select="$Atts/*[1]">
-	    <xsl:call-template name="verbatim-nextAttribute">
-	      <xsl:with-param name="indent" select="$indent"/>
-	      <xsl:with-param name="sofar" select="$esize + @size"/>
-	    </xsl:call-template>
+	    <xsl:choose>
+	      <xsl:when test="@name='key'">
+	        <xsl:call-template name="verbatim-nextAttribute">
+	          <xsl:with-param name="indent" select="$indent"/>
+	          <xsl:with-param name="sofar" select="$esize + @size"/>
+	          <xsl:with-param name="ref-link" select="true()"></xsl:with-param>
+	        </xsl:call-template>
+	      </xsl:when>
+	      <xsl:otherwise>
+          <xsl:call-template name="verbatim-nextAttribute">
+    	      <xsl:with-param name="indent" select="$indent"/>
+    	      <xsl:with-param name="sofar" select="$esize + @size"/>
+    	    </xsl:call-template>
+	      </xsl:otherwise>
+	    </xsl:choose>
 	  </xsl:for-each>
 	</xsl:otherwise>
       </xsl:choose>
@@ -659,16 +672,28 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="indent"/>
     <xsl:param name="force" select="false()"/>
     <xsl:param name="sofar">0</xsl:param>
+    <xsl:param name="ref-link" select="false()"/>
     <xsl:value-of select="$spaceCharacter"/>
     <xsl:call-template name="Attribute">
       <xsl:with-param name="content" select="string(@name)"/>
     </xsl:call-template>
     <xsl:text>="</xsl:text>
-    <xsl:call-template name="AttributeValue">
-      <xsl:with-param name="content">
-	<xsl:apply-templates select="@value" mode="attributetext"/>
-      </xsl:with-param>
-    </xsl:call-template>
+    <xsl:choose>
+      <xsl:when test="$ref-link">
+        <xsl:call-template name="RefLinkAttributeValue">
+          <xsl:with-param name="content">
+            <xsl:apply-templates select="@value" mode="attributetext"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="AttributeValue">
+          <xsl:with-param name="content">
+	           <xsl:apply-templates select="@value" mode="attributetext"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:text>"</xsl:text>
     <xsl:for-each select="following-sibling::a[1]">
       <xsl:choose>
@@ -783,6 +808,13 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="content"/>
       <xsl:copy-of select="$content"/>
   </xsl:template>
+  
+  <xsl:template name="RefLinkAttributeValue">
+    <xsl:param name="content"/>
+    <xsl:call-template name="Attribute">
+      <xsl:with-param name="content" select="$content"/>
+    </xsl:call-template>
+  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>show an XML attribute value in a verbatim context</desc>
@@ -790,7 +822,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="AttributeValue">
     <xsl:param name="content"/>
-      <xsl:copy-of select="$content"/>
+    <xsl:copy-of select="$content"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

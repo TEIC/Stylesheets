@@ -862,36 +862,36 @@ select="$makeDecls"/></xsl:message>
                       <xsl:value-of select="@ns"/>
                     </xsl:attribute>
                   </xsl:if>
-                  <xsl:if test="not($oddmode='tei')">
+                  <xsl:if test="not($oddmode = 'tei')">
                     <a:documentation>
-		      <xsl:sequence select="tei:makeDescription(.,true())"/>
+                      <xsl:sequence select="tei:makeDescription(., true())"/>
                     </a:documentation>
                   </xsl:if>
                   <xsl:choose>
-                    <xsl:when test="$parameterize='true'">
+                    <xsl:when test="$parameterize = 'true'">
                       <ref name="{$elementPrefix}{@ident}.content"/>
-                      <xsl:if test="not($Attributes='')">
-			<xsl:if test="$verbose='true'">
-			  <xsl:message>   refer to attributes: </xsl:message>
-			</xsl:if>
+                      <xsl:if test="not($Attributes = '')">
+                        <xsl:if test="$verbose = 'true'">
+                          <xsl:message> refer to attributes: </xsl:message>
+                        </xsl:if>
                         <ref name="{$elementPrefix}{@ident}.localattributes"/>
                       </xsl:if>
-		    </xsl:when>
-		    <xsl:otherwise>
+                    </xsl:when>
+                    <xsl:otherwise>
                       <xsl:call-template name="defineContent"/>
-                      <xsl:if test="not($Attributes='')">
-			<xsl:call-template name="defineAttributes"/>
+                      <xsl:if test="not($Attributes = '')">
+                        <xsl:call-template name="defineAttributes"/>
                       </xsl:if>
                     </xsl:otherwise>
                   </xsl:choose>
                 </element>
               </define>
-              <xsl:if test="$parameterize='true'">
+              <xsl:if test="$parameterize = 'true'">
                 <define xmlns="http://relaxng.org/ns/structure/1.0"
                   name="{$elementPrefix}{@ident}.content">
                   <xsl:call-template name="defineContent"/>
                 </define>
-                <xsl:if test="not($Attributes='')">
+                <xsl:if test="not($Attributes = '')">
                   <define xmlns="http://relaxng.org/ns/structure/1.0"
                     name="{$elementPrefix}{@ident}.localattributes">
                     <xsl:call-template name="defineAttributes"/>
