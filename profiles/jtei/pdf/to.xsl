@@ -61,7 +61,12 @@
   <xsl:attribute-set name="heading.lowerblock.properties">
     <xsl:attribute name="font-family">Roboto-medium</xsl:attribute>
     <xsl:attribute name="font-size">8.3pt</xsl:attribute>
-    <xsl:attribute name="keep-with-next">always</xsl:attribute>
+    <xsl:attribute name="keep-with-next">5</xsl:attribute>
+  </xsl:attribute-set>
+  
+  <xsl:attribute-set name="imageblock.properties">
+    <xsl:attribute name="inline-progression-dimension.maximum">100%</xsl:attribute>
+    <xsl:attribute name="block-progression-dimension.maximum">20cm</xsl:attribute> 
   </xsl:attribute-set>
   
   <xsl:attribute-set name="back.font.properties">
@@ -242,10 +247,15 @@
   </xsl:template>
   
   <xsl:template name="back">
-    <fo:block border-top="solid 1px black" xsl:use-attribute-sets="block.spacing.properties" keep-with-next="always"/>
-    <xsl:apply-templates select="/tei:TEI/tei:text/tei:back/tei:div[@type='bibliography']"/>
-    <xsl:call-template name="appendixes"/>
-    <xsl:call-template name="endnotes"/>
+    <xsl:variable name="variable.content">
+      <xsl:apply-templates select="/tei:TEI/tei:text/tei:back/tei:div[@type='bibliography']"/>
+      <xsl:call-template name="appendixes"/>
+      <xsl:call-template name="endnotes"/>      
+    </xsl:variable>
+    <xsl:if test="$variable.content[normalize-space()]">
+      <fo:block border-top="solid 1px black" xsl:use-attribute-sets="block.spacing.properties" keep-with-next="always"/>  
+      <xsl:copy-of select="$variable.content"/>
+    </xsl:if>
     <fo:block border-top="solid 1px black" xsl:use-attribute-sets="block.spacing.properties" keep-with-next="always"/>
     <xsl:apply-templates select="/tei:TEI/tei:text/tei:front/tei:div[@type='abstract']"/>
     <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass"/>
@@ -424,11 +434,11 @@
 
   <!-- group figure contents and headings in a block --> 
   <xsl:template match="tei:figure">
-    <fo:block xsl:use-attribute-sets="block.spacing.properties" keep-together="always">
+    <fo:block xsl:use-attribute-sets="block.spacing.properties" keep-together.within-page="5">
       <xsl:for-each select="@xml:id">
         <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
       </xsl:for-each>
-      <fo:block xsl:use-attribute-sets="heading.lowerblock.properties">
+      <fo:block xsl:use-attribute-sets="heading.lowerblock.properties imageblock.properties">
         <xsl:apply-templates select="." mode="label"/>
         <xsl:apply-templates select="tei:head[not(@type='license')]/node()"/>
       </fo:block>
@@ -442,7 +452,7 @@
   </xsl:template>
   
   <xsl:template match="tei:figure/tei:graphic">
-    <fo:external-graphic content-width="scale-down-to-fit" content-height="scale-down-to-fit" inline-progression-dimension.maximum="80%" src="{resolve-uri(@url, base-uri())}"/>
+    <fo:external-graphic xsl:use-attribute-sets="imageblock.properties" content-height="scale-down-to-fit" scaling="uniform" src="{resolve-uri(@url, base-uri())}"/>
   </xsl:template>
   
   <xsl:template match="eg:egXML">
@@ -671,7 +681,7 @@
   </xsl:template>  
   <!-- pull subsequent punctuation into generated quotation marks -->
   <xsl:template name="include.punctuation">
-    <xsl:value-of select="following-sibling::node()[not(self::tei:note)][1]/self::text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}]]')]/replace(., '^\s*([\p{P}-[\p{Ps}\p{Pe}]]+).*', '$1', 's')"/>
+    <xsl:value-of select="following-sibling::node()[not(self::tei:note)][1]/self::text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}—]]')]/replace(., '^\s*([\p{P}-[\p{Ps}\p{Pe}]]+).*', '$1', 's')"/>
   </xsl:template>
   
   <xsl:template match="tei:quote//tei:supplied|tei:q//tei:supplied">
@@ -1007,11 +1017,9 @@
   <xsl:template match="tei:table">
     <fo:block xsl:use-attribute-sets="block.spacing.properties">
       <xsl:apply-templates select="tei:head"/>
-      <fo:table id="{(@xml:id, generate-id())[1]}" xsl:use-attribute-sets="table.properties">
-        <xsl:variable name="numCols" select="sum(for $c in descendant::tei:row[1]/tei:cell return if ($c/@cols) then xs:integer($c/@cols) else 1)"/>
-        <xsl:for-each select="1 to $numCols">
-          <fo:table-column column-number="{position()}"/>
-        </xsl:for-each>
+      <fo:table id="{(@xml:id, generate-id())[1]}" xsl:use-attribute-sets="table.properties" table-layout="fixed">
+        <!-- mimic @table-layout="auto" by determining optimal column width based on maximal word length per column -->
+        <xsl:call-template name="generate.cols"/>
         <fo:table-body>
           <xsl:apply-templates select="node()[not(self::tei:head)]"/>
         </fo:table-body>
@@ -1043,7 +1051,107 @@
       </xsl:if>
       <fo:block><xsl:apply-templates/></fo:block>      
     </fo:table-cell>
-  </xsl:template>  
+  </xsl:template>
+  
+  <xsl:template name="generate.cols">
+    <!-- normalize table (expanding @cols and @rows) -->
+    <xsl:variable name="table.normalized">
+      <xsl:call-template name="table.normalize"/>
+    </xsl:variable>
+    <!-- generate an overview of the maximal word length per column -->
+    <xsl:variable name="max.length.per.column">
+      <xsl:for-each select="$table.normalized/*">
+        <xsl:call-template name="get.max.length.per.column"/>
+      </xsl:for-each>
+    </xsl:variable>
+    <!-- determine the percentage of this maximal word length based on the total maximal word length of all columns -->
+    <xsl:variable name="totalwidth" select="sum($max.length.per.column//@max.length)"/>
+    <xsl:for-each select="$max.length.per.column/*">
+      <fo:table-column column-number="{position()}" column-width="proportional-column-width({number(@max.length) div number($totalwidth) * 100})"/>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <!-- "colspan" and "rowspan" mode templates based on the helpful "table normalization" code at http://andrewjwelch.com/code/xslt/table/table-normalization.html -->
+  <xsl:template name="table.normalize">
+    <xsl:variable name="table_with_no_colspans">
+      <xsl:apply-templates select="." mode="colspan"/>
+    </xsl:variable>
+    <xsl:for-each select="$table_with_no_colspans">
+      <xsl:apply-templates mode="rowspan" />
+    </xsl:for-each>
+  </xsl:template>
+  
+  <xsl:template match="@*|node()" mode="rowspan colspan">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()" mode="#current" />
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="tei:table" mode="rowspan">
+    <xsl:copy>
+      <xsl:copy-of select="tei:row[1]" />
+      <xsl:apply-templates select="tei:row[2]" mode="rowspan">
+        <xsl:with-param name="previousRow" select="tei:row[1]" />
+      </xsl:apply-templates>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="tei:cell[@cols]" mode="colspan">
+    <xsl:variable name="current" select="."/>
+    <xsl:for-each select="1 to @cols">
+      <xsl:copy-of select="$current"/>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <xsl:template match="tei:row" mode="rowspan">
+    <xsl:param name="previousRow" as="element()" />
+    <xsl:variable name="currentRow" select="." />
+    <xsl:variable name="normalizedTDs">
+      <xsl:for-each select="$previousRow/tei:cell">
+        <xsl:choose>
+          <xsl:when test="@rows &gt; 1">
+            <xsl:copy>
+              <xsl:attribute name="rows">
+                <xsl:value-of select="@rows - 1" />
+              </xsl:attribute>
+              <xsl:copy-of select="@*[not(name() = 'rows')]" />
+              <xsl:copy-of select="node()" />
+            </xsl:copy>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="$currentRow/tei:cell[1 + count(current()/preceding-sibling::tei:cell[not(@rows) or (@rows = 1)])]" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:variable name="newRow" as="element(tei:row)">
+      <xsl:copy>
+        <xsl:copy-of select="$currentRow/@*" />
+        <xsl:copy-of select="$normalizedTDs" />
+      </xsl:copy>
+    </xsl:variable>    
+    <xsl:copy-of select="$newRow" />
+    <xsl:apply-templates select="following-sibling::tei:row[1]" mode="rowspan">
+      <xsl:with-param name="previousRow" select="$newRow" />
+    </xsl:apply-templates>
+  </xsl:template>
+  
+  <xsl:template name="get.max.length.per.column">
+    <xsl:variable name="current" select="."/>
+    <xsl:for-each select="tei:row[1]/tei:cell">
+      <xsl:variable name="pos" select="position()"/>
+      <!-- find the longest word per column (divided by @cols) -->
+      <local:column n="{$pos}" max.length="{
+        max(
+          for $cell in $current//tei:cell[$pos]
+          return max((
+            for $a in tokenize($cell, '\s+') 
+            return string-length($a) div max(($cell/@cols, 1)), 
+            for $a in $cell//(tei:figure[1])/tei:graphic return 10
+          ))
+        )}"/>
+    </xsl:for-each>
+  </xsl:template>
   
   <!-- ==== -->
   <!-- back -->
@@ -1117,7 +1225,7 @@
   </xsl:template>
   
   <!-- untag all other <bibl> contents (except for <ref>) -->
-  <xsl:template match="tei:listBibl//tei:bibl/*[not(self::tei:ref or self::tei:ptr or self::tei:hi)]" priority="0">
+  <xsl:template match="tei:listBibl//tei:bibl/*" priority="-0.5">
     <xsl:apply-templates/>
   </xsl:template>
   
@@ -1158,12 +1266,14 @@
   </xsl:function>
 
   <xsl:template name="endnotes">
-    <fo:block>
-      <fo:block xsl:use-attribute-sets="heading.properties">
-        <xsl:text>Notes</xsl:text>
+    <xsl:if test=".//tei:text//tei:note">
+      <fo:block>
+        <fo:block xsl:use-attribute-sets="heading.properties">
+          <xsl:text>Notes</xsl:text>
+        </fo:block>
+        <xsl:apply-templates select=".//tei:text//tei:note" mode="endnotes"/>
       </fo:block>
-      <xsl:apply-templates select=".//tei:text//tei:note" mode="endnotes"/>
-    </fo:block>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template match="tei:note" mode="endnotes">
@@ -1188,7 +1298,7 @@
   </xsl:template>
   
   <!-- text() following an element for which smart quotes are being generated: skip starting punctuation (this is pulled into the quotation marks) -->
-  <xsl:template match="text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}]]')]
+  <xsl:template match="text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}—]]')]
     [preceding-sibling::node()[not(self::tei:note)][1]
     [. intersect key('quotation.elements', local-name())]]
     |
