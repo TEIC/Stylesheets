@@ -331,6 +331,15 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  <xsl:template name="pureODDOut">
+    <xsl:param name="grammar"/>
+    <xsl:param name="content"/>
+    <xsl:param name="element">pre</xsl:param>
+    <xsl:element name="{$element}">
+      <xsl:attribute name="class">eg</xsl:attribute>
+      <xsl:apply-templates mode="verbatim" select="$content/*/*"></xsl:apply-templates>
+    </xsl:element>
+  </xsl:template>
   <xsl:template name="showSpace">
     <xsl:text> </xsl:text>
   </xsl:template>
@@ -374,7 +383,8 @@ of this software, even if advised of the possibility of such damage.
         <table>
           <xsl:for-each select="tei:classSpec[not(@mode or @rend)]  
             | tei:dataSpec[not(@mode or  @rend)]         
-            | tei:macroSpec[not(@mode or  @rend)]          | tei:elementSpec[not(@mode or @rend)]">
+            | tei:macroSpec[not(@mode or  @rend)]          
+            | tei:elementSpec[not(@mode or @rend)]">
             <xsl:sort select="lower-case(@ident)"/>
             <tr>
               <td id="{@ident}"><a href="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html"><xsl:value-of select="@ident"/></a>:

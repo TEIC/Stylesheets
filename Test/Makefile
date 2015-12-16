@@ -306,7 +306,6 @@ test-oddity: css
 	$(JING) oddbyexample.xsd bare/test.xml
 	#xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 	$(SAXON) -s:testdrama.odd -xsl:../odds/odd2odd.xsl -o:testdrama.compiled.xml \
-	localsource=`pwd`/p5subset.xml $(SAXONOPT)
 	perl -p -i -e 's+ xml:base=".*testdrama.odd"++' testdrama.compiled.xml
 	perl -i -pe 'BEGIN{undef $$/;} s/<\?TEIVERSION[^?]+\?>//smg' testdrama.compiled.xml
 	diff testdrama.compiled.xml expected-results/testdrama.compiled.xml
@@ -360,7 +359,7 @@ test-oddity: css
 	rm test.odd2xslstripspace
 
 moreoddity:
-	$(BINDIR)/teitoxsd --localsource=/Users/hcayless/Development/TEIC/TEI/P5/p5subset.xml test.odd test.xsd
+	$(BINDIR)/teitoxsd $(FLAG) test.odd test.xsd
 	$(BINDIR)/teitodtd test.odd test.dtd
 	$(BINDIR)/teitornc test.odd test.rnc
 

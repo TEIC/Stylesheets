@@ -289,19 +289,27 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <xsl:template name="schemaOut">
-      <xsl:param name="grammar"/>
-      <xsl:param name="content"/>
-      <xsl:param name="element">pre</xsl:param>
-      <eg rend="eg_rnc">
-	<xsl:attribute name="xml:space">preserve</xsl:attribute>
-         <xsl:call-template name="make-body-from-r-t-f">
-            <xsl:with-param name="schema">
-               <xsl:for-each select="$content/*">
-                  <xsl:call-template name="make-compact-schema"/>
-               </xsl:for-each>
-            </xsl:with-param>
-         </xsl:call-template>
-      </eg>
+    <xsl:param name="grammar"/>
+    <xsl:param name="content"/>
+    <xsl:param name="element">pre</xsl:param>
+    <eg rend="eg_rnc">
+      <xsl:attribute name="xml:space">preserve</xsl:attribute>
+      <xsl:call-template name="make-body-from-r-t-f">
+        <xsl:with-param name="schema">
+          <xsl:for-each select="$content/*">
+            <xsl:call-template name="make-compact-schema"/>
+          </xsl:for-each>
+        </xsl:with-param>
+      </xsl:call-template>
+    </eg>
+  </xsl:template>
+  <xsl:template name="pureODDOut">
+    <xsl:param name="grammar"/>
+    <xsl:param name="content"/>
+    <xsl:param name="element">pre</xsl:param>
+    <eg xml:space="preserve">
+<xsl:apply-templates mode="verbatim" select="$content/*/*"/>
+    </eg>
   </xsl:template>
   <xsl:template match="tei:remarks/tei:p">
       <xsl:apply-templates/>
@@ -470,7 +478,7 @@ of this software, even if advised of the possibility of such damage.
 	   </div>
 	   <div>
 	     <head>Schema <xsl:value-of select="@ident"/>: changed components</head>
-	     <xsl:for-each select="tei:constraintSpec[@mode='change' or			   tei:match(@rend,'change')]  
+	     <xsl:for-each select="tei:constraintSpec[@mode='change' or tei:match(@rend,'change')]  
 				   | tei:classSpec[@mode='change' or tei:match(@rend,'change')]  
 				   | tei:macroSpec[(@mode='change' or tei:match(@rend,'change'))]  
 				   | tei:elementSpec[(@mode='change' or tei:match(@rend,'change'))]">

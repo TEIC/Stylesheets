@@ -829,7 +829,6 @@
       <xsl:apply-templates mode="PureODD"/>
     </xsl:element>
   </xsl:template>
-  <xsl:template match="tei:gloss|tei:desc|tei:exemplum|tei:remarks|tei:attRef" mode="PureODD"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element elementSpec/tei:content</desc>
   </doc>
@@ -854,15 +853,13 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>wovenodd-col2</xsl:text>
         </xsl:attribute>
-        <xsl:variable name="content">
-          <PureODD>
-            <xsl:apply-templates select="../tei:classes" mode="PureODD"/>
-            <xsl:apply-templates select="." mode="PureODD"/>
-          </PureODD>
-        </xsl:variable>
         <xsl:call-template name="pureODDOut">
           <xsl:with-param name="grammar"/>
-          <xsl:with-param name="content" select="$content"/>
+          <xsl:with-param name="content">
+            <PureODD>
+              <xsl:apply-templates select="." mode="PureODD"/>
+            </PureODD>
+          </xsl:with-param>
         </xsl:call-template>
         <xsl:for-each select="tei:valList[@type='closed']">
           <xsl:sequence select="tei:i18n('Legal values are')"/>
@@ -1414,35 +1411,38 @@
     <desc>Process element macroSpec/tei:content</desc>
   </doc>
   <xsl:template match="tei:macroSpec/tei:content" mode="weave">
-    <xsl:element namespace="{$outputNS}" name="{$rowName}">
-      <xsl:element namespace="{$outputNS}" name="{$cellName}">
-        <xsl:attribute name="{$rendName}">
-          <xsl:text>wovenodd-col1</xsl:text>
-        </xsl:attribute>
-        <xsl:element namespace="{$outputNS}" name="{$hiName}">
+    <!-- TODO: Macros aren't 100% "pure" yet. anyXML, e.g., still uses RNG -->
+    <xsl:if test="tei:*">
+      <xsl:element namespace="{$outputNS}" name="{$rowName}">
+        <xsl:element namespace="{$outputNS}" name="{$cellName}">
           <xsl:attribute name="{$rendName}">
-            <xsl:text>label</xsl:text>
+            <xsl:text>wovenodd-col1</xsl:text>
           </xsl:attribute>
-          <xsl:attribute name="{$langAttributeName}">
-            <xsl:value-of select="$documentationLanguage"/>
+          <xsl:element namespace="{$outputNS}" name="{$hiName}">
+            <xsl:attribute name="{$rendName}">
+              <xsl:text>label</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="{$langAttributeName}">
+              <xsl:value-of select="$documentationLanguage"/>
+            </xsl:attribute>
+            <xsl:sequence select="tei:i18n('Pure ODD')"/>
+          </xsl:element>
+        </xsl:element>
+        <xsl:element namespace="{$outputNS}" name="{$cellName}">
+          <xsl:attribute name="{$rendName}">
+            <xsl:text>wovenodd-col2</xsl:text>
           </xsl:attribute>
-          <xsl:sequence select="tei:i18n('Pure ODD')"/>
+          <xsl:call-template name="pureODDOut">
+            <xsl:with-param name="grammar">true</xsl:with-param>
+            <xsl:with-param name="content">
+              <PureODD>
+                <xsl:apply-templates select="." mode="PureODD"/>
+              </PureODD>
+            </xsl:with-param>
+          </xsl:call-template>
         </xsl:element>
       </xsl:element>
-      <xsl:element namespace="{$outputNS}" name="{$cellName}">
-        <xsl:attribute name="{$rendName}">
-          <xsl:text>wovenodd-col2</xsl:text>
-        </xsl:attribute>
-        <xsl:call-template name="pureODDOut">
-          <xsl:with-param name="grammar">true</xsl:with-param>
-          <xsl:with-param name="content">
-            <PureODD>
-              <xsl:apply-templates select="." mode="PureODD"/>
-            </PureODD>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:element>
-    </xsl:element>
+    </xsl:if>
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
@@ -1466,17 +1466,7 @@
       </xsl:element>
     </xsl:element>
   </xsl:template>
-  
-  <xsl:template name="pureODDOut">
-    <xsl:param name="grammar"/>
-    <xsl:param name="content"/>
-    <xsl:param name="element">pre</xsl:param>
-    <xsl:element name="{$element}">
-      <xsl:attribute name="class">eg</xsl:attribute>
-      <xsl:apply-templates mode="verbatim" select="$content/*/*"></xsl:apply-templates>
-    </xsl:element>
-  </xsl:template>
-  
+    
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element dataSpec/tei:content</desc>
   </doc>

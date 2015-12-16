@@ -472,17 +472,18 @@ of this software, even if advised of the possibility of such damage.
         </xsl:apply-templates>
         <xsl:choose>
           <xsl:when test="ancestor::*[@xml:space][1]/@xml:space = 'preserve'"/>
-          <!--<xsl:when test="child::node()[last()]/self::text() and child::node()[1]/self::text()"/>-->
-          <xsl:when test="not(parent::*) or parent::teix:egXML or parent::PureODD">
-            <xsl:call-template name="verbatim-lineBreak">
-              <xsl:with-param name="id">23</xsl:with-param>
-            </xsl:call-template>
-          </xsl:when>
           <xsl:when test="child::node()[last()]/self::text()[normalize-space(.) = '']">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">3</xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="verbatim-makeIndent"/>
+          </xsl:when>
+          <!-- Don't insert a linebreak for mixed content?? -->
+          <xsl:when test="child::node()[last()]/self::text() and child::node()[1]/self::text()"/>
+          <xsl:when test="not(parent::*) or parent::teix:egXML or parent::PureODD">
+            <xsl:call-template name="verbatim-lineBreak">
+              <xsl:with-param name="id">23</xsl:with-param>
+            </xsl:call-template>
           </xsl:when>
           <xsl:when test="child::node()[last()]/self::comment()">
             <xsl:call-template name="verbatim-lineBreak">

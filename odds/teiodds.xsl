@@ -246,7 +246,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:element>
   </xsl:template>
 
-
   <xsl:template match="rng:zeroOrMore" mode="#default tangle">
     <xsl:choose>
       <xsl:when
