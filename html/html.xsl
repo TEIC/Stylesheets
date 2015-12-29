@@ -167,45 +167,47 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="auto"/>
     <xsl:call-template name="makeLang"/>
     <xsl:choose>
-      <xsl:when test="(self::tei:q or self::tei:said or
-		      self::tei:quote) and (tei:match(@rend,'inline') or
-		      tei:match(@rend,'display')) and
-		      not(@rendition) and not(key('TAGREND',local-name(.)))">
-	<xsl:sequence select="tei:processClass(local-name(),'')"/>
+      <xsl:when
+        test="
+          (self::tei:q or self::tei:said or
+          self::tei:quote) and (tei:match(@rend, 'inline') or
+          tei:match(@rend, 'display')) and
+          not(@rendition) and not(key('TAGREND', local-name(.)))">
+        <xsl:sequence select="tei:processClass(local-name(), '')"/>
       </xsl:when>
       <xsl:when test="@rend">
-	<xsl:sequence select="tei:processRend(@rend,$auto,.)"/>
+        <xsl:sequence select="tei:processRend(@rend, $auto, .)"/>
       </xsl:when>
       <xsl:when test="@rendition or @style">
-	<xsl:for-each select="@rendition">
-	  <xsl:sequence select="tei:processRendition(.,$auto)"/>
-	</xsl:for-each>
-	<xsl:for-each select="@style">
-	  <xsl:sequence select="tei:processStyle(.)"/>
-	</xsl:for-each>
+        <xsl:for-each select="@rendition">
+          <xsl:sequence select="tei:processRendition(., $auto)"/>
+        </xsl:for-each>
+        <xsl:for-each select="@style">
+          <xsl:sequence select="tei:processStyle(.)"/>
+        </xsl:for-each>
       </xsl:when>
-      <xsl:when test="key('TAGREND',local-name(.))">
-	<xsl:for-each select="key('TAGREND',local-name(.))">
-	  <xsl:sequence select="tei:processRendition(@render,$auto)"/>
-	</xsl:for-each>
+      <xsl:when test="key('TAGREND', local-name(.))">
+        <xsl:for-each select="key('TAGREND', local-name(.))">
+          <xsl:sequence select="tei:processRendition(@render, $auto)"/>
+        </xsl:for-each>
       </xsl:when>
-      <xsl:when test="$default='false'"/>
-      <xsl:when test="not($default='')">
-	  <xsl:sequence select="tei:processClass($default,$auto)"/>
+      <xsl:when test="$default = 'false'"/>
+      <xsl:when test="not($default = '')">
+        <xsl:sequence select="tei:processClass($default, $auto)"/>
       </xsl:when>
       <xsl:when test="parent::tei:item/parent::tei:list[@rend]">
-	  <xsl:sequence select="tei:processClass(parent::tei:item/parent::tei:list/@rend,$auto)"/>
+        <xsl:sequence select="tei:processClass(parent::tei:item/parent::tei:list/@rend, $auto)"/>
       </xsl:when>
       <xsl:when test="parent::tei:item[@rend]">
-	  <xsl:sequence select="tei:processClass(parent::tei:item/@rend,$auto)"/>
+        <xsl:sequence select="tei:processClass(parent::tei:item/@rend, $auto)"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:sequence select="tei:processClass(local-name(),'')"/>
+        <xsl:sequence select="tei:processClass(local-name(), '')"/>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:if test="$outputTarget='html5'">
+    <xsl:if test="$outputTarget = 'html5'">
       <xsl:call-template name="microdata"/>
-    </xsl:if>  
+    </xsl:if>
   </xsl:template>
 
 

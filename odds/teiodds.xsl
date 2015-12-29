@@ -1047,7 +1047,6 @@ select="$makeDecls"/></xsl:message>
       </xsl:call-template>
   </xsl:template>
 
-
   <xsl:template match="tei:dataSpec | tei:macroSpec" mode="tangle">
     <xsl:param name="filename"/>
     <xsl:variable name="macroPrefix">
@@ -1074,6 +1073,9 @@ select="$makeDecls"/></xsl:message>
             <choice xmlns="http://relaxng.org/ns/structure/1.0">
               <xsl:apply-templates select="tei:content/rng:group/*"/>
             </choice>
+          </xsl:when>
+          <xsl:when test="tei:content/tei:*">
+            <xsl:apply-templates select="tei:content/tei:*" mode="tangle"/>
           </xsl:when>
           <xsl:when test="tei:content/*">
             <xsl:apply-templates select="tei:content/*"/>
