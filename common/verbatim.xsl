@@ -634,6 +634,8 @@ of this software, even if advised of the possibility of such damage.
 	</a>
       </xsl:for-each>
     </xsl:variable>
+    <!-- only make links for Pure ODD content models -->
+    <xsl:variable name="link-refs" select="ancestor::tei:content"/>
       <xsl:choose>
 	<xsl:when
 	    test="parent::*/ancestor::tei:cell[not(tei:match(@rend,'wovenodd-col2'))]">
@@ -652,7 +654,7 @@ of this software, even if advised of the possibility of such damage.
 	        <xsl:call-template name="verbatim-nextAttribute">
 	          <xsl:with-param name="indent" select="$indent"/>
 	          <xsl:with-param name="sofar" select="$esize + @size"/>
-	          <xsl:with-param name="ref-link" select="true()"></xsl:with-param>
+	          <xsl:with-param name="ref-link" select="$link-refs"/>
 	        </xsl:call-template>
 	      </xsl:when>
 	      <xsl:otherwise>
