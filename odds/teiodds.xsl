@@ -2124,16 +2124,16 @@ select="$makeDecls"/></xsl:message>
    </xsl:template>
 
    <!-- for Pure ODD -->
-
-   <xsl:template match="tei:sequence" mode="#default tangle">
-     <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+  <!-- BUG? Are we too heavy on the rng:groups here? -->
+  <xsl:template match="tei:sequence" mode="#default tangle">
+    <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:choose>
       <xsl:when test="@preserveOrder='false' and
-		      string-length($suffix)=0">
+        string-length($suffix)=0">
         <group  xmlns="http://relaxng.org/ns/structure/1.0">
-	  <interleave>
+          <interleave>
             <xsl:apply-templates   mode="tangle"/>
-	  </interleave>
+          </interleave>
         </group>
       </xsl:when>
       <xsl:when test="string-length($suffix)=0">

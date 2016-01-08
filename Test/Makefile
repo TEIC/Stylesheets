@@ -379,7 +379,7 @@ test-oddity: css
 	$(JING) -c oddbyexample.rnc bare/test.xml
 	$(JING) oddbyexample.xsd bare/test.xml
 	#xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
-	$(SAXON) -s:testdrama.odd -xsl:../odds/odd2odd.xsl -o:testdrama.compiled.xml \
+	$(SAXON) -s:testdrama.odd -xsl:../odds/odd2odd.xsl -o:testdrama.compiled.xml 
 	perl -p -i -e 's+ xml:base=".*testdrama.odd"++' testdrama.compiled.xml
 	perl -i -pe 'BEGIN{undef $$/;} s/<\?TEIVERSION[^?]+\?>//smg' testdrama.compiled.xml
 	if [ $(REGENERATING) -ne 1 ]; \
