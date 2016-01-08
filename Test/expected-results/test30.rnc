@@ -381,7 +381,7 @@ Tatt.global.responsibility.attributes =
 Tatt.global.responsibility.attribute.cert =
   
   ## (certainty) signifies the degree of certainty associated with the intervention or interpretation.
-  attribute cert { Tdata.certainty | Tdata.probability }?
+  attribute cert { Tdata.certainty }?
 Tatt.global.responsibility.attribute.resp =
   
   ## (responsible party) indicates the agency responsible for the intervention or interpretation, for example an editor or transcriber.
@@ -678,14 +678,15 @@ sch:pattern [
   "\x{a}" ~
   "      "
   sch:rule [
-    context = "tei:*[@subtype]"
+    context = "*[@subtype]"
     "\x{a}" ~
     "        "
     sch:assert [
       test = "@type"
       "The "
       sch:name [ ]
-      " element should not be categorized in detail with @subtype unless also categorized in general with @type"
+      " element should not be categorized in detail with @subtype\x{a}" ~
+      " unless also categorized in general with @type"
     ]
     "\x{a}" ~
     "      "
@@ -3592,8 +3593,8 @@ Ttaxonomy =
   ## defines a typology either implicitly, by means of a bibliographic citation, or explicitly by a structured taxonomy. [2.3.7. The Classification Declaration]
   element taxonomy {
     ((Tmodel.glossLike | Tmodel.descLike)*
-     | (Tcategory | Ttaxonomy)+
-     | (Tmodel.biblLike, (Tcategory | Ttaxonomy)*)),
+     | Tcategory+
+     | (Tmodel.biblLike, Tcategory*)),
     Tatt.global.attributes,
     empty
   }
@@ -3701,7 +3702,7 @@ TlangUsage =
   
   ## (language usage) describes the languages, sublanguages, registers, dialects, etc. represented within a text. [2.4.2. Language Usage 2.4. The Profile Description 15.3.2. Declarable Elements]
   element langUsage {
-    (Tmodel.pLike+ | Tlanguage+),
+    Tlanguage+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -3781,7 +3782,7 @@ Tcalendar =
 TcorrespDesc =
   
   ## (correspondence
-  ##     description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
+  ##     description) contains a description of the actions related to one act of correspondence [2.4.6. Correspondence Description]
   element correspDesc {
     (Tmodel.correspDescPart+ | Tmodel.pLike+),
     Tatt.declarable.attributes,
@@ -3792,31 +3793,30 @@ TcorrespDesc =
   }
 TcorrespAction =
   
-  ## (correspondence
-  ##         action) contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence. [2.4.6. Correspondence Description]
+  ## contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence [2.4.6. Correspondence Description]
   element correspAction {
     (Tmodel.correspActionPart+ | Tmodel.pLike+),
     Tatt.global.attributes,
     Tatt.typed.attribute.subtype,
     Tatt.sortable.attributes,
     
-    ## describes the nature of the action.
+    ## describes the nature of the action
     ## Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5] forwarded
     attribute type {
       
-      ## information concerning the sending or dispatch of a message.
+      ## information concerning the sending or dispatch of a message
       "sent"
       | 
-        ## information concerning the receipt of a message.
+        ## information concerning the receipt of a message
         "received"
       | 
-        ## information concerning the transmission of a message, i.e. between the dispatch and the next receipt, redirect or forwarding.
+        ## information concerning the transmission of a message, i.e. between the dispatch and the next receipt, redirect or forwarding
         "transmitted"
       | 
-        ## information concerning the redirection of an unread message.
+        ## information concerning the redirection of an unread message 
         "redirected"
       | 
-        ## information concerning the forwarding of a message.
+        ## information concerning the forwarding of a message 
         "forwarded"
       | xsd:Name
     }?,
@@ -3824,7 +3824,7 @@ TcorrespAction =
   }
 TcorrespContext =
   
-  ## (correspondence context) provides references to preceding or following correspondence related to this piece of correspondence. [2.4.6. Correspondence Description]
+  ## (correspondence context) provides references to preceding or following correspondence related to this piece of correspondence [2.4.6. Correspondence Description]
   element correspContext {
     Tmodel.correspContextPart+, Tatt.global.attributes, empty
   }
@@ -5184,10 +5184,10 @@ Tmetamark =
     Tatt.placement.attributes,
     Tatt.global.attributes,
     
-    ## describes the function (for example status, insertion, deletion, transposition) of the metamark.
+    ## describes the function (for example status, insertion, deletion, transposition) of the mark.
     attribute function { Tdata.word }?,
     
-    ## identifies one or more elements to which the metamark applies.
+    ## identifies one or more elements to which the function indicated by the metamark applies.
     attribute target {
       list { Tdata.pointer+ }
     }?,
@@ -5298,11 +5298,7 @@ TnotatedMusic =
   
   ## encodes the presence of music notation in a text [14.3. Notated Music in Written Text]
   element notatedMusic {
-    (Tmodel.labelLike
-     | Tmodel.ptrLike
-     | Tgraphic
-     | TbinaryObject
-     | Tseg)*,
+    (Tmodel.labelLike | Tmodel.ptrLike | Tgraphic | TbinaryObject)*,
     Tatt.global.attributes,
     Tatt.placement.attributes,
     Tatt.typed.attributes,

@@ -378,7 +378,7 @@ att.global.responsibility.attributes =
 att.global.responsibility.attribute.cert =
   
   ## (certitude) donne le degré de certitude associée à l'intervention ou à l'interprétation.
-  attribute cert { data.certainty | data.probability }?
+  attribute cert { data.certainty }?
 att.global.responsibility.attribute.resp =
   
   ## (responsable) indique l'agent responsable de l'intervention ou de l'interprétation, par exemple un éditeur ou un transcripteur.
@@ -704,14 +704,15 @@ sch:pattern [
   "\x{a}" ~
   "      "
   sch:rule [
-    context = "tei:*[@subtype]"
+    context = "*[@subtype]"
     "\x{a}" ~
     "        "
     sch:assert [
       test = "@type"
       "The "
       sch:name [ ]
-      " element should not be categorized in detail with @subtype unless also categorized in general with @type"
+      " element should not be categorized in detail with @subtype\x{a}" ~
+      " unless also categorized in general with @type"
     ]
     "\x{a}" ~
     "      "
@@ -4435,8 +4436,8 @@ taxonomy =
   ## (taxinomie) définit une typologie soit implicitement au moyen d’une référence bibliographique, soit explicitement au moyen d’une taxinomie structurée. [2.3.7. The Classification Declaration]
   element taxonomy {
     ((model.glossLike | model.descLike)*
-     | (category | taxonomy)+
-     | (model.biblLike, (category | taxonomy)*)),
+     | category+
+     | (model.biblLike, category*)),
     att.global.attributes,
     empty
   }
@@ -4545,10 +4546,7 @@ langUsage =
   
   ## (langue utilisée) décrit les langues, variétés de langues, registres, dialectes, etc. présents à l’intérieur d’un texte. [2.4.2. Language Usage 2.4. The Profile Description 15.3.2. Declarable Elements]
   element langUsage {
-    (model.pLike+ | language+),
-    att.global.attributes,
-    att.declarable.attributes,
-    empty
+    language+, att.global.attributes, att.declarable.attributes, empty
   }
 language =
   
@@ -4622,7 +4620,7 @@ calendar =
 correspDesc =
   
   ## (correspondence
-  ##     description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
+  ##     description) contains a description of the actions related to one act of correspondence [2.4.6. Correspondence Description]
   element correspDesc {
     (model.correspDescPart+ | model.pLike+),
     att.declarable.attributes,
@@ -4633,31 +4631,30 @@ correspDesc =
   }
 correspAction =
   
-  ## (correspondence
-  ##         action) contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence. [2.4.6. Correspondence Description]
+  ## contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence [2.4.6. Correspondence Description]
   element correspAction {
     (model.correspActionPart+ | model.pLike+),
     att.global.attributes,
     att.typed.attribute.subtype,
     att.sortable.attributes,
     
-    ## describes the nature of the action.
+    ## describes the nature of the action
     ## Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5] forwarded
     attribute type {
       
-      ## information concerning the sending or dispatch of a message.
+      ## information concerning the sending or dispatch of a message
       "sent"
       | 
-        ## information concerning the receipt of a message.
+        ## information concerning the receipt of a message
         "received"
       | 
-        ## information concerning the transmission of a message, i.e. between the dispatch and the next receipt, redirect or forwarding.
+        ## information concerning the transmission of a message, i.e. between the dispatch and the next receipt, redirect or forwarding
         "transmitted"
       | 
-        ## information concerning the redirection of an unread message.
+        ## information concerning the redirection of an unread message 
         "redirected"
       | 
-        ## information concerning the forwarding of a message.
+        ## information concerning the forwarding of a message 
         "forwarded"
       | xsd:Name
     }?,
@@ -4665,7 +4662,7 @@ correspAction =
   }
 correspContext =
   
-  ## (correspondence context) provides references to preceding or following correspondence related to this piece of correspondence. [2.4.6. Correspondence Description]
+  ## (correspondence context) provides references to preceding or following correspondence related to this piece of correspondence [2.4.6. Correspondence Description]
   element correspContext {
     model.correspContextPart+, att.global.attributes, empty
   }
@@ -6299,10 +6296,10 @@ metamark =
     att.placement.attributes,
     att.global.attributes,
     
-    ## describes the function (for example status, insertion, deletion, transposition) of the metamark.
+    ## describes the function (for example status, insertion, deletion, transposition) of the mark.
     attribute function { data.word }?,
     
-    ## identifies one or more elements to which the metamark applies.
+    ## identifies one or more elements to which the function indicated by the metamark applies.
     attribute target {
       list { data.pointer+ }
     }?,
