@@ -56,14 +56,6 @@
 
 <!-- predeclared classes -->
 
-<!ENTITY % Tatt.global.responsibility.attribute.cert '
-cert CDATA #IMPLIED'>
-
-<!ENTITY % Tatt.global.responsibility.attribute.resp '
-resp CDATA  #IMPLIED'>
-<!ENTITY % Tatt.global.responsibility.attributes '
- %Tatt.global.responsibility.attribute.cert;
- %Tatt.global.responsibility.attribute.resp;'> 
 <!ENTITY % Tatt.global.rendition.attribute.rend '
 rend (bold|boxed|center|italic|underline) #IMPLIED'>
 
@@ -326,7 +318,7 @@ status %data.enumerated;  "draft" '>
 <!ENTITY % Tatt.docStatus.attributes '
  %Tatt.docStatus.attribute.status;'> 
 <!ENTITY % Tatt.global.responsibility.attribute.cert '
-cert CDATA #IMPLIED'>
+cert %data.certainty;  #IMPLIED'>
 
 <!ENTITY % Tatt.global.responsibility.attribute.resp '
 resp CDATA  #IMPLIED'>
@@ -1477,8 +1469,7 @@ scheme %data.pointer;  #REQUIRED >
  %Tatt.declarable.attributes;
 status (high|medium|low|unknown) "unknown" 
 method (silent|markup) "silent"  >
-<!--doc:(correspondence
-        action) contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence. [2.4.6. Correspondence Description] -->
+<!--doc:contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence [2.4.6. Correspondence Description] -->
 <!ELEMENT correspAction ((%model.correspActionPart;)+|(%model.pLike;)+)>
 <!ATTLIST correspAction xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST correspAction
@@ -1486,13 +1477,13 @@ method (silent|markup) "silent"  >
  %Tatt.typed.attribute.subtype;
  %Tatt.sortable.attributes;
 type %data.enumerated;  #IMPLIED >
-<!--doc:(correspondence context) provides references to preceding or following correspondence related to this piece of correspondence. [2.4.6. Correspondence Description] -->
+<!--doc:(correspondence context) provides references to preceding or following correspondence related to this piece of correspondence [2.4.6. Correspondence Description] -->
 <!ELEMENT correspContext (%model.correspContextPart;)+>
 <!ATTLIST correspContext xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST correspContext
  %Tatt.global.attributes; >
 <!--doc:(correspondence
-    description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description] -->
+    description) contains a description of the actions related to one act of correspondence [2.4.6. Correspondence Description] -->
 <!ELEMENT correspDesc ((%model.correspDescPart;)+|(%model.pLike;)+)>
 <!ATTLIST correspDesc xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST correspDesc
@@ -2015,7 +2006,7 @@ tags CDATA  #IMPLIED >
 tag %data.language;  #REQUIRED
 level %data.word;  #IMPLIED >
 <!--doc:(language usage) describes the languages, sublanguages, registers, dialects, etc. represented within a text. [2.4.2. Language Usage 2.4. The Profile Description 15.3.2. Declarable Elements] -->
-<!ELEMENT langUsage ((%model.pLike;)+|language+)>
+<!ELEMENT langUsage (language)+>
 <!ATTLIST langUsage xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST langUsage
  %Tatt.global.attributes;
@@ -2270,7 +2261,7 @@ name %data.namespace;  #REQUIRED >
 source %data.pointer;  #IMPLIED
 method (silent|markup) "silent"  >
 <!--doc:encodes the presence of music notation in a text [14.3. Notated Music in Written Text] -->
-<!ELEMENT notatedMusic (%model.labelLike;|%model.ptrLike;|graphic|binaryObject|seg)*>
+<!ELEMENT notatedMusic (%model.labelLike;|%model.ptrLike;|graphic|binaryObject)*>
 <!ATTLIST notatedMusic xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST notatedMusic
  %Tatt.global.attributes;
@@ -2940,7 +2931,7 @@ render CDATA  #IMPLIED >
  %Tatt.global.attributes;
 partial CDATA  #IMPLIED >
 <!--doc:defines a typology either implicitly, by means of a bibliographic citation, or explicitly by a structured taxonomy. [2.3.7. The Classification Declaration] -->
-<!ELEMENT taxonomy ((%model.glossLike;|%model.descLike;)*|(category|taxonomy)+|((%model.biblLike;),(category|taxonomy)*))>
+<!ELEMENT taxonomy ((%model.glossLike;|%model.descLike;)*|category+|((%model.biblLike;),category*))>
 <!ATTLIST taxonomy xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST taxonomy
  %Tatt.global.attributes; >
