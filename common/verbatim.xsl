@@ -635,7 +635,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
     </xsl:variable>
     <!-- only make links for Pure ODD content models -->
-    <xsl:variable name="link-refs" select="ancestor::tei:content"/>
+    <xsl:variable name="link-refs" select="ancestor::PureODD"/>
       <xsl:choose>
 	<xsl:when
 	    test="parent::*/ancestor::tei:cell[not(tei:match(@rend,'wovenodd-col2'))]">
