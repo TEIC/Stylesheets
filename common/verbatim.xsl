@@ -628,9 +628,15 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <xsl:variable name="Atts">
       <xsl:for-each select="@*">
+        <xsl:variable name="value">
+          <xsl:choose>
+            <xsl:when test="ancestor::*[@xml:space][1]/@xml:space='preserve'"><xsl:value-of select="."/></xsl:when>
+            <xsl:otherwise><xsl:value-of select="replace(.,'\s+',' ')"/></xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
 	<a size="{string-length(name())+string-length(.)+3}"
 	   name="{name()}" 
-	   value="{replace(.,'\s+',' ')}">
+	   value="{$value}">
 	</a>
       </xsl:for-each>
     </xsl:variable>
