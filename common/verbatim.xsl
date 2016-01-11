@@ -630,7 +630,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:for-each select="@*">
 	<a size="{string-length(name())+string-length(.)+3}"
 	   name="{name()}" 
-	   value="{.}">
+	   value="{replace(.,'\s+',' ')}">
 	</a>
       </xsl:for-each>
     </xsl:variable>
