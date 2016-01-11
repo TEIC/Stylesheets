@@ -404,7 +404,10 @@
     <!-- we assume that datatype contains only a single dataRef -->
         <xsl:call-template name="showElement">
           <xsl:with-param name="name">
-            <xsl:value-of select="tei:dataRef/@key"/>
+            <xsl:choose>
+              <xsl:when test="tei:dataRef/@key"><xsl:value-of select="tei:dataRef/@key"/></xsl:when>
+              <xsl:otherwise><xsl:value-of select="tei:dataRef/@name"/></xsl:otherwise>
+            </xsl:choose>
           </xsl:with-param>
         </xsl:call-template>
         <xsl:if test="$minOccurs != '1' or $maxOccurs != '1'">
@@ -816,7 +819,10 @@
             <xsl:call-template name="generateChildren"/>
           </xsl:element>
         </xsl:element>
-        <xsl:apply-templates mode="weave"/>
+        <xsl:apply-templates mode="weave" select="tei:remarks"/>
+        <xsl:apply-templates mode="weave" select="tei:exemplum"/>
+        <xsl:apply-templates mode="weave" select="tei:constraintSpec"/>
+        <xsl:apply-templates mode="weave" select="tei:content"/>
       </xsl:element>
     </xsl:element>
   </xsl:template>
