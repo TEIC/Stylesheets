@@ -2180,101 +2180,101 @@ select="$makeDecls"/></xsl:message>
   <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef"   mode="#default tangle">
     <xsl:variable name="prefixedName" select="tei:generateRefPrefix(.)"/>
     <xsl:variable name="wrapperElement"
-		  select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+      select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:variable name="this" select="@key"/>
     <xsl:variable name="except" select="@except"/>
     <xsl:variable name="include" select="@include"/>
     <xsl:variable name="c">
       <xsl:choose>
-	<xsl:when test="not(@expand) and (@include or @except)">
-	  <xsl:variable name="context" select="."/>
-	    <xsl:for-each select="key('CLASSMEMBERS',$this)">
-	      <xsl:if test="key('IDENTS',@ident) and tei:includeMember(@ident,$except,$include)">
-		<xsl:apply-templates select="." mode="classmember">
-		  <xsl:with-param name="theClass" select="$this"/>
-		  <xsl:with-param name="suffix" select="$context/@expand"/>
-		</xsl:apply-templates>
-	      </xsl:if>
-	    </xsl:for-each>
-	</xsl:when>
-	<xsl:when test="not(@expand)">
+        <xsl:when test="not(@expand) and (@include or @except)">
+          <xsl:variable name="context" select="."/>
+          <xsl:for-each select="key('CLASSMEMBERS',$this)">
+            <xsl:if test="key('IDENTS',@ident) and tei:includeMember(@ident,$except,$include)">
+              <xsl:apply-templates select="." mode="classmember">
+                <xsl:with-param name="theClass" select="$this"/>
+                <xsl:with-param name="suffix" select="$context/@expand"/>
+              </xsl:apply-templates>
+            </xsl:if>
+          </xsl:for-each>
+        </xsl:when>
+        <xsl:when test="not(@expand)">
           <ref  xmlns="http://relaxng.org/ns/structure/1.0" name="{$prefixedName}"/>
-	</xsl:when>
-
+        </xsl:when>
         <xsl:when test="@expand='sequence'">
-	      <xsl:for-each select="key('CLASSMEMBERS',$this)">
-		<xsl:if test="tei:includeMember(@ident,$except,$include)">
-		  <xsl:apply-templates select="." mode="classmember">
-		    <xsl:with-param name="theClass" select="$this"/>
-		    <xsl:with-param name="suffix" select="@expand"/>
-		  </xsl:apply-templates>
-		</xsl:if>
-	    </xsl:for-each>
+          <xsl:for-each select="key('CLASSMEMBERS',$this)">
+            <xsl:if test="tei:includeMember(@ident,$except,$include)">
+              <xsl:apply-templates select="." mode="classmember">
+                <xsl:with-param name="theClass" select="$this"/>
+                <xsl:with-param name="suffix" select="@expand"/>
+              </xsl:apply-templates>
+            </xsl:if>
+          </xsl:for-each>
         </xsl:when>
         <xsl:when test="@expand='sequenceOptional'">
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
-	    <xsl:if test="tei:includeMember(@ident,$except,$include)">
+            <xsl:if test="tei:includeMember(@ident,$except,$include)">
               <optional  xmlns="http://relaxng.org/ns/structure/1.0">
-		<xsl:apply-templates select="." mode="classmember">
+                <xsl:apply-templates select="." mode="classmember">
                   <xsl:with-param name="theClass" select="$this"/>
-                <xsl:with-param name="suffix" select="@expand"/>
-              </xsl:apply-templates>
-            </optional>
-	    </xsl:if>
+                  <xsl:with-param name="suffix" select="@expand"/>
+                </xsl:apply-templates>
+              </optional>
+            </xsl:if>
           </xsl:for-each>
         </xsl:when>
         <xsl:when test="@expand='sequenceRepeatable'">
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
-	    <xsl:if test="tei:includeMember(@ident,$except,$include)">	      
+            <xsl:if test="tei:includeMember(@ident,$except,$include)">	      
               <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-		<xsl:apply-templates select="." mode="classmember">
-                <xsl:with-param name="theClass" select="$this"/>
-                <xsl:with-param name="suffix" select="@expand"/>
-              </xsl:apply-templates>
+                <xsl:apply-templates select="." mode="classmember">
+                  <xsl:with-param name="theClass" select="$this"/>
+                  <xsl:with-param name="suffix" select="@expand"/>
+                </xsl:apply-templates>
               </oneOrMore>
-	    </xsl:if>
+            </xsl:if>
           </xsl:for-each>
         </xsl:when>
         <xsl:when test="@expand='sequenceOptionalRepeatable'">
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
-	    <xsl:if test="tei:includeMember(@ident,$except,$include)">	      
+            <xsl:if test="tei:includeMember(@ident,$except,$include)">	      
               <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-		<xsl:apply-templates select="." mode="classmember">
-                <xsl:with-param name="suffix" select="@expand"/>
-                <xsl:with-param name="theClass" select="$this"/>
-              </xsl:apply-templates>
+                <xsl:apply-templates select="." mode="classmember">
+                  <xsl:with-param name="suffix" select="@expand"/>
+                  <xsl:with-param name="theClass" select="$this"/>
+                </xsl:apply-templates>
               </zeroOrMore>
-	    </xsl:if>
+            </xsl:if>
           </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
           <choice xmlns="http://relaxng.org/ns/structure/1.0">
             <xsl:for-each select="key('CLASSMEMBERS',$this)">
-	      <xsl:if test="tei:includeMember(@ident,$except,$include)">
-		<xsl:apply-templates select="." mode="classmember">
+              <xsl:if test="tei:includeMember(@ident,$except,$include)">
+                <xsl:apply-templates select="." mode="classmember">
                   <xsl:with-param name="suffix" select="@expand"/>
                   <xsl:with-param name="theClass" select="$this"/>
-		</xsl:apply-templates>
-	      </xsl:if>
+                </xsl:apply-templates>
+              </xsl:if>
             </xsl:for-each>
           </choice>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="min" select="if (not(@minOccurs)) then 1 else
-				     if (@minOccurs='0') then 1 else @minOccurs" as="xs:integer"/>
+      if (@minOccurs='0') then 1 else @minOccurs" as="xs:integer"/>
     <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
+    <!-- BUG: doesn't properly handle, e.g. minOccurs="2" -->
     <xsl:for-each select="1 to $min">
       <xsl:choose>
-	<xsl:when test="string-length($wrapperElement)=0">
-	  <xsl:copy-of select="$c"/>
-	</xsl:when>
-      <xsl:otherwise>
-        <xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
-	  <xsl:copy-of select="$c"/>
-        </xsl:element>
-      </xsl:otherwise>
-    </xsl:choose>
+        <xsl:when test="string-length($wrapperElement)=0">
+          <xsl:copy-of select="$c"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
+            <xsl:copy-of select="$c"/>
+          </xsl:element>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:for-each>
   </xsl:template>
 
