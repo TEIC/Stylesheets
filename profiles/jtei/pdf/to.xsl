@@ -6,7 +6,10 @@
   xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:eg="http://www.tei-c.org/ns/Examples"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:local="local"
+  xmlns:i18n="i18n"
   exclude-result-prefixes="#all">
+  
+  <xsl:import href="../i18n.xsl"/>
 
   <xsl:output method="xml" indent="no" encoding="UTF-8"/>
   
@@ -1160,7 +1163,7 @@
   <xsl:template match="tei:div[@type= ('bibliography', 'abstract')]">
     <fo:block xsl:use-attribute-sets="back.font.properties">
       <fo:block xsl:use-attribute-sets="heading.properties">
-        <xsl:value-of select="@type"/>
+        <xsl:value-of select="i18n:key(concat(@type, '-label'), @xml:lang)"/>
       </fo:block>
       <xsl:apply-templates/>
     </fo:block>

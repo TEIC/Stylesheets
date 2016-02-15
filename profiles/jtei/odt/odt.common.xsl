@@ -52,7 +52,11 @@
     xmlns:saxon="http://saxon.sf.net/"
     xmlns:expath-file="http://expath.org/ns/file"
     xmlns:java="http://www.java.com/"
+    xmlns:i18n="i18n"
   >
+  
+  <xsl:import href="../i18n.xsl"/>
+  
     <xd:doc scope="stylesheet">
         <xd:desc>
             <xd:p><xd:b>Created on:</xd:b> Feb 23, 2014</xd:p>
@@ -179,11 +183,14 @@
     
 <!--    However, the abstract does need a special header. Keywords are included after the abstract too. -->
     <xsl:template match="div[@type='abstract']">
-        <text:p text:style-name="teiHead1">Abstract</text:p>
+        <text:p text:style-name="teiHead1">
+          <xsl:value-of select="i18n:key(concat(@type, '-label'), @xml:lang)"/></text:p>
         <xsl:apply-templates/>
       
 <!--    Add the keywords.  -->
+      <xsl:if test="not(following-sibling::div[@type='abstract'])">
         <text:p text:style-name="teiPara">Keywords: <xsl:value-of select="string-join(//textClass/keywords/term, ', ')"/></text:p>
+      </xsl:if>
     </xsl:template>
   
   <!--    So does an appendix. -->
