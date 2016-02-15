@@ -193,6 +193,14 @@
   <xsl:template match="tei:affiliation/tei:roleName|tei:affiliation/tei:orgName">
     <xsl:apply-templates/>
   </xsl:template>
+  
+  <xsl:template match="tei:licence">
+    <xsl:apply-templates/>
+  </xsl:template>
+  
+  <xsl:template match="tei:licence/*[not(self::tei:p)]">
+    <p><xsl:apply-templates/></p>
+  </xsl:template>
     
   <!-- add @scheme='keyword' and @xml:lang='en' if absent/empty; transform flat terms to list -->
   <xsl:template match="tei:keywords">
