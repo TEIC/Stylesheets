@@ -164,9 +164,14 @@
     <xsl:template name="aboutAuthors">
       <xsl:if test="/TEI/teiHeader[1]/fileDesc[1]/titleStmt[1]/author/affiliation">
         <text:p/><text:p/>
+        <xsl:variable name="author-label" select="i18n:key('author-label')"/>
         <xsl:choose>
-          <xsl:when test="count(/TEI/teiHeader[1]/fileDesc[1]/titleStmt[1]/author) gt 1"><text:p text:style-name="teiHead1">About the authors</text:p></xsl:when>
-          <xsl:otherwise><text:p text:style-name="teiHead1">About the author</text:p></xsl:otherwise>
+          <xsl:when test="count(/TEI/teiHeader[1]/fileDesc[1]/titleStmt[1]/author) gt 1"><text:p text:style-name="teiHead1">
+            <xsl:value-of select="(i18n:plural($author-label)/@pl, concat($author-label, 's'))[1]"/>
+          </text:p></xsl:when>
+          <xsl:otherwise><text:p text:style-name="teiHead1">
+            <xsl:value-of select="$author-label"/>
+          </text:p></xsl:otherwise>
         </xsl:choose>
         <xsl:for-each select="/TEI/teiHeader[1]/fileDesc[1]/titleStmt[1]/author">
           <text:p text:style-name="teiPara">
@@ -184,12 +189,15 @@
 <!--    However, the abstract does need a special header. Keywords are included after the abstract too. -->
     <xsl:template match="div[@type='abstract']">
         <text:p text:style-name="teiHead1">
-          <xsl:value-of select="i18n:key(concat(@type, '-label'), @xml:lang)"/></text:p>
+          <xsl:value-of select="i18n:key(concat(@type, '-label'), (@xml:lang, $jtei.lang)[.][1])"/>
+        </text:p>
         <xsl:apply-templates/>
       
 <!--    Add the keywords.  -->
       <xsl:if test="not(following-sibling::div[@type='abstract'])">
-        <text:p text:style-name="teiPara">Keywords: <xsl:value-of select="string-join(//textClass/keywords/term, ', ')"/></text:p>
+        <text:p text:style-name="teiPara">
+          <xsl:value-of select="concat(i18n:key('keywords-label'), ': ')"/>
+          <xsl:value-of select="string-join(//textClass/keywords/term, ', ')"/></text:p>
       </xsl:if>
     </xsl:template>
   
@@ -197,7 +205,9 @@
   <xsl:template match="div[@type='appendix']">
 <!--    Add a couple of blank lines. -->
     <text:p/><text:p/>
-    <text:p text:style-name="teiHead1">Appendix <xsl:value-of select="if (preceding::div[@type='appendix'] or following::div[@type='appendix']) then xs:string(count(preceding::div[@type='appendix']) + 1) else ''"/></text:p>
+    <text:p text:style-name="teiHead1">
+      <xsl:value-of select="concat(i18n:key(concat(@type, '-label')), ' ')"/>
+      <xsl:value-of select="if (preceding::div[@type='appendix'] or following::div[@type='appendix']) then xs:string(count(preceding::div[@type='appendix']) + 1) else ''"/></text:p>
     <xsl:apply-templates/>
   </xsl:template>
     
@@ -239,31 +249,36 @@
   <xsl:function name="hcmc:getSectionLinkText" as="xs:string">
     <xsl:param name="targEl" as="node()"/>
     <xsl:param name="pointerEl" as="node()"/>
-    <xsl:variable name="pointerElId" select="generate-id($pointerEl)"/>
-    <xsl:variable name="precedingText" select="$pointerEl/preceding::node()[text()][not(ancestor::note[following::*[generate-id(.) = $pointerElId]])]"/>
-    <xsl:variable name="capitalize" select="if ($precedingText) then (if (matches($precedingText[1], '[\.!?]\s+$')) then true() else false()) else true()"/>
+    <xsl:variable name="immediatePrecedingText" select="($pointerEl/preceding-sibling::node()/descendant-or-self::text()[not(ancestor::note[following::* intersect $pointerEl])][normalize-space()])[last()]"/>
+    <xsl:variable name="capitalize" select="if ($jtei.lang = ('de') or not($pointerEl) or not($immediatePrecedingText) or $immediatePrecedingText[matches(., '[\.!?]\s*$')]) then true() else false()"/>
     <xsl:message><xsl:value-of select="$targEl/local-name()"/></xsl:message>
     <xsl:choose>
       <xsl:when test="$targEl[self::div][ancestor::back]">
         <xsl:variable name="sectionNumber" select="if ($targEl/preceding::div[@type='appendix'] or $targEl/following::div[@type='appendix']) then xs:string(count($targEl/preceding::div[@type='appendix']) + 1) else ''"/>
-        <xsl:value-of select="concat('Appendix ', replace($sectionNumber, '\.$', ''))"/>
+        <xsl:value-of select="concat(i18n:key('appendix-label'), ' ', replace($sectionNumber, '\.$', ''))"/>
       </xsl:when>
       <xsl:when test="$targEl[self::div]">
         <xsl:variable name="sectionNumber" select="hcmc:getSectionNumber($targEl, '')"/>
-        <xsl:value-of select="concat('Section ', replace($sectionNumber, '\.$', ''))"/>
+        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('section-label'), $capitalize), ' ', replace($sectionNumber, '\.$', ''))"/>
       </xsl:when>
       <xsl:when test="$targEl[self::figure[graphic]]">
-        <xsl:value-of select="concat(if ($capitalize) then 'Figure ' else 'figure ', count($targEl/preceding::figure[graphic]) + 1)"/>
+        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('figure-label'), $capitalize), ' ', count($targEl/preceding::figure[graphic]) + 1)"/>
       </xsl:when>
       <xsl:when test="$targEl[self::figure[*:egXML or eg]]">
-        <xsl:value-of select="concat(if ($capitalize) then 'Example ' else 'example ', count($targEl/preceding::figure[*:egXML or eg]) + 1)"/>
+        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('example-label'), $capitalize), ' ', count($targEl/preceding::figure[*:egXML or eg]) + 1)"/>
       </xsl:when>
       <xsl:when test="$targEl[self::table]">
-        <xsl:value-of select="concat(if ($capitalize) then 'Table ' else 'table ', count($targEl/preceding::table) + 1)"/>
+        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('table-label'), $capitalize), ' ', count($targEl/preceding::table) + 1)"/>
       </xsl:when>
       <xsl:otherwise><xsl:value-of select="''"/></xsl:otherwise>
     </xsl:choose>
     
+  </xsl:function>
+  
+  <xsl:function name="hcmc:capitalize">
+    <xsl:param name="string" as="xs:string"/>
+    <xsl:param name="capitalize" as="xs:boolean"/>
+    <xsl:value-of select="if ($capitalize) then concat(upper-case(substring($string, 1, 1)), substring($string, 2)) else $string"/>
   </xsl:function>
 
 <!-- Paragraphs are styled with a single style. 
@@ -480,8 +495,14 @@
           <xsl:when test="normalize-space()">
             <xsl:variable name="label.formatted">
               <xsl:choose>
+                <!-- pluralize if there are multiple targets of the same type -->
                 <xsl:when test="not(@type = preceding-sibling::*[1]/@type) and @type = following-sibling::*[1]/@type">
-                  <xsl:value-of select="replace(., '^(\w+)', '$1s')"/>
+                  <!-- if no specific plural can be found, just add an -s -->
+                  <xsl:value-of select="(
+                    for $i in 
+                      i18n:plural(lower-case(normalize-space(replace(., '\d', ''))))[@pl]
+                    return replace(., substring($i, 2), substring($i/@pl, 2))
+                    , replace(., '^(\w+)', '$1s'))[1]"/>
                 </xsl:when>
                 <xsl:when test="@type = preceding-sibling::*[1]/@type">
                   <xsl:value-of select="normalize-space(replace(., '^(\w+)', ''))"/>
@@ -492,7 +513,7 @@
               </xsl:choose>
             </xsl:variable>
             <text:a xlink:type="simple" xlink:href="#{@n}">
-              <xsl:value-of select="if ($counter.group = 1 and position() = 1) then $label.formatted else lower-case($label.formatted)"/>
+              <xsl:value-of select="if ($counter.group = 1 and position() = 1 or $jtei.lang = ('de')) then $label.formatted else lower-case($label.formatted)"/>
             </text:a>
           </xsl:when>
           <xsl:otherwise>
@@ -631,7 +652,9 @@
     
 <!--    Bibliography. -->
     <xsl:template match="div[@type='bibliography']">
-        <text:p text:style-name="teiHead1">References</text:p>
+        <text:p text:style-name="teiHead1">
+          <xsl:value-of select="i18n:key('bibliography-label')"/>
+        </text:p>
         <xsl:apply-templates/>
     </xsl:template>
     
@@ -904,7 +927,7 @@
       <xsl:text> </xsl:text>
     </xsl:if>
     <xsl:if test="position() > 1 and position() = last()">
-      <xsl:text>and </xsl:text>
+      <xsl:value-of select="concat(i18n:key('and'), ' ')"/>
     </xsl:if>
   </xsl:template>
   

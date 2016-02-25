@@ -5,9 +5,12 @@
   xmlns:eg="http://www.tei-c.org/ns/Examples"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:local="local"
+  xmlns:i18n="i18n"
   xmlns="http://www.tei-c.org/ns/1.0"
   exclude-result-prefixes="#all"
   version="2.0">
+  
+  <xsl:import href="../i18n.xsl"/>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -327,16 +330,26 @@
     <xsl:param name="crossref.ptr"/>
     <xsl:variable name="rawLabel">
       <xsl:choose>
-        <xsl:when test="$node/self::tei:div[@type eq 'appendix']">appendix</xsl:when>
-        <xsl:when test="$node/self::tei:div"><xsl:if test="$crossref.ptr">section</xsl:if></xsl:when>
-        <xsl:when test="$node/self::tei:figure[tei:graphic]">figure</xsl:when>
-        <xsl:when test="$node/self::tei:figure[tei:eg|eg:egXML]">example</xsl:when>
+        <xsl:when test="$node/self::tei:div[@type eq 'appendix']">
+          <xsl:value-of select="i18n:key('appendix-label')"/>
+        </xsl:when>
+        <xsl:when test="$node/self::tei:div"><xsl:if test="$crossref.ptr">
+          <xsl:value-of select="i18n:key('section-label')"/></xsl:if>
+        </xsl:when>
+        <xsl:when test="$node/self::tei:figure[tei:graphic]">
+          <xsl:value-of select="i18n:key('figure-label')"/>
+        </xsl:when>
+        <xsl:when test="$node/self::tei:figure[tei:eg|eg:egXML]">
+          <xsl:value-of select="i18n:key('example-label')"/>
+        </xsl:when>
         <xsl:otherwise><xsl:value-of select="$node/local-name()"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="contextLabel">
+      <xsl:variable name="immediatePrecedingText" select="($crossref.ptr/preceding-sibling::node()/descendant-or-self::text()[not(ancestor::tei:note[following::* intersect $crossref.ptr])][normalize-space()])[last()]"/>
+      <xsl:variable name="capitalize" select="if ($jtei.lang = ('de') or not($crossref.ptr) or not($immediatePrecedingText) or $immediatePrecedingText[matches(., '[\.!?]\s*$')]) then true() else false()"/>
       <xsl:choose>
-        <xsl:when test="not($crossref.ptr) or not($crossref.ptr/preceding-sibling::node()) or $crossref.ptr/preceding-sibling::node()[self::text()][not(ancestor::note)][normalize-space()][1][matches(., '[\.!?]\s*$')]">
+        <xsl:when test="$capitalize">
           <xsl:value-of select="concat(upper-case(substring($rawLabel, 1, 1)), substring($rawLabel, 2))"/>
         </xsl:when>
         <xsl:otherwise>
@@ -694,15 +707,21 @@
     </xsl:variable>
     <xsl:for-each-group select="$labels/*" group-adjacent="@type">
       <xsl:variable name="counter.group" select="position()"/>
-      <xsl:call-template name="enumerate"></xsl:call-template>
+      <xsl:call-template name="enumerate"/>
       <xsl:for-each select="current-group()">
-        <xsl:call-template name="enumerate"></xsl:call-template>
+        <xsl:call-template name="enumerate"/>
         <xsl:choose>
           <xsl:when test="normalize-space()">
             <xsl:variable name="label.formatted">
               <xsl:choose>
+                <!-- pluralize if there are multiple targets of the same type -->
                 <xsl:when test="not(@type = preceding-sibling::*[1]/@type) and @type = following-sibling::*[1]/@type">
-                  <xsl:value-of select="replace(., '^(\w+)', '$1s')"/>
+                  <!-- if no specific plural can be found, just add an -s -->
+                  <xsl:value-of select="(
+                    for $i in 
+                      i18n:plural(lower-case(normalize-space(replace(., '\d', ''))))[@pl]
+                    return replace(., substring($i, 2), substring($i/@pl, 2))
+                    , replace(., '^(\w+)', '$1s'))[1]"/>
                 </xsl:when>
                 <xsl:when test="@type = preceding-sibling::*[1]/@type">
                   <xsl:value-of select="normalize-space(replace(., '^(\w+)', ''))"/>
@@ -712,7 +731,7 @@
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:variable>
-            <xsl:value-of select="if ($counter.group = 1 and position() = 1) then $label.formatted else lower-case($label.formatted)"/>
+            <xsl:value-of select="if ($counter.group = 1 and position() = 1 or $jtei.lang = ('de')) then $label.formatted else lower-case($label.formatted)"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="concat('[bad link to item: ', @n, ']')"/>
@@ -1162,7 +1181,7 @@
       <xsl:text> </xsl:text>
     </xsl:if>
     <xsl:if test="position() > 1 and position() = last()">
-      <xsl:text>and </xsl:text>
+      <xsl:value-of select="concat(i18n:key('and'), ' ')"/>
     </xsl:if>
   </xsl:template>
   

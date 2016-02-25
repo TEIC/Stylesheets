@@ -293,7 +293,9 @@
   <xsl:template name="author.notes">
     <xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:div[@type='acknowledgements']">
       <fo:block>
-        <fo:block xsl:use-attribute-sets="heading.properties" font-family="Roboto" font-size="13pt">Author's Note</fo:block>
+        <fo:block xsl:use-attribute-sets="heading.properties" font-family="Roboto" font-size="13pt">
+          <xsl:value-of select="i18n:key(concat(@type, '-label'))"/>
+        </fo:block>
         <xsl:apply-templates/>
       </fo:block>
     </xsl:for-each>
@@ -340,21 +342,32 @@
     <xsl:value-of select="string-join(($label[normalize-space()], concat($number, $postfix)), ' ')"/>
   </xsl:template>
   
+  <!-- these labels will need translation too -->
   <xsl:function name="local:get.label.name">
     <xsl:param name="node"/>
     <xsl:param name="crossref.ptr"/>
     <xsl:variable name="rawLabel">
       <xsl:choose>
-        <xsl:when test="$node/self::tei:div[@type eq 'appendix']">appendix</xsl:when>
-        <xsl:when test="$node/self::tei:div"><xsl:if test="$crossref.ptr">section</xsl:if></xsl:when>
-        <xsl:when test="$node/self::tei:figure[tei:graphic]">figure</xsl:when>
-        <xsl:when test="$node/self::tei:figure[tei:eg|eg:egXML]">example</xsl:when>
+        <xsl:when test="$node/self::tei:div[@type eq 'appendix']">
+          <xsl:value-of select="i18n:key('appendix-label')"/>
+        </xsl:when>
+        <xsl:when test="$node/self::tei:div"><xsl:if test="$crossref.ptr">
+          <xsl:value-of select="i18n:key('section-label')"/></xsl:if>
+        </xsl:when>
+        <xsl:when test="$node/self::tei:figure[tei:graphic]">
+          <xsl:value-of select="i18n:key('figure-label')"/>
+        </xsl:when>
+        <xsl:when test="$node/self::tei:figure[tei:eg|eg:egXML]">
+          <xsl:value-of select="i18n:key('example-label')"/>
+        </xsl:when>
         <xsl:otherwise><xsl:value-of select="$node/local-name()"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="contextLabel">
+      <xsl:variable name="immediatePrecedingText" select="($crossref.ptr/preceding-sibling::node()/descendant-or-self::text()[not(ancestor::tei:note[following::* intersect $crossref.ptr])][normalize-space()])[last()]"/>
+      <xsl:variable name="capitalize" select="if ($jtei.lang = ('de') or not($crossref.ptr) or not($immediatePrecedingText) or $immediatePrecedingText[matches(., '[\.!?]\s*$')]) then true() else false()"/>
       <xsl:choose>
-        <xsl:when test="not($crossref.ptr) or not($crossref.ptr/preceding-sibling::node()) or $crossref.ptr/preceding-sibling::node()[self::text()][not(ancestor::note)][normalize-space()][1][matches(., '[\.!?]\s*$')]">
+        <xsl:when test="$capitalize">
           <xsl:value-of select="concat(upper-case(substring($rawLabel, 1, 1)), substring($rawLabel, 2))"/>
         </xsl:when>
         <xsl:otherwise>
@@ -747,8 +760,14 @@
           <xsl:when test="normalize-space()">
             <xsl:variable name="label.formatted">
               <xsl:choose>
+                <!-- pluralize if there are multiple targets of the same type -->
                 <xsl:when test="not(@type = preceding-sibling::*[1]/@type) and @type = following-sibling::*[1]/@type">
-                  <xsl:value-of select="replace(., '^(\w+)', '$1s')"/>
+                  <!-- if no specific plural can be found, just add an -s -->
+                  <xsl:value-of select="(
+                    for $i in 
+                      i18n:plural(lower-case(normalize-space(replace(., '\d', ''))))[@pl]
+                    return replace(., substring($i, 2), substring($i/@pl, 2))
+                    , replace(., '^(\w+)', '$1s'))[1]"/>
                 </xsl:when>
                 <xsl:when test="@type = preceding-sibling::*[1]/@type">
                   <xsl:value-of select="normalize-space(replace(., '^(\w+)', ''))"/>
@@ -759,7 +778,7 @@
               </xsl:choose>
             </xsl:variable>
             <fo:basic-link internal-destination="{@n}" border="dotted thin grey">
-              <xsl:value-of select="if ($counter.group = 1 and position() = 1) then $label.formatted else lower-case($label.formatted)"/>
+              <xsl:value-of select="if ($counter.group = 1 and position() = 1 or $jtei.lang = ('de')) then $label.formatted else lower-case($label.formatted)"/>
             </fo:basic-link>
           </xsl:when>
           <xsl:otherwise>
@@ -1163,7 +1182,7 @@
   <xsl:template match="tei:div[@type= ('bibliography', 'abstract')]">
     <fo:block xsl:use-attribute-sets="back.font.properties">
       <fo:block xsl:use-attribute-sets="heading.properties">
-        <xsl:value-of select="i18n:key(concat(@type, '-label'), @xml:lang)"/>
+        <xsl:value-of select="i18n:key(concat(@type, '-label'), (@xml:lang, $jtei.lang)[.][1])"/>
       </fo:block>
       <xsl:apply-templates/>
     </fo:block>
@@ -1173,7 +1192,7 @@
     <xsl:if test=".//tei:back/tei:div[@type='appendix']">
       <fo:block xsl:use-attribute-sets="back.font.properties">
         <fo:block xsl:use-attribute-sets="heading.properties">
-          <xsl:text>Appendixes</xsl:text>
+          <xsl:value-of select="i18n:key(concat(@type, '-label'))"/>
         </fo:block>
         <xsl:apply-templates select=".//tei:back/tei:div[@type='appendix']"/>
       </fo:block>
@@ -1183,11 +1202,11 @@
   <xsl:template match="tei:teiHeader/tei:profileDesc/tei:textClass">
     <fo:block xsl:use-attribute-sets="back.font.properties">
       <fo:block xsl:use-attribute-sets="heading.properties">
-        <xsl:text>Index</xsl:text>
+        <xsl:value-of select="i18n:key('index-label')"/>
       </fo:block>
       <fo:block>
         <fo:inline font-family="Roboto" font-size="9pt" font-weight="bold">
-          <xsl:text>Keywords: </xsl:text>
+          <xsl:value-of select="concat(i18n:key('keywords-label'), ': ')"/>
         </fo:inline>
         <xsl:value-of select="string-join(tei:keywords/tei:term, ', ')"/>
       </fo:block>
@@ -1197,7 +1216,15 @@
   <xsl:template name="authors">
     <fo:block xsl:use-attribute-sets="back.font.properties">
       <fo:block xsl:use-attribute-sets="heading.properties">
-        <xsl:text>Authors</xsl:text>
+        <xsl:variable name="author-label" select="i18n:key('author-label')"/>
+        <xsl:choose>
+          <xsl:when test="count(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author) gt 1">
+            <xsl:value-of select="(i18n:plural($author-label)/@pl, concat($author-label, 's'))[1]"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$author-label"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </fo:block>
       <fo:block>
         <xsl:for-each select="//tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
@@ -1272,7 +1299,7 @@
     <xsl:if test=".//tei:text//tei:note">
       <fo:block>
         <fo:block xsl:use-attribute-sets="heading.properties">
-          <xsl:text>Notes</xsl:text>
+          <xsl:value-of select="i18n:key('notes-label')"/>
         </fo:block>
         <xsl:apply-templates select=".//tei:text//tei:note" mode="endnotes"/>
       </fo:block>
@@ -1323,7 +1350,7 @@
       <xsl:text> </xsl:text>
     </xsl:if>
     <xsl:if test="position() > 1 and position() = last()">
-      <xsl:text>and </xsl:text>
+      <xsl:value-of select="concat(i18n:key('and'), ' ')"/>
     </xsl:if>
   </xsl:template>
   
