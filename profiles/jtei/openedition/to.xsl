@@ -342,7 +342,7 @@
         <xsl:when test="$node/self::tei:figure[tei:eg|eg:egXML]">
           <xsl:value-of select="i18n:key('example-label')"/>
         </xsl:when>
-        <xsl:otherwise><xsl:value-of select="$node/local-name()"/></xsl:otherwise>
+        <xsl:otherwise><xsl:value-of select="i18n:key(concat($node/local-name(), '-label'))"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="contextLabel">
