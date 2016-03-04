@@ -18,7 +18,6 @@ Unported License http://creativecommons.org/licenses/by-sa/3.0/
 2. http://www.opensource.org/licenses/BSD-2-Clause
 		
 
-
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
