@@ -33,11 +33,7 @@ Tmacro.specialPara =
    | Tmodel.global)*
 Tmacro.xtext = (text | Tmodel.gLike)*
 Tmacro.anyXML =
-<<<<<<< HEAD
-  element * - (tei:* | ns2:egXML) {
-=======
   element * - (tei:* | ns2:* | teix:egXML) {
->>>>>>> release-7.41.0
     attribute * { text }*,
     (text | Tmacro.anyXML)*
   }

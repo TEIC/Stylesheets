@@ -31,9 +31,9 @@ install: build
 	dh_clean -k
 	dh_installdirs
 	(cd ..; make PREFIX=$(DESTDIR) install )
-        (cd ..; make PREFIX=$(DESTDIR) doc oxygendoc )
-        perl -p -i -e 's+http://www.tei-c.org/release+/usr/share+' $(DESTDIR)/share/doc/tei-xsl-common/style.xml
-        perl -p -i -e 's+.ID=+#+' $(DESTDIR)/share/doc/tei-xsl-common/style.xml
+	(cd ..; make PREFIX=$(DESTDIR) doc oxygendoc )
+	perl -p -i -e 's+http://www.tei-c.org/release+/usr/share+' $(DESTDIR)/share/doc/tei-xsl-common/style.xml
+	perl -p -i -e 's+.ID=+#+' $(DESTDIR)/share/doc/tei-xsl-common/style.xml
 
 
 # Build architecture-independent files here.

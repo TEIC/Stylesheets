@@ -26,7 +26,7 @@
   <target name="dist" depends="setup,odd,notodd,oddcleanup"/>
 
   <target name="odd" if="processODD">
-   <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
+   <odd2lite in="${inputFile}" out="${inputFile}.processedodd"/>
    <buildodt in="${inputFile}.processedodd" out="${outputFile}" xsl="${profiledir}/${profile}/odt/to.xsl"/>
   </target>
 
