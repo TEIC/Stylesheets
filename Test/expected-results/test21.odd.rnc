@@ -418,7 +418,7 @@ att.global.rendition.attributes =
   att.global.rendition.attribute.rendition
 att.global.rendition.attribute.rend =
   
-  ## (interprétation) indique comment l'élément en question a été rendu ou présenté dans le texte source
+  ## (interprétation) foobar
   attribute rend {
     list { data.word+ }
   }?
@@ -438,15 +438,10 @@ att.global.attributes =
   att.global.facs.attributes,
   att.global.change.attributes,
   att.global.responsibility.attributes,
-  att.global.attribute.rend,
   att.global.attribute.xmlid,
   att.global.attribute.xmllang,
   att.global.attribute.xmlbase,
   att.global.attribute.xmlspace
-att.global.attribute.rend =
-  
-  ## foobar
-  attribute rend { text }?
 att.global.attribute.xmlid =
   
   ## (identifiant) fournit un identifiant unique pour l'élément qui porte l'attribut
@@ -1714,7 +1709,7 @@ p =
   ## (paragraphe) marque les paragraphes dans un texte en prose. [3.1. Paragraphs 7.2.5. Speech Contents]
   element tei:p {
     macro.paraContent,
-    (element * {
+    (element * - (tei:* | teix:egXML) {
        attribute * { text }*
      }*)
     >> sch:pattern [
@@ -1777,7 +1772,6 @@ hi =
   ## (mis en évidence) distingue un mot ou une expression comme graphiquement distincte du texte environnant, sans en donner la raison. [3.3.2.2. Emphatic Words and Phrases 3.3.2. Emphasis, Foreign Words, and Unusual Language]
   element tei:hi {
     macro.paraContent,
-    att.global.attribute.rend,
     att.global.attribute.xmlid,
     att.global.attribute.xmlbase,
     att.global.attribute.xmlspace,
@@ -4881,7 +4875,6 @@ ab =
          "\x{a}" ~
          "         "
        ],
-    att.global.attribute.rend,
     att.global.attribute.xmlid,
     att.global.attribute.xmllang,
     att.global.attribute.xmlbase,
@@ -4905,7 +4898,7 @@ ab =
     att.fragmentable.attributes,
     
     ## (correspond) pointe vers des éléments qui ont une correspondance avec l'élément en question.
-    attribute corresp { xsd:integer }?,
+    attribute corresp { xsd:nonNegativeInteger }?,
     empty
   }
 anchor =
@@ -6193,7 +6186,6 @@ space =
   ## (espace) permet de situer un espace significatif dans le texte édité. [11.5.1. Space]
   element tei:space {
     (model.descLike | model.certLike)*,
-    att.global.attribute.rend,
     att.global.attribute.xmlid,
     att.global.attribute.xmllang,
     att.global.attribute.xmlbase,

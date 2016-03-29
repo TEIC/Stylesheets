@@ -52,7 +52,11 @@
     xmlns:saxon="http://saxon.sf.net/"
     xmlns:expath-file="http://expath.org/ns/file"
     xmlns:java="http://www.java.com/"
+    xmlns:i18n="i18n"
   >
+  
+  <xsl:import href="../i18n.xsl"/>
+  
     <xd:doc scope="stylesheet">
         <xd:desc>
             <xd:p><xd:b>Created on:</xd:b> Feb 23, 2014</xd:p>
@@ -160,9 +164,14 @@
     <xsl:template name="aboutAuthors">
       <xsl:if test="/TEI/teiHeader[1]/fileDesc[1]/titleStmt[1]/author/affiliation">
         <text:p/><text:p/>
+        <xsl:variable name="author-label" select="i18n:key('author-label')"/>
         <xsl:choose>
-          <xsl:when test="count(/TEI/teiHeader[1]/fileDesc[1]/titleStmt[1]/author) gt 1"><text:p text:style-name="teiHead1">About the authors</text:p></xsl:when>
-          <xsl:otherwise><text:p text:style-name="teiHead1">About the author</text:p></xsl:otherwise>
+          <xsl:when test="count(/TEI/teiHeader[1]/fileDesc[1]/titleStmt[1]/author) gt 1"><text:p text:style-name="teiHead1">
+            <xsl:value-of select="(i18n:plural($author-label)/@pl, concat($author-label, 's'))[1]"/>
+          </text:p></xsl:when>
+          <xsl:otherwise><text:p text:style-name="teiHead1">
+            <xsl:value-of select="$author-label"/>
+          </text:p></xsl:otherwise>
         </xsl:choose>
         <xsl:for-each select="/TEI/teiHeader[1]/fileDesc[1]/titleStmt[1]/author">
           <text:p text:style-name="teiPara">
@@ -179,18 +188,26 @@
     
 <!--    However, the abstract does need a special header. Keywords are included after the abstract too. -->
     <xsl:template match="div[@type='abstract']">
-        <text:p text:style-name="teiHead1">Abstract</text:p>
+        <text:p text:style-name="teiHead1">
+          <xsl:value-of select="i18n:key(concat(@type, '-label'), (@xml:lang, $jtei.lang)[.][1])"/>
+        </text:p>
         <xsl:apply-templates/>
       
 <!--    Add the keywords.  -->
-        <text:p text:style-name="teiPara">Keywords: <xsl:value-of select="string-join(//textClass/keywords/term, ', ')"/></text:p>
+      <xsl:if test="not(following-sibling::div[@type='abstract'])">
+        <text:p text:style-name="teiPara">
+          <xsl:value-of select="concat(i18n:key('keywords-label'), ': ')"/>
+          <xsl:value-of select="string-join(//textClass/keywords/term, ', ')"/></text:p>
+      </xsl:if>
     </xsl:template>
   
   <!--    So does an appendix. -->
   <xsl:template match="div[@type='appendix']">
 <!--    Add a couple of blank lines. -->
     <text:p/><text:p/>
-    <text:p text:style-name="teiHead1">Appendix <xsl:value-of select="if (preceding::div[@type='appendix'] or following::div[@type='appendix']) then xs:string(count(preceding::div[@type='appendix']) + 1) else ''"/></text:p>
+    <text:p text:style-name="teiHead1">
+      <xsl:value-of select="concat(i18n:key(concat(@type, '-label')), ' ')"/>
+      <xsl:value-of select="if (preceding::div[@type='appendix'] or following::div[@type='appendix']) then xs:string(count(preceding::div[@type='appendix']) + 1) else ''"/></text:p>
     <xsl:apply-templates/>
   </xsl:template>
     
@@ -232,31 +249,36 @@
   <xsl:function name="hcmc:getSectionLinkText" as="xs:string">
     <xsl:param name="targEl" as="node()"/>
     <xsl:param name="pointerEl" as="node()"/>
-    <xsl:variable name="pointerElId" select="generate-id($pointerEl)"/>
-    <xsl:variable name="precedingText" select="$pointerEl/preceding::node()[text()][not(ancestor::note[following::*[generate-id(.) = $pointerElId]])]"/>
-    <xsl:variable name="capitalize" select="if ($precedingText) then (if (matches($precedingText[1], '[\.!?]\s+$')) then true() else false()) else true()"/>
+    <xsl:variable name="immediatePrecedingText" select="($pointerEl/preceding-sibling::node()/descendant-or-self::text()[not(ancestor::note[following::* intersect $pointerEl])][normalize-space()])[last()]"/>
+    <xsl:variable name="capitalize" select="if ($jtei.lang = ('de') or not($pointerEl) or not($immediatePrecedingText) or $immediatePrecedingText[matches(., '[\.!?]\s*$')]) then true() else false()"/>
     <xsl:message><xsl:value-of select="$targEl/local-name()"/></xsl:message>
     <xsl:choose>
       <xsl:when test="$targEl[self::div][ancestor::back]">
         <xsl:variable name="sectionNumber" select="if ($targEl/preceding::div[@type='appendix'] or $targEl/following::div[@type='appendix']) then xs:string(count($targEl/preceding::div[@type='appendix']) + 1) else ''"/>
-        <xsl:value-of select="concat('Appendix ', replace($sectionNumber, '\.$', ''))"/>
+        <xsl:value-of select="concat(i18n:key('appendix-label'), ' ', replace($sectionNumber, '\.$', ''))"/>
       </xsl:when>
       <xsl:when test="$targEl[self::div]">
         <xsl:variable name="sectionNumber" select="hcmc:getSectionNumber($targEl, '')"/>
-        <xsl:value-of select="concat('Section ', replace($sectionNumber, '\.$', ''))"/>
+        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('section-label'), $capitalize), ' ', replace($sectionNumber, '\.$', ''))"/>
       </xsl:when>
       <xsl:when test="$targEl[self::figure[graphic]]">
-        <xsl:value-of select="concat(if ($capitalize) then 'Figure ' else 'figure ', count($targEl/preceding::figure[graphic]) + 1)"/>
+        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('figure-label'), $capitalize), ' ', count($targEl/preceding::figure[graphic]) + 1)"/>
       </xsl:when>
       <xsl:when test="$targEl[self::figure[*:egXML or eg]]">
-        <xsl:value-of select="concat(if ($capitalize) then 'Example ' else 'example ', count($targEl/preceding::figure[*:egXML or eg]) + 1)"/>
+        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('example-label'), $capitalize), ' ', count($targEl/preceding::figure[*:egXML or eg]) + 1)"/>
       </xsl:when>
       <xsl:when test="$targEl[self::table]">
-        <xsl:value-of select="concat(if ($capitalize) then 'Table ' else 'table ', count($targEl/preceding::table) + 1)"/>
+        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('table-label'), $capitalize), ' ', count($targEl/preceding::table) + 1)"/>
       </xsl:when>
       <xsl:otherwise><xsl:value-of select="''"/></xsl:otherwise>
     </xsl:choose>
     
+  </xsl:function>
+  
+  <xsl:function name="hcmc:capitalize">
+    <xsl:param name="string" as="xs:string"/>
+    <xsl:param name="capitalize" as="xs:boolean"/>
+    <xsl:value-of select="if ($capitalize) then concat(upper-case(substring($string, 1, 1)), substring($string, 2)) else $string"/>
   </xsl:function>
 
 <!-- Paragraphs are styled with a single style. 
@@ -391,7 +413,7 @@
 <!--    This template goes along with the one above, removing any leading punctuation from a text node that 
         follows a quoted span, because that punctuation should have been pulled into the quotes. -->
   <xsl:template match="text()[matches(., '^[\.,!\?]')][preceding-sibling::*[1][self::quote[not(parent::cit)] or self::q or self::title[@level='a'] or self::title[@level='u'] or self::soCalled]]"><xsl:value-of select="replace(., '^[\.,!\?]', '')"/></xsl:template>
-    
+  
     <xsl:template match="supplied">[<xsl:apply-templates/>]</xsl:template>
   
 <!-- Gaps are turned into ellipses; if they directly follow a period, we don't add a leading 
@@ -473,8 +495,14 @@
           <xsl:when test="normalize-space()">
             <xsl:variable name="label.formatted">
               <xsl:choose>
+                <!-- pluralize if there are multiple targets of the same type -->
                 <xsl:when test="not(@type = preceding-sibling::*[1]/@type) and @type = following-sibling::*[1]/@type">
-                  <xsl:value-of select="replace(., '^(\w+)', '$1s')"/>
+                  <!-- if no specific plural can be found, just add an -s -->
+                  <xsl:value-of select="(
+                    for $i in 
+                      i18n:plural(lower-case(normalize-space(replace(., '\d', ''))))[@pl]
+                    return replace(., substring($i, 2), substring($i/@pl, 2))
+                    , replace(., '^(\w+)', '$1s'))[1]"/>
                 </xsl:when>
                 <xsl:when test="@type = preceding-sibling::*[1]/@type">
                   <xsl:value-of select="normalize-space(replace(., '^(\w+)', ''))"/>
@@ -485,7 +513,7 @@
               </xsl:choose>
             </xsl:variable>
             <text:a xlink:type="simple" xlink:href="#{@n}">
-              <xsl:value-of select="if ($counter.group = 1 and position() = 1) then $label.formatted else lower-case($label.formatted)"/>
+              <xsl:value-of select="if ($counter.group = 1 and position() = 1 or $jtei.lang = ('de')) then $label.formatted else lower-case($label.formatted)"/>
             </text:a>
           </xsl:when>
           <xsl:otherwise>
@@ -504,47 +532,47 @@
     
 <!--    Tables. -->
     <xsl:template match="table">
-      <xsl:variable name="current" select="."/>
-      <xsl:variable name="referenceNode" select="$theDoc//table[deep-equal((@*|node()), $current/(@*|node()))]"/>
-      <xsl:variable name="tableNum" select="count($referenceNode/preceding::table) + 1"/>
-      <xsl:variable name="tableId" select="concat('Table_', $tableNum)"/>
-
-        <table:table table:style-name="{$tableId}">
-<!--       Table column widths.          -->
-          <xsl:variable name="numCols" select="sum(for $c in descendant::row[1]/cell return if ($c/@cols) then xs:integer($c/@cols) else 1)"/>
-          <xsl:for-each select="1 to $numCols">
-            <table:table-column table:style-name="{concat($tableId, '_col_', .)}"/>
-          </xsl:for-each>
-          
-<!--        We also have to handle header rows separately, because they need to be in a 
+        <xsl:variable name="current" select="."/>
+        <xsl:variable name="referenceNode" select="$theDoc//table[deep-equal((@*|node()), $current/(@*|node()))]"/>
+        <xsl:variable name="tableNum" select="count($referenceNode/preceding::table) + 1"/>
+        <xsl:variable name="tableId" select="concat('Table_', $tableNum)"/>
+        <xsl:variable name="numCols" select="sum(for $c in descendant::row[1]/cell return if ($c/@cols) then xs:integer($c/@cols) else 1)"/>
+        <!-- [RvdB] solution for tables with multiple (non-adjacent) header rows: group by header row and wrap groups in separate tables (which still look as a single table) -->
+        <xsl:for-each-group select="*" group-starting-with="row[@role='label']">
+            <table:table table:style-name="{$tableId}">
+            <!--       Table column widths.          -->
+            <xsl:for-each select="1 to $numCols">
+                <table:table-column table:style-name="{concat($tableId, '_col_', .)}"/>
+            </xsl:for-each>
+            <!--        We also have to handle header rows separately, because they need to be in a 
             special grouping element. -->
-            <xsl:if test="row[@role='label']">
+            <xsl:if test="current-group()/self::row[@role='label']">
                 <table:table-header-rows>
-                    <xsl:for-each select="row[@role='label']">
-                      <table:table-row><xsl:apply-templates/></table:table-row>
+                    <xsl:for-each select="current-group()/self::row[@role='label']">
+                        <table:table-row><xsl:apply-templates/></table:table-row>
                     </xsl:for-each>
                 </table:table-header-rows>
             </xsl:if>
-            <table:table-rows><xsl:apply-templates/></table:table-rows>
-            
+            <table:table-rows><xsl:apply-templates select="current-group()"/></table:table-rows>
         </table:table>
-        
-        <!--        We have to deal with a table headers manually and put it after the table. -->
-        <xsl:for-each select="head">
-          <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}">
-            <xsl:if test="parent::table/@xml:id and position() = 1">
-              <text:bookmark text:name="{parent::table/@xml:id}"/>
-            </xsl:if>
-            <xsl:if test="not(matches(., '^[Tt]able')) and not(@type='license')">
-              <xsl:value-of select="concat('Table ', $tableNum, ': ')"/>
-            </xsl:if><xsl:apply-templates select="*|text()"/></text:p>
-        </xsl:for-each>
-    </xsl:template>
+    </xsl:for-each-group>
     
+    <!--        We have to deal with a table headers manually and put it after the table. -->
+    <xsl:for-each select="head">
+      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}">
+        <xsl:if test="parent::table/@xml:id and position() = 1">
+          <text:bookmark text:name="{parent::table/@xml:id}"/>
+        </xsl:if>
+        <xsl:if test="not(matches(., '^[Tt]able')) and not(@type='license')">
+          <xsl:value-of select="concat(hcmc:capitalize(i18n:key('table-label'), true()), ' ', $tableNum, ': ')"/>
+        </xsl:if><xsl:apply-templates select="*|text()"/></text:p>
+    </xsl:for-each>
+  </xsl:template>
+  
 <!--    Suppress normal processing of the table head element and table header rows. -->
     <xsl:template match="table/head"/>
-    <xsl:template match="row[@role='label']"/>
-    
+    <xsl:template match="row[@role='label']"/>    
+  
     <xsl:template match="row[not(@role='label')]">
         <table:table-row><xsl:apply-templates/></table:table-row>
     </xsl:template>
@@ -553,7 +581,13 @@
       <table:table-cell table:style-name="{if (@role='label' or parent::row[@role='label']) then if (following-sibling::cell) then 'table_head_left' else 'table_head_right' else if (following-sibling::cell) then 'table_cell_left' else 'table_cell_right'}">
         <xsl:if test="@cols"><xsl:attribute name="table:number-columns-spanned"><xsl:value-of select="@cols"/></xsl:attribute></xsl:if>
         <xsl:if test="@rows"><xsl:attribute name="table:number-rows-spanned"><xsl:value-of select="@rows"/></xsl:attribute></xsl:if>
-        <text:p text:style-name="{if (@role='label' or parent::row[@role='label']) then 'teiParaTinyMarginsHeader' else 'teiParaTinyMargins'}"><xsl:apply-templates/></text:p>
+        <!-- [RvdB] egXML generates its own <text:p/>, so skip it here -->
+        <xsl:choose>
+            <xsl:when test="teix:egXML">
+                <xsl:apply-templates/>
+            </xsl:when>
+            <xsl:otherwise><text:p text:style-name="{if (@role='label' or parent::row[@role='label']) then 'teiParaTinyMarginsHeader' else 'teiParaTinyMargins'}"><xsl:apply-templates/></text:p></xsl:otherwise>
+        </xsl:choose>
       </table:table-cell>
     </xsl:template>
 
@@ -618,7 +652,9 @@
     
 <!--    Bibliography. -->
     <xsl:template match="div[@type='bibliography']">
-        <text:p text:style-name="teiHead1">References</text:p>
+        <text:p text:style-name="teiHead1">
+          <xsl:value-of select="i18n:key('bibliography-label')"/>
+        </text:p>
         <xsl:apply-templates/>
     </xsl:template>
     
@@ -663,7 +699,7 @@
     <xsl:variable name="exampleNum" select="count($referenceNode/preceding::figure[teix:egXML or eg]) + 1"/>
     <xsl:apply-templates select="teix:egXML | eg"/>
     <xsl:for-each select="head">
-      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}"><xsl:if test="not(matches(., '^[Ee]xample')) and not(@type='license')"><xsl:value-of select="concat('Example ', $exampleNum, '. ')"/></xsl:if><xsl:apply-templates select="*|text()"/></text:p>
+      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}"><xsl:if test="not(matches(., '^[Ee]xample')) and not(@type='license')"><xsl:value-of select="concat(hcmc:capitalize(i18n:key('example-label'), true()), ' ', $exampleNum, ': ')"/></xsl:if><xsl:apply-templates select="*|text()"/></text:p>
     </xsl:for-each>
     
   </xsl:template>
@@ -743,7 +779,7 @@
     </text:p>
     <!--        We have to deal with a figure captions manually and put them after the graphic. -->
     <xsl:for-each select="head">
-      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}"><xsl:if test="not(matches(., '^[Ff]igure')) and not(@type='license')"><xsl:value-of select="concat('Figure ', $graphicNum, '. ')"/></xsl:if><xsl:apply-templates select="*|text()"/></text:p>
+      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}"><xsl:if test="not(matches(., '^[Ff]igure')) and not(@type='license')"><xsl:value-of select="concat(hcmc:capitalize(i18n:key('figure-label'), true()), ' ', $graphicNum, ': ')"/></xsl:if><xsl:apply-templates select="*|text()"/></text:p>
     </xsl:for-each>
   </xsl:template>
   
@@ -891,7 +927,7 @@
       <xsl:text> </xsl:text>
     </xsl:if>
     <xsl:if test="position() > 1 and position() = last()">
-      <xsl:text>and </xsl:text>
+      <xsl:value-of select="concat(i18n:key('and'), ' ')"/>
     </xsl:if>
   </xsl:template>
   
@@ -904,15 +940,12 @@
         <xsl:for-each select="$context">
           <xsl:choose>
             <xsl:when test="self::text()">
-              <xsl:variable name="processed">
-                <xsl:apply-templates select="."/>
-              </xsl:variable>
               <xsl:choose>
                 <xsl:when test="position() = 1">
-                  <xsl:value-of select="replace(replace($processed, '^\s+', ''), '\s+$', ' ')"/>                  
+                  <xsl:value-of select="replace(replace(., '^\s+', ''), '\s+$', ' ')"/>                  
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="replace($processed, '\s+$', ' ')"/>                  
+                  <xsl:value-of select="replace(., '\s+$', ' ')"/>                  
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:when>

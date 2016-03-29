@@ -18,7 +18,6 @@ Unported License http://creativecommons.org/licenses/by-sa/3.0/
 2. http://www.opensource.org/licenses/BSD-2-Clause
 		
 
-
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
@@ -94,9 +93,10 @@ of this software, even if advised of the possibility of such damage.
 \let\endlastfoot\relax
 \parskip3pt
 \setbeamertemplate{footline}
-{\hspace{1em}\includegraphics[height=10ex]{<xsl:value-of select="$logoFile"/>} \hspace{2em}
-\hfill \textcolor{gray}{\insertframenumber/\inserttotalframenumber}
-\vspace{1em}}
+{\textcolor{gray}{\insertframenumber/\inserttotalframenumber}
+\vspace{1em}\hfill
+\hspace{1em}\includegraphics[height=10ex]{<xsl:value-of select="$logoFile"/>} \hspace{2em}
+}
 </xsl:template>
 <xsl:template match="tei:gi">
   <xsl:text>{\color{blue2}&lt;</xsl:text>

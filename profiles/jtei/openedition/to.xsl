@@ -5,9 +5,12 @@
   xmlns:eg="http://www.tei-c.org/ns/Examples"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:local="local"
+  xmlns:i18n="i18n"
   xmlns="http://www.tei-c.org/ns/1.0"
   exclude-result-prefixes="#all"
   version="2.0">
+  
+  <xsl:import href="../i18n.xsl"/>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -123,18 +126,17 @@
     <rendition xml:id="citation" scheme="css">font:0.916em/1.636 Verdana,sans-serif;margin: 1.091em 0;padding: 0 0 0 4.363em;text-align: left;border-collapse: separate;</rendition>
     <rendition xml:id="gloss" scheme="css">list-style-type:none;</rendition>
     <rendition xml:id="inlinelabel" scheme="css">font-weight:normal;</rendition>
-    <rendition xml:id="glosslabel" scheme="css">font-weight:bold;background:none;padding-left:0;list-style-type:none;margin: 1em 0;</rendition>
-    <rendition xml:id="glossitem" scheme="css">margin-left:2em;background:none;padding-left:0;list-style-type:none;</rendition>
-    <rendition xml:id="simpleitem" scheme="css">background:none;padding-left:0;</rendition>
+    <rendition xml:id="glosslabel" scheme="css">font-weight:bold;list-style-type:none;margin: 1em 0;</rendition>
+    <rendition xml:id="glossitem" scheme="css">margin-left:2em;list-style-type:none;</rendition>
+    <rendition xml:id="simpleitem" scheme="css">list-style-type:none;</rendition>
     <rendition xml:id="numberlabel" scheme="css">float:left;width:3em;padding-left:0;background:none;</rendition>
     <rendition xml:id="numberitem" scheme="css">margin-left:3em;padding-left:0;background:none;</rendition>
     <rendition xml:id="foreign" scheme="css">font-style:italic;</rendition>
-    <rendition xml:id="table" scheme="css">width:100%;</rendition>
     <rendition xml:id="tr-label" scheme="css">background-color: silver;font-weight:bold;</rendition>
     <rendition xml:id="td-label" scheme="css">font-weight:bold;</rendition>
     
-    <rendition xml:id="table.border" scheme="css">width:100%;border: 1px solid black;border-collapse:collapse;</rendition>
-    <rendition xml:id="tr-label.border" scheme="css">background-color: silver;font-weight:bold;</rendition>
+    <rendition xml:id="table.border" scheme="css">border: 1px solid black;border-collapse:collapse;</rendition>
+    <rendition xml:id="tr-label.border" scheme="css">background-color: silver;font-weight:bold;border:1px solid black;</rendition>
     <rendition xml:id="td-label.border" scheme="css">font-weight:bold;border:1px solid black;</rendition>
     
     <rendition xml:id="td.border" scheme="css">border: 1px solid black;</rendition>
@@ -193,6 +195,14 @@
   
   <xsl:template match="tei:affiliation/tei:roleName|tei:affiliation/tei:orgName">
     <xsl:apply-templates/>
+  </xsl:template>
+  
+  <xsl:template match="tei:licence">
+    <xsl:apply-templates/>
+  </xsl:template>
+  
+  <xsl:template match="tei:licence/*[not(self::tei:p)]">
+    <p><xsl:apply-templates/></p>
   </xsl:template>
     
   <!-- add @scheme='keyword' and @xml:lang='en' if absent/empty; transform flat terms to list -->
@@ -320,16 +330,26 @@
     <xsl:param name="crossref.ptr"/>
     <xsl:variable name="rawLabel">
       <xsl:choose>
-        <xsl:when test="$node/self::tei:div[@type eq 'appendix']">appendix</xsl:when>
-        <xsl:when test="$node/self::tei:div"><xsl:if test="$crossref.ptr">section</xsl:if></xsl:when>
-        <xsl:when test="$node/self::tei:figure[tei:graphic]">figure</xsl:when>
-        <xsl:when test="$node/self::tei:figure[tei:eg|eg:egXML]">example</xsl:when>
-        <xsl:otherwise><xsl:value-of select="$node/local-name()"/></xsl:otherwise>
+        <xsl:when test="$node/self::tei:div[@type eq 'appendix']">
+          <xsl:value-of select="i18n:key('appendix-label')"/>
+        </xsl:when>
+        <xsl:when test="$node/self::tei:div"><xsl:if test="$crossref.ptr">
+          <xsl:value-of select="i18n:key('section-label')"/></xsl:if>
+        </xsl:when>
+        <xsl:when test="$node/self::tei:figure[tei:graphic]">
+          <xsl:value-of select="i18n:key('figure-label')"/>
+        </xsl:when>
+        <xsl:when test="$node/self::tei:figure[tei:eg|eg:egXML]">
+          <xsl:value-of select="i18n:key('example-label')"/>
+        </xsl:when>
+        <xsl:otherwise><xsl:value-of select="i18n:key(concat($node/local-name(), '-label'))"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="contextLabel">
+      <xsl:variable name="immediatePrecedingText" select="($crossref.ptr/preceding-sibling::node()/descendant-or-self::text()[not(ancestor::tei:note[following::* intersect $crossref.ptr])][normalize-space()])[last()]"/>
+      <xsl:variable name="capitalize" select="if ($jtei.lang = ('de') or not($crossref.ptr) or not($immediatePrecedingText) or $immediatePrecedingText[matches(., '[\.!?]\s*$')]) then true() else false()"/>
       <xsl:choose>
-        <xsl:when test="not($crossref.ptr) or not($crossref.ptr/preceding-sibling::node()) or $crossref.ptr/preceding-sibling::node()[self::text()][not(ancestor::note)][normalize-space()][1][matches(., '[\.!?]\s*$')]">
+        <xsl:when test="$capitalize">
           <xsl:value-of select="concat(upper-case(substring($rawLabel, 1, 1)), substring($rawLabel, 2))"/>
         </xsl:when>
         <xsl:otherwise>
@@ -677,7 +697,7 @@
     <xsl:variable name="current" select="."/>
     <xsl:variable name="labels">
       <xsl:for-each select="tokenize(@target, '\s+')">
-        <xsl:variable name="target" select="key('ids', substring-after(., '#'), $current/root())"/>
+        <xsl:variable name="target" select="key('ids', substring-after(., '#'), $docRoot/root())"/>
         <label type="{$target/name()}" n="{substring-after(current(), '#')}">
           <xsl:apply-templates select="$target" mode="label">
             <xsl:with-param name="crossref.ptr" select="$current"/>
@@ -687,15 +707,21 @@
     </xsl:variable>
     <xsl:for-each-group select="$labels/*" group-adjacent="@type">
       <xsl:variable name="counter.group" select="position()"/>
-      <xsl:call-template name="enumerate"></xsl:call-template>
+      <xsl:call-template name="enumerate"/>
       <xsl:for-each select="current-group()">
-        <xsl:call-template name="enumerate"></xsl:call-template>
+        <xsl:call-template name="enumerate"/>
         <xsl:choose>
           <xsl:when test="normalize-space()">
             <xsl:variable name="label.formatted">
               <xsl:choose>
+                <!-- pluralize if there are multiple targets of the same type -->
                 <xsl:when test="not(@type = preceding-sibling::*[1]/@type) and @type = following-sibling::*[1]/@type">
-                  <xsl:value-of select="replace(., '^(\w+)', '$1s')"/>
+                  <!-- if no specific plural can be found, just add an -s -->
+                  <xsl:value-of select="(
+                    for $i in 
+                      i18n:plural(lower-case(normalize-space(replace(., '\d', ''))))[@pl]
+                    return replace(., substring($i, 2), substring($i/@pl, 2))
+                    , replace(., '^(\w+)', '$1s'))[1]"/>
                 </xsl:when>
                 <xsl:when test="@type = preceding-sibling::*[1]/@type">
                   <xsl:value-of select="normalize-space(replace(., '^(\w+)', ''))"/>
@@ -705,7 +731,7 @@
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:variable>
-            <xsl:value-of select="if ($counter.group = 1 and position() = 1) then $label.formatted else lower-case($label.formatted)"/>
+            <xsl:value-of select="if ($counter.group = 1 and position() = 1 or $jtei.lang = ('de')) then $label.formatted else lower-case($label.formatted)"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="concat('[bad link to item: ', @n, ']')"/>
@@ -833,6 +859,10 @@
       </xsl:if>
       <xsl:apply-templates/>
     </hi>
+  </xsl:template>
+  
+  <xsl:template match="tei:orgName">
+    <xsl:apply-templates/>
   </xsl:template>
   
   <!-- transform other 'flagged' elements (see index in 'hi' key) to hi with corresponding @rendition -->
@@ -1008,7 +1038,7 @@
   <xsl:template match="tei:cell">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
-      <xsl:for-each select="(@role,parent::tei:row/@role,.)[1]">
+      <xsl:for-each select="(@role,parent::tei:row/@role,.)[not(. = 'data')][1]">
         <xsl:call-template name="get.rendition"/>
       </xsl:for-each>
       <xsl:apply-templates/>      
@@ -1039,7 +1069,7 @@
   </xsl:template>
   
   <!-- untag all other <bibl> contents (except for <ref>) -->
-  <xsl:template match="tei:listBibl//tei:bibl/*[not(self::tei:ref or self::tei:ptr or self::tei:hi)]" priority="0">
+  <xsl:template match="tei:listBibl//tei:bibl/*" priority="-0.5">
     <xsl:apply-templates/>
   </xsl:template>
   
@@ -1117,7 +1147,7 @@
   <xsl:template match="tei:code/@lang|tei:row/@role|tei:row/@rows|tei:row/@cols|tei:cell/@role|tei:graphic/@width|tei:graphic/@height"/>
   
   <!-- text() following an element for which smart quotes are being generated: skip starting punctuation (this is pulled into the quotation marks) -->
-  <xsl:template match="text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}]]')]
+  <xsl:template match="text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}—]]')]
     [preceding-sibling::node()[not(self::tei:note)][1]
     [. intersect key('quotation.elements', local-name())]]
     |
@@ -1140,7 +1170,7 @@
   
   <!-- pull subsequent punctuation into generated quotation marks -->
   <xsl:template name="include.punctuation">
-    <xsl:value-of select="following-sibling::node()[not(self::tei:note)][1]/self::text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}]]')]/replace(., '^\s*([\p{P}-[\p{Ps}\p{Pe}]]+).*', '$1', 's')"/>
+    <xsl:value-of select="following-sibling::node()[not(self::tei:note)][1]/self::text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}—]]')]/replace(., '^\s*([\p{P}-[\p{Ps}\p{Pe}]]+).*', '$1', 's')"/>
   </xsl:template>
   
   <xsl:template name="enumerate">
@@ -1151,7 +1181,7 @@
       <xsl:text> </xsl:text>
     </xsl:if>
     <xsl:if test="position() > 1 and position() = last()">
-      <xsl:text>and </xsl:text>
+      <xsl:value-of select="concat(i18n:key('and'), ' ')"/>
     </xsl:if>
   </xsl:template>
   

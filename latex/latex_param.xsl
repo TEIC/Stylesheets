@@ -124,6 +124,7 @@ the beginning of the document</desc>
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{marginnote}
+
 </xsl:text>
 <xsl:if test="not($marginFont='')">
 \renewcommand*{\marginfont}{<xsl:value-of select="$marginFont"/>}
@@ -156,7 +157,7 @@ the beginning of the document</desc>
  select="replace(string-join(tei:generateAuthor(.),''),'\\[A-z]+','')"/>}]{hyperref}
 \hyperbaseurl{<xsl:value-of select="$baseURL"/>}
 <xsl:if test="count(key('APP',1))&gt;0">
-\usepackage{eledmac}
+\usepackage[noreledmac]{eledmac}
 <xsl:call-template name="ledmacOptions"/>
 </xsl:if>
 

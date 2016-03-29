@@ -90,6 +90,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:element name="{$cellname}">
       <xsl:for-each select="@*">
 	<xsl:choose>
+	  <xsl:when test="name(.) eq 'style'">
+	    <xsl:copy-of select="."/>
+	  </xsl:when>
 	  <xsl:when test="name(.) = 'width' or name(.) =
 			  'border' or name(.) = 'cellspacing'
 			  or name(.) = 'cellpadding'">

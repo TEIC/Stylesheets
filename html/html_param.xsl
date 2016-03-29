@@ -920,6 +920,11 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
       <xsl:copy-of select="$content"/>
     </span>
   </xsl:template>
+  
+  <xsl:template name="RefLinkAttributeValue">
+    <xsl:param name="content"/>
+    <a class="link_odd" href="ref-{$content}.html"><xsl:copy-of select="$content"/></a>
+  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] show an XML attribute value in a verbatim context</desc>

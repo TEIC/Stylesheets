@@ -160,20 +160,35 @@
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
-              </td>
-              <td class="wovenodd-col2">
-                <pre class="pre_eg">
-element bit { text | <a class="link_ref" href="#TEI.bob" title="&lt;bob&gt;">bob</a> }</pre>
-              </td>
-            </tr>
-            <tr>
-              <td class="wovenodd-col1">
                 <span lang="en" class="label">Schematron</span>
               </td>
               <td class="wovenodd-col2">
                 <div class="pre">
 &lt;s:report test="count(bob) !=1"&gt;Only one bob allowed&lt;/s:report&gt;</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;alternate minOccurs="1" maxOccurs="1"&gt;
+  &lt;textNode/&gt;
+  &lt;elementRef key="bob" maxOccurs="1"/&gt;
+ &lt;/alternate&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg">
+element bit { text | <a class="link_ref" href="#TEI.bob" title="&lt;bob&gt;">bob</a> }</pre>
               </td>
             </tr>
           </table>
@@ -223,10 +238,7 @@ element bit { text | <a class="link_ref" href="#TEI.bob" title="&lt;bob&gt;">bob
                               <td class="odd_label">
                                 <span lang="en" class="label">Datatype</span>
                               </td>
-                              <td class="odd_value">
-                                <pre class="pre_eg cdata">
-xsd:anyURI</pre>
-                              </td>
+                              <td class="odd_value"/>
                             </tr>
                           </table>
                         </div>
@@ -270,7 +282,17 @@ xsd:anyURI</pre>
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content/&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg cdata">
@@ -327,7 +349,17 @@ element bob { attribute href { xsd:anyURI }?, empty }</pre>
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content/&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg cdata">
@@ -384,7 +416,17 @@ element choice { empty }</pre>
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content/&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg cdata">
@@ -441,7 +483,17 @@ element orgName { empty }</pre>
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content/&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg cdata">
@@ -498,7 +550,17 @@ element persName { empty }</pre>
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content/&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg cdata">
@@ -554,7 +616,24 @@ element seg { empty }</pre>
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;alternate minOccurs="1"
+  maxOccurs="unbounded"&gt;
+  &lt;elementRef key="bit"/&gt;
+  &lt;elementRef key="bob"/&gt;
+  &lt;elementRef key="thingummy"/&gt;
+ &lt;/alternate&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -620,7 +699,24 @@ element stuff { ( <a class="link_ref" href="#TEI.bit" title="&lt;bit&gt;">bit</a
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;alternate minOccurs="1" maxOccurs="1"&gt;
+  &lt;textNode/&gt;
+  &lt;elementRef key="bit"/&gt;
+  &lt;elementRef key="bob"/&gt;
+  &lt;elementRef key="t1"/&gt;
+ &lt;/alternate&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -675,7 +771,24 @@ element t1 { text | <a class="link_ref" href="#TEI.bit" title="&lt;bit&gt;">bit<
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;alternate minOccurs="0"
+  maxOccurs="unbounded"&gt;
+  &lt;textNode/&gt;
+  &lt;elementRef key="bit"/&gt;
+  &lt;elementRef key="bob"/&gt;
+ &lt;/alternate&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -730,7 +843,23 @@ element t2 { ( text | <a class="link_ref" href="#TEI.bit" title="&lt;bit&gt;">bi
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;alternate minOccurs="0" maxOccurs="1"&gt;
+  &lt;textNode/&gt;
+  &lt;elementRef key="bit"/&gt;
+  &lt;elementRef key="bob"/&gt;
+ &lt;/alternate&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -786,7 +915,25 @@ element t3 { ( text | <a class="link_ref" href="#TEI.bit" title="&lt;bit&gt;">bi
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;alternate minOccurs="1"
+  maxOccurs="unbounded"&gt;
+  &lt;textNode/&gt;
+  &lt;elementRef key="bit"/&gt;
+  &lt;elementRef key="bob"/&gt;
+  &lt;elementRef key="t1"/&gt;
+ &lt;/alternate&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -841,7 +988,26 @@ element t4 { ( text | <a class="link_ref" href="#TEI.bit" title="&lt;bit&gt;">bi
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;alternate minOccurs="1" maxOccurs="1"&gt;
+  &lt;textNode/&gt;
+  &lt;sequence minOccurs="1"
+   maxOccurs="unbounded"&gt;
+   &lt;elementRef key="bit"/&gt;
+   &lt;elementRef key="bob"/&gt;
+  &lt;/sequence&gt;
+ &lt;/alternate&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -896,7 +1062,23 @@ element t5 { text | ( <a class="link_ref" href="#TEI.bit" title="&lt;bit&gt;">bi
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;sequence minOccurs="0" maxOccurs="1"&gt;
+  &lt;textNode/&gt;
+  &lt;elementRef key="bit"/&gt;
+  &lt;elementRef key="bob"/&gt;
+ &lt;/sequence&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -954,7 +1136,25 @@ element t6 { ( text, <a class="link_ref" href="#TEI.bit" title="&lt;bit&gt;">bit
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;sequence minOccurs="1" maxOccurs="1"&gt;
+  &lt;elementRef key="orgName" minOccurs="0"/&gt;
+  &lt;elementRef key="persName" minOccurs="0"/&gt;
+  &lt;elementRef key="choice" minOccurs="0"/&gt;
+  &lt;elementRef key="seg" minOccurs="0"/&gt;
+  &lt;elementRef key="trait" minOccurs="0"/&gt;
+ &lt;/sequence&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -1012,7 +1212,26 @@ element t7 { <a class="link_ref" href="#TEI.orgName" title="&lt;orgName&gt;">org
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;sequence minOccurs="1" maxOccurs="1"&gt;
+  &lt;textNode/&gt;
+  &lt;elementRef key="orgName" minOccurs="0"/&gt;
+  &lt;elementRef key="persName" minOccurs="0"/&gt;
+  &lt;elementRef key="choice" minOccurs="0"/&gt;
+  &lt;elementRef key="seg" minOccurs="0"/&gt;
+  &lt;elementRef key="trait" minOccurs="0"/&gt;
+ &lt;/sequence&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -1068,7 +1287,19 @@ element t8 { text, <a class="link_ref" href="#TEI.orgName" title="&lt;orgName&gt
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;textNode/&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg cdata">
@@ -1125,7 +1356,17 @@ element thingummy { text }</pre>
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content/&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg cdata">

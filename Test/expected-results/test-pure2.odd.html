@@ -133,7 +133,23 @@
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;alternate minOccurs="0"
+  maxOccurs="unbounded"&gt;
+  &lt;textNode/&gt;
+  &lt;elementRef key="bob"/&gt;
+ &lt;/alternate&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -187,10 +203,7 @@ element bit { ( text | <a class="link_ref" href="#TEI.bob" title="&lt;bob&gt;">b
                               <td class="odd_label">
                                 <span lang="en" class="label">Datatype</span>
                               </td>
-                              <td class="odd_value">
-                                <pre class="pre_eg cdata">
-xsd:anyURI</pre>
-                              </td>
+                              <td class="odd_value"/>
                             </tr>
                           </table>
                         </div>
@@ -241,7 +254,17 @@ xsd:anyURI</pre>
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content/&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg cdata">
@@ -296,7 +319,21 @@ element bob { attribute uri { xsd:anyURI }?, empty }</pre>
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;classRef key="stuffPart"
+  maxOccurs="unbounded"&gt;
+ &lt;/classRef&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -351,7 +388,21 @@ element stuff { <a class="link_ref" href="#TEI.stuffPart" title="stuffPart">stuf
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;classRef key="stuffPart" maxOccurs="1"
+  expand="sequence"&gt;
+ &lt;/classRef&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -406,7 +457,21 @@ element stuffSeq { <a class="link_ref" href="#TEI.bob" title="&lt;bob&gt;">bob</
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;classRef key="stuffPart" maxOccurs="1"
+  expand="sequenceOptional"&gt;
+ &lt;/classRef&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">
@@ -461,7 +526,21 @@ element stuffSeqOpt { <a class="link_ref" href="#TEI.bob" title="&lt;bob&gt;">bo
             </tr>
             <tr>
               <td class="wovenodd-col1">
-                <span lang="en" class="label">Declaration</span>
+                <span lang="en" class="label">Content model</span>
+              </td>
+              <td class="wovenodd-col2">
+                <pre class="pre_eg cdata">
+&lt;content&gt;
+ &lt;classRef key="stuffPart" maxOccurs="1"
+  expand="sequenceRepeatable"&gt;
+ &lt;/classRef&gt;
+&lt;/content&gt;
+    </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="wovenodd-col1">
+                <span lang="en" class="label">Schema Declaration</span>
               </td>
               <td class="wovenodd-col2">
                 <pre class="pre_eg">

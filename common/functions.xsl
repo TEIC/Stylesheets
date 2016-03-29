@@ -1379,27 +1379,27 @@ of this software, even if advised of the possibility of such damage.
     </xsl:function>
 
     <!-- work out a name prefix for ODD objects -->
-    <xsl:function name="tei:createSpecPrefix" as="xs:string">
-      <xsl:param name="context"/>
-      <xsl:variable name="result">
+  <xsl:function name="tei:createSpecPrefix" as="xs:string">
+    <xsl:param name="context"/>
+    <xsl:variable name="result">
       <xsl:for-each select="$context">
-	<xsl:variable name="ns" select="ancestor-or-self::*[@ns][1]/@ns"/>
-	<xsl:choose>
-	  <xsl:when test="@prefix">
-	    <xsl:value-of select="@prefix"/>
-	  </xsl:when>
-	  <xsl:when test="not($ns) or $ns='http://www.tei-c.org/ns/1.0'"/>
-	  <xsl:when test="$ns='http://www.w3.org/XML/1998/namespace'">
-	    <xsl:text>xml:</xsl:text>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="translate(tei:getPrefix($ns,.),':','_')"/>
-	  </xsl:otherwise>
-	</xsl:choose>
+        <xsl:variable name="ns" select="ancestor-or-self::*[@ns][1]/@ns"/>
+        <xsl:choose>
+          <xsl:when test="@prefix">
+            <xsl:value-of select="@prefix"/>
+          </xsl:when>
+          <xsl:when test="not($ns) or $ns='http://www.tei-c.org/ns/1.0' or self::tei:datatype"/>
+          <xsl:when test="$ns='http://www.w3.org/XML/1998/namespace'">
+            <xsl:text>xml:</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="translate(tei:getPrefix($ns,.),':','_')"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:for-each>
-      </xsl:variable>
-      <xsl:value-of select="$result"/>
-    </xsl:function>
+    </xsl:variable>
+    <xsl:value-of select="$result"/>
+  </xsl:function>
 
   <xsl:function name="tei:getPrefix" as="xs:string*">
     <xsl:param name="ns"/>

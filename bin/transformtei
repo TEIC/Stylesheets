@@ -169,6 +169,7 @@ fi
 if test "x$TEISOURCE" = "x"
 then
   localsource=""
+  echo "WARNING: No localsource set. Will get a copy from http://www.tei-c.org/Vault/P5/."
 else 
   REALD=`dirname "$TEISOURCE"`
   SDIR=`(cd $REALD; pwd)`

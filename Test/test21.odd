@@ -42,6 +42,10 @@
         <classSpec ident="att.global" mode="change">
           <attList>
             <attDef ident="n" mode="delete"/>
+          </attList>
+        </classSpec>
+        <classSpec ident="att.global.rendition" mode="change">
+          <attList>
             <attDef ident="rend" mode="change">
               <desc>foobar</desc>
             </attDef>
@@ -84,7 +88,7 @@
           <attList>
             <attDef ident="corresp" mode="change">
               <datatype>
-                <rng:data type="integer"/>
+                <dataRef name="nonNegativeInteger"/>
               </datatype>
             </attDef>
           </attList>
@@ -221,7 +225,12 @@
             <rng:ref name="macro.paraContent"/>
             <rng:zeroOrMore>
               <rng:element>
-                <rng:anyName/>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:nsName ns="http://www.tei-c.org/ns/1.0"/>
+                    <rng:name ns="http://www.tei-c.org/ns/Examples">egXML</rng:name>
+                  </rng:except>
+                </rng:anyName>
                 <rng:zeroOrMore>
                   <rng:attribute>
                     <rng:anyName/>

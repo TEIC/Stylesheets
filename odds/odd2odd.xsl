@@ -88,7 +88,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-ATTREFED" use="substring-before(@name,'.attribute.')" match="tei:attRef"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:elementSpec]"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:macroSpec and not(@name=ancestor::tei:macroSpec/@ident)]"/>
-  <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[parent::tei:datatype]"/>
+  <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:datatype]"/>
   <xsl:key name="odd2odd-REFED" use="@class" match="tei:attRef"/>
   <xsl:key name="odd2odd-REFED" use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
   <xsl:key name="odd2odd-REFED" use="@key" match="tei:dataRef"/>
@@ -299,7 +299,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="ODD">
     <xsl:for-each select="/*">
       <xsl:copy>
-	<xsl:attribute name="xml:base" select="document-uri(/)"/>
+	      <xsl:attribute name="xml:base" select="document-uri(/)"/>
         <xsl:copy-of select="@*"/>
         <xsl:if test="$useVersionFromTEI='true'">
           <xsl:processing-instruction name="TEIVERSION">
@@ -571,44 +571,44 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:dataRef|tei:macroRef|tei:classRef|tei:elementRef"
-		mode="pass1">	
+    mode="pass1">	
     <xsl:choose>
       <xsl:when test="ancestor::tei:content">
-	<xsl:copy-of select="."/>
+        <xsl:copy-of select="."/>
       </xsl:when>
       <xsl:when test="ancestor::tei:datatype">
-	<xsl:copy-of select="."/>
+        <xsl:copy-of select="."/>
       </xsl:when>
       <xsl:when test="@name">
-	<xsl:copy-of select="."/>
+        <xsl:copy-of select="."/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
-	<xsl:variable name="name" select="@key"/>
-	<xsl:variable name="id" select="ancestor::*[@ident]/@ident"/>
-	<xsl:for-each select="document($sourceDoc,$top)">
-	  <xsl:choose>
-	    <xsl:when test="key('odd2odd-IDENTS',$name)">
-	      <xsl:for-each select="key('odd2odd-IDENTS',$name)">
-		<xsl:if test="$verbose='true'">
-		  <xsl:message>Phase 1: import <xsl:value-of  select="$name"/> by direct reference</xsl:message>
-		</xsl:if>
-		<xsl:apply-templates mode="pass1" select="."/>
-	      </xsl:for-each>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:call-template name="die">
-		<xsl:with-param name="message">
-		  <xsl:text>Reference to </xsl:text>
-		  <xsl:value-of select="$name"/>
-		  <xsl:text> in </xsl:text>
-		  <xsl:value-of select="$id"/>
-		  <xsl:text>: not found in source</xsl:text>
-		</xsl:with-param>
-	      </xsl:call-template>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:for-each>
+        <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
+        <xsl:variable name="name" select="@key"/>
+        <xsl:variable name="id" select="ancestor::*[@ident]/@ident"/>
+        <xsl:for-each select="document($sourceDoc,$top)">
+          <xsl:choose>
+            <xsl:when test="key('odd2odd-IDENTS',$name)">
+              <xsl:for-each select="key('odd2odd-IDENTS',$name)">
+                <xsl:if test="$verbose='true'">
+                  <xsl:message>Phase 1: import <xsl:value-of  select="$name"/> by direct reference</xsl:message>
+                </xsl:if>
+                <xsl:apply-templates mode="pass1" select="."/>
+              </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:call-template name="die">
+                <xsl:with-param name="message">
+                  <xsl:text>Reference to </xsl:text>
+                  <xsl:value-of select="$name"/>
+                  <xsl:text> in </xsl:text>
+                  <xsl:value-of select="$id"/>
+                  <xsl:text>: not found in source</xsl:text>
+                </xsl:with-param>
+              </xsl:call-template>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -756,7 +756,7 @@ of this software, even if advised of the possibility of such damage.
         for every object
          - if its in the ODD spec's REPLACE list, use that	
          - if its in ODD spec's CHANGE list  (do the hard merge bit)
-	 - if its duplicated by an existing spec, ignore
+	       - if its duplicated by an existing spec, ignore
          - otherwise copy 
         done
   -->
@@ -1217,20 +1217,24 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
     </xsl:copy>
   </xsl:template>
+  <!-- TODO: Duplicate the functionality here for Pure ODD constructs -->
   <xsl:template match="rng:choice|rng:list|rng:group|rng:optional|rng:oneOrMore|rng:zeroOrMore" mode="odd2odd-copy">
     <xsl:call-template name="odd2odd-simplifyRelax"/>
+  </xsl:template>
+  <xsl:template match="tei:alternate|tei:sequence|tei:valList[ancestor::tei:content]" mode="odd2odd-copy">
+    <xsl:call-template name="odd2odd-simplifyODD"/>
   </xsl:template>
   <xsl:template name="odd2odd-simplifyRelax">
     <xsl:variable name="element">
       <xsl:value-of select="local-name(.)"/>
     </xsl:variable>
     <!-- 
-for each RELAX NG content model,
-remove reference to any elements which have been
-deleted, or to classes which are empty.
-This may make the container empty,
-so that is only put back in if there is some content
--->
+      for each RELAX NG content model,
+      remove reference to any elements which have been
+      deleted, or to classes which are empty.
+      This may make the container empty,
+      so that is only put back in if there is some content
+    -->
     <xsl:variable name="contents">
       <WHAT>
         <xsl:for-each select="a:*|rng:*|processing-instruction()">
@@ -1316,6 +1320,127 @@ so that is only put back in if there is some content
         <xsl:when test="self::rng:zeroOrMore/rng:ref/@name='model.global'        and preceding-sibling::rng:*[1][self::rng:zeroOrMore/rng:ref/@name='model.global']"/>
         <xsl:when test="$entCount&gt;0 or $stripped='true'">
           <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{$element}">
+            <xsl:copy-of select="*|@*|text()|processing-instruction()"/>
+          </xsl:element>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <xsl:template name="odd2odd-simplifyODD">
+    <xsl:variable name="element">
+      <xsl:value-of select="local-name(.)"/>
+    </xsl:variable>
+    <xsl:variable name="min">
+      <xsl:choose>
+        <xsl:when test="@minOccurs"><xsl:value-of select="@minOccurs"/></xsl:when>
+        <xsl:otherwise>1</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="max">
+      <xsl:choose>
+        <xsl:when test="@maxOccurs"><xsl:value-of select="@maxOccurs"/></xsl:when>
+        <xsl:otherwise>1</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <!-- 
+      for each Pure ODD content model,
+      remove reference to any elements which have been
+      deleted, or to classes which are empty.
+      This may make the container empty,
+      so that is only put back in if there is some content
+    -->
+    <xsl:variable name="contents">
+      <WHAT>
+        <xsl:for-each select="a:*|tei:*|rng:*|processing-instruction()">
+          <xsl:choose>
+            <xsl:when test="self::a:*">
+              <xsl:copy-of select="."/>
+            </xsl:when>
+            <xsl:when test="self::processing-instruction()">
+              <xsl:copy-of select="."/>
+            </xsl:when>
+            <!-- Keep for now to support anyXML -->
+            <xsl:when test="self::rng:element">
+              <element xmlns="http://relaxng.org/ns/structure/1.0">
+                <xsl:copy-of select="@*"/>
+                <xsl:apply-templates mode="odd2odd-copy"/>
+              </element>
+            </xsl:when>
+            <xsl:when test="self::rng:name">
+              <name xmlns="http://relaxng.org/ns/structure/1.0">
+                <xsl:copy-of select="@*"/>
+                <xsl:apply-templates mode="odd2odd-copy"/>
+              </name>
+            </xsl:when>
+            <xsl:when test="self::rng:attribute">
+              <attribute xmlns="http://relaxng.org/ns/structure/1.0">
+                <xsl:copy-of select="@*"/>
+                <xsl:apply-templates mode="odd2odd-copy"/>
+              </attribute>
+            </xsl:when>
+            <!-- end anyXML section -->
+            <xsl:when test="self::tei:dataRef[@name]">
+              <xsl:copy-of select="."/>
+            </xsl:when>
+            <xsl:when test="self::tei:textNode">
+              <xsl:copy-of select="."/>
+            </xsl:when>
+            <xsl:when test="self::tei:valList">
+              <xsl:copy-of select="."/>
+            </xsl:when>
+            <xsl:when test="self::tei:classRef or self::tei:elementRef or self::tei:macroRef">
+              <xsl:variable name="N" select="@key"/>
+              <xsl:variable name="current" select="."/>
+              <xsl:for-each select="$ODD">
+                <xsl:choose>
+                  <xsl:when test="$stripped='true'">
+                    <xsl:copy-of select="$current"/>
+                  </xsl:when>
+                  <xsl:when test="key('odd2odd-DELETE',$N)"/>
+                  <xsl:otherwise>
+                    <xsl:copy-of select="$current"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:call-template name="odd2odd-simplifyODD"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:for-each>
+      </WHAT>
+    </xsl:variable>
+    <xsl:variable name="entCount">
+      <xsl:value-of select="count($contents/WHAT/*)"/>
+    </xsl:variable>
+    <xsl:for-each select="$contents/WHAT">
+      <xsl:choose>
+        <xsl:when test="$entCount=1 and local-name(*)=$element">
+          <xsl:copy-of select="*|@*|text()|processing-instruction()"/>
+        </xsl:when>
+        <!-- sequence or alternate that's zero or one containing sequence or alternate that's zero or one-->
+        <xsl:when test="$element=('sequence','alternate') and $min='0' and $max='1' 
+          and $entCount=1 and (tei:sequence|tei:alternate)[@minOccurs='0' and @maxOccurs='unbounded']">
+          <xsl:copy-of select="*|@*|text()|processing-instruction()"/>
+        </xsl:when>
+        <xsl:when test="$element=('sequence','alternate') and $min='0' and $max='1' 
+          and $entCount=1 and (tei:sequence|tei:alternate)[@minOccurs='1' and @maxOccurs='unbounded']">
+          <xsl:copy-of select="*|@*|text()|processing-instruction()"/>
+        </xsl:when>
+        <xsl:when test="$element=('sequence','alternate') and $min='1' and $max='unbounded' 
+          and $entCount=1 and (tei:sequence|tei:alternate)[@minOccurs='0' and @maxOccurs='unbounded']">
+          <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:copy-of select="(tei:sequence|tei:alternate)/*"/>
+          </xsl:copy>
+        </xsl:when>
+        <xsl:when test="self::tei:classRef[@key='model.global' and @minOccurs='0' and @maxOccurs='unbounded'] and
+          preceding-sibling::tei:*[1][self::tei:classRef/@key='model.global' and @minOccurs='0' and @maxOccurs='unbounded']"/>
+        <xsl:when test="$entCount&gt;0 or $stripped='true'">
+          <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{$element}">
+            <xsl:attribute name="minOccurs" select="$min"/>
+            <xsl:attribute name="maxOccurs" select="$max"/>
             <xsl:copy-of select="*|@*|text()|processing-instruction()"/>
           </xsl:element>
         </xsl:when>
@@ -2007,6 +2132,7 @@ so that is only put back in if there is some content
       <xsl:value-of select="@prefix"/>
       <xsl:value-of select="@ident"/>
     </xsl:variable>
+    <xsl:variable name="foo" select="key('odd2odd-REFED', $k)"/>
     <xsl:choose>
       <xsl:when test="$stripped='true' and starts-with($k,'macro.')"/>
       <xsl:when test="key('odd2odd-REFED',$k)">
