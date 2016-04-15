@@ -1749,6 +1749,11 @@ of this software, even if advised of the possibility of such damage.
           <xsl:value-of select="$ename"/>
           <xsl:text>)</xsl:text>
         </xsl:when>
+        <xsl:when test="self::tei:classRef and parent::tei:sequence">
+          <xsl:text>(</xsl:text>
+          <xsl:value-of select="$ename"/>
+          <xsl:text>)</xsl:text>
+        </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="$ename"/>
         </xsl:otherwise>
@@ -1773,14 +1778,16 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="$text"/>
       <xsl:text>&#10;--&gt;&#10;</xsl:text>
   </xsl:template>
+  
   <xsl:template name="checkEnd">
-      <xsl:if test="count(parent::tei:content[parent::tei:elementSpec]/rng:*)&gt;1 and     not(following-sibling::rng:*)">
+      <xsl:if test="count(parent::tei:content[parent::tei:elementSpec]/rng:*)&gt;1 and not(following-sibling::rng:*)">
          <xsl:text>)</xsl:text>
       </xsl:if>
   </xsl:template>
 
   <xsl:template name="checkStart">
-      <xsl:if test="count(parent::tei:content[parent::tei:elementSpec]/rng:*)&gt;1">
+      <xsl:if test="count(parent::tei:content[parent::tei:elementSpec]/rng:*)
+        &gt; 1">
          <xsl:choose>
             <xsl:when test="preceding-sibling::rng:*">
                <xsl:text>,</xsl:text>
@@ -1791,7 +1798,6 @@ of this software, even if advised of the possibility of such damage.
          </xsl:choose>
       </xsl:if>
   </xsl:template>
-
 
   <xsl:template name="copyright">
     <xsl:for-each
