@@ -102,7 +102,6 @@ of this software, even if advised of the possibility of such damage.
      my first thought (honestly) was "Tei Extract Iso schematron" :-|</d:desc>
   </d:doc>
   <xsl:param name="ns-prefix-prefix" select="'eip-'"/>
-  <xsl:variable name="P5" select="/"/>
   <xsl:variable name="xslns">http://www.w3.org/1999/XSL/Transform</xsl:variable>
   
   <xsl:key name="DECLARED_NSs" 
@@ -133,7 +132,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <!-- then process decorated tree -->
     <xsl:apply-templates select="$input-with-NSs" mode="schematron-extraction">
-      <xsl:with-param name="P5deco" select="$input-with-NSs/tei:TEI"/>
+      <xsl:with-param name="decorated" select="$input-with-NSs/tei:*"/>
     </xsl:apply-templates>
       
     <!-- Note: to see decorated tree for debugging, change mode of above -->
@@ -200,7 +199,7 @@ of this software, even if advised of the possibility of such damage.
     <d:desc>Second pass does most the work ...</d:desc>
   </d:doc>
   <xsl:template match="/" mode="schematron-extraction">
-    <xsl:param name="P5deco" as="element( tei:TEI )"/>
+    <xsl:param name="decorated" as="element()"/>
     <schema queryBinding="xslt2">
       <title>ISO Schematron rules</title>
       <xsl:comment> This file generated <xsl:sequence select="tei:whatsTheDate()"/> by 'extract-isosch.xsl'. </xsl:comment>
@@ -315,7 +314,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:choose>
                 <xsl:when test="contains( $class,'global')">tei:*</xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="$P5deco//elementSpec[classes/memberOf[@key=$class]]/concat( @nsp, @ident )" separator="|"/>
+                  <xsl:value-of select="$decorated//elementSpec[classes/memberOf[@key=$class]]/concat( @nsp, @ident )" separator="|"/>
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:variable>
