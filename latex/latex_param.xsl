@@ -242,7 +242,7 @@ characters. The normal characters remain active for LaTeX commands.
   \catcode`⃥=\active \def⃥{\textbackslash}
   \catcode`❴=\active \def❴{\{}
   \catcode`❵=\active \def❵{\}}
-  \def\textJapanese{\fontspec{Kochi Mincho}}
+  \def\textJapanese{\fontspec{IPAMincho}}
   \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
   \def\textKorean{\fontspec{Baekmuk Gulim} }
   \setmonofont{<xsl:value-of select="$typewriterFont"/>}
