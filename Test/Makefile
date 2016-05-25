@@ -373,13 +373,11 @@ test-oddity: css
 	$(BINDIR)/teitodtd  $(FLAG) oddbyexample.odd  oddbyexample.dtd
 	$(JING) -c oddbyexample.rnc bare/test2.xml
 	$(JING) oddbyexample.xsd bare/test2.xml
-	# BUG: no longer works because app part of model.global, therefore content
-	# model of text is nondeterministic.
-	#xmllint --noout --dtdvalid oddbyexample.dtd bare/test2.xml
+	xmllint --noout --dtdvalid oddbyexample.dtd bare/test2.xml
 	$(JING) -c oddbyexample.rnc bare/test.xml
 	$(JING) oddbyexample.xsd bare/test.xml
-	#xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
-	$(SAXON) -s:testdrama.odd -xsl:../odds/odd2odd.xsl -o:testdrama.compiled.xml 
+	xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
+	$(SAXON) -s:testdrama.odd -xsl:../odds/odd2odd.xsl -o:testdrama.compiled.xml
 	perl -p -i -e 's+ xml:base=".*testdrama.odd"++' testdrama.compiled.xml
 	perl -i -pe 'BEGIN{undef $$/;} s/<\?TEIVERSION[^?]+\?>//smg' testdrama.compiled.xml
 	if [ $(REGENERATING) -ne 1 ]; \
