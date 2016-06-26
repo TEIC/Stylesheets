@@ -51,6 +51,14 @@ of this software, even if advised of the possibility of such damage.
       <d:p>Author: See AUTHORS</d:p>
       <d:p>Copyright: 2014, TEI Consortium</d:p>
       <d:p/>
+      <d:p>Modified 2016-06-18/26 by Syd Bauman:
+        <d:ul>
+          <d:li>re-work how constraint processing is handled so that <d:b>//schemaSpec/constraintSpec/constraint[sch:* except ( sch:pattern, sch:rule ) ]</d:b>
+          gets processed such that the Schematron elements are copied over (they weren't being copied). This bug
+          discovered by Elisa E. Beshero-Bondar.</d:li>
+          <d:li>re-work how language processing is handled, just to make code more consistent and readable.</d:li>
+        </d:ul>
+      </d:p>
       <d:p>Modified 2014-01-01/09 by Syd Bauman:
       <d:ul>
         <d:li>rely on xpath-default-namespace</d:li>
@@ -96,7 +104,7 @@ of this software, even if advised of the possibility of such damage.
   </d:doc>
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:param name="verbose" select="'false'"/>
-  <xsl:param name="lang"/>
+  <xsl:param name="lang" select="'en'"/>
   <d:doc>
     <d:desc>"eip" stands for "Extract Iso schematron Prefix". Silly, I know, but
      my first thought (honestly) was "Tei Extract Iso schematron" :-|</d:desc>
@@ -209,8 +217,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:call-template>
       <xsl:for-each select="key('DECLARED_NSs',1)">
         <xsl:choose>
-          <xsl:when test="ancestor::constraintSpec/@xml:lang
-                  and not(ancestor::constraintSpec/@xml:lang = $lang)"/>
+          <xsl:when test="not( lang( $lang ) )"/>
           <xsl:when test="@prefix = 'xsl'"/>
           <xsl:otherwise>
             <ns><xsl:apply-templates select="@*|node()" mode="copy"/></ns>
@@ -235,8 +242,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:for-each select="key('KEYs',1)">
         <xsl:choose>
-          <xsl:when test="ancestor::constraintSpec/@xml:lang
-                  and not(ancestor::constraintSpec/@xml:lang = $lang)"/>
+          <xsl:when test="not( lang( $lang ) )"/>
           <xsl:otherwise>
             <xsl:apply-templates select="."/>
           </xsl:otherwise>
@@ -257,27 +263,40 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:for-each select="key('CONSTRAINTs',1)">
         <xsl:choose>
-          <xsl:when test="parent::constraintSpec/@xml:lang
-                  and not(parent::constraintSpec/@xml:lang = $lang)"/>
-          <xsl:otherwise> 
+          <xsl:when test="not( lang( $lang ) )"/>
+          <xsl:otherwise>
             <xsl:variable name="patID" select="tei:makePatternID(.)"/>
-            <xsl:if test="sch:pattern">
-              <xsl:apply-templates/>
-            </xsl:if>
-            <xsl:if test="sch:rule">
-              <pattern id="{$patID}">
-                <xsl:apply-templates/>
-              </pattern>
-            </xsl:if>
-            <xsl:if test="sch:assert|sch:report">
-              <pattern id="{$patID}">
-                <rule>
-                  <xsl:apply-templates select="@*"/>
-                  <xsl:attribute name="context" select="tei:generate-context(.)"/>
+            <xsl:choose>
+              <xsl:when test="sch:pattern">
+                <!-- IF there is a child <pattern>, we just copy over all children, no tweaking -->
+                <xsl:apply-templates select="node()">
+                  <!-- they all get handed $patID, but only the template for 'pattern' uses it -->
+                  <xsl:with-param name="patID" select="$patID"/>
+                </xsl:apply-templates>
+              </xsl:when>
+              <xsl:when test="sch:rule">
+                <!-- IF there is no <pattern>, but there is a <rule>, copy over all children -->
+                <!-- into a newly created <pattern> wrapper -->
+                <pattern id="{$patID}">
                   <xsl:apply-templates select="node()"/>
-                </rule>
-              </pattern>
-            </xsl:if>
+                </pattern>
+              </xsl:when>
+              <xsl:when test="sch:assert | sch:report | sch:extends ">
+                <!-- IF there is no <pattern> nor <rule> child, but there is a child that -->
+                <!-- requires being wrapped in a rule, create both <rule> and <pattern> -->
+                <!-- wrappers for them, making HERE the context. -->
+                <pattern id="{$patID}">
+                  <rule context="{tei:generate-context(.)}">
+                    <xsl:apply-templates select="@* except @context | node()"/>
+                  </rule>
+                </pattern>
+              </xsl:when>
+              <xsl:otherwise>
+                <!-- IF there is neither a <pattern> nor a <rule>, nor an child that would -->
+                <!-- require being wrapped in those, just copy over whatever we have -->
+                <xsl:apply-templates select="node()"/>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
@@ -357,6 +376,27 @@ of this software, even if advised of the possibility of such damage.
     </schema>
   </xsl:template>
   
+  <xsl:template match="sch:rule" mode="wrap-in-pattern">
+    <xsl:param name="patID"/>
+    <pattern id="{$patID}">
+      <xsl:apply-templates select="." mode="copy"/>
+    </pattern>
+  </xsl:template>
+
+  <xsl:template match="sch:assert | sch:report" mode="wrap-in-rule">
+    <xsl:param name="patID"/>
+    <pattern id="{$patID}">
+      <rule>
+        <xsl:apply-templates select="@*"/>
+        <xsl:attribute name="context" select="tei:generate-context(.)"/>
+        <xsl:copy>
+          <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
+        <xsl:apply-templates select="following-sibling::sch:assert|following-sibling::sch:report"/>
+      </rule>
+    </pattern>
+  </xsl:template>
+  
   <xsl:template match="sch:rule[parent::tei:constraint]">
     <rule>
       <xsl:apply-templates select="@*"/>
@@ -410,8 +450,8 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="ancestor::attDef/@nsp"/>
             <xsl:value-of select="ancestor::attDef/@ident"/>
           </xsl:variable>
-          <xsl:value-of select="$me"/>
           <xsl:message>WARNING: constraint for <xsl:value-of select="$me"/> of the <xsl:value-of select="ancestor::classSpec/@ident"/> class does not have a context=. Resulting rule is applied to *all* occurences of <xsl:value-of select="$me"/>.</xsl:message>
+          <xsl:value-of select="$me"/>
         </xsl:when>
         <xsl:when test="ancestor::attDef[ancestor::elementSpec]">
           <xsl:value-of select="ancestor::elementSpec/@nsp"/>
@@ -440,7 +480,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
+  
   <xsl:template match="tei:TEI">
     <xsl:apply-templates/>
   </xsl:template>
@@ -452,14 +492,14 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:variable name="num">
-	<xsl:number level="any"/>
+        <xsl:number level="any"/>
       </xsl:variable>
       <xsl:value-of
-	  select="(../ancestor::*[@ident]/@ident,'constraint',../@ident,$num)"
-	  separator="-"/>
+        select="(../ancestor::*[@ident]/@ident,'constraint',../@ident,$num)"
+        separator="-"/>
     </xsl:for-each>
   </xsl:function>
-
+  
   <xsl:template match="paramList">
     <xsl:variable name="N">
       <xsl:number from="elementSpec" level="any"/>
@@ -468,20 +508,19 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="parent::valItem/@ident"/>
     </xsl:variable>
     <pattern id="teipm-{ancestor::elementSpec/@ident}-paramList-{$N}">
-          <rule context="tei:param[parent::tei:model/@behaviour='{$B}']">
-            <assert role="error">
-	      <xsl:attribute name="test">
-		<xsl:text>@name='</xsl:text>
-		<xsl:value-of select="(paramSpec/@ident)" separator="'   or  @name='"/>
-		<xsl:text>'</xsl:text>
-	      </xsl:attribute>
-	      Parameter name '<value-of select="@name"/>'  (on <value-of select="ancestor::tei:elementSpec/@ident"/>) not allowed.
-	      Must  be  drawn from the list: <xsl:value-of separator=", " select="(paramSpec/@ident)" />
-	    </assert>
-	    
-          </rule>
-        </pattern>
-
+      <rule context="tei:param[parent::tei:model/@behaviour='{$B}']">
+        <assert role="error">
+          <xsl:attribute name="test">
+            <xsl:text>@name='</xsl:text>
+            <xsl:value-of select="(paramSpec/@ident)" separator="'   or  @name='"/>
+            <xsl:text>'</xsl:text>
+          </xsl:attribute>
+          Parameter name '<value-of select="@name"/>'  (on <value-of select="ancestor::tei:elementSpec/@ident"/>) not allowed.
+          Must  be  drawn from the list: <xsl:value-of separator=", " select="(paramSpec/@ident)" />
+        </assert>
+      </rule>
+    </pattern>
+    
   </xsl:template>
 
 </xsl:stylesheet>
