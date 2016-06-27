@@ -223,7 +223,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:with-param name="content" select="'namespaces, implicit:'"/>
       </xsl:call-template>
       <xsl:variable name="NSs" select="distinct-values( //tei:*[@nsu]/concat( @nsp, '␝', @nsu ) )"/>
-      <xsl:variable name="NSpres" select="distinct-values( //tei:*[@nsu]/@nsp )"/>
       <xsl:for-each select="$NSs[ not(. eq '␝')  and not(contains(.,$xslns)) ]">
         <xsl:sort/>
         <ns prefix="{substring-before( .,':␝')}" uri="{substring-after( .,'␝')}"/>
