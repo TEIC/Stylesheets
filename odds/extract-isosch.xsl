@@ -237,12 +237,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:call-template>
       <xsl:for-each select="key('DECLARED_NSs',1)">
         <xsl:choose>
-          <xsl:when test="not( lang( $lang ) )">
-            <xsl:message>DEBUG warning: ignoring declared NS "<xsl:value-of
-              select="@prefix"/>:" = <xsl:value-of
-                select="@uri"/> because lang() != <xsl:value-of
-                select="$lang"/>.</xsl:message>
-          </xsl:when>
+          <xsl:when test="not( lang( $lang ) )"/>
           <xsl:when test="@prefix = 'xsl'"/>
           <xsl:otherwise>
             <ns><xsl:apply-templates select="@*|node()" mode="copy"/></ns>
@@ -266,13 +261,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:for-each select="key('KEYs',1)">
         <xsl:choose>
-          <xsl:when test="not( lang( $lang ) )">
-            <xsl:message>DEBUG warning: because lang() != <xsl:value-of
-              select="$lang"/> ignoring KEY: <xsl:for-each select="@*">
-              <xsl:value-of select="concat('&#x0A; @', name(.),'=',normalize-space(.))"/>
-            </xsl:for-each>
-            </xsl:message>
-          </xsl:when>
+          <xsl:when test="not( lang( $lang ) )"/>
           <xsl:otherwise>
             <xsl:apply-templates select="."/>
           </xsl:otherwise>
@@ -292,12 +281,8 @@ of this software, even if advised of the possibility of such damage.
         </xsl:call-template>
       </xsl:if>
       <xsl:for-each select="key('CONSTRAINTs',1)">
-        <xsl:message>DEBUG: context lang=<xsl:value-of select="ancestor-or-self::node()[@xml:lang][1]/@xml:lang"/>.</xsl:message>
         <xsl:choose>
-          <xsl:when test="not( lang( $lang ) )">
-            <xsl:message>DEBUG warning: ignoring constraintSpec <xsl:value-of
-              select="../@ident"/> because lang() != <xsl:value-of select="$lang"/>.</xsl:message>
-          </xsl:when>
+          <xsl:when test="not( lang( $lang ) )"/>
           <xsl:otherwise>
             <xsl:variable name="patID" select="tei:makePatternID(.)"/>
             <xsl:choose>
