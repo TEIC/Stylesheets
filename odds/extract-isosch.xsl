@@ -51,6 +51,14 @@ of this software, even if advised of the possibility of such damage.
       <d:p>Author: See AUTHORS</d:p>
       <d:p>Copyright: 2014, TEI Consortium</d:p>
       <d:p/>
+      <d:p>Modified 2016-07-09 by Syd Bauman:
+      Bug fix. Changing the language processing last month means that many Schematron constructs
+      are not copied over from an ODD that does <d:i>not</d:i> delcare its language explicitly
+      with an xml:lang= attribute on or above the &lt;constraint>. So we cheat, and add
+      an xml:lang=en to the outermost element iff it does not already have an xml:lang=. Thus
+      if there already is a xml:lang= specified anywhere on or above the &lt;constraint>, this
+      change does nothing; if there isn't, it tells the extraction that the ODD is in English,
+      so English Schematron should be extracted.</d:p>
       <d:p>Modified 2016-06-18/26 by Syd Bauman:
         <d:ul>
           <d:li>re-work how constraint processing is handled so that <d:b>//schemaSpec/constraintSpec/constraint[sch:* except ( sch:pattern, sch:rule ) ]</d:b>
@@ -134,7 +142,8 @@ of this software, even if advised of the possibility of such damage.
            use="1"/>
 
   <xsl:template match="/">
-    <!-- first, decorate tree with namespace info -->
+    <!-- first, decorate tree with namespace info; also add an @xml:lang to -->
+    <!-- the outermost element iff needed. -->
     <xsl:variable name="input-with-NSs">
       <xsl:apply-templates select="node()" mode="NSdecoration"/>
     </xsl:variable>
@@ -142,7 +151,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="$input-with-NSs" mode="schematron-extraction">
       <xsl:with-param name="decorated" select="$input-with-NSs/tei:*"/>
     </xsl:apply-templates>
-      
     <!-- Note: to see decorated tree for debugging, change mode of above -->
     <!-- from "schematron-extraction" to "copy". -->
   </xsl:template>
@@ -153,6 +161,18 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
   
+  <d:doc>
+    <d:desc>First pass ... outermost element gets a new @xml:lang iff it doesn't
+    have one already</d:desc>
+  </d:doc>
+  <xsl:template match="/*" mode="NSdecoration">
+    <xsl:copy>
+      <xsl:apply-templates select="@* except @xml:lang" mode="#current"/>
+      <xsl:attribute name="xml:lang" select="'en'"/>
+      <xsl:apply-templates select="@xml:lang" mode="#current"/>
+      <xsl:apply-templates select="node()" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
   
   <d:doc>
     <d:desc>First pass ... elements that might have an ns= attribute
@@ -217,7 +237,12 @@ of this software, even if advised of the possibility of such damage.
       </xsl:call-template>
       <xsl:for-each select="key('DECLARED_NSs',1)">
         <xsl:choose>
-          <xsl:when test="not( lang( $lang ) )"/>
+          <xsl:when test="not( lang( $lang ) )">
+            <xsl:message>DEBUG warning: ignoring declared NS "<xsl:value-of
+              select="@prefix"/>:" = <xsl:value-of
+                select="@uri"/> because lang() != <xsl:value-of
+                select="$lang"/>.</xsl:message>
+          </xsl:when>
           <xsl:when test="@prefix = 'xsl'"/>
           <xsl:otherwise>
             <ns><xsl:apply-templates select="@*|node()" mode="copy"/></ns>
@@ -241,7 +266,13 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:for-each select="key('KEYs',1)">
         <xsl:choose>
-          <xsl:when test="not( lang( $lang ) )"/>
+          <xsl:when test="not( lang( $lang ) )">
+            <xsl:message>DEBUG warning: because lang() != <xsl:value-of
+              select="$lang"/> ignoring KEY: <xsl:for-each select="@*">
+              <xsl:value-of select="concat('&#x0A; @', name(.),'=',normalize-space(.))"/>
+            </xsl:for-each>
+            </xsl:message>
+          </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates select="."/>
           </xsl:otherwise>
@@ -261,8 +292,12 @@ of this software, even if advised of the possibility of such damage.
         </xsl:call-template>
       </xsl:if>
       <xsl:for-each select="key('CONSTRAINTs',1)">
+        <xsl:message>DEBUG: context lang=<xsl:value-of select="ancestor-or-self::node()[@xml:lang][1]/@xml:lang"/>.</xsl:message>
         <xsl:choose>
-          <xsl:when test="not( lang( $lang ) )"/>
+          <xsl:when test="not( lang( $lang ) )">
+            <xsl:message>DEBUG warning: ignoring constraintSpec <xsl:value-of
+              select="../@ident"/> because lang() != <xsl:value-of select="$lang"/>.</xsl:message>
+          </xsl:when>
           <xsl:otherwise>
             <xsl:variable name="patID" select="tei:makePatternID(.)"/>
             <xsl:choose>
@@ -308,6 +343,7 @@ of this software, even if advised of the possibility of such damage.
       <!-- Things that can be deprecated: -->
       <!--   attDef classSpec constraintSpec elementSpec macroSpec -->
       <!--   moduleSpec schemaSpec valDesc valItem valList -->
+      <!--   and now defaultVal, too -->
       <!-- right now we only handle the few that actually appear -->
       <xsl:for-each select="key('DEPRECATEDs',1)">
         <xsl:variable name="amsg1" select="'WARNING: use of deprecated attribute —'"/>
