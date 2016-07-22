@@ -1859,6 +1859,9 @@
     <desc>[odds] all the values in a valList</desc>
   </doc>
   <xsl:template name="valListItems">
+    <xsl:variable name="defaultVal_validUntil" select="../tei:defaultVal/@validUntil"/>
+    <!-- above variable, and the use of it below, added 2016-07-22 by Syd and Martin -->
+    <!-- to address issue #158. -->
     <xsl:element namespace="{$outputNS}" name="{$dlName}">
       <xsl:attribute name="{$rendName}">
         <xsl:text>valList</xsl:text>
@@ -1891,13 +1894,20 @@
             <xsl:element namespace="{$outputNS}" name="{$hiName}">
               <xsl:attribute name="{$rendName}">
                 <xsl:text>defaultVal</xsl:text>
+                <xsl:if test="$defaultVal_validUntil">
+                  <xsl:text> deprecated</xsl:text>
+                </xsl:if>
               </xsl:attribute>
               <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
-              <xsl:text> [</xsl:text>
-              <xsl:sequence select="tei:i18n('Default')"/>
-              <xsl:text>]</xsl:text>
+              <xsl:value-of select="concat(
+                ' [',
+                tei:i18n('Default'),
+                if ( $defaultVal_validUntil )
+                  then concat('. ',tei:i18n('defaultValValidUntil'), ' ', $defaultVal_validUntil,'.' )
+                  else '',
+                ']')"/>
             </xsl:element>
           </xsl:if>
         </xsl:element>
@@ -2410,6 +2420,13 @@
             <xsl:text>odd_value</xsl:text>
           </xsl:attribute>
           <xsl:value-of select="."/>
+          <xsl:if test="@validUntil">
+	    <!-- This clause added 2016-07-22 by Syd and Martin so that -->
+	    <!-- default values can be deprecated. See issue #158.      -->
+            <xsl:element namespace="{$outputNS}" name="{$tableName}">
+              <xsl:call-template name="validUntil"/>
+            </xsl:element>
+          </xsl:if>
         </xsl:element>
       </xsl:element>
     </xsl:if>
@@ -2975,7 +2992,10 @@
             <xsl:attribute name="{$rendName}">
               <xsl:text>deprecated</xsl:text>
             </xsl:attribute>
-            <xsl:sequence select="tei:i18n('validuntil')"/>
+            <xsl:value-of
+              select="if (self::tei:defaultVal)
+                      then tei:i18n('defaultValValidUntil')
+                      else tei:i18n('validuntil')"/>
             <xsl:text> </xsl:text>
             <xsl:value-of select="@validUntil"/>
           </xsl:element>
