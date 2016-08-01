@@ -367,6 +367,7 @@
       <xsl:when test="$node/self::tei:div"><xsl:for-each select="$docRoot//tei:div[deep-equal((@*|node()), $node/(@*|node()))]"><xsl:number count="tei:div[tei:head]" level="multiple"/></xsl:for-each></xsl:when>
       <xsl:when test="$node/self::tei:figure[tei:graphic]"><xsl:for-each select="$docRoot//tei:figure[tei:graphic][deep-equal((@*|node()), $node/(@*|node()))]"><xsl:number count="tei:figure[tei:head[not(@type='license')]][tei:graphic]" level="any"/></xsl:for-each></xsl:when>
       <xsl:when test="$node/self::tei:figure[tei:eg|eg:egXML]"><xsl:for-each select="$docRoot//tei:figure[tei:eg|eg:egXML][deep-equal((@*|node()), $node/(@*|node()))]"><xsl:number count="tei:figure[tei:head[not(@type='license')]][tei:eg|eg:egXML]" level="any"/></xsl:for-each></xsl:when>
+      <xsl:when test="$node/self::tei:note"><xsl:for-each select="$docRoot//tei:note[deep-equal((@*|node()), $node/(@*|node()))]"><xsl:value-of select="local:get.note.nr(.)"/></xsl:for-each></xsl:when>
       <xsl:otherwise>
         <xsl:for-each select="$docRoot//*[deep-equal((@*|node()), $node/(@*|node()))]"><xsl:number count="*[name() eq $node/name()][tei:head]" level="any"/></xsl:for-each></xsl:otherwise>
     </xsl:choose>
@@ -467,7 +468,7 @@
       </xsl:if>
       <xsl:attribute name="n">
         <xsl:for-each select="$docRoot//tei:note[deep-equal((@*|node()), current()/(@*|node()))]">
-          <xsl:number value="count(preceding::tei:note[if (current()/@place) then @place = current()/@place else not(@place)]|.)" format="{if (not(@place) or @place eq 'foot') then '1' else 'i'}"/>
+          <xsl:value-of select="local:get.note.nr(.)"/>
         </xsl:for-each>
       </xsl:attribute>
       <xsl:choose>
@@ -698,7 +699,7 @@
     <xsl:variable name="labels">
       <xsl:for-each select="tokenize(@target, '\s+')">
         <xsl:variable name="target" select="key('ids', substring-after(., '#'), $docRoot/root())"/>
-        <label type="{$target/name()}" n="{substring-after(current(), '#')}">
+        <label type="{$target/name()}" n="{if ($target/self::tei:note) then concat('note', local:get.note.nr($target)) else substring-after(current(), '#')}">
           <xsl:apply-templates select="$target" mode="label">
             <xsl:with-param name="crossref.ptr" select="$current"/>
           </xsl:apply-templates>
@@ -1229,6 +1230,11 @@
   <xsl:function name="local:get.quoteLevel">
     <xsl:param name="current"/>
     <xsl:value-of select="count($current/ancestor::*[. intersect key('quotation.elements', local-name())])"/>
+  </xsl:function>
+  
+  <xsl:function name="local:get.note.nr">
+    <xsl:param name="node"/>
+    <xsl:number value="count($node/preceding::tei:note[if ($node/@place) then @place = $node/@place else not(@place)]|$node)" format="{if (not($node/@place) or $node/@place eq 'foot') then '1' else 'i'}"/>
   </xsl:function>
     
 </xsl:stylesheet>
