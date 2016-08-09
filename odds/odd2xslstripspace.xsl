@@ -93,6 +93,11 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:param name="content"/>
   </xsl:template>
+  
+  <xsl:template name="PMOut">
+    <xsl:param name="element"/>
+    <xsl:param name="content"/>
+  </xsl:template>
 
    <xsl:template name="typewriter">
       <xsl:param name="text"/>

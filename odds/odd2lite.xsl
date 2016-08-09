@@ -311,6 +311,13 @@ of this software, even if advised of the possibility of such damage.
 <xsl:apply-templates mode="verbatim" select="$content/*/*"/>
     </eg>
   </xsl:template>
+  <xsl:template name="PMOut">
+    <xsl:param name="content"/>
+    <xsl:param name="element">pre</xsl:param>
+    <eg xml:space="preserve">
+<xsl:apply-templates mode="verbatim" select="$content"/>
+    </eg>
+  </xsl:template>
   <xsl:template match="tei:remarks/tei:p">
       <xsl:apply-templates/>
       <xsl:if test="preceding-sibling::tei:p"><lb/></xsl:if>

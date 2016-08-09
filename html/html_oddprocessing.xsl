@@ -340,6 +340,15 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates mode="verbatim" select="$content/*/*"/>
     </xsl:element>
   </xsl:template>
+  <xsl:template name="PMOut">
+    <xsl:param name="content"/>
+    <xsl:param name="element">pre</xsl:param>
+    <xsl:message><xsl:copy-of select="$content"/></xsl:message>
+    <xsl:element name="{$element}">
+      <xsl:attribute name="class">eg</xsl:attribute>
+      <xsl:apply-templates mode="verbatim" select="$content"/>
+    </xsl:element>
+  </xsl:template>
   <xsl:template name="showSpace">
     <xsl:text> </xsl:text>
   </xsl:template>

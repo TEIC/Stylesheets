@@ -823,6 +823,32 @@
         <xsl:apply-templates mode="weave" select="tei:exemplum"/>
         <xsl:apply-templates mode="weave" select="tei:constraintSpec"/>
         <xsl:apply-templates mode="weave" select="tei:content"/>
+        <xsl:if test="tei:model | tei:modeGrp | tei:modelSequence">
+          <xsl:element namespace="{$outputNS}" name="{$rowName}">
+            <xsl:element namespace="{$outputNS}" name="{$cellName}">
+              <xsl:attribute name="{$rendName}">
+                <xsl:text>wovenodd-col1</xsl:text>
+              </xsl:attribute>
+              <xsl:element namespace="{$outputNS}" name="{$hiName}">
+                <xsl:attribute name="{$rendName}">
+                  <xsl:text>label</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="{$langAttributeName}">
+                  <xsl:value-of select="$documentationLanguage"/>
+                </xsl:attribute>
+                <xsl:sequence select="tei:i18n('ProcessingModel')"/>
+              </xsl:element>
+            </xsl:element>
+            <xsl:element namespace="{$outputNS}" name="{$cellName}">
+              <xsl:attribute name="{$rendName}">
+                <xsl:text>wovenodd-col2</xsl:text>
+              </xsl:attribute>
+              <xsl:call-template name="PMOut">
+                <xsl:with-param name="content"><xsl:apply-templates select="tei:model | tei:modeGrp | tei:modelSequence" mode="PureODD"/></xsl:with-param>
+              </xsl:call-template>
+            </xsl:element>
+          </xsl:element>
+        </xsl:if>
       </xsl:element>
     </xsl:element>
   </xsl:template>
@@ -924,6 +950,7 @@
       </xsl:element>
     </xsl:element>
   </xsl:template>
+  
   <xsl:template
     match="
       tei:constraintSpec[parent::tei:schemaSpec or parent::tei:elementSpec or
