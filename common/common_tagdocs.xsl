@@ -2849,37 +2849,52 @@
                 <xsl:attribute name="{$rendName}">
                   <xsl:text>specChild</xsl:text>
                 </xsl:attribute>
-                <xsl:if test="string-length(current-grouping-key()) > 0">
-                  <xsl:element namespace="{$outputNS}" name="{$segName}">
-                    <xsl:attribute name="{$rendName}">
-                      <xsl:text>specChildModule</xsl:text>
-                    </xsl:attribute>
-                    <xsl:value-of select="current-grouping-key()"/>
-                    <xsl:text>: </xsl:text>
-                  </xsl:element>
-                </xsl:if>
-                <xsl:element namespace="{$outputNS}" name="{$segName}">
-                  <xsl:attribute name="{$rendName}">
-                    <xsl:text>specChildElements</xsl:text>
-                  </xsl:attribute>
-                  <xsl:for-each-group select="current-group()" group-by="@name">
-                    <xsl:sort select="@name"/>
-                    <xsl:variable name="me" select="concat(@prefix, @name)"/>
-                    <xsl:variable name="display" select="@name"/>
-                    <xsl:variable name="type" select="@type"/>
+                <xsl:choose>
+                  <xsl:when test="@type='TEXT'">
+                    <xsl:sequence select="tei:i18n('character data')"/>
+                  </xsl:when>
+                  <xsl:when test="@type='ANYXML'">
                     <xsl:for-each select="$here">
                       <xsl:call-template name="linkTogether">
-                        <xsl:with-param name="name" select="$me"/>
-                        <xsl:with-param name="reftext" select="$display"/>
-                        <xsl:with-param name="class">link_odd_<xsl:value-of
-                            select="$type"/></xsl:with-param>
+                        <xsl:with-param name="name">macro.anyXML</xsl:with-param>
+                        <xsl:with-param name="class">link_odd</xsl:with-param>
                       </xsl:call-template>
                     </xsl:for-each>
-                    <xsl:if test="not(position() = last())">
-                      <xsl:call-template name="showSpaceBetweenItems"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:if test="string-length(current-grouping-key()) > 0">
+                      <xsl:element namespace="{$outputNS}" name="{$segName}">
+                        <xsl:attribute name="{$rendName}">
+                          <xsl:text>specChildModule</xsl:text>
+                        </xsl:attribute>
+                        <xsl:value-of select="current-grouping-key()"/>
+                        <xsl:text>: </xsl:text>
+                      </xsl:element>
                     </xsl:if>
-                  </xsl:for-each-group>
-                </xsl:element>
+                    <xsl:element namespace="{$outputNS}" name="{$segName}">
+                      <xsl:attribute name="{$rendName}">
+                        <xsl:text>specChildElements</xsl:text>
+                      </xsl:attribute>
+                      <xsl:for-each-group select="current-group()" group-by="@name">
+                        <xsl:sort select="@name"/>
+                        <xsl:variable name="me" select="concat(@prefix, @name)"/>
+                        <xsl:variable name="display" select="@name"/>
+                        <xsl:variable name="type" select="@type"/>
+                        <xsl:for-each select="$here">
+                          <xsl:call-template name="linkTogether">
+                            <xsl:with-param name="name" select="$me"/>
+                            <xsl:with-param name="reftext" select="$display"/>
+                            <xsl:with-param name="class">link_odd_<xsl:value-of
+                                select="$type"/></xsl:with-param>
+                          </xsl:call-template>
+                        </xsl:for-each>
+                        <xsl:if test="not(position() = last())">
+                          <xsl:call-template name="showSpaceBetweenItems"/>
+                        </xsl:if>
+                      </xsl:for-each-group>
+                    </xsl:element>
+                  </xsl:otherwise>
+                </xsl:choose>
               </xsl:element>
             </xsl:for-each-group>
           </xsl:element>
@@ -2888,8 +2903,8 @@
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="followRef">
-    <xsl:if test=".//rng:text or .//rng:data">
-      <Element prefix="{@prefix}" type="TEXT"/>
+    <xsl:if test=".//rng:text or .//rng:data or .//tei:textNode">
+      <Element prefix="{@prefix}" type="TEXT" module="~TEXT"/>
     </xsl:if>
     <xsl:for-each
       select=".//rng:ref | .//tei:elementRef | .//tei:classRef | .//tei:macroRef | .//tei:dataRef">
@@ -2909,7 +2924,7 @@
               <xsl:for-each select="tei:content">
                 <xsl:choose>
                   <xsl:when test="(rng:text or rng:data) and count(rng:*) = 1">
-                    <Element prefix="{@prefix}" type="TEXT"/>
+                    <Element prefix="{@prefix}" type="TEXT" module="~TEXT"/>
                   </xsl:when>
                   <xsl:otherwise>
                     <xsl:call-template name="followRef"/>
@@ -2921,7 +2936,7 @@
               <xsl:for-each select="tei:content">
                 <xsl:choose>
                   <xsl:when test="(rng:text or rng:data) and count(rng:*) = 1">
-                    <Element prefix="{@prefix}" type="TEXT"/>
+                    <Element prefix="{@prefix}" type="TEXT" module="~TEXT"/>
                   </xsl:when>
                   <xsl:otherwise>
                     <xsl:call-template name="followRef"/>
@@ -2937,6 +2952,9 @@
             </xsl:when>
           </xsl:choose>
         </xsl:for-each>
+      </xsl:if>
+      <xsl:if test="@key = 'macro.anyXML'">
+        <Element type="ANYXML" module="~anyXML"/>
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
