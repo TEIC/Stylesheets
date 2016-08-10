@@ -1905,17 +1905,17 @@
             <xsl:text>odd_label</xsl:text>
           </xsl:attribute>
           <xsl:value-of select="$name"/>
-          <xsl:if test="tei:paramList">
-            <xsl:text> (</xsl:text>
-            <xsl:value-of select="tei:paramList/tei:paramSpec/@ident"
-              separator=","/>
-            <xsl:text>)</xsl:text>
-          </xsl:if>
         </xsl:element>
         <xsl:element namespace="{$outputNS}" name="{$ddName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>odd_value</xsl:text>
           </xsl:attribute>
+          <xsl:if test="tei:paramList">
+            <xsl:text>(</xsl:text>
+            <xsl:value-of select="tei:paramList/tei:paramSpec/@ident"
+              separator=", "/>
+            <xsl:text>) </xsl:text>
+          </xsl:if>
           <xsl:sequence select="tei:makeDescription(., true())"/>
           <xsl:if test="@ident = ../../tei:defaultVal">
             <xsl:element namespace="{$outputNS}" name="{$hiName}">
