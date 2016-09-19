@@ -132,6 +132,15 @@
         <text xml:lang="nl" pl="voorbeelden">voorbeeld</text>
         <text xml:lang="pt">exemplo</text>
       </entry>
+      <entry xml:id="note-label">
+        <text xml:lang="de" pl="Anmerkungen">Anmerkung</text>
+        <text xml:lang="en">note</text>
+        <text xml:lang="es">nota</text>
+        <text xml:lang="fr">note</text>
+        <text xml:lang="it" pl="note">nota</text>
+        <text xml:lang="nl" pl="noten">note</text>
+        <text xml:lang="pt">notas</text>
+      </entry>
     </i18n>
   </xsl:variable>
 
