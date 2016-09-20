@@ -318,9 +318,9 @@ of this software, even if advised of the possibility of such damage.
 <xsl:apply-templates mode="verbatim" select="$content"/>
     </eg>
   </xsl:template>
-  <xsl:template match="tei:remarks/tei:p">
-      <xsl:apply-templates/>
-      <xsl:if test="preceding-sibling::tei:p"><lb/></xsl:if>
+  <xsl:template match="tei:remarks/tei:p | tei:remarks/tei:ab">
+      <xsl:copy><xsl:apply-templates/></xsl:copy>
+      <!--<xsl:if test="preceding-sibling::tei:p"><lb/></xsl:if>-->
   </xsl:template>
   <xsl:template match="tei:exemplum/tei:p">
       <xsl:apply-templates/>
