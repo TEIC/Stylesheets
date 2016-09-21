@@ -457,6 +457,7 @@
   
   <!-- add @n to <note> -->
   <xsl:template match="tei:note">
+    <xsl:param name="listnote.counter" tunnel="yes" as="xs:integer" select="0"/>
     <!-- only 'pull' subsequent puntuation once (i.e. unless it is done for the preceding element) -->
     <xsl:if test="not(preceding-sibling::node()[normalize-space()][1][. intersect key('quotation.elements', local-name())])">
       <xsl:call-template name="include.punctuation"/>
@@ -467,9 +468,8 @@
         <xsl:attribute name="place">foot</xsl:attribute>
       </xsl:if>
       <xsl:attribute name="n">
-        <xsl:for-each select="$docRoot//tei:note[deep-equal((@*|node()), current()/(@*|node()))]">
-          <xsl:value-of select="local:get.note.nr(.)"/>
-        </xsl:for-each>
+        <!-- notes inside lists are processed in isolation; therefore add counter of notes preceding the parent list (if available) to the relative numbering -->
+        <xsl:value-of select="local:get.note.nr(.) + $listnote.counter"/>
       </xsl:attribute>
       <xsl:choose>
         <xsl:when test="tei:p">
@@ -960,6 +960,7 @@
   
   <!-- [RvdB] added preprocessing step, which just copies the list, but wraps all contents of <item> in <p> prior to further processing -->
   <xsl:template match="tei:list">
+    <xsl:variable name="current" select="."/>
     <xsl:variable name="prepared">
       <xsl:apply-templates select="." mode="prepare"/>
     </xsl:variable>
@@ -968,7 +969,10 @@
       <xsl:copy>
         <xsl:apply-templates select="@*"/>
         <xsl:call-template name="get.rendition"/>
-        <xsl:apply-templates select="node()[not(self::tei:head)]"/>
+        <xsl:apply-templates select="node()[not(self::tei:head)]">
+          <!-- count preceding notes and pass this info for further processing of notes -->
+          <xsl:with-param name="listnote.counter" select="count($current/preceding::tei:note)" tunnel="yes"/>
+        </xsl:apply-templates>
       </xsl:copy>
     </xsl:for-each>
   </xsl:template>
