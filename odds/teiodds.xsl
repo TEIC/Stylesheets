@@ -57,6 +57,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
 
   <xsl:include href="RngToRnc.xsl"/>
+  <xsl:param name="maxint" select="3" as="xs:integer"/>
   <xsl:param name="STDOUT">true</xsl:param>
   <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="autoGlobal">false</xsl:param>
@@ -1153,6 +1154,8 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
   
   <xsl:template match="tei:dataRef" mode="#default tangle">
+    <xsl:message>DEBUG: teiodds.xsl**dataRef(<xsl:value-of
+      select="string-join( for $a in @* return concat( local-name($a),'=',normalize-space($a)),' ')"/>) in either #default or tangle mode</xsl:message>
     <xsl:variable name="wrapperElement" select="tei:generateIndicators(@minOccurs, @maxOccurs)"/>
     <xsl:variable name="min"
       select="
@@ -2261,10 +2264,46 @@ select="$makeDecls"/></xsl:message>
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="min" select="if (not(@minOccurs)) then 1 else
-      if (@minOccurs='0') then 1 else @minOccurs" as="xs:integer"/>
-    <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
-    <!-- BUG: doesn't properly handle, e.g. minOccurs="2" -->
-    <xsl:for-each select="1 to $min">
+      @minOccurs" as="xs:integer"/>
+    <xsl:variable name="max" select="if (not(@maxOccurs)) then 1 else
+      if (@maxOccurs='unbounded') then $maxint else @maxOccurs" as="xs:integer"/>
+    <xsl:message>DEBUG: processing <xsl:value-of
+      select="concat( local-name(.), '#', @key, ' in ', ancestor::*[@ident][1]/@ident )"/>, I have "<xsl:value-of
+      select="$c"/>", min=<xsl:value-of select="$min"/>, max=<xsl:value-of
+        select="$max"/>, wrapperGI=<xsl:value-of select="$wrapperElement"/>.</xsl:message>
+    <xsl:choose>
+      <xsl:when test="$min eq 1  and  $max eq 1">
+        <xsl:copy-of select="$c"/>
+      </xsl:when>
+      <xsl:when test="$min = ( 0, 1 )  and  $max = ( 1, $maxint )">
+        <xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
+          <xsl:copy-of select="$c"/>
+        </xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+        <rng:group>
+          <xsl:for-each select="1 to $min">
+            <xsl:copy-of select="$c"/>
+          </xsl:for-each>
+          <xsl:choose>
+            <xsl:when test="$max ge $maxint">
+              <rng:oneOrMore>
+                <xsl:comment> ODD calls for <xsl:value-of select="$max - $min"/> optional occurrences </xsl:comment>
+                <xsl:copy-of select="$c"/>
+              </rng:oneOrMore>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:variable name="count" select="$max - $min"/>
+              <xsl:call-template name="generateDeterministicOptionals">
+                <xsl:with-param name="count" select="$count"/>
+                <xsl:with-param name="c" select="$c"/>
+              </xsl:call-template>
+            </xsl:otherwise>
+          </xsl:choose>
+        </rng:group>
+      </xsl:otherwise>
+    </xsl:choose>
+    <!-- xsl:for-each select="1 to $min">
       <xsl:choose>
         <xsl:when test="string-length($wrapperElement)=0">
           <xsl:copy-of select="$c"/>
@@ -2275,25 +2314,36 @@ select="$makeDecls"/></xsl:message>
           </xsl:element>
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:for-each>
+    </xsl:for-each -->
   </xsl:template>
 
   <xsl:function name="tei:generateIndicators" as="xs:string">
-    <xsl:param name="min"/>
-    <xsl:param name="max"/>
+    <xsl:param name="minstr"/>
+    <xsl:param name="maxstr"/>
+    <!-- Discussion 2016-08-30 by Syd: -->
+    <!-- I found this routine testing strings. That's not OK, as the attrs -->
+    <!-- @minOccurs and @maxOccurs are defined as counts: a user should be -->
+    <!-- able to enter minOccurs="02" and get the same result as if she had -->
+    <!-- entered minOccurs='2'. So I've changed this to test for integers -->
+    <!-- instead. The result is a) we depend on the parameter $maxint to be -->
+    <!-- a number that is never used on either attribute, and b) we end up -->
+    <!-- duplicating some of the logic from <elementRef> here. Oh well. -->
+    <!-- Also note that the code here gave 'oneOrMore' to @minOccurs of -->
+    <!-- 1+ and @maxOccurs of unbounded. I've reduced that to returning -->
+    <!-- 'oneOrMore' only when @minOccurs is 1. The logic in <elementRef> -->
+    <!-- processing should do the right thing when @minOccurs is 2+. I -->
+    <!-- can not (yet) speak for the logic in other places this routine is -->
+    <!-- called, though, so this may really foul things up. -->
+    <xsl:variable name="maxstr" select="if ( $maxstr eq 'unbounded' ) then $maxint else $maxstr"/>
+    <xsl:variable name="min" select="if ( $minstr ) then xs:integer( $minstr ) else 0" as="xs:integer"/>
+    <xsl:variable name="max" select="if ( $maxstr ) then xs:integer( $maxstr ) else 1" as="xs:integer"/>
     <xsl:choose>
-      <xsl:when test="$min='0' and $max='1'">optional</xsl:when>
-      <xsl:when test="$min='0' and not($max)">optional</xsl:when>
-      <xsl:when test="number($min) ge 1 and $max='unbounded'">oneOrMore</xsl:when>
-      <xsl:when test="number($min) ge 1 and not($max)">oneOrMore</xsl:when>
-      <xsl:when test="not($min) and $max='unbounded'">oneOrMore</xsl:when>
-      <xsl:when test="$min='0' and $max='unbounded'">zeroOrMore</xsl:when>
-      <xsl:otherwise>
-	<xsl:text></xsl:text>
-      </xsl:otherwise>
+      <xsl:when test="$min eq 0  and  $max eq  1     ">optional</xsl:when>
+      <xsl:when test="$min ge 1  and  $max eq $maxint">oneOrMore</xsl:when>
+      <xsl:when test="$min eq 0  and  $max eq $maxint">zeroOrMore</xsl:when>
+      <xsl:otherwise><xsl:text/></xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-
 
   <xsl:function name="tei:generateAttRef" as="xs:string">
     <xsl:param name="context"/>
@@ -2323,7 +2373,23 @@ select="$makeDecls"/></xsl:message>
     <xsl:value-of select="$result"/>
   </xsl:function>
 
-
+  <xsl:template name="generateDeterministicOptionals">
+    <xsl:param name="count"/>
+    <xsl:param name="c"/>
+    <xsl:choose>
+      <xsl:when test="$count eq 0"/>
+      <xsl:otherwise>
+        <rng:optional>
+          <xsl:copy-of select="$c"/>
+          <xsl:call-template name="generateDeterministicOptionals">
+            <xsl:with-param name="count" select="$count - 1"/>
+            <xsl:with-param name="c" select="$c"/>
+          </xsl:call-template>
+        </rng:optional>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   <xsl:function name="tei:generateRefPrefix" as="xs:string">
     <xsl:param name="context"/>
     <!-- where we meet a pointer, we have a choice of how to proceed

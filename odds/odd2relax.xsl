@@ -622,18 +622,11 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:dataRef" mode="#default tangle">
+    <xsl:message>DEBUG: odd2relax.xsl**dataRef(<xsl:value-of
+      select="string-join( for $a in @* return concat( local-name($a),'=',normalize-space($a)),' ')"/>) in either #default or tangle mode</xsl:message>
     <xsl:variable name="wrapperElement" select="tei:generateIndicators(@minOccurs, @maxOccurs)"/>
-    <xsl:variable name="min"
-      select="
-      if (not(@minOccurs)) then
-      1
-      else
-      if (@minOccurs = '0') then
-      1
-      else
-      @minOccurs"
-      as="xs:integer"/>
-    <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
+  	<xsl:variable name="min" select="if (not(@minOccurs)) then 1 else @minOccurs" as="xs:integer"/>
+  	<xsl:variable name="max" select="if (not(@maxOccurs)) then 1 else if (@maxOccurs='unbounded') then $maxint else @maxOccurs" as="xs:integer"/>
     <xsl:variable name="c">
       <xsl:choose>
         <xsl:when test="@name">
@@ -659,19 +652,38 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
       </xsl:choose>
     </xsl:variable>
-    <xsl:for-each select="1 to $min">
-      <xsl:choose>
-        <xsl:when test="string-length($wrapperElement) = 0">
-          <xsl:copy-of select="$c"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
-            <xsl:copy-of select="$c"/>
-          </xsl:element>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+  	<xsl:choose>
+  		<xsl:when test="$min eq 1  and  $max eq 1">
+  			<xsl:copy-of select="$c"/>
+  		</xsl:when>
+  		<xsl:when test="$min = ( 0, 1 )  and  $max = ( 1, $maxint )">
+  			<xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
+  				<xsl:copy-of select="$c"/>
+  			</xsl:element>
+  		</xsl:when>
+  		<xsl:otherwise>
+  			<rng:group>
+  				<xsl:for-each select="1 to $min">
+  					<xsl:copy-of select="$c"/>
+  				</xsl:for-each>
+  				<xsl:choose>
+  					<xsl:when test="$max ge $maxint">
+  						<rng:oneOrMore>
+  							<xsl:comment> ODD calls for <xsl:value-of select="$max - $min"/> optional occurrences </xsl:comment>
+  							<xsl:copy-of select="$c"/>
+  						</rng:oneOrMore>
+  					</xsl:when>
+  					<xsl:otherwise>
+  						<xsl:variable name="count" select="$max - $min"/>
+  						<xsl:call-template name="generateDeterministicOptionals">
+  							<xsl:with-param name="count" select="$count"/>
+  							<xsl:with-param name="c" select="$c"/>
+  						</xsl:call-template>
+  					</xsl:otherwise>
+  				</xsl:choose>
+  			</rng:group>
+  		</xsl:otherwise>
+  	</xsl:choose>
   </xsl:template>  
 
-
-</xsl:stylesheet>
+  </xsl:stylesheet>
