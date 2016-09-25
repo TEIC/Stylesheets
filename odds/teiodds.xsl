@@ -2124,28 +2124,40 @@ select="$makeDecls"/></xsl:message>
    </xsl:template>
 
    <!-- for Pure ODD -->
-  <!-- BUG? Are we too heavy on the rng:groups here? -->
   <xsl:template match="tei:sequence" mode="#default tangle">
     <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <xsl:variable name="rng_name">
+      <!-- Sequences of datatypes need use rng:list -->
+      <xsl:variable name="content" select="distinct-values(*/local-name())"/>
+      <xsl:choose>
+        <xsl:when test="count($content)=1 and $content = 'dataRef'">
+          <xsl:text>list</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>group</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:choose>
+      
       <xsl:when test="@preserveOrder='false' and
         string-length($suffix)=0">
-        <group  xmlns="http://relaxng.org/ns/structure/1.0">
+        <xsl:element name="{$rng_name}" namespace="http://relaxng.org/ns/structure/1.0">
           <interleave>
             <xsl:apply-templates   mode="tangle"/>
           </interleave>
-        </group>
+        </xsl:element>
       </xsl:when>
       <xsl:when test="string-length($suffix)=0">
-        <group  xmlns="http://relaxng.org/ns/structure/1.0">
+        <xsl:element name="{$rng_name}" namespace="http://relaxng.org/ns/structure/1.0">
           <xsl:apply-templates   mode="tangle"/>
-        </group>
+        </xsl:element>
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="{$suffix}" xmlns="http://relaxng.org/ns/structure/1.0">
-          <group xmlns="http://relaxng.org/ns/structure/1.0">
+          <xsl:element name="{$rng_name}" namespace="http://relaxng.org/ns/structure/1.0">
             <xsl:apply-templates    mode="tangle"/>
-          </group>
+          </xsl:element>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
