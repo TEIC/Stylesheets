@@ -53,6 +53,7 @@
     xmlns:expath-file="http://expath.org/ns/file"
     xmlns:java="http://www.java.com/"
     xmlns:i18n="i18n"
+    xmlns:local="local"
   >
   
   <xsl:import href="../i18n.xsl"/>
@@ -270,6 +271,9 @@
       <xsl:when test="$targEl[self::table]">
         <xsl:value-of select="concat(hcmc:capitalize(i18n:key('table-label'), $capitalize), ' ', count($targEl/preceding::table) + 1)"/>
       </xsl:when>
+      <xsl:when test="$targEl[self::note]">
+        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('note-label'), $capitalize), ' ', local:get.note.nr($targEl))"/>
+      </xsl:when>
       <xsl:otherwise><xsl:value-of select="''"/></xsl:otherwise>
     </xsl:choose>
     
@@ -477,11 +481,12 @@
       <xsl:for-each select="$targIds">
         <xsl:variable name="targetEl" select="$theDoc//*[@xml:id=current()][1]"/>
         <xsl:message><xsl:value-of select="concat('Finding link to ', for $s in string($targetEl) return concat(substring($s, 1, 40), if (string-length($s) > 40) then '...' else ''))"/></xsl:message>
-        <label type="{$targetEl/name()}" n="{current()}">
+        <label type="{$targetEl/name()}" n="{if ($targetEl/self::note) then concat('ftn', local:get.note.nr($targetEl)) else current()}">
           <xsl:choose>
             <xsl:when test="local-name($targetEl) = 'div'"><xsl:value-of select="hcmc:getSectionLinkText($targetEl, $current)"/></xsl:when>
             <xsl:when test="local-name($targetEl) = 'figure'"><xsl:value-of select="hcmc:getSectionLinkText($targetEl, $current)"/></xsl:when>
             <xsl:when test="local-name($targetEl) = 'table'"><xsl:value-of select="hcmc:getSectionLinkText($targetEl, $current)"/></xsl:when>
+            <xsl:when test="local-name($targetEl) = 'note'"><xsl:value-of select="hcmc:getSectionLinkText($targetEl, $current)"/></xsl:when>
           </xsl:choose>
         </label>
       </xsl:for-each>
@@ -526,8 +531,8 @@
       
 <!--    Footnotes -->
     <xsl:template match="note">
-        <xsl:variable name="noteNum" select="count(preceding::note) + 1"/>
-        <text:span text:style-name="T1"><text:note text:id="ftn{$noteNum}" text:note-class="footnote"><text:note-citation><xsl:value-of select="$noteNum"/></text:note-citation><text:note-body><text:p text:style-name="teiFootnote"><text:span text:style-name="footnote_20_reference"/><xsl:text>. </xsl:text> <xsl:apply-templates /></text:p></text:note-body></text:note></text:span>
+      <xsl:variable name="noteNum" select="local:get.note.nr(.)"/>
+      <text:span text:style-name="T1"><text:note text:id="ftn{$noteNum}" text:note-class="{if (@place eq 'end') then 'endnote' else 'footnote'}"><text:note-citation><xsl:value-of select="$noteNum"/></text:note-citation><text:note-body><text:p text:style-name="teiFootnote"><text:span text:style-name="footnote_20_reference"/><xsl:text>. </xsl:text> <xsl:apply-templates /></text:p></text:note-body></text:note></text:span>
     </xsl:template>
     
 <!--    Tables. -->
@@ -917,6 +922,11 @@
       <xsl:variable name="filePath" select="replace(replace(resolve-uri($graphicUrl), '%20', ' '), 'file:', '')"/>
       <xsl:message>File is deemed to be at: <xsl:value-of select="$filePath"/></xsl:message>
       <xsl:value-of select="expath-file:read-binary($filePath)"/>
+  </xsl:function>
+  
+  <xsl:function name="local:get.note.nr" as="xs:string">
+    <xsl:param name="node"/>
+    <xsl:number value="count($node/preceding::note[if ($node/@place) then @place = $node/@place else not(@place)]|$node)" format="{if (not($node/@place) or $node/@place eq 'foot') then '1' else 'i'}"/>
   </xsl:function>
 
   <xsl:template name="enumerate">
