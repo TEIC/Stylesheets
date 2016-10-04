@@ -208,7 +208,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="$loc"/>
 	</xsl:when>
 	<xsl:when test="starts-with($loc,'/')">
-	  <xsl:value-of select="resolve-uri($loc)"/>
+	  <xsl:value-of select="resolve-uri($loc, 'file:///')"/>
 	</xsl:when>
 	<xsl:when test="starts-with($loc,'tei:')">
 	  <xsl:value-of
