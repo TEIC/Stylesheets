@@ -150,17 +150,16 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="parent::teix:egXML and not(parent::teix:egXML/*)">
         <xsl:call-template name="verbatim-Text">
           <xsl:with-param name="words">
-	    <xsl:value-of select="translate(.,' ','&#160;')"/>
-	  </xsl:with-param>
-	</xsl:call-template>
+            <xsl:value-of select="translate(., ' ', '&#160;')"/>
+          </xsl:with-param>
+        </xsl:call-template>
       </xsl:when>
-      <xsl:when
-	  test="ancestor::*[@xml:space][1]/@xml:space='preserve'">
+      <xsl:when test="ancestor::*[@xml:space][1]/@xml:space = 'preserve'">
         <xsl:call-template name="verbatim-Text">
           <xsl:with-param name="words">
-	    <xsl:value-of select="translate(.,' ','&#160;')"/>
-	  </xsl:with-param>
-	</xsl:call-template>
+            <xsl:value-of select="translate(., ' ', '&#160;')"/>
+          </xsl:with-param>
+        </xsl:call-template>
       </xsl:when>
       <xsl:when test="$forceWrap='true'">
         <xsl:variable name="indent">
@@ -186,7 +185,8 @@ of this software, even if advised of the possibility of such damage.
           <xsl:value-of select="$indent"/>
         </xsl:if>
       </xsl:when>
-      <xsl:when test="not(preceding-sibling::node() or         contains(.,'&#10;'))">
+      <!-- text node isn't first child and doesn't contain a line feed -->
+      <xsl:when test="not(preceding-sibling::node() or contains(.,'&#10;'))">
         <xsl:if test="starts-with(.,' ')">
           <xsl:text> </xsl:text>
         </xsl:if>
@@ -199,6 +199,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:text> </xsl:text>
         </xsl:if>
       </xsl:when>
+      <!-- text node consists of whitespace -->
       <xsl:when test="normalize-space(.)=''">
         <xsl:for-each select="following-sibling::*[1]">
           <xsl:call-template name="verbatim-lineBreak">
@@ -211,13 +212,11 @@ of this software, even if advised of the possibility of such damage.
         <xsl:call-template name="verbatim-wraptext">
           <xsl:with-param name="count">0</xsl:with-param>
           <xsl:with-param name="indent">
-            <xsl:for-each select="parent::*">
-              <xsl:call-template name="verbatim-makeIndent"/>
-            </xsl:for-each>
+            <xsl:call-template name="verbatim-makeIndent"/>
           </xsl:with-param>
           <xsl:with-param name="text">
             <xsl:choose>
-              <xsl:when test="starts-with(.,'&#10;') and not          (preceding-sibling::node())">
+              <xsl:when test="starts-with(.,'&#10;') and not(preceding-sibling::node())">
                 <xsl:value-of select="translate(substring(.,2),'&#10;','⌤')"/>
               </xsl:when>
               <xsl:otherwise>
@@ -413,18 +412,21 @@ of this software, even if advised of the possibility of such damage.
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
+      <!-- first child -->
       <xsl:when test="not(preceding-sibling::node())">
         <xsl:call-template name="verbatim-lineBreak">
           <xsl:with-param name="id">-2</xsl:with-param>
         </xsl:call-template>
         <xsl:call-template name="verbatim-makeIndent"/>
       </xsl:when>
+      <!-- preceding sibling is an element -->
       <xsl:when test="preceding-sibling::node()[1]/self::*">
         <xsl:call-template name="verbatim-lineBreak">
           <xsl:with-param name="id">1</xsl:with-param>
         </xsl:call-template>
         <xsl:call-template name="verbatim-makeIndent"/>
       </xsl:when>
+      <!-- preceding sibling is a text node -->
       <xsl:when test="preceding-sibling::node()[1]/self::text()"> </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="verbatim-lineBreak">
@@ -472,6 +474,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:apply-templates>
         <xsl:choose>
           <xsl:when test="ancestor::*[@xml:space][1]/@xml:space = 'preserve'"/>
+          <!-- last child is a text node containing only whitespace -->
           <xsl:when test="child::node()[last()]/self::text()[normalize-space(.) = '']">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">3</xsl:with-param>
@@ -480,18 +483,21 @@ of this software, even if advised of the possibility of such damage.
           </xsl:when>
           <!-- Don't insert a linebreak for mixed content?? -->
           <xsl:when test="child::node()[last()]/self::text() and child::node()[1]/self::text()"/>
-          <xsl:when test="not(parent::*) or parent::teix:egXML or parent::PureODD">
+          <!-- element is the root node of the example -->
+          <xsl:when test="not(parent::*) or ((parent::teix:egXML or parent::PureODD) and not(child::text()))">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">23</xsl:with-param>
             </xsl:call-template>
           </xsl:when>
+          <!-- last child is a comment -->
           <xsl:when test="child::node()[last()]/self::comment()">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">4</xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="verbatim-makeIndent"/>
           </xsl:when>
-          <xsl:when test="child::node()[last()]/self::*">
+          <!-- element contains only element children -->
+          <xsl:when test="not(child::text())">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">5</xsl:with-param>
             </xsl:call-template>
