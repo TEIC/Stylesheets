@@ -110,11 +110,11 @@ of this software, even if advised of the possibility of such damage.
       <desc>CSS style file to be associated with output file(s)</desc>
 
    </doc>
-  <xsl:param name="cssFile" as="xs:string">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
+  <xsl:param name="cssFile" as="xs:string">tei.css</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
       <desc>CSS style file for print; this will be given a media=print attribute.</desc>
    </doc>
-  <xsl:param name="cssPrintFile" as="xs:string">http://www.tei-c.org/release/xml/tei/stylesheet/tei-print.css</xsl:param>
+  <xsl:param name="cssPrintFile" as="xs:string">tei-print.css</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
       <desc>Secondary CSS style file; this will be given a media=screen attribute,
 so that it does not affect printing. It should be used for screen layout.</desc>
