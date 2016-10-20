@@ -1022,9 +1022,9 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:equiv">
               <xsl:apply-templates mode="justcopy"
-				   select="tei:equiv">
-		<xsl:with-param name="rend">replace</xsl:with-param>
-	      </xsl:apply-templates>
+                select="tei:equiv">
+                <xsl:with-param name="rend">replace</xsl:with-param>
+              </xsl:apply-templates>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates mode="odd2odd-copy" select="$ORIGINAL/tei:equiv"/>
@@ -1033,8 +1033,8 @@ of this software, even if advised of the possibility of such damage.
           <xsl:choose>
             <xsl:when test="tei:gloss">
               <xsl:apply-templates mode="justcopy" select="tei:gloss">
-		<xsl:with-param name="rend">replace</xsl:with-param>
-	      </xsl:apply-templates>
+                <xsl:with-param name="rend">replace</xsl:with-param>
+              </xsl:apply-templates>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:gloss"/>
@@ -1044,35 +1044,35 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:desc">
               <xsl:apply-templates mode="justcopy" select="tei:desc">
-		<xsl:with-param name="rend">replace</xsl:with-param>
-	      </xsl:apply-templates>
+                <xsl:with-param name="rend">replace</xsl:with-param>
+              </xsl:apply-templates>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:desc"/>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:desc"/>
             </xsl:otherwise>
           </xsl:choose>
           <!-- content -->
           <xsl:choose>
             <xsl:when test="tei:dataRef">
               <xsl:apply-templates mode="justcopy"
-				   select="tei:dataRef">
-		<xsl:with-param name="rend">replace</xsl:with-param>
-	      </xsl:apply-templates>
+                select="tei:dataRef">
+                <xsl:with-param name="rend">replace</xsl:with-param>
+              </xsl:apply-templates>
             </xsl:when>
             <xsl:when test="tei:content">
               <xsl:apply-templates mode="justcopy"
-				   select="tei:content">
-		<xsl:with-param name="rend">replace</xsl:with-param>
-	      </xsl:apply-templates>
+                select="tei:content">
+                <xsl:with-param name="rend">replace</xsl:with-param>
+              </xsl:apply-templates>
             </xsl:when>
-	    <xsl:when test="$ORIGINAL/tei:dataRef">
+            <xsl:when test="$ORIGINAL/tei:dataRef">
               <xsl:apply-templates mode="odd2odd-copy"
-				   select="$ORIGINAL/tei:dataRef">
-		<xsl:with-param name="rend">replace</xsl:with-param>
-	      </xsl:apply-templates>
+                select="$ORIGINAL/tei:dataRef">
+                <xsl:with-param name="rend">replace</xsl:with-param>
+              </xsl:apply-templates>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:apply-templates mode="odd2odd-copy" select="$ORIGINAL/tei:content"/>
+              <xsl:apply-templates mode="odd2odd-copy" select="$ORIGINAL/tei:content"/>
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
@@ -1221,8 +1221,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="rng:choice|rng:list|rng:group|rng:optional|rng:oneOrMore|rng:zeroOrMore" mode="odd2odd-copy">
     <xsl:call-template name="odd2odd-simplifyRelax"/>
   </xsl:template>
-  <xsl:template match="tei:alternate|tei:sequence|tei:valList[ancestor::tei:content]" mode="odd2odd-copy">
+  <xsl:template match="tei:alternate|tei:sequence" mode="odd2odd-copy">
     <xsl:call-template name="odd2odd-simplifyODD"/>
+  </xsl:template>
+  <xsl:template match="tei:valList[ancestor::tei:content]" mode="odd2odd-copy">
+    <xsl:copy-of select="."/>
   </xsl:template>
   <xsl:template name="odd2odd-simplifyRelax">
     <xsl:variable name="element">
@@ -1389,7 +1392,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="self::tei:valList">
               <xsl:copy-of select="."/>
             </xsl:when>
-            <xsl:when test="self::tei:classRef or self::tei:elementRef or self::tei:macroRef">
+            <xsl:when test="self::tei:classRef or self::tei:elementRef or self::tei:macroRef or self::tei:dataRef">
               <xsl:variable name="N" select="@key"/>
               <xsl:variable name="current" select="."/>
               <xsl:for-each select="$ODD">
@@ -2132,7 +2135,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@prefix"/>
       <xsl:value-of select="@ident"/>
     </xsl:variable>
-    <xsl:variable name="foo" select="key('odd2odd-REFED', $k)"/>
     <xsl:choose>
       <xsl:when test="$stripped='true' and starts-with($k,'macro.')"/>
       <xsl:when test="key('odd2odd-REFED',$k)">
