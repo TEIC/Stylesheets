@@ -519,12 +519,13 @@ of this software, even if advised of the possibility of such damage.
   </d:doc>
   <xsl:function name="tei:makePatternID" as="xs:string">
     <xsl:param name="context"/>
+    <xsl:variable name="scheme" select="$context/ancestor-or-self::constraintSpec/@scheme"/>
     <xsl:for-each select="$context">
       <xsl:variable name="num">
         <xsl:number level="any"/>
       </xsl:variable>
       <xsl:value-of
-        select="(../ancestor::*[@ident]/@ident,'constraint',../@ident,$num)"
+        select="( $scheme, 'constraint', ancestor-or-self::*[@ident]/@ident, $num )"
         separator="-"/>
     </xsl:for-each>
   </xsl:function>
