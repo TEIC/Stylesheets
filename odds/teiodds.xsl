@@ -947,7 +947,6 @@ select="$makeDecls"/></xsl:message>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="att.global.attributes"/>
       </xsl:if>
       <xsl:for-each select="tei:classes/tei:memberOf">
-        <xsl:message><xsl:value-of select="$ORIGINAL/@ident"/>:<xsl:copy-of select="."/></xsl:message>
         <xsl:for-each select="key('CLASSES',@key)">
           <xsl:if test="@type='atts'">
             <ref xmlns="http://relaxng.org/ns/structure/1.0">
