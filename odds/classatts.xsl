@@ -79,7 +79,7 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Walk over each class membership; visit that class; see it has attributes; check each of
+    <desc>Walk over each class membership; visit that class; see if it has attributes; check each of
       these against an override in original element. If so, merge the two together and make a local
       copy. If a class has triggered this behaviour, return pointers to untouched class attributes,
       and a set of attDefs. Otherwise, return a memberOf. A note is made of any class attribute

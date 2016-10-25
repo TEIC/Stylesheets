@@ -389,32 +389,32 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:classSpec" mode="tangle">
     <xsl:variable name="c">
       <xsl:choose>
-	<xsl:when test="@prefix">
-	  <xsl:value-of select="@prefix"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="$generalPrefix"/>
-	</xsl:otherwise>
+        <xsl:when test="@prefix">
+          <xsl:value-of select="@prefix"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$generalPrefix"/>
+        </xsl:otherwise>
       </xsl:choose>
       <xsl:value-of select="@ident"/>
     </xsl:variable>
-
+    
     <xsl:if test="$verbose='true'">
       <xsl:message> classSpec <xsl:value-of select="@ident"/> (type <xsl:value-of select="@type"
-        />)</xsl:message>
+      />)</xsl:message>
     </xsl:if>
     <xsl:choose>
       <xsl:when test="@type='model'">
         <xsl:apply-templates mode="processModel" select=".">
           <xsl:with-param name="declare">false</xsl:with-param>
           <!--	    <xsl:choose>
-	      <xsl:when test="@module='tei'">true</xsl:when>
-	      <xsl:otherwise>false</xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:with-param>
--->
+            <xsl:when test="@module='tei'">true</xsl:when>
+            <xsl:otherwise>false</xsl:otherwise>
+            </xsl:choose>
+            </xsl:with-param>
+          -->
         </xsl:apply-templates>
-	<xsl:apply-templates select="tei:constraintSpec"/>
+        <xsl:apply-templates select="tei:constraintSpec"/>
       </xsl:when>
       <xsl:when test="@type='atts'">
         <xsl:call-template name="schemaOut">
@@ -427,19 +427,19 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:for-each select="key('LOCALIDENTS',@key)[1]">
                       <xsl:if test="@type='atts'">
                         <ref  xmlns="http://relaxng.org/ns/structure/1.0">
-			  <xsl:attribute name="name">
-			    <xsl:choose>
-			      <xsl:when test="@prefix">
-				<xsl:value-of select="@prefix"/>
-			      </xsl:when>
-			      <xsl:otherwise>
-				<xsl:value-of select="$generalPrefix"/>
-			      </xsl:otherwise>
-			    </xsl:choose>
-			    <xsl:value-of select="@ident"/>
-			    <xsl:text>.attributes</xsl:text>
-			  </xsl:attribute>
-			</ref>
+                          <xsl:attribute name="name">
+                            <xsl:choose>
+                              <xsl:when test="@prefix">
+                                <xsl:value-of select="@prefix"/>
+                              </xsl:when>
+                              <xsl:otherwise>
+                                <xsl:value-of select="$generalPrefix"/>
+                              </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:value-of select="@ident"/>
+                            <xsl:text>.attributes</xsl:text>
+                          </xsl:attribute>
+                        </ref>
                       </xsl:if>
                     </xsl:for-each>
                   </xsl:for-each>
@@ -450,37 +450,37 @@ of this software, even if advised of the possibility of such damage.
                     </xsl:if>
                   </xsl:for-each>
                   <xsl:for-each select="tei:attList//tei:attRef">
-		    <xsl:choose>
-		      <xsl:when test="key('LOCALIDENTS',@class)">
-			<ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateAttRef(.,$generalPrefix)}"/>
-		      </xsl:when>
-		      <xsl:when test="@class"/>
-		      <xsl:otherwise>
-			<ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
-		      </xsl:otherwise>
-		    </xsl:choose>
+                    <xsl:choose>
+                      <xsl:when test="key('LOCALIDENTS',@class)">
+                        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{tei:generateAttRef(.,$generalPrefix)}"/>
+                      </xsl:when>
+                      <xsl:when test="@class"/>
+                      <xsl:otherwise>
+                        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
+                      </xsl:otherwise>
+                    </xsl:choose>
                   </xsl:for-each>
                 </ROOT>
               </xsl:variable>
               <define xmlns="http://relaxng.org/ns/structure/1.0"
-		      name="{$c}.attributes">
-		<xsl:for-each select="$contents/ROOT">
-		  <xsl:apply-templates mode="justcopy"/>
-		  <xsl:if test="not($contents/ROOT/*)">
-		    <empty/>
-		  </xsl:if>
-		</xsl:for-each>
+                name="{$c}.attributes">
+                <xsl:for-each select="$contents/ROOT">
+                  <xsl:apply-templates mode="justcopy"/>
+                  <xsl:if test="not($contents/ROOT/*)">
+                    <empty/>
+                  </xsl:if>
+                </xsl:for-each>
               </define>
               <xsl:apply-templates mode="tangle" select="tei:attList//tei:attDef">
                 <xsl:with-param name="element" select="$c"/>
               </xsl:apply-templates>
-	      <xsl:apply-templates select="tei:constraintSpec"/>
+              <xsl:apply-templates select="tei:constraintSpec"/>
             </Wrapper>
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
     </xsl:choose>
-
+    
   </xsl:template>
 
   <xsl:template match="tei:classSpec" mode="processModel">
@@ -926,53 +926,55 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
   <xsl:template name="defineAttributes">
+    <xsl:variable name="ORIGINAL" select="."/>
     <xsl:variable name="name">
       <xsl:choose>
-	<xsl:when test="@prefix">
-	  <xsl:value-of select="@prefix"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="$generalPrefix"/>
-	</xsl:otherwise>
+        <xsl:when test="@prefix">
+          <xsl:value-of select="@prefix"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$generalPrefix"/>
+        </xsl:otherwise>
       </xsl:choose>
       <xsl:value-of select="@ident"/>
     </xsl:variable>
     <xsl:if test="$verbose='true'">
       <xsl:message>   now define attributes for <xsl:value-of
-      select="@ident"/> (parameterize=<xsl:value-of select="$parameterize"/>)</xsl:message>
+        select="@ident"/> (parameterize=<xsl:value-of select="$parameterize"/>)</xsl:message>
     </xsl:if>
     <xsl:if test="$parameterize='true'">
       <xsl:if test="$autoGlobal='true'">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="att.global.attributes"/>
       </xsl:if>
       <xsl:for-each select="tei:classes/tei:memberOf">
+        <xsl:message><xsl:value-of select="$ORIGINAL/@ident"/>:<xsl:copy-of select="."/></xsl:message>
         <xsl:for-each select="key('CLASSES',@key)">
           <xsl:if test="@type='atts'">
             <ref xmlns="http://relaxng.org/ns/structure/1.0">
-	      <xsl:attribute name="name">
-		<xsl:choose>
-		  <xsl:when test="@prefix">
-		    <xsl:value-of select="@prefix"/>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:value-of select="$generalPrefix"/>
-		  </xsl:otherwise>
-		</xsl:choose>
-		<xsl:value-of select="@ident"/>
-		<xsl:text>.attributes</xsl:text>
-	      </xsl:attribute>
-	    </ref>
+              <xsl:attribute name="name">
+                <xsl:choose>
+                  <xsl:when test="@prefix">
+                    <xsl:value-of select="@prefix"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="$generalPrefix"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+                <xsl:value-of select="@ident"/>
+                <xsl:text>.attributes</xsl:text>
+              </xsl:attribute>
+            </ref>
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:if>
     <xsl:apply-templates mode="tangle" select="tei:attList">
       <xsl:with-param name="element">
-	<xsl:value-of select="$name"/>
+        <xsl:value-of select="$name"/>
       </xsl:with-param>
     </xsl:apply-templates>
     <!-- place holder to make sure something gets into the
-	 pattern -->
+      pattern -->
     <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
   </xsl:template>
 
