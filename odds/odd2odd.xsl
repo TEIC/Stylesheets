@@ -626,8 +626,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:for-each
 	      select="key('odd2odd-MODULE_MEMBERS_NONELEMENT',$name)">
 	      <xsl:variable name="class" select="@ident"/>
-	      <xsl:if test="tei:includeMember(@ident,$exc,$inc)
-	        and not($ODD/key('odd2odd-REFOBJECTS',$class))">
+	      <xsl:if test="not($ODD/key('odd2odd-REFOBJECTS',$class))">
 	        <xsl:if test="$verbose='true'">
 	          <xsl:message>Phase 1: import <xsl:value-of select="$class"/> by moduleRef</xsl:message>
 	        </xsl:if>

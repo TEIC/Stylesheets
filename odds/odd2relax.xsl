@@ -416,8 +416,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="rng:define" mode="pass2">
     <xsl:choose>
       <xsl:when test="key('REFED',@name) or 
-        key('REFED',substring-after(@name,$generalPrefix)) or 
-        ../rng:define//rng:ref[@name=current()/@name]">
+        key('REFED',substring-after(@name,$generalPrefix))">
         <define xmlns="http://relaxng.org/ns/structure/1.0" >
           <xsl:apply-templates  select="@*"    mode="pass2"/>
           <xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
@@ -577,8 +576,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="rng:define" mode="pass3">
     <xsl:choose>
       <xsl:when test="key('REFED',@name) or
-        key('XPATTERNS',@name) or
-        ..//rng:ref[@name=current()/@name]">
+        key('XPATTERNS',@name)">
         <xsl:choose>
           <xsl:when test="count(key('DEFED',@name))=1 or @combine='choice'">
             <define xmlns="http://relaxng.org/ns/structure/1.0" >
