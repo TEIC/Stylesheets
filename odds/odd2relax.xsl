@@ -179,6 +179,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:for-each select="tei:macroSpec|tei:dataSpec">
           <xsl:apply-templates mode="tangle" select="."/>
         </xsl:for-each>
+        <xsl:for-each select="//tei:anyElement">
+          <xsl:call-template name="anyElement"/>
+        </xsl:for-each>
         <xsl:apply-templates mode="tangle" select="tei:elementSpec|tei:classSpec"/>
         <xsl:choose>
           <xsl:when test="@start and @start=''"/>
@@ -347,6 +350,66 @@ of this software, even if advised of the possibility of such damage.
          </xsl:choose>
       </xsl:for-each>
   </xsl:template>
+  
+  <xsl:template name="anyElement">
+    <xsl:variable name="id" select="concat('anyElement-',generate-id())"/>
+    <xsl:variable name="apos">'</xsl:variable>
+    <define name="{$id}" xmlns="http://relaxng.org/ns/structure/1.0">
+      <element>
+        <anyName>
+          <xsl:if test="@include">
+            <xsl:attribute name="ns"><xsl:value-of select="tokenize(@include, ' ')[1]"/></xsl:attribute>
+          </xsl:if>
+          <except>
+            <xsl:if test="@except">
+              <xsl:for-each select="tokenize(@except, ' ')">
+                <xsl:choose>
+                  <xsl:when test="starts-with(., 'teix')">
+                    <name ns="http://www.tei-c.org/ns/Examples"><xsl:value-of select="substring-after(.,':')"/></name>
+                  </xsl:when>
+                  <xsl:when test="starts-with(., 'tei')">
+                    <name ns="http://www.tei-c.org/ns/1.0"><xsl:value-of select="substring-after(.,':')"/></name>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <nsName ns="{.}"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:for-each>
+            </xsl:if>
+          </except>
+        </anyName>
+        <zeroOrMore>
+          <attribute>
+            <anyName/>
+          </attribute>
+        </zeroOrMore>
+        <zeroOrMore>
+          <choice>
+            <text/>
+            <ref name="{$id}"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+      <xsl:if test="@include and ancestor::tei:elementSpec">
+        <xsl:if test="ancestor::tei:elementSpec/@ns">
+          <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="x" uri="{ancestor::tei:elementSpec/@ns}"/>
+        </xsl:if>
+        <xsl:variable name="prefix">
+          <xsl:choose>
+            <xsl:when test="ancestor::tei:elementSpec/@ns">x:</xsl:when>
+            <xsl:otherwise>tei:</xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="{concat(generate-id(),'-constraint')}">
+          <rule context="{$prefix}{ancestor::tei:elementSpec/@ident}">
+            <report test="child::*[not(namespace-uri(.) = ({concat($apos,string-join(tokenize(current()/@include, ' '),concat($apos,', ',$apos)),$apos)}))]">
+              <xsl:value-of select="ancestor::tei:elementSpec/@ident"/> content must be in the namespace<xsl:if test="contains(@include, ' ')">s</xsl:if><xsl:text> </xsl:text><xsl:value-of select="concat($apos,string-join(tokenize(current()/@include, ' '),concat($apos,', ',$apos)),$apos)"/></report>
+          </rule>
+        </pattern>
+      </xsl:if>
+    </define>
+  </xsl:template>
+  
   <xsl:template match="tei:specGrpRef" mode="tangle">
       <xsl:param name="filename"/>
       <xsl:if test="$verbose='true'">

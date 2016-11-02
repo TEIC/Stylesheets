@@ -322,6 +322,10 @@ of this software, even if advised of the possibility of such damage.
 
 
   <xsl:template match="tei:*" mode="tangle"/>
+  
+  <xsl:template match="tei:anyElement" mode="tangle">
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{concat('anyElement-',generate-id(.))}"/>
+  </xsl:template>
 
   <xsl:template match="tei:attRef" mode="tangle">  
     <xsl:choose>
