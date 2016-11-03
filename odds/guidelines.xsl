@@ -701,16 +701,54 @@
       match="tei:listBibl/tei:biblStruct|tei:listBibl/tei:bibl">
     <xsl:apply-templates/>
     <xsl:for-each select="key('BACKLINKS',@xml:id)">
-      <xsl:if test="self::teix:egXML">
-        <xsl:text> </xsl:text>
-        <a class="link_return" title="Go back to text">
-          <xsl:attribute name="href">
-            <xsl:apply-templates select="." mode="generateLink"/>
-          </xsl:attribute>
-          <xsl:text>↵</xsl:text>
-        </a>
+      <!-- XML code examples within tei:exemplum -->
+      <xsl:if test="self::teix:egXML and parent::tei:exemplum">
+        <!-- The following xsl:choose switch is taken from the <xsl:template match="tei:exemplum" mode="doc"> template from common_tagdocs.xsl -->
+        <!-- Those two switches should most probably stay in sync -->
+        <xsl:choose>
+          <xsl:when test="count(ancestor::tei:exemplum) gt 1">
+            <xsl:call-template name="backLink"/>
+          </xsl:when>
+          <xsl:when test="parent::tei:exemplum[not(@xml:lang)]">
+            <xsl:call-template name="backLink"/>
+          </xsl:when>
+          <xsl:when test="parent::tei:exemplum[@xml:lang = 'und']">
+            <xsl:call-template name="backLink"/>
+          </xsl:when>
+          <xsl:when
+            test="parent::tei:exemplum[@xml:lang = 'mul'] and not($documentationLanguage = 'zh-TW')">
+            <!-- will need to generalize this if other langs come along like
+		chinese -->
+            <xsl:call-template name="backLink"/>
+          </xsl:when>
+          <xsl:when test="parent::tei:exemplum[@xml:lang = $documentationLanguage]">
+            <xsl:call-template name="backLink"/>
+          </xsl:when>
+          <!--<xsl:when
+            test="not(parent::tei:exemplum[@xml:lang = $documentationLanguage]) and (@xml:lang = 'en' or @xml:lang = 'und' or @xml:lang = 'mul')">
+            <xsl:call-template name="backLink"/>
+          </xsl:when>-->
+        </xsl:choose>
+      </xsl:if>
+      
+      <!-- XML code examples within running text(?) -->
+      <xsl:if test="self::teix:egXML and not(parent::tei:exemplum)">
+        <xsl:call-template name="backLink"/>
       </xsl:if>
     </xsl:for-each>
+  </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Helper template for creating an html:a backlink</desc>
+  </doc>
+  <xsl:template name="backLink">
+    <xsl:text> </xsl:text>
+    <a class="link_return" title="Go back to text">
+      <xsl:attribute name="href">
+        <xsl:apply-templates select="." mode="generateLink"/>
+      </xsl:attribute>
+      <xsl:text>↵</xsl:text>
+    </a>
   </xsl:template>
 
   <xsl:template name="egXMLEndHook">
