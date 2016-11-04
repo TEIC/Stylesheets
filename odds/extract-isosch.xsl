@@ -268,6 +268,7 @@ of this software, even if advised of the possibility of such damage.
           <ns prefix="{$nsp}" uri="{$nsu}"/>
         </xsl:if>
       </xsl:for-each>
+      <ns prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
       
       <xsl:if test="key('KEYs',1)">
         <xsl:call-template name="blockComment">
