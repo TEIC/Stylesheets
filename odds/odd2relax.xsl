@@ -354,6 +354,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="anyElement">
     <xsl:variable name="id" select="concat('anyElement-',generate-id())"/>
     <xsl:variable name="apos">'</xsl:variable>
+    <xsl:variable name="spec" select="ancestor::tei:elementSpec|ancestor::tei:macroSpec"/>
     <define name="{$id}" xmlns="http://relaxng.org/ns/structure/1.0">
       <element>
         <anyName>
@@ -363,12 +364,17 @@ of this software, even if advised of the possibility of such damage.
           <except>
             <xsl:if test="@except">
               <xsl:for-each select="tokenize(@except, ' ')">
+                <!-- If we have a URI like teix:egXML, see if we can resolve the prefix to a namespace URI,
+                     and just exclude the element, otherwise exclude the whole namespace.
+                -->
                 <xsl:choose>
-                  <xsl:when test="starts-with(., 'teix')">
-                    <name ns="http://www.tei-c.org/ns/Examples"><xsl:value-of select="substring-after(.,':')"/></name>
-                  </xsl:when>
-                  <xsl:when test="starts-with(., 'tei')">
-                    <name ns="http://www.tei-c.org/ns/1.0"><xsl:value-of select="substring-after(.,':')"/></name>
+                  <xsl:when test="matches(.,'\w+:\w+')">
+                    <xsl:choose>
+                      <xsl:when test="namespace-uri-for-prefix(substring-before(.,':'),$spec)">
+                        <name ns="{namespace-uri-for-prefix(substring-before(.,':'),$spec)}"><xsl:value-of select="substring-after(.,':')"/></name>
+                      </xsl:when>
+                      <xsl:otherwise><nsName ns="{.}"/></xsl:otherwise>
+                    </xsl:choose>
                   </xsl:when>
                   <xsl:otherwise>
                     <nsName ns="{.}"/>
