@@ -397,17 +397,22 @@ of this software, even if advised of the possibility of such damage.
         </zeroOrMore>
       </element>
       <xsl:if test="@include and ancestor::tei:elementSpec">
-        <xsl:if test="ancestor::tei:elementSpec/@ns">
-          <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="x" uri="{ancestor::tei:elementSpec/@ns}"/>
-        </xsl:if>
+        <xsl:variable name="computed-prefix">
+          <xsl:for-each select="in-scope-prefixes($spec)">
+            <xsl:if test="$spec/@ns = namespace-uri-for-prefix(., $spec)">
+              <xsl:value-of select="."/>
+            </xsl:if>
+          </xsl:for-each>
+        </xsl:variable>
         <xsl:variable name="prefix">
           <xsl:choose>
-            <xsl:when test="ancestor::tei:elementSpec/@ns">x:</xsl:when>
-            <xsl:otherwise>tei:</xsl:otherwise>
+            <xsl:when test="ancestor::tei:elementSpec/@ns"><xsl:value-of select="$computed-prefix"/></xsl:when>
+            <xsl:otherwise>tei</xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
+        <xsl:if test="$spec/@ns"><ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="{$prefix}" uri="{ancestor::tei:elementSpec/@ns}"/></xsl:if>
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="{concat(generate-id(),'-constraint')}">
-          <rule context="{$prefix}{ancestor::tei:elementSpec/@ident}">
+          <rule context="{$prefix}:{ancestor::tei:elementSpec/@ident}">
             <report test="child::*[not(namespace-uri(.) = ({concat($apos,string-join(tokenize(current()/@include, ' '),concat($apos,', ',$apos)),$apos)}))]">
               <xsl:value-of select="ancestor::tei:elementSpec/@ident"/> content must be in the namespace<xsl:if test="contains(@include, ' ')">s</xsl:if><xsl:text> </xsl:text><xsl:value-of select="concat($apos,string-join(tokenize(current()/@include, ' '),concat($apos,', ',$apos)),$apos)"/></report>
           </rule>

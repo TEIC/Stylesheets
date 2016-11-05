@@ -2138,10 +2138,10 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="$stripped='true' and starts-with($k,'macro.')"/>
       <xsl:when test="key('odd2odd-REFED',$k)">
-	<macroSpec xmlns="http://www.tei-c.org/ns/1.0" >
+        <xsl:copy>
           <xsl:copy-of select="@*"/>
           <xsl:apply-templates mode="pass3"/>
-	</macroSpec>
+        </xsl:copy>
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="$verbose='true'">
