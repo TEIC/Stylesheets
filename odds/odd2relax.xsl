@@ -179,7 +179,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:for-each select="tei:macroSpec|tei:dataSpec">
           <xsl:apply-templates mode="tangle" select="."/>
         </xsl:for-each>
-        <xsl:for-each select="//tei:anyElement">
+        <xsl:for-each select=".//tei:anyElement">
           <xsl:call-template name="anyElement"/>
         </xsl:for-each>
         <xsl:apply-templates mode="tangle" select="tei:elementSpec|tei:classSpec"/>
@@ -255,54 +255,57 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
   </xsl:template>
   <xsl:template name="moduleSpec-body">
-      <xsl:variable name="filename" select="@ident"/>
-      <xsl:comment>Definitions from module <xsl:value-of select="@ident"/>
-      </xsl:comment>
-      <xsl:comment>Set global predeclared macros</xsl:comment>
-      <xsl:if test="@type='core'">
-         <xsl:call-template name="NameList"/>
-         <xsl:for-each select="key('PredeclareAllMacros',1)">
-            <define xmlns="http://relaxng.org/ns/structure/1.0" name="{@ident}">
-               <choice>
-                  <notAllowed/>
-               </choice>
-            </define>
-         </xsl:for-each>
-      </xsl:if>
-      <xsl:comment>Set predeclared macros</xsl:comment>
-      <xsl:for-each select="key('PredeclareMacrosModule',@ident)">
-         <xsl:apply-templates mode="tangle" select="."/>
+    <xsl:variable name="filename" select="@ident"/>
+    <xsl:comment>Definitions from module <xsl:value-of select="@ident"/>
+    </xsl:comment>
+    <xsl:comment>Set global predeclared macros</xsl:comment>
+    <xsl:if test="@type='core'">
+      <xsl:call-template name="NameList"/>
+      <xsl:for-each select="key('PredeclareAllMacros',1)">
+        <define xmlns="http://relaxng.org/ns/structure/1.0" name="{@ident}">
+          <choice>
+            <notAllowed/>
+          </choice>
+        </define>
       </xsl:for-each>
-      <xsl:if test="@type='core'">
-         <xsl:call-template name="predeclare-classes"/>
-      </xsl:if>
-      <xsl:comment>0. predeclared macros</xsl:comment>
-      <xsl:for-each select="key('PredeclareMacrosModule',@ident)">
-         <xsl:apply-templates mode="tangle" select="."/>
+    </xsl:if>
+    <xsl:comment>Set predeclared macros</xsl:comment>
+    <xsl:for-each select="key('PredeclareMacrosModule',@ident)">
+      <xsl:apply-templates mode="tangle" select="."/>
+    </xsl:for-each>
+    <xsl:if test="@type='core'">
+      <xsl:call-template name="predeclare-classes"/>
+      <xsl:for-each select="//tei:anyElement">
+        <xsl:call-template name="anyElement"/>
       </xsl:for-each>
-      <xsl:comment>1. classes</xsl:comment>
-      <xsl:for-each select="key('ClassModule',@ident)">
-         <xsl:choose>
-            <xsl:when test="@module='core' and @predeclare='true'"> </xsl:when>
-            <xsl:otherwise>
-               <xsl:apply-templates mode="tangle" select="."/>
-            </xsl:otherwise>
-         </xsl:choose>
-      </xsl:for-each>
-      <xsl:comment>2. elements</xsl:comment>
-      <xsl:apply-templates mode="tangle" select="key('ElementModule',@ident)">
-         <xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-      <xsl:comment>3. macros</xsl:comment>
-      <xsl:for-each select="key('MacroModule',@ident)">
-         <xsl:choose>
-            <xsl:when test="@predeclare='true'"/>
-            <!--	<xsl:when test="key('PredeclareMacros',@ident)"/>-->
+    </xsl:if>
+    <xsl:comment>0. predeclared macros</xsl:comment>
+    <xsl:for-each select="key('PredeclareMacrosModule',@ident)">
+      <xsl:apply-templates mode="tangle" select="."/>
+    </xsl:for-each>
+    <xsl:comment>1. classes</xsl:comment>
+    <xsl:for-each select="key('ClassModule',@ident)">
+      <xsl:choose>
+        <xsl:when test="@module='core' and @predeclare='true'"> </xsl:when>
         <xsl:otherwise>
-               <xsl:apply-templates mode="tangle" select="."/>
-            </xsl:otherwise>
-         </xsl:choose>
-      </xsl:for-each>
+          <xsl:apply-templates mode="tangle" select="."/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+    <xsl:comment>2. elements</xsl:comment>
+    <xsl:apply-templates mode="tangle" select="key('ElementModule',@ident)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+    <xsl:comment>3. macros</xsl:comment>
+    <xsl:for-each select="key('MacroModule',@ident)">
+      <xsl:choose>
+        <xsl:when test="@predeclare='true'"/>
+        <!--	<xsl:when test="key('PredeclareMacros',@ident)"/>-->
+        <xsl:otherwise>
+          <xsl:apply-templates mode="tangle" select="."/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="copyright">
@@ -359,7 +362,7 @@ of this software, even if advised of the possibility of such damage.
       <element>
         <anyName>
           <xsl:if test="@include">
-            <xsl:attribute name="ns"><xsl:value-of select="tokenize(@include, ' ')[1]"/></xsl:attribute>
+            <xsl:attribute name="ns"><xsl:value-of select="tokenize(normalize-space(@include), '\s+')[1]"/></xsl:attribute>
           </xsl:if>
           <except>
             <xsl:if test="@except">
