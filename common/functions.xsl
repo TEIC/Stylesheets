@@ -1543,16 +1543,22 @@ of this software, even if advised of the possibility of such damage.
       else false()"/>
   </xsl:function>
 
- <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Returns the current date.</desc>
   </doc>
   <xsl:function name="tei:whatsTheDate" as="node()+">
     <xsl:choose>
-      	<xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of
-	      select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
-	</xsl:otherwise>
+      <xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="
+          format-dateTime(
+            adjust-dateTime-to-timezone(
+              current-dateTime(),
+              'PT00H' cast as xs:dayTimeDuration
+            ),
+            '[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z'
+          )"/>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
   
