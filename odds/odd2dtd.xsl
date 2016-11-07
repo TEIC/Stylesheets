@@ -1032,6 +1032,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test=".//rng:anyName">
           <xsl:text> ANY</xsl:text>
         </xsl:when>
+        <xsl:when test=".//tei:anyElement">
+          <xsl:text> ANY</xsl:text>
+        </xsl:when>
         <xsl:when test="tei:textNode">
           <xsl:text> CDATA</xsl:text>
         </xsl:when>
