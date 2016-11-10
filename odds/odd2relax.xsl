@@ -210,7 +210,9 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
       </root>
     </xsl:variable>
-    
+    <xsl:result-document href="testplus.pass1.xml">
+      <xsl:copy-of select="$pass1"/>
+    </xsl:result-document>
     <!-- in 2nd and 3rd  passes, throw away any RNG <define> elements
       which do not have a <ref>, any <ref> which has no <define>
       to point to, and any empty <choice> -->
@@ -355,9 +357,10 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template name="anyElement">
-    <xsl:variable name="id" select="concat('anyElement-',generate-id())"/>
     <xsl:variable name="apos">'</xsl:variable>
     <xsl:variable name="spec" select="ancestor::tei:elementSpec|ancestor::tei:macroSpec"/>
+    <xsl:variable name="current" select="."/>
+    <xsl:variable name="id" select="concat('anyElement-',$spec/@ident)"/>
     <xsl:variable name="exclude">
       <xsl:value-of select="@except"/><xsl:text> </xsl:text>
       <xsl:for-each select="//tei:attRef[@name='xml:id']">
@@ -377,8 +380,8 @@ of this software, even if advised of the possibility of such damage.
               <xsl:choose>
                 <xsl:when test="matches(.,'\w+:\w+')">
                   <xsl:choose>
-                    <xsl:when test="namespace-uri-for-prefix(substring-before(.,':'),$spec)">
-                      <name ns="{namespace-uri-for-prefix(substring-before(.,':'),$spec)}"><xsl:value-of select="substring-after(.,':')"/></name>
+                    <xsl:when test="namespace-uri-for-prefix(substring-before(.,':'),$current)">
+                      <name ns="{namespace-uri-for-prefix(substring-before(.,':'),$current)}"><xsl:value-of select="substring-after(.,':')"/></name>
                     </xsl:when>
                     <xsl:otherwise><nsName ns="{.}"/></xsl:otherwise>
                   </xsl:choose>
@@ -404,8 +407,8 @@ of this software, even if advised of the possibility of such damage.
       </element>
       <xsl:if test="@include and ancestor::tei:elementSpec">
         <xsl:variable name="computed-prefix">
-          <xsl:for-each select="in-scope-prefixes($spec)">
-            <xsl:if test="$spec/@ns = namespace-uri-for-prefix(., $spec)">
+          <xsl:for-each select="in-scope-prefixes($current)">
+            <xsl:if test="$spec/@ns = namespace-uri-for-prefix(., $current)">
               <xsl:value-of select="."/>
             </xsl:if>
           </xsl:for-each>
