@@ -66,6 +66,12 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="stripped">false</xsl:param>
   <xsl:param name="useVersionFromTEI">true</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
+  <!-- following param, added 2016-06-06 by Syd Bauman for use by TEI
+       in Libraries Best Practices Guidelines. If set to 'true' then
+       all <exmplum> elements from TEI source or summarily dropped,
+       whereas <exemplum> elements in ODD customization file are
+       copied through. -->
+  <xsl:param name="suppressTEIexamples">false</xsl:param>
   <xsl:key name="odd2odd-CHANGEATT" match="tei:attDef[@mode='change']" use="concat(../../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-CHANGECONSTRAINT" match="tei:constraintSpec[@mode='change']" use="concat(../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-CLASS_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:classSpec"/>
@@ -1463,6 +1469,22 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
+  <!-- following template, added 2016-06-06 by Syd Bauman, completely
+       supresses <exemplum> elements from the TEI source iff
+       $suppressTEIexamples (a parameter) is set to "true". Note that
+       <exemplum> elements from the ODD customization file are still
+       copied through. -->
+  <xsl:template match="exemplum" mode="odd2odd-copy">
+    <xsl:choose>
+      <xsl:when test="$suppressTEIexamples eq 'true'"/>
+      <xsl:otherwise>
+	<xsl:copy>
+	  <xsl:apply-templates mode="odd2odd-copy" select="@*|node()"/>
+	</xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   <xsl:template match="*" mode="odd2odd-copy">
     <xsl:copy>
       <xsl:apply-templates mode="odd2odd-copy" select="*|@*|processing-instruction()|text()"/>
