@@ -2158,6 +2158,12 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@ident"/>
     </xsl:variable>
     <xsl:choose>
+      <xsl:when test="$k = 'macro.anyXML'">
+        <xsl:copy>
+          <xsl:copy-of select="@*"/>
+          <xsl:apply-templates mode="pass3"/>
+        </xsl:copy>
+      </xsl:when>
       <xsl:when test="$stripped='true' and starts-with($k,'macro.')"/>
       <xsl:when test="key('odd2odd-REFED',$k)">
         <xsl:copy>

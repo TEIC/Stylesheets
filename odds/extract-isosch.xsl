@@ -408,9 +408,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:when test="self::macroSpec">
             <pattern>
               <rule context="tei:dataRef|rng:ref">
-                <report test="concat(normalize-space(@key), normalize-space(@name)) eq '{@ident}'" role="nonfatal">
-                  WARNING: reference to deprecated macro — '<xsl:value-of select="@ident"/>' <xsl:value-of select="$msg2"/> <xsl:value-of select="@validUntil"/>.
-                </report>
+                <report test="concat(normalize-space(@key), normalize-space(@name)) eq '{@ident}'" role="nonfatal">WARNING: reference to deprecated macro — '<xsl:value-of select="@ident"/>' <xsl:value-of select="$msg2"/> <xsl:value-of select="@validUntil"/>.</report>
               </rule>
             </pattern>
           </xsl:when>
