@@ -210,9 +210,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
       </root>
     </xsl:variable>
-    <xsl:result-document href="testplus.pass1.xml">
-      <xsl:copy-of select="$pass1"/>
-    </xsl:result-document>
+    
     <!-- in 2nd and 3rd  passes, throw away any RNG <define> elements
       which do not have a <ref>, any <ref> which has no <define>
       to point to, and any empty <choice> -->
