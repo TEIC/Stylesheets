@@ -355,36 +355,40 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template name="anyElement">
-    <xsl:variable name="id" select="concat('anyElement-',generate-id())"/>
     <xsl:variable name="apos">'</xsl:variable>
     <xsl:variable name="spec" select="ancestor::tei:elementSpec|ancestor::tei:macroSpec"/>
+    <xsl:variable name="current" select="."/>
+    <xsl:variable name="id" select="concat('anyElement-',$spec/@ident)"/>
+    <xsl:variable name="exclude">
+      <xsl:value-of select="@except"/><xsl:text> </xsl:text>
+      <xsl:for-each select="//tei:attRef[@name='xml:id']">
+        <xsl:if test="ancestor::tei:elementSpec/@ns">
+          <xsl:value-of select="ancestor::tei:elementSpec/@ns"/><xsl:text> </xsl:text>
+        </xsl:if>
+      </xsl:for-each>
+      <xsl:if test="//tei:macroSpec[@ident='macro.anyXML']">
+        <xsl:value-of select="//tei:macroSpec[@ident='macro.anyXML']//tei:anyElement/@except"/>
+      </xsl:if>
+    </xsl:variable>
     <define name="{$id}" xmlns="http://relaxng.org/ns/structure/1.0">
       <element>
         <anyName>
-          <xsl:if test="@include">
-            <xsl:attribute name="ns"><xsl:value-of select="tokenize(normalize-space(@include), '\s+')[1]"/></xsl:attribute>
-          </xsl:if>
           <except>
-            <xsl:if test="@except">
-              <xsl:for-each select="tokenize(@except, ' ')">
-                <!-- If we have a URI like teix:egXML, see if we can resolve the prefix to a namespace URI,
-                     and just exclude the element, otherwise exclude the whole namespace.
-                -->
-                <xsl:choose>
-                  <xsl:when test="matches(.,'\w+:\w+')">
-                    <xsl:choose>
-                      <xsl:when test="namespace-uri-for-prefix(substring-before(.,':'),$spec)">
-                        <name ns="{namespace-uri-for-prefix(substring-before(.,':'),$spec)}"><xsl:value-of select="substring-after(.,':')"/></name>
-                      </xsl:when>
-                      <xsl:otherwise><nsName ns="{.}"/></xsl:otherwise>
-                    </xsl:choose>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <nsName ns="{.}"/>
-                  </xsl:otherwise>
-                </xsl:choose>
-              </xsl:for-each>
-            </xsl:if>
+            <xsl:for-each select="distinct-values(tokenize(normalize-space($exclude), '\s+'))">
+              <xsl:choose>
+                <xsl:when test="matches(.,'\w+:\w+')">
+                  <xsl:choose>
+                    <xsl:when test="namespace-uri-for-prefix(substring-before(.,':'),$current)">
+                      <name ns="{namespace-uri-for-prefix(substring-before(.,':'),$current)}"><xsl:value-of select="substring-after(.,':')"/></name>
+                    </xsl:when>
+                    <xsl:otherwise><nsName ns="{.}"/></xsl:otherwise>
+                  </xsl:choose>
+                </xsl:when>
+                <xsl:otherwise>
+                  <nsName ns="{.}"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:for-each>
           </except>
         </anyName>
         <zeroOrMore>
@@ -401,8 +405,8 @@ of this software, even if advised of the possibility of such damage.
       </element>
       <xsl:if test="@include and ancestor::tei:elementSpec">
         <xsl:variable name="computed-prefix">
-          <xsl:for-each select="in-scope-prefixes($spec)">
-            <xsl:if test="$spec/@ns = namespace-uri-for-prefix(., $spec)">
+          <xsl:for-each select="in-scope-prefixes($current)">
+            <xsl:if test="$spec/@ns = namespace-uri-for-prefix(., $current)">
               <xsl:value-of select="."/>
             </xsl:if>
           </xsl:for-each>
