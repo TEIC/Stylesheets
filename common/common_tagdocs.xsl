@@ -358,17 +358,10 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
-        <xsl:variable name="minOccurs">
-          <xsl:choose>
-            <xsl:when test="@minOccurs">
-              <xsl:value-of select="@minOccurs"/>
-            </xsl:when>
-            <xsl:otherwise>1</xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
+        <xsl:variable name="minOccurs" select="( @minOccurrs, '1' )[1]"/>
         <xsl:variable name="maxOccurs">
           <xsl:choose>
-            <xsl:when test="@maxOccurs = 'unbounded'">
+            <xsl:when test="normalize-space( @maxOccurs ) eq 'unbounded'">
               <xsl:text>∞</xsl:text>
             </xsl:when>
             <xsl:when test="@maxOccurs">
@@ -377,7 +370,7 @@
             <xsl:otherwise>1</xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-        <xsl:if test="$minOccurs != '1' or $maxOccurs != '1'">
+        <xsl:if test="'1' != ( $minOccurs, $maxOccurs )">
           <xsl:text> </xsl:text>
           <xsl:value-of select="$minOccurs"/>
           <xsl:text>–</xsl:text>
@@ -401,16 +394,13 @@
           </xsl:with-param>
         </xsl:call-template>-->
     
-    <!-- we assume that datatype contains only a single dataRef -->
+        <!-- we assume that datatype contains only a single dataRef -->
+        <!-- (I don't like the above assumption, but I just tested, -->
+        <!-- and as of now (2016-11-15) it's true for P5. -Syd)     -->
         <xsl:call-template name="showElement">
-          <xsl:with-param name="name">
-            <xsl:choose>
-              <xsl:when test="tei:dataRef/@key"><xsl:value-of select="tei:dataRef/@key"/></xsl:when>
-              <xsl:otherwise><xsl:value-of select="tei:dataRef/@name"/></xsl:otherwise>
-            </xsl:choose>
-          </xsl:with-param>
+          <xsl:with-param name="name" select="( tei:dataRef/@key, tei:dataref/@name )[1]"/>
         </xsl:call-template>
-        <xsl:if test="$minOccurs != '1' or $maxOccurs != '1'">
+        <xsl:if test="'1' != ( $minOccurs, $maxOccurs )">
           <xsl:text> </xsl:text>
           <xsl:element namespace="{$outputNS}" name="{$segName}">
             <xsl:attribute name="{$langAttributeName}">
