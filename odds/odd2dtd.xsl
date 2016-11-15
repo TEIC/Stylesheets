@@ -92,8 +92,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="NSELEMENTS" match="tei:elementSpec[@ns]|tei:attDef[@ns]" use="1"/>
   <xsl:key match="tei:moduleSpec[@ident]" name="FILES" use="@ident"/>
   <xsl:template match="/">
+    <xsl:variable name="wrappedClassRefs">
+      <xsl:apply-templates mode="preprocess"/>
+    </xsl:variable>
     <xsl:variable name="resolvedClassatts">
-      <xsl:apply-templates  mode="classatts"/>
+      <xsl:apply-templates select="$wrappedClassRefs"  mode="classatts"/>
     </xsl:variable>
     <xsl:for-each select="$resolvedClassatts">
       <xsl:choose>
@@ -1753,11 +1756,6 @@ of this software, even if advised of the possibility of such damage.
           <xsl:value-of select="$ename"/>
           <xsl:text>)</xsl:text>
         </xsl:when>
-        <xsl:when test="self::tei:classRef and parent::tei:sequence">
-          <xsl:text>(</xsl:text>
-          <xsl:value-of select="$ename"/>
-          <xsl:text>)</xsl:text>
-        </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="$ename"/>
         </xsl:otherwise>
@@ -1824,6 +1822,39 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="typewriter">
     <xsl:param name="text"/>
+  </xsl:template>
+  
+  <xsl:template match="tei:content/tei:classRef | tei:content//tei:sequence/tei:classRef" mode="preprocess">
+    <xsl:variable name="maxOccurs" select="( @maxOccurs, '1' )[1]"/>
+    <xsl:choose>
+      <xsl:when test="$maxOccurs eq 'unbounded'">
+        <xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="$maxOccurs cast as xs:integer gt 1">
+        <xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="parent::tei:sequence/count(*) = 1">
+        <xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="contains(@expand, 'sequence')">
+        <xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>
+        <tei:sequence>
+          <xsl:copy-of select="."/>
+        </tei:sequence>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template match="*" mode="preprocess">
+    <xsl:copy>
+      <xsl:apply-templates select="* | @* | comment() | processing-instruction() | text()" mode="preprocess"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="@* | text() | comment() | processing-instruction()" mode="preprocess">
+    <xsl:copy-of select="."/>
   </xsl:template>
 
   <xsl:function name="tei:generateIndicators">
