@@ -818,8 +818,8 @@ of this software, even if advised of the possibility of such damage.
       match="tei:dataSpec/tei:content/tei:valList[@type='closed']"
       mode="#default tangle">
     <xsl:text>(</xsl:text>
-      <xsl:value-of select="tei:valItem/@ident" separator="|"/>
-      <xsl:text>)</xsl:text>
+    <xsl:value-of select="tei:valItem/@ident" separator="|"/>
+    <xsl:text>)</xsl:text>
   </xsl:template>
 
   <xsl:template match="rng:text|tei:textNode" mode="simple">
@@ -1527,13 +1527,16 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
       <xsl:value-of select="tei:createSpecName(.)"/>
       <xsl:choose>
-         <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or tei:datatype/@maxOccurs='unbounded') and tei:datatype/rng:ref[@name='data.enumerated']">
+         <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or tei:datatype/@maxOccurs='unbounded') 
+           and (tei:datatype/rng:ref[@name='data.enumerated'] or tei:datatype/tei:dataRef[@key='teidata.enumerated'])">
             <xsl:text> NMTOKENS </xsl:text>
          </xsl:when>
-         <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or  tei:datatype/@maxOccurs='unbounded') and tei:datatype/rng:ref[@name='data.name']">
+         <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or tei:datatype/@maxOccurs='unbounded') 
+           and (tei:datatype/rng:ref[@name='data.name'] or tei:datatype/tei:dataRef[@key='teidata.name'])">
             <xsl:text> NMTOKENS </xsl:text>
          </xsl:when>
-         <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or  tei:datatype/@maxOccurs='unbounded') and tei:datatype/rng:data[@type='Name']">
+         <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or tei:datatype/@maxOccurs='unbounded') 
+           and (tei:datatype/rng:data[@type='Name'] or tei:datatype/tei:dataRef[@name='Name'])">
             <xsl:text> NMTOKENS </xsl:text>
          </xsl:when>
          <xsl:when test="tei:valList[@type='closed']">
