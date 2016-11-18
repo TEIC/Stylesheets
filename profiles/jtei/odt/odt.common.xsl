@@ -631,7 +631,7 @@
     </xsl:template>
     
 <!--    Handling of all tags within an egXML. -->
-    <xsl:template match="*[not(local-name(.) = 'egXML')][ancestor::teix:egXML]"><!-- Opening tag, including any attributes. --><text:span text:style-name="teiXmlTag">&lt;<xsl:value-of select="name()"/></text:span><xsl:for-each select="@*"><text:span text:style-name="teiXmlAttName"><xsl:text> </xsl:text><xsl:value-of select="name()"/>=</text:span><text:span text:style-name="teiXmlAttVal">"<xsl:value-of select="."/>"</text:span></xsl:for-each><xsl:choose><xsl:when test="hcmc:isSelfClosing(.)"><text:span text:style-name="teiXmlTag">/&gt;</text:span></xsl:when><xsl:otherwise><text:span text:style-name="teiXmlTag">&gt;</text:span><xsl:apply-templates select="* | text() | comment()"/><text:span text:style-name="teiXmlTag">&lt;/<xsl:value-of select="name()"/>&gt;</text:span></xsl:otherwise></xsl:choose></xsl:template>
+  <xsl:template match="*[not(local-name(.) = 'egXML')][ancestor::teix:egXML]"><!-- Opening tag, including any attributes. --><text:span text:style-name="teiXmlTag">&lt;<xsl:value-of select="name()"/></text:span><xsl:for-each select="@*"><text:span text:style-name="teiXmlAttName"><xsl:text> </xsl:text><xsl:value-of select="name()"/>=</text:span><text:span text:style-name="teiXmlAttVal">"<xsl:value-of select="local:escapeEntitiesForEgXML(.)"/>"</text:span></xsl:for-each><xsl:choose><xsl:when test="hcmc:isSelfClosing(.)"><text:span text:style-name="teiXmlTag">/&gt;</text:span></xsl:when><xsl:otherwise><text:span text:style-name="teiXmlTag">&gt;</text:span><xsl:apply-templates select="* | text() | comment()"/><text:span text:style-name="teiXmlTag">&lt;/<xsl:value-of select="name()"/>&gt;</text:span></xsl:otherwise></xsl:choose></xsl:template>
     
     <!-- We also need to process XML comments in egXML. -->
     <xsl:template match="teix:*/comment()">
@@ -650,7 +650,7 @@
                 <xsl:for-each select="$currNode/ancestor::*[not(descendant-or-self::teix:egXML)]"><text:s/></xsl:for-each>
                 <xsl:if test="$currNode/following-sibling::node()"><text:s/></xsl:if>
             </xsl:matching-substring>
-            <xsl:non-matching-substring><xsl:copy-of select="."/></xsl:non-matching-substring>
+          <xsl:non-matching-substring><xsl:value-of select="local:escapeEntitiesForEgXML(.)"/></xsl:non-matching-substring>
         </xsl:analyze-string>
     </xsl:template>
     
@@ -922,6 +922,13 @@
       <xsl:variable name="filePath" select="replace(replace(resolve-uri($graphicUrl), '%20', ' '), 'file:', '')"/>
       <xsl:message>File is deemed to be at: <xsl:value-of select="$filePath"/></xsl:message>
       <xsl:value-of select="expath-file:read-binary($filePath)"/>
+  </xsl:function>
+  
+<!-- This function is designed to double-escape entities that need to be 
+     displayed as escapes in egXML text nodes and attribute values. -->
+  <xsl:function name="local:escapeEntitiesForEgXML" as="xs:string">
+    <xsl:param name="inStr" as="xs:string"/>
+    <xsl:value-of select="replace(replace(replace($inStr, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;')"/>
   </xsl:function>
   
   <xsl:function name="local:get.note.nr" as="xs:string">
