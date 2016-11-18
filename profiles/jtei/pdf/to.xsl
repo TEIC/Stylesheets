@@ -564,7 +564,7 @@
 <!--
           <fo:inline start-indent="{$depth + 2}em" text-indent="{$depth + 2}em"><xsl:copy-of select="."/></fo:inline>
 -->
-        <xsl:copy-of select="."/>
+        <xsl:value-of select="local:escapeEntitiesForEgXML(.)"/>
       </xsl:non-matching-substring>
     </xsl:analyze-string>
   </xsl:template>
@@ -617,7 +617,7 @@
         <xsl:text>="</xsl:text>
         <xsl:if test=". != ''">
           <fo:inline color="#8B1410">
-            <xsl:value-of select="."/>
+            <xsl:value-of select="local:escapeEntitiesForEgXML(.)"/>
           </fo:inline>
         </xsl:if>
         <xsl:text>"</xsl:text>
@@ -1353,6 +1353,13 @@
   <xsl:function name="local:get.note.nr">
     <xsl:param name="node"/>
     <xsl:number value="count($node/preceding::tei:note[if ($node/@place) then @place = $node/@place else not(@place)]|$node)" format="{if (not($node/@place) or $node/@place eq 'foot') then '1' else 'i'}"/>
+  </xsl:function>
+  
+  <!-- This function is designed to double-escape entities that need to be 
+     displayed as escapes in egXML text nodes and attribute values. -->
+  <xsl:function name="local:escapeEntitiesForEgXML" as="xs:string">
+    <xsl:param name="inStr" as="xs:string"/>
+    <xsl:value-of select="replace(replace(replace($inStr, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;')"/>
   </xsl:function>
   
   <xsl:template name="enumerate">
