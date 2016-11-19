@@ -440,18 +440,12 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="text()|@*|comment()" mode="pass0">
-      <xsl:copy-of select="."/>
-  </xsl:template>
-  
-  <xsl:template match="processing-instruction()" mode="pass0">
-      <xsl:copy-of select="."/>
-  </xsl:template>
-
+  <xsl:template match="@*|processing-instruction()|text()|comment()" mode="pass0">
+      <xsl:copy/>
+  </xsl:template>  
   <xsl:template match="*" mode="pass0">
     <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <xsl:apply-templates select="*|text()|comment()|processing-instruction()" mode="pass0"/>
+      <xsl:apply-templates select="@*|node()" mode="pass0"/>
     </xsl:copy>
   </xsl:template>
 
