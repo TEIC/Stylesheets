@@ -1919,18 +1919,20 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:ptr" mode="pass3">
     <xsl:choose>
       <xsl:when test="starts-with(@target,'#') and 
-                      (ancestor::tei:remarks or ancestor::tei:listRef or ancestor::tei:valDesc) and
-                      not(id(substring(@target,2)))">
+        (ancestor::tei:remarks or ancestor::tei:listRef or ancestor::tei:valDesc) and
+        not(id(substring(@target,2)))">
         <xsl:variable name="target" select="substring(@target,2)"/>
         <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
-
         <xsl:choose>
           <xsl:when test="document($sourceDoc)/id($target)">
+            <!-- the chapter ID is on the highest ancestor or self div -->
+            <xsl:variable name="chapter" 
+              select="document($sourceDoc)/id($target)/ancestor-or-self::tei:div[not(ancestor::tei:div)]/@xml:id"/>
             <ref  xmlns="http://www.tei-c.org/ns/1.0"
-                  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/{substring($target,1,2)}.html#{$target}">
+              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/{$chapter}.html#{$target}">
               <xsl:for-each select="document($sourceDoc)/id($target)">
                 <xsl:number count="tei:div" format="1.1.1."
-                            level="multiple"/>    
+                  level="multiple"/>	  
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="tei:head"/>
               </xsl:for-each>

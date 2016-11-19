@@ -338,7 +338,7 @@ resp CDATA  #IMPLIED'>
  %Tatt.global.responsibility.attribute.cert;
  %Tatt.global.responsibility.attribute.resp;'> 
 <!ENTITY % Tatt.editLike.attribute.evidence '
-evidence CDATA  #IMPLIED'>
+evidence NMTOKENS  #IMPLIED'>
 
 <!ENTITY % Tatt.editLike.attribute.instant '
 instant %teidata.xTruthValue;  "false" '>
@@ -364,13 +364,13 @@ scribe %teidata.name;  #IMPLIED'>
 scribeRef CDATA  #IMPLIED'>
 
 <!ENTITY % Tatt.handFeatures.attribute.script '
-script CDATA  #IMPLIED'>
+script NMTOKENS  #IMPLIED'>
 
 <!ENTITY % Tatt.handFeatures.attribute.scriptRef '
 scriptRef CDATA  #IMPLIED'>
 
 <!ENTITY % Tatt.handFeatures.attribute.medium '
-medium CDATA  #IMPLIED'>
+medium NMTOKENS  #IMPLIED'>
 
 <!ENTITY % Tatt.handFeatures.attribute.scope '
 scope (sole|major|minor) #IMPLIED'>
@@ -414,7 +414,7 @@ commodity CDATA  #IMPLIED'>
  %Tatt.measurement.attribute.quantity;
  %Tatt.measurement.attribute.commodity;'> 
 <!ENTITY % Tatt.naming.attribute.role '
-role CDATA  #IMPLIED'>
+role NMTOKENS  #IMPLIED'>
 
 <!ENTITY % Tatt.naming.attribute.nymRef '
 nymRef CDATA  #IMPLIED'>
@@ -426,7 +426,7 @@ notation %teidata.enumerated;  #IMPLIED'>
 <!ENTITY % Tatt.notated.attributes '
  %Tatt.notated.attribute.notation;'> 
 <!ENTITY % Tatt.placement.attribute.place '
-place CDATA  #IMPLIED'>
+place NMTOKENS  #IMPLIED'>
 <!ENTITY % Tatt.placement.attributes '
  %Tatt.placement.attribute.place;'> 
 <!ENTITY % Tatt.typed.attribute.type '
@@ -2404,7 +2404,7 @@ Elements] -->
  %Tatt.global.attributes;
  %Tatt.editLike.attributes;
  %Tatt.sortable.attributes;
-role CDATA  #IMPLIED
+role NMTOKENS  #IMPLIED
 sex CDATA  #IMPLIED
 age %teidata.enumerated;  #IMPLIED >
 <!--doc:(personal group) describes a group of individuals treated as a single person for analytic purposes. [15.2.2. The Participant Description] -->
@@ -2855,7 +2855,7 @@ dim (horizontal|vertical) #IMPLIED >
  %Tatt.ascribed.attributes;
  %Tatt.global.attributes;
  %Tatt.placement.attributes;
-type CDATA  #IMPLIED >
+type NMTOKENS  #IMPLIED >
 <!--doc:contains a description of some status or quality attributed to a person, place, or organization often at some specific time or for a specific date range. [13.3.1. Basic Principles 13.3.2.1. Personal Characteristics] -->
 <!ELEMENT state (((precision)*,((state)+|((%model.headLike;)*,(%model.pLike;)+,(%model.noteLike;|%model.biblLike;)*)|(%model.labelLike;|%model.noteLike;|%model.biblLike;)*)))>
 <!ATTLIST state xmlns CDATA "http://www.tei-c.org/ns/1.0">
