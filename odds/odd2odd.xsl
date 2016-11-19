@@ -562,12 +562,11 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template mode="pass1"
-                match="tei:classSpec[  @mode eq 'add' or (not(@mode) and ancestor::tei:schemaSpec)]
-                     | tei:macroSpec[  @mode eq 'add' or (not(@mode) and ancestor::tei:schemaSpec)]
-                     | tei:dataSpec [  @mode eq 'add' or (not(@mode) and ancestor::tei:schemaSpec)]
-                     | tei:elementSpec[@mode eq 'add' or (not(@mode) and ancestor::tei:schemaSpec)]
+                match="tei:schemaSpec//tei:classSpec[  @mode eq 'add' or not(@mode) ]
+                     | tei:schemaSpec//tei:macroSpec[  @mode eq 'add' or not(@mode) ]
+                     | tei:schemaSpec//tei:dataSpec [  @mode eq 'add' or not(@mode) ]
+                     | tei:schemaSpec//tei:elementSpec[@mode eq 'add' or not(@mode) ]
                      ">
-    <xsl:message>DEBUG: temp in o2o - <xsl:value-of select="local-name(.)"/>(<xsl:value-of select="@ident"/>)</xsl:message>
     <xsl:call-template name="odd2odd-createCopy"/>
   </xsl:template>
 
@@ -1197,7 +1196,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:alternate|tei:sequence" mode="odd2odd-copy">
     <xsl:call-template name="odd2odd-simplifyODD"/>
   </xsl:template>
-  <xsl:template match="tei:valList[ancestor::tei:content]" mode="odd2odd-copy">
+  <xsl:template match="tei:content//tei:valList" mode="odd2odd-copy">
     <xsl:copy-of select="."/>
   </xsl:template>
   <xsl:template name="odd2odd-simplifyRelax">
@@ -1286,8 +1285,14 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="element">
       <xsl:value-of select="local-name(.)"/>
     </xsl:variable>
-    <xsl:variable name="min" select="( @minOccurs, '1' )[1]"/>
-    <xsl:variable name="max" select="( @maxOccurs, '1' )[1]"/>
+    <!-- set up defaulted (string) values of @minOccurs and @maxOccurs -->
+    <xsl:variable name="minimum" select="( @minOccurs, '1' )[1]"/>
+    <xsl:variable name="maximum" select="( @maxOccurs, '1' )[1]"/>
+    <!-- set up values of @minOccurs and @maxOccurs as number -->
+    <xsl:variable name="min" select="$minimum cast as xs:integer"/>
+    <xsl:variable name="max" select="if ($maximum castable as xs:integer)
+                                     then $maximum cast as xs:integer
+                                     else (: must be 'unbounded':) -1"/>
     <!-- 
       for each Pure ODD content model,
       remove reference to any elements which have been
@@ -1335,36 +1340,53 @@ of this software, even if advised of the possibility of such damage.
         </xsl:for-each>
       </WHAT>
     </xsl:variable>
-    <xsl:variable name="entCount">
-      <xsl:value-of select="count($contents/WHAT/*)"/>
-    </xsl:variable>
+    <xsl:variable name="entCount" select="count($contents/WHAT/*)"/>
     <xsl:for-each select="$contents/WHAT">
       <xsl:choose>
-        <xsl:when test="$entCount=1 and local-name(*) eq $element">
+        <xsl:when test="$entCount eq 1 and local-name(*) eq $element">
           <xsl:copy-of select="@*|*|text()|processing-instruction()"/>
         </xsl:when>
         <!-- sequence or alternate that's zero or one containing sequence or alternate that's zero or one-->
-        <xsl:when test="$element=('sequence','alternate') and $min eq '0' and $max eq '1' 
-          and $entCount = 1 and (tei:sequence|tei:alternate)[@minOccurs eq '0' and @maxOccurs eq 'unbounded']">
+        <xsl:when test="$element=('sequence','alternate')
+                    and $min eq 0 and $max eq 1 
+                    and $entCount eq 1
+                    and (tei:sequence|tei:alternate)
+                        [ @minOccurs cast as xs:integer eq 0 and normalize-space(@maxOccurs) eq 'unbounded']">
           <xsl:copy-of select="@*|*|text()|processing-instruction()"/>
         </xsl:when>
-        <xsl:when test="$element=('sequence','alternate') and $min eq '0' and $max eq '1' 
-          and $entCount = 1 and (tei:sequence|tei:alternate)[@minOccurs eq '1' and @maxOccurs eq 'unbounded']">
+        <xsl:when test="$element=('sequence','alternate')
+                    and $min eq 0 and $max eq 1 
+                    and $entCount eq 1
+                    and (tei:sequence|tei:alternate)
+                        [ @minOccurs cast as xs:integer eq 1 and normalize-space(@maxOccurs) eq 'unbounded']">
           <xsl:copy-of select="@*|*|text()|processing-instruction()"/>
         </xsl:when>
-        <xsl:when test="$element=('sequence','alternate') and $min eq '1' and $max eq 'unbounded' 
-          and $entCount = 1 and (tei:sequence|tei:alternate)[@minOccurs eq '0' and @maxOccurs eq 'unbounded']">
+        <!-- sequence or alternate that's zero or more containing sequence or alternate that's zero or more  -->
+        <xsl:when test="$element=('sequence','alternate')
+                    and $min eq 1 and $max eq -1 
+                    and $entCount eq 1
+                    and (tei:sequence|tei:alternate)
+                        [ @minOccurs cast as xs:integer eq 0 and normalize-space(@maxOccurs) eq 'unbounded']">
           <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:copy-of select="(tei:sequence|tei:alternate)/*"/>
           </xsl:copy>
         </xsl:when>
-        <xsl:when test="self::tei:classRef[@key eq 'model.global' and @minOccurs eq '0' and @maxOccurs eq 'unbounded'] and
-          preceding-sibling::tei:*[1][self::tei:classRef/@key eq 'model.global' and @minOccurs eq '0' and @maxOccurs eq 'unbounded']"/>
-        <xsl:when test="$entCount&gt;0 or $stripped='true'">
+        <!-- classRef that's 0 or more immediately following a classRef that's 0 or more -->
+        <xsl:when test="self::tei:classRef[
+                              @key eq 'model.global'
+                          and @minOccurs cast as xs:integer eq 0
+                          and normalize-space(@maxOccurs) eq 'unbounded'
+                          ] and
+                          preceding-sibling::tei:*[1][
+                                self::tei:classRef/@key eq 'model.global'
+                            and @minOccurs cast as xs:integer eq 0
+                            and normalize-space(@maxOccurs) eq 'unbounded'
+                          ]"/>
+        <xsl:when test="$entCount gt 0 or $stripped='true'">
           <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{$element}">
-            <xsl:attribute name="minOccurs" select="$min"/>
-            <xsl:attribute name="maxOccurs" select="$max"/>
+            <xsl:attribute name="minOccurs" select="$minimum"/>
+            <xsl:attribute name="maxOccurs" select="$maximum"/>
             <xsl:copy-of select="@*|*|text()|processing-instruction()"/>
           </xsl:element>
         </xsl:when>
@@ -1932,7 +1954,7 @@ of this software, even if advised of the possibility of such damage.
               target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/{$chapter}.html#{$target}">
               <xsl:for-each select="document($sourceDoc)/id($target)">
                 <xsl:number count="tei:div" format="1.1.1."
-                  level="multiple"/>	  
+                  level="multiple"/>      
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="tei:head"/>
               </xsl:for-each>
