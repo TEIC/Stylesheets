@@ -134,7 +134,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
     <desc>Institution or project name</desc>
   </doc>
-  <xsl:param name="institution">(unknown project)</xsl:param>
+  <xsl:param name="institution"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
     <desc>Institution link</desc>
