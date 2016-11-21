@@ -98,6 +98,26 @@
     <xsl:attribute name="widows">5</xsl:attribute>-->
   </xsl:attribute-set>
   
+  <xsl:attribute-set name="egXML.tag.properties">
+    <xsl:attribute name="color">#000099</xsl:attribute>
+  </xsl:attribute-set>
+  
+  <xsl:attribute-set name="egXML.attribute.name.properties">
+    <xsl:attribute name="color">#f5844c</xsl:attribute>
+  </xsl:attribute-set>
+  
+  <xsl:attribute-set name="egXML.attribute.value.properties">
+    <xsl:attribute name="color">#993300</xsl:attribute>
+  </xsl:attribute-set>
+  
+  <xsl:attribute-set name="egXML.comment.properties">
+    <xsl:attribute name="color">#009900</xsl:attribute>
+  </xsl:attribute-set>
+  
+  <xsl:attribute-set name="egXML.pi.properties">
+    <xsl:attribute name="color">#812ABE</xsl:attribute>
+  </xsl:attribute-set>
+
   <xsl:attribute-set name="monospace.properties">
     <xsl:attribute name="font-family">DejaVu-mono</xsl:attribute>
     <xsl:attribute name="font-size">.8em</xsl:attribute>
@@ -539,14 +559,22 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="comment()|eg:comment" mode="egXML">
-    <fo:block color="grey" start-indent="inherited-property-value(start-indent) +1em">
+  <xsl:template match="comment()" mode="egXML">
+    <fo:inline xsl:use-attribute-sets="egXML.comment.properties">
       <xsl:text>&lt;!--</xsl:text>
       <xsl:value-of select="."/>
       <xsl:text>--></xsl:text>
-    </fo:block>
+    </fo:inline>
   </xsl:template>
   
+  <xsl:template match="processing-instruction()" mode="egXML">
+    <fo:inline xsl:use-attribute-sets="egXML.pi.properties">
+      <xsl:text>&lt;?</xsl:text>
+      <xsl:value-of select="string-join((name(), .), ' ')"/>
+      <xsl:text>?></xsl:text>
+    </fo:inline>
+  </xsl:template>
+
   <!-- eg:egXML//text() processing: borrowed from tei2odt --> 
   <!--    Handling of whitespace is tricky within egXML. We basically want to preserve it,
     with some linebreaks, and try to indent helpfully if there were linebreaks in the original. -->
@@ -578,13 +606,11 @@
         <xsl:value-of select="'true'"/>
       </xsl:if>
     </xsl:variable>
-    <fo:inline color="#01005F">
+    <fo:inline xsl:use-attribute-sets="egXML.tag.properties">
       <xsl:text>&lt;</xsl:text>
       <xsl:if test="$type = 'end'">
         <xsl:text>/</xsl:text>
       </xsl:if>
-    </fo:inline>
-    <fo:inline color="#1818B4">
       <xsl:value-of select="name()"/>
     </fo:inline>
     <xsl:if test="$type != 'end'">
@@ -595,32 +621,30 @@
         <xsl:if
           test="not($parent-nss[replace(name(), '_\d+$', '') = $ns-prefix and string(.) = $ns-uri]) or $isTop = 'true'">
           <!-- This namespace node doesn't exist on the parent, at least not with that URI, so we need to add a declaration. -->
-          <fo:inline color="#189518">
+          <fo:inline xsl:use-attribute-sets="egXML.attribute.name.properties">
             <xsl:text> xmlns</xsl:text>
             <xsl:if test="$ns-prefix != ''">
               <xsl:text>:</xsl:text>
               <xsl:value-of select="$ns-prefix"/>
             </xsl:if>
           </fo:inline>
-          <xsl:text>="</xsl:text>
-          <fo:inline color="#8B1410">
+          <fo:inline xsl:use-attribute-sets="egXML.attribute.value.properties">
+            <xsl:text>="</xsl:text>
             <xsl:value-of select="$ns-uri"/>
+            <xsl:text>"</xsl:text>
           </fo:inline>
-          <xsl:text>"</xsl:text>
         </xsl:if>
       </xsl:for-each>
       <xsl:for-each select="@*">
         <xsl:text> </xsl:text>
-        <fo:inline color="#189518">
+        <fo:inline xsl:use-attribute-sets="egXML.attribute.name.properties">
           <xsl:value-of select="name()"/>
         </fo:inline>
-        <xsl:text>="</xsl:text>
-        <xsl:if test=". != ''">
-          <fo:inline color="#8B1410">
-            <xsl:value-of select="local:escapeEntitiesForEgXML(.)"/>
-          </fo:inline>
-        </xsl:if>
-        <xsl:text>"</xsl:text>
+        <fo:inline xsl:use-attribute-sets="egXML.attribute.value.properties">
+          <xsl:text>="</xsl:text>
+          <xsl:value-of select="local:escapeEntitiesForEgXMLAttribute(.)"/>
+          <xsl:text>"</xsl:text>
+        </fo:inline>
       </xsl:for-each>
     </xsl:if>
     <fo:inline color="#01005F">
@@ -1356,10 +1380,17 @@
   </xsl:function>
   
   <!-- This function is designed to double-escape entities that need to be 
-     displayed as escapes in egXML text nodes and attribute values. -->
+     displayed as escapes in egXML text nodes. -->
   <xsl:function name="local:escapeEntitiesForEgXML" as="xs:string">
     <xsl:param name="inStr" as="xs:string"/>
     <xsl:value-of select="replace(replace(replace($inStr, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;')"/>
+  </xsl:function>
+
+<!-- This function is designed to double-escape entities that need to be 
+     displayed as escapes in egXML attribute values. -->
+  <xsl:function name="local:escapeEntitiesForEgXMLAttribute" as="xs:string">
+    <xsl:param name="inStr" as="xs:string"/>
+    <xsl:value-of select="replace(local:escapeEntitiesForEgXML($inStr),'&quot;', '&amp;quot;')"/>
   </xsl:function>
   
   <xsl:template name="enumerate">
