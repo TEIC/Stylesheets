@@ -191,65 +191,65 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="e"/>
     <xsl:variable name="loc">
       <xsl:choose>
-	<xsl:when test="$e/@source">
-	  <xsl:value-of select="$e/@source"/>
-	</xsl:when>
-	<xsl:when test="$e/ancestor::tei:schemaSpec/@source">
-	  <xsl:value-of select="$e/ancestor::tei:schemaSpec/@source"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="$DEFAULTSOURCE"/>
-	</xsl:otherwise>
+        <xsl:when test="$e/@source">
+          <xsl:value-of select="$e/@source"/>
+        </xsl:when>
+        <xsl:when test="$e/ancestor::tei:schemaSpec/@source">
+          <xsl:value-of select="$e/ancestor::tei:schemaSpec/@source"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$DEFAULTSOURCE"/>
+        </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="source">
       <xsl:choose>
-	<xsl:when test="starts-with($loc,'file:')">
-	  <xsl:value-of select="$loc"/>
-	</xsl:when>
-	<xsl:when test="starts-with($loc,'http:')">
-	  <xsl:value-of select="$loc"/>
-	</xsl:when>
-	<xsl:when test="starts-with($loc,'https:')">
-	  <xsl:value-of select="$loc"/>
-	</xsl:when>
-	<xsl:when test="starts-with($loc,'/')">
-	  <xsl:value-of select="resolve-uri($loc, 'file:///')"/>
-	</xsl:when>
-	<xsl:when test="starts-with($loc,'tei:')">
-	  <xsl:value-of
-	      select="replace($loc,'tei:',$defaultTEIServer)"/>
-	  <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
-	</xsl:when>
-	<xsl:when test="base-uri($top)=''">
-	  <xsl:value-of select="$currentDirectory"/>
-	  <xsl:value-of select="$loc"/>
-	</xsl:when>
-	<xsl:when test="$currentDirectory=''">
-	  <xsl:value-of select="resolve-uri($loc,base-uri($top))"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="resolve-uri(string-join(($currentDirectory, $loc), '/'),base-uri($top))"/>
-	</xsl:otherwise>
+        <xsl:when test="starts-with($loc,'file:')">
+          <xsl:value-of select="$loc"/>
+        </xsl:when>
+        <xsl:when test="starts-with($loc,'http:')">
+          <xsl:value-of select="$loc"/>
+        </xsl:when>
+        <xsl:when test="starts-with($loc,'https:')">
+          <xsl:value-of select="$loc"/>
+        </xsl:when>
+        <xsl:when test="starts-with($loc,'/')">
+          <xsl:value-of select="resolve-uri($loc, 'file:///')"/>
+        </xsl:when>
+        <xsl:when test="starts-with($loc,'tei:')">
+          <xsl:value-of
+            select="replace($loc,'tei:',$defaultTEIServer)"/>
+          <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
+        </xsl:when>
+        <xsl:when test="base-uri($top)=''">
+          <xsl:value-of select="$currentDirectory"/>
+          <xsl:value-of select="$loc"/>
+        </xsl:when>
+        <xsl:when test="$currentDirectory=''">
+          <xsl:value-of select="resolve-uri($loc,base-uri($top))"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="resolve-uri(string-join(($currentDirectory, $loc), '/'),base-uri($top))"/>
+        </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="not(doc-available($source))">
-	<xsl:call-template name="die">
-	  <xsl:with-param name="message">
-	    <xsl:text>Source </xsl:text>
-	   <xsl:value-of select='($source,$loc,name($top),base-uri($top))'
-			 separator=" + "/>
-	   <xsl:text> not readable</xsl:text>
-	  </xsl:with-param>
-	</xsl:call-template>
+        <xsl:call-template name="die">
+          <xsl:with-param name="message">
+            <xsl:text>Source </xsl:text>
+            <xsl:value-of select='($source,$loc,name($top),base-uri($top))'
+              separator=" + "/>
+            <xsl:text> not readable</xsl:text>
+          </xsl:with-param>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:if test="$verbose='true'">
-	  <xsl:message>Setting source document to <xsl:value-of
-	  select="$source"/></xsl:message>
-	</xsl:if>
-	<xsl:sequence select="$source"/>
+        <xsl:if test="$verbose='true'">
+          <xsl:message>Setting source document to <xsl:value-of
+            select="$source"/></xsl:message>
+        </xsl:if>
+        <xsl:sequence select="$source"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
@@ -394,23 +394,23 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:schemaSpec" mode="pass0">
     <xsl:if test="@ident=$selectedSchema or ($selectedSchema='' and not(preceding-sibling::tei:schemaSpec))">
       <xsl:copy>
-	<xsl:copy-of select="@*"/>
-	<xsl:choose>
-	<xsl:when test="@source">
-	<xsl:if test="$verbose='true'">
-	  <xsl:message>Source for TEI is <xsl:value-of select="@source"/></xsl:message>
-	</xsl:if>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:if test="$verbose='true'">
-	    <xsl:message>Source for TEI will be set to <xsl:value-of select="$DEFAULTSOURCE"/> </xsl:message>
-	  </xsl:if>
-	  <xsl:attribute name="source">
-	    <xsl:value-of select="$DEFAULTSOURCE"/>
-	  </xsl:attribute>
-	</xsl:otherwise>
-	</xsl:choose>
-	<xsl:apply-templates select="*|text()|processing-instruction()" mode="pass0"/>
+        <xsl:copy-of select="@*"/>
+        <xsl:choose>
+          <xsl:when test="@source">
+            <xsl:if test="$verbose='true'">
+              <xsl:message>Source for TEI is <xsl:value-of select="@source"/></xsl:message>
+            </xsl:if>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:if test="$verbose='true'">
+              <xsl:message>Source for TEI will be set to <xsl:value-of select="$DEFAULTSOURCE"/> </xsl:message>
+            </xsl:if>
+            <xsl:attribute name="source">
+              <xsl:value-of select="$DEFAULTSOURCE"/>
+            </xsl:attribute>
+          </xsl:otherwise>
+        </xsl:choose>
+        <xsl:apply-templates select="*|text()|processing-instruction()" mode="pass0"/>
       </xsl:copy>
     </xsl:if>
   </xsl:template>
@@ -2160,12 +2160,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@ident"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="$k = 'macro.anyXML'">
-        <xsl:copy>
-          <xsl:copy-of select="@*"/>
-          <xsl:apply-templates mode="pass3"/>
-        </xsl:copy>
-      </xsl:when>
       <xsl:when test="$stripped='true' and starts-with($k,'macro.')"/>
       <xsl:when test="key('odd2odd-REFED',$k)">
         <xsl:copy>
