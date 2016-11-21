@@ -718,11 +718,16 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
         <xsl:when test="@name">
           <rng:data type="{@name}">
-            <xsl:if test="@restriction">
-              <rng:param name="pattern">
-                <xsl:value-of select="@restriction"/>
-              </rng:param>
-            </xsl:if>
+            <xsl:choose>
+              <xsl:when test="tei:dataFacet">
+                <xsl:apply-templates/>
+              </xsl:when>
+              <xsl:when test="@restriction">
+                <rng:param name="pattern">
+                  <xsl:value-of select="@restriction"/>
+                </rng:param>
+              </xsl:when>
+            </xsl:choose>
           </rng:data>
         </xsl:when>
         <xsl:when test="@key">
@@ -751,7 +756,10 @@ of this software, even if advised of the possibility of such damage.
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
-  </xsl:template>  
-
+  </xsl:template> 
+  
+  <xsl:template match="tei:dataFacet" mode="#default tangle">
+    <rng:param name="{@name}"><xsl:value-of select="@value"/></rng:param>
+  </xsl:template>
 
 </xsl:stylesheet>
