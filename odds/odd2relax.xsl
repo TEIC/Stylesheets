@@ -361,9 +361,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="id" select="concat('anyElement-',$spec/@ident)"/>
     <xsl:variable name="exclude">
       <xsl:choose>
-        <xsl:when test="@except"><xsl:value-of select="@except"/></xsl:when>
-        <xsl:when test="ancestor::tei:schemaSpec/@defaultExceptionNS">
-          <xsl:value-of select="ancestor::tei:schemaSpec/@defaultExceptionNS"/>
+        <xsl:when test="@exclude"><xsl:value-of select="@exclude"/></xsl:when>
+        <xsl:when test="ancestor::tei:schemaSpec/@defaultExceptions">
+          <xsl:value-of select="ancestor::tei:schemaSpec/@defaultExceptions"/>
         </xsl:when>
         <xsl:otherwise>http://www.tei-c.org/ns/1.0 teix:egXML</xsl:otherwise>
       </xsl:choose>
