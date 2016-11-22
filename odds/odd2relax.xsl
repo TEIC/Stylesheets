@@ -360,15 +360,13 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="current" select="."/>
     <xsl:variable name="id" select="concat('anyElement-',$spec/@ident)"/>
     <xsl:variable name="exclude">
-      <xsl:value-of select="@except"/><xsl:text> </xsl:text>
-      <xsl:for-each select="//tei:attRef[@name='xml:id']">
-        <xsl:if test="ancestor::tei:elementSpec/@ns">
-          <xsl:value-of select="ancestor::tei:elementSpec/@ns"/><xsl:text> </xsl:text>
-        </xsl:if>
-      </xsl:for-each>
-      <xsl:if test="//tei:macroSpec[@ident='macro.anyXML']">
-        <xsl:value-of select="//tei:macroSpec[@ident='macro.anyXML']//tei:anyElement/@except"/>
-      </xsl:if>
+      <xsl:choose>
+        <xsl:when test="@exclude"><xsl:value-of select="@exclude"/></xsl:when>
+        <xsl:when test="ancestor::tei:schemaSpec/@defaultExceptions">
+          <xsl:value-of select="ancestor::tei:schemaSpec/@defaultExceptions"/>
+        </xsl:when>
+        <xsl:otherwise>http://www.tei-c.org/ns/1.0 teix:egXML</xsl:otherwise>
+      </xsl:choose>
     </xsl:variable>
     <define name="{$id}" xmlns="http://relaxng.org/ns/structure/1.0">
       <element>
@@ -376,6 +374,9 @@ of this software, even if advised of the possibility of such damage.
           <except>
             <xsl:for-each select="distinct-values(tokenize(normalize-space($exclude), '\s+'))">
               <xsl:choose>
+                <xsl:when test=". = 'teix:egXML'">
+                  <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+                </xsl:when>
                 <xsl:when test="matches(.,'\w+:\w+')">
                   <xsl:choose>
                     <xsl:when test="namespace-uri-for-prefix(substring-before(.,':'),$current)">
@@ -403,7 +404,7 @@ of this software, even if advised of the possibility of such damage.
           </choice>
         </zeroOrMore>
       </element>
-      <xsl:if test="@include and ancestor::tei:elementSpec">
+      <xsl:if test="@require and ancestor::tei:elementSpec">
         <xsl:variable name="computed-prefix">
           <xsl:for-each select="in-scope-prefixes($current)">
             <xsl:if test="$spec/@ns = namespace-uri-for-prefix(., $current)">
@@ -420,7 +421,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:if test="$spec/@ns"><ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="{$prefix}" uri="{ancestor::tei:elementSpec/@ns}"/></xsl:if>
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="{concat(generate-id(),'-constraint')}">
           <rule context="{$prefix}:{ancestor::tei:elementSpec/@ident}">
-            <report test="child::*[not(namespace-uri(.) = ({concat($apos,string-join(tokenize(current()/@include, ' '),concat($apos,', ',$apos)),$apos)}))]">
+            <report test="descendant::*[not(namespace-uri(.) = ({concat($apos,string-join(tokenize(current()/@require, ' '),concat($apos,', ',$apos)),$apos)}))]">
               <xsl:value-of select="ancestor::tei:elementSpec/@ident"/> content must be in the namespace<xsl:if test="contains(@include, ' ')">s</xsl:if><xsl:text> </xsl:text><xsl:value-of select="concat($apos,string-join(tokenize(current()/@include, ' '),concat($apos,', ',$apos)),$apos)"/></report>
           </rule>
         </pattern>
@@ -717,11 +718,16 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
         <xsl:when test="@name">
           <rng:data type="{@name}">
-            <xsl:if test="@restriction">
-              <rng:param name="pattern">
-                <xsl:value-of select="@restriction"/>
-              </rng:param>
-            </xsl:if>
+            <xsl:choose>
+              <xsl:when test="tei:dataFacet">
+                <xsl:apply-templates/>
+              </xsl:when>
+              <xsl:when test="@restriction">
+                <rng:param name="pattern">
+                  <xsl:value-of select="@restriction"/>
+                </rng:param>
+              </xsl:when>
+            </xsl:choose>
           </rng:data>
         </xsl:when>
         <xsl:when test="@key">
@@ -750,7 +756,10 @@ of this software, even if advised of the possibility of such damage.
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
-  </xsl:template>  
-
+  </xsl:template> 
+  
+  <xsl:template match="tei:dataFacet" mode="#default tangle">
+    <rng:param name="{@name}"><xsl:value-of select="@value"/></rng:param>
+  </xsl:template>
 
 </xsl:stylesheet>

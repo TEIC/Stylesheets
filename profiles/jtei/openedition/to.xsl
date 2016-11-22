@@ -514,27 +514,35 @@
     </xsl:for-each>
   </xsl:template>
   
-  <!-- transform <egXML> to <code> with CDATA section -->  
+  <!-- transform <egXML> to <code> -->  
   <xsl:template match="eg:egXML">
     <p rend="noindent">
       <code lang="xml">
-        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
-        <xsl:apply-templates mode="egXML">
-          <xsl:with-param name="cutoff" select="." tunnel="yes"/>
-        </xsl:apply-templates>
-        <xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
+        <xsl:apply-templates select="node()" mode="egXML"/>
       </code>
     </p>
   </xsl:template>
 
   <xsl:template match="tei:eg">
+    <xsl:variable name="stripIndent" select="min((for $line in tokenize(., '\n')[.] return string-length(replace($line, '^(\s+).*', '$1'))))"/>
     <p rend="noindent">
       <code lang="xml">
-        <xsl:apply-templates mode="egXML">
-          <xsl:with-param name="resetIndent" select="text()[1]/replace(tokenize(., '&#10;')[normalize-space()][1], '(^\s+).*', '$1')" tunnel="yes"/>
-        </xsl:apply-templates>
+        <xsl:analyze-string select="." regex="\n">
+          <xsl:matching-substring>
+            <xsl:text>&#10;</xsl:text>
+          </xsl:matching-substring>
+          <xsl:non-matching-substring>
+            <xsl:analyze-string select="if ($stripIndent > 0) then replace(., concat('^\s{', $stripIndent, '}'), '') else ." regex="\s">
+              <xsl:matching-substring>
+                <!-- zero-width space + normal space gives best balance between preserve-space and wrapping -->
+                <xsl:text>&#8203; </xsl:text>
+              </xsl:matching-substring>
+              <xsl:non-matching-substring><xsl:copy-of select="."/></xsl:non-matching-substring>
+            </xsl:analyze-string>
+          </xsl:non-matching-substring>
+        </xsl:analyze-string>
       </code>
-    </p>
+    </p>    
   </xsl:template>
   
   <!-- resets indentation for <code> blocks (in order to keep PDF rendering more or less happy) -->
@@ -550,12 +558,83 @@
     <xsl:value-of select="replace(., '&#10;\s*', $padding)"/>
   </xsl:template>
   
-  <xsl:template match="tei:eg//text()[matches(., '&#10;')]" mode="egXML">
-    <xsl:param name="resetIndent" select="ancestor::eg[1]/text()[1]/replace(tokenize(., '&#10;')[normalize-space()][1], '(^\s+).*', '$1')" tunnel="yes"/>
-    <xsl:variable name="resetIndent.anchor" select="concat('(&#10;)', $resetIndent)"/>
-    <xsl:value-of select="replace(., $resetIndent.anchor, '$1')"/>
+  <xsl:template match="*" mode="egXML">
+    <xsl:choose>
+      <xsl:when test="node()">
+        <xsl:call-template name="createTag">
+          <xsl:with-param name="type" select="'start'"/>
+        </xsl:call-template>
+        <xsl:apply-templates select="node()" mode="egXML"/>
+        <xsl:call-template name="createTag">
+          <xsl:with-param name="type" select="'end'"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="createTag">
+          <xsl:with-param name="type" select="'empty'"/>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
+  <xsl:template match="comment()" mode="egXML">
+    <xsl:text>&lt;!--</xsl:text>
+    <xsl:value-of select="."/>
+    <xsl:text>--></xsl:text>
+  </xsl:template>
+  
+  <xsl:template match="processing-instruction()" mode="egXML">
+    <xsl:text>&lt;?</xsl:text>
+    <xsl:value-of select="string-join((name(), .), ' ')"/>
+    <xsl:text>?></xsl:text>
+  </xsl:template>
+
+  <xsl:template name="createTag">
+    <xsl:param name="type"/>
+    <xsl:variable name="parent-nss" select="../namespace::*"/>
+    <xsl:variable name="isTop">
+      <xsl:if
+        test="parent::eg:egXML and (self::tei:TEI or parent::*/parent::tei:div[@type='example'])">
+        <xsl:value-of select="'true'"/>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:text>&lt;</xsl:text>
+    <xsl:if test="$type = 'end'">
+      <xsl:text>/</xsl:text>
+    </xsl:if>
+    <xsl:value-of select="name()"/>
+    <xsl:if test="$type != 'end'">
+      <xsl:for-each
+        select="namespace::*">
+        <xsl:variable name="ns-prefix" select="replace(name(), '_\d+$', '')"/>
+        <xsl:variable name="ns-uri" select="string(.)"/>
+        <xsl:if
+          test="not($parent-nss[replace(name(), '_\d+$', '') = $ns-prefix and string(.) = $ns-uri]) or $isTop = 'true'">
+          <!-- This namespace node doesn't exist on the parent, at least not with that URI, so we need to add a declaration. -->
+          <xsl:text> xmlns</xsl:text>
+          <xsl:if test="$ns-prefix != ''">
+            <xsl:text>:</xsl:text>
+            <xsl:value-of select="$ns-prefix"/>
+          </xsl:if>
+          <xsl:text>="</xsl:text>
+          <xsl:value-of select="$ns-uri"/>
+          <xsl:text>"</xsl:text>
+        </xsl:if>
+      </xsl:for-each>
+      <xsl:for-each select="@*">
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="name()"/>
+        <xsl:text>="</xsl:text>
+        <xsl:value-of select="local:escapeEntitiesForEgXMLAttribute(.)"/>
+        <xsl:text>"</xsl:text>
+      </xsl:for-each>
+    </xsl:if>
+    <xsl:if test="$type = 'empty'">
+      <xsl:text>/</xsl:text>
+    </xsl:if>
+    <xsl:text>&gt;</xsl:text>
+  </xsl:template>
+
   <!-- transform <cit> to <q>, with @rend="quotation" (unless parent is <note>, to avoid ugly indentation in endnote) -->
   <xsl:template match="tei:cit">
     <xsl:apply-templates select="tei:quote"/>
@@ -1119,26 +1198,6 @@
   <!-- default processing -->
   <!-- ================== -->  
   
-  <!-- avoid spurious ns declarations in code examples -->
-  <xsl:template match="@*|node()" mode="egXML" priority="-1">
-    <xsl:copy copy-namespaces="no">
-      <xsl:apply-templates select="@*|node()" mode="#current"/>
-    </xsl:copy>
-  </xsl:template>
-  
-  <!-- normalize ws inside attribute values within egXML -->
-  <xsl:template match="@*" mode="egXML">
-    <xsl:attribute name="{name()}">
-      <xsl:value-of select="normalize-space()"/>
-    </xsl:attribute>
-  </xsl:template>
-
-  <xsl:template match="eg:*" mode="egXML">
-    <xsl:element name="{local-name()}">
-      <xsl:apply-templates select="@*|node()" mode="#current"/>
-    </xsl:element>
-  </xsl:template>
-
   <xsl:template match="@*|node()" priority="-1">
     <xsl:copy>
       <xsl:call-template name="get.rendition"/>
@@ -1240,5 +1299,19 @@
     <xsl:param name="node"/>
     <xsl:number value="count($node/preceding::tei:note[if ($node/@place) then @place = $node/@place else not(@place)]|$node)" format="{if (not($node/@place) or $node/@place eq 'foot') then '1' else 'i'}"/>
   </xsl:function>
-    
+  
+  <!-- This function is designed to double-escape entities that need to be 
+     displayed as escapes in egXML text nodes. -->
+  <xsl:function name="local:escapeEntitiesForEgXML" as="xs:string">
+    <xsl:param name="inStr" as="xs:string"/>
+    <xsl:value-of select="replace(replace(replace($inStr, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;')"/>
+  </xsl:function>
+  
+  <!-- This function is designed to double-escape entities that need to be 
+     displayed as escapes in egXML attribute values. -->
+  <xsl:function name="local:escapeEntitiesForEgXMLAttribute" as="xs:string">
+    <xsl:param name="inStr" as="xs:string"/>
+    <xsl:value-of select="replace(local:escapeEntitiesForEgXML($inStr),'&quot;', '&amp;quot;')"/>
+  </xsl:function>
+
 </xsl:stylesheet>
