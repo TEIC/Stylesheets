@@ -1442,25 +1442,27 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates mode="justcopy" select="tei:classes"/>
     <xsl:apply-templates mode="odd2odd-copy" select="tei:content"/>
     <xsl:apply-templates mode="odd2odd-copy" select="tei:constraintSpec"/>
-    <attList xmlns="http://www.tei-c.org/ns/1.0">
-      <xsl:choose>
-        <xsl:when test="tei:attList[@org eq 'choice']">
-          <xsl:for-each select="tei:attList">
-            <xsl:copy>
-              <xsl:copy-of select="@*"/>
-              <xsl:apply-templates mode="justcopy" select="tei:attDef"/>
-              <xsl:apply-templates mode="justcopy" select="tei:attRef"/>
-              <xsl:apply-templates mode="justcopy" select="tei:attList"/>
-            </xsl:copy>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attDef"/>
-          <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attRef"/>
-          <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attList"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </attList>
+    <xsl:if test="tei:attList">
+      <attList xmlns="http://www.tei-c.org/ns/1.0">
+        <xsl:choose>
+          <xsl:when test="tei:attList[@org='choice']">
+            <xsl:for-each select="tei:attList">
+              <xsl:copy>
+                <xsl:copy-of select="@*"/>
+                <xsl:apply-templates mode="justcopy" select="tei:attDef"/>
+                <xsl:apply-templates mode="justcopy" select="tei:attRef"/>
+                <xsl:apply-templates mode="justcopy" select="tei:attList"/>
+              </xsl:copy>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attDef"/>
+            <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attRef"/>
+            <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attList"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </attList>
+    </xsl:if>
     <xsl:apply-templates mode="odd2odd-copy" select="tei:modelGrp|tei:model|tei:modelSequence"/>
     <xsl:if test="$stripped='false'">
       <xsl:apply-templates mode="justcopy" select="tei:exemplum"/>
