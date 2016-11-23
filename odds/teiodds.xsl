@@ -1170,7 +1170,6 @@ select="$makeDecls"/></xsl:message>
       else
       @minOccurs"
       as="xs:integer"/>
-    <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
     <xsl:variable name="c">
       <xsl:choose>
         <xsl:when test="@name">
@@ -2280,7 +2279,6 @@ select="$makeDecls"/></xsl:message>
     </xsl:variable>
     <xsl:variable name="min" select="if (not(@minOccurs)) then 1 else
       if (@minOccurs='0') then 1 else @minOccurs" as="xs:integer"/>
-    <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
     <!-- BUG: doesn't properly handle, e.g. minOccurs="2" -->
     <xsl:for-each select="1 to $min">
       <xsl:choose>
