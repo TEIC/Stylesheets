@@ -358,23 +358,27 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
-        <xsl:variable name="minOccurs" select="( @minOccurrs, '1' )[1]"/>
-        <xsl:variable name="maxOccurs">
+        <!-- Convert @minOccurs and @maxOccurs to integers, giving them -->
+        <!-- a default of 1, and converting "unbounded" to -1. -->
+        <xsl:variable name="minOccurs" select="( @minOccurs, '1' )[1] cast as xs:integer"/>
+        <xsl:variable name="maxOccurs" as="xs:integer">
           <xsl:choose>
             <xsl:when test="normalize-space( @maxOccurs ) eq 'unbounded'">
-              <xsl:text>∞</xsl:text>
+              <xsl:value-of select="-1"/>
             </xsl:when>
             <xsl:when test="@maxOccurs">
-              <xsl:value-of select="@maxOccurs"/>
+              <xsl:value-of select="@maxOccurs cast as xs:integer"/>
             </xsl:when>
-            <xsl:otherwise>1</xsl:otherwise>
+            <xsl:otherwise>
+              <xsl:value-of select="1"/>
+            </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-        <xsl:if test="'1' != ( $minOccurs, $maxOccurs )">
+        <xsl:if test="( $minOccurs, $maxOccurs ) != 1">
           <xsl:text> </xsl:text>
           <xsl:value-of select="$minOccurs"/>
           <xsl:text>–</xsl:text>
-          <xsl:value-of select="$maxOccurs"/>
+          <xsl:value-of select="if ($maxOccurs eq -1) then '∞' else $maxOccurs"/>
           <xsl:text> </xsl:text>
           <xsl:element namespace="{$outputNS}" name="{$segName}">
             <xsl:attribute name="{$langAttributeName}">
@@ -400,7 +404,7 @@
         <xsl:call-template name="showElement">
           <xsl:with-param name="name" select="( tei:dataRef/@key, tei:dataref/@name )[1]"/>
         </xsl:call-template>
-        <xsl:if test="'1' != ( $minOccurs, $maxOccurs )">
+        <xsl:if test="1 != ( $minOccurs, $maxOccurs )">
           <xsl:text> </xsl:text>
           <xsl:element namespace="{$outputNS}" name="{$segName}">
             <xsl:attribute name="{$langAttributeName}">
