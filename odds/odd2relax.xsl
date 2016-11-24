@@ -69,12 +69,12 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="outputDir"/>
   <xsl:param name="appendixWords"/>
   <xsl:template name="makeAnchor">
-      <xsl:param name="name"/>
+    <xsl:param name="name"/>
   </xsl:template>
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:variable name="oddmode">dtd</xsl:variable>
   <xsl:variable name="filesuffix"/>
-   <!-- get list of output files -->
+  <!-- get list of output files -->
   <xsl:variable name="linkColor"/>
   <xsl:template match="tei:moduleSpec[@type='decls']"/>
   <xsl:template match="/">
@@ -227,32 +227,32 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:moduleSpec">
-      <xsl:if test="@ident and not(@mode='change' or @mode='replace' or   @mode='delete')">
-         <xsl:choose>
-            <xsl:when test="parent::tei:schemaSpec">
-               <xsl:call-template name="moduleSpec-body"/>
-            </xsl:when>
-            <xsl:otherwise>
-               <xsl:call-template name="generateOutput">
-                  <xsl:with-param name="method">xml</xsl:with-param>
-                  <xsl:with-param name="suffix">.rng</xsl:with-param>
-                  <xsl:with-param name="body">
-                     <grammar xmlns="http://relaxng.org/ns/structure/1.0"
-                              datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-                        <xsl:comment>
-                           <xsl:text>Schema generated </xsl:text>
-                           <xsl:sequence select="tei:whatsTheDate()"/>
-                           <xsl:call-template name="makeTEIVersion"/>
-			   <xsl:call-template name="copyright"/>
-                           <xsl:sequence select="tei:makeDescription(.,true())"/>
-                        </xsl:comment>
-                        <xsl:call-template name="moduleSpec-body"/>
-                     </grammar>
-                  </xsl:with-param>
-               </xsl:call-template>
-            </xsl:otherwise>
-         </xsl:choose>
-      </xsl:if>
+    <xsl:if test="@ident and not(@mode='change' or @mode='replace' or   @mode='delete')">
+      <xsl:choose>
+	<xsl:when test="parent::tei:schemaSpec">
+	  <xsl:call-template name="moduleSpec-body"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="generateOutput">
+	    <xsl:with-param name="method">xml</xsl:with-param>
+	    <xsl:with-param name="suffix">.rng</xsl:with-param>
+	    <xsl:with-param name="body">
+	      <grammar xmlns="http://relaxng.org/ns/structure/1.0"
+		       datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+		<xsl:comment>
+		  <xsl:text>Schema generated </xsl:text>
+		  <xsl:sequence select="tei:whatsTheDate()"/>
+		  <xsl:call-template name="makeTEIVersion"/>
+		  <xsl:call-template name="copyright"/>
+		  <xsl:sequence select="tei:makeDescription(.,true())"/>
+		</xsl:comment>
+		<xsl:call-template name="moduleSpec-body"/>
+	      </grammar>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
   </xsl:template>
   <xsl:template name="moduleSpec-body">
     <xsl:variable name="filename" select="@ident"/>
@@ -360,15 +360,13 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="current" select="."/>
     <xsl:variable name="id" select="concat('anyElement-',$spec/@ident)"/>
     <xsl:variable name="exclude">
-      <xsl:value-of select="@except"/><xsl:text> </xsl:text>
-      <xsl:for-each select="//tei:attRef[@name='xml:id']">
-        <xsl:if test="ancestor::tei:elementSpec/@ns">
-          <xsl:value-of select="ancestor::tei:elementSpec/@ns"/><xsl:text> </xsl:text>
-        </xsl:if>
-      </xsl:for-each>
-      <xsl:if test="//tei:macroSpec[@ident='macro.anyXML']">
-        <xsl:value-of select="//tei:macroSpec[@ident='macro.anyXML']//tei:anyElement/@except"/>
-      </xsl:if>
+      <xsl:choose>
+        <xsl:when test="@exclude"><xsl:value-of select="@exclude"/></xsl:when>
+        <xsl:when test="ancestor::tei:schemaSpec/@defaultExceptions">
+          <xsl:value-of select="ancestor::tei:schemaSpec/@defaultExceptions"/>
+        </xsl:when>
+        <xsl:otherwise>http://www.tei-c.org/ns/1.0 teix:egXML</xsl:otherwise>
+      </xsl:choose>
     </xsl:variable>
     <define name="{$id}" xmlns="http://relaxng.org/ns/structure/1.0">
       <element>
@@ -376,6 +374,9 @@ of this software, even if advised of the possibility of such damage.
           <except>
             <xsl:for-each select="distinct-values(tokenize(normalize-space($exclude), '\s+'))">
               <xsl:choose>
+                <xsl:when test=". = 'teix:egXML'">
+                  <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+                </xsl:when>
                 <xsl:when test="matches(.,'\w+:\w+')">
                   <xsl:choose>
                     <xsl:when test="namespace-uri-for-prefix(substring-before(.,':'),$current)">
@@ -403,7 +404,7 @@ of this software, even if advised of the possibility of such damage.
           </choice>
         </zeroOrMore>
       </element>
-      <xsl:if test="@include and ancestor::tei:elementSpec">
+      <xsl:if test="@require and ancestor::tei:elementSpec">
         <xsl:variable name="computed-prefix">
           <xsl:for-each select="in-scope-prefixes($current)">
             <xsl:if test="$spec/@ns = namespace-uri-for-prefix(., $current)">
@@ -420,7 +421,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:if test="$spec/@ns"><ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="{$prefix}" uri="{ancestor::tei:elementSpec/@ns}"/></xsl:if>
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="{concat(generate-id(),'-constraint')}">
           <rule context="{$prefix}:{ancestor::tei:elementSpec/@ident}">
-            <report test="child::*[not(namespace-uri(.) = ({concat($apos,string-join(tokenize(current()/@include, ' '),concat($apos,', ',$apos)),$apos)}))]">
+            <report test="descendant::*[not(namespace-uri(.) = ({concat($apos,string-join(tokenize(current()/@require, ' '),concat($apos,', ',$apos)),$apos)}))]">
               <xsl:value-of select="ancestor::tei:elementSpec/@ident"/> content must be in the namespace<xsl:if test="contains(@include, ' ')">s</xsl:if><xsl:text> </xsl:text><xsl:value-of select="concat($apos,string-join(tokenize(current()/@include, ' '),concat($apos,', ',$apos)),$apos)"/></report>
           </rule>
         </pattern>
@@ -710,11 +711,16 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
         <xsl:when test="@name">
           <rng:data type="{@name}">
-            <xsl:if test="@restriction">
-              <rng:param name="pattern">
-                <xsl:value-of select="@restriction"/>
-              </rng:param>
-            </xsl:if>
+            <xsl:choose>
+              <xsl:when test="tei:dataFacet">
+                <xsl:apply-templates/>
+              </xsl:when>
+              <xsl:when test="@restriction">
+                <rng:param name="pattern">
+                  <xsl:value-of select="@restriction"/>
+                </rng:param>
+              </xsl:when>
+            </xsl:choose>
           </rng:data>
         </xsl:when>
         <xsl:when test="@key">
@@ -731,38 +737,38 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
       </xsl:choose>
     </xsl:variable>
-  	<xsl:choose>
-  		<xsl:when test="$min eq 1  and  $max eq 1">
-  			<xsl:copy-of select="$c"/>
-  		</xsl:when>
-  		<xsl:when test="$min = ( 0, 1 )  and  $max = ( 1, $maxint )">
-  			<xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
-  				<xsl:copy-of select="$c"/>
-  			</xsl:element>
-  		</xsl:when>
-  		<xsl:otherwise>
-  			<rng:group>
-  				<xsl:for-each select="1 to $min">
-  					<xsl:copy-of select="$c"/>
-  				</xsl:for-each>
-  				<xsl:choose>
-  					<xsl:when test="$max ge $maxint">
-  						<rng:oneOrMore>
-  							<xsl:comment> ODD calls for <xsl:value-of select="$max - $min"/> optional occurrences </xsl:comment>
-  							<xsl:copy-of select="$c"/>
-  						</rng:oneOrMore>
-  					</xsl:when>
-  					<xsl:otherwise>
-  						<xsl:variable name="count" select="$max - $min"/>
-  						<xsl:call-template name="generateDeterministicOptionals">
-  							<xsl:with-param name="count" select="$count"/>
-  							<xsl:with-param name="c" select="$c"/>
-  						</xsl:call-template>
-  					</xsl:otherwise>
-  				</xsl:choose>
-  			</rng:group>
-  		</xsl:otherwise>
-  	</xsl:choose>
+    <xsl:choose>
+      <xsl:when test="$min eq 1  and  $max eq 1">
+	<xsl:copy-of select="$c"/>
+      </xsl:when>
+      <xsl:when test="$min = ( 0, 1 )  and  $max = ( 1, $maxint )">
+	<xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
+	  <xsl:copy-of select="$c"/>
+	</xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+	<rng:group>
+	  <xsl:for-each select="1 to $min">
+	    <xsl:copy-of select="$c"/>
+	  </xsl:for-each>
+	  <xsl:choose>
+	    <xsl:when test="$max ge $maxint">
+	      <rng:oneOrMore>
+		<xsl:comment> ODD calls for <xsl:value-of select="$max - $min"/> optional occurrences </xsl:comment>
+		<xsl:copy-of select="$c"/>
+	      </rng:oneOrMore>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:variable name="count" select="$max - $min"/>
+	      <xsl:call-template name="generateDeterministicOptionals">
+		<xsl:with-param name="count" select="$count"/>
+		<xsl:with-param name="c" select="$c"/>
+	      </xsl:call-template>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</rng:group>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>  
 
-  </xsl:stylesheet>
+</xsl:stylesheet>

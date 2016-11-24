@@ -1173,7 +1173,6 @@ select="$makeDecls"/></xsl:message>
       else
       @minOccurs"
       as="xs:integer"/>
-    <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
     <xsl:variable name="c">
       <xsl:choose>
         <xsl:when test="@name">

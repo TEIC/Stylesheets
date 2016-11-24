@@ -631,7 +631,7 @@
     </xsl:template>
     
 <!--    Handling of all tags within an egXML. -->
-  <xsl:template match="*[not(local-name(.) = 'egXML')][ancestor::teix:egXML]"><!-- Opening tag, including any attributes. --><text:span text:style-name="teiXmlTag">&lt;<xsl:value-of select="name()"/></text:span><xsl:for-each select="@*"><text:span text:style-name="teiXmlAttName"><xsl:text> </xsl:text><xsl:value-of select="name()"/>=</text:span><text:span text:style-name="teiXmlAttVal">"<xsl:value-of select="local:escapeEntitiesForEgXML(.)"/>"</text:span></xsl:for-each><xsl:choose><xsl:when test="hcmc:isSelfClosing(.)"><text:span text:style-name="teiXmlTag">/&gt;</text:span></xsl:when><xsl:otherwise><text:span text:style-name="teiXmlTag">&gt;</text:span><xsl:apply-templates select="* | text() | comment()"/><text:span text:style-name="teiXmlTag">&lt;/<xsl:value-of select="name()"/>&gt;</text:span></xsl:otherwise></xsl:choose></xsl:template>
+  <xsl:template match="*[not(local-name(.) = 'egXML')][ancestor::teix:egXML]"><!-- Opening tag, including any attributes. --><text:span text:style-name="teiXmlTag">&lt;<xsl:value-of select="name()"/></text:span><xsl:for-each select="@*"><text:span text:style-name="teiXmlAttName"><xsl:text> </xsl:text><xsl:value-of select="name()"/>=</text:span><text:span text:style-name="teiXmlAttVal">"<xsl:value-of select="local:escapeEntitiesForEgXMLAttribute(.)"/>"</text:span></xsl:for-each><xsl:choose><xsl:when test="hcmc:isSelfClosing(.)"><text:span text:style-name="teiXmlTag">/&gt;</text:span></xsl:when><xsl:otherwise><text:span text:style-name="teiXmlTag">&gt;</text:span><xsl:apply-templates select="* | text() | comment() | processing-instruction()"/><text:span text:style-name="teiXmlTag">&lt;/<xsl:value-of select="name()"/>&gt;</text:span></xsl:otherwise></xsl:choose></xsl:template>
     
     <!-- We also need to process XML comments in egXML. -->
     <xsl:template match="teix:*/comment()">
@@ -639,7 +639,13 @@
 </xsl:text>
     </xsl:template>
     
-<!--    Handling of whitespace is tricky within egXML. We basically want to preserve it,
+  <!-- We also need to process XML processing instructions in egXML. -->
+  <xsl:template match="teix:*/processing-instruction()">
+    <text:span text:style-name="teiXmlPi">&lt;?<xsl:value-of select="string-join((name(), .), ' ')"/>?&gt;</text:span><xsl:text>
+</xsl:text>
+  </xsl:template>
+  
+  <!--    Handling of whitespace is tricky within egXML. We basically want to preserve it,
     with some linebreaks, and try to indent helpfully if there were linebreaks in the original. -->
     <xsl:template match="text()[ancestor::teix:egXML]">
         <xsl:variable name="container" select="parent::*"/>
@@ -925,12 +931,19 @@
   </xsl:function>
   
 <!-- This function is designed to double-escape entities that need to be 
-     displayed as escapes in egXML text nodes and attribute values. -->
+     displayed as escapes in egXML text nodes. -->
   <xsl:function name="local:escapeEntitiesForEgXML" as="xs:string">
     <xsl:param name="inStr" as="xs:string"/>
     <xsl:value-of select="replace(replace(replace($inStr, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;')"/>
   </xsl:function>
   
+<!-- This function is designed to double-escape entities that need to be 
+     displayed as escapes in egXML attribute values. -->
+  <xsl:function name="local:escapeEntitiesForEgXMLAttribute" as="xs:string">
+    <xsl:param name="inStr" as="xs:string"/>
+    <xsl:value-of select="replace(local:escapeEntitiesForEgXML($inStr),'&quot;', '&amp;quot;')"/>
+  </xsl:function>
+
   <xsl:function name="local:get.note.nr" as="xs:string">
     <xsl:param name="node"/>
     <xsl:number value="count($node/preceding::note[if ($node/@place) then @place = $node/@place else not(@place)]|$node)" format="{if (not($node/@place) or $node/@place eq 'foot') then '1' else 'i'}"/>
