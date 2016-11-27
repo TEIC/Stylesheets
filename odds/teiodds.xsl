@@ -77,7 +77,12 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
-
+  <!-- Not sure whether this should be specified here or in odd2relax.xsl, or, -->
+  <!-- for that matter, whether we really want it at all. It is the max # of   -->
+  <!-- clauses of RELAX NG we'll generate in response to @maxOccurs (more than -->
+  <!-- this, just allow "unbounded", and insert an annotation saying so). —Syd -->
+  <xsl:param name="maxint" select="42"/>
+  
   <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec" name="LOCALIDENTS" use="@ident"/>
   <xsl:key match="tei:dataSpec|tei:macroSpec" name="MACROS" use="@ident"/>
   <xsl:key match="tei:elementSpec" name="ELEMENTS" use="@ident"/>
@@ -1159,45 +1164,22 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
   
   <xsl:template match="tei:dataRef" mode="#default tangle">
-    <xsl:variable name="wrapperElement" select="tei:generateIndicators(@minOccurs, @maxOccurs)"/>
-    <xsl:variable name="min"
-      select="
-      if (not(@minOccurs)) then
-      1
-      else
-      if (@minOccurs = '0') then
-      1
-      else
-      @minOccurs"
-      as="xs:integer"/>
-    <xsl:variable name="c">
-      <xsl:choose>
-        <xsl:when test="@name">
-          <rng:data type="{@name}">
-            <xsl:if test="@restriction">
-              <rng:param name="pattern">
-                <xsl:value-of select="@restriction"/>
-              </rng:param>
-            </xsl:if>
-          </rng:data>
-        </xsl:when>
-        <xsl:when test="@key">
-          <rng:ref name="{@key}"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:for-each select="1 to $min">
-      <xsl:choose>
-        <xsl:when test="string-length($wrapperElement) = 0">
-          <xsl:copy-of select="$c"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
-            <xsl:copy-of select="$c"/>
-          </xsl:element>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+    <xsl:choose>
+      <xsl:when test="@name">
+        <rng:data type="{@name}">
+          <xsl:if test="@restriction">
+            <rng:param name="pattern">
+              <xsl:value-of select="@restriction"/>
+            </rng:param>
+          </xsl:if>
+        </rng:data>
+      </xsl:when>
+      <xsl:when test="@key">
+        <rng:ref name="{@key}"/>
+      </xsl:when>
+      <!-- this routine does not process @ref, not sure why not (also not sure -->
+      <!-- how we would do that, so maybe that's why not :-)  —Syd, 2016-11-25 -->
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:memberOf" mode="tangleModel">
@@ -1486,35 +1468,22 @@ select="$makeDecls"/></xsl:message>
       <!-- ************************************ -->
       <!-- Ascertain minOccurs= and maxOccurs=. -->
       <!-- ************************************ -->
-      <!-- get the value of minOccurs=, defaulting to "1" -->
-      <xsl:variable name="minOccurs">
-        <xsl:choose>
-          <xsl:when test="tei:datatype/@minOccurs">
-            <xsl:value-of select="tei:datatype/@minOccurs"/>
-          </xsl:when>
-          <xsl:otherwise>1</xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
+      <!-- get the value of minOccurs=, defaulting to "0" -->
+      <xsl:variable name="minOccurs" select="( tei:datatype/@minOccurs, '0')[1]"/>
       <!-- get the value of maxOccurs=, defaulting to "1" -->
-      <xsl:variable name="maxOccurs">
-        <xsl:choose>
-          <xsl:when test="tei:datatype/@maxOccurs">
-            <xsl:value-of select="tei:datatype/@maxOccurs"/>
-          </xsl:when>
-          <xsl:otherwise>1</xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
+      <xsl:variable name="maxOccurs" select="( tei:datatype/@maxOccurs, '1')[1]"/>
       <!-- We now have two _string_ representations of the attrs, but -->
       <!-- we need integers. So cast them, converting "unbounded" to  -->
       <!-- a special flag value (-1): -->
       <xsl:variable name="min" select="xs:integer( $minOccurs )"/>
       <xsl:variable name="max">
         <xsl:choose>
-          <xsl:when test="$maxOccurs='unbounded'">
-            <xsl:value-of select="xs:integer( -1 )"/>
+          <xsl:when test="$maxOccurs castable as xs:integer">
+            <xsl:value-of select="xs:integer( $maxOccurs )"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="xs:integer( $maxOccurs )"/>
+            <!-- Must be "unbounded". -->
+            <xsl:value-of select="-1"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
@@ -1552,46 +1521,46 @@ select="$makeDecls"/></xsl:message>
           <!-- before calling 'attributeData'. Perhaps it would be better to -->
           <!-- send it as a parameter to 'attributeData' and have it set the -->
           <!-- current node, but since I didn't write 'attributeData', I've -->
-          <!-- chosen this method so I don't have to muck with it. -Syd -->
+          <!-- chosen this method so I don't have to muck with it. —Syd -->
           <xsl:variable name="thisNode" select="."/>
-	  <list>
+          <list>
             <xsl:choose>
-              <xsl:when test="$max= -1 and $min=1">
+              <xsl:when test="$max = -1 (: i.e., unbounded :)  and  $min = 1">
                 <oneOrMore>
                   <xsl:for-each select="$thisNode">
                     <xsl:call-template name="attributeData"/>
                   </xsl:for-each>
                 </oneOrMore>
               </xsl:when>
-	      <xsl:otherwise>
-		  <xsl:if test="$min > 0">
-		    <xsl:for-each select="1 to $min">
-		      <xsl:for-each select="$thisNode">
-			<xsl:call-template name="attributeData"/>
-		      </xsl:for-each>
-		    </xsl:for-each>
-		  </xsl:if>
-		  <xsl:choose>
-		    <xsl:when test="$max= -1"><!-- i.e., unbounded -->
-		      <zeroOrMore>
-			<xsl:for-each select="$thisNode">
-			  <xsl:call-template name="attributeData"/>
-			</xsl:for-each>
-		      </zeroOrMore>
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <xsl:for-each select="xs:integer( $min + 1 ) to $max">
-			<optional>
-			  <xsl:for-each select="$thisNode">
-			    <xsl:call-template name="attributeData"/>
-			  </xsl:for-each>
-			</optional>
-		      </xsl:for-each>
-		    </xsl:otherwise>
-		  </xsl:choose>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	  </list>
+              <xsl:otherwise>
+                <xsl:if test="$min > 0">
+                  <xsl:for-each select="1 to $min">
+                    <xsl:for-each select="$thisNode">
+                      <xsl:call-template name="attributeData"/>
+                    </xsl:for-each>
+                  </xsl:for-each>
+                </xsl:if>
+                <xsl:choose>
+                  <xsl:when test="$max = -1"><!-- i.e., unbounded -->
+                    <zeroOrMore>
+                      <xsl:for-each select="$thisNode">
+                        <xsl:call-template name="attributeData"/>
+                      </xsl:for-each>
+                    </zeroOrMore>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:for-each select="xs:integer( $min + 1 ) to $max">
+                      <optional>
+                        <xsl:for-each select="$thisNode">
+                          <xsl:call-template name="attributeData"/>
+                        </xsl:for-each>
+                      </optional>
+                    </xsl:for-each>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:otherwise>
+            </xsl:choose>
+          </list>
         </xsl:otherwise>
       </xsl:choose>
     </attribute>
@@ -2130,74 +2099,64 @@ select="$makeDecls"/></xsl:message>
 
    <!-- for Pure ODD -->
   <xsl:template match="tei:sequence" mode="#default tangle">
-    <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
-    <xsl:variable name="rng_name">
-      <!-- Sequences of datatypes need use rng:list -->
-      <xsl:variable name="content" select="distinct-values(*/local-name())"/>
-      <xsl:choose>
-        <xsl:when test="count($content)=1 and $content = 'dataRef'">
-          <xsl:text>list</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text>group</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+    <!-- "owe" = occurence wrapper element -->
+    <xsl:variable name="owe" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <!-- sequences of <dataRef> need use <list>, not <group> -->
+    <xsl:variable name="group_or_list" select="if ( *[ not( self::tei:dataRef ) ] ) then 'group' else 'list'"/>
     <xsl:choose>
-      
-      <xsl:when test="@preserveOrder='false' and
-        string-length($suffix)=0">
-        <xsl:element name="{$rng_name}" namespace="http://relaxng.org/ns/structure/1.0">
-          <interleave>
-            <xsl:apply-templates   mode="tangle"/>
-          </interleave>
+      <xsl:when test="@preserveOrder eq 'false'  and  string-length($owe) eq 0">
+        <xsl:element name="{$group_or_list}" namespace="http://relaxng.org/ns/structure/1.0">
+          <rng:interleave>
+            <xsl:apply-templates mode="tangle"/>
+          </rng:interleave>
         </xsl:element>
       </xsl:when>
-      <xsl:when test="string-length($suffix)=0">
-        <xsl:element name="{$rng_name}" namespace="http://relaxng.org/ns/structure/1.0">
-          <xsl:apply-templates   mode="tangle"/>
+      <xsl:when test="string-length($owe) eq 0">
+        <xsl:element name="{$group_or_list}" namespace="http://relaxng.org/ns/structure/1.0">
+          <xsl:apply-templates mode="tangle"/>
         </xsl:element>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:element name="{$suffix}" xmlns="http://relaxng.org/ns/structure/1.0">
-          <xsl:element name="{$rng_name}" namespace="http://relaxng.org/ns/structure/1.0">
-            <xsl:apply-templates    mode="tangle"/>
+        <xsl:element name="{$owe}" xmlns="http://relaxng.org/ns/structure/1.0">
+          <xsl:element name="{$group_or_list}" namespace="http://relaxng.org/ns/structure/1.0">
+            <xsl:apply-templates mode="tangle"/>
           </xsl:element>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <xsl:template match="tei:textNode"   mode="#default tangle">
     <text xmlns="http://relaxng.org/ns/structure/1.0"/>
   </xsl:template>
 
   <xsl:template match="tei:alternate"  mode="#default tangle">
-    <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <!-- "owe" = occurence wrapper element -->
+    <xsl:variable name="owe" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:choose>
-      <xsl:when test="string-length($suffix)=0">
+      <xsl:when test="string-length($owe) eq 0">
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
-          <xsl:apply-templates   mode="tangle"/>
+          <xsl:apply-templates mode="tangle"/>
         </choice>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:element name="{$suffix}" xmlns="http://relaxng.org/ns/structure/1.0">
+        <xsl:element name="{$owe}" xmlns="http://relaxng.org/ns/structure/1.0">
           <choice xmlns="http://relaxng.org/ns/structure/1.0">
-            <xsl:apply-templates  mode="tangle"/>
+            <xsl:apply-templates mode="tangle"/>
           </choice>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="tei:interleave"   mode="#default tangle">
+  
+  <xsl:template match="tei:interleave" mode="#default tangle">
     <xsl:message>met an interleave</xsl:message>
   </xsl:template>
-
   
   <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef"   mode="#default tangle">
     <xsl:variable name="prefixedName" select="tei:generateRefPrefix(.)"/>
-    <xsl:variable name="wrapperElement"
-      select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <!-- "owe" = occurence wrapper element -->
+    <xsl:variable name="owe" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:variable name="this" select="@key"/>
     <xsl:variable name="except" select="@except"/>
     <xsl:variable name="include" select="@include"/>
@@ -2215,7 +2174,7 @@ select="$makeDecls"/></xsl:message>
           </xsl:for-each>
         </xsl:when>
         <xsl:when test="not(@expand)">
-          <ref  xmlns="http://relaxng.org/ns/structure/1.0" name="{$prefixedName}"/>
+          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$prefixedName}"/>
         </xsl:when>
         <xsl:when test="@expand='sequence'">
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
@@ -2230,7 +2189,7 @@ select="$makeDecls"/></xsl:message>
         <xsl:when test="@expand='sequenceOptional'">
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
             <xsl:if test="tei:includeMember(@ident,$except,$include)">
-              <optional  xmlns="http://relaxng.org/ns/structure/1.0">
+              <optional xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:apply-templates select="." mode="classmember">
                   <xsl:with-param name="theClass" select="$this"/>
                   <xsl:with-param name="suffix" select="@expand"/>
@@ -2277,24 +2236,66 @@ select="$makeDecls"/></xsl:message>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:variable name="min" select="if (not(@minOccurs)) then 1 else
-      if (@minOccurs='0') then 1 else @minOccurs" as="xs:integer"/>
-    <!-- BUG: doesn't properly handle, e.g. minOccurs="2" -->
-    <xsl:for-each select="1 to $min">
-      <xsl:choose>
-        <xsl:when test="string-length($wrapperElement)=0">
+    <xsl:variable name="min" select="if (not(@minOccurs)) then 1
+                                     else @minOccurs" as="xs:integer"/>
+    <xsl:variable name="max" select="if (not(@maxOccurs)) then 1
+                                     else if (@maxOccurs eq 'unbounded') then -1
+                                     else @maxOccurs" as="xs:integer"/>
+    <xsl:choose>
+      <xsl:when test="$min eq 1  and  $max eq 1">
+        <xsl:copy-of select="$c"/>
+      </xsl:when>
+      <xsl:when test="$min = ( 0, 1 )  and  $max = ( 1, -1 )">
+        <xsl:element name="{$owe}" xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:copy-of select="$c"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
+        </xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+        <group>
+          <xsl:for-each select="1 to $min">
             <xsl:copy-of select="$c"/>
-          </xsl:element>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+          </xsl:for-each>
+          <xsl:choose>
+            <xsl:when test="$max ge $maxint">
+              <oneOrMore>
+                <xsl:comment> ODD calls for <xsl:value-of select="$max - $min"/> optional occurrences </xsl:comment>
+                <xsl:copy-of select="$c"/>
+              </oneOrMore>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:variable name="count" select="$max - $min"/>
+              <xsl:call-template name="generateDeterministicOptionals">
+                <xsl:with-param name="count" select="$count"/>
+                <xsl:with-param name="c" select="$c"/>
+              </xsl:call-template>
+            </xsl:otherwise>
+          </xsl:choose>
+        </group>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:function name="tei:generateIndicators" as="xs:string">
+    <xsl:param name="minstr"/>
+    <xsl:param name="maxstr"/>
+    <!-- Discussion 2016-08-30 by Syd (modified 2016-11-25): -->
+    <!-- I found this routine testing strings. That's not OK, as the attrs -->
+    <!-- @minOccurs and @maxOccurs are defined as counts: a user should be -->
+    <!-- able to enter minOccurs="02" and get the same result as if she had -->
+    <!-- entered minOccurs='2'. So I've changed this to test for integers -->
+    <!-- instead. The result is that we end up duplicating some of the logic -->
+    <!-- from <elementRef> here. Oh well. -->
+    <xsl:variable name="maxstr" select="if ( $maxstr eq 'unbounded' ) then '-1' else $maxstr"/>
+    <xsl:variable name="min" select="if ( $minstr ) then xs:integer( $minstr ) else 1" as="xs:integer"/>
+    <xsl:variable name="max" select="if ( $maxstr ) then xs:integer( $maxstr ) else 1" as="xs:integer"/>
+    <xsl:choose>
+      <xsl:when test="$min eq 0  and  $max eq  1">optional</xsl:when>
+      <xsl:when test="$min ge 1  and  $max eq -1">oneOrMore</xsl:when>
+      <xsl:when test="$min eq 0  and  $max eq -1">zeroOrMore</xsl:when>
+      <xsl:otherwise><xsl:text/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+<!--  <xsl:function name="tei:generateIndicators" as="xs:string">
     <xsl:param name="min"/>
     <xsl:param name="max"/>
     <xsl:choose>
@@ -2309,8 +2310,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-
-
+-->
   <xsl:function name="tei:generateAttRef" as="xs:string">
     <xsl:param name="context"/>
     <xsl:param name="prefix"/>
@@ -2339,7 +2339,23 @@ select="$makeDecls"/></xsl:message>
     <xsl:value-of select="$result"/>
   </xsl:function>
 
-
+  <xsl:template name="generateDeterministicOptionals">
+    <xsl:param name="count"/>
+    <xsl:param name="c"/>
+    <xsl:choose>
+      <xsl:when test="$count le 0"/>
+      <xsl:otherwise>
+        <optional>
+          <xsl:copy-of select="$c"/>
+          <xsl:call-template name="generateDeterministicOptionals">
+            <xsl:with-param name="count" select="$count - 1"/>
+            <xsl:with-param name="c" select="$c"/>
+          </xsl:call-template>
+        </optional>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   <xsl:function name="tei:generateRefPrefix" as="xs:string">
     <xsl:param name="context"/>
     <!-- where we meet a pointer, we have a choice of how to proceed
@@ -2424,8 +2440,6 @@ select="$makeDecls"/></xsl:message>
     </xsl:for-each>
   </xsl:template>
 
-
-
   <xsl:template match="tei:constrainSpec|tei:constraint">
     <xsl:apply-templates/>
   </xsl:template>
@@ -2437,6 +2451,5 @@ select="$makeDecls"/></xsl:message>
   <xsl:template match="sch:*">
       <xsl:call-template name="processSchematron"/>
   </xsl:template>
-
   
 </xsl:stylesheet>
