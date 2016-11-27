@@ -1264,7 +1264,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:when test="self::rng:zeroOrMore/rng:ref/@name eq 'model.global'        and preceding-sibling::rng:*[1][self::rng:zeroOrMore/rng:ref/@name eq 'model.global']"/>
         <xsl:when test="$entCount&gt;0 or $stripped='true'">
-          <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{$element}">
+          <xsl:element namespace="http://relaxng.org/ns/structure/1.0" name="{$element}">
             <xsl:copy-of select="@*|*|text()|processing-instruction()"/>
           </xsl:element>
         </xsl:when>
@@ -1375,7 +1375,7 @@ of this software, even if advised of the possibility of such damage.
                             and normalize-space(@maxOccurs) eq 'unbounded'
                           ]"/>
         <xsl:when test="$entCount gt 0 or $stripped='true'">
-          <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{$element}">
+          <xsl:element namespace="http://www.tei-c.org/ns/1.0" name="{$element}">
             <xsl:attribute name="minOccurs" select="$minimum"/>
             <xsl:attribute name="maxOccurs" select="$maximum"/>
             <xsl:copy-of select="@*|*|text()|processing-instruction()"/>
@@ -1815,7 +1815,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:message>Create <xsl:value-of select="local-name()"/> named   <xsl:value-of select="@ident"/>   <xsl:sequence select="if
       (@module) then concat(' module: ',@module) else ''"/>         </xsl:message>
     </xsl:if>
-    <xsl:element xmlns="http://www.tei-c.org/ns/1.0"
+    <xsl:element namespace="http://www.tei-c.org/ns/1.0"
                  name="{local-name()}">
       <xsl:attribute name="rend">add</xsl:attribute>
       <xsl:choose>
