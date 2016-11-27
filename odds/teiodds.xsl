@@ -2251,19 +2251,37 @@ select="$makeDecls"/></xsl:message>
         </xsl:element>
       </xsl:when>
       <xsl:otherwise>
+        <xsl:variable name="count" select="$max - $min"/>
         <group xmlns="http://relaxng.org/ns/structure/1.0">
-          <xsl:for-each select="1 to $min">
-            <xsl:copy-of select="$c"/>
-          </xsl:for-each>
           <xsl:choose>
-            <xsl:when test="$max ge $maxint">
+            <xsl:when test="$min eq 0">
+              <optional xmlns="http://relaxng.org/ns/structure/1.0">
+                <xsl:copy-of select="$c"/>
+              </optional>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:for-each select="1 to min( ( $min, $maxint ) )">
+                <xsl:copy-of select="$c"/>
+              </xsl:for-each>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:choose>
+            <xsl:when test="$max eq -1">
+              <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+                <xsl:if test="$min gt $maxint">
+                  <a:documentation> ODD calls for a minimum of <xsl:value-of select="$min"/> occurrences </a:documentation>
+                </xsl:if>
+                <xsl:copy-of select="$c"/>
+              </zeroOrMore>
+            </xsl:when>
+            <xsl:when test="$count ge $maxint">
               <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-                <xsl:comment> ODD calls for <xsl:value-of select="$max - $min"/> optional occurrences </xsl:comment>
+                <a:documentation> ODD calls for <xsl:value-of
+                  select="concat( $min, ' required followed by ',$count)"/> optional occurrences </a:documentation>
                 <xsl:copy-of select="$c"/>
               </oneOrMore>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:variable name="count" select="$max - $min"/>
               <xsl:call-template name="generateDeterministicOptionals">
                 <xsl:with-param name="count" select="$count"/>
                 <xsl:with-param name="c" select="$c"/>
