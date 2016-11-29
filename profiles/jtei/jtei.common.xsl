@@ -237,7 +237,7 @@
         </xsl:choose>
         <xsl:for-each select="$context">
           <xsl:variable name="processed">
-            <xsl:apply-templates select="."/>
+            <xsl:apply-templates select="." mode="#current"/>
           </xsl:variable>
           <xsl:choose>
             <xsl:when test="self::text()">
