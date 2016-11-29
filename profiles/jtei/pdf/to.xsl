@@ -51,7 +51,7 @@
   <xsl:attribute-set name="heading.lowerblock.properties">
     <xsl:attribute name="font-family">Roboto-medium</xsl:attribute>
     <xsl:attribute name="font-size">8.3pt</xsl:attribute>
-    <xsl:attribute name="keep-with-next">5</xsl:attribute>
+    <xsl:attribute name="keep-with-next">always</xsl:attribute>
   </xsl:attribute-set>
   
   <xsl:attribute-set name="imageblock.properties">
