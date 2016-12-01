@@ -391,6 +391,18 @@ of this software, even if advised of the possibility of such damage.
     <xsl:if test="@ident=$selectedSchema or ($selectedSchema='' and not(preceding-sibling::tei:schemaSpec))">
       <xsl:copy>
         <xsl:copy-of select="@*"/>
+        <!-- generate a @defaultExceptions attribute if it's not present -->
+        <xsl:if test="not(@defaultExceptions)">
+          <xsl:variable name="defval" select="document(tei:workOutSource(.))//tei:elementSpec[@ident='schemaSpec']//tei:attDef[@ident='defaultExceptions']/tei:defaultVal"/>
+          <xsl:for-each select="tokenize($defval, '\s+')">
+            <xsl:if test="matches(., '\w(\w|\d)+:(\w|\d)+')">
+              <xsl:namespace name="{substring-before(., ':')}" select="namespace-uri-for-prefix(substring-before(., ':'), $defval)" ></xsl:namespace>
+            </xsl:if>
+          </xsl:for-each>
+          <xsl:if test="$defval">
+            <xsl:attribute name="defaultExceptions" select="$defval"/>
+          </xsl:if>
+        </xsl:if>
         <xsl:choose>
           <xsl:when test="@source">
             <xsl:if test="$verbose='true'">
