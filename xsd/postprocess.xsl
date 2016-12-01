@@ -16,7 +16,9 @@
   <xsl:template match="xs:any">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
-      <xsl:attribute name="namespace">##other</xsl:attribute>
+      <xsl:if test="not(@namespace)">
+        <xsl:attribute name="namespace">##other</xsl:attribute>
+      </xsl:if>
     </xsl:copy>
   </xsl:template>
   
