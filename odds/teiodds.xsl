@@ -1386,7 +1386,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:call-template name="valListChildren"/>
     </xsl:for-each>
   </xsl:template>
-
+  
   <xsl:template name="attributeData">
     <xsl:choose>
       <xsl:when test="tei:valList[@type='closed']">
@@ -1410,7 +1410,7 @@ select="$makeDecls"/></xsl:message>
             </value>
             <xsl:if test="not($oddmode='tei')">
               <a:documentation>
-		<xsl:sequence select="tei:makeDescription(.,true())"/>
+                <xsl:sequence select="tei:makeDescription(.,true())"/>
               </a:documentation>
             </xsl:if>
           </xsl:for-each>
@@ -1418,9 +1418,9 @@ select="$makeDecls"/></xsl:message>
             <xsl:when test="tei:datatype/rng:ref[@name='data.enumerated']">
               <data xmlns="http://relaxng.org/ns/structure/1.0" type="Name"/>
             </xsl:when>
-	    <xsl:when test="not(tei:datatype)">
-	      <data xmlns="http://relaxng.org/ns/structure/1.0" type="Name"/>
-	    </xsl:when>
+            <xsl:when test="not(tei:datatype)">
+              <data xmlns="http://relaxng.org/ns/structure/1.0" type="Name"/>
+            </xsl:when>
             <xsl:otherwise>
               <xsl:apply-templates select="tei:datatype/*"/>
             </xsl:otherwise>
@@ -1435,7 +1435,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
+  
   <xsl:template name="makeSimpleAttribute">
     <xsl:variable name="name">
       <xsl:choose>
@@ -1465,30 +1465,11 @@ select="$makeDecls"/></xsl:message>
 	  <xsl:sequence select="tei:makeDescription(.,true())"/>
         </a:documentation>
       </xsl:if>
-      <!-- ************************************ -->
-      <!-- Ascertain minOccurs= and maxOccurs=. -->
-      <!-- ************************************ -->
-      <!-- get the value of minOccurs=, defaulting to "0" -->
-      <xsl:variable name="minOccurs" select="( tei:datatype/@minOccurs, '0')[1]"/>
-      <!-- get the value of maxOccurs=, defaulting to "1" -->
-      <xsl:variable name="maxOccurs" select="( tei:datatype/@maxOccurs, '1')[1]"/>
-      <!-- We now have two _string_ representations of the attrs, but -->
-      <!-- we need integers. So cast them, converting "unbounded" to  -->
-      <!-- a special flag value (-1): -->
-      <xsl:variable name="min" select="xs:integer( $minOccurs )"/>
-      <xsl:variable name="max">
-        <xsl:choose>
-          <xsl:when test="$maxOccurs castable as xs:integer">
-            <xsl:value-of select="xs:integer( $maxOccurs )"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <!-- Must be "unbounded". -->
-            <xsl:value-of select="-1"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
+      <xsl:variable name="minmax" select="tei:minOmaxO( tei:datatype/@minOccurs, tei:datatype/@maxOccurs )"/>
+      <xsl:variable name="min" select="$minmax[1]"/>
+      <xsl:variable name="max" select="$minmax[2]"/>
       <xsl:choose>
-        <xsl:when test="tei:datatype/rng:text  or  not( tei:datatype )	or  $max=1">
+        <xsl:when test="tei:datatype/rng:text  or  not( tei:datatype )	or  $max eq 1">
           <!-- If there is only going to be one output RELAX NG node   --> 
           <!-- in the attribute definition, then we don't need to      -->
           <!-- bother with the complex min & max code below (in the    -->
@@ -1525,7 +1506,7 @@ select="$makeDecls"/></xsl:message>
           <xsl:variable name="thisNode" select="."/>
           <list xmlns="http://relaxng.org/ns/structure/1.0">
             <xsl:choose>
-              <xsl:when test="$max = -1 (: i.e., unbounded :)  and  $min = 1">
+              <xsl:when test="$max eq -1 (: i.e., unbounded :)  and  $min eq 1">
                 <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
                   <xsl:for-each select="$thisNode">
                     <xsl:call-template name="attributeData"/>
@@ -1533,7 +1514,7 @@ select="$makeDecls"/></xsl:message>
                 </oneOrMore>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:if test="$min > 0">
+                <xsl:if test="$min gt 0">
                   <xsl:for-each select="1 to $min">
                     <xsl:for-each select="$thisNode">
                       <xsl:call-template name="attributeData"/>
@@ -1541,7 +1522,7 @@ select="$makeDecls"/></xsl:message>
                   </xsl:for-each>
                 </xsl:if>
                 <xsl:choose>
-                  <xsl:when test="$max = -1"><!-- i.e., unbounded -->
+                  <xsl:when test="$max eq -1"><!-- i.e., unbounded -->
                     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
                       <xsl:for-each select="$thisNode">
                         <xsl:call-template name="attributeData"/>
@@ -1549,7 +1530,7 @@ select="$makeDecls"/></xsl:message>
                     </zeroOrMore>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:for-each select="xs:integer( $min + 1 ) to $max">
+                    <xsl:for-each select="$min+1 to $max">
                       <optional xmlns="http://relaxng.org/ns/structure/1.0">
                         <xsl:for-each select="$thisNode">
                           <xsl:call-template name="attributeData"/>
@@ -2236,11 +2217,9 @@ select="$makeDecls"/></xsl:message>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:variable name="min" select="if (not(@minOccurs)) then 1
-                                     else @minOccurs" as="xs:integer"/>
-    <xsl:variable name="max" select="if (not(@maxOccurs)) then 1
-                                     else if (@maxOccurs eq 'unbounded') then -1
-                                     else @maxOccurs" as="xs:integer"/>
+    <xsl:variable name="minOmaxO" select="tei:minOmaxO( @minOccurs, @maxOccurs )"/>
+    <xsl:variable name="min" select="$minOmaxO[1]"/>
+    <xsl:variable name="max" select="$minOmaxO[2]"/>
     <xsl:choose>
       <xsl:when test="$min eq 1  and  $max eq 1">
         <xsl:copy-of select="$c"/>
@@ -2293,19 +2272,47 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
+  <xsl:function name="tei:minOmaxO" as="xs:integer+">
+    <!-- Input: the string values of the attributes @minOccurs and -->
+    <!--        @maxOccurs  -->
+    <!-- Oputput: a sequence of 2 integers representing the integer -->
+    <!--          values thereof with -1 used to indicate "unbounded" -->
+    <xsl:param name="minOccurs"/>
+    <xsl:param name="maxOccurs"/>
+    <!-- get the value of @minOccurs, defaulting to "1" -->
+    <xsl:variable name="minOccurs" select="( $minOccurs, '1')[1]"/>
+    <!-- get the value of @maxOccurs, defaulting to "1" -->
+    <xsl:variable name="maxOccurs" select="( $maxOccurs, '1')[1]"/>
+    <!-- We now have two _string_ representations of the attrs, but -->
+    <!-- we need integers. So cast them, converting "unbounded" to  -->
+    <!-- a special flag value (-1): -->
+    <xsl:variable name="min" select="xs:integer( $minOccurs )"/>
+    <xsl:variable name="max">
+      <xsl:choose>
+        <xsl:when test="$maxOccurs castable as xs:integer">
+          <xsl:value-of select="xs:integer( $maxOccurs )"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <!-- Must be "unbounded". -->
+          <xsl:value-of select="-1"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:sequence select="( $min, $max )"/>
+  </xsl:function>
+
   <xsl:function name="tei:generateIndicators" as="xs:string">
     <xsl:param name="minstr"/>
     <xsl:param name="maxstr"/>
-    <!-- Discussion 2016-08-30 by Syd (modified 2016-11-25): -->
-    <!-- I found this routine testing strings. That's not OK, as the attrs -->
+    <!-- Discussion 2016-08-30 by Syd (modified 2016-11-25, 2016-12-01): -->
+    <!-- I found this stylesheet testing strings. That's not OK, as the attrs -->
     <!-- @minOccurs and @maxOccurs are defined as counts: a user should be -->
     <!-- able to enter minOccurs="02" and get the same result as if she had -->
     <!-- entered minOccurs='2'. So I've changed this to test for integers -->
-    <!-- instead. The result is that we end up duplicating some of the logic -->
-    <!-- from <elementRef> here. Oh well. -->
-    <xsl:variable name="maxstr" select="if ( $maxstr eq 'unbounded' ) then '-1' else $maxstr"/>
-    <xsl:variable name="min" select="if ( $minstr ) then xs:integer( $minstr ) else 1" as="xs:integer"/>
-    <xsl:variable name="max" select="if ( $maxstr ) then xs:integer( $maxstr ) else 1" as="xs:integer"/>
+    <!-- instead. -->
+    <xsl:variable name="minmax" select="tei:minOmaxO( $minstr, $maxstr )"/>
+    <xsl:variable name="min" select="$minmax[1]"/>
+    <xsl:variable name="max" select="$minmax[2]"/>
     <xsl:choose>
       <xsl:when test="$min eq 0  and  $max eq  1">optional</xsl:when>
       <xsl:when test="$min ge 1  and  $max eq -1">oneOrMore</xsl:when>
@@ -2313,22 +2320,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:otherwise><xsl:text/></xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-<!--  <xsl:function name="tei:generateIndicators" as="xs:string">
-    <xsl:param name="min"/>
-    <xsl:param name="max"/>
-    <xsl:choose>
-      <xsl:when test="$min='0' and $max='1'">optional</xsl:when>
-      <xsl:when test="$min='0' and not($max)">optional</xsl:when>
-      <xsl:when test="number($min) ge 1 and $max='unbounded'">oneOrMore</xsl:when>
-      <xsl:when test="number($min) ge 1 and not($max)">oneOrMore</xsl:when>
-      <xsl:when test="not($min) and $max='unbounded'">oneOrMore</xsl:when>
-      <xsl:when test="$min='0' and $max='unbounded'">zeroOrMore</xsl:when>
-      <xsl:otherwise>
-	<xsl:text></xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:function>
--->
+
   <xsl:function name="tei:generateAttRef" as="xs:string">
     <xsl:param name="context"/>
     <xsl:param name="prefix"/>
