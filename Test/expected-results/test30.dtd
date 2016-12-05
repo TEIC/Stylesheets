@@ -72,7 +72,7 @@ resp CDATA  #IMPLIED'>
 rend (bold|boxed|center|italic|underline) #IMPLIED'>
 
 <!ENTITY % Tatt.global.rendition.attribute.style '
-style CDATA  #IMPLIED'>
+style %teidata.text;  #IMPLIED'>
 
 <!ENTITY % Tatt.global.rendition.attribute.rendition '
 rendition CDATA  #IMPLIED'>
@@ -256,7 +256,7 @@ agent %teidata.enumerated;  #IMPLIED'>
 degree %teidata.probCert;  #IMPLIED'>
 
 <!ENTITY % Tatt.damaged.attribute.group '
-group CDATA  #IMPLIED'>
+group %teidata.count;  #IMPLIED'>
 <!ENTITY % Tatt.damaged.attributes '%Tatt.dimensions.attributes;%Tatt.written.attributes;
  %Tatt.damaged.attribute.agent;
  %Tatt.damaged.attribute.degree;
@@ -266,7 +266,7 @@ break %teidata.enumerated;  #IMPLIED'>
 <!ENTITY % Tatt.breaking.attributes '
  %Tatt.breaking.attribute.break;'> 
 <!ENTITY % Tatt.cReferencing.attribute.cRef '
-cRef CDATA  #IMPLIED'>
+cRef %teidata.text;  #IMPLIED'>
 <!ENTITY % Tatt.cReferencing.attributes '
  %Tatt.cReferencing.attribute.cRef;'> 
 <!ENTITY % Tatt.datable.w3c.attribute.when '
@@ -349,7 +349,7 @@ instant %teidata.xTruthValue;  "false" '>
 rend (bold|boxed|center|italic|underline) #IMPLIED'>
 
 <!ENTITY % Tatt.global.rendition.attribute.style '
-style CDATA  #IMPLIED'>
+style %teidata.text;  #IMPLIED'>
 
 <!ENTITY % Tatt.global.rendition.attribute.rendition '
 rendition CDATA  #IMPLIED'>
@@ -512,7 +512,7 @@ status %teidata.enumerated;  "unremarkable" '>
 cause %teidata.enumerated;  #IMPLIED'>
 
 <!ENTITY % Tatt.transcriptional.attribute.seq '
-seq CDATA  #IMPLIED'>
+seq %teidata.count;  #IMPLIED'>
 <!ENTITY % Tatt.transcriptional.attributes '%Tatt.editLike.attributes;%Tatt.written.attributes;
  %Tatt.transcriptional.attribute.status;
  %Tatt.transcriptional.attribute.cause;
@@ -2219,7 +2219,7 @@ mimeType CDATA  #REQUIRED >
  %Tatt.spanning.attributes;
  %Tatt.placement.attributes;
  %Tatt.global.attributes;
-function CDATA  #IMPLIED
+function %teidata.word;  #IMPLIED
 target CDATA  #IMPLIED >
 <!--doc:marks a boundary point separating any kind of section of a text, typically but not necessarily indicating a point at which some part of a standard reference system changes, where the change is not represented by a structural element. [3.10.3. Milestone
 Elements] -->
@@ -2620,7 +2620,7 @@ passive CDATA  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.styleDef.attributes;
 scope %teidata.enumerated;  #IMPLIED
-selector CDATA  #IMPLIED >
+selector %teidata.text;  #IMPLIED >
 <!--doc:describes a person's present or past places of residence. [15.2.2. The Participant Description] -->
 <!ELEMENT residence %macro.phraseSeq;>
 <!ATTLIST residence xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2956,7 +2956,7 @@ render CDATA  #IMPLIED >
 <!ATTLIST tagsDecl xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST tagsDecl
  %Tatt.global.attributes;
-partial CDATA  #IMPLIED >
+partial %teidata.truthValue;  #IMPLIED >
 <!--doc:defines a typology either implicitly, by means of a bibliographic citation, or explicitly by a structured taxonomy. [2.3.7. The Classification Declaration] -->
 <!ELEMENT taxonomy ((%model.glossLike;|%model.descLike;)*|(category|taxonomy)+|((%model.biblLike;),(category|taxonomy)*))>
 <!ATTLIST taxonomy xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -3127,5 +3127,5 @@ since %teidata.pointer;  #IMPLIED >
  %Tatt.coordinated.attributes;
  %Tatt.typed.attributes;
  %Tatt.written.attributes;
-rotate CDATA  "0"  >
+rotate %teidata.count;  "0"  >
 <!-- end elements -->
