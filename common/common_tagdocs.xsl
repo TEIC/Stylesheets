@@ -360,6 +360,7 @@
         </xsl:attribute>
         <!-- Convert @minOccurs and @maxOccurs to integers, giving them -->
         <!-- a default of 1, and converting "unbounded" to -1. -->
+        <!-- We should probably use the function tei:minOmaxO() instead. -->
         <xsl:variable name="minOccurs" select="( @minOccurs, '1' )[1] cast as xs:integer"/>
         <xsl:variable name="maxOccurs" as="xs:integer">
           <xsl:choose>
