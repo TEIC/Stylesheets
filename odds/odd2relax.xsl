@@ -541,7 +541,7 @@ of this software, even if advised of the possibility of such damage.
   <!-- and again -->
   
   <xsl:template match="rng:list|rng:element" mode="pass3">
-    <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
+    <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
       <xsl:apply-templates  select="@*"  mode="pass3"/>
       <xsl:variable name="Contents">
 	<xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
@@ -569,7 +569,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="rng:choice|rng:group" mode="pass3">
     <xsl:choose>
       <xsl:when test="rng:value|rng:name|.//rng:ref|.//rng:text|.//rng:data">
-        <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
+        <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
           <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
         </xsl:element>
       </xsl:when>
@@ -605,7 +605,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
+            <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
               <xsl:apply-templates
                 select="*|@*|processing-instruction()|comment()|text()"
                 mode="pass3"/>
@@ -614,7 +614,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
+        <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
           <xsl:apply-templates
             select="*|@*|processing-instruction()|comment()|text()"
             mode="pass3"/>
@@ -713,7 +713,6 @@ of this software, even if advised of the possibility of such damage.
       else
       @minOccurs"
       as="xs:integer"/>
-    <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
     <xsl:variable name="c">
       <xsl:choose>
         <xsl:when test="@name">
@@ -750,7 +749,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:copy-of select="$c"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
+          <xsl:element name="{$wrapperElement}" namespace="http://relaxng.org/ns/structure/1.0">
             <xsl:copy-of select="$c"/>
           </xsl:element>
         </xsl:otherwise>
