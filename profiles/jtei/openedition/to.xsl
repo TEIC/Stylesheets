@@ -739,7 +739,7 @@
     </xsl:choose>
   </xsl:template>
       
-  <xsl:template match="tei:text//tei:title[not(@level)]">
+  <xsl:template match="tei:title[not(@level)][not(ancestor::tei:teiHeader)]">
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -748,7 +748,7 @@
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="tei:text//tei:idno[not(parent::tei:bibl)]">
+  <xsl:template match="tei:idno[not(ancestor::tei:teiHeader)][not(parent::tei:bibl)]">
     <xsl:apply-templates/>
   </xsl:template>
   
