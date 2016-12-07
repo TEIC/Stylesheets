@@ -34,7 +34,7 @@
           minOccurs="{count(following-sibling::*/self::xs:element[@ref = current()/@ref and not(@minOccurs = '0')]) + 1}"
           maxOccurs="{tei:count-elements(1, current())}"/>
       </xsl:when>
-      <xsl:when test="following-sibling::*[1]/self::xs:sequence[xs:element/@ref = current()/@ref] and
+      <xsl:when test="following-sibling::*[1]/self::xs:sequence[xs:element/@ref = current()/@ref][not(xs:group)][not(xs:element/@ref ne current())] and
         not(preceding-sibling::*[1]/self::xs:element[@ref = current()/@ref])">
         <xs:element ref="{current()/@ref}" 
           minOccurs="1"
@@ -74,8 +74,12 @@
   
   <xsl:template match="xs:sequence">
     <xsl:choose>
-      <xsl:when test="preceding-sibling::*[1]/self::xs:element[@ref = current()/xs:element/@ref]"/>
-      <xsl:when test="preceding-sibling::*[1]/self::xs:group[@ref = current()/xs:group/@ref]"/>
+      <xsl:when test="preceding-sibling::*[1]/self::xs:element[@ref = current()/xs:element/@ref] 
+        and count(xs:group) = 0
+        and count(xs:element) le 1"/>
+      <xsl:when test="preceding-sibling::*[1]/self::xs:group[@ref = current()/xs:group/@ref]
+        and count(xs:element) = 0
+        and count(xs:group) le 1"/>
       <xsl:otherwise>
         <xsl:copy>
           <xsl:apply-templates select="node()|@*"/>
