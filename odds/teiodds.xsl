@@ -81,7 +81,7 @@ of this software, even if advised of the possibility of such damage.
   <!-- for that matter, whether we really want it at all. It is the max # of   -->
   <!-- clauses of RELAX NG we'll generate in response to @maxOccurs (more than -->
   <!-- this, just allow "unbounded", and insert an annotation saying so). —Syd -->
-  <xsl:param name="maxint" select="42"/>
+  <xsl:param name="maxint" select="400"/>
   
   <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec" name="LOCALIDENTS" use="@ident"/>
   <xsl:key match="tei:dataSpec|tei:macroSpec" name="MACROS" use="@ident"/>
@@ -2254,11 +2254,11 @@ select="$makeDecls"/></xsl:message>
               </zeroOrMore>
             </xsl:when>
             <xsl:when test="$count ge $maxint">
-              <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+              <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
                 <a:documentation> ODD calls for <xsl:value-of
                   select="concat( $min, ' required followed by ',$count)"/> optional occurrences </a:documentation>
                 <xsl:copy-of select="$c"/>
-              </oneOrMore>
+              </zeroOrMore>
             </xsl:when>
             <xsl:otherwise>
               <xsl:call-template name="generateDeterministicOptionals">

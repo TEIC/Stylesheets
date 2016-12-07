@@ -1758,6 +1758,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:if test="starts-with( $ename,'%')">(</xsl:if>
             <xsl:value-of select="$ename"/>
             <xsl:if test="starts-with( $ename,'%')">)</xsl:if>
+            <xsl:if test="position() gt $min"><xsl:text>?</xsl:text></xsl:if>
             <xsl:if test="position() lt last()"><xsl:text>,</xsl:text></xsl:if>
           </xsl:for-each>
           <xsl:text>)</xsl:text>
