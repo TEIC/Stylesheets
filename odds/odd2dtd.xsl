@@ -1892,7 +1892,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="$min eq 0  and  $max eq  1">?</xsl:when>
       <xsl:when test="$min eq 0  and  $max gt  1">*</xsl:when>
       <xsl:when test="$min eq 0  and  $max eq -1">*</xsl:when>
-      <xsl:when test="$min ge 1  and  $max gt  1">+</xsl:when>
       <xsl:when test="$min ge 1  and  $max eq -1">+</xsl:when>
       <xsl:otherwise></xsl:otherwise>
     </xsl:choose>
