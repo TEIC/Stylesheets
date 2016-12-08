@@ -2290,7 +2290,10 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="max">
       <xsl:choose>
         <xsl:when test="$maxOccurs castable as xs:integer">
-          <xsl:value-of select="xs:integer( $maxOccurs )"/>
+          <xsl:choose>
+            <xsl:when test="xs:integer( $maxOccurs ) lt $min"><xsl:message terminate="yes">The default value of @maxOccurs is 1. You cannot have a @minOccurs greater than the @maxOccurs.</xsl:message></xsl:when>
+            <xsl:otherwise><xsl:value-of select="xs:integer( $maxOccurs )"/></xsl:otherwise>
+          </xsl:choose>
         </xsl:when>
         <xsl:otherwise>
           <!-- Must be "unbounded". -->
