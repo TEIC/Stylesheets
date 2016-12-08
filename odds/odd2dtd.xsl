@@ -1696,7 +1696,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="minOmaxO" select="tei:minOmaxO( @minOccurs, @maxOccurs )"/>
     <xsl:variable name="min" select="$minOmaxO[1]"/>
     <xsl:variable name="max" select="$minOmaxO[2]"/>
-    
     <xsl:variable name="exists">
       <xsl:call-template name="checkClass">
         <xsl:with-param name="id" select="@key"/>
@@ -1751,6 +1750,16 @@ of this software, even if advised of the possibility of such damage.
           <xsl:text>(%</xsl:text>
           <xsl:value-of select="(@key,@expand)" separator="_"/>
           <xsl:text>;)</xsl:text>
+        </xsl:when>
+        <xsl:when test="$min gt 1 and $max = -1">
+          <xsl:text>(</xsl:text>
+          <xsl:for-each select="1 to $min">
+            <xsl:if test="starts-with( $ename,'%')">(</xsl:if>
+            <xsl:value-of select="$ename"/>
+            <xsl:if test="starts-with( $ename,'%')">)</xsl:if>
+            <xsl:if test="position() lt last()"><xsl:text>,</xsl:text></xsl:if>
+          </xsl:for-each>
+          <xsl:text>)</xsl:text>
         </xsl:when>
         <xsl:when test="$max gt 1  and  $max lt $maxint">
           <xsl:text>(</xsl:text>
