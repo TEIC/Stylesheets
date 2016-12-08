@@ -1742,6 +1742,9 @@ of this software, even if advised of the possibility of such damage.
             </xsl:for-each>
           </xsl:variable>
           <xsl:value-of select="$members/*" separator="|"/>
+          <xsl:if test="not(parent::*/tei:textNode)">
+            <xsl:value-of select="$suffix"/>
+          </xsl:if>
         </xsl:when>
         <xsl:when test="parent::*/tei:textNode">
           <xsl:value-of select="$ename"/>
@@ -1750,6 +1753,9 @@ of this software, even if advised of the possibility of such damage.
           <xsl:text>(%</xsl:text>
           <xsl:value-of select="(@key,@expand)" separator="_"/>
           <xsl:text>;)</xsl:text>
+          <xsl:if test="not(parent::*/tei:textNode)">
+            <xsl:value-of select="$suffix"/>
+          </xsl:if>
         </xsl:when>
         <xsl:when test="$min gt 1 and $max = -1">
           <xsl:text>(</xsl:text>
@@ -1759,6 +1765,9 @@ of this software, even if advised of the possibility of such damage.
             <xsl:if test="starts-with( $ename,'%')">)</xsl:if>
             <xsl:if test="position() lt last()"><xsl:text>,</xsl:text></xsl:if>
           </xsl:for-each>
+          <xsl:if test="not(parent::*/tei:textNode)">
+            <xsl:value-of select="$suffix"/>
+          </xsl:if>
           <xsl:text>)</xsl:text>
         </xsl:when>
         <xsl:when test="$max gt 1  and  $max lt $maxint">
@@ -1770,20 +1779,27 @@ of this software, even if advised of the possibility of such damage.
             <xsl:if test="position() gt $min"><xsl:text>?</xsl:text></xsl:if>
             <xsl:if test="position() lt last()"><xsl:text>,</xsl:text></xsl:if>
           </xsl:for-each>
+          <xsl:if test="not(parent::*/tei:textNode)">
+            <xsl:value-of select="$suffix"/>
+          </xsl:if>
           <xsl:text>)</xsl:text>
         </xsl:when>
         <xsl:when test="string-length($suffix) gt 0">
           <xsl:text>(</xsl:text>
           <xsl:value-of select="$ename"/>
           <xsl:text>)</xsl:text>
+          <xsl:if test="not(parent::*/tei:textNode)">
+            <xsl:value-of select="$suffix"/>
+          </xsl:if>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="$ename"/>
+          <xsl:if test="not(parent::*/tei:textNode)">
+            <xsl:value-of select="$suffix"/>
+          </xsl:if>
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:if test="not(parent::*/tei:textNode)">
-        <xsl:value-of select="$suffix"/>
-      </xsl:if>
+      
     </token>
   </xsl:template>
   
@@ -1890,7 +1906,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="$context/tei:textNode">*</xsl:when>
       <xsl:when test="$min eq 0  and  $max eq  1">?</xsl:when>
-      <xsl:when test="$min eq 0  and  $max gt  1">*</xsl:when>
       <xsl:when test="$min eq 0  and  $max eq -1">*</xsl:when>
       <xsl:when test="$min ge 1  and  $max eq -1">+</xsl:when>
       <xsl:otherwise></xsl:otherwise>
