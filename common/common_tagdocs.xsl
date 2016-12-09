@@ -1889,17 +1889,15 @@
         <xsl:text>valList</xsl:text>
       </xsl:attribute>
       <xsl:for-each select="tei:valItem">
-        <xsl:variable name="name"
-          select="
-            if (tei:altIdent) then
-              tei:altIdent
-            else
-              @ident"/>
+        <xsl:variable name="name" select="( tei:altIdent, @ident )[1]"/>
         <xsl:element namespace="{$outputNS}" name="{$dtName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>odd_label</xsl:text>
           </xsl:attribute>
           <xsl:value-of select="$name"/>
+          <xsl:call-template name="validUntil">
+            <xsl:with-param name="inline" select="true()"/>
+          </xsl:call-template>
         </xsl:element>
         <xsl:element namespace="{$outputNS}" name="{$ddName}">
           <xsl:attribute name="{$rendName}">
@@ -1911,7 +1909,7 @@
               separator=", "/>
             <xsl:text>) </xsl:text>
           </xsl:if>
-          <xsl:sequence select="tei:makeDescription(., true())"/>
+          <xsl:sequence select="tei:makeDescription(., true() )"/>
           <xsl:if test="@ident = ../../tei:defaultVal">
             <xsl:element namespace="{$outputNS}" name="{$hiName}">
               <xsl:attribute name="{$rendName}">
@@ -1923,13 +1921,23 @@
               <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
-              <xsl:value-of select="concat(
-                ' [',
-                tei:i18n('Default'),
-                if ( $defaultVal_validUntil )
-                  then concat('. ',tei:i18n('defaultValValidUntil'), ' ', $defaultVal_validUntil,'.' )
-                  else '',
-                ']')"/>
+              <xsl:value-of select="concat(' [',tei:i18n('Default'),'] ' )"/>
+              <xsl:if test="$defaultVal_validUntil">
+                <xsl:variable name="duck">
+                  <tei:seg>
+                    <xsl:sequence select="tei:i18n('deprecated')"/>
+                  </tei:seg>
+                </xsl:variable>
+                <xsl:for-each select="$duck">
+                  <xsl:call-template name="makeExternalLink">
+                    <xsl:with-param name="ptr" select="false()"/>
+                    <xsl:with-param name="dest">
+                      <xsl:text>http://www.tei-c.org/Activities/Council/Working/tcw27.xml</xsl:text>
+                    </xsl:with-param>
+                  </xsl:call-template>
+                </xsl:for-each>
+                <xsl:value-of select="concat('. ',tei:i18n('defaultValValidUntil'), ' ', $defaultVal_validUntil,'.' )"/>
+              </xsl:if>
             </xsl:element>
           </xsl:if>
         </xsl:element>
@@ -2974,7 +2982,13 @@
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="validUntil">
+    <xsl:param name="inline" select="false()"/>
+    <!-- The above parameter, and the screwy use of it below, added 2016-12-09 -->
+    <!-- by Martin and Syd in an attempt to get phrase-level deprecation warnings -->
+    <xsl:variable name="rowName" select="if ($inline) then $segName else $rowName"/>
+    <xsl:variable name="cellName" select="if ($inline) then $hiName else $cellName"/>
     <xsl:if test="@validUntil">
+      <xsl:if test="$inline">&#xA0;&#xA0;</xsl:if>
       <xsl:element namespace="{$outputNS}" name="{$rowName}">
         <xsl:element namespace="{$outputNS}" name="{$cellName}">
           <xsl:attribute name="{$rendName}">
