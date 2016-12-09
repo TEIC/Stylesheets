@@ -284,7 +284,7 @@ att.datable.w3c.attribute.to =
     | xsd:dateTime
   }?
 sch:pattern [
-  id = "test21-att.datable.w3c-att-datable-w3c-when-constraint-1"
+  id = "test21-att.datable.w3c-att-datable-w3c-when-constraint-rule-1"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -303,7 +303,7 @@ sch:pattern [
   "   "
 ]
 sch:pattern [
-  id = "test21-att.datable.w3c-att-datable-w3c-from-constraint-2"
+  id = "test21-att.datable.w3c-att-datable-w3c-from-constraint-rule-2"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -322,7 +322,7 @@ sch:pattern [
   "   "
 ]
 sch:pattern [
-  id = "test21-att.datable.w3c-att-datable-w3c-to-constraint-3"
+  id = "test21-att.datable.w3c-att-datable-w3c-to-constraint-rule-3"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -351,7 +351,7 @@ att.datable.attribute.calendar =
   ## indique le système ou le calendrier auquel appartient la date exprimée dans le contenu de l'élément.
   attribute calendar { xsd:anyURI }?
 sch:pattern [
-  id = "test21-att.datable-calendar-calendar-constraint-4"
+  id = "test21-att.datable-calendar-calendar-constraint-rule-4"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -864,7 +864,7 @@ att.typed.attribute.subtype =
     xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 sch:pattern [
-  id = "test21-att.typed-subtypeTyped-constraint-5"
+  id = "test21-att.typed-subtypeTyped-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -897,7 +897,7 @@ att.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "test21-att.pointing-targetLang-targetLang-constraint-6"
+  id = "test21-att.pointing-targetLang-targetLang-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -996,7 +996,7 @@ att.spanning.attribute.spanTo =
   ## indique la fin d'un passage introduit par l'élément portant cet attribut.
   attribute spanTo { xsd:anyURI }?
 sch:pattern [
-  id = "test21-att.spanning-spanTo-spanTo-2-constraint-7"
+  id = "test21-att.spanning-spanTo-spanTo-2-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1047,7 +1047,7 @@ att.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "test21-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-8"
+    "test21-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1895,7 +1895,7 @@ p =
        attribute * { text }*
      }*)
     >> sch:pattern [
-         id = "test21-p-abstractModel-p-constraint-4"
+         id = "test21-p-abstractModel-p-constraint-report-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1916,7 +1916,7 @@ p =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-p-abstractModel-structure-l-constraint-5"
+         id = "test21-p-abstractModel-structure-l-constraint-report-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2429,7 +2429,7 @@ ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "test21-ptr-ptrAtts-constraint-6"
+         id = "test21-ptr-ptrAtts-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2473,7 +2473,7 @@ ref =
   element ref {
     macro.paraContent
     >> sch:pattern [
-         id = "test21-ref-refAtts-constraint-7"
+         id = "test21-ref-refAtts-constraint-report-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2513,7 +2513,8 @@ ref =
          (label, model.global*, item, model.global*)+)),
      (model.divBottom, model.global*)*)
     >> sch:pattern [
-         id = "test21-list-gloss-list-must-have-labels-constraint-9"
+         id =
+           "test21-list-gloss-list-must-have-labels-constraint-rule-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2964,7 +2965,7 @@ biblStruct =
       | citedRange)*)
     >> sch:pattern [
          id =
-           "test21-biblStruct-deprecate-altIdentifier-child-constraint-8"
+           "test21-biblStruct-deprecate-altIdentifier-child-constraint-report-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3008,7 +3009,7 @@ relatedItem =
   element relatedItem {
     ((model.biblLike | model.ptrLike)?)
     >> sch:pattern [
-         id = "test21-relatedItem-targetorcontent1-constraint-9"
+         id = "test21-relatedItem-targetorcontent1-constraint-report-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3030,7 +3031,7 @@ relatedItem =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-relatedItem-targetorcontent1-constraint-7"
+         id = "test21-relatedItem-targetorcontent1-constraint-assert-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3061,7 +3062,7 @@ l =
   element l {
     ((text | model.gLike | model.phrase | model.inter | model.global)*)
     >> sch:pattern [
-         id = "test21-l-abstractModel-structure-l-constraint-10"
+         id = "test21-l-abstractModel-structure-l-constraint-report-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3098,7 +3099,7 @@ lg =
       | lg)*,
      (model.divBottom, model.global*)*)
     >> sch:pattern [
-         id = "test21-lg-atleast1oflggapl-constraint-8"
+         id = "test21-lg-atleast1oflggapl-constraint-assert-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3118,7 +3119,7 @@ lg =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-lg-abstractModel-structure-l-constraint-11"
+         id = "test21-lg-abstractModel-structure-l-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4017,7 +4018,7 @@ relation =
   element relation {
     (desc?)
     >> sch:pattern [
-         id = "test21-relation-reforkeyorname-constraint-9"
+         id = "test21-relation-reforkeyorname-constraint-assert-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4035,7 +4036,7 @@ relation =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-relation-activemutual-constraint-12"
+         id = "test21-relation-activemutual-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4054,7 +4055,7 @@ relation =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-relation-activepassive-constraint-13"
+         id = "test21-relation-activepassive-constraint-report-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4518,7 +4519,7 @@ quotation =
   element quotation {
     (model.pLike*)
     >> sch:pattern [
-         id = "test21-quotation-quotationContents-constraint-14"
+         id = "test21-quotation-quotationContents-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5135,7 +5136,7 @@ link =
   element link {
     empty
     >> sch:pattern [
-         id = "test21-link-linkTargets3-constraint-10"
+         id = "test21-link-linkTargets3-constraint-assert-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5175,7 +5176,7 @@ ab =
   element ab {
     macro.paraContent
     >> sch:pattern [
-         id = "test21-ab-abstractModel-structure-p-constraint-15"
+         id = "test21-ab-abstractModel-structure-p-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5196,7 +5197,7 @@ ab =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-ab-abstractModel-structure-l-constraint-16"
+         id = "test21-ab-abstractModel-structure-l-constraint-report-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5370,7 +5371,7 @@ join =
   element join {
     ((model.descLike | model.certLike)*)
     >> sch:pattern [
-         id = "test21-join-joinTargets3-constraint-11"
+         id = "test21-join-joinTargets3-constraint-assert-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5515,7 +5516,7 @@ dimensions =
   element dimensions {
     ((dim | model.dimLike)*)
     >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint-17"
+         id = "test21-dimensions-duplicateDim-constraint-report-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5537,7 +5538,7 @@ dimensions =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint-18"
+         id = "test21-dimensions-duplicateDim-constraint-report-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5559,7 +5560,7 @@ dimensions =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint-19"
+         id = "test21-dimensions-duplicateDim-constraint-report-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5735,7 +5736,7 @@ msIdentifier =
       idno?),
      (msName | altIdentifier)*)
     >> sch:pattern [
-         id = "test21-msIdentifier-msId_minimal-constraint-20"
+         id = "test21-msIdentifier-msId_minimal-constraint-report-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6219,7 +6220,7 @@ msPart =
       | (msContents?, physDesc?, history?, additional?, msPart*)))
     >> sch:pattern [
          id =
-           "test21-msPart-deprecate-altIdentifier-child-constraint-21"
+           "test21-msPart-deprecate-altIdentifier-child-constraint-report-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6392,7 +6393,7 @@ addSpan =
   element addSpan {
     empty
     >> sch:pattern [
-         id = "test21-addSpan-spanTo-constraint-12"
+         id = "test21-addSpan-spanTo-constraint-assert-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6412,7 +6413,7 @@ addSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-addSpan-spanTo_fr-constraint-13"
+         id = "test21-addSpan-spanTo_fr-constraint-assert-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6437,7 +6438,7 @@ addSpan =
     ## indique la fin d'un passage introduit par l'élément portant cet attribut.
     attribute spanTo { xsd:anyURI }
     >> sch:pattern [
-         id = "test21-addSpan-spanTo-spanTo-2-constraint-10"
+         id = "test21-addSpan-spanTo-spanTo-2-constraint-rule-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6479,7 +6480,7 @@ damageSpan =
   element damageSpan {
     empty
     >> sch:pattern [
-         id = "test21-damageSpan-spanTo-constraint-15"
+         id = "test21-damageSpan-spanTo-constraint-assert-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6500,7 +6501,7 @@ damageSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-damageSpan-spanTo_fr-constraint-16"
+         id = "test21-damageSpan-spanTo_fr-constraint-assert-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6529,7 +6530,7 @@ delSpan =
   element delSpan {
     empty
     >> sch:pattern [
-         id = "test21-delSpan-spanTo-constraint-17"
+         id = "test21-delSpan-spanTo-constraint-assert-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6549,7 +6550,7 @@ delSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-delSpan-spanTo_fr-constraint-18"
+         id = "test21-delSpan-spanTo_fr-constraint-assert-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6680,7 +6681,7 @@ subst =
   element subst {
     ((add | del | model.milestoneLike)+)
     >> sch:pattern [
-         id = "test21-subst-substContents1-constraint-19"
+         id = "test21-subst-substContents1-constraint-assert-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6930,7 +6931,8 @@ group =
           ((model.divLike | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
-         id = "test21-div-abstractModel-structure-l-constraint-22"
+         id =
+           "test21-div-abstractModel-structure-l-constraint-report-22"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6950,7 +6952,8 @@ group =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-div-abstractModel-structure-p-constraint-23"
+         id =
+           "test21-div-abstractModel-structure-p-constraint-report-23"
          "\x{a}" ~
          "            "
          sch:rule [

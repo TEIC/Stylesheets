@@ -247,7 +247,7 @@ att.datable.w3c.attribute.to =
     | xsd:dateTime
   }?
 sch:pattern [
-  id = "test15-att.datable.w3c-att-datable-w3c-when-constraint-1"
+  id = "test15-att.datable.w3c-att-datable-w3c-when-constraint-rule-1"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -266,7 +266,7 @@ sch:pattern [
   "   "
 ]
 sch:pattern [
-  id = "test15-att.datable.w3c-att-datable-w3c-from-constraint-2"
+  id = "test15-att.datable.w3c-att-datable-w3c-from-constraint-rule-2"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -285,7 +285,7 @@ sch:pattern [
   "   "
 ]
 sch:pattern [
-  id = "test15-att.datable.w3c-att-datable-w3c-to-constraint-3"
+  id = "test15-att.datable.w3c-att-datable-w3c-to-constraint-rule-3"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -312,7 +312,7 @@ att.datable.attribute.calendar =
   ## indicates the system or calendar to which the date represented by the content of this element belongs.
   attribute calendar { xsd:anyURI }?
 sch:pattern [
-  id = "test15-att.datable-calendar-calendar-constraint-4"
+  id = "test15-att.datable-calendar-calendar-constraint-rule-4"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -818,7 +818,7 @@ att.typed.attribute.subtype =
     xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 sch:pattern [
-  id = "test15-att.typed-subtypeTyped-constraint-5"
+  id = "test15-att.typed-subtypeTyped-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -851,7 +851,7 @@ att.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "test15-att.pointing-targetLang-targetLang-constraint-6"
+  id = "test15-att.pointing-targetLang-targetLang-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -950,7 +950,7 @@ att.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { xsd:anyURI }?
 sch:pattern [
-  id = "test15-att.spanning-spanTo-spanTo-2-constraint-7"
+  id = "test15-att.spanning-spanTo-spanTo-2-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1001,7 +1001,7 @@ att.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "test15-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-8"
+    "test15-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1620,7 +1620,7 @@ p =
   element para {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-p-abstractModel-p-constraint-4"
+         id = "test15-p-abstractModel-p-constraint-report-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1641,7 +1641,7 @@ p =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-p-abstractModel-structure-l-constraint-5"
+         id = "test15-p-abstractModel-structure-l-constraint-report-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2134,7 +2134,7 @@ ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "test15-ptr-ptrAtts-constraint-6"
+         id = "test15-ptr-ptrAtts-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2168,7 +2168,7 @@ ref =
   element ref {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-ref-refAtts-constraint-7"
+         id = "test15-ref-refAtts-constraint-report-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2208,7 +2208,8 @@ ref =
          (label, model.global*, item, model.global*)+)),
      (model.divBottom, model.global*)*)
     >> sch:pattern [
-         id = "test15-list-gloss-list-must-have-labels-constraint-9"
+         id =
+           "test15-list-gloss-list-must-have-labels-constraint-rule-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2641,7 +2642,7 @@ biblStruct =
       | citedRange)*)
     >> sch:pattern [
          id =
-           "test15-biblStruct-deprecate-altIdentifier-child-constraint-8"
+           "test15-biblStruct-deprecate-altIdentifier-child-constraint-report-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2683,7 +2684,7 @@ relatedItem =
   element relatedItem {
     ((model.biblLike | model.ptrLike)?)
     >> sch:pattern [
-         id = "test15-relatedItem-targetorcontent1-constraint-9"
+         id = "test15-relatedItem-targetorcontent1-constraint-report-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2705,7 +2706,7 @@ relatedItem =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-relatedItem-targetorcontent1-constraint-7"
+         id = "test15-relatedItem-targetorcontent1-constraint-assert-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2736,7 +2737,7 @@ l =
   element l {
     ((text | model.gLike | model.phrase | model.inter | model.global)*)
     >> sch:pattern [
-         id = "test15-l-abstractModel-structure-l-constraint-10"
+         id = "test15-l-abstractModel-structure-l-constraint-report-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2773,7 +2774,7 @@ lg =
       | lg)*,
      (model.divBottom, model.global*)*)
     >> sch:pattern [
-         id = "test15-lg-atleast1oflggapl-constraint-8"
+         id = "test15-lg-atleast1oflggapl-constraint-assert-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2793,7 +2794,7 @@ lg =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-lg-abstractModel-structure-l-constraint-11"
+         id = "test15-lg-abstractModel-structure-l-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3240,7 +3241,7 @@ quotation =
   element quotation {
     (model.pLike*)
     >> sch:pattern [
-         id = "test15-quotation-quotationContents-constraint-12"
+         id = "test15-quotation-quotationContents-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3862,7 +3863,8 @@ floatingText =
           ((model.divLike | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
-         id = "test15-div-abstractModel-structure-l-constraint-13"
+         id =
+           "test15-div-abstractModel-structure-l-constraint-report-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3882,7 +3884,8 @@ floatingText =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-div-abstractModel-structure-p-constraint-14"
+         id =
+           "test15-div-abstractModel-structure-p-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4314,7 +4317,7 @@ link =
   element link {
     empty
     >> sch:pattern [
-         id = "test15-link-linkTargets3-constraint-9"
+         id = "test15-link-linkTargets3-constraint-assert-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4354,7 +4357,7 @@ ab =
   element ab {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-ab-abstractModel-structure-p-constraint-15"
+         id = "test15-ab-abstractModel-structure-p-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4375,7 +4378,7 @@ ab =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-ab-abstractModel-structure-l-constraint-16"
+         id = "test15-ab-abstractModel-structure-l-constraint-report-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4529,7 +4532,7 @@ join =
   element join {
     ((model.descLike | model.certLike)*)
     >> sch:pattern [
-         id = "test15-join-joinTargets3-constraint-10"
+         id = "test15-join-joinTargets3-constraint-assert-10"
          "\x{a}" ~
          "            "
          sch:rule [

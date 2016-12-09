@@ -1424,7 +1424,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:number level="any"/>
       </xsl:variable>
       <xsl:value-of
-	  select="(../ancestor::*[@ident]/@ident,'constraint',../@ident,$num)"
+	  select="(../ancestor::*[@ident]/@ident,'constraint',../@ident,local-name(),$num)"
 	  separator="-"/>
     </xsl:for-each>
   </xsl:function>

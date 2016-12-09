@@ -287,7 +287,8 @@ Tatt.datable.w3c.attribute.to =
     | xsd:dateTime
   }?
 sch:pattern [
-  id = "testbasic-att.datable.w3c-att-datable-w3c-when-constraint-1"
+  id =
+    "testbasic-att.datable.w3c-att-datable-w3c-when-constraint-rule-1"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -306,7 +307,8 @@ sch:pattern [
   "   "
 ]
 sch:pattern [
-  id = "testbasic-att.datable.w3c-att-datable-w3c-from-constraint-2"
+  id =
+    "testbasic-att.datable.w3c-att-datable-w3c-from-constraint-rule-2"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -325,7 +327,7 @@ sch:pattern [
   "   "
 ]
 sch:pattern [
-  id = "testbasic-att.datable.w3c-att-datable-w3c-to-constraint-3"
+  id = "testbasic-att.datable.w3c-att-datable-w3c-to-constraint-rule-3"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -354,7 +356,7 @@ Tatt.datable.attribute.calendar =
   ## indicates the system or calendar to which the date represented by the content of this element belongs.
   attribute calendar { xsd:anyURI }?
 sch:pattern [
-  id = "testbasic-att.datable-calendar-calendar-constraint-4"
+  id = "testbasic-att.datable-calendar-calendar-constraint-rule-4"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -840,7 +842,7 @@ Tatt.typed.attribute.subtype =
     xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 sch:pattern [
-  id = "testbasic-att.typed-subtypeTyped-constraint-5"
+  id = "testbasic-att.typed-subtypeTyped-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -873,7 +875,7 @@ Tatt.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "testbasic-att.pointing-targetLang-targetLang-constraint-6"
+  id = "testbasic-att.pointing-targetLang-targetLang-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -972,7 +974,7 @@ Tatt.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { xsd:anyURI }?
 sch:pattern [
-  id = "testbasic-att.spanning-spanTo-spanTo-2-constraint-7"
+  id = "testbasic-att.spanning-spanTo-spanTo-2-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1023,7 +1025,7 @@ Tatt.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "testbasic-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-8"
+    "testbasic-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1947,7 +1949,7 @@ Tp =
   element p {
     Tmacro.paraContent
     >> sch:pattern [
-         id = "testbasic-p-abstractModel-p-constraint-4"
+         id = "testbasic-p-abstractModel-p-constraint-report-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1968,7 +1970,8 @@ Tp =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-p-abstractModel-structure-l-constraint-5"
+         id =
+           "testbasic-p-abstractModel-structure-l-constraint-report-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2458,7 +2461,7 @@ Tptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "testbasic-ptr-ptrAtts-constraint-6"
+         id = "testbasic-ptr-ptrAtts-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2492,7 +2495,7 @@ Tref =
   element ref {
     Tmacro.paraContent
     >> sch:pattern [
-         id = "testbasic-ref-refAtts-constraint-7"
+         id = "testbasic-ref-refAtts-constraint-report-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2532,7 +2535,8 @@ Tlist =
          (Tlabel, Tmodel.global*, Titem, Tmodel.global*)+)),
      (Tmodel.divBottom, Tmodel.global*)*)
     >> sch:pattern [
-         id = "testbasic-list-gloss-list-must-have-labels-constraint-9"
+         id =
+           "testbasic-list-gloss-list-must-have-labels-constraint-rule-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2997,7 +3001,7 @@ TbiblStruct =
       | TcitedRange)*)
     >> sch:pattern [
          id =
-           "testbasic-biblStruct-deprecate-altIdentifier-child-constraint-8"
+           "testbasic-biblStruct-deprecate-altIdentifier-child-constraint-report-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3041,7 +3045,8 @@ TrelatedItem =
   element relatedItem {
     ((Tmodel.biblLike | Tmodel.ptrLike)?)
     >> sch:pattern [
-         id = "testbasic-relatedItem-targetorcontent1-constraint-9"
+         id =
+           "testbasic-relatedItem-targetorcontent1-constraint-report-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3063,7 +3068,8 @@ TrelatedItem =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relatedItem-targetorcontent1-constraint-7"
+         id =
+           "testbasic-relatedItem-targetorcontent1-constraint-assert-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3098,7 +3104,8 @@ Tl =
       | Tmodel.inter
       | Tmodel.global)*)
     >> sch:pattern [
-         id = "testbasic-l-abstractModel-structure-l-constraint-10"
+         id =
+           "testbasic-l-abstractModel-structure-l-constraint-report-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3135,7 +3142,7 @@ Tlg =
       | Tlg)*,
      (Tmodel.divBottom, Tmodel.global*)*)
     >> sch:pattern [
-         id = "testbasic-lg-atleast1oflggapl-constraint-8"
+         id = "testbasic-lg-atleast1oflggapl-constraint-assert-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3155,7 +3162,8 @@ Tlg =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-lg-abstractModel-structure-l-constraint-11"
+         id =
+           "testbasic-lg-abstractModel-structure-l-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3604,7 +3612,8 @@ Tquotation =
   element quotation {
     (Tmodel.pLike*)
     >> sch:pattern [
-         id = "testbasic-quotation-quotationContents-constraint-12"
+         id =
+           "testbasic-quotation-quotationContents-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4873,7 +4882,7 @@ Trelation =
   element relation {
     (Tdesc?)
     >> sch:pattern [
-         id = "testbasic-relation-reforkeyorname-constraint-9"
+         id = "testbasic-relation-reforkeyorname-constraint-assert-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4891,7 +4900,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-activemutual-constraint-13"
+         id = "testbasic-relation-activemutual-constraint-report-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4910,7 +4919,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-activepassive-constraint-14"
+         id = "testbasic-relation-activepassive-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5219,7 +5228,7 @@ TaddSpan =
   element addSpan {
     empty
     >> sch:pattern [
-         id = "testbasic-addSpan-spanTo-constraint-10"
+         id = "testbasic-addSpan-spanTo-constraint-assert-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5239,7 +5248,7 @@ TaddSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-addSpan-spanTo_fr-constraint-11"
+         id = "testbasic-addSpan-spanTo_fr-constraint-assert-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5279,7 +5288,7 @@ TdamageSpan =
   element damageSpan {
     empty
     >> sch:pattern [
-         id = "testbasic-damageSpan-spanTo-constraint-12"
+         id = "testbasic-damageSpan-spanTo-constraint-assert-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5300,7 +5309,7 @@ TdamageSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-damageSpan-spanTo_fr-constraint-13"
+         id = "testbasic-damageSpan-spanTo_fr-constraint-assert-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5329,7 +5338,7 @@ TdelSpan =
   element delSpan {
     empty
     >> sch:pattern [
-         id = "testbasic-delSpan-spanTo-constraint-14"
+         id = "testbasic-delSpan-spanTo-constraint-assert-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5349,7 +5358,7 @@ TdelSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-delSpan-spanTo_fr-constraint-15"
+         id = "testbasic-delSpan-spanTo_fr-constraint-assert-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5479,7 +5488,7 @@ Tsubst =
   element subst {
     ((Tadd | Tdel | Tmodel.milestoneLike)+)
     >> sch:pattern [
-         id = "testbasic-subst-substContents1-constraint-16"
+         id = "testbasic-subst-substContents1-constraint-assert-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5736,7 +5745,7 @@ Tlink =
   element link {
     empty
     >> sch:pattern [
-         id = "testbasic-link-linkTargets3-constraint-17"
+         id = "testbasic-link-linkTargets3-constraint-assert-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5776,7 +5785,8 @@ Tab =
   element ab {
     Tmacro.paraContent
     >> sch:pattern [
-         id = "testbasic-ab-abstractModel-structure-p-constraint-15"
+         id =
+           "testbasic-ab-abstractModel-structure-p-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5797,7 +5807,8 @@ Tab =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-ab-abstractModel-structure-l-constraint-16"
+         id =
+           "testbasic-ab-abstractModel-structure-l-constraint-report-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5951,7 +5962,7 @@ Tjoin =
   element join {
     ((Tmodel.descLike | Tmodel.certLike)*)
     >> sch:pattern [
-         id = "testbasic-join-joinTargets3-constraint-18"
+         id = "testbasic-join-joinTargets3-constraint-assert-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6143,7 +6154,8 @@ Tdiv =
           ((Tmodel.divLike | Tmodel.divGenLike), Tmodel.global*)*)),
       (Tmodel.divBottom, Tmodel.global*)*)?)
     >> sch:pattern [
-         id = "testbasic-div-abstractModel-structure-l-constraint-17"
+         id =
+           "testbasic-div-abstractModel-structure-l-constraint-report-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6163,7 +6175,8 @@ Tdiv =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-div-abstractModel-structure-p-constraint-18"
+         id =
+           "testbasic-div-abstractModel-structure-p-constraint-report-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6543,7 +6556,7 @@ Tplatypus =
      ##
      attribute bill { "duck" }?)
     >> sch:pattern [
-         id = "testbasic-platypus-bill-silly-test-constraint-20"
+         id = "testbasic-platypus-bill-silly-test-constraint-report-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6576,7 +6589,7 @@ TMenu =
   }
 start = TTEI | Tdiv
 sch:pattern [
-  id = "testbasic-outerconstraint-constraint-10"
+  id = "testbasic-outerconstraint-constraint-rule-10"
   "\x{a}" ~
   "      "
   sch:rule [
