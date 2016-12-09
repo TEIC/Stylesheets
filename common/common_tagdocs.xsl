@@ -3023,22 +3023,24 @@
           </xsl:element>
         </xsl:element>
         <xsl:element namespace="{$outputNS}" name="{$cellName}">
-          <xsl:attribute name="{$colspan}"
-            select="
-              if (ancestor-or-self::tei:attDef)
-              then
-                1
-              else
-                2"/>
-          <xsl:attribute name="{$rendName}">
-            <xsl:sequence
+          <xsl:if test="not($inline)">
+            <xsl:attribute name="{$colspan}"
               select="
-                if (ancestor::tei:attDef) then
-                  'odd_value'
+                if (ancestor-or-self::tei:attDef)
+                then
+                  1
                 else
-                  'wovenodd-col2'"
-            />
-          </xsl:attribute>
+                  2"/>
+            <xsl:attribute name="{$rendName}">
+              <xsl:sequence
+                select="
+                  if (ancestor::tei:attDef) then
+                    'odd_value'
+                  else
+                    'wovenodd-col2'"
+              />
+            </xsl:attribute>
+          </xsl:if>
           <xsl:element namespace="{$outputNS}" name="{$segName}">
             <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
