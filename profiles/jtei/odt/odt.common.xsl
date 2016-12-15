@@ -48,14 +48,14 @@
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:teix="http://www.tei-c.org/ns/Examples"
-    xmlns:hcmc="http://hcmc.uvic.ca/ns"
     xmlns:saxon="http://saxon.sf.net/"
     xmlns:expath-file="http://expath.org/ns/file"
     xmlns:java="http://www.java.com/"
     xmlns:i18n="i18n"
+    xmlns:local="local"
   >
   
-  <xsl:import href="../i18n.xsl"/>
+  <xsl:import href="../jtei.common.xsl"/>
   
     <xd:doc scope="stylesheet">
         <xd:desc>
@@ -69,8 +69,6 @@
   
   <xsl:preserve-space elements="teix:*"/>
   
-  <xsl:variable name="theDoc" select="/"/>
-
   <xsl:template match="teiHeader"/>
   
   <xsl:template match="text">
@@ -213,7 +211,7 @@
     
 <!--    Heads are styled depending on their embedding level. -->
     <xsl:template match="div/head">
-      <xsl:variable name="sectionNumber" select="hcmc:getSectionNumber(./parent::div, '')"/>
+      <xsl:variable name="sectionNumber" select="local:getSectionNumber(./parent::div, '')"/>
         <text:h text:style-name="teiHead{count(ancestor::div)}" text:outline-level="{count(ancestor::div)}">
           <xsl:if test="parent::div[@xml:id] and not(preceding-sibling::*)">
             <text:bookmark text:name="{parent::div/@xml:id}"/>
@@ -232,21 +230,21 @@
     </text:h>
   </xsl:template>
   
-  <xsl:function name="hcmc:getSectionNumber" as="xs:string">
+  <xsl:function name="local:getSectionNumber" as="xs:string">
     <xsl:param name="div" as="node()"/>
     <xsl:param name="lowerLevels" as="xs:string"/>
     <xsl:variable name="thisLevel" select="count($div/preceding-sibling::div) + 1"/>
     <xsl:choose>
 <!--     When it's in the back matter, we don't number it.  -->      
       <xsl:when test="$div/ancestor::back"><xsl:value-of select="''"/></xsl:when>
-      <xsl:when test="$div/ancestor::div"><xsl:value-of select="hcmc:getSectionNumber($div/parent::div, string-join((xs:string($thisLevel), $lowerLevels), '.'))"/></xsl:when>
+      <xsl:when test="$div/ancestor::div"><xsl:value-of select="local:getSectionNumber($div/parent::div, string-join((xs:string($thisLevel), $lowerLevels), '.'))"/></xsl:when>
       <xsl:otherwise><xsl:value-of select="string-join((xs:string($thisLevel), $lowerLevels), '.')"/></xsl:otherwise>
     </xsl:choose>
   </xsl:function>
   
 <!--  This function generates the linking text for sections (i.e. headers, based on nesting, 
       figures and tables (much simpler). -->
-  <xsl:function name="hcmc:getSectionLinkText" as="xs:string">
+  <xsl:function name="local:getSectionLinkText" as="xs:string">
     <xsl:param name="targEl" as="node()"/>
     <xsl:param name="pointerEl" as="node()"/>
     <xsl:variable name="immediatePrecedingText" select="($pointerEl/preceding-sibling::node()/descendant-or-self::text()[not(ancestor::note[following::* intersect $pointerEl])][normalize-space()])[last()]"/>
@@ -258,24 +256,27 @@
         <xsl:value-of select="concat(i18n:key('appendix-label'), ' ', replace($sectionNumber, '\.$', ''))"/>
       </xsl:when>
       <xsl:when test="$targEl[self::div]">
-        <xsl:variable name="sectionNumber" select="hcmc:getSectionNumber($targEl, '')"/>
-        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('section-label'), $capitalize), ' ', replace($sectionNumber, '\.$', ''))"/>
+        <xsl:variable name="sectionNumber" select="local:getSectionNumber($targEl, '')"/>
+        <xsl:value-of select="concat(local:capitalize(i18n:key('section-label'), $capitalize), ' ', replace($sectionNumber, '\.$', ''))"/>
       </xsl:when>
       <xsl:when test="$targEl[self::figure[graphic]]">
-        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('figure-label'), $capitalize), ' ', count($targEl/preceding::figure[graphic]) + 1)"/>
+        <xsl:value-of select="concat(local:capitalize(i18n:key('figure-label'), $capitalize), ' ', count($targEl/preceding::figure[graphic]) + 1)"/>
       </xsl:when>
       <xsl:when test="$targEl[self::figure[*:egXML or eg]]">
-        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('example-label'), $capitalize), ' ', count($targEl/preceding::figure[*:egXML or eg]) + 1)"/>
+        <xsl:value-of select="concat(local:capitalize(i18n:key('example-label'), $capitalize), ' ', count($targEl/preceding::figure[*:egXML or eg]) + 1)"/>
       </xsl:when>
       <xsl:when test="$targEl[self::table]">
-        <xsl:value-of select="concat(hcmc:capitalize(i18n:key('table-label'), $capitalize), ' ', count($targEl/preceding::table) + 1)"/>
+        <xsl:value-of select="concat(local:capitalize(i18n:key('table-label'), $capitalize), ' ', count($targEl/preceding::table) + 1)"/>
+      </xsl:when>
+      <xsl:when test="$targEl[self::note]">
+        <xsl:value-of select="concat(local:capitalize(i18n:key('note-label'), $capitalize), ' ', local:get.note.nr($targEl))"/>
       </xsl:when>
       <xsl:otherwise><xsl:value-of select="''"/></xsl:otherwise>
     </xsl:choose>
     
   </xsl:function>
   
-  <xsl:function name="hcmc:capitalize">
+  <xsl:function name="local:capitalize">
     <xsl:param name="string" as="xs:string"/>
     <xsl:param name="capitalize" as="xs:boolean"/>
     <xsl:value-of select="if ($capitalize) then concat(upper-case(substring($string, 1, 1)), substring($string, 2)) else $string"/>
@@ -347,48 +348,17 @@
     
 <!--    Tag names and the like are always done with a monospaced font. -->
     <xsl:template match="gi | att | val">
-        <xsl:variable name="delimiter.start">
-          <xsl:choose>
-            <xsl:when test="self::tei:gi">&lt;</xsl:when>
-            <xsl:when test="self::tei:val">"</xsl:when>
-            <xsl:when test="self::tei:att">@</xsl:when>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="delimiter.end">
-          <xsl:choose>
-            <xsl:when test="self::tei:gi">&gt;</xsl:when>
-            <xsl:when test="self::tei:val">"</xsl:when>
-          </xsl:choose>
-        </xsl:variable>
         <text:span text:style-name="teiCode">
-          <xsl:value-of select="$delimiter.start"/>
+          <xsl:value-of select="local:get.delimiter('start', .)"/>
           <xsl:apply-templates/>
-          <xsl:value-of select="$delimiter.end"/>
+          <xsl:value-of select="local:get.delimiter('end', .)"/>
         </text:span>
     </xsl:template>
     <xsl:template match="tag">
-      <xsl:variable name="delimiter.start">
-        <xsl:choose>
-          <xsl:when test="@type eq 'end'">&lt;/</xsl:when>
-          <xsl:when test="@type eq 'pi'">&lt;?</xsl:when>
-          <xsl:when test="@type eq 'comment'">&lt;!--</xsl:when>
-          <xsl:when test="@type eq 'ms'">&lt;![CDATA[</xsl:when>
-          <xsl:otherwise>&lt;</xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
-      <xsl:variable name="delimiter.end">
-        <xsl:choose>
-          <xsl:when test="@type eq 'pi'">?&gt;</xsl:when>
-          <xsl:when test="@type eq 'comment'">--&gt;</xsl:when>
-          <xsl:when test="@type eq 'ms'">]]&gt;</xsl:when>
-          <xsl:when test="@type eq 'empty'">/&gt;</xsl:when>
-          <xsl:otherwise>&gt;</xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
       <text:span text:style-name="teiCode">
-        <xsl:value-of select="$delimiter.start"/>
+        <xsl:value-of select="local:get.delimiter('start', .)"/>
         <xsl:apply-templates/>
-        <xsl:value-of select="$delimiter.end"/>
+        <xsl:value-of select="local:get.delimiter('end', .)"/>
       </text:span>
     </xsl:template>
     <xsl:template match="ident | code">
@@ -405,8 +375,8 @@
 <!--   Single quotes or double quotes? Depends on nesting level. -->
     <xsl:variable name="quoteLevel" select="count(ancestor::quote|ancestor::q|ancestor::title[@level='a']|ancestor::title[@level='u']|ancestor::soCalled)"/>
     <xsl:choose>
-      <xsl:when test="$quoteLevel mod 2 = 1">&#x2018;<xsl:apply-templates/><xsl:if test="following-sibling::node()[1][self::text()][matches(., '^[\.,!\?]+')]"><xsl:value-of select="following-sibling::text()[1]/replace(., '[^\.,!\?]+.*', '')"/></xsl:if>&#x2019;</xsl:when>
-      <xsl:otherwise>&#x201c;<xsl:apply-templates/><xsl:if test="following-sibling::node()[1][self::text()][matches(., '^[\.,!\?]+')]"><xsl:value-of select="following-sibling::text()[1]/replace(., '[^\.,!\?]+.*', '')"/></xsl:if>&#x201d;</xsl:otherwise>
+      <xsl:when test="$quoteLevel mod 2 = 1"><xsl:value-of select="$lsquo"/><xsl:apply-templates/><xsl:if test="following-sibling::node()[1][self::text()][matches(., '^[\.,!\?]+')]"><xsl:value-of select="following-sibling::text()[1]/replace(., '[^\.,!\?]+.*', '')"/></xsl:if><xsl:value-of select="$rsquo"/></xsl:when>
+      <xsl:otherwise><xsl:value-of select="$ldquo"/><xsl:apply-templates/><xsl:if test="following-sibling::node()[1][self::text()][matches(., '^[\.,!\?]+')]"><xsl:value-of select="following-sibling::text()[1]/replace(., '[^\.,!\?]+.*', '')"/></xsl:if><xsl:value-of select="$rdquo"/></xsl:otherwise>
     </xsl:choose>
   </xsl:template>
     
@@ -463,7 +433,7 @@
 <!--    Internal cross-references. -->
   <xsl:template match="ref[@type='crossref']">
     <xsl:variable name="targId" select="substring-after(@target, '#')"/>
-    <xsl:variable name="targetEl" as="element()" select="$theDoc//*[@xml:id=$targId][1]"/>
+    <xsl:variable name="targetEl" as="element()" select="$docRoot//*[@xml:id=$targId][1]"/>
     <xsl:message><xsl:value-of select="concat('Finding link to ', for $s in string($targetEl) return concat(substring($s, 1, 40), if (string-length($s) > 40) then '...' else ''))"/></xsl:message>
     <text:a xlink:type="simple" xlink:href="{@target}">
       <xsl:apply-templates/>
@@ -475,13 +445,14 @@
     <xsl:variable name="targIds" select="for $a in tokenize(@target, '\s+') return substring-after($a, '#')"/>
     <xsl:variable name="labels">
       <xsl:for-each select="$targIds">
-        <xsl:variable name="targetEl" select="$theDoc//*[@xml:id=current()][1]"/>
+        <xsl:variable name="targetEl" select="$docRoot//*[@xml:id=current()][1]"/>
         <xsl:message><xsl:value-of select="concat('Finding link to ', for $s in string($targetEl) return concat(substring($s, 1, 40), if (string-length($s) > 40) then '...' else ''))"/></xsl:message>
-        <label type="{$targetEl/name()}" n="{current()}">
+        <label type="{$targetEl/name()}" n="{if ($targetEl/self::note) then concat('ftn', local:get.note.nr($targetEl)) else current()}">
           <xsl:choose>
-            <xsl:when test="local-name($targetEl) = 'div'"><xsl:value-of select="hcmc:getSectionLinkText($targetEl, $current)"/></xsl:when>
-            <xsl:when test="local-name($targetEl) = 'figure'"><xsl:value-of select="hcmc:getSectionLinkText($targetEl, $current)"/></xsl:when>
-            <xsl:when test="local-name($targetEl) = 'table'"><xsl:value-of select="hcmc:getSectionLinkText($targetEl, $current)"/></xsl:when>
+            <xsl:when test="local-name($targetEl) = 'div'"><xsl:value-of select="local:getSectionLinkText($targetEl, $current)"/></xsl:when>
+            <xsl:when test="local-name($targetEl) = 'figure'"><xsl:value-of select="local:getSectionLinkText($targetEl, $current)"/></xsl:when>
+            <xsl:when test="local-name($targetEl) = 'table'"><xsl:value-of select="local:getSectionLinkText($targetEl, $current)"/></xsl:when>
+            <xsl:when test="local-name($targetEl) = 'note'"><xsl:value-of select="local:getSectionLinkText($targetEl, $current)"/></xsl:when>
           </xsl:choose>
         </label>
       </xsl:for-each>
@@ -526,14 +497,14 @@
       
 <!--    Footnotes -->
     <xsl:template match="note">
-        <xsl:variable name="noteNum" select="count(preceding::note) + 1"/>
-        <text:span text:style-name="T1"><text:note text:id="ftn{$noteNum}" text:note-class="footnote"><text:note-citation><xsl:value-of select="$noteNum"/></text:note-citation><text:note-body><text:p text:style-name="teiFootnote"><text:span text:style-name="footnote_20_reference"/><xsl:text>. </xsl:text> <xsl:apply-templates /></text:p></text:note-body></text:note></text:span>
+      <xsl:variable name="noteNum" select="local:get.note.nr(.)"/>
+      <text:span text:style-name="T1"><text:note text:id="ftn{$noteNum}" text:note-class="{if (@place eq 'end') then 'endnote' else 'footnote'}"><text:note-citation><xsl:value-of select="$noteNum"/></text:note-citation><text:note-body><text:p text:style-name="teiFootnote"><text:span text:style-name="footnote_20_reference"/><xsl:text>. </xsl:text> <xsl:apply-templates /></text:p></text:note-body></text:note></text:span>
     </xsl:template>
     
 <!--    Tables. -->
     <xsl:template match="table">
         <xsl:variable name="current" select="."/>
-        <xsl:variable name="referenceNode" select="$theDoc//table[deep-equal((@*|node()), $current/(@*|node()))]"/>
+        <xsl:variable name="referenceNode" select="$docRoot//table[deep-equal((@*|node()), $current/(@*|node()))]"/>
         <xsl:variable name="tableNum" select="count($referenceNode/preceding::table) + 1"/>
         <xsl:variable name="tableId" select="concat('Table_', $tableNum)"/>
         <xsl:variable name="numCols" select="sum(for $c in descendant::row[1]/cell return if ($c/@cols) then xs:integer($c/@cols) else 1)"/>
@@ -564,7 +535,7 @@
           <text:bookmark text:name="{parent::table/@xml:id}"/>
         </xsl:if>
         <xsl:if test="not(matches(., '^[Tt]able')) and not(@type='license')">
-          <xsl:value-of select="concat(hcmc:capitalize(i18n:key('table-label'), true()), ' ', $tableNum, ': ')"/>
+          <xsl:value-of select="concat(local:capitalize(i18n:key('table-label'), true()), ' ', $tableNum, ': ')"/>
         </xsl:if><xsl:apply-templates select="*|text()"/></text:p>
     </xsl:for-each>
   </xsl:template>
@@ -626,15 +597,22 @@
     </xsl:template>
     
 <!--    Handling of all tags within an egXML. -->
-    <xsl:template match="*[not(local-name(.) = 'egXML')][ancestor::teix:egXML]"><!-- Opening tag, including any attributes. --><text:span text:style-name="teiXmlTag">&lt;<xsl:value-of select="name()"/></text:span><xsl:for-each select="@*"><text:span text:style-name="teiXmlAttName"><xsl:text> </xsl:text><xsl:value-of select="name()"/>=</text:span><text:span text:style-name="teiXmlAttVal">"<xsl:value-of select="."/>"</text:span></xsl:for-each><xsl:choose><xsl:when test="hcmc:isSelfClosing(.)"><text:span text:style-name="teiXmlTag">/&gt;</text:span></xsl:when><xsl:otherwise><text:span text:style-name="teiXmlTag">&gt;</text:span><xsl:apply-templates select="* | text() | comment()"/><text:span text:style-name="teiXmlTag">&lt;/<xsl:value-of select="name()"/>&gt;</text:span></xsl:otherwise></xsl:choose></xsl:template>
+  <xsl:template match="*[not(local-name(.) = 'egXML')][ancestor::teix:egXML]"><!-- Opening tag, including any attributes. --><text:span text:style-name="teiXmlTag">&lt;<xsl:value-of select="name()"/></text:span><xsl:for-each select="@*"><text:span text:style-name="teiXmlAttName"><xsl:text> </xsl:text><xsl:value-of select="name()"/>=</text:span><text:span text:style-name="teiXmlAttVal">"<xsl:value-of select="local:escapeEntitiesForEgXMLAttribute(.)"/>"</text:span></xsl:for-each><xsl:choose><xsl:when test="local:isSelfClosing(.)"><text:span text:style-name="teiXmlTag">/&gt;</text:span></xsl:when><xsl:otherwise><text:span text:style-name="teiXmlTag">&gt;</text:span><xsl:apply-templates select="* | text() | comment() | processing-instruction()"/><text:span text:style-name="teiXmlTag">&lt;/<xsl:value-of select="name()"/>&gt;</text:span></xsl:otherwise></xsl:choose></xsl:template>
     
     <!-- We also need to process XML comments in egXML. -->
     <xsl:template match="teix:*/comment()">
-        <text:span text:style-name="teiXmlComment">&lt;!-- <xsl:value-of select="."/> --&gt;</text:span><xsl:text>
+        <text:span text:style-name="teiXmlComment">
+          <xsl:value-of select="local:get.delimiter('start', .)"/> <xsl:value-of select="."/> <xsl:value-of select="local:get.delimiter('end', .)"/></text:span><xsl:text>
 </xsl:text>
     </xsl:template>
     
-<!--    Handling of whitespace is tricky within egXML. We basically want to preserve it,
+  <!-- We also need to process XML processing instructions in egXML. -->
+  <xsl:template match="teix:*/processing-instruction()">
+    <text:span text:style-name="teiXmlPi"><xsl:value-of select="local:get.delimiter('start', .)"/><xsl:value-of select="string-join((name(), .), ' ')"/>    <xsl:value-of select="local:get.delimiter('end', .)"/></text:span><xsl:text>
+</xsl:text>
+  </xsl:template>
+  
+  <!--    Handling of whitespace is tricky within egXML. We basically want to preserve it,
     with some linebreaks, and try to indent helpfully if there were linebreaks in the original. -->
     <xsl:template match="text()[ancestor::teix:egXML]">
         <xsl:variable name="container" select="parent::*"/>
@@ -645,7 +623,7 @@
                 <xsl:for-each select="$currNode/ancestor::*[not(descendant-or-self::teix:egXML)]"><text:s/></xsl:for-each>
                 <xsl:if test="$currNode/following-sibling::node()"><text:s/></xsl:if>
             </xsl:matching-substring>
-            <xsl:non-matching-substring><xsl:copy-of select="."/></xsl:non-matching-substring>
+          <xsl:non-matching-substring><xsl:value-of select="local:escapeEntitiesForEgXML(.)"/></xsl:non-matching-substring>
         </xsl:analyze-string>
     </xsl:template>
     
@@ -669,9 +647,9 @@
             <xsl:variable name="authorOrEditor" select="child::*[1]/local-name()"/>
             <xsl:choose>
               <xsl:when test="$authorOrEditor = ('author', 'editor', 'orgName') and preceding-sibling::bibl">
-                <!--<xsl:comment><xsl:value-of select="hcmc:getAuthorsOrEditors(., $authorOrEditor)"/></xsl:comment>-->
+                <!--<xsl:comment><xsl:value-of select="local:getAuthorsOrEditors(., $authorOrEditor)"/></xsl:comment>-->
                 <xsl:choose>
-                  <xsl:when test="hcmc:getAuthorsOrEditors(., $authorOrEditor) = hcmc:getAuthorsOrEditors(preceding-sibling::bibl[1], $authorOrEditor)">
+                  <xsl:when test="local:getAuthorsOrEditors(., $authorOrEditor) = local:getAuthorsOrEditors(preceding-sibling::bibl[1], $authorOrEditor)">
 <!--           The authors or editors for this bibl match those from the 
                preceding one, so they should be rendered as a dash. -->
                     <xsl:text>———</xsl:text>
@@ -685,7 +663,7 @@
         </text:p>
     </xsl:template>
   
-  <xsl:function name="hcmc:getAuthorsOrEditors" as="xs:string?">
+  <xsl:function name="local:getAuthorsOrEditors" as="xs:string?">
     <xsl:param name="bibl" as="element(bibl)"/>
     <xsl:param name="tagName"/>
     <xsl:variable name="personList" select="for $e in $bibl/child::*[local-name() = $tagName][not(preceding-sibling::*) or not(preceding-sibling::*[local-name() != $tagName])] return $e"/>
@@ -695,11 +673,11 @@
 <!--  Figures with egXML or eg. -->
   <xsl:template match="figure[teix:egXML or eg]">
     <xsl:variable name="current" select="."/>
-    <xsl:variable name="referenceNode" select="$theDoc//figure[teix:egXML or eg][deep-equal((@*|node()), $current/(@*|node()))]"/>
+    <xsl:variable name="referenceNode" select="$docRoot//figure[teix:egXML or eg][deep-equal((@*|node()), $current/(@*|node()))]"/>
     <xsl:variable name="exampleNum" select="count($referenceNode/preceding::figure[teix:egXML or eg]) + 1"/>
     <xsl:apply-templates select="teix:egXML | eg"/>
     <xsl:for-each select="head">
-      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}"><xsl:if test="not(matches(., '^[Ee]xample')) and not(@type='license')"><xsl:value-of select="concat(hcmc:capitalize(i18n:key('example-label'), true()), ' ', $exampleNum, ': ')"/></xsl:if><xsl:apply-templates select="*|text()"/></text:p>
+      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}"><xsl:if test="not(matches(., '^[Ee]xample')) and not(@type='license')"><xsl:value-of select="concat(local:capitalize(i18n:key('example-label'), true()), ' ', $exampleNum, ': ')"/></xsl:if><xsl:apply-templates select="*|text()"/></text:p>
     </xsl:for-each>
     
   </xsl:template>
@@ -707,7 +685,7 @@
 <!--  Figures with graphics. -->
   <xsl:template match="figure[graphic]">
     <xsl:variable name="current" select="."/>
-    <xsl:variable name="referenceNode" select="$theDoc//figure[graphic][deep-equal((@*|node()), $current/(@*|node()))]"/>
+    <xsl:variable name="referenceNode" select="$docRoot//figure[graphic][deep-equal((@*|node()), $current/(@*|node()))]"/>
     <xsl:variable name="graphicNum" select="count($referenceNode/preceding::figure[graphic]) + 1"/>
     
     <xsl:variable name="graphic" select="graphic"/>
@@ -766,7 +744,7 @@
           <xsl:choose>
               <xsl:when test="$outputFormat = 'fodt'">
                   <draw:image>
-                      <office:binary-data><xsl:value-of select="hcmc:getGraphicAsBase64(resolve-uri(graphic/@url, base-uri(//TEI[1])))"/></office:binary-data>
+                      <office:binary-data><xsl:value-of select="local:getGraphicAsBase64(resolve-uri(graphic/@url, base-uri(//TEI[1])))"/></office:binary-data>
                   </draw:image>
               </xsl:when>
               <xsl:when test="$outputFormat = 'odt'">
@@ -779,7 +757,7 @@
     </text:p>
     <!--        We have to deal with a figure captions manually and put them after the graphic. -->
     <xsl:for-each select="head">
-      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}"><xsl:if test="not(matches(., '^[Ff]igure')) and not(@type='license')"><xsl:value-of select="concat(hcmc:capitalize(i18n:key('figure-label'), true()), ' ', $graphicNum, ': ')"/></xsl:if><xsl:apply-templates select="*|text()"/></text:p>
+      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}"><xsl:if test="not(matches(., '^[Ff]igure')) and not(@type='license')"><xsl:value-of select="concat(local:capitalize(i18n:key('figure-label'), true()), ' ', $graphicNum, ': ')"/></xsl:if><xsl:apply-templates select="*|text()"/></text:p>
     </xsl:for-each>
   </xsl:template>
   
@@ -896,7 +874,7 @@
     
     
     <!-- Utility functions. -->
-    <xsl:function name="hcmc:isSelfClosing" as="xs:boolean">
+    <xsl:function name="local:isSelfClosing" as="xs:boolean">
       <xsl:param name="el" as="node()"/>
         <xsl:variable name="tagName" select="local-name($el)"/>
         <xsl:value-of select="$tagName = ('lb', 'pb', 'cb') or xs:string($el) = ''"/>
@@ -908,7 +886,7 @@
       embed them in the output file. This is done before processing anything
       else.
    -->
-  <xsl:function name="hcmc:getGraphicAsBase64" as="xs:string">
+  <xsl:function name="local:getGraphicAsBase64" as="xs:string">
     <xsl:param name="graphicUrl" as="xs:string"/>
       <xsl:message>Processing image <xsl:value-of select="$graphicUrl"/>...</xsl:message>
 <!--      Let's see if we can find the actual file. 
@@ -918,45 +896,6 @@
       <xsl:message>File is deemed to be at: <xsl:value-of select="$filePath"/></xsl:message>
       <xsl:value-of select="expath-file:read-binary($filePath)"/>
   </xsl:function>
-
-  <xsl:template name="enumerate">
-    <xsl:if test="position() > 1 and last() > 2">
-      <xsl:text>,</xsl:text>
-    </xsl:if>
-    <xsl:if test="position() > 1">
-      <xsl:text> </xsl:text>
-    </xsl:if>
-    <xsl:if test="position() > 1 and position() = last()">
-      <xsl:value-of select="concat(i18n:key('and'), ' ')"/>
-    </xsl:if>
-  </xsl:template>
-  
-  <xsl:template name="p.create">
-    <xsl:param name="current"/>
-    <xsl:param name="context"/>
-    <xsl:if test="some $i in $context satisfies ($i/normalize-space() or $i/@*)">
-      <p xmlns="http://www.tei-c.org/ns/1.0">
-        <xsl:apply-templates select="$current/@*"/>
-        <xsl:for-each select="$context">
-          <xsl:choose>
-            <xsl:when test="self::text()">
-              <xsl:choose>
-                <xsl:when test="position() = 1">
-                  <xsl:value-of select="replace(replace(., '^\s+', ''), '\s+$', ' ')"/>                  
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="replace(., '\s+$', ' ')"/>                  
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:apply-templates select="." mode="#current"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:for-each>
-      </p>
-    </xsl:if>
-  </xsl:template>
   
 </xsl:stylesheet>
 

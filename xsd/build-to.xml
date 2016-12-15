@@ -40,8 +40,12 @@
       <arg value="-O"/>
       <arg value="xsd"/>
       <arg value="${outputFile}.rng"/>
-      <arg value="${outputFile}"/>
+      <arg value="${outputFile}.tmp"/>
     </java>
     <delete file="${outputFile}.rng"/>
+    <xslt force="yes" style="postprocess.xsl" in="${outputFile}.tmp" out="${outputFile}">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+    <delete file="${outputFile}.tmp"/>
   </target>
 </project>

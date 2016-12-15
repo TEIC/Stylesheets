@@ -9,23 +9,10 @@
   xmlns:i18n="i18n"
   exclude-result-prefixes="#all">
   
-  <xsl:import href="../i18n.xsl"/>
+  <xsl:import href="../jtei.common.xsl"/>
 
   <xsl:output method="xml" indent="no" encoding="UTF-8"/>
   
-  <!-- an index of elements that insert quotation marks -->
-  <xsl:key name="quotation.elements" match="tei:quote|tei:q|tei:soCalled|tei:title[@level = ('a', 'u')]" use="local-name()"/>
-  
-  <!-- an index of elements with @xml:id attribute -->
-  <xsl:key name="ids" match="*" use="@xml:id"/>
-    
-  <xsl:variable name="lsquo">‘</xsl:variable>
-  <xsl:variable name="rsquo">’</xsl:variable>
-  <xsl:variable name="ldquo">“</xsl:variable>
-  <xsl:variable name="rdquo">”</xsl:variable>
-  
-  <xsl:variable name="docRoot" select="/"/>
-
   <!-- attribute sets -->
   <xsl:attribute-set name="global.flow.properties">
     <xsl:attribute name="font-family">GentiumPlus</xsl:attribute>
@@ -64,7 +51,7 @@
   <xsl:attribute-set name="heading.lowerblock.properties">
     <xsl:attribute name="font-family">Roboto-medium</xsl:attribute>
     <xsl:attribute name="font-size">8.3pt</xsl:attribute>
-    <xsl:attribute name="keep-with-next">5</xsl:attribute>
+    <xsl:attribute name="keep-with-next">always</xsl:attribute>
   </xsl:attribute-set>
   
   <xsl:attribute-set name="imageblock.properties">
@@ -98,6 +85,26 @@
     <xsl:attribute name="widows">5</xsl:attribute>-->
   </xsl:attribute-set>
   
+  <xsl:attribute-set name="egXML.tag.properties">
+    <xsl:attribute name="color">#000099</xsl:attribute>
+  </xsl:attribute-set>
+  
+  <xsl:attribute-set name="egXML.attribute.name.properties">
+    <xsl:attribute name="color">#f5844c</xsl:attribute>
+  </xsl:attribute-set>
+  
+  <xsl:attribute-set name="egXML.attribute.value.properties">
+    <xsl:attribute name="color">#993300</xsl:attribute>
+  </xsl:attribute-set>
+  
+  <xsl:attribute-set name="egXML.comment.properties">
+    <xsl:attribute name="color">#009900</xsl:attribute>
+  </xsl:attribute-set>
+  
+  <xsl:attribute-set name="egXML.pi.properties">
+    <xsl:attribute name="color">#812ABE</xsl:attribute>
+  </xsl:attribute-set>
+
   <xsl:attribute-set name="monospace.properties">
     <xsl:attribute name="font-family">DejaVu-mono</xsl:attribute>
     <xsl:attribute name="font-size">.8em</xsl:attribute>
@@ -333,77 +340,6 @@
     </fo:block>
   </xsl:template>
   
-  <!-- label mode + associated functions: borrowed from tei2openedition -->
-  <xsl:template match="*" mode="label">
-    <xsl:param name="crossref.ptr" select="()" as="node()*"/>
-    <xsl:variable name="label" select="local:get.label.name(., $crossref.ptr)"/>
-    <xsl:variable name="number" select="local:get.label.number(.)"/>
-    <xsl:variable name="postfix" select="local:get.label.postfix(., $crossref.ptr, $number)"/>
-    <xsl:value-of select="string-join(($label[normalize-space()], concat($number, $postfix)), ' ')"/>
-  </xsl:template>
-  
-  <!-- these labels will need translation too -->
-  <xsl:function name="local:get.label.name">
-    <xsl:param name="node"/>
-    <xsl:param name="crossref.ptr"/>
-    <xsl:variable name="rawLabel">
-      <xsl:choose>
-        <xsl:when test="$node/self::tei:div[@type eq 'appendix']">
-          <xsl:value-of select="i18n:key('appendix-label')"/>
-        </xsl:when>
-        <xsl:when test="$node/self::tei:div"><xsl:if test="$crossref.ptr">
-          <xsl:value-of select="i18n:key('section-label')"/></xsl:if>
-        </xsl:when>
-        <xsl:when test="$node/self::tei:figure[tei:graphic]">
-          <xsl:value-of select="i18n:key('figure-label')"/>
-        </xsl:when>
-        <xsl:when test="$node/self::tei:figure[tei:eg|eg:egXML]">
-          <xsl:value-of select="i18n:key('example-label')"/>
-        </xsl:when>
-        <xsl:otherwise><xsl:value-of select="i18n:key(concat($node/local-name(), '-label'))"/></xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:variable name="contextLabel">
-      <xsl:variable name="immediatePrecedingText" select="($crossref.ptr/preceding-sibling::node()/descendant-or-self::text()[not(ancestor::tei:note[following::* intersect $crossref.ptr])][normalize-space()])[last()]"/>
-      <xsl:variable name="capitalize" select="if ($jtei.lang = ('de') or not($crossref.ptr) or not($immediatePrecedingText) or $immediatePrecedingText[matches(., '[\.!?]\s*$')]) then true() else false()"/>
-      <xsl:choose>
-        <xsl:when test="$capitalize">
-          <xsl:value-of select="concat(upper-case(substring($rawLabel, 1, 1)), substring($rawLabel, 2))"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$rawLabel"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:value-of select="$contextLabel"/>
-  </xsl:function>
-  
-  <xsl:function name="local:get.label.number">
-    <xsl:param name="node"/>
-    <xsl:choose>
-      <xsl:when test="$node/self::tei:div[@type eq 'appendix']"><xsl:for-each select="$docRoot//tei:div[@type eq 'appendix'][deep-equal((@*|node()), $node/(@*|node()))]"><xsl:number count="tei:div[@type eq 'appendix'][tei:head]" level="multiple"/></xsl:for-each></xsl:when>
-      <xsl:when test="$node/self::tei:div"><xsl:for-each select="$docRoot//tei:div[deep-equal((@*|node()), $node/(@*|node()))]"><xsl:number count="tei:div[tei:head]" level="multiple"/></xsl:for-each></xsl:when>
-      <xsl:when test="$node/self::tei:figure[tei:graphic]"><xsl:for-each select="$docRoot//tei:figure[tei:graphic][deep-equal((@*|node()), $node/(@*|node()))]"><xsl:number count="tei:figure[tei:head[not(@type='license')]][tei:graphic]" level="any"/></xsl:for-each></xsl:when>
-      <xsl:when test="$node/self::tei:figure[tei:eg|eg:egXML]"><xsl:for-each select="$docRoot//tei:figure[tei:eg|eg:egXML][deep-equal((@*|node()), $node/(@*|node()))]"><xsl:number count="tei:figure[tei:head[not(@type='license')]][tei:eg|eg:egXML]" level="any"/></xsl:for-each></xsl:when>
-      <xsl:otherwise>
-        <xsl:for-each select="$docRoot//*[deep-equal((@*|node()), $node/(@*|node()))]"><xsl:number count="*[name() eq $node/name()][tei:head]" level="any"/></xsl:for-each></xsl:otherwise>
-    </xsl:choose>
-  </xsl:function>
-  
-  <xsl:function name="local:get.label.postfix">
-    <xsl:param name="node"/>
-    <xsl:param name="crossref"/>
-    <xsl:param name="number"/>
-    <xsl:choose>
-      <xsl:when test="$node/self::tei:div and not($crossref)">
-        <xsl:value-of select="concat(if (not(contains($number, '.'))) then '.' else (), ' ')"/>
-      </xsl:when>
-      <xsl:when test="not($crossref)">
-        <xsl:text>: </xsl:text>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:function>
-  
   <xsl:template match="tei:body//tei:div/tei:p|tei:body/tei:p">
     <!-- a list-block looks like the best bet to get negative indent for paragraph numbers with FOP -->
     <fo:list-block>
@@ -434,9 +370,7 @@
 
   <!-- generate endnote pointer after subsequent punctuaton  -->
   <xsl:template match="tei:note">
-    <xsl:variable name="nr">
-      <xsl:number value="count(preceding::tei:note[if (current()/@place) then @place = current()/@place else not(@place)]|.)" format="{if (not(@place) or @place eq 'foot') then '1' else 'i'}"/>
-    </xsl:variable>
+    <xsl:variable name="nr" select="local:get.note.nr(.)"/>
     <!-- only 'pull' subsequent puntuation once (i.e. unless it is done for the preceding element) -->
     <xsl:if test="not(preceding-sibling::node()[normalize-space()][1][. intersect key('quotation.elements', local-name())])">
       <xsl:call-template name="include.punctuation"/>
@@ -540,14 +474,22 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="comment()|eg:comment" mode="egXML">
-    <fo:block color="grey" start-indent="inherited-property-value(start-indent) +1em">
-      <xsl:text>&lt;!--</xsl:text>
+  <xsl:template match="comment()" mode="egXML">
+    <fo:inline xsl:use-attribute-sets="egXML.comment.properties">
+      <xsl:value-of select="local:get.delimiter('start', .)"/>
       <xsl:value-of select="."/>
-      <xsl:text>--></xsl:text>
-    </fo:block>
+      <xsl:value-of select="local:get.delimiter('end', .)"/>
+    </fo:inline>
   </xsl:template>
   
+  <xsl:template match="processing-instruction()" mode="egXML">
+    <fo:inline xsl:use-attribute-sets="egXML.pi.properties">
+      <xsl:value-of select="local:get.delimiter('start', .)"/>
+      <xsl:value-of select="string-join((name(), .), ' ')"/>
+      <xsl:value-of select="local:get.delimiter('end', .)"/>
+    </fo:inline>
+  </xsl:template>
+
   <!-- eg:egXML//text() processing: borrowed from tei2odt --> 
   <!--    Handling of whitespace is tricky within egXML. We basically want to preserve it,
     with some linebreaks, and try to indent helpfully if there were linebreaks in the original. -->
@@ -565,72 +507,20 @@
 <!--
           <fo:inline start-indent="{$depth + 2}em" text-indent="{$depth + 2}em"><xsl:copy-of select="."/></fo:inline>
 -->
-        <xsl:copy-of select="."/>
+        <xsl:value-of select="local:escapeEntitiesForEgXML(.)"/>
       </xsl:non-matching-substring>
     </xsl:analyze-string>
   </xsl:template>
   
-  <xsl:template name="createTag">
-    <xsl:param name="type"/>
-    <xsl:variable name="parent-nss" select="../namespace::*"/>
-    <xsl:variable name="isTop">
-      <xsl:if
-        test="parent::eg:egXML and (self::tei:TEI or parent::*/parent::tei:div[@type='example'])">
-        <xsl:value-of select="'true'"/>
-      </xsl:if>
-    </xsl:variable>
-    <fo:inline color="#01005F">
-      <xsl:text>&lt;</xsl:text>
-      <xsl:if test="$type = 'end'">
-        <xsl:text>/</xsl:text>
-      </xsl:if>
-    </fo:inline>
-    <fo:inline color="#1818B4">
-      <xsl:value-of select="name()"/>
-    </fo:inline>
-    <xsl:if test="$type != 'end'">
-      <xsl:for-each
-        select="namespace::*">
-        <xsl:variable name="ns-prefix" select="replace(name(), '_\d+$', '')"/>
-        <xsl:variable name="ns-uri" select="string(.)"/>
-        <xsl:if
-          test="not($parent-nss[replace(name(), '_\d+$', '') = $ns-prefix and string(.) = $ns-uri]) or $isTop = 'true'">
-          <!-- This namespace node doesn't exist on the parent, at least not with that URI, so we need to add a declaration. -->
-          <fo:inline color="#189518">
-            <xsl:text> xmlns</xsl:text>
-            <xsl:if test="$ns-prefix != ''">
-              <xsl:text>:</xsl:text>
-              <xsl:value-of select="$ns-prefix"/>
-            </xsl:if>
-          </fo:inline>
-          <xsl:text>="</xsl:text>
-          <fo:inline color="#8B1410">
-            <xsl:value-of select="$ns-uri"/>
-          </fo:inline>
-          <xsl:text>"</xsl:text>
-        </xsl:if>
+  <!-- serialize abstract content of "createTag" template to XSL FO -->
+  <xsl:template match="tei:seg[starts-with(@type, 'abstract.egXML')]" mode="serialize">
+    <fo:inline>
+      <xsl:for-each select="document('')//xsl:attribute-set[@name = concat(current()/@type/substring-after(., 'abstract.'), '.properties')]/xsl:attribute">
+        <xsl:attribute name="{@name}"><xsl:value-of select="."/></xsl:attribute>
       </xsl:for-each>
-      <xsl:for-each select="@*">
-        <xsl:text> </xsl:text>
-        <fo:inline color="#189518">
-          <xsl:value-of select="name()"/>
-        </fo:inline>
-        <xsl:text>="</xsl:text>
-        <xsl:if test=". != ''">
-          <fo:inline color="#8B1410">
-            <xsl:value-of select="."/>
-          </fo:inline>
-        </xsl:if>
-        <xsl:text>"</xsl:text>
-      </xsl:for-each>
-    </xsl:if>
-    <fo:inline color="#01005F">
-      <xsl:if test="$type = 'empty'">
-        <xsl:text>/</xsl:text>
-      </xsl:if>
-      <xsl:text>&gt;</xsl:text>
+      <xsl:apply-templates mode="#current"/>
     </fo:inline>
-  </xsl:template>
+  </xsl:template> 
   
   <xsl:template match="tei:cit">
     <xsl:apply-templates select="tei:quote"/>
@@ -639,22 +529,14 @@
   <xsl:template match="tei:cit[not(ancestor::tei:note)]/tei:quote">
     <xsl:call-template name="blockquote"/>
   </xsl:template>
-    
-  <xsl:template name="blockquote">
+  
+  <!-- serialize abstract content of "blockquote" template to XSL FO -->
+  <xsl:template match="tei:seg[@type='abstract.blockquote']" mode="serialize">
     <fo:block xsl:use-attribute-sets="indentedblock.properties">
-      <xsl:choose>
-        <xsl:when test="self::tei:quote">
-          <xsl:apply-templates select="node()"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates select="."/>
-        </xsl:otherwise>
-      </xsl:choose>
-      <xsl:text> </xsl:text>
-      <xsl:apply-templates select="ancestor::tei:cit[1]/*[not(self::tei:quote)]"/>
+      <xsl:copy-of select="node()" copy-namespaces="no"/>
     </fo:block>
   </xsl:template>
-  
+    
   <xsl:template match="tei:cit[ancestor::tei:note]">
     <xsl:apply-templates/>
   </xsl:template>
@@ -695,10 +577,6 @@
       </xsl:choose>
     </xsl:if>
   </xsl:template>  
-  <!-- pull subsequent punctuation into generated quotation marks -->
-  <xsl:template name="include.punctuation">
-    <xsl:value-of select="following-sibling::node()[not(self::tei:note)][1]/self::text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}—]]')]/replace(., '^\s*([\p{P}-[\p{Ps}\p{Pe}]]+).*', '$1', 's')"/>
-  </xsl:template>
   
   <xsl:template match="tei:quote//tei:supplied|tei:q//tei:supplied">
     <xsl:text>[</xsl:text>
@@ -729,7 +607,7 @@
   <!-- replace external <ptr/> with link, whose label = @target -->
   <xsl:template match="tei:ptr[not(@type)]|tei:ref[not(@type)]">
     <fo:basic-link external-destination="{@target}" border="dotted thin grey">
-      <xsl:value-of select="(normalize-space(),@target)[.][1]"/>
+      <xsl:apply-templates select="if (normalize-space()) then node() else @target"/>
     </fo:basic-link>
   </xsl:template>
   
@@ -740,16 +618,8 @@
   </xsl:template>
   
   <xsl:template match="tei:ptr[@type eq 'crossref']">
-    <xsl:variable name="current" select="."/>
     <xsl:variable name="labels">
-      <xsl:for-each select="tokenize(@target, '\s+')">
-        <xsl:variable name="target" select="key('ids', substring-after(., '#'), $current/root())"/>
-        <label type="{$target/name()}" n="{substring-after(current(), '#')}">
-          <xsl:apply-templates select="$target" mode="label">
-            <xsl:with-param name="crossref.ptr" select="$current"/>
-          </xsl:apply-templates>
-        </label>
-      </xsl:for-each>
+      <xsl:call-template name="get.crossref.labels"/>
     </xsl:variable>
     <xsl:for-each-group select="$labels/*" group-adjacent="@type">
       <xsl:variable name="counter.group" select="position()"/>
@@ -759,23 +629,7 @@
         <xsl:choose>
           <xsl:when test="normalize-space()">
             <xsl:variable name="label.formatted">
-              <xsl:choose>
-                <!-- pluralize if there are multiple targets of the same type -->
-                <xsl:when test="not(@type = preceding-sibling::*[1]/@type) and @type = following-sibling::*[1]/@type">
-                  <!-- if no specific plural can be found, just add an -s -->
-                  <xsl:value-of select="(
-                    for $i in 
-                      i18n:plural(lower-case(normalize-space(replace(., '\d', ''))))[@pl]
-                    return replace(., substring($i, 2), substring($i/@pl, 2))
-                    , replace(., '^(\w+)', '$1s'))[1]"/>
-                </xsl:when>
-                <xsl:when test="@type = preceding-sibling::*[1]/@type">
-                  <xsl:value-of select="normalize-space(replace(., '^(\w+)', ''))"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="."/>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:call-template name="format.crossref.labels"/>
             </xsl:variable>
             <fo:basic-link internal-destination="{@n}" border="dotted thin grey">
               <xsl:value-of select="if ($counter.group = 1 and position() = 1 or $jtei.lang = ('de')) then $label.formatted else lower-case($label.formatted)"/>
@@ -818,55 +672,20 @@
   </xsl:template>
 
   <xsl:template match="tei:gi|tei:att|tei:val">
-    <xsl:variable name="delimiters">
-      <local:start>
-        <xsl:choose>
-          <xsl:when test="self::tei:gi">&lt;</xsl:when>
-          <xsl:when test="self::tei:val">"</xsl:when>
-          <xsl:when test="self::tei:att">@</xsl:when>
-        </xsl:choose>
-      </local:start>
-      <local:end>
-        <xsl:choose>
-          <xsl:when test="self::tei:gi">&gt;</xsl:when>
-          <xsl:when test="self::tei:val">"</xsl:when>
-        </xsl:choose>
-      </local:end>
-    </xsl:variable>
     <fo:inline xsl:use-attribute-sets="monospace.properties">
       <xsl:apply-templates select="@*[not(name() = ('scheme'))]"/>
-      <xsl:value-of select="$delimiters/local:start"/>
+      <xsl:value-of select="local:get.delimiter('start', .)"/>
       <xsl:apply-templates/>
-      <xsl:value-of select="$delimiters/local:end"/>
+      <xsl:value-of select="local:get.delimiter('end', .)"/>
     </fo:inline>
   </xsl:template>
   
   <xsl:template match="tei:tag">
-    <xsl:variable name="delimiters">
-      <local:start>
-        <xsl:choose>
-          <xsl:when test="@type eq 'end'">&lt;/</xsl:when>
-          <xsl:when test="@type eq 'pi'">&lt;?</xsl:when>
-          <xsl:when test="@type eq 'comment'">&lt;!--</xsl:when>
-          <xsl:when test="@type eq 'ms'">&lt;![CDATA[</xsl:when>
-          <xsl:otherwise>&lt;</xsl:otherwise>
-        </xsl:choose>
-      </local:start>
-      <local:end>
-        <xsl:choose>
-          <xsl:when test="@type eq 'pi'">?&gt;</xsl:when>
-          <xsl:when test="@type eq 'comment'">--&gt;</xsl:when>
-          <xsl:when test="@type eq 'ms'">]]&gt;</xsl:when>
-          <xsl:when test="@type eq 'empty'">/&gt;</xsl:when>
-          <xsl:otherwise>&gt;</xsl:otherwise>
-        </xsl:choose>
-      </local:end>
-    </xsl:variable>
     <fo:inline xsl:use-attribute-sets="monospace.properties">
       <xsl:apply-templates select="@*[not(name() = ('scheme', 'type'))]"/>
-      <xsl:value-of select="$delimiters/local:start"/>
+      <xsl:value-of select="local:get.delimiter('start', .)"/>
       <xsl:apply-templates/>
-      <xsl:value-of select="$delimiters/local:end"/>
+      <xsl:value-of select="local:get.delimiter('end', .)"/>
     </fo:inline>
   </xsl:template>
   
@@ -925,23 +744,9 @@
   </xsl:template>
   
   <xsl:template match="tei:list[tokenize(@rend, '\s+') = 'inline']">
-    <xsl:variable name="rend" select="@rend"/>
-    <xsl:variable name="type" select="@type"/>
     <xsl:for-each select="tei:item">
       <xsl:variable name="marker">
-        <xsl:choose>
-          <xsl:when test="$type eq 'gloss'">
-            <xsl:value-of select="preceding-sibling::tei:label[1]"/>
-          </xsl:when>
-          <xsl:when test="tokenize($rend, '\s+') = 'ordered'">
-            <xsl:text>(</xsl:text>
-            <xsl:variable name="number"><xsl:number level="multiple" format="1.a"/></xsl:variable>
-            <xsl:value-of select="replace($number, '\.', '')"/>
-            <xsl:text>)</xsl:text>
-          </xsl:when>
-          <xsl:when test="tokenize($rend, '\s+') = 'bulleted'"><xsl:text>*</xsl:text></xsl:when>
-          <xsl:otherwise/>
-        </xsl:choose>
+        <xsl:call-template name="get.inline.list.marker"/>
       </xsl:variable>
       <fo:inline>
         <xsl:value-of select="$marker"/>
@@ -1263,37 +1068,12 @@
   <xsl:template match="tei:listBibl//tei:bibl">
     <xsl:variable name="dateOrTitle" select="(tei:date|tei:title)[1]"/>
     <fo:block id="{@xml:id}" start-indent="2em" text-indent="-2em">
-      <xsl:call-template name="getAuthorInstance">
+      <xsl:call-template name="get.author.instance">
         <xsl:with-param name="dateOrTitle" select="$dateOrTitle"/>
       </xsl:call-template>
       <xsl:apply-templates select="$dateOrTitle|node()[. >> ($dateOrTitle,current())[1]]"/>
     </fo:block>
   </xsl:template>
-  
-  <!-- copy author(ing instance/s) if they're different from those of the preceding bibliographical 
-       entry; replace with ——— otherwise -->
-  <xsl:template name="getAuthorInstance">
-    <xsl:param name="dateOrTitle"/>
-    <xsl:variable name="authorInstance.current" select="node()[. &lt;&lt; $dateOrTitle]"/>
-    <xsl:variable name="bibl.prev" select="preceding-sibling::*[1]/self::tei:bibl"/>
-    <xsl:variable name="authorInstance.prev" select="preceding-sibling::*[1]/self::tei:bibl/node()[. &lt;&lt; $bibl.prev/(tei:date|tei:title)[1]]"/>
-    <xsl:choose>
-      <xsl:when test="not($authorInstance.current)"/>
-      <xsl:when test="$bibl.prev and (local:authors.serialize($authorInstance.current/self::*) = local:authors.serialize($authorInstance.prev/self::*))">
-        <xsl:text>———. </xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates select="$authorInstance.current"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
-  <!-- serialize author(ing instance/s) to {$elementName}|{normalize-space()} -->
-  <xsl:function name="local:authors.serialize" as="xs:string?">
-    <xsl:param name="nodes" as="element()*"/>
-    <xsl:variable name="personList" select="for $e in $nodes return $e"/>
-    <xsl:value-of select="normalize-space(string-join($personList/concat(local-name(), '|', normalize-space(.)), ' '))"/>
-  </xsl:function>
 
   <xsl:template name="endnotes">
     <xsl:if test=".//tei:text//tei:note">
@@ -1307,9 +1087,7 @@
   </xsl:template>
   
   <xsl:template match="tei:note" mode="endnotes">
-    <xsl:variable name="nr">
-      <xsl:number value="count(preceding::tei:note[if (current()/@place) then @place = current()/@place else not(@place)]|.)" format="{if (not(@place) or @place eq 'foot') then '1' else 'i'}"/>
-    </xsl:variable>
+    <xsl:variable name="nr" select="local:get.note.nr(.)"/>
     <fo:block>
       <fo:inline font-weight="bold" height="100%">
         <fo:basic-link internal-destination="noteptr{$nr}" id="note{$nr}" space-end="1em">
@@ -1336,22 +1114,5 @@
     [preceding-sibling::node()[1][self::tei:note]]">
     <xsl:value-of select="replace(., '^(\s*)[\p{P}-[\p{Ps}\p{Pe}]]+', '$1', 's')"/>
   </xsl:template>
-
-  <xsl:function name="local:get.quoteLevel">
-    <xsl:param name="current"/>
-    <xsl:value-of select="count($current/ancestor::*[. intersect key('quotation.elements', local-name())])"/>
-  </xsl:function>
-  
-  <xsl:template name="enumerate">
-    <xsl:if test="position() > 1 and last() > 2">
-      <xsl:text>,</xsl:text>
-    </xsl:if>
-    <xsl:if test="position() > 1">
-      <xsl:text> </xsl:text>
-    </xsl:if>
-    <xsl:if test="position() > 1 and position() = last()">
-      <xsl:value-of select="concat(i18n:key('and'), ' ')"/>
-    </xsl:if>
-  </xsl:template>
-  
+      
 </xsl:stylesheet>

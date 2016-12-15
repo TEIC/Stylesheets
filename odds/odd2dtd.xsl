@@ -92,8 +92,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="NSELEMENTS" match="tei:elementSpec[@ns]|tei:attDef[@ns]" use="1"/>
   <xsl:key match="tei:moduleSpec[@ident]" name="FILES" use="@ident"/>
   <xsl:template match="/">
+    <xsl:variable name="wrappedClassRefs">
+      <xsl:apply-templates mode="preprocess"/>
+    </xsl:variable>
     <xsl:variable name="resolvedClassatts">
-      <xsl:apply-templates  mode="classatts"/>
+      <xsl:apply-templates select="$wrappedClassRefs"  mode="classatts"/>
     </xsl:variable>
     <xsl:for-each select="$resolvedClassatts">
       <xsl:choose>
@@ -815,8 +818,8 @@ of this software, even if advised of the possibility of such damage.
       match="tei:dataSpec/tei:content/tei:valList[@type='closed']"
       mode="#default tangle">
     <xsl:text>(</xsl:text>
-      <xsl:value-of select="tei:valItem/@ident" separator="|"/>
-      <xsl:text>)</xsl:text>
+    <xsl:value-of select="tei:valItem/@ident" separator="|"/>
+    <xsl:text>)</xsl:text>
   </xsl:template>
 
   <xsl:template match="rng:text|tei:textNode" mode="simple">
@@ -1032,6 +1035,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test=".//rng:anyName">
           <xsl:text> ANY</xsl:text>
         </xsl:when>
+        <xsl:when test=".//tei:anyElement">
+          <xsl:text> ANY</xsl:text>
+        </xsl:when>
         <xsl:when test="tei:textNode">
           <xsl:text> CDATA</xsl:text>
         </xsl:when>
@@ -1153,7 +1159,8 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test="tei:content/rng:ref/@name='data.name'">
 	    <xsl:text> (#PCDATA)</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="tei:content/tei:macroRef/@key='data.name'">
+	  <xsl:when test="tei:content/tei:macroRef[@key='data.name']
+			| tei:content/tei:dataRef[@key='teidata.name']">
 	    <xsl:text> (#PCDATA)</xsl:text>
 	  </xsl:when>
 	  <xsl:when test="tei:valList[@type='closed']">
@@ -1505,70 +1512,75 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="attributeList">
       <xsl:apply-templates mode="tangle" select="tei:attList/tei:*"/>
   </xsl:template>
+
   <xsl:template match="tei:attDef" mode="tangle">
-      <xsl:text>&#10;</xsl:text>
-      <xsl:choose>
-         <xsl:when test="@ns='http://www.w3.org/XML/1998/namespace'">
-            <xsl:text>xml:</xsl:text>
-         </xsl:when>
-         <xsl:when test="@ns='http://www.w3.org/1999/xlink'">
-            <xsl:text>xlink:</xsl:text>
-         </xsl:when>
-         <xsl:when test="$parameterize='true' and (@ns) and not($nsPrefix='') and not(starts-with(@ident,'xmlns'))">
-            <xsl:text>%NS;</xsl:text>
-         </xsl:when>
-      </xsl:choose>
-      <xsl:value-of select="tei:createSpecName(.)"/>
-      <xsl:choose>
-         <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or tei:datatype/@maxOccurs='unbounded') and tei:datatype/rng:ref[@name='data.enumerated']">
-            <xsl:text> NMTOKENS </xsl:text>
-         </xsl:when>
-         <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or  tei:datatype/@maxOccurs='unbounded') and tei:datatype/rng:ref[@name='data.name']">
-            <xsl:text> NMTOKENS </xsl:text>
-         </xsl:when>
-         <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or  tei:datatype/@maxOccurs='unbounded') and tei:datatype/rng:data[@type='Name']">
-            <xsl:text> NMTOKENS </xsl:text>
-         </xsl:when>
-         <xsl:when test="tei:valList[@type='closed']">
-            <xsl:text> (</xsl:text>
-            <xsl:for-each select="tei:valList/tei:valItem">
-               <xsl:value-of select="@ident"/>
-               <xsl:if test="following-sibling::tei:valItem">
-		 <xsl:text>|</xsl:text>
-	       </xsl:if>
-            </xsl:for-each>
-            <xsl:text>)</xsl:text>
-         </xsl:when>
-         <xsl:when test="tei:datatype/rng:data[@type='Name']">
-            <xsl:text> NMTOKEN </xsl:text>
-         </xsl:when>
-         <xsl:when test="tei:datatype/@minOccurs or tei:datatype/@maxOccurs">
-            <xsl:text> CDATA </xsl:text>
-         </xsl:when>
-         <xsl:when test="tei:datatype/*">
-            <xsl:apply-templates select="tei:datatype"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:text> CDATA </xsl:text>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:choose>
-         <xsl:when test="string-length(tei:defaultVal) &gt;0">
-            <xsl:text> "</xsl:text>
-            <xsl:value-of select="tei:defaultVal"/>
-            <xsl:text>" </xsl:text>
-         </xsl:when>
-         <xsl:when test="parent::tei:attList[@org='choice']">
-            <xsl:text> #IMPLIED</xsl:text>
-         </xsl:when>
-         <xsl:when test="@usage='req'">
-            <xsl:text> #REQUIRED</xsl:text>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:text> #IMPLIED</xsl:text>
-         </xsl:otherwise>
-      </xsl:choose>
+    <xsl:text>&#10;</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@ns='http://www.w3.org/XML/1998/namespace'">
+        <xsl:text>xml:</xsl:text>
+      </xsl:when>
+      <xsl:when test="@ns='http://www.w3.org/1999/xlink'">
+        <xsl:text>xlink:</xsl:text>
+      </xsl:when>
+      <xsl:when test="$parameterize='true' and (@ns) and not($nsPrefix='') and not(starts-with(@ident,'xmlns'))">
+        <xsl:text>%NS;</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+    <xsl:value-of select="tei:createSpecName(.)"/>
+    <xsl:variable name="datminOmaxO" select="tei:minOmaxO( tei:datatype/@minOccurs, tei:datatype/@maxOccurs )"/>
+    <xsl:variable name="datmin" select="$datminOmaxO[1]"/>
+    <xsl:variable name="datmax" select="$datminOmaxO[2]"/>
+    <xsl:choose>
+      <xsl:when test="( $datmax gt 1  or  $datmax eq -1 )  and  (
+        tei:datatype/rng:ref/@name = ('data.enumerated','data.name')
+        or
+        tei:datatype/tei:dataRef/@key = ('teidata.enumerated','teidata.name')
+        or
+        'Name' = ( tei:datatype/rng:data/@type, tei:datatype/tei:dataRef/@name )
+        )">
+        <xsl:text> NMTOKENS </xsl:text>
+      </xsl:when>
+      <xsl:when test="tei:valList[@type eq 'closed']">
+        <xsl:text> (</xsl:text>
+        <xsl:for-each select="tei:valList/tei:valItem">
+          <xsl:value-of select="@ident"/>
+          <xsl:if test="following-sibling::tei:valItem">
+            <xsl:text>|</xsl:text>
+          </xsl:if>
+        </xsl:for-each>
+        <xsl:text>)</xsl:text>
+      </xsl:when>
+      <xsl:when test="tei:datatype/rng:data[@type eq 'Name']">
+        <xsl:text> NMTOKEN </xsl:text>
+      </xsl:when>
+      <xsl:when test="( $datmin, $datmax ) != 1">
+        <xsl:text> CDATA </xsl:text>
+      </xsl:when>
+      <xsl:when test="tei:datatype/*">
+        <xsl:apply-templates select="tei:datatype"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text> CDATA </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="string-length(tei:defaultVal) gt 0">
+        <xsl:text> "</xsl:text>
+        <xsl:value-of select="tei:defaultVal"/>
+        <xsl:text>" </xsl:text>
+      </xsl:when>
+      <xsl:when test="parent::tei:attList[@org='choice']">
+        <xsl:text> #IMPLIED</xsl:text>
+      </xsl:when>
+      <xsl:when test="@usage='req'">
+        <xsl:text> #REQUIRED</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text> #IMPLIED</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
   <xsl:template name="schemaOut">
       <xsl:param name="grammar"/>
       <xsl:param name="element"/>
@@ -1681,7 +1693,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef|tei:dataRef[@key]">
     <xsl:variable name="except" select="@except"/>
     <xsl:variable name="include" select="@include"/>
-
+    <xsl:variable name="minOmaxO" select="tei:minOmaxO( @minOccurs, @maxOccurs )"/>
+    <xsl:variable name="min" select="$minOmaxO[1]"/>
+    <xsl:variable name="max" select="$minOmaxO[2]"/>
     <xsl:variable name="exists">
       <xsl:call-template name="checkClass">
         <xsl:with-param name="id" select="@key"/>
@@ -1728,6 +1742,9 @@ of this software, even if advised of the possibility of such damage.
             </xsl:for-each>
           </xsl:variable>
           <xsl:value-of select="$members/*" separator="|"/>
+          <xsl:if test="not(parent::*/tei:textNode)">
+            <xsl:value-of select="$suffix"/>
+          </xsl:if>
         </xsl:when>
         <xsl:when test="parent::*/tei:textNode">
           <xsl:value-of select="$ename"/>
@@ -1736,26 +1753,53 @@ of this software, even if advised of the possibility of such damage.
           <xsl:text>(%</xsl:text>
           <xsl:value-of select="(@key,@expand)" separator="_"/>
           <xsl:text>;)</xsl:text>
+          <xsl:if test="not(parent::*/tei:textNode)">
+            <xsl:value-of select="$suffix"/>
+          </xsl:if>
         </xsl:when>
-        <xsl:when test="number(@maxOccurs)&gt;1">
-          <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
-          <xsl:for-each select="1 to $max">
-            <xsl:copy-of select="$ename"/>
-            <xsl:if test="position() &lt; last()"><xsl:text>,</xsl:text></xsl:if>
+        <xsl:when test="$min gt 1 and $max = -1">
+          <xsl:text>(</xsl:text>
+          <xsl:for-each select="1 to $min">
+            <xsl:if test="starts-with( $ename,'%')">(</xsl:if>
+            <xsl:value-of select="$ename"/>
+            <xsl:if test="starts-with( $ename,'%')">)</xsl:if>
+            <xsl:if test="position() lt last()"><xsl:text>,</xsl:text></xsl:if>
           </xsl:for-each>
+          <xsl:if test="not(parent::*/tei:textNode)">
+            <xsl:value-of select="$suffix"/>
+          </xsl:if>
+          <xsl:text>)</xsl:text>
         </xsl:when>
-        <xsl:when test="string-length($suffix)&gt;0">
+        <xsl:when test="$max gt 1  and  $max lt $maxint">
+          <xsl:text>(</xsl:text>
+          <xsl:for-each select="1 to $max">
+            <xsl:if test="starts-with( $ename,'%')">(</xsl:if>
+            <xsl:value-of select="$ename"/>
+            <xsl:if test="starts-with( $ename,'%')">)</xsl:if>
+            <xsl:if test="position() gt $min"><xsl:text>?</xsl:text></xsl:if>
+            <xsl:if test="position() lt last()"><xsl:text>,</xsl:text></xsl:if>
+          </xsl:for-each>
+          <xsl:if test="not(parent::*/tei:textNode)">
+            <xsl:value-of select="$suffix"/>
+          </xsl:if>
+          <xsl:text>)</xsl:text>
+        </xsl:when>
+        <xsl:when test="string-length($suffix) gt 0">
           <xsl:text>(</xsl:text>
           <xsl:value-of select="$ename"/>
           <xsl:text>)</xsl:text>
+          <xsl:if test="not(parent::*/tei:textNode)">
+            <xsl:value-of select="$suffix"/>
+          </xsl:if>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="$ename"/>
+          <xsl:if test="not(parent::*/tei:textNode)">
+            <xsl:value-of select="$suffix"/>
+          </xsl:if>
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:if test="not(parent::*/tei:textNode)">
-        <xsl:value-of select="$suffix"/>
-      </xsl:if>
+      
     </token>
   </xsl:template>
   
@@ -1773,14 +1817,16 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="$text"/>
       <xsl:text>&#10;--&gt;&#10;</xsl:text>
   </xsl:template>
+  
   <xsl:template name="checkEnd">
-      <xsl:if test="count(parent::tei:content[parent::tei:elementSpec]/rng:*)&gt;1 and     not(following-sibling::rng:*)">
+      <xsl:if test="count(parent::tei:content[parent::tei:elementSpec]/rng:*)&gt;1 and not(following-sibling::rng:*)">
          <xsl:text>)</xsl:text>
       </xsl:if>
   </xsl:template>
 
   <xsl:template name="checkStart">
-      <xsl:if test="count(parent::tei:content[parent::tei:elementSpec]/rng:*)&gt;1">
+      <xsl:if test="count(parent::tei:content[parent::tei:elementSpec]/rng:*)
+        &gt; 1">
          <xsl:choose>
             <xsl:when test="preceding-sibling::rng:*">
                <xsl:text>,</xsl:text>
@@ -1791,7 +1837,6 @@ of this software, even if advised of the possibility of such damage.
          </xsl:choose>
       </xsl:if>
   </xsl:template>
-
 
   <xsl:template name="copyright">
     <xsl:for-each
@@ -1815,18 +1860,54 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="typewriter">
     <xsl:param name="text"/>
   </xsl:template>
+  
+  <xsl:template match="tei:content/tei:classRef | tei:content//tei:sequence/tei:classRef" mode="preprocess">
+    <xsl:variable name="minOmaxO" select="tei:minOmaxO( @minOccurs, @maxOccurs )"/>
+    <xsl:variable name="min" select="$minOmaxO[1]"/>
+    <xsl:variable name="max" select="$minOmaxO[2]"/>
+    <xsl:choose>
+      <xsl:when test="$max eq -1">
+        <xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="$max gt 1">
+        <xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="parent::tei:sequence/count(*) eq 1">
+        <xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="contains(@expand, 'sequence')">
+        <xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>
+        <tei:sequence>
+          <xsl:copy-of select="."/>
+        </tei:sequence>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template match="*" mode="preprocess">
+    <xsl:copy>
+      <xsl:apply-templates select="* | @* | comment() | processing-instruction() | text()" mode="preprocess"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="@* | text() | comment() | processing-instruction()" mode="preprocess">
+    <xsl:copy-of select="."/>
+  </xsl:template>
 
   <xsl:function name="tei:generateIndicators">
     <xsl:param name="context"/>
-    <xsl:param name="min"/>
-    <xsl:param name="max"/>
+    <xsl:param name="minOccurs"/>
+    <xsl:param name="maxOccurs"/>
+    <xsl:variable name="minOmaxO" select="tei:minOmaxO( $minOccurs, $maxOccurs )"/>
+    <xsl:variable name="min" select="$minOmaxO[1]"/>
+    <xsl:variable name="max" select="$minOmaxO[2]"/>
     <xsl:choose>
       <xsl:when test="$context/tei:textNode">*</xsl:when>
-      <xsl:when test="$min='0' and $max='1'">?</xsl:when>
-      <xsl:when test="$min='0' and not($max)">?</xsl:when>
-      <xsl:when test="$min='1' and $max='unbounded'">+</xsl:when>
-      <xsl:when test="not($min) and $max='unbounded'">+</xsl:when>
-      <xsl:when test="$min='0' and $max='unbounded'">*</xsl:when>
+      <xsl:when test="$min eq 0  and  $max eq  1">?</xsl:when>
+      <xsl:when test="$min eq 0  and  $max eq -1">*</xsl:when>
+      <xsl:when test="$min ge 1  and  $max eq -1">+</xsl:when>
       <xsl:otherwise></xsl:otherwise>
     </xsl:choose>
   </xsl:function>
