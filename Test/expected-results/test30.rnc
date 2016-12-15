@@ -2,7 +2,6 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 namespace ns1 = "http://www.isocat.org/ns/dcr"
 namespace ns2 = "http://www.oucs.ox.ac.uk/ns"
 namespace rng = "http://relaxng.org/ns/structure/1.0"
-namespace s = "http://www.ascc.net/xml/schematron"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 default namespace tei = "http://www.tei-c.org/ns/1.0"
 namespace teix = "http://www.tei-c.org/ns/Examples"
@@ -32,10 +31,10 @@ Tmacro.specialPara =
    | Tmodel.divPart
    | Tmodel.global)*
 Tmacro.xtext = (text | Tmodel.gLike)*
-Tmacro.anyXML =
+anyElement-xenoData =
   element * - (tei:* | ns2:* | teix:egXML) {
     attribute * { text }*,
-    (text | Tmacro.anyXML)*
+    (text | anyElement-xenoData)*
   }
 Tatt.ascribed.attributes = Tatt.ascribed.attribute.who
 Tatt.ascribed.attribute.who =
@@ -512,7 +511,6 @@ Tatt.global.responsibility.attribute.resp =
   }?
 Tatt.editLike.attributes =
   Tatt.dimensions.attributes,
-  Tatt.source.attributes,
   Tatt.editLike.attribute.evidence,
   Tatt.editLike.attribute.instant
 Tatt.editLike.attribute.evidence =
@@ -580,6 +578,13 @@ Tatt.global.rendition.attribute.rendition =
   
   ## points to a description of the rendering or presentation used for this element in the source text.
   attribute rendition {
+    list { xsd:anyURI+ }
+  }?
+Tatt.global.source.attributes = Tatt.global.source.attribute.source
+Tatt.global.source.attribute.source =
+  
+  ## specifies the source from which some aspect of this element is drawn.
+  attribute source {
     list { xsd:anyURI+ }
   }?
 Tatt.handFeatures.attributes =
@@ -1097,15 +1102,8 @@ Tatt.transcriptional.attribute.status =
 Tatt.transcriptional.attribute.cause =
   
   ## documents the presumed cause for the intervention.
-  ## Suggested values include: 1] fix; 2] unclear
   attribute cause {
-    
-    ## repeated for the purpose of fixation
-    "fix"
-    | 
-      ## repeated to clarify a previously illegible or badly written text or mark
-      "unclear"
-    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 Tatt.transcriptional.attribute.seq =
   
@@ -1392,12 +1390,21 @@ Tmodel.pPart.transcriptional_sequenceRepeatable =
 Tmodel.pPart.edit =
   Tmodel.pPart.editorial | Tmodel.pPart.transcriptional
 Tmodel.linePart =
-  Tmodel.segLike
-  | Tmodel.hiLike
-  | Tmodel.pPart.transcriptional
+  Tmodel.hiLike
   | Tchoice
+  | Tadd
+  | Tdel
+  | Tunclear
   | Tzone
+  | Tdamage
+  | ThandShift
+  | Trestore
   | Tline
+  | Tmod
+  | Tredo
+  | Tretrace
+  | Tundo
+  | Tseg
 Tmodel.ptrLike = Tptr | Tref
 Tmodel.lPart = notAllowed
 Tmodel.global.meta =
@@ -1713,6 +1720,7 @@ Tmodel.choicePart =
   | Texpan
   | Tex
   | Tam
+  | Tsupplied
   | Tseg
 Tmodel.imprintPart = Tpublisher | TbiblScope | TpubPlace | Tdistributor
 Tmodel.catDescPart = notAllowed
@@ -1787,7 +1795,8 @@ Tmodel.biblPart =
   | Textent
   | Tavailability
   | TlistRelation
-Tmodel.frontPart = Tmodel.frontPart.drama | TdivGen | TtitlePage
+Tmodel.frontPart =
+  Tmodel.frontPart.drama | TlistBibl | TdivGen | TtitlePage
 Tmodel.addrPart =
   Tmodel.nameLike | TaddrLine | Tstreet | TpostCode | TpostBox
 Tmodel.pPart.data =
@@ -1831,7 +1840,8 @@ Tmodel.applicationLike = Tapplication
 Tmodel.teiHeaderPart = TencodingDesc | TprofileDesc | TxenoData
 Tmodel.sourceDescPart = notAllowed
 Tmodel.encodingDescPart =
-  TprojectDesc
+  TschemaRef
+  | TprojectDesc
   | TsamplingDecl
   | TeditorialDecl
   | TtagsDecl
@@ -1864,13 +1874,6 @@ Tmodel.correspActionPart =
   Tmodel.dateLike | Tmodel.addressLike | Tmodel.nameLike | Tnote
 Tmodel.correspContextPart = Tmodel.ptrLike | Tmodel.pLike | Tnote
 Tmodel.correspDescPart = Tnote | TcorrespAction | TcorrespContext
-Tatt.source.attributes = Tatt.source.attribute.source
-Tatt.source.attribute.source =
-  
-  ## provides a pointer to the bibliographical source from which a quotation or citation is drawn.
-  attribute source {
-    list { xsd:anyURI+ }
-  }?
 Tmodel.resourceLike = Tfacsimile | TsourceDoc | Ttext
 Tatt.personal.attributes =
   Tatt.naming.attributes,
@@ -2029,7 +2032,7 @@ Tdistinct =
     ## specifies how the phrase is distinct diatopically
     attribute space { xsd:string }?,
     
-    ## specifies how the phrase is distinct diastatically
+    ## specifies how the phrase is distinct diastratically
     attribute social { xsd:string }?,
     empty
   }
@@ -2073,7 +2076,6 @@ Tquote =
     Tmacro.specialPara,
     Tatt.global.attributes,
     Tatt.typed.attributes,
-    Tatt.source.attributes,
     empty
   }
 Tq =
@@ -2083,7 +2085,6 @@ Tq =
     Tmacro.specialPara,
     Tatt.global.attributes,
     Tatt.ascribed.attributes,
-    Tatt.source.attributes,
     
     ## may be used to indicate whether the offset passage is spoken or thought, or to characterize it more finely.
     ## Suggested values include: 1] spoken; 2] thought; 3] written; 4] soCalled; 5] foreign; 6] distinct; 7] term; 8] emph; 9] mentioned
@@ -2143,7 +2144,7 @@ TsoCalled =
   element soCalled { Tmacro.phraseSeq, Tatt.global.attributes, empty }
 Tdesc =
   
-  ## (description) contains a brief description of the object documented by its parent element, including its intended usage, purpose, or application where this is appropriate. [22.4.1. Description of Components]
+  ## (description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components]
   element desc {
     Tmacro.limitedContent,
     Tatt.global.attributes,
@@ -2180,14 +2181,8 @@ Tterm =
   }
 Tsic =
   
-  ## (Latin for thus or so
-  ##    ) contains text reproduced although apparently incorrect or inaccurate. [3.4.1. Apparent Errors]
-  element sic {
-    Tmacro.paraContent,
-    Tatt.global.attributes,
-    Tatt.source.attributes,
-    empty
-  }
+  ## (Latin for thus or so) contains text reproduced although apparently incorrect or inaccurate. [3.4.1. Apparent Errors]
+  element sic { Tmacro.paraContent, Tatt.global.attributes, empty }
 Tcorr =
   
   ## (correction) contains the correct form of a passage apparently erroneous in the copy text. [3.4.1. Apparent Errors]
@@ -2219,12 +2214,7 @@ Torig =
   
   ## (original form) contains a reading which is marked as following the original, rather than being normalized or corrected. [3.4.2. Regularization and
   ## Normalization 12. Critical Apparatus]
-  element orig {
-    Tmacro.paraContent,
-    Tatt.global.attributes,
-    Tatt.source.attributes,
-    empty
-  }
+  element orig { Tmacro.paraContent, Tatt.global.attributes, empty }
 Tgap =
   
   ## indicates a point where material has been omitted in a transcription, whether for editorial reasons described in the TEI header, as part of sampling practice, or because the material is illegible, invisible, or inaudible. [3.4.3. Additions, Deletions, and Omissions]
@@ -2317,7 +2307,6 @@ Trs =
     Tatt.global.attributes,
     Tatt.naming.attributes,
     Tatt.typed.attributes,
-    Tatt.source.attributes,
     empty
   }
 Temail =
@@ -2436,7 +2425,6 @@ Tabbr =
   element abbr {
     Tmacro.phraseSeq,
     Tatt.global.attributes,
-    Tatt.source.attributes,
     Tatt.typed.attribute.subtype,
     
     ## allows the encoder to classify the abbreviation according to some convenient typology.
@@ -2631,7 +2619,6 @@ Tnote =
     Tatt.global.attributes,
     Tatt.placement.attributes,
     Tatt.pointing.attributes,
-    Tatt.source.attributes,
     Tatt.typed.attributes,
     Tatt.written.attributes,
     
@@ -2877,6 +2864,7 @@ Ttitle =
     Tatt.global.attributes,
     Tatt.canonical.attributes,
     Tatt.typed.attribute.subtype,
+    Tatt.datable.attributes,
     
     ## classifies the title according to some convenient typology.
     ## Suggested values include: 1] biography; 2] chronology; 3] introduction; 4] project
@@ -2994,31 +2982,7 @@ TbiblStruct =
   element biblStruct {
     (Tanalytic*,
      (Tmonogr, Tseries*)+,
-     (Tmodel.noteLike
-      | Tidno
-      | Tmodel.ptrLike
-      | TrelatedItem
-      | TcitedRange)*)
-    >> sch:pattern [
-         id =
-           "testbasic-biblStruct-deprecate-altIdentifier-child-constraint-report-8"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:biblStruct"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test = "child::tei:idno"
-             role = "nonfatal"
-             "WARNING: use of deprecated method — the use of the idno element as a direct child of the biblStruct element will be removed from the TEI on 2016-09-18"
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ],
+     (Tmodel.noteLike | Tmodel.ptrLike | TrelatedItem | TcitedRange)*),
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     Tatt.typed.attributes,
@@ -3046,7 +3010,7 @@ TrelatedItem =
     ((Tmodel.biblLike | Tmodel.ptrLike)?)
     >> sch:pattern [
          id =
-           "testbasic-relatedItem-targetorcontent1-constraint-report-9"
+           "testbasic-relatedItem-targetorcontent1-constraint-report-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3105,7 +3069,7 @@ Tl =
       | Tmodel.global)*)
     >> sch:pattern [
          id =
-           "testbasic-l-abstractModel-structure-l-constraint-report-10"
+           "testbasic-l-abstractModel-structure-l-constraint-report-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3163,7 +3127,7 @@ Tlg =
        ]
     >> sch:pattern [
          id =
-           "testbasic-lg-abstractModel-structure-l-constraint-report-11"
+           "testbasic-lg-abstractModel-structure-l-constraint-report-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3263,6 +3227,7 @@ TteiCorpus =
      ((Tmodel.resourceLike+, (TTEI | TteiCorpus)*)
       | (TTEI | TteiCorpus)+)),
     Tatt.global.attributes,
+    Tatt.typed.attributes,
     
     ## The version of the TEI scheme
     [ a:defaultValue = "5.0" ]
@@ -3328,13 +3293,6 @@ TteiHeader =
   element teiHeader {
     (TfileDesc, Tmodel.teiHeaderPart*, TrevisionDesc?),
     Tatt.global.attributes,
-    
-    ## specifies the kind of document to which the header is attached, for example whether it is a corpus or individual text.
-    ## Sample values include: 1] text; 2] corpus
-    [ a:defaultValue = "text" ]
-    attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
-    }?,
     empty
   }
 TfileDesc =
@@ -3429,10 +3387,34 @@ Tidno =
     (text | Tmodel.gLike | Tidno)*,
     Tatt.global.attributes,
     Tatt.sortable.attributes,
+    Tatt.datable.attributes,
+    Tatt.typed.attribute.subtype,
     
     ## categorizes the identifier, for example as an ISBN, Social Security number, etc.
+    ## Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7] OCLC
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      
+      ## International Standard Book Number: a 13- or (if assigned prior to 2007) 10-digit identifying number assigned by the publishing industry to a published book or similar item, registered with the International ISBN Agency.
+      "ISBN"
+      | 
+        ## International Standard Serial Number: an eight-digit number to uniquely identify a serial publication.
+        "ISSN"
+      | 
+        ## Digital Object Identifier: a unique string of letters and numbers assigned to an electronic document.
+        "DOI"
+      | 
+        ## Uniform Resource Identifier: a string of characters to uniquely identify a resource which usually contains indication of the means of accessing that resource, the name of its host, and its filepath.
+        "URI"
+      | 
+        ## A data number in the Virtual Internet Authority File assigned to link different names in catalogs around the world for the same entity.
+        "VIAF"
+      | 
+        ## English Short-Title Catalogue number: an identifying number assigned to a document in English printed in the British Isles or North America before 1801.
+        "ESTC"
+      | 
+        ## union catalog number in WorldCat representing a resource held by one or more of the member libraries in the global cooperative Online Computer Library Center.
+        "OCLC"
+      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
     empty
   }
@@ -3498,13 +3480,14 @@ TbiblFull =
   
   ## (fully-structured bibliographic citation) contains a fully-structured bibliographic citation, in which all components of the TEI file description are present. [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2. The File Description 2.2.7. The Source Description 15.3.2. Declarable Elements]
   element biblFull {
-    ((TtitleStmt,
-      TeditionStmt?,
-      Textent?,
-      TpublicationStmt,
-      TseriesStmt?,
-      TnotesStmt?),
-     TsourceDesc*),
+    (((TtitleStmt,
+       TeditionStmt?,
+       Textent?,
+       TpublicationStmt,
+       TseriesStmt?,
+       TnotesStmt?),
+      TsourceDesc*)
+     | (TfileDesc, TprofileDesc)),
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     Tatt.sortable.attributes,
@@ -3517,6 +3500,19 @@ TencodingDesc =
   element encodingDesc {
     (Tmodel.encodingDescPart | Tmodel.pLike)+,
     Tatt.global.attributes,
+    empty
+  }
+TschemaRef =
+  
+  ## (schema reference) describes or points to a related customization or schema file [2.3.9. The Schema Specification]
+  element schemaRef {
+    Tmodel.descLike?,
+    Tatt.global.attributes,
+    Tatt.typed.attributes,
+    Tatt.resourced.attributes,
+    
+    ## the identifier used for the customization or schema
+    attribute key { xsd:NCName }?,
     empty
   }
 TprojectDesc =
@@ -3591,9 +3587,6 @@ Tnormalization =
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     
-    ## indicates a bibliographic description or other resource documenting the principles underlying the normalization carried out.
-    attribute source { xsd:anyURI }?,
-    
     ## indicates the method adopted to indicate normalizations within the text.
     [ a:defaultValue = "silent" ]
     attribute method {
@@ -3613,7 +3606,7 @@ Tquotation =
     (Tmodel.pLike*)
     >> sch:pattern [
          id =
-           "testbasic-quotation-quotationContents-constraint-report-12"
+           "testbasic-quotation-quotationContents-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3827,14 +3820,16 @@ TcRefPattern =
   }
 TprefixDef =
   
-  ## (prefixing scheme used in data.pointer values) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
+  ## (prefix definition) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element prefixDef {
     Tmodel.pLike*,
     Tatt.global.attributes,
     Tatt.patternReplacement.attributes,
     
     ## supplies a name which functions as the prefix for an abbreviated pointing scheme such as a private URI scheme. The prefix constitutes the text preceding the first colon.
-    attribute ident { xsd:Name },
+    attribute ident {
+      xsd:token { pattern = "[a-z][a-z0-9\+\.\-]*" }
+    },
     empty
   }
 TlistPrefixDef =
@@ -3867,8 +3862,9 @@ Ttaxonomy =
   
   ## defines a typology either implicitly, by means of a bibliographic citation, or explicitly by a structured taxonomy. [2.3.7. The Classification Declaration]
   element taxonomy {
-    ((Tmodel.glossLike | Tmodel.descLike)*
-     | (Tcategory | Ttaxonomy)+
+    (((Tcategory | Ttaxonomy)+
+      | ((Tmodel.glossLike | Tmodel.descLike)+,
+         (Tcategory | Ttaxonomy)*))
      | (Tmodel.biblLike, (Tcategory | Ttaxonomy)*)),
     Tatt.global.attributes,
     empty
@@ -3963,10 +3959,7 @@ Tabstract =
   
   ## contains a summary or formal abstract prefixed to an existing source document by the encoder. [2.4.4. Abstracts]
   element abstract {
-    (Tmodel.pLike | Tmodel.listLike)+,
-    Tatt.global.attributes,
-    Tatt.source.attributes,
-    empty
+    (Tmodel.pLike | Tmodel.listLike)+, Tatt.global.attributes, empty
   }
 Tcreation =
   
@@ -4021,7 +4014,7 @@ Tkeywords =
     (Tterm+ | Tlist),
     Tatt.global.attributes,
     
-    ## identifies the controlled vocabulary within which the set of keywords concerned is defined identifies the classification scheme within which the set of categories concerned is defined, for example by a taxonomy element, or by some other resource.
+    ## identifies the controlled vocabulary within which the set of keywords concerned is defined, for example by a taxonomy element, or by some other resource.
     attribute scheme { xsd:anyURI }?,
     empty
   }
@@ -4032,7 +4025,7 @@ TclassCode =
     Tmacro.phraseSeq.limited,
     Tatt.global.attributes,
     
-    ## identifies the classification system in use, as defined by for example by a taxonomy element, or some other resource.
+    ## identifies the classification system in use, as defined by, e.g. a taxonomy element, or some other resource.
     attribute scheme { xsd:anyURI },
     empty
   }
@@ -4075,7 +4068,7 @@ TcorrespDesc =
   }
 TcorrespAction =
   
-  ## contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence [2.4.6. Correspondence Description]
+  ## (correspondence action) contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence. [2.4.6. Correspondence Description]
   element correspAction {
     (Tmodel.correspActionPart+ | Tmodel.pLike+),
     Tatt.global.attributes,
@@ -4086,13 +4079,13 @@ TcorrespAction =
     ## Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5] forwarded
     attribute type {
       
-      ## information concerning the sending or dispatch of a message
+      ## information concerning the sending or dispatch of a message.
       "sent"
       | 
-        ## information concerning the receipt of a message
+        ## information concerning the receipt of a message.
         "received"
       | 
-        ## information concerning the transmission of a message, i.e. between the dispatch and the next receipt, redirect or forwarding
+        ## information concerning the transmission of a message, i.e. between the dispatch and the next receipt, redirect or forwarding.
         "transmitted"
       | 
         ## information concerning the redirection of an unread message.
@@ -4112,9 +4105,9 @@ TcorrespContext =
   }
 TxenoData =
   
-  ## (outside metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]
+  ## (non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]
   element xenoData {
-    (text | Tmacro.anyXML),
+    (text | anyElement-xenoData),
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     Tatt.typed.attributes,
@@ -4734,7 +4727,7 @@ Toccupation =
   
   ## contains an informal description of a person's trade, profession or occupation. [15.2.2. The Participant Description]
   element occupation {
-    Tmacro.phraseSeq,
+    Tmacro.specialPara,
     Tatt.global.attributes,
     Tatt.datable.attributes,
     Tatt.editLike.attributes,
@@ -4900,7 +4893,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-activemutual-constraint-report-13"
+         id = "testbasic-relation-activemutual-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4919,7 +4912,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-activepassive-constraint-report-14"
+         id = "testbasic-relation-activepassive-constraint-report-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5417,7 +5410,6 @@ ThandShift =
     empty,
     Tatt.global.attributes,
     Tatt.handFeatures.attributes,
-    Tatt.source.attributes,
     
     ## indicates a handNote element describing the hand concerned.
     attribute new { xsd:anyURI }?,
@@ -5462,9 +5454,9 @@ Tspace =
     Tatt.global.facs.attribute.facs,
     Tatt.global.change.attribute.change,
     Tatt.global.responsibility.attribute.cert,
+    Tatt.global.source.attribute.source,
     Tatt.typed.attributes,
     Tatt.dimensions.attributes,
-    Tatt.source.attributes,
     
     ## (responsible party) (responsible party) indicates the individual responsible for identifying and measuring the space
     attribute resp {
@@ -5786,7 +5778,7 @@ Tab =
     Tmacro.paraContent
     >> sch:pattern [
          id =
-           "testbasic-ab-abstractModel-structure-p-constraint-report-15"
+           "testbasic-ab-abstractModel-structure-p-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5808,7 +5800,7 @@ Tab =
        ]
     >> sch:pattern [
          id =
-           "testbasic-ab-abstractModel-structure-l-constraint-report-16"
+           "testbasic-ab-abstractModel-structure-l-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5836,7 +5828,7 @@ Tab =
   }
 Tanchor =
   
-  ## (anchor point) attaches an identifier to a point within a text, whether or not it corresponds with a textual element. [8.4.2. Synchronization and Overlap 16.4. Correspondence and Alignment]
+  ## (anchor point) attaches an identifier to a point within a text, whether or not it corresponds with a textual element. [8.4.2. Synchronization and Overlap 16.5. Correspondence and Alignment]
   element anchor {
     empty, Tatt.global.attributes, Tatt.typed.attributes, empty
   }
@@ -5848,13 +5840,12 @@ Tseg =
     Tatt.global.attributes,
     Tatt.segLike.attributes,
     Tatt.typed.attributes,
-    Tatt.source.attributes,
     Tatt.written.attributes,
     empty
   }
 Twhen =
   
-  ## indicates a point in time either relative to other elements in the same timeline tag, or absolutely. [16.5.2. Placing Synchronous Events in Time]
+  ## indicates a point in time either relative to other elements in the same timeline tag, or absolutely. [16.4.2. Placing Synchronous Events in Time]
   element when {
     empty,
     Tatt.global.attributes,
@@ -5912,7 +5903,7 @@ Twhen =
   }
 Ttimeline =
   
-  ## provides a set of ordered points in time which can be linked to elements of a spoken text to create a temporal alignment of that text. [16.5.2. Placing Synchronous Events in Time]
+  ## provides a set of ordered points in time which can be linked to elements of a spoken text to create a temporal alignment of that text. [16.4.2. Placing Synchronous Events in Time]
   element timeline {
     Twhen+,
     Tatt.global.attributes,
@@ -6155,7 +6146,7 @@ Tdiv =
       (Tmodel.divBottom, Tmodel.global*)*)?)
     >> sch:pattern [
          id =
-           "testbasic-div-abstractModel-structure-l-constraint-report-17"
+           "testbasic-div-abstractModel-structure-l-constraint-report-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6176,7 +6167,7 @@ Tdiv =
        ]
     >> sch:pattern [
          id =
-           "testbasic-div-abstractModel-structure-p-constraint-report-18"
+           "testbasic-div-abstractModel-structure-p-constraint-report-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6310,7 +6301,12 @@ Tsalute =
 Tsigned =
   
   ## (signature) contains the closing salutation, etc., appended to a foreword, dedicatory epistle, or other division of a text. [4.2.2. Openers and Closers]
-  element signed { Tmacro.paraContent, Tatt.global.attributes, empty }
+  element signed {
+    Tmacro.paraContent,
+    Tatt.global.attributes,
+    Tatt.written.attributes,
+    empty
+  }
 Tpostscript =
   
   ## contains a postscript, e.g. to a letter. [4.2. Elements Common to All Divisions]
@@ -6497,6 +6493,7 @@ Tatt.global.attributes =
   Tatt.global.facs.attributes,
   Tatt.global.change.attributes,
   Tatt.global.responsibility.attributes,
+  Tatt.global.source.attributes,
   Tatt.global.attribute.xmlid,
   Tatt.global.attribute.xmllang,
   Tatt.global.attribute.xmlbase,
@@ -6556,7 +6553,7 @@ Tplatypus =
      ##
      attribute bill { "duck" }?)
     >> sch:pattern [
-         id = "testbasic-platypus-bill-silly-test-constraint-report-20"
+         id = "testbasic-platypus-bill-silly-test-constraint-report-19"
          "\x{a}" ~
          "            "
          sch:rule [

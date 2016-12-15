@@ -17,7 +17,8 @@
   </teiHeader>
   <text>
     <body>
-      <schemaSpec ident="testbasic" prefix="T" xml:lang="en" start="TEI div">
+      <schemaSpec ident="testbasic" prefix="T" xml:lang="en" start="TEI div" xmlns:teix="http://www.tei-c.org/ns/Examples"
+        defaultExceptions="http://www.tei-c.org/ns/1.0 http://www.oucs.ox.ac.uk/ns teix:egXML">
         <constraintSpec scheme="isoschematron" ident="outerconstraint">
           <constraint>
             <sch:rule context="tei:TEI">
@@ -42,24 +43,7 @@
             les éléments XML sont autorisés.</desc>
           <content>
             <element xmlns="http://relaxng.org/ns/structure/1.0">
-              <anyName>
-                <except>
-                  <nsName ns="http://www.tei-c.org/ns/1.0"/>
-                  <nsName ns="http://www.oucs.ox.ac.uk/ns"/>
-                  <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
-                </except>
-              </anyName>
-              <zeroOrMore>
-                <attribute>
-                  <anyName/>
-                </attribute>
-              </zeroOrMore>
-              <zeroOrMore>
-                <choice>
-                  <text/>
-                  <ref name="macro.anyXML"/>
-                </choice>
-              </zeroOrMore>
+              <anyElement/>              
             </element>
           </content>
         </macroSpec>
