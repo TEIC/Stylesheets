@@ -193,7 +193,7 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:when test="$depth=0">chapter</xsl:when>
 		  <xsl:when test="$depth=1">section</xsl:when>
 		  <xsl:when test="$depth=2">subsection</xsl:when>
-		  <xsl:when test="$depth=4">subsunsection</xsl:when>
+		  <xsl:when test="$depth=4">subsubsection</xsl:when>
 		  <xsl:when test="$depth=4">paragraph</xsl:when>
 		  <xsl:when test="$depth=5">subparagraph</xsl:when>
 		  <xsl:otherwise>section</xsl:otherwise>
