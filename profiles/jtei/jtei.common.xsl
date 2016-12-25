@@ -61,6 +61,12 @@
     <xsl:value-of select="string-join(($label[normalize-space()], concat($number, $postfix)), ' ')"/>
   </xsl:template>
   
+  <xsl:template name="punctuate-head">
+    <xsl:if test="not(matches(normalize-space(.), '[\p{P}-[\p{Pe}]]$'))">
+      <xsl:text>.</xsl:text>
+    </xsl:if>
+  </xsl:template>
+  
   <!-- This template pulls subsequent punctuation into generated quotation 
     marks. -->
   <xsl:template name="include.punctuation">
@@ -350,7 +356,7 @@
         <xsl:value-of select="concat(if (not(contains($number, '.'))) then '.' else (), ' ')"/>
       </xsl:when>
       <xsl:when test="not($crossref)">
-        <xsl:text>: </xsl:text>
+        <xsl:text>. </xsl:text>
       </xsl:when>
     </xsl:choose>
   </xsl:function>

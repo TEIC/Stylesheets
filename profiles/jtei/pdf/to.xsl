@@ -390,12 +390,16 @@
       </xsl:for-each>
       <fo:block xsl:use-attribute-sets="heading.lowerblock.properties imageblock.properties">
         <xsl:apply-templates select="." mode="label"/>
-        <xsl:apply-templates select="tei:head[not(@type='license')]/node()"/>
+        <xsl:for-each select="tei:head[not(@type='license')]">
+          <xsl:apply-templates select="node()"/>
+          <xsl:call-template name="punctuate-head"/>
+        </xsl:for-each>
       </fo:block>
       <xsl:apply-templates select="*[not(self::tei:head)]"/>
       <xsl:for-each select="tei:head[@type eq 'license']">
         <fo:block xsl:use-attribute-sets="heading.lowerblock.properties">
           <xsl:apply-templates/>
+          <xsl:call-template name="punctuate-head"/>
         </fo:block>
       </xsl:for-each>
     </fo:block>
@@ -774,6 +778,7 @@
     <fo:block xsl:use-attribute-sets="heading.lowerblock.properties">
       <xsl:apply-templates select="parent::*" mode="label"/>
       <xsl:apply-templates/>
+      <xsl:call-template name="punctuate-head"/>
     </fo:block>
   </xsl:template>
   

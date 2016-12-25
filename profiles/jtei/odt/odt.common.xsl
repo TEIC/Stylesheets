@@ -535,8 +535,8 @@
           <text:bookmark text:name="{parent::table/@xml:id}"/>
         </xsl:if>
         <xsl:if test="not(matches(., '^[Tt]able')) and not(@type='license')">
-          <xsl:value-of select="concat(local:capitalize(i18n:key('table-label'), true()), ' ', $tableNum, ': ')"/>
-        </xsl:if><xsl:apply-templates select="*|text()"/></text:p>
+          <xsl:value-of select="concat(local:capitalize(i18n:key('table-label'), true()), ' ', $tableNum, '. ')"/>
+        </xsl:if><xsl:apply-templates select="*|text()"/><xsl:call-template name="punctuate-head"/></text:p>
     </xsl:for-each>
   </xsl:template>
   
@@ -677,7 +677,7 @@
     <xsl:variable name="exampleNum" select="count($referenceNode/preceding::figure[teix:egXML or eg]) + 1"/>
     <xsl:apply-templates select="teix:egXML | eg"/>
     <xsl:for-each select="head">
-      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}"><xsl:if test="not(matches(., '^[Ee]xample')) and not(@type='license')"><xsl:value-of select="concat(local:capitalize(i18n:key('example-label'), true()), ' ', $exampleNum, ': ')"/></xsl:if><xsl:apply-templates select="*|text()"/></text:p>
+      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}"><xsl:if test="not(matches(., '^[Ee]xample')) and not(@type='license')"><xsl:value-of select="concat(local:capitalize(i18n:key('example-label'), true()), ' ', $exampleNum, '. ')"/></xsl:if><xsl:apply-templates select="*|text()"/><xsl:call-template name="punctuate-head"/></text:p>
     </xsl:for-each>
     
   </xsl:template>
@@ -757,7 +757,7 @@
     </text:p>
     <!--        We have to deal with a figure captions manually and put them after the graphic. -->
     <xsl:for-each select="head">
-      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}"><xsl:if test="not(matches(., '^[Ff]igure')) and not(@type='license')"><xsl:value-of select="concat(local:capitalize(i18n:key('figure-label'), true()), ' ', $graphicNum, ': ')"/></xsl:if><xsl:apply-templates select="*|text()"/></text:p>
+      <text:p text:style-name="{if (following-sibling::head) then 'teiTableFigureCaptionFirst' else 'teiTableFigureCaptionLast'}"><xsl:if test="not(matches(., '^[Ff]igure')) and not(@type='license')"><xsl:value-of select="concat(local:capitalize(i18n:key('figure-label'), true()), ' ', $graphicNum, '. ')"/></xsl:if><xsl:apply-templates select="*|text()"/><xsl:call-template name="punctuate-head"/></text:p>
     </xsl:for-each>
   </xsl:template>
   
@@ -822,7 +822,7 @@
   
     
     <xsl:template match="list/head">
-      <text:list-header><text:p text:style-name="teiListHead"><xsl:apply-templates/></text:p></text:list-header>
+      <text:list-header><text:p text:style-name="teiListHead"><xsl:apply-templates/><xsl:call-template name="punctuate-head"/></text:p></text:list-header>
     </xsl:template>
   
 <!--  Suppress the label element, because we handle it inside the item. -->

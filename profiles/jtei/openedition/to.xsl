@@ -360,12 +360,16 @@
   <xsl:template match="tei:figure">
     <p rend="figure-title">
       <xsl:apply-templates select="." mode="label"/>
-      <xsl:apply-templates select="tei:head[not(@type='license')]/node()"/>
+      <xsl:for-each select="tei:head[not(@type='license')]">
+        <xsl:apply-templates select="node()"/>
+        <xsl:call-template name="punctuate-head"/>
+      </xsl:for-each>
     </p>
     <xsl:apply-templates select="*[not(self::tei:head)]"/>
     <xsl:for-each select="tei:head[@type eq 'license']">
       <p rend="figure-{@type}">
         <xsl:apply-templates/>
+        <xsl:call-template name="punctuate-head"/>
       </p>
     </xsl:for-each>
   </xsl:template>
@@ -775,6 +779,7 @@
       <xsl:call-template name="get.rendition"/>
       <xsl:apply-templates select="parent::*" mode="label"/>
       <xsl:apply-templates/>
+      <xsl:call-template name="punctuate-head"/>
     </p>
   </xsl:template>
   
