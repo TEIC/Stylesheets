@@ -333,7 +333,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:otherwise>
   </xsl:otherwise>
       </xsl:choose>
-      <xsl:if test="not(ancestor::tei:table/tei:match(@rend,'tight'))">
+      <xsl:if test="not(ancestor::tei:table[1]/tei:match(@rend,'tight'))">
          <xsl:attribute name="padding">
             <xsl:value-of select="$tableCellPadding"/>
          </xsl:attribute>
