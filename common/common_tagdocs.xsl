@@ -3026,7 +3026,7 @@
           <xsl:if test="not($inline)">
             <xsl:attribute name="{$colspan}"
               select="
-                if (ancestor-or-self::tei:attDef)
+                if (ancestor-or-self::tei:attDef or self::tei:elementSpec)
                 then
                   1
                 else
