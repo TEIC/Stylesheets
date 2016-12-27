@@ -136,7 +136,7 @@ of this software, even if advised of the possibility of such damage.
        before making a link. Otherwise something has gone wrong, and
        we should just add a comment instead. -->
       <xsl:choose>
-         <xsl:when test="string-length(normalize-space($W)) gt 0 and string-length(normalize-space($body)) gt 0">
+         <xsl:when test="string-length(normalize-space($W)) gt 0 and string-length(normalize-space($content)) gt 0">
             <basic-link internal-destination="{$W}">
                <xsl:call-template name="linkStyle"/>
                <xsl:sequence select="$content"/>
