@@ -307,12 +307,12 @@ of this software, even if advised of the possibility of such damage.
 	   <table-column column-number="2" column-width="75%"/>
 	 </xsl:when>
 	 <xsl:when test="tei:match(@rend,'attDef')">
-	   <table-column column-number="1" column-width="10%"/>
-	   <table-column column-number="2" column-width="90%"/>
+	   <table-column column-number="1" column-width="20%"/>
+	   <table-column column-number="2" column-width="80%"/>
 	 </xsl:when>
 	 <xsl:when test="tei:match(@rend,'attList')">
-	   <table-column column-number="1" column-width="10%"/>
-	   <table-column column-number="2" column-width="90%"/>
+	   <table-column column-number="1" column-width="20%"/>
+	   <table-column column-number="2" column-width="80%"/>
 	 </xsl:when>
          <xsl:when test="not($readColSpecFile='')">
 	   <xsl:variable name="no">
