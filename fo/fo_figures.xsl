@@ -107,9 +107,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:figure">
       <xsl:choose>
          <xsl:when test="tei:match(@rend,'display') or tei:head or tei:p">
-            <float>
-               <xsl:call-template name="addID"/>
                <block text-align="center">
+               <xsl:call-template name="addID"/>
 		 <xsl:apply-templates/>
                </block>
                <block>
@@ -118,7 +117,6 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:text>. </xsl:text>
                   <xsl:apply-templates select="tei:head"/>
                </block>
-            </float>
          </xsl:when>
          <xsl:otherwise>
 	   <block>
