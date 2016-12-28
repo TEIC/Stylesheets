@@ -887,7 +887,7 @@ or columns</desc>
              <!-- If we're processing a valList, then we're already nested three tables 
  deep and the normal label/item spacing is inadequate to keep the item 
  from overwriting the label. The simplest thing is to add a return. -->
-             <xsl:if test="@rend='odd_value'"><block>&#160;</block></xsl:if>
+             <xsl:if test="@rend='odd_value' or ancestor::tei:list[1][@type='gloss']"><block>&#160;</block></xsl:if>
 	         <xsl:apply-templates/>
 	       </block>
 	     </xsl:otherwise>
