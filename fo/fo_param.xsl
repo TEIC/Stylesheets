@@ -884,7 +884,11 @@ or columns</desc>
 	     </xsl:when>
 	     <xsl:otherwise>
 	       <block font-weight="normal">
-		 <xsl:apply-templates/>
+             <!-- If we're processing a valList, then we're already nested three tables 
+ deep and the normal label/item spacing is inadequate to keep the item 
+ from overwriting the label. The simplest thing is to add a return. -->
+             <xsl:if test="@rend='odd_value'"><block>&#160;</block></xsl:if>
+	         <xsl:apply-templates/>
 	       </block>
 	     </xsl:otherwise>
 	   </xsl:choose>
