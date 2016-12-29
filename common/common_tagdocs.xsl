@@ -2684,9 +2684,18 @@
       select="concat(tei:createSpecPrefix(.), $name)"/>
     <xsl:choose>
       <xsl:when test="$oddmode = 'tei'">
-        <tei:ref target="#{$name}">
-          <xsl:value-of select="$name"/>
-        </tei:ref>
+        <xsl:choose>
+          <xsl:when test="starts-with($name, 'teidata')">
+            <tei:ref target="#{concat($idPrefix, $name)}">
+              <xsl:value-of select="$name"/>
+            </tei:ref>
+          </xsl:when>
+          <xsl:otherwise>
+            <tei:ref target="{concat('https://www.w3.org/TR/xmlschema-2/#', $name)}">
+              <xsl:value-of select="$name"/>
+            </tei:ref>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:when test="$oddmode = 'html'">
         <xsl:choose>
