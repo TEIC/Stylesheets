@@ -403,7 +403,7 @@
         <!-- (I don't like the above assumption, but I just tested, -->
         <!-- and as of now (2016-11-15) it's true for P5. -Syd)     -->
         <xsl:call-template name="showElement">
-          <xsl:with-param name="name" select="( tei:dataRef/@key, tei:dataRef/@name )[1]"/>
+          <xsl:with-param name="name" select="( tei:dataRef/@key, tei:dataRef/@name, rng:data/@type )[1]"/>
         </xsl:call-template>
         <xsl:if test="1 != ( $minOccurs, $maxOccurs )">
           <xsl:text> </xsl:text>
