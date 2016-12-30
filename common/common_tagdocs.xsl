@@ -402,8 +402,10 @@
         <!-- we assume that datatype contains only a single dataRef -->
         <!-- (I don't like the above assumption, but I just tested, -->
         <!-- and as of now (2016-11-15) it's true for P5. -Syd)     -->
+        <!-- MDH tweaked this again 2016-12-29 to deal with remaining
+             rng:data elements not yet PURE-ified. -->
         <xsl:call-template name="showElement">
-          <xsl:with-param name="name" select="( tei:dataRef/@key, tei:dataRef/@name, rng:data/@type )[1]"/>
+          <xsl:with-param name="name" select="if (tei:dataRef/@key) then tei:dataRef/@key else if (tei:dataRef/@name) then tei:dataRef/@name else if (rng:data/@type) then rng:data/@type else ''"/>
         </xsl:call-template>
         <xsl:if test="1 != ( $minOccurs, $maxOccurs )">
           <xsl:text> </xsl:text>

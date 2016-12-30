@@ -3,7 +3,6 @@
                 xmlns:s="http://www.ascc.net/xml/schematron"
                 xmlns:fotex="http://www.tug.org/fotex"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
-                
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
