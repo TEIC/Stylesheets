@@ -828,6 +828,8 @@ or columns</desc>
                   <xsl:when test="tei:isGlossList(..)">
                      <xsl:attribute name="text-align">start</xsl:attribute>
                      <xsl:attribute name="font-weight">bold</xsl:attribute>
+<!--  We don't want hyphenated terms or attributes wrapping to the next line.                    -->
+                     <xsl:attribute name="keep-together.within-line" select="'always'"/>
                      <xsl:choose>
 		       <xsl:when test="tei:label">
 			 <xsl:apply-templates mode="print" select="tei:label"/>

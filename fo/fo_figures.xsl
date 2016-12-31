@@ -295,6 +295,12 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="blockTable">
       <table text-align="{$tableAlign}" font-size="{$tableSize}">
+<!--   MDH: FOP (at 2.1, which is current on 2016-12-30) does not support the 
+       default @table-layout="auto".          -->
+         <xsl:if test="$foEngine = 'fop'">
+            <xsl:attribute name="table-layout" select="'fixed'"/>
+            <xsl:attribute name="width" select="'100%'"/>
+         </xsl:if>
          <xsl:call-template name="addID"/>
          <xsl:call-template name="deriveColSpecs"/>
          <xsl:apply-templates select="tei:row[@role='header']"/>
