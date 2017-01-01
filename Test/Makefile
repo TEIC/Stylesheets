@@ -115,10 +115,11 @@ test-to-html: css
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test27.html expected-results/test27.html; fi
 	rm -rf files
-	$(SAXON) test28.xml ../html/html.xsl splitLevel=0  STDOUT=false $(SAXONOPT)
-	xmllint --format index.html > x ; mv x index.html
+#MDH 2017-01-01: Originally this file was output as index.html and then diffed against expected-results/test28.html,
+#but this was confusing.
+	$(SAXON) test28.xml ../html/html.xsl splitLevel=0  STDOUT=false $(SAXONOPT)  | xmllint --format index.html > x ; mv x test28.html
 	if [ $(REGENERATING) -ne 1 ]; \
-		then diff  index.html expected-results/test28.html; fi
+		then diff  test28.html expected-results/test28.html; fi
 	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFiles=../tei.css $(SAXONOPT)  | xmllint --format - > test31.html
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test31.html expected-results/test31.html; fi
