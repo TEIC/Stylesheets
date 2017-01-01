@@ -36,97 +36,86 @@
 <!-- We need ant-contrib to do foreach.   -->
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
     
+<!-- Location of transformtei script and its symlinked callers.   -->
+    <property name="bin" value="../bin"/>
+    
+<!-- We can control where the source of the TEI Guidelines is. This is the 
+     path to [a directory containing] p5subset.xml. If not supplied, most 
+     scripts default to using the current version from the tei-c.org Vault. 
+     Note: passing the full path to p5subset.xml, including the file name,
+     appears to work, but passing only the directory fails. This is contrary
+     to current Stylesheets documentation.
+    -->
+    <property name="localsource" value=""/>
+        
+<!-- Java tools we need.    -->
+    <property name="saxonJar" value="../lib/saxon9he.jar"/>
+    <property name="trangJar" value="../lib/trang.jar"/>
+<!-- Not sure why we need a special version of Jing, but that's what the Makefile uses. -->
+    <property name="jingJar" value="lib/jing-20120724.0.0.jar"/>
+    
+<!-- The jing task requires attributes @rngfile and @file.    -->
+    <taskdef name="jing" classpath="${jingJar}" classname="com.thaiopensource.relaxng.util.JingTask"/>
     
 <!-- Filesets for each set of tests should be declared here. -->
-    <!--<fileset id="files1" dir="${basedir}/files1" includes="*.txt"/>
-    
-    <fileset id="files2" dir="${basedir}/files2" includes="*.txt"/>-->
     <fileset id="testOutputRng" dir="${basedir}" includes="test.rng"/>
         
     <fileset id="singleFilesToDiff" dir="${basedir}" includes="test.rng,
-        test.html,
-        test-complex.html,
-        test-ota.html,
-        test.html5,
-        test20.html,
-        test5.xhtml,
-        test6.html,
-        test14.html,
-        test22.html,
-        test23.html,
-        test24.html,
-        test25.html,
-        test27.html,
-        test28.html,
-        test31.html,
-        test32.html,
-        test38.xml,
-        mdtest1.xml,
-        mdtest2.md,
-        cocoatest.xml,
-        cocoatest2.xml,
-        test17.tei,
-        A54031.xml,
-        test.tex,
-        testnotes1.tex,
-        test5.tex,
-        test6.tex,
-        test20.tex,
-        test23.tex,
-        test24.tex,
-        test25.tex,
-        test27.tex,
-        test.fo,
-        test5.fo,
-        testnotes1.fo,
-        test24.fo,
-        test25.fo,
-        test27.fo,
-        test.epub.listing,
-        test.epub.listing2,
-        test12.rdf,
-        test.text,
-        test.xlsx.xml,
-        test.xml.odt.listing,
-        content.xml.odt.listing,
-        test7.xml,
-        test-indexes.xml,
-        test11.xml,
-        test11a.xml,
-        test19.xml,
-        test18.xml,
-        test39.xml,
-        test-rtf2tei.xml,
-        test29.xml,
-        test37.xml,
-        test40.xml,
-        test.xml.docx.document,
-        test.xml.docx.core,
-        test6.xml.docx.document,
-        testnotes1.xml.docx.document,
-        test.odd.html,
-        test.isosch,
-        test21.odd.rnc,
-        test15.odd.rnc,
-        test15.odd.html,
-        oddbyexample.odd,
-        testdrama.compiled.xml,
-        test30.rnc,
-        test30.dtd,
-        test-pure.rnc,
-        test-pure.dtd,
-        test-pure.odd.html,
-        test-pure2.rnc,
-        test-pure2.dtd,
-        test-pure2.odd.html,
-        test33.rnc,
-        test33.json,
-        test34.rnc,
-        test34.json,
-        test34.combined.json,
-        test34.odd.html,
-        test35.rnc"/>
+        test.html, test-complex.html, test-ota.html, test.html5,
+        test20.html, test5.xhtml, test6.html, test14.html, test22.html, 
+        test23.html, test24.html, test25.html, test27.html, test28.html, 
+        test31.html, test32.html, test38.xml, mdtest1.xml, mdtest2.md, 
+        cocoatest.xml, cocoatest2.xml, test17.tei, A54031.xml, test.tex, 
+        testnotes1.tex, test5.tex, test6.tex, test20.tex, test23.tex, 
+        test24.tex, test25.tex, test27.tex, test.fo, test5.fo, testnotes1.fo, 
+        test24.fo, test25.fo, test27.fo, test.epub.listing, test.epub.listing2, 
+        test12.rdf, test.text, test.xlsx.xml, test.xml.odt.listing, 
+        content.xml.odt.listing, test7.xml, test-indexes.xml, test11.xml, 
+        test11a.xml, test19.xml, test18.xml, test39.xml, test-rtf2tei.xml, 
+        test29.xml, test37.xml, test40.xml, test.xml.docx.document, 
+        test.xml.docx.core, test6.xml.docx.document, testnotes1.xml.docx.document, 
+        test.odd.html, test.isosch, test21.odd.rnc, test15.odd.rnc, 
+        test15.odd.html, oddbyexample.odd, testdrama.compiled.xml, test30.rnc, 
+        test30.dtd, test-pure.rnc, test-pure.dtd, test-pure.odd.html, 
+        test-pure2.rnc, test-pure2.dtd, test-pure2.odd.html, test33.rnc, 
+        test33.json, test34.rnc, test34.json, test34.combined.json, 
+        test34.odd.html, test35.rnc"/>
     
+<!--  These targets are core transformation and validation processes which are 
+      widely used. -->
+    <target name="RngToRnc">
+        <description>
+            TARGET RngToRnc
+            This target is passed two parameters, rngIn and rncOut, and then 
+            uses Trang to convert the first to the second.
+        </description>
+        <echo level="info" message="Convert ${rngIn} to ${rncOut} using Trang."/>
+        <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
+            <classpath location="${trang}"/>
+            <arg value="-O"/>
+            <arg value="rnc"/>
+            <arg value="${rngIn}.rng"/>
+            <arg value="${rncOut}.rnc"/>
+        </java>
+    </target>
+    
+    <target name="lintFormat">
+        <description>
+            TARGET lintFormat
+            This target calls xmllint to format and indent an XML file that has 
+            been created for more reliable diff results, avoiding whitespace 
+            differences. It expects a single parameter, inFile. It lints the 
+            file to a temp file, tmpLint, then moves that back over the original
+            file.
+            
+            It may be difficult to find a good equivalent of this on Windows.
+        </description>
+        <exec executable="xmllint" failonerror="true" output="tmpLint">
+            <arg line="--format"/>
+            <arg file="${inFile}"/>
+        </exec>
+        <move file="tmpLint" tofile="${inFile}"/>
+    </target>
     
 <!--  These targets deal with diffing the results of transformations against
       expected results. The transformation result files are typically in the root 
@@ -166,6 +155,7 @@
       there would simply be less in the way of useful output. -->
                 <exec dir="." executable="diff">
                     <arg line="-u"/>
+                    <arg line="-b"/>
                     <arg file="${inFile}"/>
                     <arg file="${otherFile}"/>
                 </exec>
@@ -190,14 +180,61 @@
     </target>
     
     <target name="diffAllFiles">
+        <description>
+            TARGET: diffAllFiles
+            This target diffs all the files produced by the build process 
+            against their expected results.
+        </description>
         <antcall target="diffFileSets"/>
     </target>
     
-    <target name="documentation">
+    <target name="oddToRng">
         <description>
-            The default documentation target simply outputs helpful documentation.
-            Or at least, it will...
+            TARGET oddToRng
+            This target converts the single file test.odd to test.rng 
+            and then diffs it against the expected results. It involves
+            a straight conversion, but then some tweaking to remove 
         </description>
+<!--  First convert odd to relaxng.      -->
+        <exec executable="${bin}/teitorelaxng" failonerror="true">
+            <arg line="--localsource=${localsource}"/>
+            <arg file="test.odd"/>
+            <arg file="test.rng"/>
+        </exec>
+
+<!--  Now format/indent the result with xmllint.      -->
+        <antcall target="lintFormat">
+            <param name="inFile" value
+                ="test.rng"/>
+        </antcall>
+        
+<!--  Next, replace the version-specific build comment in the file with a nothing. -->
+        <replaceregexp file="test.rng" match="&lt;!--[^>]+-->" replace=""/>
+        
+<!--  Finally, diff the files.       -->
+        <antcall target="diffFile">
+            <param name="inFile" value="${basedir}/test.rng"/>
+        </antcall>
+    </target>
+    
+    <target name="test">
+        <description>
+            TARGET: test
+            This target runs all build and check processes. Use this target
+            for a full run of tests. IT'S NOT COMPLETE BY A LONG WAY.
+        </description>
+        
+        <antcall target="diffAllFiles"/>
+    </target>
+    
+    <target name="documentation">
+        <echo>
+            To see detailed documentation for this buildfile, run 
+                ant -projecthelp
+            To run the full set of tests that have been scripted 
+            so far, run
+                ant test
+        </echo>
     </target>
     
 </project>
