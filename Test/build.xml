@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="documentation" name="StylesheetsTest">
+
+    <description> 
+     Stylesheets/Test/build.xml
+     
+     ANT TEST FILE FOR THE TEI STYLESHEETS.
+        
+     MDH 2017-01-01: This is an EXPERIMENTAL build file which is 
+     attempting to wholly replace the Makefile in the Stylesheets/Test
+     directory. I want to discover:
+    
+     a) How easy it is to replicate all the functions of the Makefile in ant.
+     
+     b) Whether this is faster or slower than running the Makefile. I hope to
+        discover that it's faster, because we only instantiate one VM to run 
+        ant, rather than running Saxon multiple times. Doing all the file diffs
+        takes, for instance, only 1 second for me.
+        
+     c) How practical it will be to make this cross-platform (i.e. to support 
+        Windows).
+        
+     Work on this file is proceeding in small steps...
+     
+     Issues with the Makefile process:
+     
+      - It's difficult to understand.
+      
+      - It's multilayered: for instance, a call to:
+            test.rng
+        calls the symlink teitorelaxng, which calls the script transformtei, 
+        which calls ant passing a build-to or build-from file, which calls 
+        Saxon....
+    </description>
+    
+<!-- We need ant-contrib to do foreach.   -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    
+    
+<!-- Filesets for each set of tests should be declared here. -->
+    <!--<fileset id="files1" dir="${basedir}/files1" includes="*.txt"/>
+    
+    <fileset id="files2" dir="${basedir}/files2" includes="*.txt"/>-->
+    <fileset id="testOutputRng" dir="${basedir}" includes="test.rng"/>
+        
+    <fileset id="singleFilesToDiff" dir="${basedir}" includes="test.rng,
+        test.html,
+        test-complex.html,
+        test-ota.html,
+        test.html5,
+        test20.html,
+        test5.xhtml,
+        test6.html,
+        test14.html,
+        test22.html,
+        test23.html,
+        test24.html,
+        test25.html,
+        test27.html,
+        test28.html,
+        test31.html,
+        test32.html,
+        test38.xml,
+        mdtest1.xml,
+        mdtest2.md,
+        cocoatest.xml,
+        cocoatest2.xml,
+        test17.tei,
+        A54031.xml,
+        test.tex,
+        testnotes1.tex,
+        test5.tex,
+        test6.tex,
+        test20.tex,
+        test23.tex,
+        test24.tex,
+        test25.tex,
+        test27.tex,
+        test.fo,
+        test5.fo,
+        testnotes1.fo,
+        test24.fo,
+        test25.fo,
+        test27.fo,
+        test.epub.listing,
+        test.epub.listing2,
+        test12.rdf,
+        test.text,
+        test.xlsx.xml,
+        test.xml.odt.listing,
+        content.xml.odt.listing,
+        test7.xml,
+        test-indexes.xml,
+        test11.xml,
+        test11a.xml,
+        test19.xml,
+        test18.xml,
+        test39.xml,
+        test-rtf2tei.xml,
+        test29.xml,
+        test37.xml,
+        test40.xml,
+        test.xml.docx.document,
+        test.xml.docx.core,
+        test6.xml.docx.document,
+        testnotes1.xml.docx.document,
+        test.odd.html,
+        test.isosch,
+        test21.odd.rnc,
+        test15.odd.rnc,
+        test15.odd.html,
+        oddbyexample.odd,
+        testdrama.compiled.xml,
+        test30.rnc,
+        test30.dtd,
+        test-pure.rnc,
+        test-pure.dtd,
+        test-pure.odd.html,
+        test-pure2.rnc,
+        test-pure2.dtd,
+        test-pure2.odd.html,
+        test33.rnc,
+        test33.json,
+        test34.rnc,
+        test34.json,
+        test34.combined.json,
+        test34.odd.html,
+        test35.rnc"/>
+    
+    
+<!--  These targets deal with diffing the results of transformations against
+      expected results. The transformation result files are typically in the root 
+      Test folder; the files to diff them against are in the Test/expected-results
+      folder. -->
+    
+    <target name="diffFile">
+        <description>
+            TARGET: diffFile
+            The diffFile target is passed the name of a transformation result.
+            It infers the location of the expected results against which
+            to diff this file, and then does a comparison between the two,
+            using the ant filesmatch condition. If that fails, it then 
+            triggers a true diff using the diff executable, outputs the 
+            results, and fails the build.
+        </description>
+        <basename property="inFileName" file="${inFile}"/>
+<!-- NOTE: We use ${file.separator} for portability. -->
+        <propertyregex property="otherFile" input="${inFile}" regexp="(${file.separator})(${inFileName})" replace="\1expected-results\1\2" global="true"/>
+        <echo message="diffing ${inFile} against ${otherFile}."/>
+        <trycatch>
+            <try>
+                <fail message="${inFile} is different from ${otherFile}.">    
+                    <condition>
+                        <not>
+                            <filesmatch file1="${inFile}" file2="${otherFile}"/>
+                        </not>
+                    </condition>
+                </fail>
+            </try>
+            <catch>
+                <echo message="ERROR: DIFF FAILURE..."/>
+<!--  Note: this currently depends on the command-line diff app
+      available on *NIX platforms, but we could fork here and 
+      call diff.exe on Windows. Even if we don't, the build 
+      should only fail here on Windows if the files are different;
+      there would simply be less in the way of useful output. -->
+                <exec dir="." executable="diff">
+                    <arg line="-u"/>
+                    <arg file="${inFile}"/>
+                    <arg file="${otherFile}"/>
+                </exec>
+                <fail message="Build failed because of differences between  ${inFile} and ${otherFile}. See diff output above."/>
+            </catch>
+        </trycatch>
+        
+    </target>
+    
+    <target name="diffFileSets">
+        <description>
+            TARGET: diffFileSets
+            The diffFileSets target diffs all of the files in a number 
+            of nested filesets against their expected results, by passing
+            each to the diffFile target.
+        </description>
+        <foreach target="diffFile" param="inFile">
+            <path>
+                <fileset refid="singleFilesToDiff"/>                
+            </path>
+        </foreach>
+    </target>
+    
+    <target name="diffAllFiles">
+        <antcall target="diffFileSets"/>
+    </target>
+    
+    <target name="documentation">
+        <description>
+            The default documentation target simply outputs helpful documentation.
+            Or at least, it will...
+        </description>
+    </target>
+    
+</project>
