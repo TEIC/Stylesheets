@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="documentation" name="StylesheetsTest"
+    xmlns:if="ant:if"
+    xmlns:unless="ant:unless">
+
+    <description> 
+     Stylesheets/Test2/build.xml
+     
+     ANT TEST FILE FOR THE TEI STYLESHEETS.
+        
+     MDH 2017-01-01: This is an EXPERIMENTAL build file which is 
+     attempting to wholly replace the Makefile in the Stylesheets/Test
+     directory. I want to discover:
+    
+     a) How easy it is to replicate all the functions of the Makefile in ant.
+     
+     b) Whether this is faster or slower than running the Makefile. I hope to
+        discover that it's faster, because we only instantiate one VM to run 
+        ant, rather than running Saxon multiple times. Doing all the file diffs
+        takes, for instance, only 1 second for me.
+        
+     c) How practical it will be to make this cross-platform (i.e. to support 
+        Windows).
+        
+     Work on this file is proceeding in small steps...
+     
+     Issues with the Makefile process:
+     
+      - It's difficult to understand.
+      
+      - It's multilayered: for instance, a call to:
+            test.rng
+        calls the symlink teitorelaxng, which calls the script transformtei, 
+        which calls ant passing a build-to or build-from file, which calls 
+        Saxon....
+        
+     You can call this file with many targets, but this:
+     
+        ant test
+        
+     will run the set of tests which have been set up so far, and 
+     
+        ant test -Dregenerate=true
+        
+     will, instead of diffing files against expected-results, instead overwrite
+     the expected-results with the generated files.
+    </description>
+    
+<!-- We need ant-contrib to do foreach.   -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    
+<!-- Whether we're running tests against expected results or regenerating
+     expected results en masse. -->
+    <property name="regenerate" value=""/>
+    
+<!-- Location of transformtei script and its symlinked callers.   -->
+    <property name="bin" value="../bin"/>
+    
+<!-- We can control where the source of the TEI Guidelines is. This is the 
+     path to [a directory containing] p5subset.xml. If not supplied, most 
+     scripts default to using the current version from the tei-c.org Vault. 
+     Note: passing the full path to p5subset.xml, including the file name,
+     appears to work, but passing only the directory fails. This is contrary
+     to current Stylesheets documentation.
+    -->
+    <property name="localsource" value=""/>
+        
+<!-- Java tools we need.    -->
+    <property name="saxonJar" value="../lib/saxon9he.jar"/>
+    <property name="trangJar" value="../lib/trang.jar"/>
+<!-- Not sure why we need a special version of Jing, but that's what the Makefile uses. 
+     This should be checked into. -->
+    <property name="jingJar" value="../Test/lib/jing-20120724.0.0.jar"/>
+    
+<!-- The jing task requires attributes @rngfile and @file.    -->
+    <taskdef name="jing" classpath="${jingJar}" classname="com.thaiopensource.relaxng.util.JingTask"/>
+    
+<!-- Filesets for each set of tests should be declared here. -->
+    <fileset id="testOutputRng" dir="${basedir}" includes="test.rng"/>
+        
+    <fileset id="singleFilesToDiff" dir="${basedir}" includes="test.rng,
+        test.html, test-complex.html, test-ota.html, test.html5,
+        test20.html, test5.xhtml, test6.html, test14.html, test22.html, 
+        test23.html, test24.html, test25.html, test27.html, test28.html, 
+        test31.html, test32.html, test38.xml, mdtest1.xml, mdtest2.md, 
+        cocoatest.xml, cocoatest2.xml, test17.tei, A54031.xml, test.tex, 
+        testnotes1.tex, test5.tex, test6.tex, test20.tex, test23.tex, 
+        test24.tex, test25.tex, test27.tex, test.fo, test5.fo, testnotes1.fo, 
+        test24.fo, test25.fo, test27.fo, test.epub.listing, test.epub.listing2, 
+        test12.rdf, test.text, test.xlsx.xml, test.xml.odt.listing, 
+        content.xml.odt.listing, test7.xml, test-indexes.xml, test11.xml, 
+        test11a.xml, test19.xml, test18.xml, test39.xml, test-rtf2tei.xml, 
+        test29.xml, test37.xml, test40.xml, test.xml.docx.document, 
+        test.xml.docx.core, test6.xml.docx.document, testnotes1.xml.docx.document, 
+        test.odd.html, test.isosch, test21.odd.rnc, test15.odd.rnc, 
+        test15.odd.html, oddbyexample.odd, testdrama.compiled.xml, test30.rnc, 
+        test30.dtd, test-pure.rnc, test-pure.dtd, test-pure.odd.html, 
+        test-pure2.rnc, test-pure2.dtd, test-pure2.odd.html, test33.rnc, 
+        test33.json, test34.rnc, test34.json, test34.combined.json, 
+        test34.odd.html, test35.rnc"/>
+    
+<!--  TEI file that can be converted in a straightforward manner into HTML
+      without special parameters. -->
+    <fileset id="simpleTeiForHtml" dir="${basedir}" includes="test14.xml, test22.xml, test23.xml,
+        test24.xml, test25.xml"/>
+    
+<!--  CSS files that are used in HTML builds. These are symlinked from
+      the Stylesheets/ root folder. Not quite sure why yet. -->
+    <fileset id="cssFiles" dir="${basedir}/../css" includes="*.css"/>
+    
+<!--  Symlinks to the CSS files created during the build.  -->
+    <fileset id="symlinksToCssFiles" dir="${basedir}/.." includes="*.css"/>
+    
+<!--  These targets are core transformation and validation processes which are 
+      widely used. -->
+    <target name="RngToRnc">
+        <description>
+            TARGET RngToRnc
+            This target is passed two parameters, rngIn and rncOut, and then 
+            uses Trang to convert the first to the second.
+        </description>
+        <echo level="info" message="Convert ${rngIn} to ${rncOut} using Trang."/>
+        <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
+            <classpath location="${trang}"/>
+            <arg value="-O"/>
+            <arg value="rnc"/>
+            <arg value="${rngIn}.rng"/>
+            <arg value="${rncOut}.rnc"/>
+        </java>
+    </target>
+    
+    <target name="cleanForDiff">
+        <description>
+            TARGET cleanForDiff
+            This target is run on any XML or XHTML(5) output which is going to
+            be compared with an expected result file. It uses cleanForDiff.xsl
+            to:
+            1. Remove all comments (since these often contain dates, versions
+               etc.)
+            2. Normalize Unicode to UTF-8 NFC.
+            3. Check all internal links in HTML files.
+            4. Format and indent.
+            This should cover all the functions of checklinks.xsl, xmllint.
+            and various PERL bits and pieces in the original Test/Makefile.
+            It takes a single input file, inFile.
+            
+            Unfortunately, HTML5 documents created with the Stylesheets currently
+            use !DOCTYPE html  SYSTEM "about:legacy-compat", which will cause 
+            Saxon to die with an "unknown protocol: about" error, so we strip 
+            that off first with a regex transform.
+        </description>
+        <echo level="info" message="Clean ${inFile} ready for diffing with expected results."/>
+        <replaceregexp file="${inFile}" match="^\s*&lt;!DOCTYPE[^>]+>" replace=""/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/cleanForDiff.xsl"/>
+            <arg value="-o:${inFile}"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
+            <arg value="-dtd:off"/>
+        </java>
+    </target>
+    
+    <target name="lintFormat">
+        <description>
+            TARGET lintFormat
+            This target calls xmllint to format and indent an XML file that has 
+            been created for more reliable diff results, avoiding whitespace 
+            differences. It expects a single parameter, inFile. It lints the 
+            file to a temp file, tmpLint, then moves that back over the original
+            file.
+            
+            It may be difficult to find a good equivalent of this on Windows.
+        </description>
+        <exec executable="xmllint" failonerror="true" output="tmpLint">
+            <arg line="--format"/>
+            <arg file="${inFile}"/>
+        </exec>
+        <move file="tmpLint" tofile="${inFile}"/>
+    </target>
+    
+<!--   NOTE: I DO NOT SEE THE POINT IN THESE CSS FILE SYMLINKS, AND UNLESS I 
+       CAN FIGURE OUT A GOOD REASON FOR THEM, I'LL REMOVE THE FOLLOWING TWO 
+       TARGETS AND USE STRAIGHTFORWARD PATHS TO THE ORIGINAL CSS FILES IN THE
+       HTML BUILD COMMANDS. -->
+    <target name="symlinkCssFile">
+        <description>
+            TARGET symlinkCssFile
+            This target creates a symlink from the ${basedir}/../ directory
+            to a file in its child css directory. NOTE: need to figure
+            out how best to accomplish this on Windows. ${to} is passed
+            as a param; ${from} is generated from it.
+        </description>
+        <propertyregex property="from" input="${to}" regexp="${file.separator}css${file.separator}" replace="${file.separator}" global="true"/>
+        <exec executable="ln">
+            <arg value="-s"/>
+            <arg value="-f"/>
+            <arg file="${to}"/>
+            <arg file="${from}"/>
+        </exec>
+    </target>
+    
+    <target name="symlinkCssFiles">
+        <description>
+            TARGET symlinkCssFiles
+            This target creates symlinks from the parent directory of ${basedir}
+            to each of the CSS files in the ../css directory. These are used in 
+            the HTML build processes, then removed on cleanup.
+        </description>
+        <foreach target="symlinkCssFile" param="to">
+            <path>
+                <fileset refid="cssFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
+    <target name="simpleTeiToHtml" depends="symlinkCssFiles">
+        <description>
+            TARGET simpleTeiToHtml
+            This passes a set of files (simpleTeiForHtml) to the testFileToHtml
+            target, which then builds them to HTML and diffs them against 
+            expected results.
+        </description>
+        <foreach target="testFileToHtml" param="inFile">
+            <fileset refid="simpleTeiForHtml"/>
+        </foreach>
+    </target>
+    
+    <target name="testFileToHtml">
+        <description>
+            TARGET testFileToHtml
+            This builds a TEI file into HTML output using standard simple parameters.
+            The results are linted, diffed, and have their internal links checked.
+            It takes a single parameter, inFile.
+        </description>
+        <echo message="Building test file ${inFile} into HTML."/>
+        <propertyregex property="outFile" input="${inFile}" regexp="\.xml$" replace=".html" global="true"/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/../html/html.xsl"/>
+            <arg value="-o:${outFile}"/>
+            <!--<arg value="cssFile=../tei.css"/>-->
+            <arg value="useFixedDate=true"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
+        </java>
+        
+        <!--  Now check/format/indent the result with and diff it.      -->
+        <antcall target="prepAndDiffFile">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+        
+    </target>
+    
+<!--  These targets deal with diffing the results of transformations against
+      expected results. The transformation result files are typically in the root 
+      Test folder; the files to diff them against are in the Test/expected-results
+      folder. -->
+    
+    <target name="prepAndDiffFile">
+        <description>
+            TARGET prepAndDiffFile
+            This target calls the cleanForDiff target followed by the diffFile target
+            to normalize a file then compare it with its expected-results counterpart.
+            it takes a single parameter, inFile.
+        </description>
+        <!--  Format/indent the result with xmllint.      -->
+        <antcall target="cleanForDiff">
+            <param name="inFile" value="${inFile}"/>
+        </antcall>
+        
+        <!-- Diff the files, or regenerate.       -->
+        <antcall target="diffFile">
+            <param name="inFile" value="${inFile}"/>
+        </antcall>
+    </target>
+    
+    <target name="diffFile">
+        <description>
+            TARGET diffFile
+            The diffFile target is passed the name of a transformation result.
+            It infers the location of the expected results against which
+            to diff this file, and then does a comparison between the two,
+            using the ant filesmatch condition. If that fails, it then 
+            triggers a true diff using the diff executable, outputs the 
+            results, and fails the build.
+        </description>
+        <basename property="inFileName" file="${inFile}"/>
+<!-- NOTE: We use ${file.separator} for portability. -->
+        <propertyregex property="otherFile" input="${inFile}" regexp="(${file.separator})(${inFileName})" replace="\1expected-results\1\2" global="true"/>
+<!--  If regenerating, just copy the file.      -->
+        <echo unless:blank="${regenerate}" message="Copying generated ${inFile} to expected-results folder."/>
+        <copy unless:blank="${regenerate}" file="${inFile}" tofile="${otherFile}"/>
+        
+<!--  If not regenerating, then diff the file.      -->
+        <trycatch if:blank="${regenerate}">
+            <try>
+                <echo message="diffing ${inFile} against ${otherFile}."/>
+                <fail message="${inFile} is different from ${otherFile}.">    
+                    <condition>
+                        <not>
+                            <filesmatch file1="${inFile}" file2="${otherFile}"/>
+                        </not>
+                    </condition>
+                </fail>
+            </try>
+            <catch>
+                <echo message="ERROR: DIFF FAILURE..."/>
+<!--  Note: this currently depends on the command-line diff app
+      available on *NIX platforms, but we could fork here and 
+      call diff.exe on Windows. Even if we don't, the build 
+      should only fail here on Windows if the files are different;
+      there would simply be less in the way of useful output. -->
+                <exec dir="." executable="diff">
+                    <arg line="-u"/>
+                    <arg line="-b"/>
+                    <arg file="${inFile}"/>
+                    <arg file="${otherFile}"/>
+                </exec>
+                <fail message="Build failed because of differences between  ${inFile} and ${otherFile}. See diff output above."/>
+            </catch>
+        </trycatch>
+        
+    </target>
+    
+    <target name="diffFileSets">
+        <description>
+            TARGET: diffFileSets
+            The diffFileSets target diffs all of the files in a number 
+            of nested filesets against their expected results, by passing
+            each to the diffFile target.
+        </description>
+        <foreach target="diffFile" param="inFile">
+            <path>
+                <fileset refid="singleFilesToDiff"/>                
+            </path>
+        </foreach>
+    </target>
+    
+    <target name="diffAllFiles">
+        <description>
+            TARGET: diffAllFiles
+            This target diffs all the files produced by the build process 
+            against their expected results.
+        </description>
+        <antcall target="diffFileSets"/>
+    </target>
+    
+    <target name="oddToRng">
+        <description>
+            TARGET oddToRng
+            This target converts the single file test.odd to test.rng 
+            and then diffs it against the expected results. It involves
+            a straight conversion, but then some tweaking to remove 
+        </description>
+<!--  First convert odd to relaxng.      -->
+        <exec executable="${bin}/teitorelaxng" failonerror="true">
+            <arg line="--localsource=${localsource}"/>
+            <arg file="test.odd"/>
+            <arg file="test.rng"/>
+        </exec>
+        
+<!--  Now clean and diff.      -->
+        <antcall target="prepAndDiffFile">
+            <param name="inFile" value="${basedir}/test.rng"/>
+        </antcall>
+    </target>
+    
+<!--  Cleanup target, removing all files created.  -->
+    <target name="clean">
+        <description>
+            TARGET clean
+            This target removes all generated files.
+        </description>
+        <delete>
+            <!--<fileset refid="singleFilesToDiff"/>-->
+            <fileset refid="symlinksToCssFiles"/>
+        </delete>
+    </target>
+    
+    <target name="test">
+        <description>
+            TARGET: test
+            This target runs all build and check processes. Use this target
+            for a full run of tests. IT'S NOT COMPLETE BY A LONG WAY.
+        </description>
+        
+        <antcall target="oddToRng"/>
+        <antcall target="simpleTeiToHtml"/>
+    </target>
+    
+    <target name="documentation">
+        <echo>
+            To see detailed documentation for this buildfile, run 
+                ant -projecthelp
+            To run the full set of tests that have been scripted 
+            so far, run
+                ant test
+        </echo>
+    </target>
+    
+</project>
