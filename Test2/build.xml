@@ -101,7 +101,7 @@
     
 <!--  TEI file that can be converted in a straightforward manner into HTML
       without special parameters. -->
-    <fileset id="simpleTeiForHtml" dir="${basedir}" includes="test14.xml, test22.xml, test23.xml,
+    <fileset id="simpleTeiForHtml" dir="${basedir}" includes="test14.xml, test20.xml, test22.xml, test23.xml,
         test24.xml, test25.xml"/>
     
 <!--  CSS files that are used in HTML builds. These are symlinked from
@@ -222,7 +222,9 @@
             expected results.
         </description>
         <foreach target="testFileToHtml" param="inFile">
-            <fileset refid="simpleTeiForHtml"/>
+            <path>
+                <fileset refid="simpleTeiForHtml"/>
+            </path>
         </foreach>
     </target>
     
