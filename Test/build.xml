@@ -81,6 +81,13 @@
         test33.json, test34.rnc, test34.json, test34.combined.json, 
         test34.odd.html, test35.rnc"/>
     
+<!--  CSS files that are used in HTML builds. These are symlinked from
+      the Stylesheets/ root folder. Not quite sure why yet. -->
+    <fileset id="cssFiles" dir="${basedir}/../css" includes="*.css"/>
+    
+<!--  Symlinks to the CSS files created during the build.  -->
+    <fileset id="symlinksToCssFiles" dir="${basedir}/.." includes="*.css"/>
+    
 <!--  These targets are core transformation and validation processes which are 
       widely used. -->
     <target name="RngToRnc">
@@ -117,6 +124,40 @@
         <move file="tmpLint" tofile="${inFile}"/>
     </target>
     
+<!--   NOTE: I DO NOT SEE THE POINT IN THESE CSS FILE SYMLINKS, AND UNLESS I 
+       CAN FIGURE OUT A GOOD REASON FOR THEM, I'LL REMOVE THE FOLLOWING TWO 
+       TARGETS AND USE STRAIGHTFORWARD PATHS TO THE ORIGINAL CSS FILES IN THE
+       HTML BUILD COMMANDS. -->
+    <target name="symlinkCssFile">
+        <description>
+            TARGET symlinkCssFile
+            This target creates a symlink from the ${basedir}/../ directory
+            to a file in its child css directory. NOTE: need to figure
+            out how best to accomplish this on Windows. ${to} is passed
+            as a param; ${from} is generated from it.
+        </description>
+        <propertyregex property="from" input="${to}" regexp="${file.separator}css${file.separator}" replace="${file.separator}" global="true"/>
+        <exec executable="ln">
+            <arg value="-s"/>
+            <arg file="${to}"/>
+            <arg file="${from}"/>
+        </exec>
+    </target>
+    
+    <target name="symlinkCssFiles">
+        <description>
+            TARGET symlinkCssFiles
+            This target creates symlinks from the parent directory of ${basedir}
+            to each of the CSS files in the ../css directory. These are used in 
+            the HTML build processes, then removed on cleanup.
+        </description>
+        <foreach target="symlinkCssFile" param="to">
+            <path>
+                <fileset refid="cssFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
 <!--  These targets deal with diffing the results of transformations against
       expected results. The transformation result files are typically in the root 
       Test folder; the files to diff them against are in the Test/expected-results
@@ -124,7 +165,7 @@
     
     <target name="diffFile">
         <description>
-            TARGET: diffFile
+            TARGET diffFile
             The diffFile target is passed the name of a transformation result.
             It infers the location of the expected results against which
             to diff this file, and then does a comparison between the two,
@@ -215,6 +256,18 @@
         <antcall target="diffFile">
             <param name="inFile" value="${basedir}/test.rng"/>
         </antcall>
+    </target>
+    
+<!--  Cleanup target, removing all files created.  -->
+    <target name="clean">
+        <description>
+            TARGET clean
+            This target removes all generated files.
+        </description>
+        <delete>
+            <!--<fileset refid="singleFilesToDiff"/>-->
+            <fileset refid="symlinksToCssFiles"/>
+        </delete>
     </target>
     
     <target name="test">
