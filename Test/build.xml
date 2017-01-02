@@ -53,8 +53,9 @@
 <!-- Java tools we need.    -->
     <property name="saxonJar" value="../lib/saxon9he.jar"/>
     <property name="trangJar" value="../lib/trang.jar"/>
-<!-- Not sure why we need a special version of Jing, but that's what the Makefile uses. -->
-    <property name="jingJar" value="lib/jing-20120724.0.0.jar"/>
+<!-- Not sure why we need a special version of Jing, but that's what the Makefile uses. 
+     This should be checked into. -->
+    <property name="jingJar" value="../Test/lib/jing-20120724.0.0.jar"/>
     
 <!-- The jing task requires attributes @rngfile and @file.    -->
     <taskdef name="jing" classpath="${jingJar}" classname="com.thaiopensource.relaxng.util.JingTask"/>
@@ -83,6 +84,11 @@
         test33.json, test34.rnc, test34.json, test34.combined.json, 
         test34.odd.html, test35.rnc"/>
     
+<!--  TEI file that can be converted in a straightforward manner into HTML
+      without special parameters. -->
+    <fileset id="simpleTeiForHtml" dir="${basedir}" includes="test14.xml, test22.xml, test23.xml,
+        test24.xml, test25.xml"/>
+    
 <!--  CSS files that are used in HTML builds. These are symlinked from
       the Stylesheets/ root folder. Not quite sure why yet. -->
     <fileset id="cssFiles" dir="${basedir}/../css" includes="*.css"/>
@@ -105,6 +111,31 @@
             <arg value="rnc"/>
             <arg value="${rngIn}.rng"/>
             <arg value="${rncOut}.rnc"/>
+        </java>
+    </target>
+    
+    <target name="cleanForDiff">
+        <description>
+            TARGET cleanForDiff
+            This target is run on any XML or XHTML(5) output which is going to
+            be compared with an expected result file. It uses cleanForDiff.xsl
+            to:
+            1. Remove all comments (since these often contain dates, versions
+               etc.)
+            2. Normalize Unicode to UTF-8 NFC.
+            3. Check all internal links in HTML files.
+            4. Format and indent.
+            This should cover all the functions of checklinks.xsl, xmllint.
+            and various PERL bits and pieces in the original Test/Makefile.
+            It takes a single input file, inFile.
+        </description>
+        <echo level="info" message="Clean ${inFile} ready for diffing with expected results."/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/cleanForDiff.xsl"/>
+            <arg value="-o:${inFile}"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
         </java>
     </target>
     
@@ -164,30 +195,45 @@
         </foreach>
     </target>
     
-    <target name="testToHtml" depends="symlinkCssFiles">
+    <target name="simpleTeiToHtml" depends="symlinkCssFiles">
         <description>
-            TARGET testToHtml
-            This builds a wide range of different TEI files into HTML output using 
-            varied parameters.
+            TARGET simpleTeiToHtml
+            This passes a set of files (simpleTeiForHtml) to the testFileToHtml
+            target, which then builds them to HTML and diffs them against 
+            expected results.
         </description>
-        <echo message="Building various test files into HTML."/>
+        <foreach target="testFileToHtml" param="inFile">
+            <fileset refid="simpleTeiForHtml"/>
+        </foreach>
+    </target>
+    
+    <target name="testFileToHtml">
+        <description>
+            TARGET testFileToHtml
+            This builds a TEI file into HTML output using standard simple parameters.
+            The results are linted, diffed, and have their internal links checked.
+            It takes a single parameter, inFile.
+        </description>
+        <echo message="Building test file ${inFile} into HTML."/>
+        <propertyregex property="outFile" input="${inFile}" regexp="\.xml$" replace=".html" global="true"/>
         <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
-            <arg value="-s:test.xml"/>
+            <arg value="-s:${inFile}"/>
             <arg value="-xsl:${basedir}/../html/html.xsl"/>
-            <arg value="-o:${basedir}/test.html"/>
-            <arg value="cssFile=../tei.css"/>
+            <arg value="-o:${outFile}"/>
+            <!--<arg value="cssFile=../tei.css"/>-->
             <arg value="useFixedDate=true"/>
             <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
         </java>
         
         <!--  Now format/indent the result with xmllint and diff it.      -->
         <antcall target="lintAndDiffFile">
-            <param name="inFile" value="${basedir}/test.html"/>
+            <param name="inFile" value="${outFile}"/>
         </antcall>
         
         <!--  Finally run the link-checking process on the result. -->
         <antcall target="checkLinks">
-            <param name="inFile" value="${basedir}/test.html"/>
+            <param name="inFile" value="${outFile}"/>
         </antcall>
     </target>
     
