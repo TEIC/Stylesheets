@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="documentation" name="StylesheetsTest">
+<project basedir="." default="documentation" name="StylesheetsTest"
+    xmlns:if="ant:if"
+    xmlns:unless="ant:unless">
 
     <description> 
      Stylesheets/Test/build.xml
@@ -137,8 +139,12 @@
             as a param; ${from} is generated from it.
         </description>
         <propertyregex property="from" input="${to}" regexp="${file.separator}css${file.separator}" replace="${file.separator}" global="true"/>
+        <!--<condition property="linkExists">
+            <available file="${from}"/>
+        </condition>-->
         <exec executable="ln">
             <arg value="-s"/>
+            <arg value="-f"/>
             <arg file="${to}"/>
             <arg file="${from}"/>
         </exec>
@@ -158,10 +164,69 @@
         </foreach>
     </target>
     
+    <target name="testToHtml" depends="symlinkCssFiles">
+        <description>
+            TARGET testToHtml
+            This builds a wide range of different TEI files into HTML output using 
+            varied parameters.
+        </description>
+        <echo message="Building various test files into HTML."/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:test.xml"/>
+            <arg value="-xsl:${basedir}/../html/html.xsl"/>
+            <arg value="-o:${basedir}/test.html"/>
+            <arg value="cssFile=../tei.css"/>
+            <arg value="useFixedDate=true"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+        </java>
+        
+        <!--  Now format/indent the result with xmllint and diff it.      -->
+        <antcall target="lintAndDiffFile">
+            <param name="inFile" value="${basedir}/test.html"/>
+        </antcall>
+        
+        <!--  Finally run the link-checking process on the result. -->
+        <antcall target="checkLinks">
+            <param name="inFile" value="${basedir}/test.html"/>
+        </antcall>
+    </target>
+    
+    <target name="checkLinks">
+        <description>
+            TARGET checkLinks
+            This target runs the checklinks.xsl file against an HTML file to check
+            internal links are correctly configured and consistent. It takes a 
+            single parameter, inFile.
+        </description>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/checklinks.xsl"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+        </java>
+    </target>
+    
 <!--  These targets deal with diffing the results of transformations against
       expected results. The transformation result files are typically in the root 
       Test folder; the files to diff them against are in the Test/expected-results
       folder. -->
+    
+    <target name="lintAndDiffFile">
+        <description>
+            TARGET lintAndDiffFile
+            This target calls the lintFile target followed by the diffFile target
+            to normalize a file then compare it with its expected-results counterpart.
+            it takes a single parameter, inFile.
+        </description>
+        <!--  Format/indent the result with xmllint.      -->
+        <antcall target="lintFormat">
+            <param name="inFile" value="${inFile}"/>
+        </antcall>
+        
+        <!-- Diff the files.       -->
+        <antcall target="diffFile">
+            <param name="inFile" value="${inFile}"/>
+        </antcall>
+    </target>
     
     <target name="diffFile">
         <description>
@@ -245,8 +310,7 @@
 
 <!--  Now format/indent the result with xmllint.      -->
         <antcall target="lintFormat">
-            <param name="inFile" value
-                ="test.rng"/>
+            <param name="inFile" value="test.rng"/>
         </antcall>
         
 <!--  Next, replace the version-specific build comment in the file with a nothing. -->
