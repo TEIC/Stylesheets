@@ -973,15 +973,13 @@ of this software, even if advised of the possibility of such damage.
             <xsl:with-param name="elementName" select="$elementName"/>
           </xsl:call-template>
           <!-- attList -->
-          <xsl:if test="tei:attList">
-            <attList xmlns="http://www.tei-c.org/ns/1.0">
-              <xsl:apply-templates mode="justcopy" select="tei:attList/@org"/>
-              <xsl:call-template name="odd2odd-processAttributes">
-                <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
-                <xsl:with-param name="objectName" select="$elementName"/>
-              </xsl:call-template>
-            </attList>
-          </xsl:if>
+          <attList xmlns="http://www.tei-c.org/ns/1.0">
+            <xsl:apply-templates mode="justcopy" select="tei:attList/@org"/>
+            <xsl:call-template name="odd2odd-processAttributes">
+              <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
+              <xsl:with-param name="objectName" select="$elementName"/>
+            </xsl:call-template>
+          </attList>
           
 
           <!-- models -->
@@ -1226,14 +1224,12 @@ of this software, even if advised of the possibility of such damage.
             <xsl:with-param name="elementName" select="$className"/>
           </xsl:call-template>
           <!-- attList -->
-          <xsl:if test="tei:attList">
-            <attList xmlns="http://www.tei-c.org/ns/1.0">
-              <xsl:call-template name="odd2odd-processAttributes">
-                <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
-                <xsl:with-param name="objectName" select="$className"/>
-              </xsl:call-template>
-            </attList>
-          </xsl:if>
+          <attList xmlns="http://www.tei-c.org/ns/1.0">
+            <xsl:call-template name="odd2odd-processAttributes">
+              <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
+              <xsl:with-param name="objectName" select="$className"/>
+            </xsl:call-template>
+          </attList>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:copy>
@@ -1850,11 +1846,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates mode="justcopy" select="tei:classes"/>
         <xsl:apply-templates mode="odd2odd-copy" select="tei:content"/>
         <xsl:apply-templates mode="odd2odd-copy" select="tei:constraintSpec"/>
-        <xsl:if test="tei:attList">
-          <attList xmlns="http://www.tei-c.org/ns/1.0">
-            <xsl:apply-templates select="tei:attList"/>
-          </attList>
-        </xsl:if>
+        <attList xmlns="http://www.tei-c.org/ns/1.0">
+          <xsl:apply-templates select="tei:attList"/>
+        </attList>
         <xsl:if test="$stripped='false'">
           <xsl:apply-templates mode="justcopy" select="tei:exemplum"/>
           <xsl:apply-templates mode="justcopy" select="tei:remarks"/>
