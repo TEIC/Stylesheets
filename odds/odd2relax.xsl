@@ -404,7 +404,8 @@ of this software, even if advised of the possibility of such damage.
           </choice>
         </zeroOrMore>
       </element>
-      <xsl:if test="@require and ancestor::tei:elementSpec">
+      <xsl:if test="@require and ancestor::tei:elementSpec and
+        not(ancestor::tei:content//tei:elementRef)">
         <xsl:variable name="computed-prefix">
           <xsl:for-each select="in-scope-prefixes($current)">
             <xsl:if test="$spec/@ns = namespace-uri-for-prefix(., $current)">
