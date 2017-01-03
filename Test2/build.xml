@@ -78,7 +78,7 @@
 <!-- Filesets for each set of tests should be declared here. -->
     <fileset id="testOutputRng" dir="${basedir}" includes="test.rng"/>
         
-    <fileset id="singleFilesToDiff" dir="${basedir}" includes="test.rng,
+    <fileset id="generatedFiles" dir="${basedir}" includes="test.rng,
         test.html, test-complex.html, test-ota.html, test.html5,
         test20.html, test5.xhtml, test6.html, test14.html, test22.html, 
         test23.html, test24.html, test25.html, test27.html, test28.html, 
@@ -101,8 +101,11 @@
     
 <!--  TEI file that can be converted in a straightforward manner into HTML
       without special parameters. -->
-    <fileset id="simpleTeiForHtml" dir="${basedir}" includes="test14.xml, test20.xml, test22.xml, test23.xml,
+    <fileset id="simpleTeiForHtmlFiles" dir="${basedir}" includes="test14.xml, test20.xml, test22.xml, test23.xml,
         test24.xml, test25.xml"/>
+    
+<!--  Two cocoa test files which are converted to TEI.  -->
+    <fileset id="cocoaFiles" dir="${basedir}" includes="cocoatest.txt, cocoatest2.txt"/>
     
 <!--  CSS files that are used in HTML builds. These are symlinked from
       the Stylesheets/ root folder. Not quite sure why yet. -->
@@ -217,18 +220,18 @@
     <target name="simpleTeiToHtml" depends="symlinkCssFiles">
         <description>
             TARGET simpleTeiToHtml
-            This passes a set of files (simpleTeiForHtml) to the testFileToHtml
+            This passes a set of files (simpleTeiForHtmlFiles) to the testFileToHtml
             target, which then builds them to HTML and diffs them against 
             expected results.
         </description>
-        <foreach target="testFileToHtml" param="inFile">
+        <foreach target="teiFileToHtml" param="inFile">
             <path>
-                <fileset refid="simpleTeiForHtml"/>
+                <fileset refid="simpleTeiForHtmlFiles"/>
             </path>
         </foreach>
     </target>
     
-    <target name="testFileToHtml">
+    <target name="teiFileToHtml">
         <description>
             TARGET testFileToHtml
             This builds a TEI file into HTML output using standard simple parameters.
@@ -334,7 +337,7 @@
         </description>
         <foreach target="diffFile" param="inFile">
             <path>
-                <fileset refid="singleFilesToDiff"/>                
+                <fileset refid="generatedFiles"/>                
             </path>
         </foreach>
     </target>
@@ -368,6 +371,76 @@
         </antcall>
     </target>
     
+<!-- Markdown tests just run one file in each direction, so 
+     no need for any filesets. -->
+    <target name="markdown">
+        <description>
+            TARGET markdown
+            Converts one file from TEI to Markdown, and one file
+            from Markdown to TEI, then diffs the results against
+            expected results.
+        </description>
+        <echo message="Testing conversion of Markdown to TEI."/>
+        <exec executable="${bin}/markdowntotei" failonerror="true">
+            <arg line="--localsource=${localsource}"/>
+            <arg file="mdtest1.md"/>
+            <arg file="mdtest1.xml"/>
+        </exec>
+        
+        <!--  Now diff.      -->
+        <antcall target="diffFile">
+            <param name="inFile" value="${basedir}/mdtest1.xml"/>
+        </antcall>
+        
+        <echo message="Testing conversion of TEI to Markdown."/>
+        <exec executable="${bin}/teitomarkdown" failonerror="true">
+            <arg line="--localsource=${localsource}"/>
+            <arg file="test.xml"/>
+            <arg file="mdtest2.md"/>
+        </exec>
+        
+        <!--  Now diff.      -->
+        <antcall target="diffFile">
+            <param name="inFile" value="${basedir}/mdtest1.xml"/>
+        </antcall>
+    </target>
+    
+<!-- Cocoa tests go in only one direction, cocoa to TEI, and there
+     are only two test files. . -->
+    <target name="cocoaFile">
+        <description>
+            TARGET cocoaFile
+            Converts a single cocoa file to TEI and then diffs 
+            the result against expected results. Takes on param,
+            inFile.
+        </description>
+        <echo message="Converting ${inFile} from cocoa to TEI."/>
+        <propertyregex property="outFile" input="${inFile}" regexp="\.txt$" replace=".xml" global="true"/>
+        <exec executable="${bin}/cocoatotei" failonerror="true">
+            <arg line="--localsource=${localsource}"/>
+            <arg file="${inFile}"/>
+            <arg file="${outFile}"/>
+        </exec>
+        
+        <!--  Now diff.      -->
+        <antcall target="diffFile">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+    </target>
+    
+    <target name="cocoa">
+        <description>
+            TARGET cocoa
+            Converts two files from cocoa to TEI, then diffs the 
+            results against expected results.
+        </description>
+        <foreach target="cocoaFile" param="inFile">
+            <path>
+                <fileset refid="cocoaFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
 <!--  Cleanup target, removing all files created.  -->
     <target name="clean">
         <description>
@@ -377,6 +450,7 @@
         <delete>
             <!--<fileset refid="singleFilesToDiff"/>-->
             <fileset refid="symlinksToCssFiles"/>
+            <fileset refid="generatedFiles"/>
         </delete>
     </target>
     
@@ -389,6 +463,8 @@
         
         <antcall target="oddToRng"/>
         <antcall target="simpleTeiToHtml"/>
+        <antcall target="markdown"/>
+        <antcall target="cocoa"/>
     </target>
     
     <target name="documentation">
