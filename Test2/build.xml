@@ -107,6 +107,9 @@
 <!--  Two cocoa test files which are converted to TEI.  -->
     <fileset id="cocoaFiles" dir="${basedir}" includes="cocoatest.txt, cocoatest2.txt"/>
     
+<!--  TEI files which are converted to XSL:FO.  -->
+    <fileset id="foFiles" dir="${basedir}" includes="test.xml, test5.xml, test24.xml, test25.xml, test27.xml"/>
+    
 <!--  CSS files that are used in HTML builds. These are symlinked from
       the Stylesheets/ root folder. Not quite sure why yet. -->
     <fileset id="cssFiles" dir="${basedir}/../css" includes="*.css"/>
@@ -411,7 +414,7 @@
         <description>
             TARGET cocoaFile
             Converts a single cocoa file to TEI and then diffs 
-            the result against expected results. Takes on param,
+            the result against expected results. Takes one param,
             inFile.
         </description>
         <echo message="Converting ${inFile} from cocoa to TEI."/>
@@ -437,6 +440,48 @@
         <foreach target="cocoaFile" param="inFile">
             <path>
                 <fileset refid="cocoaFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
+<!-- XSL:FO tests go in only one direction, TEI to FO, and the
+        results are not only diffed but validated against fo.xsd. -->
+    <target name="foFile">
+        <description>
+            TARGET foFile
+            Converts a single TEI file to fo, validates the result
+            against the fo.xsd with Jing, and then diffs it against 
+            expected results. Takes one param, inFile.
+        </description>
+        <echo message="Converting ${inFile} from TEI to XSL:FO."/>
+        <propertyregex property="outFile" input="${inFile}" regexp="\.xml" replace=".fo" global="true"/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/../fo/fo.xsl"/>
+            <arg value="-o:${outFile}"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
+        </java>
+        
+        <!--  Validate with Jing.      -->
+        <jing rngfile="fo.xsd" file="${outFile}"/>
+        
+        <!--  Now diff.      -->
+        <antcall target="diffFile">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+    </target>
+    
+    <target name="fo">
+        <description>
+            TARGET fo
+            Converts several TEI files to XSL:FO, validates the results
+            against fo.xsd with Jing, and diffs them against expected 
+            results.
+        </description>
+        <foreach target="foFile" param="inFile">
+            <path>
+                <fileset refid="foFiles"/>
             </path>
         </foreach>
     </target>
