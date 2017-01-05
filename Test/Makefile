@@ -215,9 +215,11 @@ test-fo:
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test24.fo expected-results/test24.fo; fi
 	$(SAXON) -o:test25.fo test25.xml ../fo/fo.xsl $(SAXONOPT)
+	$(JING) fo.xsd test25.fo
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test25.fo expected-results/test25.fo; fi
 	$(SAXON) test27.xml ../fo/fo.xsl $(SAXONOPT) | xmllint --format - > test27.fo
+	$(JING) fo.xsd test27.fo
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test27.fo expected-results/test27.fo; fi
 
