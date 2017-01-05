@@ -108,7 +108,7 @@
     <fileset id="cocoaFiles" dir="${basedir}" includes="cocoatest.txt, cocoatest2.txt"/>
     
 <!--  TEI files which are converted to XSL:FO.  -->
-    <fileset id="foFiles" dir="${basedir}" includes="test.xml, test5.xml, test24.xml, test25.xml, test27.xml"/>
+    <fileset id="foFiles" dir="${basedir}" includes="test.xml, test5.xml, test24.xml, test25.xml, test27.xml, testnotes1.xml"/>
     
 <!--  CSS files that are used in HTML builds. These are symlinked from
       the Stylesheets/ root folder. Not quite sure why yet. -->
@@ -379,8 +379,8 @@
     <target name="markdown">
         <description>
             TARGET markdown
-            Converts one file from TEI to Markdown, and one file
-            from Markdown to TEI, then diffs the results against
+            Converts one file from Markdown to TEI, and one file
+            from TEI to Markdown, then diffs the results against
             expected results.
         </description>
         <echo message="Testing conversion of Markdown to TEI."/>
@@ -466,8 +466,11 @@
         <!--  Validate with Jing.      -->
         <jing rngfile="fo.xsd" file="${outFile}"/>
         
-        <!--  Now diff.      -->
-        <antcall target="diffFile">
+        <!--  Now format and diff. Note that in the original Makefile, only some
+        files are linted before diffing; no apparent reason why some are and some
+        aren't. We choose to do all of them because it makes interpreting diff 
+        errors much simpler. -->
+        <antcall target="prepAndDiffFile">
             <param name="inFile" value="${outFile}"/>
         </antcall>
     </target>
