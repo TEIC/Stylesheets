@@ -508,11 +508,11 @@
             This target runs all build and check processes. Use this target
             for a full run of tests. IT'S NOT COMPLETE BY A LONG WAY.
         </description>
-        
         <antcall target="oddToRng"/>
         <antcall target="simpleTeiToHtml"/>
         <antcall target="markdown"/>
         <antcall target="cocoa"/>
+        <antcall target="fo"/>
     </target>
     
     <target name="documentation">
