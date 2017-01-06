@@ -97,7 +97,7 @@
         test30.dtd, test-pure.rnc, test-pure.dtd, test-pure.odd.html, 
         test-pure2.rnc, test-pure2.dtd, test-pure2.odd.html, test33.rnc, 
         test33.json, test34.rnc, test34.json, test34.combined.json, 
-        test34.odd.html, test35.rnc"/>
+        test34.odd.html, test35.rnc, dcr.tmp, xml.tmp"/>
     
 <!--  TEI file that can be converted in a straightforward manner into HTML
       without special parameters. -->
@@ -331,7 +331,6 @@
                 <fail message="Build failed because of differences between  ${inFile} and ${otherFile}. See diff output above."/>
             </catch>
         </trycatch>
-        
     </target>
     
     <target name="diffFileSets">
