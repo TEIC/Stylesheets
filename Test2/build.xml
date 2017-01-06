@@ -110,6 +110,9 @@
 <!--  TEI files which are converted to XSL:FO.  -->
     <fileset id="foFiles" dir="${basedir}" includes="test.xml, test5.xml, test24.xml, test25.xml, test27.xml, testnotes1.xml"/>
     
+<!--  Files for conversion to RDF.  -->
+    <fileset id="rdfFiles" dir="${basedir}" includes="test12.xml"/>
+    
 <!--  CSS files that are used in HTML builds. These are symlinked from
       the Stylesheets/ root folder. Not quite sure why yet. -->
     <fileset id="cssFiles" dir="${basedir}/../css" includes="*.css"/>
@@ -489,6 +492,41 @@
         </foreach>
     </target>
     
+    <target name="rdfFile">
+        <description>
+            TARGET rdfFile
+            Converts a single TEI file to rdf then diffs it against 
+            expected results. Takes one param, inFile.
+        </description>
+        <echo message="Converting ${inFile} from TEI to RDF."/>
+        <propertyregex property="outFile" input="${inFile}" regexp="\.xml" replace=".rdf" global="true"/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/../profiles/default/rdf/to.xsl"/>
+            <arg value="-o:${outFile}"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
+        </java>
+        
+        
+        <antcall target="prepAndDiffFile">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+    </target>
+    
+    <target name="rdf">
+        <description>
+            TARGET rdf
+            Converts TEI files to XSL:FO, and diffs them against expected 
+            results.
+        </description>
+        <foreach target="rdfFile" param="inFile">
+            <path>
+                <fileset refid="rdfFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
 <!--  Cleanup target, removing all files created.  -->
     <target name="clean">
         <description>
@@ -513,6 +551,7 @@
         <antcall target="markdown"/>
         <antcall target="cocoa"/>
         <antcall target="fo"/>
+        <antcall target="rdf"/>
     </target>
     
     <target name="documentation">
