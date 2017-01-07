@@ -398,6 +398,24 @@ test-oddity: css
 		then diff  test30.rnc expected-results/test30.rnc; fi
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test30.dtd expected-results/test30.dtd; fi
+# MDH 2017-01-07: THE FOLLOWING LINES WILL integrate LB's new pure ODD 
+# master test to replace originals, BUT ONLY WHEN THINGS ARE WORKING PROPERLY.
+# Generate DTD from ODD.
+#	$(BINDIR)/teitodtd $(FLAG) testODD.odd testODD.dtd
+# Generate RNC from the same file.
+#	$(BINDIR)/teitornc $(FLAG) testODD.odd testODD.rnc
+# Trim all sorts of piffle out of the DTD and RNC before we compare them with the expected results.
+#	perl -p -i -e 's/generated from ODD source .*//' testODD.dtd
+#	perl -i -pe 'BEGIN{undef $$/;} s/<!--\nDTD[^>]*-->\n//smg' testODD.dtd
+#	perl -p -i -e 's/generated from ODD source .*//' testODD.rnc
+#	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' testODD.rnc
+# diff against expected results.
+#	if [ $(REGENERATING) -ne 1 ]; \
+#		then diff  testODD.dtd expected-results/testODD.dtd; fi
+#	if [ $(REGENERATING) -ne 1 ]; \
+#		then diff  testODD.rnc expected-results/testODD.rnc; fi
+# NOTE: THERE SHOULD BE VALIDATION OF AN INSTANCE FILE AGAINST THE DTD HERE.	
+# OLD ORIGINAL CODE STILL BEING USED FOR THE MOMENT.
 	$(BINDIR)/teitodtd $(FLAG) test-pure.odd test-pure.dtd
 	$(BINDIR)/teitornc $(FLAG) test-pure.odd test-pure.rnc
 	xmllint --noout --dtdvalid test-pure.dtd test-pure.xml
