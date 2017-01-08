@@ -404,8 +404,9 @@ of this software, even if advised of the possibility of such damage.
           </choice>
         </zeroOrMore>
       </element>
-      <xsl:if test="@require and ancestor::tei:elementSpec and
-        not(ancestor::tei:content//tei:elementRef)">
+      <xsl:if test="@require and ancestor::tei:elementSpec">
+        <xsl:variable name="ns"><xsl:if
+          test="ancestor::tei:content//tei:*">, 'http://www.tei-c.org/ns/1.0'</xsl:if></xsl:variable>
         <xsl:variable name="computed-prefix">
           <xsl:for-each select="in-scope-prefixes($current)">
             <xsl:if test="$spec/@ns = namespace-uri-for-prefix(., $current)">
@@ -422,8 +423,12 @@ of this software, even if advised of the possibility of such damage.
         <xsl:if test="$spec/@ns"><ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="{$prefix}" uri="{ancestor::tei:elementSpec/@ns}"/></xsl:if>
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="{concat(generate-id(),'-constraint')}">
           <rule context="{$prefix}:{ancestor::tei:elementSpec/@ident}">
-            <report test="descendant::*[not(namespace-uri(.) = ({concat($apos,string-join(tokenize(current()/@require, ' '),concat($apos,', ',$apos)),$apos)}))]">
-              <xsl:value-of select="ancestor::tei:elementSpec/@ident"/> content must be in the namespace<xsl:if test="contains(@include, ' ')">s</xsl:if><xsl:text> </xsl:text><xsl:value-of select="concat($apos,string-join(tokenize(current()/@include, ' '),concat($apos,', ',$apos)),$apos)"/></report>
+            <report test="descendant::*[not(namespace-uri(.) =
+              ({concat($apos,string-join(tokenize(current()/@require, ' '),concat($apos,', ',$apos)),$apos,$ns)}))]">
+              <xsl:value-of select="ancestor::tei:elementSpec/@ident"/> descendants must be in the
+              namespace<xsl:if test="contains(@require, ' ') or $ns ne ''">s</xsl:if><xsl:text>
+              </xsl:text><xsl:value-of select="concat($apos,string-join(tokenize(current()/@require,
+                ' '),concat($apos,', ',$apos)),$apos,$ns)"/></report>
           </rule>
         </pattern>
       </xsl:if>
