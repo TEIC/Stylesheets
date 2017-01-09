@@ -559,8 +559,8 @@ clean:
 	rm -f cocoatest*.xml
 
 oddtree:
-	saxon /usr/share/xml/tei/odd/p5subset.xml odd-to-tree.xsl  > oddtree.xml
-	teitohtml --profile=oxford oddtree.xml oddtree.html
+	$(SAXON) -s:http://www.tei-c.org/release/xml/tei/odd/p5subset.xml -xsl:../tools/odd-to-tree.xsl -o:oddtree.xml
+	../bin/teitohtml --profile=oxford oddtree.xml oddtree.html
 
 regenerate:
 	mkdir new-expected-results
