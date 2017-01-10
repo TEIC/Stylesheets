@@ -202,9 +202,9 @@ of this software, even if advised of the possibility of such damage.
     
     <xsl:template name="makeWithLabel">
       <xsl:param name="before"/>
-      <i>
+      <inline font-style="italic">
          <xsl:value-of select="$before"/>
-      </i>
+      </inline>
       <xsl:text>: </xsl:text>
       <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>

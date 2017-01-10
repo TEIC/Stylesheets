@@ -132,10 +132,16 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
-<!--  We want to make sure that there is both target and content
+<!--   We want to make sure that there is both target and content
        before making a link. Otherwise something has gone wrong, and
-       we should just add a comment instead. -->
+       we should just add a comment instead. 
+       We also want to check that the target actually exists, otherwise
+       there's no point in creating the link.
+     -->
       <xsl:choose>
+         <xsl:when test="string-length(normalize-space($W)) gt 0 and not(id($W))">
+            <xsl:sequence select="$content"/>
+         </xsl:when>
          <xsl:when test="string-length(normalize-space($W)) gt 0 and string-length(normalize-space($content)) gt 0">
             <basic-link internal-destination="{$W}">
                <xsl:call-template name="linkStyle"/>
