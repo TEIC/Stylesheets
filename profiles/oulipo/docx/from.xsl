@@ -20,12 +20,15 @@
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 version="2.0"
-                exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx pic rel a         tei teidocx xs iso">
-    <!-- import base conversion style -->
-
-
+                
+                exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx pic rel a tei teidocx xs iso">
+   
+  
+  <!-- import base conversion style -->
     <xsl:import href="../../default/docx/from.xsl"/>
-    <xsl:import href="../from_common.xsl"/>
+  <xsl:output  omit-xml-declaration="yes"/>  
+  
+    <!--xsl:import href="../from_common.xsl"/-->
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p>This software is dual-licensed:
@@ -66,8 +69,87 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
 
-  <xsl:template match="tei:appInfo" mode="pass2"/>
-  <xsl:template match="tei:encodingDesc" mode="pass2"/>
+<xsl:template match="w:r/w:tab">
+  <xsl:element name="space">
+    <xsl:attribute name="rend">
+    <xsl:text>in</xsl:text>  
+     <xsl:value-of select="preceding::w:tabs[1]/w:tab[@w:val='left'][1]/@w:pos"/>
+    </xsl:attribute>
+  </xsl:element>
+</xsl:template>
+  
+   <xsl:template match="tei:p[not(.//tei:pb) and       normalize-space(.)='']" mode="pass2"		priority="100">
+    <space/>
+  </xsl:template>
+  
+  <xsl:param name="fileName" as="text()">xxxx</xsl:param>
+
+  <xsl:template match="@rend[.='Body Text']" mode="pass2"/>
+  <xsl:template match="@rend[.='Body Text 2']" mode="pass2"/>
+  <xsl:template match="@rend[.='Body Text 3']" mode="pass2"/>
+  <xsl:template match="@rend[.='Text Body']" mode="pass2"/>
+  <xsl:template match="@rend[.='Text body']" mode="pass2"/>
+  <xsl:template match="@rend[.='Body Text Indent']" mode="pass2"/>
+  
+
+<xsl:template match="tei:teiHeader" mode="pass2"/>
+  
+<xsl:template match="tei:body" mode="pass2">
+  <xsl:element name="div">
+ <!--   <xsl:attribute name="n">
+      <xsl:value-of select="document-uri(/)"/>  
+      <xsl:value-of select="$fileName"/>
+    </xsl:attribute>
+    -->
+    <xsl:attribute name="type">page</xsl:attribute>
+    <xsl:element name="pb">
+      <xsl:attribute name="n">
+        <xsl:value-of select="$fileName"
+        />
+      </xsl:attribute>
+      <xsl:attribute name="facs">
+        <xsl:value-of
+          select="concat('../../Doucet-MS1-Photos/ms1-', $fileName, '.JPG')"
+        />
+      </xsl:attribute>
+    </xsl:element>
+     <xsl:apply-templates mode="pass2"/>
+  </xsl:element> 
+</xsl:template>
+ 
+  
+  <xsl:template match="tei:note" mode="pass2">
+    <xsl:comment>
+        <xsl:value-of select="."/>
+    </xsl:comment>
+  </xsl:template>
+  
+  <xsl:template match="tei:p"  mode="pass2">
+    <l>
+      <xsl:apply-templates mode="pass2"/>
+    </l>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend = 'strikethrough']"  mode="pass2">
+    <del>
+      <xsl:apply-templates mode="pass2"/>
+    </del>
+  </xsl:template>
+  
+  <xsl:template match="tei:hi[@rend = 'underline']"  mode="pass2">
+    <hi rend="ul">
+      <xsl:apply-templates mode="pass2"/>
+    </hi>
+  </xsl:template>
+  <xsl:template match="tei:text" mode="pass2">
+    <xsl:apply-templates  mode="pass2"/>
+  </xsl:template>
+  
+  <xsl:template match="tei:TEI" mode="pass2">
+    <xsl:apply-templates  mode="pass2"/>
+  </xsl:template>
+  
+  <!-- <xsl:template match="tei:encodingDesc" mode="pass2"/>
   <xsl:template match="tei:editionStmt" mode="pass2"/>
 
  <xsl:template match="tei:TEI" mode="pass2">
@@ -78,6 +160,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:variable>
   <xsl:apply-templates select="$Doctext" mode="pass3"/>
  </xsl:template>
-
+-->
 </xsl:stylesheet>
   
