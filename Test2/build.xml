@@ -538,7 +538,7 @@
         <property name="fopDist" value="http://apache.mirror.iweb.ca/xmlgraphics/fop/binaries/fop-2.1-bin.zip"/>
         <property name="fopDest" value="${basedir}/../lib"/>
         <available property="fopAvailable" file="${basedir}/../lib/fop-2.1/build/fop.jar"/>
-        <echo unless:false="${fopAvailable}" message="Local copy of FOP 2.1 already exists, so no need to download it."/>
+        <echo if:true="${fopAvailable}" message="Local copy of FOP 2.1 already exists, so no need to download it."/>
         <echo unless:true="${fopAvailable}" message="Downloading FOP 2.1 to test creation of PDFs."/>
         <get unless:true="${fopAvailable}" src="${fopDist}" 
              dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
