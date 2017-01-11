@@ -526,6 +526,25 @@
         </foreach>
     </target>
     
+<!--  We want to test FOP, but probably avoid exploding our repo,
+      so we download it. This is hard-coded FOP 2.1. -->
+    <target name="getFop">
+        <description>
+            TARGET getFop
+            Checks whether the FOP jars are available, and if not, 
+            downloads a binary distribution and unzips it into the 
+            ../lib folder.
+        </description>
+        <property name="fopDist" value="http://apache.mirror.iweb.ca/xmlgraphics/fop/binaries/fop-2.1-bin.zip"/>
+        <property name="fopDest" value="${basedir}/../lib"/>
+        <available property="fopAvailable" file="${basedir}/../lib/fop-2.1/build/fop.jar"/>
+        <echo unless:false="${fopAvailable}" message="Local copy of FOP 2.1 already exists, so no need to download it."/>
+        <echo unless:true="${fopAvailable}" message="Downloading FOP 2.1 to test creation of PDFs."/>
+        <get unless:true="${fopAvailable}" src="${fopDist}" 
+             dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
+        <unzip unless:true="${fopAvailable}" src="${fopDest}/fop-2.1-bin.zip" dest="${fopDest}" failonemptyarchive="true"/>
+    </target>
+    
 <!--  Cleanup target, removing all files created.  -->
     <target name="clean">
         <description>
