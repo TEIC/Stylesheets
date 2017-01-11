@@ -75,6 +75,12 @@
 <!-- The jing task requires attributes @rngfile and @file.    -->
     <taskdef name="jing" classpath="${jingJar}" classname="com.thaiopensource.relaxng.util.JingTask"/>
     
+<!-- Properties for downloading, unzipping and using FOP 2.1 dist, used in creating PDFs from XSL:FO. -->
+    <property name="fopDist" value="http://apache.mirror.iweb.ca/xmlgraphics/fop/binaries/fop-2.1-bin.zip"/>
+    <property name="fopDest" value="${basedir}/../lib"/>
+    <property name="fopHome" value="${basedir}/../lib/fop-2.1"/>
+    <property name="fopHyphDist" value="http://downloads.sourceforge.net/project/offo/offo-hyphenation/2.1/offo-hyphenation-binary.zip"/>
+    
 <!-- Filesets for each set of tests should be declared here. -->
     <fileset id="testOutputRng" dir="${basedir}" includes="test.rng"/>
         
@@ -447,13 +453,16 @@
     </target>
     
 <!-- XSL:FO tests go in only one direction, TEI to FO, and the
-        results are not only diffed but validated against fo.xsd. -->
+        results are not only diffed but validated against fo.xsd.
+        By default, we assume that the transformer target is 
+        FOP. -->
     <target name="foFile">
         <description>
             TARGET foFile
             Converts a single TEI file to fo, validates the result
             against the fo.xsd with Jing, and then diffs it against 
-            expected results. Takes one param, inFile.
+            expected results. By default, we assume FOP is the 
+            target transformer for the FO. Takes one param, inFile.
         </description>
         <echo message="Converting ${inFile} from TEI to XSL:FO."/>
         <propertyregex property="outFile" input="${inFile}" regexp="\.xml" replace=".fo" global="true"/>
@@ -463,6 +472,7 @@
             <arg value="-o:${outFile}"/>
             <arg value="--suppressXsltNamespaceCheck:on"/>
             <arg value="-versionmsg:off"/>
+            <arg value="foEngine=fop"/>
         </java>
         
         <!--  Validate with Jing.      -->
@@ -475,6 +485,41 @@
         <antcall target="prepAndDiffFile">
             <param name="inFile" value="${outFile}"/>
         </antcall>
+        
+        <!-- Now build the actual PDF, if set in the root properties. -->
+    </target>
+    
+    <target name="foToPdf" depends="getFop">
+        <description>
+            TARGET foToPDF
+            This target depends on getFop, which downloads a copy of FOP
+            if it's not yet there. Then it compiles an FO file to PDF
+            using FOP. Takes one param, inFile.
+        </description>
+        
+        <propertyregex property="outFile" input="${inFile}" regexp="\.fo$" replace=".pdf" global="true"/>
+        <echo message="Converting ${inFile} from XSL:FO to ${outFile}."/>
+        
+        <!-- This taskdef configured per instructions at 
+            https://xmlgraphics.apache.org/fop/2.1/anttask.html. -->
+        <taskdef name="fop"
+            classname="org.apache.fop.tools.anttasks.Fop"
+            onerror="fail">
+            <classpath>
+                <fileset dir="${fopHome}/lib">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${fopHome}/build">
+                    <include name="fop.jar"/>
+                    <include name="fop-hyph.jar" />
+                </fileset>
+            </classpath>
+        </taskdef>
+        
+        <fop format="application/pdf"
+            fofile="${inFile}"
+            outfile="${outFile}" />
+        
     </target>
     
     <target name="fo">
@@ -533,16 +578,28 @@
             TARGET getFop
             Checks whether the FOP jars are available, and if not, 
             downloads a binary distribution and unzips it into the 
-            ../lib folder.
+            ../lib folder. Then it gets a hyphenation file from a
+            separate open-source project if that jar is not yet
+            available.
         </description>
-        <property name="fopDist" value="http://apache.mirror.iweb.ca/xmlgraphics/fop/binaries/fop-2.1-bin.zip"/>
-        <property name="fopDest" value="${basedir}/../lib"/>
-        <available property="fopAvailable" file="${basedir}/../lib/fop-2.1/build/fop.jar"/>
+        <echo message="Checking whether a local copy of FOP 2.1 exists."/>
+        <available property="fopAvailable" file="${fopHome}/build/fop.jar"/>
         <echo if:true="${fopAvailable}" message="Local copy of FOP 2.1 already exists, so no need to download it."/>
         <echo unless:true="${fopAvailable}" message="Downloading FOP 2.1 to test creation of PDFs."/>
         <get unless:true="${fopAvailable}" src="${fopDist}" 
              dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
         <unzip unless:true="${fopAvailable}" src="${fopDest}/fop-2.1-bin.zip" dest="${fopDest}" failonemptyarchive="true"/>
+        <delete file="${fopDest}/fop-2.1-bin.zip"/>
+        <echo message="Checking whether a hyphenation file exists for FOP."/>
+        <available property="fopHyphAvailable" file="${fopHome}/build/fop-hyph.jar"/>
+        <echo if:true="${fopHyphAvailable}" message="Local copy of FOP hyphenation jar already exists, so no need to download it."/>
+        <echo unless:true="${fopHyphAvailable}" message="Downloading FOP hyphenation jar."/>
+        <get unless:true="${fopHyphAvailable}" src="${fopHyphDist}" 
+            dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
+        <unzip unless:true="${fopHyphAvailable}" src="${fopDest}/offo-hyphenation-binary.zip" dest="${fopDest}" failonemptyarchive="true"/>
+        <copy unless:true="${fopHyphAvailable}" file="${fopDest}/offo-hyphenation-binary/fop-hyph.jar" todir="${fopHome}/build"/>
+        <delete file="${fopDest}/offo-hyphenation-binary.zip"/>
+        <delete dir="${fopDest}/offo-hyphenation-binary"/>
     </target>
     
 <!--  Cleanup target, removing all files created.  -->
