@@ -59,9 +59,9 @@
 <!-- We can control where the source of the TEI Guidelines is. This is the 
      path to [a directory containing] p5subset.xml. If not supplied, most 
      scripts default to using the current version from the tei-c.org Vault. 
-     Note: passing the full path to p5subset.xml, including the file name,
-     appears to work, but passing only the directory fails. This is contrary
-     to current Stylesheets documentation.
+     Only a local path (fully expanded) can be supplied, so we can't point
+     to the Jenkins server (for instance), although we might choose to download
+     the latest dev Jenkins build of p5subset.xml to a local folder.
     -->
     <property name="localsource" value=""/>
         
