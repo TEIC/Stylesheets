@@ -62,6 +62,8 @@
      Only a local path (fully expanded) can be supplied, so we can't point
      to the Jenkins server (for instance), although we might choose to download
      the latest dev Jenkins build of p5subset.xml to a local folder.
+     Passing -Dlocalsource=DIR fails, but -Dlocalsource=DIR/p5subset.xml works 
+     for some reason.
     -->
     <property name="localsource" value=""/>
         
