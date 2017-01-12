@@ -343,11 +343,6 @@ tables in document</desc>
    </doc>
   <xsl:param name="twoSided">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
-      <desc>Language (for hyphenation)
-</desc>
-   </doc>
-  <xsl:param name="language">en_US</xsl:param>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
       <desc>
          <p>Name of intended XSL FO engine</p>
          <p>This is used to tailor the result for different XSL FO processors.
@@ -362,7 +357,15 @@ there are no bookmarks or other such features. Possible values are
          </p>
       </desc>
    </doc>
-  <xsl:param name="foEngine"/>
+   <xsl:param name="foEngine"/>
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
+        <desc>Language (for hyphenation). The default here depends on foEngine,
+            because FOP will not recognize the original default en_US, which is 
+            invalid, but presumably that was there because of some other processor
+            expectations.
+        </desc>
+    </doc>
+    <xsl:param name="language" select="if ($foEngine = 'fop') then 'en' else 'en_US'"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="boolean">
       <desc>Make &lt;lb&gt; active (ie cause a line break)
 </desc>
