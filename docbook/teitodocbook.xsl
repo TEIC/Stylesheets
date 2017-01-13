@@ -5,6 +5,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:mml="http://www.w3.org/1998/Math/MathML"
     exclude-result-prefixes="#all"
     version="2.0">
 <xsl:import href="../common/verbatim.xsl"/>
@@ -332,6 +333,16 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="@*|*|text()|comment()"/>
   </caption>
 </xsl:template>
+  
+<xsl:template match="formula">
+  <equation>
+    <xsl:apply-templates select="@*|node()"/>
+  </equation>
+</xsl:template>
+  
+  <xsl:template match="formula/mml:math">
+    <xsl:copy-of select="."/>
+  </xsl:template>
 
 <xsl:template match="note[@place='foot']">
   <footnote>
