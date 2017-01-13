@@ -308,7 +308,7 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template match="ref">
-  <link linkend="#{@target}">
+  <link linkend="{substring-after(@target, '#')}">
     <xsl:apply-templates select="@*|*|text()|comment()"/>
   </link>
 </xsl:template>
@@ -316,7 +316,7 @@ of this software, even if advised of the possibility of such damage.
 <xsl:template match="ptr">
   <xsl:choose>
     <xsl:when test="starts-with(@target,'#')">
-      <xref linkend="{@target}"/>
+      <xref linkend="{substring-after(@target, '#')}"/>
     </xsl:when>
     <xsl:otherwise>
       <link xlink:href="{@target}">
