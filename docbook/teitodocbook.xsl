@@ -93,8 +93,14 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:apply-templates select="@*|*|text()|comment()"/>
       </abstract>
     </xsl:for-each>
+<!--  Front matter from text/front can only really be 
+      handled here. -->
+    <xsl:apply-templates select="following-sibling::text/front/docAuthor"/>
+    <xsl:apply-templates select="following-sibling::text/front/docDate"/>
   </info>
 </xsl:template>
+  
+  <xsl:template match="text/front"/>
 
 <xsl:template match="persName">
   <personname>
@@ -116,7 +122,7 @@ of this software, even if advised of the possibility of such damage.
   </affiliation>
 </xsl:template>
 
-<xsl:template match="author">
+<xsl:template match="author | docAuthor">
   <author>
       <xsl:choose>
 	<xsl:when test="*">
@@ -135,6 +141,12 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </author>
 </xsl:template>
+  
+  <xsl:template match="date | docDate">
+    <date>
+      <xsl:apply-templates select="@*|node()"/>
+    </date>
+  </xsl:template>
 
 <xsl:template match="q|quote|said">
   <xsl:element name="{if (tei:match(@rend,'block')) then 'blockquote' else 'quote'}">
