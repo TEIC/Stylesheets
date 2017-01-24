@@ -50,11 +50,20 @@
         <text xml:lang="nl">Sleutelbegrippen</text>
         <text xml:lang="pt">Palavras Chaves</text>
       </entry>
+      <entry xml:id="appendixes-label">
+        <text xml:lang="de">Anhänge</text>
+        <text xml:lang="en">Appendixes</text>
+        <text xml:lang="es">Apéndices</text>
+        <text xml:lang="fr">Annexes</text>
+        <text xml:lang="it">Appendices</text>        
+        <text xml:lang="nl">Appendices</text>
+        <text xml:lang="pt">Apêndices</text>
+      </entry>
       <entry xml:id="appendix-label">
         <text xml:lang="de">Anhang</text>
-        <text xml:lang="en">Appendixes</text>
+        <text xml:lang="en">Appendix</text>
         <text xml:lang="es">Apéndice</text>
-        <text xml:lang="fr">Annexes</text>
+        <text xml:lang="fr">Annexe</text>
         <text xml:lang="it">Appendice</text>        
         <text xml:lang="nl">Appendix</text>
         <text xml:lang="pt">Apêndice</text>

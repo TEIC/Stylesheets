@@ -1002,7 +1002,7 @@
     <xsl:if test=".//tei:back/tei:div[@type='appendix']">
       <fo:block xsl:use-attribute-sets="back.font.properties">
         <fo:block xsl:use-attribute-sets="heading.properties">
-          <xsl:value-of select="i18n:key(concat(@type, '-label'))"/>
+          <xsl:value-of select="i18n:key('appendixes-label')"/>
         </fo:block>
         <xsl:apply-templates select=".//tei:back/tei:div[@type='appendix']"/>
       </fo:block>
