@@ -53,6 +53,9 @@
      expected results en masse. -->
     <property name="regenerate" value=""/>
     
+    <!-- Whether or not to build all FO files generated into PDFs with FOP.   -->
+    <property name="buildFoToPdf" value="true"/>
+    
 <!-- Location of transformtei script and its symlinked callers.   -->
     <property name="bin" value="../bin"/>
     
@@ -66,7 +69,7 @@
      for some reason.
     -->
     <property name="localsource" value=""/>
-        
+    
 <!-- Java tools we need.    -->
     <property name="saxonJar" value="../lib/saxon9he.jar"/>
     <property name="trangJar" value="../lib/trang.jar"/>
@@ -93,8 +96,7 @@
         test31.html, test32.html, test38.xml, mdtest1.xml, mdtest2.md, 
         cocoatest.xml, cocoatest2.xml, test17.tei, A54031.xml, test.tex, 
         testnotes1.tex, test5.tex, test6.tex, test20.tex, test23.tex, 
-        test24.tex, test25.tex, test27.tex, test.fo, test5.fo, testnotes1.fo, 
-        test24.fo, test25.fo, test27.fo, test.epub.listing, test.epub.listing2, 
+        test24.tex, test25.tex, test27.tex, *.fo, test.epub.listing, test.epub.listing2, 
         test12.rdf, test.text, test.xlsx.xml, test.xml.odt.listing, 
         content.xml.odt.listing, test7.xml, test-indexes.xml, test11.xml, 
         test11a.xml, test19.xml, test18.xml, test39.xml, test-rtf2tei.xml, 
@@ -105,7 +107,7 @@
         test30.dtd, test-pure.rnc, test-pure.dtd, test-pure.odd.html, 
         test-pure2.rnc, test-pure2.dtd, test-pure2.odd.html, test33.rnc, 
         test33.json, test34.rnc, test34.json, test34.combined.json, 
-        test34.odd.html, test35.rnc, dcr.tmp, xml.tmp"/>
+        test34.odd.html, test35.rnc, dcr.tmp, xml.tmp, *.pdf"/>
     
 <!--  TEI file that can be converted in a straightforward manner into HTML
       without special parameters. -->
@@ -116,7 +118,8 @@
     <fileset id="cocoaFiles" dir="${basedir}" includes="cocoatest.txt, cocoatest2.txt"/>
     
 <!--  TEI files which are converted to XSL:FO.  -->
-    <fileset id="foFiles" dir="${basedir}" includes="test.xml, test5.xml, test24.xml, test25.xml, test27.xml, testnotes1.xml"/>
+    <fileset id="foFiles" dir="${basedir}" includes="test.xml, test5.xml, test24.xml, test25.xml, 
+        test27.xml, testnotes1.xml"/>
     
 <!--  Files for conversion to RDF.  -->
     <fileset id="rdfFiles" dir="${basedir}" includes="test12.xml"/>
@@ -489,6 +492,9 @@
         </antcall>
         
         <!-- Now build the actual PDF, if set in the root properties. -->
+        <antcall target="foToPdf" if:true="${buildFoToPdf}">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
     </target>
     
     <target name="foToPdf" depends="getFop">
@@ -499,8 +505,8 @@
             using FOP. Takes one param, inFile.
         </description>
         
-        <propertyregex property="outFile" input="${inFile}" regexp="\.fo$" replace=".pdf" global="true"/>
-        <echo message="Converting ${inFile} from XSL:FO to ${outFile}."/>
+        <propertyregex property="pdfFile" input="${inFile}" regexp="\.fo" replace=".pdf" global="true"/>
+        <echo message="Converting ${inFile} from XSL:FO to ${pdfFile}."/>
         
         <!-- This taskdef configured per instructions at 
             https://xmlgraphics.apache.org/fop/2.1/anttask.html. -->
@@ -520,7 +526,8 @@
         
         <fop format="application/pdf"
             fofile="${inFile}"
-            outfile="${outFile}" />
+            outfile="${pdfFile}"
+            force="true"/>
         
     </target>
     
