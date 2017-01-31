@@ -39,7 +39,6 @@ Unported License http://creativecommons.org/licenses/by-sa/3.0/
 2. http://www.opensource.org/licenses/BSD-2-Clause
 		
 
-
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
@@ -69,18 +68,26 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
 
+<!-- ignore all but last tab in a line -->
+ 
+<xsl:template match="w:r[w:tab][following-sibling::w:r/w:tab]"/>
+
 <xsl:template match="w:r/w:tab">
+  
   <xsl:element name="space">
     <xsl:attribute name="rend">
     <xsl:text>in</xsl:text>  
-     <xsl:value-of select="preceding::w:tabs[1]/w:tab[@w:val='left'][1]/@w:pos"/>
+     <xsl:value-of select="preceding::w:tabs[1]/w:tab[@w:val='left'][last()]/@w:pos"/>
     </xsl:attribute>
   </xsl:element>
-</xsl:template>
   
+</xsl:template>
+
    <xsl:template match="tei:p[not(.//tei:pb) and       normalize-space(.)='']" mode="pass2"		priority="100">
     <space/>
   </xsl:template>
+  
+  <xsl:param name="preserveEffects">true</xsl:param>
   
   <xsl:param name="fileName" as="text()">xxxx</xsl:param>
 
@@ -96,23 +103,12 @@ of this software, even if advised of the possibility of such damage.
   
 <xsl:template match="tei:body" mode="pass2">
   <xsl:element name="div">
- <!--   <xsl:attribute name="n">
-      <xsl:value-of select="document-uri(/)"/>  
-      <xsl:value-of select="$fileName"/>
-    </xsl:attribute>
-    -->
+   
     <xsl:attribute name="type">page</xsl:attribute>
-    <xsl:element name="pb">
-      <xsl:attribute name="n">
-        <xsl:value-of select="$fileName"
-        />
-      </xsl:attribute>
-      <xsl:attribute name="facs">
-        <xsl:value-of
-          select="concat('../../Doucet-MS1-Photos/ms1-', $fileName, '.JPG')"
-        />
-      </xsl:attribute>
-    </xsl:element>
+    <xsl:element name="pb"/>
+      <!-- identification is added by script addID.xsl since this
+        script doesn't have access to original filename -->
+   
      <xsl:apply-templates mode="pass2"/>
   </xsl:element> 
 </xsl:template>
@@ -124,8 +120,17 @@ of this software, even if advised of the possibility of such damage.
     </xsl:comment>
   </xsl:template>
   
+  <xsl:template match="@style" mode="pass2">
+    <xsl:copy/>
+  </xsl:template>
+  
   <xsl:template match="tei:p"  mode="pass2">
     <l>
+     <xsl:if test="@style">
+      <xsl:attribute name="style">
+      <xsl:value-of select="@style"/>
+    </xsl:attribute></xsl:if>
+ 
       <xsl:apply-templates mode="pass2"/>
     </l>
   </xsl:template>
