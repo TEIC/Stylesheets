@@ -89,6 +89,14 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="tei:idno[@type='doi']"/>
+  <xsl:template match="tei:idno[ lower-case( @type ) = 'doi']">
+    <xsl:text> </xsl:text>
+    <xsl:call-template name="makeExternalLink">
+      <xsl:with-param name="ptr" select="false()"/>
+      <xsl:with-param name="dest">
+        <xsl:value-of select="concat( $DOIResolver, normalize-space(.) )"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
 
 </xsl:stylesheet>
