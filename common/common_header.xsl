@@ -73,7 +73,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="tei:idno[@type='url']">
+  <xsl:template match="tei:idno[ lower-case( @type ) = ('url','uri') ]">
     <xsl:text> &lt;</xsl:text>
     <xsl:call-template name="makeExternalLink">
       <xsl:with-param name="ptr" select="true()"/>
@@ -83,7 +83,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
     <xsl:text>&gt;.</xsl:text>
   </xsl:template>
-
 
   <xsl:template match="tei:idno">
     <xsl:text> </xsl:text>
