@@ -550,7 +550,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="makeRendition">
 	  <xsl:with-param name="default" select="$class"/>
 	</xsl:call-template>
-	<xsl:if test="@type and not($outputTarget='epub3' or $outputTarget='html5')">
+	<xsl:if test="@type and not($outputTarget=('epub3', 'html', 'html5'))">
             <xsl:attribute name="type">
                <xsl:value-of select="@type"/>
             </xsl:attribute>
