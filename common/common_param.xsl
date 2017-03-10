@@ -3,6 +3,7 @@
 		xmlns:sch="http://purl.oclc.org/dsdl/schematron"
 		xmlns:m="http://www.w3.org/1998/Math/MathML"
 		xmlns:tei="http://www.tei-c.org/ns/1.0"
+		xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		    exclude-result-prefixes="#all"
  version="2.0">
@@ -322,6 +323,11 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:param name="biblioStyle"></xsl:param>
 
+  <xd:doc class="layout" type="string">
+    <xd:desc>The initial part of a the URI of a DOI resolution service</xd:desc>
+  </xd:doc>
+  <xsl:param name="DOIResolver" select="'http://dx.doi.org/'"/>
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
     <desc>Default spacing between paragraphs</desc>
   </doc>
