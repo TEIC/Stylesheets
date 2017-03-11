@@ -55,6 +55,12 @@ check:
 	@which xmllint || exit 1
 	@echo -n jing: 
 	@which ${JING} || exit 1
+	@echo -n trang: 
+	@which trang || exit 1
+	@echo -n ant: 
+	@which ant || exit 1
+	@echo -n xetex: 
+	@which xetex || exit 1
 
 v:
 	perl -p -i -e "s+AppVersion.*/AppVersion+AppVersion>`cat VERSION`</AppVersion+" docx/to/application.xsl
