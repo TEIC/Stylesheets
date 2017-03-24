@@ -500,7 +500,8 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="tei:elementSpec[@mode eq 'change']|tei:classSpec[@mode eq 'change']|tei:macroSpec[@mode eq 'change']|tei:dataSpec[@mode eq 'change']"
+  <!-- Disabled this part for fixing issues with multiple schemaSpecs in one ODD file, see https://github.com/TEIC/Stylesheets/issues/249 -->
+  <!--<xsl:template match="tei:elementSpec[@mode eq 'change']|tei:classSpec[@mode eq 'change']|tei:macroSpec[@mode eq 'change']|tei:dataSpec[@mode eq 'change']"
                 mode="pass0">
     <xsl:choose>
       <xsl:when test="count(key('odd2odd-CHANGE',@ident))&gt;1">
@@ -523,7 +524,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:copy>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
+  </xsl:template>-->
 
   <!-- ******************* Phase 1, expand schemaSpec ********************************* -->
 
