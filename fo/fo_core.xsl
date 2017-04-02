@@ -622,6 +622,11 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:when test="ancestor::tei:back">
                      <xsl:value-of select="$lineheightBackpage"/>
                   </xsl:when>
+<!-- MDH 2017-04-02: It turns out that metadata in the header may 
+     also be processed with this, so provide a default. -->
+                   <xsl:otherwise>
+                     <xsl:value-of select="'1'"/>
+                   </xsl:otherwise>
                </xsl:choose>
             </xsl:attribute>
          </xsl:if>
