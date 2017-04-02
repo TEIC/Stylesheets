@@ -638,6 +638,24 @@
         <antcall target="rdf"/>
     </target>
     
+    <target name="parallel">
+        <description>
+            TARGET: parallel
+            This target runs all build and check processes, just as test does,
+            but it runs them in parallel. I am still testing to see if this 
+            results in faster execution, and whether it triggers any issues 
+            due to resource contention. 
+        </description>
+        <parallel failonany="true">
+            <antcall target="oddToRng"/>
+            <antcall target="simpleTeiToHtml"/>
+            <antcall target="markdown"/>
+            <antcall target="cocoa"/>
+            <antcall target="fo"/>
+            <antcall target="rdf"/>
+        </parallel>
+    </target>
+    
     <target name="documentation">
         <echo>
             To see detailed documentation for this buildfile, run 
