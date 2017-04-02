@@ -85,6 +85,7 @@
     <property name="fopDest" value="${basedir}/../lib"/>
     <property name="fopHome" value="${basedir}/../lib/fop-2.1"/>
     <property name="fopHyphDist" value="http://downloads.sourceforge.net/project/offo/offo-hyphenation/2.1/offo-hyphenation-binary.zip"/>
+    <property name="jeuclidDist" value="https://downloads.sourceforge.net/project/jeuclid/3.1.x/3.1.9/jeuclid-3.1.9-distribution.zip"/>
     
 <!-- Filesets for each set of tests should be declared here. -->
     <fileset id="testOutputRng" dir="${basedir}" includes="test.rng"/>
@@ -589,7 +590,8 @@
             downloads a binary distribution and unzips it into the 
             ../lib folder. Then it gets a hyphenation file from a
             separate open-source project if that jar is not yet
-            available.
+            available. Finally, it retrieves the JEuclid jars 
+            needed to process MathML into PDF with FOP.
         </description>
         <echo message="Checking whether a local copy of FOP 2.1 exists."/>
         <available property="fopAvailable" file="${fopHome}/build/fop.jar"/>
@@ -609,6 +611,15 @@
         <copy unless:true="${fopHyphAvailable}" file="${fopDest}/offo-hyphenation-binary/fop-hyph.jar" todir="${fopHome}/build"/>
         <delete file="${fopDest}/offo-hyphenation-binary.zip"/>
         <delete dir="${fopDest}/offo-hyphenation-binary"/>
+        <available property="jeuclidJarsAvailable" file="${fopHome}/lib/jeuclid-core-3.1.9.jar"/>
+        <echo unless:true="${jeuclidJarsAvailable}" message="Downloading JEuclid jars for processing MathML into PDF."/>
+        <get unless:true="${jeuclidJarsAvailable}" src="${jeuclidDist}" 
+            dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
+        <unzip unless:true="${jeuclidJarsAvailable}" src="${fopDest}/jeuclid-3.1.9-distribution.zip" dest="${fopDest}" failonemptyarchive="true"/>
+        <copy unless:true="${jeuclidJarsAvailable}" file="${fopDest}/jeuclid-3.1.9/repo/jeuclid-core-3.1.9.jar" todir="${fopHome}/lib"/>
+        <copy unless:true="${jeuclidJarsAvailable}" file="${fopDest}/jeuclid-3.1.9/repo/jeuclid-fop-3.1.9.jar" todir="${fopHome}/lib"/>
+        <delete file="${fopDest}/jeuclid-3.1.9-distribution.zip"/>
+        <delete dir="${fopDest}/jeuclid-3.1.9"/>
     </target>
     
 <!--  Cleanup target, removing all files created.  -->
