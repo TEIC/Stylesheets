@@ -224,9 +224,11 @@ of this software, even if advised of the possibility of such damage.
 <!-- For larger graphics in XSL:FO, we want to make sure they're scaled 
      nicely to fit on the page. -->
     <xsl:choose>
-      <xsl:when test="$mode eq 'fo'  and  ends-with( @width,'px')  and  ends-with( @height,'px')">
+      <xsl:when test="$mode eq 'fo'  and  ends-with( @width,'px')">
         <xsl:variable name="pxW" select="xs:integer( substring-before( @width,'px') )"/>
-        <xsl:variable name="pxH" select="xs:integer( substring-before( @height,'px') )"/>
+        <xsl:variable name="pxH" select="if (ends-with( @height,'px'))
+                                         then xs:integer( substring-before( @height,'px') )
+                                         else '-1'"/>
         <xsl:choose>
           <xsl:when test="($pxW gt $pxH)  and  ($pxW gt 200)">     
             <xsl:attribute name="max-width" select="'80%'"/>
@@ -237,19 +239,6 @@ of this software, even if advised of the possibility of such damage.
             <xsl:attribute name="content-width" select="'scale-to-fit'"/>
             <xsl:attribute name="content-height" select="'scale-to-fit'"/>
           </xsl:when>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:when test="$mode eq 'fo'  and  ends-with(@width, 'px')">
-        <xsl:variable name="pxW" select="xs:integer(substring-before(@width, 'px'))"/>
-        <xsl:choose>
-          <xsl:when test="$pxW gt 200">
-            <xsl:attribute name="max-width" select="'80%'"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:attribute name="max-width" select="$pxW"/>
-            <xsl:attribute name="content-width" select="'scale-to-fit'"/>
-            <xsl:attribute name="content-height" select="'scale-to-fit'"/>
-          </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
