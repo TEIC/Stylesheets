@@ -228,7 +228,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:variable name="pxW" select="xs:integer( substring-before( @width,'px') )"/>
         <xsl:variable name="pxH" select="if (ends-with( @height,'px'))
                                          then xs:integer( substring-before( @height,'px') )
-                                         else '-1'"/>
+                                         else -1"/>
         <xsl:choose>
           <xsl:when test="($pxW gt $pxH)  and  ($pxW gt 200)">     
             <xsl:attribute name="max-width" select="'80%'"/>
