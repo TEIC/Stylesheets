@@ -115,6 +115,9 @@
     <fileset id="simpleTeiForHtmlFiles" dir="${basedir}" includes="test14.xml, test20.xml, test22.xml, test23.xml,
         test24.xml, test25.xml"/>
     
+<!--  HTML input files for conversion into TEI.  -->
+    <fileset id="htmlInputFiles" dir="${basedir}" includes="testHtmlInput.html"/>
+    
 <!--  Two cocoa test files which are converted to TEI.  -->
     <fileset id="cocoaFiles" dir="${basedir}" includes="cocoatest.txt, cocoatest2.txt"/>
     
@@ -238,7 +241,7 @@
     <target name="simpleTeiToHtml" depends="symlinkCssFiles">
         <description>
             TARGET simpleTeiToHtml
-            This passes a set of files (simpleTeiForHtmlFiles) to the testFileToHtml
+            This passes a set of files (simpleTeiForHtmlFiles) to the teiFileToHtml
             target, which then builds them to HTML and diffs them against 
             expected results.
         </description>
@@ -251,7 +254,7 @@
     
     <target name="teiFileToHtml">
         <description>
-            TARGET testFileToHtml
+            TARGET teiFileToHtml
             This builds a TEI file into HTML output using standard simple parameters.
             The results are linted, diffed, and have their internal links checked.
             It takes a single parameter, inFile.
@@ -263,6 +266,45 @@
             <arg value="-xsl:${basedir}/../html/html.xsl"/>
             <arg value="-o:${outFile}"/>
             <!--<arg value="cssFile=../tei.css"/>-->
+            <arg value="useFixedDate=true"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
+        </java>
+        
+        <!--  Now check/format/indent the result with and diff it.      -->
+        <antcall target="prepAndDiffFile">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+        
+    </target>
+    
+    <target name="teiFilesFromHtml">
+        <description>
+            TARGET teiFilesFromHtml
+            This passes a set of files (htmlInputFiles) to the teiFileFromHtml
+            target, which then builds them to TEI and diffs them against 
+            expected results.
+        </description>
+        <echo message="${toString:htmlInputFiles}"/>
+        <foreach target="teiFileFromHtml" param="inFile">
+            <path>
+                <fileset refid="htmlInputFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
+    <target name="teiFileFromHtml">
+        <description>
+            TARGET testFileFromHtml
+            This test takes a single input file in HTML and converts it to TEI.
+            The results are linted and diffed. It takes a single parameter, inFile.
+        </description>
+        <echo message="Converting test input file ${inFile} from HTML to TEI."/>
+        <propertyregex property="outFile" input="${inFile}" regexp="\.html" replace=".xml" global="true"/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/../html/html2tei.xsl"/>
+            <arg value="-o:${outFile}"/>
             <arg value="useFixedDate=true"/>
             <arg value="--suppressXsltNamespaceCheck:on"/>
             <arg value="-versionmsg:off"/>
