@@ -97,8 +97,8 @@
         test31.html, test32.html, test38.xml, mdtest1.xml, mdtest2.md, 
         cocoatest.xml, cocoatest2.xml, test17.tei, A54031.xml, test.tex, 
         testnotes1.tex, test5.tex, test6.tex, test20.tex, test23.tex, 
-        test24.tex, test25.tex, test27.tex, *.fo, test.epub.listing, test.epub.listing2, 
-        test12.rdf, test.text, test.xlsx.xml, test.xml.odt.listing, 
+        test24.tex, test25.tex, test27.tex, *.fo, test.epub.listing, 
+        test.epub.listing2, test.text, test.xlsx.xml, test.xml.odt.listing, 
         content.xml.odt.listing, test7.xml, test-indexes.xml, test11.xml, 
         test11a.xml, test19.xml, test18.xml, test39.xml, test-rtf2tei.xml, 
         test29.xml, test37.xml, test40.xml, test.xml.docx.document, 
@@ -108,7 +108,8 @@
         test30.dtd, test-pure.rnc, test-pure.dtd, test-pure.odd.html, 
         test-pure2.rnc, test-pure2.dtd, test-pure2.odd.html, test33.rnc, 
         test33.json, test34.rnc, test34.json, test34.combined.json, 
-        test34.odd.html, test35.rnc, dcr.tmp, xml.tmp, *.pdf"/>
+        test34.odd.html, test35.rnc, dcr.tmp, xml.tmp, *.pdf, testToRdf1.rdf,
+        testHtmlInput.xml, testP4Input1.p5.xml"/>
     
 <!--  TEI file that can be converted in a straightforward manner into HTML
       without special parameters. -->
@@ -117,6 +118,9 @@
     
 <!--  HTML input files for conversion into TEI.  -->
     <fileset id="htmlInputFiles" dir="${basedir}" includes="testHtmlInput.html"/>
+    
+ <!-- TEI P4 input files for conversion to P5.  -->
+    <fileset id="p4InputFiles" dir="${basedir}" includes="testP4Input1.xml"/>
     
 <!--  Two cocoa test files which are converted to TEI.  -->
     <fileset id="cocoaFiles" dir="${basedir}" includes="cocoatest.txt, cocoatest2.txt"/>
@@ -295,7 +299,7 @@
     
     <target name="teiFileFromHtml">
         <description>
-            TARGET testFileFromHtml
+            TARGET teiFileFromHtml
             This test takes a single input file in HTML and converts it to TEI.
             The results are linted and diffed. It takes a single parameter, inFile.
         </description>
@@ -304,6 +308,44 @@
         <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
             <arg value="-s:${inFile}"/>
             <arg value="-xsl:${basedir}/../html/html2tei.xsl"/>
+            <arg value="-o:${outFile}"/>
+            <arg value="useFixedDate=true"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
+        </java>
+        
+        <!--  Now check/format/indent the result with and diff it.      -->
+        <antcall target="prepAndDiffFile">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+        
+    </target>
+    
+    <target name="teiFilesFromP4">
+        <description>
+            TARGET teiFilesFromP4
+            This passes a set of files (p4InputFiles) to the teiFileFromP4
+            target, which then builds them to TEI and diffs them against 
+            expected results.
+        </description>
+        <foreach target="teiFileFromP4" param="inFile">
+            <path>
+                <fileset refid="p4InputFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
+    <target name="teiFileFromP4">
+        <description>
+            TARGET teiFileFromP4
+            This test takes a single input file in P4 and converts it to TEI P5.
+            The results are linted and diffed. It takes a single parameter, inFile.
+        </description>
+        <echo message="Converting test input file ${inFile} from P4 to TEI P5."/>
+        <propertyregex property="outFile" input="${inFile}" regexp="\.xml" replace=".p5.xml" global="true"/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/../profiles/default/p4/from.xsl"/>
             <arg value="-o:${outFile}"/>
             <arg value="useFixedDate=true"/>
             <arg value="--suppressXsltNamespaceCheck:on"/>
@@ -706,6 +748,8 @@
             <antcall target="cocoa"/>
             <antcall target="fo"/>
             <antcall target="rdf"/>
+            <antcall target="teiFilesFromHtml"/>
+            <antcall target="teiFilesFromP4"/>
         </parallel>
     </target>
     
