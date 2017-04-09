@@ -109,7 +109,7 @@
         test-pure2.rnc, test-pure2.dtd, test-pure2.odd.html, test33.rnc, 
         test33.json, test34.rnc, test34.json, test34.combined.json, 
         test34.odd.html, test35.rnc, dcr.tmp, xml.tmp, *.pdf, testToRdf1.rdf,
-        testHtmlInput.xml, testP4Input1.p5.xml"/>
+        testHtmlInput1.xml, testP4Input1.p5.xml"/>
     
 <!--  TEI file that can be converted in a straightforward manner into HTML
       without special parameters. -->
@@ -117,7 +117,7 @@
         test24.xml, test25.xml"/>
     
 <!--  HTML input files for conversion into TEI.  -->
-    <fileset id="htmlInputFiles" dir="${basedir}" includes="testHtmlInput.html"/>
+    <fileset id="htmlInputFiles" dir="${basedir}" includes="testHtmlInput1.html"/>
     
  <!-- TEI P4 input files for conversion to P5.  -->
     <fileset id="p4InputFiles" dir="${basedir}" includes="testP4Input1.xml"/>
@@ -723,23 +723,8 @@
         <description>
             TARGET: test
             This target runs all build and check processes. Use this target
-            for a full run of tests. IT'S NOT COMPLETE BY A LONG WAY.
-        </description>
-        <antcall target="oddToRng"/>
-        <antcall target="simpleTeiToHtml"/>
-        <antcall target="markdown"/>
-        <antcall target="cocoa"/>
-        <antcall target="fo"/>
-        <antcall target="rdf"/>
-    </target>
-    
-    <target name="parallel">
-        <description>
-            TARGET: parallel
-            This target runs all build and check processes, just as test does,
-            but it runs them in parallel. I am still testing to see if this 
-            results in faster execution, and whether it triggers any issues 
-            due to resource contention. 
+            for a full run of tests. IT'S NOT COMPLETE BY A LONG WAY. This
+            runs all tests in parallel for better performance.
         </description>
         <parallel failonany="true">
             <antcall target="oddToRng"/>
