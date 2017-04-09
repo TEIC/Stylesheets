@@ -68,6 +68,9 @@
 <!-- Location of existing expected results for comparison of new output.   -->
     <property name="expectedResultsDir" value="${basedir}/expected-results"/>
     
+<!-- Location of schemas used to validate results.   -->
+    <property name="schemaDir" value="${basedir}/schemas"/>
+    
 <!-- We can control where the source of the TEI Guidelines is. This is the 
      path to [a directory containing] p5subset.xml. If not supplied, most 
      scripts default to using the current version from the tei-c.org Vault. 
@@ -461,7 +464,7 @@
         
 <!--  Now clean and diff.      -->
         <antcall target="prepAndDiffFile">
-            <param name="inFile" value="${basedir}/test.rng"/>
+            <param name="inFile" value="${outputDir}/test.rng"/>
         </antcall>
     </target>
     
@@ -561,7 +564,7 @@
         </java>
         
         <!--  Validate with Jing.      -->
-        <jing rngfile="fo.xsd" file="${outFile}"/>
+        <jing rngfile="${schemaDir}/fo.xsd" file="${outFile}"/>
         
         <!--  Now format and diff. Note that in the original Makefile, only some
         files are linted before diffing; no apparent reason why some are and some
