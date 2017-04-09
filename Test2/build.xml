@@ -455,8 +455,8 @@
 <!--  First convert odd to relaxng.      -->
         <exec executable="${bin}/teitorelaxng" failonerror="true">
             <arg line="--localsource=${localsource}"/>
-            <arg file="test.odd"/>
-            <arg file="test.rng"/>
+            <arg file="${inputDir}/test.odd"/>
+            <arg file="${outputDir}/test.rng"/>
         </exec>
         
 <!--  Now clean and diff.      -->
