@@ -685,6 +685,7 @@
              dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
         <unzip unless:true="${fopAvailable}" src="${fopDest}/fop-2.1-bin.zip" dest="${fopDest}" failonemptyarchive="true"/>
         <delete file="${fopDest}/fop-2.1-bin.zip"/>
+        
         <echo message="Checking whether a hyphenation file exists for FOP."/>
         <available property="fopHyphAvailable" file="${fopHome}/build/fop-hyph.jar"/>
         <echo if:true="${fopHyphAvailable}" message="Local copy of FOP hyphenation jar already exists, so no need to download it."/>
@@ -695,7 +696,10 @@
         <copy unless:true="${fopHyphAvailable}" file="${fopDest}/offo-hyphenation-binary/fop-hyph.jar" todir="${fopHome}/build"/>
         <delete file="${fopDest}/offo-hyphenation-binary.zip"/>
         <delete dir="${fopDest}/offo-hyphenation-binary"/>
+        
+        <echo message="Checking whether a local copy of JEuclid exists for handling MathML."/>
         <available property="jeuclidJarsAvailable" file="${fopHome}/lib/jeuclid-core-3.1.9.jar"/>
+        <echo if:true="${jeuclidJarsAvailable}" message="Local copies of JEuclid jars already exist, so no need to download them."/>
         <echo unless:true="${jeuclidJarsAvailable}" message="Downloading JEuclid jars for processing MathML into PDF."/>
         <get unless:true="${jeuclidJarsAvailable}" src="${jeuclidDist}" 
             dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
