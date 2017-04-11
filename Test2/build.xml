@@ -128,7 +128,7 @@
     </target>
     
     
-    <target name="simpleTeiToHtml" depends="utils.symlinkCssFiles">
+    <target name="simpleTeiToHtml" depends="symlinkCssFiles">
         <description>
             TARGET simpleTeiToHtml
             This passes a set of files (simpleTeiForHtmlFiles) to the teiFileToHtml
@@ -164,7 +164,7 @@
         </java>
         
         <!--  Now check/format/indent the result with and diff it.      -->
-        <antcall target="utils.prepAndDiffFile">
+        <antcall target="prepAndDiffFile">
             <param name="inFile" value="${outFile}"/>
         </antcall>
         
@@ -204,7 +204,7 @@
         </java>
         
         <!--  Now check/format/indent the result with and diff it.      -->
-        <antcall target="utils.prepAndDiffFile">
+        <antcall target="prepAndDiffFile">
             <param name="inFile" value="${outFile}"/>
         </antcall>
         
@@ -243,7 +243,7 @@
         </java>
         
         <!--  Now check/format/indent the result with and diff it.      -->
-        <antcall target="utils.prepAndDiffFile">
+        <antcall target="prepAndDiffFile">
             <param name="inFile" value="${outFile}"/>
         </antcall>
         
@@ -266,7 +266,7 @@
         </exec>
         
 <!--  Now clean and diff.      -->
-        <antcall target="utils.prepAndDiffFile">
+        <antcall target="prepAndDiffFile">
             <param name="inFile" value="${outputDir}/test.rng"/>
         </antcall>
     </target>
@@ -288,7 +288,7 @@
         </exec>
         
         <!--  Now diff.      -->
-        <antcall target="utils.diffFile">
+        <antcall target="diffFile">
             <param name="inFile" value="${outputDir}/testMarkdown1.xml"/>
         </antcall>
         
@@ -300,7 +300,7 @@
         </exec>
         
         <!--  Now diff.      -->
-        <antcall target="utils.diffFile">
+        <antcall target="diffFile">
             <param name="inFile" value="${outputDir}/testMarkdown2.md"/>
         </antcall>
     </target>
@@ -324,7 +324,7 @@
         </exec>
         
         <!--  Now diff.      -->
-        <antcall target="utils.diffFile">
+        <antcall target="diffFile">
             <param name="inFile" value="${outFile}"/>
         </antcall>
     </target>
@@ -373,7 +373,7 @@
         files are linted before diffing; no apparent reason why some are and some
         aren't. We choose to do all of them because it makes interpreting diff 
         errors much simpler. -->
-        <antcall target="utils.prepAndDiffFile">
+        <antcall target="prepAndDiffFile">
             <param name="inFile" value="${outFile}"/>
         </antcall>
         
@@ -449,7 +449,7 @@
         </java>
         
         
-        <antcall target="utils.prepAndDiffFile">
+        <antcall target="prepAndDiffFile">
             <param name="inFile" value="${outFile}"/>
         </antcall>
     </target>
