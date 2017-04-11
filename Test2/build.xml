@@ -90,7 +90,7 @@
 <!--  TEI file that can be converted in a straightforward manner into HTML
       without special parameters. -->
     <fileset id="simpleTeiForHtmlFiles" dir="${inputDir}" includes="test14.xml, test20.xml, test22.xml, test23.xml,
-        test24.xml, test25.xml"/>
+        testCorpus.xml, testMathML.xml"/>
     
 <!--  HTML input files for conversion into TEI.  -->
     <fileset id="htmlInputFiles" dir="${inputDir}" includes="testHtmlInput1.html"/>
@@ -102,7 +102,7 @@
     <fileset id="cocoaFiles" dir="${inputDir}" includes="testCocoa*.txt"/>
     
 <!--  TEI files which are converted to XSL:FO.  -->
-    <fileset id="foFiles" dir="${inputDir}" includes="generalP5.xml, test5.xml, test24.xml, test25.xml, 
+    <fileset id="foFiles" dir="${inputDir}" includes="generalP5.xml, test5.xml, testCorpus.xml, testMathML.xml, 
         test27.xml, testnotes1.xml, tei_simplePrint.doc.xml"/>
     
 <!--  Files for conversion to RDF.  -->
