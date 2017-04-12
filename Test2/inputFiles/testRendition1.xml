@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
-  <teiHeader type="text">
+  <teiHeader>
     <fileDesc>
       <titleStmt>
         <title type="main">Testing rendition</title>
@@ -12,15 +12,15 @@
       <sourceDesc>
         <p/>
       </sourceDesc>
-      <encodingDesc>
-        <tagsDecl>
-          <rendition xml:id="it" scheme="css">font-style:italic;</rendition>
-          <rendition xml:id="green" scheme="css">color:green</rendition>
-          <rendition xml:id="red" scheme="css">color:red;</rendition>
-          <rendition xml:id="blue" scheme="css">color:blue;</rendition>
-          <rendition xml:id="bold" scheme="css">font-weight:bold;</rendition>
-          <rendition xml:id="initcaps" scope="first-letter" scheme="css">font-size: xx-large</rendition>
-        </tagsDecl>
+    </fileDesc>
+    <encodingDesc>
+      <tagsDecl>
+        <rendition xml:id="it" scheme="css">font-style:italic;</rendition>
+        <rendition xml:id="green" scheme="css">color:green</rendition>
+        <rendition xml:id="red" scheme="css">color:red;</rendition>
+        <rendition xml:id="blue" scheme="css">color:blue;</rendition>
+        <rendition xml:id="bold" scheme="css">font-weight:bold;</rendition>
+        <rendition xml:id="initcaps" scope="first-letter" scheme="css">font-size: xx-large</rendition>
         <namespace name="http://www.tei-c.org/ns/1.0">
           <tagUsage gi="persName" render="#red">Makes persName red</tagUsage>
           <tagUsage gi="placeName" render="#blue">Makes placeName blue</tagUsage>
@@ -28,8 +28,8 @@
           <tagUsage gi="p" render="#green">Makes p green</tagUsage>
           <tagUsage gi="foreign" render="#green">Used to mark non-English words in the copy text.</tagUsage>
         </namespace>
-      </encodingDesc>
-    </fileDesc>
+      </tagsDecl>
+    </encodingDesc>
   </teiHeader>
   <text>
     <body>
@@ -91,7 +91,7 @@
             </egXML>
           </cell>
           <cell>
-            <cit>Quote</cit>
+            <cit><quote>Quote</quote></cit>
           </cell>
         </row>
         <row>
@@ -507,7 +507,9 @@ at last said — </cell>
             </egXML>
           </cell>
           <cell>
-            <speaker rend="it">Roderigo</speaker>
+            <sp><speaker rend="it">Roderigo</speaker>
+            <p>Stuff spoken</p>
+            </sp>
           </cell>
         </row>
         <row>
