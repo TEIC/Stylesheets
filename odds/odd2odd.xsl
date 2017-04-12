@@ -1356,7 +1356,8 @@ of this software, even if advised of the possibility of such damage.
               </xsl:copy>
             </xsl:when>
             <!-- end anyXML section -->
-            <xsl:when test="self::tei:dataRef[@name] | self::tei:textNode | self::tei:valList">
+            <xsl:when test="self::tei:dataRef[@name] | self::tei:textNode | self::tei:valList |
+              self::tei:anyElement">
               <xsl:copy-of select="."/>
             </xsl:when>
             <xsl:when test="self::tei:classRef or self::tei:elementRef or self::tei:macroRef or self::tei:dataRef">
