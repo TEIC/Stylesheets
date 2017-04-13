@@ -334,7 +334,7 @@
 \vspace{18pt}
 \makeatother
 \let\tabcellsep&  \par 
-\begin{longtable}{P{0.7480801335559266\textwidth}P{0.10191986644407346\textwidth}}
+\begin{longtable}{P{0.7459912188603608\textwidth}P{0.1040087811396392\textwidth}}
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}This is in a {<\textbf{ab}\hspace*{6pt}{rendition}="{\#bold \#initcaps}">}ab element{</\textbf{ab}>}\end{shaded}\egroup 
 
 \tabcellsep This is in a ab element\\
@@ -359,7 +359,9 @@
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{bibl}>}bibl{</\textbf{bibl}>}\end{shaded}\egroup 
 
 \tabcellsep \textit{bibl}\\
-\leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{cit}>}Quote{</\textbf{cit}>}\end{shaded}\egroup 
+\leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{cit}>}\mbox{}\newline 
+\hspace*{6pt}{<\textbf{quote}>}Quote{</\textbf{quote}>}\mbox{}\newline 
+{</\textbf{cit}>}\end{shaded}\egroup 
 
 \tabcellsep ‘Quote’\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{corr}>}corr{</\textbf{corr}>}\end{shaded}\egroup 
@@ -514,9 +516,15 @@
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{soCalled}>}highlighting{</\textbf{soCalled}>}\end{shaded}\egroup 
 
 \tabcellsep ‘highlighting’\\
-\leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{speaker}\hspace*{6pt}{rend}="{it}">}Roderigo{</\textbf{speaker}>}\end{shaded}\egroup 
+\leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{sp}>}\mbox{}\newline 
+\hspace*{6pt}{<\textbf{speaker}\hspace*{6pt}{rend}="{it}">}Roderigo{</\textbf{speaker}>}\mbox{}\newline 
+\hspace*{6pt}{<\textbf{p}>}Stuff spoken{</\textbf{p}>}\mbox{}\newline 
+{</\textbf{sp}>}\end{shaded}\egroup 
 
-\tabcellsep Roderigo\\
+\tabcellsep  \begin{description} \item[Roderigo] 
+
+Stuff spoken\end{description}
+\\
 \leavevmode\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{term}>}transmogrification{</\textbf{term}>}\end{shaded}\egroup 
 
 \tabcellsep \textit{transmogrification}\\
