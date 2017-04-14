@@ -89,7 +89,7 @@
 
 <!--  TEI file that can be converted in a straightforward manner into HTML
       without special parameters. -->
-    <fileset id="simpleTeiForHtmlFiles" dir="${inputDir}" includes="test14.xml, testRendition1.xml, test22.xml, test23.xml,
+    <fileset id="simpleTeiForHtmlFiles" dir="${inputDir}" includes="test14.xml, testRendition1.xml, testQuotations1.xml, test23.xml,
         testCorpus.xml, testMathML.xml"/>
     
 <!--  HTML input files for conversion into TEI.  -->
@@ -517,9 +517,12 @@
             TARGET: test
             This target runs all build and check processes. Use this target
             for a full run of tests. IT'S NOT COMPLETE BY A LONG WAY. This
-            runs all tests in parallel for better performance.
+            runs all tests in parallel for better performance. We run the 
+            clean target before everything else, assuming that if you're 
+            running all the tests you'll want cruft cleared away first.
         </description>
         <parallel failonany="true">
+            <antcall target="clean"/>
             <antcall target="oddToRng"/>
             <antcall target="simpleTeiToHtml"/>
             <antcall target="markdown"/>

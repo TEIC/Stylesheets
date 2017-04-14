@@ -55,7 +55,7 @@
   <!-- The jing task requires attributes @rngfile and @file.    -->
   <taskdef name="jing" classpath="${jingJar}" classname="com.thaiopensource.relaxng.util.JingTask"/>
   
-  <fileset id="generatedFiles" dir="${outputDir}" includes="**.*"/>
+  <fileset id="generatedFiles" dir="${outputDir}" includes="**.*" excludes="readme.txt"/>
   
   <!--  CSS files that are used in HTML builds. These are symlinked from
       the Stylesheets/ root folder. Not quite sure why yet. -->
