@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="teiFilesToOdt" name="StylesheetsTestOdt"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless">
+  
+  <description> 
+    Stylesheets/Test2/odt.xml
+    
+    ANT TEST FILE FOR CONVERSIONS BETWEEN TEI AND ODT.
+    
+    
+  </description>
+
+
+  <!-- First we include the generic utilities module.   -->
+  <import file="utilities.xml" as="utils"/>
+  
+  <!--  Files for conversion to ODT.  -->
+  <fileset id="teiToOdtFiles" dir="${inputDir}" includes="generalP5.xml"/>
+  
+<!-- Default target that does everything. -->
+  <target name="odt">
+    <antcall target="teiFilesToOdt"/>
+  </target>
+  
+  <target name="teiFilesToOdt">
+    <description>
+      TARGET teiFilesToOdt
+      Converts TEI files to odt, extracts their contents.xml, 
+      and diffs them against expected results.
+    </description>
+    <foreach target="teiFileToOdt" param="inFile">
+      <path>
+        <fileset refid="teiToOdtFiles"/>
+      </path>
+    </foreach>
+  </target>
+  
+  <target name="teiFileToOdt">
+    <description>
+      TARGET teiFileToOdt
+      Converts a single TEI file to odt, then extracts the content.xml from
+      the result and diffs it against expected results. It takes a single
+      parameter, inFile.
+    </description>
+    <echo message="Converting ${inFile} from TEI to ODT."/>
+    <basename file="${inFile}" property="plainFileName" suffix=".xml"/>
+    <property name="outFile" value="${outputDir}/${plainFileName}.odt"/>
+    <ant antfile="build-to.xml" target="notodd"
+       inheritAll="false" inheritRefs="false" dir="../odt">
+      <!--<property name="lib" value="../lib"/>-->
+      <!--<property name="lib" value="tools/ImageInfo"/>-->
+      <property name="saxon.jar" value="../lib/saxon9he.jar"/>
+      <property name="java.awt.headless" value="true"/>
+      
+      <property name="inputFile" value="${inFile}"/>
+      <property name="outputFile" value="${outFile}"/>
+    </ant>
+    
+
+    <!--<antcall target="prepAndDiffFile">
+      <param name="inFile" value="${outFile}"/>
+    </antcall>-->
+  </target>
+  
+  
+  
+</project>
