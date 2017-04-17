@@ -235,11 +235,10 @@
   
   <!--   NOTE: I DO NOT SEE THE POINT IN THESE CSS FILE SYMLINKS, AND UNLESS I 
        CAN FIGURE OUT A GOOD REASON FOR THEM, I'LL REMOVE THE FOLLOWING TWO 
-       TARGETS AND USE STRAIGHTFORWARD PATHS TO THE ORIGINAL CSS FILES IN THE
-       HTML BUILD COMMANDS. -->
+       TARGETS. -->
   <target name="symlinkCssFile">
     <description>
-      TARGET symlinkCssFile
+      TARGET symlinkCssFile (PROBABLY OBSOLETE)
       This target creates a symlink from the ${basedir}/../ directory
       to a file in its child css directory. NOTE: need to figure
       out how best to accomplish this on Windows. ${to} is passed
@@ -256,7 +255,7 @@
   
   <target name="symlinkCssFiles">
     <description>
-      TARGET symlinkCssFiles
+      TARGET symlinkCssFiles (PROBABLY OBSOLETE)
       This target creates symlinks from the parent directory of ${basedir}
       to each of the CSS files in the ../css directory. These are used in 
       the HTML build processes, then removed on cleanup.
