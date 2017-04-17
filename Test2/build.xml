@@ -58,6 +58,9 @@
 <!-- First we include the generic utilities module.   -->
     <import file="utilities.xml" as="utils"/>
     
+<!-- Import the ODT file, our first test of a modular process.   -->
+    <import file="odt.xml"/>
+    
 <!-- BEGIN PARAMETERS. -->
     
 <!-- Whether we're running tests against expected results or regenerating
@@ -130,7 +133,9 @@
     </target>
     
     
-    <target name="simpleTeiToHtml" depends="symlinkCssFiles">
+    <!-- NOTE: used to have depends="symlinkCssFiles", but I don't see the point in 
+         that; HTML outputse seem to be linked to CSS files on the tei website.    -->
+    <target name="simpleTeiToHtml">
         <description>
             TARGET simpleTeiToHtml
             This passes a set of files (simpleTeiForHtmlFiles) to the teiFileToHtml
@@ -471,7 +476,7 @@
     
 <!--  We want to test FOP, but probably avoid exploding our repo,
       so we download it. This is hard-coded FOP 2.1. -->
-    <target name="getFop">
+    <target name="getFop" unless:blank="getFopAlreadyExecuted">
         <description>
             TARGET getFop
             Checks whether the FOP jars are available, and if not, 
@@ -481,6 +486,7 @@
             available. Finally, it retrieves the JEuclid jars 
             needed to process MathML into PDF with FOP.
         </description>
+        <property name="getFopAlreadyExecuted" value="true" />
         <echo message="Checking whether a local copy of FOP 2.1 exists."/>
         <available property="fopAvailable" file="${fopHome}/build/fop.jar"/>
         <echo if:true="${fopAvailable}" message="Local copy of FOP 2.1 already exists, so no need to download it."/>
@@ -533,6 +539,7 @@
             <antcall target="teiFilesToRdf"/>
             <antcall target="teiFilesFromHtml"/>
             <antcall target="teiFilesFromP4"/>
+            <antcall target="odt"/>
         </parallel>
     </target>
     

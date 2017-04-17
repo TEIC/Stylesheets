@@ -28,7 +28,7 @@
   
   <!-- We need ant-contrib to do foreach.   -->
   <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
-  
+
   <!-- Whether we're running tests against expected results or regenerating
      expected results en masse. -->
   <property name="regenerate" value=""/>
@@ -58,6 +58,14 @@
   
   <!-- The jing task requires attributes @rngfile and @file.    -->
   <taskdef name="jing" classpath="${jingJar}" classname="com.thaiopensource.relaxng.util.JingTask"/>
+  
+  <path id="externalCalls">
+    <fileset dir="../lib">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="../tools/ImageInfo" includes="**.jar"/>
+    <path refid="library.dir"/>
+  </path>
   
   <fileset id="generatedFiles" dir="${outputDir}" includes="**.*" excludes="readme.txt"/>
   
@@ -237,7 +245,7 @@
       out how best to accomplish this on Windows. ${to} is passed
       as a param; ${from} is generated from it.
     </description>
-    <propertyregex property="from" input="${to}" regexp="${file.separator}css${file.separator}" replace="${file.separator}" global="true"/>
+    <propertyregex property="from" input="${to}" regexp="${file.separator}css${file.separator}" replace="${file.separator}Test2{$file.separator}outputFiles{$file.separator}" global="true"/>
     <exec executable="ln">
       <arg value="-s"/>
       <arg value="-f"/>
