@@ -141,6 +141,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="IDS" match="tei:*[@xml:id]" use="@xml:id"/>
   <xsl:key name="GRAPHICS" match="tei:graphic" use="1"/>
   <xsl:key name="GRAPHICS" match="tei:media" use="1"/>
+  <xsl:key name="PB" match="tei:pb[@facs]" use="1"/>
   <xsl:key name="Page" match="style:page-layout-properties" use="1"/>
   <xsl:template match="/">
     <xsl:choose>
@@ -208,6 +209,23 @@ of this software, even if advised of the possibility of such damage.
               </xsl:attribute>
               <xsl:attribute name="manifest:media-type">
 		<xsl:value-of  select="tei:generateMimeType(@url,@mimeType)"/>
+              </xsl:attribute>
+            </manifest:file-entry>
+          </xsl:for-each>
+        </xsl:if>
+        <xsl:if test="count(key('PB',1))&gt;0">
+          <manifest:file-entry manifest:media-type="" manifest:full-path="Pictures/"/>
+          <xsl:for-each select="key('PB',1)">
+            <manifest:file-entry>
+              <xsl:variable name="imagetype" select="tokenize(@facs,'\.')[last()]"/>
+              <xsl:attribute name="manifest:full-path">
+                <xsl:text>Pictures/pageimage</xsl:text>
+                <xsl:number level="any"/>
+                <xsl:text>.</xsl:text>
+                <xsl:value-of select="$imagetype"/>
+              </xsl:attribute>
+              <xsl:attribute name="manifest:media-type">
+                <xsl:value-of  select="tei:generateMimeType(@facs,@mimeType)"/>
               </xsl:attribute>
             </manifest:file-entry>
           </xsl:for-each>
