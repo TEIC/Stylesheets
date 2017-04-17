@@ -145,10 +145,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="/">
     <xsl:choose>
       <xsl:when test="$freestanding='true'">
-        <xsl:result-document href="{concat($outputDir,'/meta.xml')}">
+        <xsl:result-document href="{concat($outputDir,'/meta.xml')}" exclude-result-prefixes="#all">
           <xsl:call-template name="META"/>
         </xsl:result-document>
-        <office:document-content>
+        <office:document-content office:version="1.2">
           <xsl:if test="$freestanding='true'">
             <xsl:for-each select="document(concat($outputDir,'/content.xml'))/office:document-content">
               <xsl:copy-of select="office:scripts"/>
@@ -175,7 +175,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
     <xsl:result-document href="{concat($outputDir,'/META-INF/manifest.xml')}">
-      <manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0">
+      <manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0" manifest:version="1.2">
         <manifest:file-entry manifest:media-type="application/vnd.oasis.opendocument.text" manifest:version="1.2" manifest:full-path="/"/>
         <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/statusbar/"/>
         <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/accelerator/current.xml"/>
@@ -217,7 +217,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="META">
     <xsl:for-each select="*">
-      <office:document-meta>
+      <office:document-meta office:version="1.2">
 	<office:meta>
         <meta:generator>TEI to OpenOffice XSLT</meta:generator>
         <dc:title>
@@ -226,7 +226,7 @@ of this software, even if advised of the possibility of such damage.
         <dc:description/>
         <dc:subject/>
         <meta:creation-date>
-          <xsl:sequence select="tei:generateDate(.)"/>
+          <xsl:sequence select="tei:generateRevDate(.)"/>
         </meta:creation-date>
         <dc:date>
           <xsl:sequence select="tei:generateRevDate(.)"/>
