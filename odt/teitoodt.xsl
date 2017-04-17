@@ -178,26 +178,15 @@ of this software, even if advised of the possibility of such damage.
     <xsl:result-document href="{concat($outputDir,'/META-INF/manifest.xml')}">
       <manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0" manifest:version="1.2">
         <manifest:file-entry manifest:media-type="application/vnd.oasis.opendocument.text" manifest:version="1.2" manifest:full-path="/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/statusbar/"/>
         <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/accelerator/current.xml"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/accelerator/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/floater/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/popupmenu/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/progressbar/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/menubar/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/toolbar/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/images/Bitmaps/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/images/"/>
         <manifest:file-entry manifest:media-type="application/vnd.sun.xml.ui.configuration" manifest:full-path="Configurations2/"/>
         <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="content.xml"/>
         <manifest:file-entry manifest:media-type="application/rdf+xml" manifest:full-path="manifest.rdf"/>
         <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="styles.xml"/>
         <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="meta.xml"/>
         <manifest:file-entry manifest:media-type="" manifest:full-path="Thumbnails/thumbnail.png"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Thumbnails/"/>
         <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="settings.xml"/>
         <xsl:if test="count(key('GRAPHICS',1))&gt;0">
-          <manifest:file-entry manifest:media-type="" manifest:full-path="Pictures/"/>
           <xsl:for-each select="key('GRAPHICS',1)">
             <manifest:file-entry>
             <xsl:variable name="imagetype" select="tokenize(@url,'\.')[last()]"/>
@@ -214,7 +203,6 @@ of this software, even if advised of the possibility of such damage.
           </xsl:for-each>
         </xsl:if>
         <xsl:if test="count(key('PB',1))&gt;0">
-          <manifest:file-entry manifest:media-type="" manifest:full-path="Pictures/"/>
           <xsl:for-each select="key('PB',1)">
             <manifest:file-entry>
               <xsl:variable name="imagetype" select="tokenize(@facs,'\.')[last()]"/>
