@@ -7,7 +7,7 @@ BINDIR=../bin
 SAXONOPT=useFixedDate=true
 SAXON=java -Djava.awt.headless=true -jar ../lib/saxon9he.jar
 DOTDOTSAXON=java -Djava.awt.headless=true -jar ../../lib/saxon9he.jar
-JING=java -Djava.awt.headless=true -jar lib/jing-20120724.0.0.jar
+JING=java -Djava.awt.headless=true -jar ../lib/lib/jing-20120724.0.0.jar
 OXY=/usr/share/oxygen
 SCRIPTS=teitobibtex \
 	teitodocbook \
@@ -226,9 +226,9 @@ test-fo:
 test-epub: css
 	@echo BUILD: testing epub
 	$(BINDIR)/teitoepub3  test.xml test.epub
-	java -Djava.awt.headless=true -jar epubcheck3.jar test.epub
+	java -Djava.awt.headless=true -jar ../lib/epubcheck3.jar test.epub
 	$(BINDIR)/teitoepub  test.xml test.epub
-	java -Djava.awt.headless=true -jar epubcheck3.jar  test.epub
+	java -Djava.awt.headless=true -jar ../lib/epubcheck3.jar  test.epub
 	unzip -t test.epub > test.epub.listing
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test.epub.listing expected-results/test.epub.listing; fi
