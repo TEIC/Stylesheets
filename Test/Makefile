@@ -223,7 +223,7 @@ test-fo:
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test27.fo expected-results/test27.fo; fi
 
-test-epub:
+test-epub: css
 	@echo BUILD: testing epub
 	$(BINDIR)/teitoepub3  test.xml test.epub
 	java -Djava.awt.headless=true -jar epubcheck3.jar test.epub
