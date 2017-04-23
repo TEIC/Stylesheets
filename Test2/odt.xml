@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="teiFilesToOdt" name="StylesheetsTestOdt"
+<project basedir="." default="odt" name="StylesheetsTestOdt"
   xmlns:if="ant:if"
   xmlns:unless="ant:unless">
   
@@ -104,13 +104,12 @@
     </exec>
     
 <!-- Make a temp dir and unzip the ODT file.        -->
-    <mkdir dir="${outputDir}/temp"/>
-    <unzip src="${outFile}" dest="${outputDir}/temp"/>
-    <copy file="${outputDir}/temp/content.xml" tofile="${outputDir}/temp/${plainFileName}OdtContent.xml"/>
-    
+    <mkdir dir="${outputDir}/temp/${plainFileName}"/>
+    <unzip src="${outFile}" dest="${outputDir}/temp/${plainFileName}.odt"/>
+    <copy file="${outputDir}/temp/${plainFileName}.odt/content.xml" tofile="${outputDir}/temp/${plainFileName}.odt/${plainFileName}OdtContent.xml"/> 
     
     <antcall target="prepAndDiffFile">
-      <param name="inFile" value="${outputDir}/temp/${plainFileName}OdtContent.xml"/>
+      <param name="inFile" value="${outputDir}/temp/${plainFileName}.odt/${plainFileName}OdtContent.xml"/>
     </antcall>
   </target>
   

@@ -73,8 +73,10 @@
     <path refid="library.dir"/>
   </path>
   
-  <fileset id="generatedFiles" dir="${outputDir}" includes="**.*" excludes="readme.txt"/>
-  
+  <fileset id="generatedFiles" dir="${outputDir}" excludes="readme.txt">
+    <!--<include name="**.*"/>-->
+    <include name="**/**"/>
+  </fileset>  
   <!--  CSS files that are used in HTML builds. These are symlinked from
       the Stylesheets/ root folder. Not quite sure why yet. -->
   <fileset id="cssFiles" dir="${basedir}/../css" includes="*.css"/>
@@ -88,7 +90,7 @@
       TARGET clean
       This target removes all generated files.
     </description>
-    <delete>
+    <delete  includeemptydirs="true">
       <fileset refid="symlinksToCssFiles"/>
       <fileset refid="generatedFiles"/>
     </delete>
@@ -96,7 +98,7 @@
   
   <!--  These targets deal with diffing the results of transformations against
       expected results. The transformation result files are typically in the root 
-      Test folder; the files to diff them against are in the Test/expected-results
+      Test folder; the files to diff them against are in the Test2/expected-results
       folder. -->
   
   <target name="prepAndDiffFile">
