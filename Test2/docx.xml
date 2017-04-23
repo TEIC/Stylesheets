@@ -20,8 +20,11 @@
   <fileset id="teiToDocxFiles" dir="${inputDir}" includes="generalP5.xml, testEgXml1.xml, testNotes1.xml"/>
   
   <!--  Files for conversion from ODT.  -->
+  <!--  NOTE: docxGeneral.docx NOT INCLUDED HERE FOR NOW BECAUSE THE RESULTS ARE INVALID.
+        See https://github.com/TEIC/Stylesheets/issues/262. -->
   <fileset id="teiFromDocxFiles" dir="${inputDir}" includes="testDocxIndexes1.docx, testShelfmarkMs.docx,
-                                                             testDocxListsTables1.docx"/>
+                                                             testDocxListsTables1.docx, testNotes2.docx,
+                                                             "/>
   
   
 <!-- Default target that does everything. -->
