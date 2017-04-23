@@ -490,7 +490,6 @@
         </description>
         <property name="getFopAlreadyExecuted" value="true" />
         <available property="fopAvailable" file="${fopHome}/build/fop.jar"/>
-        <echo if:true="${fopAvailable}" message="Local copy of FOP 2.1 already exists, so no need to download it."/>
         <echo unless:true="${fopAvailable}" message="Downloading FOP 2.1 to test creation of PDFs."/>
         <get unless:true="${fopAvailable}" src="${fopDist}" 
              dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
@@ -498,7 +497,6 @@
         <delete file="${fopDest}/fop-2.1-bin.zip"/>
         
         <available property="fopHyphAvailable" file="${fopHome}/build/fop-hyph.jar"/>
-        <echo if:true="${fopHyphAvailable}" message="Local copy of FOP hyphenation jar already exists, so no need to download it."/>
         <echo unless:true="${fopHyphAvailable}" message="Downloading FOP hyphenation jar."/>
         <get unless:true="${fopHyphAvailable}" src="${fopHyphDist}" 
             dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
@@ -508,7 +506,6 @@
         <delete dir="${fopDest}/offo-hyphenation-binary"/>
         
         <available property="jeuclidJarsAvailable" file="${fopHome}/lib/jeuclid-core-3.1.9.jar"/>
-        <echo if:true="${jeuclidJarsAvailable}" message="Local copies of JEuclid jars already exist, so no need to download them."/>
         <echo unless:true="${jeuclidJarsAvailable}" message="Downloading JEuclid jars for processing MathML into PDF."/>
         <get unless:true="${jeuclidJarsAvailable}" src="${jeuclidDist}" 
             dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
@@ -539,6 +536,7 @@
             <antcall target="teiFilesFromHtml"/>
             <antcall target="teiFilesFromP4"/>
             <antcall target="odt"/>
+            <antcall target="docx"/>
         </parallel>
     </target>
     
