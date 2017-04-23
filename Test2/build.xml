@@ -58,8 +58,9 @@
 <!-- First we include the generic utilities module.   -->
     <import file="utilities.xml" as="utils"/>
     
-<!-- Import the ODT file, our first test of a modular process.   -->
+<!-- Import the modular test files.   -->
     <import file="odt.xml"/>
+    <import file="docx.xml"/>
     
 <!-- BEGIN PARAMETERS. -->
     
@@ -488,7 +489,6 @@
             needed to process MathML into PDF with FOP.
         </description>
         <property name="getFopAlreadyExecuted" value="true" />
-        <echo message="Checking whether a local copy of FOP 2.1 exists."/>
         <available property="fopAvailable" file="${fopHome}/build/fop.jar"/>
         <echo if:true="${fopAvailable}" message="Local copy of FOP 2.1 already exists, so no need to download it."/>
         <echo unless:true="${fopAvailable}" message="Downloading FOP 2.1 to test creation of PDFs."/>
@@ -497,7 +497,6 @@
         <unzip unless:true="${fopAvailable}" src="${fopDest}/fop-2.1-bin.zip" dest="${fopDest}" failonemptyarchive="true"/>
         <delete file="${fopDest}/fop-2.1-bin.zip"/>
         
-        <echo message="Checking whether a hyphenation file exists for FOP."/>
         <available property="fopHyphAvailable" file="${fopHome}/build/fop-hyph.jar"/>
         <echo if:true="${fopHyphAvailable}" message="Local copy of FOP hyphenation jar already exists, so no need to download it."/>
         <echo unless:true="${fopHyphAvailable}" message="Downloading FOP hyphenation jar."/>
@@ -508,7 +507,6 @@
         <delete file="${fopDest}/offo-hyphenation-binary.zip"/>
         <delete dir="${fopDest}/offo-hyphenation-binary"/>
         
-        <echo message="Checking whether a local copy of JEuclid exists for handling MathML."/>
         <available property="jeuclidJarsAvailable" file="${fopHome}/lib/jeuclid-core-3.1.9.jar"/>
         <echo if:true="${jeuclidJarsAvailable}" message="Local copies of JEuclid jars already exist, so no need to download them."/>
         <echo unless:true="${jeuclidJarsAvailable}" message="Downloading JEuclid jars for processing MathML into PDF."/>

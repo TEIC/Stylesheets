@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="teiFilesToDocx" name="StylesheetsTestDocx"
+<project basedir="." default="docx" name="StylesheetsTestDocx"
   xmlns:if="ant:if"
   xmlns:unless="ant:unless">
   
@@ -20,7 +20,7 @@
   <fileset id="teiToDocxFiles" dir="${inputDir}" includes="generalP5.xml, testEgXml1.xml, testNotes1.xml"/>
   
   <!--  Files for conversion from ODT.  -->
-  <!--<fileset id="teiFromDocxFiles" dir="${inputDir}" includes="testFromDocx1.docx"/>-->
+  <fileset id="teiFromDocxFiles" dir="${inputDir}" includes="testDocxIndexes1.docx"/>
   
   
 <!-- Default target that does everything. -->
@@ -77,48 +77,49 @@
       <param name="inFile" value="${outputDir}/temp/${plainFileName}/${plainFileName}DocxCore.xml"/>
     </antcall>
   </target>
-  <!--
-  <target name="teiFilesFromOdt">
+
+  <target name="teiFilesFromDocx">
     <description>
-      TARGET teiFilesFromOdt
-      Converts ODT files to TEI, validates them, 
+      TARGET teiFilesFromDocx
+      Converts DOCX files to TEI, validates them, 
       and diffs them against expected results.
     </description>
     
-    <foreach target="teiFileFromOdt" param="inFile">
+    <foreach target="teiFileFromDocx" param="inFile">
       <path>
-        <fileset refid="teiFromOdtFiles"/>
+        <fileset refid="teiFromDocxFiles"/>
       </path>
     </foreach>
    
   </target>
   
-  <target name="teiFileFromOdt" depends="getLatestTeiAll">
+    
+  <target name="teiFileFromDocx" depends="getLatestTeiAll">
     <description>
-      TARGET teiFileFromOdt
-      Converts a single ODT file to TEI, validates the result with Jing,
+      TARGET teiFileFromDocx
+      Converts a single DOCX file to TEI, validates the result with Jing,
       then diffs it against expected results. It takes a single
       parameter, inFile.
     </description>
-    <basename file="${inFile}" property="plainFileName" suffix=".odt"/>
+    <basename file="${inFile}" property="plainFileName" suffix=".docx"/>
     <property name="outFile" value="${outputDir}/${plainFileName}.xml"/>
     
-    <!-\- NOTE: ultimately we want to do this conversion by calling ant directly on the 
+    <!-- NOTE: ultimately we want to do this conversion by calling ant directly on the 
     ../odt/build-from.xml file, but it seems impossible to make this work; ant cannot
-    find the main Saxon class. -\->
-    <exec executable="${bin}/odttotei" failonerror="true">
-      <arg line="-\-localsource=${localsource}"/>
+    find the main Saxon class. -->
+    <exec executable="${bin}/docxtotei" failonerror="true">
+      <arg line="--localsource=${localsource}"/>
       <arg file="${inFile}"/>
       <arg file="${outFile}"/>
     </exec>
     
-<!-\- Validate the results.   -\->
+<!-- Validate the results.   -->
     <jing rngfile="${teiAllSchema}" file="${outFile}"/>
     
     <antcall target="prepAndDiffFile">
       <param name="inFile" value="${outFile}"/>
     </antcall>
-  </target>-->
+  </target>
   
   
 </project>

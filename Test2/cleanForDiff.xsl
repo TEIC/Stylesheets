@@ -58,6 +58,13 @@
         </xsl:copy>
     </xsl:template>
     
+<!--  Similarly, we remove timestamps from <date> elements in TEI files.  -->
+    <xsl:template match="tei:change/tei:date[contains(., ':')]">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+        </xsl:copy>
+    </xsl:template>
+    
 <!--  Default identity transform.  -->
     <xsl:template match="@* | node()" priority="-1" mode="#all">
         <xsl:copy>
