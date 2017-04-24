@@ -257,6 +257,17 @@ of this software, even if advised of the possibility of such damage.
     </em>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element distinct</desc>
+  </doc>
+  <xsl:template match="tei:distinct">
+    <span>
+      <xsl:call-template name="makeRendition">
+        <xsl:with-param name="default" select="local-name()"/>
+      </xsl:call-template>
+      <xsl:apply-templates/>
+    </span>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element epigraph</desc>
   </doc>
   <xsl:template match="tei:epigraph">
