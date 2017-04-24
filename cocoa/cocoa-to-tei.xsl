@@ -269,7 +269,17 @@
     <xsl:apply-templates select="@*|*|text()|comment()|processing-instruction" mode="pass2"/>
     <lb/>
   </xsl:template>
-
+<!-- abs are invalid in title elements. -->
+  <xsl:template match="ab[parent::title]" mode="pass2">
+    <xsl:apply-templates mode="#current"/>
+    <xsl:if test="following::* or following::text()[string-length(normalize-space(.)) gt 1]"><lb/><xsl:text>&#x0A;</xsl:text></xsl:if>
+  </xsl:template>
+<!-- title elements are invalid as direct children of body. -->
+  <xsl:template match="body/title" mode="pass2">
+    <ab>
+      <title><xsl:apply-templates mode="#current"/></title>
+    </ab>
+  </xsl:template>
   <xsl:template match="author" mode="pass2"/>
   <xsl:template match="date" mode="pass2"/>
   <xsl:template match="title[1]" mode="pass2"/>
