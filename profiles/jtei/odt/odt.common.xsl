@@ -173,7 +173,7 @@
         </xsl:choose>
         <xsl:for-each select="/TEI/teiHeader[1]/fileDesc[1]/titleStmt[1]/author">
           <text:p text:style-name="teiHead4">
-            <xsl:value-of select="upper-case(string-join(tei:name/(tei:forename, tei:surname), ' '))"/>
+            <xsl:value-of select="upper-case(string-join(name/(forename, surname), ' '))"/>
           </text:p>          
           <text:p text:style-name="teiPara">
             <xsl:apply-templates select="affiliation"/>
