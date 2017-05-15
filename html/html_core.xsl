@@ -93,10 +93,10 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element address</desc>
   </doc>
   <xsl:template match="tei:address">
-    <address>
+    <span class="address">
       <xsl:call-template name="makeRendition"/>
       <xsl:apply-templates/>
-    </address>
+    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element author</desc>
