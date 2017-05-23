@@ -785,6 +785,7 @@
   
   <!-- [RvdB] added preprocessing step, which just copies the list, but wraps all contents of <item> in <p> prior to further processing -->
   <xsl:template match="tei:list">
+    <xsl:param name="listnote.counter" tunnel="yes" as="xs:integer" select="0"/>
     <xsl:variable name="current" select="."/>
     <xsl:variable name="prepared">
       <xsl:apply-templates select="." mode="prepare"/>
@@ -796,7 +797,7 @@
         <xsl:call-template name="get.rendition"/>
         <xsl:apply-templates select="node()[not(self::tei:head)]">
           <!-- count preceding notes and pass this info for further processing of notes -->
-          <xsl:with-param name="listnote.counter" select="count($current/preceding::tei:note)" tunnel="yes"/>
+          <xsl:with-param name="listnote.counter" select="$listnote.counter + count($current/preceding::tei:note)" tunnel="yes"/>
         </xsl:apply-templates>
       </xsl:copy>
     </xsl:for-each>
