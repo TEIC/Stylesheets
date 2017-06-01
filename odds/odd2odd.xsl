@@ -1155,13 +1155,47 @@ of this software, even if advised of the possibility of such damage.
         <xsl:for-each select="key('odd2odd-CHANGE',$className)">
           <!-- context is now a classSpec in change mode in the ODD spec -->
           <!-- description -->
-          <xsl:choose>
+          <!-- For each non-identifiable element type (namely:
+               <gloss>, <altIdent>, <equiv>, <desc>, then <remarks>,
+               <exemplum>, and <listRef>) copy instances over from the
+               customization ODD if it is present there, and from the
+               original source ODD if it is not present in the context
+               node; unless we are stripping out prose content stuff,
+               in which case some are not copied no matter what. The
+               <classes>, <constraintSpec>s, and <attList> are handled
+               differently, as they are identifiable. -->
+          <xsl:choose> <!-- maybe copy <gloss>s from ODD or ORIGINAL -->
+            <xsl:when test="$stripped='true'"/>
+            <xsl:when test="tei:gloss">
+              <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:gloss"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:choose> <!-- copy <altIdent>s from ODD or ORIGINAL -->
+            <xsl:when test="tei:altIdent">
+              <xsl:apply-templates mode="justcopy" select="tei:altIdent"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:altIdent"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:choose> <!-- copy <equiv>s from ODD or ORIGINAL -->
+            <xsl:when test="tei:equiv">
+              <xsl:apply-templates mode="justcopy" select="tei:equiv"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:equiv"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:choose> <!-- maybe copy <desc>s from ODD or ORIGINAL -->
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:desc">
               <xsl:apply-templates mode="justcopy" select="tei:desc"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:desc"/>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:desc"/>
             </xsl:otherwise>
           </xsl:choose>
           <!-- classes -->
@@ -1186,14 +1220,14 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:variable name="metoo">
                       <xsl:value-of select="concat(../../@ident,@key)"/>
                     </xsl:variable>
-                      <xsl:choose>
-                        <xsl:when test="$ODD/key('odd2odd-DELETE',$me)"> </xsl:when>
-                        <xsl:when test="$ODD/key('odd2odd-MEMBEROFDELETE',$metoo)"> </xsl:when>
-                        <xsl:when test="$ODD/key('odd2odd-MEMBEROFADD',$metoo)"> </xsl:when>
-                        <xsl:otherwise>
-                          <memberOf key="{$me}"/>
-                        </xsl:otherwise>
-                      </xsl:choose>
+                    <xsl:choose>
+                      <xsl:when test="$ODD/key('odd2odd-DELETE',$me)"> </xsl:when>
+                      <xsl:when test="$ODD/key('odd2odd-MEMBEROFDELETE',$metoo)"> </xsl:when>
+                      <xsl:when test="$ODD/key('odd2odd-MEMBEROFADD',$metoo)"> </xsl:when>
+                      <xsl:otherwise>
+                        <memberOf key="{$me}"/>
+                      </xsl:otherwise>
+                    </xsl:choose>
                   </xsl:for-each>
                 </xsl:for-each>
               </xsl:when>
@@ -1230,6 +1264,33 @@ of this software, even if advised of the possibility of such damage.
               <xsl:with-param name="objectName" select="$className"/>
             </xsl:call-template>
           </attList>
+          <xsl:choose> <!-- maybe copy <exemplum>s from ODD or ORIGINAL -->
+            <xsl:when test="$stripped='true'"/>
+            <xsl:when test="tei:exemplum">
+              <xsl:apply-templates mode="justcopy" select="tei:exemplum"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:exemplum"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:choose> <!-- maybe copy <remarks>s from ODD or ORIGINAL -->
+            <xsl:when test="$stripped='true'"/>
+            <xsl:when test="tei:remarks">
+              <xsl:apply-templates mode="justcopy" select="tei:remarks"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:remarks"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:choose> <!-- maybe copy <listRef>s from ODD or ORIGINAL -->
+            <xsl:when test="$stripped='true'"/>
+            <xsl:when test="tei:listRef">
+              <xsl:apply-templates mode="justcopy" select="tei:listRef"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:listRef"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:copy>
