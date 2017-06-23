@@ -119,7 +119,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>Secondary CSS style file; this will be given a media=screen attribute,
 so that it does not affect printing. It should be used for screen layout.</desc>
    </doc>
-    <xsl:param name="cssSecondaryFile"  as="xs:string" select="''"/>
+  <xsl:param name="cssSecondaryFile"  as="xs:string" select="''"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
       <desc>CSS file to include in the output file directly</desc>
    </doc>
@@ -137,7 +137,13 @@ HTML width and height (in pixels) from supplied dimensions.</desc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>[html] Hook where HTML can be inserted just after &lt;body&gt;</desc>
    </doc>
-  <xsl:template name="bodyHook"/>
+  <xsl:template name="bodyHook">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="http://digitallatin.org/"><img src="images/DLL-logo.png" alt="Digital Latin Library Home" /></a>
+        </div>
+    </nav>
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>     <p>[html] Hook where HTML can be inserted just before the
     &lt;body&gt; ends.</p>
@@ -253,9 +259,9 @@ will generate an &lt;h2&gt;</p>
       <desc>[html] Header section across top of page </desc>
    </doc>
   <xsl:template name="hdr">
-      <xsl:call-template name="pageHeader">
-         <xsl:with-param name="mode"/>
-      </xsl:call-template>
+    <xsl:call-template name="pageHeader">
+      <xsl:with-param name="mode"/>
+    </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>[html] Navigation bar </desc>
@@ -359,23 +365,23 @@ will generate an &lt;h2&gt;</p>
   <xsl:template name="navbar">
     <xsl:choose>
       <xsl:when test="$navbarFile=''">
-	<xsl:comment>no nav bar</xsl:comment>
+        <xsl:comment>no nav bar</xsl:comment>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
-	  <xsl:for-each select="document($navbarFile,document(''))">
-	    <xsl:for-each select="tei:list/tei:item">
-	      <span class="navbar">
-		<a href="{$URLPREFIX}{tei:xref/@url}" class="navbar">
-		  <xsl:apply-templates select="tei:xref/text()"/>
-		</a>
-	      </span>
-	      <xsl:if test="following-sibling::tei:item"> 
-		<xsl:value-of select="$separator"/>
-	      </xsl:if>
-	    </xsl:for-each>
-	  </xsl:for-each>
-	</xsl:element>
+        <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+          <xsl:for-each select="document($navbarFile,document(''))">
+            <xsl:for-each select="tei:list/tei:item">
+              <span class="navbar">
+                <a href="{$URLPREFIX}{tei:xref/@url}" class="navbar">
+                  <xsl:apply-templates select="tei:xref/text()"/>
+                </a>
+              </span>
+              <xsl:if test="following-sibling::tei:item"> 
+                <xsl:value-of select="$separator"/>
+              </xsl:if>
+            </xsl:for-each>
+          </xsl:for-each>
+        </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
