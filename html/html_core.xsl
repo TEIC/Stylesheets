@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet                 xmlns:m="http://www.w3.org/1998/Math/MathML"
-				xmlns="http://www.w3.org/1999/xhtml"
+<xsl:stylesheet
+        xmlns:m="http://www.w3.org/1998/Math/MathML"
 				xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
 				xmlns:fo="http://www.w3.org/1999/XSL/Format"
 				xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -757,9 +757,9 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
     <xsl:choose>
       <xsl:when test="tei:biblStruct and $biblioStyle='mla'">
-	<div type="listBibl" xmlns="http://www.w3.org/1999/xhtml">	  
+	<div type="listBibl">	  
 	<xsl:for-each select="tei:biblStruct">
-	  <p class="hang" xmlns="http://www.w3.org/1999/xhtml">
+	  <p class="hang">
 	    <xsl:apply-templates select="tei:analytic" mode="mla"/>
 	    <xsl:apply-templates select="tei:monogr" mode="mla"/>
 	    <xsl:apply-templates select="tei:relatedItem" mode="mla"/>

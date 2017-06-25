@@ -4,7 +4,6 @@
   xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
   exclude-result-prefixes="xs xd"
   version="2.0"
-  xmlns="http://www.w3.org/1999/xhtml"
   xpath-default-namespace="http://www.w3.org/1999/xhtml">
   <xd:doc scope="stylesheet">
     <xd:desc>

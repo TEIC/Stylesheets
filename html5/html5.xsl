@@ -8,7 +8,7 @@
 
     <xsl:import href="../html/html.xsl"/>
     <xsl:import href="textstructure.xsl"/>
-    <xsl:output method="xml" encoding="utf-8" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
+    <xsl:output method="html" encoding="utf-8" omit-xml-declaration="yes" />
     <xsl:param name="outputTarget">html5</xsl:param>
     <xsl:param name="doctypeSystem">about:legacy-compat</xsl:param>
     <xsl:param name="doctypePublic"/>

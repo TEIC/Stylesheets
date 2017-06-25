@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="2.0"
-  exclude-result-prefixes="#default s html a fo rng tei teix"
+  exclude-result-prefixes="s html a fo rng tei teix"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:html="http://www.w3.org/1999/xhtml"
@@ -8,8 +8,7 @@
   xmlns:s="http://www.ascc.net/xml/schematron"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns="http://www.w3.org/1999/xhtml" >
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" >
 
   <xsl:param name="cssFile"/>
   <xsl:param name="cssSecondaryFile"/>

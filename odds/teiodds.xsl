@@ -1711,12 +1711,12 @@ select="$makeDecls"/></xsl:message>
         <xsl:value-of select="$link"/>
       </xsl:when>
       <xsl:when test="$oddmode='html' and number($splitLevel)=-1">
-        <a xmlns="http://www.w3.org/1999/xhtml" class="{$class}" href="#{$partialname}">
+        <a class="{$class}" href="#{$partialname}">
           <xsl:value-of select="$link"/>
         </a>
       </xsl:when>
       <xsl:when test="$oddmode='html' and $STDOUT='true'">
-        <a xmlns="http://www.w3.org/1999/xhtml" class="{$class}">
+        <a class="{$class}">
           <xsl:attribute name="href">
             <xsl:for-each select="key('IDENTS',$partialname)">
               <xsl:call-template name="getSpecURL">
@@ -1735,7 +1735,7 @@ select="$makeDecls"/></xsl:message>
 
 
       <xsl:when test="$oddmode='html'">
-        <a xmlns="http://www.w3.org/1999/xhtml" class="{$class}" title="{$glossAndDesc}"
+        <a class="{$class}" title="{$glossAndDesc}"
           href="{concat('ref-',$partialname,'.html')}">
           <xsl:value-of select="$link"/>
         </a>

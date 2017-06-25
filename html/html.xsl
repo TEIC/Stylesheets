@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"                  
-                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+<xsl:stylesheet xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
 		xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"

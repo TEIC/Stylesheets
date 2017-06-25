@@ -2688,13 +2688,13 @@
       <xsl:when test="$oddmode = 'html'">
         <xsl:choose>
           <xsl:when test="key('IDENTS', $name) and number($splitLevel) = -1">
-            <a xmlns="http://www.w3.org/1999/xhtml" class="link_element"
+            <a class="link_element"
               href="#{$name}">
               <xsl:value-of select="$name"/>
             </a>
           </xsl:when>
           <xsl:when test="key('IDENTS', $name) and $STDOUT = 'true'">
-            <a xmlns="http://www.w3.org/1999/xhtml" class="link_element">
+            <a class="link_element">
               <xsl:attribute name="href">
                 <xsl:call-template name="getSpecURL">
                   <xsl:with-param name="name">
@@ -2710,7 +2710,7 @@
             </a>
           </xsl:when>
           <xsl:when test="key('IDENTS', $name)">
-            <a xmlns="http://www.w3.org/1999/xhtml" class="link_element"
+            <a class="link_element"
               href="ref-{$linkname}{$outputSuffix}">
               <xsl:value-of select="$name"/>
             </a>
