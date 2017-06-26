@@ -373,7 +373,7 @@ of this software, even if advised of the possibility of such damage.
                </xsl:if>
             </xsl:when>
             <xsl:otherwise>
-               <xsl:message terminate="yes">Cannot work out how to do a graphic, needs a URL</xsl:message>
+               <xsl:message>Found binaryObject without @url.</xsl:message>
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
@@ -434,13 +434,9 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:attribute name="src">
 		    <xsl:choose>
 		      <xsl:when test="self::tei:binaryObject">
-			<xsl:text>data:</xsl:text>
-			<xsl:value-of select="@mimetype"/>
-			<xsl:variable name="enc" select="if (@encoding) then @encoding else 'base64'"/>
-			<xsl:text>;</xsl:text>
-			<xsl:value-of select="$enc"/>
-			<xsl:text>,</xsl:text>
-			<xsl:copy-of select="text()"/>
+		        <xsl:variable name="mime" select="if (@mimeType) then @mimeType else 'image/*'"/>
+		        <xsl:variable name="enc" select="if (@encoding) then @encoding else 'base64'"/>
+		        <xsl:value-of select="concat('data:', $mime, ';', $enc, ',', normalize-space(text()))"/>
 		      </xsl:when>
 		      <xsl:otherwise>
 			<xsl:value-of

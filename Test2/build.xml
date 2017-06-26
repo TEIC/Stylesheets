@@ -58,11 +58,15 @@
 <!-- First we include the generic utilities module.   -->
     <import file="utilities.xml" as="utils"/>
     
+<!-- Import the modular test files.   -->
+    <import file="odt.xml"/>
+    <import file="docx.xml"/>
+    
 <!-- BEGIN PARAMETERS. -->
     
 <!-- Whether we're running tests against expected results or regenerating
-     expected results en masse. -->
-    <property name="regenerate" value=""/>
+     expected results en masse. MOVED TO utilities.xml. -->
+    <!--<property name="regenerate" value=""/>-->
     
 <!-- Whether or not to build all FO files generated into PDFs with FOP.   -->
     <property name="buildFoToPdf" value="true"/>
@@ -89,8 +93,9 @@
 
 <!--  TEI file that can be converted in a straightforward manner into HTML
       without special parameters. -->
-    <fileset id="simpleTeiForHtmlFiles" dir="${inputDir}" includes="test14.xml, testRendition1.xml, test22.xml, test23.xml,
-        testCorpus.xml, testMathML.xml"/>
+    <fileset id="simpleTeiForHtmlFiles" dir="${inputDir}" includes="testP5ExTcp1.xml, 
+        testRendition1.xml, testQuotations1.xml, testWhitespace1.xml, testBinaryObjects1.xml,
+        testCorpus1.xml, testMathML.xml, testStructure1.xml"/>
     
 <!--  HTML input files for conversion into TEI.  -->
     <fileset id="htmlInputFiles" dir="${inputDir}" includes="testHtmlInput1.html"/>
@@ -102,11 +107,12 @@
     <fileset id="cocoaFiles" dir="${inputDir}" includes="testCocoa*.txt"/>
     
 <!--  TEI files which are converted to XSL:FO.  -->
-    <fileset id="foFiles" dir="${inputDir}" includes="generalP5.xml, test5.xml, testCorpus.xml, testMathML.xml, 
-        test27.xml, testnotes1.xml, tei_simplePrint.doc.xml"/>
+    <fileset id="foFiles" dir="${inputDir}" includes="generalP5.xml, testStructure1.xml, testCorpus1.xml, testMathML.xml, 
+        testBibliography1.xml, testNotes1.xml, tei_simplePrint.doc.xml, testQuotations1.xml, testBinaryObjects1.xml"/>
     
 <!--  Files for conversion to RDF.  -->
     <fileset id="rdfFiles" dir="${inputDir}" includes="testToRdf1.xml"/>
+
 
     
 <!--  These targets are core transformation and validation processes which are 
@@ -128,7 +134,9 @@
     </target>
     
     
-    <target name="simpleTeiToHtml" depends="symlinkCssFiles">
+    <!-- NOTE: used to have depends="symlinkCssFiles", but I don't see the point in 
+         that; HTML outputse seem to be linked to CSS files on the tei website.    -->
+    <target name="simpleTeiToHtml">
         <description>
             TARGET simpleTeiToHtml
             This passes a set of files (simpleTeiForHtmlFiles) to the teiFileToHtml
@@ -413,6 +421,7 @@
         <fop format="application/pdf"
             fofile="${inFile}"
             outfile="${pdfFile}"
+            basedir="${outputDir}"
             force="true"/>
         
     </target>
@@ -469,7 +478,7 @@
     
 <!--  We want to test FOP, but probably avoid exploding our repo,
       so we download it. This is hard-coded FOP 2.1. -->
-    <target name="getFop">
+    <target name="getFop" unless:blank="getFopAlreadyExecuted">
         <description>
             TARGET getFop
             Checks whether the FOP jars are available, and if not, 
@@ -479,18 +488,15 @@
             available. Finally, it retrieves the JEuclid jars 
             needed to process MathML into PDF with FOP.
         </description>
-        <echo message="Checking whether a local copy of FOP 2.1 exists."/>
+        <property name="getFopAlreadyExecuted" value="true" />
         <available property="fopAvailable" file="${fopHome}/build/fop.jar"/>
-        <echo if:true="${fopAvailable}" message="Local copy of FOP 2.1 already exists, so no need to download it."/>
         <echo unless:true="${fopAvailable}" message="Downloading FOP 2.1 to test creation of PDFs."/>
         <get unless:true="${fopAvailable}" src="${fopDist}" 
              dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
         <unzip unless:true="${fopAvailable}" src="${fopDest}/fop-2.1-bin.zip" dest="${fopDest}" failonemptyarchive="true"/>
         <delete file="${fopDest}/fop-2.1-bin.zip"/>
         
-        <echo message="Checking whether a hyphenation file exists for FOP."/>
         <available property="fopHyphAvailable" file="${fopHome}/build/fop-hyph.jar"/>
-        <echo if:true="${fopHyphAvailable}" message="Local copy of FOP hyphenation jar already exists, so no need to download it."/>
         <echo unless:true="${fopHyphAvailable}" message="Downloading FOP hyphenation jar."/>
         <get unless:true="${fopHyphAvailable}" src="${fopHyphDist}" 
             dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
@@ -499,9 +505,7 @@
         <delete file="${fopDest}/offo-hyphenation-binary.zip"/>
         <delete dir="${fopDest}/offo-hyphenation-binary"/>
         
-        <echo message="Checking whether a local copy of JEuclid exists for handling MathML."/>
         <available property="jeuclidJarsAvailable" file="${fopHome}/lib/jeuclid-core-3.1.9.jar"/>
-        <echo if:true="${jeuclidJarsAvailable}" message="Local copies of JEuclid jars already exist, so no need to download them."/>
         <echo unless:true="${jeuclidJarsAvailable}" message="Downloading JEuclid jars for processing MathML into PDF."/>
         <get unless:true="${jeuclidJarsAvailable}" src="${jeuclidDist}" 
             dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
@@ -517,9 +521,12 @@
             TARGET: test
             This target runs all build and check processes. Use this target
             for a full run of tests. IT'S NOT COMPLETE BY A LONG WAY. This
-            runs all tests in parallel for better performance.
+            runs all tests in parallel for better performance. We run the 
+            clean target before everything else, assuming that if you're 
+            running all the tests you'll want cruft cleared away first.
         </description>
         <parallel failonany="true">
+            <antcall target="clean"/>
             <antcall target="oddToRng"/>
             <antcall target="simpleTeiToHtml"/>
             <antcall target="markdown"/>
@@ -528,6 +535,8 @@
             <antcall target="teiFilesToRdf"/>
             <antcall target="teiFilesFromHtml"/>
             <antcall target="teiFilesFromP4"/>
+            <antcall target="odt"/>
+            <antcall target="docx"/>
         </parallel>
     </target>
     

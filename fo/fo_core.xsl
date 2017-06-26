@@ -643,10 +643,10 @@ of this software, even if advised of the possibility of such damage.
          </xsl:if>
          <xsl:if test="@xml:lang">
             <xsl:attribute name="country">
-               <xsl:value-of select="substring-before(@xml:lang,'-')"/>
+               <xsl:value-of select="substring-after(@xml:lang,'-')"/>
             </xsl:attribute>
             <xsl:attribute name="language">
-               <xsl:value-of select="substring-after(@xml:lang,'-')"/>
+               <xsl:value-of select="substring-before(@xml:lang,'-')"/>
             </xsl:attribute>
          </xsl:if>
          <xsl:apply-templates/>

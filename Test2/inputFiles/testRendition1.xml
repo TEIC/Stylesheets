@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="http://www.tei-c.org/Vault/P5/3.1.0/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/Vault/P5/3.1.0/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<!-- This file provides a set of generic tests for various 
+     rendition scenarios. It is hard-linked to a Vault version
+     of the TEI schema because it depends on tagUsage/@render,
+     which was removed in 2017. -->
+
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader>
     <fileDesc>
@@ -7,10 +15,10 @@
         <author>Sebastian Rahtz</author>
       </titleStmt>
       <publicationStmt>
-        <p>Stylesheets test file</p>
+        <p>Stylesheets test file.</p>
       </publicationStmt>
       <sourceDesc>
-        <p/>
+        <p>Originally test20.xml.</p>
       </sourceDesc>
     </fileDesc>
     <encodingDesc>
@@ -30,6 +38,9 @@
         </namespace>
       </tagsDecl>
     </encodingDesc>
+    <revisionDesc>
+      <change when="2017-04-13" who="https://github.com/martindholmes">Made valid and tweaked a bit.</change>
+    </revisionDesc>
   </teiHeader>
   <text>
     <body>
@@ -87,7 +98,7 @@
         <row>
           <cell>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
-              <cit>Quote</cit>
+              <cit><quote>Quote</quote></cit>
             </egXML>
           </cell>
           <cell>
@@ -147,6 +158,16 @@ dodo</del>
           </cell>
           <cell>
             <emph>emph</emph>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <distinct>distinct</distinct>
+            </egXML>
+          </cell>
+          <cell>
+            <distinct>distinct</distinct>
           </cell>
         </row>
         <row>
@@ -503,7 +524,10 @@ at last said — </cell>
         <row>
           <cell>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
-              <speaker rend="it">Roderigo</speaker>
+              <sp>
+                <speaker rend="it">Roderigo</speaker>
+                <p>Stuff spoken</p>
+              </sp>
             </egXML>
           </cell>
           <cell>

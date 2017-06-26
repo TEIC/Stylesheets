@@ -7,6 +7,8 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:rng="http://relaxng.org/ns/structure/1.0" 
     xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     exclude-result-prefixes="#all"
     version="2.0">
     <xd:doc scope="stylesheet">
@@ -25,6 +27,9 @@
                    
                 3. Check all internal links in XHTML files (replacing checklinks.xsl
                    in previous test Makefile).
+                   
+                4. Remove any timestamps that are generated during processing, since
+                   these will be different each time a test is run.
             </xd:p>
         </xd:desc>
     </xd:doc>
@@ -45,6 +50,20 @@
     
 <!--  We don't want any comments.  -->
     <xsl:template match="comment()" mode="#all"/>
+    
+<!--  We must remove the text contents of timestamps in docx core.xml files.  -->
+    <xsl:template match="dcterms:modified">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+        </xsl:copy>
+    </xsl:template>
+    
+<!--  Similarly, we remove timestamps from <date> elements in TEI files.  -->
+    <xsl:template match="tei:change/tei:date[contains(., ':')]">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+        </xsl:copy>
+    </xsl:template>
     
 <!--  Default identity transform.  -->
     <xsl:template match="@* | node()" priority="-1" mode="#all">

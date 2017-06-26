@@ -28,6 +28,10 @@
   
   <!-- We need ant-contrib to do foreach.   -->
   <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+  <!-- Whether we're running tests against expected results or regenerating
+     expected results en masse. -->
+  <property name="regenerate" value=""/>
   
   <!-- AN ASSORTMENT OF FILE PATHS. -->
   <!-- Location of transformtei script and its symlinked callers.   -->
@@ -45,18 +49,34 @@
   <!-- Location of schemas used to validate results.   -->
   <property name="schemaDir" value="${basedir}/schemas"/>
   
+  <!-- tei_all schema is not stored, it's retrieved if not there. -->
+  <property name="teiAllSchema" value="${schemaDir}/tei_all.rng"/>
+  
+  <!-- Source to retrieve teiAllSchema from. -->
+  <property name="teiAllSource" value="https://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng"/>
+  
   <!-- Java tools we need.    -->
   <property name="saxonJar" value="../lib/saxon9he.jar"/>
   <property name="trangJar" value="../lib/trang.jar"/>
   <!-- Not sure why we need a special version of Jing, but that's what the Makefile uses. 
      This should be checked into. -->
-  <property name="jingJar" value="../Test/lib/jing-20120724.0.0.jar"/>
+  <property name="jingJar" value="../lib/lib/jing-20120724.0.0.jar"/>
   
   <!-- The jing task requires attributes @rngfile and @file.    -->
   <taskdef name="jing" classpath="${jingJar}" classname="com.thaiopensource.relaxng.util.JingTask"/>
   
-  <fileset id="generatedFiles" dir="${outputDir}" includes="**.*"/>
+  <path id="externalCalls">
+    <fileset dir="../lib">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="../tools/ImageInfo" includes="**.jar"/>
+    <path refid="library.dir"/>
+  </path>
   
+  <fileset id="generatedFiles" dir="${outputDir}" excludes="readme.txt">
+    <!--<include name="**.*"/>-->
+    <include name="**/**"/>
+  </fileset>  
   <!--  CSS files that are used in HTML builds. These are symlinked from
       the Stylesheets/ root folder. Not quite sure why yet. -->
   <fileset id="cssFiles" dir="${basedir}/../css" includes="*.css"/>
@@ -70,7 +90,7 @@
       TARGET clean
       This target removes all generated files.
     </description>
-    <delete>
+    <delete  includeemptydirs="true">
       <fileset refid="symlinksToCssFiles"/>
       <fileset refid="generatedFiles"/>
     </delete>
@@ -78,7 +98,7 @@
   
   <!--  These targets deal with diffing the results of transformations against
       expected results. The transformation result files are typically in the root 
-      Test folder; the files to diff them against are in the Test/expected-results
+      Test folder; the files to diff them against are in the Test2/expected-results
       folder. -->
   
   <target name="prepAndDiffFile">
@@ -221,19 +241,37 @@
     <antcall target="diffFileSets"/>
   </target>
   
+  <target name="getLatestTeiAll" unless:true="haveTeiAll">
+    <description>
+      TARGET getLatestTeiAll
+      This target checks to see whether tei_all.rng is available in the schemas
+      folder. If not, it retrieves it for use in validation of results with Jing.
+    </description>
+    <if>
+      <available file="${teiAllSchema}"/>
+      <then>
+        <property name="haveTeiAll" value="true"/>
+      </then>
+      <else>
+        <echo message="Retrieving a copy of the tei_all schema."/>
+        <get src="${teiAllSource}" dest="${teiAllSchema}" verbose="on" retries="3" usetimestamp="true"/>
+        <property name="haveTeiAll" value="true"/>
+      </else>
+    </if>
+  </target>
+  
   <!--   NOTE: I DO NOT SEE THE POINT IN THESE CSS FILE SYMLINKS, AND UNLESS I 
        CAN FIGURE OUT A GOOD REASON FOR THEM, I'LL REMOVE THE FOLLOWING TWO 
-       TARGETS AND USE STRAIGHTFORWARD PATHS TO THE ORIGINAL CSS FILES IN THE
-       HTML BUILD COMMANDS. -->
+       TARGETS. -->
   <target name="symlinkCssFile">
     <description>
-      TARGET symlinkCssFile
+      TARGET symlinkCssFile (PROBABLY OBSOLETE)
       This target creates a symlink from the ${basedir}/../ directory
       to a file in its child css directory. NOTE: need to figure
       out how best to accomplish this on Windows. ${to} is passed
       as a param; ${from} is generated from it.
     </description>
-    <propertyregex property="from" input="${to}" regexp="${file.separator}css${file.separator}" replace="${file.separator}" global="true"/>
+    <propertyregex property="from" input="${to}" regexp="${file.separator}css${file.separator}" replace="${file.separator}Test2{$file.separator}outputFiles{$file.separator}" global="true"/>
     <exec executable="ln">
       <arg value="-s"/>
       <arg value="-f"/>
@@ -244,7 +282,7 @@
   
   <target name="symlinkCssFiles">
     <description>
-      TARGET symlinkCssFiles
+      TARGET symlinkCssFiles (PROBABLY OBSOLETE)
       This target creates symlinks from the parent directory of ${basedir}
       to each of the CSS files in the ../css directory. These are used in 
       the HTML build processes, then removed on cleanup.

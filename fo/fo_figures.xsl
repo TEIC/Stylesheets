@@ -433,14 +433,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:binaryObject">
     <xsl:variable name="enc" select="if (@encoding) then @encoding
       else 'base64'"/>
-    <external-graphic>
-      <xsl:attribute name="src">
-	<xsl:text>url('data:image/auto;{$enc},</xsl:text>
-	<xsl:value-of select="."/>
-	<xsl:text>')</xsl:text>
-      </xsl:attribute>
+    <xsl:variable name="mimeType" select="if (@mimeType) then @mimeType else 'image/auto'"/>
+    <external-graphic content-height="scale-down-to-fit" 
+                      content-width="scale-down-to-fit"
+                      scaling="uniform"
+                      max-width="100%"
+                      max-height="100%">
+       <xsl:attribute name="src" select="concat('url(''data:', $mimeType, ';', $enc, ',', normalize-space(.), ''')')"/>
       <xsl:call-template name="graphicsAttributes">
-	<xsl:with-param name="mode">fo</xsl:with-param>
+	     <xsl:with-param name="mode">fo</xsl:with-param>
       </xsl:call-template>
     </external-graphic>  
   </xsl:template>

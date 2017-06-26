@@ -359,13 +359,12 @@ there are no bookmarks or other such features. Possible values are
    </doc>
    <xsl:param name="foEngine"/>
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
-        <desc>Language (for hyphenation). The default here depends on foEngine,
-            because FOP will not recognize the original default en_US, which is 
-            invalid, but presumably that was there because of some other processor
-            expectations.
+        <desc>Language (for hyphenation). This was originally en_US, but that's 
+            invalid and causes trouble, so it's now set to the default 'en'
+            (MDH 2017-04-14).
         </desc>
     </doc>
-    <xsl:param name="language" select="if ($foEngine = 'fop') then 'en' else 'en_US'"/>
+    <xsl:param name="language" select="'en'"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="boolean">
       <desc>Make &lt;lb&gt; active (ie cause a line break)
 </desc>
