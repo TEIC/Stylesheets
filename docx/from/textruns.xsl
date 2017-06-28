@@ -87,13 +87,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
     </xsl:template>
   
-  <xsl:template match="w:commentRangeStart[@w:id]">
-    <milestone type="commentRangeStart" n="{@w:id}"/>
-  </xsl:template>
+  <xsl:template match="w:commentRangeStart[@w:id]"><anchor type="commentRangeStart" n="{@w:id}"/></xsl:template>
   
-  <xsl:template match="w:commentRangeEnd[@w:id]">
-    <milestone type="commentRangeEnd" n="{@w:id}"/>
-  </xsl:template>
+  <xsl:template match="w:commentRangeEnd[@w:id]"><anchor type="commentRangeEnd" n="{@w:id}"/></xsl:template>
   
     <xsl:template match="w:r">
       <xsl:call-template name="processTextrun"/>
