@@ -1,3 +1,1357 @@
+2017-07-04  Hugh Cayless  <philomousos@gmail.com>
+
+	Resolving #255.
+
+2017-06-30  James Cummings  <james@blushingbunny.net>
+
+	Point to local copy of xml.xsd
+
+2017-06-28  James Cummings  <james@blushingbunny.net>
+
+	changing milestone to anchor
+
+	adding change for #275
+
+2017-06-01  Syd Bauman  <s.bauman@neu.edu>
+
+	Update test15 expected output for last check-in Apparently this one test file happened to get caught by the bug the previous commit fixed -- the <listRef> was never making it to the output, but apparently no one ever noticed.
+
+	Process other children of <classSpec> Implement change worked out on this morning on conference call to addrss #254
+
+2017-05-23  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #270 from rvdb/jTEI
+	fixed numbering for notes inside nested lists
+
+	fixed numbering for notes inside nested lists
+
+2017-05-14  martindholmes  <mholmes@uvic.ca>
+
+	Fix in Test/expected-results for merge of pull request on #261.
+
+	Fix in Test2/expected-results for merge of pull request on #261.
+
+2017-05-14  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #265 from martinascholger/dev
+	TEI address element is wrongly converted to HTML address element (#261)
+
+2017-05-10  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #269 from rvdb/jTEI
+	added author names to author info
+
+	cosmetic fix
+
+	added author names to author info
+
+2017-05-04  martinascholger  <martina.scholger@uni-graz.at>
+
+	span.address selector with default properties of html:address added
+
+	change address to span
+
+2017-04-24  martindholmes  <mholmes@uvic.ca>
+
+	Forgot to commit the stylesheet changes that create the modified results.
+
+2017-04-23  martindholmes  <mholmes@uvic.ca>
+
+	Fixing expected-results fallout.
+
+	Fulfilling feature request in issue #192: adding HTML handling for element <distinct>.
+
+	Fix for a couple of the bugs on issue #222.
+
+	Done for today on docx. Remaining conversions have major problems.
+
+	Fix image paths.
+
+	Three files now in docxtotei process in Test2.
+
+	First docxtotei test file working in Test2.
+
+	Test2 teitodocx stuff is working; I have left out a test for testoucscourses.xml which seems to me to be internal to OUCS.
+
+	First work on docx in Test2; better approach to temp folders and cleaning them up.
+
+2017-04-21  Martin Holmes  <mholmes@uvic.ca>
+
+	Location of Jing has changed.
+
+2017-04-19  martindholmes  <mholmes@uvic.ca>
+
+	Testing moving the testing jars out of the test folder so they can be accessed by other processes.
+
+	test-epub requires the css target to be run first. Nobody noticed because it's never run in isolation.
+
+2017-04-18  martindholmes  <mholmes@uvic.ca>
+
+	File reorganization and better filenames.
+
+2017-04-17  martindholmes  <mholmes@uvic.ca>
+
+	Clearer file naming in tests.
+
+	More work on Test2: ODT to-and-from now working.
+
+	Ticket #260: fixing remaining warnings. Output is now conformant and LibreOffice does not complain.
+
+	Ticket #260: fixing final error from missing image in manifest. Only warnings left.
+
+	Fix for expected-results from ODT work ticket #260.
+
+	Working on ticket #260: down to a single error and some warnings.
+
+	Working on ticket #260, mimetype errors all gone now.
+
+	Working on ticket #260, the mimetype file now (correctly) doesn't have a field in the zip (but it's still not first in the file).
+
+	Working on ticket #260, the mimetype file is now uncompressed in the archive (but still not first in the file).
+
+	Reordered the contents of template.odt per issue 260 to attempt to solve an invalidity issue with TEI to ODT conversion.
+
+2017-04-16  martindholmes  <mholmes@uvic.ca>
+
+	Set basedir for fop and make sure relative paths to images work.
+
+	Working on ODT conversion/testing, and modularizing the test process.
+
+	Starting work on odt, with the buildfile modularized as an experiment.
+
+2017-04-14  martindholmes  <mholmes@uvic.ca>
+
+	Changed expected-results because work on ticket 259 has got the binaryObject output actually working.
+
+	Working on binaryObject rendering for HTML with base64-encoded images (issue 259). It's basically working.
+
+	Updating expected-results for XSL:FO language identifier fix in issue 223.
+
+	More work on binaryObject graphic rendering in FO (issue 223).
+
+	Updated tests for base64 graphics in FO.
+
+	Fixed a bug in rendering of binaryObject for XSL:FO (issue 259).
+
+	Fixing obvious error in the parsing of @xml:lang into country and language. Vals were reversed.
+
+	Replacing bad default language attribute in fo param (issue #223).
+
+	Clearer naming, fixes for expected results.
+
+	Adding a readme so that folder is retained.
+
+2017-04-13  Martin Holmes  <mholmes@uvic.ca>
+
+	Changed results for https://github.com/TEIC/Stylesheets/issues/257.
+
+	Committing fix to test file (https://github.com/TEIC/Stylesheets/issues/257) so build can fail and I can fix the expected-results (no local xelatex).
+
+	Tweaks to rendition testing file.
+
+2017-04-11  martindholmes  <mholmes@uvic.ca>
+
+	Give meaningful name to test file; make it valid.
+
+	Fix for bad element name.
+
+	Fixing bad element name forname and fallout from it.
+
+	More meaningful names for files.
+
+2017-04-10  martindholmes  <mholmes@uvic.ca>
+
+	Better filenames and helpful comments.
+
+	Cleaning up unnecessary prefixes.
+
+2017-04-09  martindholmes  <mholmes@uvic.ca>
+
+	Sorting out paths for graphics.
+
+	Beginning to modularize the test setup.
+
+	More tidying up: get schemas out of the way.
+
+	More folder cleanup.
+
+	Integrating Simple Print test into FO/PDF rendering, including images.
+
+	Reorganizing test folder structure to separate inputs from outputs; clarifying purposes with filenames; other tweaks.
+
+2017-04-08  martindholmes  <mholmes@uvic.ca>
+
+	Tweaks to feedback.
+
+	A bit of cleanup and renaming; adopted parallel approach to tests (thanks Peter).
+
+	Adding test for P4 to P5 conversion to ant tests.
+
+	Naming files more meaningfully.
+
+	Implementing HTML to TEI test in ant test setup.
+
+2017-04-06  Syd Bauman  <s.bauman@neu.edu>
+
+	Bug fix on prev commit: the negative one is an integer, not a string.
+
+	Improve logic: Condense the two <choose> down to one in the logic for handling @width & @height
+
+	merge commit
+
+	bug fix: handle @width w/o @height With the stylesheets co-operative educational group: if user specified only an @width but no @height the code was bombing. Add clauses to handle that case.
+
+2017-04-06  martindholmes  <mholmes@uvic.ca>
+
+	Fix for namespace prefix issue in https://github.com/TEIC/Stylesheets/issues/246.
+
+2017-04-02  martindholmes  <mholmes@uvic.ca>
+
+	Change expected results for Test in fo.
+
+	Fixing empty line-height attribute bug in FO processing.
+
+	Adding process to retrieve JEuclid jars for processing MathML with FOP.
+
+	Removing obsolete teiHeader/@type from test files.
+
+	Testing parallelization of task execution per suggestion from Peter Stadler. Results promising.
+
+2017-03-29  martindholmes  <mholmes@uvic.ca>
+
+	Updating expected results for FO test in Test2 due to work on https://github.com/TEIC/Stylesheets/issues/206.
+
+2017-03-27  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix for #245
+	anyElement was not being copied over during ODD chaining,
+	resulting in elements like xenoData being broken.
+
+2017-03-24  Martin Holmes  <mholmes@uvic.ca>
+
+	Simple fix for https://github.com/TEIC/Stylesheets/issues/252: treat most instances of byline in the same way as trailer (generic block output).
+
+2017-03-12  Syd Bauman  <s.bauman@neu.edu>
+
+	change hard-coded default path (addressing #242)
+
+2017-03-03  Martin Holmes  <mholmes@uvic.ca>
+
+	More work on Issue #206: Fixes for expected-results of test.27 tex and fo output.
+
+	Working on # to fix expected results in Stylesheet Tests: 1. Made test27.xml input file valid. 2. Fixed a bug in common_linking that was adding an unwanted    @type attribute to the HTML anchor element. 3. Updated expected results for test27. test-to-html now completes for me.
+
+2017-03-02  Syd Bauman  <s.bauman@neu.edu>
+
+	handle DOI <idno>s
+
+	allow @type of idno to have any case
+
+	just fix whitespace, etc
+
+2017-02-06  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #231 from rvdb/jTEI
+	made detection of identical authors in consecutive bibliography entri…
+
+	made detection of identical authors in consecutive bibliography entries more robust
+
+2017-01-31  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	handle tabs better
+
+2017-01-24  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #228 from rvdb/jTEI
+	fixed labels for Appendix sections in PDF
+
+	fixed labels for Appendix sections in PDF
+
+2017-01-14  martindholmes  <mholmes@uvic.ca>
+
+	Made FOP processing default; tested the possibility of downloading P5 Exemplars to use in processing, but it's too complicated because of linked resources.
+
+2017-01-12  Martin Holmes  <mholmes@uvic.ca>
+
+	A couple of tweaks to handle text/front in the context of docbook. Down to 70 errors in the maria.xml conversion to docbook.
+
+	Adding some basic handling for equations in docbook output. It would be good to get to the point where the only file that gets converted to docbook in the current tests produces valid DocBook.
+
+	Fix for https://github.com/TEIC/Stylesheets/issues/224.
+
+	Fix for https://github.com/TEIC/Stylesheets/issues/223, currently invoked only when foEngine='fop', but should really be generalized assuming it doesn't break other fo processors.
+
+	Comments on the fact that localsource=DIR fails whereas localsource=DIR/p5subset.xml succeeds. This contrasts with Stylesheets documentation and also with running transformations directly from the command line.
+
+	Comments on the fact that localsource=DIR fails whereas localsource=DIR/p5subset.xml succeeds. This contrasts with Stylesheets documentation and also with running transformations directly from the command line.
+
+2017-01-11  Martin Holmes  <mholmes@uvic.ca>
+
+	Expected results changed because of foEngine=fop default.
+
+	Added download of open-source hyphenation jar for FOP, and configured a task to convert fo to PDF with FOP (not yet integrated into FO conversion).
+
+	Fix ant bug: if:true, not unless:false.
+
+	Avoiding inclusion of FOP in our repo by downloading it as required.
+
+2017-01-10  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	fix conversion for spirales transcriptions
+
+2017-01-08  martindholmes  <mholmes@uvic.ca>
+
+	Fixing minor bug in odd-to-tree.xsl, where attDef without @usage was shown as mandatory instead of optional.
+
+	Fixing Test target 'oddtree' so that it actually works. It's neat.
+
+	Revert "Removing unused test make target 'oddtree which depends on non-existent XSLT file."
+	This reverts commit 21dce373bf446276fce38f300c773ce697217178.
+
+	Removing unused test make target 'oddtree which depends on non-existent XSLT file.
+
+2017-01-08  Hugh Cayless  <philomousos@gmail.com>
+
+	Better validation for anyElement/@require.
+
+2017-01-07  Hugh Cayless  <philomousos@gmail.com>
+
+	Back off on @require constraints a bit.
+
+2017-01-07  martindholmes  <mholmes@uvic.ca>
+
+	Adding experimental file that should be able to run transformations on both Windows and *NIX. Not yet tested on Windows.
+
+	Adding tests based on the new testODD.odd, but commented out for now because of the validity issues.
+
+2017-01-07  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	Add new testODD
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	add new testODD to replace old test-pure and test-pure2
+
+2017-01-07  martindholmes  <mholmes@uvic.ca>
+
+	Tweak to expected results from Lou's updated P4 conversion file.
+
+	Copying updates to Test2.
+
+	Merge branch 'dev' of git+ssh://github.com/TEIC/Stylesheets into dev
+
+	Making test14.xml valid, with advice from KH.
+
+2017-01-07  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	simplify dtd to avoid validation
+
+2017-01-06  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	replace test17 with a genuine P4 file
+
+2017-01-06  martindholmes  <mholmes@uvic.ca>
+
+	Merge branch 'dev' of git+ssh://github.com/TEIC/Stylesheets into dev
+
+	Revert "expected results for latex conversion has changed"; mistaken commit by Lou.
+	This reverts commit d7faa03a2e3cf0e5bec6dee798677b4b387e1cc3.
+
+	Revert "another expected result missing"; mistaken commmit by Lou.
+	This reverts commit 9c4dd7ae3cf700a3f511477a67ab391535573bd8.
+
+2017-01-06  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	add testClass odd
+
+2017-01-06  martindholmes  <mholmes@uvic.ca>
+
+	Another validity fix.
+
+	Make eTree testing files valid (although they're not currently used).
+
+	Merge branch 'dev' of git+ssh://github.com/TEIC/Stylesheets into dev
+
+	Two generated files were not being cleaned up at the end of the Test process.
+
+2017-01-06  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	another expected result missing
+
+2017-01-06  martindholmes  <mholmes@uvic.ca>
+
+	Merge branch 'dev' of git+ssh://github.com/TEIC/Stylesheets into dev
+
+	Removing build file now relocated to Test2.
+
+2017-01-06  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	expected results for latex conversion has changed
+
+2017-01-05  martindholmes  <mholmes@uvic.ca>
+
+	Adding RDF to Test2.
+
+	Working on TEIC/Stylesheets#211, fixed test27.xml in my Test2 setup; it's going to be uglier fixing it in Test.
+
+2017-01-04  martindholmes  <mholmes@uvic.ca>
+
+	Fixed all instances of biblScope/@type in test27.xml as part of work on TEIC/Stylesheets#213.
+
+	Fix for obsolete @type attribute on biblScope per TEIC/Stylesheets#213.
+
+	More work on the ant version of the Tests. FO now working.
+
+	Adding validation into two fo tests which mysteriously didn't have it, as final stage of TEIC/Stylesheets#211.
+
+	Fix for missing list-item elements when processing listBibl/bibl to XSL:FO (TEIC/Stylesheets@211).
+
+2017-01-03  martindholmes  <mholmes@uvic.ca>
+
+	FO tests now running, but they throw up validation errors in test27.fo which are the subject of ticket TEIC/Stylesheets#211.
+
+	Working on ticket TEIC/Stylesheets#211: fixed issue where HTML i element was being created instead of FO inline element. More to do on this ticket.
+
+2017-01-02  martindholmes  <mholmes@uvic.ca>
+
+	Added more simple targets to test build file.
+
+	Test results have changed for some reason I don't understand, but the only differences are in ids created using generate-id() so I don't see they're significant.
+
+	More work on ant test stuff.
+
+	Backing out of tweaks to original Test folder.
+
+	Moved ant test build code into a separate folder for clarity.
+
+2017-01-02  Hugh Cayless  <philomousos@gmail.com>
+
+	Reverting attList removal.
+
+	Removing empty attLists.
+
+2017-01-02  martindholmes  <mholmes@uvic.ca>
+
+	First HTML target working in Test build file. Now have to disentangle which HTML files can be built from a single target and which have peculiar parameters.
+
+2017-01-01  martindholmes  <mholmes@uvic.ca>
+
+	Adding CSS symlink targets to the ant build file, to match what happens in the Makefile, although having looked at the use of these symlinks, I don't see the point of them at all.
+
+	Some progress with my experimental ant approach to Stylesheets tests.
+
+	Cannot get this Makefile tweak right.
+
+	Fix typo in Makefile.
+
+	Minor change to Stylesheet Test/Makefile to change confusing filename.
+
+	Beginning work on an experimental pure-ant approach to the Stylesheets tests.
+
+2016-12-30  martindholmes  <mholmes@uvic.ca>
+
+	More expected-results updates.
+
+	Expected results have changed again.
+
+	Working on ticket TEIC/Stylesheets#205, fixed issue of links to specs not included in ODD file, and did a little cleanup to constrain specific optimizations to the case where foEngine='fop'.
+
+	Version file was not updated after the last release.
+
+2016-12-29  martindholmes  <mholmes@uvic.ca>
+
+	More tweaks for link creation as part of work on TEIC/Stylesheets#203.
+
+	Forgot to commit minor tweaks to common stylesheets.
+
+	Expected results have changed because of datatype display fix.
+
+	Fix (I believe) for bug TEIC/Stylesheets#203.
+
+	Fix for typo (dataref instead of dataRef).
+
+	More expected-results fixes for change in table-column algorithm.
+
+2016-12-28  martindholmes  <mholmes@uvic.ca>
+
+	Expected results have changed for external graphics and tables in FO.
+
+	Tweak to table column width calculation to drop width results entirely when they result in a column too small to contain a single word.
+
+	More tweaks to image display in FO rendering.
+
+	Working on TEIC/Stylesheets#205, fixed bug in display of figure/graphic. For some reason these were being rendered as floats, but that makes no sense.
+
+	Expected results for test.fo.
+
+2016-12-27  martindholmes  <mholmes@uvic.ca>
+
+	Continuing work on rendering issues for ODD to PDF via FO on ticket TEIC/Stylesheets#205, tweaked the rendering of glossary lists so that labels are not overwritten by items.
+
+	Continuing work on rendering issues for ODD to PDF via FO on ticket TEIC/Stylesheets#205, tweaked the rendering of valLists so that labels aren't overwritten by descs.
+
+	Expected results for fo test27.
+
+	Fixing column widths in embedded tables for attDef rendering as part of TEIC/Stylesheets#205.
+
+	Expected results for fo have changed due to work on TEIC/Stylesheets#205; broken empty link objects are now replaced by comments containing error messages. This is a tiny step forward. :-)
+
+	Expected results again.
+
+	Expected results again.
+
+	Newline missing from end of file in expected-results.
+
+	Fix for error in column count attribute when processing deprecation on elementSpec. Part of work on https://github.com/TEIC/Stylesheets/issues/205, although this has much broader consequences and gives rise to a hitherto undetected error in Guidelines output.
+
+	Changing expected results for FO test output.
+
+	Previous commit had a bug. Correcting it.
+
+	Working on TEIC/Stylesheets#205, added a workaround to catch cases where an attempt is made to create an internal link with no target or no linking text, as triggered during FO building by TEIC/Stylesheets#203.
+
+	Fix for first bug that shows up in odd-to-lite-to-fo processing being tracked at TEIC/Stylesheets#205. The code did not allow for embedded tables; the fix is to look only at the first ancestor table of the context element, not the sequence of all of them.
+
+2016-12-25  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #204 from rvdb/jTEI
+	improvements to processing of figure / table / list heads:
+
+	improvements to processing of figure / table / list heads:    -changed number separator to period (CMoS)    -add final period when no concluding punctuation is present
+
+2016-12-20  Martin Holmes  <mholmes@uvic.ca>
+
+	Fix for typo mentioned in https://github.com/TEIC/Stylesheets/issues/196.
+
+2016-12-15  Hugh Cayless  <philomousos@gmail.com>
+
+	More release followup.
+
+	Post-release cleanup.
+
+	Merge branch 'master' into dev after v7.42.0 release.
+
+2016-12-15  James Cummings  <james@blushingbunny.net>
+
+	modifying  conflict
+
+2016-12-13  martindholmes  <mholmes@uvic.ca>
+
+	Saxon requirement should actually be libsaxonhe-java, not libsaxon-java.
+
+2016-12-09  martindholmes  <mholmes@uvic.ca>
+
+	Working on Issue #158, trying to fix bug we introduced earlier.
+
+2016-12-09  Syd Bauman  <s.bauman@neu.edu>
+
+	Martin & Syd add a red warning box for deprecated attribute values, and fix the one for deprecated default values
+
+2016-12-08  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix for #176 with new test fixtures.
+
+	Another try at getting min/max DTDs right.
+
+	Fix for generateIndicators.
+
+	Better handling for @minOccurs > 1.
+
+	@minOccurs > @maxOccurs is an unrecoverable error.
+
+2016-12-07  Hugh Cayless  <philomousos@gmail.com>
+
+	Bugfixes.
+
+	Uncommented removal of temp xsd.
+
+	Caught a couple of edge cases.
+
+	Cleaning up XSD nd DTD generation.
+
+2016-12-07  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #197 from rvdb/jTEI
+	improved some selectors so they match nodes constructed inside tempor…
+
+	improved some selectors so they match nodes constructed inside temporary trees
+
+2016-12-05  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixed test.
+
+	Merge branch 'sydb-occurs2' into dev
+
+	Fixed conflict.
+
+2016-12-04  Hugh Cayless  <philomousos@gmail.com>
+
+	Upgrading to Saxon 9.7.14.
+	This version of Saxon is pickier than its predecessors, and a few
+	fixes to the stylesheets were needed. The algorithm for generating
+	ids seems to have changed too, requiring new expected-result files.
+
+2016-12-02  Syd Bauman  <s.bauman@neu.edu>
+
+	ODD->DTD process now handles @minOccurs and @maxOccurs properly as numbers. Also put parens around even singleton parameter entity references that are in a series.
+
+	Condense various places where I was converting @minOccurs and @maxOccurs to a single (NOT\!) function. It's not a single function because, for reasons I do not understand, odd2odd.xsl does not import teiodds.xsl. Thus the function is duplicated in that file.
+
+2016-11-30  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge in latest changes from 'dev' branch.
+
+2016-11-30  martindholmes  <mholmes@uvic.ca>
+
+	Merge branch 'dev' of git+ssh://github.com/TEIC/Stylesheets into dev
+
+	Local testing confirms that the dependency on a package called 'saxon', which used to be packaged by us, can be replaced by libsaxon-java, so I've made that change.
+
+2016-11-30  Hugh Cayless  <philomousos@gmail.com>
+
+	Explicitly set @defaultExceptions on compiled ODDs.
+
+	Fix for post-processing bug.
+
+2016-11-29  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #191 from rvdb/jTEI
+	jTEI: some refactoring and bug fixes
+
+	workaround for a FOP bug (see https://issues.apache.org/jira/browse/FOP-2364?focusedCommentId=15295232&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-15295232)
+
+	fixed a bug that dropped punctuation after quotation marks in some cases
+
+	some refactoring: moved common templates and functions into shared module
+
+2016-11-27  Syd Bauman  <s.bauman@neu.edu>
+
+	More minor improvements; remove debugging code
+
+2016-11-26  Syd Bauman  <s.bauman@neu.edu>
+
+	Ensure that all RELAX NG elements we generate are actually in the RELAX NG namespace.
+
+	First crack at more fixes to @minOccurs and @maxOccurs; not working entirely yet
+
+2016-11-24  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge in conversion of @minOccurs & @maxOccurs processing to XSLT 2 treating integers (rather than XSLT 1-like code handling strings), which development took place on sydb-occurs branch
+
+2016-11-23  Hugh Cayless  <philomousos@gmail.com>
+
+	Don't put empty attLists in compiled ODDs.
+
+	Removed unused variables.
+
+2016-11-22  Syd Bauman  <s.bauman@neu.edu>
+
+	Re-create a test file to match what is being produced.
+
+	merge what's been updated lately in dev
+
+	Merging changes made in sydb-occurs branch to just odds/odd2odd.xsl (I hope)
+
+2016-11-22  Hugh Cayless  <philomousos@gmail.com>
+
+	Adjust to changes in anyElement.
+
+2016-11-21  martindholmes  <mholmes@uvic.ca>
+
+	Fixing typo in XPath.
+
+2016-11-21  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #189 from rvdb/jTEI
+	fixes to <egXML> processing:
+
+2016-11-21  rvdb  <ron.vandenbranden@kantl.be>
+
+	fixes to <egXML> processing:   -escape double quotes in attribute values (fixes remaining issue in https://github.com/TEIC/oxygen-tei/issues/6)   -harmonized <egXML> processing in all output formats (PDF, ODT, OpenEdition)    -added support for processing instructions inside <egXML>
+
+2016-11-21  Raffaele Viglianti  <raffaeleviglianti@gmail.com>
+
+	Merge pull request #188 from TEIC/dataFacet
+	Processing for dataFacet
+
+2016-11-21  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Merge branch 'dev' into dataFacet
+
+2016-11-20  Hugh Cayless  <philomousos@gmail.com>
+
+	Support for reimplementation of anyElement.
+
+2016-11-18  martindholmes  <mholmes@uvic.ca>
+
+	Fix for the PDF portion of this bug: https://github.com/TEIC/oxygen-tei/issues/6.
+
+	Fix for the ODT portion of this bug: https://github.com/TEIC/oxygen-tei/issues/6.
+
+2016-11-18  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixed tests.
+
+	odd2odd now properly looks up the chapter ID.
+
+2016-11-16  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixed expected result.
+
+	Fixed lingering Pure ODD bug with val lists.
+
+2016-11-15  Hugh Cayless  <philomousos@gmail.com>
+
+	Folded in DTD creation fixes.
+
+2016-11-12  Hugh Cayless  <philomousos@gmail.com>
+
+	Reverting debug output.
+
+2016-11-11  Syd Bauman  <s.bauman@neu.edu>
+
+	merge
+
+2016-11-11  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Added processing for dataFacet
+
+2016-11-10  Hugh Cayless  <philomousos@gmail.com>
+
+	Merge branch 'dev' into hcayless_anyElement
+
+	Undoing accidental resolution of bin/ symlinks
+
+	Added post-processing step for xsd:any elements.
+
+	Changed anyElement naming.
+
+	Changed anyElement naming and where we look for prefix defs.
+
+2016-11-10  martindholmes  <mholmes@uvic.ca>
+
+	Removing linebreaks as a possible quick fix for Jenkins warnings.
+
+2016-11-07  Hugh Cayless  <philomousos@gmail.com>
+
+	Testing.
+
+2016-11-07  Syd Bauman  <s.bauman@neu.edu>
+
+	Trying to fix a minor auto-created conflict.
+
+	auto-change needs to be committed, I guess
+
+	What the pull changed, I guess
+
+	Pulling
+
+	Add parameter for supressing GL <exemplum>s (in favor of customization's, of course). Finally commiting a change made months ago.
+
+2016-11-06  Syd Bauman  <s.bauman@neu.edu>
+
+	Finally fix tei:whatsTheDate() so that the time is correctly reported in UTC, instead of reporting localtime with a 'Z' erroneously appended.
+
+2016-11-06  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixed spacing bug.
+
+2016-11-05  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixed anyELement DTD conversion.
+
+	Improve namespace handling.
+
+	Update for #170.
+
+2016-11-04  Hugh Cayless  <philomousos@gmail.com>
+
+	Changed expected test result.
+
+2016-11-03  Hugh Cayless  <philomousos@gmail.com>
+
+	Hard-coded RNG namespace to fix build.
+
+2016-11-03  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge pull request #183 from TEIC/ps-fix-bibliography
+	removes dead backlinks from bibliography
+
+2016-11-02  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixing broken builds.
+
+	Implementing #170
+	Added support for anyELement. Each referenced anyElement will
+	generate a unique definition which will enforce the restrictions
+	encoded in the elements except and include attributes.
+
+2016-10-30  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	removes dead backlinks from bibliography
+	from section „Works Cited in Examples in these Guidelines“
+
+2016-10-28  Syd Bauman  <s.bauman@neu.edu>
+
+	Re-generate test file so that change made in #2038 is reflected correctly. (Thus hopefully fixing the build!)
+
+2016-10-25  Syd Bauman  <s.bauman@neu.edu>
+
+	conclude merge of what must have been some very recent changes
+
+	Improve @id on output <pattern>s
+
+2016-10-25  Hugh Cayless  <philomousos@gmail.com>
+
+	Removed function call that was breaking tei_lite.
+
+	Removed debugging message.
+
+2016-10-25  Syd Bauman  <s.bauman@neu.edu>
+
+	Remove two unused templates. I had added them 2016-06-27, ostensibly with the intent to use them to simplify the code in the large CONSTRAINT <choose>, but never did.
+
+2016-10-25  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixed ODD chaining bug.
+	Under certain circumstances, memberOf references were getting
+	duplicated. Also reformatted a number of templates for easier
+	reading.
+
+2016-10-20  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixes #1527
+	Makes sure valLists and dataRefs are copied over correctly from
+	compiled source ODDs.
+
+2016-10-04  Hugh Cayless  <philomousos@gmail.com>
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+2016-09-25  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Merge branch 'dev' into rv-odds2oddFIX
+
+	Use rng:list instead of rng:group when tei:sequence contains only tei:dataRefs. Fixes #152
+
+2016-09-21  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #172 from rvdb/jTEI
+	fixed over-complex numbering of notes inside lists
+
+2016-09-21  rvdb  <ron.vandenbranden@kantl.be>
+
+	fixed over-complex numbering of notes inside lists
+
+2016-09-20  martindholmes  <mholmes@uvic.ca>
+
+	Fix for expected results from change per https://github.com/TEIC/Stylesheets/issues/161.
+
+	Working on https://github.com/TEIC/Stylesheets/issues/161; adding an experimental change to handle p and ab in remarks.
+
+2016-09-19  Syd Bauman  <s.bauman@neu.edu>
+
+	Revert "Start work on fixing how @minOccurs and @maxOccurs on PureODD elements are handled. There is still quite a bit more to be done. See issue #135.", so that we have a working 'dev' branch; I'll make my own branch to work more on this.
+	This reverts commit 7a3677bb672fc744d35aa552bd921e5c4fc77abc.
+
+2016-09-19  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #166 from rvdb/jTEI
+	added processing for cross-references to notes
+
+2016-09-10  Lou  <lou.burnard@retired.ox.ac.uk>
+
+	Merge pull request #169 from emchateau/master
+	correct a typo in a LaTeX command
+
+2016-08-31  Emmanuel Chateau  <emchateau@laposte.net>
+
+	correct a typo in a LaTeX command
+
+2016-08-30  Syd Bauman  <s.bauman@neu.edu>
+
+	Start work on fixing how @minOccurs and @maxOccurs on PureODD elements are handled. There is still quite a bit more to be done. See issue #135.
+
+2016-08-26  martindholmes  <mholmes@uvic.ca>
+
+	Changed caption as part of work on  ticket https://github.com/TEIC/Stylesheets/issues/158.
+
+2016-08-22  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Providing base-uri 'file:///' explicitly for local source. Refs #12
+
+2016-08-11  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixing tests for new output.
+
+2016-08-10  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix for #164
+	Changed the output of "May contain" to include links to macros and
+	"character data".
+
+	Fix for #167.
+
+2016-08-09  Hugh Cayless  <philomousos@gmail.com>
+
+	Adding support for display of processing model directives.
+
+2016-08-01  rvdb  <ron.vandenbranden@kantl.be>
+
+	added processing for cross-references to notes
+
+2016-07-22  Syd Bauman  <s.bauman@neu.edu>
+
+	Syd & Martin add deprecation of default values to HTML output. Maybe others, too :-)
+
+2016-07-09  Syd Bauman  <s.bauman@neu.edu>
+
+	Remove debugging code from work on fixing Schematron extraction bug that breaks the Jenkins build of P5.
+
+	Work on fixing Schematron extraction bug that breaks the Jenkins build -- this version still has debugging code.
+
+2016-06-29  Syd Bauman  <s.bauman@neu.edu>
+
+	oops; forgot to remove date from expected result file
+
+2016-06-28  Syd Bauman  <s.bauman@neu.edu>
+
+	I don't understand why the result of processing the new extract-isosch.xsl intermittently causes slightly different whitespace, but since Jenkins seems to want the extra whitespace, here is a version with it as the expected result.
+
+2016-06-27  Syd Bauman  <s.bauman@neu.edu>
+
+	complete merge
+
+	Remove unused variable
+
+2016-06-26  Syd Bauman  <s.bauman@neu.edu>
+
+	Addresing (new) ticket #159, this change is an attempt to fix extraction so that <sch:let> elements can appear at top-level. Also tweak language handling.
+
+2016-06-11  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+2016-06-08  Syd Bauman  <s.bauman@neu.edu>
+
+	In response to #157, add another special-case in creating the  of the elementBody
+
+2016-05-25  Hugh Cayless  <philomousos@gmail.com>
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+	Restored commented-out tests.
+
+2016-04-27  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+2016-04-25  martindholmes  <mholmes@uvic.ca>
+
+	Changed Kochi Mincho to IPAMincho in the LATEX-related files, per discussion with Council 2016-04-25 (see https://github.com/TEIC/Stylesheets/issues/148). We shall see what breaks.
+
+2016-04-25  Syd Bauman  <s.bauman@neu.edu>
+
+	Fix problem I described in mail I did *not* send to Council on 2015-01-30 (see postponed file). Basically, XSLT was expecting an entire TEI document, complete w/ <TEI> is root element. Given that RELAX NG generation does not require anything above <schemaSpec>, tried to make this match.
+
+2016-04-15  Hugh Cayless  <philomousos@gmail.com>
+
+	Updating tests.
+
+	Fix for DTD validity bug.
+
+2016-04-13  Hugh Cayless  <philomousos@gmail.com>
+
+	Updated VERSION.
+
+2016-04-12  Hugh Cayless  <philomousos@gmail.com>
+
+	Trying to sort out the tests for TEI 3.0.0.
+
+2016-04-09  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	tweak oulipo profile again
+
+2016-03-30  Martin Holmes  <mholmes@uvic.ca>
+
+	Update VERSION
+	Incrementing the version number in dev to one point past the current stable release, to avoid confusion in dev build scenarios.
+
+2016-03-29  Hugh Cayless  <philomousos@gmail.com>
+
+	Merge branch 'master' of github.com:TEIC/Stylesheets
+
+	Updated VERSION.
+
+2016-03-29  Syd Bauman  <s.bauman@neu.edu>
+
+	merging relase 7.41.0 branch into master
+
+	make date function return date in UTC rather than local time with a 'Z' appended
+
+2016-03-29  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixing merge problems.
+
+	Merging release-7.41.0 into master.
+
+2016-03-12  Syd Bauman  <s.bauman@neu.edu>
+
+	Add copying of tei:cell/@style to html:td/@style (or html:th/@style).
+
+2016-03-11  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	second attempt to swop logo and count
+
+2016-03-04  Lou  <lou.burnard@retired.ox.ac.uk>
+
+	move logo from left to right of bottom margin
+
+	Update README.txt
+
+	Update README.txt
+
+2016-02-26  rvdb  <ron.vandenbranden@kantl.be>
+
+	Fixed some multilingual glitches
+
+2016-02-25  rvdb  <ron.vandenbranden@kantl.be>
+
+	-Added support for multilingual articles -Improved capitalization of crossref labels
+
+2016-02-18  Hugh Cayless  <philomousos@gmail.com>
+
+	Updated expected test results for latex.
+	Only difference was an extra line break, so it seemed an uncontroverial change.
+
+	Added warning message when no localsource set.
+
+2016-02-15  rvdb  <ron.vandenbranden@kantl.be>
+
+	Added support for multilingual abstracts
+
+	Added support for <license> element
+
+2016-02-04  James Cummings  <james@blushingbunny.net>
+
+	adding noreledmac option to eledmac since eledmac is deprecated. This just silences the error. (We should fix this properly some time by using reledmac package.)
+
+2016-01-21  Hugh Cayless  <philomousos@gmail.com>
+
+	Flagged bug in teiodds.xsl.
+
+2016-01-11  Hugh Cayless  <philomousos@gmail.com>
+
+	Adjusting tests for reformatted display.
+
+	Improved whitespace formatting inside atts.
+
+2016-01-10  Hugh Cayless  <philomousos@gmail.com>
+
+	Trying rearranged element spec display.
+
+	Fix for datatype not displaying.
+
+2016-01-09  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixing content model link formatting.
+
+2016-01-08  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixing spurious links on @key attributes.
+
+	Fixing another test.
+
+	Trying to get tests to run against current P5.
+
+2016-01-07  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixed ODD conversion and updated tests.
+
+2015-12-30  Hugh Cayless  <philomousos@gmail.com>
+
+	More test fixes.
+
+	Merge branch 'pureodd' of github.com:TEIC/Stylesheets into pureodd
+
+	Fixed test.
+
+2015-12-29  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixing summary doc output.
+
+	Fixing tests.
+
+	Fixing DTD generation.
+
+2015-12-16  Hugh Cayless  <philomousos@gmail.com>
+
+	More work on getting Stylesheets ready for Pure ODD.
+
+2015-12-15  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	Merge branch 'pureodd' of https://github.com/TEIC/Stylesheets into pureodd
+
+	make regeneration of expected-results switchable
+
+2015-12-14  martindholmes  <mholmes@uvic.ca>
+
+	Another blank line missing in expected results.
+
+	Another blank line missing in expected results.
+
+	Bringing expected-results into line with results -- difference was a single blank line, apparently.
+
+2015-11-25  Hugh Cayless  <philomousos@gmail.com>
+
+	Merge branch 'dev' into pureodd
+	Conflicts:
+		Documentation/teixsl.xml
+
+2015-11-24  Hugh Cayless  <philomousos@gmail.com>
+
+	Pure ODD in better shape.
+
+	More work on Pure ODD.
+
+	More changes to support Pure ODD display.
+	Added HTML output of Pure ODD classes and content; enabled linking
+	of refs in output; simplified RelaxNG output by utilizing ODD-to-
+	Relax XSLTs directly, which should enable other outputs, like
+	XML Schema, in the future; fixed template name collision in
+	"valListChildren" template (now valListItems in common_tagdocs.xsl.
+
+2015-11-20  rvdb  <ron.vandenbranden@kantl.be>
+
+	Fixed an error for labeling cross-references in list context
+
+2015-11-18  rvdb  <ron.vandenbranden@kantl.be>
+
+	improved back matter for editorial introductions
+
+	skip <orgName> to keep Lodel happy
+
+2015-11-17  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	-mimic auto-layout for tables (workaround for FOP limitation which only supports fixed table column width) -exclude "—" from punctuation that is "pulled into" quotation marks
+
+	-fix for tables with more than 1 header row -fix for egXML inside table cells
+
+	-some CSS tweaks (improvements for tables and lists) -exclude "—" from punctuation that is "pulled into" quotation marks
+
+2015-11-13  Hugh Cayless  <philomousos@gmail.com>
+
+	First pass at proper Pure ODD output.
+	Still need to properly indent and add links.
+
+	Resolved merge conflict.
+
+2015-11-11  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixes #129.
+
+2015-11-03  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix for #130.
+
+	Removed debugging message.
+
+2015-10-29  martindholmes  <mholmes@uvic.ca>
+
+	Fixing expected results for test30.
+
+	xml:id fixes; in attRef/@name they have to be in the form xmlid without a colon. At least, that's what the Guidelines say.
+
+2015-10-29  Hugh Cayless  <philomousos@gmail.com>
+
+	Another xml:id fix.
+
+	Fixing test ODD.
+
+	Resets the master branch to v7.40.1.
+	Developers should switch to working in the 'dev' branch.
+
+	Added macro.anyXML fix to tests.
+
+2015-10-28  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	replaced spaces with tab
+	spaces made the Makefile choke. cf.
+	https://www.debian.org/doc/manuals/maint-guide/dreq.en.html ch. 4.4.1.
+
+2015-10-27  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Fixed typo
+
+2015-10-25  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	correct invalidty
+
+2015-10-22  Hugh Cayless  <philomousos@gmail.com>
+
+	Adding support for the display of Pure ODD content models.
+
+2015-10-21  Hugh Cayless  <philomousos@gmail.com>
+
+	Starting a section on usage.
+
+	Fix #120.
+
+	Fix #119.
+
+2015-10-15  Hugh Cayless  <philomousos@gmail.com>
+
+	Disabling DTD test for now.
+
+	Expected result fix.
+	Rather spookily, when I run the process on my laptop, I end up with the namespaces in a slightly different order than on Ubuntu. Race condition?
+
+	Incremented version.
+
+	Fixed several bugs & regenerated tests
+	Regenerated tests to match upcoming 2.9.1 release. Fixed default namespace bug in RNC creation. Modified Makefile to ignore TEI version information in comparing to expected results.
+
+2015-10-09  Lou  <lou.burnard@retired.ox.ac.uk>
+
+	Remove P4 Guidelines option from search menu
+
+2015-10-09  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	making trivial change to check i kno wot i am doing
+
+2015-10-09  Hugh Cayless  <philomousos@gmail.com>
+
+	Releasing v7.40.0.
+
+2015-10-05  martindholmes  <mholmes@uvic.ca>
+
+	Fix for whitespace handling in jTEI ODT handling from RVDB.
+
+2015-10-04  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	move new purODDOut template to common_tagdocs since it is used in pdf generation as well as html
+
+2015-10-04  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix for Latex # escaping bug.
+
+2015-10-01  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	display datatypes as a link to dataSpec
+
+	change label for content model
+
+	making teidata specs appear in html output
+
+2015-09-30  Hugh Cayless  <philomousos@gmail.com>
+
+	Adding support for the display of Pure ODD content models.
+
+2015-09-28  Hugh Cayless  <philomousos@gmail.com>
+
+	Trying to get rid of ODD validation errors.
+
+2015-09-09  Lou  <lou.burnard@retired.ox.ac.uk>
+
+	and reverting...
+
+2015-09-04  Lou  <lou.burnard@retired.ox.ac.uk>
+
+	adding testfile which should break build to test whether jinx is jinxed
+
+2015-09-03  Lou  <lou.burnard@retired.ox.ac.uk>
+
+	remove pure datatype test for the moment
+
+	add datatype test; switch on generation of  dataSpec documentation (even tho its wrong)
+
+2015-07-18  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	sort out ID in DTD
+
+2015-07-06  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	fixing DTD genertauib from pure odd
+
+2015-07-03  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	fix valList
+
+	handling of valLisy
+
+	handling of dataRef
+
+2015-07-02  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	more cleanup,and remove bad code
+
+2015-07-01  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	cleanuo
+
+2015-06-30  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	makinh dataRef and dataSpec work
+
+2015-06-26  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	trick to replace unncessary anchor elements with just @xml:id needs to calm down a bit
+
+2015-06-24  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	Merge pull request #110 from mpetris/master
+	profile adaptions to reflect changes in the base xsl
+
+2015-06-22  Marco Petris  <marco.petris@web.de>
+
+	applying changes of getDocDate of base xsl
+
+2015-06-22  mpetris  <marco.petris@web.de>
+
+	Merge pull request #3 from TEIC/master
+	merging the latest changes
+
+2015-06-11  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	cope with dataRef as direct child of attDef
+
+	remove debug
+
+2015-06-10  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	Merge branch 'master' of https://github.com/TEIC/Stylesheets
+
+	making dataRef and dataSpec work right
+
+2015-06-10  sebastianrahtz  <Sebastian.Rahtz@it.ox.ac.uk>
+
+	Merge branch 'master' of github.com:TEIC/Stylesheets
+
+	more fallout from things that can appear in lists
+
+2015-06-09  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	start on support for dataSpec and dataRef
+
+2015-06-08  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	allow for localsouce startuing with /
+
+2015-06-07  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
+
+	RELEASE 7.39 fixing bug which lost a front when the rest of the text was groups
 2015-06-07  Sebastian Rahtz  <sebastian.rahtz@gmail.com>
 
 	limit affect of fooling around with lists
