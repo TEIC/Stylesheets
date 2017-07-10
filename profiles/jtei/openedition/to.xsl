@@ -360,12 +360,16 @@
   <xsl:template match="tei:figure">
     <p rend="figure-title">
       <xsl:apply-templates select="." mode="label"/>
-      <xsl:apply-templates select="tei:head[not(@type='license')]/node()"/>
+      <xsl:for-each select="tei:head[not(@type='license')]">
+        <xsl:apply-templates select="node()"/>
+        <xsl:call-template name="punctuate-head"/>
+      </xsl:for-each>
     </p>
     <xsl:apply-templates select="*[not(self::tei:head)]"/>
     <xsl:for-each select="tei:head[@type eq 'license']">
       <p rend="figure-{@type}">
         <xsl:apply-templates/>
+        <xsl:call-template name="punctuate-head"/>
       </p>
     </xsl:for-each>
   </xsl:template>
@@ -775,11 +779,13 @@
       <xsl:call-template name="get.rendition"/>
       <xsl:apply-templates select="parent::*" mode="label"/>
       <xsl:apply-templates/>
+      <xsl:call-template name="punctuate-head"/>
     </p>
   </xsl:template>
   
   <!-- [RvdB] added preprocessing step, which just copies the list, but wraps all contents of <item> in <p> prior to further processing -->
   <xsl:template match="tei:list">
+    <xsl:param name="listnote.counter" tunnel="yes" as="xs:integer" select="0"/>
     <xsl:variable name="current" select="."/>
     <xsl:variable name="prepared">
       <xsl:apply-templates select="." mode="prepare"/>
@@ -791,7 +797,7 @@
         <xsl:call-template name="get.rendition"/>
         <xsl:apply-templates select="node()[not(self::tei:head)]">
           <!-- count preceding notes and pass this info for further processing of notes -->
-          <xsl:with-param name="listnote.counter" select="count($current/preceding::tei:note)" tunnel="yes"/>
+          <xsl:with-param name="listnote.counter" select="$listnote.counter + count($current/preceding::tei:note)" tunnel="yes"/>
         </xsl:apply-templates>
       </xsl:copy>
     </xsl:for-each>

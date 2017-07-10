@@ -402,8 +402,10 @@
         <!-- we assume that datatype contains only a single dataRef -->
         <!-- (I don't like the above assumption, but I just tested, -->
         <!-- and as of now (2016-11-15) it's true for P5. -Syd)     -->
+        <!-- MDH tweaked this again 2016-12-29 to deal with remaining
+             rng:data elements not yet PURE-ified. -->
         <xsl:call-template name="showElement">
-          <xsl:with-param name="name" select="( tei:dataRef/@key, tei:dataref/@name )[1]"/>
+          <xsl:with-param name="name" select="if (tei:dataRef/@key) then tei:dataRef/@key else if (tei:dataRef/@name) then tei:dataRef/@name else if (rng:data/@type) then rng:data/@type else ''"/>
         </xsl:call-template>
         <xsl:if test="1 != ( $minOccurs, $maxOccurs )">
           <xsl:text> </xsl:text>
@@ -2684,9 +2686,18 @@
       select="concat(tei:createSpecPrefix(.), $name)"/>
     <xsl:choose>
       <xsl:when test="$oddmode = 'tei'">
-        <tei:ref target="#{$name}">
-          <xsl:value-of select="$name"/>
-        </tei:ref>
+        <xsl:choose>
+          <xsl:when test="starts-with($name, 'teidata')">
+            <tei:ref target="#{concat($idPrefix, $name)}">
+              <xsl:value-of select="$name"/>
+            </tei:ref>
+          </xsl:when>
+          <xsl:otherwise>
+            <tei:ref target="{concat('https://www.w3.org/TR/xmlschema-2/#', $name)}">
+              <xsl:value-of select="$name"/>
+            </tei:ref>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:when test="$oddmode = 'html'">
         <xsl:choose>
@@ -3026,7 +3037,7 @@
           <xsl:if test="not($inline)">
             <xsl:attribute name="{$colspan}"
               select="
-                if (ancestor-or-self::tei:attDef)
+                if (ancestor-or-self::tei:attDef or self::tei:elementSpec)
                 then
                   1
                 else

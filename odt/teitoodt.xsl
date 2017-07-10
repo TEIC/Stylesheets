@@ -141,14 +141,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="IDS" match="tei:*[@xml:id]" use="@xml:id"/>
   <xsl:key name="GRAPHICS" match="tei:graphic" use="1"/>
   <xsl:key name="GRAPHICS" match="tei:media" use="1"/>
+  <xsl:key name="PB" match="tei:pb[@facs]" use="1"/>
   <xsl:key name="Page" match="style:page-layout-properties" use="1"/>
   <xsl:template match="/">
     <xsl:choose>
       <xsl:when test="$freestanding='true'">
-        <xsl:result-document href="{concat($outputDir,'/meta.xml')}">
+        <xsl:result-document href="{concat($outputDir,'/meta.xml')}" exclude-result-prefixes="#all">
           <xsl:call-template name="META"/>
         </xsl:result-document>
-        <office:document-content>
+        <office:document-content office:version="1.2">
           <xsl:if test="$freestanding='true'">
             <xsl:for-each select="document(concat($outputDir,'/content.xml'))/office:document-content">
               <xsl:copy-of select="office:scripts"/>
@@ -175,28 +176,17 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
     <xsl:result-document href="{concat($outputDir,'/META-INF/manifest.xml')}">
-      <manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0">
+      <manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0" manifest:version="1.2">
         <manifest:file-entry manifest:media-type="application/vnd.oasis.opendocument.text" manifest:version="1.2" manifest:full-path="/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/statusbar/"/>
         <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/accelerator/current.xml"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/accelerator/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/floater/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/popupmenu/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/progressbar/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/menubar/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/toolbar/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/images/Bitmaps/"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/images/"/>
         <manifest:file-entry manifest:media-type="application/vnd.sun.xml.ui.configuration" manifest:full-path="Configurations2/"/>
         <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="content.xml"/>
         <manifest:file-entry manifest:media-type="application/rdf+xml" manifest:full-path="manifest.rdf"/>
         <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="styles.xml"/>
         <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="meta.xml"/>
         <manifest:file-entry manifest:media-type="" manifest:full-path="Thumbnails/thumbnail.png"/>
-        <manifest:file-entry manifest:media-type="" manifest:full-path="Thumbnails/"/>
         <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="settings.xml"/>
         <xsl:if test="count(key('GRAPHICS',1))&gt;0">
-          <manifest:file-entry manifest:media-type="" manifest:full-path="Pictures/"/>
           <xsl:for-each select="key('GRAPHICS',1)">
             <manifest:file-entry>
             <xsl:variable name="imagetype" select="tokenize(@url,'\.')[last()]"/>
@@ -212,12 +202,28 @@ of this software, even if advised of the possibility of such damage.
             </manifest:file-entry>
           </xsl:for-each>
         </xsl:if>
+        <xsl:if test="count(key('PB',1))&gt;0">
+          <xsl:for-each select="key('PB',1)">
+            <manifest:file-entry>
+              <xsl:variable name="imagetype" select="tokenize(@facs,'\.')[last()]"/>
+              <xsl:attribute name="manifest:full-path">
+                <xsl:text>Pictures/pageimage</xsl:text>
+                <xsl:number level="any"/>
+                <xsl:text>.</xsl:text>
+                <xsl:value-of select="$imagetype"/>
+              </xsl:attribute>
+              <xsl:attribute name="manifest:media-type">
+                <xsl:value-of  select="tei:generateMimeType(@facs,@mimeType)"/>
+              </xsl:attribute>
+            </manifest:file-entry>
+          </xsl:for-each>
+        </xsl:if>
       </manifest:manifest>
     </xsl:result-document>
   </xsl:template>
   <xsl:template name="META">
     <xsl:for-each select="*">
-      <office:document-meta>
+      <office:document-meta office:version="1.2">
 	<office:meta>
         <meta:generator>TEI to OpenOffice XSLT</meta:generator>
         <dc:title>
@@ -226,7 +232,7 @@ of this software, even if advised of the possibility of such damage.
         <dc:description/>
         <dc:subject/>
         <meta:creation-date>
-          <xsl:sequence select="tei:generateDate(.)"/>
+          <xsl:sequence select="tei:generateRevDate(.)"/>
         </meta:creation-date>
         <dc:date>
           <xsl:sequence select="tei:generateRevDate(.)"/>

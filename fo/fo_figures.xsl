@@ -107,9 +107,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:figure">
       <xsl:choose>
          <xsl:when test="tei:match(@rend,'display') or tei:head or tei:p">
-            <float>
-               <xsl:call-template name="addID"/>
                <block text-align="center">
+               <xsl:call-template name="addID"/>
 		 <xsl:apply-templates/>
                </block>
                <block>
@@ -118,7 +117,6 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:text>. </xsl:text>
                   <xsl:apply-templates select="tei:head"/>
                </block>
-            </float>
          </xsl:when>
          <xsl:otherwise>
 	   <block>
@@ -297,6 +295,12 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="blockTable">
       <table text-align="{$tableAlign}" font-size="{$tableSize}">
+<!--   MDH: FOP (at 2.1, which is current on 2016-12-30) does not support the 
+       default @table-layout="auto".          -->
+         <xsl:if test="$foEngine = 'fop'">
+            <xsl:attribute name="table-layout" select="'fixed'"/>
+            <xsl:attribute name="width" select="'100%'"/>
+         </xsl:if>
          <xsl:call-template name="addID"/>
          <xsl:call-template name="deriveColSpecs"/>
          <xsl:apply-templates select="tei:row[@role='header']"/>
@@ -333,7 +337,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:otherwise>
   </xsl:otherwise>
       </xsl:choose>
-      <xsl:if test="not(ancestor::tei:table/tei:match(@rend,'tight'))">
+      <xsl:if test="not(ancestor::tei:table[1]/tei:match(@rend,'tight'))">
          <xsl:attribute name="padding">
             <xsl:value-of select="$tableCellPadding"/>
          </xsl:attribute>
@@ -429,14 +433,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:binaryObject">
     <xsl:variable name="enc" select="if (@encoding) then @encoding
       else 'base64'"/>
-    <external-graphic>
-      <xsl:attribute name="src">
-	<xsl:text>url('data:image/auto;{$enc},</xsl:text>
-	<xsl:value-of select="."/>
-	<xsl:text>')</xsl:text>
-      </xsl:attribute>
+    <xsl:variable name="mimeType" select="if (@mimeType) then @mimeType else 'image/auto'"/>
+    <external-graphic content-height="scale-down-to-fit" 
+                      content-width="scale-down-to-fit"
+                      scaling="uniform"
+                      max-width="100%"
+                      max-height="100%">
+       <xsl:attribute name="src" select="concat('url(''data:', $mimeType, ';', $enc, ',', normalize-space(.), ''')')"/>
       <xsl:call-template name="graphicsAttributes">
-	<xsl:with-param name="mode">fo</xsl:with-param>
+	     <xsl:with-param name="mode">fo</xsl:with-param>
       </xsl:call-template>
     </external-graphic>  
   </xsl:template>

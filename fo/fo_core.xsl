@@ -314,7 +314,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
-  <xsl:template match="tei:item|tei:biblStruct">
+  <xsl:template match="tei:item|tei:biblStruct|tei:listBibl/tei:bibl">
       <xsl:call-template name="makeItem"/>
   </xsl:template>
   <xsl:template match="tei:item" mode="xref">
@@ -423,6 +423,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+    
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>cit element</desc>
    </doc>
@@ -445,6 +446,12 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:list[@type='catalogue']">
       <block space-before="{$spaceAroundTable}" space-after="{$spaceAroundTable}">
          <table>
+<!--   MDH: FOP (at 2.1, which is current on 2016-12-30) does not support the 
+       default @table-layout="auto".          -->
+             <xsl:if test="$foEngine = 'fop'">
+                 <xsl:attribute name="table-layout" select="'fixed'"/>
+                 <xsl:attribute name="width" select="'100%'"/>
+             </xsl:if>
             <table-column column-number="1" column-width="20%">
                <xsl:if test="$foEngine='passivetex'">
                   <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">p</xsl:attribute>
@@ -615,6 +622,11 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:when test="ancestor::tei:back">
                      <xsl:value-of select="$lineheightBackpage"/>
                   </xsl:when>
+<!-- MDH 2017-04-02: It turns out that metadata in the header may 
+     also be processed with this, so provide a default. -->
+                   <xsl:otherwise>
+                     <xsl:value-of select="'1'"/>
+                   </xsl:otherwise>
                </xsl:choose>
             </xsl:attribute>
          </xsl:if>
@@ -631,10 +643,10 @@ of this software, even if advised of the possibility of such damage.
          </xsl:if>
          <xsl:if test="@xml:lang">
             <xsl:attribute name="country">
-               <xsl:value-of select="substring-before(@xml:lang,'-')"/>
+               <xsl:value-of select="substring-after(@xml:lang,'-')"/>
             </xsl:attribute>
             <xsl:attribute name="language">
-               <xsl:value-of select="substring-after(@xml:lang,'-')"/>
+               <xsl:value-of select="substring-before(@xml:lang,'-')"/>
             </xsl:attribute>
          </xsl:if>
          <xsl:apply-templates/>

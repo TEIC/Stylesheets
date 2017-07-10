@@ -7,7 +7,7 @@ BINDIR=../bin
 SAXONOPT=useFixedDate=true
 SAXON=java -Djava.awt.headless=true -jar ../lib/saxon9he.jar
 DOTDOTSAXON=java -Djava.awt.headless=true -jar ../../lib/saxon9he.jar
-JING=java -Djava.awt.headless=true -jar lib/jing-20120724.0.0.jar
+JING=java -Djava.awt.headless=true -jar ../lib/lib/jing-20120724.0.0.jar
 OXY=/usr/share/oxygen
 SCRIPTS=teitobibtex \
 	teitodocbook \
@@ -115,10 +115,12 @@ test-to-html: css
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test27.html expected-results/test27.html; fi
 	rm -rf files
+#MDH 2017-01-01: Originally this file was output as index.html and then diffed against expected-results/test28.html,
+#but this was confusing.
 	$(SAXON) test28.xml ../html/html.xsl splitLevel=0  STDOUT=false $(SAXONOPT)
-	xmllint --format index.html > x ; mv x index.html
+	xmllint --format index.html > x ; mv x test28.html
 	if [ $(REGENERATING) -ne 1 ]; \
-		then diff  index.html expected-results/test28.html; fi
+		then diff  test28.html expected-results/test28.html; fi
 	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFiles=../tei.css $(SAXONOPT)  | xmllint --format - > test31.html
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test31.html expected-results/test31.html; fi
@@ -213,18 +215,20 @@ test-fo:
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test24.fo expected-results/test24.fo; fi
 	$(SAXON) -o:test25.fo test25.xml ../fo/fo.xsl $(SAXONOPT)
+	$(JING) fo.xsd test25.fo
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test25.fo expected-results/test25.fo; fi
 	$(SAXON) test27.xml ../fo/fo.xsl $(SAXONOPT) | xmllint --format - > test27.fo
+	$(JING) fo.xsd test27.fo
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test27.fo expected-results/test27.fo; fi
 
-test-epub:
+test-epub: css
 	@echo BUILD: testing epub
 	$(BINDIR)/teitoepub3  test.xml test.epub
-	java -Djava.awt.headless=true -jar epubcheck3.jar test.epub
+	java -Djava.awt.headless=true -jar ../lib/epubcheck3.jar test.epub
 	$(BINDIR)/teitoepub  test.xml test.epub
-	java -Djava.awt.headless=true -jar epubcheck3.jar  test.epub
+	java -Djava.awt.headless=true -jar ../lib/epubcheck3.jar  test.epub
 	unzip -t test.epub > test.epub.listing
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test.epub.listing expected-results/test.epub.listing; fi
@@ -394,6 +398,24 @@ test-oddity: css
 		then diff  test30.rnc expected-results/test30.rnc; fi
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test30.dtd expected-results/test30.dtd; fi
+# MDH 2017-01-07: THE FOLLOWING LINES WILL integrate LB's new pure ODD 
+# master test to replace originals, BUT ONLY WHEN THINGS ARE WORKING PROPERLY.
+# Generate DTD from ODD.
+#	$(BINDIR)/teitodtd $(FLAG) testODD.odd testODD.dtd
+# Generate RNC from the same file.
+#	$(BINDIR)/teitornc $(FLAG) testODD.odd testODD.rnc
+# Trim all sorts of piffle out of the DTD and RNC before we compare them with the expected results.
+#	perl -p -i -e 's/generated from ODD source .*//' testODD.dtd
+#	perl -i -pe 'BEGIN{undef $$/;} s/<!--\nDTD[^>]*-->\n//smg' testODD.dtd
+#	perl -p -i -e 's/generated from ODD source .*//' testODD.rnc
+#	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' testODD.rnc
+# diff against expected results.
+#	if [ $(REGENERATING) -ne 1 ]; \
+#		then diff  testODD.dtd expected-results/testODD.dtd; fi
+#	if [ $(REGENERATING) -ne 1 ]; \
+#		then diff  testODD.rnc expected-results/testODD.rnc; fi
+# NOTE: THERE SHOULD BE VALIDATION OF AN INSTANCE FILE AGAINST THE DTD HERE.	
+# OLD ORIGINAL CODE STILL BEING USED FOR THE MOMENT.
 	$(BINDIR)/teitodtd $(FLAG) test-pure.odd test-pure.dtd
 	$(BINDIR)/teitornc $(FLAG) test-pure.odd test-pure.rnc
 	xmllint --noout --dtdvalid test-pure.dtd test-pure.xml
@@ -528,7 +550,7 @@ clean:
 	rm -f oddbyexample.* index*div*html
 	rm -f testdrama.compiled.xml
 	rm -f test5.odt test7.xml test18.xml test19.xml test-index.xml test7.zip test11.xml test9.docx test9.odt content.xml.odt.listing content.xml.odt test.xml.docx.core test7.docx
-	rm -f A54031.xml dcr.result test-rtf2tei.xml test29.xml
+	rm -f A54031.xml dcr.result test-rtf2tei.xml test29.xml dcr.tmp xml.tmp
 	rm -f xml.result
 	rm -rf charts/ embeddings/ media/ _rels/ \[Content_Types\].xml
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype files
@@ -537,8 +559,8 @@ clean:
 	rm -f cocoatest*.xml
 
 oddtree:
-	saxon /usr/share/xml/tei/odd/p5subset.xml odd-to-tree.xsl  > oddtree.xml
-	teitohtml --profile=oxford oddtree.xml oddtree.html
+	$(SAXON) -s:http://www.tei-c.org/release/xml/tei/odd/p5subset.xml -xsl:../tools/odd-to-tree.xsl -o:oddtree.xml
+	../bin/teitohtml --profile=oxford oddtree.xml oddtree.html
 
 regenerate:
 	mkdir new-expected-results

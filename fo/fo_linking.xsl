@@ -99,10 +99,14 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="target"/>
       <xsl:param name="dest"/>
       <xsl:param name="body"/>
+<!--  The target of the link.  -->
       <xsl:variable name="W">
          <xsl:choose>
             <xsl:when test="$target">
                <xsl:value-of select="$target"/>
+            </xsl:when>
+            <xsl:when test="$dest = '#'">
+               <xsl:value-of select="''"/>
             </xsl:when>
             <xsl:when test="contains($dest,'#')">
                <xsl:value-of select="substring($dest,2)"/>
@@ -112,8 +116,8 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
-      <basic-link internal-destination="{$W}">
-         <xsl:call-template name="linkStyle"/>
+<!-- The clickable body content of the link. -->
+      <xsl:variable name="content">
          <xsl:choose>
             <xsl:when test="not($body='')">
                <xsl:value-of select="$body"/>
@@ -127,6 +131,31 @@ of this software, even if advised of the possibility of such damage.
                <xsl:apply-templates/>
             </xsl:otherwise>
          </xsl:choose>
-      </basic-link>
+      </xsl:variable>
+<!--   We want to make sure that there is both target and content
+       before making a link. Otherwise something has gone wrong, and
+       we should just add a comment instead. 
+       We also want to check that the target actually exists, otherwise
+       there's no point in creating the link.
+     -->
+      <xsl:choose>
+         <xsl:when test="string-length(normalize-space($W)) gt 0 and not(id($W))">
+            <xsl:sequence select="$content"/>
+         </xsl:when>
+         <xsl:when test="string-length(normalize-space($W)) gt 0 and string-length(normalize-space($content)) gt 0">
+            <basic-link internal-destination="{$W}">
+               <xsl:call-template name="linkStyle"/>
+               <xsl:sequence select="$content"/>
+            </basic-link>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:comment>An internal link should have been created here,
+                         but either there was no target, or no content to 
+                         constitute the link.
+                         Target: <xsl:value-of select="$W"/>
+                         Content: <xsl:value-of select="$content"/></xsl:comment>
+         </xsl:otherwise>
+      </xsl:choose>
+      
   </xsl:template>
 </xsl:stylesheet>

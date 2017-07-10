@@ -97,12 +97,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
 	        <assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</assert>
       </rule>
     </pattern>
-   <pattern id="isoschematron-constraint-test-biblStruct-deprecate-altIdentifier-child-14">
-      <rule context="tei:biblStruct">
-         <report test="child::tei:idno" role="nonfatal">WARNING: use of deprecated method — the use of the idno element as a direct child of the biblStruct element will be removed from the TEI on 2016-09-18</report>
-      </rule>
-   </pattern>
-   <pattern id="isoschematron-constraint-test-relatedItem-targetorcontent1-15">
+   <pattern id="isoschematron-constraint-test-relatedItem-targetorcontent1-14">
       <rule context="tei:relatedItem">
          <report test="@target and count( child::* ) &gt; 0">
 If the @target attribute on <name/> is used, the
@@ -111,49 +106,49 @@ relatedItem element must be empty</report>
         or a child element to indicate the related bibliographic item</assert>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-l-abstractModel-structure-l-16">
+   <pattern id="isoschematron-constraint-test-l-abstractModel-structure-l-15">
       <rule context="tei:l">
          <report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
         Abstract model violation: Lines may not contain lines or lg elements.
       </report>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-lg-atleast1oflggapl-17">
+   <pattern id="isoschematron-constraint-test-lg-atleast1oflggapl-16">
       <rule context="tei:lg">
          <assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
         must contain at least one child l, lg or gap element.</assert>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-lg-abstractModel-structure-l-18">
+   <pattern id="isoschematron-constraint-test-lg-abstractModel-structure-l-17">
       <rule context="tei:lg">
          <report test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
         Abstract model violation: Lines may not contain line groups.
       </report>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-quotation-quotationContents-19">
+   <pattern id="isoschematron-constraint-test-quotation-quotationContents-18">
       <rule context="tei:quotation">
          <report test="not(@marks) and not (tei:p)">
 On <name/>, either the @marks attribute should be used, or a paragraph of description provided</report>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-addSpan-spanTo-20">
+   <pattern id="isoschematron-constraint-test-addSpan-spanTo-19">
       <rule context="tei:addSpan">
          <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-damageSpan-spanTo-22">
+   <pattern id="isoschematron-constraint-test-damageSpan-spanTo-21">
       <rule context="tei:damageSpan">
          <assert test="@spanTo">
 The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-delSpan-spanTo-24">
+   <pattern id="isoschematron-constraint-test-delSpan-spanTo-23">
       <rule context="tei:delSpan">
          <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-subst-substContents1-26">
+   <pattern id="isoschematron-constraint-test-subst-substContents1-25">
       <rule context="tei:subst">
          <assert test="child::tei:add and child::tei:del">
             <name/> must have at least one child add and at least one child del</assert>
@@ -163,41 +158,41 @@ The @spanTo attribute of <name/> is required.</assert>
       
     
       
-    <pattern id="isoschematron-constraint-test-div-abstractModel-structure-l-29">
+    <pattern id="isoschematron-constraint-test-div-abstractModel-structure-l-28">
       <rule context="tei:div">
          <report test="ancestor::tei:l">
         Abstract model violation: Lines may not contain higher-level structural elements such as div.
       </report>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-div-abstractModel-structure-p-30">
+   <pattern id="isoschematron-constraint-test-div-abstractModel-structure-p-29">
       <rule context="tei:div">
          <report test="ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)">
         Abstract model violation: p and ab may not contain higher-level structural elements such as div.
       </report>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-link-linkTargets3-31">
+   <pattern id="isoschematron-constraint-test-link-linkTargets3-30">
       <rule context="tei:link">
          <assert test="contains(normalize-space(@target),' ')">You must supply at least two values for @target or  on <name/>
          </assert>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-ab-abstractModel-structure-p-32">
+   <pattern id="isoschematron-constraint-test-ab-abstractModel-structure-p-31">
       <rule context="tei:ab">
          <report test="(ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
         Abstract model violation: ab may not contain paragraphs or other ab elements.
       </report>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-ab-abstractModel-structure-l-33">
+   <pattern id="isoschematron-constraint-test-ab-abstractModel-structure-l-32">
       <rule context="tei:ab">
          <report test="ancestor::tei:l or ancestor::tei:lg">
         Abstract model violation: Lines may not contain higher-level divisions such as p or ab.
       </report>
       </rule>
    </pattern>
-   <pattern id="isoschematron-constraint-test-join-joinTargets3-34">
+   <pattern id="isoschematron-constraint-test-join-joinTargets3-33">
       <rule context="tei:join">
          <assert test="contains(@target,' ')">
 You must supply at least two values for @target on <name/>
@@ -217,12 +212,6 @@ You must supply at least two values for @target on <name/>
    <pattern>
       <rule context="tei:unclear">
          <report test="@hand" role="nonfatal">WARNING: use of deprecated attribute — @hand of the unclear element will be removed from the TEI on 2017-08-01.
-                </report>
-      </rule>
-   </pattern>
-   <pattern>
-      <rule context="tei:teiHeader">
-         <report test="@type" role="nonfatal">WARNING: use of deprecated attribute — @type of the teiHeader element will be removed from the TEI on 2016-11-18.
                 </report>
       </rule>
    </pattern>

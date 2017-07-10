@@ -579,9 +579,9 @@ of this software, even if advised of the possibility of such damage.
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>trailer</desc>
+      <desc>trailer and byline are simple blocks.</desc>
    </doc>
-  <xsl:template match="tei:trailer">
+  <xsl:template match="tei:trailer | tei:byline[not(ancestor::tei:titlePage)]">
       <block>
          <xsl:apply-templates/>
       </block>

@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="http://www.tei-c.org/Vault/P5/3.1.0/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/Vault/P5/3.1.0/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<!-- This file provides a set of generic tests for various 
+     rendition scenarios. It is hard-linked to a Vault version
+     of the TEI schema because it depends on tagUsage/@render,
+     which was removed in 2017. -->
+
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
-  <teiHeader type="text">
+  <teiHeader>
     <fileDesc>
       <titleStmt>
         <title type="main">Testing rendition</title>
         <author>Sebastian Rahtz</author>
       </titleStmt>
       <publicationStmt>
-        <p>Stylesheets test file</p>
+        <p>Stylesheets test file.</p>
       </publicationStmt>
       <sourceDesc>
         <p/>
       </sourceDesc>
-      <encodingDesc>
-        <tagsDecl>
-          <rendition xml:id="it" scheme="css">font-style:italic;</rendition>
-          <rendition xml:id="green" scheme="css">color:green</rendition>
-          <rendition xml:id="red" scheme="css">color:red;</rendition>
-          <rendition xml:id="blue" scheme="css">color:blue;</rendition>
-          <rendition xml:id="bold" scheme="css">font-weight:bold;</rendition>
-          <rendition xml:id="initcaps" scope="first-letter" scheme="css">font-size: xx-large</rendition>
-        </tagsDecl>
+    </fileDesc>
+    <encodingDesc>
+      <tagsDecl>
+        <rendition xml:id="it" scheme="css">font-style:italic;</rendition>
+        <rendition xml:id="green" scheme="css">color:green</rendition>
+        <rendition xml:id="red" scheme="css">color:red;</rendition>
+        <rendition xml:id="blue" scheme="css">color:blue;</rendition>
+        <rendition xml:id="bold" scheme="css">font-weight:bold;</rendition>
+        <rendition xml:id="initcaps" scope="first-letter" scheme="css">font-size: xx-large</rendition>
         <namespace name="http://www.tei-c.org/ns/1.0">
           <tagUsage gi="persName" render="#red">Makes persName red</tagUsage>
           <tagUsage gi="placeName" render="#blue">Makes placeName blue</tagUsage>
@@ -28,8 +36,11 @@
           <tagUsage gi="p" render="#green">Makes p green</tagUsage>
           <tagUsage gi="foreign" render="#green">Used to mark non-English words in the copy text.</tagUsage>
         </namespace>
-      </encodingDesc>
-    </fileDesc>
+      </tagsDecl>
+    </encodingDesc>
+    <revisionDesc>
+      <change when="2017-04-13" who="https://github.com/martindholmes">Made valid and tweaked a bit.</change>
+    </revisionDesc>
   </teiHeader>
   <text>
     <body>
@@ -50,18 +61,30 @@
             <abbr>abbr</abbr>
           </cell>
         </row>
-<row>
-<cell><egXML xmlns="http://www.tei-c.org/ns/Examples">Thus: <add place="above" hand="primary">QDM</add></egXML></cell>
-<cell>Thus: <add place="above" hand="primary">QDM</add></cell></row>
-<row>
-<cell><egXML xmlns="http://www.tei-c.org/ns/Examples">Thus: <add place="below" hand="primary">QDM</add></egXML></cell>
-<cell>Thus: <add place="below" hand="primary">QDM</add></cell></row>
-<row>
-<cell><egXML xmlns="http://www.tei-c.org/ns/Examples">Thus: <add place="inline" hand="primary">QDM</add></egXML></cell>
-<cell>Thus: <add place="inline" hand="primary">QDM</add></cell></row>
-<row>
-<cell><egXML xmlns="http://www.tei-c.org/ns/Examples">Thus: <add>QDM</add></egXML></cell>
-<cell>Thus: <add>QDM</add></cell></row>
+        <row>
+          <cell>
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">Thus: <add place="above" hand="primary">QDM</add></egXML>
+          </cell>
+          <cell>Thus: <add place="above" hand="primary">QDM</add></cell>
+        </row>
+        <row>
+          <cell>
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">Thus: <add place="below" hand="primary">QDM</add></egXML>
+          </cell>
+          <cell>Thus: <add place="below" hand="primary">QDM</add></cell>
+        </row>
+        <row>
+          <cell>
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">Thus: <add place="inline" hand="primary">QDM</add></egXML>
+          </cell>
+          <cell>Thus: <add place="inline" hand="primary">QDM</add></cell>
+        </row>
+        <row>
+          <cell>
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">Thus: <add>QDM</add></egXML>
+          </cell>
+          <cell>Thus: <add>QDM</add></cell>
+        </row>
         <row>
           <cell>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -75,11 +98,11 @@
         <row>
           <cell>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
-              <cit>Quote</cit>
+              <cit><quote>Quote</quote></cit>
             </egXML>
           </cell>
           <cell>
-            <cit>Quote</cit>
+            <cit><quote>Quote</quote></cit>
           </cell>
         </row>
         <row>
@@ -491,11 +514,16 @@ at last said — </cell>
         <row>
           <cell>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
-              <speaker rend="it">Roderigo</speaker>
+              <sp>
+                <speaker rend="it">Roderigo</speaker>
+                <p>Stuff spoken</p>
+              </sp>
             </egXML>
           </cell>
           <cell>
-            <speaker rend="it">Roderigo</speaker>
+            <sp><speaker rend="it">Roderigo</speaker>
+            <p>Stuff spoken</p>
+            </sp>
           </cell>
         </row>
         <row>

@@ -1393,7 +1393,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>xml:</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="translate(tei:getPrefix($ns,.),':','_')"/>
+            <xsl:value-of select="translate(tei:getPrefix($ns,.)[1],':','_')"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
@@ -1401,6 +1401,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:value-of select="$result"/>
   </xsl:function>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Return a sequence of 0 or more namespace prefixes.</desc>
+  </doc>
   <xsl:function name="tei:getPrefix" as="xs:string*">
     <xsl:param name="ns"/>
     <xsl:param name="here"/>
