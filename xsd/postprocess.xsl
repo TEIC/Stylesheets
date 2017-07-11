@@ -26,6 +26,7 @@
     </xsl:copy>
   </xsl:template>
   
+  <!-- Consolidate series of the same element -->
   <xsl:template match="xs:element[@ref]">
     <xsl:choose>
       <xsl:when test="following-sibling::*[1]/self::xs:element[@ref = current()/@ref] and
@@ -34,11 +35,22 @@
           minOccurs="{count(following-sibling::*/self::xs:element[@ref = current()/@ref and not(@minOccurs = '0')]) + 1}"
           maxOccurs="{tei:count-elements(1, current())}"/>
       </xsl:when>
+      <!-- Consolidate when followed by a sequence of all the same ref -->
       <xsl:when test="following-sibling::*[1]/self::xs:sequence[xs:element/@ref = current()/@ref][not(xs:group)][not(xs:element/@ref[. ne current()/@ref])] and
         not(preceding-sibling::*[1]/self::xs:element[@ref = current()/@ref])">
-        <xs:element ref="{current()/@ref}" 
-          minOccurs="1"
-          maxOccurs="{tei:count-elements(1, current())}"/>
+        <xsl:variable name="ref" select="following-sibling::*[1]/xs:element[1]/@ref"/>
+        <xsl:choose>
+          <xsl:when test="not(following-sibling::*[1]/*/@ref except $ref)">
+            <xs:element ref="{current()/@ref}" 
+              minOccurs="1"
+              maxOccurs="{tei:count-elements(1, current())}"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy>
+              <xsl:apply-templates select="@*"/>
+            </xsl:copy>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:when test="preceding-sibling::*[1]/self::xs:element[@ref = current()/@ref]"/>
       <xsl:otherwise>
@@ -49,6 +61,7 @@
     </xsl:choose>
   </xsl:template>
   
+  <!-- Consolidate series of the same group -->
   <xsl:template match="xs:group[@ref]">
     <xsl:choose>
       <xsl:when test="following-sibling::*[1]/self::xs:group[@ref = current()/@ref] and
@@ -57,11 +70,22 @@
           minOccurs="{count(following-sibling::*/self::xs:group[@ref = current()/@ref and not(@minOccurs = '0')]) + 1}"
           maxOccurs="{tei:count-elements(1, current())}"/>
       </xsl:when>
+      <!-- Consolidate when followed by a sequence of all the same ref -->
       <xsl:when test="following-sibling::*[1]/self::xs:sequence[xs:group/@ref = current()/@ref] and
         not(preceding-sibling::*[1]/self::xs:group[@ref = current()/@ref])">
-        <xs:group ref="{current()/@ref}" 
-          minOccurs="1"
-          maxOccurs="{tei:count-elements(1, current())}"/>
+        <xsl:variable name="ref" select="following-sibling::*[1]/xs:group[1]/@ref"/>
+        <xsl:choose>
+          <xsl:when test="not(following-sibling::*[1]/*/@ref except $ref)">
+            <xs:group ref="{current()/@ref}" 
+              minOccurs="1"
+              maxOccurs="{tei:count-elements(1, current())}"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy>
+              <xsl:apply-templates select="@*"/>
+            </xsl:copy>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:when test="preceding-sibling::*[1]/self::xs:group[@ref = current()/@ref]"/>
       <xsl:otherwise>
@@ -74,10 +98,12 @@
   
   <xsl:template match="xs:sequence">
     <xsl:choose>
-      <xsl:when test="preceding-sibling::*[1]/self::xs:element[@ref = current()/xs:element/@ref] 
+      <xsl:when test="xs:element and preceding-sibling::*[1]/self::xs:element[not(current()/xs:element/@ref except
+        @ref)] 
         and count(xs:group) = 0
         and count(xs:element) le 2"/>
-      <xsl:when test="preceding-sibling::*[1]/self::xs:group[@ref = current()/xs:group/@ref]
+      <xsl:when test="xs:group and preceding-sibling::*[1]/self::xs:group[not(current()/xs:group/@ref except
+        @ref)]
         and count(xs:element) = 0
         and count(xs:group) le 2"/>
       <xsl:otherwise>
