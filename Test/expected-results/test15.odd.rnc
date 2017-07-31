@@ -27,10 +27,10 @@ macro.specialPara =
    | model.inter
    | model.divPart
    | model.global)*
-macro.anyXML =
+anyElement-xenoData =
   element * - (tei:* | teix:egXML) {
     attribute * { text }*,
-    (text | macro.anyXML)*
+    (text | anyElement-xenoData)*
   }
 att.ascribed.attributes = att.ascribed.attribute.who
 att.ascribed.attribute.who =
@@ -247,7 +247,7 @@ att.datable.w3c.attribute.to =
     | xsd:dateTime
   }?
 sch:pattern [
-  id = "test15-att.datable.w3c-att-datable-w3c-when-constraint-1"
+  id = "test15-att.datable.w3c-att-datable-w3c-when-constraint-rule-1"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -266,7 +266,7 @@ sch:pattern [
   "   "
 ]
 sch:pattern [
-  id = "test15-att.datable.w3c-att-datable-w3c-from-constraint-2"
+  id = "test15-att.datable.w3c-att-datable-w3c-from-constraint-rule-2"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -285,7 +285,7 @@ sch:pattern [
   "   "
 ]
 sch:pattern [
-  id = "test15-att.datable.w3c-att-datable-w3c-to-constraint-3"
+  id = "test15-att.datable.w3c-att-datable-w3c-to-constraint-rule-3"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -312,7 +312,7 @@ att.datable.attribute.calendar =
   ## indicates the system or calendar to which the date represented by the content of this element belongs.
   attribute calendar { xsd:anyURI }?
 sch:pattern [
-  id = "test15-att.datable-calendar-calendar-constraint-4"
+  id = "test15-att.datable-calendar-calendar-constraint-rule-4"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -468,7 +468,6 @@ att.global.responsibility.attribute.resp =
   }?
 att.editLike.attributes =
   att.dimensions.attributes,
-  att.source.attributes,
   att.editLike.attribute.evidence,
   att.editLike.attribute.instant
 att.editLike.attribute.evidence =
@@ -524,10 +523,18 @@ att.global.rendition.attribute.rendition =
   attribute rendition {
     list { xsd:anyURI+ }
   }?
+att.global.source.attributes = att.global.source.attribute.source
+att.global.source.attribute.source =
+  
+  ## specifies the source from which some aspect of this element is drawn.
+  attribute source {
+    list { xsd:anyURI+ }
+  }?
 att.global.attributes =
   att.global.rendition.attributes,
   att.global.linking.attributes,
   att.global.responsibility.attributes,
+  att.global.source.attributes,
   att.global.attribute.xmlid,
   att.global.attribute.n,
   att.global.attribute.xmllang,
@@ -818,7 +825,7 @@ att.typed.attribute.subtype =
     xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 sch:pattern [
-  id = "test15-att.typed-subtypeTyped-constraint-5"
+  id = "test15-att.typed-subtypeTyped-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -851,7 +858,7 @@ att.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "test15-att.pointing-targetLang-targetLang-constraint-6"
+  id = "test15-att.pointing-targetLang-targetLang-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -950,7 +957,7 @@ att.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { xsd:anyURI }?
 sch:pattern [
-  id = "test15-att.spanning-spanTo-spanTo-2-constraint-7"
+  id = "test15-att.spanning-spanTo-spanTo-2-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1001,7 +1008,7 @@ att.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "test15-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-8"
+    "test15-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1073,15 +1080,8 @@ att.transcriptional.attribute.status =
 att.transcriptional.attribute.cause =
   
   ## documents the presumed cause for the intervention.
-  ## Suggested values include: 1] fix; 2] unclear
   attribute cause {
-    
-    ## repeated for the purpose of fixation
-    "fix"
-    | 
-      ## repeated to clarify a previously illegible or badly written text or mark
-      "unclear"
-    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 att.transcriptional.attribute.seq =
   
@@ -1107,8 +1107,8 @@ att.citing.attributes =
   att.citing.attribute.to
 att.citing.attribute.unit =
   
-  ## identifies the unit of information conveyed by the element, e.g. columns, pages, volume.
-  ## Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] part; 7] column
+  ## identifies the unit of information conveyed by the element, e.g. columns, pages, volume, entry.
+  ## Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] part; 7] column; 8] entry
   attribute unit {
     
     ## the element contains a volume number.
@@ -1129,8 +1129,11 @@ att.citing.attribute.unit =
       ## the element identifies a part of a book or collection.
       "part"
     | 
-      ## the element identifies a column.
+      ## the element identifies an entry number or label in a list of entries.
       "column"
+    | 
+      ## the element identifies a column.
+      "entry"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 att.citing.attribute.from =
@@ -1333,7 +1336,7 @@ model.placeStateLike_sequenceRepeatable =
   model.placeNamePart_sequenceRepeatable+
 model.publicationStmtPart.agency = publisher | distributor | authority
 model.publicationStmtPart.detail =
-  address | date | pubPlace | idno | availability
+  model.ptrLike | address | date | pubPlace | idno | availability
 model.availabilityPart = licence
 model.certLike = notAllowed
 model.descLike = desc
@@ -1458,7 +1461,7 @@ model.biblPart =
   | edition
   | extent
   | availability
-model.frontPart = model.frontPart.drama | divGen | titlePage
+model.frontPart = model.frontPart.drama | listBibl | divGen | titlePage
 model.addrPart = model.nameLike | addrLine | street | postCode | postBox
 model.pPart.data =
   model.dateLike
@@ -1506,7 +1509,8 @@ model.applicationLike = application
 model.teiHeaderPart = encodingDesc | profileDesc | xenoData
 model.sourceDescPart = notAllowed
 model.encodingDescPart =
-  projectDesc
+  schemaRef
+  | projectDesc
   | samplingDecl
   | editorialDecl
   | tagsDecl
@@ -1536,13 +1540,6 @@ model.correspActionPart =
   model.dateLike | model.addressLike | model.nameLike | note
 model.correspContextPart = model.ptrLike | model.pLike | note
 model.correspDescPart = note | correspAction | correspContext
-att.source.attributes = att.source.attribute.source
-att.source.attribute.source =
-  
-  ## provides a pointer to the bibliographical source from which a quotation or citation is drawn.
-  attribute source {
-    list { xsd:anyURI+ }
-  }?
 model.resourceLike = \text
 att.personal.attributes =
   att.naming.attributes,
@@ -1620,7 +1617,7 @@ p =
   element para {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-p-abstractModel-p-constraint-4"
+         id = "test15-p-abstractModel-p-constraint-report-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1629,7 +1626,7 @@ p =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure)"
+               "not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
              "\x{a}" ~
              "        Abstract model violation: Paragraphs may not contain other paragraphs or ab elements.\x{a}" ~
              "      "
@@ -1641,7 +1638,7 @@ p =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-p-abstractModel-structure-l-constraint-5"
+         id = "test15-p-abstractModel-structure-l-constraint-report-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1702,7 +1699,7 @@ distinct =
     ## specifies how the phrase is distinct diatopically
     attribute space { xsd:string }?,
     
-    ## specifies how the phrase is distinct diastatically
+    ## specifies how the phrase is distinct diastratically
     attribute social { xsd:string }?,
     empty
   }
@@ -1746,7 +1743,6 @@ quote =
     macro.specialPara,
     att.global.attributes,
     att.typed.attributes,
-    att.source.attributes,
     empty
   }
 q =
@@ -1756,7 +1752,6 @@ q =
     macro.specialPara,
     att.global.attributes,
     att.ascribed.attributes,
-    att.source.attributes,
     
     ## may be used to indicate whether the offset passage is spoken or thought, or to characterize it more finely.
     ## Suggested values include: 1] spoken; 2] thought; 3] written; 4] soCalled; 5] foreign; 6] distinct; 7] term; 8] emph; 9] mentioned
@@ -1816,7 +1811,7 @@ soCalled =
   element soCalled { macro.phraseSeq, att.global.attributes, empty }
 desc =
   
-  ## (description) contains a brief description of the object documented by its parent element, including its intended usage, purpose, or application where this is appropriate. [22.4.1. Description of Components]
+  ## (description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components]
   element desc {
     macro.limitedContent,
     att.global.attributes,
@@ -1853,14 +1848,8 @@ term =
   }
 sic =
   
-  ## (Latin for thus or so
-  ##    ) contains text reproduced although apparently incorrect or inaccurate. [3.4.1. Apparent Errors]
-  element sic {
-    macro.paraContent,
-    att.global.attributes,
-    att.source.attributes,
-    empty
-  }
+  ## (Latin for thus or so) contains text reproduced although apparently incorrect or inaccurate. [3.4.1. Apparent Errors]
+  element sic { macro.paraContent, att.global.attributes, empty }
 corr =
   
   ## (correction) contains the correct form of a passage apparently erroneous in the copy text. [3.4.1. Apparent Errors]
@@ -1892,12 +1881,7 @@ orig =
   
   ## (original form) contains a reading which is marked as following the original, rather than being normalized or corrected. [3.4.2. Regularization and
   ## Normalization 12. Critical Apparatus]
-  element orig {
-    macro.paraContent,
-    att.global.attributes,
-    att.source.attributes,
-    empty
-  }
+  element orig { macro.paraContent, att.global.attributes, empty }
 gap =
   
   ## indicates a point where material has been omitted in a transcription, whether for editorial reasons described in the TEI header, as part of sampling practice, or because the material is illegible, invisible, or inaudible. [3.4.3. Additions, Deletions, and Omissions]
@@ -1907,10 +1891,32 @@ gap =
     att.timed.attributes,
     att.editLike.attributes,
     
-    ## gives the reason for omission. Sample values include sampling, inaudible, irrelevant, cancelled.
+    ## gives the reason for omission
+    ## Suggested values include: 1] cancelled; 2] deleted; 3] editorial; 4] illegible; 5] inaudible; 6] irrelevant; 7] sampling
     attribute reason {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        (
+         ##
+         "cancelled"
+         | 
+           ##
+           "deleted"
+         | 
+           ## for features omitted from transcription due to editorial policy
+           "editorial"
+         | 
+           ##
+           "illegible"
+         | 
+           ##
+           "inaudible"
+         | 
+           ##
+           "irrelevant"
+         | 
+           ##
+           "sampling"
+         | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" })+
       }
     }?,
     
@@ -1990,7 +1996,6 @@ rs =
     att.global.attributes,
     att.naming.attributes,
     att.typed.attributes,
-    att.source.attributes,
     empty
   }
 email =
@@ -2109,7 +2114,6 @@ abbr =
   element abbr {
     macro.phraseSeq,
     att.global.attributes,
-    att.source.attributes,
     att.typed.attribute.subtype,
     
     ## allows the encoder to classify the abbreviation according to some convenient typology.
@@ -2134,7 +2138,7 @@ ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "test15-ptr-ptrAtts-constraint-6"
+         id = "test15-ptr-ptrAtts-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2168,7 +2172,7 @@ ref =
   element ref {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-ref-refAtts-constraint-7"
+         id = "test15-ref-refAtts-constraint-report-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2208,7 +2212,8 @@ ref =
          (label, model.global*, item, model.global*)+)),
      (model.divBottom, model.global*)*)
     >> sch:pattern [
-         id = "test15-list-gloss-list-must-have-labels-constraint-9"
+         id =
+           "test15-list-gloss-list-must-have-labels-constraint-rule-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2284,6 +2289,7 @@ head =
      | model.global)*,
     att.global.attributes,
     att.typed.attributes,
+    att.placement.attributes,
     att.written.attributes,
     empty
   }
@@ -2303,7 +2309,6 @@ note =
     att.global.attributes,
     att.placement.attributes,
     att.pointing.attributes,
-    att.source.attributes,
     att.typed.attributes,
     att.written.attributes,
     
@@ -2395,7 +2400,7 @@ milestone =
   }
 gb =
   
-  ## (gathering begins) marks the point in a transcribed codex at which a new gathering or quire begins. [3.10.3. Milestone
+  ## (gathering beginning) marks the beginning of a new gathering or quire in a transcribed codex. [3.10.3. Milestone
   ## Elements]
   element gb {
     empty,
@@ -2407,7 +2412,7 @@ gb =
   }
 pb =
   
-  ## (page break) marks the start of a new page in a paginated document. [3.10.3. Milestone
+  ## (page beginning) marks the beginning of a new page in a paginated document. [3.10.3. Milestone
   ## Elements]
   element pb {
     empty,
@@ -2420,7 +2425,7 @@ pb =
   }
 lb =
   
-  ## (line break) marks the start of a new (typographic) line in some edition or version of a text. [3.10.3. Milestone
+  ## (line beginning) marks the beginning of a new (typographic) line in some edition or version of a text. [3.10.3. Milestone
   ## Elements 7.2.5. Speech Contents]
   element lb {
     empty,
@@ -2433,7 +2438,7 @@ lb =
   }
 cb =
   
-  ## (column break) marks the beginning of a new column of a text on a multi-column page. [3.10.3. Milestone
+  ## (column beginning) marks the beginning of a new column of a text on a multi-column page. [3.10.3. Milestone
   ## Elements]
   element cb {
     empty,
@@ -2514,7 +2519,8 @@ respStmt =
   
   ## (statement of responsibility) supplies a statement of responsibility for the intellectual content of a text, edition, recording, or series, where the specialized elements for authors, editors, etc. do not suffice or do not apply. May also be used to encode information about individuals or organizations which have played a role in the production or distribution of a bibliographic work. [3.11.2.2. Titles, Authors, and Editors 2.2.1. The Title Statement 2.2.2. The Edition Statement 2.2.5. The Series Statement]
   element respStmt {
-    ((resp+, model.nameLike.agent+) | (model.nameLike.agent+, resp+)),
+    (((resp+, model.nameLike.agent+) | (model.nameLike.agent+, resp+)),
+     note*),
     att.global.attributes,
     att.canonical.attributes,
     empty
@@ -2537,6 +2543,7 @@ title =
     att.global.attributes,
     att.canonical.attributes,
     att.typed.attribute.subtype,
+    att.datable.attributes,
     
     ## classifies the title according to some convenient typology.
     ## Sample values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] short; 5] desc(descriptive) 
@@ -2634,31 +2641,7 @@ biblStruct =
   element biblStruct {
     (analytic*,
      (monogr, series*)+,
-     (model.noteLike
-      | idno
-      | model.ptrLike
-      | relatedItem
-      | citedRange)*)
-    >> sch:pattern [
-         id =
-           "test15-biblStruct-deprecate-altIdentifier-child-constraint-8"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:biblStruct"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test = "child::tei:idno"
-             role = "nonfatal"
-             "WARNING: use of deprecated method — the use of the idno element as a direct child of the biblStruct element will be removed from the TEI on 2016-09-18"
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ],
+     (model.noteLike | model.ptrLike | relatedItem | citedRange)*),
     att.global.attributes,
     att.declarable.attributes,
     att.typed.attributes,
@@ -2683,7 +2666,7 @@ relatedItem =
   element relatedItem {
     ((model.biblLike | model.ptrLike)?)
     >> sch:pattern [
-         id = "test15-relatedItem-targetorcontent1-constraint-9"
+         id = "test15-relatedItem-targetorcontent1-constraint-report-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2705,7 +2688,7 @@ relatedItem =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-relatedItem-targetorcontent1-constraint-7"
+         id = "test15-relatedItem-targetorcontent1-constraint-assert-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2736,7 +2719,7 @@ l =
   element l {
     ((text | model.gLike | model.phrase | model.inter | model.global)*)
     >> sch:pattern [
-         id = "test15-l-abstractModel-structure-l-constraint-10"
+         id = "test15-l-abstractModel-structure-l-constraint-report-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2773,7 +2756,7 @@ lg =
       | lg)*,
      (model.divBottom, model.global*)*)
     >> sch:pattern [
-         id = "test15-lg-atleast1oflggapl-constraint-8"
+         id = "test15-lg-atleast1oflggapl-constraint-assert-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2793,7 +2776,7 @@ lg =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-lg-abstractModel-structure-l-constraint-11"
+         id = "test15-lg-abstractModel-structure-l-constraint-report-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2893,6 +2876,7 @@ teiCorpus =
      ((model.resourceLike+, (TEI | teiCorpus)*)
       | (TEI | teiCorpus)+)),
     att.global.attributes,
+    att.typed.attributes,
     
     ## The version of the TEI scheme
     [ a:defaultValue = "5.0" ]
@@ -2958,13 +2942,6 @@ teiHeader =
   element teiHeader {
     (fileDesc, model.teiHeaderPart*, revisionDesc?),
     att.global.attributes,
-    
-    ## specifies the kind of document to which the header is attached, for example whether it is a corpus or individual text.
-    ## Sample values include: 1] text; 2] corpus
-    [ a:defaultValue = "text" ]
-    attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
-    }?,
     empty
   }
 fileDesc =
@@ -3057,10 +3034,34 @@ idno =
     (text | model.gLike | idno)*,
     att.global.attributes,
     att.sortable.attributes,
+    att.datable.attributes,
+    att.typed.attribute.subtype,
     
     ## categorizes the identifier, for example as an ISBN, Social Security number, etc.
+    ## Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7] OCLC
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      
+      ## International Standard Book Number: a 13- or (if assigned prior to 2007) 10-digit identifying number assigned by the publishing industry to a published book or similar item, registered with the International ISBN Agency.
+      "ISBN"
+      | 
+        ## International Standard Serial Number: an eight-digit number to uniquely identify a serial publication.
+        "ISSN"
+      | 
+        ## Digital Object Identifier: a unique string of letters and numbers assigned to an electronic document.
+        "DOI"
+      | 
+        ## Uniform Resource Identifier: a string of characters to uniquely identify a resource which usually contains indication of the means of accessing that resource, the name of its host, and its filepath.
+        "URI"
+      | 
+        ## A data number in the Virtual Internet Authority File assigned to link different names in catalogs around the world for the same entity.
+        "VIAF"
+      | 
+        ## English Short-Title Catalogue number: an identifying number assigned to a document in English printed in the British Isles or North America before 1801.
+        "ESTC"
+      | 
+        ## union catalog number in WorldCat representing a resource held by one or more of the member libraries in the global cooperative Online Computer Library Center.
+        "OCLC"
+      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
     empty
   }
@@ -3126,13 +3127,14 @@ biblFull =
   
   ## (fully-structured bibliographic citation) contains a fully-structured bibliographic citation, in which all components of the TEI file description are present. [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2. The File Description 2.2.7. The Source Description 15.3.2. Declarable Elements]
   element biblFull {
-    ((titleStmt,
-      editionStmt?,
-      extent?,
-      publicationStmt,
-      seriesStmt?,
-      notesStmt?),
-     sourceDesc*),
+    (((titleStmt,
+       editionStmt?,
+       extent?,
+       publicationStmt,
+       seriesStmt?,
+       notesStmt?),
+      sourceDesc*)
+     | (fileDesc, profileDesc)),
     att.global.attributes,
     att.declarable.attributes,
     att.sortable.attributes,
@@ -3145,6 +3147,19 @@ encodingDesc =
   element encodingDesc {
     (model.encodingDescPart | model.pLike)+,
     att.global.attributes,
+    empty
+  }
+schemaRef =
+  
+  ## (schema reference) describes or points to a related customization or schema file [2.3.9. The Schema Specification]
+  element schemaRef {
+    model.descLike?,
+    att.global.attributes,
+    att.typed.attributes,
+    att.resourced.attributes,
+    
+    ## the identifier used for the customization or schema
+    attribute key { xsd:NCName }?,
     empty
   }
 projectDesc =
@@ -3219,9 +3234,6 @@ normalization =
     att.global.attributes,
     att.declarable.attributes,
     
-    ## indicates a bibliographic description or other resource documenting the principles underlying the normalization carried out.
-    attribute source { xsd:anyURI }?,
-    
     ## indicates the method adopted to indicate normalizations within the text.
     [ a:defaultValue = "silent" ]
     attribute method {
@@ -3240,7 +3252,7 @@ quotation =
   element quotation {
     (model.pLike*)
     >> sch:pattern [
-         id = "test15-quotation-quotationContents-constraint-12"
+         id = "test15-quotation-quotationContents-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3388,11 +3400,6 @@ tagUsage =
     
     ## (with unique identifier) specifies the number of occurrences of this element within the text which bear a distinct value for the global xml:id attribute.
     attribute withId { xsd:nonNegativeInteger }?,
-    
-    ## specifies the identifier of a rendition element which defines how this element was rendered in the source text.
-    attribute render {
-      list { xsd:anyURI+ }
-    }?,
     empty
   }
 \namespace =
@@ -3454,14 +3461,16 @@ cRefPattern =
   }
 prefixDef =
   
-  ## (prefixing scheme used in data.pointer values) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
+  ## (prefix definition) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element prefixDef {
     model.pLike*,
     att.global.attributes,
     att.patternReplacement.attributes,
     
     ## supplies a name which functions as the prefix for an abbreviated pointing scheme such as a private URI scheme. The prefix constitutes the text preceding the first colon.
-    attribute ident { xsd:Name },
+    attribute ident {
+      xsd:token { pattern = "[a-z][a-z0-9\+\.\-]*" }
+    },
     empty
   }
 listPrefixDef =
@@ -3494,8 +3503,8 @@ taxonomy =
   
   ## defines a typology either implicitly, by means of a bibliographic citation, or explicitly by a structured taxonomy. [2.3.7. The Classification Declaration]
   element taxonomy {
-    ((model.glossLike | model.descLike)*
-     | (category | taxonomy)+
+    (((category | taxonomy)+
+      | ((model.glossLike | model.descLike)+, (category | taxonomy)*))
      | (model.biblLike, (category | taxonomy)*)),
     att.global.attributes,
     empty
@@ -3581,10 +3590,7 @@ abstract =
   
   ## contains a summary or formal abstract prefixed to an existing source document by the encoder. [2.4.4. Abstracts]
   element abstract {
-    (model.pLike | model.listLike)+,
-    att.global.attributes,
-    att.source.attributes,
-    empty
+    (model.pLike | model.listLike)+, att.global.attributes, empty
   }
 creation =
   
@@ -3639,7 +3645,7 @@ keywords =
     (term+ | \list),
     att.global.attributes,
     
-    ## identifies the controlled vocabulary within which the set of keywords concerned is defined identifies the classification scheme within which the set of categories concerned is defined, for example by a taxonomy element, or by some other resource.
+    ## identifies the controlled vocabulary within which the set of keywords concerned is defined, for example by a taxonomy element, or by some other resource.
     attribute scheme { xsd:anyURI }?,
     empty
   }
@@ -3650,7 +3656,7 @@ classCode =
     macro.phraseSeq.limited,
     att.global.attributes,
     
-    ## identifies the classification system in use, as defined by for example by a taxonomy element, or some other resource.
+    ## identifies the classification system in use, as defined by, e.g. a taxonomy element, or some other resource.
     attribute scheme { xsd:anyURI },
     empty
   }
@@ -3690,7 +3696,7 @@ correspDesc =
   }
 correspAction =
   
-  ## contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence [2.4.6. Correspondence Description]
+  ## (correspondence action) contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence. [2.4.6. Correspondence Description]
   element correspAction {
     (model.correspActionPart+ | model.pLike+),
     att.global.attributes,
@@ -3701,13 +3707,13 @@ correspAction =
     ## Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5] forwarded
     attribute type {
       
-      ## information concerning the sending or dispatch of a message
+      ## information concerning the sending or dispatch of a message.
       "sent"
       | 
-        ## information concerning the receipt of a message
+        ## information concerning the receipt of a message.
         "received"
       | 
-        ## information concerning the transmission of a message, i.e. between the dispatch and the next receipt, redirect or forwarding
+        ## information concerning the transmission of a message, i.e. between the dispatch and the next receipt, redirect or forwarding.
         "transmitted"
       | 
         ## information concerning the redirection of an unread message.
@@ -3727,9 +3733,9 @@ correspContext =
   }
 xenoData =
   
-  ## (outside metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]
+  ## (non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]
   element xenoData {
-    (text | macro.anyXML),
+    (text | anyElement-xenoData),
     att.global.attributes,
     att.declarable.attributes,
     att.typed.attributes,
@@ -3862,7 +3868,8 @@ floatingText =
           ((model.divLike | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
-         id = "test15-div-abstractModel-structure-l-constraint-13"
+         id =
+           "test15-div-abstractModel-structure-l-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3882,7 +3889,8 @@ floatingText =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-div-abstractModel-structure-p-constraint-14"
+         id =
+           "test15-div-abstractModel-structure-p-constraint-report-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4107,7 +4115,12 @@ salute =
 signed =
   
   ## (signature) contains the closing salutation, etc., appended to a foreword, dedicatory epistle, or other division of a text. [4.2.2. Openers and Closers]
-  element signed { macro.paraContent, att.global.attributes, empty }
+  element signed {
+    macro.paraContent,
+    att.global.attributes,
+    att.written.attributes,
+    empty
+  }
 postscript =
   
   ## contains a postscript, e.g. to a letter. [4.2. Elements Common to All Divisions]
@@ -4117,6 +4130,7 @@ postscript =
      (model.global | model.common)*,
      (model.divBottomPart, model.global*)*),
     att.global.attributes,
+    att.written.attributes,
     empty
   }
 titlePage =
@@ -4314,7 +4328,7 @@ link =
   element link {
     empty
     >> sch:pattern [
-         id = "test15-link-linkTargets3-constraint-9"
+         id = "test15-link-linkTargets3-constraint-assert-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4354,7 +4368,7 @@ ab =
   element ab {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-ab-abstractModel-structure-p-constraint-15"
+         id = "test15-ab-abstractModel-structure-p-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4363,7 +4377,7 @@ ab =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
+               "not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
              "\x{a}" ~
              "        Abstract model violation: ab may not contain paragraphs or other ab elements.\x{a}" ~
              "      "
@@ -4375,7 +4389,7 @@ ab =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-ab-abstractModel-structure-l-constraint-16"
+         id = "test15-ab-abstractModel-structure-l-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4403,7 +4417,7 @@ ab =
   }
 anchor =
   
-  ## (anchor point) attaches an identifier to a point within a text, whether or not it corresponds with a textual element. [8.4.2. Synchronization and Overlap 16.4. Correspondence and Alignment]
+  ## (anchor point) attaches an identifier to a point within a text, whether or not it corresponds with a textual element. [8.4.2. Synchronization and Overlap 16.5. Correspondence and Alignment]
   element anchor {
     empty, att.global.attributes, att.typed.attributes, empty
   }
@@ -4415,13 +4429,12 @@ seg =
     att.global.attributes,
     att.segLike.attributes,
     att.typed.attributes,
-    att.source.attributes,
     att.written.attributes,
     empty
   }
 when =
   
-  ## indicates a point in time either relative to other elements in the same timeline tag, or absolutely. [16.5.2. Placing Synchronous Events in Time]
+  ## indicates a point in time either relative to other elements in the same timeline tag, or absolutely. [16.4.2. Placing Synchronous Events in Time]
   element when {
     empty,
     att.global.attributes,
@@ -4479,7 +4492,7 @@ when =
   }
 timeline =
   
-  ## provides a set of ordered points in time which can be linked to elements of a spoken text to create a temporal alignment of that text. [16.5.2. Placing Synchronous Events in Time]
+  ## provides a set of ordered points in time which can be linked to elements of a spoken text to create a temporal alignment of that text. [16.4.2. Placing Synchronous Events in Time]
   element timeline {
     when+,
     att.global.attributes,
@@ -4529,7 +4542,7 @@ join =
   element join {
     ((model.descLike | model.certLike)*)
     >> sch:pattern [
-         id = "test15-join-joinTargets3-constraint-10"
+         id = "test15-join-joinTargets3-constraint-assert-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4606,7 +4619,7 @@ alt =
         "incl"
     }?,
     
-    ## If mode is , each weight states the probability that the corresponding alternative occurs. If mode is incl each weight states the probability that the corresponding alternative occurs given that at least one of the other alternatives occurs.
+    ## If mode is excl, each weight states the probability that the corresponding alternative occurs. If mode is incl each weight states the probability that the corresponding alternative occurs given that at least one of the other alternatives occurs.
     attribute weights {
       list { xsd:double, xsd:double, xsd:double* }
     }?,

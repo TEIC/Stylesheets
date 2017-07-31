@@ -3,7 +3,6 @@
                 xmlns:s="http://www.ascc.net/xml/schematron"
                 xmlns:fotex="http://www.tug.org/fotex"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
-                
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -199,9 +198,9 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:apply-templates/>
        </xsl:when>
        <xsl:otherwise>
-	 <xsl:value-of select="$preQuote"/>
-	 <xsl:apply-templates/>
-	 <xsl:value-of select="$postQuote"/>
+         <xsl:value-of select="$preQuote"/>
+      	 <xsl:apply-templates/>
+      	 <xsl:value-of select="$postQuote"/>
        </xsl:otherwise>
      </xsl:choose>
    </xsl:template>

@@ -93,10 +93,10 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element address</desc>
   </doc>
   <xsl:template match="tei:address">
-    <address>
+    <span class="address">
       <xsl:call-template name="makeRendition"/>
       <xsl:apply-templates/>
-    </address>
+    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element author</desc>
@@ -255,6 +255,17 @@ of this software, even if advised of the possibility of such damage.
       </xsl:call-template>
       <xsl:apply-templates/>
     </em>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element distinct</desc>
+  </doc>
+  <xsl:template match="tei:distinct">
+    <span>
+      <xsl:call-template name="makeRendition">
+        <xsl:with-param name="default" select="local-name()"/>
+      </xsl:call-template>
+      <xsl:apply-templates/>
+    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element epigraph</desc>

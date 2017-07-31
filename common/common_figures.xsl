@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0"
-                
+   
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="tei"
                 version="2.0">
@@ -220,7 +221,31 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
          </xsl:choose>
       </xsl:if>
-      <xsl:variable name="s">
+<!-- For larger graphics in XSL:FO, we want to make sure they're scaled 
+     nicely to fit on the page. -->
+    <xsl:choose>
+      <xsl:when test="$mode eq 'fo'  and  ends-with( @width,'px')">
+        <xsl:variable name="pxW" select="xs:integer( substring-before( @width,'px') )"/>
+        <xsl:variable name="pxH" select="if (ends-with( @height,'px'))
+                                         then xs:integer( substring-before( @height,'px') )
+                                         else -1"/>
+        <xsl:choose>
+          <xsl:when test="($pxW gt $pxH)  and  ($pxW gt 200)">     
+            <xsl:attribute name="max-width" select="'80%'"/>
+          </xsl:when>
+          <xsl:when test="($pxH gt $pxW)  and  ($pxW gt 200)">  
+            <xsl:variable name="percentH" select="round(($pxW div $pxH) * 80)"/>
+            <xsl:attribute name="width" select="concat($percentH, '%')"/>
+            <xsl:attribute name="content-width" select="'scale-to-fit'"/>
+            <xsl:attribute name="content-height" select="'scale-to-fit'"/>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- We have no idea how the height & width were specified, so do no harm -->
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:variable name="s">
          <xsl:choose>
             <xsl:when test="@scale and ends-with(@scale,'%')">
                <xsl:value-of select="number(substring-before(@scale,'%')) div 100"/>

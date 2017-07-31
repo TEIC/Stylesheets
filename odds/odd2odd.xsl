@@ -161,6 +161,19 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:variable>
 
+  <!-- NOTE on functions added 2016-12-02 by Syd: -->
+  <!-- Many, if not most, of the functions below duplicate in name -->
+  <!-- functions that are in teiodds.xsl. odd2relax, odd2dtd, odd2html, -->
+  <!-- and even odd2json & odd2lite import that file. But this one -->
+  <!-- does not. I do not know if the functions are slightly different, -->
+  <!-- or if there is some other reason this file does not import -->
+  <!-- teiodds.xsl. Someday I hope to test this out and do the right -->
+  <!-- thing (either import that file so there is only 1 definition -->
+  <!-- of each function, or add documentation explaining why not and -->
+  <!-- perhaps re-name the functions so the difference is clear). But -->
+  <!-- for now, since I'm in a rush, I'm just following the lead of -->
+  <!-- what's here already, and copying my new function from teiodds to -->
+  <!-- here. -->
 
   <xsl:function name="tei:includeMember" as="xs:boolean">
     <xsl:param name="ident"  as="xs:string"/>
@@ -297,7 +310,36 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="$message"/>
     </xsl:message>
   </xsl:template>
-
+  
+  <xsl:function name="tei:minOmaxO" as="xs:integer+">
+    <!-- Input: the string values of the attributes @minOccurs and -->
+    <!--        @maxOccurs  -->
+    <!-- Oputput: a sequence of 2 integers representing the integer -->
+    <!--          values thereof with -1 used to indicate "unbounded" -->
+    <xsl:param name="minOccurs"/>
+    <xsl:param name="maxOccurs"/>
+    <!-- get the value of @minOccurs, defaulting to "1" -->
+    <xsl:variable name="minOccurs" select="( $minOccurs, '1')[1]"/>
+    <!-- get the value of @maxOccurs, defaulting to "1" -->
+    <xsl:variable name="maxOccurs" select="( $maxOccurs, '1')[1]"/>
+    <!-- We now have two _string_ representations of the attrs, but -->
+    <!-- we need integers. So cast them, converting "unbounded" to  -->
+    <!-- a special flag value (-1): -->
+    <xsl:variable name="min" select="xs:integer( $minOccurs )"/>
+    <xsl:variable name="max">
+      <xsl:choose>
+        <xsl:when test="$maxOccurs castable as xs:integer">
+          <xsl:value-of select="xs:integer( $maxOccurs )"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <!-- Must be "unbounded". -->
+          <xsl:value-of select="-1"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:sequence select="( $min, $max )"/>
+  </xsl:function>
+  
   <xsl:variable name="ODD">
     <xsl:for-each select="/*">
       <xsl:copy>
@@ -391,6 +433,18 @@ of this software, even if advised of the possibility of such damage.
     <xsl:if test="@ident=$selectedSchema or ($selectedSchema='' and not(preceding-sibling::tei:schemaSpec))">
       <xsl:copy>
         <xsl:copy-of select="@*"/>
+        <!-- generate a @defaultExceptions attribute if it's not present -->
+        <xsl:if test="not(@defaultExceptions)">
+          <xsl:variable name="defval" select="document(tei:workOutSource(.))//tei:elementSpec[@ident='schemaSpec']//tei:attDef[@ident='defaultExceptions']/tei:defaultVal"/>
+          <xsl:for-each select="tokenize($defval, '\s+')">
+            <xsl:if test="matches(., '\w(\w|\d)+:(\w|\d)+')">
+              <xsl:namespace name="{substring-before(., ':')}" select="namespace-uri-for-prefix(substring-before(., ':'), $defval)" ></xsl:namespace>
+            </xsl:if>
+          </xsl:for-each>
+          <xsl:if test="$defval">
+            <xsl:attribute name="defaultExceptions" select="$defval"/>
+          </xsl:if>
+        </xsl:if>
         <xsl:choose>
           <xsl:when test="@source">
             <xsl:if test="$verbose='true'">
@@ -1101,13 +1155,47 @@ of this software, even if advised of the possibility of such damage.
         <xsl:for-each select="key('odd2odd-CHANGE',$className)">
           <!-- context is now a classSpec in change mode in the ODD spec -->
           <!-- description -->
-          <xsl:choose>
+          <!-- For each non-identifiable element type (namely:
+               <gloss>, <altIdent>, <equiv>, <desc>, then <remarks>,
+               <exemplum>, and <listRef>) copy instances over from the
+               customization ODD if it is present there, and from the
+               original source ODD if it is not present in the context
+               node; unless we are stripping out prose content stuff,
+               in which case some are not copied no matter what. The
+               <classes>, <constraintSpec>s, and <attList> are handled
+               differently, as they are identifiable. -->
+          <xsl:choose> <!-- maybe copy <gloss>s from ODD or ORIGINAL -->
+            <xsl:when test="$stripped='true'"/>
+            <xsl:when test="tei:gloss">
+              <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:gloss"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:choose> <!-- copy <altIdent>s from ODD or ORIGINAL -->
+            <xsl:when test="tei:altIdent">
+              <xsl:apply-templates mode="justcopy" select="tei:altIdent"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:altIdent"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:choose> <!-- copy <equiv>s from ODD or ORIGINAL -->
+            <xsl:when test="tei:equiv">
+              <xsl:apply-templates mode="justcopy" select="tei:equiv"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:equiv"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:choose> <!-- maybe copy <desc>s from ODD or ORIGINAL -->
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:desc">
               <xsl:apply-templates mode="justcopy" select="tei:desc"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:desc"/>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:desc"/>
             </xsl:otherwise>
           </xsl:choose>
           <!-- classes -->
@@ -1132,14 +1220,14 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:variable name="metoo">
                       <xsl:value-of select="concat(../../@ident,@key)"/>
                     </xsl:variable>
-                      <xsl:choose>
-                        <xsl:when test="$ODD/key('odd2odd-DELETE',$me)"> </xsl:when>
-                        <xsl:when test="$ODD/key('odd2odd-MEMBEROFDELETE',$metoo)"> </xsl:when>
-                        <xsl:when test="$ODD/key('odd2odd-MEMBEROFADD',$metoo)"> </xsl:when>
-                        <xsl:otherwise>
-                          <memberOf key="{$me}"/>
-                        </xsl:otherwise>
-                      </xsl:choose>
+                    <xsl:choose>
+                      <xsl:when test="$ODD/key('odd2odd-DELETE',$me)"> </xsl:when>
+                      <xsl:when test="$ODD/key('odd2odd-MEMBEROFDELETE',$metoo)"> </xsl:when>
+                      <xsl:when test="$ODD/key('odd2odd-MEMBEROFADD',$metoo)"> </xsl:when>
+                      <xsl:otherwise>
+                        <memberOf key="{$me}"/>
+                      </xsl:otherwise>
+                    </xsl:choose>
                   </xsl:for-each>
                 </xsl:for-each>
               </xsl:when>
@@ -1176,6 +1264,33 @@ of this software, even if advised of the possibility of such damage.
               <xsl:with-param name="objectName" select="$className"/>
             </xsl:call-template>
           </attList>
+          <xsl:choose> <!-- maybe copy <exemplum>s from ODD or ORIGINAL -->
+            <xsl:when test="$stripped='true'"/>
+            <xsl:when test="tei:exemplum">
+              <xsl:apply-templates mode="justcopy" select="tei:exemplum"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:exemplum"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:choose> <!-- maybe copy <remarks>s from ODD or ORIGINAL -->
+            <xsl:when test="$stripped='true'"/>
+            <xsl:when test="tei:remarks">
+              <xsl:apply-templates mode="justcopy" select="tei:remarks"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:remarks"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:choose> <!-- maybe copy <listRef>s from ODD or ORIGINAL -->
+            <xsl:when test="$stripped='true'"/>
+            <xsl:when test="tei:listRef">
+              <xsl:apply-templates mode="justcopy" select="tei:listRef"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/tei:listRef"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:copy>
@@ -1264,7 +1379,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:when test="self::rng:zeroOrMore/rng:ref/@name eq 'model.global'        and preceding-sibling::rng:*[1][self::rng:zeroOrMore/rng:ref/@name eq 'model.global']"/>
         <xsl:when test="$entCount&gt;0 or $stripped='true'">
-          <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{$element}">
+          <xsl:element namespace="http://relaxng.org/ns/structure/1.0" name="{$element}">
             <xsl:copy-of select="@*|*|text()|processing-instruction()"/>
           </xsl:element>
         </xsl:when>
@@ -1276,14 +1391,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="element">
       <xsl:value-of select="local-name(.)"/>
     </xsl:variable>
-    <!-- set up defaulted (string) values of @minOccurs and @maxOccurs -->
-    <xsl:variable name="minimum" select="( @minOccurs, '1' )[1]"/>
-    <xsl:variable name="maximum" select="( @maxOccurs, '1' )[1]"/>
-    <!-- set up values of @minOccurs and @maxOccurs as number -->
-    <xsl:variable name="min" select="$minimum cast as xs:integer"/>
-    <xsl:variable name="max" select="if ($maximum castable as xs:integer)
-                                     then $maximum cast as xs:integer
-                                     else (: must be 'unbounded':) -1"/>
+    <xsl:variable name="minOmaxO" select="tei:minOmaxO( @minOccurs, @maxOccurs )"/>
+    <xsl:variable name="min" select="$minOmaxO[1]"/>
+    <xsl:variable name="max" select="$minOmaxO[2]"/>
     <!-- 
       for each Pure ODD content model,
       remove reference to any elements which have been
@@ -1306,7 +1416,8 @@ of this software, even if advised of the possibility of such damage.
               </xsl:copy>
             </xsl:when>
             <!-- end anyXML section -->
-            <xsl:when test="self::tei:dataRef[@name] | self::tei:textNode | self::tei:valList">
+            <xsl:when test="self::tei:dataRef[@name] | self::tei:textNode | self::tei:valList |
+              self::tei:anyElement">
               <xsl:copy-of select="."/>
             </xsl:when>
             <xsl:when test="self::tei:classRef or self::tei:elementRef or self::tei:macroRef or self::tei:dataRef">
@@ -1341,23 +1452,32 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="$element=('sequence','alternate')
                     and $min eq 0 and $max eq 1 
                     and $entCount eq 1
-                    and (tei:sequence|tei:alternate)
-                        [ @minOccurs cast as xs:integer eq 0 and normalize-space(@maxOccurs) eq 'unbounded']">
+                    and (tei:sequence|tei:alternate)[
+                        tei:minOmaxO( @minOccurs, @maxOccurs )[1] eq 0
+                        and
+                        tei:minOmaxO( @minOccurs, @maxOccurs )[2] eq -1
+                        ]">
           <xsl:copy-of select="@*|*|text()|processing-instruction()"/>
         </xsl:when>
         <xsl:when test="$element=('sequence','alternate')
                     and $min eq 0 and $max eq 1 
                     and $entCount eq 1
-                    and (tei:sequence|tei:alternate)
-                        [ @minOccurs cast as xs:integer eq 1 and normalize-space(@maxOccurs) eq 'unbounded']">
+                    and (tei:sequence|tei:alternate)[
+                        tei:minOmaxO( @minOccurs, @maxOccurs )[1] eq 1
+                        and
+                        tei:minOmaxO( @minOccurs, @maxOccurs )[2] eq -1
+                        ]">
           <xsl:copy-of select="@*|*|text()|processing-instruction()"/>
         </xsl:when>
         <!-- sequence or alternate that's zero or more containing sequence or alternate that's zero or more  -->
         <xsl:when test="$element=('sequence','alternate')
                     and $min eq 1 and $max eq -1 
                     and $entCount eq 1
-                    and (tei:sequence|tei:alternate)
-                        [ @minOccurs cast as xs:integer eq 0 and normalize-space(@maxOccurs) eq 'unbounded']">
+                    and (tei:sequence|tei:alternate)[
+                        tei:minOmaxO( @minOccurs, @maxOccurs )[1] eq 0
+                        and
+                        tei:minOmaxO( @minOccurs, @maxOccurs )[2] eq -1
+                        ]">
           <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:copy-of select="(tei:sequence|tei:alternate)/*"/>
@@ -1366,18 +1486,22 @@ of this software, even if advised of the possibility of such damage.
         <!-- classRef that's 0 or more immediately following a classRef that's 0 or more -->
         <xsl:when test="self::tei:classRef[
                               @key eq 'model.global'
-                          and @minOccurs cast as xs:integer eq 0
-                          and normalize-space(@maxOccurs) eq 'unbounded'
-                          ] and
+                              and
+                              tei:minOmaxO( @minOccurs, @maxOccurs )[1] eq 0
+                              and
+                              tei:minOmaxO( @minOccurs, @maxOccurs )[2] eq -1
+                              ] and
                           preceding-sibling::tei:*[1][
                                 self::tei:classRef/@key eq 'model.global'
-                            and @minOccurs cast as xs:integer eq 0
-                            and normalize-space(@maxOccurs) eq 'unbounded'
-                          ]"/>
+                                and
+                                tei:minOmaxO( @minOccurs, @maxOccurs )[1] eq 0
+                                and
+                                tei:minOmaxO( @minOccurs, @maxOccurs )[2] eq -1
+                                ]"/>
         <xsl:when test="$entCount gt 0 or $stripped='true'">
-          <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{$element}">
-            <xsl:attribute name="minOccurs" select="$minimum"/>
-            <xsl:attribute name="maxOccurs" select="$maximum"/>
+          <xsl:element namespace="http://www.tei-c.org/ns/1.0" name="{$element}">
+            <xsl:attribute name="minOccurs" select="$min"/>
+            <xsl:attribute name="maxOccurs" select="if ($max eq -1) then 'unbounded' else $max"/>
             <xsl:copy-of select="@*|*|text()|processing-instruction()"/>
           </xsl:element>
         </xsl:when>
@@ -1815,7 +1939,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:message>Create <xsl:value-of select="local-name()"/> named   <xsl:value-of select="@ident"/>   <xsl:sequence select="if
       (@module) then concat(' module: ',@module) else ''"/>         </xsl:message>
     </xsl:if>
-    <xsl:element xmlns="http://www.tei-c.org/ns/1.0"
+    <xsl:element namespace="http://www.tei-c.org/ns/1.0"
                  name="{local-name()}">
       <xsl:attribute name="rend">add</xsl:attribute>
       <xsl:choose>

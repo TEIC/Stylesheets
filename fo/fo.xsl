@@ -152,6 +152,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="DIVS"
             match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5"
             use="'1'"/>
+  
   <xsl:include href="fo_core.xsl"/>
   <xsl:include href="fo_corpus.xsl"/>
   <xsl:include href="fo_drama.xsl"/>
@@ -201,9 +202,9 @@ of this software, even if advised of the possibility of such damage.
     
     <xsl:template name="makeWithLabel">
       <xsl:param name="before"/>
-      <i>
+      <inline font-style="italic">
          <xsl:value-of select="$before"/>
-      </i>
+      </inline>
       <xsl:text>: </xsl:text>
       <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
@@ -254,47 +255,65 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="calculateTableSpecs">
       <xsl:variable name="tds">
-	<xsl:for-each select="tei:row">
-	  <xsl:variable name="row">
-	    <xsl:for-each select="tei:cell">
-	      <xsl:variable name="stuff">
-		<xsl:apply-templates/>
-	      </xsl:variable>
-	      <cell>
-		<xsl:value-of select="string-length($stuff)"/>
-	      </cell>
-	      <xsl:if test="@cols">
-		<xsl:variable name="c" select="xs:integer(@cols) - 1 "/>
-		<xsl:for-each select="1 to $c">
-		  <cell>0</cell>
-		</xsl:for-each>
-	      </xsl:if>
-	    </xsl:for-each>
-	  </xsl:variable>
-	  <xsl:for-each select="$row/fo:cell">
-	    <cell col="{position()}">
-	      <xsl:value-of select="."/>
-	    </cell>
-	  </xsl:for-each>
-	</xsl:for-each>
+       	<xsl:for-each select="tei:row">
+       	  <xsl:variable name="row">
+       	    <xsl:for-each select="tei:cell">
+       	      <xsl:variable name="stuff">
+       		<xsl:apply-templates/>
+       	      </xsl:variable>
+       	      <cell>
+       		<xsl:value-of select="string-length($stuff)"/>
+       	      </cell>
+       	      <xsl:if test="@cols">
+       		<xsl:variable name="c" select="xs:integer(@cols) - 1 "/>
+       		<xsl:for-each select="1 to $c">
+       		  <cell>0</cell>
+       		</xsl:for-each>
+       	      </xsl:if>
+       	    </xsl:for-each>
+       	  </xsl:variable>
+       	  <xsl:for-each select="$row/fo:cell">
+       	    <cell col="{position()}">
+       	      <xsl:value-of select="."/>
+       	    </cell>
+       	  </xsl:for-each>
+       	</xsl:for-each>
       </xsl:variable>
       <xsl:variable name="total">
-	<xsl:value-of select="sum($tds/fo:cell)"/>
+	       <xsl:value-of select="sum($tds/fo:cell)"/>
       </xsl:variable>
+   
+<!-- Intervention by MDH working on FO output for FOP 2016-12-28: the algorithm
+     below works OK except in cases where it creates a column too small to hold 
+     a single word. In an effort to avoid this, we'll set a minimum width of 
+     10% on any column, and when the algorithm generates a column smaller than
+     this, we'll simply omit the columns.
+     Note: this could be improved by a better approach which creates adjusted 
+     but still proportional column widths, when someone has time to do it.
+    -->
+    <xsl:variable name="proposedCols">
       <xsl:for-each select="$tds/fo:cell">
-         <xsl:sort select="@col" data-type="number"/>
-         <xsl:variable name="c" select="@col"/>
-         <xsl:if test="not(preceding-sibling::fo:cell[$c=@col])">
-            <xsl:variable name="len">
-               <xsl:value-of select="sum(following-sibling::fo:cell[$c=@col]) + current()"/>
-            </xsl:variable>
-            <table-column column-number="{@col}" column-width="{$len div $total * 100}%">
-               <xsl:if test="$foEngine='passivetex'">
-                  <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">L</xsl:attribute>
-               </xsl:if>
-            </table-column>
-         </xsl:if>
-      </xsl:for-each>
+           <xsl:sort select="@col" data-type="number"/>
+           <xsl:variable name="c" select="@col"/>
+           <xsl:if test="not(preceding-sibling::fo:cell[$c=@col])">
+              <xsl:variable name="len">
+                 <xsl:value-of select="sum(following-sibling::fo:cell[$c=@col]) + current()"/>
+              </xsl:variable>
+              <table-column column-number="{@col}" column-width="{$len div $total * 100}%">
+                 <xsl:if test="$foEngine='passivetex'">
+                    <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">L</xsl:attribute>
+                 </xsl:if>
+              </table-column>
+           </xsl:if>
+        </xsl:for-each>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$proposedCols/fo:table-column/@column-width[xs:float(substring-before(., '%')) lt 10]">
+        <!-- Drop the column width definitions altogether. -->
+      </xsl:when>
+      <xsl:otherwise><xsl:sequence select="$proposedCols"/></xsl:otherwise>
+    </xsl:choose>
+    
       <xsl:text>&#10;</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -307,12 +326,12 @@ of this software, even if advised of the possibility of such damage.
 	   <table-column column-number="2" column-width="75%"/>
 	 </xsl:when>
 	 <xsl:when test="tei:match(@rend,'attDef')">
-	   <table-column column-number="1" column-width="10%"/>
-	   <table-column column-number="2" column-width="90%"/>
+	   <table-column column-number="1" column-width="20%"/>
+	   <table-column column-number="2" column-width="80%"/>
 	 </xsl:when>
 	 <xsl:when test="tei:match(@rend,'attList')">
-	   <table-column column-number="1" column-width="10%"/>
-	   <table-column column-number="2" column-width="90%"/>
+	   <table-column column-number="1" column-width="20%"/>
+	   <table-column column-number="2" column-width="80%"/>
 	 </xsl:when>
          <xsl:when test="not($readColSpecFile='')">
 	   <xsl:variable name="no">
