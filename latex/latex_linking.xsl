@@ -69,23 +69,30 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <xsl:template name="makeExternalLink">
-      <xsl:param name="ptr" as="xs:boolean"  select="false()"/>
-      <xsl:param name="dest"/>
-      <xsl:param name="title"/>
-      <xsl:choose>
-         <xsl:when test="$ptr">
-            <xsl:text>\url{</xsl:text>
-	    <xsl:sequence select="tei:escapeChars($dest,.)"/>
-            <xsl:text>}</xsl:text>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:text>\xref{</xsl:text>
-            <xsl:value-of select="tei:escapeCharsPartial($dest)"/>
-            <xsl:text>}{</xsl:text>
-            <xsl:apply-templates/>
-            <xsl:text>}</xsl:text>
-         </xsl:otherwise>
-      </xsl:choose>
+    <xsl:param name="ptr" as="xs:boolean"  select="false()"/>
+    <xsl:param name="dest"/>
+    <xsl:param name="title"/>
+    <xsl:choose>
+      <xsl:when test="$ptr and ancestor::tei:app">
+        <xsl:text>\xref{</xsl:text>
+        <xsl:sequence select="tei:escapeChars($dest,.)"/>
+        <xsl:text>}{[</xsl:text>
+        <xsl:value-of select="substring-before(replace(@target, '^https?://', ''), '/')"/>
+        <xsl:text>]}</xsl:text>
+      </xsl:when>
+      <xsl:when test="$ptr">
+        <xsl:text>\url{</xsl:text>
+        <xsl:sequence select="tei:escapeChars($dest,.)"/>
+        <xsl:text>}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>\xref{</xsl:text>
+        <xsl:value-of select="tei:escapeCharsPartial($dest)"/>
+        <xsl:text>}{</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text>}</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[latex] <param name="target">target</param>

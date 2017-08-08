@@ -7,6 +7,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="a rng tei teix"
                 version="2.0">
+  <xsl:import href="functions.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p>
@@ -53,44 +54,54 @@ of this software, even if advised of the possibility of such damage.
 
    <xsl:key name="APPREADINGS" match="tei:app[starts-with(@from,'#')]" use="substring(@from,2)"/>
    
-   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>Process element app</p>
-         <p>Process lem and rdg within app. Sends lots of information
-	 to a footnote. If a lem is not found, the first rdg is
-	 used as the base text. 
-	 </p>
-      </desc>
-   </doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>Process element app</p>
+      <p>Process lem and rdg within app. Sends lots of information
+        to a footnote. If a lem is not found, the first rdg is
+        used as the base text. 
+      </p>
+    </desc>
+  </doc>
   <xsl:template match="tei:app">
-    <xsl:if test="not(@from)">
-      <xsl:call-template name="makeAppEntry">
-	<xsl:with-param name="lemma">
-	  <xsl:call-template name="appLemma"/>
-	</xsl:with-param>
-      </xsl:call-template>
-    </xsl:if>
+    <!-- If the len or rdg contains l, p, ab, or div, just apply templates-->
+    <xsl:choose>
+      <xsl:when test="(tei:lem|tei:rdg)/(tei:l|tei:p|tei:ab|tei:div) 
+        or tei:rdgGrp/(tei:lem|tei:rdg)/(tei:l|tei:p|tei:ab|tei:div)
+        or not(tei:lem)">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:if test="not(@from)">
+          <xsl:call-template name="makeAppEntry">
+            <xsl:with-param name="lemma">
+              <xsl:call-template name="appLemma"/>
+            </xsl:with-param>
+          </xsl:call-template>
+        </xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
-  
-    <xsl:template match="tei:w">
-      <xsl:choose>
-	<xsl:when test="not(tei:app) and key('APPREADINGS',@xml:id)">
-	  <xsl:call-template name="findApp"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:apply-templates/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:template>
+    
+  <xsl:template match="tei:w">
+    <xsl:choose>
+      <xsl:when test="not(tei:app) and key('APPREADINGS',@xml:id)">
+        <xsl:call-template name="findApp"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
-    <xsl:template name="findApp">
-      <xsl:variable name="sourcelem" select="."/>
-      <xsl:for-each select="key('APPREADINGS',@xml:id)">
-	<xsl:call-template name="makeAppEntry">
-	  <xsl:with-param name="lemma" select="$sourcelem"/>
-	</xsl:call-template>
-      </xsl:for-each>
-    </xsl:template>
+  <xsl:template name="findApp">
+    <xsl:variable name="sourcelem" select="."/>
+    <xsl:for-each select="key('APPREADINGS',@xml:id)">
+      <xsl:call-template name="makeAppEntry">
+        <xsl:with-param name="lemma" select="$sourcelem"/>
+      </xsl:call-template>
+    </xsl:for-each>
+  </xsl:template>
 	 
 
   <xsl:template match="tei:back/tei:div[@type='apparatus']"
@@ -100,18 +111,18 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template match="tei:sourceDoc"/>
    <xsl:template match="tei:facsimile"/>
 
-   <xsl:template match="tei:listWit">
-     <xsl:variable name="l">
-       <list rend="unordered" xmlns="http://www.tei-c.org/ns/1.0">
-	 <xsl:for-each select="tei:witness">
-	   <item>
-	     <xsl:copy-of select="@*|*|text()"/>
-	   </item>
-	 </xsl:for-each>
-       </list>
-     </xsl:variable>
-     <xsl:apply-templates select="$l"/>
-   </xsl:template>
+  <xsl:template match="tei:listWit">
+    <xsl:variable name="l">
+      <list rend="unordered" xmlns="http://www.tei-c.org/ns/1.0">
+        <xsl:for-each select="tei:witness">
+          <item>
+            <xsl:copy-of select="@*|*|text()"/>
+          </item>
+        </xsl:for-each>
+      </list>
+    </xsl:variable>
+    <xsl:apply-templates select="$l"/>
+  </xsl:template>
 
    <xsl:template name="appN">
       <xsl:choose>
@@ -125,41 +136,24 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
 
 
-   <xsl:template name="appLemmaWitness">
-     <xsl:choose>
-       <xsl:when test="tei:lem">
-	 <xsl:value-of select="tei:getWitness(tei:lem/@wit)"/>
-       </xsl:when>
-       <xsl:otherwise>
-	 <xsl:value-of select="tei:getWitness(tei:rdg[1]/@wit)"/>
-       </xsl:otherwise>
-     </xsl:choose>
-   </xsl:template>
+  <xsl:template name="appLemmaWitness">
+    <xsl:value-of select="tei:getWitness(tei:lem/@wit, .)"/><xsl:if test="@wit and
+      @source"><xsl:text> </xsl:text></xsl:if> <xsl:value-of
+      select="tei:getWitness(tei:lem/@source, ., ' ')"/>
+  </xsl:template>
 
    <xsl:template name="appLemma">
-	<xsl:choose>
-	  <xsl:when test="tei:lem">
-	    <xsl:value-of select="tei:lem"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="tei:rdg[1]"/>
-	  </xsl:otherwise>
-	</xsl:choose>
+	   <xsl:if test="tei:lem"><xsl:value-of select="tei:lem"/></xsl:if>
    </xsl:template>
 
    <xsl:template name="appReadings">
-      <xsl:variable name="start" select="if (not(tei:lem)) then 1 else 0"/>
-      <xsl:for-each select="tei:rdg[position() &gt; $start]">
-	<xsl:text>; </xsl:text>
-	<xsl:apply-templates/>
-	<xsl:if test="@cause='omission'">[]</xsl:if>
-	<xsl:text> (</xsl:text>
-	<xsl:value-of select="tei:getWitness(@wit)"/>
-	<xsl:text>)</xsl:text>
-	<xsl:if test="following-sibling::tei:rdg">; </xsl:if>
+      <xsl:for-each select="tei:rdg|tei:wit|tei:note">
+      	<xsl:apply-templates/><xsl:text> </xsl:text>
+        <xsl:value-of select="tei:getWitness(@wit, .)"/><xsl:if test="@wit and
+          @source"><xsl:text> </xsl:text></xsl:if><xsl:value-of select="tei:getWitness(@source, ., 
+          ' ')"/><xsl:if test="not(position() = last())"><xsl:text> </xsl:text></xsl:if>
       </xsl:for-each>
     </xsl:template>
-
 
    <xsl:template name="makeAppEntry">
      <xsl:param name="lemma"/>

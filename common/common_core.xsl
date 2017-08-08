@@ -117,8 +117,8 @@ of this software, even if advised of the possibility of such damage.
        <xsl:when test="@reason='omitted'">
 	 <xsl:call-template name="makeInline">
 	   <xsl:with-param name="style">supplied</xsl:with-param>
-	   <xsl:with-param name="before">⟨</xsl:with-param>
-	   <xsl:with-param name="after">⟩</xsl:with-param>
+	   <xsl:with-param name="before">&lt;</xsl:with-param>
+	   <xsl:with-param name="after">&gt;</xsl:with-param>
 	 </xsl:call-template>
        </xsl:when>
        <xsl:otherwise>
@@ -966,68 +966,69 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:note">
     <xsl:choose>
+      
       <xsl:when test="@place='none'"/>
-
+      
       <xsl:when test="not(@place) and (parent::tei:head or ancestor::tei:bibl or
-		      ancestor::tei:biblFull or ancestor::tei:biblStruct)">
-	<xsl:call-template name="makeText">
-	  <xsl:with-param name="letters"> (</xsl:with-param>
-	</xsl:call-template>
-	<xsl:apply-templates/>
-	<xsl:call-template name="makeText">
-	  <xsl:with-param name="letters">)</xsl:with-param>
-	</xsl:call-template>
+        ancestor::tei:biblFull or ancestor::tei:biblStruct)">
+        <xsl:call-template name="makeText">
+          <xsl:with-param name="letters"> (</xsl:with-param>
+        </xsl:call-template>
+        <xsl:apply-templates/>
+        <xsl:call-template name="makeText">
+          <xsl:with-param name="letters">)</xsl:with-param>
+        </xsl:call-template>
       </xsl:when>
-
+      
       <xsl:when test="tokenize(@place,' ')=('sup','above')">
-	<xsl:call-template name="makeInline">
-	  <xsl:with-param name="style">sup</xsl:with-param>
-	</xsl:call-template>
+        <xsl:call-template name="makeInline">
+          <xsl:with-param name="style">sup</xsl:with-param>
+        </xsl:call-template>
       </xsl:when>
-
+      
       <xsl:when test="tokenize(@place,' ')=('sub','below')">
-	<xsl:call-template name="makeInline">
-	  <xsl:with-param name="style">sub</xsl:with-param>
-	</xsl:call-template>
+        <xsl:call-template name="makeInline">
+          <xsl:with-param name="style">sub</xsl:with-param>
+        </xsl:call-template>
       </xsl:when>
-
+      
       <xsl:when test="@place='comment'">
-	<xsl:call-template name="commentNote"/>
+        <xsl:call-template name="commentNote"/>
       </xsl:when>
-
+      
       <xsl:when test="@place='inline' and not(tei:isInline(.))">
-	<xsl:call-template name="displayNote"/>
+        <xsl:call-template name="displayNote"/>
       </xsl:when>
       
       <xsl:when test="@place='inline'">
-	<xsl:call-template name="plainNote"/>
+        <xsl:call-template name="plainNote"/>
       </xsl:when>
-
+      
       <xsl:when test="tei:isEndNote(.) or $autoEndNotes='true'">
-	<xsl:call-template name="endNote"/>
+        <xsl:call-template name="endNote"/>
       </xsl:when>
-
+      
       <xsl:when test="tei:isFootNote(.)">
-	<xsl:call-template name="footNote"/>
+        <xsl:call-template name="footNote"/>
       </xsl:when>
-
+      
       <xsl:when test="tei:isMarginal(@place)">
-	<xsl:call-template name="marginalNote"/>
+        <xsl:call-template name="marginalNote"/>
       </xsl:when>
-
+      
       <xsl:when test="not(tei:isInline(.)) or tei:q">
-	<xsl:call-template name="displayNote"/>
+        <xsl:call-template name="displayNote"/>
       </xsl:when>
-
+      
       <xsl:when test="@place">
-	<xsl:message>WARNING: unknown @place for note, <xsl:value-of select="@place"/></xsl:message>
-	<xsl:call-template name="displayNote"/>
+        <xsl:message>WARNING: unknown @place for note, <xsl:value-of select="@place"/></xsl:message>
+        <xsl:call-template name="displayNote"/>
       </xsl:when>
-
+      
       <xsl:otherwise>
-	<xsl:call-template name="plainNote"/>
+        <xsl:call-template name="plainNote"/>
       </xsl:otherwise>
-      </xsl:choose>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="marginalNote">
@@ -1054,11 +1055,11 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text> [</xsl:text>
     <xsl:choose>
       <xsl:when test="@n">
-	<xsl:value-of select="@n"/>
+        <xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:sequence select="tei:i18n('Note')"/>
-	<xsl:text>: </xsl:text>
+        <xsl:sequence select="tei:i18n('Note')"/>
+        <xsl:text>: </xsl:text>
       </xsl:otherwise>
     </xsl:choose>
     <xsl:apply-templates/>
@@ -1341,26 +1342,37 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:add">
     <xsl:choose>
       <xsl:when test="@place='sup' or @place='above'">
-	<xsl:call-template name="makeInline">
-	  <xsl:with-param name="style">sup</xsl:with-param>
-	</xsl:call-template>
+        <xsl:call-template name="makeInline">
+          <xsl:with-param name="style">sup</xsl:with-param>
+          <xsl:with-param name="after">»</xsl:with-param>
+          <xsl:with-param name="before">«</xsl:with-param>
+        </xsl:call-template>
       </xsl:when>
       <xsl:when test="@place='sub' or @place='below'">
-	<xsl:call-template name="makeInline">
-	  <xsl:with-param name="style">sub</xsl:with-param>
-	</xsl:call-template>
+        <xsl:call-template name="makeInline">
+          <xsl:with-param name="style">sub</xsl:with-param>
+          <xsl:with-param name="after">»</xsl:with-param>
+          <xsl:with-param name="before">«</xsl:with-param>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:when test="@place='margin'">
+        <xsl:call-template name="makeInline">
+          <xsl:with-param name="style">add</xsl:with-param>
+          <xsl:with-param name="after">» (in mg.)</xsl:with-param>
+          <xsl:with-param name="before">«</xsl:with-param>
+        </xsl:call-template>
       </xsl:when>
       <xsl:when test="not(tei:isInline(*[last()]))">
-	<xsl:call-template name="makeBlock">
-	  <xsl:with-param name="style">add</xsl:with-param>
-	</xsl:call-template>
+        <xsl:call-template name="makeBlock">
+          <xsl:with-param name="style">add</xsl:with-param>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:call-template name="makeInline">
-	  <xsl:with-param name="style">add</xsl:with-param>
-	  <xsl:with-param name="after">&#10217;</xsl:with-param>
-	  <xsl:with-param name="before">&#10216;</xsl:with-param>
-	</xsl:call-template>
+        <xsl:call-template name="makeInline">
+          <xsl:with-param name="style">add</xsl:with-param>
+          <xsl:with-param name="after">»</xsl:with-param>
+          <xsl:with-param name="before">«</xsl:with-param>
+        </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

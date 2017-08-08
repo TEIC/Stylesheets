@@ -138,6 +138,11 @@ of this software, even if advised of the possibility of such damage.
       <desc>Processing teiHeader elements</desc>
    </doc>
    <xsl:template match="tei:teiHeader"/>
+  
+  <xsl:template match="tei:front">
+    <xsl:text>\frontmatter </xsl:text>
+    <xsl:apply-templates/>
+  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
@@ -151,18 +156,12 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
-  <xsl:template match="tei:body">
-      <xsl:if test="not(ancestor::tei:floatingText) and not(preceding::tei:body) and preceding::tei:front">
-         <xsl:text>\mainmatter </xsl:text>
-      </xsl:if>
-      <xsl:if test="count(key('APP',1))&gt;0">
-\beginnumbering
-\def\endstanzaextra{\pstart\centering---------\skipnumbering\pend}
-</xsl:if>
-      <xsl:apply-templates/>
-      <xsl:if test="count(key('APP',1))&gt;0">
-\endnumbering
-</xsl:if>
+  <xsl:template match="tei:body/tei:div[@type='edition']">
+    <xsl:if test="not(ancestor::tei:floatingText) and not(preceding::tei:body) and preceding::tei:front">
+      <xsl:text>\mainmatter </xsl:text>
+    </xsl:if>
+      \def\endstanzaextra{\pstart\centering-\-\-\-\-\-\-\-\-\skipnumbering\pend}
+    <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
@@ -280,6 +279,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="/tei:text" priority="999">
     <xsl:call-template name="wrapRootText"/>
   </xsl:template>
+  
+  <xsl:template match="tei:milestone"/>
 
 
 </xsl:stylesheet>

@@ -244,59 +244,59 @@ of this software, even if advised of the possibility of such damage.
       <desc>inline objects</desc>
    </doc>
 
-   <xsl:template name="makeInline">
-      <xsl:param name="before"/>
-      <xsl:param name="style"/>
-      <xsl:param name="after"/>
-      <xsl:value-of select="$before"/>
-      <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
-      <xsl:choose>
-	<xsl:when test="$style=('add','unclear','bibl','docAuthor','titlem','italic','mentioned','term','foreign')">
-	  <xsl:text>\textit{</xsl:text>
-	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
-	  <xsl:text>}</xsl:text>
-	</xsl:when>
-	<xsl:when test="$style='supplied'">
-	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
-	</xsl:when>
-	<xsl:when test="$style='bold'">
-	  <xsl:text>\textbf{</xsl:text>
-	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
-	  <xsl:text>}</xsl:text>	    
-	</xsl:when>
-	<xsl:when test="$style='strikethrough'">
-	  <xsl:text>\sout{</xsl:text>
-	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
-	  <xsl:text>}</xsl:text>	    
-	</xsl:when>
-	<xsl:when test="$style='sup'">
-	  <xsl:text>\textsuperscript{</xsl:text>
-	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
-	  <xsl:text>}</xsl:text>	    
-	</xsl:when>
-	<xsl:when test="$style='sub'">
-	  <xsl:text>\textsubscript{</xsl:text>
-	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
-	  <xsl:text>}</xsl:text>	    
-	</xsl:when>
-	<xsl:when test="local-name()='label'">
-	  <xsl:text>\textbf{</xsl:text>
-	  <xsl:apply-templates/>
-	  <xsl:text>}</xsl:text>
-	</xsl:when>
-	<xsl:when test="not($style)">
-	  <xsl:sequence select="concat('{\',local-name(),' ')"/>
-	  <xsl:apply-templates/>
-	  <xsl:text>}</xsl:text>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:sequence select="concat('{\',$style[1], ' ')"/>
-	  <xsl:apply-templates/>
-	  <xsl:text>}</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-      <xsl:value-of select="$after"/>
-    </xsl:template>
+  <xsl:template name="makeInline">
+    <xsl:param name="before"/>
+    <xsl:param name="style"/>
+    <xsl:param name="after"/>
+    <xsl:value-of select="$before"/>
+    <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
+    <xsl:choose>
+      <xsl:when test="$style=('bibl','docAuthor','titlem','italic','mentioned','term','foreign')">
+        <xsl:text>\textit{</xsl:text>
+        <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+        <xsl:text>}</xsl:text>
+      </xsl:when>
+      <xsl:when test="$style=('add','supplied','unclear')">
+        <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+      </xsl:when>
+      <xsl:when test="$style='bold'">
+        <xsl:text>\textbf{</xsl:text>
+        <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+        <xsl:text>}</xsl:text>	    
+      </xsl:when>
+      <xsl:when test="$style='strikethrough'">
+        <xsl:text>\sout{</xsl:text>
+        <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+        <xsl:text>}</xsl:text>	    
+      </xsl:when>
+      <xsl:when test="$style='sup'">
+        <xsl:text>\textsuperscript{</xsl:text>
+        <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+        <xsl:text>}</xsl:text>	    
+      </xsl:when>
+      <xsl:when test="$style='sub'">
+        <xsl:text>\textsubscript{</xsl:text>
+        <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+        <xsl:text>}</xsl:text>	    
+      </xsl:when>
+      <xsl:when test="local-name()='label'">
+        <xsl:text>\textbf{</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text> }</xsl:text>
+      </xsl:when>
+      <xsl:when test="not($style)">
+        <xsl:sequence select="concat('{\',local-name(),' ')"/>
+        <xsl:apply-templates/>
+        <xsl:text>}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="concat('{\',$style[1], ' ')"/>
+        <xsl:apply-templates/>
+        <xsl:text>}</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:value-of select="$after"/>
+  </xsl:template>
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -321,36 +321,36 @@ of this software, even if advised of the possibility of such damage.
       <desc>division-like object</desc>
    </doc>
 
-   <xsl:template name="makeSection">
-     <xsl:param name="level"/>
-      <xsl:param name="heading"/>
-      <xsl:param name="implicitBlock">false</xsl:param>
-      <xsl:text>&#10;</xsl:text>
-      <xsl:choose>
-	<xsl:when test="$level=1">\section</xsl:when>
-	<xsl:when test="$level=2">\subsection</xsl:when>
-	<xsl:when test="$level=3">\subsubsection</xsl:when>
-	<xsl:when test="$level=4">\paragraph</xsl:when>
-      </xsl:choose>
-      <xsl:text>{</xsl:text>
-      <xsl:value-of select="$heading"/>
-      <xsl:text>}&#10;</xsl:text>
-      <xsl:choose>
-	<xsl:when test="$implicitBlock='true'">
-	  <xsl:text>\par&#10;</xsl:text>
-	  <xsl:apply-templates/>
-	  <xsl:text>\par&#10;</xsl:text>
-	</xsl:when>
-	<xsl:when test="*">
-	  <xsl:apply-templates/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text>\par&#10;</xsl:text>
-	  <xsl:apply-templates/>
-	  <xsl:text>\par&#10;</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:template>
+  <xsl:template name="makeSection">
+    <xsl:param name="level"/>
+    <xsl:param name="heading"/>
+    <xsl:param name="implicitBlock">false</xsl:param>
+    <xsl:text>&#10;</xsl:text>
+    <xsl:choose>
+      <xsl:when test="$level=1">\section</xsl:when>
+      <xsl:when test="$level=2">\subsection</xsl:when>
+      <xsl:when test="$level=3">\subsubsection</xsl:when>
+      <xsl:when test="$level=4">\paragraph</xsl:when>
+    </xsl:choose>
+    <xsl:text>{</xsl:text>
+    <xsl:value-of select="$heading"/>
+    <xsl:text>}&#10;</xsl:text>
+    <xsl:choose>
+      <xsl:when test="$implicitBlock='true'">
+        <xsl:text>\par&#10;</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text>\par&#10;</xsl:text>
+      </xsl:when>
+      <xsl:when test="*">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>\par&#10;</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text>\par&#10;</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
     
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>text with a label</desc>

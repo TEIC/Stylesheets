@@ -67,6 +67,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="@ident"/>
   <xsl:key match="tei:schemaSpec" name="SCHEMASPECS" use="1"/>
+  <xsl:key name="WITDETAIL" match="tei:witDetail" use="@target"/>
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="ignoreXmlBase">false</xsl:param>
   <xsl:param name="selectedSchema"/>
@@ -1343,31 +1344,51 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:function name="tei:getWitness" as="xs:string*">
     <xsl:param name="witness"/>
-      <xsl:variable name="r">
-    <xsl:for-each select="tokenize($witness,' ')">
-      <xsl:variable name="wit" select="."/>
-      <xsl:for-each select="$top">
-	<xsl:choose>
-	  <xsl:when test="starts-with($wit,'#') and
-			  id(substring($wit,2))">
-	    <xsl:for-each select="id(substring($wit,2))">
-	      <xsl:value-of select="if (@n) then @n else @xml:id"/>
-	    </xsl:for-each>
-	</xsl:when>
-	  <xsl:when test="starts-with($wit,'#')">
-	    <xsl:value-of select="substring($wit,2)"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:for-each select="doc($wit)/*">
-	    <xsl:value-of select="if (@n) then @n else @xml:id"/>
-	  </xsl:for-each>
-	</xsl:otherwise>
-	</xsl:choose>
+    <xsl:param name="context"/>
+    <xsl:param name="separator"/>
+    <xsl:variable name="r">
+      <xsl:for-each select="tokenize($witness,' ')">
+        <xsl:variable name="wit" select="."/>
+        <xsl:variable name="last" select="position() = last()"/>
+        <xsl:for-each select="$top">
+          <xsl:choose>
+            <xsl:when test="starts-with($wit,'#') and
+              id(substring($wit,2))">
+              <xsl:for-each select="id(substring($wit,2))">
+                <xsl:apply-templates select="if (tei:abbr[@type='siglum']) then tei:abbr[@type='siglum'][1]
+                  else if (@n) then @n else @xml:id"/>
+                <xsl:variable name="detail" select="if ($context) then key('WITDETAIL',
+                  concat('#', $context/@xml:id))[@wit = $wit] else false()"/>
+                <xsl:if test="$detail"> (<xsl:apply-templates select="$detail/node()"/>)<xsl:if
+                  test="not($last)"><xsl:text> </xsl:text></xsl:if></xsl:if>
+              </xsl:for-each>
+            </xsl:when>
+            <xsl:when test="starts-with($wit,'#')">
+              <xsl:value-of select="substring($wit,2)"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:for-each select="doc($wit)/*">
+                <xsl:value-of select="if (@n) then @n else @xml:id"/>
+              </xsl:for-each>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:for-each>
+        <xsl:if test="not($last)"><xsl:value-of select="$separator"/></xsl:if>
       </xsl:for-each>
-      <xsl:if test="position() &lt; last()">, </xsl:if>
-    </xsl:for-each>
-      </xsl:variable>
-      <xsl:value-of select="$r"/>
+      <xsl:text> </xsl:text>
+    </xsl:variable>
+    <xsl:value-of select="$r"/>
+  </xsl:function>
+  
+  <xsl:function name="tei:getWitness" as="xs:string*">
+    <xsl:param name="witness"/>
+    <xsl:param name="context"/>
+    <xsl:value-of select="tei:getWitness($witness, $context, '')"/>
+  </xsl:function>
+  
+  <xsl:function name="tei:getWitness" as="xs:string*">
+    <xsl:param name="witness"/>
+    <xsl:value-of select="tei:getWitness($witness, (), '')"/>
   </xsl:function>
 
     <xsl:function name="tei:createSpecName" as="xs:string">

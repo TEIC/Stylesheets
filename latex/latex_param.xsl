@@ -157,7 +157,7 @@ the beginning of the document</desc>
  select="replace(string-join(tei:generateAuthor(.),''),'\\[A-z]+','')"/>}]{hyperref}
 \hyperbaseurl{<xsl:value-of select="$baseURL"/>}
 <xsl:if test="count(key('APP',1))&gt;0">
-\usepackage[noreledmac]{eledmac}
+\usepackage{reledmac}
 <xsl:call-template name="ledmacOptions"/>
 </xsl:if>
 
@@ -380,11 +380,11 @@ characters. The normal characters remain active for LaTeX commands.
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for examples</desc>   </doc>
 <xsl:param name="exampleFont">Courier New</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for literal code</desc>   </doc>
-<xsl:param name="typewriterFont">DejaVu Sans Mono</xsl:param>
+<xsl:param name="typewriterFont">Courier New</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for sans-serif</desc>   </doc>
-<xsl:param name="sansFont"></xsl:param>
+<xsl:param name="sansFont">Noto Sans</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for serif</desc>   </doc>
-<xsl:param name="romanFont"></xsl:param>
+<xsl:param name="romanFont">Baskerville</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for gothic</desc>   </doc>
 <xsl:param name="gothicFont">Lucida Blackletter</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for calligraphic</desc>   </doc>
@@ -568,10 +568,12 @@ characters. The normal characters remain active for LaTeX commands.
 <xsl:template name="ledmacOptions">
 <xsl:text>
 \renewcommand{\notenumfont}{\bfseries}
-\lineation{page}
+\lineation{section}
 \linenummargin{inner}
-\footthreecol{A}
-\foottwocol{B}
+\Xarrangement[A]{paragraph}
+\Xnumberonlyfirstinline[A]
+\Xarrangement[B]{paragraph}
+\Xnumberonlyfirstinline[B]
 </xsl:text>
 </xsl:template>
 
