@@ -15,7 +15,7 @@
   
   <!-- attribute sets -->
   <xsl:attribute-set name="global.flow.properties">
-    <xsl:attribute name="font-family">GentiumPlus,unifont</xsl:attribute>
+    <xsl:attribute name="font-family">GentiumPlus</xsl:attribute>
     <xsl:attribute name="font-size">10pt</xsl:attribute>
     <xsl:attribute name="line-height">2</xsl:attribute>
     <xsl:attribute name="text-align">justify</xsl:attribute>
@@ -29,12 +29,12 @@
   </xsl:attribute-set>
   
   <xsl:attribute-set name="headerfooter.properties">
-    <xsl:attribute name="font-family">Roboto-medium,unifont</xsl:attribute>
+    <xsl:attribute name="font-family">Roboto-medium</xsl:attribute>
     <xsl:attribute name="font-size">7pt</xsl:attribute>
   </xsl:attribute-set>
 
   <xsl:attribute-set name="heading.properties">
-    <xsl:attribute name="font-family">Roboto,unifont</xsl:attribute>
+    <xsl:attribute name="font-family">Roboto</xsl:attribute>
     <xsl:attribute name="font-size">13pt</xsl:attribute>
     <xsl:attribute name="text-transform">uppercase</xsl:attribute>
     <xsl:attribute name="keep-with-next">always</xsl:attribute>
@@ -43,13 +43,13 @@
   </xsl:attribute-set>
 
   <xsl:attribute-set name="heading.body.properties">
-    <xsl:attribute name="font-family">Roboto-medium,unifont</xsl:attribute>
+    <xsl:attribute name="font-family">Roboto-medium</xsl:attribute>
     <xsl:attribute name="keep-with-next">always</xsl:attribute>
     <xsl:attribute name="space-before">1em</xsl:attribute>
   </xsl:attribute-set>
   
   <xsl:attribute-set name="heading.lowerblock.properties">
-    <xsl:attribute name="font-family">Roboto-medium,unifont</xsl:attribute>
+    <xsl:attribute name="font-family">Roboto-medium</xsl:attribute>
     <xsl:attribute name="font-size">8.3pt</xsl:attribute>
     <xsl:attribute name="keep-with-next">always</xsl:attribute>
   </xsl:attribute-set>
@@ -73,7 +73,7 @@
   </xsl:attribute-set>
 
   <xsl:attribute-set name="pnr.properties">
-    <xsl:attribute name="font-family">Roboto-medium,unifont</xsl:attribute>
+    <xsl:attribute name="font-family">Roboto-medium</xsl:attribute>
     <xsl:attribute name="font-size">7pt</xsl:attribute>
   </xsl:attribute-set>
   
@@ -106,7 +106,7 @@
   </xsl:attribute-set>
 
   <xsl:attribute-set name="monospace.properties">
-    <xsl:attribute name="font-family">DejaVu-mono,unifont</xsl:attribute>
+    <xsl:attribute name="font-family">DejaVu-mono</xsl:attribute>
     <xsl:attribute name="font-size">.8em</xsl:attribute>
   </xsl:attribute-set>
 
@@ -280,7 +280,7 @@
     <fo:block margin-top="2cm" margin-bottom="3cm"
       border-top="solid black 5px" border-bottom="solid black 3px" 
       padding-top="1cm" padding-bottom="1cm">
-      <fo:block font-family="GentiumBookBasic,unifont" font-style="italic" font-size="24pt" line-height="1.2">
+      <fo:block font-family="GentiumBookBasic" font-style="italic" font-size="24pt" line-height="1.2">
         <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type = 'main'], /tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type = 'main')]">
           <xsl:apply-templates/>
           <xsl:if test="position() != last()">
@@ -288,7 +288,7 @@
           </xsl:if>
         </xsl:for-each>
       </fo:block>
-      <fo:block font-family="Roboto-medium,unifont" font-size="11pt" margin-top="1cm">
+      <fo:block font-family="Roboto-medium" font-size="11pt" margin-top="1cm">
         <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
           <xsl:call-template name="enumerate"/>
           <xsl:value-of select="string-join(tei:name/(tei:forename, tei:surname), ' ')"/>
