@@ -62,7 +62,7 @@
   </xsl:template>
   
   <xsl:template name="punctuate-head">
-    <xsl:if test="not(matches(normalize-space(.), '[\p{P}-[\p{Pe}]]$'))">
+    <xsl:if test="not(matches(normalize-space((descendant::text()[not(ancestor::tei:note)][last()])), '[\p{P}-[\p{Pe}]]$'))">
       <xsl:text>.</xsl:text>
     </xsl:if>
   </xsl:template>
