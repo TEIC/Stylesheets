@@ -139,7 +139,7 @@
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:attribute name="xsi:schemaLocation">
-        <xsl:text>http://www.tei-c.org/ns/1.0 http://lodel.org/ns/tei.openedition.1.3/tei.openedition.1.3.xsd</xsl:text>
+        <xsl:text>http://www.tei-c.org/ns/1.0 http://lodel.org/ns/tei.openedition.1.5.1/tei.openedition.1.5.1.xsd</xsl:text>
       </xsl:attribute>
       <xsl:apply-templates/>
     </xsl:copy>
