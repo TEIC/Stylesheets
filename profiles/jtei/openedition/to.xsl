@@ -886,6 +886,10 @@
       <xsl:apply-templates/>
     </item>
   </xsl:template>
+  
+  <xsl:template match="tei:text//tei:date" priority="0">
+    <xsl:apply-templates/>
+  </xsl:template>
 
   <!-- ==== -->
   <!-- back -->
