@@ -372,7 +372,7 @@
   <!-- This function computes the number and format for footnotes. -->
   <xsl:function name="local:get.note.nr" as="xs:integer">
     <xsl:param name="node"/>
-    <xsl:number value="count($node/preceding::tei:note[if ($node/@place) then @place = $node/@place else not(@place)]|$node)" format="{if (not($node/@place) or $node/@place eq 'foot') then '1' else 'i'}"/>
+    <xsl:number value="count($node/preceding::tei:note[if ($node/@place) then @place = $node/@place else not(@place)][ancestor::*[parent::tei:text] intersect $node/ancestor::*[parent::tei:text] or root()/*[not(self::tei:TEI)] intersect $node/root()/*[not(self::tei:TEI)]]|$node)" format="{if (not($node/@place) or $node/@place eq 'foot') then '1' else 'i'}"/>
   </xsl:function>
   
   <!-- This function is designed to double-escape entities that need to be 
