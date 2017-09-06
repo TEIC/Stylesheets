@@ -379,9 +379,16 @@
      displayed as escapes in egXML text nodes. -->
   <xsl:function name="local:escapeEntitiesForEgXML" as="xs:string">
     <xsl:param name="inStr" as="xs:string"/>
-    <xsl:value-of select="replace(replace(replace($inStr, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;')"/>
+    <xsl:value-of select="local:unescapeAmpersandsForEgXMLEscapes(replace(replace(replace($inStr, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;'))"/>
   </xsl:function>
   
+  <!-- This function is designed to unescape ampersands that should be displayed 
+    literally as part of escapes in egXML text nodes. -->
+  <xsl:function name="local:unescapeAmpersandsForEgXMLEscapes" as="xs:string">
+    <xsl:param name="inStr" as="xs:string"/>
+    <xsl:value-of select="replace($inStr, '&amp;amp;([^;\s&amp;]+?;)', '&amp;$1')"/>
+  </xsl:function>
+
   <!-- This function is designed to double-escape entities that need to be 
      displayed as escapes in egXML attribute values. -->
   <xsl:function name="local:escapeEntitiesForEgXMLAttribute" as="xs:string">
