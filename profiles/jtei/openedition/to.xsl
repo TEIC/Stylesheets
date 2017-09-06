@@ -429,7 +429,11 @@
     <xsl:variable name="depth.endtag" select="if (not(following-sibling::node()) and not(normalize-space())) then $depth -1 else $depth"/>
     <xsl:variable name="indentString"><xsl:text>  </xsl:text></xsl:variable>
     <xsl:variable name="padding" select="string-join(('&#10;', for $i in (1 to $depth.endtag) return $indentString), '')"/>
-    <xsl:value-of select="replace(., '&#10;\s*', $padding)"/>
+    <xsl:value-of select="replace(local:escapeEntitiesForEgXML(.), '&#10;\s*', $padding)"/>
+  </xsl:template>
+  
+  <xsl:template match="eg:egXML//text()" mode="egXML" priority="-0.5">
+    <xsl:value-of select="local:escapeEntitiesForEgXML(.)"/>
   </xsl:template>
   
   <xsl:template match="*" mode="egXML">
