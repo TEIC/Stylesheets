@@ -774,7 +774,7 @@
     </fo:list-block>
   </xsl:template>  
   
-  <xsl:template match="tei:list/tei:head|tei:table/tei:head">
+  <xsl:template match="tei:table/tei:head">
     <fo:block xsl:use-attribute-sets="heading.lowerblock.properties">
       <xsl:apply-templates select="parent::*" mode="label"/>
       <xsl:apply-templates/>
@@ -782,6 +782,13 @@
     </fo:block>
   </xsl:template>
   
+  <xsl:template match="tei:list/tei:head">
+    <fo:block xsl:use-attribute-sets="heading.lowerblock.properties">
+      <xsl:apply-templates/>
+      <xsl:call-template name="punctuate-head"/>
+    </fo:block>
+  </xsl:template>
+
   <xsl:template match="tei:list[not(@type='gloss')]/tei:item">
     <fo:list-item>
       <xsl:if test="not(tei:list)">
