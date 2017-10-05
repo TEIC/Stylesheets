@@ -147,7 +147,14 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
       <xsl:when test="$defaultSource != ''">
-        <xsl:value-of select="$defaultSource"/>
+        <xsl:choose>
+          <xsl:when test="starts-with($defaultSource, '&quot;') and ends-with($defaultSource, '&quot;')">
+            <xsl:value-of select="substring($defaultSource, 2, string-length($defaultSource)-2)"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$defaultSource"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:when test="$configDirectory != ''">
         <xsl:value-of select="$configDirectory"/>
