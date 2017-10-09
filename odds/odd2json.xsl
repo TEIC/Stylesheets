@@ -1,547 +1,323 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format" 
-    xmlns:html="http://www.w3.org/1999/xhtml" 
-    xmlns:i="http://www.iso.org/ns/1.0"
-    xmlns:rng="http://relaxng.org/ns/structure/1.0"
-    xmlns:s="http://www.ascc.net/xml/schematron" 
-    xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xmlns:teix="http://www.tei-c.org/ns/Examples" 
-    xmlns:xi="http://www.w3.org/2001/XInclude"
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
-    version="2.0">
-  <xsl:import href="teiodds.xsl"/>
-  <xsl:import href="../common/common_tagdocs.xsl"/>
-  <xsl:import href="../common/common_param.xsl"/>
-  <xsl:import href="../common/functions.xsl"/>
-  <xsl:import href="../common/i18n.xsl"/>
-  <xsl:param name="cellName">cell</xsl:param>
-  <xsl:param name="codeName">code</xsl:param>
-  <xsl:param name="colspan"/>
-  <xsl:param name="ddName"/>
-  <xsl:param name="divName">div</xsl:param>
-  <xsl:param name="dlName"/>
-  <xsl:param name="dtName"/>
-  <xsl:param name="hiName">hi</xsl:param>
-  <xsl:param name="itemName"/>
-  <xsl:param name="labelName">label</xsl:param>
-  <xsl:param name="outputNS"/>
-  <xsl:param name="rendName">rend</xsl:param>
-  <xsl:param name="rowName"/>
-  <xsl:param name="sectionName"/>
-  <xsl:param name="segName">seg</xsl:param>
-  <xsl:param name="spaceCharacter"/>
-  <xsl:param name="tableName"/>
-  <xsl:param name="ulName"/>
-  <xsl:param name="urlName"/>
-  <xsl:param name="xrefName"/>
-  <xsl:key match="tei:moduleRef" name="ModuleRefs" use="1"/>
-  <xsl:key match="tei:moduleRef" name="MODULEREFS" use="@key"/>
-  <xsl:key match="tei:classRef[not(ancestor::tei:content)]" name="ClassRefs" use="1"/>
-  <xsl:key match="tei:classRef[not(ancestor::tei:content)]" name="CLASSREFS" use="@key"/>
-  <xsl:key match="tei:macroRef[not(ancestor::tei:content)]" name="MacroRefs" use="1"/>
-  <xsl:key match="tei:macroRef" name="MACROREFS" use="@key"/>
-  <xsl:key match="tei:elementRef[not(ancestor::tei:content)]" name="ElementRefs" use="1"/>
-  <xsl:key match="tei:elementRef[not(ancestor::tei:content)]" name="ELEMENTREFS" use="@key"/>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
-      <desc>
-         <p> TEI stylesheet for making JSON from ODD </p>
-         <p>This software is dual-licensed:
-
-1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
-Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
-
-2. http://www.opensource.org/licenses/BSD-2-Clause
-		
-
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-* Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-
-* Redistributions in binary form must reproduce the above copyright
-notice, this list of conditions and the following disclaimer in the
-documentation and/or other materials provided with the distribution.
-
-This software is provided by the copyright holders and contributors
-"as is" and any express or implied warranties, including, but not
-limited to, the implied warranties of merchantability and fitness for
-a particular purpose are disclaimed. In no event shall the copyright
-holder or contributors be liable for any direct, indirect, incidental,
-special, exemplary, or consequential damages (including, but not
-limited to, procurement of substitute goods or services; loss of use,
-data, or profits; or business interruption) however caused and on any
-theory of liability, whether in contract, strict liability, or tort
-(including negligence or otherwise) arising in any way out of the use
-of this software, even if advised of the possibility of such damage.
-</p>
-         <p>Author: See AUTHORS</p>
-         
-         <p>Copyright: 2013, TEI Consortium</p>
-      </desc>
-   </doc>
-   <xsl:param name="callback"></xsl:param>
-   <xsl:param name="showChildren">false</xsl:param>
-
-   <xsl:template name="emphasize">
-      <xsl:param name="class"/>
-      <xsl:param name="content"/>
-   </xsl:template>
-   <xsl:template name="emptySlash">
-     <xsl:param name="name"/>
-   </xsl:template>
-   <xsl:template name="generateEndLink">
-      <xsl:param name="where"/>
-   </xsl:template>
-   <xsl:template name="identifyElement">
-      <xsl:param name="id"/>
-   </xsl:template>
-   <xsl:template name="makeExternalLink">
-      <xsl:param name="ptr" as="xs:boolean" select="false()"/>
-      <xsl:param name="dest"/>
-      <xsl:param name="title"/>
-   </xsl:template>
-   <xsl:template name="makeInternalLink">
-      <xsl:param name="ptr" as="xs:boolean"  select="false()"/>
-      <xsl:param name="target"/>
-      <xsl:param name="dest"/>
-      <xsl:param name="class"/>
-      <xsl:param name="body"/>
-   </xsl:template>
-   <xsl:template name="makeSectionHead">
-      <xsl:param name="name"/>
-      <xsl:param name="id"/>
-   </xsl:template>
-   <xsl:template name="refdoc"/>
-   <xsl:template name="showRNC">
-      <xsl:param name="style"/>
-      <xsl:param name="contents"/>
-      <xsl:value-of select="$contents"/>
-   </xsl:template>
-   <xsl:template name="showSpace">
-   </xsl:template>
-   <xsl:template name="showSpaceBetweenItems"/>
-   <xsl:template name="specHook">
-     <xsl:param name="name"/>
-   </xsl:template>
-  <xsl:output encoding="utf-8" indent="yes" method="text"/>
-  <xsl:strip-space elements="*"/>
-  <xsl:param name="TEIC">false</xsl:param>
-  <xsl:param name="verbose"/>
-  <xsl:param name="outputDir"/>
-  <xsl:param name="appendixWords"/>
-  <xsl:template name="makeAnchor">
-      <xsl:param name="name"/>
-  </xsl:template>
-  <xsl:param name="splitLevel">-1</xsl:param>
-  <xsl:param name="oddmode">dtd</xsl:param>
-  <xsl:variable name="filesuffix"/>
-   <!-- get list of output files -->
-  <xsl:variable name="linkColor"/>
-  <xsl:template match="tei:moduleSpec[@type='decls']"/>
-
-  <xsl:variable name="dq">"</xsl:variable>
-  <xsl:variable name="escdq">\\"</xsl:variable>
-  <xsl:template match="/">
-    <xsl:if test="not($callback='')">
-      <xsl:value-of select="$callback"/>
-      <xsl:text>(</xsl:text>
-    </xsl:if>
-    <xsl:text>{"title": "</xsl:text>
-    <xsl:sequence select="tei:generateMetadataTitle(*)"/>
-    <xsl:text>","edition": "</xsl:text>
-    <xsl:sequence select="tei:generateEdition(*)"/>
-    <xsl:text>","generator": "odd2json",
-    "date":"</xsl:text>
-    <xsl:sequence select="tei:whatsTheDate()"/>
-    <xsl:text>","modules": [</xsl:text>
-    <xsl:for-each select="key('Modules',1)">
-      <xsl:sort select="@ident"/>
-      <xsl:text>{"ident":"</xsl:text>
-      <xsl:value-of select="@ident"/>
-      <xsl:text>",</xsl:text>
-      <xsl:text>"id":"</xsl:text>
-      <xsl:choose>
-	<xsl:when test="@n">
-	  <xsl:value-of select="@n">
-	  </xsl:value-of>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="ancestor::tei:div[last()]/@xml:id"/>
-	</xsl:otherwise>
-      </xsl:choose>      
-      <xsl:text>",</xsl:text>
-      <xsl:call-template name="desc"/>
-      <xsl:call-template name="mode"/>
-      <xsl:text>}</xsl:text>
-      <xsl:if test="not(position() = last())">,</xsl:if>
-      <xsl:text>&#10;</xsl:text>
-    </xsl:for-each>
-    <xsl:text>],</xsl:text>
+    xmlns:math="http://www.w3.org/2005/xpath-functions/math"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:j="http://www.w3.org/2005/xpath-functions"
+    exclude-result-prefixes="xs math"
+    version="3.0">
     
-    <xsl:text>"moduleRefs": [</xsl:text>
-    <xsl:for-each select="key('ModuleRefs',1)">
-      <xsl:sort select="@key"/>
-      <xsl:text>{"key":"</xsl:text>
-      <xsl:value-of select="@key"/>
-      <xsl:text>",</xsl:text>
-      <xsl:call-template name="desc"/>
-      <xsl:call-template name="mode"/>
-      <xsl:text>}</xsl:text>
-      <xsl:if test="not(position() = last())">,</xsl:if>
-      <xsl:text>&#10;</xsl:text>
-    </xsl:for-each>
-    <xsl:text>],</xsl:text>
-
-    <xsl:text>"members": [</xsl:text>
-    <xsl:for-each select="//tei:elementSpec|//tei:classSpec[@type='atts']">
-      <xsl:sort select="@ident"/>
-      <xsl:text>{"ident":"</xsl:text>
-      <xsl:value-of select="@ident"/>
-      <xsl:text>",</xsl:text>
-      <xsl:variable name="ns"
-                    select="(@ns,  ancestor::tei:schemaSpec[1]/@ns)[1]"/>
-      <xsl:if test="$ns">
-        <xsl:text>"ns":"</xsl:text>
-        <xsl:value-of select="$ns"/>
-        <xsl:text>",</xsl:text>
-      </xsl:if>
-      <xsl:text>"type":"</xsl:text>
-      <xsl:value-of select="local-name()"/>
-      <xsl:text>",</xsl:text>
-      <xsl:text>"module":"</xsl:text>
-      <xsl:value-of select="@module"/>
-      <xsl:text>",</xsl:text>
-      <xsl:call-template name="desc"/>
-      <xsl:call-template name="mode"/>
-      <xsl:if test="tei:classes">
-	<xsl:text>,"classes":[</xsl:text>
-	<xsl:for-each select="tei:classes/tei:memberOf">
-	  <xsl:text>{"</xsl:text>
-	  <xsl:value-of select="@key"/>
-	  <xsl:text>":"</xsl:text>
-	  <xsl:for-each select="key('IDENTS',@key)">
-	    <xsl:value-of select="@type"/>
-	  </xsl:for-each>
-	  <xsl:text>"}</xsl:text>
-	  <xsl:if test="following-sibling::tei:memberOf">,</xsl:if>
-	</xsl:for-each>
-	<xsl:text>]</xsl:text>
-      </xsl:if>
-      <xsl:text>,"model":"</xsl:text>
-      <xsl:call-template name="generateSummaryChildren"/>
-      <xsl:text>"</xsl:text>
-      <xsl:if test="$showChildren='true'">
-	<xsl:text>,"children":[</xsl:text>
-	<xsl:call-template name="generateChildren"/>
-	<xsl:text>]</xsl:text>
-      </xsl:if>
-      <xsl:variable name="a">
-	<xsl:call-template name="atts"/>
-      </xsl:variable>
-      <xsl:variable name="classa">
-	<xsl:call-template name="classatts"/>
-      </xsl:variable>
-      <xsl:text>,"attributes":[</xsl:text>
-      <xsl:for-each select="$a/tei:attDef">
-	<xsl:text>{"ident":"</xsl:text>
-	<xsl:value-of select="@ident"/>
-	<xsl:text>",</xsl:text>
-        <xsl:if test="@ns">
-          <xsl:text>"ns":"</xsl:text>
-          <xsl:value-of select="@ns"/>
-	  <xsl:text>",</xsl:text>
+    <xsl:import href="../common/functions.xsl"/>
+    <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec" name="IDENTS" use="concat(@prefix,@ident)"/>
+    
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+        <desc>
+            <p> TEI stylesheet for making JSON from ODD </p>
+            <p>This software is dual-licensed:
+                
+                1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
+                Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
+                
+                2. http://www.opensource.org/licenses/BSD-2-Clause
+                
+                
+                
+                Redistribution and use in source and binary forms, with or without
+                modification, are permitted provided that the following conditions are
+                met:
+                
+                * Redistributions of source code must retain the above copyright
+                notice, this list of conditions and the following disclaimer.
+                
+                * Redistributions in binary form must reproduce the above copyright
+                notice, this list of conditions and the following disclaimer in the
+                documentation and/or other materials provided with the distribution.
+                
+                This software is provided by the copyright holders and contributors
+                "as is" and any express or implied warranties, including, but not
+                limited to, the implied warranties of merchantability and fitness for
+                a particular purpose are disclaimed. In no event shall the copyright
+                holder or contributors be liable for any direct, indirect, incidental,
+                special, exemplary, or consequential damages (including, but not
+                limited to, procurement of substitute goods or services; loss of use,
+                data, or profits; or business interruption) however caused and on any
+                theory of liability, whether in contract, strict liability, or tort
+                (including negligence or otherwise) arising in any way out of the use
+                of this software, even if advised of the possibility of such damage.
+            </p> 
+            <p>Author: See AUTHORS</p>
+            
+            <p>Copyright: 2017, TEI Consortium</p>
+        </desc>
+    </doc>
+    
+    <xsl:output method="text"/>
+    
+    <xsl:param name="lang" select="'en'">
+        <!-- Set this to 'all' to include documentation in all languages. -->
+    </xsl:param>
+    <xsl:param name="serializeDocs" select="true()"/>
+    
+    <xsl:template match="/">
+        <xsl:variable name="structure">
+            <j:map>
+                <j:string key="title">
+                    <xsl:sequence select="tei:generateMetadataTitle(*)"/>
+                </j:string>
+                <j:string key="edition">
+                    <xsl:sequence select="tei:generateEdition(*)"/>
+                </j:string>
+                <j:string key="generator">odd2json3</j:string>
+                <j:string key="date"><xsl:sequence select="tei:whatsTheDate()"/></j:string>
+                <j:array key="modules">
+                    <xsl:for-each select="//tei:moduleSpec">
+                        <xsl:sort select="@ident"/>
+                        <j:map>
+                            <j:string key="ident"><xsl:value-of select="@ident"/></j:string>
+                            <j:string key="id">
+                                <xsl:choose>
+                                    <xsl:when test="@n">
+                                        <xsl:value-of select="@n">
+                                        </xsl:value-of>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:value-of select="ancestor::tei:div[last()]/@xml:id"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </j:string>
+                            <xsl:call-template name="desc"/>
+                            <j:string key="altIdent">
+                                <xsl:value-of select="tei:altIdent"/>
+                            </j:string>
+                        </j:map>
+                    </xsl:for-each>
+                </j:array>
+                <j:array key="moduleRefs">
+                    <xsl:for-each select="//tei:moduleRef">
+                        <xsl:sort select="@key"/>
+                        <j:map>
+                            <j:string key="key"><xsl:value-of select="@key"/></j:string>
+                            <xsl:call-template name="desc"/>
+                            <xsl:call-template name="mode"/>
+                        </j:map>
+                    </xsl:for-each>
+                </j:array>
+                <j:array key="members">
+                    <xsl:for-each select="//tei:elementSpec|//tei:classSpec[@type='atts']">
+                        <xsl:sort select="@ident"/>
+                        <j:map>
+                            <j:string key="ident"><xsl:value-of select="@ident"/></j:string>
+                            <xsl:variable name="nspace"
+                                select="(@ns,  ancestor::tei:schemaSpec[1]/@ns)[1]"/>
+                            <xsl:if test="$nspace">
+                                <j:string key="ns"><xsl:value-of select="$nspace"/></j:string>
+                            </xsl:if>
+                            <j:string key="type"><xsl:value-of select="local-name()"/></j:string>
+                            <j:string key="module"><xsl:value-of select="@module"/></j:string>
+                            <xsl:call-template name="desc"/>
+                            <j:string key="altIdent">
+                                <xsl:value-of select="tei:altIdent"/>
+                            </j:string>
+                            <xsl:if test="tei:classes">
+                                <j:array key="classes">
+                                    <xsl:for-each select="tei:classes/tei:memberOf">
+                                        <j:map>
+                                            <j:array key="{@key}">
+                                                <xsl:for-each select="key('IDENTS',@key)">
+                                                    <j:string><xsl:value-of select="@type"/></j:string>
+                                                </xsl:for-each>
+                                            </j:array>
+                                        </j:map>
+                                    </xsl:for-each>
+                                </j:array>
+                            </xsl:if>
+                            <xsl:call-template name="attributes"/>
+                            <xsl:if test="tei:classes">
+                                <j:array key="classattributes">
+                                    <xsl:call-template name="classattributes"/>
+                                </j:array>
+                            </xsl:if>
+                        </j:map>
+                    </xsl:for-each>
+                </j:array>
+                <j:array key="elementRefs">
+                    <xsl:for-each select="//tei:elementRef[not(ancestor::tei:content)]">
+                        <xsl:sort select="@key"/>
+                        <j:map>
+                            <j:string key="key">
+                                <xsl:value-of select="@key"/>
+                            </j:string>
+                            <xsl:call-template name="desc"/>
+                            <xsl:call-template name="mode"/>
+                        </j:map>
+                    </xsl:for-each>
+                </j:array>
+                <j:array key="modelclasses">
+                    <xsl:for-each select="//tei:classSpec[@type='model']">
+                        <xsl:sort select="@ident"/>
+                        <j:map>
+                            <j:string key="ident">
+                                <xsl:value-of select="@ident"/>
+                            </j:string>
+                            <j:string key="module">
+                                <xsl:value-of select="@module"/>
+                            </j:string>
+                            <xsl:call-template name="desc"/>
+                            <xsl:call-template name="mode"/>
+                        </j:map>
+                    </xsl:for-each>
+                </j:array>
+                <j:array key="classRefs">
+                    <xsl:for-each select="//tei:classRef[not(ancestor::tei:content)]">
+                        <xsl:sort select="@key"/>
+                        <j:map>
+                            <j:string key="key">
+                                <xsl:value-of select="@key"/>
+                            </j:string>
+                            <xsl:call-template name="desc"/>
+                            <xsl:call-template name="mode"/>
+                        </j:map>
+                    </xsl:for-each>
+                </j:array>
+                <j:array key="macros">
+                    <xsl:for-each select="//tei:macroSpec|//tei:dataSpec">
+                        <xsl:sort select="@ident"/>
+                        <j:map>
+                            <j:string key="ident">
+                                <xsl:value-of select="@ident"/>
+                            </j:string>
+                            <j:string key="module">
+                                <xsl:value-of select="@module"/>
+                            </j:string>
+                            <j:string key="type">
+                                <xsl:value-of select="@type"/>
+                            </j:string>
+                            <xsl:call-template name="desc"/>
+                            <xsl:call-template name="mode"/>
+                        </j:map>
+                    </xsl:for-each>
+                </j:array>
+                <j:array key="macroRefs">
+                    <xsl:for-each select="//tei:macroRef[not(ancestor::tei:content)]">
+                        <xsl:sort select="@key"/>
+                        <j:map>
+                            <j:string key="key">
+                                <xsl:value-of select="@key"/>
+                            </j:string>
+                            <xsl:call-template name="desc"/>
+                            <xsl:call-template name="mode"/>
+                        </j:map>
+                    </xsl:for-each>
+                </j:array>
+            </j:map>
+        </xsl:variable>
+        <xsl:value-of select="xml-to-json($structure, map{'indent':true()})"/>
+    </xsl:template>
+    
+    <xsl:template name="mode">
+        <xsl:if test="@mode">
+            <j:string key="key">
+                <xsl:value-of select="@mode"/>
+            </j:string>
         </xsl:if>
-	<xsl:value-of select="desc"/>
-  <xsl:for-each select="values">
-    <xsl:text>,</xsl:text>
-    <xsl:text>"values":[</xsl:text>
-    <xsl:for-each select="value">
-      <xsl:text>"</xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>"</xsl:text>
-      <xsl:if test="not(position()=last())">
-        <xsl:text>,</xsl:text>
-      </xsl:if>
-    </xsl:for-each>
-    <xsl:text>]</xsl:text>
-  </xsl:for-each>
-  
-	<xsl:text>}</xsl:text>
-	<xsl:if test="position()!=last()">,</xsl:if>
-      </xsl:for-each>
-      <xsl:text>]</xsl:text>
-      <xsl:text>,"classattributes":[</xsl:text>
-      <xsl:for-each-group select="$classa/tei:attDef"
-			  group-by="@class">
-	<xsl:text>{"class":"</xsl:text>
-	<xsl:value-of select="@class"/>
-	<xsl:text>","module":"</xsl:text>
-	<xsl:value-of select="@module"/>
-	<xsl:text>"}</xsl:text>
-	<xsl:if test="position()!=last()">,</xsl:if>
-      </xsl:for-each-group>
-      <xsl:text>]</xsl:text>
-      <xsl:text>}</xsl:text>
-      <xsl:if test="position()!=last()">,</xsl:if>
-      <xsl:text>&#10;</xsl:text>
-    </xsl:for-each>
-    <xsl:text>],</xsl:text>
-
-    <xsl:text>"elementRefs": [</xsl:text>
-    <xsl:for-each select="key('ElementRefs',1)">
-      <xsl:sort select="@key"/>
-      <xsl:text>{"key":"</xsl:text>
-      <xsl:value-of select="@key"/>
-      <xsl:text>",</xsl:text>
-      <xsl:call-template name="desc"/>
-      <xsl:call-template name="mode"/>
-      <xsl:text>}</xsl:text>
-      <xsl:if test="not(position() = last())">,</xsl:if>
-      <xsl:text>&#10;</xsl:text>
-    </xsl:for-each>
-    <xsl:text>],</xsl:text>
-
-    <xsl:text>"modelclasses": [</xsl:text>
-    <xsl:for-each select="key('MODELCLASSDOCS',1)">
-      <xsl:sort select="@ident"/>
-      <xsl:text>{"ident":"</xsl:text>
-      <xsl:value-of  select="@ident"/>
-      <xsl:text>",</xsl:text>
-      <xsl:text>"module":"</xsl:text>
-      <xsl:value-of  select="@module"/>
-      <xsl:text>",</xsl:text>
-      <xsl:call-template name="desc"/>
-      <xsl:call-template name="mode"/>
-      <xsl:text>}</xsl:text>
-      <xsl:if test="not(position() = last())">,</xsl:if>
-      <xsl:text>&#10;</xsl:text>
-    </xsl:for-each>
-    <xsl:text>],</xsl:text>
-
-    <xsl:text>"classRefs": [</xsl:text>
-    <xsl:for-each select="key('ClassRefs',1)">
-      <xsl:sort select="@key"/>
-      <xsl:text>{"key":"</xsl:text>
-      <xsl:value-of select="@key"/>
-      <xsl:text>",</xsl:text>
-      <xsl:call-template name="desc"/>
-      <xsl:call-template name="mode"/>
-      <xsl:text>}</xsl:text>
-      <xsl:if test="not(position() = last())">,</xsl:if>
-      <xsl:text>&#10;</xsl:text>
-    </xsl:for-each>
-    <xsl:text>],</xsl:text>
-
-    <xsl:text>"macros": [</xsl:text>
-    <xsl:for-each select="key('MACRODOCS',1)">
-      <xsl:sort select="@ident"/>
-      <xsl:text>{"ident":"</xsl:text>
-      <xsl:value-of select="@ident"/>
-      <xsl:text>",</xsl:text>
-      <xsl:text>"module":"</xsl:text>
-      <xsl:value-of  select="@module"/>
-      <xsl:text>",</xsl:text>
-      <xsl:text>"type":"</xsl:text>
-      <xsl:value-of select="@type"/>
-      <xsl:text>",</xsl:text>
-      <xsl:call-template name="desc"/>
-      <xsl:call-template name="mode"/>
-      <xsl:text>}</xsl:text>
-      <xsl:if test="not(position() = last())">,</xsl:if>
-      <xsl:text>&#10;</xsl:text>
-    </xsl:for-each>
-    <xsl:text>],</xsl:text>
-  
-    <xsl:text>"macroRefs": [</xsl:text>
-    <xsl:for-each select="key('MacroRefs',1)">
-      <xsl:sort select="@key"/>
-      <xsl:text>{"key":"</xsl:text>
-      <xsl:value-of select="@key"/>
-      <xsl:text>",</xsl:text>
-      <xsl:call-template name="desc"/>
-      <xsl:call-template name="mode"/>
-      <xsl:text>}</xsl:text>
-      <xsl:if test="not(position() = last())">,</xsl:if>
-      <xsl:text>&#10;</xsl:text>
-    </xsl:for-each>
-    <xsl:text>]</xsl:text>
-    <xsl:text>}</xsl:text>
-    <xsl:if test="not($callback='')">
-      <xsl:text>)</xsl:text>
-    </xsl:if>
-  </xsl:template>
-
-  <xsl:template name="schemaOut">
-      <xsl:param name="grammar"/>
-      <xsl:param name="element"/>
-      <xsl:param name="content"/>
-      <xsl:value-of select="normalize-space($content)"/>
-  </xsl:template>
-  
-  <xsl:template name="pureODDOut">
-    <xsl:param name="grammar"/>
-    <xsl:param name="element"/>
-    <xsl:param name="content"/>
-    <xsl:value-of select="normalize-space($content)"/>
-  </xsl:template>
-  
-  <xsl:template name="PMOut">
-    <xsl:param name="element"/>
-    <xsl:param name="content"/>
-    <xsl:value-of select="normalize-space($content)"/>
-  </xsl:template>
-
-  <xsl:template name="typewriter">
-    <xsl:param name="text"/>
-    <xsl:value-of select="$text"/>
-  </xsl:template>
-
-  <xsl:template name="desc">
-    <xsl:variable name="d">      
-    <xsl:sequence select="tei:makeDescription(.,false())"/>
-    </xsl:variable>
-    <xsl:text>"desc":"</xsl:text>
-    <xsl:value-of select="replace(normalize-space($d),$dq,$escdq)"/>
-    <xsl:text>"</xsl:text>
-  </xsl:template>
-  
-  <xsl:template name="mode">
-    <xsl:if test="@mode">
-      <xsl:text>,</xsl:text>
-      <xsl:text>"mode":"</xsl:text>
-      <xsl:value-of select="@mode"/>
-      <xsl:text>"</xsl:text>
-    </xsl:if>
-  </xsl:template>
-
-  <xsl:template name="atts">
-    <xsl:for-each select=".//tei:attDef">
-      <tei:attDef ident="{@ident}">
-        <xsl:if test="@ns">
-          <xsl:attribute name="ns" select="@ns"/>
-        </xsl:if>
-	<desc>
-	  <xsl:call-template name="desc"/>
-	</desc>
-        <xsl:if test="tei:valList">
-          <values>
-            <xsl:for-each select="tei:valList/tei:valItem">
-              <value>
-                <xsl:value-of select="@ident"/>
-              </value>
+    </xsl:template>
+    
+    <xsl:template name="attributes">
+        <j:array key="attributes">
+            <xsl:for-each select=".//tei:attDef">
+                <j:map>
+                    <j:string key="ident">
+                        <xsl:value-of select="@ident"/>
+                    </j:string>
+                    <xsl:if test="@ns">
+                        <j:string key="ns">
+                            <xsl:value-of select="@ns"/>
+                        </j:string>
+                    </xsl:if>
+                    <xsl:call-template name="desc"/>
+                    <xsl:if test="tei:valList">
+                        <j:array key="values">
+                            <xsl:for-each select="tei:valList/tei:valItem">
+                                <j:string>
+                                    <xsl:value-of select="@ident"/>
+                                </j:string>
+                            </xsl:for-each>
+                        </j:array>                                            
+                    </xsl:if>
+                </j:map>
             </xsl:for-each>
-          </values>
-        </xsl:if>
-   
-      </tei:attDef>
-    </xsl:for-each>
-  </xsl:template>
-
-  <xsl:template name="classatts">
-    <xsl:for-each select="tei:classes/tei:memberOf">
-      <xsl:call-template name="classA">
-	<xsl:with-param name="i" select="@key"/>
-      </xsl:call-template>
-    </xsl:for-each>
-  </xsl:template>
-
-  <xsl:template name="listAtts">
-   <xsl:for-each select=".//tei:attDef">
-      <tei:attDef ident="{@ident}"
-		  module="{ancestor::tei:classSpec/@module}" class="{ancestor::tei:classSpec/@ident}">
-	<desc>
-	  <xsl:call-template name="desc"/>
-	</desc>
-      </tei:attDef>
-    </xsl:for-each>
-
-  </xsl:template>
-
-  <xsl:template name="classA">
-    <xsl:param name="i"/>
-    <xsl:for-each select="key('CLASSES',$i)">
-      <xsl:call-template name="listAtts"/>
-      <xsl:for-each select="tei:classes/tei:memberOf">
-	<xsl:call-template name="classA">
-	  <xsl:with-param name="i" select="@key"/>
-	</xsl:call-template>
-      </xsl:for-each>
-    </xsl:for-each>
-  </xsl:template>
-
-
-  <xsl:template name="generateSummaryChildren">
-    <xsl:variable name="name" select="@ident"/>
-    <xsl:choose>
-      <xsl:when test="tei:content//rng:ref[@name='macro.anyXML']">
-          <xsl:text>ANY</xsl:text>
-      </xsl:when>
-      <xsl:when test="tei:content/rng:empty">
-	<xsl:text>EMPTY</xsl:text>
-      </xsl:when>
-      <xsl:when test="tei:content/rng:text and count(tei:content/rng:*)=1">
-	<xsl:text>TEXT</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:variable name="Children">
-          <xsl:for-each select="tei:content">
-            <xsl:call-template name="followRef"/>
-          </xsl:for-each>
+        </j:array>
+    </xsl:template>
+    
+    <xsl:template name="classattributes">
+        <xsl:variable name="caller" select="@ident"/>
+        <xsl:for-each select="tei:classes/tei:memberOf">
+            <xsl:for-each select="key('IDENTS',@key)">
+                <xsl:if test="@type='atts'">
+                    <j:map>
+                        <j:string key="class">
+                            <xsl:value-of select="@ident"/>
+                        </j:string>
+                        <j:string key="module">
+                            <xsl:value-of select="@module"/>
+                        </j:string>
+                        <j:string key="usedBy">
+                            <xsl:value-of select="$caller"/>
+                        </j:string>
+                    </j:map>
+                    <xsl:call-template name="classattributes"/>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template name="serializeElement">
+        <xsl:variable name="simplified">
+            <xsl:copy-of copy-namespaces="no" select="."/>
         </xsl:variable>
-	<xsl:for-each select="$Children">
-	  <xsl:choose>
-	    <xsl:when test="Element[@type='TEXT'] and
-			    count(Element)=1">
-	      <xsl:text>TEXT</xsl:text>
-	    </xsl:when>
-	    <xsl:when test="count(Element)=0">
-	      <xsl:text>EMPTY</xsl:text>
-	    </xsl:when>
-	    <xsl:when test="Element[@type='TEXT']">
-	      <xsl:text>MIXED</xsl:text>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:text>SIMPLE</xsl:text>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:for-each>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xsl:template name="generateChildren">
-    <xsl:variable name="name" select="@ident"/>
-    <xsl:choose>
-      <xsl:when test="tei:content//rng:ref[@name='macro.anyXML']">
-      </xsl:when>
-      <xsl:when test="tei:content/rng:empty">
-      </xsl:when>
-      <xsl:when test="tei:content/rng:text and count(tei:content/rng:*)=1">
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:variable name="Children">
-          <xsl:for-each select="tei:content">
-            <xsl:call-template name="followRef"/>
-          </xsl:for-each>
-        </xsl:variable>
-	<xsl:for-each-group
-	    select="$Children/Element[not(@type='TEXT')]"
-	    group-by="@name">
-	  <xsl:sort select="@name"/>
-	  <xsl:text>{"ident":"</xsl:text>
-	  <xsl:value-of select="@name"/>
-	  <xsl:text>"}</xsl:text>	
-	  <xsl:if test="position()!=last()">,</xsl:if>
-	</xsl:for-each-group>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
+        <j:string><xsl:value-of select="serialize($simplified)"/></j:string>
+    </xsl:template>
+    
+    <xsl:template name="makeDesc">
+        <xsl:choose>
+            <xsl:when test="$serializeDocs">
+                <xsl:call-template name="serializeElement"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <j:string><xsl:sequence select="tei:makeDescription(parent::*,false())"/></j:string>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="desc">
+        <j:array key="desc">
+            <xsl:for-each select="tei:desc">
+                <xsl:choose>
+                    <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
+                        <xsl:call-template name="makeDesc"/>                  
+                    </xsl:when>
+                    <xsl:when test="not(@xml:lang)">
+                        <xsl:call-template name="makeDesc"/>
+                    </xsl:when>
+                    <xsl:otherwise/>
+                </xsl:choose>                
+            </xsl:for-each>
+        </j:array>  
+        <xsl:if test="$serializeDocs">
+            <j:array key="gloss">
+                <xsl:for-each select="tei:gloss">
+                    <xsl:choose>
+                        <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
+                            <xsl:call-template name="serializeElement"/>
+                        </xsl:when>
+                        <xsl:when test="not(@xml:lang)">
+                            <xsl:call-template name="serializeElement"/>
+                        </xsl:when>
+                        <xsl:otherwise/>
+                    </xsl:choose>                
+                </xsl:for-each>
+            </j:array>
+        </xsl:if>        
+    </xsl:template>
+    
 </xsl:stylesheet>
