@@ -1812,44 +1812,53 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:copy-of select="@*"/>
                 <xsl:for-each select="$Old/tei:valList/tei:valItem">
                   <xsl:variable name="thisme" select="@ident"/>
-                  <xsl:if test="not($New/tei:valList[1]/tei:valItem[@ident=$thisme and (@mode eq 'delete' or @mode eq 'replace')])">
-                    <xsl:copy>
-                      <xsl:copy-of select="@*"/>
-                      <xsl:for-each select="$New/tei:valList[1]/tei:valItem[@ident=$thisme]">
-                        <xsl:choose>
-                          <xsl:when test="tei:equiv">
-                            <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <xsl:for-each select="$Old/tei:valList/tei:valItem[@ident=$thisme]">
+                  <xsl:choose>
+                    <xsl:when test="$New/tei:valList[1]/tei:valItem[@ident eq $thisme and (@mode eq 'delete' or @mode eq 'replace')]"/>
+                    <xsl:when test="$New/tei:valList[1]/tei:valItem[@ident eq $thisme and (@mode eq 'change')]">
+                      <xsl:copy>
+                        <xsl:copy-of select="@*"/>
+                        <xsl:for-each select="$New/tei:valList[1]/tei:valItem[@ident=$thisme]">
+                          <xsl:choose>
+                            <xsl:when test="tei:equiv">
                               <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
-                            </xsl:for-each>
-                          </xsl:otherwise>
-                        </xsl:choose>
-                        <xsl:choose>
-                          <xsl:when test="tei:gloss">
-                            <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <xsl:for-each select="$Old/tei:valList/tei:valItem[@ident=$thisme]">
+                            </xsl:when>
+                            <xsl:otherwise>
+                              <xsl:for-each select="$Old/tei:valList/tei:valItem[@ident=$thisme]">
+                                <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
+                              </xsl:for-each>
+                            </xsl:otherwise>
+                          </xsl:choose>
+                          <xsl:choose>
+                            <xsl:when test="tei:gloss">
                               <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
-                            </xsl:for-each>
-                          </xsl:otherwise>
-                        </xsl:choose>
-                        <xsl:choose>
-                          <xsl:when test="$stripped='true'"/>
-                          <xsl:when test="tei:desc">
-                            <xsl:apply-templates mode="justcopy" select="tei:desc"/>
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <xsl:for-each select="$Old/tei:valList/tei:valItem[@ident=$thisme]">
+                            </xsl:when>
+                            <xsl:otherwise>
+                              <xsl:for-each select="$Old/tei:valList/tei:valItem[@ident=$thisme]">
+                                <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
+                              </xsl:for-each>
+                            </xsl:otherwise>
+                          </xsl:choose>
+                          <xsl:choose>
+                            <xsl:when test="$stripped='true'"/>
+                            <xsl:when test="tei:desc">
                               <xsl:apply-templates mode="justcopy" select="tei:desc"/>
-                            </xsl:for-each>
-                          </xsl:otherwise>
-                        </xsl:choose>
-                      </xsl:for-each>
-                    </xsl:copy>
-                  </xsl:if>
+                            </xsl:when>
+                            <xsl:otherwise>
+                              <xsl:for-each select="$Old/tei:valList/tei:valItem[@ident=$thisme]">
+                                <xsl:apply-templates mode="justcopy" select="tei:desc"/>
+                              </xsl:for-each>
+                            </xsl:otherwise>
+                          </xsl:choose>
+                        </xsl:for-each>
+                      </xsl:copy>
+                    </xsl:when>
+                    <xsl:when test="$New/tei:valList[1]/tei:valItem[@ident eq $thisme and (@mode eq 'add')]">
+                      <xsl:message terminate="yes">Asked to add attr <xsl:value-of select="$thisme"/> of <xsl:value-of select="$Old/@ident"/> of <xsl:value-of select="$Old/ancestor::*[@ident][1]/@ident"/> but it already exists; perhaps use @mode of 'change' or 'replace' instead.</xsl:message>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:apply-templates mode="justcopy" select="."/>
+                    </xsl:otherwise>
+                  </xsl:choose>
                 </xsl:for-each>
                 <xsl:apply-templates mode="justcopy" select="tei:valItem[@mode eq 'add']"/>
                 <xsl:apply-templates mode="justcopy" select="tei:valItem[@mode eq 'replace']"/>
