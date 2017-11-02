@@ -504,9 +504,9 @@ test-namespaces:
 		then diff  test35.rnc expected-results/test35.rnc; fi
 
 test-scripts:
-	for i in $(SCRIPTS); do $(BINDIR)/$$i maria.xml $$i.result && rm $$i.result; done
+	for i in $(SCRIPTS); do $(BINDIR)/$$i $(FLAGS) maria.xml $$i.result && rm $$i.result; done
 	$(BINDIR)/teitoodd test16.odd temp.odd
-	for i in $(SCHEMASCRIPTS) ; do $(BINDIR)/$$i temp.odd $$i.result && rm $$i.result; done
+	for i in $(SCHEMASCRIPTS) ; do $(BINDIR)/$$i $(FLAGS) temp.odd $$i.result && rm $$i.result; done
 	rm temp.odd
 
 test-pureant:
