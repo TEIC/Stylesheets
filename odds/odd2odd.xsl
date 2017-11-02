@@ -2071,7 +2071,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tei:ptr" mode="pass3">
+  <xsl:template match="tei:ptr | tei:ref[ancestor::tei:listRef]" mode="pass3">
     <xsl:choose>
       <xsl:when test="starts-with(@target,'#') and 
         (ancestor::tei:remarks or ancestor::tei:listRef or ancestor::tei:valDesc) and
@@ -2091,6 +2091,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="tei:head"/>
               </xsl:for-each>
+         <xsl:if test="child::text()">  <xsl:text>. Project gloss: </xsl:text><xsl:apply-templates/></xsl:if>
             </ref>
           </xsl:when>
           <xsl:otherwise>
