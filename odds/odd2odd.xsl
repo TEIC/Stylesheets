@@ -2078,11 +2078,17 @@ of this software, even if advised of the possibility of such damage.
         not(id(substring(@target,2)))">
         <xsl:variable name="target" select="substring(@target,2)"/>
         <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
+        <xsl:variable name="chapter" 
+          select="document($sourceDoc)/id($target)/ancestor-or-self::tei:div[not(ancestor::tei:div)]/@xml:id"/>
         <xsl:choose>
+          <xsl:when test="(string-length(normalize-space(.)) &gt; 0) or processing-instruction()">
+            <ref  xmlns="http://www.tei-c.org/ns/1.0"
+              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/{$chapter}.html#{$target}">
+              <xsl:apply-templates mode="#current"/>
+            </ref>
+          </xsl:when>
           <xsl:when test="document($sourceDoc)/id($target)">
             <!-- the chapter ID is on the highest ancestor or self div -->
-            <xsl:variable name="chapter" 
-              select="document($sourceDoc)/id($target)/ancestor-or-self::tei:div[not(ancestor::tei:div)]/@xml:id"/>
             <ref  xmlns="http://www.tei-c.org/ns/1.0"
               target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/{$chapter}.html#{$target}">
               <xsl:for-each select="document($sourceDoc)/id($target)">
@@ -2091,7 +2097,6 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="tei:head"/>
               </xsl:for-each>
-         <xsl:if test="child::node()">  <xsl:text>. Project gloss: </xsl:text><xsl:apply-templates mode="pass3"/></xsl:if>
             </ref>
           </xsl:when>
           <xsl:otherwise>
