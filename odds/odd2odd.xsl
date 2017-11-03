@@ -944,9 +944,11 @@ of this software, even if advised of the possibility of such damage.
           <xsl:choose>
             <xsl:when test="tei:valList[@mode eq 'delete']"/>
             <xsl:when test="tei:valList">
+              <xsl:message>Found an undeleted vallist</xsl:message>
               <xsl:apply-templates mode="odd2odd-copy" select="tei:valList[1]"/>
             </xsl:when>
             <xsl:otherwise>
+              <xsl:message>Copying existing vallist</xsl:message>
                 <xsl:apply-templates mode="odd2odd-copy" select="$ORIGINAL/tei:valList"/>
             </xsl:otherwise>
           </xsl:choose>
@@ -1229,8 +1231,7 @@ of this software, even if advised of the possibility of such damage.
                       </xsl:otherwise>
                     </xsl:choose>
                   </xsl:for-each>
-                </xsl:for-each>
-              </xsl:when>
+                </xsl:for-each>              </xsl:when>
               <xsl:when test="tei:classes">
                 <xsl:for-each select="tei:classes/tei:memberOf">
                   <xsl:copy-of select="."/>
@@ -1805,10 +1806,15 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:copy-of select="@*"/>
                 <xsl:for-each select="$Old/tei:valList/tei:valItem">
                   <xsl:variable name="thisme" select="@ident"/>
+                  <xsl:message>Looking at existing valItem <xsl:value-of select="$thisme"/></xsl:message>
                   <xsl:if test="not($New/tei:valList[1]/tei:valItem[@ident=$thisme and (@mode eq 'delete' or @mode eq 'replace')])">
                     <xsl:copy>
                       <xsl:copy-of select="@*"/>
-                      <xsl:for-each select="$New/tei:valList[1]/tei:valItem[@ident=$thisme]">
+                      
+           <!--         <xsl:for-each select="$New/tei:valList[1]/tei:valItem[@ident=$thisme]">
+           
+           -->           <xsl:message>Looking at new valItem <xsl:value-of select="$thisme"/></xsl:message>
+                        
                         <xsl:choose>
                           <xsl:when test="tei:equiv">
                             <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
@@ -1840,7 +1846,8 @@ of this software, even if advised of the possibility of such damage.
                             </xsl:for-each>
                           </xsl:otherwise>
                         </xsl:choose>
-                      </xsl:for-each>
+                     <!--</xsl:for-each>-->
+                      
                     </xsl:copy>
                   </xsl:if>
                 </xsl:for-each>
