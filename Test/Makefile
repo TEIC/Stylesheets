@@ -299,7 +299,7 @@ test-from-docx: test.rng
 	$(JING) test.rng test18.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test18.xml expected-results/test18.xml; fi
-	$(BINDIR)/docxtotei --profile=jsi test39.docx temp.xml
+	$(BINDIR)/docxtotei test39.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test39.xml  && rm temp.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test39.xml expected-results/test39.xml; fi
