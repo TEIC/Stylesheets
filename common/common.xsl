@@ -60,7 +60,7 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
- <xsl:strip-space elements="tei:additional tei:address tei:adminInfo
+ <xsl:strip-space elements="tei:additional tei:adminInfo
 			    tei:altGrp tei:altIdentifier tei:analytic
 			    tei:app tei:appInfo tei:application
 			    tei:arc tei:argument tei:attDef
