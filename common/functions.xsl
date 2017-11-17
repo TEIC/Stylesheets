@@ -1116,7 +1116,6 @@ of this software, even if advised of the possibility of such damage.
 		    select="tei:generateDocumentationLang(.)"/>
       <xsl:variable name="firstLang" select="($langs)[1]"/>
       <!-- first the gloss -->
-      <xsl:text> </xsl:text>
       <xsl:sequence select="tei:makeGloss(.,$langs)"/>
       <!-- now the description -->
       <xsl:choose>
@@ -1179,7 +1178,6 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
             </xsl:variable>
             <xsl:variable name="firstLang" select="($langs)[1]"/>
-            <xsl:text> </xsl:text>
             <xsl:sequence select="tei:makeGloss(.,$langs)"/>
             <xsl:if test="following-sibling::tei:valItem">
               <xsl:text>; </xsl:text>
@@ -1208,7 +1206,6 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
             </xsl:variable>
             <xsl:variable name="firstLang" select="($langs)[1]"/>
-            <xsl:text> </xsl:text>
             <xsl:sequence select="tei:makeGloss(.,$langs)"/>
             <xsl:if test="following-sibling::tei:valItem">
               <xsl:text>; </xsl:text>
