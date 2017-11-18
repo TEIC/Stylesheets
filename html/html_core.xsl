@@ -66,6 +66,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="parent::tei:sp">
         <div>
+	  <xsl:if test="@xml:id">
+	    <xsl:call-template name="makeAnchor"/>
+	  </xsl:if>
           <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="default">spProse</xsl:with-param>
 	  </xsl:call-template>
@@ -74,6 +77,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
         <div>
+	  <xsl:if test="@xml:id">
+	    <xsl:call-template name="makeAnchor"/>
+	  </xsl:if>
           <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="default">false</xsl:with-param>
 	  </xsl:call-template>

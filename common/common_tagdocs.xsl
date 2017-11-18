@@ -816,7 +816,17 @@
             <xsl:call-template name="generateChildren"/>
           </xsl:element>
         </xsl:element>
-        <xsl:apply-templates mode="weave" select="tei:remarks"/>
+        <xsl:variable name="remarks">
+          <xsl:apply-templates mode="weave" select="tei:remarks"/>
+        </xsl:variable>
+        <xsl:choose>
+          <xsl:when test="string-length($remarks) = 0">
+            <xsl:apply-templates mode="doc" select="tei:remarks[@xml:lang='en']"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="$remarks"/>
+          </xsl:otherwise>
+        </xsl:choose>        
         <xsl:apply-templates mode="weave" select="tei:exemplum"/>
         <xsl:apply-templates mode="weave" select="tei:constraintSpec"/>
         <xsl:apply-templates mode="weave" select="tei:content"/>
