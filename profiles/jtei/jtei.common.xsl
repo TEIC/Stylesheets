@@ -61,6 +61,12 @@
     <xsl:value-of select="string-join(($label[normalize-space()], concat($number, $postfix)), ' ')"/>
   </xsl:template>
   
+  <xsl:template name="punctuate-head">
+    <xsl:if test="not(matches(normalize-space((descendant::text()[not(ancestor::tei:note)][last()])), '[\p{P}-[\p{Pe}]]$'))">
+      <xsl:text>.</xsl:text>
+    </xsl:if>
+  </xsl:template>
+  
   <!-- This template pulls subsequent punctuation into generated quotation 
     marks. -->
   <xsl:template name="include.punctuation">
@@ -269,7 +275,7 @@
     <xsl:variable name="authorInstance.prev" select="preceding-sibling::*[1]/self::tei:bibl/node()[. &lt;&lt; $bibl.prev/(tei:date|tei:title)[1]]"/>
     <xsl:choose>
       <xsl:when test="not($authorInstance.current)"/>
-      <xsl:when test="$bibl.prev and (local:authors.serialize($authorInstance.current/self::*) = local:authors.serialize($authorInstance.prev/self::*))">
+      <xsl:when test="$bibl.prev and deep-equal(local:strip-space($authorInstance.current), local:strip-space($authorInstance.prev))">
         <xsl:text>———. </xsl:text>
       </xsl:when>
       <xsl:otherwise>
@@ -278,13 +284,21 @@
     </xsl:choose>
   </xsl:template>
   
-  <!-- This function generates a serialization of an author(ing instance) in
+  <!-- This function creates a space-stripped copy of an author(ing instance) in
     a bibliography that can be compared to other author(ing instance)s, when
     determining if an abbreviated form should be used. -->
-  <xsl:function name="local:authors.serialize" as="xs:string?">
-    <xsl:param name="nodes" as="element()*"/>
-    <xsl:variable name="personList" select="for $e in $nodes return $e"/>
-    <xsl:value-of select="normalize-space(string-join($personList/concat(local-name(), '|', normalize-space(.)), ' '))"/>
+  <xsl:function name="local:strip-space">
+    <xsl:param name="node" as="node()*"/>
+    <xsl:for-each select="$node">
+      <xsl:choose>
+        <xsl:when test="self::text()"><xsl:value-of select="replace(., '\s', '')"/></xsl:when>
+        <xsl:otherwise>
+          <xsl:copy>
+            <xsl:copy-of select="local:strip-space(@*|node())"/>
+          </xsl:copy>
+        </xsl:otherwise>
+      </xsl:choose>      
+    </xsl:for-each>
   </xsl:function>
   
   <!-- This function determines the name when labeling headings for 
@@ -350,7 +364,7 @@
         <xsl:value-of select="concat(if (not(contains($number, '.'))) then '.' else (), ' ')"/>
       </xsl:when>
       <xsl:when test="not($crossref)">
-        <xsl:text>: </xsl:text>
+        <xsl:text>. </xsl:text>
       </xsl:when>
     </xsl:choose>
   </xsl:function>
@@ -358,16 +372,23 @@
   <!-- This function computes the number and format for footnotes. -->
   <xsl:function name="local:get.note.nr" as="xs:integer">
     <xsl:param name="node"/>
-    <xsl:number value="count($node/preceding::tei:note[if ($node/@place) then @place = $node/@place else not(@place)]|$node)" format="{if (not($node/@place) or $node/@place eq 'foot') then '1' else 'i'}"/>
+    <xsl:number value="count($node/preceding::tei:note[if ($node/@place) then @place = $node/@place else not(@place)][ancestor::*[parent::tei:text] intersect $node/ancestor::*[parent::tei:text] or root()/*[not(self::tei:TEI)] intersect $node/root()/*[not(self::tei:TEI)]]|$node)" format="{if (not($node/@place) or $node/@place eq 'foot') then '1' else 'i'}"/>
   </xsl:function>
   
   <!-- This function is designed to double-escape entities that need to be 
      displayed as escapes in egXML text nodes. -->
   <xsl:function name="local:escapeEntitiesForEgXML" as="xs:string">
     <xsl:param name="inStr" as="xs:string"/>
-    <xsl:value-of select="replace(replace(replace($inStr, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;')"/>
+    <xsl:value-of select="local:unescapeAmpersandsForEgXMLEscapes(replace(replace(replace($inStr, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;'))"/>
   </xsl:function>
   
+  <!-- This function is designed to unescape ampersands that should be displayed 
+    literally as part of escapes in egXML text nodes. -->
+  <xsl:function name="local:unescapeAmpersandsForEgXMLEscapes" as="xs:string">
+    <xsl:param name="inStr" as="xs:string"/>
+    <xsl:value-of select="replace($inStr, '&amp;amp;([^;\s&amp;]+?;)', '&amp;$1')"/>
+  </xsl:function>
+
   <!-- This function is designed to double-escape entities that need to be 
      displayed as escapes in egXML attribute values. -->
   <xsl:function name="local:escapeEntitiesForEgXMLAttribute" as="xs:string">

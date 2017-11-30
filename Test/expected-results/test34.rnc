@@ -33,10 +33,10 @@ tei_macro.specialPara =
    | tei_model.inter
    | tei_model.divPart
    | tei_model.global)*
-tei_macro.anyXML =
+anyElement-xenoData =
   element * - (tei:* | teix:egXML) {
     attribute * { text }*,
-    (text | tei_macro.anyXML)*
+    (text | anyElement-xenoData)*
   }
 tei_att.ascribed.attributes = tei_att.ascribed.attribute.who
 tei_att.ascribed.attribute.who =
@@ -253,7 +253,7 @@ tei_att.datable.w3c.attribute.to =
     | xsd:dateTime
   }?
 sch:pattern [
-  id = "foo-att.datable.w3c-att-datable-w3c-when-constraint-1"
+  id = "foo-att.datable.w3c-att-datable-w3c-when-constraint-rule-1"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -272,7 +272,7 @@ sch:pattern [
   "   "
 ]
 sch:pattern [
-  id = "foo-att.datable.w3c-att-datable-w3c-from-constraint-2"
+  id = "foo-att.datable.w3c-att-datable-w3c-from-constraint-rule-2"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -291,7 +291,7 @@ sch:pattern [
   "   "
 ]
 sch:pattern [
-  id = "foo-att.datable.w3c-att-datable-w3c-to-constraint-3"
+  id = "foo-att.datable.w3c-att-datable-w3c-to-constraint-rule-3"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -318,7 +318,7 @@ tei_att.datable.attribute.calendar =
   ## indicates the system or calendar to which the date represented by the content of this element belongs.
   attribute calendar { xsd:anyURI }?
 sch:pattern [
-  id = "foo-att.datable-calendar-calendar-constraint-4"
+  id = "foo-att.datable-calendar-calendar-constraint-rule-4"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -474,7 +474,6 @@ tei_att.global.responsibility.attribute.resp =
   }?
 tei_att.editLike.attributes =
   tei_att.dimensions.attributes,
-  tei_att.source.attributes,
   tei_att.editLike.attribute.evidence,
   tei_att.editLike.attribute.instant
 tei_att.editLike.attribute.evidence =
@@ -530,10 +529,19 @@ tei_att.global.rendition.attribute.rendition =
   attribute rendition {
     list { xsd:anyURI+ }
   }?
+tei_att.global.source.attributes =
+  tei_att.global.source.attribute.source
+tei_att.global.source.attribute.source =
+  
+  ## specifies the source from which some aspect of this element is drawn.
+  attribute source {
+    list { xsd:anyURI+ }
+  }?
 tei_att.global.attributes =
   tei_att.global.rendition.attributes,
   tei_att.global.linking.attributes,
   tei_att.global.responsibility.attributes,
+  tei_att.global.source.attributes,
   tei_att.global.attribute.xmlid,
   tei_att.global.attribute.n,
   tei_att.global.attribute.xmllang,
@@ -818,7 +826,7 @@ tei_att.typed.attribute.subtype =
     xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 sch:pattern [
-  id = "foo-att.typed-subtypeTyped-constraint-5"
+  id = "foo-att.typed-subtypeTyped-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -851,7 +859,7 @@ tei_att.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "foo-att.pointing-targetLang-targetLang-constraint-6"
+  id = "foo-att.pointing-targetLang-targetLang-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -950,7 +958,7 @@ tei_att.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { xsd:anyURI }?
 sch:pattern [
-  id = "foo-att.spanning-spanTo-spanTo-2-constraint-7"
+  id = "foo-att.spanning-spanTo-spanTo-2-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1002,7 +1010,7 @@ tei_att.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "foo-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-8"
+    "foo-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1048,15 +1056,8 @@ tei_att.transcriptional.attribute.status =
 tei_att.transcriptional.attribute.cause =
   
   ## documents the presumed cause for the intervention.
-  ## Suggested values include: 1] fix; 2] unclear
   attribute cause {
-    
-    ## repeated for the purpose of fixation
-    "fix"
-    | 
-      ## repeated to clarify a previously illegible or badly written text or mark
-      "unclear"
-    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 tei_att.transcriptional.attribute.seq =
   
@@ -1083,8 +1084,8 @@ tei_att.citing.attributes =
   tei_att.citing.attribute.to
 tei_att.citing.attribute.unit =
   
-  ## identifies the unit of information conveyed by the element, e.g. columns, pages, volume.
-  ## Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] part; 7] column
+  ## identifies the unit of information conveyed by the element, e.g. columns, pages, volume, entry.
+  ## Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] part; 7] column; 8] entry
   attribute unit {
     
     ## the element contains a volume number.
@@ -1105,8 +1106,11 @@ tei_att.citing.attribute.unit =
       ## the element identifies a part of a book or collection.
       "part"
     | 
-      ## the element identifies a column.
+      ## the element identifies an entry number or label in a list of entries.
       "column"
+    | 
+      ## the element identifies a column.
+      "entry"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 tei_att.citing.attribute.from =
@@ -1366,7 +1370,12 @@ tei_model.placeStateLike_sequenceRepeatable =
 tei_model.publicationStmtPart.agency =
   tei_publisher | tei_distributor | tei_authority
 tei_model.publicationStmtPart.detail =
-  tei_address | tei_date | tei_pubPlace | tei_idno | tei_availability
+  tei_model.ptrLike
+  | tei_address
+  | tei_date
+  | tei_pubPlace
+  | tei_idno
+  | tei_availability
 tei_model.availabilityPart = tei_licence
 tei_model.certLike = notAllowed
 tei_model.descLike = tei_desc
@@ -1522,7 +1531,7 @@ tei_model.biblPart =
   | tei_extent
   | tei_availability
 tei_model.frontPart =
-  tei_model.frontPart.drama | tei_divGen | tei_titlePage
+  tei_model.frontPart.drama | tei_listBibl | tei_divGen | tei_titlePage
 tei_model.addrPart =
   tei_model.nameLike
   | tei_addrLine
@@ -1576,7 +1585,8 @@ tei_model.teiHeaderPart =
   tei_encodingDesc | tei_profileDesc | tei_xenoData
 tei_model.sourceDescPart = notAllowed
 tei_model.encodingDescPart =
-  tei_projectDesc
+  tei_schemaRef
+  | tei_projectDesc
   | tei_samplingDecl
   | tei_editorialDecl
   | tei_tagsDecl
@@ -1611,13 +1621,6 @@ tei_model.correspContextPart =
   tei_model.ptrLike | tei_model.pLike | tei_note
 tei_model.correspDescPart =
   tei_note | tei_correspAction | tei_correspContext
-tei_att.source.attributes = tei_att.source.attribute.source
-tei_att.source.attribute.source =
-  
-  ## provides a pointer to the bibliographical source from which a quotation or citation is drawn.
-  attribute source {
-    list { xsd:anyURI+ }
-  }?
 tei_model.resourceLike = tei_text
 tei_att.personal.attributes =
   tei_att.naming.attributes,
@@ -1695,7 +1698,7 @@ tei_p =
   element p {
     tei_macro.paraContent
     >> sch:pattern [
-         id = "foo-p-abstractModel-p-constraint-4"
+         id = "foo-p-abstractModel-p-constraint-report-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1704,7 +1707,7 @@ tei_p =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure)"
+               "not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
              "\x{a}" ~
              "        Abstract model violation: Paragraphs may not contain other paragraphs or ab elements.\x{a}" ~
              "      "
@@ -1716,7 +1719,7 @@ tei_p =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-p-abstractModel-structure-l-constraint-5"
+         id = "foo-p-abstractModel-structure-l-constraint-report-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1781,7 +1784,7 @@ tei_distinct =
     ## specifies how the phrase is distinct diatopically
     attribute space { xsd:string }?,
     
-    ## specifies how the phrase is distinct diastatically
+    ## specifies how the phrase is distinct diastratically
     attribute social { xsd:string }?,
     empty
   }
@@ -1825,7 +1828,6 @@ tei_quote =
     tei_macro.specialPara,
     tei_att.global.attributes,
     tei_att.typed.attributes,
-    tei_att.source.attributes,
     empty
   }
 tei_q =
@@ -1835,7 +1837,6 @@ tei_q =
     tei_macro.specialPara,
     tei_att.global.attributes,
     tei_att.ascribed.attributes,
-    tei_att.source.attributes,
     
     ## may be used to indicate whether the offset passage is spoken or thought, or to characterize it more finely.
     ## Suggested values include: 1] spoken; 2] thought; 3] written; 4] soCalled; 5] foreign; 6] distinct; 7] term; 8] emph; 9] mentioned
@@ -1899,7 +1900,7 @@ tei_soCalled =
   }
 tei_desc =
   
-  ## (description) contains a brief description of the object documented by its parent element, including its intended usage, purpose, or application where this is appropriate. [22.4.1. Description of Components]
+  ## (description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components]
   element desc {
     tei_macro.limitedContent,
     tei_att.global.attributes,
@@ -1936,13 +1937,9 @@ tei_term =
   }
 tei_sic =
   
-  ## (Latin for thus or so
-  ##    ) contains text reproduced although apparently incorrect or inaccurate. [3.4.1. Apparent Errors]
+  ## (Latin for thus or so) contains text reproduced although apparently incorrect or inaccurate. [3.4.1. Apparent Errors]
   element sic {
-    tei_macro.paraContent,
-    tei_att.global.attributes,
-    tei_att.source.attributes,
-    empty
+    tei_macro.paraContent, tei_att.global.attributes, empty
   }
 tei_corr =
   
@@ -1978,10 +1975,7 @@ tei_orig =
   ## (original form) contains a reading which is marked as following the original, rather than being normalized or corrected. [3.4.2. Regularization and
   ## Normalization 12. Critical Apparatus]
   element orig {
-    tei_macro.paraContent,
-    tei_att.global.attributes,
-    tei_att.source.attributes,
-    empty
+    tei_macro.paraContent, tei_att.global.attributes, empty
   }
 tei_gap =
   
@@ -1992,10 +1986,32 @@ tei_gap =
     tei_att.timed.attributes,
     tei_att.editLike.attributes,
     
-    ## gives the reason for omission. Sample values include sampling, inaudible, irrelevant, cancelled.
+    ## gives the reason for omission
+    ## Suggested values include: 1] cancelled; 2] deleted; 3] editorial; 4] illegible; 5] inaudible; 6] irrelevant; 7] sampling
     attribute reason {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        (
+         ##
+         "cancelled"
+         | 
+           ##
+           "deleted"
+         | 
+           ## for features omitted from transcription due to editorial policy
+           "editorial"
+         | 
+           ##
+           "illegible"
+         | 
+           ##
+           "inaudible"
+         | 
+           ##
+           "irrelevant"
+         | 
+           ##
+           "sampling"
+         | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" })+
       }
     }?,
     
@@ -2075,7 +2091,6 @@ tei_rs =
     tei_att.global.attributes,
     tei_att.naming.attributes,
     tei_att.typed.attributes,
-    tei_att.source.attributes,
     empty
   }
 tei_email =
@@ -2200,7 +2215,6 @@ tei_abbr =
   element abbr {
     tei_macro.phraseSeq,
     tei_att.global.attributes,
-    tei_att.source.attributes,
     tei_att.typed.attribute.subtype,
     
     ## allows the encoder to classify the abbreviation according to some convenient typology.
@@ -2225,7 +2239,7 @@ tei_ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "foo-ptr-ptrAtts-constraint-6"
+         id = "foo-ptr-ptrAtts-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2259,7 +2273,7 @@ tei_ref =
   element ref {
     tei_macro.paraContent
     >> sch:pattern [
-         id = "foo-ref-refAtts-constraint-7"
+         id = "foo-ref-refAtts-constraint-report-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2299,7 +2313,7 @@ tei_list =
          (tei_label, tei_model.global*, tei_item, tei_model.global*)+)),
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-list-gloss-list-must-have-labels-constraint-9"
+         id = "foo-list-gloss-list-must-have-labels-constraint-rule-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2375,6 +2389,7 @@ tei_head =
      | tei_model.global)*,
     tei_att.global.attributes,
     tei_att.typed.attributes,
+    tei_att.placement.attributes,
     tei_att.written.attributes,
     empty
   }
@@ -2398,7 +2413,6 @@ tei_note =
     tei_att.global.attributes,
     tei_att.placement.attributes,
     tei_att.pointing.attributes,
-    tei_att.source.attributes,
     tei_att.typed.attributes,
     tei_att.written.attributes,
     
@@ -2490,7 +2504,7 @@ tei_milestone =
   }
 tei_gb =
   
-  ## (gathering begins) marks the point in a transcribed codex at which a new gathering or quire begins. [3.10.3. Milestone
+  ## (gathering beginning) marks the beginning of a new gathering or quire in a transcribed codex. [3.10.3. Milestone
   ## Elements]
   element gb {
     empty,
@@ -2502,7 +2516,7 @@ tei_gb =
   }
 tei_pb =
   
-  ## (page break) marks the start of a new page in a paginated document. [3.10.3. Milestone
+  ## (page beginning) marks the beginning of a new page in a paginated document. [3.10.3. Milestone
   ## Elements]
   element pb {
     empty,
@@ -2515,7 +2529,7 @@ tei_pb =
   }
 tei_lb =
   
-  ## (line break) marks the start of a new (typographic) line in some edition or version of a text. [3.10.3. Milestone
+  ## (line beginning) marks the beginning of a new (typographic) line in some edition or version of a text. [3.10.3. Milestone
   ## Elements 7.2.5. Speech Contents]
   element lb {
     empty,
@@ -2528,7 +2542,7 @@ tei_lb =
   }
 tei_cb =
   
-  ## (column break) marks the beginning of a new column of a text on a multi-column page. [3.10.3. Milestone
+  ## (column beginning) marks the beginning of a new column of a text on a multi-column page. [3.10.3. Milestone
   ## Elements]
   element cb {
     empty,
@@ -2628,8 +2642,9 @@ tei_respStmt =
   
   ## (statement of responsibility) supplies a statement of responsibility for the intellectual content of a text, edition, recording, or series, where the specialized elements for authors, editors, etc. do not suffice or do not apply. May also be used to encode information about individuals or organizations which have played a role in the production or distribution of a bibliographic work. [3.11.2.2. Titles, Authors, and Editors 2.2.1. The Title Statement 2.2.2. The Edition Statement 2.2.5. The Series Statement]
   element respStmt {
-    ((tei_resp+, tei_model.nameLike.agent+)
-     | (tei_model.nameLike.agent+, tei_resp+)),
+    (((tei_resp+, tei_model.nameLike.agent+)
+      | (tei_model.nameLike.agent+, tei_resp+)),
+     tei_note*),
     tei_att.global.attributes,
     tei_att.canonical.attributes,
     empty
@@ -2652,6 +2667,7 @@ tei_title =
     tei_att.global.attributes,
     tei_att.canonical.attributes,
     tei_att.typed.attribute.subtype,
+    tei_att.datable.attributes,
     
     ## classifies the title according to some convenient typology.
     ## Sample values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] short; 5] desc(descriptive) 
@@ -2760,30 +2776,9 @@ tei_biblStruct =
     (tei_analytic*,
      (tei_monogr, tei_series*)+,
      (tei_model.noteLike
-      | tei_idno
       | tei_model.ptrLike
       | tei_relatedItem
-      | tei_citedRange)*)
-    >> sch:pattern [
-         id =
-           "foo-biblStruct-deprecate-altIdentifier-child-constraint-8"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:biblStruct"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test = "child::tei:idno"
-             role = "nonfatal"
-             "WARNING: use of deprecated method — the use of the idno element as a direct child of the biblStruct element will be removed from the TEI on 2016-09-18"
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ],
+      | tei_citedRange)*),
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     tei_att.typed.attributes,
@@ -2810,7 +2805,7 @@ tei_relatedItem =
   element relatedItem {
     ((tei_model.biblLike | tei_model.ptrLike)?)
     >> sch:pattern [
-         id = "foo-relatedItem-targetorcontent1-constraint-9"
+         id = "foo-relatedItem-targetorcontent1-constraint-report-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2832,7 +2827,7 @@ tei_relatedItem =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-relatedItem-targetorcontent1-constraint-7"
+         id = "foo-relatedItem-targetorcontent1-constraint-assert-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2867,7 +2862,7 @@ tei_l =
       | tei_model.inter
       | tei_model.global)*)
     >> sch:pattern [
-         id = "foo-l-abstractModel-structure-l-constraint-10"
+         id = "foo-l-abstractModel-structure-l-constraint-report-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2907,7 +2902,7 @@ tei_lg =
       | tei_lg)*,
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-lg-atleast1oflggapl-constraint-8"
+         id = "foo-lg-atleast1oflggapl-constraint-assert-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2927,7 +2922,7 @@ tei_lg =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-lg-abstractModel-structure-l-constraint-11"
+         id = "foo-lg-abstractModel-structure-l-constraint-report-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3029,6 +3024,7 @@ tei_teiCorpus =
      ((tei_model.resourceLike+, (tei_TEI | tei_teiCorpus)*)
       | (tei_TEI | tei_teiCorpus)+)),
     tei_att.global.attributes,
+    tei_att.typed.attributes,
     
     ## The version of the TEI scheme
     [ a:defaultValue = "5.0" ]
@@ -3094,13 +3090,6 @@ tei_teiHeader =
   element teiHeader {
     (tei_fileDesc, tei_model.teiHeaderPart*, tei_revisionDesc?),
     tei_att.global.attributes,
-    
-    ## specifies the kind of document to which the header is attached, for example whether it is a corpus or individual text.
-    ## Sample values include: 1] text; 2] corpus
-    [ a:defaultValue = "text" ]
-    attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
-    }?,
     empty
   }
 tei_fileDesc =
@@ -3199,10 +3188,34 @@ tei_idno =
     (text | tei_model.gLike | tei_idno)*,
     tei_att.global.attributes,
     tei_att.sortable.attributes,
+    tei_att.datable.attributes,
+    tei_att.typed.attribute.subtype,
     
     ## categorizes the identifier, for example as an ISBN, Social Security number, etc.
+    ## Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7] OCLC
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      
+      ## International Standard Book Number: a 13- or (if assigned prior to 2007) 10-digit identifying number assigned by the publishing industry to a published book or similar item, registered with the International ISBN Agency.
+      "ISBN"
+      | 
+        ## International Standard Serial Number: an eight-digit number to uniquely identify a serial publication.
+        "ISSN"
+      | 
+        ## Digital Object Identifier: a unique string of letters and numbers assigned to an electronic document.
+        "DOI"
+      | 
+        ## Uniform Resource Identifier: a string of characters to uniquely identify a resource which usually contains indication of the means of accessing that resource, the name of its host, and its filepath.
+        "URI"
+      | 
+        ## A data number in the Virtual Internet Authority File assigned to link different names in catalogs around the world for the same entity.
+        "VIAF"
+      | 
+        ## English Short-Title Catalogue number: an identifying number assigned to a document in English printed in the British Isles or North America before 1801.
+        "ESTC"
+      | 
+        ## union catalog number in WorldCat representing a resource held by one or more of the member libraries in the global cooperative Online Computer Library Center.
+        "OCLC"
+      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
     empty
   }
@@ -3274,13 +3287,14 @@ tei_biblFull =
   
   ## (fully-structured bibliographic citation) contains a fully-structured bibliographic citation, in which all components of the TEI file description are present. [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2. The File Description 2.2.7. The Source Description 15.3.2. Declarable Elements]
   element biblFull {
-    ((tei_titleStmt,
-      tei_editionStmt?,
-      tei_extent?,
-      tei_publicationStmt,
-      tei_seriesStmt?,
-      tei_notesStmt?),
-     tei_sourceDesc*),
+    (((tei_titleStmt,
+       tei_editionStmt?,
+       tei_extent?,
+       tei_publicationStmt,
+       tei_seriesStmt?,
+       tei_notesStmt?),
+      tei_sourceDesc*)
+     | (tei_fileDesc, tei_profileDesc)),
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     tei_att.sortable.attributes,
@@ -3293,6 +3307,19 @@ tei_encodingDesc =
   element encodingDesc {
     (tei_model.encodingDescPart | tei_model.pLike)+,
     tei_att.global.attributes,
+    empty
+  }
+tei_schemaRef =
+  
+  ## (schema reference) describes or points to a related customization or schema file [2.3.9. The Schema Specification]
+  element schemaRef {
+    tei_model.descLike?,
+    tei_att.global.attributes,
+    tei_att.typed.attributes,
+    tei_att.resourced.attributes,
+    
+    ## the identifier used for the customization or schema
+    attribute key { xsd:NCName }?,
     empty
   }
 tei_projectDesc =
@@ -3367,9 +3394,6 @@ tei_normalization =
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     
-    ## indicates a bibliographic description or other resource documenting the principles underlying the normalization carried out.
-    attribute source { xsd:anyURI }?,
-    
     ## indicates the method adopted to indicate normalizations within the text.
     [ a:defaultValue = "silent" ]
     attribute method {
@@ -3388,7 +3412,7 @@ tei_quotation =
   element quotation {
     (tei_model.pLike*)
     >> sch:pattern [
-         id = "foo-quotation-quotationContents-constraint-12"
+         id = "foo-quotation-quotationContents-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3536,11 +3560,6 @@ tei_tagUsage =
     
     ## (with unique identifier) specifies the number of occurrences of this element within the text which bear a distinct value for the global xml:id attribute.
     attribute withId { xsd:nonNegativeInteger }?,
-    
-    ## specifies the identifier of a rendition element which defines how this element was rendered in the source text.
-    attribute render {
-      list { xsd:anyURI+ }
-    }?,
     empty
   }
 tei_namespace =
@@ -3602,14 +3621,16 @@ tei_cRefPattern =
   }
 tei_prefixDef =
   
-  ## (prefixing scheme used in data.pointer values) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
+  ## (prefix definition) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element prefixDef {
     tei_model.pLike*,
     tei_att.global.attributes,
     tei_att.patternReplacement.attributes,
     
     ## supplies a name which functions as the prefix for an abbreviated pointing scheme such as a private URI scheme. The prefix constitutes the text preceding the first colon.
-    attribute ident { xsd:Name },
+    attribute ident {
+      xsd:token { pattern = "[a-z][a-z0-9\+\.\-]*" }
+    },
     empty
   }
 tei_listPrefixDef =
@@ -3644,8 +3665,9 @@ tei_taxonomy =
   
   ## defines a typology either implicitly, by means of a bibliographic citation, or explicitly by a structured taxonomy. [2.3.7. The Classification Declaration]
   element taxonomy {
-    ((tei_model.glossLike | tei_model.descLike)*
-     | (tei_category | tei_taxonomy)+
+    (((tei_category | tei_taxonomy)+
+      | ((tei_model.glossLike | tei_model.descLike)+,
+         (tei_category | tei_taxonomy)*))
      | (tei_model.biblLike, (tei_category | tei_taxonomy)*)),
     tei_att.global.attributes,
     empty
@@ -3733,7 +3755,6 @@ tei_abstract =
   element abstract {
     (tei_model.pLike | tei_model.listLike)+,
     tei_att.global.attributes,
-    tei_att.source.attributes,
     empty
   }
 tei_creation =
@@ -3789,7 +3810,7 @@ tei_keywords =
     (tei_term+ | tei_list),
     tei_att.global.attributes,
     
-    ## identifies the controlled vocabulary within which the set of keywords concerned is defined identifies the classification scheme within which the set of categories concerned is defined, for example by a taxonomy element, or by some other resource.
+    ## identifies the controlled vocabulary within which the set of keywords concerned is defined, for example by a taxonomy element, or by some other resource.
     attribute scheme { xsd:anyURI }?,
     empty
   }
@@ -3800,7 +3821,7 @@ tei_classCode =
     tei_macro.phraseSeq.limited,
     tei_att.global.attributes,
     
-    ## identifies the classification system in use, as defined by for example by a taxonomy element, or some other resource.
+    ## identifies the classification system in use, as defined by, e.g. a taxonomy element, or some other resource.
     attribute scheme { xsd:anyURI },
     empty
   }
@@ -3845,7 +3866,7 @@ tei_correspDesc =
   }
 tei_correspAction =
   
-  ## contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence [2.4.6. Correspondence Description]
+  ## (correspondence action) contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence. [2.4.6. Correspondence Description]
   element correspAction {
     (tei_model.correspActionPart+ | tei_model.pLike+),
     tei_att.global.attributes,
@@ -3856,13 +3877,13 @@ tei_correspAction =
     ## Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5] forwarded
     attribute type {
       
-      ## information concerning the sending or dispatch of a message
+      ## information concerning the sending or dispatch of a message.
       "sent"
       | 
-        ## information concerning the receipt of a message
+        ## information concerning the receipt of a message.
         "received"
       | 
-        ## information concerning the transmission of a message, i.e. between the dispatch and the next receipt, redirect or forwarding
+        ## information concerning the transmission of a message, i.e. between the dispatch and the next receipt, redirect or forwarding.
         "transmitted"
       | 
         ## information concerning the redirection of an unread message.
@@ -3882,9 +3903,9 @@ tei_correspContext =
   }
 tei_xenoData =
   
-  ## (outside metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]
+  ## (non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]
   element xenoData {
-    (text | tei_macro.anyXML),
+    (text | anyElement-xenoData),
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     tei_att.typed.attributes,
@@ -4023,7 +4044,7 @@ tei_div =
            tei_model.global*)*)),
       (tei_model.divBottom, tei_model.global*)*)?)
     >> sch:pattern [
-         id = "foo-div-abstractModel-structure-l-constraint-13"
+         id = "foo-div-abstractModel-structure-l-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4043,7 +4064,7 @@ tei_div =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-div-abstractModel-structure-p-constraint-14"
+         id = "foo-div-abstractModel-structure-p-constraint-report-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4281,7 +4302,10 @@ tei_signed =
   
   ## (signature) contains the closing salutation, etc., appended to a foreword, dedicatory epistle, or other division of a text. [4.2.2. Openers and Closers]
   element signed {
-    tei_macro.paraContent, tei_att.global.attributes, empty
+    tei_macro.paraContent,
+    tei_att.global.attributes,
+    tei_att.written.attributes,
+    empty
   }
 tei_postscript =
   
@@ -4292,6 +4316,7 @@ tei_postscript =
      (tei_model.global | tei_model.common)*,
      (tei_model.divBottomPart, tei_model.global*)*),
     tei_att.global.attributes,
+    tei_att.written.attributes,
     empty
   }
 tei_titlePage =
@@ -4499,7 +4524,7 @@ tei_link =
   element link {
     empty
     >> sch:pattern [
-         id = "foo-link-linkTargets3-constraint-9"
+         id = "foo-link-linkTargets3-constraint-assert-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4539,7 +4564,7 @@ tei_ab =
   element ab {
     tei_macro.paraContent
     >> sch:pattern [
-         id = "foo-ab-abstractModel-structure-p-constraint-15"
+         id = "foo-ab-abstractModel-structure-p-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4548,7 +4573,7 @@ tei_ab =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
+               "not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
              "\x{a}" ~
              "        Abstract model violation: ab may not contain paragraphs or other ab elements.\x{a}" ~
              "      "
@@ -4560,7 +4585,7 @@ tei_ab =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-ab-abstractModel-structure-l-constraint-16"
+         id = "foo-ab-abstractModel-structure-l-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4588,7 +4613,7 @@ tei_ab =
   }
 tei_anchor =
   
-  ## (anchor point) attaches an identifier to a point within a text, whether or not it corresponds with a textual element. [8.4.2. Synchronization and Overlap 16.4. Correspondence and Alignment]
+  ## (anchor point) attaches an identifier to a point within a text, whether or not it corresponds with a textual element. [8.4.2. Synchronization and Overlap 16.5. Correspondence and Alignment]
   element anchor {
     empty, tei_att.global.attributes, tei_att.typed.attributes, empty
   }
@@ -4600,13 +4625,12 @@ tei_seg =
     tei_att.global.attributes,
     tei_att.segLike.attributes,
     tei_att.typed.attributes,
-    tei_att.source.attributes,
     tei_att.written.attributes,
     empty
   }
 tei_when =
   
-  ## indicates a point in time either relative to other elements in the same timeline tag, or absolutely. [16.5.2. Placing Synchronous Events in Time]
+  ## indicates a point in time either relative to other elements in the same timeline tag, or absolutely. [16.4.2. Placing Synchronous Events in Time]
   element when {
     empty,
     tei_att.global.attributes,
@@ -4664,7 +4688,7 @@ tei_when =
   }
 tei_timeline =
   
-  ## provides a set of ordered points in time which can be linked to elements of a spoken text to create a temporal alignment of that text. [16.5.2. Placing Synchronous Events in Time]
+  ## provides a set of ordered points in time which can be linked to elements of a spoken text to create a temporal alignment of that text. [16.4.2. Placing Synchronous Events in Time]
   element timeline {
     tei_when+,
     tei_att.global.attributes,
@@ -4714,7 +4738,7 @@ tei_join =
   element join {
     ((tei_model.descLike | tei_model.certLike)*)
     >> sch:pattern [
-         id = "foo-join-joinTargets3-constraint-10"
+         id = "foo-join-joinTargets3-constraint-assert-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4791,7 +4815,7 @@ tei_alt =
         "incl"
     }?,
     
-    ## If mode is , each weight states the probability that the corresponding alternative occurs. If mode is incl each weight states the probability that the corresponding alternative occurs given that at least one of the other alternatives occurs.
+    ## If mode is excl, each weight states the probability that the corresponding alternative occurs. If mode is incl each weight states the probability that the corresponding alternative occurs given that at least one of the other alternatives occurs.
     attribute weights {
       list { xsd:double, xsd:double, xsd:double* }
     }?,

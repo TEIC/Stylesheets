@@ -70,9 +70,9 @@
     |tei:term
     |tei:list[tokenize(@rend, '\s+') = 'inline']/tei:item
     |tei:cit[tei:quote/(tei:table|tei:list)]
-    |tei:list[@type eq 'gloss']/tei:item
-    |tei:list[@type eq 'gloss']/tei:label
-    |tei:list[tokenize(@rend, '\s+') = 'simple']/tei:item
+    |tei:list[tokenize(@rend, '\s+')  = 'simple']
+    |tei:list[@type eq 'gloss']
+    |tei:list[@type eq 'gloss']/tei:label/node()
     |tei:list/tei:head
     |tei:table/tei:head
     |tei:foreign
@@ -113,11 +113,9 @@
     <rendition xml:id="citation" scheme="css">font:0.916em/1.636 Verdana,sans-serif;margin: 1.091em 0;padding: 0 0 0 4.363em;text-align: left;border-collapse: separate;</rendition>
     <rendition xml:id="gloss" scheme="css">list-style-type:none;</rendition>
     <rendition xml:id="inlinelabel" scheme="css">font-weight:normal;</rendition>
-    <rendition xml:id="glosslabel" scheme="css">font-weight:bold;list-style-type:none;margin: 1em 0;</rendition>
-    <rendition xml:id="glossitem" scheme="css">margin-left:2em;list-style-type:none;</rendition>
-    <rendition xml:id="simpleitem" scheme="css">list-style-type:none;</rendition>
-    <rendition xml:id="numberlabel" scheme="css">float:left;width:3em;padding-left:0;background:none;</rendition>
-    <rendition xml:id="numberitem" scheme="css">margin-left:3em;padding-left:0;background:none;</rendition>
+    <rendition xml:id="simplelist" scheme="css">list-style-type:none;</rendition>
+    <rendition xml:id="glosslist" scheme="css">list-style-type:none;margin-left:4em;</rendition>
+    <rendition xml:id="glosslabel" scheme="css">display:block;font-weight:bold;margin: 1em 0 1em -2em;</rendition>
     <rendition xml:id="foreign" scheme="css">font-style:italic;</rendition>
     <rendition xml:id="tr-label" scheme="css">background-color: silver;font-weight:bold;</rendition>
     <rendition xml:id="td-label" scheme="css">font-weight:bold;</rendition>
@@ -139,7 +137,7 @@
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:attribute name="xsi:schemaLocation">
-        <xsl:text>http://www.tei-c.org/ns/1.0 http://lodel.org/ns/tei.openedition.1.3/tei.openedition.1.3.xsd</xsl:text>
+        <xsl:text>http://www.tei-c.org/ns/1.0 http://lodel.org/ns/tei.openedition.1.5.2/tei.openedition.1.5.2.xsd</xsl:text>
       </xsl:attribute>
       <xsl:apply-templates/>
     </xsl:copy>
@@ -360,12 +358,16 @@
   <xsl:template match="tei:figure">
     <p rend="figure-title">
       <xsl:apply-templates select="." mode="label"/>
-      <xsl:apply-templates select="tei:head[not(@type='license')]/node()"/>
+      <xsl:for-each select="tei:head[not(@type='license')]">
+        <xsl:apply-templates select="node()"/>
+        <xsl:call-template name="punctuate-head"/>
+      </xsl:for-each>
     </p>
     <xsl:apply-templates select="*[not(self::tei:head)]"/>
     <xsl:for-each select="tei:head[@type eq 'license']">
       <p rend="figure-{@type}">
         <xsl:apply-templates/>
+        <xsl:call-template name="punctuate-head"/>
       </p>
     </xsl:for-each>
   </xsl:template>
@@ -427,7 +429,11 @@
     <xsl:variable name="depth.endtag" select="if (not(following-sibling::node()) and not(normalize-space())) then $depth -1 else $depth"/>
     <xsl:variable name="indentString"><xsl:text>  </xsl:text></xsl:variable>
     <xsl:variable name="padding" select="string-join(('&#10;', for $i in (1 to $depth.endtag) return $indentString), '')"/>
-    <xsl:value-of select="replace(., '&#10;\s*', $padding)"/>
+    <xsl:value-of select="replace(local:escapeEntitiesForEgXML(.), '&#10;\s*', $padding)"/>
+  </xsl:template>
+  
+  <xsl:template match="eg:egXML//text()" mode="egXML" priority="-0.5">
+    <xsl:value-of select="local:escapeEntitiesForEgXML(.)"/>
   </xsl:template>
   
   <xsl:template match="*" mode="egXML">
@@ -739,7 +745,7 @@
     </xsl:choose>
   </xsl:template>
       
-  <xsl:template match="tei:text//tei:title[not(@level)]">
+  <xsl:template match="tei:title[not(@level)][not(ancestor::tei:teiHeader)]">
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -748,7 +754,7 @@
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="tei:text//tei:idno[not(parent::tei:bibl)]">
+  <xsl:template match="tei:idno[not(ancestor::tei:teiHeader)][not(parent::tei:bibl)]">
     <xsl:apply-templates/>
   </xsl:template>
   
@@ -758,11 +764,13 @@
       <xsl:variable name="marker">
         <xsl:call-template name="get.inline.list.marker"/>
       </xsl:variable>
-      <hi>
-        <xsl:call-template name="get.rendition"/>
-        <xsl:value-of select="$marker"/>
-      </hi>
-      <xsl:text> </xsl:text>
+      <xsl:if test="normalize-space($marker)">
+        <hi>
+          <xsl:call-template name="get.rendition"/>
+          <xsl:value-of select="$marker"/>
+        </hi>
+        <xsl:text> </xsl:text>
+      </xsl:if>
       <xsl:apply-templates/>
       <xsl:if test="following-sibling::tei:item">
         <xsl:text> </xsl:text>
@@ -770,39 +778,47 @@
     </xsl:for-each>
   </xsl:template>
       
-  <xsl:template match="tei:list/tei:head|tei:table/tei:head">
+  <xsl:template match="tei:table/tei:head">
     <p rend="noindent">
       <xsl:call-template name="get.rendition"/>
       <xsl:apply-templates select="parent::*" mode="label"/>
       <xsl:apply-templates/>
+      <xsl:call-template name="punctuate-head"/>
     </p>
   </xsl:template>
   
+  <!-- don't generate a label for list headings -->
+  <!-- (could be very confusing if only 1 list has a heading) -->
+  <xsl:template match="tei:list/tei:head">
+    <p rend="noindent">
+      <xsl:call-template name="get.rendition"/>
+      <xsl:apply-templates/>
+      <xsl:call-template name="punctuate-head"/>
+    </p>
+  </xsl:template>
+
   <!-- [RvdB] added preprocessing step, which just copies the list, but wraps all contents of <item> in <p> prior to further processing -->
   <xsl:template match="tei:list">
+    <xsl:param name="listnote.counter" tunnel="yes" as="xs:integer" select="0"/>
     <xsl:variable name="current" select="."/>
-    <xsl:variable name="prepared">
-      <xsl:apply-templates select="." mode="prepare"/>
+    <xsl:variable name="list.prepare">
+      <xsl:apply-templates select="." mode="list.prepare"/>
     </xsl:variable>
-    <xsl:for-each select="$prepared/tei:list">
-      <xsl:apply-templates select="tei:head"/>
-      <xsl:copy>
-        <xsl:apply-templates select="@*"/>
-        <xsl:call-template name="get.rendition"/>
-        <xsl:apply-templates select="node()[not(self::tei:head)]">
-          <!-- count preceding notes and pass this info for further processing of notes -->
-          <xsl:with-param name="listnote.counter" select="count($current/preceding::tei:note)" tunnel="yes"/>
-        </xsl:apply-templates>
-      </xsl:copy>
-    </xsl:for-each>
-  </xsl:template>
-  
-  <xsl:template match="tei:list/@type">
-    <xsl:choose>
-      <xsl:when test=". = 'gloss'">
-        <xsl:attribute name="type">unordered</xsl:attribute>
-      </xsl:when>
-    </xsl:choose>
+    <xsl:variable name="list.complete">
+      <xsl:for-each select="$list.prepare/tei:list">
+        <xsl:apply-templates select="tei:head"/>
+        <xsl:copy>
+          <xsl:apply-templates select="@*"/>
+          <xsl:call-template name="get.rendition"/>        
+          <xsl:apply-templates select="node()[not(self::tei:head)]">
+            <!-- count preceding notes and pass this info for further processing of notes -->
+            <xsl:with-param name="listnote.counter" select="$listnote.counter + local:get.note.nr($current/preceding::tei:note[1])" tunnel="yes"/>
+            
+          </xsl:apply-templates>
+        </xsl:copy>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:apply-templates select="$list.complete" mode="list.finish"/>
   </xsl:template>
   
   <xsl:template match="tei:list/@rend">
@@ -817,9 +833,38 @@
       </xsl:choose>
     </xsl:attribute>
   </xsl:template>
+
+  <!-- labeled lists:
+      -transform list to simple list
+      -transform label to item
+      -assign rendition class to label contents
+   -->
+  <xsl:template match="tei:list/@type[. = 'gloss']" mode="list.finish">
+    <xsl:attribute name="type">unordered</xsl:attribute>
+  </xsl:template>
+
+  <xsl:template match="tei:list[@type='gloss']/tei:label" mode="list.finish">
+    <item>
+      <xsl:apply-templates select="@*|node()" mode="#current"/>
+    </item>
+  </xsl:template>
+
+  <xsl:template match="tei:list[@type='gloss']/tei:label/*" mode="list.finish">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:call-template name="get.rendition"/>
+      <xsl:apply-templates select="node()" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="@*|node()" mode="list.finish">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
   
   <!-- [RvdB] wrap all contents of <item> in <p> prior to further processing -->
-  <xsl:template match="tei:list[not(matches(@rend, 'inline'))]/tei:item" mode="prepare">
+  <xsl:template match="tei:list[not(matches(@rend, 'inline'))]/tei:item|tei:list[not(matches(@rend, 'inline'))]/tei:label" mode="list.prepare">
     <xsl:variable name="current" select="."/>
     <xsl:copy>
       <xsl:copy-of select="@*"/>
@@ -845,7 +890,7 @@
     </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="@*|node()" mode="prepare">
+  <xsl:template match="@*|node()" mode="list.prepare" priority="-1">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()" mode="#current"/>
     </xsl:copy>
@@ -870,15 +915,8 @@
     </xsl:copy>
   </xsl:template>
   
-  <!-- better way of covering labeled lists in Lodel: transform them to unordered lists, 
-       with dedicated rendition classes for labels (glosslabel) and list items (glossitem)
-   -->
-  <xsl:template match="tei:list[@type eq 'gloss']/tei:label">
-    <item>
-      <xsl:apply-templates select="@*"/>
-      <xsl:call-template name="get.rendition"/>
-      <xsl:apply-templates/>
-    </item>
+  <xsl:template match="tei:text//tei:date" priority="0">
+    <xsl:apply-templates/>
   </xsl:template>
 
   <!-- ==== -->
@@ -965,13 +1003,12 @@
   <xsl:function name="local:map.styles" as="xs:string?">
     <xsl:param name="node"/>
     <xsl:choose>
-      <xsl:when test="$node/self::tei:item/parent::tei:list[tokenize(@rend, '\s+') = 'inline']">inlinelabel</xsl:when>
+      <xsl:when test="$node/self::tei:item/parent::tei:list[tokenize(@rend, '\s+') = 'inline'][not(tokenize(@rend, '\s+') = 'simple')]">inlinelabel</xsl:when>
       <xsl:when test="$node/self::tei:head/(parent::tei:list|parent::tei:table)">p.head</xsl:when>
       <xsl:when test="$node[self::tei:list or self::tei:table]/parent::tei:quote/parent::tei:cit or $node/self::tei:cit[tei:quote/(tei:table|tei:list)]">citation</xsl:when>
-
-      <xsl:when test="$node[self::tei:item]/parent::tei:list[@type eq 'gloss']">glossitem</xsl:when>
-      <xsl:when test="$node[self::tei:label]/parent::tei:list[@type eq 'gloss']">glosslabel</xsl:when>
-      <xsl:when test="$node/self::tei:item/parent::tei:list[tokenize(@rend, '\s+') = 'simple']">simpleitem</xsl:when>
+      <xsl:when test="$node/self::tei:list[tokenize(@rend, '\s+') = 'inline'][not(tokenize(@rend, '\s+') = 'simple')]">simplelist</xsl:when>
+      <xsl:when test="$node/self::tei:list[@type eq 'gloss']">glosslist</xsl:when>
+      <xsl:when test="$node/self::node()[parent::tei:label[parent::tei:list[@type eq 'gloss']]]">glosslabel</xsl:when>
       <xsl:when test="$node/self::tei:table[@rend='border']">table.border</xsl:when>
       <xsl:when test="$node[name() eq 'role'][. eq 'label'][parent::tei:row[ancestor::tei:table[1][@rend='border']]]">tr-label.border</xsl:when>
       <xsl:when test="$node[name() eq 'role'][. eq 'label'][parent::tei:cell[ancestor::tei:table[1][@rend='border']]]">td-label.border</xsl:when>

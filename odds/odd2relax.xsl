@@ -405,6 +405,8 @@ of this software, even if advised of the possibility of such damage.
         </zeroOrMore>
       </element>
       <xsl:if test="@require and ancestor::tei:elementSpec">
+        <xsl:variable name="ns"><xsl:if
+          test="ancestor::tei:content//tei:*">, 'http://www.tei-c.org/ns/1.0'</xsl:if></xsl:variable>
         <xsl:variable name="computed-prefix">
           <xsl:for-each select="in-scope-prefixes($current)">
             <xsl:if test="$spec/@ns = namespace-uri-for-prefix(., $current)">
@@ -421,8 +423,12 @@ of this software, even if advised of the possibility of such damage.
         <xsl:if test="$spec/@ns"><ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="{$prefix}" uri="{ancestor::tei:elementSpec/@ns}"/></xsl:if>
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="{concat(generate-id(),'-constraint')}">
           <rule context="{$prefix}:{ancestor::tei:elementSpec/@ident}">
-            <report test="descendant::*[not(namespace-uri(.) = ({concat($apos,string-join(tokenize(current()/@require, ' '),concat($apos,', ',$apos)),$apos)}))]">
-              <xsl:value-of select="ancestor::tei:elementSpec/@ident"/> content must be in the namespace<xsl:if test="contains(@include, ' ')">s</xsl:if><xsl:text> </xsl:text><xsl:value-of select="concat($apos,string-join(tokenize(current()/@include, ' '),concat($apos,', ',$apos)),$apos)"/></report>
+            <report test="descendant::*[not(namespace-uri(.) =
+              ({concat($apos,string-join(tokenize(current()/@require, ' '),concat($apos,', ',$apos)),$apos,$ns)}))]">
+              <xsl:value-of select="ancestor::tei:elementSpec/@ident"/> descendants must be in the
+              namespace<xsl:if test="contains(@require, ' ') or $ns ne ''">s</xsl:if><xsl:text>
+              </xsl:text><xsl:value-of select="concat($apos,string-join(tokenize(current()/@require,
+                ' '),concat($apos,', ',$apos)),$apos,$ns)"/></report>
           </rule>
         </pattern>
       </xsl:if>
@@ -541,7 +547,7 @@ of this software, even if advised of the possibility of such damage.
   <!-- and again -->
   
   <xsl:template match="rng:list|rng:element" mode="pass3">
-    <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
+    <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
       <xsl:apply-templates  select="@*"  mode="pass3"/>
       <xsl:variable name="Contents">
 	<xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
@@ -569,7 +575,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="rng:choice|rng:group" mode="pass3">
     <xsl:choose>
       <xsl:when test="rng:value|rng:name|.//rng:ref|.//rng:text|.//rng:data">
-        <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
+        <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
           <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
         </xsl:element>
       </xsl:when>
@@ -605,7 +611,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
+            <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
               <xsl:apply-templates
                 select="*|@*|processing-instruction()|comment()|text()"
                 mode="pass3"/>
@@ -614,7 +620,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
+        <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
           <xsl:apply-templates
             select="*|@*|processing-instruction()|comment()|text()"
             mode="pass3"/>
@@ -702,60 +708,34 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:dataRef" mode="#default tangle">
-    <xsl:variable name="wrapperElement" select="tei:generateIndicators(@minOccurs, @maxOccurs)"/>
-    <xsl:variable name="min"
-      select="
-      if (not(@minOccurs)) then
-      1
-      else
-      if (@minOccurs = '0') then
-      1
-      else
-      @minOccurs"
-      as="xs:integer"/>
-    <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
-    <xsl:variable name="c">
-      <xsl:choose>
-        <xsl:when test="@name">
-          <rng:data type="{@name}">
-            <xsl:choose>
-              <xsl:when test="tei:dataFacet">
-                <xsl:apply-templates/>
-              </xsl:when>
-              <xsl:when test="@restriction">
-                <rng:param name="pattern">
-                  <xsl:value-of select="@restriction"/>
-                </rng:param>
-              </xsl:when>
-            </xsl:choose>
-          </rng:data>
-        </xsl:when>
-        <xsl:when test="@key">
-          <xsl:for-each select="key('LOCALIDENTS', @key)">
-            <xsl:choose>
-              <xsl:when test="tei:content">
-                <xsl:apply-templates select="tei:content/*"/>
-              </xsl:when>
-              <xsl:when test="tei:datatype">
-                <xsl:apply-templates select="tei:datatype/*"/>
-              </xsl:when>
-            </xsl:choose>
-          </xsl:for-each>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:for-each select="1 to $min">
-      <xsl:choose>
-        <xsl:when test="string-length($wrapperElement) = 0">
-          <xsl:copy-of select="$c"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:element name="{$wrapperElement}" xmlns="http://relaxng.org/ns/structure/1.0">
-            <xsl:copy-of select="$c"/>
-          </xsl:element>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+    <xsl:choose>
+      <xsl:when test="@name">
+        <rng:data type="{@name}">
+          <xsl:choose>
+            <xsl:when test="tei:dataFacet">
+              <xsl:apply-templates/>
+            </xsl:when>
+            <xsl:when test="@restriction">
+              <rng:param name="pattern">
+                <xsl:value-of select="@restriction"/>
+              </rng:param>
+            </xsl:when>
+          </xsl:choose>
+        </rng:data>
+      </xsl:when>
+      <xsl:when test="@key">
+        <xsl:for-each select="key('LOCALIDENTS', @key)">
+          <xsl:choose>
+            <xsl:when test="tei:content">
+              <xsl:apply-templates select="tei:content/*"/>
+            </xsl:when>
+            <xsl:when test="tei:datatype">
+              <xsl:apply-templates select="tei:datatype/*"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:for-each>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template> 
   
   <xsl:template match="tei:dataFacet" mode="#default tangle">

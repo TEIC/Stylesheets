@@ -390,12 +390,16 @@
       </xsl:for-each>
       <fo:block xsl:use-attribute-sets="heading.lowerblock.properties imageblock.properties">
         <xsl:apply-templates select="." mode="label"/>
-        <xsl:apply-templates select="tei:head[not(@type='license')]/node()"/>
+        <xsl:for-each select="tei:head[not(@type='license')]">
+          <xsl:apply-templates select="node()"/>
+          <xsl:call-template name="punctuate-head"/>
+        </xsl:for-each>
       </fo:block>
       <xsl:apply-templates select="*[not(self::tei:head)]"/>
       <xsl:for-each select="tei:head[@type eq 'license']">
         <fo:block xsl:use-attribute-sets="heading.lowerblock.properties">
           <xsl:apply-templates/>
+          <xsl:call-template name="punctuate-head"/>
         </fo:block>
       </xsl:for-each>
     </fo:block>
@@ -770,13 +774,21 @@
     </fo:list-block>
   </xsl:template>  
   
-  <xsl:template match="tei:list/tei:head|tei:table/tei:head">
+  <xsl:template match="tei:table/tei:head">
     <fo:block xsl:use-attribute-sets="heading.lowerblock.properties">
       <xsl:apply-templates select="parent::*" mode="label"/>
       <xsl:apply-templates/>
+      <xsl:call-template name="punctuate-head"/>
     </fo:block>
   </xsl:template>
   
+  <xsl:template match="tei:list/tei:head">
+    <fo:block xsl:use-attribute-sets="heading.lowerblock.properties">
+      <xsl:apply-templates/>
+      <xsl:call-template name="punctuate-head"/>
+    </fo:block>
+  </xsl:template>
+
   <xsl:template match="tei:list[not(@type='gloss')]/tei:item">
     <fo:list-item>
       <xsl:if test="not(tei:list)">
@@ -997,7 +1009,7 @@
     <xsl:if test=".//tei:back/tei:div[@type='appendix']">
       <fo:block xsl:use-attribute-sets="back.font.properties">
         <fo:block xsl:use-attribute-sets="heading.properties">
-          <xsl:value-of select="i18n:key(concat(@type, '-label'))"/>
+          <xsl:value-of select="i18n:key('appendixes-label')"/>
         </fo:block>
         <xsl:apply-templates select=".//tei:back/tei:div[@type='appendix']"/>
       </fo:block>

@@ -5,6 +5,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:mml="http://www.w3.org/1998/Math/MathML"
     exclude-result-prefixes="#all"
     version="2.0">
 <xsl:import href="../common/verbatim.xsl"/>
@@ -92,8 +93,14 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:apply-templates select="@*|*|text()|comment()"/>
       </abstract>
     </xsl:for-each>
+<!--  Front matter from text/front can only really be 
+      handled here. -->
+    <xsl:apply-templates select="following-sibling::text/front/docAuthor"/>
+    <xsl:apply-templates select="following-sibling::text/front/docDate"/>
   </info>
 </xsl:template>
+  
+  <xsl:template match="text/front"/>
 
 <xsl:template match="persName">
   <personname>
@@ -115,7 +122,7 @@ of this software, even if advised of the possibility of such damage.
   </affiliation>
 </xsl:template>
 
-<xsl:template match="author">
+<xsl:template match="author | docAuthor">
   <author>
       <xsl:choose>
 	<xsl:when test="*">
@@ -134,6 +141,12 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </author>
 </xsl:template>
+  
+  <xsl:template match="date | docDate">
+    <date>
+      <xsl:apply-templates select="@*|node()"/>
+    </date>
+  </xsl:template>
 
 <xsl:template match="q|quote|said">
   <xsl:element name="{if (tei:match(@rend,'block')) then 'blockquote' else 'quote'}">
@@ -308,7 +321,7 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template match="ref">
-  <link linkend="#{@target}">
+  <link linkend="{substring-after(@target, '#')}">
     <xsl:apply-templates select="@*|*|text()|comment()"/>
   </link>
 </xsl:template>
@@ -316,7 +329,7 @@ of this software, even if advised of the possibility of such damage.
 <xsl:template match="ptr">
   <xsl:choose>
     <xsl:when test="starts-with(@target,'#')">
-      <xref linkend="{@target}"/>
+      <xref linkend="{substring-after(@target, '#')}"/>
     </xsl:when>
     <xsl:otherwise>
       <link xlink:href="{@target}">
@@ -332,6 +345,16 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="@*|*|text()|comment()"/>
   </caption>
 </xsl:template>
+  
+<xsl:template match="formula">
+  <equation>
+    <xsl:apply-templates select="@*|node()"/>
+  </equation>
+</xsl:template>
+  
+  <xsl:template match="formula/mml:math">
+    <xsl:copy-of select="."/>
+  </xsl:template>
 
 <xsl:template match="note[@place='foot']">
   <footnote>
@@ -358,7 +381,7 @@ of this software, even if advised of the possibility of such damage.
 <!-- use general-purpose templates to add standard attributes -->
 <xsl:template match="@rend">
   <xsl:attribute name="role">
-    <xsl:value-of select="@rend"/>
+    <xsl:value-of select="."/>
   </xsl:attribute>
 </xsl:template>
 

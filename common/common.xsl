@@ -3,7 +3,6 @@
                 xmlns:s="http://www.ascc.net/xml/schematron"
                 xmlns:fotex="http://www.tug.org/fotex"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
-                
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -61,7 +60,7 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
- <xsl:strip-space elements="tei:additional tei:address tei:adminInfo
+ <xsl:strip-space elements="tei:additional tei:adminInfo
 			    tei:altGrp tei:altIdentifier tei:analytic
 			    tei:app tei:appInfo tei:application
 			    tei:arc tei:argument tei:attDef
@@ -88,7 +87,7 @@ of this software, even if advised of the possibility of such damage.
 			    tei:floatingText tei:forest tei:front
 			    tei:fs tei:fsConstraints tei:fsDecl
 			    tei:fsdDecl tei:fvLib tei:gap tei:glyph
-			    tei:graph tei:graphic tei:medua tei:group
+			    tei:graph tei:graphic tei:media tei:group
 			    tei:handDesc tei:handNotes tei:history
 			    tei:hom tei:hyphenation tei:iNode tei:if
 			    tei:imprint tei:incident tei:index
@@ -199,9 +198,9 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:apply-templates/>
        </xsl:when>
        <xsl:otherwise>
-	 <xsl:value-of select="$preQuote"/>
-	 <xsl:apply-templates/>
-	 <xsl:value-of select="$postQuote"/>
+         <xsl:value-of select="$preQuote"/>
+      	 <xsl:apply-templates/>
+      	 <xsl:value-of select="$postQuote"/>
        </xsl:otherwise>
      </xsl:choose>
    </xsl:template>

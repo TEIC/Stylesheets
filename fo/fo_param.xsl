@@ -343,11 +343,6 @@ tables in document</desc>
    </doc>
   <xsl:param name="twoSided">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
-      <desc>Language (for hyphenation)
-</desc>
-   </doc>
-  <xsl:param name="language">en_US</xsl:param>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
       <desc>
          <p>Name of intended XSL FO engine</p>
          <p>This is used to tailor the result for different XSL FO processors.
@@ -362,7 +357,14 @@ there are no bookmarks or other such features. Possible values are
          </p>
       </desc>
    </doc>
-  <xsl:param name="foEngine"/>
+   <xsl:param name="foEngine"/>
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
+        <desc>Language (for hyphenation). This was originally en_US, but that's 
+            invalid and causes trouble, so it's now set to the default 'en'
+            (MDH 2017-04-14).
+        </desc>
+    </doc>
+    <xsl:param name="language" select="'en'"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="boolean">
       <desc>Make &lt;lb&gt; active (ie cause a line break)
 </desc>
@@ -828,6 +830,8 @@ or columns</desc>
                   <xsl:when test="tei:isGlossList(..)">
                      <xsl:attribute name="text-align">start</xsl:attribute>
                      <xsl:attribute name="font-weight">bold</xsl:attribute>
+<!--  We don't want hyphenated terms or attributes wrapping to the next line.                    -->
+                     <xsl:attribute name="keep-together.within-line" select="'always'"/>
                      <xsl:choose>
 		       <xsl:when test="tei:label">
 			 <xsl:apply-templates mode="print" select="tei:label"/>
@@ -884,7 +888,11 @@ or columns</desc>
 	     </xsl:when>
 	     <xsl:otherwise>
 	       <block font-weight="normal">
-		 <xsl:apply-templates/>
+             <!-- If we're processing a valList, then we're already nested three tables 
+ deep and the normal label/item spacing is inadequate to keep the item 
+ from overwriting the label. The simplest thing is to add a return. -->
+             <xsl:if test="@rend='odd_value' or ancestor::tei:list[1][@type='gloss']"><block>&#160;</block></xsl:if>
+	         <xsl:apply-templates/>
 	       </block>
 	     </xsl:otherwise>
 	   </xsl:choose>

@@ -114,7 +114,7 @@
 		<label rend="desc">
 		  <xsl:sequence select="tei:makeDescription(.,true())"/>
 		  <xsl:text> (</xsl:text>
-		  <xsl:value-of select="if (@usage='opt') then
+		  <xsl:value-of select="if (@usage='opt' or not(@usage)) then
 					'Optional' else 'Mandatory'"/>
 		  <xsl:text>)</xsl:text>
 		</label>
