@@ -330,7 +330,18 @@ of this software, even if advised of the possibility of such damage.
   
   <xsl:template match="tei:anyElement" mode="tangle">
     <xsl:variable name="spec" select="ancestor::tei:elementSpec|ancestor::tei:macroSpec"/>
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{concat('anyElement-',$spec/@ident)}"/>
+    <!-- "owe" = occurence wrapper element -->
+    <xsl:variable name="owe" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <xsl:choose>
+      <xsl:when test="string-length($owe) eq 0">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{concat('anyElement-',$spec/@ident)}"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:element name="{$owe}" namespace="http://relaxng.org/ns/structure/1.0">
+          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{concat('anyElement-',$spec/@ident)}"/>
+        </xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:attRef" mode="tangle">  

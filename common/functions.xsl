@@ -729,7 +729,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:if test="count(preceding-sibling::tei:editor)&gt;=1">
                   <xsl:text>, </xsl:text>
                 </xsl:if>
-                <xsl:sequence select="tei:i18n('and')"/>
+                <xsl:value-of select="tei:i18n('and')"/>
               </xsl:when>
               <xsl:when test="following-sibling::tei:editor">, </xsl:when>
             </xsl:choose>
