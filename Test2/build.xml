@@ -56,16 +56,16 @@
     </description>
     
 <!-- First we include the generic utilities module.   -->
-    <import file="utilities.xml" as="utils"/>
+    <import file="build_utilities.xml" as="utils"/>
     
 <!-- Import the modular test files.   -->
-    <import file="odt.xml"/>
-    <import file="docx.xml"/>
+    <import file="build_odt.xml"/>
+    <import file="build_docx.xml"/>
     
 <!-- BEGIN PARAMETERS. -->
     
 <!-- Whether we're running tests against expected results or regenerating
-     expected results en masse. MOVED TO utilities.xml. -->
+     expected results en masse. MOVED TO build_utilities.xml. -->
     <!--<property name="regenerate" value=""/>-->
     
 <!-- Whether or not to build all FO files generated into PDFs with FOP.   -->
