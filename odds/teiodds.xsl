@@ -2400,7 +2400,7 @@ select="$makeDecls"/></xsl:message>
 	  <xsl:value-of select="$fullname"/>
 	</xsl:when>
 	<xsl:when test="key('IDENTS',$lookup)">
-	  <xsl:for-each select="key('IDENTS',$lookup)">
+	  <xsl:for-each select="key('IDENTS',$lookup)[1]">
 	    <xsl:choose>
 	      <xsl:when test="@prefix and starts-with($fullname,@prefix)">
 		<xsl:value-of select="$fullname"/>
