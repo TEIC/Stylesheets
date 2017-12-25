@@ -54,8 +54,7 @@ of this software, even if advised of the possibility of such damage.
        $Date$  $Id$
        
   -->
-  <xsl:output method="xml" encoding="UTF-8"
-    cdata-section-elements="tei:eg" omit-xml-declaration="yes"/>
+  <xsl:output method="xml" cdata-section-elements="tei:eg" omit-xml-declaration="yes" encoding="UTF-8"/>
   
   <xsl:variable name="processor">
     <xsl:value-of select="system-property('xsl:vendor')"/>

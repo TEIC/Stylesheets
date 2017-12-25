@@ -16,8 +16,7 @@
                 exclude-result-prefixes="#all"
                 version="2.0">
     <xsl:import href="../../../epub3/tei-to-epub3.xsl"/>
-  <xsl:output method="xml" encoding="UTF-8" doctype-system=""
-	      indent="no" omit-xml-declaration="yes"/>
+  <xsl:output method="xml" indent="no" doctype-system="" omit-xml-declaration="yes" encoding="UTF-8"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

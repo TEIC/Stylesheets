@@ -34,8 +34,7 @@
         </xd:desc>
     </xd:doc>
     
-    <xsl:output method="xml" encoding="UTF-8" normalization-form="NFC" indent="yes" omit-xml-declaration="yes"
-    exclude-result-prefixes="#all"/>
+    <xsl:output method="xml" normalization-form="NFC" indent="yes" omit-xml-declaration="yes" encoding="UTF-8" exclude-result-prefixes="#all"/>
     
 <!--  Key for checking of internal links in HTML documents.  -->
     <xsl:key name="IDS" use="@id" match="*"/>

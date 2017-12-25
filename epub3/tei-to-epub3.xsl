@@ -14,8 +14,7 @@
   <xsl:import href="../html5/html5.xsl"/>
   <xsl:import href="../epub/epub-common.xsl"/>
   <xsl:import href="../epub/epub-preflight.xsl"/>
-  <xsl:output method="xml" encoding="UTF-8" doctype-system=""
-	      indent="no" omit-xml-declaration="yes"/>
+  <xsl:output method="xml" indent="no" omit-xml-declaration="yes" encoding="UTF-8" doctype-system=""/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>

@@ -58,10 +58,7 @@ of this software, even if advised of the possibility of such damage.
 <xsl:param name="numberHeadings">false</xsl:param>
 <xsl:param name="omitNSDecls">http://www.w3.org/1999/xhtml</xsl:param>
 
-<xsl:output 
-    encoding="UTF-8"
-    indent="yes" 
-    method="xml"/>
+<xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 
 <xsl:template name="cgi">
 <xsl:result-document href="stylebear" method="text" encoding="UTF-8">

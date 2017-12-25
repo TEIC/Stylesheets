@@ -34,10 +34,7 @@
     <xsl:key name="milestone-id" match="tei:lb | tei:pb" use="generate-id(.)"/>
 
     <!-- indent and strip-space: for testing only! -->
-    <xsl:output
-	cdata-section-elements="eg" 
-	indent="yes" 
-	/>
+    <xsl:output cdata-section-elements="eg" indent="yes" />
     <xsl:strip-space elements="tei:additional tei:address tei:adminInfo
 			     tei:altGrp tei:altIdentifier tei:analytic
 			     tei:app tei:appInfo tei:application

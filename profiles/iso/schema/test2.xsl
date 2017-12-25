@@ -63,19 +63,16 @@ of this software, even if advised of the possibility of such damage.
    <!--PHASES-->
 
 
-<!--PROLOG-->
-<xsl:output xmlns:svrl="http://purl.oclc.org/dsdl/svrl" method="xml"
-               omit-xml-declaration="no"
-               standalone="yes"
-               indent="yes"/>
+   <!--PROLOG-->
+   <xsl:output method="xml" omit-xml-declaration="no" standalone="yes" indent="yes"/>
 
    <!--XSD TYPES FOR XSLT2-->
 
 
-<!--KEYS AND FUNCTIONS-->
+   <!--KEYS AND FUNCTIONS-->
 
 
-<!--DEFAULT RULES-->
+   <!--DEFAULT RULES-->
 
 
 <!--MODE: SCHEMATRON-SELECT-FULL-PATH-->
