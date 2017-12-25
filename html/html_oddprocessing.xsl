@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0"
   exclude-result-prefixes="#default s html a fo rng tei teix"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"

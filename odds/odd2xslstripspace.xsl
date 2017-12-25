@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
     xmlns:gen="http://www.w3.org/1999/XSL/TransformAlias" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
@@ -144,7 +144,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template name="specHook">
      <xsl:param name="name"/>
    </xsl:template>
-  <xsl:output encoding="utf-8" indent="yes" method="xml"/>
+  <xsl:output encoding="UTF-8" indent="yes" method="xml"/>
   <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="verbose"/>
   <xsl:param name="outputDir"/>

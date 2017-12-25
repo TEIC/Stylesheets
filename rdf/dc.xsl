@@ -13,7 +13,7 @@
     xpath-default-namespace="http://www.tei-c.org/ns/1.0" 
     exclude-result-prefixes="dc tei rdf rdfs owl xsd xsl xs">
   
-  <xsl:output encoding="utf-8" method="xml" indent="yes"/>
+  <xsl:output encoding="UTF-8" method="xml" indent="yes"/>
 
   <xsl:template name="dc_header">
     <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/"

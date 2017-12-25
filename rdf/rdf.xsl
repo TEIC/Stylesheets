@@ -21,7 +21,7 @@
   <xsl:param name="REQUEST">/</xsl:param>
   <xsl:param name="SERVER">http://www.oucs.ox.ac.uk</xsl:param>
 
-  <xsl:output encoding="utf-8" method="xml" indent="yes"/>
+  <xsl:output encoding="UTF-8" method="xml" indent="yes"/>
 
   <xsl:key name="persons" match="persName" use="@ref"/>
 

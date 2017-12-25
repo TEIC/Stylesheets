@@ -13,7 +13,7 @@
     xpath-default-namespace="http://www.tei-c.org/ns/1.0" 
     exclude-result-prefixes="tei rdf rdfs owl xsd crm xsl xs">
   
-  <xsl:output encoding="utf-8" method="xml" indent="yes"/>
+  <xsl:output encoding="UTF-8" method="xml" indent="yes"/>
 
   <xsl:key name="persons" match="persName" use="@ref"/>
   <xsl:key name="Places" match="place[placeName]" use="placeName"/>

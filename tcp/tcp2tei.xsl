@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 $Date$ $Author$
 
@@ -43,7 +43,7 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:output cdata-section-elements="eg" indent="yes" method="xml" encoding="utf-8" omit-xml-declaration="yes"/>
+  <xsl:output cdata-section-elements="eg" indent="yes" method="xml" encoding="UTF-8" omit-xml-declaration="yes"/>
   <xsl:param name="ID"/>
   <xsl:key name="ROLES" match="P/@ROLE" use="1"/>
   <xsl:key name="ROLES" match="ITEM/@ROLE" use="1"/>

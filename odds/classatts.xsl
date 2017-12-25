@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:s="http://www.ascc.net/xml/schematron"
@@ -32,7 +32,7 @@
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:output encoding="utf-8" indent="no"/>
+  <xsl:output encoding="UTF-8" indent="no"/>
   <xsl:param name="verbose"/>
   <xsl:param name="stripped">false</xsl:param>
   <xsl:variable name="All" select="/"/>

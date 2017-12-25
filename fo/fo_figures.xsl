@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
                 xmlns:fotex="http://www.tug.org/fotex"
                 xmlns:m="http://www.w3.org/1998/Math/MathML"

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 This software is dual-licensed:
 
@@ -51,7 +51,7 @@ XSL LaTeX stylesheet to make slides
                 version="2.0">
   <xsl:import href="../latex/latex.xsl"/>
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
-  <xsl:output method="text" encoding="utf-8"/>
+  <xsl:output method="text" encoding="UTF-8"/>
   <xsl:param name="documentclass">beamer</xsl:param>
   <xsl:param name="classParameters"/>
   <xsl:param name="beamerClass">PaloAlto</xsl:param>

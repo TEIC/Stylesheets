@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"                 
     xmlns:html="http://www.w3.org/1999/xhtml"                
     xmlns:xs="http://www.w3.org/2001/XMLSchema"                
@@ -333,7 +333,7 @@ will generate an &lt;h2&gt;</p>
       <meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
       <xsl:choose>
 	<xsl:when test="$outputTarget='html5' or $outputTarget='epub3'">
-	  <meta charset="utf-8" />
+	  <meta charset="UTF-8" />
 	</xsl:when>
 	<xsl:otherwise>
 	  <meta http-equiv="Content-Type" content="text/html; charset={$outputEncoding}"/>
@@ -577,7 +577,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
       <desc>Encoding of output file(s).</desc>
 
    </doc>
-  <xsl:param name="outputEncoding">utf-8</xsl:param>
+  <xsl:param name="outputEncoding">UTF-8</xsl:param>
 
   <xsl:param name="outputNamespace">http://www.w3.org/1999/xhtml</xsl:param>
 

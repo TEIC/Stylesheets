@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:sch="http://purl.oclc.org/dsdl/schematron"
 		xmlns:m="http://www.w3.org/1998/Math/MathML"

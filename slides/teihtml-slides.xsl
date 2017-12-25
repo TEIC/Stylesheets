@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" 
 		xmlns:atom="http://www.w3.org/2005/Atom"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -56,8 +56,8 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
-  <xsl:output encoding="utf-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN"/>
-  <xsl:param name="outputEncoding">utf-8</xsl:param>
+  <xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN"/>
+  <xsl:param name="outputEncoding">UTF-8</xsl:param>
   <xsl:output method="xml" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
   <xsl:param name="outputTarget">html5</xsl:param>
   <xsl:param name="logoFile"></xsl:param>

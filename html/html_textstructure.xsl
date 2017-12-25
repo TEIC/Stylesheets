@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"  xmlns:xlink="http://www.w3.org/1999/xlink"
 		xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
 		xmlns:its="http://www.w3.org/2005/11/its"

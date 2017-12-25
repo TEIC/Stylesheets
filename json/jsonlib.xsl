@@ -8,7 +8,7 @@
     version="2.0"
     >
 <xsl:strip-space elements="*"/>
-<xsl:output method="text" encoding="utf-8" />
+<xsl:output method="text" encoding="UTF-8" />
   
 <xsl:function name="tei:jsonString" as="xs:string">
     <xsl:param name="content"/>

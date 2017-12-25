@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:fo="http://www.w3.org/1999/XSL/Format" 
@@ -59,7 +59,7 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
-  <xsl:output encoding="utf-8" indent="yes" method="xml"/>
+  <xsl:output encoding="UTF-8" indent="yes" method="xml"/>
   <xsl:key name="PATTERNS" match="rng:define[rng:element/@name]" use="'true'"/>
   <xsl:key name="XPATTERNS" match="rng:define[rng:element/@name]" use="@name"/>
   <xsl:key name="REFED" match="rng:ref" use="@name"/>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
 		xmlns:iso="http://www.iso.org/ns/1.0"
@@ -67,7 +67,7 @@ of this software, even if advised of the possibility of such damage.
     
    <xsl:strip-space elements="tei:bibl"/>
    <xsl:param name="numberFormat">uk</xsl:param>
-   <xsl:output encoding="utf-8" omit-xml-declaration="yes" method="xhtml"
+   <xsl:output encoding="UTF-8" omit-xml-declaration="yes" method="xhtml"
                doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
                doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
                indent="yes"/>

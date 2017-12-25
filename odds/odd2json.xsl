@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:fo="http://www.w3.org/1999/XSL/Format" 
@@ -131,7 +131,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template name="specHook">
      <xsl:param name="name"/>
    </xsl:template>
-  <xsl:output encoding="utf-8" indent="yes" method="text"/>
+  <xsl:output encoding="UTF-8" indent="yes" method="text"/>
   <xsl:strip-space elements="*"/>
   <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="verbose"/>

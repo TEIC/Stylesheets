@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
     xmlns:fo="http://www.w3.org/1999/XSL/Format"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
@@ -71,7 +71,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:otherwise>
       </xsl:choose>
   </xsl:variable>
-  <xsl:output indent="no" encoding="utf-8"/>
+  <xsl:output indent="no" encoding="UTF-8"/>
  <xsl:strip-space elements="tei:additional tei:address tei:adminInfo
 			    tei:altGrp tei:altIdentifier tei:analytic
 			    tei:app tei:appInfo tei:application

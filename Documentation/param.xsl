@@ -55,7 +55,7 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:key name="XDS" match="xd:doc" use="@class"/>
 
-<xsl:output indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
+<xsl:output indent="yes" encoding="UTF-8" omit-xml-declaration="yes"/>
 
 <xsl:include href="../common/verbatim.xsl"/>
 <xsl:include href="../common/functions.xsl"/>

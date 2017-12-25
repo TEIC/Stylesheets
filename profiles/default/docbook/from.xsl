@@ -47,5 +47,5 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
 
-<xsl:output method="xml" indent="yes" encoding="utf-8"/>
+<xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 </xsl:stylesheet>

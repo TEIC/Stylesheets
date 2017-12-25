@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
 		xmlns:iso="http://www.iso.org/ns/1.0"

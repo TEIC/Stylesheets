@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -8,7 +8,7 @@
 
     <xsl:import href="../html/html.xsl"/>
     <xsl:import href="textstructure.xsl"/>
-    <xsl:output method="xml" encoding="utf-8" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
+    <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
     <xsl:param name="outputTarget">html5</xsl:param>
     <xsl:param name="doctypeSystem">about:legacy-compat</xsl:param>
     <xsl:param name="doctypePublic"/>

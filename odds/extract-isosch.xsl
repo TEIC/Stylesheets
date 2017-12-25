@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:xi="http://www.w3.org/2001/XInclude"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -111,7 +111,7 @@ of this software, even if advised of the possibility of such damage.
         is a direct child of <d:pre>&lt;schemaSpec</d:pre>.</d:p>
     </d:desc>
   </d:doc>
-  <xsl:output encoding="utf-8" indent="yes" method="xml"/>
+  <xsl:output encoding="UTF-8" indent="yes" method="xml"/>
   <xsl:param name="verbose" select="'false'"/>
   <xsl:param name="lang" select="'en'"/>
   <d:doc>

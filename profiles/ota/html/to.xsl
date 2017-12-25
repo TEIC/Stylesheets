@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -51,8 +51,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-   <xsl:output method="xhtml" omit-xml-declaration="yes"
-	       encoding="utf-8"/>
+   <xsl:output method="xhtml" omit-xml-declaration="yes" encoding="UTF-8"/>
 
     <xsl:param name="treestyle">d3VerticalTree</xsl:param>
     <xsl:param name="publisher">University of Oxford Text Archive</xsl:param>

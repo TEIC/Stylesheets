@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
 Text Encoding Initiative Consortium XSLT stylesheet family
 $Date$, $Revision$, $Author$
@@ -13,7 +13,7 @@ XSL stylesheet to process TEI documents using ODD markup
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="tei"
                 version="2.0">
-  <xsl:output method="xml" indent="yes" encoding="utf-8"/>
+  <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
   <xsl:param name="verbose"/>
   <xsl:param name="lang">es</xsl:param>
   <xsl:key name="ELEMENTS" match="element" use="@ident"/>

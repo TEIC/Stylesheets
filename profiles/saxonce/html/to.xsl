@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:ixsl="http://saxonica.com/ns/interactiveXSLT" 
 		xmlns:prop="http://saxonica.com/ns/html-property" 
 		xmlns:html="http://www.w3.org/1999/xhtml"

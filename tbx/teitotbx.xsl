@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
@@ -46,7 +46,7 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:key name="T" match="tbx:termEntry" use="1"/>
 
-<xsl:output method="xml" indent="yes" encoding="utf-8"/>
+<xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 
 <xsl:template match="/">
   <martif type="TBX" xml:lang="en">

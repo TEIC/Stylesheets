@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:cals="http://www.oasis-open.org/specs/tm9901"
 		xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xmlns:fn="http://www.w3.org/2005/xpath-functions"
@@ -56,7 +56,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:key name="frontDiv" match="tei:div[ancestor::tei:front]" use="1"/>
    <xsl:key name="bodyDiv" match="tei:div[ancestor::tei:body]" use="1"/>
    <xsl:key name="backDiv" match="tei:div[ancestor::tei:back]" use="1"/>
-   <xsl:output method="xhtml" encoding="utf-8"/>
+   <xsl:output method="xhtml" encoding="UTF-8"/>
    <xsl:template match="/tei:TEI">
       <xsl:variable name="today">
          <xsl:call-template name="whatsTheDate"/>

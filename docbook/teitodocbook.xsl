@@ -53,7 +53,7 @@ of this software, even if advised of the possibility of such damage.
 
 
 
-<xsl:output method="xml" indent="yes" encoding="utf-8"/>
+<xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 <xsl:param name="debug"/>
 <xsl:param name="spaceCharacter">&#160;</xsl:param>
 

@@ -10,7 +10,7 @@
 <xsl:include href="jsonlib.xsl"/>
 
 <xsl:strip-space elements="*"/>
-<xsl:output method="text" encoding="utf-8" />
+<xsl:output method="text" encoding="UTF-8" />
   
 <xsl:template match="/">
   <xsl:call-template name="main"/>

@@ -59,12 +59,12 @@ of this software, even if advised of the possibility of such damage.
 <xsl:param name="omitNSDecls">http://www.w3.org/1999/xhtml</xsl:param>
 
 <xsl:output 
-    encoding="utf-8"
+    encoding="UTF-8"
     indent="yes" 
     method="xml"/>
 
 <xsl:template name="cgi">
-<xsl:result-document href="stylebear" method="text" encoding="utf-8">
+<xsl:result-document href="stylebear" method="text" encoding="UTF-8">
 <xsl:message>Create file "stylebear" </xsl:message>
 <xsl:text>#!/usr/bin/perl&#10;</xsl:text>
 
@@ -154,7 +154,7 @@ return "";
     <text>
 <body>
 <html:form
- encoding="utf-8"
+ encoding="UTF-8"
  enctype="multipart/form-data"
  action="/cgi-bin/stylebear"
  method="post"

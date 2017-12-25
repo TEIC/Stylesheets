@@ -14,7 +14,7 @@
 
   <XSL:key name="EQUIVFILES" match="equiv" use="@filter"/>
   <XSL:key name="MEMBERS" match="elementSpec" use="classes/memberOf/@key"/>
-  <XSL:output method="xml" indent="yes" encoding="utf-8"/>
+  <XSL:output method="xml" indent="yes" encoding="UTF-8"/>
   <XSL:key name="NS" match="elementSpec|attDef" use="@ns"/>
   <XSL:param name="useFixedDate">false</XSL:param>
   

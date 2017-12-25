@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
                 xmlns:cals="http://www.oasis-open.org/specs/tm9901"
                 xmlns:iso="http://www.iso.org/ns/1.0"

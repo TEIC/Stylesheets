@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/"
 		xmlns:iso="http://www.iso.org/ns/1.0"
 		xmlns="http://www.w3.org/1999/xhtml"
@@ -14,7 +14,7 @@
   <xsl:import href="../html5/html5.xsl"/>
   <xsl:import href="../epub/epub-common.xsl"/>
   <xsl:import href="../epub/epub-preflight.xsl"/>
-  <xsl:output method="xml" encoding="utf-8" doctype-system=""
+  <xsl:output method="xml" encoding="UTF-8" doctype-system=""
 	      indent="no" omit-xml-declaration="yes"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">

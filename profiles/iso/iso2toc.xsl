@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns="http://www.w3.org/1999/xhtml"
@@ -46,7 +46,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-   <xsl:output method="xhtml" encoding="utf-8"/>
+   <xsl:output method="xhtml" encoding="UTF-8"/>
    <xsl:template match="tei:TEI">
       <xsl:variable name="today">
          <xsl:call-template name="whatsTheDate"/>

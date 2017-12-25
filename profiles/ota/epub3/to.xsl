@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
@@ -16,7 +16,7 @@
                 exclude-result-prefixes="#all"
                 version="2.0">
     <xsl:import href="../../../epub3/tei-to-epub3.xsl"/>
-  <xsl:output method="xml" encoding="utf-8" doctype-system=""
+  <xsl:output method="xml" encoding="UTF-8" doctype-system=""
 	      indent="no" omit-xml-declaration="yes"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">

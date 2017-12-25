@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
@@ -125,7 +125,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-   <xsl:output encoding="utf-8" method="text"/>
+   <xsl:output encoding="UTF-8" method="text"/>
    <xsl:param name="makeCSV">false</xsl:param>
    <xsl:param name="oneword">false</xsl:param>
    <xsl:variable name="q">"</xsl:variable>

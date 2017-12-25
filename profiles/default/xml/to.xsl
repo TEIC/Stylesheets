@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:html="http://www.w3.org/1999/xhtml"
@@ -46,7 +46,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-  <xsl:output encoding="utf-8"     indent="yes"/>
+  <xsl:output encoding="UTF-8"     indent="yes"/>
 
   <xsl:template match="text()|@*|text()|comment()">
     <xsl:copy-of select="."/>

@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0"
                 exclude-result-prefixes="rng tei">
-   <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+   <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
    <xsl:param name="lang">ja</xsl:param>
 
    <xsl:template match="/i18n">

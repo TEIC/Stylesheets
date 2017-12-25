@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -54,7 +54,7 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
 
-  <xsl:output encoding="utf-8" indent="no"/>
+  <xsl:output encoding="UTF-8" indent="no"/>
   <xsl:param name="autoGlobal">false</xsl:param>
   <xsl:param name="configDirectory"/>
   <xsl:param name="currentDirectory"/>

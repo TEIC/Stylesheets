@@ -12,7 +12,7 @@
 
 <xsl:key name="CONTEXTS" use="." match="@context"/>
 <xsl:key name="ALLCONTEXTS" use="1" match="@context"/>
-<xsl:output method="xml" indent="yes" encoding="utf-8"/>
+<xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 
 
 <xsl:template match="/">

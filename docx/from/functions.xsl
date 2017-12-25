@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:cals="http://www.oasis-open.org/specs/tm9901"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"

@@ -6,7 +6,7 @@
 <!-- cf http://www.bramstein.com/projects/xsltjson/ for better
 coverage -->
 <xsl:strip-space elements="*"/>
-<xsl:output method="text" encoding="utf-8" />
+<xsl:output method="text" encoding="UTF-8" />
 <xsl:variable name="inq">"</xsl:variable>
 <xsl:variable name="outq">\\"</xsl:variable>
 <xsl:template match="/">

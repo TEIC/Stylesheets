@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns="http://www.tei-c.org/ns/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xpath-default-namespace="http://www.tei-c.org/ns/1.0" exclude-result-prefixes="tei xs" version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -42,7 +42,7 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:strip-space elements="*"/>
-  <xsl:output method="text" encoding="utf-8"/>
+  <xsl:output method="text" encoding="UTF-8"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc> JSON string with quotes escaped </desc>
   </doc>
