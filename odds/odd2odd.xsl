@@ -9,14 +9,15 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
     version="2.0" 
     exclude-result-prefixes="#all">
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
-    <desc>
-      <p> TEI stylesheet for merging TEI ODD specification with source to
-      make a new source document. </p>
-      <p>This software is dual-licensed:
+  <xd:doc scope="stylesheet" type="stylesheet">
+    <xd:desc>
+      <xd:p> TEI stylesheet for merging TEI ODD specification with source to
+      make a new source document. </xd:p>
+      <xd:p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
 Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
@@ -47,14 +48,15 @@ data, or profits; or business interruption) however caused and on any
 theory of liability, whether in contract, strict liability, or tort
 (including negligence or otherwise) arising in any way out of the use
 of this software, even if advised of the possibility of such damage.
-</p>
-      <p>Author: See AUTHORS</p>
+</xd:p>
+      <xd:p>Author: See AUTHORS</xd:p>
       
-      <p>Copyright: 2013, TEI Consortium</p>
-    </desc>
-  </doc>
+      <xd:p>Copyright: 2013, TEI Consortium</xd:p>
+    </xd:desc>
+  </xd:doc>
 
   <xsl:output encoding="UTF-8" indent="no"/>
+
   <xsl:param name="autoGlobal">false</xsl:param>
   <xsl:param name="configDirectory"/>
   <xsl:param name="currentDirectory"/>
@@ -64,81 +66,88 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="doclang"/>
   <xsl:param name="selectedSchema"/>
   <xsl:param name="stripped">false</xsl:param>
-  <xsl:param name="useVersionFromTEI">true</xsl:param>
-  <xsl:param name="verbose">false</xsl:param>
   <!-- following param, added 2016-06-06 by Syd Bauman for use by TEI
        in Libraries Best Practices Guidelines. If set to 'true' then
-       all <exmplum> elements from TEI source or summarily dropped,
+       all <exmplum> elements from TEI source are summarily dropped,
        whereas <exemplum> elements in ODD customization file are
        copied through. -->
   <xsl:param name="suppressTEIexamples">false</xsl:param>
+  <xsl:param name="useVersionFromTEI">true</xsl:param>
+  <xsl:param name="verbose">false</xsl:param>
+  
   <xsl:key name="odd2odd-CHANGEATT" match="tei:attDef[@mode eq 'change']" use="concat(../../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-CHANGECONSTRAINT" match="tei:constraintSpec[@mode eq 'change']" use="concat(../@ident,'_',@ident)"/>
-  <xsl:key name="odd2odd-CLASS_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:classSpec"/>
+  <xsl:key name="odd2odd-CLASS_MEMBERED" match="tei:classSpec" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key name="odd2odd-DELETEATT" match="tei:attDef[@mode eq 'delete']" use="concat(ancestor::tei:classSpec/@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-DELETEATT" match="tei:attDef[@mode eq 'delete']" use="concat(ancestor::tei:elementSpec/@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-DELETECONSTRAINT" match="tei:constraintSpec[@mode eq 'delete']" use="concat(../@ident,'_',@ident)"/>
-  <xsl:key name="odd2odd-ELEMENT_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:elementSpec"/>
+  <xsl:key name="odd2odd-ELEMENT_MEMBERED" match="tei:elementSpec" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:dataSpec" use="@ident"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:macroSpec" use="@ident"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:classSpec" use="@ident"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:elementSpec" use="@ident"/>
-  <xsl:key name="odd2odd-MACROS" use="@ident" match="tei:macroSpec"/>
+  <xsl:key name="odd2odd-MACROS" match="tei:macroSpec" use="@ident"/>
   <xsl:key name="odd2odd-MEMBEROFADD" match="tei:memberOf[@mode eq 'add' or not (@mode)]" use="concat(../../@ident,@key)"/>
   <xsl:key name="odd2odd-MEMBEROFDELETE" match="tei:memberOf[@mode eq 'delete']" use="concat(../../@ident,@key)"/>
   <xsl:key name="odd2odd-MODULES" match="tei:moduleRef" use="@key"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_ELEMENT" match="tei:elementSpec" use="@module"/>
-  <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:dataSpec"  use="@module"/>
-  <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:macroSpec"  use="@module"/>
+  <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:dataSpec" use="@module"/>
+  <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:macroSpec" use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:classSpec" use="@module"/>
-  <xsl:key name="odd2odd-ATTREFED" use="substring-before(@name,'.attribute.')" match="tei:attRef"/>
-  <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:elementSpec]"/>
-  <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:macroSpec and not(@name=ancestor::tei:macroSpec/@ident)]"/>
-  <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:datatype]"/>
-  <xsl:key name="odd2odd-REFED" use="@class" match="tei:attRef"/>
-  <xsl:key name="odd2odd-REFED" use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
-  <xsl:key name="odd2odd-REFED" use="@key" match="tei:dataRef"/>
-  <xsl:key name="odd2odd-REFED" use="@key" match="tei:macroRef"/>
-  <xsl:key name="odd2odd-REFED" use="@key" match="tei:classRef"/>
-  <xsl:key name="odd2odd-REFED" use="@key" match="tei:elementRef"/>
+  <xsl:key name="odd2odd-ATTREFED" match="tei:attRef" use="substring-before(@name,'.attribute.')"/>
+  <xsl:key name="odd2odd-REFED" match="rng:ref[ancestor::tei:elementSpec]" use="@name"/>
+  <xsl:key name="odd2odd-REFED" match="rng:ref[ancestor::tei:macroSpec and not(@name=ancestor::tei:macroSpec/@ident)]" use="@name"/>
+  <xsl:key name="odd2odd-REFED" match="rng:ref[ancestor::tei:datatype]" use="@name"/>
+  <xsl:key name="odd2odd-REFED" match="tei:attRef" use="@class"/>
+  <xsl:key name="odd2odd-REFED" match="rng:ref[contains(@name,'_')]" use="substring-before(@name,'_')"/>
+  <xsl:key name="odd2odd-REFED" match="tei:dataRef" use="@key"/>
+  <xsl:key name="odd2odd-REFED" match="tei:macroRef" use="@key"/>
+  <xsl:key name="odd2odd-REFED" match="tei:classRef" use="@key"/>
+  <xsl:key name="odd2odd-REFED" match="tei:elementRef" use="@key"/>
 
-  <xsl:key name="odd2odd-REFOBJECTS" use="@key" match="tei:schemaSpec/tei:macroRef[not(ancestor::tei:content)]"/>
-  <xsl:key name="odd2odd-REFOBJECTS" use="@key" match="tei:schemaSpec/tei:classRef[not(ancestor::tei:content)]"/>
-  <xsl:key name="odd2odd-REFOBJECTS" use="@key" match="tei:schemaSpec/tei:elementRef[not(ancestor::tei:content)]"/>
+  <xsl:key name="odd2odd-REFOBJECTS" match="tei:schemaSpec/tei:macroRef[not(ancestor::tei:content)]" use="@key"/>
+  <xsl:key name="odd2odd-REFOBJECTS" match="tei:schemaSpec/tei:classRef[not(ancestor::tei:content)]" use="@key"/>
+  <xsl:key name="odd2odd-REFOBJECTS" match="tei:schemaSpec/tei:elementRef[not(ancestor::tei:content)]" use="@key"/>
   <xsl:key name="odd2odd-REPLACECONSTRAINT" match="tei:constraintSpec[@mode eq 'replace']" use="concat(../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
-  <xsl:key match="tei:moduleSpec" name="odd2odd-MODULES" use="@ident"/>
+  <xsl:key name="odd2odd-MODULES" match="tei:moduleSpec" use="@ident"/>
 
 
    <!-- all of these use a combination of @ident _and_ @ns (where
    present), in case of duplication of names across schemes -->
 
-  <xsl:key name="odd2odd-CHANGE"     match="tei:classSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-CHANGE"     match="tei:dataSpec[@mode eq 'change']"   use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-CHANGE"     match="tei:elementSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-CHANGE"     match="tei:macroSpec[@mode eq 'change']"   use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-CHANGE" match="tei:classSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-CHANGE" match="tei:dataSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-CHANGE" match="tei:elementSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-CHANGE" match="tei:macroSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
 
-  <xsl:key name="odd2odd-DELETE"   match="tei:classSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-DELETE"   match="tei:macroSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-DELETE"   match="tei:dataSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-DELETE"   match="tei:elementSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:classSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:macroSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:dataSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:elementSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
 
-  <xsl:key name="odd2odd-REPLACE"  match="tei:classSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-REPLACE"  match="tei:dataSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:classSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:dataSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-REPLACE" match="tei:elementSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-REPLACE"  match="tei:macroSpec[@mode eq 'replace']"   use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-REPLACEATT"     match="tei:attDef[@mode eq 'replace']" use="concat(../../@ident,'_',@ident)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:macroSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
 
-  
-  <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="1"/>
+  <xsl:key name="odd2odd-REPLACEATT" match="tei:attDef[@mode eq 'replace']" use="concat(../../@ident,'_',@ident)"/>
+
+  <xsl:key name="odd2odd-SCHEMASPECS" match="tei:schemaSpec" use="1"/>
 
   <xsl:variable name="whichSchemaSpec">
+    <!-- 
+	 can't use just
+           select="( $selectedSchema, key('odd2odd-SCHEMASPECS',1)[1]/@ident )[1]"
+	 because $selectedSchema is a string, and would get returned
+	 even if nil.
+    -->
     <xsl:choose>
-      <xsl:when test="not($selectedSchema='')">
+      <xsl:when test="not( $selectedSchema eq '')">
         <xsl:value-of select="$selectedSchema"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="key('LISTSCHEMASPECS',1)[1]/@ident"/>
+        <xsl:value-of select="key('odd2odd-SCHEMASPECS',1)[1]/@ident"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -280,10 +289,10 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="e"/>
     <xsl:for-each select="$e">
       <xsl:sequence select="concat(
-        if (@ns eq 'http://www.tei-c.org/ns/1.0') then ''
-        else if (@ns) then @ns
-        else if (ancestor::tei:schemaSpec/@ns) then
-        ancestor::tei:schemaSpec/@ns else '',@ident)"/>
+			        if ( @ns eq 'http://www.tei-c.org/ns/1.0') then ''
+			        else ( @ns, ancestor::tei:schemaSpec/@ns, '')[1],
+			      @ident
+			    )"/>
     </xsl:for-each>
   </xsl:function>
 
