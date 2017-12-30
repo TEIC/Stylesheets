@@ -154,17 +154,17 @@
 
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
-      <xsl:when test="$defaultSource != ''">
+      <xsl:when test="$defaultSource ne ''">
         <xsl:choose>
-          <xsl:when test="starts-with($defaultSource, '&quot;') and ends-with($defaultSource, '&quot;')">
-            <xsl:value-of select="substring($defaultSource, 2, string-length($defaultSource)-2)"/>
+          <xsl:when test="starts-with( $defaultSource,'&quot;') and ends-with( $defaultSource,'&quot;')">
+            <xsl:value-of select="substring( $defaultSource, 2, string-length( $defaultSource )-2 )"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="$defaultSource"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
-      <xsl:when test="$configDirectory != ''">
+      <xsl:when test="$configDirectory ne ''">
         <xsl:value-of select="$configDirectory"/>
         <xsl:text>odd/p5subset.xml</xsl:text>
       </xsl:when>
@@ -176,21 +176,22 @@
     </xsl:choose>
   </xsl:variable>
 
-  <!-- NOTE on functions added 2016-12-02 by Syd: -->
-  <!-- Many, if not most, of the functions below duplicate in name -->
-  <!-- functions that are in teiodds.xsl. odd2relax, odd2dtd, odd2html, -->
-  <!-- and even odd2json & odd2lite import that file. But this one -->
-  <!-- does not. I do not know if the functions are slightly different, -->
-  <!-- or if there is some other reason this file does not import -->
-  <!-- teiodds.xsl. Someday I hope to test this out and do the right -->
-  <!-- thing (either import that file so there is only 1 definition -->
-  <!-- of each function, or add documentation explaining why not and -->
-  <!-- perhaps re-name the functions so the difference is clear). But -->
-  <!-- for now, since I'm in a rush, I'm just following the lead of -->
-  <!-- what's here already, and copying my new function from teiodds to -->
-  <!-- here. -->
+  <!-- 
+    NOTE on functions added 2016-12-02 by Syd: Many, if not most, of
+    the functions below duplicate in name functions that are in
+    teiodds.xsl. The files odd2relax, odd2dtd, odd2html, and even
+    odd2json & odd2lite import that file. But this one does not. I do
+    not know if the functions are slightly different, or if there is
+    some other reason this file does not import teiodds.xsl. Someday I
+    hope to test this out and do the right thing (either import that
+    file so there is only 1 definition of each function, or add
+    documentation explaining why not and perhaps re-name the functions
+    so the difference is clear). But for now, since I'm in a rush, I'm
+    just following the lead of what's here already, and copying my new
+    function from teiodds to here.
+  -->
 
-  <xsl:function name="includeMember" as="xs:boolean">
+  <xsl:function name="tei:includeMember" as="xs:boolean">
     <xsl:param name="ident"  as="xs:string"/>
     <xsl:param name="exc" />
     <xsl:param name="inc" />
@@ -204,7 +205,7 @@
   </xsl:function>
 
 
-  <xsl:function name="checkExclude" as="xs:boolean">
+  <xsl:function name="tei:checkExclude" as="xs:boolean">
     <xsl:param name="ident"  as="xs:string"/>
     <xsl:param name="exc" />
       <xsl:choose>
@@ -214,7 +215,7 @@
       </xsl:choose>
   </xsl:function>
 
-  <xsl:function name="workOutSource" as="xs:string*">
+  <xsl:function name="tei:workOutSource" as="xs:string*">
     <xsl:param name="e"/>
     <xsl:variable name="loc">
       <xsl:choose>
@@ -278,13 +279,13 @@
     </xsl:choose>
   </xsl:function>
 
-  <xsl:function name="message" as="xs:string">
+  <xsl:function name="tei:message" as="xs:string">
     <xsl:param name="message"/>
     <xsl:message><xsl:copy-of select="$message"/></xsl:message>
     <xsl:text/>
   </xsl:function>
 
-  <xsl:function name="uniqueName" as="xs:string">
+  <xsl:function name="tei:uniqueName" as="xs:string">
     <xsl:param name="e"/>
     <xsl:for-each select="$e">
       <xsl:sequence select="concat(
@@ -295,7 +296,7 @@
     </xsl:for-each>
   </xsl:function>
 
-  <xsl:function name="generate-nsprefix-schematron" as="xs:string">
+  <xsl:function name="tei:generate-nsprefix-schematron" as="xs:string">
     <xsl:param name="e"/>
     <xsl:for-each select="$e">
       <xsl:variable name="myns" select="ancestor::elementSpec/@ns"/>
