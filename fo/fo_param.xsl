@@ -727,7 +727,7 @@ or columns</desc>
   <xsl:template name="Element">
     <xsl:param name="content"/>
     <inline>
-      <xsl:copy-of select="$content"/>
+      <xsl:value-of select="$content"/>
     </inline>
   </xsl:template>
 
