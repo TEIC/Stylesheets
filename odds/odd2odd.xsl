@@ -56,6 +56,7 @@
 
   <xsl:output encoding="UTF-8" indent="no"/>
 
+  <!-- ***** parameters ***** -->
   <xsl:param name="autoGlobal">false</xsl:param>
   <xsl:param name="configDirectory"/>
   <xsl:param name="currentDirectory"/>
@@ -74,6 +75,7 @@
   <xsl:param name="useVersionFromTEI">true</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
 
+  <!-- ***** keys ***** -->
   <xsl:key name="odd2odd-CHANGEATT" match="attDef[@mode eq 'change']" use="concat(../../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-CHANGECONSTRAINT" match="constraintSpec[@mode eq 'change']" use="concat(../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-CLASS_MEMBERED" match="classSpec" use="classes/memberOf/@key"/>
@@ -111,10 +113,11 @@
   <xsl:key name="odd2odd-SCHEMASPECS" match="schemaSpec" use="@ident"/>
   <xsl:key name="odd2odd-MODULES" match="moduleSpec" use="@ident"/>
 
-
-   <!-- all of these use a combination of @ident _and_ @ns (where
-   present), in case of duplication of names across schemes -->
-
+   <!-- 
+        The following keys use a combination of @ident _and_ @ns
+        (where present) as their key, so as to avoid problems when
+        names are duplicated accross schemes.
+   -->
   <xsl:key name="odd2odd-CHANGE" match="classSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-CHANGE" match="dataSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-CHANGE" match="elementSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
@@ -134,15 +137,18 @@
 
   <xsl:key name="odd2odd-SCHEMASPECS" match="schemaSpec" use="1"/>
 
+  <!-- ***** global variables ***** -->
   <xsl:variable name="whichSchemaSpec">
     <!--
-         can't use just
-           select="( $selectedSchema, key('odd2odd-SCHEMASPECS',1)[1]/@ident )[1]"
-         because $selectedSchema is a string, and would get returned
-         even if nil.
+        We use the schemaSpec the user specified via a parameter or,
+        if she didn't, then the first one found in document order. We
+        can't just use
+            select="( $selectedSchema, key('odd2odd-SCHEMASPECS',1)[1]/@ident )[1]"
+        because $selectedSchema is a string, and would get returned
+        even if nil.
     -->
     <xsl:choose>
-      <xsl:when test="not( $selectedSchema eq '')">
+      <xsl:when test="$selectedSchema ne ''">
         <xsl:value-of select="$selectedSchema"/>
       </xsl:when>
       <xsl:otherwise>
@@ -151,10 +157,15 @@
     </xsl:choose>
   </xsl:variable>
 
-
+  <!-- location of source XML file for language we are customizing -->
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
+      <!-- 
+           User specified a default source, use it, stripping
+           leading and trailing U+0022 characters if present.
+      -->
       <xsl:when test="$defaultSource ne ''">
+        <!-- Why strip them instead of just tell users not to specify 'em? —Syd, 2017-12-30 -->
         <xsl:choose>
           <xsl:when test="starts-with( $defaultSource,'&quot;') and ends-with( $defaultSource,'&quot;')">
             <xsl:value-of select="substring( $defaultSource, 2, string-length( $defaultSource )-2 )"/>
@@ -164,10 +175,15 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
+      <!-- User specified a configuration directory, assume our p5subset is in that -->
       <xsl:when test="$configDirectory ne ''">
         <xsl:value-of select="$configDirectory"/>
         <xsl:text>odd/p5subset.xml</xsl:text>
       </xsl:when>
+      <!-- 
+           No clues from user, use default path to web veresion (which
+           user may have overridden via parameters).
+      -->
       <xsl:otherwise>
         <xsl:value-of select="$defaultTEIServer"/>
         <xsl:value-of select="$defaultTEIVersion"/>
@@ -177,91 +193,106 @@
   </xsl:variable>
 
   <!-- 
-    NOTE on functions added 2016-12-02 by Syd: Many, if not most, of
-    the functions below duplicate in name functions that are in
-    teiodds.xsl. The files odd2relax, odd2dtd, odd2html, and even
-    odd2json & odd2lite import that file. But this one does not. I do
-    not know if the functions are slightly different, or if there is
-    some other reason this file does not import teiodds.xsl. Someday I
-    hope to test this out and do the right thing (either import that
-    file so there is only 1 definition of each function, or add
-    documentation explaining why not and perhaps re-name the functions
-    so the difference is clear). But for now, since I'm in a rush, I'm
-    just following the lead of what's here already, and copying my new
+    NOTE added 2016-12-02 by Syd: Many, if not most, of the functions
+    below duplicate in name functions that are in teiodds.xsl. The
+    files odd2relax, odd2dtd, odd2html, and even odd2json & odd2lite
+    import that file. But this one does not. I do not know if the
+    functions are slightly different, or if there is some other reason
+    this file does not import teiodds.xsl. Someday I hope to test this
+    out and do the right thing (either import that file so there is
+    only 1 definition of each function, or add documentation
+    explaining why not and perhaps re-name the functions so the
+    difference is clear). But for now, since I'm in a rush, I'm just
+    following the lead of what's here already, and copying my new
     function from teiodds to here.
   -->
 
+  <xd:doc>
+    <xd:desc>
+      <xd:p>Given an element or attribute identifier and a list of @include and @except
+      GIs or attribute names, return false() if a) there is an @include and the
+      identifier is not in its list, or b) there is an @except and the identifier
+      is in its list.</xd:p>
+    </xd:desc>
+  </xd:doc>
   <xsl:function name="tei:includeMember" as="xs:boolean">
-    <xsl:param name="ident"  as="xs:string"/>
-    <xsl:param name="exc" />
-    <xsl:param name="inc" />
-      <xsl:choose>
-        <xsl:when test="not($exc) and not($inc)">true</xsl:when>
-        <xsl:when test="$inc and $ident cast as xs:string  = tokenize($inc, ' ')">true</xsl:when>
-        <xsl:when test="$inc">false</xsl:when>
-        <xsl:when test="$exc and $ident cast as xs:string   = tokenize($exc, ' ')">false</xsl:when>
-        <xsl:otherwise>true</xsl:otherwise>
-      </xsl:choose>
-  </xsl:function>
-
-
-  <xsl:function name="tei:checkExclude" as="xs:boolean">
-    <xsl:param name="ident"  as="xs:string"/>
-    <xsl:param name="exc" />
-      <xsl:choose>
-        <xsl:when test="not($exc)">true</xsl:when>
-        <xsl:when test="$exc and $ident cast as xs:string   = tokenize($exc, ' ')">false</xsl:when>
-        <xsl:otherwise>true</xsl:otherwise>
-      </xsl:choose>
+    <xsl:param name="ident" as="xs:string"/>
+    <!-- the values of $exc and $inc should be space-normalized before reaching us -->
+    <xsl:param name="exc"/>
+    <xsl:param name="inc"/>
+    <xsl:choose>
+      <xsl:when test="not($exc) and not($inc)">
+        <xsl:sequence select="true()"/>
+      </xsl:when>
+      <xsl:when test="$inc  and  $ident = tokenize( $inc,'&#x20;')">
+        <xsl:sequence select="true()"/>
+      </xsl:when>
+      <xsl:when test="$inc">
+        <xsl:sequence select="false()"/>
+      </xsl:when>
+      <xsl:when test="$exc  and  $ident = tokenize( $exc,'&#x20;')">
+        <xsl:sequence select="false()"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="true()"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
 
   <xsl:function name="tei:workOutSource" as="xs:string*">
-    <xsl:param name="e"/>
-    <xsl:variable name="loc">
-      <xsl:choose>
-        <xsl:when test="$e/@source">
-          <xsl:value-of select="$e/@source"/>
-        </xsl:when>
-        <xsl:when test="$e/ancestor::schemaSpec/@source">
-          <xsl:value-of select="$e/ancestor::schemaSpec/@source"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$DEFAULTSOURCE"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+    <xsl:param name="context"/>
+    <xsl:variable name="loc" select="normalize-space( ( $context/@source, $context/ancestor::schemaSpec/@source, $DEFAULTSOURCE )[1] )"/>
+    <!-- 
+         Note: I think the above should probably instead be
+         ( $context/ancestor-or-self::*[@source][1]/@source, $DEFAULTSOURCE )[1]
+         but even if so, that change does not get made in this branch. See issue
+         303 at target="https://github.com/TEIC/Stylesheets/issues/303. —Syd, 2017-12-30
+    -->
     <xsl:variable name="source">
       <xsl:choose>
-        <xsl:when test="starts-with($loc,'file:')">
+        <!-- if $loc is an absolute URI w/ scheme, just use it -->
+        <xsl:when test="matches( $loc,'^(file|https?):')">
           <xsl:value-of select="$loc"/>
         </xsl:when>
-        <xsl:when test="starts-with($loc,'http:')">
-          <xsl:value-of select="$loc"/>
+        <!-- if it is an absolute filepath, use it as a file URI -->
+        <xsl:when test="starts-with( $loc,'/')">
+          <xsl:value-of select="resolve-uri( $loc, 'file:///')"/>
         </xsl:when>
-        <xsl:when test="starts-with($loc,'https:')">
-          <xsl:value-of select="$loc"/>
-        </xsl:when>
-        <xsl:when test="starts-with($loc,'/')">
-          <xsl:value-of select="resolve-uri($loc, 'file:///')"/>
-        </xsl:when>
-        <xsl:when test="starts-with($loc,'tei:')">
-          <xsl:value-of select="replace($loc,'tei:',$defaultTEIServer)"/>
+        <!-- if it is our private URI scheme, expand it automagically -->
+        <xsl:when test="starts-with( $loc,'tei:')">
+          <xsl:value-of select="replace( $loc, 'tei:', $defaultTEIServer )"/>
           <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
         </xsl:when>
-        <xsl:when test="base-uri($top)=''">
+        <!-- 
+             If we can figure out the base URI of the input document, then
+             just use $loc raw (unless user specified an overriding current
+             directory, in which case prepend it).
+        -->
+        <!-- (Note: that is what this code is doing, but I don't get it —Syd, 2017-12-30) -->
+        <xsl:when test="base-uri( $top )=''">
           <xsl:value-of select="$currentDirectory"/>
           <xsl:value-of select="$loc"/>
         </xsl:when>
+        <!-- 
+             OK, so we *can* figure out the base URI, use it. Since
+             user did not specify an overriding current directory,
+             just use URI of source againt base URI of input doc.
+        -->
         <xsl:when test="$currentDirectory=''">
-          <xsl:value-of select="resolve-uri($loc,base-uri($top))"/>
+          <xsl:value-of select="resolve-uri( $loc, base-uri( $top ) )"/>
         </xsl:when>
+        <!-- 
+             Same as above, but user did specify an overriding current
+             directory, so prepend that.
+        -->
         <xsl:otherwise>
-          <xsl:value-of select="resolve-uri(string-join(($currentDirectory, $loc), '/'),base-uri($top))"/>
+          <xsl:value-of select="resolve-uri( string-join( ( $currentDirectory, $loc ),'/'), base-uri( $top ) )"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <!-- OK, now we have a $source URI. -->
     <xsl:choose>
-      <xsl:when test="not(doc-available($source))">
+      <xsl:when test="not( doc-available( $source ) )">
         <xsl:call-template name="die">
           <xsl:with-param name="message">
             <xsl:text>Source </xsl:text>
@@ -282,41 +313,38 @@
   <xsl:function name="tei:message" as="xs:string">
     <xsl:param name="message"/>
     <xsl:message><xsl:copy-of select="$message"/></xsl:message>
-    <xsl:text/>
+    <xsl:text/>       <!--why is this empty <text> here? —Syd, 2017-12-30-->
   </xsl:function>
 
   <xsl:function name="tei:uniqueName" as="xs:string">
-    <xsl:param name="e"/>
-    <xsl:for-each select="$e">
-      <xsl:sequence select="concat(
-                                if ( @ns eq 'http://www.tei-c.org/ns/1.0') then ''
-                                else ( @ns, ancestor::schemaSpec/@ns, '')[1],
-                              @ident
-                            )"/>
-    </xsl:for-each>
+    <xsl:param name="context"/>
+    <xsl:sequence select="concat(
+                          if ( $context/@ns eq 'http://www.tei-c.org/ns/1.0')
+                            then ''
+                            else ( $context/@ns, $context/ancestor::schemaSpec/@ns, '')[1],
+                          $context/@ident
+                          )"/>
   </xsl:function>
 
   <xsl:function name="tei:generate-nsprefix-schematron" as="xs:string">
-    <xsl:param name="e"/>
-    <xsl:for-each select="$e">
-      <xsl:variable name="myns" select="ancestor::elementSpec/@ns"/>
-      <xsl:choose>
-        <xsl:when test="not($myns) or $myns='http://www.tei-c.org/ns/1.0'">
-          <xsl:text>tei:</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:choose>
-            <xsl:when test="ancestor::schemaSpec//sch:ns[@uri=$myns]">
-              <xsl:value-of
-                  select="concat(ancestor::schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="ancestor::elementSpec/@ident"/></xsl:message>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+    <xsl:param name="context"/>
+    <xsl:variable name="myns" select="$context/ancestor::elementSpec/@ns"/>
+    <xsl:choose>
+      <xsl:when test="not($myns) or $myns eq 'http://www.tei-c.org/ns/1.0'">
+        <xsl:text>tei:</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:choose>
+          <xsl:when test="$context/ancestor::schemaSpec//sch:ns[@uri=$myns]">
+            <xsl:value-of
+                select="concat($context/ancestor::schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="$context/ancestor::elementSpec/@ident"/></xsl:message>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
 
   <xsl:template name="die">
@@ -677,8 +705,8 @@
   <xsl:template name="odd2odd-expandModule">
     <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
     <xsl:variable name="name" select="@key"/>
-    <xsl:variable name="exc" select="@except"/>
-    <xsl:variable name="inc"  select="@include"/>
+    <xsl:variable name="exc" select="normalize-space( @except )"/>
+    <xsl:variable name="inc" select="normalize-space( @include )"/>
     <xsl:sequence select="if ($verbose='true') then
                           tei:message(concat('Process module reference to [',@key,'] with exclusion/inclusion of [',@except,'/',@include,']')) else ()"/>
           <xsl:for-each select="document($sourceDoc,$top)">
