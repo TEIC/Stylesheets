@@ -139,6 +139,23 @@
   <xsl:key name="odd2odd-SCHEMASPECS" match="schemaSpec" use="1"/>
 
   <!-- ***** global variables ***** -->
+  <xsl:variable name="top" select="/"/>
+  
+  <xsl:variable name="ODD">
+    <xsl:for-each select="/*">
+      <xsl:copy>
+        <xsl:attribute name="xml:base" select="document-uri(/)"/>
+        <xsl:copy-of select="@*"/>
+        <xsl:if test="$useVersionFromTEI eq 'true'">
+          <xsl:processing-instruction name="TEIVERSION">
+            <xsl:call-template name="odd2odd-getversion"/>
+          </xsl:processing-instruction>
+        </xsl:if>
+        <xsl:apply-templates mode="pass0"/>
+      </xsl:copy>
+    </xsl:for-each>
+  </xsl:variable>
+  
   <xsl:variable name="whichSchemaSpec">
     <!--
         We use the schemaSpec the user specified via a parameter or,
@@ -196,7 +213,6 @@
   <xsl:variable name="teins" select="'http://www.tei-c.org/ns/1.0'"/>
 
   <!-- ***** functions ***** -->
-  
   <!-- 
     NOTE added 2016-12-02 by Syd: Many, if not most, of the functions
     below duplicate in name functions that are in teiodds.xsl. The
@@ -349,39 +365,6 @@
                           )"/>
   </xsl:function>
 
-  <xd:doc>
-    <xd:desc>Function to generate ...</xd:desc>
-    <xd:param name="context">the context node from where we were called</xd:param>
-  </xd:doc>
-  <xsl:function name="tei:generate-nsprefix-schematron" as="xs:string">
-    <xsl:param name="context"/>
-    <xsl:variable name="myns" select="$context/ancestor::elementSpec/@ns"/>
-    <xsl:choose>
-      <xsl:when test="not($myns) or $myns eq $teins">
-        <xsl:text>tei:</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="$context/ancestor::schemaSpec//sch:ns[@uri=$myns]">
-            <xsl:value-of
-                select="concat($context/ancestor::schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="$context/ancestor::elementSpec/@ident"/></xsl:message>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:function>
-
-  <xsl:template name="die">
-    <xsl:param name="message"/>
-    <xsl:message terminate="yes">
-      <xsl:text>Error: odd2odd.xsl: </xsl:text>
-      <xsl:value-of select="$message"/>
-    </xsl:message>
-  </xsl:template>
-
   <xsl:function name="tei:minOmaxO" as="xs:integer+">
     <!-- Input: the string values of the attributes @minOccurs and -->
     <!--        @maxOccurs  -->
@@ -411,29 +394,17 @@
     <xsl:sequence select="( $min, $max )"/>
   </xsl:function>
 
-  <xsl:variable name="ODD">
-    <xsl:for-each select="/*">
-      <xsl:copy>
-              <xsl:attribute name="xml:base" select="document-uri(/)"/>
-        <xsl:copy-of select="@*"/>
-        <xsl:if test="$useVersionFromTEI='true'">
-          <xsl:processing-instruction name="TEIVERSION">
-            <xsl:call-template name="odd2odd-getversion"/>
-          </xsl:processing-instruction>
-        </xsl:if>
-        <xsl:apply-templates mode="pass0"/>
-      </xsl:copy>
-    </xsl:for-each>
-  </xsl:variable>
-
-  <xsl:variable name="top" select="/"/>
-
+  <!-- ***** subroutines (called templates) ***** -->
+  <xsl:template name="die">
+    <xsl:param name="message"/>
+    <xsl:message terminate="yes">
+      <xsl:text>Error: odd2odd.xsl: </xsl:text>
+      <xsl:value-of select="$message"/>
+    </xsl:message>
+  </xsl:template>
+  
+  <!-- ***** start main processing ***** -->
   <xsl:template match="/">
-    <!--
-        <xsl:result-document href="/tmp/odd2odd-pass0.xml">
-          <xsl:copy-of select="$ODD"/>
-        </xsl:result-document>
-        -->
     <xsl:apply-templates mode="pass1" select="$ODD"/>
   </xsl:template>
 
