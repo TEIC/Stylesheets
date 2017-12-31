@@ -334,6 +334,8 @@
     <xd:desc>Function to generate a unique key based on the namespace in which we are
     currently generating constructs and the local name of the construct being addressed.</xd:desc>
     <xd:param name="context">the context node from where we were called</xd:param>
+    <xd:return>a string that can be used to uniquely identify the construct represented by the $context.
+    In particular, its namespace (if other than TEI) concatonated to its identifier.</xd:return>
   </xd:doc>
   <xsl:function name="tei:uniqueName" as="xs:string">
     <xsl:param name="context"/>
@@ -345,11 +347,12 @@
                           )"/>
   </xsl:function>
 
-  <xsl:function name="tei:minOmaxO" as="xs:integer+">
-    <!-- Input: the string values of the attributes @minOccurs and -->
-    <!--        @maxOccurs  -->
-    <!-- Oputput: a sequence of 2 integers representing the integer -->
-    <!--          values thereof with -1 used to indicate "unbounded" -->
+  <xd:doc>
+    <xd:param name="minOccurs">string value of @minOccurs attr</xd:param>
+    <xd:param name="maxOccurs">string value of @maxOccurs attr</xd:param>
+    <xd:return>a sequence of 2 integers representing the integer values thereof with -1 used to indicate "unbounded"</xd:return>
+  </xd:doc>
+  <xsl:function name="tei:minOmaxO" as="xs:integer">
     <xsl:param name="minOccurs"/>
     <xsl:param name="maxOccurs"/>
     <!-- get the value of @minOccurs, defaulting to "1" -->
@@ -375,6 +378,11 @@
   </xsl:function>
 
   <!-- ***** subroutines (called templates) ***** -->
+  <xd:doc>
+    <xd:desc>Issue error msg and stop execution</xd:desc>
+    <xd:param name="message">the error message to display</xd:param>
+    <xd:return>N/A: execution is halted.</xd:return>
+  </xd:doc>
   <xsl:template name="die">
     <xsl:param name="message"/>
     <xsl:message terminate="yes">
@@ -384,73 +392,119 @@
   </xsl:template>
   
   <!-- ***** start main processing ***** -->
+  <xd:doc>
+    <xd:desc>Process root by taking output of pass0 and processing in pass1</xd:desc>
+  </xd:doc>
   <xsl:template match="/">
     <xsl:apply-templates mode="pass1" select="$ODD"/>
   </xsl:template>
 
   <!-- ******************* Pass 0, follow and expand specGrp ********************************* -->
 
-  <xsl:template match="specGrp" mode="pass0">
+  <xd:doc>
+    <xd:desc><xd:i>pass 0</xd:i>: unless specified below, just copy over</xd:desc>
+  </xd:doc>
+  <xsl:template match="@*|node()" mode="pass0">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()" mode="pass0"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xd:doc>
+    <xd:desc><xd:i>pass 0</xd:i>: Ignore &lt;specGrp> w/o interesting children</xd:desc>
+  </xd:doc>
+  <xsl:template match="specGrp">
     <xsl:if test="$verbose">
-      <xsl:message>Phase 0: summarize specGrp <xsl:value-of select="@xml:id"/>
-      </xsl:message>
-    </xsl:if>
-    <xsl:if test="specGrpRef|elementSpec|classSpec|macroSpec|dataSpec|moduleRef">
-    <table rend="specGrpSummary">
-      <xsl:for-each select="specGrpRef|elementSpec|classSpec|macroSpec|dataSpec|moduleRef">
-        <row>
-          <xsl:choose>
-            <xsl:when test="self::specGrpRef">
-              <cell>
-                <ref target="#{@target}">reference <xsl:value-of select="@target"/></ref>
-              </cell>
-              <cell/>
-            </xsl:when>
-            <xsl:when test="self::elementSpec">
-              <cell>
-                Element <gi><xsl:value-of select="@ident"/></gi>
-              </cell>
-              <cell>
-                <xsl:value-of select="@mode"/>
-              </cell>
-            </xsl:when>
-            <xsl:when test="self::classSpec">
-              <cell>
-                Class <ident type="class"><xsl:value-of select="@ident"/></ident>
-              </cell>
-              <cell>
-                <xsl:value-of select="@mode"/>
-              </cell>
-            </xsl:when>
-            <xsl:when test="self::dataSpec">
-              <cell>
-                Data <ident type="macro"><xsl:value-of select="@ident"/></ident>
-              </cell>
-              <cell>
-                <xsl:value-of select="@mode"/>
-              </cell>
-            </xsl:when>
-            <xsl:when test="self::macroSpec">
-              <cell>
-                Macro <ident type="macro"><xsl:value-of select="@ident"/></ident>
-              </cell>
-              <cell>
-                <xsl:value-of select="@mode"/>
-              </cell>
-            </xsl:when>
-            <xsl:when test="self::moduleRef">
-              <cell>
-                Module <xsl:value-of select="@key"/>
-              </cell>
-              <cell/>
-            </xsl:when>
-          </xsl:choose>
-        </row>
-      </xsl:for-each>
-    </table>
+      <xsl:message>Phase 0: ignore childless specGrp <xsl:value-of select="@xml:id"/>&#x0A;</xsl:message>
     </xsl:if>
   </xsl:template>
-
+  
+  <xd:doc>
+    <xd:desc><xd:i>pass 0</xd:i>: Generate a descriptive table of the &lt;specGrp></xd:desc>
+  </xd:doc>
+  <xsl:template match="specGrp[ specGrpRef | elementSpec | classSpec | macroSpec | dataSpec | moduleRef ]" mode="pass0">
+    <xsl:if test="$verbose">
+      <xsl:message>Phase 0: summarize specGrp <xsl:value-of select="@xml:id"/>&#x0A;</xsl:message>
+    </xsl:if>
+    <table rend="specGrpSummary">
+      <xsl:apply-templates select="specGrpRef|elementSpec|classSpec|macroSpec|dataSpec|moduleRef" mode="specGrpTableRow"></xsl:apply-templates>
+    </table>
+  </xsl:template>
+  <xd:doc>
+    <xd:desc><xd:i>pass 0</xd:i>: table row for &lt;specGrpRef: prose in cell 1</xd:desc>
+  </xd:doc>
+  <xsl:template match="specGrpRef" mode="specGrpTableRow">
+    <row>
+      <cell>
+        <ref target="#{@target}">reference <xsl:value-of select="@target"/></ref>
+      </cell>
+      <cell/>
+    </row>
+  </xsl:template>
+  <xd:doc>
+    <xd:desc><xd:i>pass 0</xd:i>: table row for &lt;elementSpec: prose in cell 1, mode in cell 2</xd:desc>
+  </xd:doc>
+  <xsl:template match="elementSpec" mode="specGrpTableRow">
+    <row>
+      <cell>
+        Element <gi><xsl:value-of select="@ident"/></gi>
+      </cell>
+      <cell>
+        <xsl:value-of select="@mode"/>
+      </cell>
+    </row>
+  </xsl:template>
+  <xd:doc>
+    <xd:desc><xd:i>pass 0</xd:i>: table row for &lt;classSpec: prose in cell 1, mode in cell 2</xd:desc>
+  </xd:doc>
+  <xsl:template match="classSpec" mode="specGrpTableRow">
+    <row>
+      <cell>
+        Class <ident type="class"><xsl:value-of select="@ident"/></ident>
+      </cell>
+      <cell>
+        <xsl:value-of select="@mode"/>
+      </cell>
+    </row>
+  </xsl:template>
+  <xd:doc>
+    <xd:desc><xd:i>pass 0</xd:i>: table row for &lt;macroSpec: prose in cell 1, mode in cell 2</xd:desc>
+  </xd:doc>
+  <xsl:template match="macroSpec" mode="specGrpTableRow">
+    <row>
+      <cell>
+        Macro <ident type="macro"><xsl:value-of select="@ident"/></ident>
+      </cell>
+      <cell>
+        <xsl:value-of select="@mode"/>
+      </cell>
+    </row>
+  </xsl:template>
+  <xd:doc>
+    <xd:desc><xd:i>pass 0</xd:i>: table row for &lt;dataSpec: prose in cell 1, mode in cell 2</xd:desc>
+  </xd:doc>
+  <xsl:template match="dataSpec" mode="specGrpTableRow">
+    <row>
+      <cell>
+        Data <ident type="macro"><xsl:value-of select="@ident"/></ident>
+      </cell>
+      <cell>
+        <xsl:value-of select="@mode"/>
+      </cell>
+    </row>
+  </xsl:template>
+  <xd:doc>
+    <xd:desc><xd:i>pass 0</xd:i>: table row for &lt;moduleRef: prose in cell 1</xd:desc>
+  </xd:doc>
+  <xsl:template match="moduleRef" mode="specGrpTableRow">
+    <row>
+      <cell>
+        Module <xsl:value-of select="@key"/>
+      </cell>
+      <cell/>
+    </row>
+  </xsl:template>
+  
   <xsl:template match="schemaSpec" mode="pass0">
     <xsl:if test="@ident=$selectedSchema or ($selectedSchema='' and not(preceding-sibling::schemaSpec))">
       <xsl:copy>
@@ -511,15 +565,6 @@
         </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-
-  <xsl:template match="@*|processing-instruction()|text()|comment()" mode="pass0">
-      <xsl:copy/>
-  </xsl:template>
-  <xsl:template match="*" mode="pass0">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="pass0"/>
-    </xsl:copy>
   </xsl:template>
 
   <xsl:template match="elementSpec[@mode eq 'change']|classSpec[@mode eq 'change']|macroSpec[@mode eq 'change']|dataSpec[@mode eq 'change']"
