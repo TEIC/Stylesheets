@@ -65,7 +65,7 @@
   <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
   <xsl:param name="defaultTEIVersion">current</xsl:param>
   <xsl:param name="doclang"/>
-  <xsl:param name="selectedSchema"/>
+  <xsl:param name="selectedSchema" select="//schemaSpec[1]/@ident"/>
   <xsl:param name="stripped">false</xsl:param>
   <!-- following param, added 2016-06-06 by Syd Bauman for use by TEI
        in Libraries Best Practices Guidelines. If set to 'true' then
@@ -136,8 +136,6 @@
 
   <xsl:key name="odd2odd-REPLACEATT" match="attDef[@mode eq 'replace']" use="concat(../../@ident,'_',@ident)"/>
 
-  <xsl:key name="odd2odd-SCHEMASPECS" match="schemaSpec" use="1"/>
-
   <!-- ***** global variables ***** -->
   <xsl:variable name="top" select="/"/>
   
@@ -156,25 +154,6 @@
     </xsl:for-each>
   </xsl:variable>
   
-  <xsl:variable name="whichSchemaSpec">
-    <!--
-        We use the schemaSpec the user specified via a parameter or,
-        if she didn't, then the first one found in document order. We
-        can't just use
-            select="( $selectedSchema, key('odd2odd-SCHEMASPECS',1)[1]/@ident )[1]"
-        because $selectedSchema is a string, and would get returned
-        even if nil.
-    -->
-    <xsl:choose>
-      <xsl:when test="$selectedSchema ne ''">
-        <xsl:value-of select="$selectedSchema"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="key('odd2odd-SCHEMASPECS',1)[1]/@ident"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-
   <!-- location of source XML file for language we are customizing -->
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
@@ -2029,9 +2008,9 @@
 
   <xsl:template name="odd2odd-getversion">
     <xsl:choose>
-      <xsl:when test="key('odd2odd-SCHEMASPECS',$whichSchemaSpec)">
+      <xsl:when test="key('odd2odd-SCHEMASPECS',$selectedSchema)">
         <xsl:for-each
-            select="key('odd2odd-SCHEMASPECS',$whichSchemaSpec)">
+            select="key('odd2odd-SCHEMASPECS',$selectedSchema)">
           <xsl:variable name="source" select="tei:workOutSource(.)"/>
           <xsl:for-each select="document($source)/TEI/teiHeader/fileDesc/editionStmt/edition">
             <xsl:value-of select="."/>
