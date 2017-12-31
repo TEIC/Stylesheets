@@ -11,6 +11,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
     version="2.0"
+    xmlns="http://www.tei-c.org/ns/1.0"
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     exclude-result-prefixes="#all">
 
@@ -192,6 +193,10 @@
     </xsl:choose>
   </xsl:variable>
 
+  <xsl:variable name="teins" select="'http://www.tei-c.org/ns/1.0'"/>
+
+  <!-- ***** functions ***** -->
+  
   <!-- 
     NOTE added 2016-12-02 by Syd: Many, if not most, of the functions
     below duplicate in name functions that are in teiodds.xsl. The
@@ -214,6 +219,9 @@
       identifier is not in its list, or b) there is an @except and the identifier
       is in its list.</xd:p>
     </xd:desc>
+    <xd:param name="ident">a GI or an attribute name</xd:param>
+    <xd:param name="exc">the @except list from the &lt;moduleRef> the &lt;classRef> being examined</xd:param>
+    <xd:param name="inc">the @include list from the &lt;moduleRef> the &lt;classRef> being examined</xd:param>
   </xd:doc>
   <xsl:function name="tei:includeMember" as="xs:boolean">
     <xsl:param name="ident" as="xs:string"/>
@@ -239,7 +247,14 @@
     </xsl:choose>
   </xsl:function>
 
-  <xsl:function name="tei:workOutSource" as="xs:string*">
+  <xd:doc>
+    <xd:desc>
+      <xd:p>Given a context node, figure out which ODD source file it
+      is supposed to be customizing.</xd:p>
+    </xd:desc>
+    <xd:param name="context">the context node from where we were called</xd:param>
+  </xd:doc>
+  <xsl:function name="tei:workOutSource" as="xs:anyURI">
     <xsl:param name="context"/>
     <xsl:variable name="loc" select="normalize-space( ( $context/@source, $context/ancestor::schemaSpec/@source, $DEFAULTSOURCE )[1] )"/>
     <!-- 
@@ -269,7 +284,7 @@
              directory, in which case prepend it).
         -->
         <!-- (Note: that is what this code is doing, but I don't get it —Syd, 2017-12-30) -->
-        <xsl:when test="base-uri( $top )=''">
+        <xsl:when test="base-uri( $top ) eq ''">
           <xsl:value-of select="$currentDirectory"/>
           <xsl:value-of select="$loc"/>
         </xsl:when>
@@ -292,7 +307,13 @@
     </xsl:variable>
     <!-- OK, now we have a $source URI. -->
     <xsl:choose>
-      <xsl:when test="not( doc-available( $source ) )">
+      <xsl:when test="doc-available( $source )">
+        <xsl:if test="$verbose eq 'true'">
+          <xsl:message>Setting source document to <xsl:value-of select="$source"/></xsl:message>
+        </xsl:if>
+        <xsl:sequence select="$source"/>
+      </xsl:when>
+      <xsl:otherwise>
         <xsl:call-template name="die">
           <xsl:with-param name="message">
             <xsl:text>Source </xsl:text>
@@ -300,37 +321,43 @@
             <xsl:text> not readable</xsl:text>
           </xsl:with-param>
         </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Setting source document to <xsl:value-of select="$source"/></xsl:message>
-        </xsl:if>
-        <xsl:sequence select="$source"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
 
-  <xsl:function name="tei:message" as="xs:string">
+  <xd:doc>
+    <xd:desc>Function to execute an &lt;xsl:message></xd:desc>
+    <xd:param name="message">the message text to emit</xd:param>
+  </xd:doc>
+  <xsl:function name="tei:message" as="empty-sequence()">
     <xsl:param name="message"/>
-    <xsl:message><xsl:copy-of select="$message"/></xsl:message>
-    <xsl:text/>       <!--why is this empty <text> here? —Syd, 2017-12-30-->
+    <xsl:message><xsl:value-of select="$message"/></xsl:message>
   </xsl:function>
 
+  <xd:doc>
+    <xd:desc>Function to generate a unique key based on the namespace in which we are
+    currently generating constructs and the local name of the construct being addressed.</xd:desc>
+    <xd:param name="context">the context node from where we were called</xd:param>
+  </xd:doc>
   <xsl:function name="tei:uniqueName" as="xs:string">
     <xsl:param name="context"/>
     <xsl:sequence select="concat(
-                          if ( $context/@ns eq 'http://www.tei-c.org/ns/1.0')
+                          if ( $context/@ns eq $teins )
                             then ''
                             else ( $context/@ns, $context/ancestor::schemaSpec/@ns, '')[1],
                           $context/@ident
                           )"/>
   </xsl:function>
 
+  <xd:doc>
+    <xd:desc>Function to generate ...</xd:desc>
+    <xd:param name="context">the context node from where we were called</xd:param>
+  </xd:doc>
   <xsl:function name="tei:generate-nsprefix-schematron" as="xs:string">
     <xsl:param name="context"/>
     <xsl:variable name="myns" select="$context/ancestor::elementSpec/@ns"/>
     <xsl:choose>
-      <xsl:when test="not($myns) or $myns eq 'http://www.tei-c.org/ns/1.0'">
+      <xsl:when test="not($myns) or $myns eq $teins">
         <xsl:text>tei:</xsl:text>
       </xsl:when>
       <xsl:otherwise>
@@ -418,7 +445,7 @@
       </xsl:message>
     </xsl:if>
     <xsl:if test="specGrpRef|elementSpec|classSpec|macroSpec|dataSpec|moduleRef">
-    <table xmlns="http://www.tei-c.org/ns/1.0" rend="specGrpSummary">
+    <table rend="specGrpSummary">
       <xsl:for-each select="specGrpRef|elementSpec|classSpec|macroSpec|dataSpec|moduleRef">
         <row>
           <xsl:choose>
@@ -931,7 +958,7 @@
             </xsl:otherwise>
           </xsl:choose>
           <!-- classes -->
-          <classes xmlns="http://www.tei-c.org/ns/1.0">
+          <classes>
             <xsl:choose>
               <xsl:when test="classes[@mode eq 'change']">
                 <xsl:for-each select="classes/memberOf">
@@ -995,7 +1022,7 @@
             </xsl:otherwise>
           </xsl:choose>
           <!-- element content -->
-          <content xmlns="http://www.tei-c.org/ns/1.0">
+          <content>
             <xsl:choose>
               <xsl:when test="content and not(content/*)"/>
               <xsl:when test="content/rng:*">
@@ -1017,7 +1044,7 @@
             <xsl:with-param name="elementName" select="$elementName"/>
           </xsl:call-template>
           <!-- attList -->
-          <attList xmlns="http://www.tei-c.org/ns/1.0">
+          <attList>
             <xsl:apply-templates mode="justcopy" select="attList/@org"/>
             <xsl:call-template name="odd2odd-processAttributes">
               <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
@@ -1243,7 +1270,7 @@
             </xsl:otherwise>
           </xsl:choose>
           <!-- classes -->
-          <classes xmlns="http://www.tei-c.org/ns/1.0">
+          <classes>
             <xsl:choose>
               <xsl:when test="classes[@mode eq 'change']">
                 <xsl:for-each select="classes/memberOf">
@@ -1302,7 +1329,7 @@
             <xsl:with-param name="elementName" select="$className"/>
           </xsl:call-template>
           <!-- attList -->
-          <attList xmlns="http://www.tei-c.org/ns/1.0">
+          <attList>
             <xsl:call-template name="odd2odd-processAttributes">
               <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
               <xsl:with-param name="objectName" select="$className"/>
@@ -1558,7 +1585,7 @@
     <xsl:choose>
       <xsl:when test="key('odd2odd-DELETE',$k)"/>
       <xsl:otherwise>
-        <memberOf xmlns="http://www.tei-c.org/ns/1.0" key="{$k}">
+        <memberOf key="{$k}">
           <xsl:copy-of select="@min|@max"/>
         </memberOf>
       </xsl:otherwise>
@@ -1611,7 +1638,7 @@
     <xsl:apply-templates mode="odd2odd-copy" select="content"/>
     <xsl:apply-templates mode="odd2odd-copy" select="constraintSpec"/>
     <xsl:if test="attList">
-      <attList xmlns="http://www.tei-c.org/ns/1.0">
+      <attList>
         <xsl:choose>
           <xsl:when test="attList[@org='choice']">
             <xsl:for-each select="attList">
@@ -1648,13 +1675,13 @@
     <!-- we are sitting in the ODD -->
     <!-- first put in the ones we know take precedence as replacements -->
     <xsl:for-each select="attList/attDef[@mode eq 'replace' and @ident=$ORIGINAL/attList//attDef/@ident]">
-      <attDef xmlns="http://www.tei-c.org/ns/1.0" >
+      <attDef >
         <xsl:apply-templates select="@*"/>
         <xsl:apply-templates mode="justcopy"/>
       </attDef>
     </xsl:for-each>
     <xsl:for-each select="attList/attDef[@mode eq 'add' or not(@mode)]">
-      <attDef xmlns="http://www.tei-c.org/ns/1.0" >
+      <attDef >
         <xsl:apply-templates select="@*[not(name()='mode')]"/>
         <xsl:apply-templates mode="justcopy"/>
       </attDef>
@@ -1675,7 +1702,7 @@
       <!-- original source  context -->
       <!-- first looking at nested attList -->
       <xsl:for-each select="attList">
-        <attList xmlns="http://www.tei-c.org/ns/1.0">
+        <attList>
           <xsl:copy-of select="@org"/>
           <xsl:for-each select="attDef">
             <xsl:variable name="ATT" select="."/>
@@ -1732,7 +1759,7 @@
       </xsl:variable>
       <xsl:choose>
         <xsl:when test="@org">
-          <attList xmlns="http://www.tei-c.org/ns/1.0">
+          <attList>
             <xsl:copy-of select="@org"/>
             <xsl:copy-of select="$atts"/>
           </attList>
@@ -1746,7 +1773,7 @@
   <xsl:template name="odd2odd-mergeAttribute">
     <xsl:param name="New"/>
     <xsl:param name="Old"/>
-    <attDef xmlns="http://www.tei-c.org/ns/1.0">
+    <attDef>
       <xsl:attribute name="ident" select="$Old/@ident"/>
       <xsl:copy-of select="$Old/@mode"/>
       <xsl:if test="$Old/@mode">
@@ -1961,7 +1988,7 @@
         <xsl:apply-templates mode="justcopy" select="classes"/>
         <xsl:apply-templates mode="odd2odd-copy" select="content"/>
         <xsl:apply-templates mode="odd2odd-copy" select="constraintSpec"/>
-        <attList xmlns="http://www.tei-c.org/ns/1.0">
+        <attList>
           <xsl:apply-templates select="attList"/>
         </attList>
         <xsl:if test="$stripped='false'">
@@ -2120,7 +2147,7 @@
             <!-- the chapter ID is on the highest ancestor or self div -->
             <xsl:variable name="chapter"
               select="document($sourceDoc)/id($target)/ancestor-or-self::div[not(ancestor::div)]/@xml:id"/>
-            <ref  xmlns="http://www.tei-c.org/ns/1.0"
+            <ref 
               target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/{$chapter}.html#{$target}">
               <xsl:for-each select="document($sourceDoc)/id($target)">
                 <xsl:number count="div" format="1.1.1." level="multiple"/>
@@ -2287,7 +2314,7 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="key('odd2odd-REFED',$k)">
-        <dataSpec xmlns="http://www.tei-c.org/ns/1.0" >
+        <dataSpec >
           <xsl:copy-of select="@*"/>
           <xsl:apply-templates mode="pass3"/>
         </dataSpec>
