@@ -230,7 +230,7 @@
     <xsl:param name="exc"/>
     <xsl:param name="inc"/>
     <xsl:choose>
-      <xsl:when test="not($exc) and not($inc)">
+      <xsl:when test="not($exc)  and  not($inc)">
         <xsl:sequence select="true()"/>
       </xsl:when>
       <xsl:when test="$inc  and  $ident = tokenize( $inc,'&#x20;')">
@@ -403,7 +403,7 @@
   <xsl:template match="/">
     <xsl:apply-templates mode="pass1" select="$ODD"/>
   </xsl:template>
-
+  
   <xd:doc>
     <xd:desc>In both major passes (pass0 and pass1), for the most part we are performing
     an identity transform, except as specified below</xd:desc>
@@ -413,6 +413,7 @@
       <xsl:apply-templates select="@*|node()" mode="#current"/>
     </xsl:copy>
   </xsl:template>
+  
   
   <!-- ******************* Pass 0, follow and expand specGrp ********************************* -->
 
@@ -619,46 +620,30 @@
 
   <!-- ******************* Phase 1, expand schemaSpec ********************************* -->
 
+  <xd:doc>
+    <xd:desc>
+      <xd:p><xd:i>pass 1</xd:i>: Process &lt;schemaSpec>s</xd:p>
+      <xd:p>First, generate a temporary copy of the &lt;schemaSpec> that has the results
+      of processing first the &lt;moduleRef>s, and then my other children, in 
+      mode "pass1". Then process all the child nodes of that temporary &lt;schemaSpec>
+      in mode "pass2", and return the result to the output tree.</xd:p>
+    </xd:desc>
+  </xd:doc>
   <xsl:template match="schemaSpec" mode="pass1">
     <xsl:variable name="pass1">
       <xsl:copy>
         <xsl:copy-of select="@*"/>
-        <xsl:sequence select="if ($verbose)then
-          tei:message(concat('Schema pass 1: ',@ident)) else ()"/>
-
-        <!--
-          it is important to process "tei" and "core" first
-          because of the order of declarations
-        -->
-        <xsl:for-each select="moduleRef[@key eq 'tei']">
-          <xsl:call-template name="odd2odd-expandModule"/>
-        </xsl:for-each>
-
-        <xsl:for-each select="moduleRef[@key eq 'core']">
-          <xsl:call-template name="odd2odd-expandModule"/>
-        </xsl:for-each>
-
-        <xsl:for-each select="moduleRef[@key]">
-          <xsl:if test="not(@key eq 'tei' or @key eq 'core')">
-            <xsl:call-template name="odd2odd-expandModule"/>
-          </xsl:if>
-        </xsl:for-each>
-        <xsl:for-each
-          select="*[not(self::moduleRef[@key])]">
-          <xsl:apply-templates select="." mode="pass1"/>
-        </xsl:for-each>
+        <xsl:sequence select="if ($verbose)then tei:message(concat('Schema pass 1: ',@ident)) else ()"/>
+        <!-- process "tei" and "core" first due to order of declarations -->
+        <xsl:apply-templates select="moduleRef[@key eq 'tei']" mode="pass1"/>
+        <xsl:apply-templates select="moduleRef[@key eq 'core']" mode="pass1"/>
+        <xsl:apply-templates select="moduleRef[@key][ not( @key = ('tei','core') )]" mode="pass1"/>
+        <xsl:apply-templates select="* except moduleRef[@key]" mode="pass1"/>
       </xsl:copy>
     </xsl:variable>
-    <!--
-        <xsl:result-document href="/tmp/odd2odd-pass1.xml">
-          <xsl:copy-of select="$pass1"/>
-        </xsl:result-document>
-    -->
-    <xsl:for-each select="$pass1">
-      <xsl:apply-templates mode="pass2"/>
-    </xsl:for-each>
+    <xsl:apply-templates select="$pass1/*" mode="pass2"/>
   </xsl:template>
-
+  
   <xsl:template match="elementSpec[@mode eq 'delete']|classSpec[@mode eq 'delete']|macroSpec[@mode eq 'delete']|dataSpec[@mode eq 'delete']"
                 mode="pass1">
         <xsl:if test="$verbose">
@@ -688,12 +673,11 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template mode="pass1"
-                match="schemaSpec//classSpec[  @mode eq 'add' or not(@mode) ]
+  <xsl:template match="schemaSpec//classSpec[  @mode eq 'add' or not(@mode) ]
                      | schemaSpec//macroSpec[  @mode eq 'add' or not(@mode) ]
                      | schemaSpec//dataSpec [  @mode eq 'add' or not(@mode) ]
-                     | schemaSpec//elementSpec[@mode eq 'add' or not(@mode) ]
-                     ">
+                     | schemaSpec//elementSpec[@mode eq 'add' or not(@mode) ]"
+                     mode="pass1">
     <xsl:call-template name="odd2odd-createCopy"/>
   </xsl:template>
 
@@ -740,7 +724,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="odd2odd-expandModule">
+  <xsl:template match="moduleRef" mode="pass1">
     <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
     <xsl:variable name="name" select="@key"/>
     <xsl:variable name="exc" select="normalize-space( @except )"/>
