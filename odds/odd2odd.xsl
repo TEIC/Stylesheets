@@ -1612,15 +1612,11 @@
 
   <xsl:template match="elementSpec" mode="odd2odd-copy">
     <xsl:copy>
-      <xsl:call-template name="odd2odd-copyElementSpec">
-        <xsl:with-param name="n" select="'1'"/>
-      </xsl:call-template>
+      <xsl:call-template name="odd2odd-copyElementSpec"/>
     </xsl:copy>
   </xsl:template>
 
   <xsl:template name="odd2odd-copyElementSpec">
-    <xsl:param name="n"/>
-    <xsl:variable name="orig" select="."/>
     <xsl:apply-templates mode="odd2odd-copy" select="@*"/>
     <xsl:apply-templates mode="justcopy" select="altIdent"/>
     <xsl:if test="not($stripped)">
@@ -2017,11 +2013,15 @@
     </xsl:if>
     <xsl:copy>
       <xsl:attribute name="rend">add</xsl:attribute>
+      <!-- make sure this <*Spec> element has a @module attribute -->
       <xsl:choose>
+        <!-- already has one, so do nothing (it will presumably get copied later) -->
         <xsl:when test="@module"/>
+        <!-- if the schema we are defining specifies a module name, use it -->
         <xsl:when test="ancestor::schemaSpec/@module">
           <xsl:copy-of select="ancestor::schemaSpec/@module"/>
         </xsl:when>
+        <!-- if not, make one up -->
         <xsl:otherwise>
           <xsl:attribute name="module">
             <xsl:text>derived-module-</xsl:text>
@@ -2030,22 +2030,20 @@
         </xsl:otherwise>
       </xsl:choose>
       <xsl:choose>
-        <xsl:when test="local-name()='classSpec'">
+        <xsl:when test="self::classSpec">
           <xsl:if test="@type eq 'model' and not(@predeclare)">
             <xsl:attribute name="predeclare">true</xsl:attribute>
           </xsl:if>
           <xsl:apply-templates mode="odd2odd-copy" select="@*|*|processing-instruction()|text()"/>
         </xsl:when>
-        <xsl:when test="local-name()='macroSpec'">
+        <xsl:when test="self::macroSpec">
           <xsl:apply-templates mode="odd2odd-copy" select="@*|*|processing-instruction()|text()"/>
         </xsl:when>
-        <xsl:when test="local-name()='dataSpec'">
+        <xsl:when test="self::dataSpec">
           <xsl:apply-templates mode="odd2odd-copy" select="@*|*|processing-instruction()|text()"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:call-template name="odd2odd-copyElementSpec">
-            <xsl:with-param name="n" select="'2'"/>
-          </xsl:call-template>
+          <xsl:call-template name="odd2odd-copyElementSpec"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:copy>
