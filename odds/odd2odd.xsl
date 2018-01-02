@@ -404,17 +404,18 @@
     <xsl:apply-templates mode="pass1" select="$ODD"/>
   </xsl:template>
 
-  <!-- ******************* Pass 0, follow and expand specGrp ********************************* -->
-
   <xd:doc>
-    <xd:desc><xd:i>pass 0</xd:i>: unless specified below, just copy over</xd:desc>
+    <xd:desc>In both major passes (pass0 and pass1), for the most part we are performing
+    an identity transform, except as specified below</xd:desc>
   </xd:doc>
-  <xsl:template match="@*|node()" mode="pass0">
+  <xsl:template match="@*|node()" mode="pass0 pass1">
     <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="pass0"/>
+      <xsl:apply-templates select="@*|node()" mode="#current"/>
     </xsl:copy>
   </xsl:template>
   
+  <!-- ******************* Pass 0, follow and expand specGrp ********************************* -->
+
   <xd:doc>
     <xd:desc><xd:i>pass 0</xd:i>: Ignore &lt;specGrp> w/o interesting children</xd:desc>
   </xd:doc>
@@ -656,16 +657,6 @@
     <xsl:for-each select="$pass1">
       <xsl:apply-templates mode="pass2"/>
     </xsl:for-each>
-  </xsl:template>
-
-  <xsl:template match="*" mode="pass1">
-    <xsl:copy>
-      <xsl:apply-templates mode="pass1" select="@*|*|processing-instruction()|comment()|text()"/>
-    </xsl:copy>
-  </xsl:template>
-
-  <xsl:template match="@*|processing-instruction()|text()|comment()" mode="pass1">
-    <xsl:copy-of select="."/>
   </xsl:template>
 
   <xsl:template match="elementSpec[@mode eq 'delete']|classSpec[@mode eq 'delete']|macroSpec[@mode eq 'delete']|dataSpec[@mode eq 'delete']"
