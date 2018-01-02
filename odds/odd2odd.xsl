@@ -644,40 +644,39 @@
     <xsl:apply-templates select="$pass1/*" mode="pass2"/>
   </xsl:template>
   
+  <xd:doc>
+    <xd:desc><xd:i>pass 1</xd:i>: Delete the mode "delete" &lt;*Spec> elements</xd:desc>
+  </xd:doc>
   <xsl:template match="elementSpec[@mode eq 'delete']|classSpec[@mode eq 'delete']|macroSpec[@mode eq 'delete']|dataSpec[@mode eq 'delete']"
                 mode="pass1">
-        <xsl:if test="$verbose">
-          <xsl:message>Phase 1: remove <xsl:value-of select="@ident"/></xsl:message>
-        </xsl:if>
+    <xsl:if test="$verbose">
+      <xsl:message>Phase 1: remove <xsl:value-of select="@ident"/></xsl:message>
+    </xsl:if>
   </xsl:template>
-
-  <xsl:template match="elementSpec|classSpec|macroSpec|dataSpec"
-                mode="pass1">
+  
+  <xd:doc>
+    <xd:desc><xd:i>pass 1</xd:i>: Process &lt;*Spec> elements with @mode other than "change" or "delete"</xd:desc>
+  </xd:doc>
+  <xsl:template match="elementSpec|classSpec|macroSpec|dataSpec" mode="pass1">
     <xsl:variable name="specName" select="@ident"/>
-    <xsl:choose>
-      <xsl:when test="$ODD/key('odd2odd-DELETE',$specName)">
-        <xsl:if test="$verbose">
-          <xsl:message>Phase 1: remove <xsl:value-of select="$specName"/></xsl:message>
-        </xsl:if>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:if test="$verbose">
-          <xsl:message>Phase 1: hang onto <xsl:value-of
-          select="$specName"/> <xsl:if test="@mode"> in mode <xsl:value-of
+    <xsl:if test="$verbose">
+      <xsl:message>Phase 1: hang onto <xsl:value-of
+        select="$specName"/> <xsl:if test="@mode"> in mode <xsl:value-of
           select="@mode"/></xsl:if></xsl:message>
-        </xsl:if>
-        <xsl:copy>
-          <xsl:apply-templates mode="pass1" select="@*|*|processing-instruction()|comment()|text()"/>
-        </xsl:copy>
-      </xsl:otherwise>
-    </xsl:choose>
+    </xsl:if>
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()" mode="pass1"/>
+    </xsl:copy>
   </xsl:template>
 
+  <xd:doc>
+    <xd:desc><xd:i>pass 1</xd:i>: Process &lt;*Spec> to be added</xd:desc>
+  </xd:doc>
   <xsl:template match="schemaSpec//classSpec[  @mode eq 'add' or not(@mode) ]
                      | schemaSpec//macroSpec[  @mode eq 'add' or not(@mode) ]
                      | schemaSpec//dataSpec [  @mode eq 'add' or not(@mode) ]
                      | schemaSpec//elementSpec[@mode eq 'add' or not(@mode) ]"
-                     mode="pass1">
+                mode="pass1">
     <xsl:call-template name="odd2odd-createCopy"/>
   </xsl:template>
 
@@ -2011,11 +2010,12 @@
 
   <xsl:template name="odd2odd-createCopy">
     <xsl:if test="$verbose">
-      <xsl:message>Create <xsl:value-of select="local-name()"/> named   <xsl:value-of select="@ident"/>   <xsl:sequence select="if
-      (@module) then concat(' module: ',@module) else ''"/>         </xsl:message>
+      <xsl:message>Create <xsl:value-of select="local-name()"/> named <xsl:value-of
+        select="@ident"/> <xsl:sequence select="if (@module)
+          then concat(' module: ',@module)
+          else ''"/></xsl:message>
     </xsl:if>
-    <xsl:element namespace="http://www.tei-c.org/ns/1.0"
-                 name="{local-name()}">
+    <xsl:copy>
       <xsl:attribute name="rend">add</xsl:attribute>
       <xsl:choose>
         <xsl:when test="@module"/>
@@ -2048,7 +2048,7 @@
           </xsl:call-template>
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:element>
+    </xsl:copy>
   </xsl:template>
 
   <xsl:template name="odd2odd-getversion">
