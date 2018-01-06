@@ -481,10 +481,10 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
           <xsl:if test="$verbose='true'">
-            <xsl:sequence select="tei:message(concat('... read from ',resolve-uri(@target,base-uri(/tei:TEI))))"/>
+            <xsl:sequence select="tei:message(concat('... read from ',resolve-uri(@target,base-uri($top))))"/>
           </xsl:if>
         <xsl:for-each 
-            select="doc(resolve-uri(@target,base-uri(/tei:TEI)))">
+            select="doc(resolve-uri(@target,base-uri($top)))">
           <xsl:choose>
             <xsl:when test="tei:specGrp">
               <xsl:apply-templates select="tei:specGrp/*" mode="pass0"/>
@@ -1998,13 +1998,13 @@ of this software, even if advised of the possibility of such damage.
         <xsl:for-each
             select="key('odd2odd-SCHEMASPECS',$whichSchemaSpec)">
           <xsl:variable name="source" select="tei:workOutSource(.)"/>
-          <xsl:for-each select="document($source)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+          <xsl:for-each select="document($source)/*/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
             <xsl:value-of select="."/>
           </xsl:for-each>
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:for-each select="document($DEFAULTSOURCE)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+        <xsl:for-each select="document($DEFAULTSOURCE)/*/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
           <xsl:value-of select="."/>
         </xsl:for-each>
       </xsl:otherwise>
