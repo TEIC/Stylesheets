@@ -148,6 +148,7 @@
   <xsl:variable name="inputFilename" select="tokenize( base-uri(/),'/')[last()]"/>
   
   <xsl:variable name="ODD">
+    <xsl:sequence select="tei:msg('debug the duck')"/>
     <xsl:for-each select="/*">
       <xsl:copy>
         <xsl:attribute name="xml:base" select="document-uri(/)"/>
@@ -311,7 +312,7 @@
     <!-- OK, now we have a $source URI. -->
     <xsl:choose>
       <xsl:when test="doc-available( $source )">
-        <xsl:sequence select="tei:msg( concat('Setting source document to ', $source ) )"/>
+        <xsl:sequence select="tei:msg(('Setting source document to ', $source ))"/>
         <xsl:sequence select="$source"/>
       </xsl:when>
       <xsl:otherwise>
@@ -331,10 +332,19 @@
     <xd:param name="message">the message text to emit</xd:param>
   </xd:doc>
   <xsl:function name="tei:msg" as="empty-sequence()">
-    <xsl:param name="message"/>
+    <xsl:param name="message" as="xs:string+"/>
     <xsl:if test="$verbose">
-      <xsl:message><xsl:value-of select="$message"/></xsl:message>
-    </xsl:if>
+      <xsl:message><xsl:value-of select="$message" separator=""/></xsl:message>
+      <!--      <xsl:choose>
+        <xsl:when test="count( $message ) eq 0"/>
+        <xsl:when test="count( $message ) eq 1">
+          <xsl:message><xsl:value-of select="$message"/></xsl:message>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:message><xsl:value-of select="$message" separator="''"/></xsl:message>
+        </xsl:otherwise>
+      </xsl:choose>      
+-->    </xsl:if>
   </xsl:function>
 
   <xd:doc>
@@ -428,14 +438,14 @@
     <xd:desc><xd:i>pass 0</xd:i>: Ignore &lt;specGrp> w/o interesting children</xd:desc>
   </xd:doc>
   <xsl:template match="specGrp">
-    <xsl:sequence select="tei:msg( concat('Phase 0: ignore childless specGrp ', @xml:id, '&#x0A;') )"/>
+    <xsl:sequence select="tei:msg(('Phase 0: ignore childless specGrp ', @xml:id, '&#x0A;'))"/>
   </xsl:template>
   
   <xd:doc>
     <xd:desc><xd:i>pass 0</xd:i>: Generate a descriptive table of the &lt;specGrp></xd:desc>
   </xd:doc>
   <xsl:template match="specGrp[ specGrpRef | elementSpec | classSpec | macroSpec | dataSpec | moduleRef ]" mode="pass0">
-    <xsl:sequence select="tei:msg( concat('Phase 0: summarize specGrp ', @xml:id, '&#x0A;') )"/>
+    <xsl:sequence select="tei:msg(('Phase 0: summarize specGrp ', @xml:id, '&#x0A;'))"/>
     <table rend="specGrpSummary">
       <xsl:apply-templates select="specGrpRef|elementSpec|classSpec|macroSpec|dataSpec|moduleRef" mode="specGrpTableRow"></xsl:apply-templates>
     </table>
@@ -547,10 +557,10 @@
       </xsl:if>
       <xsl:choose>
         <xsl:when test="@source">
-          <xsl:sequence select="tei:msg( concat('Source for TEI is ', @source) )"/>
+          <xsl:sequence select="tei:msg(('Source for TEI is ', @source))"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:sequence select="tei:msg( concat('Source for TEI will be set to ', $DEFAULTSOURCE ) )"/>
+          <xsl:sequence select="tei:msg(('Source for TEI will be set to ', $DEFAULTSOURCE ))"/>
           <xsl:attribute name="source">
             <xsl:value-of select="$DEFAULTSOURCE"/>
           </xsl:attribute>
@@ -566,7 +576,7 @@
   </xd:doc>
   <xsl:template match="specGrpRef" mode="pass0">
     <xsl:variable name="target" select="normalize-space( @target )"/>
-    <xsl:sequence select="tei:msg(concat('Phase 0: expand specGrpRef ', $target ))"/>
+    <xsl:sequence select="tei:msg(('Phase 0: expand specGrpRef ', $target ))"/>
     <xsl:choose>
       <xsl:when test="starts-with( $target,'#')">
         <!-- If target is a pointer to a local element, process its children here -->
@@ -575,7 +585,7 @@
       <xsl:otherwise>
         <!-- If target is a pointer outside the current document, resolve it (in case it is relative) ... -->
         <xsl:variable name="externalTarget" select="resolve-uri( $target, base-uri($top) )"/>
-        <xsl:sequence select="tei:msg( concat('... read from ', $externalTarget ) )"/>
+        <xsl:sequence select="tei:msg(('... read from ', $externalTarget ))"/>
         <xsl:for-each select="doc( $externalTarget )">
           <!-- ... then take what it points to and ... -->
           <xsl:choose>
@@ -629,7 +639,7 @@
     <xsl:variable name="pass1">
       <xsl:copy>
         <xsl:copy-of select="@*"/>
-        <xsl:sequence select="tei:msg( concat('Schema pass 1: ',@ident ) )"/>
+        <xsl:sequence select="tei:msg(('Schema pass 1: ',@ident ))"/>
         <!-- process "tei" and "core" first due to order of declarations -->
         <xsl:apply-templates select="moduleRef[@key eq 'tei']" mode="pass1"/>
         <xsl:apply-templates select="moduleRef[@key eq 'core']" mode="pass1"/>
@@ -645,7 +655,7 @@
   </xd:doc>
   <xsl:template match="elementSpec[@mode eq 'delete']|classSpec[@mode eq 'delete']|macroSpec[@mode eq 'delete']|dataSpec[@mode eq 'delete']"
                 mode="pass1">
-    <xsl:sequence select="tei:msg( concat('Phase 1: remove ', @ident ) )"/>
+    <xsl:sequence select="tei:msg(('Phase 1: remove ', @ident ))"/>
   </xsl:template>
   
   <xd:doc>
@@ -653,7 +663,7 @@
   </xd:doc>
   <xsl:template match="elementSpec|classSpec|macroSpec|dataSpec" mode="pass1">
     <xsl:variable name="specName" select="@ident"/>
-    <xsl:sequence select="tei:msg( concat('Phase 1: hang onto ', $specName, if (@mode) then concat(' in mode ', @mode ) else '' ) )"/>
+    <xsl:sequence select="tei:msg(('Phase 1: hang onto ', $specName, if (@mode) then ('in mode ',@mode) else ''))"/>
     <xsl:copy>
       <xsl:apply-templates select="@*|node()" mode="pass1"/>
     </xsl:copy>
@@ -698,7 +708,7 @@
           <xsl:choose>
             <xsl:when test="key('odd2odd-IDENTS',$name)">
               <xsl:for-each select="key('odd2odd-IDENTS',$name)">
-                <xsl:sequence select="tei:msg( concat('Phase 1: import ', $name, ' by direct reference') )"/>
+                <xsl:sequence select="tei:msg(('Phase 1: import ', $name, ' by direct reference'))"/>
                 <xsl:apply-templates mode="pass1" select="."/>
               </xsl:for-each>
             </xsl:when>
@@ -728,14 +738,14 @@
     <xsl:variable name="key" select="normalize-space( @key )"/>
     <xsl:variable name="exc" select="normalize-space( @except )"/>
     <xsl:variable name="inc" select="normalize-space( @include )"/>
-    <xsl:sequence select="tei:msg( concat('Process module reference to [', @key,'] with exclusion/inclusion of [', @except, '/', @include, ']') )"/>
+    <xsl:sequence select="tei:msg(('Process module reference to [', @key,'] with exclusion/inclusion of [', @except, '/', @include, ']'))"/>
     <xsl:for-each select="document($sourceDoc,$top)">
       
       <!-- get model and attribute classes regardless -->
       <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_NONELEMENT',$key)">
         <xsl:variable name="class" select="@ident"/>
         <xsl:if test="not($ODD/key('odd2odd-REFOBJECTS',$class))">
-          <xsl:sequence select="tei:msg( concat('Phase 1: import ', $class, ' by moduleRef') )"/>
+          <xsl:sequence select="tei:msg(('Phase 1: import ', $class, ' by moduleRef'))"/>
           <xsl:apply-templates mode="pass1" select="."/>
         </xsl:if>
       </xsl:for-each>
@@ -745,7 +755,7 @@
         <xsl:variable name="i" select="@ident"/>
         <xsl:if test="tei:includeMember(@ident,$exc,$inc)
                   and not($ODD/key('odd2odd-REFOBJECTS',$i))">
-          <xsl:sequence select="tei:msg( concat('Phase 1: import ', $i,' by moduleRef') )"/>
+          <xsl:sequence select="tei:msg(('Phase 1: import ', $i,' by moduleRef'))"/>
           <xsl:apply-templates mode="pass1" select="."/>
         </xsl:if>
       </xsl:for-each>
@@ -780,7 +790,7 @@
     <xsl:choose>
       <xsl:when test="$ODD/key('odd2odd-REFED',$c)[@include or @except]">
         <xsl:if test="tei:includeMember(@ident,$ODD/key('odd2odd-REFED',$c)/@except,$ODD/key('odd2odd-REFED',$c)/@include)">
-          <xsl:sequence select="tei:msg( concat('  keeping attribute ', $c, '/@', $a ) )"/>
+          <xsl:sequence select="tei:msg(('  keeping attribute ', $c, '/@', $a ))"/>
           <xsl:copy>
             <xsl:apply-templates select="@*|node()" mode="pass1"/>
           </xsl:copy>
@@ -830,7 +840,7 @@
      <xsl:variable name="oddsource">
        <xsl:copy>
          <xsl:copy-of select="@*"/>
-         <xsl:sequence select="tei:msg(concat('Schema pass 2: ',@ident))"/>
+         <xsl:sequence select="tei:msg(('Schema pass 2: ',@ident))"/>
          <xsl:for-each select="*">
            <xsl:call-template name="odd2odd-checkObject"/>
          </xsl:for-each>
@@ -870,21 +880,21 @@
     <xsl:choose>
       <!-- mode=delete, drop it -->
       <xsl:when test="$ODD/key('odd2odd-DELETE',$specName)">
-        <xsl:sequence select="tei:msg( concat('Phase 2: delete ', $specName ) )"/>
+        <xsl:sequence select="tei:msg(('Phase 2: delete ', $specName ))"/>
       </xsl:when>
       <!-- mode=replace, copy it -->
       <xsl:when test="$ODD/key('odd2odd-REPLACE',$specName)">
-        <xsl:sequence select="tei:msg( concat('Phase 2: replace ', $specName ) )"/>
+        <xsl:sequence select="tei:msg(('Phase 2: replace ', $specName ))"/>
         <xsl:apply-templates mode="odd2odd-copy" select="$ODD/key('odd2odd-REPLACE',$specName)"/>
       </xsl:when>
       <!-- mode=change, change it -->
       <xsl:when test="$ODD/key('odd2odd-CHANGE',$specName)">
-        <xsl:sequence select="tei:msg( concat('Phase 2: change ', $specName ) )"/>
+        <xsl:sequence select="tei:msg(('Phase 2: change ', $specName ))"/>
         <xsl:apply-templates mode="odd2odd-change" select="."/>
       </xsl:when>
       <!-- mode=add or no mode=, so just copy it -->
       <xsl:otherwise>
-        <xsl:sequence select="tei:msg( concat('Phase 2: keep ', $N, ' of ', $specName) )"/>
+        <xsl:sequence select="tei:msg(('Phase 2: keep ', $N, ' of ', $specName))"/>
         <xsl:apply-templates mode="justcopy" select="."/>
       </xsl:otherwise>
     </xsl:choose>
@@ -2010,7 +2020,7 @@
   </xsl:template>
 
   <xsl:template name="odd2odd-createCopy">
-    <xsl:sequence select="tei:msg( concat('Create ', local-name(),' named ', @ident, if (@module) then concat(' module: ',@module) else '') )"/>
+    <xsl:sequence select="tei:msg(('Create ', local-name(),' named ', @ident, if (@module) then (' module: ', @module ) else ''))"/>
     <xsl:copy>
       <xsl:attribute name="rend">add</xsl:attribute>
       <!-- make sure this <*Spec> element has a @module attribute -->
@@ -2209,7 +2219,7 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$used=''">
-        <xsl:sequence select="tei:msg( concat('Reject unused class ', @ident ) )"/>
+        <xsl:sequence select="tei:msg(('Reject unused class ', @ident ))"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy>
@@ -2252,7 +2262,7 @@
     <xsl:variable name="keep" select="."/>
     <xsl:choose>
       <xsl:when test="not(key('odd2odd-IDENTS',@key))">
-        <xsl:sequence select="tei:msg( concat('Reject unused memberOf pointing to ', @ident,' because that does not exist') )"/>
+        <xsl:sequence select="tei:msg(('Reject unused memberOf pointing to ', @ident,' because that does not exist'))"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:for-each select="key('odd2odd-IDENTS',@key)[1]">
@@ -2261,7 +2271,7 @@
           </xsl:variable>
           <xsl:choose>
             <xsl:when test="$used=''">
-              <xsl:sequence select="tei:msg( concat('Reject unused memberOf pointing to ', @ident ) )"/>
+              <xsl:sequence select="tei:msg(('Reject unused memberOf pointing to ', @ident ))"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:copy-of select="$keep"/>
@@ -2286,7 +2296,7 @@
         </xsl:copy>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:sequence select="tei:msg( concat('Reject unused macro ', $k ) )"/>
+        <xsl:sequence select="tei:msg(('Reject unused macro ', $k ))"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -2303,7 +2313,7 @@
         </dataSpec>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:sequence select="tei:msg( concat('Reject unused dataSpec ', $k ) )"/>
+        <xsl:sequence select="tei:msg(('Reject unused dataSpec ', $k ))"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
