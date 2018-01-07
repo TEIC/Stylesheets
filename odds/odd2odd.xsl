@@ -412,10 +412,10 @@
   </xsl:template>
   
   <xd:doc>
-    <xd:desc>In both major passes (pass0 and pass1), for the most part we are performing
-    an identity transform, except as specified below</xd:desc>
+    <xd:desc>In various passes over the data we are, for the most part, performing
+    an identity transform, except as specified otherwise</xd:desc>
   </xd:doc>
-  <xsl:template match="@*|node()" mode="pass0 pass1">
+  <xsl:template match="@*|node()" mode="pass0 pass1 pass2">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()" mode="#current"/>
     </xsl:copy>
@@ -823,22 +823,25 @@
 
 
   <!-- ******************* Phase 2, make the changes ********************************* -->
-  <xsl:template match="@*|processing-instruction()|text()|comment()" mode="pass2">
-    <xsl:copy/>
-  </xsl:template>
-
-  <xsl:template match="*" mode="pass2">
-    <xsl:copy>
-      <xsl:apply-templates mode="#current" select="@*|node()"/>
-    </xsl:copy>
-  </xsl:template>
-
+  
+  <xd:doc>
+    <xd:desc><xd:b>Mode "justcopy"</xd:b>: <xd:ul>
+      <xd:li>drop comments except within &lt;exemplum> (why &lt;exemplum> and not &lt;teix:egXML>? —Syd, 2018-01-07)</xd:li>
+      <xd:li>if requested, add a @rend attribute, except if there already is one</xd:li>
+      <xd:li>this @rend feature is not available for &lt;a:*> and &lt;rng:*> elements,
+      but I do not think these templates are *ever* called. (That is, if the "justcopy"
+      mode template is applied for one of these elements, it is because one of these
+      elements was a child of something that matched '*', not because of an explicit
+      application of templates with the $rend param set.)</xd:li>
+    </xd:ul>
+    </xd:desc>
+  </xd:doc>
   <xsl:template match="comment()" mode="justcopy"/>
-
+  <xd:doc><xd:desc>See above</xd:desc></xd:doc>
   <xsl:template match="@*|text()|processing-instruction()|exemplum//comment()" mode="justcopy">
     <xsl:copy/>
   </xsl:template>
-
+  <xd:doc><xd:desc>See above</xd:desc></xd:doc>
   <xsl:template match="*" mode="justcopy">
     <xsl:param name="rend"/>
     <xsl:copy>
@@ -848,7 +851,7 @@
       <xsl:apply-templates select="@*|node()" mode="#current"/>
     </xsl:copy>
   </xsl:template>
-
+  <xd:doc><xd:desc>See above</xd:desc></xd:doc>
   <xsl:template match="a:* | rng:*" mode="justcopy">
     <xsl:copy>
       <xsl:apply-templates select="@*|*|processing-instruction()|text()" mode="#current"/>
