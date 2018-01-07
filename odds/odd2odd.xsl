@@ -738,6 +738,10 @@
     </xsl:choose>
   </xsl:template>
 
+  <xd:doc>
+    <xd:desc><xd:i>pass 1</xd:i>: Expand &lt;moduleRef>s that have an @key. Those that
+    do not have an @key are just copied over in pass 1 (handled later, presumably)</xd:desc>
+  </xd:doc>
   <xsl:template match="moduleRef[@key]" mode="pass1">
     <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
     <xsl:variable name="key" select="normalize-space( @key )"/>
@@ -773,21 +777,36 @@
     </xsl:for-each>
   </xsl:template>
 
+  <xd:doc>
+    <xd:desc><xd:b>pass 1</xd:b>: ignore &lt;*Spec> elements that are in
+    mode "change" or "replace".</xd:desc>
+  </xd:doc>
   <xsl:template match="elementSpec[@mode = ('change','replace')]
                      | classSpec[ @mode  = ('change','replace')]
                      | macroSpec[ @mode  = ('change','replace')]
                      | dataSpec[ @mode   = ('change','replace')]"
                 mode="pass1"/>
 
+  <xd:doc>
+    <xd:desc>
+      <xd:p><xd:b>pass 1</xd:b>: process attribute defintions inside class specifications:
+        Just copy this &lt;attDef> over UNLESS
+        * the class is referred to (via a &lt;classRef>), and
+        * the attribute is excluded from that referral (either there is an
+          @include that does not list this attr, or there is an @except that does),
+        in which case just drop it.</xd:p>
+      <xd:p>This clearly fails miserably if there is more than one &lt;classRef> with
+        a @key that matches $c. —Syd, 2018-01-07</xd:p>
+    </xd:desc>
+  </xd:doc>
   <xsl:template match="classSpec/attList/attDef" mode="pass1">
-    <xsl:variable name="c" select="ancestor::classSpec/@ident"/>
-    <xsl:variable name="a" select="@ident"/>
+    <xsl:variable name="c" select="normalize-space( ancestor::classSpec/@ident )"/>
+    <xsl:variable name="a" select="normalize-space( @ident )"/>
     <xsl:choose>
       <xsl:when test="$ODD/key('odd2odd-REFED',$c)[@include or @except]">
         <xsl:if test="tei:includeMember(@ident,$ODD/key('odd2odd-REFED',$c)/@except,$ODD/key('odd2odd-REFED',$c)/@include)">
           <xsl:if test="$verbose">
-            <xsl:message>  keeping attribute <xsl:value-of
-              select="(ancestor::classSpec/@ident,@ident)" separator="/"/></xsl:message>
+            <xsl:message>  keeping attribute <xsl:value-of select="($c,$a)" separator="/"/></xsl:message>
           </xsl:if>
           <xsl:copy>
             <xsl:apply-templates select="@*|node()" mode="pass1"/>
