@@ -145,6 +145,8 @@
   <!-- ***** global variables ***** -->
   <xsl:variable name="top" select="/"/>
   
+  <xsl:variable name="inputFilename" select="tokenize( base-uri(/),'/')[last()]"/>
+  
   <xsl:variable name="ODD">
     <xsl:for-each select="/*">
       <xsl:copy>
@@ -357,7 +359,7 @@
     <xd:param name="maxOccurs">string value of @maxOccurs attr</xd:param>
     <xd:return>a sequence of 2 integers representing the integer values thereof with -1 used to indicate "unbounded"</xd:return>
   </xd:doc>
-  <xsl:function name="tei:minOmaxO" as="xs:integer">
+  <xsl:function name="tei:minOmaxO" as="xs:integer+">
     <xsl:param name="minOccurs"/>
     <xsl:param name="maxOccurs"/>
     <!-- get the value of @minOccurs, defaulting to "1" -->
@@ -382,7 +384,7 @@
     <xsl:sequence select="( $min, $max )"/>
   </xsl:function>
 
-  <!-- ***** subroutines (i.e., named templates) ***** -->
+  <!-- ***** subroutines (i.e., general purpose named templates) ***** -->
   <xd:doc>
     <xd:desc>Issue error msg and stop execution</xd:desc>
     <xd:param name="message">the error message to display</xd:param>
@@ -401,7 +403,12 @@
     <xd:desc>Process root by taking output of pass0 and processing in pass1</xd:desc>
   </xd:doc>
   <xsl:template match="/">
-    <xsl:apply-templates mode="pass1" select="$ODD"/>
+    <xsl:variable name="pass1">
+      <xsl:apply-templates mode="pass1" select="$ODD"/>
+    </xsl:variable>
+    <!-- these two (above setting var and below sending it to output) are not combined
+    just to make adding debugging code easier -->
+    <xsl:sequence select="$pass1"/>
   </xsl:template>
   
   <xd:doc>
@@ -576,7 +583,7 @@
       </xsl:when>
       <xsl:otherwise>
         <!-- If target is a pointer outside the current document, resolve it (in case it is relative) ... -->
-        <xsl:variable name="externalTarget" select="resolve-uri( $target, base-uri( /TEI ) )"/>
+        <xsl:variable name="externalTarget" select="resolve-uri( $target, base-uri(/) )"/>
         <xsl:if test="$verbose">
           <xsl:sequence select="tei:message( concat('... read from ', $externalTarget ) )"/>
         </xsl:if>
@@ -602,8 +609,8 @@
       <xd:p><xd:i>pass 0</xd:i>: Process &lt;*Spec>s in mode "change"</xd:p>
       <xd:p>Regardless of how many &lt;*Spec> elements in "change" mode
       there are for a given construct, create one output element that
-      has the attributes of the first one, and the [output of processing the] children
-      of all of them [in mode "pass0"]</xd:p>
+      has the attributes of the first one, and the (output of processing the) children
+      of all of them (in mode "pass0")</xd:p>
     </xd:desc>
   </xd:doc>
   <xsl:template match="elementSpec[@mode eq 'change']|classSpec[@mode eq 'change']|macroSpec[@mode eq 'change']|dataSpec[@mode eq 'change']" mode="pass0">
@@ -680,8 +687,16 @@
     <xsl:call-template name="odd2odd-createCopy"/>
   </xsl:template>
 
-  <xsl:template match="dataRef|macroRef|classRef|elementRef"
-    mode="pass1">
+  <xd:doc>
+    <xd:desc>
+      <xd:p><xd:i>pass 1</xd:i>: Expand &lt;*Ref> elements that use @key,
+    except those that are inside a &lt;content> or a &lt;datatype> (which I think
+    is all of them —Syd, 2018-01-03).</xd:p>
+      <xd:p><xd:b>Note:</xd:b> those with @ref will get processed by the &lt;otherwise>,
+      but since it only deals with @key, the results will probably be wrong.</xd:p>
+    </xd:desc>
+  </xd:doc>
+  <xsl:template match="dataRef|macroRef|classRef|elementRef" mode="pass1">
     <xsl:choose>
       <xsl:when test="ancestor::content">
         <xsl:copy-of select="."/>
@@ -723,39 +738,39 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="moduleRef" mode="pass1">
+  <xsl:template match="moduleRef[@key]" mode="pass1">
     <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
-    <xsl:variable name="name" select="@key"/>
+    <xsl:variable name="key" select="normalize-space( @key )"/>
     <xsl:variable name="exc" select="normalize-space( @except )"/>
     <xsl:variable name="inc" select="normalize-space( @include )"/>
     <xsl:sequence select="if ($verbose) then
-                          tei:message(concat('Process module reference to [',@key,'] with exclusion/inclusion of [',@except,'/',@include,']')) else ()"/>
-          <xsl:for-each select="document($sourceDoc,$top)">
-
-            <!-- get model and attribute classes regardless -->
-            <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_NONELEMENT',$name)">
-              <xsl:variable name="class" select="@ident"/>
-              <xsl:if test="not($ODD/key('odd2odd-REFOBJECTS',$class))">
-                <xsl:if test="$verbose">
-                  <xsl:message>Phase 1: import <xsl:value-of select="$class"/> by moduleRef</xsl:message>
-                </xsl:if>
-                <xsl:apply-templates mode="pass1" select="."/>
-              </xsl:if>
-            </xsl:for-each>
-
-            <!-- now elements -->
-            <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_ELEMENT',$name)">
-              <xsl:variable name="i" select="@ident"/>
-              <xsl:if test="tei:includeMember(@ident,$exc,$inc)
-                and not($ODD/key('odd2odd-REFOBJECTS',$i))">
-                <xsl:if test="$verbose">
-                  <xsl:message>Phase 1: import <xsl:value-of
-                    select="$i"/> by moduleRef</xsl:message>
-                </xsl:if>
-                <xsl:apply-templates mode="pass1" select="."/>
-              </xsl:if>
-            </xsl:for-each>
-          </xsl:for-each>
+      tei:message(concat('Process module reference to [',@key,'] with exclusion/inclusion of [',@except,'/',@include,']')) else ()"/>
+    <xsl:for-each select="document($sourceDoc,$top)">
+      
+      <!-- get model and attribute classes regardless -->
+      <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_NONELEMENT',$key)">
+        <xsl:variable name="class" select="@ident"/>
+        <xsl:if test="not($ODD/key('odd2odd-REFOBJECTS',$class))">
+          <xsl:if test="$verbose">
+            <xsl:message>Phase 1: import <xsl:value-of select="$class"/> by moduleRef</xsl:message>
+          </xsl:if>
+          <xsl:apply-templates mode="pass1" select="."/>
+        </xsl:if>
+      </xsl:for-each>
+      
+      <!-- now elements -->
+      <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_ELEMENT',$key)">
+        <xsl:variable name="i" select="@ident"/>
+        <xsl:if test="tei:includeMember(@ident,$exc,$inc)
+          and not($ODD/key('odd2odd-REFOBJECTS',$i))">
+          <xsl:if test="$verbose">
+            <xsl:message>Phase 1: import <xsl:value-of
+              select="$i"/> by moduleRef</xsl:message>
+          </xsl:if>
+          <xsl:apply-templates mode="pass1" select="."/>
+        </xsl:if>
+      </xsl:for-each>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template match="elementSpec[@mode = ('change','replace')]
@@ -1611,6 +1626,7 @@
   <xsl:template match="listRef" mode="odd2odd-copy"/>
 
   <xsl:template match="elementSpec" mode="odd2odd-copy">
+    <xsl:message>DEBUG: elementSpec <xsl:value-of select="@ident"/> in mode <xsl:value-of select="@mode"/> in XSLT mode odd2odd-copy</xsl:message>
     <xsl:copy>
       <xsl:call-template name="odd2odd-copyElementSpec"/>
     </xsl:copy>
@@ -2023,10 +2039,8 @@
         </xsl:when>
         <!-- if not, make one up -->
         <xsl:otherwise>
-          <xsl:attribute name="module">
-            <xsl:text>derived-module-</xsl:text>
-            <xsl:value-of select="ancestor::schemaSpec/@ident"/>
-          </xsl:attribute>
+          <xsl:attribute name="module"
+                         select="concat('derived-module-', ancestor::schemaSpec/@ident )"/>
         </xsl:otherwise>
       </xsl:choose>
       <xsl:choose>
@@ -2043,6 +2057,7 @@
           <xsl:apply-templates mode="odd2odd-copy" select="@*|*|processing-instruction()|text()"/>
         </xsl:when>
         <xsl:otherwise>
+          <xsl:message>DEBUG: schemaSpec//elementSpec <xsl:value-of select="@ident"/> in mode <xsl:value-of select="@mode"/></xsl:message>
           <xsl:call-template name="odd2odd-copyElementSpec"/>
         </xsl:otherwise>
       </xsl:choose>
