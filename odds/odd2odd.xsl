@@ -828,11 +828,6 @@
     <xd:desc><xd:b>Mode "justcopy"</xd:b>: <xd:ul>
       <xd:li>drop comments except within &lt;exemplum> (why &lt;exemplum> and not &lt;teix:egXML>? —Syd, 2018-01-07)</xd:li>
       <xd:li>if requested, add a @rend attribute, except if there already is one</xd:li>
-      <xd:li>this @rend feature is not available for &lt;a:*> and &lt;rng:*> elements,
-      but I do not think these templates are *ever* called. (That is, if the "justcopy"
-      mode template is applied for one of these elements, it is because one of these
-      elements was a child of something that matched '*', not because of an explicit
-      application of templates with the $rend param set.)</xd:li>
     </xd:ul>
     </xd:desc>
   </xd:doc>
@@ -849,12 +844,6 @@
         <xsl:attribute name="rend" select="$rend"/>
       </xsl:if>
       <xsl:apply-templates select="@*|node()" mode="#current"/>
-    </xsl:copy>
-  </xsl:template>
-  <xd:doc><xd:desc>See above</xd:desc></xd:doc>
-  <xsl:template match="a:* | rng:*" mode="justcopy">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|*|processing-instruction()|text()" mode="#current"/>
     </xsl:copy>
   </xsl:template>
 
