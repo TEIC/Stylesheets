@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." name="rub-a-test">
+
+  <property name="odd2oddxsl" value="odds/odd2odd.xsl"/>
+  <property name="outputdir" value="/tmp/rub-a-test-output/"/>
+  <property name="tmpoutdir" value="/tmp/radto/"/>
+  <property name="localsrc" value="/home/syd/Documents/TEI_dev/P5/p5subset.xml"/>
+  <property name="verbose" value="false"/>
+  <property name="lang" value="en"/>
+  <property name="saxonJar" value="lib/saxon9he.jar"/>
+  
+  <macrodef name="oddexpand">
+    <attribute name="in"/>
+    <attribute name="out"/>
+    <sequential>
+      <echo>--------- tangle customization @{in} against TEI source ${localsrc}</echo>
+      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{out}">
+        <factory name="net.sf.saxon.TransformerFactoryImpl">
+          <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
+        </factory>
+        <classpath location="${saxonJar}"/>
+        <param name="lang" expression="${lang}" if="lang"/>
+        <param name="localsrc" expression="${localsrc}" if="localsrc"/>
+        <!-- param name="selectedSchema" expression="${selectedSchema}" if="selectedSchema"/-->
+        <param name="verbose" expression="${verbose}" if="verbose"/>
+        <param name="currentDirectory" expression="${inputDir}"/>
+      </xslt>
+    </sequential>
+  </macrodef>
+
+  <target name="clean">
+    <delete dir="${outputdir}"/>
+    <delete dir="${tmpoutdir}"/>
+    <mkdir dir="${outputdir}"/>
+    <mkdir dir="${tmpoutdir}"/>
+  </target>
+
+  <target name="testseq" depends="clean">
+    <antcall target="odd2oddseq"/>
+    <antcall target="rest"/>
+  </target>
+  
+  <target name="testpar" depends="clean">
+    <antcall target="odd2oddpar"/>
+    <antcall target="rest"/>
+  </target>
+  
+  <target name="rest">
+    <description>remove name-differention and convert "utf-8" to "UTF-8"</description>
+    <antcall target="cleanForDiff"/>
+<!--    <apply executable="perl" parallel="true">
+      <files includes="${outputdir}*"/>
+      <arg value="-p"/>
+      <arg value="-i"/>
+      <arg value="-e"/>
+      <arg value="s,Stylesheets_[dr][eu][vb],Stylesheets,g; s,( encoding=.)utf-8,$1UTF-8,g;"/>
+    </apply>
+-->  </target>
+
+  <target name="odd2oddseq">
+    <description>
+      TARGET testseq: run tests sequentially
+      NOTE: If you make a change here, make it in target "test", too.
+    </description>
+    <oddexpand in="Test/alt2.odd" out="${outputdir}alt2.tangled.odd"/>
+    <oddexpand in="Test/alt.odd" out="${outputdir}alt.tangled.odd"/>
+    <oddexpand in="Test/base2.odd" out="${outputdir}base2.tangled.odd"/>
+    <oddexpand in="Test/base.odd" out="${outputdir}base.tangled.odd"/>
+    <oddexpand in="Test/oddbyexample.odd" out="${outputdir}oddbyexample.tangled.odd"/>
+    <oddexpand in="Test/test13.odd" out="${outputdir}test13.tangled.odd"/>
+    <oddexpand in="Test/test15.odd" out="${outputdir}test15.tangled.odd"/>
+    <oddexpand in="Test/test16.odd" out="${outputdir}test16.tangled.odd"/>
+    <oddexpand in="Test/test21.odd" out="${outputdir}test21.tangled.odd"/>
+    <oddexpand in="Test/test30.odd" out="${outputdir}test30.tangled.odd"/>
+    <oddexpand in="Test/test33.odd" out="${outputdir}test33.tangled.odd"/>
+    <oddexpand in="Test/test34.combined.odd" out="${outputdir}test34.combined.tangled.odd"/>
+    <oddexpand in="Test/test34.odd" out="${outputdir}test34.tangled.odd"/>
+    <oddexpand in="Test/test35.odd" out="${outputdir}test35.tangled.odd"/>
+    <oddexpand in="Test/testClass.odd" out="${outputdir}testClass.tangled.odd"/>
+    <oddexpand in="Test/testdrama.odd" out="${outputdir}testdrama.tangled.odd"/>
+    <oddexpand in="Test/test.odd" out="${outputdir}test.tangled.odd"/>
+    <oddexpand in="Test/testODD.odd" out="${outputdir}testODD.tangled.odd"/>
+    <oddexpand in="Test/test-pure2.odd" out="${outputdir}test-pure2.tangled.odd"/>
+    <oddexpand in="Test/test-pure.odd" out="${outputdir}test-pure.tangled.odd"/>
+  </target>
+  
+  <target name="odd2oddpar">
+    <description>
+      TARGET test: run tests in parallel
+      NOTE: If you make a change here, probably have to make it in target "testseq", too.
+    </description>
+    <parallel failonany="true">
+      <oddexpand in="Test/alt2.odd" out="${outputdir}alt2.tangled.odd"/>
+      <oddexpand in="Test/alt.odd" out="${outputdir}alt.tangled.odd"/>
+      <oddexpand in="Test/base2.odd" out="${outputdir}base2.tangled.odd"/>
+      <oddexpand in="Test/base.odd" out="${outputdir}base.tangled.odd"/>
+      <oddexpand in="Test/oddbyexample.odd" out="${outputdir}oddbyexample.tangled.odd"/>
+      <oddexpand in="Test/test13.odd" out="${outputdir}test13.tangled.odd"/>
+      <oddexpand in="Test/test15.odd" out="${outputdir}test15.tangled.odd"/>
+      <oddexpand in="Test/test16.odd" out="${outputdir}test16.tangled.odd"/>
+      <oddexpand in="Test/test21.odd" out="${outputdir}test21.tangled.odd"/>
+      <oddexpand in="Test/test30.odd" out="${outputdir}test30.tangled.odd"/>
+      <oddexpand in="Test/test33.odd" out="${outputdir}test33.tangled.odd"/>
+      <oddexpand in="Test/test34.combined.odd" out="${outputdir}test34.combined.tangled.odd"/>
+      <oddexpand in="Test/test34.odd" out="${outputdir}test34.tangled.odd"/>
+      <oddexpand in="Test/test35.odd" out="${outputdir}test35.tangled.odd"/>
+      <oddexpand in="Test/testClass.odd" out="${outputdir}testClass.tangled.odd"/>
+      <oddexpand in="Test/testdrama.odd" out="${outputdir}testdrama.tangled.odd"/>
+      <oddexpand in="Test/test.odd" out="${outputdir}test.tangled.odd"/>
+      <oddexpand in="Test/testODD.odd" out="${outputdir}testODD.tangled.odd"/>
+      <oddexpand in="Test/test-pure2.odd" out="${outputdir}test-pure2.tangled.odd"/>
+      <oddexpand in="Test/test-pure.odd" out="${outputdir}test-pure.tangled.odd"/>
+    </parallel>
+  </target>
+  
+  <target name="cleanForDiff">
+    <description>
+      TARGET cleanForDiff
+      (Stolen and modified from Martin Holme's
+      Stylesheets/Test2/build_utilities.xml.)
+      This target is run on an XML file which is going to be
+      compared with an expected result file. It uses cleanForDiff.xsl
+      to:
+      1. Remove all comments (since these often contain dates, versions
+         etc.)
+      2. Normalize Unicode to UTF-8 NFC.
+      3. Format and indent.
+      4. (and also to check all internal links in HTML files, but we don't have any).
+      It also replaces all occurences of ">&lt;" with ">\n&lt;" so each new tag is
+      on a line by itself, and the string that includes the directory name to be
+      just "Stylesheets/".
+    </description>
+    <replace dir="${outputdir}" casesensitive="true" token="Stylesheets_dev" value="Stylesheets"/>
+    <replace dir="${outputdir}" casesensitive="true" token="Stylesheets_rub" value="Stylesheets"/>
+    <property name="cleaner" value="${basedir}/Test2/cleanForDiff.xsl"/>
+    <echo level="info" message="Clean ${outputdir} ready for diffing with expected results using ${cleaner}."/>
+    <echo level="info" message="DEBUG: saxon -s:${outputdir} -xsl:${cleaner} -o:${tmpoutdir} --suppressXsltNamespaceCheck:on -versionmsg:off -dtd:off"/>
+    <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="false">
+      <arg value="-s:${outputdir}"/>
+      <arg value="-xsl:${cleaner}"/>
+      <arg value="-o:${tmpoutdir}"/>
+      <arg value="--suppressXsltNamespaceCheck:on"/>
+      <arg value="-versionmsg:off"/>  
+      <arg value="-dtd:off"/>
+    </java>
+    <move todir="${outputdir}" includeemptydirs="false">
+      <fileset dir="${tmpoutdir}"/>
+      <mapper type="glob" from="*.odd.xml" to="*.odd"/>
+    </move>
+    <replaceregexp match=' xmlns:[A-Za-z0-9._-]+="[^"]+"' replace="" flags="g">
+      <fileset dir="${outputdir}"/>
+    </replaceregexp>
+    <replace dir="${outputdir}">
+      <replacetoken>&gt;&lt;</replacetoken>
+      <replacevalue>&gt;&#x0A;&lt;</replacevalue>
+    </replace>
+  </target>
+
+</project>

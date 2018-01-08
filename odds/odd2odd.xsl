@@ -148,7 +148,6 @@
   <xsl:variable name="inputFilename" select="tokenize( base-uri(/),'/')[last()]"/>
   
   <xsl:variable name="ODD">
-    <xsl:sequence select="tei:msg('debug the duck')"/>
     <xsl:for-each select="/*">
       <xsl:copy>
         <xsl:attribute name="xml:base" select="document-uri(/)"/>
@@ -529,7 +528,7 @@
     <xd:desc><xd:i>pass 0</xd:i>: Ignore &lt;schemaSpec>s other than selected</xd:desc>
   </xd:doc>
   <xsl:template match="schemaSpec" mode="pass0">
-    <xsl:message>DEBUG: Ignoring schemaSpec <xsl:value-of select="@ident"/> as selectedSchema=<xsl:value-of select="$selectedSchema"/>!</xsl:message>
+    <xsl:sequence select="tei:msg(('Ignoring schemaSpec ', @ident,' as the selected schema is ', $selectedSchema,'.'))"/>
   </xsl:template>
   
   <xd:doc>
@@ -910,14 +909,29 @@
     <xsl:copy/>
   </xsl:template>
 
+  <xd:doc>
+    <xd:desc>Just copy most elements</xd:desc>
+  </xd:doc>
   <xsl:template match="*" mode="odd2odd-change">
     <xsl:copy>
       <xsl:apply-templates mode="odd2odd-change" select="@*|*|processing-instruction()|text()"/>
     </xsl:copy>
   </xsl:template>
 
+  <xd:doc>
+    <xd:desc>
+      <xd:p><xd:b>pass 2</xd:b> &lt;elementSpec mode=change></xd:p>
+      <xd:p>Call this input &lt;elementSpec> from the customization file
+      "inSpec"; call the corresponding &lt;elementSpec> from the TEI source
+      file "srcSpec".</xd:p>
+      <xd:p>First copy over the inSpec element itself with an added rend=change (why? is it ever checked?),
+      and then step through each child (other than the identifiable ones) of the srcSpec.
+      If the inSpec
+      &lt;elementSpec>, copying over from this input &lt;whatever is in this input &lt;elementSpec>, </xd:p>
+    </xd:desc>
+  </xd:doc>
   <xsl:template match="elementSpec" mode="odd2odd-change">
-    <xsl:variable name="elementName" select="tei:uniqueName(.)"/>
+    <xsl:variable name="elementKeyID" select="tei:uniqueName(.)"/>
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
       <xsl:attribute name="rend">change</xsl:attribute>
@@ -928,45 +942,48 @@
               If so, use them as is. The constraints and attributes are identifiable
               for change individually.
       -->
-      <xsl:for-each select="$ODD/key('odd2odd-CHANGE',$elementName)">
+      <xsl:message>DEBUG: <xsl:value-of select="$inputFilename"/>: <xsl:value-of select="
+        $ORIGINAL/@*" separator=", "/>; <xsl:value-of select="$ODD/*/@*"
+          separator=","/>; <xsl:value-of select="$ODD/key('odd2odd-CHANGE',$elementKeyID)/@*"
+            separator=","/>.</xsl:message>
+      <xsl:for-each select="$ODD/key('odd2odd-CHANGE',$elementKeyID)">
         <xsl:copy-of select="@ns"/>
         <!-- if there is an altIdent, use it -->
         <xsl:apply-templates mode="justcopy" select="altIdent"/>
         <!-- equiv, gloss, desc trio -->
         <xsl:choose>
           <xsl:when test="equiv">
-            <xsl:apply-templates mode="justcopy"
-              select="equiv">
+            <xsl:apply-templates mode="justcopy" select="equiv">
               <xsl:with-param name="rend">replace</xsl:with-param>
             </xsl:apply-templates>
           </xsl:when>
           <xsl:otherwise>
-              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/equiv"/>
-            </xsl:otherwise>
-          </xsl:choose>
-          <xsl:choose>
-            <xsl:when test="gloss">
-              <xsl:apply-templates mode="justcopy" select="gloss">
-                <xsl:with-param name="rend">replace</xsl:with-param>
-              </xsl:apply-templates>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/gloss"/>
-            </xsl:otherwise>
-          </xsl:choose>
-          <xsl:choose>
-            <xsl:when test="$stripped"/>
-            <xsl:when test="desc">
-              <xsl:apply-templates mode="justcopy" select="desc">
-                <xsl:with-param name="rend">replace</xsl:with-param>
-              </xsl:apply-templates>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:apply-templates mode="justcopy" select="$ORIGINAL/desc"/>
-            </xsl:otherwise>
-          </xsl:choose>
-          <!-- classes -->
-          <classes>
+            <xsl:apply-templates mode="justcopy" select="$ORIGINAL/equiv"/>
+          </xsl:otherwise>
+        </xsl:choose>
+        <xsl:choose>
+          <xsl:when test="gloss">
+            <xsl:apply-templates mode="justcopy" select="gloss">
+              <xsl:with-param name="rend">replace</xsl:with-param>
+            </xsl:apply-templates>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:apply-templates mode="justcopy" select="$ORIGINAL/gloss"/>
+          </xsl:otherwise>
+        </xsl:choose>
+        <xsl:choose>
+          <xsl:when test="$stripped"/>
+          <xsl:when test="desc">
+            <xsl:apply-templates mode="justcopy" select="desc">
+              <xsl:with-param name="rend">replace</xsl:with-param>
+            </xsl:apply-templates>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:apply-templates mode="justcopy" select="$ORIGINAL/desc"/>
+          </xsl:otherwise>
+        </xsl:choose>
+        <!-- classes -->
+        <classes>
             <xsl:choose>
               <xsl:when test="classes[@mode eq 'change']">
                 <xsl:for-each select="classes/memberOf">
@@ -1049,14 +1066,14 @@
           <!-- element constraints -->
           <xsl:call-template name="odd2odd-processConstraints">
             <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
-            <xsl:with-param name="elementName" select="$elementName"/>
+            <xsl:with-param name="elementName" select="$elementKeyID"/>
           </xsl:call-template>
           <!-- attList -->
           <attList>
             <xsl:apply-templates mode="justcopy" select="attList/@org"/>
             <xsl:call-template name="odd2odd-processAttributes">
               <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
-              <xsl:with-param name="objectName" select="$elementName"/>
+              <xsl:with-param name="objectName" select="$elementKeyID"/>
             </xsl:call-template>
           </attList>
 
@@ -1625,7 +1642,6 @@
   <xsl:template match="listRef" mode="odd2odd-copy"/>
 
   <xsl:template match="elementSpec" mode="odd2odd-copy">
-    <xsl:message>DEBUG: elementSpec <xsl:value-of select="@ident"/> in mode <xsl:value-of select="@mode"/> in XSLT mode odd2odd-copy</xsl:message>
     <xsl:copy>
       <xsl:call-template name="odd2odd-copyElementSpec"/>
     </xsl:copy>
@@ -2051,7 +2067,6 @@
           <xsl:apply-templates mode="odd2odd-copy" select="@*|*|processing-instruction()|text()"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:message>DEBUG: schemaSpec//elementSpec <xsl:value-of select="@ident"/> in mode <xsl:value-of select="@mode"/></xsl:message>
           <xsl:call-template name="odd2odd-copyElementSpec"/>
         </xsl:otherwise>
       </xsl:choose>
