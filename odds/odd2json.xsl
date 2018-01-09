@@ -86,9 +86,11 @@
                                 </xsl:choose>
                             </j:string>
                             <xsl:call-template name="desc"/>
-                            <j:string key="altIdent">
-                                <xsl:value-of select="tei:altIdent"/>
-                            </j:string>
+                            <j:array key="altIdent">
+                                <xsl:for-each select="tei:altIdent">
+                                    <j:string><xsl:value-of select="."/></j:string>
+                                </xsl:for-each>                                
+                            </j:array>
                         </j:map>
                     </xsl:for-each>
                 </j:array>
@@ -102,44 +104,26 @@
                         </j:map>
                     </xsl:for-each>
                 </j:array>
-                <j:array key="members">
-                    <xsl:for-each select="//tei:elementSpec|//tei:classSpec[@type='atts']">
+                <j:array key="elements">
+                    <xsl:for-each select="//tei:elementSpec">
                         <xsl:sort select="@ident"/>
-                        <j:map>
-                            <j:string key="ident"><xsl:value-of select="@ident"/></j:string>
-                            <xsl:variable name="nspace"
-                                select="(@ns,  ancestor::tei:schemaSpec[1]/@ns)[1]"/>
-                            <xsl:if test="$nspace">
-                                <j:string key="ns"><xsl:value-of select="$nspace"/></j:string>
-                            </xsl:if>
-                            <j:string key="type"><xsl:value-of select="local-name()"/></j:string>
-                            <j:string key="module"><xsl:value-of select="@module"/></j:string>
-                            <xsl:call-template name="desc"/>
-                            <j:string key="altIdent">
-                                <xsl:value-of select="tei:altIdent"/>
-                            </j:string>
-                            <xsl:if test="tei:classes">
-                                <j:array key="classes">
-                                    <xsl:for-each select="tei:classes/tei:memberOf">
-                                        <j:map>
-                                            <j:array key="{@key}">
-                                                <xsl:for-each select="key('IDENTS',@key)">
-                                                    <j:string><xsl:value-of select="@type"/></j:string>
-                                                </xsl:for-each>
-                                            </j:array>
-                                        </j:map>
-                                    </xsl:for-each>
-                                </j:array>
-                            </xsl:if>
-                            <xsl:call-template name="attributes"/>
-                            <xsl:if test="tei:classes">
-                                <j:array key="classattributes">
-                                    <xsl:call-template name="classattributes"/>
-                                </j:array>
-                            </xsl:if>
-                        </j:map>
+                        <xsl:call-template name="getMember"/>
                     </xsl:for-each>
                 </j:array>
+                <j:map key="classes">
+                    <j:array key="models">
+                        <xsl:for-each select="//tei:classSpec[@type='model']">
+                            <xsl:sort select="@ident"/>
+                            <xsl:call-template name="getMember"/>
+                        </xsl:for-each>
+                    </j:array>     
+                    <j:array key="attributes">
+                        <xsl:for-each select="//tei:classSpec[@type='atts']">
+                            <xsl:sort select="@ident"/>
+                            <xsl:call-template name="getMember"/>
+                        </xsl:for-each>
+                    </j:array>
+                </j:map>                
                 <j:array key="elementRefs">
                     <xsl:for-each select="//tei:elementRef[not(ancestor::tei:content)]">
                         <xsl:sort select="@key"/>
@@ -152,7 +136,7 @@
                         </j:map>
                     </xsl:for-each>
                 </j:array>
-                <j:array key="modelclasses">
+                <!--<j:array key="modelclasses">
                     <xsl:for-each select="//tei:classSpec[@type='model']">
                         <xsl:sort select="@ident"/>
                         <j:map>
@@ -166,7 +150,7 @@
                             <xsl:call-template name="mode"/>
                         </j:map>
                     </xsl:for-each>
-                </j:array>
+                </j:array>-->
                 <j:array key="classRefs">
                     <xsl:for-each select="//tei:classRef[not(ancestor::tei:content)]">
                         <xsl:sort select="@key"/>
@@ -180,7 +164,25 @@
                     </xsl:for-each>
                 </j:array>
                 <j:array key="macros">
-                    <xsl:for-each select="//tei:macroSpec|//tei:dataSpec">
+                    <xsl:for-each select="//tei:macroSpec">
+                        <xsl:sort select="@ident"/>
+                        <j:map>
+                            <j:string key="ident">
+                                <xsl:value-of select="@ident"/>
+                            </j:string>
+                            <j:string key="module">
+                                <xsl:value-of select="@module"/>
+                            </j:string>
+                            <j:string key="type">
+                                <xsl:value-of select="@type"/>
+                            </j:string>
+                            <xsl:call-template name="desc"/>
+                            <xsl:call-template name="mode"/>
+                        </j:map>
+                    </xsl:for-each>
+                </j:array>
+                <j:array key="datatypes">
+                    <xsl:for-each select="//tei:dataSpec">
                         <xsl:sort select="@ident"/>
                         <j:map>
                             <j:string key="ident">
@@ -212,6 +214,39 @@
             </j:map>
         </xsl:variable>
         <xsl:value-of select="xml-to-json($structure, map{'indent':true()})"/>
+    </xsl:template>
+    
+    <xsl:template name="getMember">
+        <j:map>
+            <j:string key="ident"><xsl:value-of select="@ident"/></j:string>
+            <xsl:variable name="nspace"
+                select="(@ns,  ancestor::tei:schemaSpec[1]/@ns)[1]"/>
+            <xsl:if test="$nspace">
+                <j:string key="ns"><xsl:value-of select="$nspace"/></j:string>
+            </xsl:if>
+            <j:string key="type"><xsl:value-of select="local-name()"/></j:string>
+            <j:string key="module"><xsl:value-of select="@module"/></j:string>
+            <xsl:call-template name="desc"/>
+            <j:array key="altIdent">
+                <xsl:for-each select="tei:altIdent">
+                    <j:string><xsl:value-of select="."/></j:string>
+                </xsl:for-each>                                
+            </j:array>
+            <xsl:if test="tei:classes">
+                <j:map key="classes">
+                    <xsl:for-each-group select="tei:classes/tei:memberOf" group-by="key('IDENTS',@key)/@type">                                                                                    
+                        <j:array key="{current-grouping-key()}">
+                            <xsl:for-each select="current-group()">
+                                <j:string>
+                                    <xsl:value-of select="@key"/>
+                                </j:string>
+                            </xsl:for-each>
+                        </j:array>
+                    </xsl:for-each-group>
+                </j:map>
+            </xsl:if>
+            <xsl:call-template name="attributes"/>
+        </j:map>
     </xsl:template>
     
     <xsl:template name="mode">
@@ -249,7 +284,7 @@
         </j:array>
     </xsl:template>
     
-    <xsl:template name="classattributes">
+    <!--<xsl:template name="classattributes">
         <xsl:variable name="caller" select="@ident"/>
         <xsl:for-each select="tei:classes/tei:memberOf">
             <xsl:for-each select="key('IDENTS',@key)">
@@ -269,7 +304,7 @@
                 </xsl:if>
             </xsl:for-each>
         </xsl:for-each>
-    </xsl:template>
+    </xsl:template>-->
     
     <xsl:template name="serializeElement">
         <xsl:variable name="simplified">
@@ -302,7 +337,9 @@
                     <xsl:otherwise/>
                 </xsl:choose>                
             </xsl:for-each>
-        </j:array>  
+        </j:array>
+        <!-- Format the first desc into shortDesc -->
+        <j:string key="shortDesc"><xsl:sequence select="tei:makeDescription(.,false())"/></j:string>
         <xsl:if test="$serializeDocs">
             <j:array key="gloss">
                 <xsl:for-each select="tei:gloss">
