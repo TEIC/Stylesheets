@@ -247,7 +247,7 @@
   
   <xsl:template name="front">
     <xsl:call-template name="article.title"/>
-    <xsl:call-template name="author.notes"/>
+    <xsl:call-template name="front.divs"/>
   </xsl:template>
   
   <xsl:template name="body">
@@ -297,8 +297,8 @@
     </fo:block>
   </xsl:template>
   
-  <xsl:template name="author.notes">
-    <xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:div[@type='acknowledgements']">
+  <xsl:template name="front.divs">
+    <xsl:for-each select="for $i in $div.types.front[. != 'abstract'] return /tei:TEI/tei:text/tei:front/tei:div[@type = $i]">
       <fo:block>
         <fo:block xsl:use-attribute-sets="heading.properties" font-family="Roboto" font-size="13pt">
           <xsl:value-of select="i18n:key(concat(@type, '-label'))"/>
