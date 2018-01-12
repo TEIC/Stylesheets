@@ -133,6 +133,8 @@
     -->
   </xsl:variable>
   
+  <xsl:variable name="notes.type.front" select="('authorNotes', 'editorNotes')"/>
+  
   <xsl:template match="tei:TEI">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
@@ -245,20 +247,39 @@
   <!-- front -->
   <!-- ===== -->
   
-  <!-- Lodel expects @xml:lang attribute, so add default @xml:lang='en' if absent/emtpy -->
-  <xsl:template match="tei:front/tei:div[@type eq 'abstract'][not(@xml:lang[normalize-space()])]">
+  <xsl:template match="tei:front">
+    <xsl:variable name="current" select="."/>
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
-      <xsl:attribute name="xml:lang">en</xsl:attribute>
-      <xsl:apply-templates select="node()"/>
+      <xsl:for-each select="for $i in $div.types.front return $current/tei:div[@type = $i]">
+        <xsl:apply-templates select="."/>
+      </xsl:for-each>
     </xsl:copy>
   </xsl:template>
   
-  <!-- Lodel doesn't display acknowledgments too well -> change to author note -->
-  <xsl:template match="tei:front/tei:div[@type eq 'acknowledgements']">
-    <note resp="author">
-      <xsl:apply-templates/>
-    </note>
+  <xsl:template match="tei:front/tei:div[@type = $div.types.front]">
+    <xsl:variable name="name" select="if (@type = $notes.type.front) then 'note' else name()"/>
+    <xsl:element name="{$name}">
+      <xsl:apply-templates select="@*"/>
+      <!-- Lodel expects @xml:lang attribute for abstracts, so add default @xml:lang='en' if absent/emtpy -->
+      <xsl:if test="@type eq 'abstract' and not(@xml:lang[normalize-space()])">
+        <xsl:attribute name="xml:lang">en</xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates select="node()"/>
+    </xsl:element>
+  </xsl:template>
+  
+  <xsl:template match="tei:front/tei:div[@type = $div.types.front]/@type">
+    <xsl:variable name="name" select="if (../@type = $notes.type.front) then 'resp' else name()"/>
+    <xsl:attribute name="{$name}">
+      <xsl:choose>
+        <xsl:when test=". eq 'authorNotes'">author</xsl:when>
+        <xsl:when test=". eq 'editorNotes'">editor</xsl:when>
+        <xsl:when test=". eq 'acknowledgements'">ack</xsl:when>
+        <xsl:when test=". eq 'corrections'">correction</xsl:when>
+        <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
   </xsl:template>
 
   <!-- ==== -->

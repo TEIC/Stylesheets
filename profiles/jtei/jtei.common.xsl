@@ -52,6 +52,10 @@
     <local:delim n="tag">&gt;</local:delim>
   </xsl:variable>
   
+  <!-- This variable lists all possible @type values for divisions in the 
+       front section (in processing order). -->
+  <xsl:variable name="div.types.front" select="('abstract', 'corrections', 'dedication', 'editorNotes', 'authorNotes', 'acknowledgements')"/>
+  
   <!-- This template generates labels for headers. -->
   <xsl:template match="*" mode="label">
     <xsl:param name="crossref.ptr" select="()" as="node()*"/>
