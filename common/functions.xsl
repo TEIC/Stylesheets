@@ -1157,12 +1157,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
         <xsl:when test="$oddmode='tei'"/>
         <xsl:when test="tei:valList[ @type = ('open','semi')]">
-          <xsl:sequence select="concat(
-            '&#x0A;',
-            if (@type eq 'open') then 'Sample' else 'Suggested',
-            '&#x20;',
-            'values include:',
-            '&#x20;')"/>
+          <xsl:variable name="msg"
+          select="tei:i18n( concat( if (@type eq 'open') then 'Sample' else 'Suggested', '&#x20;values include' ) )"/>
+          <xsl:value-of select="concat('&#x0A;', $msg, ':&#x20;')"/>
           <xsl:for-each select="tei:valList/tei:valItem">
             <xsl:number/>
             <xsl:text>] </xsl:text>
