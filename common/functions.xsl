@@ -1156,38 +1156,13 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
       <xsl:choose>
         <xsl:when test="$oddmode='tei'"/>
-        <xsl:when test="tei:valList[@type='open']">
-          <xsl:text>&#10;</xsl:text>
-          <xsl:sequence select="tei:i18n('Sample values include')"/>
-          <xsl:text>: </xsl:text>
-          <xsl:for-each select="tei:valList/tei:valItem">
-            <xsl:number/>
-            <xsl:text>] </xsl:text>
-            <xsl:choose>
-              <xsl:when test="tei:altIdent=@ident">
-                <xsl:value-of select="@ident"/>
-              </xsl:when>
-              <xsl:when test="tei:altIdent">
-                <xsl:value-of select="normalize-space(tei:altIdent)"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="@ident"/>
-              </xsl:otherwise>
-            </xsl:choose>
-            <xsl:variable name="langs">
-              <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
-            </xsl:variable>
-            <xsl:variable name="firstLang" select="($langs)[1]"/>
-            <xsl:sequence select="tei:makeGloss(.,$langs)"/>
-            <xsl:if test="following-sibling::tei:valItem">
-              <xsl:text>; </xsl:text>
-            </xsl:if>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:when test="tei:valList[@type='semi']">
-          <xsl:text>&#10;</xsl:text>
-          <xsl:sequence select="tei:i18n('Suggested values include')"/>
-          <xsl:text>: </xsl:text>
+        <xsl:when test="tei:valList[ @type = ('open','semi')]">
+          <xsl:sequence select="concat(
+            '&#x0A;',
+            if (@type eq 'open') then 'Sample' else 'Suggested',
+            '&#x20;',
+            'values include:',
+            '&#x20;')"/>
           <xsl:for-each select="tei:valList/tei:valItem">
             <xsl:number/>
             <xsl:text>] </xsl:text>
