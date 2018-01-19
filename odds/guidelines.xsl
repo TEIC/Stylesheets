@@ -718,8 +718,7 @@
           </xsl:when>
           <xsl:when
             test="parent::tei:exemplum[@xml:lang = 'mul'] and not($documentationLanguage = 'zh-TW')">
-            <!-- will need to generalize this if other langs come along like
-		chinese -->
+            <!-- will need to generalize this if other langs come along like chinese -->
             <xsl:call-template name="backLink"/>
           </xsl:when>
           <xsl:when test="parent::tei:exemplum[@xml:lang = $documentationLanguage]">
@@ -734,8 +733,8 @@
       
       <!-- XML code examples within tei:remarks -->
       <xsl:if test="self::teix:egXML and ancestor::tei:remarks">
-        <!-- The following xsl:choose switch is taken from the <xsl:template match="tei:exemplum" mode="doc"> template from common_tagdocs.xsl -->
-        <!-- Those two switches should most probably stay in sync -->
+        <!-- The following <xsl:choose> is a modification of the <xsl:if test="self::teix:egXML and parent::tei:exemplum"> clause, above -->
+        <!-- These two switches should most probably stay in sync -->
         <xsl:choose>
           <xsl:when test="ancestor::tei:remarks[not(@xml:lang)]">
             <xsl:call-template name="backLink"/>
@@ -745,8 +744,7 @@
           </xsl:when>
           <xsl:when
             test="ancestor::tei:remarks[@xml:lang = 'mul'] and not($documentationLanguage = 'zh-TW')">
-            <!-- will need to generalize this if other langs come along like
-		chinese -->
+            <!-- will need to generalize this if other langs come along like chinese -->
             <xsl:call-template name="backLink"/>
           </xsl:when>
           <xsl:when test="ancestor::tei:remarks[@xml:lang = $documentationLanguage]">
