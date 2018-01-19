@@ -1156,9 +1156,19 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
       <xsl:choose>
         <xsl:when test="$oddmode='tei'"/>
+        <!--
+          The original code, which had separate templates for tei:valList[@type=open] and
+          tei:valList[@type=semi], was very redundant. However, it may have been very clever
+          in how it handled the case of multiple child <valList>s. Or, it may have obliviously
+          worked in that caes, producing passable, if not ideal, outupt. Depends on your point
+          of view, in part.
+          I believe we reproduce what it did, whether you like it or not, by using '=' instead
+          of 'eq' in the "if" comparison in the definition of $msg.
+          —Syd, 2018-01-19
+        -->
         <xsl:when test="tei:valList[ @type = ('open','semi')]">
           <xsl:variable name="msg"
-          select="tei:i18n( concat( if (@type eq 'open') then 'Sample' else 'Suggested', '&#x20;values include' ) )"/>
+            select="tei:i18n( concat( if (tei:valList/@type = 'open') then 'Sample' else 'Suggested', '&#x20;values include' ) )"/>
           <xsl:value-of select="concat('&#x0A;', $msg, ':&#x20;')"/>
           <xsl:for-each select="tei:valList/tei:valItem">
             <xsl:number/>
