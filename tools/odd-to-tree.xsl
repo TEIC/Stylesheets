@@ -112,7 +112,7 @@
               <label>@<xsl:value-of select="@ident"/></label>
 	      <eLeaf>
 		<label rend="desc">
-		  <xsl:sequence select="tei:makeDescription(.,true())"/>
+		  <xsl:sequence select="tei:makeDescription(., true(), true())"/>
 		  <xsl:text> (</xsl:text>
 		  <xsl:value-of select="if (@usage='opt' or not(@usage)) then
 					'Optional' else 'Mandatory'"/>

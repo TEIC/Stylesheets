@@ -128,7 +128,7 @@ of this software, even if advised of the possibility of such damage.
 	                    <xsl:text>. </xsl:text>
 			    <xsl:call-template name="copyright"/>
 	                    <xsl:call-template name="makeTEIVersion"/>
-	                    <xsl:sequence select="tei:makeDescription(.,true())"/>
+	                    <xsl:sequence select="tei:makeDescription(., true(), true())"/>
 	                 </xsl:with-param>
                </xsl:call-template>
                <xsl:choose>
@@ -184,7 +184,7 @@ of this software, even if advised of the possibility of such damage.
 		                      <xsl:text>.&#10;</xsl:text>
 				      <xsl:call-template name="copyright"/>
 		                      <xsl:call-template name="makeTEIVersion"/>
-		                      <xsl:sequence select="tei:makeDescription(.,true())"/>
+		                      <xsl:sequence select="tei:makeDescription(., true(), true())"/>
 	                    </xsl:with-param>
                   </xsl:call-template>
                   <xsl:call-template name="datatypeMacros"/>
@@ -348,7 +348,7 @@ of this software, even if advised of the possibility of such damage.
 		      separator=""/>
 	    <xsl:call-template name="copyright"/>
             <xsl:call-template name="makeTEIVersion"/>
-            <xsl:sequence select="tei:makeDescription(.,true())"/>
+            <xsl:sequence select="tei:makeDescription(., true(), true())"/>
          </xsl:with-param>
       </xsl:call-template>
       <xsl:choose>
@@ -1139,7 +1139,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:choose>
       </xsl:variable>
       <xsl:text>&#10;&lt;!--doc:</xsl:text>
-      <xsl:sequence select="tei:makeDescription(.,true())"/>
+      <xsl:sequence select="tei:makeDescription(., true(), true())"/>
       <xsl:text> --&gt;&#10;</xsl:text>
       <xsl:text>&lt;!ELEMENT </xsl:text>
       <xsl:value-of select="$ename"/>

@@ -1110,6 +1110,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:makeDescription" as="node()*">
     <xsl:param name="context"/>
     <xsl:param name="showListRef"/>
+<!-- MDH 2018-01-21: added this param so we can stop building
+     ugly and superfluous lists in Guidelines ref pages. See 
+     issue #296. -->
+    <xsl:param name="makeMiniList" as="xs:boolean"/>
     <xsl:variable name="D">
     <xsl:for-each select="$context">
       <xsl:variable name="langs"
@@ -1166,7 +1170,7 @@ of this software, even if advised of the possibility of such damage.
           of 'eq' in the "if" comparison in the definition of $msg.
           —Syd, 2018-01-19
         -->
-        <xsl:when test="tei:valList[ @type = ('open','semi')]">
+        <xsl:when test="tei:valList[ @type = ('open','semi')] and $makeMiniList = true()">
           <xsl:variable name="msg"
             select="tei:i18n( concat( if (tei:valList/@type = 'open') then 'Sample' else 'Suggested', '&#x20;values include' ) )"/>
           <xsl:value-of select="concat('&#x0A;', $msg, ':&#x20;')"/>
