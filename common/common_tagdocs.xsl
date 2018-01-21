@@ -240,7 +240,10 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
-        <xsl:sequence select="tei:makeDescription(., true(), true())"/>
+        <!-- MDH 2018-01-21: setting third param ($makeMiniList) to 
+          false so we can stop building ugly and superfluous lists 
+          in Guidelines ref pages. See issue #296. -->
+        <xsl:sequence select="tei:makeDescription(., true(), false())"/>
         <xsl:element namespace="{$outputNS}" name="{$tableName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>attDef</xsl:text>

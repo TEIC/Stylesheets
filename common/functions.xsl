@@ -1170,6 +1170,9 @@ of this software, even if advised of the possibility of such damage.
           of 'eq' in the "if" comparison in the definition of $msg.
           —Syd, 2018-01-19
         -->
+        <!-- MDH 2018-01-21: using $makeMiniList param so we can stop building
+     ugly and superfluous lists in Guidelines ref pages. See 
+     issue #296. -->
         <xsl:when test="tei:valList[ @type = ('open','semi')] and $makeMiniList = true()">
           <xsl:variable name="msg"
             select="tei:i18n( concat( if (tei:valList/@type = 'open') then 'Sample' else 'Suggested', '&#x20;values include' ) )"/>
