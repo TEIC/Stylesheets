@@ -1275,7 +1275,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:variable>
           <xsl:choose>
             <xsl:when test="$G='' and tei:gloss[(not(@xml:lang) or @xml:lang='en')]">
-              <xsl:text>(</xsl:text>
+              <xsl:text> (</xsl:text>
               <xsl:apply-templates select="tei:gloss[(not(@xml:lang) or @xml:lang='en')]" mode="inLanguage"/>
               <xsl:text>) </xsl:text>
             </xsl:when>
