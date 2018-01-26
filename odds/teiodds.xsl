@@ -894,7 +894,7 @@ select="$makeDecls"/></xsl:message>
                   </xsl:if>
                   <xsl:if test="not($oddmode = 'tei')">
                     <a:documentation>
-                      <xsl:sequence select="tei:makeDescription(., true())"/>
+                      <xsl:sequence select="tei:makeDescription(., true(), true())"/>
                     </a:documentation>
                   </xsl:if>
                   <xsl:choose>
@@ -1039,7 +1039,7 @@ select="$makeDecls"/></xsl:message>
         </value>
         <xsl:if test="not($oddmode='tei')">
           <a:documentation>
-	    <xsl:sequence select="tei:makeDescription(.,true())"/>
+	    <xsl:sequence select="tei:makeDescription(., true(), true())"/>
           </a:documentation>
         </xsl:if>
       </xsl:for-each>
@@ -1421,7 +1421,7 @@ select="$makeDecls"/></xsl:message>
             </value>
             <xsl:if test="not($oddmode='tei')">
               <a:documentation>
-                <xsl:sequence select="tei:makeDescription(.,true())"/>
+                <xsl:sequence select="tei:makeDescription(., true(), true())"/>
               </a:documentation>
             </xsl:if>
           </xsl:for-each>
@@ -1473,7 +1473,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:if>
       <xsl:if test="not($oddmode='tei')">
         <a:documentation>
-	  <xsl:sequence select="tei:makeDescription(.,true())"/>
+	  <xsl:sequence select="tei:makeDescription(., true(), true())"/>
         </a:documentation>
       </xsl:if>
       <xsl:variable name="minmax" select="tei:minOmaxO( tei:datatype/@minOccurs, tei:datatype/@maxOccurs )"/>
