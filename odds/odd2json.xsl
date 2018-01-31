@@ -406,7 +406,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="desc">
     <xsl:variable name="d">      
-    <xsl:sequence select="tei:makeDescription(.,false())"/>
+    <xsl:sequence select="tei:makeDescription(., false(), true())"/>
     </xsl:variable>
     <xsl:text>"desc":"</xsl:text>
     <xsl:value-of select="replace(normalize-space($d),$dq,$escdq)"/>

@@ -700,6 +700,7 @@
   <xsl:template
       match="tei:listBibl/tei:biblStruct|tei:listBibl/tei:bibl">
     <xsl:apply-templates/>
+    <xsl:variable name="id" select="@xml:id"/>
     <xsl:for-each select="key('BACKLINKS',@xml:id)">
       <!-- XML code examples within tei:exemplum -->
       <xsl:if test="self::teix:egXML and parent::tei:exemplum">
@@ -717,8 +718,7 @@
           </xsl:when>
           <xsl:when
             test="parent::tei:exemplum[@xml:lang = 'mul'] and not($documentationLanguage = 'zh-TW')">
-            <!-- will need to generalize this if other langs come along like
-		chinese -->
+            <!-- will need to generalize this if other langs come along like chinese -->
             <xsl:call-template name="backLink"/>
           </xsl:when>
           <xsl:when test="parent::tei:exemplum[@xml:lang = $documentationLanguage]">
@@ -731,8 +731,30 @@
         </xsl:choose>
       </xsl:if>
       
+      <!-- XML code examples within tei:remarks -->
+      <xsl:if test="self::teix:egXML and ancestor::tei:remarks">
+        <!-- The following <xsl:choose> is a modification of the <xsl:if test="self::teix:egXML and parent::tei:exemplum"> clause, above -->
+        <!-- These two switches should most probably stay in sync -->
+        <xsl:choose>
+          <xsl:when test="ancestor::tei:remarks[not(@xml:lang)]">
+            <xsl:call-template name="backLink"/>
+          </xsl:when>
+          <xsl:when test="ancestor::tei:remarks[@xml:lang = 'und']">
+            <xsl:call-template name="backLink"/>
+          </xsl:when>
+          <xsl:when
+            test="ancestor::tei:remarks[@xml:lang = 'mul'] and not($documentationLanguage = 'zh-TW')">
+            <!-- will need to generalize this if other langs come along like chinese -->
+            <xsl:call-template name="backLink"/>
+          </xsl:when>
+          <xsl:when test="ancestor::tei:remarks[@xml:lang = $documentationLanguage]">
+            <xsl:call-template name="backLink"/>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:if>
+      
       <!-- XML code examples within running text(?) -->
-      <xsl:if test="self::teix:egXML and not(parent::tei:exemplum)">
+      <xsl:if test="self::teix:egXML and not(ancestor::tei:exemplum) and not(ancestor::tei:remarks)">
         <xsl:call-template name="backLink"/>
       </xsl:if>
     </xsl:for-each>

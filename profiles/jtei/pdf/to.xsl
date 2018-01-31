@@ -247,7 +247,7 @@
   
   <xsl:template name="front">
     <xsl:call-template name="article.title"/>
-    <xsl:call-template name="author.notes"/>
+    <xsl:call-template name="front.divs"/>
   </xsl:template>
   
   <xsl:template name="body">
@@ -297,8 +297,8 @@
     </fo:block>
   </xsl:template>
   
-  <xsl:template name="author.notes">
-    <xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:div[@type='acknowledgements']">
+  <xsl:template name="front.divs">
+    <xsl:for-each select="for $i in $div.types.front[. != 'abstract'] return /tei:TEI/tei:text/tei:front/tei:div[@type = $i]">
       <fo:block>
         <fo:block xsl:use-attribute-sets="heading.properties" font-family="Roboto" font-size="13pt">
           <xsl:value-of select="i18n:key(concat(@type, '-label'))"/>
@@ -774,7 +774,7 @@
     </fo:list-block>
   </xsl:template>  
   
-  <xsl:template match="tei:list/tei:head|tei:table/tei:head">
+  <xsl:template match="tei:table/tei:head">
     <fo:block xsl:use-attribute-sets="heading.lowerblock.properties">
       <xsl:apply-templates select="parent::*" mode="label"/>
       <xsl:apply-templates/>
@@ -782,6 +782,13 @@
     </fo:block>
   </xsl:template>
   
+  <xsl:template match="tei:list/tei:head">
+    <fo:block xsl:use-attribute-sets="heading.lowerblock.properties">
+      <xsl:apply-templates/>
+      <xsl:call-template name="punctuate-head"/>
+    </fo:block>
+  </xsl:template>
+
   <xsl:template match="tei:list[not(@type='gloss')]/tei:item">
     <fo:list-item>
       <xsl:if test="not(tei:list)">

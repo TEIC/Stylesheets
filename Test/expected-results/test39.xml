@@ -160,7 +160,7 @@
             <item>First item<list type="ordered"><item>Subitem<list type="ordered"><item>Subsubitem</item></list></item></list></item>
           </list>
           <p>By using the paragraph level <hi rend="italic">Quote</hi> style a <hi rend="underline">quote</hi> can be produced:</p>
-          <p rend="Quote">My fake plants died because I did not pretend to water them.</p>
+          <p rend="Quote" style="font-style: italic; ">My fake plants died because I did not pretend to water them.</p>
         </div>
         <div>
           <head><anchor xml:id="Toc382049200"/>Notes</head>
@@ -169,7 +169,7 @@
           <p>Here is a standard footnote<anchor xml:id="Ref378325988"/><note place="foot" xml:id="ftn1" n="1"><p rend="footnote text"> Small footnote (we don’t want a paragraph inside it).</p></note> and another,<note place="foot" xml:id="ftn2" n="2"><p rend="footnote text"> A footnote with two paragraphs. This is the first.</p><p rend="footnote text">And this is the second.</p></note> which should be converted without problems. We can also use endnotes<hi rend="endnote_reference"><note place="end"><p rend="endnote text"> This is an example of an endnote.</p></note></hi> although the difference between the two is moot in on-line editions. </p>
           <p rend="MarginNoteInner">Margin Note Inner</p>
           <p rend="MarginNoteOuter">Margin Note Outer</p>
-          <p>Critical editions can also use marginal notes. Following one of the existing TEI profiles we define 4 <hi rend="italic">MarginNote</hi> styles (<hi rend="italic">MarginNoteLeft, MarginNoteRight, MarginNoteInner, MarginNoteOuter</hi>), which are used to the left and right of this text. They are converted to <hi rend="underline">note[@place = "margin_xx"]</hi> where xx ∈ {left, right, inner, outer}. Note that the exact positioning of these notes is rather tricky.</p>
+          <p>Critical editions can also use marginal notes. Following one of the existing TEI profiles we define 4 <hi rend="italic">MarginNote</hi> styles (<hi rend="italic">MarginNoteLeft, MarginNoteRight, MarginNoteInner, MarginNoteOuter</hi>), which are used to the left and right of this text. They are converted to <hi rend="underline">note[@place = "margin_xx"]</hi> where xx <hi style="font-family:Cambria Math" xml:space="preserve">∈ </hi>{left, right, inner, outer}. Note that the exact positioning of these notes is rather tricky.</p>
         </div>
         <div>
           <head><anchor xml:id="Toc382049201"/>Figures</head>
@@ -209,114 +209,132 @@
           <p>Tables, even somewhat more complicated ones (e.g. Table 2) can also be converted to TEI. However, the details of their layout and formatting will not be preserved. As with Figures, it is currently not possible to convert embedded Excel spreadsheets.</p>
           <table rend="rules">
             <row>
-              <cell/>
-              <cell>
-                <hi rend="bold">Lendava</hi>
+              <cell rend="left"/>
+              <cell rend="left">
+                <hi rend="bold" style="font-size:9pt">Lendava</hi>
               </cell>
-              <cell>
-                <hi rend="bold">Murska Sobota</hi>
+              <cell rend="left">
+                <hi rend="bold" style="font-size:9pt">Murska Sobota</hi>
               </cell>
-              <cell>
-                <hi rend="bold">Beltinci</hi>
+              <cell rend="left">
+                <hi rend="bold" style="font-size:9pt">Beltinci</hi>
               </cell>
-              <cell>
-                <hi rend="bold">okoliške vasi</hi>
+              <cell rend="left">
+                <hi rend="bold" style="font-size:9pt">okoliške vasi</hi>
               </cell>
-              <cell>
-                <hi rend="bold">skupaj</hi>
-              </cell>
-            </row>
-            <row>
-              <cell>1778</cell>
-              <cell>
-                <hi rend="italic">14</hi>
-              </cell>
-              <cell>
-                <hi rend="italic">0</hi>
-              </cell>
-              <cell>
-                <hi rend="italic">0</hi>
-              </cell>
-              <cell>
-                <hi rend="italic">0</hi>
-              </cell>
-              <cell>
-                <hi rend="italic">14</hi>
+              <cell rend="left">
+                <hi rend="bold" style="font-size:9pt">skupaj</hi>
               </cell>
             </row>
             <row>
-              <cell>1793</cell>
-              <cell>
-                <hi rend="italic">19</hi>
+              <cell rend="right">
+                <hi style="font-size:9pt">1778</hi>
               </cell>
-              <cell>
-                <hi rend="italic">14</hi>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">14</hi>
               </cell>
-              <cell>
-                <hi rend="italic">21</hi>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">0</hi>
               </cell>
-              <cell>
-                <hi rend="italic">6</hi>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">0</hi>
               </cell>
-              <cell>
-                <hi rend="italic">60</hi>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">0</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">14</hi>
               </cell>
             </row>
             <row>
-              <cell>1812</cell>
-              <cell>
-                <hi rend="italic">23</hi>
+              <cell rend="right">
+                <hi style="font-size:9pt">1793</hi>
               </cell>
-              <cell>
-                <hi rend="italic">13</hi>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">19</hi>
               </cell>
-              <cell>
-                <hi rend="italic">40</hi>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">14</hi>
               </cell>
-              <cell>
-                <hi rend="italic">0</hi>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">21</hi>
               </cell>
-              <cell>
-                <hi rend="italic">76</hi>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">6</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">60</hi>
+              </cell>
+            </row>
+            <row>
+              <cell rend="right">
+                <hi style="font-size:9pt">1812</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">23</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">13</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">40</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">0</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">76</hi>
               </cell>
             </row>
             <head><anchor xml:id="Ref378063790"/><lb/><anchor xml:id="Toc381285985"/>Table 1 A Simple table</head>
           </table>
           <table rend="rules">
             <row>
-              <cell cols="5">
-                <hi rend="bold">SLOVENSKE DEŽELE</hi>
+              <cell rend="center" cols="5">
+                <hi rend="bold" style="font-size:10pt">SLOVENSKE DEŽELE</hi>
               </cell>
             </row>
             <row>
-              <cell/>
-              <cell>144</cell>
-              <cell>192</cell>
-              <cell>182</cell>
-            </row>
-            <row>
-              <cell/>
-              <cell>96</cell>
-              <cell>89</cell>
-              <cell>145</cell>
-            </row>
-            <row>
-              <cell>
-                <hi rend="italic">Ljubljana</hi>
+              <cell rend="left"/>
+              <cell rend="right">
+                <hi style="font-size:10pt">144</hi>
               </cell>
-              <cell>
-                <hi rend="italic">(74)</hi>
+              <cell rend="right">
+                <hi style="font-size:10pt">192</hi>
               </cell>
-              <cell>
-                <hi rend="italic">(76)</hi>
-              </cell>
-              <cell>
-                <hi rend="italic">(95)</hi>
+              <cell rend="right">
+                <hi style="font-size:10pt">182</hi>
               </cell>
             </row>
             <row>
-              <cell cols="5">
-                <hi rend="bold">Sodni okraji z ozemlja današnje slovenske Primorske</hi>
+              <cell rend="left"/>
+              <cell rend="right">
+                <hi style="font-size:10pt">96</hi>
+              </cell>
+              <cell rend="right">
+                <hi style="font-size:10pt">89</hi>
+              </cell>
+              <cell rend="right">
+                <hi style="font-size:10pt">145</hi>
+              </cell>
+            </row>
+            <row>
+              <cell rend="left">
+                <hi rend="italic" style="font-size:10pt">Ljubljana</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:10pt">(74)</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:10pt">(76)</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:10pt">(95)</hi>
+              </cell>
+            </row>
+            <row>
+              <cell rend="center" cols="5">
+                <hi rend="bold" style="font-size:10pt">Sodni okraji z ozemlja današnje slovenske Primorske</hi>
               </cell>
             </row>
             <head><anchor xml:id="Ref378079178"/><anchor xml:id="Toc381285986"/>Table 2 A more complex table with multi columns</head>

@@ -403,7 +403,7 @@ of this software, even if advised of the possibility of such damage.
 		      </xsl:variable>
 		      <cell>
 		      	<xsl:if test="$preserveEffects='true'"> 
-		      		<xsl:attribute name="tei:align">
+		      		<xsl:attribute name="rend">
 			    <xsl:choose>
 			      <xsl:when test="w:p/w:pPr/w:jc">
 			      	<xsl:value-of

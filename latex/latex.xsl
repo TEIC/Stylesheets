@@ -168,7 +168,7 @@ of this software, even if advised of the possibility of such damage.
 		  '([%&amp;\$#])','\\$1')"/>
   </xsl:function>
 
-  <xsl:function name="tei:escapeChars" as="xs:string" override="yes">
+  <xsl:function name="tei:escapeChars" as="xs:string" override-extension-function="yes">
     <xsl:param name="letters"/>
     <xsl:param name="context"/>
       <xsl:value-of
@@ -181,7 +181,7 @@ of this software, even if advised of the possibility of such damage.
 
   </xsl:function>
 
-  <xsl:function name="tei:escapeCharsPartial" as="xs:string" override="yes">
+  <xsl:function name="tei:escapeCharsPartial" as="xs:string" override-extension-function="yes">
     <xsl:param name="letters"/>
       <xsl:value-of
 	  select="replace($letters,'([%#])','\\$1')"/>

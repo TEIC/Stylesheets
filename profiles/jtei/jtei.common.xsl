@@ -52,6 +52,10 @@
     <local:delim n="tag">&gt;</local:delim>
   </xsl:variable>
   
+  <!-- This variable lists all possible @type values for divisions in the 
+       front section (in processing order). -->
+  <xsl:variable name="div.types.front" select="('abstract', 'corrections', 'dedication', 'editorNotes', 'authorNotes', 'acknowledgements')"/>
+  
   <!-- This template generates labels for headers. -->
   <xsl:template match="*" mode="label">
     <xsl:param name="crossref.ptr" select="()" as="node()*"/>
@@ -62,7 +66,7 @@
   </xsl:template>
   
   <xsl:template name="punctuate-head">
-    <xsl:if test="not(matches(normalize-space(.), '[\p{P}-[\p{Pe}]]$'))">
+    <xsl:if test="not(matches(normalize-space((descendant::text()[not(ancestor::tei:note)][last()])), '[\p{P}-[\p{Pe}]]$'))">
       <xsl:text>.</xsl:text>
     </xsl:if>
   </xsl:template>
@@ -372,16 +376,23 @@
   <!-- This function computes the number and format for footnotes. -->
   <xsl:function name="local:get.note.nr" as="xs:integer">
     <xsl:param name="node"/>
-    <xsl:number value="count($node/preceding::tei:note[if ($node/@place) then @place = $node/@place else not(@place)]|$node)" format="{if (not($node/@place) or $node/@place eq 'foot') then '1' else 'i'}"/>
+    <xsl:number value="count($node/preceding::tei:note[if ($node/@place) then @place = $node/@place else not(@place)][ancestor::*[parent::tei:text] intersect $node/ancestor::*[parent::tei:text] or root()/*[not(self::tei:TEI)] intersect $node/root()/*[not(self::tei:TEI)]]|$node)" format="{if (not($node/@place) or $node/@place eq 'foot') then '1' else 'i'}"/>
   </xsl:function>
   
   <!-- This function is designed to double-escape entities that need to be 
      displayed as escapes in egXML text nodes. -->
   <xsl:function name="local:escapeEntitiesForEgXML" as="xs:string">
     <xsl:param name="inStr" as="xs:string"/>
-    <xsl:value-of select="replace(replace(replace($inStr, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;')"/>
+    <xsl:value-of select="local:unescapeAmpersandsForEgXMLEscapes(replace(replace(replace($inStr, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;'))"/>
   </xsl:function>
   
+  <!-- This function is designed to unescape ampersands that should be displayed 
+    literally as part of escapes in egXML text nodes. -->
+  <xsl:function name="local:unescapeAmpersandsForEgXMLEscapes" as="xs:string">
+    <xsl:param name="inStr" as="xs:string"/>
+    <xsl:value-of select="replace($inStr, '&amp;amp;([^;\s&amp;]+?;)', '&amp;$1')"/>
+  </xsl:function>
+
   <!-- This function is designed to double-escape entities that need to be 
      displayed as escapes in egXML attribute values. -->
   <xsl:function name="local:escapeEntitiesForEgXMLAttribute" as="xs:string">
