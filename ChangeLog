@@ -1,3 +1,339 @@
+2018-01-31  martinascholger  <martina.scholger@uni-graz.at>
+
+	merging latest changes from dev
+
+2018-01-31  Syd Bauman  <s.bauman@neu.edu>
+
+	Address #253: With Stylesheets sub-group of Council, removed "(unknown project)" as the defalut value for the  parameter, and replace with the first available distributor, publisher, or authority in that order; if none available, assign nil to value (which has to be tested for, but that's what the Stylesheets already do).
+
+2018-01-30  martindholmes  <mholmes@uvic.ca>
+
+	Adding a conditional to check whether there's any useful value in the $institution param before creating a block for it, on issue #253.
+
+2018-01-26  Hugh Cayless  <philomousos@gmail.com>
+
+	Missed a test in #296 fix.
+
+2018-01-26  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge pull request #307 from TEIC/bug296makeDescription
+	Fixes the redundant mini-lists in documentation
+
+2018-01-23  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	fixed some path issues that surfaced during OxGarage tests
+
+	added declaration for missing namespace prefix
+
+2018-01-22  martindholmes  <mholmes@uvic.ca>
+
+	Fixing expected results for changes arising out of bug #296.
+
+	Fix for expected results in my Test2 set following bugfix for #296.
+
+2018-01-21  martindholmes  <mholmes@uvic.ca>
+
+	Fix for spacing issue in bug #296. Will need a Jenkins build to confirm no ill-effects on PDF build.
+
+	Stage two for issue #296: new param set to false at line 246 of common_tagdocs to suppress the list in the ref page.
+
+	Stage one for issue #296: new parameter added to tei:makeDescription, and all invocations changed to use it, but values maintain current behaviour.
+
+2018-01-19  Hugh Cayless  <philomousos@gmail.com>
+
+	Changed WARNING to INFO for generate-context.
+	Turns out there are legitimate reasons for context-free attribute
+	constraints sometimes. The tei_customization ODD uses one such.
+
+2018-01-19  Syd Bauman  <s.bauman@neu.edu>
+
+	improve internal doc
+
+	Ack! Fix boo-boo: I had forgotten the "child::tei:valList" part of the XPath that tests for 'semi' or 'open' lists in previous commit.
+
+	forgot call to tei:i18n()
+
+	simplify making descriptions: Eliminate redundancy in generation of value list output when making descriptions.
+
+2018-01-19  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixes for broken links in BIB affecting ePub.
+
+2018-01-12  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #305 from rvdb/jTEI
+	added processing for all different front/div types 
+
+	added processing for all different front/div types
+
+2018-01-06  Syd Bauman  <s.bauman@neu.edu>
+
+	Address #304: Change calls to base-uri() and searches in <teiHeader> so that they no longer presume outermost element of input customization ODD is <TEI>, as it might be <teiHeader>. (It also might be something else, but that's not valid.)
+
+2017-12-30  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge in from gitHub
+
+2017-12-29  martindholmes  <mholmes@uvic.ca>
+
+	Expected results for Test2 changed again.
+
+	Work on ticket #302 has changed results for test.fo.
+
+	Fix for expected results in FO per bug #302.
+
+	Fix for bug #302.
+
+2017-12-28  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+2017-12-22  Syd Bauman  <s.bauman@neu.edu>
+
+	merge in MDH changes
+
+2017-12-22  Syd Bauman  <s.bauman@neu.edu>
+
+	bug fix: return only 1 prefix
+	On line 2403 we try to set the context node to the identifiable
+	element that has the `@ident` that matches the `@key` or `@name` of
+	the element tei:generateRefPrefix() as context, by using
+	`<xsl:for-each select="key('IDENTS',$lookup)">`. HOWEVER, it is
+	possible that there will be more than one element in IDENTS with the
+	same `@ident`. (E.g., this happens when the TEI-in-Libraries Best
+	Practices documentation is generated, because each of the 4 included
+	ODD files (level1.odd, level2.odd, level3.odd, level4.odd) has a
+	<specGrpRef> that points to a set of ODD elements in lib-header.odd.
+	This those particularly identifiable elements occur more than once in
+	IDENTS, and the `@ident` of one of them as a key would return 4 items.
+	This also might happen when elements of the same name occur in
+	different modules, which TEI itself does not do but another language
+	being defined in ODD might.) Thus the <xsl:for-each>, which I think
+	the original author intended to do nothing but set the context node,
+	ends up iterating multiple times, and we try to return multiple items,
+	when we are only allowed to return one.
+
+	To fix this, or at least to hack around it, I have changed the line in
+	question to read `<xsl:for-each select="key('IDENTS',$lookup)[1]">`,
+	thus selecting only the first element found in IDENTS with the
+	`@ident` of interest.
+
+	This may not be the ideal fix, but it is working for the case
+	intended, and has not (yet) broken anything else.
+
+2017-12-22  Syd Bauman  <s.bauman@neu.edu>
+
+	bug fix: return only 1 prefix On line 2403 we try to set the context node to the identifiable element that has the  that matches the  or  of the element tei:generateRefPrefix() as context, by using . HOWEVER, it is possible that there will be more than one element in IDENTS with the same . (E.g., this happens when the TEI-in-Libraries Best Practices documentation is generated, because each of the 4 included ODD files (level1.odd, level2.odd, level3.odd, level4.odd) has a <specGrpRef> that points to a set of ODD elements in lib-header.odd. This those particularly identifiable elements occur more than once in IDENTS, and the  of one of them as a key would return 4 items. This also might happen when elements of the same name occur in different modules, which TEI itself does not do but another language being defined in ODD might.) Thus the <xsl:for-each>, which I think the original author intended to do nothing but set the context node, ends up iterating multiple times, and we try to return multiple items, when we are only allowed to return one.
+	To fix this, or at least to hack around it, I have changed the line in
+	question to read ,
+	thus selecting only the first element found in IDENTS with the
+	 of interest.
+
+	This may not be the ideal fix, but it is working for the case
+	intended, and has not (yet) broken anything else.
+
+2017-12-22  martindholmes  <mholmes@uvic.ca>
+
+	Fixing filename references.
+
+	Renaming files at @sydb's suggestion.
+
+2017-12-07  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	made sure to construct a text node not an atomic value #293
+
+2017-11-30  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+2017-11-20  Syd Bauman  <s.bauman@neu.edu>
+
+	anyElement ordinality fix: Address #297 -- content model generated by  was ignoring its  and
+
+2017-11-18  martindholmes  <mholmes@uvic.ca>
+
+	Expected results untweak.
+
+2017-11-17  martindholmes  <mholmes@uvic.ca>
+
+	Revert "Expected results changes."
+	This reverts commit 36bff91c87b4dcdbc99091d529b5540911a7dc55.
+
+	Revert "Fix for issue #1709. Need to watch that it doesn't break PDF output."
+	This reverts commit 02907fe5dcde2c4dd0498c377bd1fadbbb16d19c.
+
+	Expected results changes.
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	Expected d results change from TEI/#1709.
+
+2017-11-17  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Merge pull request #295 from TomazErjavec/dev
+	Add makeAnchor to tei:ab where it generates html:div
+
+2017-11-17  martindholmes  <mholmes@uvic.ca>
+
+	Fix for issue #1709. Need to watch that it doesn't break PDF output.
+
+2017-11-17  James Cummings  <James.Cummings@newcastle.ac.uk>
+
+	Fixing 'medua' to 'media'
+
+2017-11-17  martinascholger  <martina.scholger@uni-graz.at>
+
+	whitespace issues, #264
+
+2017-11-17  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix for #123.
+
+2017-11-17  martindholmes  <mholmes@uvic.ca>
+
+	More expected-results fixes which are fallout from JSI confusion.
+
+	More expected-results fixes which are fallout from JSI confusion.
+
+	More expected-results fixes which are fallout from JSI confusion.
+
+	More expected-results fixes which are fallout from JSI confusion.
+
+2017-11-17  Syd Bauman  <s.bauman@neu.edu>
+
+	merge
+
+	Revert --jsi switch on test 39 @martindholmes and @jamescummings and I think this is an accidental artifact that is causing problems
+
+2017-11-17  martindholmes  <mholmes@uvic.ca>
+
+	Change to expected-results in docx conversion.
+
+	Non-existent @tei:align attribute in output; changing to @rend.
+
+2017-11-16  Syd Bauman  <s.bauman@neu.edu>
+
+	Re-create expected results w/ @martindholmes at Council meeting, scanned both test-indexes and expected version thereof; we think that all are due to font size change in @lb42's JSI commit, and it can just be copied over, so trying it
+
+2017-11-15  Tomaž Erjavec  <tomaz.erjavec@ijs.si>
+
+	Add makeAnchor to tei:ab where it generates html:div
+
+2017-11-11  Syd Bauman  <s.bauman@neu.edu>
+
+	Update from deprecated name of attribute to current name
+
+2017-11-05  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	small fix
+	The attribute axis starting at an attribute node node will never select
+	anything
+
+2017-11-03  lb42  <lou.burnard@retired.ox.ac.uk>
+
+	restore odd2odd
+
+	fix compatibility problems in jsi profile for docx conversn
+
+2017-11-02  Hugh Cayless  <philomousos@gmail.com>
+
+	Added .DS_Store to gitignore.
+
+2017-10-31  Hugh Cayless  <philomousos@gmail.com>
+
+	New Saxon produces more warnings.
+
+2017-10-30  Hugh Cayless  <philomousos@gmail.com>
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+2017-10-13  Syd Bauman  <s.bauman@neu.edu>
+
+	Fix for #272 Syd & Martin collaborated to find where <gloss> and <desc> were getting lost from existing P5 <valItem>s in the case that a customization ODD specified a new <valItem>
+
+2017-10-12  Hugh Cayless  <philomousos@gmail.com>
+
+	Upgraded to Saxon 9.8.0.5.
+
+2017-10-05  Raff Viglianti  <raffaeleviglianti@gmail.com>
+
+	removing quotes from defaultsource path when present
+
+2017-09-06  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #285 from rvdb/jTEI
+	avoid double escaping in <egXML> for ampersands that function as enti…
+
+	avoid double escaping in <egXML> for ampersands that function as entity escape character
+
+	Merge pull request #284 from rvdb/jTEI
+	entities inside <egXML> should be escaped
+
+	entities inside <egXML> should be escaped (should have been included in https://github.com/TEIC/Stylesheets/pull/189)
+
+2017-09-05  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #283 from rvdb/jTEI
+	-updated to OpenEdition-1.5.2
+
+	-updated to OpenEdition-1.5.2 -fixes to OpenEdition rendition of lists (after OpenEdition fix of  https://github.com/OpenEdition/tei.openedition/issues/4) -don't label list headings
+
+2017-09-01  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #282 from rvdb/jTEI
+	don't copy <date> 
+
+	don't copy <date> (complements https://github.com/TEIC/TEI/commit/db483fe4e4a3ac605d249460534662a2f3b32cc4)
+
+2017-08-29  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #280 from rvdb/jTEI
+	-updated to OpenEdition-1.5.1
+
+	-updated to OpenEdition-1.5.1 -improved automatic addition of closing period to figure headings
+
+2017-08-09  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #278 from rvdb/jTEI
+	Revert "added unifont as fallback font for unsupported characters in …
+
+	Revert "added unifont as fallback font for unsupported characters in PDF conversion"
+	This reverts commit 78bb65f5dc2797a924ef866402fc8ec64e919dec.
+
+2017-08-08  rvdb  <ron.vandenbranden@kantl.be>
+
+	Merge pull request #277 from rvdb/jTEI
+	added unifont as fallback font for unsupported characters in PDF conv…
+
+	added unifont as fallback font for unsupported characters in PDF conversion
+
+2017-07-11  Syd Bauman  <s.bauman@neu.edu>
+
+	Re-generate many expected result files to match new Telstar release of TEI
+
+2017-07-10  Syd Bauman  <s.bauman@neu.edu>
+
+	Update version #, as Telstar = 7.43.0 is out
+
+2017-07-10  Sarah Stanley  <scstanley7@gmail.com>
+
+	merged dev with master post-release
+
+2017-07-10  Syd Bauman  <s.bauman@neu.edu>
+
+	One more whitespace tweak in expected-results
+
+	"fix" several expected results It appears that current version of Stylesheets generates an extra blank line inside <address> in some circumstances, and thus the expected results were not matching. (Gee whiz, it's extra whitespace *in a comment*; who cares?) Copied over from Test/ to Test/expected-results
+
+	Updated expected results w/ extra blank line
+
+	Create new release (7.43.0)
+
+	Set up to create new release 7.43.0
+
+2017-07-04  Hugh Cayless  <philomousos@gmail.com>
+
+	Resolving #255.
 2017-07-04  Hugh Cayless  <philomousos@gmail.com>
 
 	Resolving #255.
