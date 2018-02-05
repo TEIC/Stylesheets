@@ -181,7 +181,13 @@
         </xsl:for-each>
       </xsl:if>
     </xsl:template>
-
+  
+  <!--Front -->
+  <xsl:template match="front">
+    <xsl:apply-templates select="div[@type='abstract']"/>
+    <xsl:call-template name="front.divs"/>
+  </xsl:template>
+  
 <!--Regular templates for body text. -->
     
 <!--    Shouldn't need to do anything with divs. -->
@@ -189,6 +195,7 @@
     
 <!--    However, the abstract does need a special header. Keywords are included after the abstract too. -->
     <xsl:template match="div[@type='abstract']">
+      <xsl:variable name="current" select="."/>
         <text:p text:style-name="teiHead1">
           <xsl:value-of select="i18n:key(concat(@type, '-label'), (@xml:lang, $jtei.lang)[.][1])"/>
         </text:p>
@@ -201,6 +208,17 @@
           <xsl:value-of select="string-join(//textClass/keywords/term, ', ')"/></text:p>
       </xsl:if>
     </xsl:template>
+  
+  <xsl:template name="front.divs">
+    <xsl:variable name="current" select="."/>
+    <xsl:for-each select="for $i in $div.types.front[. != 'abstract'] return $current/div[@type = $i]">
+      <text:p text:style-name="teiHead4">
+        <xsl:value-of select="upper-case(i18n:key(concat(@type, '-label')))"/>
+      </text:p>
+      <xsl:apply-templates/>
+    </xsl:for-each>
+  </xsl:template>
+  
   
   <!--    So does an appendix. -->
   <xsl:template match="div[@type='appendix']">

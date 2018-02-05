@@ -65,10 +65,10 @@ The element indicated by @spanTo (<value-of select="@spanTo"/>) must follow the 
             </assert>
           </rule>
         </pattern>
-   <pattern id="schematron-constraint-test-p-abstractModel-p-9">
+   <pattern id="schematron-constraint-test-p-abstractModel-structure-p-9">
       <rule context="tei:p">
-         <report test="not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
-        Abstract model violation: Paragraphs may not contain other paragraphs or ab elements.
+         <report test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
+        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
       </report>
       </rule>
    </pattern>
@@ -178,10 +178,10 @@ The @spanTo attribute of <name/> is required.</assert>
          </assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-ab-abstractModel-structure-p-31">
+   <pattern id="schematron-constraint-test-ab-abstractModel-structure-ab-31">
       <rule context="tei:ab">
-         <report test="not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
-        Abstract model violation: ab may not contain paragraphs or other ab elements.
+         <report test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
+        Abstract model violation: ab may not occur inside paragraphs or other ab elements.
       </report>
       </rule>
    </pattern>
@@ -197,36 +197,6 @@ The @spanTo attribute of <name/> is required.</assert>
          <assert test="contains(@target,' ')">
 You must supply at least two values for @target on <name/>
          </assert>
-      </rule>
-   </pattern>
-
-   <!-- *********** -->
-   <!-- deprecated: -->
-   <!-- *********** -->
-   <pattern>
-      <rule context="tei:gap">
-         <report test="@hand" role="nonfatal">WARNING: use of deprecated attribute — @hand of the gap element will be removed from the TEI on 2017-08-01.
-                </report>
-      </rule>
-   </pattern>
-   <pattern>
-      <rule context="tei:unclear">
-         <report test="@hand" role="nonfatal">WARNING: use of deprecated attribute — @hand of the unclear element will be removed from the TEI on 2017-08-01.
-                </report>
-      </rule>
-   </pattern>
-   <pattern>
-      <rule context="tei:oVar">
-         <report test="true()" role="nonfatal">
-                  WARNING: use of deprecated element — The <name/> element will be removed from the TEI on 2017-08-24. 
-                </report>
-      </rule>
-   </pattern>
-   <pattern>
-      <rule context="tei:pVar">
-         <report test="true()" role="nonfatal">
-                  WARNING: use of deprecated element — The <name/> element will be removed from the TEI on 2017-08-24. 
-                </report>
       </rule>
    </pattern>
 </schema>

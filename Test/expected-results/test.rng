@@ -206,7 +206,7 @@
     <optional>
       <attribute name="unit">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">names the unit used for the measurement
-Suggested values include: 1] cm(centimetres) ; 2] mm(millimetres) ; 3] in(inches) ; 4] lines; 5] chars(characters) </a:documentation>
+Suggested values include: 1] cm (centimetres) ; 2] mm (millimetres) ; 3] in (inches) ; 4] lines; 5] chars (characters) </a:documentation>
         <choice>
           <value>cm</value>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(centimetres) </a:documentation>
@@ -660,7 +660,6 @@ Sample values include: 1] approved; 2] candidate; 3] cleared; 4] deprecated; 5] 
     </optional>
   </define>
   <define name="att.editLike.attributes">
-    <ref name="att.dimensions.attributes"/>
     <ref name="att.editLike.attribute.evidence"/>
     <ref name="att.editLike.attribute.instant"/>
   </define>
@@ -977,7 +976,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
     <optional>
       <attribute name="unit">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the units used for the measurement, usually using the standard symbol for the desired units.
-Suggested values include: 1] m(metre) ; 2] kg(kilogram) ; 3] s(second) ; 4] Hz(hertz) ; 5] Pa(pascal) ; 6] Ω(ohm) ; 7] L(litre) ; 8] t(tonne) ; 9] ha(hectare) ; 10] Å(ångström) ; 11] mL(millilitre) ; 12] cm(centimetre) ; 13] dB(decibel) ; 14] kbit(kilobit) ; 15] Kibit(kibibit) ; 16] kB(kilobyte) ; 17] KiB(kibibyte) ; 18] MB(megabyte) ; 19] MiB(mebibyte) </a:documentation>
+Suggested values include: 1] m (metre) ; 2] kg (kilogram) ; 3] s (second) ; 4] Hz (hertz) ; 5] Pa (pascal) ; 6] Ω (ohm) ; 7] L (litre) ; 8] t (tonne) ; 9] ha (hectare) ; 10] Å (ångström) ; 11] mL (millilitre) ; 12] cm (centimetre) ; 13] dB (decibel) ; 14] kbit (kilobit) ; 15] Kibit (kibibit) ; 16] kB (kilobyte) ; 17] KiB (kibibyte) ; 18] MB (megabyte) ; 19] MiB (mebibyte) </a:documentation>
         <choice>
           <value>m</value>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(metre) SI base unit of length</a:documentation>
@@ -1508,9 +1507,9 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
           <value>part</value>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the element identifies a part of a book or collection.</a:documentation>
           <value>column</value>
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the element identifies an entry number or label in a list of entries.</a:documentation>
-          <value>entry</value>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the element identifies a column.</a:documentation>
+          <value>entry</value>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the element identifies an entry number or label in a list of entries.</a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -3224,7 +3223,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
     <optional>
       <attribute name="extent">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates whether the pronunciation or orthography applies to all or part of a word.
-Suggested values include: 1] full(full form) ; 2] pref(prefix) ; 3] suff(suffix) ; 4] inf(infix) ; 5] part(partial) </a:documentation>
+Suggested values include: 1] full (full form) ; 2] pref (prefix) ; 3] suff (suffix) ; 4] inf (infix) ; 5] part (partial) </a:documentation>
         <choice>
           <value>full</value>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(full form) </a:documentation>
@@ -3322,10 +3321,10 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
     <element name="p">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.5. Speech Contents]</a:documentation>
       <ref name="macro.paraContent"/>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-p-abstractModel-p-constraint-report-4">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-p-abstractModel-structure-p-constraint-report-4">
         <rule context="tei:p">
-          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
-        Abstract model violation: Paragraphs may not contain other paragraphs or ab elements.
+          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
+        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
       </report>
         </rule>
       </pattern>
@@ -3409,15 +3408,15 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
       <ref name="att.global.attributes"/>
       <ref name="att.ascribed.attributes"/>
       <optional>
-        <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="aloud" a:defaultValue="unknown">
-          <a:documentation>may be used to indicate whether the quoted matter is regarded as having been vocalized or signed.</a:documentation>
+        <attribute name="aloud">
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">may be used to indicate whether the quoted matter is regarded as having been vocalized or signed.</a:documentation>
           <choice>
             <data type="boolean"/>
             <choice>
               <value>unknown</value>
-              <a:documentation/>
+              <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
               <value>inapplicable</value>
-              <a:documentation/>
+              <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
             </choice>
           </choice>
         </attribute>
@@ -3445,6 +3444,7 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
       <ref name="macro.specialPara"/>
       <ref name="att.global.attributes"/>
       <ref name="att.typed.attributes"/>
+      <ref name="att.notated.attributes"/>
       <empty/>
     </element>
   </define>
@@ -3578,12 +3578,12 @@ Suggested values include: 1] spoken; 2] thought; 3] written; 4] soCalled; 5] for
   <define name="choice">
     <element name="choice">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups a number of alternative encodings for the same point in a text. [3.4. Simple Editorial Changes]</a:documentation>
-      <zeroOrMore>
+      <oneOrMore>
         <choice>
           <ref name="model.choicePart"/>
           <ref name="choice"/>
         </choice>
-      </zeroOrMore>
+      </oneOrMore>
       <ref name="att.global.attributes"/>
       <empty/>
     </element>
@@ -3620,6 +3620,7 @@ Normalization 12. Critical Apparatus]</a:documentation>
       <ref name="att.global.attributes"/>
       <ref name="att.timed.attributes"/>
       <ref name="att.editLike.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <optional>
         <attribute name="reason">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the reason for omission
@@ -3650,12 +3651,6 @@ Suggested values include: 1] cancelled; 2] deleted; 3] editorial; 4] illegible; 
         </attribute>
       </optional>
       <optional>
-        <attribute name="hand">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">in the case of text omitted from the transcription because of deliberate deletion by an identifiable hand, indicates the hand which made the deletion.</a:documentation>
-          <data type="anyURI"/>
-        </attribute>
-      </optional>
-      <optional>
         <attribute name="agent">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">in the case of text omitted because of damage, categorizes the cause of the damage, if it can be identified.
 Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
@@ -3675,6 +3670,7 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
       <ref name="att.transcriptional.attributes"/>
       <ref name="att.placement.attributes"/>
       <ref name="att.typed.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <empty/>
     </element>
   </define>
@@ -3685,6 +3681,7 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
       <ref name="att.global.attributes"/>
       <ref name="att.transcriptional.attributes"/>
       <ref name="att.typed.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <empty/>
     </element>
   </define>
@@ -3694,22 +3691,30 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
       <ref name="macro.paraContent"/>
       <ref name="att.global.attributes"/>
       <ref name="att.editLike.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <optional>
         <attribute name="reason">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates why the material is hard to transcribe.</a:documentation>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates why the material is hard to transcribe.
+Suggested values include: 1] illegible; 2] inaudible; 3] faded; 4] background_noise; 5] eccentric_ductus</a:documentation>
           <list>
             <oneOrMore>
-              <data type="token">
-                <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
-              </data>
+              <choice>
+                <value>illegible</value>
+                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                <value>inaudible</value>
+                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                <value>faded</value>
+                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                <value>background_noise</value>
+                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                <value>eccentric_ductus</value>
+                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+                </data>
+              </choice>
             </oneOrMore>
           </list>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="hand">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Where the difficulty in transcription arises from action (partial deletion, etc.) assignable to an identifiable hand, signifies the hand responsible for the action.</a:documentation>
-          <data type="anyURI"/>
         </attribute>
       </optional>
       <optional>
@@ -3895,6 +3900,7 @@ Measures]</a:documentation>
       <ref name="att.global.attributes"/>
       <ref name="att.datable.attributes"/>
       <ref name="att.editLike.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <ref name="att.typed.attributes"/>
       <empty/>
     </element>
@@ -3913,6 +3919,7 @@ Measures]</a:documentation>
       <ref name="att.global.attributes"/>
       <ref name="att.datable.attributes"/>
       <ref name="att.editLike.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <ref name="att.typed.attributes"/>
       <empty/>
     </element>
@@ -4257,6 +4264,7 @@ Elements]</a:documentation>
       <ref name="att.typed.attributes"/>
       <ref name="att.spanning.attributes"/>
       <ref name="att.breaking.attributes"/>
+      <ref name="att.edition.attributes"/>
       <empty/>
     </element>
   </define>
@@ -4503,7 +4511,7 @@ Elements]</a:documentation>
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the title according to some convenient typology.
-Sample values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] short; 5] desc(descriptive) </a:documentation>
+Sample values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4] short; 5] desc (descriptive) </a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -4909,8 +4917,8 @@ Suggested values include: 1] setting; 2] entrance; 3] exit; 4] business; 5] nove
       <ref name="att.global.attributes"/>
       <ref name="att.typed.attributes"/>
       <optional>
-        <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="version" a:defaultValue="5.0">
-          <a:documentation>The version of the TEI scheme</a:documentation>
+        <attribute name="version">
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the version number of the TEI Guidelines against which this document is valid.</a:documentation>
           <data type="token">
             <param name="pattern">[\d]+(\.[\d]+){0,2}</param>
           </data>
@@ -5178,7 +5186,7 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
             <value>ESTC</value>
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">English Short-Title Catalogue number: an identifying number assigned to a document in English printed in the British Isles or North America before 1801.</a:documentation>
             <value>OCLC</value>
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">union catalog number in WorldCat representing a resource held by one or more of the member libraries in the global cooperative Online Computer Library Center.</a:documentation>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">OCLC control number (record number) for the union catalog record in WorldCat, a union catalog for member libraries in the Online Computer Library Center global cooperative.</a:documentation>
             <data type="token">
               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
             </data>
@@ -5200,15 +5208,15 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
       <ref name="att.global.attributes"/>
       <ref name="att.declarable.attributes"/>
       <optional>
-        <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="status" a:defaultValue="unknown">
-          <a:documentation>supplies a code identifying the current availability of the text.</a:documentation>
+        <attribute name="status">
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies a code identifying the current availability of the text.</a:documentation>
           <choice>
             <value>free</value>
-            <a:documentation>the text is freely available.</a:documentation>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the text is freely available.</a:documentation>
             <value>unknown</value>
-            <a:documentation>the status of the text is unknown.</a:documentation>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the status of the text is unknown.</a:documentation>
             <value>restricted</value>
-            <a:documentation>the text is not freely available.</a:documentation>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the text is not freely available.</a:documentation>
           </choice>
         </attribute>
       </optional>
@@ -5400,17 +5408,17 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
       <ref name="att.global.attributes"/>
       <ref name="att.declarable.attributes"/>
       <optional>
-        <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="status" a:defaultValue="unknown">
-          <a:documentation>indicates the degree of correction applied to the text.</a:documentation>
+        <attribute name="status">
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the degree of correction applied to the text.</a:documentation>
           <choice>
             <value>high</value>
-            <a:documentation>the text has been thoroughly checked and proofread.</a:documentation>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the text has been thoroughly checked and proofread.</a:documentation>
             <value>medium</value>
-            <a:documentation>the text has been checked at least once.</a:documentation>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the text has been checked at least once.</a:documentation>
             <value>low</value>
-            <a:documentation>the text has not been checked.</a:documentation>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the text has not been checked.</a:documentation>
             <value>unknown</value>
-            <a:documentation>the correction status of the text is unknown.</a:documentation>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the correction status of the text is unknown.</a:documentation>
           </choice>
         </attribute>
       </optional>
@@ -5562,12 +5570,12 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
       </optional>
       <optional>
         <attribute name="placement">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates whether punctation marks have been captured inside or outside of an adjacent element.</a:documentation>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the positioning of punctuation marks that are associated with marked up text as being encoded within the element surrounding the text or immediately before or after it.</a:documentation>
           <choice>
             <value>internal</value>
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">punctuation marks are captured inside adjacent elements</a:documentation>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">punctuation marks found at the start or end of a marked up text component are included within its surrounding element;</a:documentation>
             <value>external</value>
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">punctuation marks are captured outside adjacent elements</a:documentation>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">punctuation marks found at the start or end of a marked up text component appear immediately before or after the surrounding element</a:documentation>
           </choice>
         </attribute>
       </optional>
@@ -5847,7 +5855,7 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
       <optional>
         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="datum" a:defaultValue="WGS84">
           <a:documentation>supplies a commonly used code name for the datum employed.
-Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Grid Reference System) ; 3] OSGB36(ordnance survey great britain) ; 4] ED50(European Datum coordinate system) </a:documentation>
+Suggested values include: 1] WGS84 (World Geodetic System) ; 2] MGRS (Military Grid Reference System) ; 3] OSGB36 (ordnance survey great britain) ; 4] ED50 (European Datum coordinate system) </a:documentation>
           <choice>
             <value>WGS84</value>
             <a:documentation>(World Geodetic System) a pair of numbers to be interpreted as latitude followed by longitude according to the World Geodetic System.</a:documentation>
@@ -6486,6 +6494,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
       <ref name="att.placement.attributes"/>
       <ref name="att.typed.attributes"/>
       <ref name="att.spanning.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <empty/>
     </element>
   </define>
@@ -6539,6 +6548,7 @@ The @spanTo attribute of <name/> is required.</assert>
       <ref name="att.transcriptional.attributes"/>
       <ref name="att.typed.attributes"/>
       <ref name="att.spanning.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <empty/>
     </element>
   </define>
@@ -6548,6 +6558,7 @@ The @spanTo attribute of <name/> is required.</assert>
       <ref name="macro.xtext"/>
       <ref name="att.global.attributes"/>
       <ref name="att.editLike.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <empty/>
     </element>
   </define>
@@ -6561,7 +6572,7 @@ The @spanTo attribute of <name/> is required.</assert>
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the material encoded according to some useful typology.
-Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNum(line number) ; 5] sig(signature) ; 6] catch(catchword) </a:documentation>
+Sample values include: 1] header; 2] footer; 3] pageNum (page number) ; 4] lineNum (line number) ; 5] sig (signature) ; 6] catch (catchword) </a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -6618,6 +6629,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
       <ref name="att.global.attributes"/>
       <ref name="att.transcriptional.attributes"/>
       <ref name="att.typed.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <empty/>
     </element>
   </define>
@@ -6693,6 +6705,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
       </pattern>
       <ref name="att.global.attributes"/>
       <ref name="att.transcriptional.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <empty/>
     </element>
   </define>
@@ -6708,6 +6721,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
       <ref name="att.global.attributes"/>
       <ref name="att.pointing.attributes"/>
       <ref name="att.transcriptional.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <empty/>
     </element>
   </define>
@@ -6717,6 +6731,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
       <ref name="macro.paraContent"/>
       <ref name="att.global.attributes"/>
       <ref name="att.editLike.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <optional>
         <attribute name="reason">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">one or more words indicating why the text has had to be supplied, e.g. overbinding, faded-ink, lost-folio, omitted-in-original.</a:documentation>
@@ -6738,6 +6753,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
       <ref name="macro.paraContent"/>
       <ref name="att.global.attributes"/>
       <ref name="att.editLike.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <optional>
         <attribute name="reason">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">one or more words indicating why this text is believed to be superfluous, e.g. repeated, interpolated etc.</a:documentation>
@@ -6759,6 +6775,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
       <ref name="macro.paraContent"/>
       <ref name="att.global.attributes"/>
       <ref name="att.editLike.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <optional>
         <attribute name="reason">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">one or more words indicating why this text has been secluded, e.g. interpolated etc.</a:documentation>
@@ -6838,6 +6855,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
       <ref name="att.transcriptional.attributes"/>
       <ref name="att.typed.attributes"/>
       <ref name="att.spanning.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <empty/>
     </element>
   </define>
@@ -6848,6 +6866,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
       <ref name="att.global.attributes"/>
       <ref name="att.spanning.attributes"/>
       <ref name="att.transcriptional.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <optional>
         <attribute name="target">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to one or more elements representing the interventions which are being reasserted.</a:documentation>
@@ -6868,6 +6887,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
       <ref name="att.global.attributes"/>
       <ref name="att.spanning.attributes"/>
       <ref name="att.transcriptional.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <empty/>
     </element>
   </define>
@@ -6891,6 +6911,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
       <ref name="att.global.attributes"/>
       <ref name="att.spanning.attributes"/>
       <ref name="att.transcriptional.attributes"/>
+      <ref name="att.dimensions.attributes"/>
       <optional>
         <attribute name="target">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to one or more elements representing the interventions which are to be reverted or undone.</a:documentation>
@@ -7399,7 +7420,7 @@ Suggested values include: 1] initial; 2] final</a:documentation>
       <ref name="att.typed.attributes"/>
       <optional>
         <attribute name="version">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the major version number of the TEI Guidelines against which this document is valid.</a:documentation>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the version number of the TEI Guidelines against which this document is valid.</a:documentation>
           <data type="token">
             <param name="pattern">[\d]+(\.[\d]+){0,2}</param>
           </data>
@@ -8353,7 +8374,7 @@ Suggested values include: 1] initial; 2] final</a:documentation>
       <optional>
         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="type" a:defaultValue="main">
           <a:documentation>specifies the role of this subdivision of the title.
-Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] short; 5] desc(descriptive) </a:documentation>
+Suggested values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4] short; 5] desc (descriptive) </a:documentation>
           <choice>
             <value>main</value>
             <a:documentation>main title of the work</a:documentation>
@@ -8673,10 +8694,10 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
     <element name="ab">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(anonymous block) contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph. [16.3. Blocks, Segments, and Anchors]</a:documentation>
       <ref name="macro.paraContent"/>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-ab-abstractModel-structure-p-constraint-report-14">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-ab-abstractModel-structure-ab-constraint-report-14">
         <rule context="tei:ab">
-          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
-        Abstract model violation: ab may not contain paragraphs or other ab elements.
+          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
+        Abstract model violation: ab may not occur inside paragraphs or other ab elements.
       </report>
         </rule>
       </pattern>
@@ -8712,6 +8733,7 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <ref name="att.segLike.attributes"/>
       <ref name="att.typed.attributes"/>
       <ref name="att.written.attributes"/>
+      <ref name="att.notated.attributes"/>
       <empty/>
     </element>
   </define>
@@ -8738,7 +8760,7 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <optional>
         <attribute name="unit">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the unit of time in which the interval value is expressed, if this is not inherited from the parent timeline.
-Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seconds) ; 5] ms(milliseconds) </a:documentation>
+Suggested values include: 1] d (days) ; 2] h (hours) ; 3] min (minutes) ; 4] s (seconds) ; 5] ms (milliseconds) </a:documentation>
           <choice>
             <value>d</value>
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(days) </a:documentation>
@@ -8797,7 +8819,7 @@ Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seco
       <optional>
         <attribute name="unit">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the unit of time corresponding to the interval value of the timeline or of its constituent points in time.
-Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seconds) ; 5] ms(milliseconds) </a:documentation>
+Suggested values include: 1] d (days) ; 2] h (hours) ; 3] min (minutes) ; 4] s (seconds) ; 5] ms (milliseconds) </a:documentation>
           <choice>
             <value>d</value>
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(days) </a:documentation>
@@ -8983,7 +9005,7 @@ You must supply at least two values for @target on <name/>
     <optional>
       <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="type" a:defaultValue="main">
         <a:documentation>indicates type of entry, in dictionaries with multiple types.
-Suggested values include: 1] main; 2] hom(homograph) ; 3] xref(cross reference) ; 4] affix; 5] abbr(abbreviation) ; 6] supplemental; 7] foreign</a:documentation>
+Suggested values include: 1] main; 2] hom (homograph) ; 3] xref (cross reference) ; 4] affix; 5] abbr (abbreviation) ; 6] supplemental; 7] foreign</a:documentation>
         <choice>
           <value>main</value>
           <a:documentation>a main entry (default).</a:documentation>
@@ -9301,9 +9323,7 @@ Suggested values include: 1] main; 2] hom(homograph) ; 3] xref(cross reference) 
   <define name="model.ptrLike.form">
     <choice>
       <ref name="oRef"/>
-      <ref name="oVar"/>
       <ref name="pRef"/>
-      <ref name="pVar"/>
     </choice>
   </define>
   <define name="superEntry">
@@ -9436,6 +9456,7 @@ Suggested values include: 1] main; 2] hom(homograph) ; 3] xref(cross reference) 
         </choice>
       </zeroOrMore>
       <ref name="att.global.attributes"/>
+      <ref name="att.typed.attribute.subtype"/>
       <ref name="att.lexicographic.attributes"/>
       <optional>
         <attribute name="type">
@@ -9472,6 +9493,7 @@ Suggested values include: 1] simple; 2] lemma; 3] variant; 4] compound; 5] deriv
       <ref name="att.global.attributes"/>
       <ref name="att.lexicographic.attributes"/>
       <ref name="att.partials.attributes"/>
+      <ref name="att.notated.attributes"/>
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the type of spelling.</a:documentation>
@@ -9500,6 +9522,7 @@ Suggested values include: 1] simple; 2] lemma; 3] variant; 4] compound; 5] deriv
       <ref name="macro.paraContent"/>
       <ref name="att.global.attributes"/>
       <ref name="att.lexicographic.attributes"/>
+      <ref name="att.notated.attributes"/>
       <empty/>
     </element>
   </define>
@@ -9509,6 +9532,7 @@ Suggested values include: 1] simple; 2] lemma; 3] variant; 4] compound; 5] deriv
       <ref name="macro.paraContent"/>
       <ref name="att.global.attributes"/>
       <ref name="att.lexicographic.attributes"/>
+      <ref name="att.notated.attributes"/>
       <empty/>
     </element>
   </define>
@@ -9517,6 +9541,7 @@ Suggested values include: 1] simple; 2] lemma; 3] variant; 4] compound; 5] deriv
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains the stress pattern for a dictionary headword, if given separately. [9.3.1. Information on Written and Spoken Forms]</a:documentation>
       <ref name="macro.paraContent"/>
       <ref name="att.global.attributes"/>
+      <ref name="att.notated.attributes"/>
       <empty/>
     </element>
   </define>
@@ -9529,7 +9554,7 @@ Suggested values include: 1] simple; 2] lemma; 3] variant; 4] compound; 5] deriv
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the grammatical information given according to some convenient typology—in the case of terminological information, preferably the dictionary of data element types specified in ISO 12620.
-Sample values include: 1] pos(part of speech) ; 2] gen(gender) ; 3] num(number) ; 4] animate; 5] proper</a:documentation>
+Sample values include: 1] pos (part of speech) ; 2] gen (gender) ; 3] num (number) ; 4] animate; 5] proper</a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -9673,17 +9698,19 @@ Sample values include: 1] abbrev; 2] verbTable</a:documentation>
         <choice>
           <text/>
           <ref name="model.gLike"/>
-          <ref name="model.phrase"/>
-          <ref name="model.inter"/>
-          <ref name="usg"/>
-          <ref name="lbl"/>
-          <ref name="def"/>
-          <ref name="gramGrp"/>
-          <ref name="xr"/>
           <ref name="model.global"/>
+          <ref name="model.inter"/>
+          <ref name="model.phrase"/>
+          <ref name="def"/>
+          <ref name="etym"/>
+          <ref name="gramGrp"/>
+          <ref name="lbl"/>
+          <ref name="usg"/>
+          <ref name="xr"/>
         </choice>
       </zeroOrMore>
       <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
       <ref name="att.lexicographic.attributes"/>
       <empty/>
     </element>
@@ -9706,7 +9733,7 @@ Sample values include: 1] abbrev; 2] verbTable</a:documentation>
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the usage information using any convenient typology.
-Sample values include: 1] geo(geographic) ; 2] time; 3] dom(domain) ; 4] register; 5] style; 6] plev(preference level) ; 7] lang(language) ; 8] gram(grammatical) ; 9] syn(synonym) ; 10] hyper(hypernym) ; 11] colloc(collocation) ; 12] comp(complement) ; 13] obj(object) ; 14] subj(subject) ; 15] verb; 16] hint</a:documentation>
+Sample values include: 1] geo (geographic) ; 2] time; 3] dom (domain) ; 4] register; 5] style; 6] plev (preference level) ; 7] lang (language) ; 8] gram (grammatical) ; 9] syn (synonym) ; 10] hyper (hypernym) ; 11] colloc (collocation) ; 12] comp (complement) ; 13] obj (object) ; 14] subj (subject) ; 15] verb; 16] hint</a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -9751,7 +9778,7 @@ Sample values include: 1] geo(geographic) ; 2] time; 3] dom(domain) ; 4] registe
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the type of cross reference, using any convenient typology.
-Sample values include: 1] syn(synonym) ; 2] etym(etymological) ; 3] cf(compare or consult) ; 4] illus(illustration) </a:documentation>
+Sample values include: 1] syn (synonym) ; 2] etym (etymological) ; 3] cf (compare or consult) ; 4] illus (illustration) </a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -9796,32 +9823,7 @@ Sample values include: 1] syn(synonym) ; 2] etym(etymological) ; 3] cf(compare o
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the kind of typographic modification made to the headword in the reference.
-Sample values include: 1] cap(capital) ; 2] noHyph(no hyphen) </a:documentation>
-          <data type="token">
-            <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
-          </data>
-        </attribute>
-      </optional>
-      <empty/>
-    </element>
-  </define>
-  <define name="oVar">
-    <element name="oVar">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(orthographic-variant reference) in a dictionary example, indicates a reference to variant orthographic form(s) of the headword. [9. Dictionaries]</a:documentation>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="model.gLike"/>
-          <ref name="oRef"/>
-        </choice>
-      </zeroOrMore>
-      <ref name="att.global.attributes"/>
-      <ref name="att.lexicographic.attributes"/>
-      <ref name="att.pointing.attributes"/>
-      <optional>
-        <attribute name="type">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the kind of variant involved.
-Sample values include: 1] pt(past tense) ; 2] pp(past participle) ; 3] prp(present participle) ; 4] f(feminine) ; 5] pl(plural) </a:documentation>
+Sample values include: 1] cap (capital) ; 2] noHyph (no hyphen) </a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -9833,23 +9835,6 @@ Sample values include: 1] pt(past tense) ; 2] pp(past participle) ; 3] prp(prese
   <define name="pRef">
     <element name="pRef">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(pronunciation reference) in a dictionary example, indicates a reference to the pronunciation(s) of the headword. [9.4. Headword and Pronunciation References]</a:documentation>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="model.gLike"/>
-          <ref name="pRef"/>
-        </choice>
-      </zeroOrMore>
-      <ref name="att.global.attributes"/>
-      <ref name="att.pointing.attributes"/>
-      <ref name="att.lexicographic.attributes"/>
-      <ref name="att.notated.attributes"/>
-      <empty/>
-    </element>
-  </define>
-  <define name="pVar">
-    <element name="pVar">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(pronunciation-variant reference) in a dictionary example, indicates a reference to variant pronunciation(s) of the headword. [9. Dictionaries]</a:documentation>
       <zeroOrMore>
         <choice>
           <text/>

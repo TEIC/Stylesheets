@@ -1110,6 +1110,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:makeDescription" as="node()*">
     <xsl:param name="context"/>
     <xsl:param name="showListRef"/>
+<!-- MDH 2018-01-21: added this param so we can stop building
+     ugly and superfluous lists in Guidelines ref pages. See 
+     issue #296. -->
+    <xsl:param name="makeMiniList" as="xs:boolean"/>
     <xsl:variable name="D">
     <xsl:for-each select="$context">
       <xsl:variable name="langs"
@@ -1156,38 +1160,23 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
       <xsl:choose>
         <xsl:when test="$oddmode='tei'"/>
-        <xsl:when test="tei:valList[@type='open']">
-          <xsl:text>&#10;</xsl:text>
-          <xsl:sequence select="tei:i18n('Sample values include')"/>
-          <xsl:text>: </xsl:text>
-          <xsl:for-each select="tei:valList/tei:valItem">
-            <xsl:number/>
-            <xsl:text>] </xsl:text>
-            <xsl:choose>
-              <xsl:when test="tei:altIdent=@ident">
-                <xsl:value-of select="@ident"/>
-              </xsl:when>
-              <xsl:when test="tei:altIdent">
-                <xsl:value-of select="normalize-space(tei:altIdent)"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="@ident"/>
-              </xsl:otherwise>
-            </xsl:choose>
-            <xsl:variable name="langs">
-              <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
-            </xsl:variable>
-            <xsl:variable name="firstLang" select="($langs)[1]"/>
-            <xsl:sequence select="tei:makeGloss(.,$langs)"/>
-            <xsl:if test="following-sibling::tei:valItem">
-              <xsl:text>; </xsl:text>
-            </xsl:if>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:when test="tei:valList[@type='semi']">
-          <xsl:text>&#10;</xsl:text>
-          <xsl:sequence select="tei:i18n('Suggested values include')"/>
-          <xsl:text>: </xsl:text>
+        <!--
+          The original code, which had separate templates for tei:valList[@type=open] and
+          tei:valList[@type=semi], was very redundant. However, it may have been very clever
+          in how it handled the case of multiple child <valList>s. Or, it may have obliviously
+          worked in that caes, producing passable, if not ideal, outupt. Depends on your point
+          of view, in part.
+          I believe we reproduce what it did, whether you like it or not, by using '=' instead
+          of 'eq' in the "if" comparison in the definition of $msg.
+          —Syd, 2018-01-19
+        -->
+        <!-- MDH 2018-01-21: using $makeMiniList param so we can stop building
+     ugly and superfluous lists in Guidelines ref pages. See 
+     issue #296. -->
+        <xsl:when test="tei:valList[ @type = ('open','semi')] and $makeMiniList = true()">
+          <xsl:variable name="msg"
+            select="tei:i18n( concat( if (tei:valList/@type = 'open') then 'Sample' else 'Suggested', '&#x20;values include' ) )"/>
+          <xsl:value-of select="concat('&#x0A;', $msg, ':&#x20;')"/>
           <xsl:for-each select="tei:valList/tei:valItem">
             <xsl:number/>
             <xsl:text>] </xsl:text>
@@ -1286,7 +1275,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:variable>
           <xsl:choose>
             <xsl:when test="$G='' and tei:gloss[(not(@xml:lang) or @xml:lang='en')]">
-              <xsl:text>(</xsl:text>
+              <xsl:text> (</xsl:text>
               <xsl:apply-templates select="tei:gloss[(not(@xml:lang) or @xml:lang='en')]" mode="inLanguage"/>
               <xsl:text>) </xsl:text>
             </xsl:when>

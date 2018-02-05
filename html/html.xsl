@@ -517,98 +517,104 @@ of this software, even if advised of the possibility of such damage.
       for it</desc>
    </doc>
   <xsl:template match="*" mode="generateLink">
-      <xsl:variable name="ident">
-         <xsl:apply-templates mode="ident" select="."/>
-      </xsl:variable>
-      <xsl:variable name="depth">
-         <xsl:apply-templates mode="depth" select="."/>
-      </xsl:variable>
-      <xsl:variable name="keep" select="tei:keepDivOnPage(.)"/>
-      <xsl:variable name="LINK">
+    <xsl:variable name="ident">
+      <xsl:apply-templates mode="ident" select="."/>
+    </xsl:variable>
+    <xsl:variable name="depth">
+      <xsl:apply-templates mode="depth" select="."/>
+    </xsl:variable>
+    <xsl:variable name="keep" select="tei:keepDivOnPage(.)"/>
+    <xsl:variable name="LINK">
       <xsl:choose>
-	<xsl:when test="$filePerPage='true'">
-	  <xsl:choose>
-	    <xsl:when test="preceding::tei:pb">
-	      <xsl:apply-templates select="preceding::tei:pb[1]"
-				   mode="ident"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:text>index</xsl:text>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	  <xsl:value-of select="$standardSuffix"/>
-	</xsl:when>
-	<xsl:when test="ancestor::tei:elementSpec and not($STDOUT='true')">
-	  <xsl:sequence select="concat('ref-',ancestor::tei:elementSpec/@ident,$standardSuffix,'#',$ident)"/>
-	</xsl:when>
-	<xsl:when test="ancestor::tei:classSpec and not($STDOUT='true')">
-	  <xsl:sequence select="concat('ref-',ancestor::tei:classSpec/@ident,$standardSuffix,'#',$ident)"/>
-	</xsl:when>
-	<xsl:when test="not ($STDOUT='true') and ancestor::tei:back and not($splitBackmatter='true')">
-	  <xsl:value-of select="concat($masterFile,$standardSuffix,'#',$ident)"/>
-	</xsl:when>
-	<xsl:when test="not($STDOUT='true') and ancestor::tei:front
-			and not($splitFrontmatter='true')">
-	  <xsl:value-of select="concat($masterFile,$standardSuffix,'#',$ident)"/>
-	</xsl:when>
-	<xsl:when test="not($keep) and $STDOUT='true' and
-			number($depth) &lt;= number($splitLevel)">
-	  <xsl:sequence select="concat($masterFile,$standardSuffix,$urlChunkPrefix,$ident)"/>
-	</xsl:when>
-	<xsl:when test="self::tei:text and $splitLevel=0">
-	  <xsl:value-of select="concat($ident,$standardSuffix)"/>
-	</xsl:when>
-	<xsl:when test="number($splitLevel)= -1 and
-			ancestor::tei:teiCorpus">
-	  <xsl:value-of select="$masterFile"/>
-	  <xsl:call-template name="addCorpusID"/>
-	  <xsl:value-of select="$standardSuffix"/>
-	  <xsl:value-of select="concat('#',$ident)"/>
-	</xsl:when>
-	<xsl:when test="number($splitLevel)= -1">
-	  <xsl:value-of select="concat('#',$ident)"/>
-	</xsl:when>
-	<xsl:when test="number($depth) &lt;= number($splitLevel) and not($keep)">
-	  <xsl:value-of select="concat($ident,$standardSuffix)"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:variable name="parent">
-	    <xsl:call-template name="locateParentDiv"/>
-	  </xsl:variable>
-	  <xsl:choose>
-	    <xsl:when test="$STDOUT='true'">
-	      <xsl:sequence select="concat($masterFile,$urlChunkPrefix,$parent,'#',$ident)"/>
-	    </xsl:when>
-	    <xsl:when test="ancestor::tei:group">
-	      <xsl:sequence select="concat($parent,$standardSuffix,'#',$ident)"/>
-	    </xsl:when>
-	    <xsl:when test="ancestor::tei:floatingText">
-	      <xsl:sequence select="concat($parent,$standardSuffix,'#',$ident)"/>
-	    </xsl:when>
-	    <xsl:when test="$keep and number($depth=0)">
-	      <xsl:sequence select="concat('#',$ident)"/>
-	    </xsl:when>
-	    <xsl:when test="$keep">
-	      <xsl:sequence select="concat($masterFile,$standardSuffix,'#',$ident)"/>
-	    </xsl:when>
-	    <xsl:when test="ancestor::tei:div and tei:keepDivOnPage(ancestor::tei:div[last()])">
-	      <xsl:sequence select="concat('#',$ident)"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:sequence select="concat($parent,$standardSuffix,'#',$ident)"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:otherwise>
+        <xsl:when test="$filePerPage='true'">
+          <xsl:choose>
+            <xsl:when test="preceding::tei:pb">
+              <xsl:apply-templates select="preceding::tei:pb[1]"
+                mode="ident"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>index</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:value-of select="$standardSuffix"/>
+        </xsl:when>
+        <xsl:when test="ancestor::tei:elementSpec and not($STDOUT='true')">
+          <xsl:sequence select="concat('ref-',ancestor::tei:elementSpec/@ident,$standardSuffix,'#',$ident)"/>
+        </xsl:when>
+        <xsl:when test="ancestor::tei:classSpec and not($STDOUT='true')">
+          <xsl:sequence select="concat('ref-',ancestor::tei:classSpec/@ident,$standardSuffix,'#',$ident)"/>
+        </xsl:when>
+        <xsl:when test="ancestor::tei:dataSpec and not($STDOUT='true')">
+          <xsl:sequence select="concat('ref-',ancestor::tei:dataSpec/@ident,$standardSuffix,'#',$ident)"/>
+        </xsl:when>
+        <xsl:when test="ancestor::tei:macroSpec and not($STDOUT='true')">
+          <xsl:sequence select="concat('ref-',ancestor::tei:macroSpec/@ident,$standardSuffix,'#',$ident)"/>
+        </xsl:when>
+        <xsl:when test="not ($STDOUT='true') and ancestor::tei:back and not($splitBackmatter='true')">
+          <xsl:value-of select="concat($masterFile,$standardSuffix,'#',$ident)"/>
+        </xsl:when>
+        <xsl:when test="not($STDOUT='true') and ancestor::tei:front
+          and not($splitFrontmatter='true')">
+          <xsl:value-of select="concat($masterFile,$standardSuffix,'#',$ident)"/>
+        </xsl:when>
+        <xsl:when test="not($keep) and $STDOUT='true' and
+          number($depth) &lt;= number($splitLevel)">
+          <xsl:sequence select="concat($masterFile,$standardSuffix,$urlChunkPrefix,$ident)"/>
+        </xsl:when>
+        <xsl:when test="self::tei:text and $splitLevel=0">
+          <xsl:value-of select="concat($ident,$standardSuffix)"/>
+        </xsl:when>
+        <xsl:when test="number($splitLevel)= -1 and
+          ancestor::tei:teiCorpus">
+          <xsl:value-of select="$masterFile"/>
+          <xsl:call-template name="addCorpusID"/>
+          <xsl:value-of select="$standardSuffix"/>
+          <xsl:value-of select="concat('#',$ident)"/>
+        </xsl:when>
+        <xsl:when test="number($splitLevel)= -1">
+          <xsl:value-of select="concat('#',$ident)"/>
+        </xsl:when>
+        <xsl:when test="number($depth) &lt;= number($splitLevel) and not($keep)">
+          <xsl:value-of select="concat($ident,$standardSuffix)"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:variable name="parent">
+            <xsl:call-template name="locateParentDiv"/>
+          </xsl:variable>
+          <xsl:choose>
+            <xsl:when test="$STDOUT='true'">
+              <xsl:sequence select="concat($masterFile,$urlChunkPrefix,$parent,'#',$ident)"/>
+            </xsl:when>
+            <xsl:when test="ancestor::tei:group">
+              <xsl:sequence select="concat($parent,$standardSuffix,'#',$ident)"/>
+            </xsl:when>
+            <xsl:when test="ancestor::tei:floatingText">
+              <xsl:sequence select="concat($parent,$standardSuffix,'#',$ident)"/>
+            </xsl:when>
+            <xsl:when test="$keep and number($depth=0)">
+              <xsl:sequence select="concat('#',$ident)"/>
+            </xsl:when>
+            <xsl:when test="$keep">
+              <xsl:sequence select="concat($masterFile,$standardSuffix,'#',$ident)"/>
+            </xsl:when>
+            <xsl:when test="ancestor::tei:div and tei:keepDivOnPage(ancestor::tei:div[last()])">
+              <xsl:sequence select="concat('#',$ident)"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:sequence select="concat($parent,$standardSuffix,'#',$ident)"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:otherwise>
       </xsl:choose>
-      </xsl:variable>
-
-      <!--
+    </xsl:variable>
+    
+    <!--
       <xsl:message>GENERATELINK <xsl:value-of
       select="(name(),$ident,$depth,string($keep),$LINK)"
-	  separator="|"/></xsl:message>
-      -->
-      <xsl:value-of select="$LINK"/>
-      
+      separator="|"/></xsl:message>
+    -->
+    <xsl:value-of select="$LINK"/>
+    
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -762,55 +768,55 @@ of this software, even if advised of the possibility of such damage.
       current object which would create an output file</desc>
    </doc>
   <xsl:template name="locateParentDiv">
-
-      <xsl:choose>
-
-	<xsl:when
-	     test="ancestor-or-self::tei:body/parent::tei:text/ancestor::tei:group">
-            <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
-         </xsl:when>
-
-	 <xsl:when test="ancestor-or-self::tei:front/parent::tei:text/ancestor::tei:group">
-            <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
-         </xsl:when>
-
-	 <xsl:when test="ancestor-or-self::tei:back/parent::tei:text/ancestor::tei:group">
-            <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
-         </xsl:when>
-
-         <xsl:when test="ancestor-or-self::tei:div and number($splitLevel) &lt; 0">
-            <xsl:apply-templates mode="ident" select="ancestor::tei:div[last()]"/>
-         </xsl:when>
-
-         <xsl:when test="ancestor-or-self::tei:div">
-	   <xsl:variable name="ancestors" select="count(ancestor-or-self::tei:div)"/>
-	   <xsl:variable name="diff" select="$ancestors - number($splitLevel)"/>
-	   <xsl:variable name="what" select="if ($diff &lt;= 1) then 1
-					     else $diff "/>
-	   <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div[$what]"/>
-         </xsl:when>
-
-         <xsl:otherwise>
-	   <xsl:variable name="ancestors" select="count(ancestor::tei:*[local-name()='div1'
-				 or local-name()='div2'
-				 or local-name()='div3'
-				 or local-name()='div4'
-				 or local-name()='div5'
-				 or local-name()='div6'])"/>
-	   <xsl:variable name="what"
-			 select="if
-				 ($ancestors &lt; number($splitLevel)) then 1 else
-				 $ancestors - number($splitLevel) +1"/>
-            <xsl:apply-templates mode="ident"
-				 select="ancestor-or-self::tei:*[local-name()='div1'
-				 or local-name()='div2'
-				 or local-name()='div3'
-				 or local-name()='div4'
-				 or local-name()='div5'
-				 or local-name()='div6'][$what]"/>
-         </xsl:otherwise>
-      </xsl:choose>
-
+    
+    <xsl:choose>
+      
+      <xsl:when
+        test="ancestor-or-self::tei:body/parent::tei:text/ancestor::tei:group">
+        <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
+      </xsl:when>
+      
+      <xsl:when test="ancestor-or-self::tei:front/parent::tei:text/ancestor::tei:group">
+        <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
+      </xsl:when>
+      
+      <xsl:when test="ancestor-or-self::tei:back/parent::tei:text/ancestor::tei:group">
+        <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
+      </xsl:when>
+      
+      <xsl:when test="ancestor-or-self::tei:div and number($splitLevel) &lt; 0">
+        <xsl:apply-templates mode="ident" select="ancestor::tei:div[last()]"/>
+      </xsl:when>
+      
+      <xsl:when test="ancestor-or-self::tei:div">
+        <xsl:variable name="ancestors" select="count(ancestor-or-self::tei:div)"/>
+        <xsl:variable name="diff" select="$ancestors - number($splitLevel)"/>
+        <xsl:variable name="what" select="if ($diff &lt;= 1) then 1
+          else $diff "/>
+        <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div[$what]"/>
+      </xsl:when>
+      
+      <xsl:otherwise>
+        <xsl:variable name="ancestors" select="count(ancestor::tei:*[local-name()='div1'
+          or local-name()='div2'
+          or local-name()='div3'
+          or local-name()='div4'
+          or local-name()='div5'
+          or local-name()='div6'])"/>
+        <xsl:variable name="what"
+          select="if
+          ($ancestors &lt; number($splitLevel)) then 1 else
+          $ancestors - number($splitLevel) +1"/>
+        <xsl:apply-templates mode="ident"
+          select="ancestor-or-self::tei:*[local-name()='div1'
+          or local-name()='div2'
+          or local-name()='div3'
+          or local-name()='div4'
+          or local-name()='div5'
+          or local-name()='div6'][$what]"/>
+      </xsl:otherwise>
+    </xsl:choose>
+    
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

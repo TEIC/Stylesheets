@@ -478,7 +478,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="ancestor::attDef/@nsp"/>
             <xsl:value-of select="ancestor::attDef/@ident"/>
           </xsl:variable>
-          <xsl:message>WARNING: constraint for <xsl:value-of select="$me"/> of the <xsl:value-of select="ancestor::classSpec/@ident"/> class does not have a context=. Resulting rule is applied to *all* occurences of <xsl:value-of select="$me"/>.</xsl:message>
+          <xsl:message>INFO: constraint for <xsl:value-of select="$me"/> of the <xsl:value-of select="ancestor::classSpec/@ident"/> class does not have a context=. Resulting rule is applied to *all* occurences of <xsl:value-of select="$me"/>.</xsl:message>
           <xsl:value-of select="$me"/>
         </xsl:when>
         <xsl:when test="ancestor::attDef[ancestor::elementSpec]">
@@ -492,7 +492,7 @@ of this software, even if advised of the possibility of such damage.
           <!-- this is WRONG: need to run around and get the -->
           <!-- members of the class, and for each use its -->
           <!-- @nsp:@ident -->
-          <xsl:message>WARNING: constraint for <xsl:value-of select="ancestor::classSpec/@ident"/> class does not have a context=. Resulting rule is applied to *all* elements.</xsl:message>
+          <xsl:message>INFO: constraint for <xsl:value-of select="ancestor::classSpec/@ident"/> class does not have a context=. Resulting rule is applied to *all* elements.</xsl:message>
           <xsl:text>*</xsl:text>
         </xsl:when>
         <xsl:when test="ancestor::elementSpec">

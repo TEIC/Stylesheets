@@ -4,7 +4,7 @@
   xmlns:unless="ant:unless">
   
   <description> 
-    Stylesheets/Test2/docx.xml
+    Stylesheets/Test2/build_docx.xml
     
     ANT TEST FILE FOR CONVERSIONS BETWEEN TEI AND DOCX.
     
@@ -14,7 +14,7 @@
 
 
   <!-- First we include the generic utilities module.   -->
-  <import file="utilities.xml" as="utils"/>
+  <import file="build_utilities.xml" as="utils"/>
   
   <!--  Files for conversion to ODT.  -->
   <fileset id="teiToDocxFiles" dir="${inputDir}" includes="generalP5.xml, testEgXml1.xml, testNotes1.xml"/>
