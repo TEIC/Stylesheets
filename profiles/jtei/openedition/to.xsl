@@ -348,7 +348,8 @@
   
   <!-- add @n to <note> -->
   <xsl:template match="tei:note">
-    <xsl:param name="listnote.counter" tunnel="yes" as="xs:integer" select="0"/>
+    <xsl:param name="note.counter" tunnel="yes" as="xs:integer" select="0"/>
+    <xsl:param name="note.context" select="ancestor::*[self::tei:front|self::tei:body|self::tei:back]" tunnel="yes" as="element()?"/>
     <!-- only 'pull' subsequent puntuation once (i.e. unless it is done for the preceding element) -->
     <xsl:if test="not(preceding-sibling::node()[normalize-space()][1][. intersect key('quotation.elements', local-name())])">
       <xsl:call-template name="include.punctuation"/>
@@ -360,7 +361,7 @@
       </xsl:if>
       <xsl:attribute name="n">
         <!-- notes inside lists are processed in isolation; therefore add counter of notes preceding the parent list (if available) to the relative numbering -->
-        <xsl:value-of select="local:get.note.nr(.) + $listnote.counter"/>
+        <xsl:number value="local:get.note.nr(.) + $note.counter" format="{local:format.note.nr($note.context)}"/>
       </xsl:attribute>
       <xsl:choose>
         <xsl:when test="tei:p">
@@ -820,7 +821,8 @@
 
   <!-- [RvdB] added preprocessing step, which just copies the list, but wraps all contents of <item> in <p> prior to further processing -->
   <xsl:template match="tei:list">
-    <xsl:param name="listnote.counter" tunnel="yes" as="xs:integer" select="0"/>
+    <xsl:param name="note.counter" tunnel="yes" as="xs:integer" select="0"/>
+    <xsl:param name="note.context" select="ancestor::*[self::tei:front|self::tei:body|self::tei:back]" tunnel="yes" as="element()?"/>
     <xsl:variable name="current" select="."/>
     <xsl:variable name="list.prepare">
       <xsl:apply-templates select="." mode="list.prepare"/>
@@ -832,9 +834,8 @@
           <xsl:apply-templates select="@*"/>
           <xsl:call-template name="get.rendition"/>        
           <xsl:apply-templates select="node()[not(self::tei:head)]">
-            <!-- count preceding notes and pass this info for further processing of notes -->
-            <xsl:with-param name="listnote.counter" select="$listnote.counter + local:get.note.nr($current/preceding::tei:note[1])" tunnel="yes"/>
-            
+            <xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/>
+            <xsl:with-param name="note.context" select="$note.context" tunnel="yes"/>
           </xsl:apply-templates>
         </xsl:copy>
       </xsl:for-each>
