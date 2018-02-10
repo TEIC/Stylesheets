@@ -370,14 +370,15 @@
 
   <!-- generate endnote pointer after subsequent punctuaton  -->
   <xsl:template match="tei:note">
-    <xsl:variable name="nr" select="local:get.note.nr(.)"/>
-    <!-- only 'pull' subsequent puntuation once (i.e. unless it is done for the preceding element) -->
+    <xsl:param name="note.context" select="ancestor::*[self::tei:front|self::tei:body|self::tei:back]" tunnel="yes" as="element()?"/>
+    <xsl:variable name="note.nr" select="local:get.note.nr(.)"/>
+    <!-- only 'pull' subsequent punctuation once (i.e. unless it is done for the preceding element) -->
     <xsl:if test="not(preceding-sibling::node()[normalize-space()][1][. intersect key('quotation.elements', local-name())])">
       <xsl:call-template name="include.punctuation"/>
     </xsl:if>
     <fo:inline font-size="5.4pt" vertical-align="super">
-      <fo:basic-link internal-destination="note{$nr}" id="noteptr{$nr}">
-        <xsl:value-of select="$nr"/>
+      <fo:basic-link internal-destination="{$note.context/name()}.note{$note.nr}" id="{$note.context/name()}.noteptr{$note.nr}">
+        <xsl:number value="$note.nr" format="{local:format.note.nr($note.context)}"/>
       </fo:basic-link>
     </fo:inline>
   </xsl:template>
@@ -1099,11 +1100,12 @@
   </xsl:template>
   
   <xsl:template match="tei:note" mode="endnotes">
-    <xsl:variable name="nr" select="local:get.note.nr(.)"/>
+    <xsl:variable name="note.nr" select="local:get.note.nr(.)"/>
+    <xsl:variable name="note.context" select="ancestor::*[self::tei:front|self::tei:body|self::tei:back]"/>
     <fo:block>
       <fo:inline font-weight="bold" height="100%">
-        <fo:basic-link internal-destination="noteptr{$nr}" id="note{$nr}" space-end="1em">
-          <xsl:value-of select="$nr"/>
+        <fo:basic-link internal-destination="{$note.context/name()}.noteptr{$note.nr}" id="{$note.context/name()}.note{$note.nr}" space-end="1em">
+          <xsl:number value="$note.nr" format="{local:format.note.nr($note.context)}"/>
         </fo:basic-link>
       </fo:inline>
       <xsl:apply-templates/>
