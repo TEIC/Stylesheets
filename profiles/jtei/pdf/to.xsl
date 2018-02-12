@@ -228,7 +228,7 @@
   
   <xsl:template name="PDF-outline">
     <fo:bookmark-tree>
-      <xsl:apply-templates select=".//tei:body/tei:div[tei:head]" mode="PDF-outline"/>
+      <xsl:apply-templates select=".//tei:text/(tei:body|tei:back)/tei:div[tei:head]" mode="PDF-outline"/>
     </fo:bookmark-tree>
   </xsl:template>
   
@@ -247,6 +247,8 @@
   
   <xsl:template name="front">
     <xsl:call-template name="article.title"/>
+    <xsl:apply-templates select="/tei:TEI/tei:text/tei:front/tei:div[@type='abstract']"/>
+    <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass"/>
     <xsl:call-template name="front.divs"/>
   </xsl:template>
   
@@ -258,17 +260,15 @@
   
   <xsl:template name="back">
     <xsl:variable name="variable.content">
-      <xsl:apply-templates select="/tei:TEI/tei:text/tei:back/tei:div[@type='bibliography']"/>
       <xsl:call-template name="appendixes"/>
+      <xsl:apply-templates select="/tei:TEI/tei:text/tei:back/tei:div[@type='bibliography']"/>
       <xsl:call-template name="endnotes"/>      
     </xsl:variable>
     <xsl:if test="$variable.content[normalize-space()]">
-      <fo:block border-top="solid 1px black" xsl:use-attribute-sets="block.spacing.properties" keep-with-next="always"/>  
+      <fo:block xsl:use-attribute-sets="block.spacing.properties" keep-with-next="always"/>  
       <xsl:copy-of select="$variable.content"/>
     </xsl:if>
-    <fo:block border-top="solid 1px black" xsl:use-attribute-sets="block.spacing.properties" keep-with-next="always"/>
-    <xsl:apply-templates select="/tei:TEI/tei:text/tei:front/tei:div[@type='abstract']"/>
-    <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass"/>
+    <fo:block xsl:use-attribute-sets="block.spacing.properties" keep-with-next="always"/>
     <xsl:call-template name="authors"/>    
   </xsl:template>
   
@@ -299,15 +299,19 @@
   
   <xsl:template name="front.divs">
     <xsl:for-each select="for $i in $div.types.front[. != 'abstract'] return /tei:TEI/tei:text/tei:front/tei:div[@type = $i]">
-      <fo:block>
-        <fo:block xsl:use-attribute-sets="heading.properties" font-family="Roboto" font-size="13pt">
-          <xsl:value-of select="i18n:key(concat(@type, '-label'))"/>
-        </fo:block>
-        <xsl:apply-templates/>
-      </fo:block>
+      <xsl:apply-templates select="."/>
     </xsl:for-each>
   </xsl:template>
-    
+
+  <xsl:template match="tei:front/tei:div[@type = $div.types.front]">
+    <fo:block>
+      <fo:block xsl:use-attribute-sets="heading.properties" font-family="Roboto" font-size="13pt">
+        <xsl:value-of select="i18n:key(concat(@type, '-label'))"/>
+      </fo:block>
+      <xsl:apply-templates/>
+    </fo:block>
+  </xsl:template>
+      
   <!-- ==================================================================================== -->
   <!-- BODY STRUCTURE                                                                       -->
   <!-- ==================================================================================== -->
@@ -997,8 +1001,9 @@
   <!-- back -->
   <!-- ==== -->
   
-  <xsl:template match="tei:div[@type= ('bibliography', 'abstract')]">
-    <fo:block xsl:use-attribute-sets="back.font.properties">
+  <xsl:template match="tei:div[@type= ('bibliography')]">
+    <fo:block xsl:use-attribute-sets="block.spacing.properties"/>
+    <fo:block border-top="solid 1px black" xsl:use-attribute-sets="back.font.properties">
       <fo:block xsl:use-attribute-sets="heading.properties">
         <xsl:value-of select="i18n:key(concat(@type, '-label'), (@xml:lang, $jtei.lang)[.][1])"/>
       </fo:block>
