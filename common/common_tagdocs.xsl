@@ -964,7 +964,7 @@
   <xsl:template
     match="
       tei:constraintSpec[parent::tei:schemaSpec or parent::tei:elementSpec or
-      parent::tei:classSpec or parent::tei:attDef]"
+      parent::tei:classSpec or parent::tei:dataSpec or parent::tei:attDef]"
     mode="weave">
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">

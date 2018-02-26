@@ -1165,7 +1165,6 @@ select="$makeDecls"/></xsl:message>
                   </xsl:otherwise>
                 </xsl:choose>
               </define>
-              <xsl:apply-templates select="tei:constraintSpec"/>
             </Wrapper>
           </xsl:with-param>
         </xsl:call-template>
