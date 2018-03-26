@@ -37,7 +37,9 @@
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
+      <!--   MDH: Next line commented out 2017-02-01 for ticket #308; should never have been there.
+             If no ill-effects after a month or so, remove completely. -->
+      <!--<classpath location="${oxygenlib}/saxon9ee.jar"/>-->
       <param name="word-directory" expression="file:///${outputTempDir}"/>
       <param name="inputDir" expression="${inputDir}"/>
       <param name="mediaDir" expression="word/media"/>

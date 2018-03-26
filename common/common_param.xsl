@@ -3,6 +3,7 @@
 		xmlns:sch="http://purl.oclc.org/dsdl/schematron"
 		xmlns:m="http://www.w3.org/1998/Math/MathML"
 		xmlns:tei="http://www.tei-c.org/ns/1.0"
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		    exclude-result-prefixes="#all"
@@ -135,12 +136,16 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
     <desc>Institution or project name</desc>
   </doc>
-  <xsl:param name="institution">(unknown project)</xsl:param>
+  <xsl:param name="institution" select="(
+    /*/teiHeader/fileDesc/publicationStmt/distributor[1],
+    /*/teiHeader/fileDesc/publicationStmt/publisher[1],
+    /*/teiHeader/fileDesc/publicationStmt/authority[1],
+    '')[1]" as="xs:string"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
     <desc>Institution link</desc>
   </doc>
-  <xsl:param name="parentURL"></xsl:param>
+  <xsl:param name="parentURL"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
     <desc>Name of overall institution</desc>
@@ -150,7 +155,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
     <desc>Link to search application</desc>
   </doc>
-  <xsl:param name="searchURL"></xsl:param>
+  <xsl:param name="searchURL"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="anyURI">
     <desc>The home page for these stylesheets</desc>

@@ -157,7 +157,7 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
-        <xsl:sequence select="tei:makeDescription(., true())"/>
+        <xsl:sequence select="tei:makeDescription(., true(), true())"/>
         <xsl:apply-templates select="tei:valList"/>
       </xsl:element>
     </xsl:element>
@@ -212,7 +212,7 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
-        <xsl:sequence select="tei:makeDescription(., false())"/>
+        <xsl:sequence select="tei:makeDescription(., false(), true())"/>
         <xsl:apply-templates select="tei:valList"/>
       </xsl:element>
     </xsl:element>
@@ -240,7 +240,10 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
-        <xsl:sequence select="tei:makeDescription(., true())"/>
+        <!-- MDH 2018-01-21: setting third param ($makeMiniList) to 
+          false so we can stop building ugly and superfluous lists 
+          in Guidelines ref pages. See issue #296. -->
+        <xsl:sequence select="tei:makeDescription(., true(), false())"/>
         <xsl:element namespace="{$outputNS}" name="{$tableName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>attDef</xsl:text>
@@ -484,7 +487,7 @@
               </xsl:with-param>
             </xsl:call-template>
             <xsl:text>&#160;</xsl:text>
-            <xsl:sequence select="tei:makeDescription(., true())"/>
+            <xsl:sequence select="tei:makeDescription(., true(), true())"/>
           </xsl:element>
         </xsl:element>
         <xsl:if test="@generate">
@@ -682,7 +685,7 @@
               </xsl:choose>
               <xsl:text>&gt; </xsl:text>
             </xsl:element>
-            <xsl:sequence select="tei:makeDescription(., true())"/>
+            <xsl:sequence select="tei:makeDescription(., true(), true())"/>
           </xsl:element>
         </xsl:element>
         <xsl:call-template name="validUntil"/>
@@ -816,7 +819,17 @@
             <xsl:call-template name="generateChildren"/>
           </xsl:element>
         </xsl:element>
-        <xsl:apply-templates mode="weave" select="tei:remarks"/>
+        <xsl:variable name="remarks">
+          <xsl:apply-templates mode="weave" select="tei:remarks"/>
+        </xsl:variable>
+        <xsl:choose>
+          <xsl:when test="string-length($remarks) = 0">
+            <xsl:apply-templates mode="doc" select="tei:remarks[@xml:lang='en']"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="$remarks"/>
+          </xsl:otherwise>
+        </xsl:choose>        
         <xsl:apply-templates mode="weave" select="tei:exemplum"/>
         <xsl:apply-templates mode="weave" select="tei:constraintSpec"/>
         <xsl:apply-templates mode="weave" select="tei:content"/>
@@ -951,7 +964,7 @@
   <xsl:template
     match="
       tei:constraintSpec[parent::tei:schemaSpec or parent::tei:elementSpec or
-      parent::tei:classSpec or parent::tei:attDef]"
+      parent::tei:classSpec or parent::tei:dataSpec or parent::tei:attDef]"
     mode="weave">
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -972,7 +985,7 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>wovenodd-col2</xsl:text>
         </xsl:attribute>
-        <xsl:sequence select="tei:makeDescription(., true())"/>
+        <xsl:sequence select="tei:makeDescription(., true(), true())"/>
         <xsl:for-each select="tei:constraint">
           <xsl:element namespace="{$outputNS}" name="{$divName}">
             <xsl:attribute name="xml:space">preserve</xsl:attribute>
@@ -1049,7 +1062,7 @@
       </xsl:element>
     </xsl:element>
     <xsl:call-template name="showSpace"/>
-    <xsl:sequence select="tei:makeDescription(., false())"/>
+    <xsl:sequence select="tei:makeDescription(., false(), true())"/>
     <xsl:choose>
       <xsl:when test="self::tei:classSpec and @type = 'model'">
         <xsl:if test="key('CLASSMEMBERS-CLASSES', @ident)">
@@ -1190,7 +1203,7 @@
         </xsl:element>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
-        <xsl:sequence select="tei:makeDescription(., true())"/>
+        <xsl:sequence select="tei:makeDescription(., true(), true())"/>
         <xsl:if test="$verboseSpecDesc = 'true' and tei:valList">
           <xsl:element namespace="{$outputNS}" name="{$tableName}">
             <xsl:attribute name="{$rendName}">
@@ -1334,7 +1347,7 @@
               <xsl:value-of select="$name"/>
             </xsl:element>
             <xsl:text>&#160;</xsl:text>
-            <xsl:sequence select="tei:makeDescription(., true())"/>
+            <xsl:sequence select="tei:makeDescription(., true(), true())"/>
           </xsl:element>
         </xsl:element>
         <xsl:call-template name="validUntil"/>
@@ -1404,7 +1417,7 @@
               <xsl:value-of select="$name"/>
             </xsl:element>
             <xsl:text>&#160;</xsl:text>
-            <xsl:sequence select="tei:makeDescription(., true())"/>
+            <xsl:sequence select="tei:makeDescription(., true(), true())"/>
           </xsl:element>
         </xsl:element>
         <xsl:call-template name="validUntil"/>
@@ -1574,7 +1587,7 @@
         <xsl:value-of select="$spaceCharacter"/>
         <xsl:value-of select="@ident"/>
         <xsl:text>: </xsl:text>
-        <xsl:sequence select="tei:makeDescription(., true())"/>
+        <xsl:sequence select="tei:makeDescription(., true(), true())"/>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$ddName}">
         <xsl:element namespace="{$outputNS}" name="{$ulName}">
@@ -1911,7 +1924,7 @@
               separator=", "/>
             <xsl:text>) </xsl:text>
           </xsl:if>
-          <xsl:sequence select="tei:makeDescription(., true() )"/>
+          <xsl:sequence select="tei:makeDescription(., true(), true())"/>
           <xsl:if test="@ident = ../../tei:defaultVal">
             <xsl:element namespace="{$outputNS}" name="{$hiName}">
               <xsl:attribute name="{$rendName}">

@@ -13,6 +13,19 @@
   
   <xsl:import href="i18n.xsl"/>
   
+  <!-- This parameter controls if footnotes are numbered continously throughout the document --> 
+  <xsl:param name="footnote.number.continuous" select="true()"/>
+  
+  <!-- This parameter controls if the footnote numbering format should be differentiated for foonotes occurring in tei:front (i), tei:body (1), or tei:back (a) -->
+  <xsl:param name="footnote.numberformat.differentiate" select="false()"/>
+  
+  <!-- This variable specifies the different footnote formats -->
+  <xsl:variable name="footnote.formats">
+    <local:context name="front" format="i"/>
+    <local:context name="body" format="1"/>
+    <local:context name="back" format="a"/>
+  </xsl:variable>
+  
   <!-- This key builds an index of elements with @xml:id attribute. -->
   <xsl:key name="ids" match="*" use="@xml:id"/>    
 
@@ -51,6 +64,10 @@
     <local:delim n="tag.empty">/&gt;</local:delim>
     <local:delim n="tag">&gt;</local:delim>
   </xsl:variable>
+  
+  <!-- This variable lists all possible @type values for divisions in the 
+       front section (in processing order). -->
+  <xsl:variable name="div.types.front" select="('abstract', 'corrections', 'dedication', 'editorNotes', 'authorNotes', 'acknowledgements')"/>
   
   <!-- This template generates labels for headers. -->
   <xsl:template match="*" mode="label">
@@ -369,10 +386,34 @@
     </xsl:choose>
   </xsl:function>
   
-  <!-- This function computes the number and format for footnotes. -->
+  <!-- This function computes the number for footnotes. -->
   <xsl:function name="local:get.note.nr" as="xs:integer">
     <xsl:param name="node"/>
-    <xsl:number value="count($node/preceding::tei:note[if ($node/@place) then @place = $node/@place else not(@place)][ancestor::*[parent::tei:text] intersect $node/ancestor::*[parent::tei:text] or root()/*[not(self::tei:TEI)] intersect $node/root()/*[not(self::tei:TEI)]]|$node)" format="{if (not($node/@place) or $node/@place eq 'foot') then '1' else 'i'}"/>
+    <xsl:choose>
+      <!-- Count footnotes continuously throughout the document is this is set in the stylesheet parameter -->
+      <xsl:when test="$footnote.number.continuous">
+        <xsl:number select="$node" level="any"/>
+      </xsl:when>
+      <!-- Otherwise, restart footnote numbering for each front, body, or back section -->
+      <xsl:otherwise>
+        <xsl:number select="$node" level="any" from="tei:front|tei:body|tei:back"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  
+  <!-- This function determines the number format for footnotes. -->
+  <xsl:function name="local:format.note.nr" as="xs:string">
+    <xsl:param name="note.context" as="element()"/>
+    <xsl:choose>
+      <!-- Format footnotes numbers differently when occurring inside the front (i), body (1), or back (a) section, if this is set in the stylesheet parameter -->
+      <xsl:when test="$footnote.numberformat.differentiate">
+        <xsl:value-of select="$footnote.formats//local:context[@name = local-name($note.context)]/@format"/>
+      </xsl:when>
+      <!-- Otherwise, just format all footnote numbers with Arabic numerals -->
+      <xsl:otherwise>
+        <xsl:value-of select="'1'"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
   
   <!-- This function is designed to double-escape entities that need to be 

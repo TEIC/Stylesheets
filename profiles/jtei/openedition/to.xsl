@@ -133,6 +133,8 @@
     -->
   </xsl:variable>
   
+  <xsl:variable name="notes.type.front" select="('authorNotes', 'editorNotes')"/>
+  
   <xsl:template match="tei:TEI">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
@@ -245,20 +247,39 @@
   <!-- front -->
   <!-- ===== -->
   
-  <!-- Lodel expects @xml:lang attribute, so add default @xml:lang='en' if absent/emtpy -->
-  <xsl:template match="tei:front/tei:div[@type eq 'abstract'][not(@xml:lang[normalize-space()])]">
+  <xsl:template match="tei:front">
+    <xsl:variable name="current" select="."/>
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
-      <xsl:attribute name="xml:lang">en</xsl:attribute>
-      <xsl:apply-templates select="node()"/>
+      <xsl:for-each select="for $i in $div.types.front return $current/tei:div[@type = $i]">
+        <xsl:apply-templates select="."/>
+      </xsl:for-each>
     </xsl:copy>
   </xsl:template>
   
-  <!-- Lodel doesn't display acknowledgments too well -> change to author note -->
-  <xsl:template match="tei:front/tei:div[@type eq 'acknowledgements']">
-    <note resp="author">
-      <xsl:apply-templates/>
-    </note>
+  <xsl:template match="tei:front/tei:div[@type = $div.types.front]">
+    <xsl:variable name="name" select="if (@type = $notes.type.front) then 'note' else name()"/>
+    <xsl:element name="{$name}">
+      <xsl:apply-templates select="@*"/>
+      <!-- Lodel expects @xml:lang attribute for abstracts, so add default @xml:lang='en' if absent/emtpy -->
+      <xsl:if test="@type eq 'abstract' and not(@xml:lang[normalize-space()])">
+        <xsl:attribute name="xml:lang">en</xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates select="node()"/>
+    </xsl:element>
+  </xsl:template>
+  
+  <xsl:template match="tei:front/tei:div[@type = $div.types.front]/@type">
+    <xsl:variable name="name" select="if (../@type = $notes.type.front) then 'resp' else name()"/>
+    <xsl:attribute name="{$name}">
+      <xsl:choose>
+        <xsl:when test=". eq 'authorNotes'">author</xsl:when>
+        <xsl:when test=". eq 'editorNotes'">editor</xsl:when>
+        <xsl:when test=". eq 'acknowledgements'">ack</xsl:when>
+        <xsl:when test=". eq 'corrections'">correction</xsl:when>
+        <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
   </xsl:template>
 
   <!-- ==== -->
@@ -327,7 +348,8 @@
   
   <!-- add @n to <note> -->
   <xsl:template match="tei:note">
-    <xsl:param name="listnote.counter" tunnel="yes" as="xs:integer" select="0"/>
+    <xsl:param name="note.counter" tunnel="yes" as="xs:integer" select="0"/>
+    <xsl:param name="note.context" select="ancestor::*[self::tei:front|self::tei:body|self::tei:back]" tunnel="yes" as="element()?"/>
     <!-- only 'pull' subsequent puntuation once (i.e. unless it is done for the preceding element) -->
     <xsl:if test="not(preceding-sibling::node()[normalize-space()][1][. intersect key('quotation.elements', local-name())])">
       <xsl:call-template name="include.punctuation"/>
@@ -339,7 +361,7 @@
       </xsl:if>
       <xsl:attribute name="n">
         <!-- notes inside lists are processed in isolation; therefore add counter of notes preceding the parent list (if available) to the relative numbering -->
-        <xsl:value-of select="local:get.note.nr(.) + $listnote.counter"/>
+        <xsl:number value="local:get.note.nr(.) + $note.counter" format="{local:format.note.nr($note.context)}"/>
       </xsl:attribute>
       <xsl:choose>
         <xsl:when test="tei:p">
@@ -799,7 +821,8 @@
 
   <!-- [RvdB] added preprocessing step, which just copies the list, but wraps all contents of <item> in <p> prior to further processing -->
   <xsl:template match="tei:list">
-    <xsl:param name="listnote.counter" tunnel="yes" as="xs:integer" select="0"/>
+    <xsl:param name="note.counter" tunnel="yes" as="xs:integer" select="0"/>
+    <xsl:param name="note.context" select="ancestor::*[self::tei:front|self::tei:body|self::tei:back]" tunnel="yes" as="element()?"/>
     <xsl:variable name="current" select="."/>
     <xsl:variable name="list.prepare">
       <xsl:apply-templates select="." mode="list.prepare"/>
@@ -811,9 +834,8 @@
           <xsl:apply-templates select="@*"/>
           <xsl:call-template name="get.rendition"/>        
           <xsl:apply-templates select="node()[not(self::tei:head)]">
-            <!-- count preceding notes and pass this info for further processing of notes -->
-            <xsl:with-param name="listnote.counter" select="$listnote.counter + local:get.note.nr($current/preceding::tei:note[1])" tunnel="yes"/>
-            
+            <xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/>
+            <xsl:with-param name="note.context" select="$note.context" tunnel="yes"/>
           </xsl:apply-templates>
         </xsl:copy>
       </xsl:for-each>

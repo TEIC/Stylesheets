@@ -103,7 +103,7 @@ att.dimensions.attributes =
 att.dimensions.attribute.unit =
   
   ## names the unit used for the measurement
-  ## Suggested values include: 1] cm(centimetres) ; 2] mm(millimetres) ; 3] in(inches) ; 4] lines; 5] chars(characters) 
+  ## Suggested values include: 1] cm (centimetres) ; 2] mm (millimetres) ; 3] in (inches) ; 4] lines; 5] chars (characters) 
   attribute unit {
     
     ## (centimetres) 
@@ -467,9 +467,7 @@ att.global.responsibility.attribute.resp =
     list { xsd:anyURI+ }
   }?
 att.editLike.attributes =
-  att.dimensions.attributes,
-  att.editLike.attribute.evidence,
-  att.editLike.attribute.instant
+  att.editLike.attribute.evidence, att.editLike.attribute.instant
 att.editLike.attribute.evidence =
   
   ## indicates the nature of the evidence supporting the reliability or accuracy of the intervention or interpretation.
@@ -668,7 +666,7 @@ att.measurement.attributes =
 att.measurement.attribute.unit =
   
   ## indicates the units used for the measurement, usually using the standard symbol for the desired units.
-  ## Suggested values include: 1] m(metre) ; 2] kg(kilogram) ; 3] s(second) ; 4] Hz(hertz) ; 5] Pa(pascal) ; 6] Ω(ohm) ; 7] L(litre) ; 8] t(tonne) ; 9] ha(hectare) ; 10] Å(ångström) ; 11] mL(millilitre) ; 12] cm(centimetre) ; 13] dB(decibel) ; 14] kbit(kilobit) ; 15] Kibit(kibibit) ; 16] kB(kilobyte) ; 17] KiB(kibibyte) ; 18] MB(megabyte) ; 19] MiB(mebibyte) 
+  ## Suggested values include: 1] m (metre) ; 2] kg (kilogram) ; 3] s (second) ; 4] Hz (hertz) ; 5] Pa (pascal) ; 6] Ω (ohm) ; 7] L (litre) ; 8] t (tonne) ; 9] ha (hectare) ; 10] Å (ångström) ; 11] mL (millilitre) ; 12] cm (centimetre) ; 13] dB (decibel) ; 14] kbit (kilobit) ; 15] Kibit (kibibit) ; 16] kB (kilobyte) ; 17] KiB (kibibyte) ; 18] MB (megabyte) ; 19] MiB (mebibyte) 
   attribute unit {
     
     ## (metre) SI base unit of length
@@ -1129,10 +1127,10 @@ att.citing.attribute.unit =
       ## the element identifies a part of a book or collection.
       "part"
     | 
-      ## the element identifies an entry number or label in a list of entries.
+      ## the element identifies a column.
       "column"
     | 
-      ## the element identifies a column.
+      ## the element identifies an entry number or label in a list of entries.
       "entry"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
@@ -1617,7 +1615,7 @@ p =
   element para {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-p-abstractModel-p-constraint-report-4"
+         id = "test15-p-abstractModel-structure-p-constraint-report-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1626,9 +1624,9 @@ p =
            "               "
            sch:report [
              test =
-               "not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
+               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
              "\x{a}" ~
-             "        Abstract model violation: Paragraphs may not contain other paragraphs or ab elements.\x{a}" ~
+             "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -1712,7 +1710,6 @@ said =
     att.ascribed.attributes,
     
     ## may be used to indicate whether the quoted matter is regarded as having been vocalized or signed.
-    [ a:defaultValue = "unknown" ]
     attribute aloud {
       xsd:boolean
       | (
@@ -1743,6 +1740,7 @@ quote =
     macro.specialPara,
     att.global.attributes,
     att.typed.attributes,
+    att.notated.attributes,
     empty
   }
 q =
@@ -1864,7 +1862,7 @@ choice =
   
   ## groups a number of alternative encodings for the same point in a text. [3.4. Simple Editorial Changes]
   element choice {
-    (model.choicePart | choice)*, att.global.attributes, empty
+    (model.choicePart | choice)+, att.global.attributes, empty
   }
 reg =
   
@@ -1890,6 +1888,7 @@ gap =
     att.global.attributes,
     att.timed.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     
     ## gives the reason for omission
     ## Suggested values include: 1] cancelled; 2] deleted; 3] editorial; 4] illegible; 5] inaudible; 6] irrelevant; 7] sampling
@@ -1920,9 +1919,6 @@ gap =
       }
     }?,
     
-    ## in the case of text omitted from the transcription because of deliberate deletion by an identifiable hand, indicates the hand which made the deletion.
-    attribute hand { xsd:anyURI }?,
-    
     ## in the case of text omitted because of damage, categorizes the cause of the damage, if it can be identified.
     ## Sample values include: 1] rubbing; 2] mildew; 3] smoke
     attribute agent {
@@ -1939,6 +1935,7 @@ add =
     att.transcriptional.attributes,
     att.placement.attributes,
     att.typed.attributes,
+    att.dimensions.attributes,
     empty
   }
 del =
@@ -1949,6 +1946,7 @@ del =
     att.global.attributes,
     att.transcriptional.attributes,
     att.typed.attributes,
+    att.dimensions.attributes,
     empty
   }
 unclear =
@@ -1958,16 +1956,30 @@ unclear =
     macro.paraContent,
     att.global.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     
     ## indicates why the material is hard to transcribe.
+    ## Suggested values include: 1] illegible; 2] inaudible; 3] faded; 4] background_noise; 5] eccentric_ductus
     attribute reason {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        (
+         ##
+         "illegible"
+         | 
+           ##
+           "inaudible"
+         | 
+           ##
+           "faded"
+         | 
+           ##
+           "background_noise"
+         | 
+           ##
+           "eccentric_ductus"
+         | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" })+
       }
     }?,
-    
-    ## Where the difficulty in transcription arises from action (partial deletion, etc.) assignable to an identifiable hand, signifies the hand responsible for the action.
-    attribute hand { xsd:anyURI }?,
     
     ## Where the difficulty in transcription arises from damage, categorizes the cause of the damage, if it can be identified.
     ## Sample values include: 1] rubbing; 2] mildew; 3] smoke
@@ -2094,6 +2106,7 @@ date =
     att.global.attributes,
     att.datable.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     att.typed.attributes,
     empty
   }
@@ -2105,6 +2118,7 @@ time =
     att.global.attributes,
     att.datable.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     att.typed.attributes,
     empty
   }
@@ -2408,6 +2422,7 @@ gb =
     att.typed.attributes,
     att.spanning.attributes,
     att.breaking.attributes,
+    att.edition.attributes,
     empty
   }
 pb =
@@ -2546,7 +2561,7 @@ title =
     att.datable.attributes,
     
     ## classifies the title according to some convenient typology.
-    ## Sample values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] short; 5] desc(descriptive) 
+    ## Sample values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4] short; 5] desc (descriptive) 
     attribute type {
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
@@ -2878,8 +2893,7 @@ teiCorpus =
     att.global.attributes,
     att.typed.attributes,
     
-    ## The version of the TEI scheme
-    [ a:defaultValue = "5.0" ]
+    ## specifies the version number of the TEI Guidelines against which this document is valid.
     attribute version {
       xsd:token { pattern = "[\d]+(\.[\d]+){0,2}" }
     }?,
@@ -3059,7 +3073,7 @@ idno =
         ## English Short-Title Catalogue number: an identifying number assigned to a document in English printed in the British Isles or North America before 1801.
         "ESTC"
       | 
-        ## union catalog number in WorldCat representing a resource held by one or more of the member libraries in the global cooperative Online Computer Library Center.
+        ## OCLC control number (record number) for the union catalog record in WorldCat, a union catalog for member libraries in the Online Computer Library Center global cooperative.
         "OCLC"
       | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
@@ -3074,7 +3088,6 @@ availability =
     att.declarable.attributes,
     
     ## supplies a code identifying the current availability of the text.
-    [ a:defaultValue = "unknown" ]
     attribute status {
       
       ## the text is freely available.
@@ -3198,7 +3211,6 @@ correction =
     att.declarable.attributes,
     
     ## indicates the degree of correction applied to the text.
-    [ a:defaultValue = "unknown" ]
     attribute status {
       
       ## the text has been thoroughly checked and proofread.
@@ -3363,13 +3375,13 @@ punctuation =
         "all"
     }?,
     
-    ## indicates whether punctation marks have been captured inside or outside of an adjacent element.
+    ## indicates the positioning of punctuation marks that are associated with marked up text as being encoded within the element surrounding the text or immediately before or after it.
     attribute placement {
       
-      ## punctuation marks are captured inside adjacent elements
+      ## punctuation marks found at the start or end of a marked up text component are included within its surrounding element;
       "internal"
       | 
-        ## punctuation marks are captured outside adjacent elements
+        ## punctuation marks found at the start or end of a marked up text component appear immediately before or after the surrounding element
         "external"
     }?,
     empty
@@ -3535,7 +3547,7 @@ geoDecl =
     att.declarable.attributes,
     
     ## supplies a commonly used code name for the datum employed.
-    ## Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Grid Reference System) ; 3] OSGB36(ordnance survey great britain) ; 4] ED50(European Datum coordinate system) 
+    ## Suggested values include: 1] WGS84 (World Geodetic System) ; 2] MGRS (Military Grid Reference System) ; 3] OSGB36 (ordnance survey great britain) ; 4] ED50 (European Datum coordinate system) 
     [ a:defaultValue = "WGS84" ]
     attribute datum {
       
@@ -3794,7 +3806,7 @@ TEI =
     att.global.attributes,
     att.typed.attributes,
     
-    ## specifies the major version number of the TEI Guidelines against which this document is valid.
+    ## specifies the version number of the TEI Guidelines against which this document is valid.
     attribute version {
       xsd:token { pattern = "[\d]+(\.[\d]+){0,2}" }
     }?,
@@ -4165,7 +4177,7 @@ titlePart =
     att.global.attributes,
     
     ## specifies the role of this subdivision of the title.
-    ## Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] short; 5] desc(descriptive) 
+    ## Suggested values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4] short; 5] desc (descriptive) 
     [ a:defaultValue = "main" ]
     attribute type {
       
@@ -4368,7 +4380,8 @@ ab =
   element ab {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-ab-abstractModel-structure-p-constraint-report-14"
+         id =
+           "test15-ab-abstractModel-structure-ab-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4377,9 +4390,9 @@ ab =
            "               "
            sch:report [
              test =
-               "not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
+               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
              "\x{a}" ~
-             "        Abstract model violation: ab may not contain paragraphs or other ab elements.\x{a}" ~
+             "        Abstract model violation: ab may not occur inside paragraphs or other ab elements.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -4430,6 +4443,7 @@ seg =
     att.segLike.attributes,
     att.typed.attributes,
     att.written.attributes,
+    att.notated.attributes,
     empty
   }
 when =
@@ -4452,7 +4466,7 @@ when =
     }?,
     
     ## specifies the unit of time in which the interval value is expressed, if this is not inherited from the parent timeline.
-    ## Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seconds) ; 5] ms(milliseconds) 
+    ## Suggested values include: 1] d (days) ; 2] h (hours) ; 3] min (minutes) ; 4] s (seconds) ; 5] ms (milliseconds) 
     attribute unit {
       
       ## (days) 
@@ -4501,7 +4515,7 @@ timeline =
     attribute origin { xsd:anyURI }?,
     
     ## specifies the unit of time corresponding to the interval value of the timeline or of its constituent points in time.
-    ## Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seconds) ; 5] ms(milliseconds) 
+    ## Suggested values include: 1] d (days) ; 2] h (hours) ; 3] min (minutes) ; 4] s (seconds) ; 5] ms (milliseconds) 
     attribute unit {
       
       ## (days) 

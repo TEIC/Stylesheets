@@ -107,7 +107,7 @@ Tatt.dimensions.attributes =
 Tatt.dimensions.attribute.unit =
   
   ## names the unit used for the measurement
-  ## Suggested values include: 1] cm(centimetres) ; 2] mm(millimetres) ; 3] in(inches) ; 4] lines; 5] chars(characters) 
+  ## Suggested values include: 1] cm (centimetres) ; 2] mm (millimetres) ; 3] in (inches) ; 4] lines; 5] chars (characters) 
   attribute unit {
     
     ## (centimetres) 
@@ -510,9 +510,7 @@ Tatt.global.responsibility.attribute.resp =
     list { xsd:anyURI+ }
   }?
 Tatt.editLike.attributes =
-  Tatt.dimensions.attributes,
-  Tatt.editLike.attribute.evidence,
-  Tatt.editLike.attribute.instant
+  Tatt.editLike.attribute.evidence, Tatt.editLike.attribute.instant
 Tatt.editLike.attribute.evidence =
   
   ## indicates the nature of the evidence supporting the reliability or accuracy of the intervention or interpretation.
@@ -690,7 +688,7 @@ Tatt.measurement.attributes =
 Tatt.measurement.attribute.unit =
   
   ## indicates the units used for the measurement, usually using the standard symbol for the desired units.
-  ## Suggested values include: 1] m(metre) ; 2] kg(kilogram) ; 3] s(second) ; 4] Hz(hertz) ; 5] Pa(pascal) ; 6] Ω(ohm) ; 7] L(litre) ; 8] t(tonne) ; 9] ha(hectare) ; 10] Å(ångström) ; 11] mL(millilitre) ; 12] cm(centimetre) ; 13] dB(decibel) ; 14] kbit(kilobit) ; 15] Kibit(kibibit) ; 16] kB(kilobyte) ; 17] KiB(kibibyte) ; 18] MB(megabyte) ; 19] MiB(mebibyte) 
+  ## Suggested values include: 1] m (metre) ; 2] kg (kilogram) ; 3] s (second) ; 4] Hz (hertz) ; 5] Pa (pascal) ; 6] Ω (ohm) ; 7] L (litre) ; 8] t (tonne) ; 9] ha (hectare) ; 10] Å (ångström) ; 11] mL (millilitre) ; 12] cm (centimetre) ; 13] dB (decibel) ; 14] kbit (kilobit) ; 15] Kibit (kibibit) ; 16] kB (kilobyte) ; 17] KiB (kibibyte) ; 18] MB (megabyte) ; 19] MiB (mebibyte) 
   attribute unit {
     
     ## (metre) SI base unit of length
@@ -1151,10 +1149,10 @@ Tatt.citing.attribute.unit =
       ## the element identifies a part of a book or collection.
       "part"
     | 
-      ## the element identifies an entry number or label in a list of entries.
+      ## the element identifies a column.
       "column"
     | 
-      ## the element identifies a column.
+      ## the element identifies an entry number or label in a list of entries.
       "entry"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
@@ -1969,7 +1967,8 @@ Tp =
   element p {
     Tmacro.paraContent
     >> sch:pattern [
-         id = "testbasic-p-abstractModel-p-constraint-report-4"
+         id =
+           "testbasic-p-abstractModel-structure-p-constraint-report-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1978,9 +1977,9 @@ Tp =
            "               "
            sch:report [
              test =
-               "not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
+               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
              "\x{a}" ~
-             "        Abstract model violation: Paragraphs may not contain other paragraphs or ab elements.\x{a}" ~
+             "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -2062,7 +2061,6 @@ Tsaid =
     Tatt.ascribed.attributes,
     
     ## may be used to indicate whether the quoted matter is regarded as having been vocalized or signed.
-    [ a:defaultValue = "unknown" ]
     attribute aloud {
       xsd:boolean
       | (
@@ -2093,6 +2091,7 @@ Tquote =
     Tmacro.specialPara,
     Tatt.global.attributes,
     Tatt.typed.attributes,
+    Tatt.notated.attributes,
     empty
   }
 Tq =
@@ -2214,7 +2213,7 @@ Tchoice =
   
   ## groups a number of alternative encodings for the same point in a text. [3.4. Simple Editorial Changes]
   element choice {
-    (Tmodel.choicePart | Tchoice)*, Tatt.global.attributes, empty
+    (Tmodel.choicePart | Tchoice)+, Tatt.global.attributes, empty
   }
 Treg =
   
@@ -2240,6 +2239,7 @@ Tgap =
     Tatt.global.attributes,
     Tatt.timed.attributes,
     Tatt.editLike.attributes,
+    Tatt.dimensions.attributes,
     
     ## gives the reason for omission
     ## Suggested values include: 1] cancelled; 2] deleted; 3] editorial; 4] illegible; 5] inaudible; 6] irrelevant; 7] sampling
@@ -2270,9 +2270,6 @@ Tgap =
       }
     }?,
     
-    ## in the case of text omitted from the transcription because of deliberate deletion by an identifiable hand, indicates the hand which made the deletion.
-    attribute hand { xsd:anyURI }?,
-    
     ## in the case of text omitted because of damage, categorizes the cause of the damage, if it can be identified.
     ## Sample values include: 1] rubbing; 2] mildew; 3] smoke
     attribute agent {
@@ -2289,6 +2286,7 @@ Tadd =
     Tatt.transcriptional.attributes,
     Tatt.placement.attributes,
     Tatt.typed.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Tdel =
@@ -2299,6 +2297,7 @@ Tdel =
     Tatt.global.attributes,
     Tatt.transcriptional.attributes,
     Tatt.typed.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Tunclear =
@@ -2308,16 +2307,30 @@ Tunclear =
     Tmacro.paraContent,
     Tatt.global.attributes,
     Tatt.editLike.attributes,
+    Tatt.dimensions.attributes,
     
     ## indicates why the material is hard to transcribe.
+    ## Suggested values include: 1] illegible; 2] inaudible; 3] faded; 4] background_noise; 5] eccentric_ductus
     attribute reason {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        (
+         ##
+         "illegible"
+         | 
+           ##
+           "inaudible"
+         | 
+           ##
+           "faded"
+         | 
+           ##
+           "background_noise"
+         | 
+           ##
+           "eccentric_ductus"
+         | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" })+
       }
     }?,
-    
-    ## Where the difficulty in transcription arises from action (partial deletion, etc.) assignable to an identifiable hand, signifies the hand responsible for the action.
-    attribute hand { xsd:anyURI }?,
     
     ## Where the difficulty in transcription arises from damage, categorizes the cause of the damage, if it can be identified.
     ## Sample values include: 1] rubbing; 2] mildew; 3] smoke
@@ -2444,6 +2457,7 @@ Tdate =
     Tatt.global.attributes,
     Tatt.datable.attributes,
     Tatt.editLike.attributes,
+    Tatt.dimensions.attributes,
     Tatt.typed.attributes,
     empty
   }
@@ -2455,6 +2469,7 @@ Ttime =
     Tatt.global.attributes,
     Tatt.datable.attributes,
     Tatt.editLike.attributes,
+    Tatt.dimensions.attributes,
     Tatt.typed.attributes,
     empty
   }
@@ -2758,6 +2773,7 @@ Tgb =
     Tatt.typed.attributes,
     Tatt.spanning.attributes,
     Tatt.breaking.attributes,
+    Tatt.edition.attributes,
     empty
   }
 Tpb =
@@ -3270,8 +3286,7 @@ TteiCorpus =
     Tatt.global.attributes,
     Tatt.typed.attributes,
     
-    ## The version of the TEI scheme
-    [ a:defaultValue = "5.0" ]
+    ## specifies the version number of the TEI Guidelines against which this document is valid.
     attribute version {
       xsd:token { pattern = "[\d]+(\.[\d]+){0,2}" }
     }?,
@@ -3453,7 +3468,7 @@ Tidno =
         ## English Short-Title Catalogue number: an identifying number assigned to a document in English printed in the British Isles or North America before 1801.
         "ESTC"
       | 
-        ## union catalog number in WorldCat representing a resource held by one or more of the member libraries in the global cooperative Online Computer Library Center.
+        ## OCLC control number (record number) for the union catalog record in WorldCat, a union catalog for member libraries in the Online Computer Library Center global cooperative.
         "OCLC"
       | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
@@ -3468,7 +3483,6 @@ Tavailability =
     Tatt.declarable.attributes,
     
     ## supplies a code identifying the current availability of the text.
-    [ a:defaultValue = "unknown" ]
     attribute status {
       
       ## the text is freely available.
@@ -3592,7 +3606,6 @@ Tcorrection =
     Tatt.declarable.attributes,
     
     ## indicates the degree of correction applied to the text.
-    [ a:defaultValue = "unknown" ]
     attribute status {
       
       ## the text has been thoroughly checked and proofread.
@@ -3758,13 +3771,13 @@ Tpunctuation =
         "all"
     }?,
     
-    ## indicates whether punctation marks have been captured inside or outside of an adjacent element.
+    ## indicates the positioning of punctuation marks that are associated with marked up text as being encoded within the element surrounding the text or immediately before or after it.
     attribute placement {
       
-      ## punctuation marks are captured inside adjacent elements
+      ## punctuation marks found at the start or end of a marked up text component are included within its surrounding element;
       "internal"
       | 
-        ## punctuation marks are captured outside adjacent elements
+        ## punctuation marks found at the start or end of a marked up text component appear immediately before or after the surrounding element
         "external"
     }?,
     empty
@@ -3931,7 +3944,7 @@ TgeoDecl =
     Tatt.declarable.attributes,
     
     ## supplies a commonly used code name for the datum employed.
-    ## Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Grid Reference System) ; 3] OSGB36(ordnance survey great britain) ; 4] ED50(European Datum coordinate system) 
+    ## Suggested values include: 1] WGS84 (World Geodetic System) ; 2] MGRS (Military Grid Reference System) ; 3] OSGB36 (ordnance survey great britain) ; 4] ED50 (European Datum coordinate system) 
     [ a:defaultValue = "WGS84" ]
     attribute datum {
       
@@ -4492,6 +4505,7 @@ Toffset =
     Tatt.global.attributes,
     Tatt.naming.attributes,
     Tatt.typed.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 TgeogName =
@@ -4516,6 +4530,7 @@ TgeogFeat =
     Tatt.global.attributes,
     Tatt.naming.attributes,
     Tatt.typed.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Taffiliation =
@@ -4545,9 +4560,10 @@ Tage =
     Tatt.editLike.attributes,
     Tatt.datable.attributes,
     Tatt.typed.attribute.subtype,
+    Tatt.dimensions.attributes,
     
     ## characterizes the element in some sense, using any convenient classification scheme or typology.
-    ## Sample values include: 1] western; 2] sui; 3] subjective; 4] objective; 5] inWorld(in world) ; 6] chronological; 7] biological; 8] psychological; 9] functional
+    ## Sample values include: 1] western; 2] sui; 3] subjective; 4] objective; 5] inWorld (in world) ; 6] chronological; 7] biological; 8] psychological; 9] functional
     attribute type {
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
@@ -4564,11 +4580,12 @@ Tbirth =
     Tatt.global.attributes,
     Tatt.editLike.attributes,
     Tatt.datable.attributes,
+    Tatt.dimensions.attributes,
     Tatt.naming.attributes,
     Tatt.typed.attribute.subtype,
     
     ## characterizes the element in some sense, using any convenient classification scheme or typology.
-    ## Sample values include: 1] caesarean(caesarean section) ; 2] vaginal(vaginal delivery) ; 3] exNihilo(ex nihilo) ; 4] incorporated; 5] founded; 6] established
+    ## Sample values include: 1] caesarean (caesarean section) ; 2] vaginal (vaginal delivery) ; 3] exNihilo (ex nihilo) ; 4] incorporated; 5] founded; 6] established
     attribute type {
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
@@ -4594,9 +4611,10 @@ Tdeath =
   ## contains information about a person's death, such as its date and place. [15.2.2. The Participant Description]
   element death {
     Tmacro.phraseSeq,
-    Tatt.global.attributes,
-    Tatt.editLike.attributes,
     Tatt.datable.attributes,
+    Tatt.dimensions.attributes,
+    Tatt.editLike.attributes,
+    Tatt.global.attributes,
     Tatt.naming.attributes,
     Tatt.typed.attribute.subtype,
     
@@ -4669,6 +4687,7 @@ Tfloruit =
     Tmacro.phraseSeq,
     Tatt.global.attributes,
     Tatt.datable.attributes,
+    Tatt.dimensions.attributes,
     Tatt.editLike.attributes,
     empty
   }
@@ -4745,9 +4764,7 @@ TlistEvent =
   
   ## (list of events) contains a list of descriptions, each of which provides information about an identifiable event. [13.3.1. Basic Principles]
   element listEvent {
-    (Tmodel.headLike*,
-     (Tevent | TlistEvent)+,
-     (Trelation | TlistRelation)*),
+    (Tmodel.headLike*, Tmodel.eventLike+, (Trelation | TlistRelation)*),
     Tatt.global.attributes,
     Tatt.typed.attributes,
     Tatt.declarable.attributes,
@@ -4995,6 +5012,7 @@ Tpopulation =
     Tatt.editLike.attributes,
     Tatt.naming.attributes,
     Tatt.typed.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Trelation =
@@ -5167,6 +5185,7 @@ Tstate =
     Tatt.editLike.attributes,
     Tatt.typed.attributes,
     Tatt.naming.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Tterrain =
@@ -5198,6 +5217,7 @@ Ttrait =
     Tatt.editLike.attributes,
     Tatt.naming.attributes,
     Tatt.typed.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Tnym =
@@ -5412,6 +5432,7 @@ TaddSpan =
     Tatt.placement.attributes,
     Tatt.typed.attributes,
     Tatt.spanning.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Tdamage =
@@ -5521,6 +5542,7 @@ TdelSpan =
     Tatt.transcriptional.attributes,
     Tatt.typed.attributes,
     Tatt.spanning.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Tex =
@@ -5530,6 +5552,7 @@ Tex =
     Tmacro.xtext,
     Tatt.global.attributes,
     Tatt.editLike.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Tfw =
@@ -5542,7 +5565,7 @@ Tfw =
     Tatt.written.attributes,
     
     ## classifies the material encoded according to some useful typology.
-    ## Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNum(line number) ; 5] sig(signature) ; 6] catch(catchword) 
+    ## Sample values include: 1] header; 2] footer; 3] pageNum (page number) ; 4] lineNum (line number) ; 5] sig (signature) ; 6] catch (catchword) 
     attribute type {
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
@@ -5582,6 +5605,7 @@ Trestore =
     Tatt.global.attributes,
     Tatt.transcriptional.attributes,
     Tatt.typed.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Tspace =
@@ -5651,6 +5675,7 @@ Tsubst =
        ],
     Tatt.global.attributes,
     Tatt.transcriptional.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 TsubstJoin =
@@ -5661,6 +5686,7 @@ TsubstJoin =
     Tatt.global.attributes,
     Tatt.pointing.attributes,
     Tatt.transcriptional.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Tsupplied =
@@ -5670,6 +5696,7 @@ Tsupplied =
     Tmacro.paraContent,
     Tatt.global.attributes,
     Tatt.editLike.attributes,
+    Tatt.dimensions.attributes,
     
     ## one or more words indicating why the text has had to be supplied, e.g. overbinding, faded-ink, lost-folio, omitted-in-original.
     attribute reason {
@@ -5686,6 +5713,7 @@ Tsurplus =
     Tmacro.paraContent,
     Tatt.global.attributes,
     Tatt.editLike.attributes,
+    Tatt.dimensions.attributes,
     
     ## one or more words indicating why this text is believed to be superfluous, e.g. repeated, interpolated etc.
     attribute reason {
@@ -5702,6 +5730,7 @@ Tsecl =
     Tmacro.paraContent,
     Tatt.global.attributes,
     Tatt.editLike.attributes,
+    Tatt.dimensions.attributes,
     
     ## one or more words indicating why this text has been secluded, e.g. interpolated etc.
     attribute reason {
@@ -5755,6 +5784,7 @@ Tmod =
     Tatt.transcriptional.attributes,
     Tatt.typed.attributes,
     Tatt.spanning.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Tredo =
@@ -5765,6 +5795,7 @@ Tredo =
     Tatt.global.attributes,
     Tatt.spanning.attributes,
     Tatt.transcriptional.attributes,
+    Tatt.dimensions.attributes,
     
     ## points to one or more elements representing the interventions which are being reasserted.
     attribute target {
@@ -5780,6 +5811,7 @@ Tretrace =
     Tatt.global.attributes,
     Tatt.spanning.attributes,
     Tatt.transcriptional.attributes,
+    Tatt.dimensions.attributes,
     empty
   }
 Ttranspose =
@@ -5794,6 +5826,7 @@ Tundo =
     Tatt.global.attributes,
     Tatt.spanning.attributes,
     Tatt.transcriptional.attributes,
+    Tatt.dimensions.attributes,
     
     ## points to one or more elements representing the interventions which are to be reverted or undone.
     attribute target {
@@ -5927,7 +5960,7 @@ Tab =
     Tmacro.paraContent
     >> sch:pattern [
          id =
-           "testbasic-ab-abstractModel-structure-p-constraint-report-14"
+           "testbasic-ab-abstractModel-structure-ab-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5936,9 +5969,9 @@ Tab =
            "               "
            sch:report [
              test =
-               "not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
+               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
              "\x{a}" ~
-             "        Abstract model violation: ab may not contain paragraphs or other ab elements.\x{a}" ~
+             "        Abstract model violation: ab may not occur inside paragraphs or other ab elements.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -5990,6 +6023,7 @@ Tseg =
     Tatt.segLike.attributes,
     Tatt.typed.attributes,
     Tatt.written.attributes,
+    Tatt.notated.attributes,
     empty
   }
 Twhen =
@@ -6012,7 +6046,7 @@ Twhen =
     }?,
     
     ## specifies the unit of time in which the interval value is expressed, if this is not inherited from the parent timeline.
-    ## Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seconds) ; 5] ms(milliseconds) 
+    ## Suggested values include: 1] d (days) ; 2] h (hours) ; 3] min (minutes) ; 4] s (seconds) ; 5] ms (milliseconds) 
     attribute unit {
       
       ## (days) 
@@ -6061,7 +6095,7 @@ Ttimeline =
     attribute origin { xsd:anyURI }?,
     
     ## specifies the unit of time corresponding to the interval value of the timeline or of its constituent points in time.
-    ## Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seconds) ; 5] ms(milliseconds) 
+    ## Suggested values include: 1] d (days) ; 2] h (hours) ; 3] min (minutes) ; 4] s (seconds) ; 5] ms (milliseconds) 
     attribute unit {
       
       ## (days) 
@@ -6219,7 +6253,7 @@ TTEI =
     Tatt.global.attributes,
     Tatt.typed.attributes,
     
-    ## specifies the major version number of the TEI Guidelines against which this document is valid.
+    ## specifies the version number of the TEI Guidelines against which this document is valid.
     attribute version {
       xsd:token { pattern = "[\d]+(\.[\d]+){0,2}" }
     }?,
@@ -6500,7 +6534,7 @@ TtitlePart =
     Tatt.global.attributes,
     
     ## specifies the role of this subdivision of the title.
-    ## Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] short; 5] desc(descriptive) 
+    ## Suggested values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4] short; 5] desc (descriptive) 
     [ a:defaultValue = "main" ]
     attribute type {
       

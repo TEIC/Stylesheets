@@ -642,6 +642,21 @@ of this software, even if advised of the possibility of such damage.
        <xsl:apply-templates mode="pass3"/>
      </fw>
    </xsl:template>
+  <xsl:template match="tei:fwSig" mode="pass3" priority="99">
+    <fw type='sig'>
+      <xsl:apply-templates mode="pass3"/>
+    </fw>
+  </xsl:template>
+  <xsl:template match="tei:fwPageNum" mode="pass3" priority="99">
+    <fw type='pageNum'>
+      <xsl:apply-templates mode="pass3"/>
+    </fw>
+  </xsl:template>
+  <xsl:template match="tei:fwHeader" mode="pass3" priority="99">
+    <fw type='header'>
+      <xsl:apply-templates mode="pass3"/>
+    </fw>
+  </xsl:template>
   
    <xsl:template match="tei:persName" mode="pass3">
      <name type='person'>
@@ -877,6 +892,9 @@ of this software, even if advised of the possibility of such damage.
      </xsl:if>
    </xsl:template>
    
+  <!-- suppress nonexistent TEI attribute (LB) -->
+  <xsl:template match="//tei:cell/@tei:align" mode="pass3"/>
+  
   <!-- Instead of using anchor give @xml:id to superordinate element -->
   <xsl:template match="tei:anchor[not(../@xml:id)][not(preceding-sibling::tei:anchor)]" mode="pass3"/>
   <xsl:template match="tei:*[not(@xml:id)][tei:anchor]" mode="pass3">
