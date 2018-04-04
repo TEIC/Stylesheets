@@ -549,7 +549,7 @@ clean:
 	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5 test*.processedodd *.isosch
 	rm -f oddbyexample.* index*div*html
 	rm -f testdrama.compiled.xml
-	rm -f test5.odt test7.xml test18.xml test19.xml test-index.xml test7.zip test11.xml test9.docx test9.odt content.xml.odt.listing content.xml.odt test.xml.docx.core test7.docx
+	rm -f test5.odt test7.xml test18.xml test19.xml test-index.xml test7.zip test11.xml test11a.xml test9.docx test9.odt content.xml.odt.listing content.xml.odt test.xml.docx.core test7.docx
 	rm -f A54031.xml dcr.result test-rtf2tei.xml test29.xml dcr.tmp xml.tmp
 	rm -f xml.result
 	rm -rf charts/ embeddings/ media/ _rels/ \[Content_Types\].xml
