@@ -1353,7 +1353,7 @@
         <xsl:call-template name="validUntil"/>
         <xsl:call-template name="moduleInfo"/>
         <xsl:choose>
-          <xsl:when test="@type = 'pe' or @type = 'dt'">
+          <xsl:when test="@type eq 'pe'">
             <xsl:element namespace="{$outputNS}" name="{$rowName}">
               <xsl:element namespace="{$outputNS}" name="{$cellName}">
                 <xsl:attribute name="{$rendName}">
