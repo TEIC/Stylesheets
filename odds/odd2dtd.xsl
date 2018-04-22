@@ -822,7 +822,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="parent::tei:content/parent::tei:dataSpec">
             <xsl:text> CDATA</xsl:text>
          </xsl:when>
-         <xsl:when test="parent::tei:content/parent::tei:macroSpec[@type='pe']">
+         <xsl:when test="parent::tei:content/parent::tei:macroSpec">
             <xsl:text>#PCDATA</xsl:text>
          </xsl:when>
          <xsl:when test="parent::tei:content and not(following-sibling::rng:*) and not (preceding-sibling::rng:*)">

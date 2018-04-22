@@ -1352,34 +1352,30 @@
         </xsl:element>
         <xsl:call-template name="validUntil"/>
         <xsl:call-template name="moduleInfo"/>
-        <xsl:choose>
-          <xsl:when test="@type eq 'pe'">
-            <xsl:element namespace="{$outputNS}" name="{$rowName}">
-              <xsl:element namespace="{$outputNS}" name="{$cellName}">
-                <xsl:attribute name="{$rendName}">
-                  <xsl:text>wovenodd-col1</xsl:text>
-                </xsl:attribute>
-                <xsl:element namespace="{$outputNS}" name="{$hiName}">
-                  <xsl:attribute name="{$rendName}">
-                    <xsl:text>label</xsl:text>
-                  </xsl:attribute>
-                  <xsl:attribute name="{$langAttributeName}">
-                    <xsl:value-of select="$documentationLanguage"/>
-                  </xsl:attribute>
-                  <xsl:sequence select="tei:i18n('Used by')"/>
-                </xsl:element>
-              </xsl:element>
-              <xsl:element namespace="{$outputNS}" name="{$cellName}">
-                <xsl:attribute name="{$rendName}">
-                  <xsl:text>wovenodd-col2</xsl:text>
-                </xsl:attribute>
-                <xsl:call-template name="generateModelParents">
-                  <xsl:with-param name="showElements">true</xsl:with-param>
-                </xsl:call-template>
-              </xsl:element>
+        <xsl:element namespace="{$outputNS}" name="{$rowName}">
+          <xsl:element namespace="{$outputNS}" name="{$cellName}">
+            <xsl:attribute name="{$rendName}">
+              <xsl:text>wovenodd-col1</xsl:text>
+            </xsl:attribute>
+            <xsl:element namespace="{$outputNS}" name="{$hiName}">
+              <xsl:attribute name="{$rendName}">
+                <xsl:text>label</xsl:text>
+              </xsl:attribute>
+              <xsl:attribute name="{$langAttributeName}">
+                <xsl:value-of select="$documentationLanguage"/>
+              </xsl:attribute>
+              <xsl:sequence select="tei:i18n('Used by')"/>
             </xsl:element>
-          </xsl:when>
-        </xsl:choose>
+          </xsl:element>
+          <xsl:element namespace="{$outputNS}" name="{$cellName}">
+            <xsl:attribute name="{$rendName}">
+              <xsl:text>wovenodd-col2</xsl:text>
+            </xsl:attribute>
+            <xsl:call-template name="generateModelParents">
+              <xsl:with-param name="showElements">true</xsl:with-param>
+            </xsl:call-template>
+          </xsl:element>
+        </xsl:element>
         <xsl:apply-templates mode="weave"/>
       </xsl:element>
     </xsl:element>
