@@ -59,6 +59,8 @@
     <import file="build_utilities.xml" as="utils"/>
     
 <!-- Import the modular test files.   -->
+    
+    <import file="build_odd.xml"/>
     <import file="build_odt.xml"/>
     <import file="build_docx.xml"/>
     
@@ -257,7 +259,7 @@
         
     </target>
     
-
+<!--
     
     <target name="oddToRng">
         <description>
@@ -266,18 +268,18 @@
             and then diffs it against the expected results. It involves
             a straight conversion, but then some tweaking to remove 
         </description>
-<!--  First convert odd to relaxng.      -->
+<!-\-  First convert odd to relaxng.      -\->
         <exec executable="${bin}/teitorelaxng" failonerror="true">
-            <arg line="--localsource=${localsource}"/>
+            <arg line="-\-localsource=${localsource}"/>
             <arg file="${inputDir}/test.odd"/>
             <arg file="${outputDir}/test.rng"/>
         </exec>
         
-<!--  Now clean and diff.      -->
+<!-\-  Now clean and diff.      -\->
         <antcall target="prepAndDiffFile">
             <param name="inFile" value="${outputDir}/test.rng"/>
         </antcall>
-    </target>
+    </target>-->
     
 <!-- Markdown tests just run one file in each direction, so 
      didn't use filesets. BUT THIS SHOULD BE REMEDIED. -->
@@ -527,7 +529,7 @@
         </description>
         <parallel failonany="true">
             <antcall target="clean"/>
-            <antcall target="oddToRng"/>
+            <antcall target="oddFilesToRng"/>
             <antcall target="simpleTeiToHtml"/>
             <antcall target="markdown"/>
             <antcall target="cocoaFilesToTei"/>

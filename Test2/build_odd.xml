@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="odt" name="StylesheetsTestOdt"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless">
+  
+  <description> 
+    Stylesheets/Test2/build_odd.xml
+    
+    ANT TEST FILE FOR CONVERSIONS BETWEEN ODD AND OTHER FORMATS.
+    
+    
+    
+  </description>
+
+
+  <!-- First we include the generic utilities module.   -->
+  <import file="build_utilities.xml" as="utils"/>
+  
+  <!--  Files for conversion from ODD to RNG.  -->
+  <fileset id="oddToRngFiles" dir="${inputDir}" includes="test.odd"/>
+  
+  
+<!-- Default target that does everything. -->
+  <target name="odd">
+    <antcall target="oddFilesToRng"/>
+  </target>
+  
+  <target name="oddFilesToRng">
+    <description>
+      TARGET oddFilesToRng
+      Converts ODD files to RNG, extracts their contents.xml, diffs 
+      them against expected results.
+    </description>
+   
+    <foreach target="oddFileToRng" param="inFile">
+      <path>
+        <fileset refid="oddToRngFiles"/>
+      </path>
+    </foreach>
+    
+<!-- Why not use a macrodef rather than a target, as below?
+     Because we often want to call a single target with a single
+     file while we're working on tests; there's no easy way to 
+     do this if the process is defined as a macrodef rather than
+     as a distinct target.
+    -->
+<!--    <for param="inFile">
+      <fileset refid="oddToRngFiles"/>
+      <sequential>
+        <oddToRng inFile="@{inFile}"/>
+      </sequential>
+    </for>-->
+    
+  </target>
+  
+<!--  <macrodef name="oddToRng">
+    <attribute name="inFile"/>
+    <sequential>
+      <basename file="@{inFile}" property="plainFileName" suffix=".odd"/>
+      <property name="outFile" value="${outputDir}/${plainFileName}.rng"/>
+      
+      <exec executable="${bin}/teitorelaxng" failonerror="true">
+        <arg line="-\-localsource=${localsource}"/>
+        <arg file="@{inFile}"/>
+        <arg file="${outFile}"/>
+      </exec>
+      
+      <antcall target="prepAndDiffFile">
+        <param name="inFile" value="${outputDir}/${plainFileName}.odd"/>
+      </antcall>
+    </sequential>
+  </macrodef>-->
+  
+  <target name="oddFileToRng">
+    <description>
+      TARGET oddFileToRng
+      Converts a single TEI file to rng, then diffs it against expected results. 
+      It takes a single parameter, inFile.
+    </description>
+    <basename file="${inFile}" property="plainFileName" suffix=".odd"/>
+    <property name="outFile" value="${outputDir}/${plainFileName}.rng"/>
+    
+    <exec executable="${bin}/teitorelaxng" failonerror="true">
+      <arg line="--localsource=${localsource}"/>
+      <arg file="${inFile}"/>
+      <arg file="${outFile}"/>
+    </exec>
+    
+    <antcall target="prepAndDiffFile">
+      <param name="inFile" value="${outputDir}/${plainFileName}.rng"/>
+    </antcall>
+  </target>
+  
+</project>
