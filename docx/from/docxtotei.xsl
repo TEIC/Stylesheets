@@ -47,8 +47,8 @@
 	  <xsl:param name="preserveWordSections">false</xsl:param>	  
 	  <xsl:param name="preserveWordHeadersFooters">false</xsl:param>    	  
 	  <xsl:param name="preserveSoftPageBreaks">false</xsl:param>    	  
-	  <xsl:param name="preserveEffects">false</xsl:param>	  
-	  <xsl:param name="preserveFontSizeChanges">false</xsl:param>
+	  <xsl:param name="preserveEffects">true</xsl:param><!-- was false -->	  
+	  <xsl:param name="preserveFontSizeChanges">true</xsl:param><!-- was false -->
 	  <xsl:param name="preserveObject">false</xsl:param>
 	  <xsl:param name="preserveSpace">false</xsl:param>
 	  <xsl:param name="verbose">false</xsl:param>	  

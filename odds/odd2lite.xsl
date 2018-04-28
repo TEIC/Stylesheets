@@ -514,7 +514,7 @@ of this software, even if advised of the possibility of such damage.
                       <xsl:value-of select="@ident"/>
                     </ref>
                   </hi>:
-                  <xsl:sequence select="tei:makeDescription(.,true())"/>
+                  <xsl:sequence select="tei:makeDescription(., true(), true())"/>
                 </cell>
               </row>
             </xsl:for-each>

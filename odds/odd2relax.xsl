@@ -152,7 +152,7 @@ of this software, even if advised of the possibility of such damage.
               select="(/tei:TEI/tei:text/tei:front/tei:titlePage/tei:docDate,'.')"
               separator=""/>
             <xsl:call-template name="makeTEIVersion"/>
-            <xsl:sequence select="tei:makeDescription(.,true())"/>
+            <xsl:sequence select="tei:makeDescription(., true(), true())"/>
             <xsl:text>&#10;</xsl:text>
           </xsl:comment>
           <xsl:comment>
@@ -244,7 +244,7 @@ of this software, even if advised of the possibility of such damage.
                            <xsl:sequence select="tei:whatsTheDate()"/>
                            <xsl:call-template name="makeTEIVersion"/>
 			   <xsl:call-template name="copyright"/>
-                           <xsl:sequence select="tei:makeDescription(.,true())"/>
+                           <xsl:sequence select="tei:makeDescription(., true(), true())"/>
                         </xsl:comment>
                         <xsl:call-template name="moduleSpec-body"/>
                      </grammar>

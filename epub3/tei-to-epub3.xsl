@@ -68,9 +68,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="bottomNavigationPanel">false</xsl:param>
   <xsl:param name="coverimage"/>
   <xsl:param name="createanttask">false</xsl:param>
-  <xsl:param name="cssFile">../tei.css</xsl:param>
-  <xsl:param name="cssODDFile">../odd.css</xsl:param>
-  <xsl:param name="cssPrintFile">../epub-print.css</xsl:param>
+  <xsl:param name="cssFile">../css/tei.css</xsl:param>
+  <xsl:param name="cssODDFile">../css/odd.css</xsl:param>
+  <xsl:param name="cssPrintFile">../css/epub-print.css</xsl:param>
   <xsl:param name="debug">false</xsl:param>
   <xsl:param name="directory">.</xsl:param>
   <xsl:param name="doctypePublic"/>

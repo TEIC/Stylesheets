@@ -381,7 +381,7 @@ of this software, even if advised of the possibility of such damage.
 <!-- use general-purpose templates to add standard attributes -->
 <xsl:template match="@rend">
   <xsl:attribute name="role">
-    <xsl:value-of select="@rend"/>
+    <xsl:value-of select="."/>
   </xsl:attribute>
 </xsl:template>
 
