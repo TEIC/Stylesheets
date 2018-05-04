@@ -3,7 +3,7 @@
 <?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_customization.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <?xml-model href="http://www.tei-c.org/release/xml/tei/Exemplars/tei_customization.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0" n="testdrama">
+  xmlns:rng="http://relaxng.org/ns/structure/1.0" n="testPure1">
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -21,8 +21,12 @@
   </teiHeader>
   <text>
     <body>
-      <schemaSpec start="TEI div" ident="testPure1">
-        <desc></desc>
+      <schemaSpec start="TEI div" ident="testPure1" prefix="t_">
+        <desc>This file is intended as input for a conversion to
+        RNG and Schematron (and possibly other outputs) as part 
+        of the modular Stylesheets test process. No source is 
+        specified here, because the source p5subset.xml is controlled
+        by command-line input.</desc>
       </schemaSpec>
     </body>
     <back>
