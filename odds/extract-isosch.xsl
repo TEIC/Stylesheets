@@ -524,8 +524,11 @@ of this software, even if advised of the possibility of such damage.
         <xsl:number level="any"/>
       </xsl:variable>
       <xsl:value-of
-        select="( $scheme, 'constraint', ancestor-or-self::*[@ident]/@ident, $num )"
-        separator="-"/>
+	  select="( $scheme,
+		   'constraint',
+		    ancestor-or-self::*[@ident]/@ident/translate( .,':',''),
+		    $num )"
+	  separator="-"/>
     </xsl:for-each>
   </xsl:function>
   
