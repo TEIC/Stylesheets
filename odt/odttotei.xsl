@@ -3,7 +3,7 @@
   exclude-result-prefixes="office style text table draw fo xlink dc
 			   meta number tei svg chart dr3d math form
 			   script ooo ooow oooc dom xforms xs xsd xsi"
-  office:version="1.0" version="2.0" 
+  office:version="1.0" version="2.0"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns="http://www.tei-c.org/ns/1.0"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
@@ -39,14 +39,14 @@
          <p> TEI stylesheet for making TEI files from
 	 OpenOffice. Originally derived from the OpenOffice /Docbook
 	 conversion, but largely rewritten</p>
-         <p> 
+         <p>
             <h1 xmlns="">License</h1>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
-Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
+Unported License http://creativecommons.org/licenses/by-sa/3.0/
 
 2. http://www.opensource.org/licenses/BSD-2-Clause
-		
+
 
 
 Redistribution and use in source and binary forms, with or without
@@ -73,15 +73,15 @@ theory of liability, whether in contract, strict liability, or tort
 of this software, even if advised of the possibility of such damage.
 </p>
          <p>Author: See AUTHORS</p>
-         
+
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
 
   <xsl:key match="style:style" name="STYLES" use="@style:name"/>
 
-  <xsl:key name="LISTS" 
-	 match="text:list-level-style-number" 
+  <xsl:key name="LISTS"
+	 match="text:list-level-style-number"
 	 use="parent::text:list-style/@style:name"/>
 
   <xsl:key match="text:h" name="Headings" use="text:outline-level"/>
@@ -93,7 +93,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:output encoding="utf-8" indent="yes"/>
 
   <!--  <xsl:strip-space elements="text:span"/>-->
-  
+
   <xsl:variable name="META">
     <xsl:choose>
       <xsl:when test="doc-available(concat($dir,'/meta.xml'))">
@@ -113,7 +113,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when
 	  test="/office:document-content/office:body/office:text/text:p[@text:style-name='Title']">
         <xsl:value-of
-	    select="/office:document-content/office:body/office:text/text:p[@text:style-name='Title'][1]"
+	    select="/office:document-content/office:body/office:text/text:p[@text:style-name='Title']"
 	    />
       </xsl:when>
       <xsl:when test="$META/office:meta/dc:title">
@@ -121,6 +121,23 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>Untitled Document</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+  <xsl:variable name="document-author">
+    <xsl:choose>
+      <xsl:when
+	  test="/office:document-content/office:body/office:text/text:p[@text:style-name='Author']">
+        <xsl:value-of
+	    select="/office:document-content/office:body/office:text/text:p[@text:style-name='Author']"
+	    />
+      </xsl:when>
+      <xsl:when test="$META/office:meta/meta:initial-creator">
+        <xsl:value-of select="$META/office:meta/meta:initial-creator"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>Unspecified author</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -142,7 +159,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="pass2">
       <xsl:apply-templates mode="pass2" select="$pass1"/>
     </xsl:variable>
-    <xsl:apply-templates mode="pass3" select="$pass2"/>    
+    <xsl:apply-templates mode="pass3" select="$pass2"/>
   </xsl:template>
 
   <xsl:template match="office:document-content|office:body">
@@ -167,7 +184,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:attribute name="xml:lang">
 	    <xsl:value-of select="normalize-space(.)"/>
 	  </xsl:attribute>
-	</xsl:for-each>  
+	</xsl:for-each>
       <xsl:call-template name="teiHeader"/>
       <text>
 	<xsl:apply-templates/>
@@ -194,8 +211,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="$document-title"/>
           </title>
           <author>
-            <xsl:value-of
-              select="$META/office:meta/meta:initial-creator"/>
+            <xsl:value-of select="$document-author" />
           </author>
         </titleStmt>
         <editionStmt>
@@ -324,7 +340,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <!-- special case paragraphs -->
   <xsl:template match="text:p[@text:style-name='XMLComment']">
     <xsl:comment>
@@ -481,7 +497,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template
     match="text:p[@text:style-name='VarList Term' or @text:style-name='List Heading']">
-    <GLOSS n="label"> 
+    <GLOSS n="label">
       <xsl:apply-templates/>
     </GLOSS>
   </xsl:template>
@@ -816,7 +832,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="office:binary-data">    
+  <xsl:template match="office:binary-data">
     <binaryObject encoding="base64" mimeType="image/jpg">
       <xsl:value-of select="."/>
     </binaryObject>
@@ -1199,7 +1215,7 @@ These seem to have no obvious translation
     <xsl:for-each-group select="current-group()"
 			group-adjacent="if (self::tei:GLOSS)
 					then 1
-					else 2">      
+					else 2">
       <xsl:choose>
 	<xsl:when test="current-grouping-key()=1">
 	  <list type="gloss">
@@ -1218,7 +1234,7 @@ These seem to have no obvious translation
       </xsl:choose>
     </xsl:for-each-group>
   </xsl:template>
-		
+
   <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass1">
     <xsl:copy-of select="."/>
   </xsl:template>
@@ -1260,23 +1276,23 @@ These seem to have no obvious translation
   <xsl:template match="tei:p[not(*) and normalize-space(.)='']"
 		mode="pass2">
   </xsl:template>
-  
+
   <xsl:template match="@*|comment()|processing-instruction()" mode="pass2">
     <xsl:copy-of select="."/>
   </xsl:template>
-  
+
   <xsl:template match="*" mode="pass2">
     <xsl:copy>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
     </xsl:copy>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="text()" mode="pass2">
     <xsl:value-of select="."/>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="tei:title" mode="pass2">
     <xsl:choose>
       <xsl:when test="parent::tei:div|parent::tei:body">
@@ -1291,7 +1307,7 @@ These seem to have no obvious translation
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <!-- third pass -->
 
 
@@ -1299,24 +1315,24 @@ These seem to have no obvious translation
     <xsl:template match="@*|comment()|processing-instruction()" mode="pass3">
         <xsl:copy-of select="."/>
     </xsl:template>
-    
+
     <xsl:template match="*" mode="pass3">
         <xsl:copy>
             <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
         </xsl:copy>
     </xsl:template>
-    
-    
+
+
     <xsl:template match="text()" mode="pass3">
         <xsl:value-of select="."/>
     </xsl:template>
-    
+
     <xsl:template match="tei:div[not(@type)]" mode="pass3">
       <div type="div{count(ancestor-or-self::tei:div)}">
 	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
       </div>
     </xsl:template>
-    
+
     <xsl:function name="tei:inlineStyles"  as="xs:string">
       <xsl:param name="name"/>
       <xsl:param name="context"/>
@@ -1332,57 +1348,57 @@ These seem to have no obvious translation
 		<xsl:value-of
 		    select="style:paragraph-properties/@fo:text-align"/>
 		<xsl:text> </xsl:text>
-	  </xsl:if>	  
+	  </xsl:if>
 	  <xsl:if
 	      test="style:text-properties[starts-with(@style:text-position,'super')]">
 	    <xsl:text>sup </xsl:text>
 	  </xsl:if>
-	  
+
 	  <xsl:if test="style:text-properties/@fo:color and not(style:text-properties/@fo:color='transparent')">
 	    <xsl:text> color(</xsl:text>
 	    <xsl:value-of select="style:text-properties/@fo:color"/>
 	    <xsl:text>)</xsl:text>
 	  </xsl:if>
-	  
+
 	  <xsl:if test="style:text-properties/@fo:background-color and not(style:text-properties/@fo:background-color='transparent')">
 	    <xsl:text> background-color(</xsl:text>
 	    <xsl:value-of select="style:text-properties/@fo:background-color"/>
 	    <xsl:text>)</xsl:text>
 	  </xsl:if>
-	  
+
 	  <xsl:if
 	      test="style:text-properties[starts-with(@style:text-position,'sub')]">
 	    <xsl:text>sub </xsl:text>
 	  </xsl:if>
-	  
+
 	  <xsl:if test="style:text-properties[@fo:font-weight='bold']">
 	    <xsl:text>bold </xsl:text>
 	 </xsl:if>
-	 
+
 	 <xsl:if
 	     test="style:text-properties[@style:text-underline-type='double']">
 	   <xsl:text>doubleunderline </xsl:text>
 	 </xsl:if>
-	 
+
 	 <xsl:if
 	     test="style:text-properties[@style:text-underline-style='solid']">
 	   <xsl:text>underline </xsl:text>
 	 </xsl:if>
-	 
+
 	 <xsl:if
 	     test="style:text-properties[@style:text-line-through-style='solid']">
 	   <xsl:text>strikethrough </xsl:text>
 	 </xsl:if>
-	 
+
 	 <xsl:if
 	     test="style:text-properties[@fo:font-variant='small-caps']">
 	   <xsl:text>smallcaps </xsl:text>
 	 </xsl:if>
-	 
+
 	 <xsl:if test="style:text-properties[@fo:font-style='italic']">
 	   <xsl:text>italic </xsl:text>
 	 </xsl:if>
-	 
+
 	    </xsl:for-each>
 	  </xsl:variable>
 	  <xsl:value-of select="normalize-space($r)"/>
