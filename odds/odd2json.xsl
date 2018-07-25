@@ -58,7 +58,7 @@
     </xsl:param>
     <xsl:param name="serializeDocs" select="true()"/>
     
-    <xsl:template match="/">
+    <xsl:template match="/">        
         <xsl:variable name="structure">
             <j:map>
                 <j:string key="title">
@@ -107,20 +107,26 @@
                 <j:array key="elements">
                     <xsl:for-each select="//tei:elementSpec">
                         <xsl:sort select="@ident"/>
-                        <xsl:call-template name="getMember"/>
+                        <xsl:call-template name="getMember">
+                            <xsl:with-param name="attributes" select="true()" />
+                        </xsl:call-template>
                     </xsl:for-each>
                 </j:array>
                 <j:map key="classes">
                     <j:array key="models">
                         <xsl:for-each select="//tei:classSpec[@type='model']">
                             <xsl:sort select="@ident"/>
-                            <xsl:call-template name="getMember"/>
+                            <xsl:call-template name="getMember">
+                                <xsl:with-param name="attributes" select="false()" />
+                            </xsl:call-template>
                         </xsl:for-each>
                     </j:array>     
                     <j:array key="attributes">
                         <xsl:for-each select="//tei:classSpec[@type='atts']">
                             <xsl:sort select="@ident"/>
-                            <xsl:call-template name="getMember"/>
+                            <xsl:call-template name="getMember">
+                                <xsl:with-param name="attributes" select="true()" />
+                            </xsl:call-template>
                         </xsl:for-each>
                     </j:array>
                 </j:map>                
@@ -202,6 +208,7 @@
     </xsl:template>
     
     <xsl:template name="getMember">
+        <xsl:param name="attributes" select="false()"/>
         <j:map>
             <j:string key="ident"><xsl:value-of select="@ident"/></j:string>
             <xsl:variable name="nspace"
@@ -243,8 +250,17 @@
                     </j:array>
                 </j:map>
             </xsl:if>
-            <xsl:if test=".//tei:attDef[1]">
-                <xsl:call-template name="attributes"/>
+            <xsl:if test="$attributes">
+                <xsl:choose>
+                    <xsl:when test="self::tei:elementSpec">
+                        <xsl:call-template name="attributes">
+                            <xsl:with-param name="onElement" select="'true'"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:call-template name="attributes"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:if> 
             <xsl:if test="tei:content">
                 <j:array key="content">
@@ -295,11 +311,16 @@
     </xsl:template>
     
     <xsl:template name="attributes">
+        <xsl:param name="onElement" select="'false'"/>
         <j:array key="attributes">
-            <xsl:for-each select=".//tei:attDef[not(@mode='delete')]">
+            <xsl:for-each select=".//tei:attDef">
                 <j:map>
+                    <j:boolean key="onElement"><xsl:value-of select="$onElement"/></j:boolean>
                     <j:string key="ident">
                         <xsl:value-of select="@ident"/>
+                    </j:string>
+                    <j:string key="mode">
+                        <xsl:value-of select="if (not(@mode)) then 'add' else @mode"/>
                     </j:string>
                     <j:string key="ns">
                         <xsl:value-of select="@ns"/>
@@ -320,14 +341,40 @@
                             <j:string><xsl:value-of select="."/></j:string>
                         </xsl:for-each>                                
                     </j:array>
+                    <j:array key="valDesc">
+                        <xsl:for-each select="tei:valDesc">
+                            <xsl:choose>
+                                <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
+                                    <xsl:call-template name="makeDesc"/>                  
+                                </xsl:when>
+                                <xsl:when test="not(@xml:lang)">
+                                    <xsl:call-template name="makeDesc"/>
+                                </xsl:when>
+                                <xsl:otherwise/>
+                            </xsl:choose>              
+                        </xsl:for-each>
+                    </j:array>
                     <xsl:if test="tei:valList">
-                        <j:array key="values">
-                            <xsl:for-each select="tei:valList/tei:valItem">
-                                <j:string>
-                                    <xsl:value-of select="@ident"/>
-                                </j:string>
-                            </xsl:for-each>
-                        </j:array>                                            
+                        <j:map key="valList">
+                            <j:string key="type">
+                                <xsl:value-of select="@type"/>
+                            </j:string>
+                            <j:array key="valItem">
+                                <xsl:for-each select="tei:valList/tei:valItem">
+                                    <j:map>
+                                        <j:string key="ident">
+                                            <xsl:value-of select="@ident"/>
+                                        </j:string>
+                                        <xsl:call-template name="desc"/>
+                                        <j:array key="altIdent">
+                                            <xsl:for-each select="tei:altIdent">
+                                                <j:string><xsl:value-of select="."/></j:string>
+                                            </xsl:for-each>                                
+                                        </j:array>
+                                    </j:map>                                    
+                                </xsl:for-each>
+                            </j:array>
+                        </j:map>                                            
                     </xsl:if>
                 </j:map>
             </xsl:for-each>
@@ -346,8 +393,8 @@
             <xsl:when test="$serializeDocs">
                 <xsl:call-template name="serializeElement"/>
             </xsl:when>
-            <xsl:otherwise>m
-                <j:string><xsl:sequence select="tei:makeDescription(parent::*,false())"/></j:string>
+            <xsl:otherwise>
+                <j:string><xsl:sequence select="tei:makeDescription(parent::*,false(),false())"/></j:string>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -367,7 +414,7 @@
             </xsl:for-each>
         </j:array>
         <!-- Format the first desc into shortDesc -->
-        <j:string key="shortDesc"><xsl:sequence select="tei:makeDescription(.,false())"/></j:string>
+        <j:string key="shortDesc"><xsl:sequence select="tei:makeDescription(.,false(),false())"/></j:string>
         <xsl:if test="$serializeDocs">
             <j:array key="gloss">
                 <xsl:for-each select="tei:gloss">
