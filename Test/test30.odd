@@ -19,7 +19,7 @@
     <body>
       <schemaSpec ident="testbasic" prefix="T" xml:lang="en" start="TEI div" xmlns:teix="http://www.tei-c.org/ns/Examples"
         defaultExceptions="http://www.tei-c.org/ns/1.0 http://www.oucs.ox.ac.uk/ns teix:egXML">
-        <constraintSpec scheme="isoschematron" ident="outerconstraint">
+        <constraintSpec scheme="schematron" ident="outerconstraint">
           <constraint>
             <sch:rule context="tei:TEI">
               <sch:report test="count(*)=1"> I need more than 1 child for a TEI element
@@ -79,7 +79,7 @@
               <datatype>
                 <rng:value>duck</rng:value>
               </datatype>
-              <constraintSpec scheme="isoschematron" ident="silly-test">
+              <constraintSpec scheme="schematron" ident="silly-test">
                 <constraint>
                   <sch:report test="true()"> My context is <sch:value-of select="."/>
                   </sch:report>
