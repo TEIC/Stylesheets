@@ -1831,7 +1831,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
          <ref name="num"/>
          <ref name="measure"/>
          <ref name="measureGrp"/>
-      <ref name="unit"/>
+         <ref name="unit"/>
       </choice>
    </define>
    <define name="model.measureLike_alternation">
@@ -1839,14 +1839,14 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
          <ref name="num"/>
          <ref name="measure"/>
          <ref name="measureGrp"/>
-      <ref name="unit"/>
+         <ref name="unit"/>
       </choice>
    </define>
    <define name="model.measureLike_sequence">
       <ref name="num"/>
       <ref name="measure"/>
       <ref name="measureGrp"/>
-   <ref name="unit"/>
+      <ref name="unit"/>
    </define>
    <define name="model.measureLike_sequenceOptional">
       <optional>
@@ -1858,7 +1858,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <optional>
          <ref name="measureGrp"/>
       </optional>
-   <optional>
+      <optional>
          <ref name="unit"/>
       </optional>
    </define>
@@ -1872,7 +1872,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <zeroOrMore>
          <ref name="measureGrp"/>
       </zeroOrMore>
-   <zeroOrMore>
+      <zeroOrMore>
          <ref name="unit"/>
       </zeroOrMore>
    </define>
@@ -1886,7 +1886,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <oneOrMore>
          <ref name="measureGrp"/>
       </oneOrMore>
-   <oneOrMore>
+      <oneOrMore>
          <ref name="unit"/>
       </oneOrMore>
    </define>
@@ -10074,6 +10074,7 @@ Suggested values include: 1] main; 2] hom (homograph) ; 3] xref (cross reference
             <choice>
                <ref name="hom"/>
                <ref name="sense"/>
+        
                <ref name="model.entryPart.top"/>
                <ref name="model.global"/>
                <ref name="model.ptrLike"/>
@@ -10112,6 +10113,7 @@ Suggested values include: 1] main; 2] hom (homograph) ; 3] xref (cross reference
          <zeroOrMore>
             <choice>
                <ref name="sense"/>
+        
                <ref name="model.entryPart.top"/>
                <ref name="model.global"/>
             </choice>
