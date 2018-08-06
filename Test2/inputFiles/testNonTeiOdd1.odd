@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
-<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
-	schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:xh="http://www.w3.org/1999/xhtml"
-   xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:gcse="http://www.google.com/cse"
-   n="testNonTeiOdd1">
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?><?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?><TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:xh="http://www.w3.org/1999/xhtml"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xmlns:gcse="http://www.google.com/cse"
+     n="testNonTeiOdd1">
    <teiHeader>
       <fileDesc>
          <titleStmt>
@@ -44,9 +43,7 @@
                   </content>
                   <constraintSpec ident="headingLevelMustMatchNesting" scheme="schematron">
                      <constraint>
-                        <sch:assert
-                           test="if (child::xh:h3) then count(ancestor::xh:div) = 0                             else if (child::xh:h4) then count(ancestor::xh:div) = 1                             else if (child::xh:h5) then count(ancestor::xh:div) = 2                             else not(child::xh:h3 or child::xh:h4 or child::xh:h5)"
-                           > The level of your heading (h3, h4 or h5) must fit with the depth of
+                        <sch:assert test="if (child::xh:h3) then count(ancestor::xh:div) = 0                             else if (child::xh:h4) then count(ancestor::xh:div) = 1                             else if (child::xh:h5) then count(ancestor::xh:div) = 2                             else not(child::xh:h3 or child::xh:h4 or child::xh:h5)"> The level of your heading (h3, h4 or h5) must fit with the depth of
                            your division nesting; so the top-level div would have h3, a div inside
                            it would have h4, and a div inside that would have h5. </sch:assert>
                      </constraint>
@@ -101,7 +98,9 @@
                   </content>
                </elementSpec>
 
-               <elementSpec ident="blockquote" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+               <elementSpec ident="blockquote"
+                            ns="http://www.w3.org/1999/xhtml"
+                            module="xhtml5">
                   <desc>Block quotation.</desc>
                   <classes>
                      <memberOf key="model.divBody"/>
@@ -210,10 +209,8 @@
                   </classes>
                   <constraintSpec ident="imgWithoutCaptionNeedsAltAndTitle" scheme="schematron">
                      <constraint>
-                        <!--<sch:ns uri="http://www.w3.org/1999/xhtml" prefix="xh"/>-->
-                        <sch:assert
-                           test="(@alt and @title) or following-sibling::xh:figcaption or ancestor::xh:ul[@class='gallery']"
-                           > If your img element is not inside a figure element with a figcaption,
+                        
+                        <sch:assert test="(@alt and @title) or following-sibling::xh:figcaption or ancestor::xh:ul[@class='gallery']"> If your img element is not inside a figure element with a figcaption,
                            then it requires @alt and @title attributes to provide help for
                            visually-impaired users. </sch:assert>
                      </constraint>
@@ -345,7 +342,9 @@
 
                
 
-               <elementSpec ident="figcaption" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+               <elementSpec ident="figcaption"
+                            ns="http://www.w3.org/1999/xhtml"
+                            module="xhtml5">
                   <desc>Caption for an image in a figure element.</desc>
                   <classes>
                      <memberOf key="model.phrase"/>
@@ -429,7 +428,7 @@
                   <content>
                      <sequence>
                         <classRef key="model.divHeading" minOccurs="0" maxOccurs="1"/>
-                        <classRef key="model.divBody" minOccurs="0" maxOccurs="unbounded"/>
+                        <classRef key="model.divBody" minOccurs="1" maxOccurs="unbounded"/>
                      </sequence>
                   </content>
                </macroSpec>
@@ -478,7 +477,7 @@
                   </attList>
                </classSpec>
 
-               <!--        Global Schematron constraints    -->
+               
                <constraintSpec ident="schVariables" scheme="schematron">
                   <constraint>
                      <sch:ns uri="http://www.w3.org/1999/xhtml" prefix="xh"/>
@@ -488,7 +487,7 @@
                         <sch:let name="straightDouble" value="'&#34;'"/>
                         <sch:let name="straightApos" value="''''"/>
                         <sch:let name="straightQuotes"
-                           value="concat('[', $straightDouble, $straightApos, ']')"/>
+                                 value="concat('[', $straightDouble, $straightApos, ']')"/>
                      </sch:pattern>
                   </constraint>
                </constraintSpec>
@@ -512,9 +511,7 @@
                <constraintSpec ident="onlyPermittedImgAttributes" scheme="schematron">
                   <constraint>
                      <sch:rule context="xh:img">
-                        <sch:assert
-                           test="every $att in @* satisfies local-name($att) = ('src', 'alt', 'title', 'width', 'height', 'id', 'style', 'class')"
-                           > Only the following attributes are allowed on img: 'src',
+                        <sch:assert test="every $att in @* satisfies local-name($att) = ('src', 'alt', 'title', 'width', 'height', 'id', 'style', 'class')"> Only the following attributes are allowed on img: 'src',
                            'alt', 'title', 'id', 'style', 'class', 'width' and
                            'height'. </sch:assert>
                      </sch:rule>
@@ -547,9 +544,7 @@
                <constraintSpec ident="periodsAndCommasOutsideLinks" scheme="schematron">
                   <constraint>
                      <sch:rule context="xh:a[@href]">
-                        <sch:assert
-                           test="not(matches(., '[\.,:;]\s*$')) or matches(., '((Esq\.)|(A\.\s*W\.)|(\.\s*\.\s*\.))$')"
-                           > Don't include trailing periods and commas inside link text.
+                        <sch:assert test="not(matches(., '[\.,:;]\s*$')) or matches(., '((Esq\.)|(A\.\s*W\.)|(\.\s*\.\s*\.))$')"> Don't include trailing periods and commas inside link text.
                         </sch:assert>
                      </sch:rule>
                   </constraint>
