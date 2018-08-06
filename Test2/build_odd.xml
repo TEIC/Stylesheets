@@ -89,6 +89,38 @@
     <antcall target="prepAndDiffFile">
       <param name="inFile" value="${outputDir}/${plainFileName}.rng"/>
     </antcall>
+    
+<!--  We will next need to check whether there are any Schematron 
+      constraints in the file, and if so, export them to create 
+      a separate Schematron file. Checking whether this file exists:
+      
+      ${expectedResultsDir}/${plainFileName}.sch
+      
+      should signify that there are constraints, and that they should
+      therefore be exported. Next, the resulting file in 
+      
+      ${outputDir}/${plainFileName}.sch
+      
+      should be diffed against the expected-results file.
+      
+      Next:
+         If there is a file named ${inputDir}/${plainFileName}ValidExemplar.xml, then:
+      
+         1. Validate it with Jing against ${outputDir}/${plainFileName}.rng and fail on invalid.
+         
+         2. Validate it (how???) against ${outputDir}/${plainFileName}.sch and fail on invalid.
+      
+      And then:
+         If there is a file named ${inputDir}/${plainFileName}InvalidExemplar.xml, then:
+      
+         1. Validate it with Jing against ${outputDir}/${plainFileName}.rng > 
+            ${outputDir}/${plainFileName}InvalidExemplarRngErrors.txt, and diff that
+            against ${expectedResultsDir}/${plainFileName}InvalidExemplarRngErrors.txt
+            
+         2. Validate it (how???) against ${outputDir}/${plainFileName}.sch > 
+            ${outputDir}/${plainFileName}InvalidExemplarSchErrors.txt, and diff that
+            against ${expectedResultsDir}/${plainFileName}InvalidExemplarSchErrors.txt
+       -->
   </target>
   
 </project>
