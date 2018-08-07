@@ -121,6 +121,32 @@
             ${outputDir}/${plainFileName}InvalidExemplarSchErrors.txt, and diff that
             against ${expectedResultsDir}/${plainFileName}InvalidExemplarSchErrors.txt
        -->
+<!--   Look for a valid exemplar, and if it's there, validate it with
+       the schema that's been created. -->
+    
+    <property name="validExemplar" value="${inputDir}/${plainFileName}ValidExemplar.xml"/>
+    
+    <if>
+      <available file="${validExemplar}"/>
+      <then>
+        <jing rngfile="${outputDir}/${plainFileName}.rng" file="${validExemplar}"/>
+      </then>
+    </if>
+    
+<!--   Look for an invalid exemplar, and if it's there, validate it and diff
+       errors against expected-results. -->
+    
+    <property name="invalidExemplar" value="${inputDir}/${plainFileName}InvalidExemplar.xml"/>
+    
+    <if>
+      <available file="${invalidExemplar}"/>
+      <then>
+        <antcall target="validateInvalidExemplarRng">
+          <param name="plainFileName" value="${plainFileName}"/>
+        </antcall>
+      </then>
+    </if>
+    
   </target>
   
 </project>
