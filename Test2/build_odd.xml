@@ -16,8 +16,13 @@
   <!-- First we include the generic utilities module.   -->
   <import file="build_utilities.xml" as="utils"/>
   
+  <!-- This is the list of files we're going to process, expressed
+       as a parameter, so that it can be overridden to process 
+       a subset of files. -->
+  <property name="oddFileList" value="testSpecificationDescription.odd testPure1.odd testNonTeiOdd1.odd"/>
+  
   <!--  Files for conversion from ODD to RNG.  -->
-  <fileset id="oddToRngFiles" dir="${inputDir}" includes="testSpecificationDescription.odd testPure1.odd testNonTeiOdd1.odd"/>
+  <fileset id="oddToRngFiles" dir="${inputDir}" includes="${oddFileList}"/>
   
   
 <!-- Default target that does everything. -->
@@ -128,7 +133,7 @@
 <!--   Look for a valid exemplar, and if it's there, validate it with
        the schema that's been created. -->
     
-    <property name="validExemplar" value="${inputDir}/${plainFileName}ValidExemplar.xml"/>
+    <property name="validExemplar" value="${inputDir}/validExemplars/${plainFileName}ValidExemplar.xml"/>
     
     <if>
       <available file="${validExemplar}"/>
@@ -140,7 +145,7 @@
 <!--   Look for an invalid exemplar, and if it's there, validate it and diff
        errors against expected-results. -->
     
-    <property name="invalidExemplar" value="${inputDir}/${plainFileName}InvalidExemplar.xml"/>
+    <property name="invalidExemplar" value="${inputDir}/invalidExemplars/${plainFileName}InvalidExemplar.xml"/>
     
     <if>
       <available file="${invalidExemplar}"/>
