@@ -328,7 +328,7 @@
                     <j:string key="usage">
                         <xsl:choose>
                             <xsl:when test="@usage">
-                                <xsl:value-of select="@ns"/>
+                                <xsl:value-of select="@usage"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:text>def</xsl:text>
@@ -354,6 +354,48 @@
                             </xsl:choose>              
                         </xsl:for-each>
                     </j:array>
+                    <j:map key="datatype">
+                        <xsl:for-each select="tei:datatype">
+                            <j:string key="min">
+                                <xsl:choose>
+                                    <xsl:when test="@minOccurs">
+                                        <xsl:value-of select="@minOccurs"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>1</xsl:otherwise>
+                                </xsl:choose>
+                            </j:string>
+                            <j:string key="max">
+                                <xsl:choose>
+                                    <xsl:when test="@maxOccurs">
+                                        <xsl:value-of select="@maxOccurs"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>1</xsl:otherwise>
+                                </xsl:choose>
+                            </j:string>
+                            <j:map key="dataRef">
+                                <xsl:for-each select="tei:dataRef">
+                                   <xsl:if test="@key">
+                                       <j:string key="key"><xsl:value-of select="@key"/></j:string>
+                                   </xsl:if>
+                                   <xsl:if test="@name">
+                                       <j:string key="name"><xsl:value-of select="@name"/></j:string>
+                                   </xsl:if>
+                                   <xsl:if test="@ref">
+                                       <j:string key="ref"><xsl:value-of select="@ref"/></j:string>
+                                   </xsl:if>
+                                   <xsl:if test="@restriction">
+                                       <j:string key="restriction"><xsl:value-of select="@restriction"/></j:string>
+                                   </xsl:if>
+                                   <j:array key="dataFacet">
+                                       <xsl:for-each select="tei:dataFacet">
+                                           <j:string key="name"><xsl:value-of select="@name"/></j:string>
+                                           <j:string key="value"><xsl:value-of select="@value"/></j:string>
+                                       </xsl:for-each>
+                                   </j:array>
+                                </xsl:for-each>
+                            </j:map>
+                        </xsl:for-each>
+                    </j:map>
                     <xsl:if test="tei:valList">
                         <j:map key="valList">
                             <j:string key="type">
