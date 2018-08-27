@@ -45,6 +45,8 @@
                   <attDef ident="require" mode="delete"/>
                </attList>
             </classSpec>
+            <!--Checking module msdescription-->
+            <classRef key="model.physDescPart"/>
             <!--Checking module namesdates-->
             <classRef key="model.persNamePart"/>
             <!--Checking module dictionaries-->
@@ -68,7 +70,6 @@
                </attList>
             </classSpec>
             <!--Checking module tagdocs-->
-            <macroRef key="macro.schemaPattern"/>
             <classRef key="att.combinable"/>
             <classRef key="att.identified"/>
             <classRef key="model.contentPart"/>
@@ -82,6 +83,11 @@
                   <attDef ident="ident" mode="delete"/>
                   <attDef ident="predeclare" mode="delete"/>
                   <attDef ident="module" mode="delete"/>
+               </attList>
+            </classSpec>
+            <classSpec ident="att.ascribed.directed" type="atts" mode="change">
+               <attList>
+                  <attDef ident="toWhom" mode="delete"/>
                </attList>
             </classSpec>
             <classSpec ident="att.dimensions" type="atts" mode="change">
@@ -167,7 +173,6 @@
             <moduleRef key="header"
                        include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
             <!--Checking module verse-->
-            <!--Checking module msdescription-->
             <!--Checking module transcr-->
             <!--Checking module linking-->
             <!--Checking module analysis-->

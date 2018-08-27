@@ -260,6 +260,34 @@
     </if>
   </target>
   
+  <target name="validateInvalidExemplarRng">
+    <description>
+      TARGET validateInvalidExemplar
+      This target uses Jing to validate an exemplar that 
+      is purposely invalid, in order to check that the 
+      expected error messages are generated. It diffs the
+      actual output against expected results, and fails if
+      the results do not match. Filenames are all generated 
+      from a single input pattern (plainFileName).
+    </description>
+    <property name="rngFile" value="${outputDir}/${plainFileName}.rng"/>
+    <property name="invalidExemplar" value="${inputDir}/invalidExemplars/${plainFileName}InvalidExemplar.xml"/>
+    <property name="outputErrorFile" value="${outputDir}/${plainFileName}InvalidExemplarRngErrors.txt"/>
+    
+<!--   Run jing to create the error output file. -->
+    <property name="expectedErrorFile" value="${expectedResultsDir}/${plainFileName}InvalidExemplarRngErrors.txt"/>
+    <java fork="true" failonerror="false" jar="${jingJar}" output="${outputErrorFile}">
+      <arg value="${rngFile}"/>
+      <arg value="${invalidExemplar}"/>
+    </java>
+    
+<!--   Now diff against expected-results. -->
+    <antcall target="diffFile">
+      <param name="inFile" value="${outputErrorFile}"/>
+    </antcall>
+    
+  </target>
+  
   <!--   NOTE: I DO NOT SEE THE POINT IN THESE CSS FILE SYMLINKS, AND UNLESS I 
        CAN FIGURE OUT A GOOD REASON FOR THEM, I'LL REMOVE THE FOLLOWING TWO 
        TARGETS. -->
