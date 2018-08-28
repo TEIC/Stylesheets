@@ -480,7 +480,7 @@ test-namespaces:
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test33.rnc expected-results/test33.rnc; fi
 	$(SAXON) test33.odd ../odds/odd2json.xsl > test33.json
-	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test33.json
+	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test33.json
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test33.json expected-results/test33.json; fi
 	$(BINDIR)/teitornc test34.odd test34.rnc
@@ -489,12 +489,12 @@ test-namespaces:
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test34.rnc expected-results/test34.rnc; fi
 	$(SAXON) test34.odd ../odds/odd2json.xsl > test34.json
-	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.json
+	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.json
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test34.json expected-results/test34.json; fi
 	$(SAXON) test34.odd ../odds/odd2odd.xsl > test34.combined.odd
 	$(SAXON) test34.combined.odd ../odds/odd2json.xsl > test34.combined.json
-	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.combined.json
+	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.combined.json
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test34.combined.json expected-results/test34.combined.json; fi
 	$(BINDIR)/teitohtml --odd --summaryDoc test34.odd test34.odd.html
