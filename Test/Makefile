@@ -261,7 +261,7 @@ test-odt:   test.rng
 	(cd ..; $(MAKE) names)
 	@echo BUILD: testing odt
 	$(BINDIR)/teitoodt test.xml
-	unzip -t test.xml.odt > test.xml.odt.listing
+	unzip -t test.xml.odt | sort > test.xml.odt.listing
 	unzip -o -q test.xml.odt content.xml
 	xmllint --format content.xml > content.xml.odt.listing
 	if [ $(REGENERATING) -ne 1 ]; \
