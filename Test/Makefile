@@ -231,12 +231,12 @@ test-epub: css
 	java -Djava.awt.headless=true -jar ../lib/epubcheck3.jar  test.epub
 	unzip -t test.epub > test.epub.listing
 	if [ $(REGENERATING) -ne 1 ]; \
-		then diff  test.epub.listing expected-results/test.epub.listing; fi
+		then bash -c 'diff  <(sort test.epub.listing) <(sort expected-results/test.epub.listing)'; fi
 	rm test.epub.listing
 	$(BINDIR)/teitoepub  --fileperpage test.xml test-pages.epub
 	unzip -t test-pages.epub > test.epub.listing2
 	if [ $(REGENERATING) -ne 1 ]; \
-		then diff  test.epub.listing2 expected-results/test.epub.listing2; fi
+		then bash -c 'diff  <(sort test.epub.listing2) <(sort expected-results/test.epub.listing2)'; fi
 	rm test.epub.listing2
 
 test-rdf:
@@ -265,9 +265,9 @@ test-odt:   test.rng
 	unzip -o -q test.xml.odt content.xml
 	xmllint --format content.xml > content.xml.odt.listing
 	if [ $(REGENERATING) -ne 1 ]; \
-		then diff  test.xml.odt.listing expected-results/test.xml.odt.listing; fi
+		then bash -c 'diff  <(sort test.xml.odt.listing) <(sort expected-results/test.xml.odt.listing)'; fi
 	if [ $(REGENERATING) -ne 1 ]; \
-		then diff  content.xml.odt.listing expected-results/content.xml.odt.listing; fi
+		then bash -c 'diff  <(sort content.xml.odt.listing) <(sort expected-results/content.xml.odt.listing)'; fi
 	$(BINDIR)/odttotei test7.odt test7.xml
 	$(JING) test.rng test7.xml
 	if [ $(REGENERATING) -ne 1 ]; \
