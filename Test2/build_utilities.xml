@@ -281,6 +281,9 @@
       <arg value="${invalidExemplar}"/>
     </java>
     
+<!--   Now we sed the file to get rid of host-specific paths. -->
+    <replaceregexp file="${outputErrorFile}" match="^.+inputFiles" replace="" flags="" byline="true"/>
+    
 <!--   Now diff against expected-results. -->
     <antcall target="diffFile">
       <param name="inFile" value="${outputErrorFile}"/>
