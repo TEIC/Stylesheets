@@ -43,6 +43,14 @@ Tatt.ascribed.attribute.who =
   attribute who {
     list { xsd:anyURI+ }
   }?
+Tatt.ascribed.directed.attributes =
+  Tatt.ascribed.attributes, Tatt.ascribed.directed.attribute.toWhom
+Tatt.ascribed.directed.attribute.toWhom =
+  
+  ## indicates the person, or group of people, to whom a speech act or action is directed.
+  attribute toWhom {
+    list { xsd:anyURI+ }
+  }?
 Tatt.canonical.attributes =
   Tatt.canonical.attribute.key, Tatt.canonical.attribute.ref
 Tatt.canonical.attribute.key =
@@ -165,7 +173,7 @@ Tatt.dimensions.attribute.scope =
 Tatt.written.attributes = Tatt.written.attribute.hand
 Tatt.written.attribute.hand =
   
-  ## points to a handNote element describing the hand considered responsible for the textual content of the element concerned.
+  ## points to a handNote element describing the hand considered responsible for the content of the element concerned.
   attribute hand { xsd:anyURI }?
 Tatt.damaged.attributes =
   Tatt.dimensions.attributes,
@@ -1246,15 +1254,16 @@ Tmodel.dateLike_sequence = Tdate, Ttime
 Tmodel.dateLike_sequenceOptional = Tdate?, Ttime?
 Tmodel.dateLike_sequenceOptionalRepeatable = Tdate*, Ttime*
 Tmodel.dateLike_sequenceRepeatable = Tdate+, Ttime+
-Tmodel.measureLike = Tnum | Tmeasure | TmeasureGrp | Tgeo
-Tmodel.measureLike_alternation = Tnum | Tmeasure | TmeasureGrp | Tgeo
-Tmodel.measureLike_sequence = Tnum, Tmeasure, TmeasureGrp, Tgeo
+Tmodel.measureLike = Tnum | Tmeasure | TmeasureGrp | Tunit | Tgeo
+Tmodel.measureLike_alternation =
+  Tnum | Tmeasure | TmeasureGrp | Tunit | Tgeo
+Tmodel.measureLike_sequence = Tnum, Tmeasure, TmeasureGrp, Tunit, Tgeo
 Tmodel.measureLike_sequenceOptional =
-  Tnum?, Tmeasure?, TmeasureGrp?, Tgeo?
+  Tnum?, Tmeasure?, TmeasureGrp?, Tunit?, Tgeo?
 Tmodel.measureLike_sequenceOptionalRepeatable =
-  Tnum*, Tmeasure*, TmeasureGrp*, Tgeo*
+  Tnum*, Tmeasure*, TmeasureGrp*, Tunit*, Tgeo*
 Tmodel.measureLike_sequenceRepeatable =
-  Tnum+, Tmeasure+, TmeasureGrp+, Tgeo+
+  Tnum+, Tmeasure+, TmeasureGrp+, Tunit+, Tgeo+
 Tmodel.egLike = notAllowed
 Tmodel.egLike_alternation = notAllowed
 Tmodel.egLike_sequence = empty
@@ -1397,6 +1406,7 @@ Tmodel.linePart =
   | Tdel
   | Tunclear
   | Tzone
+  | Tpath
   | Tdamage
   | ThandShift
   | Trestore
@@ -1968,7 +1978,7 @@ Tp =
     Tmacro.paraContent
     >> sch:pattern [
          id =
-           "testbasic-p-abstractModel-structure-p-constraint-report-4"
+           "testbasic-p-abstractModel-structure-p-constraint-report-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1990,7 +2000,7 @@ Tp =
        ]
     >> sch:pattern [
          id =
-           "testbasic-p-abstractModel-structure-l-constraint-report-5"
+           "testbasic-p-abstractModel-structure-l-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2058,7 +2068,7 @@ Tsaid =
   element said {
     Tmacro.specialPara,
     Tatt.global.attributes,
-    Tatt.ascribed.attributes,
+    Tatt.ascribed.directed.attributes,
     
     ## may be used to indicate whether the quoted matter is regarded as having been vocalized or signed.
     attribute aloud {
@@ -2100,7 +2110,7 @@ Tq =
   element q {
     Tmacro.specialPara,
     Tatt.global.attributes,
-    Tatt.ascribed.attributes,
+    Tatt.ascribed.directed.attributes,
     
     ## may be used to indicate whether the offset passage is spoken or thought, or to characterize it more finely.
     ## Suggested values include: 1] spoken; 2] thought; 3] written; 4] soCalled; 5] foreign; 6] distinct; 7] term; 8] emph; 9] mentioned
@@ -2449,6 +2459,17 @@ TmeasureGrp =
     Tatt.typed.attributes,
     empty
   }
+Tunit =
+  
+  ## contains a symbol, a word or a phrase referring to a unit of measurement in any kind of formal or informal system. [3.5.3. Numbers and
+  ## Measures]
+  element unit {
+    Tmacro.phraseSeq,
+    Tatt.global.attributes,
+    Tatt.typed.attributes,
+    Tatt.measurement.attributes,
+    empty
+  }
 Tdate =
   
   ## contains a date in any format. [3.5.4. Dates and Times 2.2.4. Publication, Distribution, Licensing, etc. 2.6. The Revision Description 3.11.2.4. Imprint, Size of a Document, and Reprint Information 15.2.3. The Setting Description 13.3.6. Dates and Times]
@@ -2503,7 +2524,7 @@ Tptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "testbasic-ptr-ptrAtts-constraint-report-6"
+         id = "testbasic-ptr-ptrAtts-constraint-report-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2537,7 +2558,7 @@ Tref =
   element ref {
     Tmacro.paraContent
     >> sch:pattern [
-         id = "testbasic-ref-refAtts-constraint-report-7"
+         id = "testbasic-ref-refAtts-constraint-report-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2578,7 +2599,7 @@ Tlist =
      (Tmodel.divBottom, Tmodel.global*)*)
     >> sch:pattern [
          id =
-           "testbasic-list-gloss-list-must-have-labels-constraint-rule-9"
+           "testbasic-list-gloss-list-must-have-labels-constraint-rule-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2984,7 +3005,12 @@ Timprint =
 Tpublisher =
   
   ## provides the name of the organization responsible for the publication or distribution of a bibliographic item. [3.11.2.4. Imprint, Size of a Document, and Reprint Information 2.2.4. Publication, Distribution, Licensing, etc.]
-  element publisher { Tmacro.phraseSeq, Tatt.global.attributes, empty }
+  element publisher {
+    Tmacro.phraseSeq,
+    Tatt.global.attributes,
+    Tatt.canonical.attributes,
+    empty
+  }
 TbiblScope =
   
   ## (scope of bibliographic reference) defines the scope of a bibliographic reference, for example as a list of page numbers, or a named subdivision of a larger work. [3.11.2.5. Scopes and Ranges in Bibliographic Citations]
@@ -3067,7 +3093,7 @@ TrelatedItem =
     ((Tmodel.biblLike | Tmodel.ptrLike)?)
     >> sch:pattern [
          id =
-           "testbasic-relatedItem-targetorcontent1-constraint-report-8"
+           "testbasic-relatedItem-targetorcontent1-constraint-report-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3126,7 +3152,7 @@ Tl =
       | Tmodel.global)*)
     >> sch:pattern [
          id =
-           "testbasic-l-abstractModel-structure-l-constraint-report-9"
+           "testbasic-l-abstractModel-structure-l-constraint-report-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3184,7 +3210,7 @@ Tlg =
        ]
     >> sch:pattern [
          id =
-           "testbasic-lg-abstractModel-structure-l-constraint-report-10"
+           "testbasic-lg-abstractModel-structure-l-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3224,7 +3250,7 @@ Tsp =
        | Tmodel.qLike),
       Tmodel.global*)+),
     Tatt.global.attributes,
-    Tatt.ascribed.attributes,
+    Tatt.ascribed.directed.attributes,
     empty
   }
 Tspeaker =
@@ -3236,7 +3262,7 @@ Tstage =
   ## (stage direction) contains any kind of stage direction within a dramatic text or fragment. [3.12.2. Core Tags for Drama 3.12. Passages of Verse or Drama 7.2.4. Stage Directions]
   element stage {
     Tmacro.specialPara,
-    Tatt.ascribed.attributes,
+    Tatt.ascribed.directed.attributes,
     Tatt.global.attributes,
     Tatt.placement.attributes,
     
@@ -3428,13 +3454,19 @@ Tdistributor =
   
   ## supplies the name of a person or other agency responsible for the distribution of a text. [2.2.4. Publication, Distribution, Licensing, etc.]
   element distributor {
-    Tmacro.phraseSeq, Tatt.global.attributes, empty
+    Tmacro.phraseSeq,
+    Tatt.global.attributes,
+    Tatt.canonical.attributes,
+    empty
   }
 Tauthority =
   
   ## (release authority) supplies the name of a person or other agency responsible for making a work available, other than a publisher or distributor. [2.2.4. Publication, Distribution, Licensing, etc.]
   element authority {
-    Tmacro.phraseSeq.limited, Tatt.global.attributes, empty
+    Tmacro.phraseSeq.limited,
+    Tatt.global.attributes,
+    Tatt.canonical.attributes,
+    empty
   }
 Tidno =
   
@@ -3660,7 +3692,7 @@ Tquotation =
     (Tmodel.pLike*)
     >> sch:pattern [
          id =
-           "testbasic-quotation-quotationContents-constraint-report-11"
+           "testbasic-quotation-quotationContents-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5039,7 +5071,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-activemutual-constraint-report-12"
+         id = "testbasic-relation-activemutual-constraint-report-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5048,8 +5080,7 @@ Trelation =
            "               "
            sch:report [
              test = "@active and @mutual"
-             "Only one of the attributes\x{a}" ~
-             "@active and @mutual may be supplied"
+             "Only one of the attributes @active and @mutual may be supplied"
            ]
            "\x{a}" ~
            "            "
@@ -5058,7 +5089,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-activepassive-constraint-report-13"
+         id = "testbasic-relation-activepassive-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5067,9 +5098,7 @@ Trelation =
            "               "
            sch:report [
              test = "@passive and not(@active)"
-             "the attribute 'passive'\x{a}" ~
-             "	may be supplied only if the attribute 'active' is\x{a}" ~
-             "	supplied"
+             "the attribute 'passive' may be supplied only if the attribute 'active' is supplied"
            ]
            "\x{a}" ~
            "            "
@@ -5339,7 +5368,8 @@ Tsurface =
   ## defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and transcriptions of the writing within them. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]
   element surface {
     ((Tmodel.global | Tmodel.labelLike | Tmodel.graphicLike)*,
-     ((Tzone | Tline | Tsurface | TsurfaceGrp), Tmodel.global*)*),
+     ((Tzone | Tline | Tpath | Tsurface | TsurfaceGrp),
+      Tmodel.global*)*),
     Tatt.global.attributes,
     Tatt.coordinated.attributes,
     Tatt.declaring.attributes,
@@ -5382,6 +5412,94 @@ Tzone =
     ## indicates the amount by which this zone has been rotated clockwise, with respect to the normal orientation of the parent surface element as implied by the dimensions given in the msDesc element or by the coordinates of the surface itself. The orientation is expressed in arc degrees.
     [ a:defaultValue = "0" ]
     attribute rotate { xsd:nonNegativeInteger }?,
+    empty
+  }
+Tpath =
+  
+  ## defines any line passing through two or more points within a surface element. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]
+  element path {
+    empty
+    >> sch:pattern [
+         id = "testbasic-path-pathmustnotbeclosed-constraint-rule-11"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:path[@points]"
+           "\x{a}" ~
+           "        \x{a}" ~
+           "               "
+           sch:let [
+             name = "firstPair"
+             value = "tokenize( normalize-space( @points ), ' ')[1]"
+           ]
+           "\x{a}" ~
+           "               "
+           sch:let [
+             name = "lastPair"
+             value =
+               "tokenize( normalize-space( @points ), ' ')[last()]"
+           ]
+           "\x{a}" ~
+           "               "
+           sch:let [
+             name = "firstX"
+             value = "xs:float( substring-before( $firstPair, ',') )"
+           ]
+           "\x{a}" ~
+           "               "
+           sch:let [
+             name = "firstY"
+             value = "xs:float( substring-after( $firstPair, ',') )"
+           ]
+           "\x{a}" ~
+           "               "
+           sch:let [
+             name = "lastX"
+             value = "xs:float( substring-before( $lastPair, ',') )"
+           ]
+           "\x{a}" ~
+           "               "
+           sch:let [
+             name = "lastY"
+             value = "xs:float( substring-after( $lastPair, ',') )"
+           ]
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test = "$firstX eq $lastX  and  $firstY eq $lastY"
+             "The first and\x{a}" ~
+             "          last elements of this path are the same. To specify a closed polygon, use\x{a}" ~
+             "          the zone element rather than the path element. "
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
+    Tatt.global.attributes,
+    Tatt.coordinated.attribute.start,
+    Tatt.coordinated.attribute.ulx,
+    Tatt.coordinated.attribute.uly,
+    Tatt.coordinated.attribute.lrx,
+    Tatt.coordinated.attribute.lry,
+    Tatt.typed.attributes,
+    Tatt.written.attributes,
+    
+    ## identifies a line within the container or bounding box specified by the parent element by means of a series of two or more pairs of numbers, each of which gives the x,y coordinates of a point on the line.
+    attribute points {
+      list {
+        xsd:token {
+          pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)"
+        },
+        xsd:token {
+          pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)"
+        },
+        xsd:token {
+          pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)"
+        }*
+      }
+    }?,
     empty
   }
 TaddSpan =
@@ -5905,6 +6023,7 @@ Tfigure =
     Tatt.global.attributes,
     Tatt.placement.attributes,
     Tatt.typed.attributes,
+    Tatt.written.attributes,
     empty
   }
 TfigDesc =
@@ -5960,7 +6079,7 @@ Tab =
     Tmacro.paraContent
     >> sch:pattern [
          id =
-           "testbasic-ab-abstractModel-structure-ab-constraint-report-14"
+           "testbasic-ab-abstractModel-structure-ab-constraint-report-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5982,7 +6101,7 @@ Tab =
        ]
     >> sch:pattern [
          id =
-           "testbasic-ab-abstractModel-structure-l-constraint-report-15"
+           "testbasic-ab-abstractModel-structure-l-constraint-report-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6329,7 +6448,7 @@ Tdiv =
       (Tmodel.divBottom, Tmodel.global*)*)?)
     >> sch:pattern [
          id =
-           "testbasic-div-abstractModel-structure-l-constraint-report-16"
+           "testbasic-div-abstractModel-structure-l-constraint-report-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6350,7 +6469,7 @@ Tdiv =
        ]
     >> sch:pattern [
          id =
-           "testbasic-div-abstractModel-structure-p-constraint-report-17"
+           "testbasic-div-abstractModel-structure-p-constraint-report-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6737,7 +6856,7 @@ Tplatypus =
      ##
      attribute bill { "duck" }?)
     >> sch:pattern [
-         id = "testbasic-platypus-bill-silly-test-constraint-report-19"
+         id = "testbasic-platypus-bill-silly-test-constraint-report-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6770,7 +6889,7 @@ TMenu =
   }
 start = TTEI | Tdiv
 sch:pattern [
-  id = "testbasic-outerconstraint-constraint-rule-10"
+  id = "testbasic-outerconstraint-constraint-rule-12"
   "\x{a}" ~
   "      "
   sch:rule [
