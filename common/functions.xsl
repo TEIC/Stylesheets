@@ -730,6 +730,7 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:text>, </xsl:text>
                 </xsl:if>
                 <xsl:value-of select="tei:i18n('and')"/>
+                <xsl:text> </xsl:text>
               </xsl:when>
               <xsl:when test="following-sibling::tei:editor">, </xsl:when>
             </xsl:choose>
