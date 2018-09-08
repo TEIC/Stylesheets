@@ -346,7 +346,7 @@ evidence NMTOKENS  #IMPLIED'>
 
 <!ENTITY % Tatt.editLike.attribute.instant '
 instant %teidata.xTruthValue;  "false" '>
-<!ENTITY % Tatt.editLike.attributes '%Tatt.dimensions.attributes;
+<!ENTITY % Tatt.editLike.attributes '
  %Tatt.editLike.attribute.evidence;
  %Tatt.editLike.attribute.instant;'> 
 <!ENTITY % Tatt.global.rendition.attribute.rend '
@@ -1175,7 +1175,8 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.transcriptional.attributes;
  %Tatt.placement.attributes;
- %Tatt.typed.attributes; >
+ %Tatt.typed.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:(additional name) contains an additional name component, such as a nickname, epithet, or alias, or any other descriptive phrase used within a personal name. [13.2.1. Personal Names] -->
 <!ELEMENT addName %macro.phraseSeq;>
 <!ATTLIST addName xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -1191,7 +1192,8 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.transcriptional.attributes;
  %Tatt.placement.attributes;
  %Tatt.typed.attributes;
- %Tatt.spanning.attributes; >
+ %Tatt.spanning.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:(address line) contains one line of a postal address. [3.5.2. Addresses 2.2.4. Publication, Distribution, Licensing, etc. 3.11.2.4. Imprint, Size of a Document, and Reprint Information] -->
 <!ELEMENT addrLine %macro.phraseSeq;>
 <!ATTLIST addrLine xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -1220,6 +1222,7 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.editLike.attributes;
  %Tatt.datable.attributes;
  %Tatt.typed.attribute.subtype;
+ %Tatt.dimensions.attributes;
 type %teidata.enumerated;  #IMPLIED
 value %teidata.count;  #IMPLIED >
 <!--doc:(alternation) identifies an alternation or a set of choices among elements or passages. [16.8. Alternation] -->
@@ -1294,7 +1297,7 @@ version %teidata.versionNumber;  #REQUIRED >
 <!ATTLIST availability
  %Tatt.global.attributes;
  %Tatt.declarable.attributes;
-status (free|unknown|restricted) "unknown"  >
+status (free|unknown|restricted) #IMPLIED >
 <!--doc:(back matter) contains any appendixes, etc. following the main part of a text. [4.7. Back Matter 4. Default Text Structure] -->
 <!ELEMENT back (((%model.frontPart;|%model.pLike.front;|%model.pLike;|%model.listLike;|%model.global;)*,(((_DUMMY_model.div1Like),(%model.frontPart;|_DUMMY_model.div1Like|%model.global;)*)|((%model.divLike;),(%model.frontPart;|%model.divLike;|%model.global;)*))?,((%model.divBottomPart;),(%model.divBottomPart;|%model.global;)*)?))>
 <!ATTLIST back xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -1349,6 +1352,7 @@ encoding CDATA  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.editLike.attributes;
  %Tatt.datable.attributes;
+ %Tatt.dimensions.attributes;
  %Tatt.naming.attributes;
  %Tatt.typed.attribute.subtype;
 type %teidata.enumerated;  #IMPLIED >
@@ -1432,7 +1436,7 @@ Elements] -->
  %Tatt.typed.attributes;
 target CDATA  #IMPLIED >
 <!--doc:groups a number of alternative encodings for the same point in a text. [3.4. Simple Editorial Changes] -->
-<!ELEMENT choice (%model.choicePart;|choice)*>
+<!ELEMENT choice (%model.choicePart;|choice)+>
 <!ATTLIST choice xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST choice
  %Tatt.global.attributes; >
@@ -1488,7 +1492,7 @@ scheme %teidata.pointer;  #REQUIRED >
 <!ATTLIST correction
  %Tatt.global.attributes;
  %Tatt.declarable.attributes;
-status (high|medium|low|unknown) "unknown" 
+status (high|medium|low|unknown) #IMPLIED
 method (silent|markup) "silent"  >
 <!--doc:(correspondence action) contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence. [2.4.6. Correspondence Description] -->
 <!ELEMENT correspAction ((%model.correspActionPart;)+|(%model.pLike;)+)>
@@ -1548,6 +1552,7 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.datable.attributes;
  %Tatt.editLike.attributes;
+ %Tatt.dimensions.attributes;
  %Tatt.typed.attributes; >
 <!--doc:contains a brief description of the place, date, time, etc. of production of a letter, newspaper story, or other work, prefixed or suffixed to it as a kind of heading or trailer. [4.2.2. Openers and Closers] -->
 <!ELEMENT dateline (#PCDATA|_DUMMY_model.gLike|%model.phrase;|%model.global;|docDate)*>
@@ -1558,9 +1563,10 @@ type %teidata.enumerated;  #IMPLIED >
 <!ELEMENT death %macro.phraseSeq;>
 <!ATTLIST death xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST death
- %Tatt.global.attributes;
- %Tatt.editLike.attributes;
  %Tatt.datable.attributes;
+ %Tatt.dimensions.attributes;
+ %Tatt.editLike.attributes;
+ %Tatt.global.attributes;
  %Tatt.naming.attributes;
  %Tatt.typed.attribute.subtype;
 type %teidata.enumerated;  #IMPLIED >
@@ -1570,7 +1576,8 @@ type %teidata.enumerated;  #IMPLIED >
 <!ATTLIST del
  %Tatt.global.attributes;
  %Tatt.transcriptional.attributes;
- %Tatt.typed.attributes; >
+ %Tatt.typed.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:(deleted span of text) marks the beginning of a longer sequence of text deleted, marked as deleted, or otherwise signaled as superfluous or spurious by an author, scribe, annotator, or corrector. [11.3.1.4. Additions and Deletions] -->
 <!ELEMENT delSpan  EMPTY>
 <!ATTLIST delSpan xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -1578,7 +1585,8 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.transcriptional.attributes;
  %Tatt.typed.attributes;
- %Tatt.spanning.attributes; >
+ %Tatt.spanning.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:(description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components] -->
 <!ELEMENT desc %macro.limitedContent;>
 <!ATTLIST desc xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -1720,7 +1728,8 @@ where %teidata.pointer;  #IMPLIED >
 <!ATTLIST ex xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST ex
  %Tatt.global.attributes;
- %Tatt.editLike.attributes; >
+ %Tatt.editLike.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:(expansion) contains the expansion of an abbreviation. [3.5.5. Abbreviations and Their Expansions] -->
 <!ELEMENT expan %macro.phraseSeq;>
 <!ATTLIST expan xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -1778,6 +1787,7 @@ type %teidata.enumerated;  #IMPLIED >
 <!ATTLIST floruit
  %Tatt.global.attributes;
  %Tatt.datable.attributes;
+ %Tatt.dimensions.attributes;
  %Tatt.editLike.attributes; >
 <!--doc:identifies a word or phrase as belonging to some language other than that of the surrounding text. [3.3.2.1. Foreign Words or Expressions] -->
 <!ELEMENT foreign %macro.phraseSeq;>
@@ -1824,8 +1834,8 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.timed.attributes;
  %Tatt.editLike.attributes;
+ %Tatt.dimensions.attributes;
 reason NMTOKENS  #IMPLIED
-hand %teidata.pointer;  #IMPLIED
 agent %teidata.enumerated;  #IMPLIED >
 <!--doc:(gathering beginning) marks the beginning of a new gathering or quire in a transcribed codex. [3.10.3. Milestone
 Elements] -->
@@ -1835,7 +1845,8 @@ Elements] -->
  %Tatt.global.attributes;
  %Tatt.typed.attributes;
  %Tatt.spanning.attributes;
- %Tatt.breaking.attributes; >
+ %Tatt.breaking.attributes;
+ %Tatt.edition.attributes; >
 <!--doc:(generational name component) contains a name component used to distinguish otherwise similar names on the basis of the relative ages or generations of the persons named. [13.2.1. Personal Names] -->
 <!ELEMENT genName %macro.phraseSeq;>
 <!ATTLIST genName xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -1864,7 +1875,8 @@ datum %teidata.enumerated;  "WGS84"  >
  %Tatt.editLike.attributes;
  %Tatt.global.attributes;
  %Tatt.naming.attributes;
- %Tatt.typed.attributes; >
+ %Tatt.typed.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:(geographical name) identifies a name associated with some geographical feature such as Windrush Valley or Mount Sinai. [13.2.3. Place Names] -->
 <!ELEMENT geogName %macro.phraseSeq;>
 <!ATTLIST geogName xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2125,7 +2137,7 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.typed.attributes;
 ordered %teidata.truthValue;  "true"  >
 <!--doc:(list of events) contains a list of descriptions, each of which provides information about an identifiable event. [13.3.1. Basic Principles] -->
-<!ELEMENT listEvent (((%model.headLike;)*,(event|listEvent)+,(relation|listRelation)*))>
+<!ELEMENT listEvent (((%model.headLike;)*,(%model.eventLike;)+,(relation|listRelation)*))>
 <!ATTLIST listEvent xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST listEvent
  %Tatt.global.attributes;
@@ -2255,7 +2267,8 @@ Elements] -->
  %Tatt.global.attributes;
  %Tatt.transcriptional.attributes;
  %Tatt.typed.attributes;
- %Tatt.spanning.attributes; >
+ %Tatt.spanning.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:(monographic level) contains bibliographic elements describing an item (e.g. a book or journal) published as an independent item (i.e. as a separate physical object). [3.11.2.1. Analytic, Monographic, and Series Levels] -->
 <!ELEMENT monogr (((((author|editor|meeting|respStmt),(author|editor|meeting|respStmt)*,(title)+,(%model.ptrLike;|idno|textLang|editor|respStmt)*)|((title|%model.ptrLike;|idno)+,(textLang|author|editor|meeting|respStmt)*)|(authority,idno))?,(availability)*,(%model.noteLike;)*,(edition,(idno|%model.ptrLike;|editor|sponsor|funder|respStmt)*)*,imprint,(imprint|extent|biblScope)*))>
 <!ATTLIST monogr xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2359,7 +2372,8 @@ code %teidata.pointer;  #IMPLIED >
  %Tatt.editLike.attributes;
  %Tatt.global.attributes;
  %Tatt.naming.attributes;
- %Tatt.typed.attributes; >
+ %Tatt.typed.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:groups together dateline, byline, salutation, and similar phrases appearing as a preliminary group at the start of a division, especially of a letter. [4.2. Elements Common to All Divisions] -->
 <!ELEMENT opener (#PCDATA|_DUMMY_model.gLike|%model.phrase;|argument|byline|dateline|epigraph|salute|signed|%model.global;)*>
 <!ATTLIST opener xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2474,7 +2488,8 @@ bill CDATA #IMPLIED >
  %Tatt.datable.attributes;
  %Tatt.editLike.attributes;
  %Tatt.naming.attributes;
- %Tatt.typed.attributes; >
+ %Tatt.typed.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:(postal box or post office box) contains a number or other identifier for some postal delivery point other than a street address. [3.5.2. Addresses] -->
 <!ELEMENT postBox (#PCDATA)>
 <!ATTLIST postBox xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2568,7 +2583,8 @@ marks (none|some|all) #IMPLIED >
 <!ATTLIST quote xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST quote
  %Tatt.global.attributes;
- %Tatt.typed.attributes; >
+ %Tatt.typed.attributes;
+ %Tatt.notated.attributes; >
 <!--doc:indicates one or more cancelled interventions in a document which have subsequently been marked as reaffirmed or repeated. [11.3.4.4. Confirmation, Cancellation, and Reinstatement of Modifications] -->
 <!ELEMENT redo  EMPTY>
 <!ATTLIST redo xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2576,6 +2592,7 @@ marks (none|some|all) #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.spanning.attributes;
  %Tatt.transcriptional.attributes;
+ %Tatt.dimensions.attributes;
 target CDATA  #IMPLIED >
 <!--doc:(reference) defines a reference to another location, possibly modified by additional text or comment. [3.6. Simple Links and Cross-References 16.1. Links] -->
 <!ELEMENT ref %macro.paraContent;>
@@ -2676,14 +2693,16 @@ type %teidata.enumerated;  #IMPLIED >
 <!ATTLIST restore
  %Tatt.global.attributes;
  %Tatt.transcriptional.attributes;
- %Tatt.typed.attributes; >
+ %Tatt.typed.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:contains a sequence of writing which has been retraced, for example by over-inking, to clarify or fix it. [11.3.4.3. Fixation and Clarification] -->
 <!ELEMENT retrace %macro.paraContent;>
 <!ATTLIST retrace xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST retrace
  %Tatt.global.attributes;
  %Tatt.spanning.attributes;
- %Tatt.transcriptional.attributes; >
+ %Tatt.transcriptional.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:(revision description) summarizes the revision history for a file. [2.6. The Revision Description 2.1.1. The TEI Header and Its Components] -->
 <!ELEMENT revisionDesc (list|listChange|(change)+)>
 <!ATTLIST revisionDesc xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2716,7 +2735,7 @@ type %teidata.enumerated;  #IMPLIED >
 <!ATTLIST said
  %Tatt.global.attributes;
  %Tatt.ascribed.attributes;
-aloud %teidata.xTruthValue;  "unknown" 
+aloud %teidata.xTruthValue;  #IMPLIED
 direct %teidata.xTruthValue;  "true"  >
 <!--doc:(salutation) contains a salutation or greeting prefixed to a foreword, dedicatory epistle, or other division of a text, or the salutation in the closing of a letter, preface, etc. [4.2.2. Openers and Closers] -->
 <!ELEMENT salute %macro.paraContent;>
@@ -2750,6 +2769,7 @@ key %teidata.xmlName;  #IMPLIED >
 <!ATTLIST secl
  %Tatt.global.attributes;
  %Tatt.editLike.attributes;
+ %Tatt.dimensions.attributes;
 reason CDATA  #IMPLIED >
 <!--doc:(arbitrary segment) represents any segmentation of text below the chunk level. [16.3. Blocks, Segments, and Anchors 6.2. Components of the Verse Line 7.2.5. Speech Contents] -->
 <!ELEMENT seg %macro.paraContent;>
@@ -2758,7 +2778,8 @@ reason CDATA  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.segLike.attributes;
  %Tatt.typed.attributes;
- %Tatt.written.attributes; >
+ %Tatt.written.attributes;
+ %Tatt.notated.attributes; >
 <!--doc:describes the principles according to which the text has been segmented, for example into sentences, tone-units, graphemic strata, etc. [2.3.3. The Editorial Practices Declaration 15.3.2. Declarable Elements] -->
 <!ELEMENT segmentation (%model.pLike;)+>
 <!ATTLIST segmentation xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2901,7 +2922,8 @@ type NMTOKENS  #IMPLIED >
  %Tatt.datable.attributes;
  %Tatt.editLike.attributes;
  %Tatt.typed.attributes;
- %Tatt.naming.attributes; >
+ %Tatt.naming.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:(standard values) specifies the format used when standardized date or number values are supplied. [2.3.3. The Editorial Practices Declaration 15.3.2. Declarable Elements] -->
 <!ELEMENT stdVals (%model.pLike;)+>
 <!ATTLIST stdVals xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2925,20 +2947,23 @@ type NMTOKENS  #IMPLIED >
 <!ATTLIST subst xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST subst
  %Tatt.global.attributes;
- %Tatt.transcriptional.attributes; >
+ %Tatt.transcriptional.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:(substitution join) identifies a series of possibly fragmented additions, deletions or other revisions on a manuscript that combine to make up a single intervention in the text [11.3.1.5. Substitutions] -->
 <!ELEMENT substJoin (%model.descLike;|_DUMMY_model.certLike)*>
 <!ATTLIST substJoin xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST substJoin
  %Tatt.global.attributes;
  %Tatt.pointing.attributes;
- %Tatt.transcriptional.attributes; >
+ %Tatt.transcriptional.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:signifies text supplied by the transcriber or editor for any reason; for example because the original cannot be read due to physical damage, or because of an obvious omission by the author or scribe. [11.3.3.1. Damage, Illegibility, and Supplied Text] -->
 <!ELEMENT supplied %macro.paraContent;>
 <!ATTLIST supplied xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST supplied
  %Tatt.global.attributes;
  %Tatt.editLike.attributes;
+ %Tatt.dimensions.attributes;
 reason CDATA  #IMPLIED >
 <!--doc:defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and transcriptions of the writing within them. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription] -->
 <!ELEMENT surface (((%model.global;|%model.labelLike;|%model.graphicLike;)*,((zone|line|surface|surfaceGrp),(%model.global;)*)*))>
@@ -2970,6 +2995,7 @@ flipping %teidata.truthValue;  #IMPLIED >
 <!ATTLIST surplus
  %Tatt.global.attributes;
  %Tatt.editLike.attributes;
+ %Tatt.dimensions.attributes;
 reason CDATA  #IMPLIED >
 <!--doc:contains text displayed in tabular form, in rows and columns. [14.1.1. TEI Tables] -->
 <!ELEMENT table (((%model.headLike;|%model.global;)*,((row,(%model.global;)*)+|((%model.graphicLike;),(%model.global;)*)+),((%model.divBottom;),(%model.global;)*)*))>
@@ -3004,7 +3030,7 @@ partial %teidata.truthValue;  #IMPLIED >
 <!ATTLIST teiCorpus
  %Tatt.global.attributes;
  %Tatt.typed.attributes;
-version %teidata.version;  "5.0"  >
+version %teidata.version;  #IMPLIED >
 <!ATTLIST teiCorpus xsi:schemaLocation CDATA #IMPLIED
  xmlns:xsi CDATA #FIXED 'http://www.w3.org/2001/XMLSchema-instance'
  >
@@ -3061,6 +3087,7 @@ otherLangs CDATA  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.datable.attributes;
  %Tatt.editLike.attributes;
+ %Tatt.dimensions.attributes;
  %Tatt.typed.attributes; >
 <!--doc:provides a set of ordered points in time which can be linked to elements of a spoken text to create a temporal alignment of that text. [16.4.2. Placing Synchronous Events in Time] -->
 <!ELEMENT timeline (when)+>
@@ -3111,7 +3138,8 @@ type %teidata.enumerated;  "main"  >
  %Tatt.datable.attributes;
  %Tatt.editLike.attributes;
  %Tatt.naming.attributes;
- %Tatt.typed.attributes; >
+ %Tatt.typed.attributes;
+ %Tatt.dimensions.attributes; >
 <!--doc:describes a single textual transposition as an ordered list of at least two pointers specifying the order in which the elements indicated should be re-combined. [11.3.4.5. Transpositions] -->
 <!ELEMENT transpose ((ptr,(ptr)+))>
 <!ATTLIST transpose xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -3123,8 +3151,8 @@ type %teidata.enumerated;  "main"  >
 <!ATTLIST unclear
  %Tatt.global.attributes;
  %Tatt.editLike.attributes;
-reason CDATA  #IMPLIED
-hand %teidata.pointer;  #IMPLIED
+ %Tatt.dimensions.attributes;
+reason NMTOKENS  #IMPLIED
 agent %teidata.enumerated;  #IMPLIED >
 <!--doc:indicates one or more marked-up interventions in a document which have subsequently been marked for cancellation. [11.3.4.4. Confirmation, Cancellation, and Reinstatement of Modifications] -->
 <!ELEMENT undo  EMPTY>
@@ -3133,6 +3161,7 @@ agent %teidata.enumerated;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.spanning.attributes;
  %Tatt.transcriptional.attributes;
+ %Tatt.dimensions.attributes;
 target CDATA  #IMPLIED >
 <!--doc:indicates a point in time either relative to other elements in the same timeline tag, or absolutely. [16.4.2. Placing Synchronous Events in Time] -->
 <!ELEMENT when  EMPTY>

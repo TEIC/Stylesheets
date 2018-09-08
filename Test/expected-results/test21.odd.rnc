@@ -505,9 +505,7 @@ att.global.responsibility.attribute.resp =
     list { xsd:anyURI+ }
   }?
 att.editLike.attributes =
-  att.dimensions.attributes,
-  att.editLike.attribute.evidence,
-  att.editLike.attribute.instant
+  att.editLike.attribute.evidence, att.editLike.attribute.instant
 att.editLike.attribute.evidence =
   
   ## indique la nature de la preuve attestant la fiabilité ou la justesse de l'intervention ou de l'interprétation.
@@ -809,6 +807,13 @@ att.naming.attribute.nymRef =
   ## (référence au nom canonique) indique comment localiser la forme canonique (nym) des noms qui sont associés à l'objet nommé par l'élément qui le contient.
   attribute nymRef {
     list { xsd:anyURI+ }
+  }?
+att.notated.attributes = att.notated.attribute.notation
+att.notated.attribute.notation =
+  
+  ## précise le nom d'une notation définie précédemment, utilisée dans le contenu de l'élément.
+  attribute notation {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 att.placement.attributes = att.placement.attribute.place
 att.placement.attribute.place =
@@ -1148,10 +1153,10 @@ att.citing.attribute.unit =
       ## l'élément identifie une partie d'un livre ou une anthologie.
       "part"
     | 
-      ## the element identifies an entry number or label in a list of entries.
+      ## the element identifies a column.
       "column"
     | 
-      ## the element identifies a column.
+      ## the element identifies an entry number or label in a list of entries.
       "entry"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
@@ -1948,7 +1953,7 @@ p =
        attribute * { text }*
      }*)
     >> sch:pattern [
-         id = "test21-p-abstractModel-p-constraint-report-4"
+         id = "test21-p-abstractModel-structure-p-constraint-report-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1957,9 +1962,9 @@ p =
            "               "
            sch:report [
              test =
-               "not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
+               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
              "\x{a}" ~
-             "        Abstract model violation: Paragraphs may not contain other paragraphs or ab elements.\x{a}" ~
+             "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -2059,7 +2064,6 @@ said =
     att.ascribed.attributes,
     
     ## peut être utilisé pour indiquer si l'on estime que l'objet cité est dit oralement ou par signes.
-    [ a:defaultValue = "unknown" ]
     attribute aloud {
       xsd:boolean
       | (
@@ -2091,6 +2095,7 @@ quote =
     att.global.attributes,
     att.typed.attributes,
     att.msExcerpt.attributes,
+    att.notated.attributes,
     empty
   }
 q =
@@ -2212,7 +2217,7 @@ choice =
   
   ## (choix) regroupe un certain nombre de balisages alternatifs possibles pour un même endroit dans un texte. [3.4. Simple Editorial Changes]
   element choice {
-    (model.choicePart | choice)*, att.global.attributes, empty
+    (model.choicePart | choice)+, att.global.attributes, empty
   }
 reg =
   
@@ -2238,6 +2243,7 @@ gap =
     att.global.attributes,
     att.timed.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     
     ## donne la raison de l'omission
     ## Suggested values include: 1] cancelled; 2] deleted; 3] editorial; 4] illegible; 5] inaudible; 6] irrelevant; 7] sampling
@@ -2268,9 +2274,6 @@ gap =
       }
     }?,
     
-    ## lorsque du texte est omis de la transcription en raison d'une suppression volontaire par une main identifiable, indique quelle est cette main.
-    attribute hand { xsd:anyURI }?,
-    
     ## lorsque du texte est omis de la transcription en raison d'un dommage, catégorise la cause du dommage, si celle-ci peut être identifiée.
     ## Sample values include: 1] rubbing; 2] mildew; 3] smoke
     attribute agent {
@@ -2287,6 +2290,7 @@ add =
     att.transcriptional.attributes,
     att.placement.attributes,
     att.typed.attributes,
+    att.dimensions.attributes,
     empty
   }
 del =
@@ -2297,6 +2301,7 @@ del =
     att.global.attributes,
     att.transcriptional.attributes,
     att.typed.attributes,
+    att.dimensions.attributes,
     empty
   }
 unclear =
@@ -2306,16 +2311,30 @@ unclear =
     macro.paraContent,
     att.global.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     
     ## indique pourquoi il est difficile de transcrire le document
+    ## Suggested values include: 1] illegible; 2] inaudible; 3] faded; 4] background_noise; 5] eccentric_ductus
     attribute reason {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        (
+         ## (illisible) 
+         "illegible"
+         | 
+           ## (inaudible) 
+           "inaudible"
+         | 
+           ##
+           "faded"
+         | 
+           ##
+           "background_noise"
+         | 
+           ##
+           "eccentric_ductus"
+         | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" })+
       }
     }?,
-    
-    ## lorsque la difficulté de transcription vient d'une action attribuable à une main identifiable (suppression partielle, etc.), indique quelle est cette main
-    attribute hand { xsd:anyURI }?,
     
     ## lorsque la difficulté de transcription vient d'un dommage, catégorise la cause du dommage si celle-ci peut être identifiée
     ## Sample values include: 1] rubbing; 2] mildew; 3] smoke
@@ -2442,6 +2461,7 @@ date =
     att.global.attributes,
     att.datable.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     att.typed.attributes,
     empty
   }
@@ -2453,6 +2473,7 @@ time =
     att.global.attributes,
     att.datable.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     att.typed.attributes,
     empty
   }
@@ -2770,6 +2791,7 @@ gb =
     att.typed.attributes,
     att.spanning.attributes,
     att.breaking.attributes,
+    att.edition.attributes,
     empty
   }
 pb =
@@ -3272,7 +3294,6 @@ teiCorpus =
     att.typed.attributes,
     
     ## la version du modèle TEI
-    [ a:defaultValue = "5.0" ]
     attribute version {
       xsd:token { pattern = "[\d]+(\.[\d]+){0,2}" }
     }?,
@@ -3638,6 +3659,7 @@ offset =
     att.global.attributes,
     att.naming.attributes,
     att.typed.attributes,
+    att.dimensions.attributes,
     empty
   }
 geogName =
@@ -3662,6 +3684,7 @@ geogFeat =
     att.global.attributes,
     att.naming.attributes,
     att.typed.attributes,
+    att.dimensions.attributes,
     empty
   }
 affiliation =
@@ -3691,6 +3714,7 @@ age =
     att.editLike.attributes,
     att.datable.attributes,
     att.typed.attribute.subtype,
+    att.dimensions.attributes,
     
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] western; 2] sui; 3] subjective; 4] objective; 5] inWorld (in world) ; 6] chronological; 7] biological; 8] psychological; 9] functional
@@ -3710,6 +3734,7 @@ birth =
     att.global.attributes,
     att.editLike.attributes,
     att.datable.attributes,
+    att.dimensions.attributes,
     att.naming.attributes,
     att.typed.attribute.subtype,
     
@@ -3740,9 +3765,10 @@ death =
   ## (décès) contient des informations sur le décès d'une personne, comme la date et le lieu. [15.2.2. The Participant Description]
   element death {
     macro.phraseSeq,
-    att.global.attributes,
-    att.editLike.attributes,
     att.datable.attributes,
+    att.dimensions.attributes,
+    att.editLike.attributes,
+    att.global.attributes,
     att.naming.attributes,
     att.typed.attribute.subtype,
     
@@ -3815,6 +3841,7 @@ floruit =
     macro.phraseSeq,
     att.global.attributes,
     att.datable.attributes,
+    att.dimensions.attributes,
     att.editLike.attributes,
     empty
   }
@@ -3889,7 +3916,7 @@ listEvent =
   
   ## (liste d'événements) contient une liste de descriptions, chacune d'entre elles fournissant des informations sur un événement connu. [13.3.1. Basic Principles]
   element listEvent {
-    (model.headLike*, (event | listEvent)+, (relation | listRelation)*),
+    (model.headLike*, model.eventLike+, (relation | listRelation)*),
     att.global.attributes,
     att.typed.attributes,
     att.declarable.attributes,
@@ -4142,6 +4169,7 @@ population =
     att.editLike.attributes,
     att.naming.attributes,
     att.typed.attributes,
+    att.dimensions.attributes,
     empty
   }
 relation =
@@ -4314,6 +4342,7 @@ state =
     att.editLike.attributes,
     att.typed.attributes,
     att.naming.attributes,
+    att.dimensions.attributes,
     empty
   }
 terrain =
@@ -4345,6 +4374,7 @@ trait =
     att.editLike.attributes,
     att.naming.attributes,
     att.typed.attributes,
+    att.dimensions.attributes,
     empty
   }
 nym =
@@ -4507,7 +4537,7 @@ idno =
         ## English Short-Title Catalogue number: an identifying number assigned to a document in English printed in the British Isles or North America before 1801.
         "ESTC"
       | 
-        ## union catalog number in WorldCat representing a resource held by one or more of the member libraries in the global cooperative Online Computer Library Center.
+        ## OCLC control number (record number) for the union catalog record in WorldCat, a union catalog for member libraries in the Online Computer Library Center global cooperative.
         "OCLC"
       | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
@@ -4522,7 +4552,6 @@ availability =
     att.declarable.attributes,
     
     ## donne un code caractérisant la disponibilité actuelle d’un texte.
-    [ a:defaultValue = "unknown" ]
     attribute status {
       
       ## Le texte est libre de droits.
@@ -4646,7 +4675,6 @@ correction =
     att.declarable.attributes,
     
     ## indique le degré de correction apporté au texte.
-    [ a:defaultValue = "unknown" ]
     attribute status {
       
       ## le texte a été entièrement vérifié et corrigé.
@@ -4811,13 +4839,13 @@ punctuation =
         "all"
     }?,
     
-    ## indicates whether punctation marks have been captured inside or outside of an adjacent element.
+    ## indicates the positioning of punctuation marks that are associated with marked up text as being encoded within the element surrounding the text or immediately before or after it.
     attribute placement {
       
-      ## punctuation marks are captured inside adjacent elements
+      ## punctuation marks found at the start or end of a marked up text component are included within its surrounding element;
       "internal"
       | 
-        ## punctuation marks are captured outside adjacent elements
+        ## punctuation marks found at the start or end of a marked up text component appear immediately before or after the surrounding element
         "external"
     }?,
     empty
@@ -5342,7 +5370,8 @@ ab =
   element ab {
     macro.paraContent
     >> sch:pattern [
-         id = "test21-ab-abstractModel-structure-p-constraint-report-14"
+         id =
+           "test21-ab-abstractModel-structure-ab-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5351,9 +5380,9 @@ ab =
            "               "
            sch:report [
              test =
-               "not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
+               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
              "\x{a}" ~
-             "        Abstract model violation: ab may not contain paragraphs or other ab elements.\x{a}" ~
+             "        Abstract model violation: ab may not occur inside paragraphs or other ab elements.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -5425,6 +5454,7 @@ seg =
     att.segLike.attributes,
     att.typed.attributes,
     att.written.attributes,
+    att.notated.attributes,
     empty
   }
 when =
@@ -5644,7 +5674,6 @@ att.msExcerpt.attributes = att.msExcerpt.attribute.defective
 att.msExcerpt.attribute.defective =
   
   ## indique si le passage décrit est fautif, i.e. incomplet en raison d'une lacune ou d'une détérioration.
-  [ a:defaultValue = "false" ]
   attribute defective {
     xsd:boolean
     | (
@@ -5882,6 +5911,7 @@ origDate =
     (text | model.gLike | model.phrase | model.global)*,
     att.global.attributes,
     att.datable.attributes,
+    att.dimensions.attributes,
     att.editLike.attributes,
     att.typed.attributes,
     empty
@@ -6681,6 +6711,7 @@ addSpan =
     att.transcriptional.attributes,
     att.placement.attributes,
     att.typed.attributes,
+    att.dimensions.attributes,
     
     ## indique la fin d'un passage introduit par l'élément portant cet attribut.
     attribute spanTo { xsd:anyURI }
@@ -6818,13 +6849,18 @@ delSpan =
     att.transcriptional.attributes,
     att.typed.attributes,
     att.spanning.attributes,
+    att.dimensions.attributes,
     empty
   }
 ex =
   
   ## (développement éditorial) contient une succession de lettres ajoutées par un éditeur ou un transcripteur pour développer une abréviation. [11.3.1.2. Abbreviation and Expansion]
   element ex {
-    macro.xtext, att.global.attributes, att.editLike.attributes, empty
+    macro.xtext,
+    att.global.attributes,
+    att.editLike.attributes,
+    att.dimensions.attributes,
+    empty
   }
 fw =
   
@@ -6876,6 +6912,7 @@ restore =
     att.global.attributes,
     att.transcriptional.attributes,
     att.typed.attributes,
+    att.dimensions.attributes,
     empty
   }
 space =
@@ -6949,6 +6986,7 @@ subst =
        ],
     att.global.attributes,
     att.transcriptional.attributes,
+    att.dimensions.attributes,
     empty
   }
 substJoin =
@@ -6959,6 +6997,7 @@ substJoin =
     att.global.attributes,
     att.pointing.attributes,
     att.transcriptional.attributes,
+    att.dimensions.attributes,
     empty
   }
 supplied =
@@ -6968,6 +7007,7 @@ supplied =
     macro.paraContent,
     att.global.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     empty
   }
 surplus =
@@ -6977,6 +7017,7 @@ surplus =
     macro.paraContent,
     att.global.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     
     ## indique les raisons pour lesquelles on considère cette partie de texte comme superflue.
     attribute reason {
@@ -6993,6 +7034,7 @@ secl =
     macro.paraContent,
     att.global.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     
     ## one or more words indicating why this text has been secluded, e.g. interpolated etc.
     attribute reason {
@@ -7046,6 +7088,7 @@ mod =
     att.transcriptional.attributes,
     att.typed.attributes,
     att.spanning.attributes,
+    att.dimensions.attributes,
     empty
   }
 redo =
@@ -7056,6 +7099,7 @@ redo =
     att.global.attributes,
     att.spanning.attributes,
     att.transcriptional.attributes,
+    att.dimensions.attributes,
     
     ## points to one or more elements representing the interventions which are being reasserted.
     attribute target {
@@ -7071,6 +7115,7 @@ retrace =
     att.global.attributes,
     att.spanning.attributes,
     att.transcriptional.attributes,
+    att.dimensions.attributes,
     empty
   }
 transpose =
@@ -7085,6 +7130,7 @@ undo =
     att.global.attributes,
     att.spanning.attributes,
     att.transcriptional.attributes,
+    att.dimensions.attributes,
     
     ## points to one or more elements representing the interventions which are to be reverted or undone.
     attribute target {

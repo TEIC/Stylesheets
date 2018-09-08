@@ -132,7 +132,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:elementSpec" name="ElementModule" use="@module"/>
   <xsl:key match="tei:classSpec" name="ClassModule" use="@module"/>
   <xsl:key match="tei:macroSpec" name="MacroModule" use="@module"/>
-  <xsl:key match="tei:macroSpec[@type='dt']" name="DataMacroModule" use="@module"/>
   <xsl:key match="tei:dataSpec" name="MacroModule" use="@module"/>
   <xsl:key match="tei:dataSpec" name="DataMacroModule" use="@module"/>
   <xsl:key match="tei:moduleSpec" name="Modules" use="1"/>
@@ -1165,7 +1164,6 @@ select="$makeDecls"/></xsl:message>
                   </xsl:otherwise>
                 </xsl:choose>
               </define>
-              <xsl:apply-templates select="tei:constraintSpec"/>
             </Wrapper>
           </xsl:with-param>
         </xsl:call-template>

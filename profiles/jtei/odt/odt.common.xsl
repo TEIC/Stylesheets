@@ -307,6 +307,7 @@
     However, we have a problem with paras nested in list items, 
     which requires some fancy footwork. -->
     <xsl:template match="p">
+      <xsl:param name="note.context" select="ancestor::*[self::front|self::body|self::back]" tunnel="yes" as="element()?"/>
         <xsl:choose>
           <xsl:when test="normalize-space(.) = '' and not(*)"></xsl:when>
           <!-- [RvdB] give right styling to simple/simplified paragraphs inside lists -->
@@ -326,7 +327,9 @@
                         <xsl:with-param name="inputPara" select="."/>
                     </xsl:call-template>
                 </xsl:variable>
-                <xsl:apply-templates select="$preProcessed/*"/>
+                <xsl:apply-templates select="$preProcessed/*">
+                  <xsl:with-param name="note.context" select="$note.context" tunnel="yes"/>
+                </xsl:apply-templates>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -518,8 +521,10 @@
       
 <!--    Footnotes -->
     <xsl:template match="note">
-      <xsl:variable name="noteNum" select="local:get.note.nr(.)"/>
-      <text:span text:style-name="T1"><text:note text:id="ftn{$noteNum}" text:note-class="{if (@place eq 'end') then 'endnote' else 'footnote'}"><text:note-citation><xsl:value-of select="$noteNum"/></text:note-citation><text:note-body><text:p text:style-name="teiFootnote"><text:span text:style-name="footnote_20_reference"/><xsl:text>. </xsl:text> <xsl:apply-templates /></text:p></text:note-body></text:note></text:span>
+      <xsl:param name="note.counter" tunnel="yes" as="xs:integer" select="0"/>
+      <xsl:param name="note.context" tunnel="yes" as="element()?" select="ancestor::*[self::front|self::body|self::back]"/>
+      <xsl:variable name="note.nr" select="local:get.note.nr(.) + $note.counter"/>
+      <text:span text:style-name="T1"><text:note text:id="{$note.context/name()}.ftn{$note.nr}" text:note-class="{if (@place eq 'end') then 'endnote' else 'footnote'}"><text:note-citation><xsl:number value="$note.nr" format="{local:format.note.nr($note.context)}"/></text:note-citation><text:note-body><text:p text:style-name="teiFootnote"><text:span text:style-name="footnote_20_reference"/><xsl:text>. </xsl:text> <xsl:apply-templates /></text:p></text:note-body></text:note></text:span>
     </xsl:template>
     
 <!--    Tables. -->
@@ -785,6 +790,9 @@
 <!--    Lists of various kinds. -->
 <!-- [RvdB] added preprocessing step, which just copies the list, but wraps all contents of <item> in <p> prior to further processing -->
   <xsl:template match="list">
+    <xsl:param name="note.counter" tunnel="yes" as="xs:integer" select="0"/>
+    <xsl:param name="note.context" select="ancestor::*[self::front|self::body|self::back]" tunnel="yes" as="element()?"/>
+    <xsl:variable name="current" select="."/>
     <xsl:variable name="prepared">
       <xsl:apply-templates select="." mode="prepare"/>
     </xsl:variable>
@@ -793,16 +801,16 @@
         <xsl:when test="matches(@rend, 'inline')">
           <xsl:for-each select="item">
             <xsl:choose>
-              <xsl:when test="matches(parent::list/@rend, 'bulleted')"><text:s/>•<text:s/><xsl:apply-templates/></xsl:when>
+              <xsl:when test="matches(parent::list/@rend, 'bulleted')"><text:s/>•<text:s/><xsl:apply-templates><xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/><xsl:with-param name="note.context" select="$note.context" tunnel="yes"/></xsl:apply-templates></xsl:when>
               <xsl:when test="matches(parent::list/@rend, 'ordered')">
                 <xsl:variable name="number"><xsl:number level="multiple" format="1.a"/></xsl:variable>
-                <text:s/><xsl:value-of select="concat('(', replace($number, '\.', ''), ')')"/><text:s/><xsl:apply-templates/></xsl:when>
-              <xsl:otherwise><text:s/><xsl:apply-templates/></xsl:otherwise>
+                <text:s/><xsl:value-of select="concat('(', replace($number, '\.', ''), ')')"/><text:s/><xsl:apply-templates><xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/><xsl:with-param name="note.context" select="$note.context" tunnel="yes"/></xsl:apply-templates></xsl:when>
+              <xsl:otherwise><text:s/><xsl:apply-templates><xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/><xsl:with-param name="note.context" select="$note.context" tunnel="yes"/></xsl:apply-templates></xsl:otherwise>
             </xsl:choose>
           </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
-          <text:list text:style-name="{if (@rend='bulleted') then 'teiListBulleted' else if (@rend='ordered') then 'teiListOrdered' else 'teiListSimple'}"><xsl:apply-templates/></text:list>
+          <text:list text:style-name="{if (@rend='bulleted') then 'teiListBulleted' else if (@rend='ordered') then 'teiListOrdered' else 'teiListSimple'}"><xsl:apply-templates><xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/><xsl:with-param name="note.context" select="$note.context" tunnel="yes"/></xsl:apply-templates></text:list>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
