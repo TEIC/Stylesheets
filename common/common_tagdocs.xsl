@@ -2394,6 +2394,9 @@
   <!-- MDH working on ticket #1657 2018-09-10. -->
   <xsl:template match="tei:divGen[@type = 'deprecationcat']">
     <xsl:element namespace="{$outputNS}" name="{$tableName}">
+      <xsl:attribute name="{$rendName}">
+        <xsl:text>deprecationcat</xsl:text>
+      </xsl:attribute>
       <xsl:element namespace="{$outputNS}" name="{$rowName}">
         <xsl:element namespace="{$outputNS}" name="{$cellName}">Identifier</xsl:element>
         <xsl:element namespace="{$outputNS}" name="{$cellName}">Component type</xsl:element>
