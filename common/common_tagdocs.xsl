@@ -2390,6 +2390,40 @@
       </xsl:for-each>
     </xsl:element>
   </xsl:template>
+  
+  <!-- MDH working on ticket #1657 2018-09-10. -->
+  <xsl:template match="tei:divGen[@type = 'deprecationcat']">
+    <tei:table>
+      <tei:row role="label">
+        <tei:cell>Identifier</tei:cell>
+        <tei:cell>Component type</tei:cell>
+        <tei:cell>Valid until</tei:cell>
+      </tei:row>
+      <xsl:for-each select="//*[@validUntil]">
+        <tei:row>
+          <tei:cell>
+            <xsl:choose>
+              <xsl:when test="self::attDef">
+                <xsl:value-of select="concat(ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident, ' / ', ancestor::attDef/@ident, ' / ', @ident)"/>
+              </xsl:when>
+              <xsl:when test="self::valItem or self::valDesc">
+                <xsl:value-of select="concat(ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident, ' / ', @ident)"/>
+              </xsl:when>
+              <xsl:otherwise><xsl:value-of select="@ident"/></xsl:otherwise>
+            </xsl:choose>
+          </tei:cell>
+          <tei:cell>
+            <xsl:value-of select="local-name(.)"/>
+          </tei:cell>
+          <tei:cell>
+            <xsl:value-of select="@validUntil"/>
+            <xsl:if test="xs:date(@validUntil) lt current-date()">!!!</xsl:if>
+          </tei:cell>
+        </tei:row>
+      </xsl:for-each>
+    </tei:table>
+  </xsl:template>
+  
   <xsl:template match="tei:exemplum" mode="weave">
     <xsl:if test="teix:egXML/* or teix:egXML/text() or text()">
       <xsl:apply-templates select="." mode="doc"/>
