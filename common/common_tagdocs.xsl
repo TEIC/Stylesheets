@@ -2393,15 +2393,15 @@
   
   <!-- MDH working on ticket #1657 2018-09-10. -->
   <xsl:template match="tei:divGen[@type = 'deprecationcat']">
-    <tei:table>
-      <tei:row role="label">
-        <tei:cell>Identifier</tei:cell>
-        <tei:cell>Component type</tei:cell>
-        <tei:cell>Valid until</tei:cell>
-      </tei:row>
+    <xsl:element namespace="{$outputNS}" name="{$tableName}">
+      <xsl:element namespace="{$outputNS}" name="{$rowName}">
+        <xsl:element namespace="{$outputNS}" name="{$cellName}">Identifier</xsl:element>
+        <xsl:element namespace="{$outputNS}" name="{$cellName}">Component type</xsl:element>
+        <xsl:element namespace="{$outputNS}" name="{$cellName}">Valid until</xsl:element>
+      </xsl:element>
       <xsl:for-each select="//*[@validUntil]">
-        <tei:row>
-          <tei:cell>
+        <xsl:element namespace="{$outputNS}" name="{$rowName}"></xsl:element>
+          <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:choose>
               <xsl:when test="self::attDef">
                 <xsl:value-of select="concat(ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident, ' / ', ancestor::attDef/@ident, ' / ', @ident)"/>
@@ -2411,17 +2411,16 @@
               </xsl:when>
               <xsl:otherwise><xsl:value-of select="@ident"/></xsl:otherwise>
             </xsl:choose>
-          </tei:cell>
-          <tei:cell>
+          </xsl:element>
+          <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:value-of select="local-name(.)"/>
-          </tei:cell>
-          <tei:cell>
+          </xsl:element>
+          <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:value-of select="@validUntil"/>
             <xsl:if test="xs:date(@validUntil) lt current-date()">!!!</xsl:if>
-          </tei:cell>
-        </tei:row>
+          </xsl:element>
       </xsl:for-each>
-    </tei:table>
+    </xsl:element>
   </xsl:template>
   
   <xsl:template match="tei:exemplum" mode="weave">
