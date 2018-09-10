@@ -2403,7 +2403,7 @@
         <xsl:element namespace="{$outputNS}" name="{$cellName}">Valid until</xsl:element>
       </xsl:element>
       <xsl:for-each select="//*[@validUntil]">
-        <xsl:element namespace="{$outputNS}" name="{$rowName}"></xsl:element>
+        <xsl:element namespace="{$outputNS}" name="{$rowName}">
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:choose>
               <xsl:when test="self::attDef">
@@ -2422,6 +2422,7 @@
             <xsl:value-of select="@validUntil"/>
             <xsl:if test="xs:date(@validUntil) lt current-date()">!!!</xsl:if>
           </xsl:element>
+        </xsl:element>
       </xsl:for-each>
     </xsl:element>
   </xsl:template>
