@@ -2422,7 +2422,6 @@
               </xsl:when>
               <xsl:when test="self::valItem or self::valDesc">
                 <xsl:variable name="targetIdent" select="ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident"/>
-<xsl:call-template name="linkTogether">
                   <xsl:call-template name="linkTogether">
                     <xsl:with-param name="name">
                       <xsl:value-of select="$targetIdent"/>
@@ -2435,7 +2434,8 @@
                     </xsl:with-param>
                   </xsl:call-template>
               </xsl:when>
-              <xsl:otherwise><xsl:call-template name="linkTogether">
+              <xsl:otherwise>
+                <xsl:call-template name="linkTogether">
                     <xsl:with-param name="name">
                       <xsl:value-of select="@ident"/>
                     </xsl:with-param>
