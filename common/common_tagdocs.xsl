@@ -2407,10 +2407,12 @@
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:choose>
               <xsl:when test="self::attDef">
-                <xsl:value-of select="concat(ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident, ' / ', ancestor::attDef/@ident, ' / ', @ident)"/>
+                <xsl:variable name="targetIdent" select="ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident"/>
+                <xsl:value-of select="concat($targetIdent, ' / ', ancestor::attDef/@ident, ' / ', @ident)"/>
               </xsl:when>
               <xsl:when test="self::valItem or self::valDesc">
-                <xsl:value-of select="concat(ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident, ' / ', @ident)"/>
+                <xsl:variable name="targetIdent" select="ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident"/>
+                <xsl:value-of select="concat($targetIdent, ' / ', ancestor::attDef[1]/@ident, ' / ', @ident)"/>
               </xsl:when>
               <xsl:otherwise><xsl:value-of select="@ident"/></xsl:otherwise>
             </xsl:choose>
