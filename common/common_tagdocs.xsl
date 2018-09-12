@@ -2391,7 +2391,7 @@
     </xsl:element>
   </xsl:template>
   
-  <!-- MDH working on ticket #1657 2018-09-10. -->
+  <!-- MDH & SB working on ticket #1657 2018-09-10. -->
   <xsl:template match="tei:divGen[@type = 'deprecationcat']">
     <xsl:element namespace="{$outputNS}" name="{$tableName}">
       <xsl:attribute name="{$rendName}">
@@ -2401,6 +2401,7 @@
         <xsl:element namespace="{$outputNS}" name="{$cellName}">Identifier</xsl:element>
         <xsl:element namespace="{$outputNS}" name="{$cellName}">Component type</xsl:element>
         <xsl:element namespace="{$outputNS}" name="{$cellName}">Valid until</xsl:element>
+        <xsl:element namespace="{$outputNS}" name="{$cellName}">Description</xsl:element>
       </xsl:element>
       <xsl:for-each select="//*[@validUntil]">
         <xsl:sort select="@validUntil"/>
@@ -2414,7 +2415,7 @@
                       <xsl:value-of select="$targetIdent"/>
                     </xsl:with-param>
                     <xsl:with-param name="reftext">
-                      <xsl:value-of select="concat($targetIdent, ' / ', ancestor::tei:attDef/@ident, ' / ', @ident)"/>
+                      <xsl:value-of select="concat($targetIdent, ' / ', if (self::attDef) then '@' else '', @ident)"/>
                     </xsl:with-param>
                     <xsl:with-param name="class">
                       <xsl:text>link_odd</xsl:text>
@@ -2455,6 +2456,9 @@
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:value-of select="@validUntil"/>
             <xsl:if test="xs:date(@validUntil) lt current-date()">!!!</xsl:if>
+          </xsl:element>
+          <xsl:element namespace="{$outputNS}" name="{$cellName}">
+            <xsl:apply-templates select="descendant::tei:desc[@type='deprecationInfo'][1]"/>
           </xsl:element>
         </xsl:element>
       </xsl:for-each>
