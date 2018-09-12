@@ -2406,7 +2406,7 @@
         <xsl:element namespace="{$outputNS}" name="{$rowName}">
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:choose>
-              <xsl:when test="self::attDef">
+              <xsl:when test="self::attDef or self::constraintSpec">
                 <xsl:variable name="targetIdent" select="ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident"/>
                   <xsl:call-template name="linkTogether">
                     <xsl:with-param name="name">
