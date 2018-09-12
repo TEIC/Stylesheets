@@ -2403,6 +2403,7 @@
         <xsl:element namespace="{$outputNS}" name="{$cellName}">Valid until</xsl:element>
       </xsl:element>
       <xsl:for-each select="//*[@validUntil]">
+        <xsl:sort select="@validUntil"/>
         <xsl:element namespace="{$outputNS}" name="{$rowName}">
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:choose>
