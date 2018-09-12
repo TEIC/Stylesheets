@@ -2406,28 +2406,28 @@
         <xsl:element namespace="{$outputNS}" name="{$rowName}">
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:choose>
-              <xsl:when test="self::attDef or self::constraintSpec">
+              <xsl:when test="self::tei:attDef or self::tei:constraintSpec">
                 <xsl:variable name="targetIdent" select="ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident"/>
                   <xsl:call-template name="linkTogether">
                     <xsl:with-param name="name">
                       <xsl:value-of select="$targetIdent"/>
                     </xsl:with-param>
                     <xsl:with-param name="reftext">
-                      <xsl:value-of select="concat($targetIdent, ' / ', ancestor::attDef/@ident, ' / ', @ident)"/>
+                      <xsl:value-of select="concat($targetIdent, ' / ', ancestor::tei:attDef/@ident, ' / ', @ident)"/>
                     </xsl:with-param>
                     <xsl:with-param name="class">
                       <xsl:text>link_odd</xsl:text>
                     </xsl:with-param>
                   </xsl:call-template>
               </xsl:when>
-              <xsl:when test="self::valItem or self::valDesc">
+              <xsl:when test="self::tei:valItem or self::tei:valDesc">
                 <xsl:variable name="targetIdent" select="ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident"/>
                   <xsl:call-template name="linkTogether">
                     <xsl:with-param name="name">
                       <xsl:value-of select="$targetIdent"/>
                     </xsl:with-param>
                     <xsl:with-param name="reftext">
-                      <xsl:value-of select="concat($targetIdent, ' / ', ancestor::attDef[1]/@ident, ' / ', @ident)"/>
+                      <xsl:value-of select="concat($targetIdent, ' / ', ancestor::tei:attDef[1]/@ident, ' / ', @ident)"/>
                     </xsl:with-param>
                     <xsl:with-param name="class">
                       <xsl:text>link_odd</xsl:text>
