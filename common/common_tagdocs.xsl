@@ -2398,10 +2398,56 @@
         <xsl:text>deprecationcat</xsl:text>
       </xsl:attribute>
       <xsl:element namespace="{$outputNS}" name="{$rowName}">
-        <xsl:element namespace="{$outputNS}" name="{$cellName}">Identifier</xsl:element>
-        <xsl:element namespace="{$outputNS}" name="{$cellName}">Component type</xsl:element>
-        <xsl:element namespace="{$outputNS}" name="{$cellName}">Valid until</xsl:element>
-        <xsl:element namespace="{$outputNS}" name="{$cellName}">Description</xsl:element>
+        <xsl:element namespace="{$outputNS}" name="{$cellName}">
+          <xsl:element namespace="{$outputNS}" name="{$hiName}">
+            <xsl:attribute name="{$rendName}">
+              <xsl:text>label</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="{$langAttributeName}">
+              <xsl:value-of select="$documentationLanguage"/>
+            </xsl:attribute>
+            <xsl:sequence select="tei:i18n('Identifier')"/>
+          </xsl:element>
+        </xsl:element>
+        <xsl:element namespace="{$outputNS}" name="{$cellName}">
+          <xsl:element namespace="{$outputNS}" name="{$cellName}">
+            <xsl:element namespace="{$outputNS}" name="{$hiName}">
+              <xsl:attribute name="{$rendName}">
+                <xsl:text>label</xsl:text>
+              </xsl:attribute>
+              <xsl:attribute name="{$langAttributeName}">
+                <xsl:value-of select="$documentationLanguage"/>
+              </xsl:attribute>
+              <xsl:sequence select="tei:i18n('ComponentType')"/>
+            </xsl:element>
+          </xsl:element>
+        </xsl:element>
+        <xsl:element namespace="{$outputNS}" name="{$cellName}">
+          <xsl:element namespace="{$outputNS}" name="{$cellName}">
+            <xsl:element namespace="{$outputNS}" name="{$hiName}">
+              <xsl:attribute name="{$rendName}">
+                <xsl:text>label</xsl:text>
+              </xsl:attribute>
+              <xsl:attribute name="{$langAttributeName}">
+                <xsl:value-of select="$documentationLanguage"/>
+              </xsl:attribute>
+              <xsl:sequence select="tei:i18n('validuntil')"/>
+            </xsl:element>
+          </xsl:element>
+        </xsl:element>
+        <xsl:element namespace="{$outputNS}" name="{$cellName}">
+          <xsl:element namespace="{$outputNS}" name="{$cellName}">
+            <xsl:element namespace="{$outputNS}" name="{$hiName}">
+              <xsl:attribute name="{$rendName}">
+                <xsl:text>label</xsl:text>
+              </xsl:attribute>
+              <xsl:attribute name="{$langAttributeName}">
+                <xsl:value-of select="$documentationLanguage"/>
+              </xsl:attribute>
+              <xsl:sequence select="tei:i18n('Description')"/>
+            </xsl:element>
+          </xsl:element>
+        </xsl:element>
       </xsl:element>
       <xsl:for-each select="//*[@validUntil]">
         <xsl:sort select="@validUntil"/>
