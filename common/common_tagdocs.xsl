@@ -2410,7 +2410,6 @@
           </xsl:element>
         </xsl:element>
         <xsl:element namespace="{$outputNS}" name="{$cellName}">
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:element namespace="{$outputNS}" name="{$hiName}">
               <xsl:attribute name="{$rendName}">
                 <xsl:text>label</xsl:text>
@@ -2420,10 +2419,8 @@
               </xsl:attribute>
               <xsl:sequence select="tei:i18n('ComponentType')"/>
             </xsl:element>
-          </xsl:element>
         </xsl:element>
         <xsl:element namespace="{$outputNS}" name="{$cellName}">
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:element namespace="{$outputNS}" name="{$hiName}">
               <xsl:attribute name="{$rendName}">
                 <xsl:text>label</xsl:text>
@@ -2433,10 +2430,8 @@
               </xsl:attribute>
               <xsl:sequence select="tei:i18n('validuntil')"/>
             </xsl:element>
-          </xsl:element>
         </xsl:element>
         <xsl:element namespace="{$outputNS}" name="{$cellName}">
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:element namespace="{$outputNS}" name="{$hiName}">
               <xsl:attribute name="{$rendName}">
                 <xsl:text>label</xsl:text>
@@ -2446,7 +2441,6 @@
               </xsl:attribute>
               <xsl:sequence select="tei:i18n('Description')"/>
             </xsl:element>
-          </xsl:element>
         </xsl:element>
       </xsl:element>
       <xsl:for-each select="//*[@validUntil]">
