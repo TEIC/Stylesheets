@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_customization.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/Exemplars/tei_customization.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0" n="testPure1">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Test TEI Customization using Pure ODD</title>
+        <author>Martin Holmes</author>
+        <author>Syd Bauman</author>
+      </titleStmt>
+      <publicationStmt>
+        <p>Free for anyone for anything</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Authored from scratch</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <schemaSpec start="TEI div" ident="testPure1" prefix="t_">
+        <desc>This file is intended as input for a conversion to
+        RNG and Schematron (and possibly other outputs) as part 
+        of the modular Stylesheets test process. No source is 
+        specified here, because the source p5subset.xml is controlled
+        by command-line input.</desc>
+        <moduleRef key="tei"/>
+        <!-- test @except -->
+        <moduleRef key="textstructure" except="div1 div2 div3 div4 div5 div6 div7"/>
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <!-- test @include -->
+        <moduleRef key="namesdates" include="persName placeName orgName"/>
+        <moduleRef key="linking"/>
+        <!-- try deleting a class that is not included anyway as tagdocs module is not included -->
+        <classSpec ident="att.deprecated" mode="delete" type="atts"/>
+        <!-- test deletion of attr class (which is a subclass), -->
+        <!-- scorched earth approach: -->
+        <classSpec ident="att.datable.custom" mode="delete" type="atts"/>
+        <classSpec ident="att.datable.iso" mode="delete" type="atts"/>
+        <!-- test deletion of an attr from a class; selective thinning approach: -->
+        <classSpec ident="att.typed" type="atts" mode="change">
+          <attList>
+            <attDef ident="subtype" mode="delete"/>
+          </attList>
+        </classSpec>
+        <!-- test deletion of an attr from a subclass; selective thinning approach: -->
+        <classSpec ident="att.global.linking" type="atts" mode="change">
+          <attList>
+            <attDef ident="synch" mode="change">
+              <datatype minOccurs="1" maxOccurs="1">
+                <dataRef key="teidata.pointer"/>
+              </datatype>
+            </attDef>
+          </attList>
+        </classSpec>
+        <!-- Remove @type from <list>, genteel bureaucratic approach: -->
+        <elementSpec module="core" ident="list" mode="change">
+          <classes mode="change">
+            <memberOf key="att.typed" mode="delete"/>
+          </classes>
+        </elementSpec>  
+        <!-- test removal of a specific attribute from an element that holds it privately (repossession) -->
+        <elementSpec module="core" ident="note" mode="change">
+          <attList>
+            <attDef ident="anchored" mode="delete"/>
+          </attList>
+        </elementSpec>
+        <!-- provide a closed value list for an attr -->
+        <elementSpec ident="title" mode="change" module="core">
+          <attList>
+            <attDef ident="type" mode="replace">
+              <datatype>
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+              <valList type="closed">
+                <valItem ident="LP">
+                  <gloss>long playing</gloss>
+                  <desc>12-inch vinyl</desc>
+                </valItem>
+                <valItem ident="single"/>
+                <valItem ident="eightTrack"/>
+                <valItem ident="cassette"/>
+                <valItem ident="CD">
+                  <gloss>compact disc</gloss>
+                </valItem>
+                <valItem ident="VCRtape"/>
+                <valItem ident="DVD"/>
+                <valItem ident="blueRay"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <elementSpec ident="bibl" mode="change" module="core">
+          <desc>A short bibliographic citation with nothing but author, title, and optional date</desc>
+          <content>
+            <sequence>
+              <elementRef key="author" minOccurs="1" maxOccurs="unbounded"/>
+              <elementRef key="title"/>
+              <elementRef key="date" minOccurs="0" maxOccurs="1"/>
+            </sequence>
+          </content>
+        </elementSpec>
+      </schemaSpec>
+    </body>
+    <back>
+    </back>
+  </text>
+</TEI>

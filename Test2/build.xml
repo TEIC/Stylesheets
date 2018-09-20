@@ -59,6 +59,8 @@
     <import file="build_utilities.xml" as="utils"/>
     
 <!-- Import the modular test files.   -->
+    
+    <import file="build_odd.xml"/>
     <import file="build_odt.xml"/>
     <import file="build_docx.xml"/>
     
@@ -82,11 +84,12 @@
     -->
     <property name="localsource" value=""/>
     
-<!-- Properties for downloading, unzipping and using FOP 2.1 dist, used in creating PDFs from XSL:FO. -->
-    <property name="fopDist" value="http://apache.mirror.iweb.ca/xmlgraphics/fop/binaries/fop-2.1-bin.zip"/>
+<!-- Properties for downloading, unzipping and using FOP 2.2 dist, used in creating PDFs from XSL:FO.
+     We're stuck at 2.2 because no hyphenation lib is available for 2.3 yet. -->
+    <property name="fopDist" value="http://apache.mirror.iweb.ca/xmlgraphics/fop/binaries/fop-2.2-bin.zip"/>
     <property name="fopDest" value="${basedir}/../lib"/>
-    <property name="fopHome" value="${basedir}/../lib/fop-2.1"/>
-    <property name="fopHyphDist" value="http://downloads.sourceforge.net/project/offo/offo-hyphenation/2.1/offo-hyphenation-binary.zip"/>
+    <property name="fopHome" value="${basedir}/../lib/fop-2.2"/>
+    <property name="fopHyphDist" value="https://downloads.sourceforge.net/project/offo/offo-hyphenation/2.2/offo-hyphenation-compiled.zip"/>
     <property name="jeuclidDist" value="https://downloads.sourceforge.net/project/jeuclid/3.1.x/3.1.9/jeuclid-3.1.9-distribution.zip"/>
     
 <!-- Filesets for each set of tests should be declared here. -->
@@ -257,7 +260,7 @@
         
     </target>
     
-
+<!--
     
     <target name="oddToRng">
         <description>
@@ -266,18 +269,18 @@
             and then diffs it against the expected results. It involves
             a straight conversion, but then some tweaking to remove 
         </description>
-<!--  First convert odd to relaxng.      -->
+<!-\-  First convert odd to relaxng.      -\->
         <exec executable="${bin}/teitorelaxng" failonerror="true">
-            <arg line="--localsource=${localsource}"/>
+            <arg line="-\-localsource=${localsource}"/>
             <arg file="${inputDir}/test.odd"/>
             <arg file="${outputDir}/test.rng"/>
         </exec>
         
-<!--  Now clean and diff.      -->
+<!-\-  Now clean and diff.      -\->
         <antcall target="prepAndDiffFile">
             <param name="inFile" value="${outputDir}/test.rng"/>
         </antcall>
-    </target>
+    </target>-->
     
 <!-- Markdown tests just run one file in each direction, so 
      didn't use filesets. BUT THIS SHOULD BE REMEDIED. -->
@@ -403,15 +406,15 @@
         <echo message="Converting ${inFile} from XSL:FO to ${pdfFile}."/>
         
         <!-- This taskdef configured per instructions at 
-            https://xmlgraphics.apache.org/fop/2.1/anttask.html. -->
+            https://xmlgraphics.apache.org/fop/2.2/anttask.html. -->
         <taskdef name="fop"
             classname="org.apache.fop.tools.anttasks.Fop"
             onerror="fail">
             <classpath>
-                <fileset dir="${fopHome}/lib">
+                <fileset dir="${fopHome}/fop/lib">
                     <include name="*.jar"/>
                 </fileset>
-                <fileset dir="${fopHome}/build">
+                <fileset dir="${fopHome}/fop/build">
                     <include name="fop.jar"/>
                     <include name="fop-hyph.jar" />
                 </fileset>
@@ -477,7 +480,7 @@
     </target>
     
 <!--  We want to test FOP, but probably avoid exploding our repo,
-      so we download it. This is hard-coded FOP 2.1. -->
+      so we download it. This is hard-coded FOP 2.2. -->
     <target name="getFop" unless:blank="getFopAlreadyExecuted">
         <description>
             TARGET getFop
@@ -489,29 +492,29 @@
             needed to process MathML into PDF with FOP.
         </description>
         <property name="getFopAlreadyExecuted" value="true" />
-        <available property="fopAvailable" file="${fopHome}/build/fop.jar"/>
-        <echo unless:true="${fopAvailable}" message="Downloading FOP 2.1 to test creation of PDFs."/>
+        <available property="fopAvailable" file="${fopHome}/fop/build/fop.jar"/>
+        <echo unless:true="${fopAvailable}" message="Downloading FOP 2.2 to test creation of PDFs."/>
         <get unless:true="${fopAvailable}" src="${fopDist}" 
              dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
-        <unzip unless:true="${fopAvailable}" src="${fopDest}/fop-2.1-bin.zip" dest="${fopDest}" failonemptyarchive="true"/>
-        <delete file="${fopDest}/fop-2.1-bin.zip"/>
+        <unzip unless:true="${fopAvailable}" src="${fopDest}/fop-2.2-bin.zip" dest="${fopDest}" failonemptyarchive="true"/>
+        <delete file="${fopDest}/fop-2.2-bin.zip"/>
         
-        <available property="fopHyphAvailable" file="${fopHome}/build/fop-hyph.jar"/>
+        <available property="fopHyphAvailable" file="${fopHome}/fop/build/fop-hyph.jar"/>
         <echo unless:true="${fopHyphAvailable}" message="Downloading FOP hyphenation jar."/>
         <get unless:true="${fopHyphAvailable}" src="${fopHyphDist}" 
             dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
-        <unzip unless:true="${fopHyphAvailable}" src="${fopDest}/offo-hyphenation-binary.zip" dest="${fopDest}" failonemptyarchive="true"/>
-        <copy unless:true="${fopHyphAvailable}" file="${fopDest}/offo-hyphenation-binary/fop-hyph.jar" todir="${fopHome}/build"/>
-        <delete file="${fopDest}/offo-hyphenation-binary.zip"/>
-        <delete dir="${fopDest}/offo-hyphenation-binary"/>
+        <unzip unless:true="${fopHyphAvailable}" src="${fopDest}/offo-hyphenation-compiled.zip" dest="${fopDest}" failonemptyarchive="true"/>
+        <copy unless:true="${fopHyphAvailable}" file="${fopDest}/offo-hyphenation-compiled/fop-hyph.jar" todir="${fopHome}/fop/build"/>
+        <delete file="${fopDest}/offo-hyphenation-compiled.zip"/>
+        <delete dir="${fopDest}/offo-hyphenation-compiled"/>
         
-        <available property="jeuclidJarsAvailable" file="${fopHome}/lib/jeuclid-core-3.1.9.jar"/>
+        <available property="jeuclidJarsAvailable" file="${fopHome}/fop/lib/jeuclid-core-3.1.9.jar"/>
         <echo unless:true="${jeuclidJarsAvailable}" message="Downloading JEuclid jars for processing MathML into PDF."/>
         <get unless:true="${jeuclidJarsAvailable}" src="${jeuclidDist}" 
             dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
         <unzip unless:true="${jeuclidJarsAvailable}" src="${fopDest}/jeuclid-3.1.9-distribution.zip" dest="${fopDest}" failonemptyarchive="true"/>
-        <copy unless:true="${jeuclidJarsAvailable}" file="${fopDest}/jeuclid-3.1.9/repo/jeuclid-core-3.1.9.jar" todir="${fopHome}/lib"/>
-        <copy unless:true="${jeuclidJarsAvailable}" file="${fopDest}/jeuclid-3.1.9/repo/jeuclid-fop-3.1.9.jar" todir="${fopHome}/lib"/>
+        <copy unless:true="${jeuclidJarsAvailable}" file="${fopDest}/jeuclid-3.1.9/repo/jeuclid-core-3.1.9.jar" todir="${fopHome}/fop/lib"/>
+        <copy unless:true="${jeuclidJarsAvailable}" file="${fopDest}/jeuclid-3.1.9/repo/jeuclid-fop-3.1.9.jar" todir="${fopHome}/fop/lib"/>
         <delete file="${fopDest}/jeuclid-3.1.9-distribution.zip"/>
         <delete dir="${fopDest}/jeuclid-3.1.9"/>
     </target>
@@ -527,7 +530,7 @@
         </description>
         <parallel failonany="true">
             <antcall target="clean"/>
-            <antcall target="oddToRng"/>
+            <antcall target="oddFilesToRng"/>
             <antcall target="simpleTeiToHtml"/>
             <antcall target="markdown"/>
             <antcall target="cocoaFilesToTei"/>

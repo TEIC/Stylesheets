@@ -730,6 +730,7 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:text>, </xsl:text>
                 </xsl:if>
                 <xsl:value-of select="tei:i18n('and')"/>
+                <xsl:text> </xsl:text>
               </xsl:when>
               <xsl:when test="following-sibling::tei:editor">, </xsl:when>
             </xsl:choose>
@@ -1323,7 +1324,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="context"/>
     <xsl:choose>
       <xsl:when test="$useFixedDate='true'">0</xsl:when>
-      <xsl:otherwise><xsl:value-of select="unparsed-text('../VERSION')"/></xsl:otherwise>
+      <xsl:otherwise><xsl:value-of select="normalize-space(unparsed-text('../VERSION'))"/></xsl:otherwise>
     </xsl:choose>
   </xsl:function>
 

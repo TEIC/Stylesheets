@@ -15,10 +15,10 @@
 This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
-Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
+Unported License http://creativecommons.org/licenses/by-sa/3.0/
 
 2. http://www.opensource.org/licenses/BSD-2-Clause
-		
+
 
 
 Redistribution and use in source and binary forms, with or without
@@ -52,23 +52,23 @@ $Id$
    saxon -it:main -o:myodd /usr/share/xml/tei/stylesheet/tools/oddbyexample.xsl   corpus=`pwd`/
 
 -->
-  <!-- 
+  <!--
 Read a corpus of TEI P5 documents and construct
 an ODD customization file which expresses the subset
 of the TEI you need to validate that corpus
 -->
   <!-- How does this work?
 
-1) start a variable and copy in all of the TEI 
+1) start a variable and copy in all of the TEI
 
 2) read the corpus and get a list of all the elements and their
 attributes that it uses, put that in the same variable.
 
 3) process the variable and read the TEI section. if an element or
  attribute is not present in the corpus section, put out a delete
- customization; 
- if the attributes of an attribute class are never used 
- that class may be deleted only if it doesn't claim membership in any other class 
+ customization;
+ if the attributes of an attribute class are never used
+ that class may be deleted only if it doesn't claim membership in any other class
  or, if it does, none of the attributes from that other class is used.
 
 4) for every attribute which is of type "enumerated", construct a
@@ -189,7 +189,7 @@ valList
       <xsl:variable name="count">
         <xsl:value-of select="count(/n:ROOT/*)"/>
       </xsl:variable>
-      <!-- assemble together all the TEI elements and attributes, 
+      <!-- assemble together all the TEI elements and attributes,
      followed by all the
      elements and attributes used in the corpus -->
       <xsl:variable name="stage1">
@@ -414,13 +414,14 @@ valList
           <teiHeader>
             <fileDesc>
               <titleStmt>
+                <title type="short"><xsl:value-of select="$schema"/></title>
                 <title>ODD by Example customization</title>
               </titleStmt>
               <publicationStmt>
                 <p>Unpublished first draft </p>
               </publicationStmt>
               <sourceDesc>
-                <p>Derived from an analysis of <xsl:value-of select="$count"/> files from <xsl:value-of select="$corpus"/></p>
+                <p>Derived from <ref target="{$defaultSource}">base odd</ref> after an analysis of <xsl:value-of select="$count"/> files in <xsl:value-of select="$corpus"/></p>
               </sourceDesc>
             </fileDesc>
           </teiHeader>
@@ -436,12 +437,12 @@ valList
                     test="$stage2/stage2/elementSpec[@mode='keep' and @ident='teiCorpus']"
                     >teiCorpus</xsl:if>
                 </xsl:attribute>
-                <!-- 
+                <!--
 		 We need to list only modules from which elements or
 		 classes have been used, but we always need tei module
 	    -->
                 <moduleRef key="tei"/>
-                
+
                 <xsl:for-each-group select="$stage2/stage2/*" group-by="@module">
                   <xsl:variable name="m" select="current-grouping-key()"/>
                   <xsl:choose>
@@ -449,23 +450,23 @@ valList
                     <xsl:when test="count(current-group()/*)=0"/>
                     <xsl:otherwise>
                  <xsl:comment>Checking module <xsl:value-of select="$m"/></xsl:comment>
-                    
+
               <xsl:for-each select="current-group()[self::macroSpec]">
                         <xsl:sort select="@ident"/>
                         <xsl:if test="not(@mode='delete')">
                           <macroRef key="{@ident}"/>
                         </xsl:if>
                       </xsl:for-each>
-                      
+
                       <xsl:for-each select="current-group()[self::classSpec]">
                         <xsl:sort select="@ident"/>
                         <xsl:if test="not(@mode='delete')">
                           <classRef key="{@ident}"/>
                         </xsl:if>
                       </xsl:for-each>
-                    
+
                       <xsl:variable name="keepList">
-                        <xsl:value-of select="current-group()[self::elementSpec][not(@mode='delete')]/@ident" separator=" "/>                     
+                        <xsl:value-of select="current-group()[self::elementSpec][not(@mode='delete')]/@ident" separator=" "/>
                       </xsl:variable>
                      <xsl:if test='string-length($keepList) gt 1'> <moduleRef key="{$m}" include="{$keepList}"/>
                      </xsl:if>

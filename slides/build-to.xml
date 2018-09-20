@@ -52,7 +52,6 @@
     <echo level="info">XSLT generate slides handout file</echo>
     <xslt force="yes" style="${odd2slides}" in="${inputFile}" out="${texfile}-handout.tex">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
       <param name="directory" expression="file:///${outputTempDir}"/>
       <!-- supply name of language-->
       <param name="lang" expression="${lang}" if="lang"/>
