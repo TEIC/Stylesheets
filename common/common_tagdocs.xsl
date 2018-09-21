@@ -2443,7 +2443,7 @@
             </xsl:element>
         </xsl:element>
       </xsl:element>
-      <xsl:for-each select="//*[@validUntil]">
+      <xsl:for-each select="//tei:*[@validUntil]">
         <xsl:sort select="@validUntil"/>
         <xsl:element namespace="{$outputNS}" name="{$rowName}">
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
