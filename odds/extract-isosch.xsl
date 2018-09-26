@@ -16,7 +16,7 @@
 
   <d:doc scope="stylesheet" type="stylesheet">
     <d:desc>
-      <d:p> TEI stylesheet for extracting Schematron rules from  TEI ODD </d:p>
+      <d:p>TEI stylesheet for extracting Schematron rules from TEI ODD</d:p>
       <d:p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
@@ -268,10 +268,8 @@ of this software, even if advised of the possibility of such damage.
       <!-- separating each pair with a character we know will never occur inside (for easy -->
       <!-- parsing later). -->
       <xsl:variable name="allNSs" as="xs:string+">
-        <xsl:sequence>
-          <xsl:sequence select="( $decorated//tei:*[@nsu]/concat( @nsp, '␝', @nsu ) )"/>
-          <xsl:sequence select="('rng:␝http://relaxng.org/ns/structure/1.0')"/>
-        </xsl:sequence>
+        <xsl:sequence select="( $decorated//tei:*[@nsu]/concat( @nsp, '␝', @nsu ) )"/>
+        <!-- if desired, other NSs can be added manually here -->
       </xsl:variable>
       <xsl:variable name="NSs" select="distinct-values( $allNSs )"/>
       <!-- For each pair (except those that are empty or are the XLS namespace) ... -->
