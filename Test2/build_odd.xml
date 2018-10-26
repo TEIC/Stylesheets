@@ -34,10 +34,10 @@
     <description>
       TARGET oddFilesToRng
       Converts ODD files to RNG and diffs them against expected results.
-      Then if correctly-named exemplar files exist, these are validated
+      Then if correctly-named instance files exist, these are validated
       against the RNG file and results checked.
       Then Schematron is extracted from both the ODD file and the RNG 
-      file, and exemplar files are validated against both Schematron files
+      file, and instance files are validated against both Schematron files
       with results checked.
     </description>
    
@@ -84,10 +84,10 @@
     <description>
       TARGET oddFileToRng
       Converts a sinigle ODD file to RNG and diffs it against expected results.
-      Then if correctly-named exemplar files exist, these are validated
+      Then if correctly-named instance files exist, these are validated
       against the RNG file and results checked.
       Then Schematron is extracted from both the ODD file and the RNG 
-      file, and exemplar files are validated against both Schematron files
+      file, and instance files are validated against both Schematron files
       with results checked. 
       It takes a single parameter, inFile.
     </description>
@@ -113,14 +113,14 @@
     </antcall>
       <!-- 
       Next:
-         If there is a file named ${inputDir}/${plainFileName}ValidExemplar.xml, then:
+         If there is a file named ${inputDir}/${plainFileName}ValidInstance.xml, then:
       
          1. Validate it with Jing against ${outputDir}/${plainFileName}.rng and fail on invalid.
          
          2. Validate it (how???) against ${outputDir}/${plainFileName}.sch and fail on invalid.
       
       And then:
-         If there is a file named ${inputDir}/${plainFileName}InvalidExemplar.xml, then:
+         If there is a file named ${inputDir}/${plainFileName}InvalidInstance.xml, then:
       
          1. Validate it with Jing against ${outputDir}/${plainFileName}.rng > 
             ${outputDir}/${plainFileName}InvalidExemplarRngMessages.txt, and diff that
@@ -130,27 +130,27 @@
             ${outputDir}/${plainFileName}InvalidExemplarSchMessages.txt, and diff that
             against ${expectedResultsDir}/${plainFileName}InvalidExemplarSchMessages.txt
        -->
-<!--   Look for a valid exemplar, and if it's there, validate it with
+<!--   Look for a valid instance, and if it's there, validate it with
        the schema that's been created. -->
     
-    <property name="validExemplar" value="${inputDir}/validExemplars/${plainFileName}ValidExemplar.xml"/>
+    <property name="validInstance" value="${inputDir}/validInstances/${plainFileName}ValidInstance.xml"/>
     
     <if>
-      <available file="${validExemplar}"/>
+      <available file="${validInstance}"/>
       <then>
-        <jing rngfile="${outputDir}/${plainFileName}.rng" file="${validExemplar}"/>
+        <jing rngfile="${outputDir}/${plainFileName}.rng" file="${validInstance}"/>
       </then>
     </if>
     
-<!--   Look for an invalid exemplar, and if it's there, validate it and diff
+<!--   Look for an invalid instance, and if it's there, validate it and diff
        errors against expected-results. -->
     
-    <property name="invalidExemplar" value="${inputDir}/invalidExemplars/${plainFileName}InvalidExemplar.xml"/>
+    <property name="invalidInstance" value="${inputDir}/invalidInstances/${plainFileName}InvalidInstance.xml"/>
     
     <if>
-      <available file="${invalidExemplar}"/>
+      <available file="${invalidInstance}"/>
       <then>
-        <antcall target="validateInvalidExemplarRng">
+        <antcall target="validateInvalidInstanceRng">
           <param name="plainFileName" value="${plainFileName}"/>
         </antcall>
       </then>
