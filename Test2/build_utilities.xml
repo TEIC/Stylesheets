@@ -140,7 +140,8 @@
     <!--  If not regenerating, then diff the file.      -->
     <trycatch if:blank="${regenerate}">
       <try>
-        <echo message="diffing ${inFile} against ${otherFile}."/>
+        <echo message="diff A: ${inFile}"/>
+        <echo message="diff B: ${otherFile}"/>
         <fail message="${inFile} is different from ${otherFile}.">    
           <condition>
             <not>
