@@ -273,21 +273,21 @@
     </description>
     <property name="rngFile" value="${outputDir}/${plainFileName}.rng"/>
     <property name="invalidInstance" value="${inputDir}/invalidInstances/${plainFileName}InvalidInstance.xml"/>
-    <property name="outputErrorFile" value="${outputDir}/${plainFileName}InvalidInstanceRngErrors.txt"/>
+    <property name="outputMessageFile" value="${outputDir}/${plainFileName}InvalidInstanceRngMessages.txt"/>
     
 <!--   Run jing to create the error output file. -->
-    <property name="expectedErrorFile" value="${expectedResultsDir}/${plainFileName}InvalidInstanceRngErrors.txt"/>
-    <java fork="true" failonerror="false" jar="${jingJar}" output="${outputErrorFile}">
+    <property name="expectedMessageFile" value="${expectedResultsDir}/${plainFileName}InvalidInstanceRngMessages.txt"/>
+    <java fork="true" failonerror="false" jar="${jingJar}" output="${outputMessageFile}">
       <arg value="${rngFile}"/>
       <arg value="${invalidInstance}"/>
     </java>
     
 <!--   Now we sed the file to get rid of host-specific paths. -->
-    <replaceregexp file="${outputErrorFile}" match="^.+inputFiles" replace="" flags="" byline="true"/>
+    <replaceregexp file="${outputMessageFile}" match="^.+inputFiles" replace="" flags="" byline="true"/>
     
 <!--   Now diff against expected-results. -->
     <antcall target="diffFile">
-      <param name="inFile" value="${outputErrorFile}"/>
+      <param name="inFile" value="${outputMessageFile}"/>
     </antcall>
     
   </target>
