@@ -125,9 +125,9 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template match="tei:ex">
-  <i>
+  <span class="ex">
     <xsl:apply-templates />
-  </i>
+  </span>
 </xsl:template>
 
 <xsl:template match="tei:surfaceGrp/tei:desc"/>
