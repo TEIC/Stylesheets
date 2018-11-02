@@ -138,6 +138,8 @@
     <if>
       <available file="${validInstance}"/>
       <then>
+        <echo message=""/>
+        <echo message="Validating valid instance file ${validInstance} against ${outputDir}/${plainFileName}.rng."/>
         <jing rngfile="${outputDir}/${plainFileName}.rng" file="${validInstance}"/>
       </then>
     </if>
