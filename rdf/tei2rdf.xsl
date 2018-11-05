@@ -5,30 +5,45 @@
    <XSL:import href="../tools/getfiles.xsl"/>
    <XSL:import href="crm.xsl"/>
    <XSL:param name="corpus">./</XSL:param>
-   <!-- entry point templates -->
-   <XSL:template match="teiCorpus">
-      <XSL:call-template name="TEI"/>
-   </XSL:template>
-   <XSL:template match="TEI">
-      <XSL:call-template name="TEI"/>
-   </XSL:template>
-   <!-- default processing -->
    <XSL:template match="*" priority="-1">
       <XSL:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
    </XSL:template>
    <XSL:template match="text()|comment()|@*|processing-instruction()"/>
-   <!-- normal mode templates sorted by element name -->
-   <XSL:template match="ab">
-      <XSL:call-template name="anonblock"/>
+   <XSL:template match="name">
+      <XSL:call-template name="teiname"/>
+   </XSL:template>
+   <XSL:template match="date">
+      <XSL:call-template name="E52"/>
    </XSL:template>
    <XSL:template match="author">
       <XSL:call-template name="E65"/>
    </XSL:template>
+   <XSL:template match="title">
+      <XSL:call-template name="E35"/>
+   </XSL:template>
+   <XSL:template match="teiCorpus">
+      <XSL:call-template name="TEI"/>
+   </XSL:template>
+   <XSL:template match="fileDesc">
+      <XSL:call-template name="F24"/>
+   </XSL:template>
+   <XSL:template match="publicationStmt">
+      <XSL:call-template name="F30"/>
+   </XSL:template>
+   <XSL:template match="TEI">
+      <XSL:call-template name="TEI"/>
+   </XSL:template>
+   <XSL:template match="text">
+      <XSL:call-template name="E31"/>
+   </XSL:template>
+   <XSL:template match="persName">
+      <XSL:call-template name="E82"/>
+   </XSL:template>
+   <XSL:template match="placeName">
+      <XSL:call-template name="E48"/>
+   </XSL:template>
    <XSL:template match="birth">
       <XSL:call-template name="E67"/>
-   </XSL:template>
-   <XSL:template match="date">
-      <XSL:call-template name="E52"/>
    </XSL:template>
    <XSL:template match="death">
       <XSL:call-template name="E69"/>
@@ -36,14 +51,8 @@
    <XSL:template match="event">
       <XSL:call-template name="E5"/>
    </XSL:template>
-   <XSL:template match="fileDesc">
-      <XSL:call-template name="F24"/>
-   </XSL:template>
    <XSL:template match="geo">
       <XSL:call-template name="E47"/>
-   </XSL:template>
-   <XSL:template match="name">
-      <XSL:call-template name="teiname"/>
    </XSL:template>
    <XSL:template match="org">
       <XSL:call-template name="E74"/>
@@ -54,31 +63,18 @@
    <XSL:template match="org/place" priority="2">
       <XSL:call-template name="P76"/>
    </XSL:template>
-   <XSL:template match="persName">
-      <XSL:call-template name="E82"/>
-   </XSL:template>
    <XSL:template match="person">
       <XSL:call-template name="E21"/>
    </XSL:template>
    <XSL:template match="place">
       <XSL:call-template name="E53"/>
    </XSL:template>
-   <XSL:template match="placeName">
-      <XSL:call-template name="E48"/>
-   </XSL:template>
-   <XSL:template match="publicationStmt">
-      <XSL:call-template name="F30"/>
-   </XSL:template>
    <XSL:template match="residence">
       <XSL:call-template name="P74"/>
    </XSL:template>
-   <XSL:template match="text">
-      <XSL:call-template name="E31"/>
+   <XSL:template match="ab">
+      <XSL:call-template name="anonblock"/>
    </XSL:template>
-   <XSL:template match="title">
-      <XSL:call-template name="E35"/>
-   </XSL:template>
-   <!-- named template -->
    <XSL:template name="typology">
       <E55_Type xmlns="http://purl.org/NET/crm-owl#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
