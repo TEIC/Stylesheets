@@ -3,8 +3,8 @@
     <teiHeader>
         <fileDesc>
             <titleStmt>
-                <title>testPure1InvalidInstance: File designed to fail validation 
-                against a schema created from testPure1.odd in predicted ways.</title>
+                <title>testPure1InvalidInstance: File designed to fail validation against a schema
+                    created from testPure1.odd in predicted ways.</title>
             </titleStmt>
             <publicationStmt>
                 <p>Free for all for anything for ever.</p>
@@ -18,17 +18,33 @@
         <body>
             <div>
                 <head>Test file for validation</head>
-                
+
                 <p>This file is designed to fail validation in specific predicted ways.</p>
-                
-<!--               First, we test the removal of att.typed from
+
+                <!--               Test the removal of att.typed from
                    <list>. -->
                 <list type="notAllowed">
-                    <head>List with <att>type</att>, which is not allowed.
-                    </head>
+                    <head>List with <att>type</att>, which is not allowed. </head>
                     <item>one</item>
                     <item>two</item>
                 </list>
+
+                <!--               Test the deletion of biblStruct from the core module. -->
+                <listBibl>
+                    <head>This should not allow biblStruct</head>
+                    <bibl>
+                        <title>This one should fail because it has no author.</title>
+                        <date>2018</date>
+                    </bibl>
+                    <biblStruct>
+                        <monogr>
+                            <title>This one should not be allowed</title>
+                            <imprint>
+                                <date>2018</date>
+                            </imprint>
+                        </monogr>
+                    </biblStruct>
+                </listBibl>
             </div>
         </body>
     </text>
