@@ -37,6 +37,7 @@
         <moduleRef key="textstructure" except="div1 div2 div3 div4 div5 div6 div7"/>
         <moduleRef key="header"/>
         <moduleRef key="core"/>
+        <moduleRef key="analysis"/>
         <!-- test @include -->
         <moduleRef key="namesdates" include="persName placeName orgName"/>
         <moduleRef key="linking"/>
@@ -114,6 +115,14 @@
         
 <!--       Delete an element from its module. -->
         <elementSpec ident="biblStruct" module="core" mode="delete"/>
+        
+<!--       Change an attribute from optional to required, on an individual element,
+           when the attribute comes from a class. -->
+        <elementSpec ident="w" module="linking" mode="change">
+          <attList>
+            <attDef ident="ana" mode="change" usage="req"/>
+          </attList>
+        </elementSpec>
         
         
       </schemaSpec>
