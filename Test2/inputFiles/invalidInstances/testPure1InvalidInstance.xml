@@ -54,6 +54,22 @@
                     <s>The word should require the ana attribute, and therefore 
                         fail validation, but the phrase not.</s></p>
             </div>
+            
+<!--        <persName> should be allowed but <addName> not, because @include
+            was used and <addName> was not included in it. -->
+            <div>
+                <head>No addNames</head>
+                <p>Have you hears of 
+                    <persName>Frederick <addName type="epithet">the Great</addName></persName>?</p>
+            </div>
+            
+<!--        <div1> should be disallowed through @except.    -->
+            <div1>
+                <head>This should not be valid</head>
+                <p>div1 and friends is excluded.</p>
+            </div1>
+            
+            
         </body>
     </text>
 </TEI>

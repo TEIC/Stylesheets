@@ -32,14 +32,19 @@
         changing content models in such a way as to create non-TEI-
         compliant schemas (for the most severe definition of 
         "TEI-compliant").</desc>
+        
         <moduleRef key="tei"/>
+        
         <!-- test @except -->
         <moduleRef key="textstructure" except="div1 div2 div3 div4 div5 div6 div7"/>
+        
         <moduleRef key="header"/>
         <moduleRef key="core"/>
         <moduleRef key="analysis"/>
+        
         <!-- test @include -->
         <moduleRef key="namesdates" include="persName placeName orgName"/>
+        
         <moduleRef key="linking"/>
         <!-- Include tagdocs so that our instance files can use <gi> et al descriptively.  -->
         <moduleRef key="tagdocs"/>
@@ -123,8 +128,7 @@
             <attDef ident="ana" mode="change" usage="req"/>
           </attList>
         </elementSpec>
-        
-        
+
       </schemaSpec>
     </body>
     <back>
