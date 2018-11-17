@@ -128,6 +128,22 @@
             <attDef ident="ana" mode="change" usage="req"/>
           </attList>
         </elementSpec>
+        
+<!--       Complicated one: the <email> element is only allowed
+           to contain two email addresses, so we try to constrain
+           its content model using a valList. -->
+        <elementSpec ident="email" module="core" mode="change">
+          <content>
+            <valList type="closed">
+              <valItem ident="amourdecosmos@gmail.com">
+                <gloss>The email address of Amour de Cosmos.</gloss>
+              </valItem>
+              <valItem ident="thevenerablebede@gmail.com">
+                <gloss>The email address of The Venerable Bede.</gloss>
+              </valItem>
+            </valList>
+          </content>
+        </elementSpec>
 
       </schemaSpec>
     </body>

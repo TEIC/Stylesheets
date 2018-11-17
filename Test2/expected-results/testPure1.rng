@@ -127,7 +127,7 @@
             </choice>
          </zeroOrMore>
       </element>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="d9e61232-constraint">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="d9e61243-constraint">
          <rule context="tei:content">
             <report test="descendant::*[not(namespace-uri(.) =               ('http://relaxng.org/ns/structure/1.0', 'http://www.tei-c.org/ns/1.0'))]">content descendants must be in the
               namespaces
@@ -176,7 +176,7 @@
             </choice>
          </zeroOrMore>
       </element>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="d9e62490-constraint">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="d9e62501-constraint">
          <rule context="tei:datatype">
             <report test="descendant::*[not(namespace-uri(.) =               ('http://relaxng.org/ns/structure/1.0', 'http://www.tei-c.org/ns/1.0'))]">datatype descendants must be in the
               namespaces
@@ -3761,7 +3761,12 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
    <define name="t_email">
       <element name="email">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(electronic mail address) contains an email address identifying a location to which email messages can be delivered. [3.5.2. Addresses]</a:documentation>
-         <ref name="t_macro.phraseSeq"/>
+         <choice>
+            <value>amourdecosmos@gmail.com</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(The email address of Amour de Cosmos.) </a:documentation>
+            <value>thevenerablebede@gmail.com</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(The email address of The Venerable Bede.) </a:documentation>
+         </choice>
          <ref name="t_att.global.attributes"/>
          <empty/>
       </element>
