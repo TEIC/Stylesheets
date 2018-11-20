@@ -6,7 +6,7 @@ Rather than Make it uses only Ant, and for the sake of speed, under normal condi
 
 For a detailed introduction to how it works, run "ant -projecthelp" in the Test2 directory.
 
-Martin  Holmes (@martindholmes) and Syd Bauman (@sydb) are doing the work on this.
+Martin  Holmes (@martindholmes) and Syd Bauman (@sydb) are currently doing the work on this, but feel free to join the effort! Current work is focusing on ODD processing, in build_odd.xml. 
 
 
 Example usages:

@@ -1,3 +1,202 @@
+2018-09-26  Syd Bauman  <s.bauman@neu.edu>
+
+	More work on #250
+
+	Work on #250
+
+2018-09-25  Syd Bauman  <s.bauman@neu.edu>
+
+	Address #330: Ensure that no colons are in the generated ID used for <sch:pattern>s.
+
+2018-09-21  martindholmes  <mholmes@uvic.ca>
+
+	Fix to prevent deprecations in egXML from being harvested for the appendix.
+
+2018-09-13  martindholmes  <mholmes@uvic.ca>
+
+	Don't nest tds in tds.
+
+	Work on TEI ticket #1657: translatable headings for deprecation appendix table.
+
+2018-09-12  martindholmes  <mholmes@uvic.ca>
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+	Stylesheet support for another column in the deprecation table with descriptive information.
+
+2018-09-11  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	add Travis build icon to Readme
+	and added more targets to the `make` command (to align it with the current Jenkins job)
+
+2018-09-11  martindholmes  <mholmes@uvic.ca>
+
+	Sort deprecations by expiry date.
+
+	Add namespace prefix, doh.
+
+	Attempting to make constraintSpec deprecations link to their ancestor spec file in the Deprecations appendix.
+
+2018-09-11  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	this should work now …
+	proper docker command for running the Stylesheets tests on Travis
+
+	add travis integration
+
+2018-09-11  martindholmes  <mholmes@uvic.ca>
+
+	Fix for ill-formed file committed in haste. Sorry folks.
+
+	Attempt to make deprecation idents into links.
+
+	Tweaks to prepare for easier linking.
+
+2018-09-10  martindholmes  <mholmes@uvic.ca>
+
+	Table structure should be fixed now (TEI ticket 1657 work).
+
+	Still hacking on TEI ticket #1657.
+
+	More work on TEI ticket #1657.
+
+	Fix for expected results.
+
+	Work on TEIC/TEI ticket #1657: need to add processing for deprecationcat value of divGen/@type.
+
+2018-09-08  martindholmes  <mholmes@uvic.ca>
+
+	Work on ticket #216: removing apparently orphaned file.
+
+	Try actually saving the file before committing.
+
+	Adding a README as requested by Council in Tokyo.
+
+	Two files removed per issue #216. If nothing breaks, I'll continue.
+
+	Commenting out bad CSS in epub output for issue #115, this time in epub rather than epub3.
+
+	Commenting out bad CSS in epub output for issue #115.
+
+	Space missing in listed authors.
+
+2018-09-07  Raffaele Viglianti  <raffaeleviglianti@gmail.com>
+
+	Merge pull request #292 from ebeshero/dev
+	possible solution for processing listRef/ref in odd2odd.xsl
+
+2018-09-07  ebeshero  <ebbondar@gmail.com>
+
+	merging with dev instead of master Merge remote-tracking branch 'upstream/dev' into dev
+
+	updating from main Stylesheets Merge remote-tracking branch 'upstream/master' into dev
+
+2018-09-07  Magdalena Turska  <tuurma@gmail.com>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	fix #308 cleaning up remaining hardcoded and superfluous references to Saxon EE
+
+2018-09-07  martindholmes  <mholmes@uvic.ca>
+
+	For issue #316, added tite to the list. If nothing breaks, ticket can be closed.
+
+2018-08-31  martindholmes  <mholmes@uvic.ca>
+
+	Fix for local paths in outputs and expected-results.
+
+2018-08-31  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge pull request #332 from TEIC/sortedDiffTests
+	Implementation of sorted diffing to make Test more robust against software version changes.
+
+2018-08-31  martindholmes  <mholmes@uvic.ca>
+
+	Updating FOP to 2.2, which involves changing filepaths.
+
+	Use https for all downloads from now on.
+
+2018-08-31  Hugh Cayless  <philomousos@gmail.com>
+
+	Sorting archive manifest before diff.
+
+2018-08-29  martindholmes  <mholmes@uvic.ca>
+
+	Test of sorted diffing to make Test more robust against software version changes.
+
+2018-08-28  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	attempting to fix more test errors
+
+	Fixing tests for new odd2json
+
+2018-08-27  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Merge branch 'dev' into raffazizzi-json
+
+2018-08-22  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	A few adjustments and representing datatypes for attributes
+
+2018-08-11  martindholmes  <mholmes@uvic.ca>
+
+	Slight file re-organization per suggestion from SB; parameterizing file list so a single file can be tested more easily.
+
+2018-08-08  martindholmes  <mholmes@uvic.ca>
+
+	Schematron now being extracted from ODDs.
+
+2018-08-07  martindholmes  <mholmes@uvic.ca>
+
+	Added one more test to the invalid file.
+
+	Invalid file testing: first example working.
+
+2018-08-06  martindholmes  <mholmes@uvic.ca>
+
+	Comments in ODD build file as to how to proceed with testing validation using generated schemas.
+
+	Build of ODD for non-TEI schema working.
+
+	RelaxNG being created; adding valid exemplar for testing.
+
+	Adding a simple test file for building an ODD for a non-TEI schema.
+
+2018-07-27  martindholmes  <mholmes@uvic.ca>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	Update build file to match new file name for old test.odd.
+
+2018-07-27  Syd Bauman  <s.bauman@neu.edu>
+
+	Rename output file accordingly
+
+	Tweak and rename specDesc test file
+
+2018-07-25  martindholmes  <mholmes@uvic.ca>
+
+	Updated pureOdd  expected-results.
+
+	Whitespace in expected-results.
+
+	Updates for changes to expected-results.
+
+	Fixing duplicated project name.
+
+2018-07-25  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	changes related to attributes processing
+
+	Merge branch 'dev' into raffazizzi-json
+
+2018-07-23  Syd Bauman  <s.bauman@neu.edu>
+
+	Update for 3.4.0: Re-create a bunch of the expected results based on what is generated from test files using the soon-to-be-published 3.4.0.
+
+2018-07-23  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Updated version after release
 2018-07-23  Peter Stadler  <stadlerpeter@yahoo.fr>
 
 	trimming whitespace from VERSION file

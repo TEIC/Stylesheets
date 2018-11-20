@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>testPure1ValidInstance: File designed to pass validation 
+                against a schema created from testPure1.odd.</title>
+            </titleStmt>
+            <publicationStmt>
+                <p>Free for all for anything for ever.</p>
+            </publicationStmt>
+            <sourceDesc>
+                <p>Born-digital</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <div>
+                <head>Test file for validation</head>
+                
+                <p>This file is designed to pass validation.</p>
+                
+                <p>We changed the <gi>title</gi> element's <att>type</att> attribute
+                to permit some of these values:</p>
+                
+                <list>
+                    <head>Some objects related to media</head>
+                    <item><title type="single">Jeepster</title></item>
+                    <item><title type="LP">Electric Warrior</title></item>
+                    <item><title type="CD">A Beard of Stars</title></item>
+                </list>
+                
+                <p>Test inclusion: <persName>Syd Bauman</persName> and <persName>Martin Holmes</persName>
+                are working on these tests in <placeName>Providence</placeName> and <placeName>Victoria</placeName>
+                for the <orgName>TEI</orgName>.</p>
+            </div>
+            
+            <div>
+                <head>Some linguistic stuff</head>
+                <p><s>This is a sentence with a <phr>short phrase</phr> and a single 
+                    <w ana="https://en.oxforddictionaries.com/definition/word">word</w>.</s> 
+                    <s>The word should require the ana attribute, but the phrase not.</s></p>
+            </div>
+            
+            <div>
+                <head>Testing some content model changes</head>
+                <p>The email address for <email>thevenerablebede@gmail.com</email>
+                should be valid.</p>
+            </div>
+        </body>
+    </text>
+</TEI>

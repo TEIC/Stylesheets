@@ -25,15 +25,29 @@
         RNG and Schematron (and possibly other outputs) as part 
         of the modular Stylesheets test process. No source is 
         specified here, because the source p5subset.xml is controlled
-        by command-line input.</desc>
+        by command-line input. The purpose of this file is to test 
+        Pure ODD customizations of TEI whose valid instance files will 
+        always validate against tei_all. In other words, it is not 
+        a place to test creating new elements in new namespaces, or
+        changing content models in such a way as to create non-TEI-
+        compliant schemas (for the most severe definition of 
+        "TEI-compliant").</desc>
+        
         <moduleRef key="tei"/>
+        
         <!-- test @except -->
         <moduleRef key="textstructure" except="div1 div2 div3 div4 div5 div6 div7"/>
+        
         <moduleRef key="header"/>
         <moduleRef key="core"/>
+        <moduleRef key="analysis"/>
+        
         <!-- test @include -->
         <moduleRef key="namesdates" include="persName placeName orgName"/>
+        
         <moduleRef key="linking"/>
+        <!-- Include tagdocs so that our instance files can use <gi> et al descriptively.  -->
+        <moduleRef key="tagdocs"/>
         <!-- try deleting a class that is not included anyway as tagdocs module is not included -->
         <classSpec ident="att.deprecated" mode="delete" type="atts"/>
         <!-- test deletion of attr class (which is a subclass), -->
@@ -103,6 +117,34 @@
             </sequence>
           </content>
         </elementSpec>
+        
+<!--       Delete an element from its module. -->
+        <elementSpec ident="biblStruct" module="core" mode="delete"/>
+        
+<!--       Change an attribute from optional to required, on an individual element,
+           when the attribute comes from a class. -->
+        <elementSpec ident="w" module="linking" mode="change">
+          <attList>
+            <attDef ident="ana" mode="change" usage="req"/>
+          </attList>
+        </elementSpec>
+        
+<!--       Complicated one: the <email> element is only allowed
+           to contain two email addresses, so we try to constrain
+           its content model using a valList. -->
+        <elementSpec ident="email" module="core" mode="change">
+          <content>
+            <valList type="closed">
+              <valItem ident="amourdecosmos@gmail.com">
+                <gloss>The email address of Amour de Cosmos.</gloss>
+              </valItem>
+              <valItem ident="thevenerablebede@gmail.com">
+                <gloss>The email address of The Venerable Bede.</gloss>
+              </valItem>
+            </valList>
+          </content>
+        </elementSpec>
+
       </schemaSpec>
     </body>
     <back>

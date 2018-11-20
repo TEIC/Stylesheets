@@ -20,7 +20,7 @@
       This is a support module for the build.xml file in the 
       same folder. Run:
       
-        ant projecthelp
+        ant -projecthelp
         
       to see full details of the build process.
     </echo>
@@ -140,7 +140,8 @@
     <!--  If not regenerating, then diff the file.      -->
     <trycatch if:blank="${regenerate}">
       <try>
-        <echo message="diffing ${inFile} against ${otherFile}."/>
+        <echo message="diff A: ${inFile}"/>
+        <echo message="diff B: ${otherFile}"/>
         <fail message="${inFile} is different from ${otherFile}.">    
           <condition>
             <not>
@@ -260,33 +261,33 @@
     </if>
   </target>
   
-  <target name="validateInvalidExemplarRng">
+  <target name="validateInvalidInstanceRng">
     <description>
-      TARGET validateInvalidExemplar
-      This target uses Jing to validate an exemplar that 
-      is purposely invalid, in order to check that the 
-      expected error messages are generated. It diffs the
-      actual output against expected results, and fails if
-      the results do not match. Filenames are all generated 
-      from a single input pattern (plainFileName).
+      TARGET validateInvalidInstance
+      This target uses Jing to validate an XML instance file that is
+      purposely invalid, in order to check that the expected error
+      messages are generated. It diffs the actual output against
+      expected results, and fails if the results do not match.
+      Filenames are all generated from a single input pattern
+      (plainFileName).
     </description>
     <property name="rngFile" value="${outputDir}/${plainFileName}.rng"/>
-    <property name="invalidExemplar" value="${inputDir}/invalidExemplars/${plainFileName}InvalidExemplar.xml"/>
-    <property name="outputErrorFile" value="${outputDir}/${plainFileName}InvalidExemplarRngErrors.txt"/>
+    <property name="invalidInstance" value="${inputDir}/invalidInstances/${plainFileName}InvalidInstance.xml"/>
+    <property name="outputMessageFile" value="${outputDir}/${plainFileName}InvalidInstanceRngMessages.txt"/>
     
 <!--   Run jing to create the error output file. -->
-    <property name="expectedErrorFile" value="${expectedResultsDir}/${plainFileName}InvalidExemplarRngErrors.txt"/>
-    <java fork="true" failonerror="false" jar="${jingJar}" output="${outputErrorFile}">
+    <property name="expectedMessageFile" value="${expectedResultsDir}/${plainFileName}InvalidInstanceRngMessages.txt"/>
+    <java fork="true" failonerror="false" jar="${jingJar}" output="${outputMessageFile}">
       <arg value="${rngFile}"/>
-      <arg value="${invalidExemplar}"/>
+      <arg value="${invalidInstance}"/>
     </java>
     
 <!--   Now we sed the file to get rid of host-specific paths. -->
-    <replaceregexp file="${outputErrorFile}" match="^.+inputFiles" replace="" flags="" byline="true"/>
+    <replaceregexp file="${outputMessageFile}" match="^.+inputFiles" replace="" flags="" byline="true"/>
     
 <!--   Now diff against expected-results. -->
     <antcall target="diffFile">
-      <param name="inFile" value="${outputErrorFile}"/>
+      <param name="inFile" value="${outputMessageFile}"/>
     </antcall>
     
   </target>
