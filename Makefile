@@ -5,7 +5,7 @@ DOTDOTSAXON=java -jar ../../lib/saxon9he.jar
 DOTSAXON=java -jar ../lib/saxon9he.jar
 SAXON_ARGS=-ext:on
 
-DIRS=bibtex cocoa common csv docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt p4 pdf profiles/default rdf relaxng rnc schematron simple slides tbx tcp tite tools txt html xsd xlsx pdf verbatimxml
+DIRS=bibtex cocoa common csv docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt p4 pdf profiles/default rdf relaxng rnc schematron simple slides tbx tcp lite tite tools txt html xsd xlsx pdf verbatimxml
 
 SCRIPTS=bin/*to*
 PREFIX=/usr
@@ -94,7 +94,7 @@ oxygendoc:
 	# when building Debian packages, the script runs under
 	# fakeroot, and the oxygen script then tries to look in /root/.com.oxygenxml, and fails.  
 	# The answer is to tweak the stylesheetDocumentation.sh script 
-	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh and make stylesheet documentation if it exists
+	@echo test for existence of file $(OXY)/stylesheetDocumentation.sh and make stylesheet documentation if it exists
 	if test -f $(OXY)/stylesheetDocumentation.sh; then perl -pe "s+-Djava.awt+-Duser.home=/tmp/ -Djava.awt+; s+OXYGEN_HOME=.*+OXYGEN_HOME=/usr/share/oxygen+" < $(OXY)/stylesheetDocumentation.sh > ./runDoc.sh; chmod 755 runDoc.sh;  cp -f $(OXY)/licensekey.txt .;  $(MAKE) ${DOCTARGETS} ${PROFILEDOCTARGETS}; rm -f licensekey.txt runDoc.sh; fi
 
 teioo.jar:
@@ -131,7 +131,7 @@ installprofiles: install-profiles-files install-profiles-docs
 
 install-profiles-docs: 
 	mkdir -p release/xslprofiles/doc
-	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh
+	@echo test for existence of file $(OXY)/stylesheetDocumentation.sh
 	if test -f $(OXY)/stylesheetDocumentation.sh; then perl -pe "s+-Djava.awt+-Djava.awt -Duser.home=/tmp/+; s+OXYGEN_HOME=.*+OXYGEN_HOME=/usr/share/oxygen+" < $(OXY)/stylesheetDocumentation.sh > ./runDoc.sh; chmod 755 runDoc.sh;  cp -f $(OXY)/licensekey.txt .;  $(MAKE) ${PROFILEDOCTARGETS}; rm -f licensekey.txt runDoc.sh; fi
 	(cd release/xslprofiles/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 

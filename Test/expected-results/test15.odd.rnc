@@ -39,6 +39,14 @@ att.ascribed.attribute.who =
   attribute who {
     list { xsd:anyURI+ }
   }?
+att.ascribed.directed.attributes =
+  att.ascribed.attributes, att.ascribed.directed.attribute.toWhom
+att.ascribed.directed.attribute.toWhom =
+  
+  ## indicates the person, or group of people, to whom a speech act or action is directed.
+  attribute toWhom {
+    list { xsd:anyURI+ }
+  }?
 att.canonical.attributes =
   att.canonical.attribute.key, att.canonical.attribute.ref
 att.canonical.attribute.key =
@@ -161,7 +169,7 @@ att.dimensions.attribute.scope =
 att.written.attributes = att.written.attribute.hand
 att.written.attribute.hand =
   
-  ## points to a handNote element describing the hand considered responsible for the textual content of the element concerned.
+  ## points to a handNote element describing the hand considered responsible for the content of the element concerned.
   attribute hand { xsd:anyURI }?
 att.breaking.attributes = att.breaking.attribute.break
 att.breaking.attribute.break =
@@ -467,9 +475,7 @@ att.global.responsibility.attribute.resp =
     list { xsd:anyURI+ }
   }?
 att.editLike.attributes =
-  att.dimensions.attributes,
-  att.editLike.attribute.evidence,
-  att.editLike.attribute.instant
+  att.editLike.attribute.evidence, att.editLike.attribute.instant
 att.editLike.attribute.evidence =
   
   ## indicates the nature of the evidence supporting the reliability or accuracy of the intervention or interpretation.
@@ -1129,10 +1135,10 @@ att.citing.attribute.unit =
       ## the element identifies a part of a book or collection.
       "part"
     | 
-      ## the element identifies an entry number or label in a list of entries.
+      ## the element identifies a column.
       "column"
     | 
-      ## the element identifies a column.
+      ## the element identifies an entry number or label in a list of entries.
       "entry"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
@@ -1215,13 +1221,14 @@ model.dateLike_sequence = date, time
 model.dateLike_sequenceOptional = date?, time?
 model.dateLike_sequenceOptionalRepeatable = date*, time*
 model.dateLike_sequenceRepeatable = date+, time+
-model.measureLike = num | measure | measureGrp
-model.measureLike_alternation = num | measure | measureGrp
-model.measureLike_sequence = num, measure, measureGrp
-model.measureLike_sequenceOptional = num?, measure?, measureGrp?
+model.measureLike = num | measure | measureGrp | unit
+model.measureLike_alternation = num | measure | measureGrp | unit
+model.measureLike_sequence = num, measure, measureGrp, unit
+model.measureLike_sequenceOptional = num?, measure?, measureGrp?, unit?
 model.measureLike_sequenceOptionalRepeatable =
-  num*, measure*, measureGrp*
-model.measureLike_sequenceRepeatable = num+, measure+, measureGrp+
+  num*, measure*, measureGrp*, unit*
+model.measureLike_sequenceRepeatable =
+  num+, measure+, measureGrp+, unit+
 model.egLike = notAllowed
 model.egLike_alternation = notAllowed
 model.egLike_sequence = empty
@@ -1617,7 +1624,7 @@ p =
   element para {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-p-abstractModel-p-constraint-report-4"
+         id = "test15-p-abstractModel-structure-p-constraint-report-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1626,9 +1633,9 @@ p =
            "               "
            sch:report [
              test =
-               "not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
+               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
              "\x{a}" ~
-             "        Abstract model violation: Paragraphs may not contain other paragraphs or ab elements.\x{a}" ~
+             "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -1709,10 +1716,9 @@ said =
   element said {
     macro.specialPara,
     att.global.attributes,
-    att.ascribed.attributes,
+    att.ascribed.directed.attributes,
     
     ## may be used to indicate whether the quoted matter is regarded as having been vocalized or signed.
-    [ a:defaultValue = "unknown" ]
     attribute aloud {
       xsd:boolean
       | (
@@ -1743,6 +1749,7 @@ quote =
     macro.specialPara,
     att.global.attributes,
     att.typed.attributes,
+    att.notated.attributes,
     empty
   }
 q =
@@ -1751,7 +1758,7 @@ q =
   element q {
     macro.specialPara,
     att.global.attributes,
-    att.ascribed.attributes,
+    att.ascribed.directed.attributes,
     
     ## may be used to indicate whether the offset passage is spoken or thought, or to characterize it more finely.
     ## Suggested values include: 1] spoken; 2] thought; 3] written; 4] soCalled; 5] foreign; 6] distinct; 7] term; 8] emph; 9] mentioned
@@ -1864,7 +1871,7 @@ choice =
   
   ## groups a number of alternative encodings for the same point in a text. [3.4. Simple Editorial Changes]
   element choice {
-    (model.choicePart | choice)*, att.global.attributes, empty
+    (model.choicePart | choice)+, att.global.attributes, empty
   }
 reg =
   
@@ -1890,6 +1897,7 @@ gap =
     att.global.attributes,
     att.timed.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     
     ## gives the reason for omission
     ## Suggested values include: 1] cancelled; 2] deleted; 3] editorial; 4] illegible; 5] inaudible; 6] irrelevant; 7] sampling
@@ -1920,9 +1928,6 @@ gap =
       }
     }?,
     
-    ## in the case of text omitted from the transcription because of deliberate deletion by an identifiable hand, indicates the hand which made the deletion.
-    attribute hand { xsd:anyURI }?,
-    
     ## in the case of text omitted because of damage, categorizes the cause of the damage, if it can be identified.
     ## Sample values include: 1] rubbing; 2] mildew; 3] smoke
     attribute agent {
@@ -1939,6 +1944,7 @@ add =
     att.transcriptional.attributes,
     att.placement.attributes,
     att.typed.attributes,
+    att.dimensions.attributes,
     empty
   }
 del =
@@ -1949,6 +1955,7 @@ del =
     att.global.attributes,
     att.transcriptional.attributes,
     att.typed.attributes,
+    att.dimensions.attributes,
     empty
   }
 unclear =
@@ -1958,16 +1965,30 @@ unclear =
     macro.paraContent,
     att.global.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     
     ## indicates why the material is hard to transcribe.
+    ## Suggested values include: 1] illegible; 2] inaudible; 3] faded; 4] background_noise; 5] eccentric_ductus
     attribute reason {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        (
+         ##
+         "illegible"
+         | 
+           ##
+           "inaudible"
+         | 
+           ##
+           "faded"
+         | 
+           ##
+           "background_noise"
+         | 
+           ##
+           "eccentric_ductus"
+         | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" })+
       }
     }?,
-    
-    ## Where the difficulty in transcription arises from action (partial deletion, etc.) assignable to an identifiable hand, signifies the hand responsible for the action.
-    attribute hand { xsd:anyURI }?,
     
     ## Where the difficulty in transcription arises from damage, categorizes the cause of the damage, if it can be identified.
     ## Sample values include: 1] rubbing; 2] mildew; 3] smoke
@@ -2086,6 +2107,17 @@ measureGrp =
     att.typed.attributes,
     empty
   }
+unit =
+  
+  ## contains a symbol, a word or a phrase referring to a unit of measurement in any kind of formal or informal system. [3.5.3. Numbers and
+  ## Measures]
+  element unit {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.typed.attributes,
+    att.measurement.attributes,
+    empty
+  }
 date =
   
   ## contains a date in any format. [3.5.4. Dates and Times 2.2.4. Publication, Distribution, Licensing, etc. 2.6. The Revision Description 3.11.2.4. Imprint, Size of a Document, and Reprint Information 15.2.3. The Setting Description 13.3.6. Dates and Times]
@@ -2094,6 +2126,7 @@ date =
     att.global.attributes,
     att.datable.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     att.typed.attributes,
     empty
   }
@@ -2105,6 +2138,7 @@ time =
     att.global.attributes,
     att.datable.attributes,
     att.editLike.attributes,
+    att.dimensions.attributes,
     att.typed.attributes,
     empty
   }
@@ -2408,6 +2442,7 @@ gb =
     att.typed.attributes,
     att.spanning.attributes,
     att.breaking.attributes,
+    att.edition.attributes,
     empty
   }
 pb =
@@ -2592,7 +2627,12 @@ imprint =
 publisher =
   
   ## provides the name of the organization responsible for the publication or distribution of a bibliographic item. [3.11.2.4. Imprint, Size of a Document, and Reprint Information 2.2.4. Publication, Distribution, Licensing, etc.]
-  element publisher { macro.phraseSeq, att.global.attributes, empty }
+  element publisher {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.canonical.attributes,
+    empty
+  }
 biblScope =
   
   ## (scope of bibliographic reference) defines the scope of a bibliographic reference, for example as a list of page numbers, or a named subdivision of a larger work. [3.11.2.5. Scopes and Ranges in Bibliographic Citations]
@@ -2816,7 +2856,7 @@ sp =
        | model.qLike),
       model.global*)+),
     att.global.attributes,
-    att.ascribed.attributes,
+    att.ascribed.directed.attributes,
     empty
   }
 speaker =
@@ -2828,7 +2868,7 @@ stage =
   ## (stage direction) contains any kind of stage direction within a dramatic text or fragment. [3.12.2. Core Tags for Drama 3.12. Passages of Verse or Drama 7.2.4. Stage Directions]
   element stage {
     macro.specialPara,
-    att.ascribed.attributes,
+    att.ascribed.directed.attributes,
     att.global.attributes,
     att.placement.attributes,
     
@@ -2878,8 +2918,7 @@ teiCorpus =
     att.global.attributes,
     att.typed.attributes,
     
-    ## The version of the TEI scheme
-    [ a:defaultValue = "5.0" ]
+    ## specifies the version number of the TEI Guidelines against which this document is valid.
     attribute version {
       xsd:token { pattern = "[\d]+(\.[\d]+){0,2}" }
     }?,
@@ -3020,12 +3059,20 @@ publicationStmt =
 distributor =
   
   ## supplies the name of a person or other agency responsible for the distribution of a text. [2.2.4. Publication, Distribution, Licensing, etc.]
-  element distributor { macro.phraseSeq, att.global.attributes, empty }
+  element distributor {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.canonical.attributes,
+    empty
+  }
 authority =
   
   ## (release authority) supplies the name of a person or other agency responsible for making a work available, other than a publisher or distributor. [2.2.4. Publication, Distribution, Licensing, etc.]
   element authority {
-    macro.phraseSeq.limited, att.global.attributes, empty
+    macro.phraseSeq.limited,
+    att.global.attributes,
+    att.canonical.attributes,
+    empty
   }
 idno =
   
@@ -3059,7 +3106,7 @@ idno =
         ## English Short-Title Catalogue number: an identifying number assigned to a document in English printed in the British Isles or North America before 1801.
         "ESTC"
       | 
-        ## union catalog number in WorldCat representing a resource held by one or more of the member libraries in the global cooperative Online Computer Library Center.
+        ## OCLC control number (record number) for the union catalog record in WorldCat, a union catalog for member libraries in the Online Computer Library Center global cooperative.
         "OCLC"
       | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
@@ -3074,7 +3121,6 @@ availability =
     att.declarable.attributes,
     
     ## supplies a code identifying the current availability of the text.
-    [ a:defaultValue = "unknown" ]
     attribute status {
       
       ## the text is freely available.
@@ -3198,7 +3244,6 @@ correction =
     att.declarable.attributes,
     
     ## indicates the degree of correction applied to the text.
-    [ a:defaultValue = "unknown" ]
     attribute status {
       
       ## the text has been thoroughly checked and proofread.
@@ -3363,13 +3408,13 @@ punctuation =
         "all"
     }?,
     
-    ## indicates whether punctation marks have been captured inside or outside of an adjacent element.
+    ## indicates the positioning of punctuation marks that are associated with marked up text as being encoded within the element surrounding the text or immediately before or after it.
     attribute placement {
       
-      ## punctuation marks are captured inside adjacent elements
+      ## punctuation marks found at the start or end of a marked up text component are included within its surrounding element;
       "internal"
       | 
-        ## punctuation marks are captured outside adjacent elements
+        ## punctuation marks found at the start or end of a marked up text component appear immediately before or after the surrounding element
         "external"
     }?,
     empty
@@ -3794,7 +3839,7 @@ TEI =
     att.global.attributes,
     att.typed.attributes,
     
-    ## specifies the major version number of the TEI Guidelines against which this document is valid.
+    ## specifies the version number of the TEI Guidelines against which this document is valid.
     attribute version {
       xsd:token { pattern = "[\d]+(\.[\d]+){0,2}" }
     }?,
@@ -4368,7 +4413,8 @@ ab =
   element ab {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-ab-abstractModel-structure-p-constraint-report-14"
+         id =
+           "test15-ab-abstractModel-structure-ab-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4377,9 +4423,9 @@ ab =
            "               "
            sch:report [
              test =
-               "not(ancestor::floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
+               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
              "\x{a}" ~
-             "        Abstract model violation: ab may not contain paragraphs or other ab elements.\x{a}" ~
+             "        Abstract model violation: ab may not occur inside paragraphs or other ab elements.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -4430,6 +4476,7 @@ seg =
     att.segLike.attributes,
     att.typed.attributes,
     att.written.attributes,
+    att.notated.attributes,
     empty
   }
 when =
@@ -4709,6 +4756,7 @@ figure =
     att.global.attributes,
     att.placement.attributes,
     att.typed.attributes,
+    att.written.attributes,
     empty
   }
 figDesc =

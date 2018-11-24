@@ -205,7 +205,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>px;
 }
 img.fullpage {
-position: absolute;
+<!--position: absolute;-->
 height: </xsl:text>
             <xsl:value-of select="$viewPortHeight"/>
             <xsl:text>px; left:0px; top:0px;}

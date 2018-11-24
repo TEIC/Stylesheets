@@ -231,12 +231,12 @@ test-epub: css
 	java -Djava.awt.headless=true -jar ../lib/epubcheck3.jar  test.epub
 	unzip -t test.epub > test.epub.listing
 	if [ $(REGENERATING) -ne 1 ]; \
-		then diff  test.epub.listing expected-results/test.epub.listing; fi
+		then bash -c 'diff  <(sort test.epub.listing) <(sort expected-results/test.epub.listing)'; fi
 	rm test.epub.listing
 	$(BINDIR)/teitoepub  --fileperpage test.xml test-pages.epub
 	unzip -t test-pages.epub > test.epub.listing2
 	if [ $(REGENERATING) -ne 1 ]; \
-		then diff  test.epub.listing2 expected-results/test.epub.listing2; fi
+		then bash -c 'diff  <(sort test.epub.listing2) <(sort expected-results/test.epub.listing2)'; fi
 	rm test.epub.listing2
 
 test-rdf:
@@ -261,13 +261,13 @@ test-odt:   test.rng
 	(cd ..; $(MAKE) names)
 	@echo BUILD: testing odt
 	$(BINDIR)/teitoodt test.xml
-	unzip -t test.xml.odt > test.xml.odt.listing
+	unzip -t test.xml.odt | sort > test.xml.odt.listing
 	unzip -o -q test.xml.odt content.xml
 	xmllint --format content.xml > content.xml.odt.listing
 	if [ $(REGENERATING) -ne 1 ]; \
-		then diff  test.xml.odt.listing expected-results/test.xml.odt.listing; fi
+		then bash -c 'diff  <(sort test.xml.odt.listing) <(sort expected-results/test.xml.odt.listing)'; fi
 	if [ $(REGENERATING) -ne 1 ]; \
-		then diff  content.xml.odt.listing expected-results/content.xml.odt.listing; fi
+		then bash -c 'diff  <(sort content.xml.odt.listing) <(sort expected-results/content.xml.odt.listing)'; fi
 	$(BINDIR)/odttotei test7.odt test7.xml
 	$(JING) test.rng test7.xml
 	if [ $(REGENERATING) -ne 1 ]; \
@@ -303,6 +303,10 @@ test-from-docx: test.rng
 	xmllint --format temp.xml | perl cleanup.pl > test39.xml  && rm temp.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test39.xml expected-results/test39.xml; fi
+	$(BINDIR)/docxtotei hyperlinktest.docx temp.xml
+	xmllint --format temp.xml | perl cleanup.pl > hyperlinktest.xml  && rm temp.xml
+	if [ $(REGENERATING) -ne 1 ]; \
+		then diff  hyperlinktest.xml expected-results/hyperlinktest.xml; fi
 	$(BINDIR)/docxtotei --profile=transcription test-rtf2tei.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-rtf2tei.xml  && rm temp.xml
 	if [ $(REGENERATING) -ne 1 ]; \
@@ -476,7 +480,7 @@ test-namespaces:
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test33.rnc expected-results/test33.rnc; fi
 	$(SAXON) test33.odd ../odds/odd2json.xsl > test33.json
-	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test33.json
+	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test33.json
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test33.json expected-results/test33.json; fi
 	$(BINDIR)/teitornc test34.odd test34.rnc
@@ -485,12 +489,12 @@ test-namespaces:
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test34.rnc expected-results/test34.rnc; fi
 	$(SAXON) test34.odd ../odds/odd2json.xsl > test34.json
-	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.json
+	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.json
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test34.json expected-results/test34.json; fi
 	$(SAXON) test34.odd ../odds/odd2odd.xsl > test34.combined.odd
 	$(SAXON) test34.combined.odd ../odds/odd2json.xsl > test34.combined.json
-	perl -p -i -e 's/"date":"\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.combined.json
+	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.combined.json
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test34.combined.json expected-results/test34.combined.json; fi
 	$(BINDIR)/teitohtml --odd --summaryDoc test34.odd test34.odd.html
@@ -529,8 +533,8 @@ test-pureant:
 
 test-oxgarage:
 	@echo BUILD: testing oxgarage
-	curl -s -F upload=@test.odd  -o test.rng http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/relaxng%3Aapplication%3Axml-relaxng
-	curl -s -F upload=@test.odd  -o test.zip http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/xsd%3Aapplication%3Axml-xsd/
+	curl -s -F upload=@test.odd  -o test.rng http://oxgarage.tei-c.org/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/relaxng%3Aapplication%3Axml-relaxng
+	curl -s -F upload=@test.odd  -o test.zip http://oxgarage.tei-c.org/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/xsd%3Aapplication%3Axml-xsd/
 
 test-oxgarage-tei:
 	@echo BUILD: testing oxgarage-tei
@@ -549,7 +553,7 @@ clean:
 	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5 test*.processedodd *.isosch
 	rm -f oddbyexample.* index*div*html
 	rm -f testdrama.compiled.xml
-	rm -f test5.odt test7.xml test18.xml test19.xml test-index.xml test7.zip test11.xml test9.docx test9.odt content.xml.odt.listing content.xml.odt test.xml.docx.core test7.docx
+	rm -f test5.odt test7.xml test18.xml test19.xml test-index.xml test7.zip test11.xml test11a.xml test9.docx test9.odt content.xml.odt.listing content.xml.odt test.xml.docx.core test7.docx hyperlinktest.xml
 	rm -f A54031.xml dcr.result test-rtf2tei.xml test29.xml dcr.tmp xml.tmp
 	rm -f xml.result
 	rm -rf charts/ embeddings/ media/ _rels/ \[Content_Types\].xml
