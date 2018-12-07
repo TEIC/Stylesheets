@@ -33,16 +33,15 @@
         a place to test creating new elements in new namespaces, or
         changing content models in such a way as to create non-TEI-
         compliant schemas (for the most severe definition of 
-        "TEI-compliant").</desc>
+        <soCalled>TEI-compliant</soCalled>).</desc>
         
-        <moduleRef key="tei"/>
-        
-        <!-- test @except -->
-        <moduleRef key="textstructure" except="div1 div2 div3 div4 div5 div6 div7"/>
-        
+        <moduleRef key="tei"/>        
         <moduleRef key="header"/>
         <moduleRef key="core"/>
         <moduleRef key="analysis"/>
+        
+        <!-- test @except -->
+        <moduleRef key="textstructure" except="div1 div2 div3 div4 div5 div6 div7"/>
         
         <!-- test @include -->
         <moduleRef key="namesdates" include="persName placeName orgName"/>
