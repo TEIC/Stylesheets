@@ -2061,8 +2061,6 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
          <ref name="t_link"/>
          <ref name="t_linkGrp"/>
          <ref name="t_timeline"/>
-         <ref name="t_join"/>
-         <ref name="t_joinGrp"/>
          <ref name="t_alt"/>
          <ref name="t_altGrp"/>
       </choice>
@@ -6588,79 +6586,6 @@ Suggested values include: 1] d (days) ; 2] h (hours) ; 3] min (minutes) ; 4] s (
                      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                   </choice>
                </choice>
-            </attribute>
-         </optional>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_join">
-      <element name="join">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">identifies a possibly fragmented segment of text, by pointing at the possibly discontiguous elements which compose it. [16.7. Aggregation]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <ref name="t_model.descLike"/>
-               <ref name="t_model.certLike"/>
-            </choice>
-         </zeroOrMore>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-join-joinTargets3-constraint-assert-10">
-            <rule context="tei:join">
-               <assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                       test="contains(@target,' ')">
-You must supply at least two values for @target on <name/>
-               </assert>
-            </rule>
-         </pattern>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.pointing.attributes"/>
-         <ref name="t_att.typed.attributes"/>
-         <optional>
-            <attribute name="result">
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the name of an element which this aggregation may be understood to represent.</a:documentation>
-               <data type="Name"/>
-            </attribute>
-         </optional>
-         <optional>
-            <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                       name="scope"
-                       a:defaultValue="root">
-               <a:documentation>indicates whether the targets to be joined include the entire element indicated (the entire subtree including its root), or just the children of the target (the branches of the subtree).</a:documentation>
-               <choice>
-                  <value>root</value>
-                  <a:documentation>the rooted subtrees indicated by the target attribute are joined, each subtree become a child of the virtual element created by the join</a:documentation>
-                  <value>branches</value>
-                  <a:documentation>the children of the subtrees indicated by the target attribute become the children of the virtual element (i.e. the roots of the subtrees are discarded)</a:documentation>
-               </choice>
-            </attribute>
-         </optional>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_joinGrp">
-      <element name="joinGrp">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(join group) groups a collection of join elements and possibly pointers. [16.7. Aggregation]</a:documentation>
-         <group>
-      
-            <zeroOrMore>
-               <ref name="t_model.glossLike"/>
-            </zeroOrMore>
-      
-      
-            <oneOrMore>
-               <choice>
-                  <ref name="t_join"/>
-                  <ref name="t_ptr"/>
-               </choice>
-            </oneOrMore>
-      
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.pointing.group.attributes"/>
-         <optional>
-            <attribute name="result">
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies the default value for the result on each join included within the group.</a:documentation>
-               <data type="Name"/>
             </attribute>
          </optional>
          <empty/>

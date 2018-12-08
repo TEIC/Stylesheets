@@ -31,15 +31,23 @@
 		paragraph should be valid, but the <gi>tag</gi>
 		element should not.</p>
 
-                <!--               Test the removal of att.typed from
-                   <list>. -->
+		<!-- 
+		     The testPure1 schema removed <join> and <joinGrp>, so the
+		     following should generate an error.
+		-->
+		<joinGrp type="invalid">
+		  <join result="p" scope="branches" target="#para1 #para2"/>
+		  <join result="p" scope="branches" target="#para3 #para4"/>
+		</joinGrp>
+
+                <!-- Test the removal of att.typed from <list>. -->
                 <list type="notAllowed">
                     <head>List with <att>type</att>, which is not allowed. </head>
                     <item>one</item>
                     <item>two</item>
                 </list>
 
-                <!--               Test the deletion of biblStruct from the core module. -->
+                <!-- Test the deletion of biblStruct from the core module. -->
                 <listBibl>
                     <head>This should not allow biblStruct</head>
                     <bibl>

@@ -53,6 +53,10 @@
 	<elementRef key="att"/>
 	<elementRef key="val"/>
 
+	<!-- Test deletion of an element directly: -->
+	<elementSpec module="linking" ident="join" mode="delete"/>
+	<elementSpec module="linking" ident="joinGrp" mode="delete"/>
+
         <!-- try deleting a class that is not included anyway as tagdocs module is not included -->
         <classSpec ident="att.deprecated" mode="delete" type="atts"/>
         <!-- test deletion of attr class (which is a subclass), -->
