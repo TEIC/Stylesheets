@@ -57,28 +57,28 @@
 	<elementSpec module="linking" ident="join" mode="delete"/>
 	<elementSpec module="linking" ident="joinGrp" mode="delete"/>
 
-        <!-- try deleting a class that is not included anyway as tagdocs module is not included -->
-        <classSpec ident="att.deprecated" mode="delete" type="atts"/>
-        <!-- test deletion of attr class (which is a subclass), -->
-        <!-- scorched earth approach: -->
+        <!-- try deleting a class that is not included anyway as
+             dictionary module is not included -->
+        <classSpec ident="att.lexicographic" mode="delete" type="atts"/>
+
+        <!-- test deletion of attr class (which is a subclass); scorched earth approach: -->
         <classSpec ident="att.datable.custom" mode="delete" type="atts"/>
         <classSpec ident="att.datable.iso" mode="delete" type="atts"/>
+
         <!-- test deletion of an attr from a class; selective thinning approach: -->
         <classSpec ident="att.typed" type="atts" mode="change">
           <attList>
             <attDef ident="subtype" mode="delete"/>
           </attList>
         </classSpec>
+
         <!-- test deletion of an attr from a subclass; selective thinning approach: -->
         <classSpec ident="att.global.linking" type="atts" mode="change">
           <attList>
-            <attDef ident="synch" mode="change">
-              <datatype minOccurs="1" maxOccurs="1">
-                <dataRef key="teidata.pointer"/>
-              </datatype>
-            </attDef>
+	    <attDef ident="synch" mode="delete"/>
           </attList>
         </classSpec>
+
         <!-- Remove @type from <list>, genteel bureaucratic approach: -->
         <elementSpec module="core" ident="list" mode="change">
           <classes mode="change">

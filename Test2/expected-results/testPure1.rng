@@ -6082,7 +6082,6 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <ref name="t_att.global.rendition.attribute.style"/>
          <ref name="t_att.global.rendition.attribute.rendition"/>
          <ref name="t_att.global.linking.attribute.corresp"/>
-         <ref name="t_att.global.linking.attribute.synch"/>
          <ref name="t_att.global.linking.attribute.sameAs"/>
          <ref name="t_att.global.linking.attribute.copyOf"/>
          <ref name="t_att.global.linking.attribute.next"/>
@@ -6301,7 +6300,6 @@ The attributes @to and @from on <name/> may each contain only a single value</re
    </define>
    <define name="t_att.global.linking.attributes">
       <ref name="t_att.global.linking.attribute.corresp"/>
-      <ref name="t_att.global.linking.attribute.synch"/>
       <ref name="t_att.global.linking.attribute.sameAs"/>
       <ref name="t_att.global.linking.attribute.copyOf"/>
       <ref name="t_att.global.linking.attribute.next"/>
@@ -6318,14 +6316,6 @@ The attributes @to and @from on <name/> may each contain only a single value</re
                   <data type="anyURI"/>
                </oneOrMore>
             </list>
-         </attribute>
-      </optional>
-   </define>
-   <define name="t_att.global.linking.attribute.synch">
-      <optional>
-         <attribute name="synch">
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(synchronous) points to elements that are synchronous with the current element.</a:documentation>
-            <data type="anyURI"/>
          </attribute>
       </optional>
    </define>

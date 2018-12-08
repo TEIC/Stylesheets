@@ -40,6 +40,12 @@
 		  <join result="p" scope="branches" target="#para3 #para4"/>
 		</joinGrp>
 
+		<!-- Test the deletion of @synch -->
+		<p synch="#para1 #para2">The testPure1 schema has
+		removed <att>synch</att> from att.global.linking, so
+		its presence on this <gi>p</gi> should cause an
+		error.</p>
+		
                 <!-- Test the removal of att.typed from <list>. -->
                 <list type="notAllowed">
                     <head>List with <att>type</att>, which is not allowed. </head>
