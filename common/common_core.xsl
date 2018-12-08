@@ -817,6 +817,13 @@ of this software, even if advised of the possibility of such damage.
 			       name="letters">pp. </xsl:with-param>
 			 </xsl:call-template>
                </xsl:when>
+               <xsl:when test="./@from and ./@to">
+				<xsl:call-template name="makeText">
+					<xsl:with-param name="letters">
+					pp. <xsl:value-of select="@from"/>-<xsl:value-of select="@to"/>
+					</xsl:with-param>
+			 </xsl:call-template>
+               </xsl:when>
                <xsl:otherwise>
 	                 <xsl:call-template name="makeText">
 			   <xsl:with-param
