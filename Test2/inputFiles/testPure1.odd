@@ -79,19 +79,24 @@
           </attList>
         </classSpec>
 
-        <!-- Remove @type from <list>, genteel bureaucratic approach: -->
+        <!-- test unsubscribing an element from a class, here removing
+             <list> from att.typed, removing @type and @subtype;
+             genteel bureaucratic approach: -->
         <elementSpec module="core" ident="list" mode="change">
           <classes mode="change">
             <memberOf key="att.typed" mode="delete"/>
           </classes>
-        </elementSpec>  
-        <!-- test removal of a specific attribute from an element that holds it privately (repossession) -->
+        </elementSpec>
+ 
+        <!-- test removal of a specific attribute from an element that
+             holds it privately; repossession: -->
         <elementSpec module="core" ident="note" mode="change">
           <attList>
             <attDef ident="anchored" mode="delete"/>
           </attList>
         </elementSpec>
-        <!-- provide a closed value list for an attr -->
+
+        <!-- test providing a closed value list for an attr provided by a class: -->
         <elementSpec ident="title" mode="change" module="core">
           <attList>
             <attDef ident="type" mode="replace">
@@ -116,7 +121,37 @@
             </attDef>
           </attList>
         </elementSpec>
-        <elementSpec ident="bibl" mode="change" module="core">
+
+	<!-- Test providing a closed value list for a privately held attr: -->
+	<?TEI winita?>
+
+	<!-- Test use of <dataRef> (by changing attrs): -->
+	<elementSpec ident="measureGrp" mode="change" module="core">
+	  <attList>
+	    <attDef mode="change" ident="corresp">
+	      <datatype minOccurs="1" maxOccurs="1">
+		<dataRef key="teidata.count"/>
+	      </datatype>
+	    </attDef>
+	    <attDef mode="change" ident="select">
+	      <datatype minOccurs="1" maxOccurs="1">
+		<dataRef name="nonNegativeInteger"/>
+	      </datatype>
+	    </attDef>
+	    <attDef mode="change" ident="sameAs">
+	      <datatype minOccurs="1" maxOccurs="1">
+		<dataRef key="teidata.count" restriction="[0-9][0-9]?"/>
+	      </datatype>
+	    </attDef>
+	    <attDef mode="change" ident="copyOf">
+	      <datatype minOccurs="1" maxOccurs="1">
+		<dataRef name="nonNegativeInteger" restriction="[0-9][0-9]?"/>
+	      </datatype>
+	    </attDef>
+	  </attList>
+	</elementSpec>		
+
+	<elementSpec ident="bibl" mode="change" module="core">
           <desc>A short bibliographic citation with nothing but author, title, and optional date</desc>
           <content>
             <sequence>

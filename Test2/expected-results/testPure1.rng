@@ -3619,9 +3619,49 @@ Measures]</a:documentation>
                <ref name="t_model.measureLike"/>
             </choice>
          </zeroOrMore>
-         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.global.attribute.xmlid"/>
+         <ref name="t_att.global.attribute.n"/>
+         <ref name="t_att.global.attribute.xmllang"/>
+         <ref name="t_att.global.attribute.xmlbase"/>
+         <ref name="t_att.global.attribute.xmlspace"/>
+         <ref name="t_att.global.rendition.attribute.rend"/>
+         <ref name="t_att.global.rendition.attribute.style"/>
+         <ref name="t_att.global.rendition.attribute.rendition"/>
+         <ref name="t_att.global.linking.attribute.next"/>
+         <ref name="t_att.global.linking.attribute.prev"/>
+         <ref name="t_att.global.linking.attribute.exclude"/>
+         <ref name="t_att.global.analytic.attribute.ana"/>
+         <ref name="t_att.global.responsibility.attribute.cert"/>
+         <ref name="t_att.global.responsibility.attribute.resp"/>
+         <ref name="t_att.global.source.attribute.source"/>
          <ref name="t_att.measurement.attributes"/>
          <ref name="t_att.typed.attributes"/>
+         <optional>
+            <attribute name="corresp">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(corresponds) points to elements that correspond to the current element in some way.</a:documentation>
+               <data type="nonNegativeInteger"/>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="sameAs">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to an element that is the same as the current element.</a:documentation>
+               <data type="nonNegativeInteger"/>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="copyOf">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to an element of which the current element is a copy.</a:documentation>
+               <data type="nonNegativeInteger">
+                  <param name="pattern">[0-9][0-9]?</param>
+               </data>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="select">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">selects one or more alternants; if one alternant is selected, the ambiguity or uncertainty is marked as resolved. If more than one alternant is selected, the degree of ambiguity or uncertainty is marked as reduced by the number of alternants not selected.</a:documentation>
+               <data type="nonNegativeInteger"/>
+            </attribute>
+         </optional>
          <empty/>
       </element>
    </define>

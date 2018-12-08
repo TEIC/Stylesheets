@@ -53,6 +53,42 @@
                     <item>two</item>
                 </list>
 
+		<!-- 
+		     Test constraints on the attrs of <measureGrp>, as they were
+		     used to test <dataRef> in the ODD.
+		-->
+		<list>
+		  <label><att>corresp</att>: <gi>dataRef</gi> w/ <att>key</att></label>
+		  <item><measureGrp corresp="#para1"/> Should be
+		  invalid, as <val>#para1</val> is not a teidata.count
+		  (i.e., a non-negative integer).</item>
+
+		  <label><att>select</att>: <gi>dataRef</gi> w/ <att>name</att></label>
+		  <item><measureGrp select="#para1"/> Should be
+		  invalid, as <val>#para1</val> is not a non-negative
+		  integer.</item>
+
+		  <label><att>sameAs</att>: <gi>dataRef</gi> w/ <att>key</att> &amp; <att>restriction</att></label>
+		  <item><measureGrp sameAs="1234"/> Should be invalid,
+		  as <val>1234</val> is a 4-digit teidata.count, not a
+		  1- or 2-digit teidata.count (i.e., non-negative
+		  integer). <note><emph>THIS TEST FAILS</emph> — it
+		  should be invalid, but is not flagged as such. Thus
+		  this test has correctly helped us find an error (or
+		  at least, a missing feature) in the Stylesheets. See
+		  <ref
+		  target="https://github.com/TEIC/Stylesheets/issues/349">#349</ref>;
+		  when it is fixed the expected-results of this file
+		  will need to be updated, and this entire
+		  <gi>note</gi> should be deleted.</note></item>
+
+		  <label><att>copyOf</att>: <gi>dataRef</gi> w/ <att>name</att> &amp; <att>restriction</att></label>
+		  <item><measureGrp copyOf="567.890"/> Should be
+		  invalid, as <val>567.890</val> is not an integer,
+		  let alone a 1- or 2-digit non-negative
+		  integer.</item>
+		</list>
+
                 <!-- Test the deletion of biblStruct from the core module. -->
                 <listBibl>
                     <head>This should not allow biblStruct</head>
