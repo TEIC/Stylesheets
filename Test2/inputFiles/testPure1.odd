@@ -47,8 +47,12 @@
         <!-- test @include -->
         <moduleRef key="namesdates" include="persName placeName orgName"/>
         
-        <!-- Include tagdocs so that our instance files can use <gi> et al descriptively.  -->
-        <moduleRef key="tagdocs"/>
+        <!-- Allow our instance files to use <gi> et al descriptively,
+             thus testing direct use of <elementRef>: -->
+	<elementRef key="gi"/>
+	<elementRef key="att"/>
+	<elementRef key="val"/>
+
         <!-- try deleting a class that is not included anyway as tagdocs module is not included -->
         <classSpec ident="att.deprecated" mode="delete" type="atts"/>
         <!-- test deletion of attr class (which is a subclass), -->

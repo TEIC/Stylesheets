@@ -21,6 +21,16 @@
 
                 <p>This file is designed to fail validation in specific predicted ways.</p>
 
+		<!--
+		    Test something from tagdocs that should *not* be valid, along
+		    with something that should.
+		-->
+		<p>Turns out, because of the use of
+		<gi>elementRef</gi>s instead of just <tag>moduleRef
+		key="tagdocs"</tag>, the <gi>gi</gi> elements in this
+		paragraph should be valid, but the <gi>tag</gi>
+		element should not.</p>
+
                 <!--               Test the removal of att.typed from
                    <list>. -->
                 <list type="notAllowed">
