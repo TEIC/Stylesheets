@@ -24,7 +24,7 @@ All the files in that list are processed by default. Each file goes through the 
 - Diffing against expected results. The expected results file is `expected-results/testPure1.rng`.
 - Extraction of Schematron from the ODD file. This creates a file called `outputFiles/testPure1FromOdd.sch`.
 
-##Testing of the RELAX NG
+## Testing of the RELAX NG
 
 Generated RELAX NG files are not simply diffed against expected results; they're also tested against two TEI instance files, one of which is intended to be valid, and one of which is intended to be invalid in specific ways. These two files are named according to a convention based on the original ODD file name:
 
