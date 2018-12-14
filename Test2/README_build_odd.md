@@ -2,12 +2,12 @@
 
 This file documents the components and functionality of the build_odd.xml ant file, which handles testing of ODD processing.
 
-##Invocation
+## Invocation
 build_odd.xml is a separate file in order to provide some modularization and keep file sizes under control, but it should be invoked using the main ant file, build.xml:
 
 `ant odd`
 
-##ODD to RELAX NG tests
+## ODD to RELAX NG tests
 
 Most of the work done so far is on converting ODD to RELAX NG. The basic process works like this:
 
