@@ -47,8 +47,8 @@ Imagine that you want to add a new test to the `testPure1.odd` file. We recommen
  - Add only one new test/feature at a time.
  - Think clearly about what you want to test and how you want to test it.
  - Add a well-commented block to the `testPure1.odd` file which invokes the component of the transformations that you want to test.
- - Add a new section to the `inputFiles/validInstances/testPure1ValidInstance.xml` file which comprises a structure which should be valid given the new ODD component in `testPure1.odd`.
- - Add a new section to the `inputFiles/invalidInstances/testPure1InvalidInstance.xml` file which should be invalid in a specific way dependent on the section you have added to `testPure1.odd`.
+ - Add a new section (with explanatory comments) to the `inputFiles/validInstances/testPure1ValidInstance.xml` file which comprises a structure which should be valid given the new ODD component in `testPure1.odd`.
+ - Add a new section (with comments) to the `inputFiles/invalidInstances/testPure1InvalidInstance.xml` file which should be invalid in a specific way dependent on the section you have added to `testPure1.odd`.
  - Run the tests. The first thing that will fail is the that the generated ODD file in `outputFiles/testPure1.rng` will no longer match the version in `expected-results`.  Open these two files in a diff tool; check that the differences in the new version are what should be expected from your changes, and if so, copy the version in `outputFiles/testPure1.rng` over the version in `expected-results`.
  - Run the tests again. The RELAX NG file should now pass. If everything is working as expected, the *valid instance* file should also pass; if not, check into that problem and fix it.
  - Finally, we would expect the *invalid instance* file to be invalid as before, but it will now generate additional error messages based on the new changes you made. Diff the error message files (in our example case, `outputFiles/testPure1InvalidInstanceRngMessages.txt` and `expected-results/testPure1InvalidInstanceRngMessages.txt`) and chedk that the differences are what you would expect to see. If so, copy the former over the latter and save.
