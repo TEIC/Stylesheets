@@ -151,6 +151,7 @@
 	  </attList>
 	</elementSpec>		
 
+	<!-- Test changing a content model: -->
 	<elementSpec ident="bibl" mode="change" module="core">
           <desc>A short bibliographic citation with nothing but author, title, and optional date</desc>
           <content>
@@ -162,20 +163,20 @@
           </content>
         </elementSpec>
         
-<!--       Delete an element from its module. -->
+	<!-- Test deletion of an element from its module: -->
         <elementSpec ident="biblStruct" module="core" mode="delete"/>
         
-<!--       Change an attribute from optional to required, on an individual element,
-           when the attribute comes from a class. -->
+	<!-- Test changing an attribute on an individual alement from
+	     optional to required, when the attribute comes from a
+	     class:. -->
         <elementSpec ident="w" module="linking" mode="change">
           <attList>
             <attDef ident="ana" mode="change" usage="req"/>
           </attList>
         </elementSpec>
         
-<!--       Complicated one: the <email> element is only allowed
-           to contain two email addresses, so we try to constrain
-           its content model using a valList. -->
+	<!-- Test constraint of content to specific value list, and
+	     addition of remarks: -->
         <elementSpec ident="email" module="core" mode="change">
           <content>
             <valList type="closed">
@@ -187,7 +188,21 @@
               </valItem>
             </valList>
           </content>
+	  <remarks>
+	    <p>Our <gi>email</gi> element is only allowed to contain
+	    one of two email addresses, so we try to constrain its
+	    content model using a valList.</p>
+	  </remarks>
         </elementSpec>
+
+	<!-- Test adding a Schematron constraint: -->
+	<elementSpec ident="linkGrp" module="linking" mode="change">
+	  <constraintSpec scheme="schematron" ident="eight_is_enough">
+	    <constraint>
+	      <sch:report test="count(*)>8">Too many links!</sch:report>
+	    </constraint>
+	  </constraintSpec>
+	</elementSpec>
 
       </schemaSpec>
     </body>
