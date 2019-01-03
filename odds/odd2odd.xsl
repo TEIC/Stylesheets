@@ -1,68 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
-    xmlns:s="http://www.ascc.net/xml/schematron" 
+<xsl:stylesheet
+    version="2.0"
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
-    xmlns:tei="http://www.tei-c.org/ns/1.0" 
-    xmlns:teix="http://www.tei-c.org/ns/Examples" 
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    version="2.0" 
+    xmlns:s="http://www.ascc.net/xml/schematron"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:teix="http://www.tei-c.org/ns/Examples"
+    xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns="http://www.tei-c.org/ns/1.0"
+    xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     exclude-result-prefixes="#all">
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
-    <desc>
-      <p> TEI stylesheet for merging TEI ODD specification with source to
-      make a new source document. </p>
-      <p>This software is dual-licensed:
+  <xd:doc scope="stylesheet" type="stylesheet">
+    <xd:desc>
+      <xd:p>TEI stylesheet for merging TEI ODD specification with source to
+        make a new source document.</xd:p>
+      <xd:p>This software is dual-licensed:
+        <xd:ul>
+          <xd:li>1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
+            Unported License http://creativecommons.org/licenses/by-sa/3.0/
+          </xd:li>
+          <xd:li>2. http://www.opensource.org/licenses/BSD-2-Clause</xd:li>
+        </xd:ul>
+      </xd:p>
+      <xd:p>Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are
+        met:
+        <xd:ul>
+          <xd:li>Redistributions of source code must retain the above copyright
+            notice, this list of conditions and the following disclaimer.</xd:li>
+          <xd:li>Redistributions in binary form must reproduce the above copyright
+            notice, this list of conditions and the following disclaimer in the
+            documentation and/or other materials provided with the distribution.</xd:li>
+        </xd:ul>
+      </xd:p>
+      <xd:p>This software is provided by the copyright holders and contributors
+        “as is” and any express or implied warranties, including, but not
+        limited to, the implied warranties of merchantability and fitness for
+        a particular purpose are disclaimed. In no event shall the copyright
+        holder or contributors be liable for any direct, indirect, incidental,
+        special, exemplary, or consequential damages (including, but not
+        limited to, procurement of substitute goods or services; loss of use,
+        data, or profits; or business interruption) however caused and on any
+        theory of liability, whether in contract, strict liability, or tort
+        (including negligence or otherwise) arising in any way out of the use
+        of this software, even if advised of the possibility of such damage.
+      </xd:p>
+      <xd:p>Author: See AUTHORS</xd:p>
+      <xd:p>Copyright: 2013, TEI Consortium</xd:p>
+    </xd:desc>
+  </xd:doc>
 
-1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
-Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
+  <xsl:output encoding="UTF-8" indent="no"/>
 
-2. http://www.opensource.org/licenses/BSD-2-Clause
-                
-
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-* Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-
-* Redistributions in binary form must reproduce the above copyright
-notice, this list of conditions and the following disclaimer in the
-documentation and/or other materials provided with the distribution.
-
-This software is provided by the copyright holders and contributors
-"as is" and any express or implied warranties, including, but not
-limited to, the implied warranties of merchantability and fitness for
-a particular purpose are disclaimed. In no event shall the copyright
-holder or contributors be liable for any direct, indirect, incidental,
-special, exemplary, or consequential damages (including, but not
-limited to, procurement of substitute goods or services; loss of use,
-data, or profits; or business interruption) however caused and on any
-theory of liability, whether in contract, strict liability, or tort
-(including negligence or otherwise) arising in any way out of the use
-of this software, even if advised of the possibility of such damage.
-</p>
-      <p>Author: See AUTHORS</p>
-      
-      <p>Copyright: 2013, TEI Consortium</p>
-    </desc>
-  </doc>
-
-  <xsl:output encoding="utf-8" indent="no"/>
-  <xsl:param name="autoGlobal">false</xsl:param>
+  <!-- ***** parameters ***** -->
+  <xsl:param name="autoGlobal" as="xs:boolean" select="false()"/>
   <xsl:param name="configDirectory"/>
   <xsl:param name="currentDirectory"/>
   <xsl:param name="defaultSource"/>
   <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
   <xsl:param name="defaultTEIVersion">current</xsl:param>
   <xsl:param name="doclang"/>
-  <xsl:param name="selectedSchema"/>
+  <!-- Which <schemaSpec> we are processing, by its @ident attribute: -->
+  <xsl:param name="selectedSchema" select="//schemaSpec[1]/@ident"/>
+  <!-- WARNING: as currently configured teianttasks.xml (and perhaps
+       other build processes) set $selectedSchema to a null value,
+       meaning this (cleverly setting the default where it is supposed
+       to be set) does not work — we re-set $selectedSchema to
+       //schemaSpec[1]/@ident if it is nil, below. I'm not sure if
+       this should be changed here or (better IMHO), the calling
+       routines should not say the selected schema is nil ot get the
+       default. —Syd, 2019-01-03 -->
   <xsl:param name="stripped">false</xsl:param>
   <xsl:param name="useVersionFromTEI">true</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
@@ -352,11 +364,21 @@ of this software, even if advised of the possibility of such damage.
       <xsl:copy>
               <xsl:attribute name="xml:base" select="document-uri(/)"/>
         <xsl:copy-of select="@*"/>
+	<xsl:variable name="gotversion">
+            <xsl:call-template name="odd2odd-getversion"/>
+	</xsl:variable>	  
         <xsl:if test="$useVersionFromTEI='true'">
           <xsl:processing-instruction name="TEIVERSION">
             <xsl:call-template name="odd2odd-getversion"/>
           </xsl:processing-instruction>
         </xsl:if>
+	<xsl:variable name="gotversion">		       <!--debug-->
+	  <xsl:call-template name="odd2odd-getversion"/>       <!--debug-->
+	</xsl:variable>					       <!--debug-->
+	<xsl:message select="concat(
+'Debug: selectedSchema=',$selectedSchema,' whichSchemaSpec=',$whichSchemaSpec,
+' TEIVERSION=',$gotversion
+)"/>							       <!--debug-->
         <xsl:apply-templates mode="pass0"/>
       </xsl:copy>
     </xsl:for-each>
@@ -2181,7 +2203,7 @@ of this software, even if advised of the possibility of such damage.
     -->
     <xsl:variable name="k" select="@ident"/>
     <xsl:choose>
-      <xsl:when test="$autoGlobal='true' and starts-with(@ident,'att.global')">y</xsl:when>
+      <xsl:when test="$autoGlobal  and  starts-with(@ident,'att.global')">y</xsl:when>
       <xsl:when test="@type eq 'model' and  key('odd2odd-REFED',$k)">y</xsl:when>
       <xsl:when test="@type eq 'atts' and  key('odd2odd-ATTREFED',$k)">y</xsl:when>
       <xsl:when test="@type eq 'atts' and key('odd2odd-ELEMENT_MEMBERED',$k)">y</xsl:when>
