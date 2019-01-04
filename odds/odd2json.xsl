@@ -8,7 +8,6 @@
     version="3.0">
     
     <xsl:import href="../common/functions.xsl"/>
-    <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec" name="IDENTS" use="concat(@prefix,@ident)"/>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
         <desc>
@@ -225,32 +224,14 @@
                 </xsl:for-each>                                
             </j:array>
             <xsl:if test="tei:classes">
-                <j:map key="classes">
-                    <j:array key="model">
-                        <xsl:for-each-group select="tei:classes/tei:memberOf" group-by="key('IDENTS',@key)/@type">
-                            <xsl:if test="current-grouping-key() = 'model'">
-                                <xsl:for-each select="current-group()">
-                                    <j:map>
-                                        <j:string key="key"><xsl:value-of select="@key"/></j:string>
-                                        <j:string key="mode"><xsl:value-of select="@mode"/></j:string>
-                                    </j:map>
-                                </xsl:for-each>
-                            </xsl:if>                            
-                        </xsl:for-each-group>    
-                    </j:array>
-                    <j:array key="atts">
-                        <xsl:for-each-group select="tei:classes/tei:memberOf" group-by="key('IDENTS',@key)/@type">
-                            <xsl:if test="current-grouping-key() = 'atts'">
-                                <xsl:for-each select="current-group()">
-                                    <j:map>
-                                        <j:string key="key"><xsl:value-of select="@key"/></j:string>
-                                        <j:string key="mode"><xsl:value-of select="@mode"/></j:string>
-                                    </j:map>
-                                </xsl:for-each>
-                            </xsl:if>
-                        </xsl:for-each-group>    
-                    </j:array>
-                </j:map>
+                <j:array key="classes">
+                    <xsl:for-each select="tei:classes/tei:memberOf">
+                        <j:map>
+                            <j:string key="key"><xsl:value-of select="@key"/></j:string>
+                            <j:string key="mode"><xsl:value-of select="@mode"/></j:string>
+                        </j:map>
+                    </xsl:for-each>
+                </j:array>
             </xsl:if>
             <xsl:if test="$attributes">
                 <xsl:choose>
