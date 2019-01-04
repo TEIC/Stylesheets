@@ -230,9 +230,10 @@
                         <xsl:for-each-group select="tei:classes/tei:memberOf" group-by="key('IDENTS',@key)/@type">
                             <xsl:if test="current-grouping-key() = 'model'">
                                 <xsl:for-each select="current-group()">
-                                    <j:string>
-                                        <xsl:value-of select="@key"/>
-                                    </j:string>
+                                    <j:map>
+                                        <j:string key="key"><xsl:value-of select="@key"/></j:string>
+                                        <j:string key="mode"><xsl:value-of select="@mode"/></j:string>
+                                    </j:map>
                                 </xsl:for-each>
                             </xsl:if>                            
                         </xsl:for-each-group>    
@@ -241,9 +242,10 @@
                         <xsl:for-each-group select="tei:classes/tei:memberOf" group-by="key('IDENTS',@key)/@type">
                             <xsl:if test="current-grouping-key() = 'atts'">
                                 <xsl:for-each select="current-group()">
-                                    <j:string>
-                                        <xsl:value-of select="@key"/>
-                                    </j:string>
+                                    <j:map>
+                                        <j:string key="key"><xsl:value-of select="@key"/></j:string>
+                                        <j:string key="mode"><xsl:value-of select="@mode"/></j:string>
+                                    </j:map>
                                 </xsl:for-each>
                             </xsl:if>
                         </xsl:for-each-group>    
