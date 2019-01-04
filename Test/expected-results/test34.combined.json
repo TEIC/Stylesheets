@@ -2,7 +2,7 @@
   { "title" : "Namespace Test",
     "edition" : "",
     "generator" : "odd2json3",
-    "date" : "2019-01-04T16:40:42Z",
+    
     "modules" : 
     [ 
       { "ident" : "core",
@@ -70,12 +70,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.typed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -124,24 +123,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.pLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "att.fragmentable",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.pLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.declaring",
+            "att.fragmentable",
+            "att.written" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -161,18 +150,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.pPart.editorial",
-            "mode" : "" },
-          
-          { "key" : "model.choicePart",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.pPart.editorial",
+            "model.choicePart" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -288,12 +271,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.profileDescPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.profileDescPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -321,24 +302,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.pPart.transcriptional",
-            "mode" : "" },
-          
-          { "key" : "att.transcriptional",
-            "mode" : "" },
-          
-          { "key" : "att.placement",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.dimensions",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.pPart.transcriptional" ],
+          "atts" : 
+          [ "att.global",
+            "att.transcriptional",
+            "att.placement",
+            "att.typed",
+            "att.dimensions" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -358,12 +329,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.addrPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.addrPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -383,15 +352,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.addressLike",
-            "mode" : "" },
-          
-          { "key" : "model.publicationStmtPart.detail",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.addressLike",
+            "model.publicationStmtPart.detail" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -427,18 +392,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.pointing",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "model.global.meta",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.global.meta" ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing",
+            "att.typed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -543,15 +502,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.pointing.group",
-            "mode" : "" },
-          
-          { "key" : "model.global.meta",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.global.meta" ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing.group" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -621,9 +576,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -672,15 +628,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.milestoneLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.milestoneLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -699,12 +651,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.encodingDescPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.encodingDescPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -724,18 +674,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.datable",
-            "mode" : "" },
-          
-          { "key" : "model.applicationLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.applicationLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.datable" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -814,18 +758,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.divWrapper",
-            "mode" : "" },
-          
-          { "key" : "model.titlepagePart",
-            "mode" : "" },
-          
-          { "key" : "model.pLike.front",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divWrapper",
+            "model.titlepagePart",
+            "model.pLike.front" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -869,15 +807,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.naming",
-            "mode" : "" },
-          
-          { "key" : "model.respLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.respLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.naming" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -897,15 +831,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" },
-          
-          { "key" : "model.publicationStmtPart.agency",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.publicationStmtPart.agency" ],
+          "atts" : 
+          [ "att.global",
+            "att.canonical" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -925,18 +855,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.publicationStmtPart.detail",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "model.biblPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.publicationStmtPart.detail",
+            "model.biblPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -1015,12 +939,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.declaring" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1130,27 +1053,15 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.biblLike",
-            "mode" : "" },
-          
-          { "key" : "model.biblPart",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.sortable",
-            "mode" : "" },
-          
-          { "key" : "att.docStatus",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.biblLike",
+            "model.biblPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable",
+            "att.typed",
+            "att.sortable",
+            "att.docStatus" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1198,21 +1109,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.biblLike",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "att.sortable",
-            "mode" : "" },
-          
-          { "key" : "att.docStatus",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.biblLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable",
+            "att.sortable",
+            "att.docStatus" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1276,15 +1179,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.citing",
-            "mode" : "" },
-          
-          { "key" : "model.imprintPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.imprintPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.citing" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1304,24 +1203,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.biblLike",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.sortable",
-            "mode" : "" },
-          
-          { "key" : "att.docStatus",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.biblLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable",
+            "att.typed",
+            "att.sortable",
+            "att.docStatus" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1374,24 +1263,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.graphicLike",
-            "mode" : "" },
-          
-          { "key" : "model.titlepagePart",
-            "mode" : "" },
-          
-          { "key" : "att.media",
-            "mode" : "" },
-          
-          { "key" : "att.timed",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.graphicLike",
+            "model.titlepagePart" ],
+          "atts" : 
+          [ "att.global",
+            "att.media",
+            "att.timed",
+            "att.typed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -1448,12 +1327,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.declaring" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1629,18 +1507,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.divWrapper",
-            "mode" : "" },
-          
-          { "key" : "model.titlepagePart",
-            "mode" : "" },
-          
-          { "key" : "model.pLike.front",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divWrapper",
+            "model.titlepagePart",
+            "model.pLike.front" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1676,12 +1548,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.patternReplacement",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.patternReplacement" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1701,12 +1572,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.pointing",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1726,12 +1596,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.profileDescPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.profileDescPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1751,9 +1619,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1783,12 +1652,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.pointing",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -1828,9 +1696,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1874,24 +1743,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.milestoneLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.edition",
-            "mode" : "" },
-          
-          { "key" : "att.spanning",
-            "mode" : "" },
-          
-          { "key" : "att.breaking",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.milestoneLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.edition",
+            "att.spanning",
+            "att.breaking" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1910,21 +1769,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.ascribed",
-            "mode" : "" },
-          
-          { "key" : "att.datable",
-            "mode" : "" },
-          
-          { "key" : "att.docStatus",
-            "mode" : "" },
-          
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.ascribed",
+            "att.datable",
+            "att.docStatus",
+            "att.global",
+            "att.typed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -1965,12 +1817,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.pPart.editorial",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.pPart.editorial" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -1998,15 +1848,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "model.quoteLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.quoteLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2046,9 +1892,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "model.quoteLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.quoteLike" ],
+          "atts" : 
+          [  ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2071,9 +1918,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "model.quoteLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.quoteLike" ],
+          "atts" : 
+          [  ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2096,18 +1944,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.pointing",
-            "mode" : "" },
-          
-          { "key" : "att.citing",
-            "mode" : "" },
-          
-          { "key" : "model.biblPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.biblPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing",
+            "att.citing" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2127,9 +1969,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -2170,12 +2013,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.encodingDescPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.encodingDescPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2195,15 +2036,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" },
-          
-          { "key" : "model.divBottomPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divBottomPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.written" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2245,21 +2082,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.pPart.transcriptional",
-            "mode" : "" },
-          
-          { "key" : "model.choicePart",
-            "mode" : "" },
-          
-          { "key" : "att.editLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.pPart.transcriptional",
+            "model.choicePart" ],
+          "atts" : 
+          [ "att.global",
+            "att.editLike",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2279,15 +2108,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "model.editorialDeclPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.editorialDeclPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -2410,18 +2235,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.sortable",
-            "mode" : "" },
-          
-          { "key" : "model.correspDescPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.correspDescPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.sortable" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -2518,12 +2337,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.correspDescPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.correspDescPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2543,21 +2360,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "model.profileDescPart",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" },
-          
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.profileDescPart" ],
+          "atts" : 
+          [ "att.declarable",
+            "att.canonical",
+            "att.global",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2585,15 +2394,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.datable",
-            "mode" : "" },
-          
-          { "key" : "model.profileDescPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.profileDescPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.datable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2623,27 +2428,15 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.dateLike",
-            "mode" : "" },
-          
-          { "key" : "model.publicationStmtPart.detail",
-            "mode" : "" },
-          
-          { "key" : "att.datable",
-            "mode" : "" },
-          
-          { "key" : "att.editLike",
-            "mode" : "" },
-          
-          { "key" : "att.dimensions",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.dateLike",
+            "model.publicationStmtPart.detail" ],
+          "atts" : 
+          [ "att.global",
+            "att.datable",
+            "att.editLike",
+            "att.dimensions",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2676,12 +2469,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.divWrapper",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divWrapper" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2717,21 +2508,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.pPart.transcriptional",
-            "mode" : "" },
-          
-          { "key" : "att.transcriptional",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.dimensions",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.pPart.transcriptional" ],
+          "atts" : 
+          [ "att.global",
+            "att.transcriptional",
+            "att.typed",
+            "att.dimensions" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2751,21 +2534,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.descLike",
-            "mode" : "" },
-          
-          { "key" : "att.translatable",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "model.labelLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.descLike",
+            "model.labelLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.translatable",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2785,12 +2560,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.emphLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.emphLike" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -2897,18 +2670,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" },
-          
-          { "key" : "model.imprintPart",
-            "mode" : "" },
-          
-          { "key" : "model.publicationStmtPart.agency",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.imprintPart",
+            "model.publicationStmtPart.agency" ],
+          "atts" : 
+          [ "att.global",
+            "att.canonical" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -2928,24 +2695,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.divLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" },
-          
-          { "key" : "model.divLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.divLike",
+            "att.typed",
+            "att.declaring",
+            "att.written" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -3053,21 +2810,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.divLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "model.div1Like",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.div1Like" ],
+          "atts" : 
+          [ "att.global",
+            "att.divLike",
+            "att.typed",
+            "att.declaring" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -3175,21 +2924,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.divLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "model.div2Like",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.div2Like" ],
+          "atts" : 
+          [ "att.global",
+            "att.divLike",
+            "att.typed",
+            "att.declaring" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -3297,21 +3038,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.divLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "model.div3Like",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.div3Like" ],
+          "atts" : 
+          [ "att.global",
+            "att.divLike",
+            "att.typed",
+            "att.declaring" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -3419,21 +3152,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.divLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "model.div4Like",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.div4Like" ],
+          "atts" : 
+          [ "att.global",
+            "att.divLike",
+            "att.typed",
+            "att.declaring" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -3541,21 +3266,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.divLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "model.div5Like",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.div5Like" ],
+          "atts" : 
+          [ "att.global",
+            "att.divLike",
+            "att.typed",
+            "att.declaring" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -3663,21 +3380,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.divLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "model.div6Like",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.div6Like" ],
+          "atts" : 
+          [ "att.global",
+            "att.divLike",
+            "att.typed",
+            "att.declaring" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -3785,21 +3494,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.divLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "model.div7Like",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.div7Like" ],
+          "atts" : 
+          [ "att.global",
+            "att.divLike",
+            "att.typed",
+            "att.declaring" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -3859,15 +3560,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.frontPart",
-            "mode" : "" },
-          
-          { "key" : "model.divGenLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.frontPart",
+            "model.divGenLike" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -3947,21 +3644,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.titlepagePart",
-            "mode" : "" },
-          
-          { "key" : "model.divWrapper",
-            "mode" : "" },
-          
-          { "key" : "model.pLike.front",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.titlepagePart",
+            "model.divWrapper",
+            "model.pLike.front" ],
+          "atts" : 
+          [ "att.global",
+            "att.canonical" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -3981,18 +3670,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.titlepagePart",
-            "mode" : "" },
-          
-          { "key" : "model.divWrapper",
-            "mode" : "" },
-          
-          { "key" : "model.pLike.front",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.titlepagePart",
+            "model.divWrapper",
+            "model.pLike.front" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -4033,15 +3716,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.titlepagePart",
-            "mode" : "" },
-          
-          { "key" : "model.pLike.front",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.titlepagePart",
+            "model.pLike.front" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4061,15 +3740,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.titlepagePart",
-            "mode" : "" },
-          
-          { "key" : "model.pLike.front",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.titlepagePart",
+            "model.pLike.front" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4111,18 +3786,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.titlepagePart",
-            "mode" : "" },
-          
-          { "key" : "model.pLike.front",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.titlepagePart",
+            "model.pLike.front" ],
+          "atts" : 
+          [ "att.global",
+            "att.canonical" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4158,12 +3827,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.biblPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.biblPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4183,9 +3850,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4221,15 +3889,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.naming",
-            "mode" : "" },
-          
-          { "key" : "model.respLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.respLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.naming" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4249,15 +3913,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.encodingDescPart",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.encodingDescPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4285,12 +3945,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.addressLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.addressLike" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4310,12 +3968,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.emphLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.emphLike" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4335,12 +3991,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.teiHeaderPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.teiHeaderPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4368,18 +4022,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.divWrapper",
-            "mode" : "" },
-          
-          { "key" : "model.titlepagePart",
-            "mode" : "" },
-          
-          { "key" : "model.pLike.front",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divWrapper",
+            "model.titlepagePart",
+            "model.pLike.front" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4407,18 +4055,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.pPart.editorial",
-            "mode" : "" },
-          
-          { "key" : "model.choicePart",
-            "mode" : "" },
-          
-          { "key" : "att.editLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.pPart.editorial",
+            "model.choicePart" ],
+          "atts" : 
+          [ "att.global",
+            "att.editLike" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4438,12 +4080,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.biblPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.biblPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4463,9 +4103,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4513,18 +4154,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.qLike",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.qLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.declaring",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4585,12 +4220,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.emphLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.emphLike" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4610,12 +4243,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.declaring" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4727,15 +4359,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" },
-          
-          { "key" : "model.respLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.respLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.canonical" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4755,21 +4383,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.global.edit",
-            "mode" : "" },
-          
-          { "key" : "att.timed",
-            "mode" : "" },
-          
-          { "key" : "att.editLike",
-            "mode" : "" },
-          
-          { "key" : "att.dimensions",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.global.edit" ],
+          "atts" : 
+          [ "att.global",
+            "att.timed",
+            "att.editLike",
+            "att.dimensions" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -4936,24 +4556,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.milestoneLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.spanning",
-            "mode" : "" },
-          
-          { "key" : "att.breaking",
-            "mode" : "" },
-          
-          { "key" : "att.edition",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.milestoneLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.spanning",
+            "att.breaking",
+            "att.edition" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -4972,15 +4582,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.encodingDescPart",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.encodingDescPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -5060,30 +4666,16 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.emphLike",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "att.translatable",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.pointing",
-            "mode" : "" },
-          
-          { "key" : "att.cReferencing",
-            "mode" : "" },
-          
-          { "key" : "model.glossLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.emphLike",
+            "model.glossLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.declaring",
+            "att.translatable",
+            "att.typed",
+            "att.pointing",
+            "att.cReferencing" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -5103,24 +4695,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.graphicLike",
-            "mode" : "" },
-          
-          { "key" : "model.titlepagePart",
-            "mode" : "" },
-          
-          { "key" : "att.media",
-            "mode" : "" },
-          
-          { "key" : "att.resourced",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.graphicLike",
+            "model.titlepagePart" ],
+          "atts" : 
+          [ "att.global",
+            "att.media",
+            "att.resourced",
+            "att.declaring" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -5140,15 +4722,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.declaring",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -5214,12 +4793,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.handFeatures",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.handFeatures" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -5239,24 +4817,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.placement",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" },
-          
-          { "key" : "model.headLike",
-            "mode" : "" },
-          
-          { "key" : "model.pLike.front",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.headLike",
+            "model.pLike.front" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.placement",
+            "att.written" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -5298,9 +4866,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -5320,9 +4889,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -5342,15 +4912,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.hiLike",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.hiLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.written" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -5370,15 +4936,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "model.editorialDeclPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.editorialDeclPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -5458,24 +5020,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.sortable",
-            "mode" : "" },
-          
-          { "key" : "att.datable",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "model.nameLike",
-            "mode" : "" },
-          
-          { "key" : "model.publicationStmtPart.detail",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.nameLike",
+            "model.publicationStmtPart.detail" ],
+          "atts" : 
+          [ "att.global",
+            "att.sortable",
+            "att.datable",
+            "att.typed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -5592,12 +5144,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.titlepagePart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.titlepagePart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -5617,9 +5167,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -5674,15 +5225,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.global.meta",
-            "mode" : "" },
-          
-          { "key" : "att.spanning",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.global.meta" ],
+          "atts" : 
+          [ "att.global",
+            "att.spanning" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -5731,15 +5278,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "model.editorialDeclPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.editorialDeclPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -5759,12 +5302,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.sortable",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.sortable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -5784,18 +5326,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.pointing",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "model.global.meta",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.global.meta" ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing",
+            "att.typed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -5887,15 +5423,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.pointing.group",
-            "mode" : "" },
-          
-          { "key" : "model.global.meta",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.global.meta" ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing.group" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -5952,9 +5484,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -6003,15 +5536,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.lLike",
-            "mode" : "" },
-          
-          { "key" : "att.fragmentable",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.lLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.fragmentable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6047,21 +5576,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.placement",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" },
-          
-          { "key" : "model.labelLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.labelLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.placement",
+            "att.written" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6081,15 +5602,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.profileDescPart",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.profileDescPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6117,9 +5634,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -6182,24 +5700,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.milestoneLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.edition",
-            "mode" : "" },
-          
-          { "key" : "att.spanning",
-            "mode" : "" },
-          
-          { "key" : "att.breaking",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.milestoneLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.edition",
+            "att.spanning",
+            "att.breaking" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6218,21 +5726,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.divPart",
-            "mode" : "" },
-          
-          { "key" : "att.divLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.divLike",
+            "att.typed",
+            "att.declaring" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6313,18 +5813,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.pointing",
-            "mode" : "" },
-          
-          { "key" : "att.datable",
-            "mode" : "" },
-          
-          { "key" : "model.availabilityPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.availabilityPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing",
+            "att.datable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6344,18 +5838,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.pointing",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "model.global.meta",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.global.meta" ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6374,15 +5862,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.pointing.group",
-            "mode" : "" },
-          
-          { "key" : "model.global.meta",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.global.meta" ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing.group" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6410,18 +5894,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.sortable",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "model.listLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.listLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.sortable",
+            "att.typed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -6578,24 +6056,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.sortable",
-            "mode" : "" },
-          
-          { "key" : "model.frontPart",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "model.biblLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.frontPart",
+            "model.biblLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.sortable",
+            "att.declarable",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6642,15 +6110,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.sortable",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.sortable",
+            "att.typed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -6699,12 +6164,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.encodingDescPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.encodingDescPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6732,15 +6195,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.measureLike",
-            "mode" : "" },
-          
-          { "key" : "att.measurement",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.measureLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.measurement" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -6781,18 +6240,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.measurement",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "model.measureLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.measureLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.measurement",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6822,27 +6275,15 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.graphicLike",
-            "mode" : "" },
-          
-          { "key" : "att.media",
-            "mode" : "" },
-          
-          { "key" : "att.resourced",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "att.timed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.graphicLike" ],
+          "atts" : 
+          [ "att.typed",
+            "att.global",
+            "att.media",
+            "att.resourced",
+            "att.declaring",
+            "att.timed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -6878,18 +6319,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.divWrapper",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" },
-          
-          { "key" : "model.respLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divWrapper",
+            "model.respLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.canonical" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6909,12 +6344,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.emphLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.emphLike" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6934,27 +6367,15 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.milestoneLike",
-            "mode" : "" },
-          
-          { "key" : "att.milestoneUnit",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.edition",
-            "mode" : "" },
-          
-          { "key" : "att.spanning",
-            "mode" : "" },
-          
-          { "key" : "att.breaking",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.milestoneLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.milestoneUnit",
+            "att.typed",
+            "att.edition",
+            "att.spanning",
+            "att.breaking" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -6973,9 +6394,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7168,24 +6590,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.nameLike.agent",
-            "mode" : "" },
-          
-          { "key" : "att.personal",
-            "mode" : "" },
-          
-          { "key" : "att.datable",
-            "mode" : "" },
-          
-          { "key" : "att.editLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.nameLike.agent" ],
+          "atts" : 
+          [ "att.global",
+            "att.personal",
+            "att.datable",
+            "att.editLike",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7205,9 +6617,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -7248,15 +6661,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "model.editorialDeclPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.editorialDeclPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -7318,33 +6727,17 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.noteLike",
-            "mode" : "" },
-          
-          { "key" : "att.placement",
-            "mode" : "" },
-          
-          { "key" : "att.pointing",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" },
-          
-          { "key" : "model.correspDescPart",
-            "mode" : "" },
-          
-          { "key" : "model.correspActionPart",
-            "mode" : "" },
-          
-          { "key" : "model.correspContextPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.noteLike",
+            "model.correspDescPart",
+            "model.correspActionPart",
+            "model.correspContextPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.placement",
+            "att.pointing",
+            "att.typed",
+            "att.written" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -7407,9 +6800,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7437,15 +6831,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.measureLike",
-            "mode" : "" },
-          
-          { "key" : "att.ranging",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.measureLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.ranging" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -7547,15 +6937,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.divTopPart",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divTopPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.written" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7606,15 +6992,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.pPart.transcriptional",
-            "mode" : "" },
-          
-          { "key" : "model.choicePart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.pPart.transcriptional",
+            "model.choicePart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7634,21 +7016,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.pLike",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "att.fragmentable",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.pLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.declaring",
+            "att.fragmentable",
+            "att.written" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7668,24 +7042,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.milestoneLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.edition",
-            "mode" : "" },
-          
-          { "key" : "att.spanning",
-            "mode" : "" },
-          
-          { "key" : "att.breaking",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.milestoneLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.edition",
+            "att.spanning",
+            "att.breaking" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7704,12 +7068,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.addrPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.addrPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7728,12 +7090,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.addrPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.addrPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7752,15 +7112,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" },
-          
-          { "key" : "model.divBottomPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divBottomPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.written" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7818,12 +7174,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.patternReplacement",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.patternReplacement" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -7864,15 +7219,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" },
-          
-          { "key" : "model.respLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.respLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.canonical" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7892,12 +7243,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.teiHeaderPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.teiHeaderPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7917,15 +7266,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.encodingDescPart",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.encodingDescPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7945,27 +7290,15 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.ptrLike",
-            "mode" : "" },
-          
-          { "key" : "att.pointing",
-            "mode" : "" },
-          
-          { "key" : "att.internetMedia",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "att.cReferencing",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.ptrLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing",
+            "att.internetMedia",
+            "att.typed",
+            "att.declaring",
+            "att.cReferencing" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -7984,18 +7317,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.naming",
-            "mode" : "" },
-          
-          { "key" : "model.imprintPart",
-            "mode" : "" },
-          
-          { "key" : "model.publicationStmtPart.detail",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.imprintPart",
+            "model.publicationStmtPart.detail" ],
+          "atts" : 
+          [ "att.global",
+            "att.naming" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -8015,9 +7342,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -8053,18 +7381,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" },
-          
-          { "key" : "model.imprintPart",
-            "mode" : "" },
-          
-          { "key" : "model.publicationStmtPart.agency",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.imprintPart",
+            "model.publicationStmtPart.agency" ],
+          "atts" : 
+          [ "att.global",
+            "att.canonical" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -8084,15 +7406,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.editorialDeclPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.editorialDeclPart" ],
+          "atts" : 
+          [ "att.declarable",
+            "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -8206,15 +7524,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.qLike",
-            "mode" : "" },
-          
-          { "key" : "att.ascribed.directed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.qLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.ascribed.directed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -8339,9 +7653,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "model.quoteLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.quoteLike" ],
+          "atts" : 
+          [  ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -8364,15 +7679,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "model.editorialDeclPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.editorialDeclPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -8443,18 +7754,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.quoteLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.notated",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.quoteLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.notated" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -8474,27 +7779,15 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.ptrLike",
-            "mode" : "" },
-          
-          { "key" : "att.pointing",
-            "mode" : "" },
-          
-          { "key" : "att.internetMedia",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "att.cReferencing",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.ptrLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing",
+            "att.internetMedia",
+            "att.typed",
+            "att.declaring",
+            "att.cReferencing" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -8514,15 +7807,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.milestoneUnit",
-            "mode" : "" },
-          
-          { "key" : "att.edition",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.milestoneUnit",
+            "att.edition" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -8584,15 +7874,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.encodingDescPart",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.encodingDescPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -8623,21 +7909,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.pPart.transcriptional",
-            "mode" : "" },
-          
-          { "key" : "model.choicePart",
-            "mode" : "" },
-          
-          { "key" : "att.editLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.pPart.transcriptional",
+            "model.choicePart" ],
+          "atts" : 
+          [ "att.global",
+            "att.editLike",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -8657,15 +7935,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.biblPart",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.biblPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -8714,12 +7988,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.styleDef",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.styleDef" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -8821,15 +8094,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" },
-          
-          { "key" : "att.datable",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.canonical",
+            "att.datable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -8849,15 +8119,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" },
-          
-          { "key" : "model.respLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.respLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.canonical" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -8909,12 +8175,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.docStatus",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.docStatus" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -8945,18 +8210,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.naming",
-            "mode" : "" },
-          
-          { "key" : "model.nameLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.nameLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.naming",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -8976,15 +8235,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.qLike",
-            "mode" : "" },
-          
-          { "key" : "att.ascribed.directed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.qLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.ascribed.directed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -9047,15 +8302,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" },
-          
-          { "key" : "model.divWrapper",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divWrapper" ],
+          "atts" : 
+          [ "att.global",
+            "att.written" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9075,15 +8326,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.encodingDescPart",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.encodingDescPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9103,18 +8350,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.resourced",
-            "mode" : "" },
-          
-          { "key" : "model.encodingDescPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.encodingDescPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.resourced" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -9155,12 +8396,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.handFeatures",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.handFeatures" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9180,27 +8420,15 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.segLike",
-            "mode" : "" },
-          
-          { "key" : "att.segLike",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" },
-          
-          { "key" : "model.choicePart",
-            "mode" : "" },
-          
-          { "key" : "att.notated",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.segLike",
+            "model.choicePart" ],
+          "atts" : 
+          [ "att.global",
+            "att.segLike",
+            "att.typed",
+            "att.written",
+            "att.notated" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9220,15 +8448,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "model.editorialDeclPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.editorialDeclPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9248,12 +8472,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.biblPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.biblPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9307,9 +8529,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9364,15 +8587,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.pPart.transcriptional",
-            "mode" : "" },
-          
-          { "key" : "model.choicePart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.pPart.transcriptional",
+            "model.choicePart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9392,18 +8611,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" },
-          
-          { "key" : "model.divBottomPart",
-            "mode" : "" },
-          
-          { "key" : "model.divTopPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divBottomPart",
+            "model.divTopPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.written" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9423,12 +8636,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.emphLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.emphLike" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9448,12 +8659,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9492,15 +8702,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.divPart",
-            "mode" : "" },
-          
-          { "key" : "att.ascribed.directed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.ascribed.directed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9567,9 +8773,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9589,15 +8796,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" },
-          
-          { "key" : "model.respLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.respLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.canonical" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9617,18 +8820,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.ascribed.directed",
-            "mode" : "" },
-          
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.placement",
-            "mode" : "" },
-          
-          { "key" : "model.stageLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.stageLike" ],
+          "atts" : 
+          [ "att.ascribed.directed",
+            "att.global",
+            "att.placement" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -9753,15 +8950,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "model.editorialDeclPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.editorialDeclPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9781,12 +8974,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.addrPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.addrPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9806,18 +8997,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.encodingDescPart",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "att.styleDef",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.encodingDescPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable",
+            "att.styleDef" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -9837,9 +9022,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -9924,12 +9110,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.encodingDescPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.encodingDescPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -9978,9 +9162,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -10064,12 +9249,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.typed" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -10150,9 +9334,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -10183,30 +9368,16 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.emphLike",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "att.pointing",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" },
-          
-          { "key" : "att.sortable",
-            "mode" : "" },
-          
-          { "key" : "att.cReferencing",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.emphLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.declaring",
+            "att.pointing",
+            "att.typed",
+            "att.canonical",
+            "att.sortable",
+            "att.cReferencing" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -10226,21 +9397,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declaring",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.written",
-            "mode" : "" },
-          
-          { "key" : "model.resourceLike",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.resourceLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.declaring",
+            "att.typed",
+            "att.written" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -10301,15 +9464,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.profileDescPart",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.profileDescPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -10340,12 +9499,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.biblPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.biblPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -10408,24 +9565,14 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.dateLike",
-            "mode" : "" },
-          
-          { "key" : "att.datable",
-            "mode" : "" },
-          
-          { "key" : "att.editLike",
-            "mode" : "" },
-          
-          { "key" : "att.dimensions",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.dateLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.datable",
+            "att.editLike",
+            "att.dimensions",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -10458,12 +9605,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.global.meta",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.global.meta" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -10596,21 +9741,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.emphLike",
-            "mode" : "" },
-          
-          { "key" : "att.canonical",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "att.datable",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.emphLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.canonical",
+            "att.typed",
+            "att.datable" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -10769,12 +9906,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.frontPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.frontPart" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -10834,15 +9969,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.titlepagePart",
-            "mode" : "" },
-          
-          { "key" : "model.pLike.front",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.titlepagePart",
+            "model.pLike.front" ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -10931,9 +10062,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -10961,15 +10093,11 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "model.divBottomPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.divBottomPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -11011,21 +10139,13 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "model.pPart.transcriptional",
-            "mode" : "" },
-          
-          { "key" : "model.choicePart",
-            "mode" : "" },
-          
-          { "key" : "att.editLike",
-            "mode" : "" },
-          
-          { "key" : "att.dimensions",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.pPart.transcriptional",
+            "model.choicePart" ],
+          "atts" : 
+          [ "att.global",
+            "att.editLike",
+            "att.dimensions" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -11166,18 +10286,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "model.measureLike",
-            "mode" : "" },
-          
-          { "key" : "att.measurement",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.measureLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.measurement" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -11197,9 +10311,10 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" } ],
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global" ] },
         "attributes" : 
         [ 
           { "onElement" : true,
@@ -11353,18 +10468,12 @@
         "altIdent" : 
         [  ],
         "classes" : 
-        [ 
-          { "key" : "att.global",
-            "mode" : "" },
-          
-          { "key" : "att.declarable",
-            "mode" : "" },
-          
-          { "key" : "att.typed",
-            "mode" : "" },
-          
-          { "key" : "model.teiHeaderPart",
-            "mode" : "" } ],
+        { "model" : 
+          [ "model.teiHeaderPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.declarable",
+            "att.typed" ] },
         "attributes" : 
         [  ],
         "content" : 
@@ -11406,12 +10515,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.pPart.data",
-              "mode" : "" },
-            
-            { "key" : "model.correspActionPart",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.pPart.data",
+              "model.correspActionPart" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.applicationLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11449,9 +10557,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.inter",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.inter" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.biblPart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11489,7 +10598,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [  ] },
+          { "model" : 
+            [  ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.choicePart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11503,7 +10615,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [  ] },
+          { "model" : 
+            [  ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.common",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11565,12 +10680,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.pPart.data",
-              "mode" : "" },
-            
-            { "key" : "model.correspActionPart",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.pPart.data",
+              "model.correspActionPart" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.descLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11692,9 +10806,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.divBottom",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.divBottom" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.divGenLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11732,9 +10847,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.common",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.common" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.divTop",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11760,9 +10876,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.divTop",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.divTop" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.divWrapper",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11776,12 +10893,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.divTop",
-              "mode" : "" },
-            
-            { "key" : "model.divBottom",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.divTop",
+              "model.divBottom" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.editorialDeclPart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11807,9 +10923,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.inter",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.inter" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.emphLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11823,12 +10940,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.highlighted",
-              "mode" : "" },
-            
-            { "key" : "model.limitedPhrase",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.highlighted",
+              "model.limitedPhrase" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.encodingDescPart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11878,9 +10994,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.frontPart",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.frontPart" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.gLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11918,9 +11035,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.global",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.global" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.global.meta",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11934,9 +11052,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.global",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.global" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.glossLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11962,9 +11081,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.phrase",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.phrase" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.headLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11978,9 +11098,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.divTopPart",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.divTopPart" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.hiLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11994,12 +11115,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.highlighted",
-              "mode" : "" },
-            
-            { "key" : "model.limitedPhrase",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.highlighted",
+              "model.limitedPhrase" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.highlighted",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12013,9 +11133,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.phrase",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.phrase" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.imprintPart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12029,9 +11150,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.biblPart",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.biblPart" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.inter",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12045,9 +11167,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.common",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.common" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.lLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12061,9 +11184,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.divPart",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.divPart" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.lPart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12077,9 +11201,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.phrase",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.phrase" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.labelLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12093,9 +11218,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.inter",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.inter" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.limitedPhrase",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12121,9 +11247,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.inter",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.inter" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.measureLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12137,9 +11264,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.pPart.data",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.pPart.data" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.milestoneLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12153,9 +11281,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.global",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.global" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.nameLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12169,15 +11298,12 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.addrPart",
-              "mode" : "" },
-            
-            { "key" : "model.pPart.data",
-              "mode" : "" },
-            
-            { "key" : "model.correspActionPart",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.addrPart",
+              "model.pPart.data",
+              "model.correspActionPart" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.nameLike.agent",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12191,9 +11317,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.nameLike",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.nameLike" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.noteLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12207,9 +11334,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.global",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.global" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.oddDecl",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12223,9 +11351,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.inter",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.inter" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.offsetLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12239,9 +11368,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.nameLike",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.nameLike" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.pLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12255,12 +11385,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.divPart",
-              "mode" : "" },
-            
-            { "key" : "model.correspContextPart",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.divPart",
+              "model.correspContextPart" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.pLike.front",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12286,12 +11415,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.phrase",
-              "mode" : "" },
-            
-            { "key" : "model.limitedPhrase",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.phrase",
+              "model.limitedPhrase" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.pPart.edit",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12305,9 +11433,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.phrase",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.phrase" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.pPart.editorial",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12321,12 +11450,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.pPart.edit",
-              "mode" : "" },
-            
-            { "key" : "model.limitedPhrase",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.pPart.edit",
+              "model.limitedPhrase" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.pPart.msdesc",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12340,12 +11468,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.phrase",
-              "mode" : "" },
-            
-            { "key" : "model.limitedPhrase",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.phrase",
+              "model.limitedPhrase" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.pPart.transcriptional",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12359,9 +11486,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.pPart.edit",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.pPart.edit" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.phrase",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12387,12 +11515,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.phrase",
-              "mode" : "" },
-            
-            { "key" : "model.limitedPhrase",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.phrase",
+              "model.limitedPhrase" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.placeNamePart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12406,9 +11533,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.placeStateLike",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.placeStateLike" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.placeStateLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12422,9 +11550,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.nameLike",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.nameLike" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.profileDescPart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12450,18 +11579,13 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.phrase",
-              "mode" : "" },
-            
-            { "key" : "model.limitedPhrase",
-              "mode" : "" },
-            
-            { "key" : "model.correspContextPart",
-              "mode" : "" },
-            
-            { "key" : "model.publicationStmtPart.detail",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.phrase",
+              "model.limitedPhrase",
+              "model.correspContextPart",
+              "model.publicationStmtPart.detail" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.publicationStmtPart.agency",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12499,9 +11623,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.inter",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.inter" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.quoteLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12515,9 +11640,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.qLike",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.qLike" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.resourceLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12543,9 +11669,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.biblPart",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.biblPart" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.segLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12559,9 +11686,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.phrase",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.phrase" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.sourceDescPart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12587,9 +11715,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.phrase",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.phrase" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.stageLike",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12603,9 +11732,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "model.inter",
-              "mode" : "" } ] },
+          { "model" : 
+            [ "model.inter" ],
+            "atts" : 
+            [  ] } },
         
         { "ident" : "model.teiHeaderPart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12679,9 +11809,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "att.ascribed",
-              "mode" : "" } ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [ "att.ascribed" ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -12875,7 +12006,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [  ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [  ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -13031,9 +12165,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "att.datable.w3c",
-              "mode" : "" } ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [ "att.datable.w3c" ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -13363,9 +12498,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "att.ranging",
-              "mode" : "" } ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [ "att.ranging" ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -13568,9 +12704,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "att.fragmentable",
-              "mode" : "" } ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [ "att.fragmentable" ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -14098,18 +13235,13 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "att.global.rendition",
-              "mode" : "" },
-            
-            { "key" : "att.global.linking",
-              "mode" : "" },
-            
-            { "key" : "att.global.responsibility",
-              "mode" : "" },
-            
-            { "key" : "att.global.source",
-              "mode" : "" } ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [ "att.global.rendition",
+              "att.global.linking",
+              "att.global.responsibility",
+              "att.global.source" ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -14444,7 +13576,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [  ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [  ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -14525,7 +13660,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [  ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [  ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -15082,9 +14220,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "att.internetMedia",
-              "mode" : "" } ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [ "att.internetMedia" ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -15320,9 +14459,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "att.canonical",
-              "mode" : "" } ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [ "att.canonical" ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -15473,9 +14613,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "att.naming",
-              "mode" : "" } ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [ "att.naming" ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -15801,12 +14942,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "att.pointing",
-              "mode" : "" },
-            
-            { "key" : "att.typed",
-              "mode" : "" } ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [ "att.pointing",
+              "att.typed" ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -16023,12 +15163,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "att.datcat",
-              "mode" : "" },
-            
-            { "key" : "att.fragmentable",
-              "mode" : "" } ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [ "att.datcat",
+              "att.fragmentable" ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -16231,7 +15370,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [  ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [  ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -16290,12 +15432,11 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [ 
-            { "key" : "att.editLike",
-              "mode" : "" },
-            
-            { "key" : "att.written",
-              "mode" : "" } ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [ "att.editLike",
+              "att.written" ] },
           "attributes" : 
           [ 
             { "onElement" : false,
@@ -16543,7 +15684,10 @@
           "altIdent" : 
           [  ],
           "classes" : 
-          [  ],
+          { "model" : 
+            [  ],
+            "atts" : 
+            [  ] },
           "attributes" : 
           [ 
             { "onElement" : false,
