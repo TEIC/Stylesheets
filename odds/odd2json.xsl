@@ -228,6 +228,7 @@
                 <j:map key="classes">
                     <j:array key="model">
                         <xsl:for-each-group select="tei:classes/tei:memberOf" group-by="key('IDENTS',@key)/@type">
+                            <xsl:message><xsl:sequence select="current()"/></xsl:message>
                             <xsl:if test="current-grouping-key() = 'model'">
                                 <xsl:for-each select="current-group()">
                                     <j:map>
