@@ -108,16 +108,7 @@
            match="tei:elementSpec"
            use="tei:classes/tei:memberOf/@key"/>
   <xsl:key name="odd2odd-IDENTS"
-           match="tei:dataSpec"
-           use="@ident"/>
-  <xsl:key name="odd2odd-IDENTS"
-           match="tei:macroSpec"
-           use="@ident"/>
-  <xsl:key name="odd2odd-IDENTS"
-           match="tei:classSpec"
-           use="@ident"/>
-  <xsl:key name="odd2odd-IDENTS"
-           match="tei:elementSpec"
+           match="tei:classSpec|tei:dataSpec|tei:elementSpec|tei:macroSpec"
            use="@ident"/>
   <xsl:key name="odd2odd-MACROS"
            match="tei:macroSpec"
@@ -149,9 +140,9 @@
   <xsl:key name="odd2odd-REFED"
            match="tei:elementSpec//rng:ref"
            use="@name"/>
-  <!-- See [1] re: following <xsl:key> -->
+  <!-- See [1] about the following <xsl:key> -->
   <xsl:key name="odd2odd-REFED"
-	   match="tei:macroSpec//rng:ref[not(@name=ancestor::tei:macroSpec/@ident)]"
+           match="tei:macroSpec//rng:ref[not(@name=ancestor::tei:macroSpec/@ident)]"
            use="@name"/>
   <xsl:key name="odd2odd-REFED"
            match="tei:datatype//rng:ref"
@@ -190,9 +181,9 @@
   <xsl:key name="odd2odd-SCHEMASPECS"
            match="tei:schemaSpec"
            use="@ident"/>
-  <xsl:key
-      match="tei:moduleSpec" name="odd2odd-MODULES"
-      use="@ident"/>
+  <xsl:key name="odd2odd-MODULES"
+           match="tei:moduleSpec"
+           use="@ident"/>
 
    <!-- 
         The following keys use a combination of @ident _and_ @ns
@@ -250,20 +241,16 @@
        instead of '=', as the R side should always be singular. But
        just in case ... —Syd, 2019-01-04
   -->
-  
-  <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="1"/>
 
-  <xsl:variable name="whichSchemaSpec">
-    <xsl:choose>
-      <xsl:when test="not($selectedSchema='')">
-        <xsl:value-of select="$selectedSchema"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="key('LISTSCHEMASPECS',1)[1]/@ident"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-
+  <!-- 
+       Set a variable to the name (i.e., @ident) of the <schemaSpec>
+       we are supposed to be process, ignoring all others. See
+       2019-01-03 WARNING, above —Syd
+  -->
+  <xsl:variable name="whichSchemaSpec"
+		select="if ($selectedSchema='')
+			  then //tei:schemaSpec[1]/@ident
+			  else $selectedSchema"/>
 
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
