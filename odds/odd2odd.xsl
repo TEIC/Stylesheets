@@ -248,9 +248,9 @@
        2019-01-03 WARNING, above —Syd
   -->
   <xsl:variable name="whichSchemaSpec"
-		select="if ($selectedSchema='')
-			  then //tei:schemaSpec[1]/@ident
-			  else $selectedSchema"/>
+                select="if ($selectedSchema='')
+                          then //tei:schemaSpec[1]/@ident
+                          else $selectedSchema"/>
 
   <!-- Location of the source XML file for the language we are customizing -->
   <xsl:variable name="DEFAULTSOURCE">
@@ -455,19 +455,13 @@
                           )"/>
   </xsl:function>
 
-  <xsl:template name="die">
-    <xsl:param name="message"/>
-    <xsl:message terminate="yes">
-      <xsl:text>Error: odd2odd.xsl: </xsl:text> 
-      <xsl:value-of select="$message"/>
-    </xsl:message>
-  </xsl:template>
-  
+  <xd:doc>
+    <xd:param name="minOccurs">string value of @minOccurs attr</xd:param>
+    <xd:param name="maxOccurs">string value of @maxOccurs attr</xd:param>
+    <xd:return>a sequence of 2 integers representing the integer
+    values thereof with -1 used to indicate "unbounded"</xd:return>
+  </xd:doc>
   <xsl:function name="tei:minOmaxO" as="xs:integer+">
-    <!-- Input: the string values of the attributes @minOccurs and -->
-    <!--        @maxOccurs  -->
-    <!-- Oputput: a sequence of 2 integers representing the integer -->
-    <!--          values thereof with -1 used to indicate "unbounded" -->
     <xsl:param name="minOccurs"/>
     <xsl:param name="maxOccurs"/>
     <!-- get the value of @minOccurs, defaulting to "1" -->
@@ -491,6 +485,20 @@
     </xsl:variable>
     <xsl:sequence select="( $min, $max )"/>
   </xsl:function>
+  
+  <!-- ***** subroutines (i.e., general purpose named templates) ***** -->
+  <xd:doc>
+    <xd:desc>Issue error msg and stop execution</xd:desc>
+    <xd:param name="message">the error message to display</xd:param>
+    <xd:return>N/A: execution is halted.</xd:return>
+  </xd:doc>
+  <xsl:template name="die">
+    <xsl:param name="message"/>
+    <xsl:message terminate="yes">
+      <xsl:text>Error: odd2odd.xsl: </xsl:text>
+      <xsl:value-of select="$message"/>
+    </xsl:message>
+  </xsl:template>
   
   <xsl:variable name="ODD">
     <xsl:for-each select="/*">
