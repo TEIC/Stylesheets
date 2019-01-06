@@ -15,6 +15,13 @@
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     exclude-result-prefixes="#all">
 
+  <xsl:function name="tei:message" as="xs:string">
+    <!-- KEEPING THIS UNTIL tei:message() calls changed to tei:msg() —Syd, 2019-01-06 -->
+    <xsl:param name="message"/>
+    <xsl:message><xsl:copy-of select="$message"/></xsl:message>
+    <xsl:text/>
+  </xsl:function>
+
   <xd:doc scope="stylesheet" type="stylesheet">
     <xd:desc>
       <xd:p>TEI stylesheet for merging TEI ODD specification with source to
@@ -259,8 +266,8 @@
            User specified a default source, use it, stripping
            leading and trailing U+0022 characters if present.
       -->
+      <!-- Why strip them instead of just tell users not to specify 'em? —Syd, 2017-12-30 -->
       <xsl:when test="$defaultSource ne ''">
-        <!-- Why strip them instead of just tell users not to specify 'em? —Syd, 2017-12-30 -->
         <xsl:choose>
           <xsl:when test="starts-with( $defaultSource,'&quot;') and ends-with( $defaultSource,'&quot;')">
             <xsl:value-of select="substring( $defaultSource, 2, string-length( $defaultSource )-2 )"/>
@@ -308,11 +315,11 @@
 
   <xd:doc>
     <xd:desc>
-      <xd:p>Given an element or attribute identifier and a list of @include and @except
-      GIs or attribute names, return false() if a) there is an @include and the
-      identifier is not in its list, or b) there is an @except and the identifier
-      is in its list.</xd:p>
-    </xd:desc>
+      <xd:b>tei:includeMember()</xd:b>: Given an element or attribute
+      identifier and a list of @include and @except GIs or attribute
+      names, return false() if a) there is an @include and the
+      identifier is not in its list, or b) there is an @except and the
+      identifier is in its list.</xd:desc>
     <xd:param name="ident">a GI or an attribute name</xd:param>
     <xd:param name="exc">the @except list from the &lt;moduleRef> the &lt;classRef> being examined</xd:param>
     <xd:param name="inc">the @include list from the &lt;moduleRef> the &lt;classRef> being examined</xd:param>
@@ -343,14 +350,15 @@
 
   <xd:doc>
     <xd:desc>
-      <xd:p>Given a context node, figure out which ODD source file it
-      is supposed to be customizing.</xd:p>
-    </xd:desc>
-    <xd:param name="context">the context node from where we were called</xd:param>
+      <xd:b>tei:workOutSource</xd:b> Given a context node, figure out
+      which ODD source file it is supposed to be customizing.</xd:desc>
+    <xd:param name="context">the context node from where we were
+    called</xd:param>
   </xd:doc>
   <xsl:function name="tei:workOutSource" as="xs:anyURI">
     <xsl:param name="context"/>
-    <xsl:variable name="loc" select="normalize-space( ( $context/@source, $context/ancestor::tei:schemaSpec/@source, $DEFAULTSOURCE )[1] )"/>
+    <xsl:variable name="loc"
+		  select="normalize-space( ( $context/@source, $context/ancestor::tei:schemaSpec/@source, $DEFAULTSOURCE )[1] )"/>
     <!-- 
          Note: I think the above should probably instead be
          ( $context/ancestor-or-self::*[@source][1]/@source, $DEFAULTSOURCE )[1]
@@ -373,11 +381,11 @@
           <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
         </xsl:when>
         <!-- 
-             If we can figure out the base URI of the input document, then
-             just use $loc raw (unless user specified an overriding current
-             directory, in which case prepend it).
-        -->
-        <!-- (Note: that is what this code is doing, but I don't get it —Syd, 2017-12-30) -->
+             If we can't figure out the base URI of the input
+             document, then just use $loc raw (unless user specified
+             an overriding current directory, in which case prepend
+             it). Note: that is what this code is doing, but I don't
+             get it —Syd, 2017-12-30 -->
         <xsl:when test="base-uri( $top ) eq ''">
           <xsl:value-of select="$currentDirectory"/>
           <xsl:value-of select="$loc"/>
@@ -418,7 +426,8 @@
   </xsl:function>
 
   <xd:doc>
-    <xd:desc>Function to execute an &lt;xsl:message> iff $verbose is true</xd:desc>
+    <xd:desc><xd:b>tei:msg()</xd:b>: Function to execute an
+    &lt;xsl:message> iff $verbose is true</xd:desc>
     <xd:param name="message">the message text to emit</xd:param>
   </xd:doc>
   <xsl:function name="tei:msg" as="empty-sequence()">
@@ -428,16 +437,11 @@
     </xsl:if>
   </xsl:function>
 
-  <xsl:function name="tei:message" as="xs:string">
-    <xsl:param name="message"/>
-    <xsl:message><xsl:copy-of select="$message"/></xsl:message>
-    <xsl:text/>
-  </xsl:function>
-
   <xd:doc>
-    <xd:desc>Function to generate a unique key based on the namespace
-    in which we are currently generating constructs and the local name
-    of the construct being addressed.</xd:desc>
+    <xd:desc><xd:b>tei:uniqueName</xd:b>: Function to generate a
+    unique key based on the namespace in which we are currently
+    generating constructs and the local name of the construct being
+    addressed.</xd:desc>
     <xd:param name="context">the context node from where we were
     called</xd:param>
     <xd:return>a string that can be used to uniquely identify the
@@ -447,15 +451,19 @@
   </xd:doc>
   <xsl:function name="tei:uniqueName" as="xs:string">
     <xsl:param name="context"/>
-    <xsl:sequence select="concat(
-                          if ( $context/@ns eq $teins )
+    <xsl:value-of select="if ( $context/@ns eq $teins )
                             then ''
                             else ( $context/@ns, $context/ancestor::schemaSpec/@ns, '')[1],
-                          $context/@ident
-                          )"/>
+                          $context/@ident" separator=""/>
   </xsl:function>
 
+
   <xd:doc>
+    <xd:desc>Function read in the @minOccurs and @maxOccurs of an
+    att.repeatable element (or &lt;datatype>), and return integers for
+    the minimum and maximum occurences, taking defaults into account.
+    The integer -1 is returned for "unbounded" (or any other string
+    that cannot be cast into an integer, actually).</xd:desc>
     <xd:param name="minOccurs">string value of @minOccurs attr</xd:param>
     <xd:param name="maxOccurs">string value of @maxOccurs attr</xd:param>
     <xd:return>a sequence of 2 integers representing the integer
