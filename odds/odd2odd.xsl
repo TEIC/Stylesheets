@@ -542,9 +542,11 @@
         <xd:li>Transform &lt;specGrp> into an &lt;html:table> iff it
         has a child &lt;classSpec>, &lt;dataSpec>, &lt;elementSpec>,
         &lt;macroSpec>, &lt;moduleRef>, or &lt;specGrpRef>.</xd:li>
+        <xd:li>Resolve &lt;specGrpRef>s.</xd:li>
         <xd:li>Adds a @defaultExceptions attribute to the
         &lt;schemSpec> we are processing</xd:li>
-	<xd:li>Drops all comments.</xd:li>
+        <xd:li>Drops all comment children of &lt;schemaSpec> (why? —Syd, 2019-01-06).</xd:li>
+        <xd:li>Drops &lt;schemaSpec>s we are not processing.</xd:li>
       </xd:ul>
     </xd:desc>
   </xd:doc>
@@ -555,19 +557,17 @@
         <xsl:attribute name="xml:base" select="document-uri(/)"/>
         <xsl:copy-of select="@*"/>
         <xsl:variable name="gotversion">
-	  <xsl:value-of separator=" "
-			select="document( tei:workOutSource( key('odd2odd-SCHEMASPECS',$whichSchemaSpec ) ) )
-				/*/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"
-	/>
+          <xsl:value-of separator=" "
+                        select="document( tei:workOutSource( key('odd2odd-SCHEMASPECS',$whichSchemaSpec ) ) ) /*/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
         </xsl:variable>   
         <xsl:if test="$useVersionFromTEI">
           <xsl:processing-instruction name="TEIVERSION">
             <xsl:value-of select="$gotversion"/>
           </xsl:processing-instruction>
         </xsl:if>
-	<xsl:value-of select="tei:msg(('Debug:',
-			      ' selectedSchema=',$selectedSchema,
-			      ' whichSchemaSpec=',$whichSchemaSpec,
+        <xsl:value-of select="tei:msg(('Debug:',
+                              ' selectedSchema=',$selectedSchema,
+                              ' whichSchemaSpec=',$whichSchemaSpec,
                               ' TEIVERSION=',$gotversion
                               ))"/>
         <xsl:apply-templates mode="pass0"/>
@@ -575,13 +575,20 @@
     </xsl:for-each>
   </xsl:variable>
 
-  <xsl:template match="tei:specGrp" mode="pass0">
-    <xsl:if test="$verbose">
-      <xsl:message>Phase 0: summarize specGrp <xsl:value-of select="@xml:id"/>
-      </xsl:message>
-    </xsl:if>
-    <xsl:if test="tei:specGrpRef|tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec|tei:moduleRef">
-    <table xmlns="http://www.tei-c.org/ns/1.0" rend="specGrpSummary">
+  <xd:doc>
+    <xd:desc>Convert a &lt;specGrp> with a child &lt;specGrpRef>,
+    &lt;elementSpec>, &lt;classSpec>, &lt;macroSpec>, &lt;dataSpec>,
+    or &lt;moduleRef> into a &lt;table> summarizing it; ignore a
+    &lt;specGrp> that does not have one of those children.</xd:desc>
+  </xd:doc>
+  <xsl:template match="tei:specGrp[not(tei:specGrpRef|tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec|tei:moduleRef)]" mode="pass0"/>
+  <xsl:template match="tei:specGrp[tei:specGrpRef|tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec|tei:moduleRef]" mode="pass0">
+    <!-- MINOR change in output from pre-rub-a-dub-dub: the message,
+         below, used to be output even if there was no child
+         <specGrpRef>, <elementSpec>, <classSpec>, <macroSpec>,
+         <dataSpec>, or <moduleRef> —Syd, 2019-01-06 -->
+    <xsl:value-of select="tei:msg(('Pass 0: summarize specGrp ', @xml:id,'&#x0A;'))"/>
+    <table rend="specGrpSummary">
       <xsl:for-each select="tei:specGrpRef|tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec|tei:moduleRef">
         <row>
           <xsl:choose>
@@ -633,19 +640,30 @@
         </row>
       </xsl:for-each>
     </table>
-    </xsl:if>
   </xsl:template>
-
+  
+  <xd:doc>
+    <xd:desc>IF this is the &lt;schemaSpec> we are supposed to
+    process, THEN add a @defaultExceptions iff it doesn't already have
+    one, and set @source to $DEFAULTSOURCE unless there already is a
+    @source, ELSE ignore it completely.</xd:desc>
+  </xd:doc>
   <xsl:template match="tei:schemaSpec" mode="pass0">
-    <xsl:if test="@ident=$selectedSchema or ($selectedSchema='' and not(preceding-sibling::tei:schemaSpec))">
+    <xsl:if test="@ident eq $selectedSchema or
+                  ($selectedSchema eq '' and not( preceding-sibling::tei:schemaSpec ) )">
       <xsl:copy>
         <xsl:copy-of select="@*"/>
         <!-- generate a @defaultExceptions attribute if it's not present -->
         <xsl:if test="not(@defaultExceptions)">
-          <xsl:variable name="defval" select="document(tei:workOutSource(.))//tei:elementSpec[@ident='schemaSpec']//tei:attDef[@ident='defaultExceptions']/tei:defaultVal"/>
+          <xsl:variable name="defval"
+                        select="document( tei:workOutSource(.) )
+                                //tei:elementSpec[@ident eq 'schemaSpec']
+                                //tei:attDef[@ident eq 'defaultExceptions']
+                                /tei:defaultVal"/>
           <xsl:for-each select="tokenize($defval, '\s+')">
             <xsl:if test="matches(., '\w(\w|\d)+:(\w|\d)+')">
-              <xsl:namespace name="{substring-before(., ':')}" select="namespace-uri-for-prefix(substring-before(., ':'), $defval)" ></xsl:namespace>
+              <xsl:namespace select="namespace-uri-for-prefix(substring-before(., ':'), $defval)"
+			     name="{substring-before(., ':')}" />
             </xsl:if>
           </xsl:for-each>
           <xsl:if test="$defval">
@@ -654,14 +672,10 @@
         </xsl:if>
         <xsl:choose>
           <xsl:when test="@source">
-            <xsl:if test="$verbose">
-              <xsl:message>Source for TEI is <xsl:value-of select="@source"/></xsl:message>
-            </xsl:if>
+            <xsl:value-of select="tei:msg(('Source for TEI is ', @source ))"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:if test="$verbose">
-              <xsl:message>Source for TEI will be set to <xsl:value-of select="$DEFAULTSOURCE"/> </xsl:message>
-            </xsl:if>
+            <xsl:value-of select="tei:msg(('Source for TEI will be set to ', $DEFAULTSOURCE ))"/>
             <xsl:attribute name="source">
               <xsl:value-of select="$DEFAULTSOURCE"/>
             </xsl:attribute>
