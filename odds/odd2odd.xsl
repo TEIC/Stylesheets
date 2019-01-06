@@ -249,17 +249,25 @@
        just in case ... —Syd, 2019-01-04
   -->
 
-  <!-- 
-       Set a variable to the name (i.e., @ident) of the <schemaSpec>
-       we are supposed to be process, ignoring all others. See
-       2019-01-03 WARNING, above —Syd
-  -->
+  <!-- ***** global variables (except $ODD, which is further below) ***** -->
+
+  <xd:doc><xd:desc>Quick reference to input document root node</xd:desc></xd:doc>
+  <xsl:variable name="top" select="/"/>
+
+  <xd:doc>
+    <xd:desc>Set a variable to the name (i.e., @ident) of the
+    &lt;schemaSpec> we are supposed to be process, ignoring all
+    others. See 2019-01-03 WARNING, above —Syd</xd:desc>
+  </xd:doc>
   <xsl:variable name="whichSchemaSpec"
                 select="if ($selectedSchema='')
                           then //tei:schemaSpec[1]/@ident
                           else $selectedSchema"/>
 
-  <!-- Location of the source XML file for the language we are customizing -->
+  <xd:doc>
+    <xd:desc>Location of the source XML file for the language we are
+    customizing</xd:desc>
+  </xd:doc>
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
       <!-- 
@@ -294,7 +302,9 @@
     </xsl:choose>
   </xsl:variable>
 
-  <!-- Store the TEI namespace once for later and consistent use. -->
+  <xd:doc>
+    <xd:desc>Store the TEI namespace once for later and consistent use</xd:desc>
+  </xd:doc>
   <xsl:variable name="teins" select="'http://www.tei-c.org/ns/1.0'"/>
 
   <!-- ***** functions ***** -->
@@ -358,7 +368,7 @@
   <xsl:function name="tei:workOutSource" as="xs:anyURI">
     <xsl:param name="context"/>
     <xsl:variable name="loc"
-		  select="normalize-space( ( $context/@source, $context/ancestor::tei:schemaSpec/@source, $DEFAULTSOURCE )[1] )"/>
+                  select="normalize-space( ( $context/@source, $context/ancestor::tei:schemaSpec/@source, $DEFAULTSOURCE )[1] )"/>
     <!-- 
          Note: I think the above should probably instead be
          ( $context/ancestor-or-self::*[@source][1]/@source, $DEFAULTSOURCE )[1]
@@ -457,13 +467,13 @@
                           $context/@ident" separator=""/>
   </xsl:function>
 
-
   <xd:doc>
-    <xd:desc>Function read in the @minOccurs and @maxOccurs of an
-    att.repeatable element (or &lt;datatype>), and return integers for
-    the minimum and maximum occurences, taking defaults into account.
-    The integer -1 is returned for "unbounded" (or any other string
-    that cannot be cast into an integer, actually).</xd:desc>
+    <xd:desc><xd:b>tei:minOmaxO()</xd:b>: Function read in the
+    @minOccurs and @maxOccurs of an att.repeatable element (or
+    &lt;datatype>), and return integers for the minimum and maximum
+    occurences, taking defaults into account. The integer -1 is
+    returned for "unbounded" (or any other string that cannot be cast
+    into an integer, actually).</xd:desc>
     <xd:param name="minOccurs">string value of @minOccurs attr</xd:param>
     <xd:param name="maxOccurs">string value of @maxOccurs attr</xd:param>
     <xd:return>a sequence of 2 integers representing the integer
@@ -496,7 +506,8 @@
   
   <!-- ***** subroutines (i.e., general purpose named templates) ***** -->
   <xd:doc>
-    <xd:desc>Issue error msg and stop execution</xd:desc>
+    <xd:desc><xd:b>tei:die</xd:b>: Issue error msg and stop
+    execution</xd:desc>
     <xd:param name="message">the error message to display</xd:param>
     <xd:return>N/A: execution is halted.</xd:return>
   </xd:doc>
@@ -508,33 +519,6 @@
     </xsl:message>
   </xsl:template>
   
-  <xsl:variable name="ODD">
-    <xsl:for-each select="/*">
-      <xsl:copy>
-              <xsl:attribute name="xml:base" select="document-uri(/)"/>
-        <xsl:copy-of select="@*"/>
-        <xsl:variable name="gotversion">
-            <xsl:call-template name="odd2odd-getversion"/>
-        </xsl:variable>   
-        <xsl:if test="$useVersionFromTEI">
-          <xsl:processing-instruction name="TEIVERSION">
-            <xsl:call-template name="odd2odd-getversion"/>
-          </xsl:processing-instruction>
-        </xsl:if>
-        <xsl:variable name="gotversion">                       <!--debug-->
-          <xsl:call-template name="odd2odd-getversion"/>       <!--debug-->
-        </xsl:variable>                                        <!--debug-->
-        <xsl:message select="concat(
-'Debug: selectedSchema=',$selectedSchema,' whichSchemaSpec=',$whichSchemaSpec,
-' TEIVERSION=',$gotversion
-)"/>                                                           <!--debug-->
-        <xsl:apply-templates mode="pass0"/>
-      </xsl:copy>
-    </xsl:for-each>
-  </xsl:variable>
-
-  <xsl:variable name="top" select="/"/>
-
   <xsl:template match="/">
     <!--
         <xsl:result-document href="/tmp/odd2odd-pass0.xml">
@@ -544,7 +528,52 @@
     <xsl:apply-templates mode="pass1" select="$ODD"/>
   </xsl:template>
 
-  <!-- ******************* Pass 0, follow and expand specGrp ********************************* -->
+  <!-- ********* pass 0 ********* -->
+
+  <xd:doc>
+    <xd:p><xd:b>Pass 0</xd:b></xd:p>
+    <xd:desc>
+      <xd:p>Pass 0 is called <xd:i>before</xd:i> we match the input
+        document root node, from the definition of $ODD. This pass over
+        the input data does several things:</xd:p>
+      <xd:ul>
+        <xd:li>Adds an @xml:base to the outermost element</xd:li>
+        <xd:li>Adds a TEIVERSION processing instruction if (unless $useVersionFromTEI is set to false())</xd:li>
+        <xd:li>Transform &lt;specGrp> into an &lt;html:table> iff it
+        has a child &lt;classSpec>, &lt;dataSpec>, &lt;elementSpec>,
+        &lt;macroSpec>, &lt;moduleRef>, or &lt;specGrpRef>.</xd:li>
+        <xd:li>Adds a @defaultExceptions attribute to the
+        &lt;schemSpec> we are processing</xd:li>
+	<xd:li>Drops all comments.</xd:li>
+      </xd:ul>
+    </xd:desc>
+  </xd:doc>
+
+  <xsl:variable name="ODD">
+    <xsl:for-each select="/*">
+      <xsl:copy>
+        <xsl:attribute name="xml:base" select="document-uri(/)"/>
+        <xsl:copy-of select="@*"/>
+        <xsl:variable name="gotversion">
+	  <xsl:value-of separator=" "
+			select="document( tei:workOutSource( key('odd2odd-SCHEMASPECS',$whichSchemaSpec ) ) )
+				/*/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"
+	/>
+        </xsl:variable>   
+        <xsl:if test="$useVersionFromTEI">
+          <xsl:processing-instruction name="TEIVERSION">
+            <xsl:value-of select="$gotversion"/>
+          </xsl:processing-instruction>
+        </xsl:if>
+	<xsl:value-of select="tei:msg(('Debug:',
+			      ' selectedSchema=',$selectedSchema,
+			      ' whichSchemaSpec=',$whichSchemaSpec,
+                              ' TEIVERSION=',$gotversion
+                              ))"/>
+        <xsl:apply-templates mode="pass0"/>
+      </xsl:copy>
+    </xsl:for-each>
+  </xsl:variable>
 
   <xsl:template match="tei:specGrp" mode="pass0">
     <xsl:if test="$verbose">
@@ -1000,20 +1029,6 @@
       <xsl:apply-templates mode="odd2odd-change" select="@*|*|processing-instruction()|text()"/>
     </xsl:copy>
   </xsl:template>
-
-<!--  <xsl:template match="rng:*" mode="odd2odd-change">
-    <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{local-name()}">
-      <xsl:apply-templates mode="odd2odd-change" select="@*|*|processing-instruction()|text()"/>
-    </xsl:element>
-  </xsl:template>
- USELESS template to be removed? see e-mail "copying craziness" of 2016-11-15 22:54Z -->
-
-<!--  <xsl:template match="tei:elementSpec/@mode" mode="odd2odd-change">
-    <xsl:copy/>
-  </xsl:template>
- USELESS? same as above, I think. -->
-  <xsl:variable name="key" select="@key"/>
-  <xsl:variable name="whence" select="local-name()"/>
   
   <xsl:template match="tei:elementSpec" mode="odd2odd-change">
     <xsl:variable name="elementName" select="tei:uniqueName(.)"/>
@@ -2164,22 +2179,6 @@
   </xsl:template>
 
   <xsl:template name="odd2odd-getversion">
-    <xsl:choose>
-      <xsl:when test="key('odd2odd-SCHEMASPECS',$whichSchemaSpec)">
-        <xsl:for-each
-            select="key('odd2odd-SCHEMASPECS',$whichSchemaSpec)">
-          <xsl:variable name="source" select="tei:workOutSource(.)"/>
-          <xsl:for-each select="document($source)/*/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-            <xsl:value-of select="."/>
-          </xsl:for-each>
-        </xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:for-each select="document($DEFAULTSOURCE)/*/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-          <xsl:value-of select="."/>
-        </xsl:for-each>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="odd2odd-processConstraints">
