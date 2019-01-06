@@ -341,53 +341,71 @@
     </xsl:choose>
   </xsl:function>
 
-  <xsl:function name="tei:workOutSource" as="xs:string*">
-    <xsl:param name="e"/>
-    <xsl:variable name="loc">
-      <xsl:choose>
-        <xsl:when test="$e/@source">
-          <xsl:value-of select="$e/@source"/>
-        </xsl:when>
-        <xsl:when test="$e/ancestor::tei:schemaSpec/@source">
-          <xsl:value-of select="$e/ancestor::tei:schemaSpec/@source"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$DEFAULTSOURCE"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+  <xd:doc>
+    <xd:desc>
+      <xd:p>Given a context node, figure out which ODD source file it
+      is supposed to be customizing.</xd:p>
+    </xd:desc>
+    <xd:param name="context">the context node from where we were called</xd:param>
+  </xd:doc>
+  <xsl:function name="tei:workOutSource" as="xs:anyURI">
+    <xsl:param name="context"/>
+    <xsl:variable name="loc" select="normalize-space( ( $context/@source, $context/ancestor::tei:schemaSpec/@source, $DEFAULTSOURCE )[1] )"/>
+    <!-- 
+         Note: I think the above should probably instead be
+         ( $context/ancestor-or-self::*[@source][1]/@source, $DEFAULTSOURCE )[1]
+         but even if so, that change does not get made in this branch. See issue
+         303 at target="https://github.com/TEIC/Stylesheets/issues/303. —Syd, 2017-12-30
+    -->
     <xsl:variable name="source">
       <xsl:choose>
-        <xsl:when test="starts-with($loc,'file:')">
+        <!-- if $loc is an absolute URI w/ scheme, just use it -->
+        <xsl:when test="matches( $loc,'^(file|https?):')">
           <xsl:value-of select="$loc"/>
         </xsl:when>
-        <xsl:when test="starts-with($loc,'http:')">
-          <xsl:value-of select="$loc"/>
+        <!-- if it is an absolute filepath, use it as a file URI -->
+        <xsl:when test="starts-with( $loc,'/')">
+          <xsl:value-of select="resolve-uri( $loc, 'file:///')"/>
         </xsl:when>
-        <xsl:when test="starts-with($loc,'https:')">
-          <xsl:value-of select="$loc"/>
-        </xsl:when>
-        <xsl:when test="starts-with($loc,'/')">
-          <xsl:value-of select="resolve-uri($loc, 'file:///')"/>
-        </xsl:when>
-        <xsl:when test="starts-with($loc,'tei:')">
-          <xsl:value-of select="replace($loc,'tei:',$defaultTEIServer)"/>
+        <!-- if it is our private URI scheme, expand it automagically -->
+        <xsl:when test="starts-with( $loc,'tei:')">
+          <xsl:value-of select="replace( $loc, 'tei:', $defaultTEIServer )"/>
           <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
         </xsl:when>
-        <xsl:when test="base-uri($top)=''">
+        <!-- 
+             If we can figure out the base URI of the input document, then
+             just use $loc raw (unless user specified an overriding current
+             directory, in which case prepend it).
+        -->
+        <!-- (Note: that is what this code is doing, but I don't get it —Syd, 2017-12-30) -->
+        <xsl:when test="base-uri( $top ) eq ''">
           <xsl:value-of select="$currentDirectory"/>
           <xsl:value-of select="$loc"/>
         </xsl:when>
+        <!-- 
+             OK, so we *can* figure out the base URI, use it. Since
+             user did not specify an overriding current directory,
+             just use URI of source againt base URI of input doc.
+        -->
         <xsl:when test="$currentDirectory=''">
-          <xsl:value-of select="resolve-uri($loc,base-uri($top))"/>
+          <xsl:value-of select="resolve-uri( $loc, base-uri( $top ) )"/>
         </xsl:when>
+        <!-- 
+             Same as above, but user did specify an overriding current
+             directory, so prepend that.
+        -->
         <xsl:otherwise>
-          <xsl:value-of select="resolve-uri(string-join(($currentDirectory, $loc), '/'),base-uri($top))"/>
+          <xsl:value-of select="resolve-uri( string-join( ( $currentDirectory, $loc ),'/'), base-uri( $top ) )"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <!-- OK, now we have a $source URI. -->
     <xsl:choose>
-      <xsl:when test="not(doc-available($source))">
+      <xsl:when test="doc-available( $source )">
+        <xsl:sequence select="tei:msg(('Setting source document to ', $source ))"/>
+        <xsl:sequence select="$source"/>
+      </xsl:when>
+      <xsl:otherwise>
         <xsl:call-template name="die">
           <xsl:with-param name="message">
             <xsl:text>Source </xsl:text>
@@ -395,14 +413,19 @@
             <xsl:text> not readable</xsl:text>
           </xsl:with-param>
         </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:if test="$verbose">
-          <xsl:message>Setting source document to <xsl:value-of select="$source"/></xsl:message>
-        </xsl:if>
-        <xsl:sequence select="$source"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+
+  <xd:doc>
+    <xd:desc>Function to execute an &lt;xsl:message> iff $verbose is true</xd:desc>
+    <xd:param name="message">the message text to emit</xd:param>
+  </xd:doc>
+  <xsl:function name="tei:msg" as="empty-sequence()">
+    <xsl:param name="message" as="xs:string+"/>
+    <xsl:if test="$verbose">
+      <xsl:message><xsl:value-of select="$message" separator=""/></xsl:message>
+    </xsl:if>
   </xsl:function>
 
   <xsl:function name="tei:message" as="xs:string">
@@ -411,38 +434,25 @@
     <xsl:text/>
   </xsl:function>
 
+  <xd:doc>
+    <xd:desc>Function to generate a unique key based on the namespace
+    in which we are currently generating constructs and the local name
+    of the construct being addressed.</xd:desc>
+    <xd:param name="context">the context node from where we were
+    called</xd:param>
+    <xd:return>a string that can be used to uniquely identify the
+    construct represented by the $context. In particular, its
+    namespace (if other than TEI) concatonated to its
+    identifier.</xd:return>
+  </xd:doc>
   <xsl:function name="tei:uniqueName" as="xs:string">
-    <xsl:param name="e"/>
-    <xsl:for-each select="$e">
-      <xsl:sequence select="concat(
-        if (@ns eq 'http://www.tei-c.org/ns/1.0') then ''
-        else if (@ns) then @ns
-        else if (ancestor::tei:schemaSpec/@ns) then
-        ancestor::tei:schemaSpec/@ns else '',@ident)"/>
-    </xsl:for-each>
-  </xsl:function>
-
-  <xsl:function name="tei:generate-nsprefix-schematron" as="xs:string">
-    <xsl:param name="e"/>
-    <xsl:for-each select="$e">
-      <xsl:variable name="myns" select="ancestor::tei:elementSpec/@ns"/>
-      <xsl:choose>
-        <xsl:when test="not($myns) or $myns='http://www.tei-c.org/ns/1.0'">
-          <xsl:text>tei:</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:choose>
-            <xsl:when test="ancestor::tei:schemaSpec//sch:ns[@uri=$myns]">
-              <xsl:value-of
-                  select="concat(ancestor::tei:schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="ancestor::tei:elementSpec/@ident"/></xsl:message>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+    <xsl:param name="context"/>
+    <xsl:sequence select="concat(
+                          if ( $context/@ns eq $teins )
+                            then ''
+                            else ( $context/@ns, $context/ancestor::schemaSpec/@ns, '')[1],
+                          $context/@ident
+                          )"/>
   </xsl:function>
 
   <xsl:template name="die">
