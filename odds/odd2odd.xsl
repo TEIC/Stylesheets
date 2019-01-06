@@ -66,7 +66,7 @@
   <xsl:param name="defaultTEIVersion">current</xsl:param>
   <xsl:param name="doclang"/>
   <!-- Which <schemaSpec> we are processing, by its @ident attribute: -->
-  <xsl:param name="selectedSchema" select="//schemaSpec[1]/@ident"/>
+  <xsl:param name="selectedSchema" select="//schemaSpec[1]/@ident/normalize-space()"/>
   <!-- WARNING: as currently configured teianttasks.xml (and perhaps
        other build processes) set $selectedSchema to a null value,
        meaning this (cleverly setting the default where it is supposed
@@ -252,22 +252,33 @@
 			  then //tei:schemaSpec[1]/@ident
 			  else $selectedSchema"/>
 
+  <!-- Location of the source XML file for the language we are customizing -->
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
-      <xsl:when test="$defaultSource != ''">
+      <!-- 
+           User specified a default source, use it, stripping
+           leading and trailing U+0022 characters if present.
+      -->
+      <xsl:when test="$defaultSource ne ''">
+        <!-- Why strip them instead of just tell users not to specify 'em? —Syd, 2017-12-30 -->
         <xsl:choose>
-          <xsl:when test="starts-with($defaultSource, '&quot;') and ends-with($defaultSource, '&quot;')">
-            <xsl:value-of select="substring($defaultSource, 2, string-length($defaultSource)-2)"/>
+          <xsl:when test="starts-with( $defaultSource,'&quot;') and ends-with( $defaultSource,'&quot;')">
+            <xsl:value-of select="substring( $defaultSource, 2, string-length( $defaultSource )-2 )"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="$defaultSource"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
-      <xsl:when test="$configDirectory != ''">
+      <!-- User specified a configuration directory, assume our p5subset is in that -->
+      <xsl:when test="$configDirectory ne ''">
         <xsl:value-of select="$configDirectory"/>
         <xsl:text>odd/p5subset.xml</xsl:text>
       </xsl:when>
+      <!-- 
+           No clues from user, use default path to web veresion (which
+           user may have overridden via parameters).
+      -->
       <xsl:otherwise>
         <xsl:value-of select="$defaultTEIServer"/>
         <xsl:value-of select="$defaultTEIVersion"/>
@@ -276,42 +287,58 @@
     </xsl:choose>
   </xsl:variable>
 
-  <!-- NOTE on functions added 2016-12-02 by Syd: -->
-  <!-- Many, if not most, of the functions below duplicate in name -->
-  <!-- functions that are in teiodds.xsl. odd2relax, odd2dtd, odd2html, -->
-  <!-- and even odd2json & odd2lite import that file. But this one -->
-  <!-- does not. I do not know if the functions are slightly different, -->
-  <!-- or if there is some other reason this file does not import -->
-  <!-- teiodds.xsl. Someday I hope to test this out and do the right -->
-  <!-- thing (either import that file so there is only 1 definition -->
-  <!-- of each function, or add documentation explaining why not and -->
-  <!-- perhaps re-name the functions so the difference is clear). But -->
-  <!-- for now, since I'm in a rush, I'm just following the lead of -->
-  <!-- what's here already, and copying my new function from teiodds to -->
-  <!-- here. -->
+  <!-- Store the TEI namespace once for later and consistent use. -->
+  <xsl:variable name="teins" select="'http://www.tei-c.org/ns/1.0'"/>
 
+  <!-- ***** functions ***** -->
+  <!-- 
+    NOTE added 2016-12-02 by Syd: Many, if not most, of the functions
+    below duplicate in name functions that are in teiodds.xsl. The
+    files odd2relax, odd2dtd, odd2html, and even odd2json & odd2lite
+    import that file. But this one does not. I do not know if the
+    functions are slightly different, or if there is some other reason
+    this file does not import teiodds.xsl. Someday I hope to test this
+    out and do the right thing (either import that file so there is
+    only 1 definition of each function, or add documentation
+    explaining why not and perhaps re-name the functions so the
+    difference is clear). But for now, since I'm in a rush, I'm just
+    following the lead of what's here already, and copying my new
+    function from teiodds to here.
+  -->
+
+  <xd:doc>
+    <xd:desc>
+      <xd:p>Given an element or attribute identifier and a list of @include and @except
+      GIs or attribute names, return false() if a) there is an @include and the
+      identifier is not in its list, or b) there is an @except and the identifier
+      is in its list.</xd:p>
+    </xd:desc>
+    <xd:param name="ident">a GI or an attribute name</xd:param>
+    <xd:param name="exc">the @except list from the &lt;moduleRef> the &lt;classRef> being examined</xd:param>
+    <xd:param name="inc">the @include list from the &lt;moduleRef> the &lt;classRef> being examined</xd:param>
+  </xd:doc>
   <xsl:function name="tei:includeMember" as="xs:boolean">
-    <xsl:param name="ident"  as="xs:string"/>
-    <xsl:param name="exc" />
-    <xsl:param name="inc" />
-      <xsl:choose>
-        <xsl:when test="not($exc) and not($inc)">true</xsl:when>
-        <xsl:when test="$inc and $ident cast as xs:string  = tokenize($inc, ' ')">true</xsl:when>
-        <xsl:when test="$inc">false</xsl:when>
-        <xsl:when test="$exc and $ident cast as xs:string   = tokenize($exc, ' ')">false</xsl:when>
-        <xsl:otherwise>true</xsl:otherwise>
-      </xsl:choose>
-  </xsl:function>
-
-
-  <xsl:function name="tei:checkExclude" as="xs:boolean">
-    <xsl:param name="ident"  as="xs:string"/>
-    <xsl:param name="exc" />
-      <xsl:choose>
-        <xsl:when test="not($exc)">true</xsl:when>
-        <xsl:when test="$exc and $ident cast as xs:string   = tokenize($exc, ' ')">false</xsl:when>
-        <xsl:otherwise>true</xsl:otherwise>
-      </xsl:choose>
+    <xsl:param name="ident" as="xs:string"/>
+    <!-- the values of $exc and $inc should be space-normalized before reaching us -->
+    <xsl:param name="exc"/>
+    <xsl:param name="inc"/>
+    <xsl:choose>
+      <xsl:when test="not($exc)  and  not($inc)">
+        <xsl:sequence select="true()"/>
+      </xsl:when>
+      <xsl:when test="$inc  and  $ident = tokenize( $inc,'&#x20;')">
+        <xsl:sequence select="true()"/>
+      </xsl:when>
+      <xsl:when test="$inc">
+        <xsl:sequence select="false()"/>
+      </xsl:when>
+      <xsl:when test="$exc  and  $ident = tokenize( $exc,'&#x20;')">
+        <xsl:sequence select="false()"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="true()"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
 
   <xsl:function name="tei:workOutSource" as="xs:string*">
