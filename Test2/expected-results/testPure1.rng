@@ -4279,10 +4279,51 @@ Elements]</a:documentation>
       <element name="bibl">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(bibliographic citation) A short bibliographic citation with nothing but author, title, and optional date [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2.7. The Source Description 15.3.2. Declarable Elements]</a:documentation>
          <group>
-            <oneOrMore>
+            <group>
                <ref name="t_author"/>
-            </oneOrMore>
-            <ref name="t_title"/>
+               <ref name="t_author"/>
+               <zeroOrMore>
+                  <ref name="t_author"/>
+               </zeroOrMore>
+            </group>
+            <group>
+               <ref name="t_title"/>
+               <optional>
+                  <ref name="t_title"/>
+                  <optional>
+                     <ref name="t_title"/>
+                     <optional>
+                        <ref name="t_title"/>
+                        <optional>
+                           <ref name="t_title"/>
+                           <optional>
+                              <ref name="t_title"/>
+                              <optional>
+                                 <ref name="t_title"/>
+                                 <optional>
+                                    <ref name="t_title"/>
+                                 </optional>
+                              </optional>
+                           </optional>
+                        </optional>
+                     </optional>
+                  </optional>
+               </optional>
+            </group>
+            <group>
+               <optional>
+                  <ref name="t_publisher"/>
+               </optional>
+               <optional>
+                  <ref name="t_publisher"/>
+                  <optional>
+                     <ref name="t_publisher"/>
+                     <optional>
+                        <ref name="t_publisher"/>
+                     </optional>
+                  </optional>
+               </optional>
+            </group>
             <optional>
                <ref name="t_date"/>
             </optional>
