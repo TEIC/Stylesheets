@@ -551,6 +551,18 @@
     </xd:desc>
   </xd:doc>
 
+  <xd:doc>
+    <xd:desc>Most of pass 0 processing is just the identity function</xd:desc>
+  </xd:doc>
+  <xsl:template match="@*|processing-instruction()|text()|comment()" mode="pass0">
+    <xsl:copy/>
+  </xsl:template>  
+  <xsl:template match="*" mode="pass0">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()" mode="pass0"/>
+    </xsl:copy>
+  </xsl:template>
+  
   <xsl:variable name="ODD">
     <xsl:for-each select="/*">
       <xsl:copy>
@@ -686,25 +698,34 @@
     </xsl:if>
   </xsl:template>
 
+  <xd:doc>
+    <xd:desc>Handle a &lt;specGrpRef> by processing the children of
+    that which it points to instead. (But see "??" below, where
+    processing is different iff the element pointed to has a child
+    &lt;specGrp>.)</xd:desc>
+  </xd:doc>
   <xsl:template match="tei:specGrpRef" mode="pass0">
-    <xsl:sequence select="if ($verbose)then tei:message(concat('Phase 0: expand specGrpRef ',@target)) else ()"/>
+    <xsl:variable name="target" select="normalize-space( @target )"/>
+    <xsl:value-of select="tei:msg(('Phase 0: expand specGrpRef ', $target ))"/>
     <xsl:choose>
-      <xsl:when test="starts-with(@target,'#')">
-        <xsl:apply-templates  mode="pass0"
-                              select="id(substring(@target,2))/*"/>
+      <xsl:when test="starts-with( $target ,'#')">
+	<!-- Points to a local target, process its children instead of me -->
+        <xsl:apply-templates mode="pass0"
+                             select="id( substring( $target, 2 ) )/*"/>
       </xsl:when>
       <xsl:otherwise>
-          <xsl:if test="$verbose">
-            <xsl:sequence select="tei:message(concat('... read from ',resolve-uri(@target,base-uri($top))))"/>
-          </xsl:if>
-        <xsl:for-each 
-            select="doc(resolve-uri(@target,base-uri($top)))">
-          <xsl:choose>
-            <xsl:when test="tei:specGrp">
+	<!-- @target is not a bare name identifier local pointer -->
+	<xsl:value-of
+	    select="tei:msg((' ... read from ', resolve-uri( $target, base-uri($top) )))"/>
+	<xsl:for-each select="doc( resolve-uri( $target, base-uri($top) ) )">
+	  <xsl:choose>
+	    <xsl:when test="tei:specGrp">
+	      <!-- if it has a child <specGrp>, process *its* children?? —Syd -->
               <xsl:apply-templates select="tei:specGrp/*" mode="pass0"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:apply-templates  mode="pass0"/>
+	      <!-- otherwas just process the children of what was pointed to -->
+              <xsl:apply-templates mode="pass0"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:for-each>
@@ -712,36 +733,35 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="@*|processing-instruction()|text()|comment()" mode="pass0">
-      <xsl:copy/>
-  </xsl:template>  
-  <xsl:template match="*" mode="pass0">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="pass0"/>
-    </xsl:copy>
-  </xsl:template>
-
-  <xsl:template match="tei:elementSpec[@mode eq 'change']|tei:classSpec[@mode eq 'change']|tei:macroSpec[@mode eq 'change']|tei:dataSpec[@mode eq 'change']"
-                mode="pass0">
+  <xd:doc>
+    <xd:desc>Process mode "change" &lt;*Spec> elements. If this is the
+    only such element, just make a copy (processing children); if
+    there are others and this is the first, make a copy processing
+    children of all the &lt;*Spec mode="change"> with the same @ident,
+    if not the first, don't do anything (our children have already been
+    dealt with).</xd:desc>
+  </xd:doc>
+  <xsl:template mode="pass0"
+      match="( tei:elementSpec | tei:classSpec | tei:macroSpec | tei:dataSpec )
+	     [@mode eq 'change']">
     <xsl:choose>
-      <xsl:when test="count(key('odd2odd-CHANGE',@ident))&gt;1">
-        <xsl:if
-            test="generate-id(.)=generate-id(key('odd2odd-CHANGE',@ident)[1])">
-          <xsl:copy>
-            <xsl:copy-of select="@*"/>
-            <xsl:for-each select="key('odd2odd-CHANGE',@ident)">
-              <xsl:apply-templates
-                  select="*|text()|comment()|processing-instruction()"
-                  mode="pass0"/>
-            </xsl:for-each>
-          </xsl:copy>
-        </xsl:if>
+      <xsl:when test="count( key('odd2odd-CHANGE', @ident ) ) > 1">
+	<xsl:if test=". is key('odd2odd-CHANGE', @ident )[1]">
+	  <xsl:copy>
+	    <xsl:copy-of select="@*"/>
+	    <xsl:for-each select="key('odd2odd-CHANGE',@ident)">
+	      <xsl:apply-templates
+		  select="*|text()|comment()|processing-instruction()"
+		  mode="pass0"/>
+	    </xsl:for-each>
+	  </xsl:copy>
+	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy>
-          <xsl:copy-of select="@*"/>
-          <xsl:apply-templates select="*|text()|comment()|processing-instruction()" mode="pass0"/>
-        </xsl:copy>
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates select="*|text()|comment()|processing-instruction()" mode="pass0"/>
+	</xsl:copy>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
