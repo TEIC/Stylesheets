@@ -189,7 +189,7 @@ then
 else
    outfile=`basename $2`
    O=`dirname "$2"`
-   outdir=`(cd $O; pwd)`
+   outdir=`(mkdir -p $O; cd $O; pwd)`
 fi
 if ! test -f "$indir/$infile"
 then 
