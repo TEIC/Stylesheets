@@ -57,6 +57,109 @@
         <!-- Set this to 'all' to include documentation in all languages. -->
     </xsl:param>
     <xsl:param name="serializeDocs" select="true()"/>
+    <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
+    <xsl:param name="defaultTEIVersion">current</xsl:param>
+    <xsl:param name="defaultSource"/>
+    <xsl:param name="configDirectory"/>
+    <xsl:param name="currentDirectory"/>
+    <xsl:param name="verbose">false</xsl:param>
+    
+    <xsl:variable name="DEFAULTSOURCE">
+        <xsl:choose>
+            <xsl:when test="$defaultSource != ''">
+                <xsl:choose>
+                    <xsl:when test="starts-with($defaultSource, '&quot;') and ends-with($defaultSource, '&quot;')">
+                        <xsl:value-of select="substring($defaultSource, 2, string-length($defaultSource)-2)"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$defaultSource"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:when test="$configDirectory != ''">
+                <xsl:value-of select="$configDirectory"/>
+                <xsl:text>odd/p5subset.xml</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$defaultTEIServer"/>
+                <xsl:value-of select="$defaultTEIVersion"/>
+                <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    
+    <xsl:function name="tei:workOutSource" as="xs:string*">
+        <xsl:param name="e"/>
+        <xsl:variable name="loc">
+            <xsl:choose>
+                <xsl:when test="$e/@source">
+                    <xsl:value-of select="$e/@source"/>
+                </xsl:when>
+                <xsl:when test="$e/ancestor::tei:schemaSpec/@source">
+                    <xsl:value-of select="$e/ancestor::tei:schemaSpec/@source"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$DEFAULTSOURCE"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="source">
+            <xsl:choose>
+                <xsl:when test="starts-with($loc,'file:')">
+                    <xsl:value-of select="$loc"/>
+                </xsl:when>
+                <xsl:when test="starts-with($loc,'http:')">
+                    <xsl:value-of select="$loc"/>
+                </xsl:when>
+                <xsl:when test="starts-with($loc,'https:')">
+                    <xsl:value-of select="$loc"/>
+                </xsl:when>
+                <xsl:when test="starts-with($loc,'/')">
+                    <xsl:value-of select="resolve-uri($loc, 'file:///')"/>
+                </xsl:when>
+                <xsl:when test="starts-with($loc,'tei:')">
+                    <xsl:value-of select="replace($loc,'tei:',$defaultTEIServer)"/>
+                    <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
+                </xsl:when>
+                <xsl:when test="base-uri($top)=''">
+                    <xsl:value-of select="$currentDirectory"/>
+                    <xsl:value-of select="$loc"/>
+                </xsl:when>
+                <xsl:when test="$currentDirectory=''">
+                    <xsl:value-of select="resolve-uri($loc,base-uri($top))"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="resolve-uri(string-join(($currentDirectory, $loc), '/'),base-uri($top))"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="not(doc-available($source))">
+                <!-- noop -->
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="$verbose='true'">
+                    <xsl:message>Setting source document to <xsl:value-of select="$source"/></xsl:message>
+                </xsl:if>
+                <xsl:sequence select="$source"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>    
+    
+    <xsl:function name="tei:getClassType" as="xs:string">
+        <xsl:param name="context"/>
+        <xsl:param name="key"/>
+        <xsl:for-each select="$context">
+            <xsl:choose>
+                <xsl:when test="key('IDENTS', $key)/@type">
+                    <xsl:value-of select="key('IDENTS', $key)/@type"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="document(tei:workOutSource($context))//tei:classSpec[@ident=$key]/@type"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
+    </xsl:function>
     
     <xsl:template match="/">        
         <xsl:variable name="structure">
@@ -226,27 +329,46 @@
             </j:array>
             <xsl:if test="tei:classes">
                 <j:map key="classes">
+                    <!-- Organize memberOf references by class type. Use the IDENTS key to look for classSpecs in the current ODD, or look for it in the default source -->
+                    <!-- If a classSpec can't be located, mark the reference as 'unknown' (RomaJS will not process it) -->
                     <j:array key="model">
-                        <xsl:for-each-group select="tei:classes/tei:memberOf" group-by="key('IDENTS',@key)/@type">
+                        <xsl:for-each-group select="tei:classes/tei:memberOf" group-by="tei:getClassType(ancestor::tei:classes, @key)">
                             <xsl:if test="current-grouping-key() = 'model'">
                                 <xsl:for-each select="current-group()">
-                                    <j:string>
-                                        <xsl:value-of select="@key"/>
-                                    </j:string>
-                                </xsl:for-each>
-                            </xsl:if>                            
-                        </xsl:for-each-group>    
-                    </j:array>
-                    <j:array key="atts">
-                        <xsl:for-each-group select="tei:classes/tei:memberOf" group-by="key('IDENTS',@key)/@type">
-                            <xsl:if test="current-grouping-key() = 'atts'">
-                                <xsl:for-each select="current-group()">
-                                    <j:string>
-                                        <xsl:value-of select="@key"/>
-                                    </j:string>
+                                    <xsl:if test="not(@mode = 'delete')">
+                                        <j:string>
+                                            <xsl:value-of select="@key"/>
+                                        </j:string>
+                                    </xsl:if>
                                 </xsl:for-each>
                             </xsl:if>
-                        </xsl:for-each-group>    
+                        </xsl:for-each-group>
+                    </j:array>
+                    <j:array key="atts">
+                        <xsl:for-each-group select="tei:classes/tei:memberOf" group-by="tei:getClassType(ancestor::tei:classes, @key)">
+                            <xsl:if test="current-grouping-key() = 'atts'">
+                                <xsl:for-each select="current-group()">
+                                    <xsl:if test="not(@mode = 'delete')">
+                                       <j:string>
+                                           <xsl:value-of select="@key"/>
+                                       </j:string>
+                                    </xsl:if>
+                                </xsl:for-each>
+                            </xsl:if>
+                        </xsl:for-each-group>
+                    </j:array>
+                    <j:array key="unknown">
+                        <xsl:for-each-group select="tei:classes/tei:memberOf" group-by="tei:getClassType(ancestor::tei:classes, @key)">
+                            <xsl:if test="not(current-grouping-key())">
+                                <xsl:for-each select="current-group()">
+                                    <xsl:if test="not(@mode = 'delete')">
+                                        <j:string>
+                                            <xsl:value-of select="@key"/>
+                                        </j:string>
+                                    </xsl:if>
+                                </xsl:for-each>
+                            </xsl:if>
+                        </xsl:for-each-group>
                     </j:array>
                 </j:map>
             </xsl:if>
