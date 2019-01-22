@@ -80,7 +80,7 @@
        to be set) does not work — we re-set $selectedSchema to
        //schemaSpec[1]/@ident if it is nil, below. I'm not sure if
        this should be changed here or (better IMHO), the calling
-       routines should not say the selected schema is nil ot get the
+       routines should not say the selected schema is nil to get the
        default. —Syd, 2019-01-03 -->
   <xsl:param name="stripped" as="xs:boolean" select="false()"/>
   <!-- following param was added 2016-06-06 by Syd Bauman for use by
@@ -256,8 +256,8 @@
 
   <xd:doc>
     <xd:desc>Set a variable to the name (i.e., @ident) of the
-    &lt;schemaSpec> we are supposed to be process, ignoring all
-    others. See 2019-01-03 WARNING, above —Syd</xd:desc>
+    &lt;schemaSpec> we are supposed to process, ignoring all others.
+    See 2019-01-03 WARNING, above —Syd</xd:desc>
   </xd:doc>
   <xsl:variable name="whichSchemaSpec"
                 select="if ($selectedSchema='')
@@ -519,15 +519,31 @@
     </xsl:message>
   </xsl:template>
   
+  <!-- ***** start main processing ***** -->
+  <xd:doc>
+    <xd:desc>Process root by taking output of pass0 and processing in pass1</xd:desc>
+  </xd:doc>
   <xsl:template match="/">
-    <!--
-        <xsl:result-document href="/tmp/odd2odd-pass0.xml">
-          <xsl:copy-of select="$ODD"/>
-        </xsl:result-document>
-        -->
-    <xsl:apply-templates mode="pass1" select="$ODD"/>
+    <xsl:variable name="pass1">
+      <xsl:apply-templates mode="pass1" select="$ODD"/>
+    </xsl:variable>
+    <!-- these two (setting the variable above and sending it to
+         output below) are not combined just to make adding debugging
+         code easier -->
+    <xsl:sequence select="$pass1"/>
   </xsl:template>
 
+  <xd:doc>
+    <xd:desc>In various passes over the data we are, for the most part, performing
+    an identity transform, except as specified otherwise</xd:desc>
+  </xd:doc>
+  <xsl:template match="@*|node()" mode="pass0 pass1 pass2">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  
   <!-- ********* pass 0 ********* -->
 
   <xd:doc>
@@ -551,18 +567,6 @@
     </xd:desc>
   </xd:doc>
 
-  <xd:doc>
-    <xd:desc>Most of pass 0 processing is just the identity function</xd:desc>
-  </xd:doc>
-  <xsl:template match="@*|processing-instruction()|text()|comment()" mode="pass0">
-    <xsl:copy/>
-  </xsl:template>  
-  <xsl:template match="*" mode="pass0">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="pass0"/>
-    </xsl:copy>
-  </xsl:template>
-  
   <xsl:variable name="ODD">
     <xsl:for-each select="/*">
       <xsl:copy>
@@ -593,7 +597,7 @@
     or &lt;moduleRef> into a &lt;table> summarizing it; ignore a
     &lt;specGrp> that does not have one of those children.</xd:desc>
   </xd:doc>
-  <xsl:template match="tei:specGrp[not(tei:specGrpRef|tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec|tei:moduleRef)]" mode="pass0"/>
+  <xsl:template match="tei:specGrp" mode="pass0"/> <!-- ignore those not matched next -->
   <xsl:template match="tei:specGrp[tei:specGrpRef|tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec|tei:moduleRef]" mode="pass0">
     <!-- MINOR change in output from pre-rub-a-dub-dub: the message,
          below, used to be output even if there was no child
@@ -665,35 +669,44 @@
                   ($selectedSchema eq '' and not( preceding-sibling::tei:schemaSpec ) )">
       <xsl:copy>
         <xsl:copy-of select="@*"/>
-        <!-- generate a @defaultExceptions attribute if it's not present -->
-        <xsl:if test="not(@defaultExceptions)">
-          <xsl:variable name="defval"
-                        select="document( tei:workOutSource(.) )
-                                //tei:elementSpec[@ident eq 'schemaSpec']
-                                //tei:attDef[@ident eq 'defaultExceptions']
-                                /tei:defaultVal"/>
-          <xsl:for-each select="tokenize($defval, '\s+')">
-            <xsl:if test="matches(., '\w(\w|\d)+:(\w|\d)+')">
-              <xsl:namespace select="namespace-uri-for-prefix(substring-before(., ':'), $defval)"
-                             name="{substring-before(., ':')}" />
-            </xsl:if>
-          </xsl:for-each>
-          <xsl:if test="$defval">
-            <xsl:attribute name="defaultExceptions" select="$defval"/>
-          </xsl:if>
-        </xsl:if>
-        <xsl:choose>
-          <xsl:when test="@source">
-            <xsl:value-of select="tei:msg(('Source for TEI is ', @source ))"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="tei:msg(('Source for TEI will be set to ', $DEFAULTSOURCE ))"/>
-            <xsl:attribute name="source">
-              <xsl:value-of select="$DEFAULTSOURCE"/>
-            </xsl:attribute>
-          </xsl:otherwise>
-        </xsl:choose>
-        <xsl:apply-templates select="*|text()|processing-instruction()" mode="pass0"/>
+        <!-- Generate a @defaultExceptions attribute if it's not present -->
+	<xsl:if test="not(@defaultExceptions)">
+	  <!-- First, get the default value of @defaultExceptions from the source -->
+	  <xsl:variable name="defval"
+			select="document( tei:workOutSource(.) )
+				//tei:elementSpec[@ident eq 'schemaSpec']
+				//tei:attDef[@ident eq 'defaultExceptions']
+				/tei:defaultVal"/>
+	  <!-- Then, for each token therein, generate an namespace for its prefix -->
+	  <xsl:for-each select="tokenize($defval,'\s+')">
+	    <xsl:if test=". castable as xs:QName">
+	      <!-- Yes, an NCName is castable as a QName, since the
+		   prefix and colon are optional, however, we know
+		   there is a colon because the schema requires it. -->
+	      <xsl:variable name="prefix" select="substring-before(., ':')"/>
+	      <xsl:namespace name="{$prefix}" select="namespace-uri-for-prefix( $prefix, $defval )"/>
+	    </xsl:if>
+	  </xsl:for-each>
+	  <!-- Now that we have the prefixes bound, we can use the value on an attr -->
+	  <xsl:if test="$defval">
+	    <xsl:attribute name="defaultExceptions" select="$defval"/>
+	  </xsl:if>
+	</xsl:if>
+	<xsl:choose>
+	  <xsl:when test="@source">
+	    <xsl:value-of
+		select="tei:msg(('Source for TEI is ', @source ))"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of
+		select="tei:msg(('Source for TEI will be set to ', $DEFAULTSOURCE ))"/>
+	    <xsl:attribute name="source">
+	      <xsl:value-of select="$DEFAULTSOURCE"/>
+	    </xsl:attribute>
+	  </xsl:otherwise>
+	</xsl:choose>
+	<!-- process my children, except for comments (why not?) -->
+	<xsl:apply-templates select="*|text()|processing-instruction()" mode="pass0"/>
       </xsl:copy>
     </xsl:if>
   </xsl:template>
@@ -710,17 +723,17 @@
     <xsl:choose>
       <xsl:when test="starts-with( $target ,'#')">
         <!-- Points to a local target, process its children instead of me -->
-        <xsl:apply-templates mode="pass0"
-                             select="id( substring( $target, 2 ) )/*"/>
+        <xsl:apply-templates mode="pass0" select="id( substring( $target, 2 ) )/*"/>
       </xsl:when>
       <xsl:otherwise>
         <!-- @target is not a bare name identifier local pointer -->
-        <xsl:value-of
-            select="tei:msg((' ... read from ', resolve-uri( $target, base-uri($top) )))"/>
-        <xsl:for-each select="doc( resolve-uri( $target, base-uri($top) ) )">
+        <xsl:variable name="externalTarget" select="resolve-uri( $target, base-uri($top) )"/>
+	<!-- Resolve it ... -->
+        <xsl:sequence select="tei:msg(('... read from ', $externalTarget ))"/>
+        <xsl:for-each select="doc( $externalTarget )">
           <xsl:choose>
             <xsl:when test="tei:specGrp">
-              <!-- if it has a child <specGrp>, process *its* children?? —Syd -->
+              <!-- ... if it has <specGrp> children, process their children ... -->
               <xsl:apply-templates select="tei:specGrp/*" mode="pass0"/>
             </xsl:when>
             <xsl:otherwise>
@@ -734,33 +747,34 @@
   </xsl:template>
   
   <xd:doc>
-    <xd:desc>Process mode "change" &lt;*Spec> elements. If this is the
-    only such element, just make a copy (processing children); if
-    there are others and this is the first, make a copy processing
-    children of all the &lt;*Spec mode="change"> with the same @ident,
-    if not the first, don't do anything (our children have already been
-    dealt with).</xd:desc>
+      <xd:p><xd:i>pass 0</xd:i>: Process &lt;*Spec>s in mode "change"</xd:p>
+      <xd:p>Regardless of how many &lt;*Spec> elements in "change"
+      mode there are for a given construct, create one output element
+      that has the attributes of the first one, and the (output of
+      processing the) children of all of them (in mode "pass0")</xd:p>
+      <xd:p>That is, if this is the only such element, just make a
+      copy (processing children); if there are others and this is the
+      first, make a copy processing children of all the &lt;*Spec
+      mode="change"> with the same @ident; if not the first, don't do
+      anything (our children have already been dealt with).</xd:p>
   </xd:doc>
   <xsl:template mode="pass0"
       match="( tei:elementSpec | tei:classSpec | tei:macroSpec | tei:dataSpec )
              [@mode eq 'change']">
     <xsl:choose>
       <xsl:when test="count( key('odd2odd-CHANGE', @ident ) ) > 1">
-        <xsl:if test=". is key('odd2odd-CHANGE', @ident )[1]">
-          <xsl:copy>
+	<xsl:if test=". is key('odd2odd-CHANGE', @ident )[1]">
+	  <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:for-each select="key('odd2odd-CHANGE',@ident)">
-              <xsl:apply-templates
-                  select="*|text()|comment()|processing-instruction()"
-                  mode="pass0"/>
+              <xsl:apply-templates select="node()" mode="pass0"/>
             </xsl:for-each>
           </xsl:copy>
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy>
-          <xsl:copy-of select="@*"/>
-          <xsl:apply-templates select="*|text()|comment()|processing-instruction()" mode="pass0"/>
+          <xsl:apply-templates select="@*|node()" mode="pass0"/>
         </xsl:copy>
       </xsl:otherwise>
     </xsl:choose>
@@ -796,16 +810,6 @@
     <xsl:for-each select="$pass1">
       <xsl:apply-templates mode="pass2"/>
     </xsl:for-each>
-  </xsl:template>
-
-  <xsl:template match="*" mode="pass1">
-    <xsl:copy>
-      <xsl:apply-templates mode="pass1" select="@*|*|processing-instruction()|comment()|text()"/>
-    </xsl:copy>
-  </xsl:template>
-
-  <xsl:template match="@*|processing-instruction()|text()|comment()" mode="pass1">
-    <xsl:copy-of select="."/>
   </xsl:template>
 
   <xsl:template match="tei:elementSpec[@mode eq 'delete']|tei:classSpec[@mode eq 'delete']|tei:macroSpec[@mode eq 'delete']|tei:dataSpec[@mode eq 'delete']"
@@ -958,15 +962,6 @@
   
   
   <!-- ******************* Phase 2, make the changes ********************************* -->
-  <xsl:template match="@*|processing-instruction()|text()|comment()" mode="pass2">
-    <xsl:copy/>
-  </xsl:template>
-  
-  <xsl:template match="*" mode="pass2">
-    <xsl:copy>
-      <xsl:apply-templates mode="#current" select="@*|node()"/>
-    </xsl:copy>
-  </xsl:template>
   
   <xsl:template match="comment()" mode="justcopy"/>
 
