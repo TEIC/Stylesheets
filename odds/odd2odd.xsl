@@ -424,13 +424,12 @@
         <xsl:sequence select="$source"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="die">
-          <xsl:with-param name="message">
-            <xsl:text>Source </xsl:text>
-            <xsl:value-of select='($source,$loc,name($top),base-uri($top))' separator=" + "/>
-            <xsl:text> not readable</xsl:text>
-          </xsl:with-param>
-        </xsl:call-template>
+        <xsl:value-of select="tei:die(('No sources readable: ',
+                                        $source, ' + ',
+                                        $loc, ' + ',
+                                        name($top), ' + ',
+                                        base-uri($top) ))"/>
+        <xsl:value-of select="'http://www.tei-c.org/just/here/to/avoid/warning/msg' cast as xs:anyURI"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
@@ -504,21 +503,18 @@
     <xsl:sequence select="( $min, $max )"/>
   </xsl:function>
   
-  <!-- ***** subroutines (i.e., general purpose named templates) ***** -->
   <xd:doc>
-    <xd:desc><xd:b>tei:die</xd:b>: Issue error msg and stop
-    execution</xd:desc>
+    <xd:desc><xd:b>tei:die</xd:b>: Issue error msg and stop execution</xd:desc>
     <xd:param name="message">the error message to display</xd:param>
     <xd:return>N/A: execution is halted.</xd:return>
   </xd:doc>
-  <xsl:template name="die">
-    <xsl:param name="message"/>
+  <xsl:function name="tei:die" as="empty-sequence()">
+    <xsl:param name="message" as="xs:string+"/>
     <xsl:message terminate="yes">
-      <xsl:text>Error: odd2odd.xsl: </xsl:text>
-      <xsl:value-of select="$message"/>
+      <xsl:value-of select="'Error: odd2odd.xsl: ', $message" separator=""/>
     </xsl:message>
-  </xsl:template>
-  
+  </xsl:function>
+
   <!-- ***** start main processing ***** -->
   <xd:doc>
     <xd:desc>Process root by taking output of pass0 and processing in pass1</xd:desc>
@@ -869,6 +865,17 @@
     </xsl:copy>
   </xsl:template>
 
+  <xd:doc>
+    <xd:desc>
+      <xd:p><xd:i>pass 1</xd:i>: Expand &lt;*Ref> elements that use
+      @key, except those that are inside a &lt;content> or a
+      &lt;datatype> (which I think is all of them —Syd,
+      2018-01-03).</xd:p>
+      <xd:p><xd:b>Note:</xd:b> those with @ref will get processed by
+      the &lt;otherwise>, but since it only deals with @key, the
+      results will probably be wrong.</xd:p>
+    </xd:desc>
+  </xd:doc>
   <xsl:template match="tei:dataRef|tei:macroRef|tei:classRef|tei:elementRef" mode="pass1">
     <xsl:choose>
       <xsl:when test="ancestor::tei:content">
@@ -895,15 +902,7 @@
               </xsl:for-each>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:call-template name="die">
-                <xsl:with-param name="message">
-                  <xsl:text>Reference to </xsl:text>
-                  <xsl:value-of select="$name"/>
-                  <xsl:text> in </xsl:text>
-                  <xsl:value-of select="$id"/>
-                  <xsl:text>: not found in source</xsl:text>
-                </xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:die(('Reference to ', $name, ' in ', $id, ': not found in source'))"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:for-each>
@@ -912,50 +911,39 @@
   </xsl:template>
 
   <xsl:template match="tei:moduleRef" mode="pass1">
-    <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
-    <xsl:variable name="name" select="@key"/>
-    <xsl:variable name="exc" select="@except"/>
-    <xsl:variable name="inc"  select="@include"/>
+    <xsl:variable name="src" select="tei:workOutSource(.)"/>
+    <xsl:variable name="key" select="normalize-space( @key )"/>
+    <xsl:variable name="exc" select="normalize-space( @except )"/>
+    <xsl:variable name="inc" select="normalize-space( @include )"/>
     <xsl:sequence
         select="tei:msg((
-                'Process module reference to [', @key,
-                '] with exclusion/inclusion of [', @except,
-                '/', @include,']'
+                'Process module reference to [', $key,
+                '] with exclusion/inclusion of [', $exc,
+                '/', $inc,']'
                 ))"/>
-    <xsl:for-each select="document($sourceDoc,$top)">
+    <xsl:for-each select="document( $src, $top )">
       
       <!-- get model and attribute classes regardless -->
-      <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_NONELEMENT',$name)">
+      <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_NONELEMENT', $key )">
         <xsl:variable name="class" select="@ident"/>
         <xsl:if test="not($ODD/key('odd2odd-REFOBJECTS',$class))">
-          <xsl:if test="$verbose">
-            <xsl:message>pass 1: import <xsl:value-of select="$class"/> by moduleRef</xsl:message>
-          </xsl:if>
+          <xsl:sequence select="tei:msg(('pass 1: import ', $class, ' by moduleRef'))"/>
           <xsl:apply-templates mode="pass1" select="."/>
         </xsl:if>
       </xsl:for-each>
       
       <!-- now elements -->
-      <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_ELEMENT',$name)">
+      <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_ELEMENT', $key )">
         <xsl:variable name="i" select="@ident"/>
-        <xsl:if test="tei:includeMember(@ident,$exc,$inc)
-                      and not($ODD/key('odd2odd-REFOBJECTS',$i))">
-          <xsl:if test="$verbose">
-            <xsl:message>pass 1: import <xsl:value-of
-            select="$i"/> by moduleRef</xsl:message>
-          </xsl:if>
+        <xsl:if test="tei:includeMember( @ident, $exc, $inc )
+                      and not( $ODD/key('odd2odd-REFOBJECTS', $i ) )">
+          <xsl:sequence select="tei:msg(('pass 1: import ', $i, ' by moduleRef'))"/>
           <xsl:apply-templates mode="pass1" select="."/>
         </xsl:if>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template match="tei:elementSpec[@mode = ('change','replace')]
-                     | tei:classSpec[ @mode  = ('change','replace')]
-                     | tei:macroSpec[ @mode  = ('change','replace')]
-                     | tei:dataSpec[ @mode   = ('change','replace')]"
-                mode="pass1"/>
-  
   <xsl:template match="tei:classSpec/tei:attList/tei:attDef" mode="pass1">
     <xsl:variable name="c" select="ancestor::tei:classSpec/@ident"/>
     <xsl:variable name="a" select="@ident"/>
