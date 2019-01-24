@@ -295,7 +295,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="text:h[@text:outline-level]">
-    <xsl:sequence select="tei:pagebreak-before(.)"/>
     <xsl:choose>
       <xsl:when test="ancestor::text:note-body">
 	<p>
@@ -320,6 +319,13 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:otherwise>nostyle</xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:attribute>
+	  <!--
+	    We do not process hard page breaks here directly 
+	    but defer their output until the sections get created.
+	    Therefore we add a dedicated attribute '@page-break-before'
+	    for flagging this.
+	  -->
+	  <xsl:attribute name="page-break-before" select="exists(tei:pagebreak-before(.))"/>
 	  <xsl:apply-templates/>
 	</HEAD>
       </xsl:otherwise>
@@ -1173,6 +1179,13 @@ These seem to have no obvious translation
 	  </xsl:for-each-group>
       </xsl:when>
       <xsl:otherwise>
+        <!-- 
+          hard page breaks before sections are passed on via the
+          @page-break-before attribute and need to get injected here
+        -->
+        <xsl:if test="@page-break-before='true'">
+          <pb/>
+        </xsl:if>
 	<div>
 	  <xsl:choose>
 	    <xsl:when test="starts-with(@style,'Heading')"/>
