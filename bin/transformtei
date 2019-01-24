@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/sh -e
 # convert between TEI and other formats. intended to be use as symlink to other scripts
 # whose names will dictate the format and direction of conversion.
 # Sebastian Rahtz, July 2011
@@ -189,7 +189,7 @@ then
 else
    outfile=`basename $2`
    O=`dirname "$2"`
-   outdir=`(cd $O; pwd)`
+   outdir=`(mkdir -p $O; cd $O; pwd)`
 fi
 if ! test -f "$indir/$infile"
 then 
