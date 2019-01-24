@@ -91,6 +91,8 @@
   <xsl:param name="suppressTEIexamples" as="xs:boolean" select="false()"/>
   <xsl:param name="useVersionFromTEI" as="xs:boolean" select="true()"/>
   <xsl:param name="verbose" as="xs:boolean" select="false()"/>
+  <xsl:param name="generateIntermediateDebugFiles" as="xs:boolean" select="true()"/>
+  <xsl:param name="debugDir" select="'/tmp'"/>
 
   <!-- ***** keys ***** -->
   <xsl:key name="odd2odd-CHANGEATT"
@@ -515,17 +517,47 @@
     </xsl:message>
   </xsl:function>
 
+  <!-- ***** subroutines (i.e., general purpose named templates) ***** -->
+
+  <xd:doc>
+    <xd:desc><xd:i>tei:debugOut</xd:i>: Write out a passed in XML tree fragment
+    to the indicated output file.</xd:desc>
+    <xd:param name="tree">an XML tree fragment to write out</xd:param>
+    <xd:param name="file">the filename to write out, without path or extension. The path
+    is provided by global parameter $debugDir, the extension is always '.xml'.</xd:param>
+    <xd:return>an empty sequence</xd:return>
+  </xd:doc>
+  <xsl:template name="debugOut" as="xs:string">
+    <xsl:param name="tree" as="node()"/> <!-- element or document node -->
+    <xsl:param name="file" as="xs:string"/>
+    <xsl:message select="concat('DEBUG: called debugOut( ', local-name($tree), ', ', $file, ' )')"/>
+    <if test="$generateIntermediateDebugFiles">
+      <xsl:result-document href="{concat( $debugDir, '/odd2odd-', $file, '.xml')}">
+        <xsl:copy-of select="$tree"/>
+      </xsl:result-document>
+    </if>
+
+  </xsl:template>
+
   <!-- ***** start main processing ***** -->
   <xd:doc>
     <xd:desc>Process root by taking output of pass0 and processing in pass1</xd:desc>
   </xd:doc>
   <xsl:template match="/">
+    <xsl:call-template name="debugOut">
+      <xsl:with-param name="tree" select="$ODD"/>
+      <xsl:with-param name="file" select="'pass0'"/>
+    </xsl:call-template>
     <xsl:variable name="pass1">
       <xsl:apply-templates mode="pass1" select="$ODD"/>
     </xsl:variable>
     <!-- these two (setting the variable above and sending it to
          output below) are not combined just to make adding debugging
          code easier -->
+    <xsl:call-template name="debugOut">
+      <xsl:with-param name="tree" select="."/>
+      <xsl:with-param name="file" select="'pass1'"/>
+    </xsl:call-template>
     <xsl:sequence select="$pass1"/>
   </xsl:template>
 
@@ -944,16 +976,25 @@
     </xsl:for-each>
   </xsl:template>
 
+  <xd:doc>
+    <xd:desc>
+      <xd:p><xd:b>pass 1</xd:b>: process attribute defintions inside class specifications:
+        Just copy this &lt;attDef> over UNLESS
+        * the class is referred to (via a &lt;classRef>), and
+        * the attribute is excluded from that referral (either there is an
+          @include that does not list this attr, or there is an @except that does),
+        in which case just drop it.</xd:p>
+      <xd:p>This clearly fails miserably if there is more than one &lt;classRef> with
+        a @key that matches $c. —Syd, 2018-01-07</xd:p>
+    </xd:desc>
+  </xd:doc>
   <xsl:template match="tei:classSpec/tei:attList/tei:attDef" mode="pass1">
-    <xsl:variable name="c" select="ancestor::tei:classSpec/@ident"/>
-    <xsl:variable name="a" select="@ident"/>
+    <xsl:variable name="c" select="normalize-space( ancestor::tei:classSpec/@ident )"/>
+    <xsl:variable name="a" select="normalize-space( @ident )"/>
     <xsl:choose>
       <xsl:when test="$ODD/key('odd2odd-REFED',$c)[@include or @except]">
         <xsl:if test="tei:includeMember(@ident,$ODD/key('odd2odd-REFED',$c)/@except,$ODD/key('odd2odd-REFED',$c)/@include)">
-          <xsl:if test="$verbose">
-            <xsl:message>  keeping attribute <xsl:value-of
-              select="(ancestor::tei:classSpec/@ident,@ident)" separator="/"/></xsl:message>
-          </xsl:if>
+          <xsl:sequence select="tei:msg(('  keeping attribute ', $c, '/@', $a ))"/>
           <xsl:copy>
             <xsl:apply-templates select="@*|node()" mode="pass1"/>
           </xsl:copy>
@@ -966,7 +1007,6 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
   
   <!-- ******************* Phase 2, make the changes ********************************* -->
   
@@ -996,9 +1036,7 @@
      <xsl:variable name="oddsource">
        <xsl:copy>
          <xsl:copy-of select="@*"/>
-         <xsl:sequence select="if ($verbose)then
-           tei:message(concat('Schema pass 2: ',@ident))
-           else ()"/>
+	 <xsl:sequence select="tei:msg(('Schema pass 2: ', @ident ))"/>
          <xsl:for-each select="*">
            <xsl:call-template name="odd2odd-checkObject"/>
          </xsl:for-each>
