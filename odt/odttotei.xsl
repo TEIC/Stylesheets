@@ -1091,9 +1091,13 @@ These seem to have no obvious translation
 
 <xsl:template match="text:section-source"/>
 
-
-<xsl:template match="text:soft-page-break">
-</xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Since soft page breaks are an optional and application specific feature, we disregard them completely.
+      See the <a href="http://docs.oasis-open.org/office/v1.2/os/OpenDocument-v1.2-os-part1.html#__RefHeading__1419322_253892949">OpenDocument specification</a>
+      for further information.
+    </desc>
+  </doc>
+  <xsl:template match="text:soft-page-break"/>
 
 <xsl:template name="stars">
    <xsl:param name="n"/>
