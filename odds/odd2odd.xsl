@@ -670,43 +670,43 @@
       <xsl:copy>
         <xsl:copy-of select="@*"/>
         <!-- Generate a @defaultExceptions attribute if it's not present -->
-	<xsl:if test="not(@defaultExceptions)">
-	  <!-- First, get the default value of @defaultExceptions from the source -->
-	  <xsl:variable name="defval"
-			select="document( tei:workOutSource(.) )
-				//tei:elementSpec[@ident eq 'schemaSpec']
-				//tei:attDef[@ident eq 'defaultExceptions']
-				/tei:defaultVal"/>
-	  <!-- Then, for each token therein, generate an namespace for its prefix -->
-	  <xsl:for-each select="tokenize($defval,'\s+')">
-	    <xsl:if test=". castable as xs:QName">
-	      <!-- Yes, an NCName is castable as a QName, since the
-		   prefix and colon are optional, however, we know
-		   there is a colon because the schema requires it. -->
-	      <xsl:variable name="prefix" select="substring-before(., ':')"/>
-	      <xsl:namespace name="{$prefix}" select="namespace-uri-for-prefix( $prefix, $defval )"/>
-	    </xsl:if>
-	  </xsl:for-each>
-	  <!-- Now that we have the prefixes bound, we can use the value on an attr -->
-	  <xsl:if test="$defval">
-	    <xsl:attribute name="defaultExceptions" select="$defval"/>
-	  </xsl:if>
-	</xsl:if>
-	<xsl:choose>
-	  <xsl:when test="@source">
-	    <xsl:value-of
-		select="tei:msg(('Source for TEI is ', @source ))"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of
-		select="tei:msg(('Source for TEI will be set to ', $DEFAULTSOURCE ))"/>
-	    <xsl:attribute name="source">
-	      <xsl:value-of select="$DEFAULTSOURCE"/>
-	    </xsl:attribute>
-	  </xsl:otherwise>
-	</xsl:choose>
-	<!-- process my children, except for comments (why not?) -->
-	<xsl:apply-templates select="*|text()|processing-instruction()" mode="pass0"/>
+        <xsl:if test="not(@defaultExceptions)">
+          <!-- First, get the default value of @defaultExceptions from the source -->
+          <xsl:variable name="defval"
+                        select="document( tei:workOutSource(.) )
+                                //tei:elementSpec[@ident eq 'schemaSpec']
+                                //tei:attDef[@ident eq 'defaultExceptions']
+                                /tei:defaultVal"/>
+          <!-- Then, for each token therein, generate an namespace for its prefix -->
+          <xsl:for-each select="tokenize($defval,'\s+')">
+            <xsl:if test=". castable as xs:QName">
+              <!-- Yes, an NCName is castable as a QName, since the
+                   prefix and colon are optional, however, we know
+                   there is a colon because the schema requires it. -->
+              <xsl:variable name="prefix" select="substring-before(., ':')"/>
+              <xsl:namespace name="{$prefix}" select="namespace-uri-for-prefix( $prefix, $defval )"/>
+            </xsl:if>
+          </xsl:for-each>
+          <!-- Now that we have the prefixes bound, we can use the value on an attr -->
+          <xsl:if test="$defval">
+            <xsl:attribute name="defaultExceptions" select="$defval"/>
+          </xsl:if>
+        </xsl:if>
+        <xsl:choose>
+          <xsl:when test="@source">
+            <xsl:value-of
+                select="tei:msg(('Source for TEI is ', @source ))"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of
+                select="tei:msg(('Source for TEI will be set to ', $DEFAULTSOURCE ))"/>
+            <xsl:attribute name="source">
+              <xsl:value-of select="$DEFAULTSOURCE"/>
+            </xsl:attribute>
+          </xsl:otherwise>
+        </xsl:choose>
+        <!-- process my children, except for comments (why not?) -->
+        <xsl:apply-templates select="*|text()|processing-instruction()" mode="pass0"/>
       </xsl:copy>
     </xsl:if>
   </xsl:template>
@@ -728,7 +728,7 @@
       <xsl:otherwise>
         <!-- @target is not a bare name identifier local pointer -->
         <xsl:variable name="externalTarget" select="resolve-uri( $target, base-uri($top) )"/>
-	<!-- Resolve it ... -->
+        <!-- Resolve it ... -->
         <xsl:sequence select="tei:msg(('... read from ', $externalTarget ))"/>
         <xsl:for-each select="doc( $externalTarget )">
           <xsl:choose>
@@ -763,8 +763,8 @@
              [@mode eq 'change']">
     <xsl:choose>
       <xsl:when test="count( key('odd2odd-CHANGE', @ident ) ) > 1">
-	<xsl:if test=". is key('odd2odd-CHANGE', @ident )[1]">
-	  <xsl:copy>
+        <xsl:if test=". is key('odd2odd-CHANGE', @ident )[1]">
+          <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:for-each select="key('odd2odd-CHANGE',@ident)">
               <xsl:apply-templates select="node()" mode="pass0"/>
@@ -782,75 +782,94 @@
 
   <!-- ******************* Pass 1, expand schemaSpec ********************************* -->
 
+  <xd:doc>
+    <xd:desc>
+      <xd:p><xd:i>pass 1</xd:i>: Process &lt;schemaSpec>s</xd:p>
+      <xd:p>First, generate a temporary copy of the &lt;schemaSpec> that has the results
+      of processing first the &lt;moduleRef>s, and then my other children, in 
+      mode "pass1". Then process all the child nodes of that temporary &lt;schemaSpec>
+      in mode "pass2", and return the result to the output tree.</xd:p>
+    </xd:desc>
+  </xd:doc>
   <xsl:template match="tei:schemaSpec" mode="pass1">
     <xsl:variable name="pass1">
       <xsl:copy>
         <xsl:copy-of select="@*"/>
-        <xsl:sequence select="if ($verbose)then
-          tei:message(concat('Schema pass 1: ',@ident)) else ()"/>
-        
-        <!-- 
-          It is important to process "tei" and "core" <moduleRef>s first,
-          because of the order of declarations.
-        -->
+        <xsl:sequence select="tei:msg(('Schema pass 1: ', @ident ))"/>
+        <!-- process "tei" and "core" first due to order of declarations -->
         <xsl:apply-templates select="tei:moduleRef[@key eq 'tei']" mode="pass1"/>
         <xsl:apply-templates select="tei:moduleRef[@key eq 'core']" mode="pass1"/>
         <!-- then process the rest of the <moduleRef>s  -->
-        <xsl:apply-templates select="tei:moduleRef[not(@key eq 'tei' or @key eq 'core')]" mode="pass1"/>
+        <xsl:apply-templates select="tei:moduleRef[@key][ not( @key = ('tei','core') )]"
+                             mode="pass1"/>
         <!-- then process anything else -->
         <xsl:apply-templates select="*[not(self::tei:moduleRef[@key])]" mode="pass1"/>
         <!-- (Note that non-element nodes were just dropped, not sure why —Syd, 2019-01-22 -->
       </xsl:copy>
     </xsl:variable>
-    <!--
-        <xsl:result-document href="/tmp/odd2odd-pass1.xml">
-          <xsl:copy-of select="$pass1"/>
-        </xsl:result-document>
-    -->
     <xsl:for-each select="$pass1">
       <xsl:apply-templates mode="pass2"/>
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template match="tei:elementSpec[@mode eq 'delete']|tei:classSpec[@mode eq 'delete']|tei:macroSpec[@mode eq 'delete']|tei:dataSpec[@mode eq 'delete']"
+  <xd:doc>
+    <xd:desc><xd:b>pass 1</xd:b>: ignore &lt;*Spec> elements that are in
+    mode "change", "delete", or "replace".</xd:desc>
+  </xd:doc>
+  <xsl:template match="(tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec)
+                       [ @mode = ('change','delete','replace') ]"
                 mode="pass1">
-        <xsl:if test="$verbose">
-          <xsl:message>pass 1: remove <xsl:value-of select="@ident"/></xsl:message>
-        </xsl:if>
-  </xsl:template>
+    <xsl:sequence select="tei:msg((
+                          'Pass 1: remove ', local-name(.),
+                          ' for ', @ident,
+                          ' (as it was in mode ', @mode ))"/>
+  </xsl:template>    
 
-  <xsl:template match="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec"
+  <xd:doc>
+    <xd:desc><xd:i>pass 1</xd:i>: Process &lt;*Spec> to be added</xd:desc>
+  </xd:doc>
+  <xsl:template match="schemaSpec//classSpec[  @mode eq 'add' or not(@mode) ]
+                     | schemaSpec//macroSpec[  @mode eq 'add' or not(@mode) ]
+                     | schemaSpec//dataSpec [  @mode eq 'add' or not(@mode) ]
+                     | schemaSpec//elementSpec[@mode eq 'add' or not(@mode) ]"
                 mode="pass1">
-    <xsl:variable name="specName" select="@ident"/>
-    <xsl:choose>
-      <xsl:when test="$ODD/key('odd2odd-DELETE',$specName)">
-        <xsl:if test="$verbose">
-          <xsl:message>pass 1: remove <xsl:value-of select="$specName"/></xsl:message>
-        </xsl:if>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:if test="$verbose">
-          <xsl:message>pass 1: hang onto <xsl:value-of
-          select="$specName"/> <xsl:if test="@mode"> in mode <xsl:value-of
-          select="@mode"/></xsl:if></xsl:message>
-        </xsl:if>
-        <xsl:copy>
-          <xsl:apply-templates mode="pass1" select="@*|*|processing-instruction()|comment()|text()"/>
-        </xsl:copy>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:sequence select="tei:msg(('Create ', local-name(), ' named ', @ident,
+                          if (@module) then concat(', module: ', @module )
+                          else ''))"/>
+    <xsl:copy>
+      <xsl:attribute name="rend">add</xsl:attribute>
+      <!-- Figure out what module we're talking about, and generate @module if needed -->
+      <xsl:choose>
+        <!-- if @module already there, we're all set, it will be coied below. -->
+        <xsl:when test="@module"/>
+        <xsl:when test="ancestor::tei:schemaSpec/@module">
+          <xsl:copy-of select="ancestor::tei:schemaSpec/@module"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:attribute name="module">
+            <xsl:text>derived-module-</xsl:text>
+            <xsl:value-of select="ancestor::tei:schemaSpec/@ident"/>
+          </xsl:attribute>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:choose>
+        <xsl:when test="self::tei:elementSpec">
+          <xsl:call-template name="odd2odd-copyElementSpec">
+            <xsl:with-param name="n" select="'2'"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:if test="@type eq 'model'  and  not(@predeclare)">
+            <!-- this is a <classSpec>, as others do not have @type -->
+            <xsl:attribute name="predeclare" select="'true'"/>
+          </xsl:if>
+          <xsl:apply-templates mode="odd2odd-copy" select="@*|node()"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
   </xsl:template>
 
-  <xsl:template mode="pass1"
-                match="tei:schemaSpec//tei:classSpec[  @mode eq 'add' or not(@mode) ]
-                     | tei:schemaSpec//tei:macroSpec[  @mode eq 'add' or not(@mode) ]
-                     | tei:schemaSpec//tei:dataSpec [  @mode eq 'add' or not(@mode) ]
-                     | tei:schemaSpec//tei:elementSpec[@mode eq 'add' or not(@mode) ]
-                     ">
-    <xsl:call-template name="odd2odd-createCopy"/>
-  </xsl:template>
-
-  <xsl:template match="tei:dataRef|tei:macroRef|tei:classRef|tei:elementRef" mode="pass1">       
+  <xsl:template match="tei:dataRef|tei:macroRef|tei:classRef|tei:elementRef" mode="pass1">
     <xsl:choose>
       <xsl:when test="ancestor::tei:content">
         <xsl:copy-of select="."/>
@@ -2156,48 +2175,6 @@
     <xsl:copy>
       <xsl:apply-templates select="@*|*|processing-instruction()|text()"/>
     </xsl:copy>
-  </xsl:template>
-
-  <xsl:template name="odd2odd-createCopy">
-    <xsl:if test="$verbose">
-      <xsl:message>Create <xsl:value-of select="local-name()"/> named   <xsl:value-of select="@ident"/>   <xsl:sequence select="if
-      (@module) then concat(' module: ',@module) else ''"/>         </xsl:message>
-    </xsl:if>
-    <xsl:element namespace="http://www.tei-c.org/ns/1.0"
-                 name="{local-name()}">
-      <xsl:attribute name="rend">add</xsl:attribute>
-      <xsl:choose>
-        <xsl:when test="@module"/>
-        <xsl:when test="ancestor::tei:schemaSpec/@module">
-          <xsl:copy-of select="ancestor::tei:schemaSpec/@module"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:attribute name="module">
-            <xsl:text>derived-module-</xsl:text>
-            <xsl:value-of select="ancestor::tei:schemaSpec/@ident"/>
-          </xsl:attribute>
-        </xsl:otherwise>
-      </xsl:choose>
-      <xsl:choose>
-        <xsl:when test="local-name()='classSpec'">
-          <xsl:if test="@type eq 'model' and not(@predeclare)">
-            <xsl:attribute name="predeclare">true</xsl:attribute>
-          </xsl:if>
-          <xsl:apply-templates mode="odd2odd-copy" select="@*|*|processing-instruction()|text()"/>
-        </xsl:when>
-        <xsl:when test="local-name()='macroSpec'">
-          <xsl:apply-templates mode="odd2odd-copy" select="@*|*|processing-instruction()|text()"/>
-        </xsl:when>
-        <xsl:when test="local-name()='dataSpec'">
-          <xsl:apply-templates mode="odd2odd-copy" select="@*|*|processing-instruction()|text()"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:call-template name="odd2odd-copyElementSpec">
-            <xsl:with-param name="n" select="'2'"/>
-          </xsl:call-template>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:element>
   </xsl:template>
 
   <xsl:template name="odd2odd-getversion">
