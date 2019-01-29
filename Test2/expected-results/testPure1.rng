@@ -57,6 +57,14 @@
          </choice>
       </zeroOrMore>
    </define>
+   <define name="t_macro.xtext">
+      <zeroOrMore>
+         <choice>
+            <text/>
+            <ref name="t_model.gLike"/>
+         </choice>
+      </zeroOrMore>
+   </define>
    <define name="anyElement-xenoData">
       <element>
          <anyName>
@@ -415,8 +423,8 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.datable.w3c-att-datable-w3c-when-constraint-rule-1">
       <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@when]">
         <sch:report test="@notBefore|@notAfter|@from|@to" role="nonfatal">The @when attribute cannot be used with any other att.datable.w3c attributes.</sch:report>
       </sch:rule>
@@ -424,8 +432,8 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.datable.w3c-att-datable-w3c-from-constraint-rule-2">
       <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@from]">
         <sch:report test="@notBefore" role="nonfatal">The @from and @notBefore attributes cannot be used together.</sch:report>
       </sch:rule>
@@ -433,8 +441,8 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.datable.w3c-att-datable-w3c-to-constraint-rule-3">
       <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@to]">
         <sch:report test="@notAfter" role="nonfatal">The @to and @notAfter attributes cannot be used together.</sch:report>
       </sch:rule>
@@ -455,8 +463,8 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.datable-calendar-calendar-constraint-rule-4">
       <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@calendar]">
             <sch:assert test="string-length(.) gt 0">
 @calendar indicates the system or calendar to which the date represented by the content of this element
@@ -751,6 +759,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
    <define name="t_att.global.attributes">
       <ref name="t_att.global.rendition.attributes"/>
       <ref name="t_att.global.linking.attributes"/>
+      <ref name="t_att.global.analytic.attributes"/>
       <ref name="t_att.global.responsibility.attributes"/>
       <ref name="t_att.global.source.attributes"/>
       <ref name="t_att.global.attribute.xmlid"/>
@@ -949,6 +958,33 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
          <data type="anyURI"/>
       </attribute>
    </define>
+   <define name="t_att.interpLike.attributes">
+      <ref name="t_att.interpLike.attribute.type"/>
+      <ref name="t_att.interpLike.attribute.inst"/>
+   </define>
+   <define name="t_att.interpLike.attribute.type">
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates what kind of phenomenon is being noted in the passage.
+Sample values include: 1] image; 2] character; 3] theme; 4] allusion</a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </attribute>
+      </optional>
+   </define>
+   <define name="t_att.interpLike.attribute.inst">
+      <optional>
+         <attribute name="inst">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(instances) points to instances of the analysis or interpretation represented by the current element.</a:documentation>
+            <list>
+               <oneOrMore>
+                  <data type="anyURI"/>
+               </oneOrMore>
+            </list>
+         </attribute>
+      </optional>
+   </define>
    <define name="t_att.measurement.attributes">
       <ref name="t_att.measurement.attribute.unit"/>
       <ref name="t_att.measurement.attribute.quantity"/>
@@ -1133,8 +1169,8 @@ Suggested values include: 1] below; 2] bottom; 3] margin; 4] top; 5] opposite; 6
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.typed-subtypeTyped-constraint-rule-5">
       <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@subtype]">
         <sch:assert test="@type">The <sch:name/> element should not be categorized in detail with @subtype unless also categorized in general with @type</sch:assert>
       </sch:rule>
@@ -1161,8 +1197,8 @@ Suggested values include: 1] below; 2] bottom; 3] margin; 4] top; 5] opposite; 6
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.pointing-targetLang-targetLang-constraint-rule-6">
       <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
             <sch:assert test="@target">@targetLang should only be used on <sch:name/> if @target is specified.</sch:assert>
           </sch:rule>
@@ -1306,8 +1342,8 @@ Suggested values include: 1] below; 2] bottom; 3] margin; 4] top; 5] opposite; 6
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.spanning-spanTo-spanTo-2-constraint-rule-7">
       <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@spanTo]">
             <sch:assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
 The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current element <sch:name/>
@@ -1348,8 +1384,8 @@ The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow 
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8">
       <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@schemeVersion]">
             <sch:assert test="@scheme and not(@scheme = 'free')">
               @schemeVersion can only be used if @scheme is specified.
@@ -1542,6 +1578,13 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
    </define>
    <define name="t_model.segLike">
       <choice>
+         <ref name="t_s"/>
+         <ref name="t_cl"/>
+         <ref name="t_phr"/>
+         <ref name="t_w"/>
+         <ref name="t_m"/>
+         <ref name="t_c"/>
+         <ref name="t_pc"/>
          <ref name="t_seg"/>
       </choice>
    </define>
@@ -2011,11 +2054,13 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
    <define name="t_model.global.meta">
       <choice>
          <ref name="t_index"/>
+         <ref name="t_span"/>
+         <ref name="t_spanGrp"/>
+         <ref name="t_interp"/>
+         <ref name="t_interpGrp"/>
          <ref name="t_link"/>
          <ref name="t_linkGrp"/>
          <ref name="t_timeline"/>
-         <ref name="t_join"/>
-         <ref name="t_joinGrp"/>
          <ref name="t_alt"/>
          <ref name="t_altGrp"/>
       </choice>
@@ -2052,7 +2097,11 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <notAllowed/>
    </define>
    <define name="t_model.phrase.xml">
-      <notAllowed/>
+      <choice>
+         <ref name="t_gi"/>
+         <ref name="t_att"/>
+         <ref name="t_val"/>
+      </choice>
    </define>
    <define name="t_model.specDescLike">
       <notAllowed/>
@@ -2060,7 +2109,6 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
    <define name="t_model.biblLike">
       <choice>
          <ref name="t_bibl"/>
-         <ref name="t_biblStruct"/>
          <ref name="t_listBibl"/>
          <ref name="t_biblFull"/>
       </choice>
@@ -2068,23 +2116,18 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
    <define name="t_model.biblLike_alternation">
       <choice>
          <ref name="t_bibl"/>
-         <ref name="t_biblStruct"/>
          <ref name="t_listBibl"/>
          <ref name="t_biblFull"/>
       </choice>
    </define>
    <define name="t_model.biblLike_sequence">
       <ref name="t_bibl"/>
-      <ref name="t_biblStruct"/>
       <ref name="t_listBibl"/>
       <ref name="t_biblFull"/>
    </define>
    <define name="t_model.biblLike_sequenceOptional">
       <optional>
          <ref name="t_bibl"/>
-      </optional>
-      <optional>
-         <ref name="t_biblStruct"/>
       </optional>
       <optional>
          <ref name="t_listBibl"/>
@@ -2098,9 +2141,6 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
          <ref name="t_bibl"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_biblStruct"/>
-      </zeroOrMore>
-      <zeroOrMore>
          <ref name="t_listBibl"/>
       </zeroOrMore>
       <zeroOrMore>
@@ -2110,9 +2150,6 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
    <define name="t_model.biblLike_sequenceRepeatable">
       <oneOrMore>
          <ref name="t_bibl"/>
-      </oneOrMore>
-      <oneOrMore>
-         <ref name="t_biblStruct"/>
       </oneOrMore>
       <oneOrMore>
          <ref name="t_listBibl"/>
@@ -3007,7 +3044,8 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-p-abstractModel-structure-p-constraint-report-4">
             <rule context="tei:p">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0"
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
         Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
       </report>
@@ -3016,7 +3054,8 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-p-abstractModel-structure-l-constraint-report-5">
             <rule context="tei:p">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0"
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.
       </report>
@@ -3443,7 +3482,12 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
    <define name="t_email">
       <element name="email">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(electronic mail address) contains an email address identifying a location to which email messages can be delivered. [3.5.2. Addresses]</a:documentation>
-         <ref name="t_macro.phraseSeq"/>
+         <choice>
+            <value>amourdecosmos@gmail.com</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(The email address of Amour de Cosmos.) </a:documentation>
+            <value>thevenerablebede@gmail.com</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(The email address of The Venerable Bede.) </a:documentation>
+         </choice>
          <ref name="t_att.global.attributes"/>
          <empty/>
       </element>
@@ -3575,9 +3619,49 @@ Measures]</a:documentation>
                <ref name="t_model.measureLike"/>
             </choice>
          </zeroOrMore>
-         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.global.attribute.xmlid"/>
+         <ref name="t_att.global.attribute.n"/>
+         <ref name="t_att.global.attribute.xmllang"/>
+         <ref name="t_att.global.attribute.xmlbase"/>
+         <ref name="t_att.global.attribute.xmlspace"/>
+         <ref name="t_att.global.rendition.attribute.rend"/>
+         <ref name="t_att.global.rendition.attribute.style"/>
+         <ref name="t_att.global.rendition.attribute.rendition"/>
+         <ref name="t_att.global.linking.attribute.next"/>
+         <ref name="t_att.global.linking.attribute.prev"/>
+         <ref name="t_att.global.linking.attribute.exclude"/>
+         <ref name="t_att.global.analytic.attribute.ana"/>
+         <ref name="t_att.global.responsibility.attribute.cert"/>
+         <ref name="t_att.global.responsibility.attribute.resp"/>
+         <ref name="t_att.global.source.attribute.source"/>
          <ref name="t_att.measurement.attributes"/>
          <ref name="t_att.typed.attributes"/>
+         <optional>
+            <attribute name="corresp">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(corresponds) points to elements that correspond to the current element in some way.</a:documentation>
+               <data type="nonNegativeInteger"/>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="sameAs">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to an element that is the same as the current element.</a:documentation>
+               <data type="nonNegativeInteger"/>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="copyOf">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to an element of which the current element is a copy.</a:documentation>
+               <data type="nonNegativeInteger">
+                  <param name="pattern">[0-9][0-9]?</param>
+               </data>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="select">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">selects one or more alternants; if one alternant is selected, the ambiguity or uncertainty is marked as resolved. If more than one alternant is selected, the degree of ambiguity or uncertainty is marked as reduced by the number of alternants not selected.</a:documentation>
+               <data type="nonNegativeInteger"/>
+            </attribute>
+         </optional>
          <empty/>
       </element>
    </define>
@@ -3664,7 +3748,9 @@ Sample values include: 1] suspension; 2] contraction; 3] brevigraph; 4] superscr
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-ptr-ptrAtts-constraint-report-6">
             <rule context="tei:ptr">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="@target and @cRef">Only one of the
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       test="@target and @cRef">Only one of the
 attributes @target and @cRef may be supplied on <name/>.</report>
             </rule>
          </pattern>
@@ -3684,7 +3770,9 @@ attributes @target and @cRef may be supplied on <name/>.</report>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-ref-refAtts-constraint-report-7">
             <rule context="tei:ref">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="@target and @cRef">Only one of the
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       test="@target and @cRef">Only one of the
 	attributes @target' and @cRef' may be supplied on <name/>
                </report>
             </rule>
@@ -3750,8 +3838,8 @@ attributes @target and @cRef may be supplied on <name/>.</report>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-list-gloss-list-must-have-labels-constraint-rule-9">
             <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                      xmlns="http://www.tei-c.org/ns/1.0"
                       context="tei:list[@type='gloss']">
 	              <sch:assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</sch:assert>
             </sch:rule>
@@ -3993,161 +4081,6 @@ Elements]</a:documentation>
          <empty/>
       </element>
    </define>
-   <define name="t_analytic">
-      <element name="analytic">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(analytic level) contains bibliographic elements describing an item (e.g. an article or poem) published within a monograph or journal and not as an independent publication. [3.11.2.1. Analytic, Monographic, and Series Levels]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <ref name="t_author"/>
-               <ref name="t_editor"/>
-               <ref name="t_respStmt"/>
-               <ref name="t_title"/>
-               <ref name="t_model.ptrLike"/>
-               <ref name="t_date"/>
-               <ref name="t_textLang"/>
-               <ref name="t_idno"/>
-               <ref name="t_availability"/>
-            </choice>
-         </zeroOrMore>
-         <ref name="t_att.global.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_monogr">
-      <element name="monogr">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(monographic level) contains bibliographic elements describing an item (e.g. a book or journal) published as an independent item (i.e. as a separate physical object). [3.11.2.1. Analytic, Monographic, and Series Levels]</a:documentation>
-         <group>
-      
-            <optional>
-               <choice>
-                  <group>
-                     <choice>
-                        <ref name="t_author"/>
-                        <ref name="t_editor"/>
-                        <ref name="t_meeting"/>
-                        <ref name="t_respStmt"/>
-                     </choice>
-            
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="t_author"/>
-                           <ref name="t_editor"/>
-                           <ref name="t_meeting"/>
-                           <ref name="t_respStmt"/>
-                        </choice>
-                     </zeroOrMore>
-            
-            
-                     <oneOrMore>
-                        <ref name="t_title"/>
-                     </oneOrMore>
-            
-            
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="t_model.ptrLike"/>
-                           <ref name="t_idno"/>
-                           <ref name="t_textLang"/>
-                           <ref name="t_editor"/>
-                           <ref name="t_respStmt"/>
-                        </choice>
-                     </zeroOrMore>
-            
-                  </group>
-                  <group>
-            
-                     <oneOrMore>
-                        <choice>
-                           <ref name="t_title"/>
-                           <ref name="t_model.ptrLike"/>
-                           <ref name="t_idno"/>
-                        </choice>
-                     </oneOrMore>
-            
-            
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="t_textLang"/>
-                           <ref name="t_author"/>
-                           <ref name="t_editor"/>
-                           <ref name="t_meeting"/>
-                           <ref name="t_respStmt"/>
-                        </choice>
-                     </zeroOrMore>
-            
-                  </group>
-                  <group>
-            
-                     <ref name="t_authority"/>
-                     <ref name="t_idno"/>
-                  </group>
-               </choice>
-            </optional>
-      
-      
-            <zeroOrMore>
-               <ref name="t_availability"/>
-            </zeroOrMore>
-      
-      
-            <zeroOrMore>
-               <ref name="t_model.noteLike"/>
-            </zeroOrMore>
-      
-            <zeroOrMore>
-               <group>
-                  <ref name="t_edition"/>
-        
-                  <zeroOrMore>
-                     <choice>
-                        <ref name="t_idno"/>
-                        <ref name="t_model.ptrLike"/>
-                        <ref name="t_editor"/>
-                        <ref name="t_sponsor"/>
-                        <ref name="t_funder"/>
-                        <ref name="t_respStmt"/>
-                     </choice>
-                  </zeroOrMore>
-        
-               </group>
-            </zeroOrMore>
-            <ref name="t_imprint"/>
-      
-            <zeroOrMore>
-               <choice>
-                  <ref name="t_imprint"/>
-                  <ref name="t_extent"/>
-                  <ref name="t_biblScope"/>
-               </choice>
-            </zeroOrMore>
-      
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_series">
-      <element name="series">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(series information) contains information about the series in which a book or other bibliographic item has appeared. [3.11.2.1. Analytic, Monographic, and Series Levels]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <text/>
-               <ref name="t_model.gLike"/>
-               <ref name="t_title"/>
-               <ref name="t_model.ptrLike"/>
-               <ref name="t_editor"/>
-               <ref name="t_respStmt"/>
-               <ref name="t_biblScope"/>
-               <ref name="t_idno"/>
-               <ref name="t_textLang"/>
-               <ref name="t_model.global"/>
-               <ref name="t_availability"/>
-            </choice>
-         </zeroOrMore>
-         <ref name="t_att.global.attributes"/>
-         <empty/>
-      </element>
-   </define>
    <define name="t_author">
       <element name="author">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">in a bibliographic reference, contains the name(s) of an author, personal or corporate, of a work; for example in the same form as that provided by a recognized bibliographic name authority. [3.11.2.2. Titles, Authors, and Editors 2.2.1. The Title Statement]</a:documentation>
@@ -4333,16 +4266,6 @@ Elements]</a:documentation>
          <empty/>
       </element>
    </define>
-   <define name="t_citedRange">
-      <element name="citedRange">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(cited range) defines the range of cited content, often represented by pages or other units [3.11.2.5. Scopes and Ranges in Bibliographic Citations]</a:documentation>
-         <ref name="t_macro.phraseSeq"/>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.pointing.attributes"/>
-         <ref name="t_att.citing.attributes"/>
-         <empty/>
-      </element>
-   </define>
    <define name="t_pubPlace">
       <element name="pubPlace">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(publication place) contains the name of the place where a bibliographic item was published. [3.11.2.4. Imprint, Size of a Document, and Reprint Information]</a:documentation>
@@ -4356,45 +4279,54 @@ Elements]</a:documentation>
       <element name="bibl">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(bibliographic citation) A short bibliographic citation with nothing but author, title, and optional date [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2.7. The Source Description 15.3.2. Declarable Elements]</a:documentation>
          <group>
-            <oneOrMore>
+            <group>
                <ref name="t_author"/>
-            </oneOrMore>
-            <ref name="t_title"/>
+               <ref name="t_author"/>
+               <zeroOrMore>
+                  <ref name="t_author"/>
+               </zeroOrMore>
+            </group>
+            <group>
+               <ref name="t_title"/>
+               <optional>
+                  <ref name="t_title"/>
+                  <optional>
+                     <ref name="t_title"/>
+                     <optional>
+                        <ref name="t_title"/>
+                        <optional>
+                           <ref name="t_title"/>
+                           <optional>
+                              <ref name="t_title"/>
+                              <optional>
+                                 <ref name="t_title"/>
+                                 <optional>
+                                    <ref name="t_title"/>
+                                 </optional>
+                              </optional>
+                           </optional>
+                        </optional>
+                     </optional>
+                  </optional>
+               </optional>
+            </group>
+            <group>
+               <optional>
+                  <ref name="t_publisher"/>
+               </optional>
+               <optional>
+                  <ref name="t_publisher"/>
+                  <optional>
+                     <ref name="t_publisher"/>
+                     <optional>
+                        <ref name="t_publisher"/>
+                     </optional>
+                  </optional>
+               </optional>
+            </group>
             <optional>
                <ref name="t_date"/>
             </optional>
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.declarable.attributes"/>
-         <ref name="t_att.typed.attributes"/>
-         <ref name="t_att.sortable.attributes"/>
-         <ref name="t_att.docStatus.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_biblStruct">
-      <element name="biblStruct">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(structured bibliographic citation) contains a structured bibliographic citation, in which only bibliographic sub-elements appear and in a specified order. [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2.7. The Source Description 15.3.2. Declarable Elements]</a:documentation>
-         <group>
-            <zeroOrMore>
-               <ref name="t_analytic"/>
-            </zeroOrMore>      
-            <oneOrMore>
-               <group>
-                  <ref name="t_monogr"/>
-                  <zeroOrMore>
-                     <ref name="t_series"/>
-                  </zeroOrMore>
-               </group>
-            </oneOrMore>
-            <zeroOrMore>
-               <choice>
-                  <ref name="t_model.noteLike"/>
-                  <ref name="t_model.ptrLike"/>
-                  <ref name="t_relatedItem"/>
-                  <ref name="t_citedRange"/>
-               </choice>
-            </zeroOrMore>
          </group>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
@@ -4447,8 +4379,8 @@ Elements]</a:documentation>
                   id="testPure1-relatedItem-targetorcontent1-constraint-report-8">
             <rule context="tei:relatedItem">
                <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                           xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                           xmlns="http://www.tei-c.org/ns/1.0"
                            test="@target and count( child::* ) &gt; 0">
 If the @target attribute on <sch:name/> is used, the
 relatedItem element must be empty</sch:report>
@@ -4458,8 +4390,8 @@ relatedItem element must be empty</sch:report>
                   id="testPure1-relatedItem-targetorcontent1-constraint-assert-7">
             <rule context="tei:relatedItem">
                <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                           xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                           xmlns="http://www.tei-c.org/ns/1.0"
                            test="@target or child::*">A relatedItem element should have either a 'target' attribute
         or a child element to indicate the related bibliographic item</sch:assert>
             </rule>
@@ -4490,7 +4422,8 @@ relatedItem element must be empty</sch:report>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-l-abstractModel-structure-l-constraint-report-9">
             <rule context="tei:l">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0"
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
         Abstract model violation: Lines may not contain lines or lg elements.
       </report>
@@ -4547,8 +4480,8 @@ relatedItem element must be empty</sch:report>
                   id="testPure1-lg-atleast1oflggapl-constraint-assert-8">
             <rule context="tei:lg">
                <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                           xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                           xmlns="http://www.tei-c.org/ns/1.0"
                            test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
         must contain at least one child l, lg or gap element.</sch:assert>
             </rule>
@@ -4556,7 +4489,8 @@ relatedItem element must be empty</sch:report>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-lg-abstractModel-structure-l-constraint-report-10">
             <rule context="tei:lg">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0"
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
         Abstract model violation: Lines may not contain line groups.
       </report>
@@ -4758,914 +4692,6 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
                </list>
             </attribute>
          </optional>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_TEI">
-      <element name="TEI">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(TEI document) contains a single TEI-conformant document, combining a single TEI header with one or more members of the model.resourceLike class. Multiple TEI elements may be combined to form a teiCorpus element. [4. Default Text Structure 15.1. Varieties of Composite Text]</a:documentation>
-         <group>
-            <ref name="t_teiHeader"/>
-            <oneOrMore>
-               <ref name="t_model.resourceLike"/>
-            </oneOrMore>
-         </group>
-         <ns xmlns="http://purl.oclc.org/dsdl/schematron"
-             prefix="tei"
-             uri="http://www.tei-c.org/ns/1.0"/>
-         <ns xmlns="http://purl.oclc.org/dsdl/schematron"
-             prefix="xs"
-             uri="http://www.w3.org/2001/XMLSchema"/>
-         <ns xmlns="http://purl.oclc.org/dsdl/schematron"
-             prefix="rng"
-             uri="http://relaxng.org/ns/structure/1.0"/>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.typed.attributes"/>
-         <optional>
-            <attribute name="version">
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the version number of the TEI Guidelines against which this document is valid.</a:documentation>
-               <data type="token">
-                  <param name="pattern">[\d]+(\.[\d]+){0,2}</param>
-               </data>
-            </attribute>
-         </optional>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_text">
-      <element name="text">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a single text of any kind, whether unitary or composite, for example a poem or drama, a collection of essays, a novel, a dictionary, or a corpus sample. [4. Default Text Structure 15.1. Varieties of Composite Text]</a:documentation>
-         <group>
-      
-            <zeroOrMore>
-               <ref name="t_model.global"/>
-            </zeroOrMore>
-      
-            <optional>
-               <group>
-                  <ref name="t_front"/>
-        
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-        
-               </group>
-            </optional>
-            <choice>
-               <ref name="t_body"/>
-               <ref name="t_group"/>
-            </choice>
-      
-            <zeroOrMore>
-               <ref name="t_model.global"/>
-            </zeroOrMore>
-      
-            <optional>
-               <group>
-                  <ref name="t_back"/>
-        
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-        
-               </group>
-            </optional>
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.declaring.attributes"/>
-         <ref name="t_att.typed.attributes"/>
-         <ref name="t_att.written.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_body">
-      <element name="body">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(text body) contains the whole body of a single unitary text, excluding any front or back matter. [4. Default Text Structure]</a:documentation>
-         <group>
-      
-      
-            <zeroOrMore>
-               <ref name="t_model.global"/>
-            </zeroOrMore>
-      
-      
-      
-            <optional>
-               <group>
-          
-                  <ref name="t_model.divTop"/>
-          
-          
-                  <zeroOrMore>
-                     <choice>
-                        <ref name="t_model.global"/>
-                        <ref name="t_model.divTop"/>
-                     </choice>
-                  </zeroOrMore>
-          
-               </group>
-            </optional>
-      
-      
-      
-            <optional>
-               <group>
-          
-                  <ref name="t_model.divGenLike"/>
-          
-          
-                  <zeroOrMore>
-                     <choice>
-                        <ref name="t_model.global"/>
-                        <ref name="t_model.divGenLike"/>
-                     </choice>
-                  </zeroOrMore>
-          
-               </group>
-            </optional>
-      
-      
-        
-            <choice>
-          
-          
-               <oneOrMore>
-                  <group>
-              
-                     <ref name="t_model.divLike"/>
-              
-              
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="t_model.global"/>
-                           <ref name="t_model.divGenLike"/>
-                        </choice>
-                     </zeroOrMore>
-              
-                  </group>
-               </oneOrMore>
-          
-          
-          
-               <oneOrMore>
-                  <group>
-              
-                     <ref name="t_model.div1Like"/>
-              
-              
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="t_model.global"/>
-                           <ref name="t_model.divGenLike"/>
-                        </choice>
-                     </zeroOrMore>
-              
-                  </group>
-               </oneOrMore>
-          
-          
-               <group>
-                  <oneOrMore>
-                     <group>
-              
-                        <ref name="t_model.common"/>
-              
-              
-                        <zeroOrMore>
-                           <ref name="t_model.global"/>
-                        </zeroOrMore>
-              
-                     </group>
-                  </oneOrMore>
-            
-                  <optional>
-                     <choice>
-                
-                
-                        <oneOrMore>
-                           <group>
-                    
-                              <ref name="t_model.divLike"/>
-                    
-                    
-                              <zeroOrMore>
-                                 <choice>
-                                    <ref name="t_model.global"/>
-                                    <ref name="t_model.divGenLike"/>
-                                 </choice>
-                              </zeroOrMore>
-                    
-                           </group>
-                        </oneOrMore>
-                
-                
-                
-                        <oneOrMore>
-                           <group>
-                    
-                              <ref name="t_model.div1Like"/>
-                    
-                    
-                              <zeroOrMore>
-                                 <choice>
-                                    <ref name="t_model.global"/>
-                                    <ref name="t_model.divGenLike"/>
-                                 </choice>
-                              </zeroOrMore>
-                    
-                           </group>
-                        </oneOrMore>
-                
-                     </choice>
-                  </optional>
-            
-               </group>
-            </choice>
-        
-      
-      
-      
-            <zeroOrMore>
-               <group>
-          
-                  <ref name="t_model.divBottom"/>
-          
-          
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-          
-               </group>
-            </zeroOrMore>
-      
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.declaring.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_group">
-      <element name="group">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains the body of a composite text, grouping together a sequence of distinct texts (or groups of such texts) which are regarded as a unit for some purpose, for example the collected works of an author, a sequence of prose essays, etc. [4. Default Text Structure 4.3.1. Grouped Texts 15.1. Varieties of Composite Text]</a:documentation>
-         <group>
-      
-            <zeroOrMore>
-               <choice>
-                  <ref name="t_model.divTop"/>
-                  <ref name="t_model.global"/>
-               </choice>
-            </zeroOrMore>
-      
-            <group>
-               <choice>
-                  <ref name="t_text"/>
-                  <ref name="t_group"/>
-               </choice>
-        
-               <zeroOrMore>
-                  <choice>
-                     <ref name="t_text"/>
-                     <ref name="t_group"/>
-                     <ref name="t_model.global"/>
-                  </choice>
-               </zeroOrMore>
-        
-            </group>
-      
-            <zeroOrMore>
-               <ref name="t_model.divBottom"/>
-            </zeroOrMore>
-      
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.declaring.attributes"/>
-         <ref name="t_att.typed.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_floatingText">
-      <element name="floatingText">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a single text of any kind, whether unitary or composite, which interrupts the text containing it at any point and after which the surrounding text resumes. [4.3.2. Floating Texts]</a:documentation>
-         <group>
-      
-            <zeroOrMore>
-               <ref name="t_model.global"/>
-            </zeroOrMore>
-      
-            <optional>
-               <group>
-                  <ref name="t_front"/>
-        
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-        
-               </group>
-            </optional>
-            <choice>
-               <ref name="t_body"/>
-               <ref name="t_group"/>
-            </choice>
-      
-            <zeroOrMore>
-               <ref name="t_model.global"/>
-            </zeroOrMore>
-      
-            <optional>
-               <group>
-                  <ref name="t_back"/>
-        
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-        
-               </group>
-            </optional>
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.declaring.attributes"/>
-         <ref name="t_att.typed.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_div">
-      <element name="div">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(text division) contains a subdivision of the front, body, or back of a text. [4.1. Divisions of the Body]</a:documentation>
-         <group>
-      
-            <zeroOrMore>
-               <choice>
-                  <ref name="t_model.divTop"/>
-          
-                  <ref name="t_model.global"/>
-               </choice>
-            </zeroOrMore>
-      
-            <optional>
-               <group>
-                  <choice>
-          
-                     <oneOrMore>
-                        <group>
-                           <choice>
-                              <ref name="t_model.divLike"/>
-                              <ref name="t_model.divGenLike"/>
-                           </choice>
-              
-                           <zeroOrMore>
-                              <ref name="t_model.global"/>
-                           </zeroOrMore>
-              
-                        </group>
-                     </oneOrMore>
-          
-                     <group>
-                        <oneOrMore>
-                           <group>
-              
-                              <ref name="t_model.common"/>
-              
-              
-                              <zeroOrMore>
-                                 <ref name="t_model.global"/>
-                              </zeroOrMore>
-              
-                           </group>
-                        </oneOrMore>
-                        <zeroOrMore>
-                           <group>
-                              <choice>
-                                 <ref name="t_model.divLike"/>
-                                 <ref name="t_model.divGenLike"/>
-                              </choice>
-              
-                              <zeroOrMore>
-                                 <ref name="t_model.global"/>
-                              </zeroOrMore>
-              
-                           </group>
-                        </zeroOrMore>
-                     </group>
-                  </choice>
-                  <zeroOrMore>
-                     <group>
-          
-                        <ref name="t_model.divBottom"/>
-          
-          
-                        <zeroOrMore>
-                           <ref name="t_model.global"/>
-                        </zeroOrMore>
-          
-                     </group>
-                  </zeroOrMore>
-               </group>
-            </optional>
-         </group>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-div-abstractModel-structure-l-constraint-report-11">
-            <rule context="tei:div">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="ancestor::tei:l">
-        Abstract model violation: Lines may not contain higher-level structural elements such as div.
-      </report>
-            </rule>
-         </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-div-abstractModel-structure-p-constraint-report-12">
-            <rule context="tei:div">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                       test="ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)">
-        Abstract model violation: p and ab may not contain higher-level structural elements such as div.
-      </report>
-            </rule>
-         </pattern>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.divLike.attributes"/>
-         <ref name="t_att.typed.attributes"/>
-         <ref name="t_att.declaring.attributes"/>
-         <ref name="t_att.written.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_trailer">
-      <element name="trailer">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a closing title or footer appearing at the end of a division of a text. [4.2.4. Content of Textual Divisions 4.2. Elements Common to All Divisions]</a:documentation>
-         <zeroOrMore>
-            <choice>
-	              <text/>
-	              <ref name="t_lg"/>
-	              <ref name="t_model.gLike"/>
-	              <ref name="t_model.phrase"/>
-	              <ref name="t_model.inter"/>
-	              <ref name="t_model.lLike"/>
-	              <ref name="t_model.global"/>
-            </choice>
-         </zeroOrMore>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.typed.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_byline">
-      <element name="byline">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains the primary statement of responsibility given for a work on its title page or at the head or end of the work. [4.2.2. Openers and Closers 4.5. Front Matter]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <text/>
-               <ref name="t_model.gLike"/>
-               <ref name="t_model.phrase"/>
-               <ref name="t_docAuthor"/>
-               <ref name="t_model.global"/>
-            </choice>
-         </zeroOrMore>
-         <ref name="t_att.global.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_dateline">
-      <element name="dateline">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a brief description of the place, date, time, etc. of production of a letter, newspaper story, or other work, prefixed or suffixed to it as a kind of heading or trailer. [4.2.2. Openers and Closers]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <text/>
-               <ref name="t_model.gLike"/>
-               <ref name="t_model.phrase"/>
-               <ref name="t_model.global"/>
-               <ref name="t_docDate"/>
-            </choice>
-         </zeroOrMore>
-         <ref name="t_att.global.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_argument">
-      <element name="argument">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a formal list or prose description of the topics addressed by a subdivision of a text. [4.2. Elements Common to All Divisions 4.6. Title Pages]</a:documentation>
-         <group>
-      
-            <zeroOrMore>
-               <choice>
-                  <ref name="t_model.global"/>
-                  <ref name="t_model.headLike"/>
-               </choice>
-            </zeroOrMore>
-      
-            <oneOrMore>
-               <group>
-        
-                  <ref name="t_model.common"/>
-        
-        
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-        
-               </group>
-            </oneOrMore>
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_epigraph">
-      <element name="epigraph">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a quotation, anonymous or attributed, appearing at the start or end of a section or on a title page. [4.2.3. Arguments, Epigraphs, and Postscripts 4.2. Elements Common to All Divisions 4.6. Title Pages]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <ref name="t_model.common"/>
-               <ref name="t_model.global"/>
-            </choice>
-         </zeroOrMore>
-         <ref name="t_att.global.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_opener">
-      <element name="opener">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups together dateline, byline, salutation, and similar phrases appearing as a preliminary group at the start of a division, especially of a letter. [4.2. Elements Common to All Divisions]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <text/>
-               <ref name="t_model.gLike"/>
-               <ref name="t_model.phrase"/>
-        
-               <ref name="t_argument"/>
-               <ref name="t_byline"/>
-               <ref name="t_dateline"/>
-               <ref name="t_epigraph"/>
-               <ref name="t_salute"/>
-               <ref name="t_signed"/>
-               <ref name="t_model.global"/>
-            </choice>
-         </zeroOrMore>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.written.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_closer">
-      <element name="closer">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups together salutations, datelines, and similar phrases appearing as a final group at the end of a division, especially of a letter. [4.2.2. Openers and Closers 4.2. Elements Common to All Divisions]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <text/>
-               <ref name="t_model.gLike"/>
-               <ref name="t_signed"/>
-               <ref name="t_dateline"/>
-               <ref name="t_salute"/>
-               <ref name="t_model.phrase"/>
-               <ref name="t_model.global"/>
-            </choice>
-         </zeroOrMore>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.written.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_salute">
-      <element name="salute">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(salutation) contains a salutation or greeting prefixed to a foreword, dedicatory epistle, or other division of a text, or the salutation in the closing of a letter, preface, etc. [4.2.2. Openers and Closers]</a:documentation>
-         <ref name="t_macro.paraContent"/>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.written.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_signed">
-      <element name="signed">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(signature) contains the closing salutation, etc., appended to a foreword, dedicatory epistle, or other division of a text. [4.2.2. Openers and Closers]</a:documentation>
-         <ref name="t_macro.paraContent"/>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.written.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_postscript">
-      <element name="postscript">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a postscript, e.g. to a letter. [4.2. Elements Common to All Divisions]</a:documentation>
-         <group>
-      
-            <zeroOrMore>
-               <choice>
-                  <ref name="t_model.global"/>
-                  <ref name="t_model.divTopPart"/>
-               </choice>
-            </zeroOrMore>
-      
-      
-            <ref name="t_model.common"/>
-      
-      
-            <zeroOrMore>
-               <choice>
-                  <ref name="t_model.global"/>
-                  <ref name="t_model.common"/>
-               </choice>
-            </zeroOrMore>
-      
-            <zeroOrMore>
-               <group>
-        
-                  <ref name="t_model.divBottomPart"/>
-        
-        
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-        
-               </group>
-            </zeroOrMore>
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.written.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_titlePage">
-      <element name="titlePage">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(title page) contains the title page of a text, appearing within the front or back matter. [4.6. Title Pages]</a:documentation>
-         <group>
-      
-            <zeroOrMore>
-               <ref name="t_model.global"/>
-            </zeroOrMore>
-      
-      
-            <ref name="t_model.titlepagePart"/>
-      
-      
-            <zeroOrMore>
-               <choice>
-                  <ref name="t_model.titlepagePart"/>
-                  <ref name="t_model.global"/>
-               </choice>
-            </zeroOrMore>
-      
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <optional>
-            <attribute name="type">
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the title page according to any convenient typology.</a:documentation>
-               <data type="token">
-                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
-               </data>
-            </attribute>
-         </optional>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_docTitle">
-      <element name="docTitle">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(document title) contains the title of a document, including all its constituents, as given on a title page. [4.6. Title Pages]</a:documentation>
-         <group>
-      
-            <zeroOrMore>
-               <ref name="t_model.global"/>
-            </zeroOrMore>
-      
-            <oneOrMore>
-               <group>
-                  <ref name="t_titlePart"/>
-        
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-        
-               </group>
-            </oneOrMore>
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.canonical.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_titlePart">
-      <element name="titlePart">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a subsection or division of the title of a work, as indicated on a title page. [4.6. Title Pages]</a:documentation>
-         <ref name="t_macro.paraContent"/>
-         <ref name="t_att.global.attributes"/>
-         <optional>
-            <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                       name="type"
-                       a:defaultValue="main">
-               <a:documentation>specifies the role of this subdivision of the title.
-Suggested values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4] short; 5] desc (descriptive) </a:documentation>
-               <choice>
-                  <value>main</value>
-                  <a:documentation>main title of the work</a:documentation>
-                  <value>sub</value>
-                  <a:documentation>(subordinate) subtitle of the work</a:documentation>
-                  <value>alt</value>
-                  <a:documentation>(alternate) alternative title of the work</a:documentation>
-                  <value>short</value>
-                  <a:documentation>abbreviated form of title</a:documentation>
-                  <value>desc</value>
-                  <a:documentation>(descriptive) descriptive paraphrase of the work</a:documentation>
-                  <data type="token">
-                     <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
-                  </data>
-               </choice>
-            </attribute>
-         </optional>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_docAuthor">
-      <element name="docAuthor">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(document author) contains the name of the author of the document, as given on the title page (often but not always contained in a byline). [4.6. Title Pages]</a:documentation>
-         <ref name="t_macro.phraseSeq"/>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.canonical.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_imprimatur">
-      <element name="imprimatur">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a formal statement authorizing the publication of a work, sometimes required to appear on a title page or its verso. [4.6. Title Pages]</a:documentation>
-         <ref name="t_macro.paraContent"/>
-         <ref name="t_att.global.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_docEdition">
-      <element name="docEdition">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(document edition) contains an edition statement as presented on a title page of a document. [4.6. Title Pages]</a:documentation>
-         <ref name="t_macro.paraContent"/>
-         <ref name="t_att.global.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_docImprint">
-      <element name="docImprint">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(document imprint) contains the imprint statement (place and date of publication, publisher name), as given (usually) at the foot of a title page. [4.6. Title Pages]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <text/>
-               <ref name="t_model.gLike"/>
-               <ref name="t_model.phrase"/>
-               <ref name="t_pubPlace"/>
-               <ref name="t_docDate"/>
-               <ref name="t_publisher"/>
-               <ref name="t_model.global"/>
-            </choice>
-         </zeroOrMore>
-         <ref name="t_att.global.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_docDate">
-      <element name="docDate">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(document date) contains the date of a document, as given on a title page or in a dateline. [4.6. Title Pages]</a:documentation>
-         <ref name="t_macro.phraseSeq"/>
-         <ref name="t_att.global.attributes"/>
-         <optional>
-            <attribute name="when">
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the value of the date in standard form, i.e. YYYY-MM-DD.</a:documentation>
-               <choice>
-                  <data type="date"/>
-                  <data type="gYear"/>
-                  <data type="gMonth"/>
-                  <data type="gDay"/>
-                  <data type="gYearMonth"/>
-                  <data type="gMonthDay"/>
-                  <data type="time"/>
-                  <data type="dateTime"/>
-               </choice>
-            </attribute>
-         </optional>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_front">
-      <element name="front">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(front matter) contains any prefatory matter (headers, abstracts, title page, prefaces, dedications, etc.) found at the start of a document, before the main body. [4.6. Title Pages 4. Default Text Structure]</a:documentation>
-         <group>
-      
-            <zeroOrMore>
-               <choice>
-                  <ref name="t_model.frontPart"/>
-                  <ref name="t_model.pLike"/>
-                  <ref name="t_model.pLike.front"/>
-                  <ref name="t_model.global"/>
-               </choice>
-            </zeroOrMore>
-            <optional>
-               <group>
-                  <choice>
-          
-                     <group>
-                        <ref name="t_model.div1Like"/>
-                        <zeroOrMore>
-                           <choice>
-                              <ref name="t_model.div1Like"/>
-                              <ref name="t_model.frontPart"/>
-                              <ref name="t_model.global"/>
-                           </choice>
-                        </zeroOrMore>
-                     </group>
-          
-                     <group>
-                        <ref name="t_model.divLike"/>
-                        <zeroOrMore>
-                           <choice>
-                              <ref name="t_model.divLike"/>
-                              <ref name="t_model.frontPart"/>
-                              <ref name="t_model.global"/>
-                           </choice>
-                        </zeroOrMore>
-                     </group>
-                  </choice>
-        
-                  <optional>
-                     <group>
-                        <ref name="t_model.divBottom"/>
-                        <zeroOrMore>
-                           <choice>
-                              <ref name="t_model.divBottom"/>
-                              <ref name="t_model.global"/>
-                           </choice>
-                        </zeroOrMore>
-                     </group>
-                  </optional>
-               </group>
-            </optional>
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.declaring.attributes"/>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_back">
-      <element name="back">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(back matter) contains any appendixes, etc. following the main part of a text. [4.7. Back Matter 4. Default Text Structure]</a:documentation>
-         <group>
-
-            <zeroOrMore>
-               <choice>
-                  <ref name="t_model.frontPart"/>
-                  <ref name="t_model.pLike.front"/>
-                  <ref name="t_model.pLike"/>
-                  <ref name="t_model.listLike"/>
-                  <ref name="t_model.global"/>
-               </choice>
-            </zeroOrMore>
-
-
-
-            <optional>
-               <choice>
-                  <group>
-
-                     <ref name="t_model.div1Like"/>
-
-
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="t_model.frontPart"/>
-                           <ref name="t_model.div1Like"/>
-                           <ref name="t_model.global"/>
-                        </choice>
-                     </zeroOrMore>
-
-                  </group>
-                  <group>
-
-                     <ref name="t_model.divLike"/>
-
-
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="t_model.frontPart"/>
-                           <ref name="t_model.divLike"/>
-                           <ref name="t_model.global"/>
-                        </choice>
-                     </zeroOrMore>
-
-                  </group>
-               </choice>
-            </optional>
-
-
-
-            <optional>
-               <group>
-
-                  <ref name="t_model.divBottomPart"/>
-
-
-                  <zeroOrMore>
-                     <choice>
-                        <ref name="t_model.divBottomPart"/>
-                        <ref name="t_model.global"/>
-                     </choice>
-                  </zeroOrMore>
-
-               </group>
-            </optional>
-
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.declaring.attributes"/>
          <empty/>
       </element>
    </define>
@@ -6199,9 +5225,10 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
             <ref name="t_model.pLike"/>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-quotation-quotationContents-constraint-report-13">
+                  id="testPure1-quotation-quotationContents-constraint-report-11">
             <rule context="tei:quotation">
                <report xmlns:xi="http://www.w3.org/2001/XInclude"
+                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        test="not(@marks) and not (tei:p)">
 On <name/>, either the @marks attribute should be used, or a paragraph of description provided</report>
@@ -6994,63 +6021,366 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <empty/>
       </element>
    </define>
-   <define name="t_model.persNamePart">
-      <notAllowed/>
+   <define name="t_att.linguistic.attributes">
+      <ref name="t_att.linguistic.attribute.lemma"/>
+      <ref name="t_att.linguistic.attribute.lemmaRef"/>
+      <ref name="t_att.linguistic.attribute.pos"/>
+      <ref name="t_att.linguistic.attribute.msd"/>
+      <ref name="t_att.linguistic.attribute.join"/>
    </define>
-   <define name="t_model.persNamePart_alternation">
-      <notAllowed/>
+   <define name="t_att.linguistic.attribute.lemma">
+      <optional>
+         <attribute name="lemma">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a lemma (base form) for the word, typically uninflected and serving both as an identifier (e.g. in dictionary contexts, as a headword), and as a basis for potential inflections.</a:documentation>
+            <data type="string"/>
+         </attribute>
+      </optional>
    </define>
-   <define name="t_model.persNamePart_sequence">
-      <empty/>
+   <define name="t_att.linguistic.attribute.lemmaRef">
+      <optional>
+         <attribute name="lemmaRef">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a pointer to a definition of the lemma for the word, for example in an online lexicon.</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
    </define>
-   <define name="t_model.persNamePart_sequenceOptional">
-      <empty/>
+   <define name="t_att.linguistic.attribute.pos">
+      <optional>
+         <attribute name="pos">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(part of speech) indicates the part of speech assigned to a token (i.e. information on whether it is a noun, adjective, or verb), usually according to some official reference vocabulary (e.g. for German: STTS, for English: CLAWS, for Polish: NKJP, etc.).</a:documentation>
+            <data type="string"/>
+         </attribute>
+      </optional>
    </define>
-   <define name="t_model.persNamePart_sequenceOptionalRepeatable">
-      <empty/>
+   <define name="t_att.linguistic.attribute.msd">
+      <optional>
+         <attribute name="msd">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(morphosyntactic description) supplies morphosyntactic information for a token, usually according to some official reference vocabulary (e.g. for German: STTS-large tagset; for a feature description system designed as (pragmatically) universal, see Universal Features).</a:documentation>
+            <data type="string"/>
+         </attribute>
+      </optional>
    </define>
-   <define name="t_model.persNamePart_sequenceRepeatable">
-      <notAllowed/>
+   <define name="t_att.linguistic.attribute.join">
+      <optional>
+         <attribute name="join">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">when present, it provides information on whether the token in question is adjacent to another, and if so, on which side. The definition of this attribute is adapted from ISO MAF (Morpho-syntactic Annotation Framework), ISO 24611:2012.</a:documentation>
+            <choice>
+               <value>no</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(the token is not adjacent to another) </a:documentation>
+               <value>left</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(there is no whitespace on the left side of the token) </a:documentation>
+               <value>right</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(there is no whitespace on the right side of the token) </a:documentation>
+               <value>both</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(there is no whitespace on either side of the token) </a:documentation>
+               <value>overlap</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(the token overlaps with another; other devices (specifying the extent and the area of overlap) are needed to more precisely locate this token in the character stream) </a:documentation>
+            </choice>
+         </attribute>
+      </optional>
    </define>
-   <define name="t_orgName">
-      <element name="orgName">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(organization name) contains an organizational name. [13.2.2. Organizational Names]</a:documentation>
+   <define name="t_att.global.analytic.attributes">
+      <ref name="t_att.global.analytic.attribute.ana"/>
+   </define>
+   <define name="t_att.global.analytic.attribute.ana">
+      <optional>
+         <attribute name="ana">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(analysis) indicates one or more elements containing interpretations of the element on which the ana attribute appears.</a:documentation>
+            <list>
+               <oneOrMore>
+                  <data type="anyURI"/>
+               </oneOrMore>
+            </list>
+         </attribute>
+      </optional>
+   </define>
+   <define name="t_s">
+      <element name="s">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(s-unit) contains a sentence-like division of a text. [17.1. Linguistic Segment Categories 8.4.1. Segmentation]</a:documentation>
          <ref name="t_macro.phraseSeq"/>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  id="testPure1-s-noNestedS-constraint-report-12">
+            <rule context="tei:s">
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       test="tei:s">You may not nest one s element within
+      another: use seg instead</report>
+            </rule>
+         </pattern>
          <ref name="t_att.global.attributes"/>
-         <ref name="t_att.datable.attributes"/>
-         <ref name="t_att.editLike.attributes"/>
-         <ref name="t_att.personal.attributes"/>
+         <ref name="t_att.segLike.attributes"/>
          <ref name="t_att.typed.attributes"/>
+         <ref name="t_att.notated.attributes"/>
          <empty/>
       </element>
    </define>
-   <define name="t_persName">
-      <element name="persName">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(personal name) contains a proper noun or proper-noun phrase referring to a person, possibly including one or more of the person's forenames, surnames, honorifics, added names, etc. [13.2.1. Personal Names]</a:documentation>
+   <define name="t_cl">
+      <element name="cl">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(clause) represents a grammatical clause. [17.1. Linguistic Segment Categories]</a:documentation>
          <ref name="t_macro.phraseSeq"/>
          <ref name="t_att.global.attributes"/>
-         <ref name="t_att.datable.attributes"/>
-         <ref name="t_att.editLike.attributes"/>
-         <ref name="t_att.personal.attributes"/>
+         <ref name="t_att.segLike.attributes"/>
          <ref name="t_att.typed.attributes"/>
+         <ref name="t_att.notated.attributes"/>
          <empty/>
       </element>
    </define>
-   <define name="t_placeName">
-      <element name="placeName">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains an absolute or relative place name. [13.2.3. Place Names]</a:documentation>
+   <define name="t_phr">
+      <element name="phr">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(phrase) represents a grammatical phrase. [17.1. Linguistic Segment Categories]</a:documentation>
          <ref name="t_macro.phraseSeq"/>
-         <ref name="t_att.datable.attributes"/>
-         <ref name="t_att.editLike.attributes"/>
          <ref name="t_att.global.attributes"/>
-         <ref name="t_att.personal.attributes"/>
+         <ref name="t_att.segLike.attributes"/>
          <ref name="t_att.typed.attributes"/>
+         <ref name="t_att.notated.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_w">
+      <element name="w">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(word) represents a grammatical (not necessarily orthographic) word. [17.1. Linguistic Segment Categories 17.4.2. Lightweight Linguistic Annotation]</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="t_model.gLike"/>
+               <ref name="t_seg"/>
+               <ref name="t_w"/>
+               <ref name="t_m"/>
+               <ref name="t_c"/>
+               <ref name="t_pc"/>
+               <ref name="t_model.global"/>
+               <ref name="t_model.lPart"/>
+               <ref name="t_model.hiLike"/>
+               <ref name="t_model.pPart.edit"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="t_att.global.attribute.xmlid"/>
+         <ref name="t_att.global.attribute.n"/>
+         <ref name="t_att.global.attribute.xmllang"/>
+         <ref name="t_att.global.attribute.xmlbase"/>
+         <ref name="t_att.global.attribute.xmlspace"/>
+         <ref name="t_att.global.rendition.attribute.rend"/>
+         <ref name="t_att.global.rendition.attribute.style"/>
+         <ref name="t_att.global.rendition.attribute.rendition"/>
+         <ref name="t_att.global.linking.attribute.corresp"/>
+         <ref name="t_att.global.linking.attribute.sameAs"/>
+         <ref name="t_att.global.linking.attribute.copyOf"/>
+         <ref name="t_att.global.linking.attribute.next"/>
+         <ref name="t_att.global.linking.attribute.prev"/>
+         <ref name="t_att.global.linking.attribute.exclude"/>
+         <ref name="t_att.global.linking.attribute.select"/>
+         <ref name="t_att.global.responsibility.attribute.cert"/>
+         <ref name="t_att.global.responsibility.attribute.resp"/>
+         <ref name="t_att.global.source.attribute.source"/>
+         <ref name="t_att.segLike.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <ref name="t_att.linguistic.attributes"/>
+         <ref name="t_att.notated.attributes"/>
+         <attribute name="ana">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(analysis) indicates one or more elements containing interpretations of the element on which the ana attribute appears.</a:documentation>
+            <list>
+               <oneOrMore>
+                  <data type="anyURI"/>
+               </oneOrMore>
+            </list>
+         </attribute>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_m">
+      <element name="m">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(morpheme) represents a grammatical morpheme. [17.1. Linguistic Segment Categories]</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="t_model.gLike"/>
+               <ref name="t_model.hiLike"/>
+               <ref name="t_seg"/>
+               <ref name="t_m"/>
+               <ref name="t_c"/>
+               <ref name="t_model.global"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.segLike.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <ref name="t_att.notated.attributes"/>
+         <optional>
+            <attribute name="baseForm">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies the morpheme's base form.</a:documentation>
+               <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+               </data>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_c">
+      <element name="c">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(character) represents a character. [17.1. Linguistic Segment Categories]</a:documentation>
+         <ref name="t_macro.xtext"/>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.segLike.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <ref name="t_att.notated.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_pc">
+      <element name="pc">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(punctuation character) contains a character or string of characters regarded as constituting a single punctuation mark. [17.1.2. Below the Word Level 17.4.2. Lightweight Linguistic Annotation]</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="t_model.gLike"/>
+               <ref name="t_c"/>
+               <ref name="t_model.pPart.edit"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.segLike.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <ref name="t_att.linguistic.attributes"/>
+         <optional>
+            <attribute name="force">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the extent to which this punctuation mark conventionally separates words or phrases</a:documentation>
+               <choice>
+                  <value>strong</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the punctuation mark is a word separator</a:documentation>
+                  <value>weak</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the punctuation mark is not a word separator</a:documentation>
+                  <value>inter</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the punctuation mark may or may not be a word separator</a:documentation>
+               </choice>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="unit">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a name for the kind of unit delimited by this punctuation mark.</a:documentation>
+               <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+               </data>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="pre">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates whether this punctuation mark precedes or follows the unit it delimits.</a:documentation>
+               <data type="boolean"/>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_span">
+      <element name="span">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">associates an interpretative annotation directly with a span of text. [17.3. Spans and Interpretations]</a:documentation>
+         <ref name="t_macro.phraseSeq.limited"/>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  id="testPure1-span-targetfrom-constraint-report-13">
+            <rule context="tei:span">
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       test="@from and @target">
+Only one of the attributes @target and @from may be supplied on <name/>
+               </report>
+            </rule>
+         </pattern>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  id="testPure1-span-targetto-constraint-report-14">
+            <rule context="tei:span">
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       test="@to and @target">
+Only one of the attributes @target and @to may be supplied on <name/>
+               </report>
+            </rule>
+         </pattern>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  id="testPure1-span-tonotfrom-constraint-report-15">
+            <rule context="tei:span">
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       test="@to and not(@from)">
+If @to is supplied on <name/>, @from must be supplied as well</report>
+            </rule>
+         </pattern>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  id="testPure1-span-tofrom-constraint-report-16">
+            <rule context="tei:span">
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       test="contains(normalize-space(@to),' ') or contains(normalize-space(@from),' ')">
+The attributes @to and @from on <name/> may each contain only a single value</report>
+            </rule>
+         </pattern>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.interpLike.attributes"/>
+         <ref name="t_att.pointing.attributes"/>
+         <optional>
+            <attribute name="from">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the identifier of the node which is the starting point of the span of text being annotated; if not accompanied by a to attribute, gives the identifier of the node of the entire span of text being annotated.</a:documentation>
+               <data type="anyURI"/>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="to">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the identifier of the node which is the end-point of the span of text being annotated.</a:documentation>
+               <data type="anyURI"/>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_spanGrp">
+      <element name="spanGrp">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(span group) collects together span tags. [17.3. Spans and Interpretations]</a:documentation>
+         <zeroOrMore>
+            <ref name="t_span"/>
+         </zeroOrMore>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.interpLike.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_interp">
+      <element name="interp">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(interpretation) summarizes a specific interpretative annotation which can be linked to a span of text. [17.3. Spans and Interpretations]</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="t_model.gLike"/>
+               <ref name="t_model.descLike"/>
+               <ref name="t_model.certLike"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.interpLike.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_interpGrp">
+      <element name="interpGrp">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(interpretation group) collects together a set of related interpretations which share responsibility or type. [17.3. Spans and Interpretations]</a:documentation>
+         <group>
+      
+            <zeroOrMore>
+               <ref name="t_model.descLike"/>
+            </zeroOrMore>
+      
+      
+            <oneOrMore>
+               <ref name="t_interp"/>
+            </oneOrMore>
+      
+         </group>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.interpLike.attributes"/>
          <empty/>
       </element>
    </define>
    <define name="t_att.global.linking.attributes">
       <ref name="t_att.global.linking.attribute.corresp"/>
-      <ref name="t_att.global.linking.attribute.synch"/>
       <ref name="t_att.global.linking.attribute.sameAs"/>
       <ref name="t_att.global.linking.attribute.copyOf"/>
       <ref name="t_att.global.linking.attribute.next"/>
@@ -7067,14 +6397,6 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                   <data type="anyURI"/>
                </oneOrMore>
             </list>
-         </attribute>
-      </optional>
-   </define>
-   <define name="t_att.global.linking.attribute.synch">
-      <optional>
-         <attribute name="synch">
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(synchronous) points to elements that are synchronous with the current element.</a:documentation>
-            <data type="anyURI"/>
          </attribute>
       </optional>
    </define>
@@ -7142,8 +6464,8 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                   id="testPure1-link-linkTargets3-constraint-assert-9">
             <rule context="tei:link">
                <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                           xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                           xmlns="http://www.tei-c.org/ns/1.0"
                            test="contains(normalize-space(@target),' ')">You must supply at least two values for @target or  on <sch:name/>
                </sch:assert>
             </rule>
@@ -7163,6 +6485,15 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                <ref name="t_ptr"/>
             </choice>
          </oneOrMore>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  id="testPure1-linkGrp-eight_is_enough-constraint-report-17">
+            <rule context="tei:linkGrp">
+               <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                           xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                           xmlns="http://www.tei-c.org/ns/1.0"
+                           test="count(*)&gt;8">Too many links!</sch:report>
+            </rule>
+         </pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.pointing.group.attributes"/>
          <empty/>
@@ -7173,18 +6504,20 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(anonymous block) contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph. [16.3. Blocks, Segments, and Anchors]</a:documentation>
          <ref name="t_macro.paraContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-ab-abstractModel-structure-ab-constraint-report-14">
+                  id="testPure1-ab-abstractModel-structure-ab-constraint-report-18">
             <rule context="tei:ab">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0"
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
         Abstract model violation: ab may not occur inside paragraphs or other ab elements.
       </report>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-ab-abstractModel-structure-l-constraint-report-15">
+                  id="testPure1-ab-abstractModel-structure-l-constraint-report-19">
             <rule context="tei:ab">
-               <report xmlns:rng="http://relaxng.org/ns/structure/1.0"
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        test="ancestor::tei:l or ancestor::tei:lg">
         Abstract model violation: Lines may not contain higher-level divisions such as p or ab.
       </report>
@@ -7338,78 +6671,6 @@ Suggested values include: 1] d (days) ; 2] h (hours) ; 3] min (minutes) ; 4] s (
          <empty/>
       </element>
    </define>
-   <define name="t_join">
-      <element name="join">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">identifies a possibly fragmented segment of text, by pointing at the possibly discontiguous elements which compose it. [16.7. Aggregation]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <ref name="t_model.descLike"/>
-               <ref name="t_model.certLike"/>
-            </choice>
-         </zeroOrMore>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-join-joinTargets3-constraint-assert-10">
-            <rule context="tei:join">
-               <assert xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                       test="contains(@target,' ')">
-You must supply at least two values for @target on <name/>
-               </assert>
-            </rule>
-         </pattern>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.pointing.attributes"/>
-         <ref name="t_att.typed.attributes"/>
-         <optional>
-            <attribute name="result">
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the name of an element which this aggregation may be understood to represent.</a:documentation>
-               <data type="Name"/>
-            </attribute>
-         </optional>
-         <optional>
-            <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                       name="scope"
-                       a:defaultValue="root">
-               <a:documentation>indicates whether the targets to be joined include the entire element indicated (the entire subtree including its root), or just the children of the target (the branches of the subtree).</a:documentation>
-               <choice>
-                  <value>root</value>
-                  <a:documentation>the rooted subtrees indicated by the target attribute are joined, each subtree become a child of the virtual element created by the join</a:documentation>
-                  <value>branches</value>
-                  <a:documentation>the children of the subtrees indicated by the target attribute become the children of the virtual element (i.e. the roots of the subtrees are discarded)</a:documentation>
-               </choice>
-            </attribute>
-         </optional>
-         <empty/>
-      </element>
-   </define>
-   <define name="t_joinGrp">
-      <element name="joinGrp">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(join group) groups a collection of join elements and possibly pointers. [16.7. Aggregation]</a:documentation>
-         <group>
-      
-            <zeroOrMore>
-               <ref name="t_model.glossLike"/>
-            </zeroOrMore>
-      
-      
-            <oneOrMore>
-               <choice>
-                  <ref name="t_join"/>
-                  <ref name="t_ptr"/>
-               </choice>
-            </oneOrMore>
-      
-         </group>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.pointing.group.attributes"/>
-         <optional>
-            <attribute name="result">
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies the default value for the result on each join included within the group.</a:documentation>
-               <data type="Name"/>
-            </attribute>
-         </optional>
-         <empty/>
-      </element>
-   </define>
    <define name="t_alt">
       <element name="alt">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(alternation) identifies an alternation or a set of choices among elements or passages. [16.8. Alternation]</a:documentation>
@@ -7480,6 +6741,1017 @@ You must supply at least two values for @target on <name/>
                </choice>
             </attribute>
          </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_TEI">
+      <element name="TEI">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(TEI document) contains a single TEI-conformant document, combining a single TEI header with one or more members of the model.resourceLike class. Multiple TEI elements may be combined to form a teiCorpus element. [4. Default Text Structure 15.1. Varieties of Composite Text]</a:documentation>
+         <group>
+            <ref name="t_teiHeader"/>
+            <oneOrMore>
+               <ref name="t_model.resourceLike"/>
+            </oneOrMore>
+         </group>
+         <ns xmlns="http://purl.oclc.org/dsdl/schematron"
+             prefix="tei"
+             uri="http://www.tei-c.org/ns/1.0"/>
+         <ns xmlns="http://purl.oclc.org/dsdl/schematron"
+             prefix="xs"
+             uri="http://www.w3.org/2001/XMLSchema"/>
+         <ns xmlns="http://purl.oclc.org/dsdl/schematron"
+             prefix="rng"
+             uri="http://relaxng.org/ns/structure/1.0"/>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <optional>
+            <attribute name="version">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the version number of the TEI Guidelines against which this document is valid.</a:documentation>
+               <data type="token">
+                  <param name="pattern">[\d]+(\.[\d]+){0,2}</param>
+               </data>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_text">
+      <element name="text">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a single text of any kind, whether unitary or composite, for example a poem or drama, a collection of essays, a novel, a dictionary, or a corpus sample. [4. Default Text Structure 15.1. Varieties of Composite Text]</a:documentation>
+         <group>
+      
+            <zeroOrMore>
+               <ref name="t_model.global"/>
+            </zeroOrMore>
+      
+            <optional>
+               <group>
+                  <ref name="t_front"/>
+        
+                  <zeroOrMore>
+                     <ref name="t_model.global"/>
+                  </zeroOrMore>
+        
+               </group>
+            </optional>
+            <choice>
+               <ref name="t_body"/>
+               <ref name="t_group"/>
+            </choice>
+      
+            <zeroOrMore>
+               <ref name="t_model.global"/>
+            </zeroOrMore>
+      
+            <optional>
+               <group>
+                  <ref name="t_back"/>
+        
+                  <zeroOrMore>
+                     <ref name="t_model.global"/>
+                  </zeroOrMore>
+        
+               </group>
+            </optional>
+         </group>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.declaring.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <ref name="t_att.written.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_body">
+      <element name="body">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(text body) contains the whole body of a single unitary text, excluding any front or back matter. [4. Default Text Structure]</a:documentation>
+         <group>
+      
+      
+            <zeroOrMore>
+               <ref name="t_model.global"/>
+            </zeroOrMore>
+      
+      
+      
+            <optional>
+               <group>
+          
+                  <ref name="t_model.divTop"/>
+          
+          
+                  <zeroOrMore>
+                     <choice>
+                        <ref name="t_model.global"/>
+                        <ref name="t_model.divTop"/>
+                     </choice>
+                  </zeroOrMore>
+          
+               </group>
+            </optional>
+      
+      
+      
+            <optional>
+               <group>
+          
+                  <ref name="t_model.divGenLike"/>
+          
+          
+                  <zeroOrMore>
+                     <choice>
+                        <ref name="t_model.global"/>
+                        <ref name="t_model.divGenLike"/>
+                     </choice>
+                  </zeroOrMore>
+          
+               </group>
+            </optional>
+      
+      
+        
+            <choice>
+          
+          
+               <oneOrMore>
+                  <group>
+              
+                     <ref name="t_model.divLike"/>
+              
+              
+                     <zeroOrMore>
+                        <choice>
+                           <ref name="t_model.global"/>
+                           <ref name="t_model.divGenLike"/>
+                        </choice>
+                     </zeroOrMore>
+              
+                  </group>
+               </oneOrMore>
+          
+          
+          
+               <oneOrMore>
+                  <group>
+              
+                     <ref name="t_model.div1Like"/>
+              
+              
+                     <zeroOrMore>
+                        <choice>
+                           <ref name="t_model.global"/>
+                           <ref name="t_model.divGenLike"/>
+                        </choice>
+                     </zeroOrMore>
+              
+                  </group>
+               </oneOrMore>
+          
+          
+               <group>
+                  <oneOrMore>
+                     <group>
+              
+                        <ref name="t_model.common"/>
+              
+              
+                        <zeroOrMore>
+                           <ref name="t_model.global"/>
+                        </zeroOrMore>
+              
+                     </group>
+                  </oneOrMore>
+            
+                  <optional>
+                     <choice>
+                
+                
+                        <oneOrMore>
+                           <group>
+                    
+                              <ref name="t_model.divLike"/>
+                    
+                    
+                              <zeroOrMore>
+                                 <choice>
+                                    <ref name="t_model.global"/>
+                                    <ref name="t_model.divGenLike"/>
+                                 </choice>
+                              </zeroOrMore>
+                    
+                           </group>
+                        </oneOrMore>
+                
+                
+                
+                        <oneOrMore>
+                           <group>
+                    
+                              <ref name="t_model.div1Like"/>
+                    
+                    
+                              <zeroOrMore>
+                                 <choice>
+                                    <ref name="t_model.global"/>
+                                    <ref name="t_model.divGenLike"/>
+                                 </choice>
+                              </zeroOrMore>
+                    
+                           </group>
+                        </oneOrMore>
+                
+                     </choice>
+                  </optional>
+            
+               </group>
+            </choice>
+        
+      
+      
+      
+            <zeroOrMore>
+               <group>
+          
+                  <ref name="t_model.divBottom"/>
+          
+          
+                  <zeroOrMore>
+                     <ref name="t_model.global"/>
+                  </zeroOrMore>
+          
+               </group>
+            </zeroOrMore>
+      
+         </group>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.declaring.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_group">
+      <element name="group">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains the body of a composite text, grouping together a sequence of distinct texts (or groups of such texts) which are regarded as a unit for some purpose, for example the collected works of an author, a sequence of prose essays, etc. [4. Default Text Structure 4.3.1. Grouped Texts 15.1. Varieties of Composite Text]</a:documentation>
+         <group>
+      
+            <zeroOrMore>
+               <choice>
+                  <ref name="t_model.divTop"/>
+                  <ref name="t_model.global"/>
+               </choice>
+            </zeroOrMore>
+      
+            <group>
+               <choice>
+                  <ref name="t_text"/>
+                  <ref name="t_group"/>
+               </choice>
+        
+               <zeroOrMore>
+                  <choice>
+                     <ref name="t_text"/>
+                     <ref name="t_group"/>
+                     <ref name="t_model.global"/>
+                  </choice>
+               </zeroOrMore>
+        
+            </group>
+      
+            <zeroOrMore>
+               <ref name="t_model.divBottom"/>
+            </zeroOrMore>
+      
+         </group>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.declaring.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_floatingText">
+      <element name="floatingText">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a single text of any kind, whether unitary or composite, which interrupts the text containing it at any point and after which the surrounding text resumes. [4.3.2. Floating Texts]</a:documentation>
+         <group>
+      
+            <zeroOrMore>
+               <ref name="t_model.global"/>
+            </zeroOrMore>
+      
+            <optional>
+               <group>
+                  <ref name="t_front"/>
+        
+                  <zeroOrMore>
+                     <ref name="t_model.global"/>
+                  </zeroOrMore>
+        
+               </group>
+            </optional>
+            <choice>
+               <ref name="t_body"/>
+               <ref name="t_group"/>
+            </choice>
+      
+            <zeroOrMore>
+               <ref name="t_model.global"/>
+            </zeroOrMore>
+      
+            <optional>
+               <group>
+                  <ref name="t_back"/>
+        
+                  <zeroOrMore>
+                     <ref name="t_model.global"/>
+                  </zeroOrMore>
+        
+               </group>
+            </optional>
+         </group>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.declaring.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_div">
+      <element name="div">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(text division) contains a subdivision of the front, body, or back of a text. [4.1. Divisions of the Body]</a:documentation>
+         <group>
+      
+            <zeroOrMore>
+               <choice>
+                  <ref name="t_model.divTop"/>
+          
+                  <ref name="t_model.global"/>
+               </choice>
+            </zeroOrMore>
+      
+            <optional>
+               <group>
+                  <choice>
+          
+                     <oneOrMore>
+                        <group>
+                           <choice>
+                              <ref name="t_model.divLike"/>
+                              <ref name="t_model.divGenLike"/>
+                           </choice>
+              
+                           <zeroOrMore>
+                              <ref name="t_model.global"/>
+                           </zeroOrMore>
+              
+                        </group>
+                     </oneOrMore>
+          
+                     <group>
+                        <oneOrMore>
+                           <group>
+              
+                              <ref name="t_model.common"/>
+              
+              
+                              <zeroOrMore>
+                                 <ref name="t_model.global"/>
+                              </zeroOrMore>
+              
+                           </group>
+                        </oneOrMore>
+                        <zeroOrMore>
+                           <group>
+                              <choice>
+                                 <ref name="t_model.divLike"/>
+                                 <ref name="t_model.divGenLike"/>
+                              </choice>
+              
+                              <zeroOrMore>
+                                 <ref name="t_model.global"/>
+                              </zeroOrMore>
+              
+                           </group>
+                        </zeroOrMore>
+                     </group>
+                  </choice>
+                  <zeroOrMore>
+                     <group>
+          
+                        <ref name="t_model.divBottom"/>
+          
+          
+                        <zeroOrMore>
+                           <ref name="t_model.global"/>
+                        </zeroOrMore>
+          
+                     </group>
+                  </zeroOrMore>
+               </group>
+            </optional>
+         </group>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  id="testPure1-div-abstractModel-structure-l-constraint-report-20">
+            <rule context="tei:div">
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       test="ancestor::tei:l">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div.
+      </report>
+            </rule>
+         </pattern>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  id="testPure1-div-abstractModel-structure-p-constraint-report-21">
+            <rule context="tei:div">
+               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       test="ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)">
+        Abstract model violation: p and ab may not contain higher-level structural elements such as div.
+      </report>
+            </rule>
+         </pattern>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.divLike.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <ref name="t_att.declaring.attributes"/>
+         <ref name="t_att.written.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_trailer">
+      <element name="trailer">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a closing title or footer appearing at the end of a division of a text. [4.2.4. Content of Textual Divisions 4.2. Elements Common to All Divisions]</a:documentation>
+         <zeroOrMore>
+            <choice>
+	              <text/>
+	              <ref name="t_lg"/>
+	              <ref name="t_model.gLike"/>
+	              <ref name="t_model.phrase"/>
+	              <ref name="t_model.inter"/>
+	              <ref name="t_model.lLike"/>
+	              <ref name="t_model.global"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_byline">
+      <element name="byline">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains the primary statement of responsibility given for a work on its title page or at the head or end of the work. [4.2.2. Openers and Closers 4.5. Front Matter]</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="t_model.gLike"/>
+               <ref name="t_model.phrase"/>
+               <ref name="t_docAuthor"/>
+               <ref name="t_model.global"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="t_att.global.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_dateline">
+      <element name="dateline">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a brief description of the place, date, time, etc. of production of a letter, newspaper story, or other work, prefixed or suffixed to it as a kind of heading or trailer. [4.2.2. Openers and Closers]</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="t_model.gLike"/>
+               <ref name="t_model.phrase"/>
+               <ref name="t_model.global"/>
+               <ref name="t_docDate"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="t_att.global.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_argument">
+      <element name="argument">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a formal list or prose description of the topics addressed by a subdivision of a text. [4.2. Elements Common to All Divisions 4.6. Title Pages]</a:documentation>
+         <group>
+      
+            <zeroOrMore>
+               <choice>
+                  <ref name="t_model.global"/>
+                  <ref name="t_model.headLike"/>
+               </choice>
+            </zeroOrMore>
+      
+            <oneOrMore>
+               <group>
+        
+                  <ref name="t_model.common"/>
+        
+        
+                  <zeroOrMore>
+                     <ref name="t_model.global"/>
+                  </zeroOrMore>
+        
+               </group>
+            </oneOrMore>
+         </group>
+         <ref name="t_att.global.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_epigraph">
+      <element name="epigraph">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a quotation, anonymous or attributed, appearing at the start or end of a section or on a title page. [4.2.3. Arguments, Epigraphs, and Postscripts 4.2. Elements Common to All Divisions 4.6. Title Pages]</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <ref name="t_model.common"/>
+               <ref name="t_model.global"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="t_att.global.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_opener">
+      <element name="opener">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups together dateline, byline, salutation, and similar phrases appearing as a preliminary group at the start of a division, especially of a letter. [4.2. Elements Common to All Divisions]</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="t_model.gLike"/>
+               <ref name="t_model.phrase"/>
+        
+               <ref name="t_argument"/>
+               <ref name="t_byline"/>
+               <ref name="t_dateline"/>
+               <ref name="t_epigraph"/>
+               <ref name="t_salute"/>
+               <ref name="t_signed"/>
+               <ref name="t_model.global"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.written.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_closer">
+      <element name="closer">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups together salutations, datelines, and similar phrases appearing as a final group at the end of a division, especially of a letter. [4.2.2. Openers and Closers 4.2. Elements Common to All Divisions]</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="t_model.gLike"/>
+               <ref name="t_signed"/>
+               <ref name="t_dateline"/>
+               <ref name="t_salute"/>
+               <ref name="t_model.phrase"/>
+               <ref name="t_model.global"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.written.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_salute">
+      <element name="salute">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(salutation) contains a salutation or greeting prefixed to a foreword, dedicatory epistle, or other division of a text, or the salutation in the closing of a letter, preface, etc. [4.2.2. Openers and Closers]</a:documentation>
+         <ref name="t_macro.paraContent"/>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.written.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_signed">
+      <element name="signed">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(signature) contains the closing salutation, etc., appended to a foreword, dedicatory epistle, or other division of a text. [4.2.2. Openers and Closers]</a:documentation>
+         <ref name="t_macro.paraContent"/>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.written.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_postscript">
+      <element name="postscript">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a postscript, e.g. to a letter. [4.2. Elements Common to All Divisions]</a:documentation>
+         <group>
+      
+            <zeroOrMore>
+               <choice>
+                  <ref name="t_model.global"/>
+                  <ref name="t_model.divTopPart"/>
+               </choice>
+            </zeroOrMore>
+      
+      
+            <ref name="t_model.common"/>
+      
+      
+            <zeroOrMore>
+               <choice>
+                  <ref name="t_model.global"/>
+                  <ref name="t_model.common"/>
+               </choice>
+            </zeroOrMore>
+      
+            <zeroOrMore>
+               <group>
+        
+                  <ref name="t_model.divBottomPart"/>
+        
+        
+                  <zeroOrMore>
+                     <ref name="t_model.global"/>
+                  </zeroOrMore>
+        
+               </group>
+            </zeroOrMore>
+         </group>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.written.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_titlePage">
+      <element name="titlePage">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(title page) contains the title page of a text, appearing within the front or back matter. [4.6. Title Pages]</a:documentation>
+         <group>
+      
+            <zeroOrMore>
+               <ref name="t_model.global"/>
+            </zeroOrMore>
+      
+      
+            <ref name="t_model.titlepagePart"/>
+      
+      
+            <zeroOrMore>
+               <choice>
+                  <ref name="t_model.titlepagePart"/>
+                  <ref name="t_model.global"/>
+               </choice>
+            </zeroOrMore>
+      
+         </group>
+         <ref name="t_att.global.attributes"/>
+         <optional>
+            <attribute name="type">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the title page according to any convenient typology.</a:documentation>
+               <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+               </data>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_docTitle">
+      <element name="docTitle">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(document title) contains the title of a document, including all its constituents, as given on a title page. [4.6. Title Pages]</a:documentation>
+         <group>
+      
+            <zeroOrMore>
+               <ref name="t_model.global"/>
+            </zeroOrMore>
+      
+            <oneOrMore>
+               <group>
+                  <ref name="t_titlePart"/>
+        
+                  <zeroOrMore>
+                     <ref name="t_model.global"/>
+                  </zeroOrMore>
+        
+               </group>
+            </oneOrMore>
+         </group>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.canonical.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_titlePart">
+      <element name="titlePart">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a subsection or division of the title of a work, as indicated on a title page. [4.6. Title Pages]</a:documentation>
+         <ref name="t_macro.paraContent"/>
+         <ref name="t_att.global.attributes"/>
+         <optional>
+            <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                       name="type"
+                       a:defaultValue="main">
+               <a:documentation>specifies the role of this subdivision of the title.
+Suggested values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4] short; 5] desc (descriptive) </a:documentation>
+               <choice>
+                  <value>main</value>
+                  <a:documentation>main title of the work</a:documentation>
+                  <value>sub</value>
+                  <a:documentation>(subordinate) subtitle of the work</a:documentation>
+                  <value>alt</value>
+                  <a:documentation>(alternate) alternative title of the work</a:documentation>
+                  <value>short</value>
+                  <a:documentation>abbreviated form of title</a:documentation>
+                  <value>desc</value>
+                  <a:documentation>(descriptive) descriptive paraphrase of the work</a:documentation>
+                  <data type="token">
+                     <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+                  </data>
+               </choice>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_docAuthor">
+      <element name="docAuthor">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(document author) contains the name of the author of the document, as given on the title page (often but not always contained in a byline). [4.6. Title Pages]</a:documentation>
+         <ref name="t_macro.phraseSeq"/>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.canonical.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_imprimatur">
+      <element name="imprimatur">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a formal statement authorizing the publication of a work, sometimes required to appear on a title page or its verso. [4.6. Title Pages]</a:documentation>
+         <ref name="t_macro.paraContent"/>
+         <ref name="t_att.global.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_docEdition">
+      <element name="docEdition">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(document edition) contains an edition statement as presented on a title page of a document. [4.6. Title Pages]</a:documentation>
+         <ref name="t_macro.paraContent"/>
+         <ref name="t_att.global.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_docImprint">
+      <element name="docImprint">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(document imprint) contains the imprint statement (place and date of publication, publisher name), as given (usually) at the foot of a title page. [4.6. Title Pages]</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="t_model.gLike"/>
+               <ref name="t_model.phrase"/>
+               <ref name="t_pubPlace"/>
+               <ref name="t_docDate"/>
+               <ref name="t_publisher"/>
+               <ref name="t_model.global"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="t_att.global.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_docDate">
+      <element name="docDate">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(document date) contains the date of a document, as given on a title page or in a dateline. [4.6. Title Pages]</a:documentation>
+         <ref name="t_macro.phraseSeq"/>
+         <ref name="t_att.global.attributes"/>
+         <optional>
+            <attribute name="when">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the value of the date in standard form, i.e. YYYY-MM-DD.</a:documentation>
+               <choice>
+                  <data type="date"/>
+                  <data type="gYear"/>
+                  <data type="gMonth"/>
+                  <data type="gDay"/>
+                  <data type="gYearMonth"/>
+                  <data type="gMonthDay"/>
+                  <data type="time"/>
+                  <data type="dateTime"/>
+               </choice>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_front">
+      <element name="front">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(front matter) contains any prefatory matter (headers, abstracts, title page, prefaces, dedications, etc.) found at the start of a document, before the main body. [4.6. Title Pages 4. Default Text Structure]</a:documentation>
+         <group>
+      
+            <zeroOrMore>
+               <choice>
+                  <ref name="t_model.frontPart"/>
+                  <ref name="t_model.pLike"/>
+                  <ref name="t_model.pLike.front"/>
+                  <ref name="t_model.global"/>
+               </choice>
+            </zeroOrMore>
+            <optional>
+               <group>
+                  <choice>
+          
+                     <group>
+                        <ref name="t_model.div1Like"/>
+                        <zeroOrMore>
+                           <choice>
+                              <ref name="t_model.div1Like"/>
+                              <ref name="t_model.frontPart"/>
+                              <ref name="t_model.global"/>
+                           </choice>
+                        </zeroOrMore>
+                     </group>
+          
+                     <group>
+                        <ref name="t_model.divLike"/>
+                        <zeroOrMore>
+                           <choice>
+                              <ref name="t_model.divLike"/>
+                              <ref name="t_model.frontPart"/>
+                              <ref name="t_model.global"/>
+                           </choice>
+                        </zeroOrMore>
+                     </group>
+                  </choice>
+        
+                  <optional>
+                     <group>
+                        <ref name="t_model.divBottom"/>
+                        <zeroOrMore>
+                           <choice>
+                              <ref name="t_model.divBottom"/>
+                              <ref name="t_model.global"/>
+                           </choice>
+                        </zeroOrMore>
+                     </group>
+                  </optional>
+               </group>
+            </optional>
+         </group>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.declaring.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_back">
+      <element name="back">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(back matter) contains any appendixes, etc. following the main part of a text. [4.7. Back Matter 4. Default Text Structure]</a:documentation>
+         <group>
+
+            <zeroOrMore>
+               <choice>
+                  <ref name="t_model.frontPart"/>
+                  <ref name="t_model.pLike.front"/>
+                  <ref name="t_model.pLike"/>
+                  <ref name="t_model.listLike"/>
+                  <ref name="t_model.global"/>
+               </choice>
+            </zeroOrMore>
+
+
+
+            <optional>
+               <choice>
+                  <group>
+
+                     <ref name="t_model.div1Like"/>
+
+
+                     <zeroOrMore>
+                        <choice>
+                           <ref name="t_model.frontPart"/>
+                           <ref name="t_model.div1Like"/>
+                           <ref name="t_model.global"/>
+                        </choice>
+                     </zeroOrMore>
+
+                  </group>
+                  <group>
+
+                     <ref name="t_model.divLike"/>
+
+
+                     <zeroOrMore>
+                        <choice>
+                           <ref name="t_model.frontPart"/>
+                           <ref name="t_model.divLike"/>
+                           <ref name="t_model.global"/>
+                        </choice>
+                     </zeroOrMore>
+
+                  </group>
+               </choice>
+            </optional>
+
+
+
+            <optional>
+               <group>
+
+                  <ref name="t_model.divBottomPart"/>
+
+
+                  <zeroOrMore>
+                     <choice>
+                        <ref name="t_model.divBottomPart"/>
+                        <ref name="t_model.global"/>
+                     </choice>
+                  </zeroOrMore>
+
+               </group>
+            </optional>
+
+         </group>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.declaring.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_model.persNamePart">
+      <notAllowed/>
+   </define>
+   <define name="t_model.persNamePart_alternation">
+      <notAllowed/>
+   </define>
+   <define name="t_model.persNamePart_sequence">
+      <empty/>
+   </define>
+   <define name="t_model.persNamePart_sequenceOptional">
+      <empty/>
+   </define>
+   <define name="t_model.persNamePart_sequenceOptionalRepeatable">
+      <empty/>
+   </define>
+   <define name="t_model.persNamePart_sequenceRepeatable">
+      <notAllowed/>
+   </define>
+   <define name="t_orgName">
+      <element name="orgName">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(organization name) contains an organizational name. [13.2.2. Organizational Names]</a:documentation>
+         <ref name="t_macro.phraseSeq"/>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.datable.attributes"/>
+         <ref name="t_att.editLike.attributes"/>
+         <ref name="t_att.personal.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_persName">
+      <element name="persName">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(personal name) contains a proper noun or proper-noun phrase referring to a person, possibly including one or more of the person's forenames, surnames, honorifics, added names, etc. [13.2.1. Personal Names]</a:documentation>
+         <ref name="t_macro.phraseSeq"/>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.datable.attributes"/>
+         <ref name="t_att.editLike.attributes"/>
+         <ref name="t_att.personal.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_placeName">
+      <element name="placeName">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains an absolute or relative place name. [13.2.3. Place Names]</a:documentation>
+         <ref name="t_macro.phraseSeq"/>
+         <ref name="t_att.datable.attributes"/>
+         <ref name="t_att.editLike.attributes"/>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.personal.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_gi">
+      <element name="gi">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(element name) contains the name (generic identifier) of an element. [22. Documentation Elements 22.5. Element Specifications]</a:documentation>
+         <data type="Name"/>
+         <ref name="t_att.global.attributes"/>
+         <optional>
+            <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                       name="scheme"
+                       a:defaultValue="TEI">
+               <a:documentation>supplies the name of the scheme in which this name is defined.
+Sample values include: 1] TEI; 2] DBK (docbook) ; 3] XX (unknown) ; 4] Schematron; 5] HTML</a:documentation>
+               <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+               </data>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_att">
+      <element name="att">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(attribute) contains the name of an attribute appearing within running text. [22. Documentation Elements]</a:documentation>
+         <data type="Name"/>
+         <ref name="t_att.global.attributes"/>
+         <optional>
+            <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                       name="scheme"
+                       a:defaultValue="TEI">
+               <a:documentation>supplies an identifier for the scheme in which this name is defined.
+Sample values include: 1] TEI (text encoding initiative) ; 2] DBK (docbook) ; 3] XX (unknown) ; 4] imaginary; 5] XHTML; 6] XML; 7] XI</a:documentation>
+               <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+               </data>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_val">
+      <element name="val">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(value) contains a single attribute value. [22. Documentation Elements 22.5.3. Attribute List Specification]</a:documentation>
+         <text/>
+         <ref name="t_att.global.attributes"/>
          <empty/>
       </element>
    </define>

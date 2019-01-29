@@ -1,3 +1,234 @@
+2019-01-29  Hugh Cayless  <philomousos@gmail.com>
+
+	Set VERSION 7.47.0
+
+2019-01-28  Syd Bauman  <s.bauman@neu.edu>
+
+	Release note processing: Process <gi> and <ident type="class"> in readme-X.Y.Z.xml files such that they point to the X.Y.Z version of the Guidelines
+
+2019-01-24  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #356 from TEIC/peterstadler-issue351
+	pull request to address #351
+
+2019-01-24  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Merge branch 'dev' into peterstadler-issue351
+
+2019-01-20  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Adjusted odd2json to look for class types from a source file when not found in the local ODD. This will help supporting non-compiled ODDs. Updated tests.
+
+2019-01-12  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	create output directories if needed #351
+	this should be safe since `-p` does not throw an error for existing directories and creates parent directories if needed
+
+	set `-e` option #351
+	… to exit immediately if some command returns a non-zero status.
+
+2019-01-06  Syd Bauman  <s.bauman@neu.edu>
+
+	add test: Added better testing of minOccurs= and maxOccurs= (in part to set up testing for when we try to fix #354).
+
+2019-01-04  Syd Bauman  <s.bauman@neu.edu>
+
+	Fix #352: Changed “odd2odd.xsl” to “teiodds.xsl” in unused error message.
+
+2019-01-04  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	only class name for memberOf
+
+	back to simple classes
+
+	returned to non-agnostic model with apologies for the revert attempts nonsense
+
+	Revert "Added more detail for memberOf"
+	This reverts commit 64dbff8bae86e3e65bbb838345e3342505986b6e.
+
+	Revert "fix expected results"
+	This reverts commit e422d4bfff5ccb372acf49efbf299eecf8b7c5dc.
+
+	New tests for odd2json
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+	Made representation of memberOf more agnostic. The XSLT does not attempt to sort class references by class type as that information may not always be available in customization ODDs.
+
+2019-01-04  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	fix expected results
+	aftermath of 64dbff8bae86e3e65bbb838345e3342505986b6e
+
+2019-01-03  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Added more detail for memberOf
+
+2018-12-30  Syd Bauman  <s.bauman@neu.edu>
+
+	Update testPure1, step 8: Add a Schematron constraint. (Also some tweaks to comments and added a <remarks>.)
+
+2018-12-21  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Update README_build_odd.md
+	Typo fix.
+
+2018-12-21  martindholmes  <mholmes@uvic.ca>
+
+	Tweaks to test ODD readme.
+
+	Tweaks to test ODD readme.
+
+	More added to the ODD test readme file.
+
+2018-12-14  martindholmes  <mholmes@uvic.ca>
+
+	Markdown fix in readme.
+
+	Markdown fix in readme.
+
+	Adding a readme to document the ODD file processing.
+
+2018-12-08  Syd Bauman  <s.bauman@neu.edu>
+
+	Update testPure1, step 7: Add tests for <dataRef> with key= or name=, and restriction=. Note that one of these tests worked, in that it found a Stylesheets problem. See #349.
+
+	Update testPure1, step 6: 1) Delete att.lexicographic instead of att.deprecated, just to be clear that we are testing the deletion of something that is not included. (Since previous versions of this schema have included 'tagdocs', and even this version sucks in some elements therefrom.) 2) Change the alteration of synch= to be a deletion thereof to match the comment. I.e., synch= should not be included in output schemas, and thus invalid.
+
+2018-12-07  Syd Bauman  <s.bauman@neu.edu>
+
+	Update testPure1, step 5: Delete the <join> and <joinGrp> elements from testPure1 schema using <elementSpec>.
+
+	Update testPure1, step 4: Replace reference to module 'tagdocs' and replace with references to elements <gi>, <att>, and <val>. Add a test to ensure that <tag> is invalid.
+
+	Update testPure1, step 3: Move reference to module 'linking' from middle-of-pack to up where all the other simple <moduleRef>s are. This has profound effects on what the output RNG looks like, but should have no effect on what it validates. I have checked against all the XML files in the inputFiles/ directory, and the same number of error messages are issued for each.
+
+	Update testPure1, step 2: Change order of <moduleRef> declarations so that those that are simple (i.e., have no attrs) come first. This has profound effects on what the output RNG looks like, but should have no effect on what it validates. I have checked against all the XML files in the imnputFiles/ directory, and the same number of error messages are issued for each. Also use phrase-level encoding in the <desc>.
+
+	Update testPure1, step 1: Just a change to the order of and whitespace between the attributes and namespace declarations on the outermost <TEI> element. Nothing else. Should cause no appreciable change at all. But requires different expected results, as the order is propegated through to the output.
+
+	Revert testPure1: Revert the testPure1.odd file in preparation for re-introducing each change I made one at a time.
+
+2018-11-23  martindholmes  <mholmes@uvic.ca>
+
+	Removing -Dregenerate support, since it's risky and not the ideal approach.
+
+2018-11-23  Syd Bauman  <s.bauman@neu.edu>
+
+	Add more tests of ODD constructs
+
+2018-11-20  Syd Bauman  <s.bauman@neu.edu>
+
+	Updated AUTHORS: Added those who are listed in ChangeLog or have > 25 commits to the AUTHORS list.
+
+2018-11-19  Syd Bauman  <s.bauman@neu.edu>
+
+	Fix #334: During today's Stylesheets group conference call we fixed ticket #334 by adding a template that simply ingores <cb>, <gb>, and <milestone> elements. It is possible, if not outright likely, that in the future we will have to do better than just ignoring them, but at least now FO can be produced w/o this error forcing the build to fail.
+
+2018-11-19  James Cummings  <296651+jamescummings@users.noreply.github.com>
+
+	Merge pull request #339 from cyocum/html-tei-ex
+	Make editorial expansions appear as italic in HTML
+
+2018-11-17  martindholmes  <mholmes@uvic.ca>
+
+	Adding test for valList in content models.
+
+2018-11-12  martindholmes  <mholmes@uvic.ca>
+
+	A bit more progress with Pure ODD testing.
+
+2018-11-11  martindholmes  <mholmes@uvic.ca>
+
+	Tweak to wording.
+
+	More work on Pure ODD test.
+
+	A bit more work on Pure ODD test.
+
+2018-11-02  martindholmes  <mholmes@uvic.ca>
+
+	Adding valid instance file for testPure1.
+
+	Adding beginnings of an invalid instance file for testPure1.
+
+2018-10-29  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	update expected results
+
+2018-10-27  Chris Yocum  <cyocum@gmail.com>
+
+	Fixed expected html in test
+
+	Upated html expected results to match html ex output
+
+	Changed to use CSS rather than HTML element
+
+2018-10-26  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge in @martindholmes changes, I think
+
+	With @martindholmes change name of validation output file so that Jenkins console doesn't parse it as an error
+
+2018-10-26  martindholmes  <mholmes@uvic.ca>
+
+	Changing nomenclature to avoid using the word 'error', which may trigger Jenkins log parser build failures.
+
+	@sydb and @martindholmes working on setting up for more ODD processing.
+
+2018-10-26  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	Change informational message for readability.
+
+2018-10-26  martindholmes  <mholmes@uvic.ca>
+
+	Fixes to expected results due to nomenclature and naming convention changes.
+
+2018-10-26  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+2018-10-26  martindholmes  <mholmes@uvic.ca>
+
+	@sydb and @martindholmes changing nomenclature for clarity.
+
+2018-10-26  Syd Bauman  <s.bauman@neu.edu>
+
+	@martindholmes and I changing nomenclature for clarity
+
+2018-10-26  martindholmes  <mholmes@uvic.ca>
+
+	Tweak to readme.
+
+2018-10-23  Chris Yocum  <cyocum@gmail.com>
+
+	Fixed last missing i tag
+
+2018-10-22  Chris Yocum  <cyocum@gmail.com>
+
+	Updated html tests to use the new italics for editorial expansions
+
+2018-10-21  Chris Yocum  <cyocum@gmail.com>
+
+	Make editorial expansions appear as italic in HTML
+	Make editorial expansions appear as italic in HTML. This allows
+	editorial interventions to be visible when a transcription is
+	translated into HTML.  This is common formating for printed critical
+	editions.
+
+2018-09-28  Syd Bauman  <s.bauman@neu.edu>
+
+	Update version to 7.47.0 as we just released 7.46.0
+
+	auto-updated changelog
+
+	Prepare for release
+
+2018-09-26  Syd Bauman  <s.bauman@neu.edu>
+
+	More work on #250
 2018-09-26  Syd Bauman  <s.bauman@neu.edu>
 
 	More work on #250
