@@ -18,7 +18,8 @@ macro.paraContent =
    | lg
    | model.lLike)*
 macro.limitedContent = (text | model.limitedPhrase | model.inter)*
-macro.phraseSeq = (text | model.gLike | model.phrase | model.global)*
+macro.phraseSeq =
+  (text | model.gLike | model.qLike | model.phrase | model.global)*
 macro.phraseSeq.limited = (text | model.limitedPhrase | model.global)*
 macro.specialPara =
   (text
@@ -1500,6 +1501,7 @@ model.listLike =
   | listPerson
   | listPlace
   | listRelation
+  | listObject
   | listNym
 model.listLike_alternation =
   \list
@@ -1508,6 +1510,7 @@ model.listLike_alternation =
   | listPerson
   | listPlace
   | listRelation
+  | listObject
   | listNym
 model.listLike_sequence =
   \list,
@@ -1516,6 +1519,7 @@ model.listLike_sequence =
   listPerson,
   listPlace,
   listRelation,
+  listObject,
   listNym
 model.listLike_sequenceOptional =
   \list?,
@@ -1524,6 +1528,7 @@ model.listLike_sequenceOptional =
   listPerson?,
   listPlace?,
   listRelation?,
+  listObject?,
   listNym?
 model.listLike_sequenceOptionalRepeatable =
   \list*,
@@ -1532,6 +1537,7 @@ model.listLike_sequenceOptionalRepeatable =
   listPerson*,
   listPlace*,
   listRelation*,
+  listObject*,
   listNym*
 model.listLike_sequenceRepeatable =
   \list+,
@@ -1540,6 +1546,7 @@ model.listLike_sequenceRepeatable =
   listPerson+,
   listPlace+,
   listRelation+,
+  listObject+,
   listNym+
 model.noteLike = note
 model.lLike = l
@@ -1769,6 +1776,7 @@ model.nameLike =
   | model.placeStateLike
   | rs
   | model.persNamePart
+  | objectName
   | idno
 model.nameLike_alternation =
   model.nameLike.agent_alternation
@@ -1776,6 +1784,7 @@ model.nameLike_alternation =
   | model.placeStateLike_alternation
   | rs
   | model.persNamePart_alternation
+  | objectName
   | idno
 model.nameLike_sequence =
   model.nameLike.agent_sequence,
@@ -1783,6 +1792,7 @@ model.nameLike_sequence =
   model.placeStateLike_sequence,
   rs,
   model.persNamePart_sequence,
+  objectName,
   idno
 model.nameLike_sequenceOptional =
   model.nameLike.agent_sequenceOptional?,
@@ -1790,6 +1800,7 @@ model.nameLike_sequenceOptional =
   model.placeStateLike_sequenceOptional?,
   rs?,
   model.persNamePart_sequenceOptional?,
+  objectName?,
   idno?
 model.nameLike_sequenceOptionalRepeatable =
   model.nameLike.agent_sequenceOptionalRepeatable*,
@@ -1797,6 +1808,7 @@ model.nameLike_sequenceOptionalRepeatable =
   model.placeStateLike_sequenceOptionalRepeatable*,
   rs*,
   model.persNamePart_sequenceOptionalRepeatable*,
+  objectName*,
   idno*
 model.nameLike_sequenceRepeatable =
   model.nameLike.agent_sequenceRepeatable+,
@@ -1804,6 +1816,7 @@ model.nameLike_sequenceRepeatable =
   model.placeStateLike_sequenceRepeatable+,
   rs+,
   model.persNamePart_sequenceRepeatable+,
+  objectName+,
   idno+
 model.global =
   model.global.meta
@@ -1820,6 +1833,7 @@ model.biblPart =
   | relatedItem
   | textLang
   | listRelation
+  | objectIdentifier
   | edition
   | extent
   | availability
@@ -1906,6 +1920,7 @@ model.correspActionPart =
 model.correspContextPart = model.ptrLike | model.pLike | note
 model.correspDescPart = note | correspAction | correspContext
 model.resourceLike = facsimile | sourceDoc | \text
+model.objectLike = object | listObject
 att.personal.attributes =
   att.naming.attributes,
   att.personal.attribute.full,
@@ -2199,10 +2214,43 @@ desc =
   
   ## (description) contient une courte description de l'objet documenté par son élément parent, qui comprend son utilisation prévue, son but, ou son application là où c'est approprié. [22.4.1. Description of Components]
   element desc {
-    macro.limitedContent,
+    macro.limitedContent
+    >> sch:pattern [
+         id =
+           "test21-desc-deprecationInfo-only-in-deprecated-constraint-rule-10"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:desc[ @type eq 'deprecationInfo']"
+           "\x{a}" ~
+           "	              "
+           sch:assert [
+             test = "../@validUntil"
+             "Information about a\x{a}" ~
+             "	deprecation should only be present in a specification element\x{a}" ~
+             "	that is being deprecated: that is, only an element that has a\x{a}" ~
+             "	@validUntil attribute should have a child <desc\x{a}" ~
+             '	type="deprecationInfo">.'
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     att.global.attributes,
     att.translatable.attributes,
-    att.typed.attributes,
+    att.typed.attribute.subtype,
+    
+    ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
+    attribute type {
+      
+      ## first type
+      "A"
+      | 
+        ## second type
+        "B"
+    }?,
     empty
   }
 gloss =
@@ -2499,10 +2547,11 @@ unit =
   }
 date =
   
-  ## (date) contient une date exprimée dans n'importe quel format. [3.5.4. Dates and Times 2.2.4. Publication, Distribution, Licensing, etc. 2.6. The Revision Description 3.11.2.4. Imprint, Size of a Document, and Reprint Information 15.2.3. The Setting Description 13.3.6. Dates and Times]
+  ## (date) contient une date exprimée dans n'importe quel format. [3.5.4. Dates and Times 2.2.4. Publication, Distribution, Licensing, etc. 2.6. The Revision Description 3.11.2.4. Imprint, Size of a Document, and Reprint Information 15.2.3. The Setting Description 13.3.7. Dates and Times]
   element date {
     (text | model.gLike | model.phrase | model.global)*,
     att.global.attributes,
+    att.canonical.attributes,
     att.datable.attributes,
     att.editLike.attributes,
     att.dimensions.attributes,
@@ -2640,7 +2689,7 @@ ref =
      (model.divBottom, model.global*)*)
     >> sch:pattern [
          id =
-           "test21-list-gloss-list-must-have-labels-constraint-rule-10"
+           "test21-list-gloss-list-must-have-labels-constraint-rule-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3141,7 +3190,7 @@ relatedItem =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-relatedItem-targetorcontent1-constraint-assert-7"
+         id = "test21-relatedItem-targetorcontent1-constraint-assert-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3209,7 +3258,7 @@ lg =
       | lg)*,
      (model.divBottom, model.global*)*)
     >> sch:pattern [
-         id = "test21-lg-atleast1oflggapl-constraint-assert-8"
+         id = "test21-lg-atleast1oflggapl-constraint-assert-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4227,7 +4276,7 @@ relation =
   element relation {
     (desc?)
     >> sch:pattern [
-         id = "test21-relation-reforkeyorname-constraint-assert-9"
+         id = "test21-relation-reforkeyorname-constraint-assert-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4423,9 +4472,84 @@ trait =
     att.dimensions.attributes,
     empty
   }
+objectName =
+  
+  ##  (name of an object) contains a proper noun or noun phrase used to refer to an object. [13.2.4. Object Names]
+  element objectName {
+    macro.phraseSeq,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.global.attributes,
+    att.personal.attributes,
+    att.typed.attributes,
+    empty
+  }
+object =
+  
+  ## contains a description of a single identifiable physical object. [13.3.5. Objects]
+  element object {
+    (objectIdentifier+,
+     model.headLike*,
+     (model.pLike* | (msContents?, physDesc?, history?, additional?)),
+     (model.noteLike | model.biblLike | linkGrp | link)*,
+     object?),
+    att.global.attributes,
+    att.sortable.attributes,
+    att.typed.attributes,
+    att.declaring.attributes,
+    att.docStatus.attributes,
+    att.canonical.attributes,
+    empty
+  }
+listObject =
+  
+  ##  (list of objects) contains a list of descriptions, each of which provides information about an identifiable physical object. [13.3.5. Objects]
+  element listObject {
+    (model.headLike*, model.objectLike+, (relation | listRelation)*),
+    att.global.attributes,
+    att.typed.attributes,
+    att.declarable.attributes,
+    att.sortable.attributes,
+    empty
+  }
+objectIdentifier =
+  
+  ##  (object identifier) groups one or more identifiers or pieces of locating information concerning a single object. [13.3.5. Objects]
+  element objectIdentifier {
+    ((model.placeNamePart
+      | institution
+      | repository
+      | collection
+      | idno
+      | msName
+      | objectName
+      | altIdentifier
+      | address)*)
+    >> sch:pattern [
+         id =
+           "test21-objectIdentifier-objectIdentifier_minimal-constraint-report-14"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:objectIdentifier"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test = "not(count(*) gt 0)"
+             "An objectIdentifier must contain at minimum a single piece of locating or identifying information."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
+    att.global.attributes,
+    empty
+  }
 nym =
   
-  ## (nom canonique) contient la définition de tout nom ou partie de nom dans leur forme canonique. [13.3.5. Names and Nyms]
+  ## (nom canonique) contient la définition de tout nom ou partie de nom dans leur forme canonique. [13.3.6. Names and Nyms]
   element nym {
     (model.entryPart*, model.pLike*, nym*),
     att.global.attributes,
@@ -4440,7 +4564,7 @@ nym =
   }
 listNym =
   
-  ## (liste de noms canoniques) contient une liste de noms normalisés pour tous types d'objets. [13.3.5. Names and Nyms]
+  ## (liste de noms canoniques) contient une liste de noms normalisés pour tous types d'objets. [13.3.6. Names and Nyms]
   element listNym {
     (model.headLike*, (nym | listNym)+, (relation | listRelation)*),
     att.global.attributes,
@@ -4782,7 +4906,7 @@ quotation =
   element quotation {
     (model.pLike*)
     >> sch:pattern [
-         id = "test21-quotation-quotationContents-constraint-report-14"
+         id = "test21-quotation-quotationContents-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5384,7 +5508,7 @@ link =
   element link {
     empty
     >> sch:pattern [
-         id = "test21-link-linkTargets3-constraint-assert-10"
+         id = "test21-link-linkTargets3-constraint-assert-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5425,7 +5549,7 @@ ab =
     macro.paraContent
     >> sch:pattern [
          id =
-           "test21-ab-abstractModel-structure-ab-constraint-report-15"
+           "test21-ab-abstractModel-structure-ab-constraint-report-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5446,7 +5570,7 @@ ab =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-ab-abstractModel-structure-l-constraint-report-16"
+         id = "test21-ab-abstractModel-structure-l-constraint-report-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5621,7 +5745,7 @@ join =
   element join {
     ((model.descLike | model.certLike)*)
     >> sch:pattern [
-         id = "test21-join-joinTargets3-constraint-assert-11"
+         id = "test21-join-joinTargets3-constraint-assert-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5770,7 +5894,7 @@ catchwords =
     macro.phraseSeq
     >> sch:pattern [
          id =
-           "test21-catchwords-catchword_in_msDesc-constraint-assert-12"
+           "test21-catchwords-catchword_in_msDesc-constraint-assert-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5778,11 +5902,10 @@ catchwords =
            "\x{a}" ~
            "               "
            sch:assert [
-             test = "ancestor::tei:msDesc"
-             role = "nonfatal"
-             "WARNING: deprecated use of element — The "
+             test = "ancestor::tei:msDesc or ancestor::tei:egXML"
+             "The "
              sch:name [ ]
-             " element will not be allowed outside of msDesc as of 2018-10-01."
+             " element should not be used outside of msDesc."
            ]
            "\x{a}" ~
            "            "
@@ -5799,7 +5922,7 @@ dimensions =
   element dimensions {
     ((dim | model.dimLike)*)
     >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint-report-17"
+         id = "test21-dimensions-duplicateDim-constraint-report-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5821,7 +5944,7 @@ dimensions =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint-report-18"
+         id = "test21-dimensions-duplicateDim-constraint-report-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5843,7 +5966,7 @@ dimensions =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint-report-19"
+         id = "test21-dimensions-duplicateDim-constraint-report-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5988,7 +6111,7 @@ secFol =
   element secFol {
     macro.phraseSeq
     >> sch:pattern [
-         id = "test21-secFol-secFol_in_msDesc-constraint-assert-13"
+         id = "test21-secFol-secFol_in_msDesc-constraint-assert-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5996,11 +6119,10 @@ secFol =
            "\x{a}" ~
            "               "
            sch:assert [
-             test = "ancestor::tei:msDesc"
-             role = "nonfatal"
-             "WARNING: deprecated use of element — The "
+             test = "ancestor::tei:msDesc or ancestor::tei:egXML"
+             "The "
              sch:name [ ]
-             " element will not be allowed outside of msDesc as of 2018-10-01."
+             " element should not be used outside of msDesc."
            ]
            "\x{a}" ~
            "            "
@@ -6018,7 +6140,7 @@ signatures =
     macro.specialPara
     >> sch:pattern [
          id =
-           "test21-signatures-signatures_in_msDesc-constraint-assert-14"
+           "test21-signatures-signatures_in_msDesc-constraint-assert-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6026,11 +6148,10 @@ signatures =
            "\x{a}" ~
            "               "
            sch:assert [
-             test = "ancestor::tei:msDesc"
-             role = "nonfatal"
-             "WARNING: deprecated use of element — The "
+             test = "ancestor::tei:msDesc or ancestor::tei:egXML"
+             "The "
              sch:name [ ]
-             " element will not be allowed outside of msDesc as of 2018-10-01."
+             " element should not be used outside of msDesc."
            ]
            "\x{a}" ~
            "            "
@@ -6069,10 +6190,10 @@ msIdentifier =
       institution?,
       repository?,
       collection*,
-      idno?),
-     (msName | altIdentifier)*)
+      idno*),
+     (msName | objectName | altIdentifier)*)
     >> sch:pattern [
-         id = "test21-msIdentifier-msId_minimal-constraint-report-20"
+         id = "test21-msIdentifier-msId_minimal-constraint-report-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6081,8 +6202,8 @@ msIdentifier =
            "               "
            sch:report [
              test =
-               "not(parent::tei:msPart) and       (local-name(*[1])='idno' or       local-name(*[1])='altIdentifier' or       normalize-space(.)='')"
-             "An msIdentifier must contain either a repository or location of some type, or a manuscript name"
+               "not(parent::tei:msPart) and (local-name(*[1])='idno' or local-name(*[1])='altIdentifier' or normalize-space(.)='')"
+             "An msIdentifier must contain either a repository or location."
            ]
            "\x{a}" ~
            "            "
@@ -6242,7 +6363,7 @@ rubric =
   }
 summary =
   
-  ## contains an overview of the available information concerning some aspect of an item (for example, its intellectual content, history, layout, typography etc.) as a complement or alternative to the more detailed information carried by more specific elements. [10.6. Intellectual Content]
+  ## contains an overview of the available information concerning some aspect of an item or object (for example, its intellectual content, history, layout, typography etc.) as a complement or alternative to the more detailed information carried by more specific elements. [10.6. Intellectual Content]
   element summary { macro.specialPara, att.global.attributes, empty }
 physDesc =
   
@@ -6381,7 +6502,7 @@ typeNote =
   }
 scriptDesc =
   
-  ## contains a description of the scripts used in a manuscript or similar source. [10.7.2.1. Writing]
+  ## contains a description of the scripts used in a manuscript or other object. [10.7.2.1. Writing]
   element scriptDesc {
     (model.pLike+ | (summary?, scriptNote+)),
     att.global.attributes,
@@ -6729,7 +6850,7 @@ path =
   element path {
     empty
     >> sch:pattern [
-         id = "test21-path-pathmustnotbeclosed-constraint-rule-11"
+         id = "test21-path-pathmustnotbeclosed-constraint-rule-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6817,7 +6938,7 @@ addSpan =
   element addSpan {
     empty
     >> sch:pattern [
-         id = "test21-addSpan-spanTo-constraint-assert-15"
+         id = "test21-addSpan-spanTo-constraint-assert-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6837,7 +6958,7 @@ addSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-addSpan-spanTo_fr-constraint-assert-16"
+         id = "test21-addSpan-spanTo_fr-constraint-assert-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6863,7 +6984,7 @@ addSpan =
     ## indique la fin d'un passage introduit par l'élément portant cet attribut.
     attribute spanTo { xsd:anyURI }
     >> sch:pattern [
-         id = "test21-addSpan-spanTo-spanTo-2-constraint-rule-12"
+         id = "test21-addSpan-spanTo-spanTo-2-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6905,7 +7026,7 @@ damageSpan =
   element damageSpan {
     empty
     >> sch:pattern [
-         id = "test21-damageSpan-spanTo-constraint-assert-18"
+         id = "test21-damageSpan-spanTo-constraint-assert-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6926,7 +7047,7 @@ damageSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-damageSpan-spanTo_fr-constraint-assert-19"
+         id = "test21-damageSpan-spanTo_fr-constraint-assert-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6955,7 +7076,7 @@ delSpan =
   element delSpan {
     empty
     >> sch:pattern [
-         id = "test21-delSpan-spanTo-constraint-assert-20"
+         id = "test21-delSpan-spanTo-constraint-assert-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6975,7 +7096,7 @@ delSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-delSpan-spanTo_fr-constraint-assert-21"
+         id = "test21-delSpan-spanTo_fr-constraint-assert-22"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7111,7 +7232,7 @@ subst =
   element subst {
     ((add | del | model.milestoneLike)+)
     >> sch:pattern [
-         id = "test21-subst-substContents1-constraint-assert-22"
+         id = "test21-subst-substContents1-constraint-assert-23"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7371,7 +7492,7 @@ group =
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
          id =
-           "test21-div-abstractModel-structure-l-constraint-report-22"
+           "test21-div-abstractModel-structure-l-constraint-report-23"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7392,7 +7513,7 @@ group =
        ]
     >> sch:pattern [
          id =
-           "test21-div-abstractModel-structure-p-constraint-report-23"
+           "test21-div-abstractModel-structure-p-constraint-report-24"
          "\x{a}" ~
          "            "
          sch:rule [
