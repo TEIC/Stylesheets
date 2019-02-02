@@ -15,13 +15,6 @@
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     exclude-result-prefixes="#all">
 
-  <xsl:function name="tei:message" as="xs:string">
-    <!-- KEEPING THIS UNTIL tei:message() calls changed to tei:msg() —Syd, 2019-01-06 -->
-    <xsl:param name="message"/>
-    <xsl:message><xsl:copy-of select="$message"/></xsl:message>
-    <xsl:text/>
-  </xsl:function>
-
   <xd:doc scope="stylesheet" type="stylesheet">
     <xd:desc>
       <xd:p>TEI stylesheet for merging TEI ODD specification with source to
@@ -135,13 +128,7 @@
            match="tei:elementSpec"
            use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT"
-           match="tei:dataSpec"
-           use="@module"/>
-  <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT"
-           match="tei:macroSpec"
-           use="@module"/>
-  <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT"
-           match="tei:classSpec"
+           match="tei:classSpec | tei:dataSpec | tei:macroSpec"
            use="@module"/>
   <xsl:key name="odd2odd-ATTREFED"
            match="tei:attRef"
@@ -375,7 +362,7 @@
          Note: I think the above should probably instead be
          ( $context/ancestor-or-self::*[@source][1]/@source, $DEFAULTSOURCE )[1]
          but even if so, that change does not get made in this branch. See issue
-         303 at target="https://github.com/TEIC/Stylesheets/issues/303. —Syd, 2017-12-30
+         303 at https://github.com/TEIC/Stylesheets/issues/303. —Syd, 2017-12-30
     -->
     <xsl:variable name="source">
       <xsl:choose>
@@ -443,9 +430,9 @@
   </xd:doc>
   <xsl:function name="tei:msg" as="empty-sequence()">
     <xsl:param name="message" as="xs:string+"/>
-    <xsl:if test="$verbose">
+    <!-- DEBUG!! <xsl:if test="$verbose"> -->
       <xsl:message><xsl:value-of select="$message" separator=""/></xsl:message>
-    </xsl:if>
+    <!-- </xsl:if> -->
   </xsl:function>
 
   <xd:doc>
@@ -530,18 +517,18 @@
   <xsl:template name="debugOut" as="xs:string">
     <xsl:param name="tree" as="node()"/> <!-- element or document node -->
     <xsl:param name="file" as="xs:string"/>
-    <xsl:message select="concat('DEBUG: called debugOut( ', local-name($tree), ', ', $file, ' )')"/>
+    <xsl:variable name="outFile" select="concat( $debugDir, '/odd2odd-', $file, '.xml')"/>
     <if test="$generateIntermediateDebugFiles">
-      <xsl:result-document href="{concat( $debugDir, '/odd2odd-', $file, '.xml')}">
+      <xsl:message select="concat('DEBUG: debugOut for ', local-name($tree), ' to be stored into ', $outFile )"/>
+      <xsl:result-document href="{$outFile}">
         <xsl:copy-of select="$tree"/>
       </xsl:result-document>
     </if>
-
   </xsl:template>
 
   <!-- ***** start main processing ***** -->
   <xd:doc>
-    <xd:desc>Process root by taking output of pass0 and processing in pass1</xd:desc>
+    <xd:desc>Process root by taking output of pass0 and processing it in pass1</xd:desc>
   </xd:doc>
   <xsl:template match="/">
     <xsl:call-template name="debugOut">
@@ -562,10 +549,22 @@
   </xsl:template>
 
   <xd:doc>
-    <xd:desc>In various passes over the data we are, for the most part, performing
-    an identity transform, except as specified otherwise</xd:desc>
+    <xd:desc>
+      <xd:p>In various passes over the data we are, for the most part,
+      performing an identity transform, except as specified
+      otherwise</xd:p>
+    </xd:desc>
+    <xd:param name="announce">xs:boolean, default false(); true() means
+    to announce what we are doing via tei:msg() (i.e., as a message to
+    STDERR iff $verbose is true()).</xd:param>
   </xd:doc>
   <xsl:template match="@*|node()" mode="pass0 pass1 pass2">
+    <xsl:param name="announce" select="false()"/>
+    <xsl:if test="$announce">
+      <xsl:sequence select="tei:msg(('pass?: copy over ',
+			             substring-before( local-name(), 'Spec'),
+				     ' specification of ', @ident))"/>
+    </xsl:if>
     <xsl:copy>
       <xsl:apply-templates select="@*|node()" mode="#current"/>
     </xsl:copy>
@@ -835,9 +834,7 @@
         <!-- (Note that non-element nodes were just dropped, not sure why —Syd, 2019-01-22 -->
       </xsl:copy>
     </xsl:variable>
-    <xsl:for-each select="$pass1">
-      <xsl:apply-templates mode="pass2"/>
-    </xsl:for-each>
+    <xsl:apply-templates select="$pass1" mode="pass2"/>
   </xsl:template>
 
   <xd:doc>
@@ -848,20 +845,26 @@
                        [ @mode = ('change','delete','replace') ]"
                 mode="pass1">
     <xsl:sequence select="tei:msg((
-                          'Pass 1: remove ', local-name(.),
+                          'pass 1: remove ', local-name(.),
                           ' for ', @ident,
-                          ' (as it was in mode ', @mode ))"/>
+                          ' (as it was in mode ', @mode, ')' ))"/>
   </xsl:template>    
 
   <xd:doc>
-    <xd:desc><xd:i>pass 1</xd:i>: Process &lt;*Spec> to be added</xd:desc>
+    <xd:desc>
+      <xd:p><xd:i>pass 1</xd:i>: Process &lt;*Spec> to be added</xd:p>
+      <xd:p>I <xd:i>think</xd:i> the reason we match only descendants
+      of &lt;schemaSpec> is to avoid matching &lt;*Spec> elements from
+      the TEI P5 source document with this template. (They will instead
+      get matched by the generic identity for the pass1 mode.)</xd:p>
+    </xd:desc>
   </xd:doc>
-  <xsl:template match="schemaSpec//classSpec[  @mode eq 'add' or not(@mode) ]
-                     | schemaSpec//macroSpec[  @mode eq 'add' or not(@mode) ]
-                     | schemaSpec//dataSpec [  @mode eq 'add' or not(@mode) ]
-                     | schemaSpec//elementSpec[@mode eq 'add' or not(@mode) ]"
+  <xsl:template match="tei:schemaSpec//tei:classSpec[  @mode eq 'add'  or  not(@mode) ]
+                     | tei:schemaSpec//tei:macroSpec[  @mode eq 'add'  or  not(@mode) ]
+                     | tei:schemaSpec//tei:dataSpec [  @mode eq 'add'  or  not(@mode) ]
+                     | tei:schemaSpec//tei:elementSpec[@mode eq 'add'  or  not(@mode) ]"
                 mode="pass1">
-    <xsl:sequence select="tei:msg(('Create ', local-name(), ' named ', @ident,
+    <xsl:sequence select="tei:msg(('pass 1: create ', local-name(), ' named ', @ident,
                           if (@module) then concat(', module: ', @module )
                           else ''))"/>
     <xsl:copy>
@@ -949,20 +952,29 @@
     <xsl:variable name="inc" select="normalize-space( @include )"/>
     <xsl:sequence
         select="tei:msg((
-                'Process module reference to [', $key,
-                '] with exclusion/inclusion of [', $exc,
-                '/', $inc,']'
-                ))"/>
+                'pass 1: process module reference to ', $key,
+		if ($exc ne '') then (' with exceptions=&quot;', $exc,'&quot;' ) else '',
+		if ($inc ne '') then  (' with incusions=&quot;', $inc,'&quot;' ) else ''
+		))"/>
+    <!-- Set the context node to the source (i.e., P5). (I think this
+         is done so that subsequent references to key() hold elements
+         from P5 source, not from the input ODD customization. —Syd) -->
     <xsl:for-each select="document( $src, $top )">
       
       <!-- get model and attribute classes regardless -->
-      <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_NONELEMENT', $key )">
-        <xsl:variable name="class" select="@ident"/>
-        <xsl:if test="not($ODD/key('odd2odd-REFOBJECTS',$class))">
-          <xsl:sequence select="tei:msg(('pass 1: import ', $class, ' by moduleRef'))"/>
-          <xsl:apply-templates mode="pass1" select="."/>
-        </xsl:if>
-      </xsl:for-each>
+      <!-- <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_NONELEMENT', $key )"> -->
+      <!--   <xsl:variable name="class" select="@ident"/> -->
+      <!--   <xsl:if test="not($ODD/key('odd2odd-REFOBJECTS',$class))"> -->
+      <!--     <xsl:sequence select="tei:msg(('pass 1: import ', $class, ' by moduleRef'))"/> -->
+      <!--     <xsl:apply-templates mode="pass1" select="."/> -->
+      <!--   </xsl:if> -->
+      <!-- </xsl:for-each> -->
+
+       <xsl:apply-templates mode="pass1"
+       	   select="key('odd2odd-MODULE_MEMBERS_NONELEMENT', $key )
+       		   [ not( $ODD/key('odd2odd-REFOBJECTS', current()/@ident ) ) ]">
+	 <xsl:with-param name="announce" select="true()"/>
+       </xsl:apply-templates>
       
       <!-- now elements -->
       <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_ELEMENT', $key )">
