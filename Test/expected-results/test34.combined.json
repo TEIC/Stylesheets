@@ -2527,6 +2527,7 @@
             "model.publicationStmtPart.detail" ],
           "atts" : 
           [ "att.global",
+            "att.canonical",
             "att.datable",
             "att.editLike",
             "att.dimensions",
@@ -2627,8 +2628,8 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-09-25\" xml:lang=\"en\">contains a brief description of the object documented by its parent element, typically a documentation\n    element or an entity.<\/desc>" ],
-        "shortDesc" : "(description) contains a brief description of the object documented by its parent element, typically a documentation\n    element or an entity.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-09-25\" xml:lang=\"en\">contains a brief\n  description of the object documented by its parent element,\n  typically a documentation element or an entity.<\/desc>" ],
+        "shortDesc" : "(description) contains a brief\n  description of the object documented by its parent element,\n  typically a documentation element or an entity.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">description<\/gloss>" ],
         "altIdent" : 
@@ -2644,7 +2645,35 @@
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "type",
+            "mode" : "change",
+            "ns" : "",
+            "usage" : "def",
+            "desc" : 
+            [  ],
+            "shortDesc" : "",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            {  },
+            "valList" : 
+            { "type" : "",
+              "valItem" : 
+              [ 
+                { "ident" : "deprecationInfo",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-09-14\" xml:lang=\"en\">This element\n\t  describes why or how its parent element is being deprecated,\n\t  typically including recommendations for alternate\n\t  encoding.<\/desc>" ],
+                  "shortDesc" : "(deprecation\n\t  information) This element\n\t  describes why or how its parent element is being deprecated,\n\t  typically including recommendations for alternate\n\t  encoding.",
+                  "gloss" : 
+                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-09-14\" xml:lang=\"en\">deprecation\n\t  information<\/gloss>" ],
+                  "altIdent" : 
+                  [  ] } ] } } ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -16516,8 +16545,8 @@
         "module" : "tei",
         "type" : "",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-04-14\" xml:lang=\"en\">defines attribute values which contain an XPath  expression.<\/desc>" ],
-        "shortDesc" : "defines attribute values which contain an XPath  expression.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-04-14\" xml:lang=\"en\">defines attribute values\nwhich contain an XPath expression.<\/desc>" ],
+        "shortDesc" : "defines attribute values\nwhich contain an XPath expression.",
         "gloss" : 
         [  ] } ],
     "macroRefs" : 
