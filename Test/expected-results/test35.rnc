@@ -21,7 +21,11 @@ tei_macro.paraContent =
 tei_macro.limitedContent =
   (text | tei_model.limitedPhrase | tei_model.inter)*
 tei_macro.phraseSeq =
-  (text | tei_model.gLike | tei_model.phrase | tei_model.global)*
+  (text
+   | tei_model.gLike
+   | tei_model.qLike
+   | tei_model.phrase
+   | tei_model.global)*
 tei_macro.phraseSeq.limited =
   (text | tei_model.limitedPhrase | tei_model.global)*
 tei_macro.specialPara =
@@ -1913,10 +1917,38 @@ tei_desc =
   
   ## (description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components]
   element tei:desc {
-    tei_macro.limitedContent,
+    tei_macro.limitedContent
+    >> sch:pattern [
+         id =
+           "foo-desc-deprecationInfo-only-in-deprecated-constraint-rule-9"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:desc[ @type eq 'deprecationInfo']"
+           "\x{a}" ~
+           "	              "
+           sch:assert [
+             test = "../@validUntil"
+             "Information about a\x{a}" ~
+             "	deprecation should only be present in a specification element\x{a}" ~
+             "	that is being deprecated: that is, only an element that has a\x{a}" ~
+             "	@validUntil attribute should have a child <desc\x{a}" ~
+             '	type="deprecationInfo">.'
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     tei_att.global.attributes,
     tei_att.translatable.attributes,
-    tei_att.typed.attributes,
+    tei_att.typed.attribute.subtype,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    attribute type {
+      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    }?,
     empty
   }
 tei_gloss =
@@ -2225,10 +2257,11 @@ tei_unit =
   }
 tei_date =
   
-  ## contains a date in any format. [3.5.4. Dates and Times 2.2.4. Publication, Distribution, Licensing, etc. 2.6. The Revision Description 3.11.2.4. Imprint, Size of a Document, and Reprint Information 15.2.3. The Setting Description 13.3.6. Dates and Times]
+  ## contains a date in any format. [3.5.4. Dates and Times 2.2.4. Publication, Distribution, Licensing, etc. 2.6. The Revision Description 3.11.2.4. Imprint, Size of a Document, and Reprint Information 15.2.3. The Setting Description 13.3.7. Dates and Times]
   element tei:date {
     (text | tei_model.gLike | tei_model.phrase | tei_model.global)*,
     tei_att.global.attributes,
+    tei_att.canonical.attributes,
     tei_att.datable.attributes,
     tei_att.editLike.attributes,
     tei_att.dimensions.attributes,
@@ -2351,7 +2384,7 @@ tei_list =
          (tei_label, tei_model.global*, tei_item, tei_model.global*)+)),
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-list-gloss-list-must-have-labels-constraint-rule-9"
+         id = "foo-list-gloss-list-must-have-labels-constraint-rule-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2869,7 +2902,7 @@ tei_relatedItem =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-relatedItem-targetorcontent1-constraint-assert-7"
+         id = "foo-relatedItem-targetorcontent1-constraint-assert-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2944,7 +2977,7 @@ tei_lg =
       | tei_lg)*,
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-lg-atleast1oflggapl-constraint-assert-8"
+         id = "foo-lg-atleast1oflggapl-constraint-assert-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4555,7 +4588,7 @@ tei_link =
   element tei:link {
     empty
     >> sch:pattern [
-         id = "foo-link-linkTargets3-constraint-assert-9"
+         id = "foo-link-linkTargets3-constraint-assert-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4770,7 +4803,7 @@ tei_join =
   element tei:join {
     ((tei_model.descLike | tei_model.certLike)*)
     >> sch:pattern [
-         id = "foo-join-joinTargets3-constraint-assert-10"
+         id = "foo-join-joinTargets3-constraint-assert-11"
          "\x{a}" ~
          "            "
          sch:rule [
