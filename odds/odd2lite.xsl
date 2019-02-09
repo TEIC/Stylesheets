@@ -86,6 +86,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="ulName">list</xsl:param>
   <xsl:param name="urlName">target</xsl:param>
   <xsl:param name="xrefName">ref</xsl:param>
+  
+  <!--Joey Takeda and Martin Holmes began editing this 
+    stylesheet February 2019 in response to 
+    Issue 328: https://github.com/TEIC/Stylesheets/issues/328-->
 
   <xsl:variable name="TOP" select="/"/>
   <xsl:key name="ALTIDENTS" match="tei:elementSpec[tei:altIdent]" use="@ident"/>
