@@ -310,6 +310,11 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
+  <!-- use a char style to isolate the label of : Chapter I. Where I start my adventers -->
+  <xsl:template match="text:h//text:span[@text:style-name='Label']">
+    <label><xsl:apply-templates/></label>
+  </xsl:template>
+
   <xsl:template match="text:h[@text:outline-level]">
     <xsl:choose>
       <xsl:when test="ancestor::text:note-body">
