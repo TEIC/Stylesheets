@@ -17,7 +17,7 @@ Example usages:
 
 `ant odt` runs only the odt tests. Similarly, `ant docx`, `ant fo`, `ant odd`, and others.
 
-`ant test -Dregenerate=true` runs all the tests and regenerates all the expected-results.
+
 
 
 

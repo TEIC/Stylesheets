@@ -136,8 +136,10 @@
     <!--  If regenerating, just copy the file.      -->
     <!--<echo unless:blank="${regenerate}" message="Copying generated ${inFile} to expected-results folder."/>
     <copy unless:blank="${regenerate}" file="${inFile}" tofile="${otherFile}"/>-->
-    <echo message="The regenerate functionality has been removed from this test suite."/>
-    <echo message="Instead, please diff your output file against the expected-results file manually and copy changes over if correct."/>
+    
+    <echo unless:blank="${regenerate}" message="The regenerate functionality has been removed from this test suite."/>
+    <echo unless:blank="${regenerate}" message="Instead, please diff your output file against the expected-results file manually and copy changes over if correct."/>
+    
     
     <!--  If not regenerating, then diff the file.      -->
     <trycatch if:blank="${regenerate}">
@@ -190,6 +192,10 @@
       use !DOCTYPE html  SYSTEM "about:legacy-compat", which will cause 
       Saxon to die with an "unknown protocol: about" error, so we strip 
       that off first with a regex transform.
+      
+      Note that if this strip process is applied to a file with a doctype which
+      contains entities (i.e. has closing angle brackets inside it), it will fail.
+      Current test processes don't process any such files.
     </description>
     <echo level="info" message="Clean ${inFile} ready for diffing with expected results."/>
     <replaceregexp file="${inFile}" match="^\s*&lt;!DOCTYPE[^>]+>" replace=""/>
