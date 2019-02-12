@@ -381,7 +381,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@text:style-name='Document Title'">
         <docTitle>
           <xsl:apply-templates/>
-	</docTitle>
+	      </docTitle>
       </xsl:when>
 
       <xsl:when test="@text:style-name='Author'">
@@ -392,10 +392,10 @@ of this software, even if advised of the possibility of such damage.
 
       <xsl:when test="@text:style-name='lg'">
         <lg>
-	  <xsl:for-each-group select="node()"
-			      group-ending-with="text:line-break">
-	    <l><xsl:apply-templates select="current-group()"/></l>
-	  </xsl:for-each-group>
+	        <xsl:for-each-group select="node()"
+			        group-ending-with="text:line-break">
+	          <l><xsl:apply-templates select="current-group()"/></l>
+	        </xsl:for-each-group>
         </lg>
       </xsl:when>
 
@@ -403,6 +403,12 @@ of this software, even if advised of the possibility of such damage.
         <title>
           <xsl:apply-templates/>
         </title>
+      </xsl:when>
+
+      <xsl:when test="@text:style-name='Subtitle'">
+        <p class="subtitle">
+          <xsl:apply-templates/>
+        </p>
       </xsl:when>
 
       <xsl:when test="@text:style-name='Section Title'">
