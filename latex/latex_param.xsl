@@ -549,7 +549,7 @@ characters. The normal characters remain active for LaTeX commands.
   {\end{list}\end{raggedright}}
 \newenvironment{specHead}[2]%
  {\vspace{20pt}\hrule\vspace{10pt}%
-  \label{#1}\markright{#2}%
+  \phantomsection\label{#1}\markright{#2}%
 <xsl:text>
   \pdfbookmark[</xsl:text>
       <xsl:value-of select="$specLinkDepth"/>
