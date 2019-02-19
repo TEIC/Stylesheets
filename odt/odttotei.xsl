@@ -920,7 +920,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="text:tab">
-    <xsl:text>	</xsl:text>
+    <xsl:text>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</xsl:text>
   </xsl:template>
 
   <xsl:template match="text:reference-ref">
