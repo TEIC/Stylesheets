@@ -127,17 +127,17 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:variable name="document-author">
     <xsl:choose>
-      <xsl:when
-	  test="/office:document-content/office:body/office:text/text:p[@text:style-name='Author']">
-        <xsl:value-of
-	    select="/office:document-content/office:body/office:text/text:p[@text:style-name='Author']"
-	    />
+      <xsl:when test="/office:document-content/office:body/office:text/text:p[@text:style-name='Author']">
+        <xsl:for-each select="/office:document-content/office:body/office:text/text:p[@text:style-name='Author']">
+          <xsl:message>pulea meaa, uite un autor!!!</xsl:message>
+          <author><xsl:value-of select="." /></author>
+        </xsl:for-each>
       </xsl:when>
       <xsl:when test="$META/office:meta/meta:initial-creator">
-        <xsl:value-of select="$META/office:meta/meta:initial-creator"/>
+        <author><xsl:value-of select="$META/office:meta/meta:initial-creator"/></author>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text>Unspecified author</xsl:text>
+        <author><xsl:text>Unspecified author</xsl:text></author>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -210,9 +210,9 @@ of this software, even if advised of the possibility of such damage.
           <title>
             <xsl:value-of select="$document-title"/>
           </title>
-          <author>
-            <xsl:value-of select="$document-author" />
-          </author>
+
+          <xsl:copy-of select="$document-author" />
+
         </titleStmt>
         <editionStmt>
           <edition>
@@ -407,6 +407,18 @@ of this software, even if advised of the possibility of such damage.
 
       <xsl:when test="@text:style-name='Subtitle'">
         <p class="subtitle">
+          <xsl:apply-templates/>
+        </p>
+      </xsl:when>
+
+      <xsl:when test="@text:style-name='Trailer'">
+        <p class="trailer">
+          <xsl:apply-templates/>
+        </p>
+      </xsl:when>
+
+      <xsl:when test="@text:style-name='Epigraph'">
+        <p class="epigraph">
           <xsl:apply-templates/>
         </p>
       </xsl:when>
