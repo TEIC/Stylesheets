@@ -102,19 +102,22 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="/office:document/office:meta">
         <xsl:copy-of select="/office:document/office:meta"/>
       </xsl:when>
+      <xsl:when test="/office:document-content/office:meta">
+        <xsl:copy-of select="/office:document-content/office:meta"/>
+      </xsl:when>
       <xsl:otherwise>
-        <xsl:copy-of select="/office:document-meta/office:meta"/>
+        <xsl:copy-of select="//office:meta"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
 
   <xsl:variable name="document-title">
     <xsl:choose>
-      <xsl:when
-	  test="/office:document-content/office:body/office:text/text:p[@text:style-name='Title']">
-        <xsl:value-of
-	    select="/office:document-content/office:body/office:text/text:p[@text:style-name='Title']"
-	    />
+      <xsl:when test="/office:document/office:body/office:text/text:p[@text:style-name='Title']">
+        <xsl:value-of select="/office:document/office:body/office:text/text:p[@text:style-name='Title']" />
+      </xsl:when>
+      <xsl:when test="/office:document-content/office:body/office:text/text:p[@text:style-name='Title']">
+        <xsl:value-of select="/office:document-content/office:body/office:text/text:p[@text:style-name='Title']" />
       </xsl:when>
       <xsl:when test="$META/office:meta/dc:title">
         <xsl:value-of select="$META/office:meta/dc:title"/>
@@ -129,6 +132,11 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="/office:document-content/office:body/office:text/text:p[@text:style-name='Author']">
         <xsl:for-each select="/office:document-content/office:body/office:text/text:p[@text:style-name='Author']">
+          <author><xsl:value-of select="." /></author>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:when test="/office:document/office:body/office:text/text:p[@text:style-name='Author']">
+        <xsl:for-each select="/office:document/office:body/office:text/text:p[@text:style-name='Author']">
           <author><xsl:value-of select="." /></author>
         </xsl:for-each>
       </xsl:when>
@@ -161,7 +169,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates mode="pass3" select="$pass2"/>
   </xsl:template>
 
-  <xsl:template match="office:document-content|office:body">
+  <xsl:template match="office:document|office:document-content|office:body">
     <xsl:for-each select="descendant::text:variable-decl">
       <xsl:variable name="name">
         <xsl:value-of select="@text:name"/>
@@ -280,7 +288,7 @@ of this software, even if advised of the possibility of such damage.
 
 
 
-  <xsl:template match="/office:document-content/office:body">
+  <xsl:template match="/office:document-content/office:body | /office:document/office:body">
       <xsl:apply-templates/>
   </xsl:template>
 
