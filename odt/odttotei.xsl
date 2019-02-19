@@ -129,7 +129,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="/office:document-content/office:body/office:text/text:p[@text:style-name='Author']">
         <xsl:for-each select="/office:document-content/office:body/office:text/text:p[@text:style-name='Author']">
-          <xsl:message>pulea meaa, uite un autor!!!</xsl:message>
           <author><xsl:value-of select="." /></author>
         </xsl:for-each>
       </xsl:when>

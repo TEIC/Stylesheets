@@ -6,11 +6,11 @@
 # license: GPL
 # $Id$
 
-script=`[ -L $0 ] && readlink $0 || echo $0` # resolve maybe symlink
-scriptdir=`dirname "$script"`
-script=`basename $script`
+script=`basename $0`
+scriptdir=`dirname "$0"`
 APPHOME=`(cd $scriptdir; cd ..; pwd)`
-
+echo $script
+echo $scriptdir
 defaultAPPHOME=`(cd $scriptdir; cd .. ; pwd)`
 profiledir=$APPHOME/profiles
 defaultprofiledir=$APPHOME/profiles
