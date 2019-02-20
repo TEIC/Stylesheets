@@ -350,7 +350,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="ODD">
     <xsl:for-each select="/*">
       <xsl:copy>
-              <xsl:attribute name="xml:base" select="document-uri(/)"/>
+        <!--Ticket#328 (joeytakeda and martindholmes): Get rid of xml:base-->
+        <!--Not needed and @xml:base is not allowed in TEI Lite-->
+             <!-- <xsl:attribute name="xml:base" select="document-uri(/)"/>-->
         <xsl:copy-of select="@*"/>
         <xsl:if test="$useVersionFromTEI='true'">
           <xsl:processing-instruction name="TEIVERSION">
