@@ -2048,7 +2048,9 @@
         </xsl:attribute>
         <xsl:choose>
           <xsl:when test="$mode = 'all'">
-            <xsl:apply-templates/>
+            <!--ISSUE 328 (martindholmes and joeytakeda): Added predicate
+              to suppress copying tei:attRef, which were invalid in TEI lite-->
+            <xsl:apply-templates select="node()[not(self::tei:attRef)]"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates mode="summary"/>
