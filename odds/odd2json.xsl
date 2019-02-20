@@ -511,7 +511,7 @@
                     <xsl:if test="tei:valList">
                         <j:map key="valList">
                             <j:string key="type">
-                                <xsl:value-of select="@type"/>
+                                <xsl:value-of select="tei:valList/@type"/>
                             </j:string>
                             <j:array key="valItem">
                                 <xsl:for-each select="tei:valList/tei:valItem">
