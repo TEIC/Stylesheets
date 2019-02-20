@@ -476,10 +476,9 @@
                                 <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
                                     <xsl:call-template name="makeDesc"/>                  
                                 </xsl:when>
-                                <xsl:when test="not(@xml:lang)">
+                                <xsl:otherwise>
                                     <xsl:call-template name="makeDesc"/>
-                                </xsl:when>
-                                <xsl:otherwise/>
+                                </xsl:otherwise>
                             </xsl:choose>              
                         </xsl:for-each>
                     </j:array>
