@@ -78,6 +78,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
+
   <xsl:key match="style:style" name="STYLES" use="@style:name"/>
 
   <xsl:key name="LISTS"
@@ -94,16 +95,27 @@ of this software, even if advised of the possibility of such damage.
 
   <!--  <xsl:strip-space elements="text:span"/>-->
 
+  <!-- 
+    The .odt#content.xml is rooted in <office:document-content>
+    while the flat odt .fodt xml is rooted in <office:document>.
+
+    Other than that, the structure of the two xml's is similar (the flat odt contains also the meta.xml etc.).
+  -->
+  <xsl:variable name="document-root">
+    <xsl:choose>
+      <xsl:when test="/office:document"><xsl:copy-of select="/office:document/*"/></xsl:when>
+      <xsl:when test="/office:document-content"><xsl:copy-of select="/office:document-content/*" /></xsl:when>
+      <xsl:otherwise><xsl:message terminate="yes">expected document root to be either office:document or office:document-content</xsl:message></xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
   <xsl:variable name="META">
     <xsl:choose>
       <xsl:when test="doc-available(concat($dir,'/meta.xml'))">
         <xsl:copy-of select="document(concat($dir,'/meta.xml'))//office:meta"/>
       </xsl:when>
-      <xsl:when test="/office:document/office:meta">
-        <xsl:copy-of select="/office:document/office:meta"/>
-      </xsl:when>
-      <xsl:when test="/office:document-content/office:meta">
-        <xsl:copy-of select="/office:document-content/office:meta"/>
+      <xsl:when test="$document-root/office:meta">
+        <xsl:copy-of select="$document-root/office:meta"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy-of select="//office:meta"/>
@@ -111,13 +123,22 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:variable>
 
+  <xsl:variable name="document-languages">
+    <xsl:for-each select="$META/office:meta/dc:language">
+      <dc:language><xsl:value-of select="normalize-space(.)"/></dc:language>
+    </xsl:for-each>
+    <xsl:for-each select="$META/office:meta/meta:user-defined[@meta:name='Language']">
+      <dc:language><xsl:value-of select="normalize-space(.)"/></dc:language>
+    </xsl:for-each>
+    <xsl:for-each select="$document-root/office:body/office:text/text:p[@text:style-name='DocumentLanguage']">
+      <dc:language><xsl:value-of select="normalize-space(.)" /></dc:language>
+    </xsl:for-each>
+  </xsl:variable>
+
   <xsl:variable name="document-title">
     <xsl:choose>
-      <xsl:when test="/office:document/office:body/office:text/text:p[@text:style-name='Title']">
-        <xsl:value-of select="/office:document/office:body/office:text/text:p[@text:style-name='Title']" />
-      </xsl:when>
-      <xsl:when test="/office:document-content/office:body/office:text/text:p[@text:style-name='Title']">
-        <xsl:value-of select="/office:document-content/office:body/office:text/text:p[@text:style-name='Title']" />
+      <xsl:when test="$document-root/office:body/office:text/text:p[@text:style-name='Title']">
+        <xsl:value-of select="$document-root/office:body/office:text/text:p[@text:style-name='Title']" />
       </xsl:when>
       <xsl:when test="$META/office:meta/dc:title">
         <xsl:value-of select="$META/office:meta/dc:title"/>
@@ -130,13 +151,8 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:variable name="document-author">
     <xsl:choose>
-      <xsl:when test="/office:document-content/office:body/office:text/text:p[@text:style-name='Author']">
-        <xsl:for-each select="/office:document-content/office:body/office:text/text:p[@text:style-name='Author']">
-          <author><xsl:value-of select="." /></author>
-        </xsl:for-each>
-      </xsl:when>
-      <xsl:when test="/office:document/office:body/office:text/text:p[@text:style-name='Author']">
-        <xsl:for-each select="/office:document/office:body/office:text/text:p[@text:style-name='Author']">
+      <xsl:when test="$document-root/office:body/office:text/text:p[@text:style-name='Author']">
+        <xsl:for-each select="$document-root/office:body/office:text/text:p[@text:style-name='Author']">
           <author><xsl:value-of select="." /></author>
         </xsl:for-each>
       </xsl:when>
@@ -169,35 +185,34 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates mode="pass3" select="$pass2"/>
   </xsl:template>
 
-  <xsl:template match="office:document|office:document-content|office:body">
-    <xsl:for-each select="descendant::text:variable-decl">
-      <xsl:variable name="name">
-        <xsl:value-of select="@text:name"/>
-      </xsl:variable>
-      <xsl:if test="contains(@text:name,'entitydecl')">
-        <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE TEI [
-	</xsl:text>
-        <xsl:text disable-output-escaping="yes">&lt;!ENTITY </xsl:text>
-        <xsl:value-of select="substring-after(@text:name,'entitydecl_')"/>
-        <xsl:text> &quot;</xsl:text>
-        <xsl:value-of
-          select="/descendant::text:variable-set[@text:name= $name][1]"/>
-        <xsl:text disable-output-escaping="yes">&quot;&gt;</xsl:text>
-        <xsl:text disable-output-escaping="yes">]&gt;</xsl:text>
-      </xsl:if>
+<xsl:template match="office:document|office:document-content|office:body">
+  <xsl:for-each select="descendant::text:variable-decl">
+    <xsl:variable name="name">
+      <xsl:value-of select="@text:name"/>
+    </xsl:variable>
+    <xsl:if test="contains(@text:name,'entitydecl')">
+      <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE TEI [
+      </xsl:text>
+      <xsl:text disable-output-escaping="yes">&lt;!ENTITY </xsl:text>
+      <xsl:value-of select="substring-after(@text:name,'entitydecl_')"/>
+      <xsl:text> &quot;</xsl:text>
+      <xsl:value-of select="/descendant::text:variable-set[@text:name= $name][1]"/>
+      <xsl:text disable-output-escaping="yes">&quot;&gt;</xsl:text>
+      <xsl:text disable-output-escaping="yes">]&gt;</xsl:text>
+    </xsl:if>
+  </xsl:for-each>
+  <TEI>
+    <xsl:for-each select="$document-languages/dc:language">
+      <xsl:attribute name="xml:lang">
+        <xsl:value-of select="normalize-space(.)"/>
+      </xsl:attribute>
     </xsl:for-each>
-    <TEI>
-	<xsl:for-each select="$META/office:meta/dc:language">
-	  <xsl:attribute name="xml:lang">
-	    <xsl:value-of select="normalize-space(.)"/>
-	  </xsl:attribute>
-	</xsl:for-each>
-      <xsl:call-template name="teiHeader"/>
-      <text>
-	<xsl:apply-templates/>
-      </text>
-    </TEI>
-  </xsl:template>
+    <xsl:call-template name="teiHeader"/>
+    <text>
+      <xsl:apply-templates/>
+    </text>
+  </TEI>
+</xsl:template>
 
 
   <xsl:template match="text:variable-set|text:variable-get">
@@ -224,68 +239,66 @@ of this software, even if advised of the possibility of such damage.
         <editionStmt>
           <edition>
             <date>
-              <xsl:value-of
-                select="$META/office:meta/meta:creation-date"/>
+              <xsl:value-of select="$META/office:meta/meta:creation-date"/>
             </date>
           </edition>
         </editionStmt>
         <publicationStmt>
-          <p>no publication statement available</p>
+            <xsl:apply-templates select="$document-root/office:body/office:text/text:p[@text:style-name='License']"/>
         </publicationStmt>
         <sourceDesc>
-          <p>
-	    <xsl:apply-templates
-              select="$META/office:meta/meta:generator"/>
-	    <xsl:text>Written by OpenOffice</xsl:text>
-	  </p>
+          <xsl:apply-templates select="$document-root/office:body/office:text/text:p[@text:style-name='SourceDesc']"/>
+
+          <p><xsl:apply-templates select="$META/office:meta/meta:generator"/></p>
         </sourceDesc>
       </fileDesc>
-      <xsl:variable name="pD">
-	<xsl:if test="$META/office:meta/dc:language">
-	  <langUsage>
-	    <language>
-	      <xsl:attribute name="ident">
-		<xsl:value-of select="$META/office:meta/dc:language"/>
-	      </xsl:attribute>
-	      <xsl:value-of select="$META/office:meta/dc:language"/>
-	    </language>
-	  </langUsage>
-	</xsl:if>
-	<xsl:if test="$META/office:meta/meta:keyword">
-	  <textClass>
-	    <keywords scheme="unknown">
-	      <list>
-		<xsl:for-each select="$META/office:meta/meta:keyword">
-		  <item>
-		    <xsl:value-of select="."/>
-		  </item>
-		</xsl:for-each>
-	      </list>
-	    </keywords>
-	  </textClass>
-	</xsl:if>
+
+      <xsl:variable name="profDesc">
+        <langUsage>
+          <xsl:for-each select="$document-languages/dc:language">
+                <language>
+                  <xsl:attribute name="ident">
+                    <xsl:value-of select="."/>
+                  </xsl:attribute>
+                  <xsl:value-of select="."/>
+                </language>
+          </xsl:for-each>
+        </langUsage>
+
+        <xsl:if test="$META/office:meta/meta:keyword">
+          <textClass>
+            <keywords scheme="unknown">
+              <list>
+                <xsl:for-each select="$META/office:meta/meta:keyword">
+                  <item>
+                    <xsl:value-of select="."/>
+                  </item>
+                </xsl:for-each>
+              </list>
+            </keywords>
+          </textClass>
+        </xsl:if>
       </xsl:variable>
-      <xsl:if test="$pD/*">
-	<profileDesc>
-	  <xsl:copy-of select="$pD"/>
-	</profileDesc>
+      <xsl:if test="$profDesc/*">
+        <profileDesc>
+          <xsl:copy-of select="$profDesc"/>
+        </profileDesc>
       </xsl:if>
+
       <revisionDesc>
-	<listChange>
+        <listChange>
           <change>
-	    <name>
-	      <xsl:apply-templates
-		  select="$META/office:meta/dc:creator"/>
-	    </name>
-	    <date>
-	      <xsl:apply-templates select="$META/office:meta/dc:date"/>
-	    </date>
+            <name>
+              <xsl:apply-templates select="$META/office:meta/dc:creator"/>
+            </name>
+            <date>
+              <xsl:apply-templates select="$META/office:meta/dc:date"/>
+            </date>
           </change>
-	</listChange>
+        </listChange>
       </revisionDesc>
     </teiHeader>
   </xsl:template>
-
 
 
   <xsl:template match="/office:document-content/office:body | /office:document/office:body">
@@ -317,41 +330,41 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <!-- use a char style to isolate the label of : Chapter I. Where I start my adventers -->
+  <!-- use a char style to isolate the label of : <head><label>Chapter I. </label>Where I start my adventures</head> -->
   <xsl:template match="text:h//text:span[@text:style-name='Label']">
     <label><xsl:apply-templates/></label>
   </xsl:template>
 
-  <xsl:template match="text:h[@text:outline-level]">
-    <xsl:choose>
-      <xsl:when test="ancestor::text:note-body">
-	<p>
-	  <xsl:attribute name="rend">
-	    <xsl:choose>
-	      <xsl:when test="@text:style-name">
-		<xsl:value-of select="@text:style-name"/>
-	      </xsl:when>
-	      <xsl:otherwise>heading</xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:attribute>
-          <xsl:apply-templates/>
-	</p>
-      </xsl:when>
-      <xsl:otherwise>
-	<HEAD level="{@text:outline-level}" >
-	  <xsl:attribute name="style">
-	    <xsl:choose>
-	      <xsl:when test="@text:style-name">
-		<xsl:value-of select="@text:style-name"/>
-	      </xsl:when>
-	      <xsl:otherwise>nostyle</xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:attribute>
-	  <xsl:apply-templates/>
-	</HEAD>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+<xsl:template match="text:h[@text:outline-level]">
+  <xsl:choose>
+    <xsl:when test="ancestor::text:note-body">
+      <p>
+        <xsl:attribute name="rend">
+          <xsl:choose>
+            <xsl:when test="@text:style-name">
+              <xsl:value-of select="@text:style-name"/>
+            </xsl:when>
+            <xsl:otherwise>heading</xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        <xsl:apply-templates/>
+      </p>
+    </xsl:when>
+    <xsl:otherwise>
+      <HEAD level="{@text:outline-level}">
+        <xsl:attribute name="style">
+          <xsl:choose>
+            <xsl:when test="@text:style-name">
+              <xsl:value-of select="@text:style-name"/>
+            </xsl:when>
+            <xsl:otherwise>nostyle</xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        <xsl:apply-templates/>
+      </HEAD>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
 
   <!-- special case paragraphs -->
   <xsl:template match="text:p[@text:style-name='XMLComment']">
@@ -367,28 +380,28 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
-  <xsl:template match="text:p">
+ <xsl:template match="text:p">
 
     <xsl:choose>
       <xsl:when test="draw:frame and parent::draw:text-box">
-	<xsl:apply-templates select="draw:frame"/>
-	<head>
-	  <xsl:apply-templates select="text()|*[not(local-name(.)='frame')]"/>
-	</head>
+        <xsl:apply-templates select="draw:frame"/>
+        <head>
+          <xsl:apply-templates select="text()|*[not(local-name(.)='frame')]"/>
+        </head>
       </xsl:when>
 
       <xsl:when test="count(parent::text:note-body/text:p)=1">
-          <xsl:apply-templates/>
+        <xsl:apply-templates/>
       </xsl:when>
 
       <xsl:when test="count(parent::text:list-item/text:p)=1">
-          <xsl:apply-templates/>
+        <xsl:apply-templates/>
       </xsl:when>
 
       <xsl:when test="@text:style-name='Document Title'">
         <docTitle>
           <xsl:apply-templates/>
-	      </docTitle>
+        </docTitle>
       </xsl:when>
 
       <xsl:when test="@text:style-name='Author'">
@@ -399,36 +412,39 @@ of this software, even if advised of the possibility of such damage.
 
       <xsl:when test="@text:style-name='lg'">
         <lg>
-	        <xsl:for-each-group select="node()"
-			        group-ending-with="text:line-break">
-	          <l><xsl:apply-templates select="current-group()"/></l>
-	        </xsl:for-each-group>
+          <xsl:for-each-group select="node()" group-ending-with="text:line-break">
+            <l>
+              <xsl:apply-templates select="current-group()"/>
+            </l>
+          </xsl:for-each-group>
         </lg>
       </xsl:when>
 
       <xsl:when test="@text:style-name='Title'">
-        <title>
-          <xsl:apply-templates/>
-        </title>
+        <title><xsl:apply-templates/></title>
       </xsl:when>
 
       <xsl:when test="@text:style-name='Subtitle'">
-        <p class="subtitle">
-          <xsl:apply-templates/>
-        </p>
+        <subtitle><xsl:apply-templates/></subtitle>
       </xsl:when>
 
       <xsl:when test="@text:style-name='Trailer'">
-        <p class="trailer">
-          <xsl:apply-templates/>
-        </p>
+        <trailer><xsl:apply-templates/></trailer>
       </xsl:when>
 
       <xsl:when test="@text:style-name='Epigraph'">
-        <p class="epigraph">
-          <xsl:apply-templates/>
-        </p>
+        <epigraph><xsl:apply-templates/></epigraph>
       </xsl:when>
+
+      <xsl:when test="@text:style-name='Opener'">
+        <opener><xsl:apply-templates/></opener>
+      </xsl:when>
+
+      <xsl:when test="@text:style-name='Closer'">
+        <closer><xsl:apply-templates/></closer>
+      </xsl:when>
+
+
 
       <xsl:when test="@text:style-name='Section Title'">
         <head>
@@ -443,7 +459,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
 
       <xsl:when test="parent::text:list-item">
-	<xsl:call-template name="applyStyle"/>
+        <xsl:call-template name="applyStyle"/>
       </xsl:when>
 
       <xsl:when test="@text:style-name='Table'"/>
@@ -453,11 +469,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@text:style-name='Speech'">
         <sp>
           <speaker/>
-	  <xsl:call-template name="applyStyle"/>
+          <xsl:call-template name="applyStyle"/>
         </sp>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:call-template name="applyStyle"/>
+        <xsl:call-template name="applyStyle"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
