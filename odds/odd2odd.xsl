@@ -1022,12 +1022,22 @@
   
   <!-- ******************* Phase 2, make the changes ********************************* -->
   
+  <xd:doc>
+    <xd:desc><xd:b>Mode "justcopy"</xd:b>: <xd:ul>
+      <xd:li>drop comments except within &lt;exemplum> (why &lt;exemplum> and not &lt;teix:egXML>? —Syd, 2018-01-07)</xd:li>
+      <xd:li>if requested, add a @rend attribute, except if there already is one</xd:li>
+    </xd:ul>
+    </xd:desc>
+  </xd:doc>
   <xsl:template match="comment()" mode="justcopy"/>
-
+  <xd:doc><xd:desc>See above</xd:desc></xd:doc>
   <xsl:template match="@*|text()|processing-instruction()|tei:exemplum//comment()" mode="justcopy">
     <xsl:copy/>
   </xsl:template>
-  
+  <xd:doc>
+    <xd:desc>See above</xd:desc>
+    <xd:param name="rend">sometimes set to "replace"</xd:param>
+  </xd:doc>
   <xsl:template match="*" mode="justcopy">
     <xsl:param name="rend"/>
     <xsl:copy>
@@ -1035,12 +1045,6 @@
         <xsl:attribute name="rend" select="$rend"/>
       </xsl:if>
       <xsl:apply-templates select="@*|node()" mode="#current"/>
-    </xsl:copy>
-  </xsl:template>
-  
-  <xsl:template match="a:* | rng:*" mode="justcopy">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|*|processing-instruction()|text()" mode="#current"/>
     </xsl:copy>
   </xsl:template>
   
@@ -1798,7 +1802,7 @@
        $suppressTEIexamples (a parameter) is set to true(). Note that
        <exemplum> elements from the ODD customization file are still
        copied through. -->
-  <xsl:template match="exemplum" mode="odd2odd-copy">
+  <xsl:template match="tei:exemplum" mode="odd2odd-copy">
     <xsl:choose>
       <xsl:when test="$suppressTEIexamples"/>
       <xsl:otherwise>
