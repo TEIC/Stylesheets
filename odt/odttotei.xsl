@@ -444,7 +444,12 @@ of this software, even if advised of the possibility of such damage.
         <closer><xsl:apply-templates/></closer>
       </xsl:when>
 
-
+      <xsl:when test="@text:style-name='Quote'">
+        <quote><xsl:apply-templates/></quote>
+      </xsl:when>
+      <xsl:when test="@text:style-name='Quotations'">
+        <quote><xsl:apply-templates/></quote>
+      </xsl:when>
 
       <xsl:when test="@text:style-name='Section Title'">
         <head>
