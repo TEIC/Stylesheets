@@ -3,7 +3,7 @@ VERSION=`cat VERSION`
 REGENERATING=0
 # 0 = do diff; 1 = dont do diff
 BINDIR=../bin
-DEFAULTSOURCE=https://www.tei-c.org/release/xml/tei/odd/p5subset.xml
+DEFAULTSOURCE=https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml
 SAXONOPT=useFixedDate=true
 SAXON=java -Djava.awt.headless=true -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
 DOTDOTSAXON=java -Djava.awt.headless=true -jar ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)

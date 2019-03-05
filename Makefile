@@ -1,6 +1,6 @@
 SFUSER=rahtz
 JING=jing
-DEFAULTSOURCE=https://www.tei-c.org/release/xml/tei/odd/p5subset.xml
+DEFAULTSOURCE=https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml
 SAXON=java -jar lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
 DOTSAXON=java -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
 DOTDOTSAXON=java -jar ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE) 
