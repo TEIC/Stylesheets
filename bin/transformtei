@@ -171,11 +171,11 @@ then
   localsource=""
   echo "WARNING: No localsource set. Will get a copy from http://www.tei-c.org/Vault/P5/."
 else 
-  REALD=`dirname "$TEISOURCE"`
-  SDIR=`(cd $REALD; pwd)`
-  REALSOURCE=$SDIR/`basename $TEISOURCE`
-  echo using $REALSOURCE as default source
-  localsource=" -DdefaultSource=\"$REALSOURCE\" "
+#  REALD=`dirname "$TEISOURCE"`
+#  SDIR=`(cd $REALD; pwd)`
+#  REALSOURCE=$SDIR/`basename $TEISOURCE`
+  echo using $TEISOURCE as default source
+  localsource=" -DdefaultSource=\"$TEISOURCE\" "
 fi
 
 in=${1:?"no input file supplied; for usage syntax $0 --help"}
