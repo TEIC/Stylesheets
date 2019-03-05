@@ -1202,7 +1202,7 @@ of this software, even if advised of the possibility of such damage.
                                     if ($gloss ne '') then '&#x20;' else '',
                                     $gloss,
                                     if (following-sibling::tei:valItem) then ';' else '',
-                                    '&#x20;'
+                                    if (position() ne last()) then '&#x20;' else ''
                                     )"/>
           </xsl:for-each>
         </xsl:when>
