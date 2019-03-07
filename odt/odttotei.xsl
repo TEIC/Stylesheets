@@ -561,29 +561,22 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$Style='Emphasis'">
-        <emph>
-          <xsl:apply-templates/>
-        </emph>
+        <emph><xsl:apply-templates/></emph>
       </xsl:when>
       <xsl:when test="$Style='Underline'">
-        <hi rend="ul">
-          <xsl:apply-templates/>
-        </hi>
+        <hi rend="ul"><xsl:apply-templates/></hi>
       </xsl:when>
       <xsl:when test="$Style='SmallCaps'">
-        <hi rend="sc">
-          <xsl:apply-templates/>
-        </hi>
+        <hi rend="sc"><xsl:apply-templates/></hi>
       </xsl:when>
       <xsl:when test="$Style='Emphasis Bold'">
-        <hi rend="bold">
-          <xsl:apply-templates/>
-        </hi>
+        <hi rend="bold"><xsl:apply-templates/></hi>
       </xsl:when>
       <xsl:when test="$Style='Highlight'">
-        <hi>
-          <xsl:apply-templates/>
-        </hi>
+        <hi><xsl:apply-templates/></hi>
+      </xsl:when>
+      <xsl:when test="$Style='Quotation'">
+        <q><xsl:apply-templates/></q>
       </xsl:when>
       <xsl:when test="$Style='q'">
         <q>
