@@ -166,16 +166,35 @@ then
 	profiledir=$APPHOME/profiles
     fi
 fi
+
+# **************************************** #
+# *** work out defaultSource parameter *** # 
+# ***  to pass to the XSL Stylesheets  *** #
+# **************************************** #  
+# case 1: no localsource set, we'll use the hard-coded values 
+# for the source as set in the XSL Stylesheets
 if test "x$TEISOURCE" = "x"
 then
   localsource=""
-  echo "WARNING: No localsource set. Will get a copy from http://www.tei-c.org/Vault/P5/."
-else 
-#  REALD=`dirname "$TEISOURCE"`
-#  SDIR=`(cd $REALD; pwd)`
-#  REALSOURCE=$SDIR/`basename $TEISOURCE`
-  echo using $TEISOURCE as default source
+  echo "WARNING: No localsource set. Will get a copy from http://www.tei-c.org/Vault/P5/ when necessary."
+
+# case 2: localsource is set and starts with 'http',
+# thus pointing at a remote resource
+elif [ "$TEISOURCE" != "${TEISOURCE#http}" ]
+then
+  echo using remote resource $TEISOURCE as default source 
   localsource=" -DdefaultSource=\"$TEISOURCE\" "
+
+# case 3: localsource is set and the local file exists
+elif test -e $TEISOURCE
+then
+  REALD=`dirname "$TEISOURCE"`
+  SDIR=`(cd $REALD; pwd)`
+  REALSOURCE=$SDIR/`basename $TEISOURCE`
+  echo using local file $REALSOURCE as default source
+  localsource=" -DdefaultSource=\"$REALSOURCE\" "
+else 
+  die "unable to get localsource from $TEISOURCE"
 fi
 
 in=${1:?"no input file supplied; for usage syntax $0 --help"}
