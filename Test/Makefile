@@ -390,6 +390,7 @@ test-oddity: css
 	$(SAXON) -s:testdrama.odd -xsl:../odds/odd2odd.xsl -o:testdrama.compiled.xml
 	perl -p -i -e 's+ xml:base=".*testdrama.odd"++' testdrama.compiled.xml
 	perl -i -pe 'BEGIN{undef $$/;} s/<\?TEIVERSION[^?]+\?>//smg' testdrama.compiled.xml
+	perl -i -pe 's+(schemaSpec.*source=")$(DEFAULTSOURCE)+$$1https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml+' testdrama.compiled.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  testdrama.compiled.xml expected-results/testdrama.compiled.xml; fi
 	$(BINDIR)/teitornc $(FLAGS) test30.odd test30.rnc
