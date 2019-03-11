@@ -182,7 +182,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "open",
               "valItem" : 
               [ 
                 { "ident" : "suspension",
@@ -452,7 +452,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "closed",
               "valItem" : 
               [ 
                 { "ident" : "excl",
@@ -537,7 +537,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "closed",
               "valItem" : 
               [ 
                 { "ident" : "excl",
@@ -901,7 +901,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "closed",
               "valItem" : 
               [ 
                 { "ident" : "free",
@@ -2195,7 +2195,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "closed",
               "valItem" : 
               [ 
                 { "ident" : "high",
@@ -2254,7 +2254,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "closed",
               "valItem" : 
               [ 
                 { "ident" : "silent",
@@ -2321,7 +2321,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "semi",
               "valItem" : 
               [ 
                 { "ident" : "sent",
@@ -2495,6 +2495,7 @@
             "model.publicationStmtPart.detail" ],
           "atts" : 
           [ "att.global",
+            "att.canonical",
             "att.datable",
             "att.editLike",
             "att.dimensions",
@@ -2595,8 +2596,8 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-09-25\" xml:lang=\"en\">contains a brief description of the object documented by its parent element, typically a documentation\n    element or an entity.<\/desc>" ],
-        "shortDesc" : "(description) contains a brief description of the object documented by its parent element, typically a documentation\n    element or an entity.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-09-25\" xml:lang=\"en\">contains a brief\n  description of the object documented by its parent element,\n  typically a documentation element or an entity.<\/desc>" ],
+        "shortDesc" : "(description) contains a brief\n  description of the object documented by its parent element,\n  typically a documentation element or an entity.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">description<\/gloss>" ],
         "altIdent" : 
@@ -2612,7 +2613,35 @@
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "type",
+            "mode" : "change",
+            "ns" : "",
+            "usage" : "def",
+            "desc" : 
+            [  ],
+            "shortDesc" : "",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            {  },
+            "valList" : 
+            { "type" : "semi",
+              "valItem" : 
+              [ 
+                { "ident" : "deprecationInfo",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-09-14\" xml:lang=\"en\">This element\n\t  describes why or how its parent element is being deprecated,\n\t  typically including recommendations for alternate\n\t  encoding.<\/desc>" ],
+                  "shortDesc" : "(deprecation\n\t  information) This element\n\t  describes why or how its parent element is being deprecated,\n\t  typically including recommendations for alternate\n\t  encoding.",
+                  "gloss" : 
+                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-09-14\" xml:lang=\"en\">deprecation\n\t  information<\/gloss>" ],
+                  "altIdent" : 
+                  [  ] } ] } } ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -3671,7 +3700,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "open",
               "valItem" : 
               [ 
                 { "ident" : "index",
@@ -4534,7 +4563,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "semi",
               "valItem" : 
               [ 
                 { "ident" : "cancelled",
@@ -4620,7 +4649,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "open",
               "valItem" : 
               [ 
                 { "ident" : "rubbing",
@@ -4731,7 +4760,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "semi",
               "valItem" : 
               [ 
                 { "ident" : "WGS84",
@@ -5101,7 +5130,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "closed",
               "valItem" : 
               [ 
                 { "ident" : "all",
@@ -5188,7 +5217,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "semi",
               "valItem" : 
               [ 
                 { "ident" : "ISBN",
@@ -5520,7 +5549,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "closed",
               "valItem" : 
               [ 
                 { "ident" : "root",
@@ -6080,7 +6109,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "semi",
               "valItem" : 
               [ 
                 { "ident" : "gloss",
@@ -6864,7 +6893,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "closed",
               "valItem" : 
               [ 
                 { "ident" : "silent",
@@ -7034,7 +7063,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "semi",
               "valItem" : 
               [ 
                 { "ident" : "cardinal",
@@ -7086,7 +7115,9 @@
             "altIdent" : 
             [  ],
             "valDesc" : 
-            [ "<valDesc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\">a numeric value.<\/valDesc>" ],
+            [ "<valDesc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\">a numeric value.<\/valDesc>",
+              "<valDesc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"fr\">une valeur numérique.<\/valDesc>",
+              "<valDesc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"de\">ein numerischer Wert<\/valDesc>" ],
             "datatype" : 
             { "min" : "1",
               "max" : "1",
@@ -7635,7 +7666,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "closed",
               "valItem" : 
               [ 
                 { "ident" : "none",
@@ -7685,7 +7716,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "closed",
               "valItem" : 
               [ 
                 { "ident" : "internal",
@@ -7751,7 +7782,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "semi",
               "valItem" : 
               [ 
                 { "ident" : "spoken",
@@ -7908,7 +7939,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "closed",
               "valItem" : 
               [ 
                 { "ident" : "none",
@@ -8223,7 +8254,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "open",
               "valItem" : 
               [ 
                 { "ident" : "first-line",
@@ -9088,7 +9119,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "semi",
               "valItem" : 
               [ 
                 { "ident" : "setting",
@@ -9903,7 +9934,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "semi",
               "valItem" : 
               [ 
                 { "ident" : "d",
@@ -10018,7 +10049,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "closed",
               "valItem" : 
               [ 
                 { "ident" : "a",
@@ -10086,7 +10117,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "open",
               "valItem" : 
               [ 
                 { "ident" : "main",
@@ -10242,7 +10273,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "semi",
               "valItem" : 
               [ 
                 { "ident" : "main",
@@ -10418,7 +10449,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "semi",
               "valItem" : 
               [ 
                 { "ident" : "illegible",
@@ -10486,7 +10517,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "open",
               "valItem" : 
               [ 
                 { "ident" : "rubbing",
@@ -10607,7 +10638,7 @@
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
             "valList" : 
-            { "type" : "",
+            { "type" : "semi",
               "valItem" : 
               [ 
                 { "ident" : "d",
@@ -12362,7 +12393,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "semi",
                 "valItem" : 
                 [ 
                   { "ident" : "volume",
@@ -12736,7 +12767,7 @@
                 "dataRef" : 
                 { "key" : "teidata.truthValue" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "closed",
                 "valItem" : 
                 [ 
                   { "ident" : "true",
@@ -12830,7 +12861,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "semi",
                 "valItem" : 
                 [ 
                   { "ident" : "cm",
@@ -12958,7 +12989,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "open",
                 "valItem" : 
                 [ 
                   { "ident" : "all",
@@ -13028,7 +13059,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "closed",
                 "valItem" : 
                 [ 
                   { "ident" : "composite",
@@ -13069,7 +13100,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "closed",
                 "valItem" : 
                 [ 
                   { "ident" : "initial",
@@ -13150,7 +13181,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "open",
                 "valItem" : 
                 [ 
                   { "ident" : "approved",
@@ -13321,7 +13352,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "semi",
                 "valItem" : 
                 [ 
                   { "ident" : "internal",
@@ -13457,7 +13488,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "closed",
                 "valItem" : 
                 [ 
                   { "ident" : "Y",
@@ -13628,7 +13659,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "closed",
                 "valItem" : 
                 [ 
                   { "ident" : "default",
@@ -14128,7 +14159,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "closed",
                 "valItem" : 
                 [ 
                   { "ident" : "sole",
@@ -14224,7 +14255,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "semi",
                 "valItem" : 
                 [ 
                   { "ident" : "m",
@@ -14551,7 +14582,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "semi",
                 "valItem" : 
                 [ 
                   { "ident" : "page",
@@ -14857,7 +14888,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "closed",
                 "valItem" : 
                 [ 
                   { "ident" : "yes",
@@ -14940,7 +14971,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "semi",
                 "valItem" : 
                 [ 
                   { "ident" : "below",
@@ -15106,7 +15137,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "closed",
                 "valItem" : 
                 [ 
                   { "ident" : "all",
@@ -15483,7 +15514,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "closed",
                 "valItem" : 
                 [ 
                   { "ident" : "css",
@@ -15643,7 +15674,7 @@
                 "dataRef" : 
                 { "key" : "teidata.enumerated" } },
               "valList" : 
-              { "type" : "",
+              { "type" : "open",
                 "valItem" : 
                 [ 
                   { "ident" : "duplicate",
@@ -16435,8 +16466,8 @@
         "type" : "dataSpec",
         "module" : "tei",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-04-14\" xml:lang=\"en\">defines attribute values which contain an XPath  expression.<\/desc>" ],
-        "shortDesc" : "defines attribute values which contain an XPath  expression.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-04-14\" xml:lang=\"en\">defines attribute values\nwhich contain an XPath expression.<\/desc>" ],
+        "shortDesc" : "defines attribute values\nwhich contain an XPath expression.",
         "gloss" : 
         [  ],
         "altIdent" : 
