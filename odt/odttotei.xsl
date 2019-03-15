@@ -319,6 +319,13 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:otherwise>nostyle</xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:attribute>
+	  <!--
+	    We do not process hard page breaks here directly 
+	    but defer their output until the sections get created.
+	    Therefore we add a dedicated attribute '@page-break-before'
+	    for flagging this.
+	  -->
+	  <xsl:attribute name="page-break-before" select="exists(tei:pagebreak-before(.))"/>
 	  <xsl:apply-templates/>
 	</HEAD>
       </xsl:otherwise>
@@ -340,6 +347,7 @@ of this software, even if advised of the possibility of such damage.
 
 
   <xsl:template match="text:p">
+    <xsl:sequence select="tei:pagebreak-before(.)"/>
 
     <xsl:choose>
       <xsl:when test="draw:frame and parent::draw:text-box">
@@ -611,6 +619,7 @@ of this software, even if advised of the possibility of such damage.
 
   <!-- tables -->
   <xsl:template match="table:table">
+    <xsl:sequence select="tei:pagebreak-before(.)"/>
     <table rend="frame">
       <xsl:if test="@table:name and not(@table:name = 'local-table')">
         <xsl:attribute name="xml:id">
@@ -1088,9 +1097,13 @@ These seem to have no obvious translation
 
 <xsl:template match="text:section-source"/>
 
-
-<xsl:template match="text:soft-page-break">
-</xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Since soft page breaks are an optional and application specific feature, we disregard them completely.
+      See the <a href="http://docs.oasis-open.org/office/v1.2/os/OpenDocument-v1.2-os-part1.html#__RefHeading__1419322_253892949">OpenDocument specification</a>
+      for further information.
+    </desc>
+  </doc>
+  <xsl:template match="text:soft-page-break"/>
 
 <xsl:template name="stars">
    <xsl:param name="n"/>
@@ -1166,6 +1179,13 @@ These seem to have no obvious translation
 	  </xsl:for-each-group>
       </xsl:when>
       <xsl:otherwise>
+        <!-- 
+          hard page breaks before sections are passed on via the
+          @page-break-before attribute and need to get injected here
+        -->
+        <xsl:if test="@page-break-before='true'">
+          <pb/>
+        </xsl:if>
 	<div>
 	  <xsl:choose>
 	    <xsl:when test="starts-with(@style,'Heading')"/>
@@ -1389,4 +1409,23 @@ These seem to have no obvious translation
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:function>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Check whether the given element (e.g. text:p) refers to a style that implies a hard page break before.
+    </desc>
+    <param name="curNode">The element for which to check the style. 
+      The element's attribute @text:style-name or @table:style-name is used for looking up the style</param>
+    <return>A tei:pb element if the lookup was succesful, the empty sequence otherwise</return>
+  </doc>
+  <xsl:function name="tei:pagebreak-before" as="element(tei:pb)?">
+    <xsl:param name="curNode" as="element()?"/>
+    <xsl:if test="($curNode/@text:style-name or $curNode/@table:style-name) and 
+      key('STYLES', 
+        ($curNode/@text:style-name, $curNode/@table:style-name), 
+        $curNode/root()
+        )/(style:paragraph-properties, style:table-properties)[@fo:break-before='page']">
+      <pb/>
+    </xsl:if>
+  </xsl:function>
+  
 </xsl:stylesheet>
