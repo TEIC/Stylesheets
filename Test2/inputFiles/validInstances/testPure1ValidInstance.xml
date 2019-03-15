@@ -65,6 +65,28 @@
 	</list>
 	</p>
       </div>
+
+      <div>
+	<head>Testing content model and occurences of element refs</head>
+	<p>The following <gi>bibl</gi> should be valid. It
+	<emph>should</emph> be invalid if you add 2 more
+	<gi>publisher</gi> elements (for a total of 4), but is not.
+	See <ref
+	target="https://github.com/TEIC/Stylesheets/issues/354">354</ref>.
+	<bibl>
+	  <author>one</author>
+	  <author>two</author>
+	  <title xml:lang="es">uno</title>
+	  <title xml:lang="es">dos</title>
+	  <title xml:lang="es">tres</title>
+	  <title xml:lang="es">quatro</title>
+	  <title xml:lang="es">cinco</title>
+	  <publisher xml:lang="ja">ich</publisher>
+	  <publisher xml:lang="ja">ni</publisher>
+	  <date when="2019-01-05"/>
+	</bibl>
+	</p>
+      </div>
       
       <div>
         <head>Some linguistic stuff</head>

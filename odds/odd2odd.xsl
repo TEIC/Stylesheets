@@ -59,7 +59,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="configDirectory"/>
   <xsl:param name="currentDirectory"/>
   <xsl:param name="defaultSource"/>
-  <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
+  <xsl:param name="defaultTEIServer">https://www.tei-c.org/Vault/P5/</xsl:param>
   <xsl:param name="defaultTEIVersion">current</xsl:param>
   <xsl:param name="doclang"/>
   <xsl:param name="selectedSchema"/>

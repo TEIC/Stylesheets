@@ -1,13 +1,15 @@
 #added REGERATION option (LB 2015-12-16)
 VERSION=`cat VERSION`
-FLAG=
 REGENERATING=0
 # 0 = do diff; 1 = dont do diff
 BINDIR=../bin
+DEFAULTSOURCE=https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml
 SAXONOPT=useFixedDate=true
-SAXON=java -Djava.awt.headless=true -jar ../lib/saxon9he.jar
-DOTDOTSAXON=java -Djava.awt.headless=true -jar ../../lib/saxon9he.jar
-JING=java -Djava.awt.headless=true -jar ../lib/lib/jing-20120724.0.0.jar
+SAXON=java -Djava.awt.headless=true -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
+DOTDOTSAXON=java -Djava.awt.headless=true -jar ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
+JING=java -Djava.awt.headless=true -jar ../lib/lib/jing-20120724.0.0.jar 
+# flags used for the commands running from $(BINDIR), e.g. `bin/teitorelaxng` 
+FLAGS=--localsource=$(DEFAULTSOURCE)
 OXY=/usr/share/oxygen
 SCRIPTS=teitobibtex \
 	teitodocbook \
@@ -32,7 +34,7 @@ SCHEMASCRIPTS=teitornc \
 default: test.rng test-to-html test-p4top5 test-oddity test-scripts test-namespaces test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt test-markdown test-cocoa test-epub
 
 test.rng:
-	$(BINDIR)/teitorelaxng --odd test.odd test.rng
+	$(BINDIR)/teitorelaxng $(FLAGS) --odd test.odd test.rng
 	perl -i -p -e 's/generated from ODD source.*//' test.rng
 	xmllint --format test.rng > temp; mv temp test.rng
 	perl -i -pe 'BEGIN{undef $$/;} s/<!--\n ?Schema[^>]+>//smg' test.rng
@@ -54,7 +56,7 @@ test-to-html: css
 	$(SAXON) test.xml ../profiles/ota/html/to.xsl cssFile=../tei.css $(SAXONOPT)  | xmllint --format - | perl cleanup.pl > test-ota.html
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test-ota.html expected-results/test-ota.html; fi
-	$(BINDIR)/teitohtml5 test.xml test.html5
+	$(BINDIR)/teitohtml5 $(FLAGS) test.xml test.html5
 	xmllint --encode utf-8 --format test.html5 | perl cleanup.pl > test.temp
 	mv test.temp test.html5
 	if [ $(REGENERATING) -ne 1 ]; \
@@ -136,20 +138,20 @@ test-from-html:
 test-markdown:
 	@echo BUILD: testing markdown
 	@echo BUILD: markdown to tei
-	$(BINDIR)/markdowntotei mdtest1.md mdtest1.xml
+	$(BINDIR)/markdowntotei $(FLAGS) mdtest1.md mdtest1.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  mdtest1.xml expected-results/mdtest1.xml; fi
 	@echo BUILD: tei to markdown
-	$(BINDIR)/teitomarkdown test.xml mdtest2.md
+	$(BINDIR)/teitomarkdown $(FLAGS) test.xml mdtest2.md
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  mdtest2.md expected-results/mdtest2.md; fi
 
 test-cocoa:
 	@echo BUILD: testing cocoa  to TEI
-	$(BINDIR)/cocoatotei cocoatest.txt cocoatest.xml
+	$(BINDIR)/cocoatotei $(FLAGS) cocoatest.txt cocoatest.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  cocoatest.xml expected-results/cocoatest.xml; fi
-	$(BINDIR)/cocoatotei cocoatest2.txt cocoatest2.xml
+	$(BINDIR)/cocoatotei $(FLAGS) cocoatest2.txt cocoatest2.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  cocoatest2.xml expected-results/cocoatest2.xml; fi
 
@@ -225,15 +227,15 @@ test-fo:
 
 test-epub: css
 	@echo BUILD: testing epub
-	$(BINDIR)/teitoepub3  test.xml test.epub
+	$(BINDIR)/teitoepub3 $(FLAGS) test.xml test.epub
 	java -Djava.awt.headless=true -jar ../lib/epubcheck3.jar test.epub
-	$(BINDIR)/teitoepub  test.xml test.epub
+	$(BINDIR)/teitoepub $(FLAGS) test.xml test.epub
 	java -Djava.awt.headless=true -jar ../lib/epubcheck3.jar  test.epub
 	unzip -t test.epub > test.epub.listing
 	if [ $(REGENERATING) -ne 1 ]; \
 		then bash -c 'diff  <(sort test.epub.listing) <(sort expected-results/test.epub.listing)'; fi
 	rm test.epub.listing
-	$(BINDIR)/teitoepub  --fileperpage test.xml test-pages.epub
+	$(BINDIR)/teitoepub $(FLAGS) --fileperpage test.xml test-pages.epub
 	unzip -t test-pages.epub > test.epub.listing2
 	if [ $(REGENERATING) -ne 1 ]; \
 		then bash -c 'diff  <(sort test.epub.listing2) <(sort expected-results/test.epub.listing2)'; fi
@@ -247,20 +249,20 @@ test-rdf:
 
 test-text:
 	@echo BUILD: testing text
-	$(BINDIR)/teitotxt test14.xml test.text
+	$(BINDIR)/teitotxt $(FLAGS) test14.xml test.text
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test.text expected-results/test.text; fi
 
 test-xlsx:
 	@echo BUILD: testing xlsx
-	$(BINDIR)/xlsxtotei test.xlsx test.xlsx.xml
+	$(BINDIR)/xlsxtotei $(FLAGS) test.xlsx test.xlsx.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test.xlsx.xml expected-results/test.xlsx.xml; fi
 
 test-odt:   test.rng
 	(cd ..; $(MAKE) names)
 	@echo BUILD: testing odt
-	$(BINDIR)/teitoodt test.xml
+	$(BINDIR)/teitoodt $(FLAGS) test.xml
 	unzip -t test.xml.odt | sort > test.xml.odt.listing
 	unzip -o -q test.xml.odt content.xml
 	xmllint --format content.xml > content.xml.odt.listing
@@ -268,65 +270,65 @@ test-odt:   test.rng
 		then bash -c 'diff  <(sort test.xml.odt.listing) <(sort expected-results/test.xml.odt.listing)'; fi
 	if [ $(REGENERATING) -ne 1 ]; \
 		then bash -c 'diff  <(sort content.xml.odt.listing) <(sort expected-results/content.xml.odt.listing)'; fi
-	$(BINDIR)/odttotei test7.odt test7.xml
+	$(BINDIR)/odttotei $(FLAGS) test7.odt test7.xml
 	$(JING) test.rng test7.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test7.xml expected-results/test7.xml; fi
 
 test-from-docx: test.rng
 	@echo BUILD: testing from-docx
-	$(BINDIR)/docxtotei test-indexes.docx temp.xml
+	$(BINDIR)/docxtotei $(FLAGS) test-indexes.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-indexes.xml  && rm temp.xml
 	$(JING) test.rng test-indexes.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test-indexes.xml expected-results/test-indexes.xml; fi
-	$(BINDIR)/docxtotei test11.docx temp.xml
+	$(BINDIR)/docxtotei $(FLAGS) test11.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl> test11.xml  && rm temp.xml
 	$(JING) test.rng test11.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test11.xml expected-results/test11.xml; fi
-	$(BINDIR)/docxtotei --profile=sciencejournal test11.docx temp.xml
+	$(BINDIR)/docxtotei $(FLAGS) --profile=sciencejournal test11.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl> test11a.xml  && rm temp.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test11a.xml expected-results/test11a.xml; fi
-	$(BINDIR)/docxtotei test19.docx temp.xml
+	$(BINDIR)/docxtotei $(FLAGS) test19.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test19.xml  && rm temp.xml
 	$(JING) test.rng test19.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test19.xml expected-results/test19.xml; fi
-	$(BINDIR)/docxtotei test18.docx temp.xml
+	$(BINDIR)/docxtotei $(FLAGS) test18.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test18.xml  && rm temp.xml
 	$(JING) test.rng test18.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test18.xml expected-results/test18.xml; fi
-	$(BINDIR)/docxtotei test39.docx temp.xml
+	$(BINDIR)/docxtotei $(FLAGS) test39.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test39.xml  && rm temp.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test39.xml expected-results/test39.xml; fi
-	$(BINDIR)/docxtotei hyperlinktest.docx temp.xml
+	$(BINDIR)/docxtotei $(FLAGS) hyperlinktest.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > hyperlinktest.xml  && rm temp.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  hyperlinktest.xml expected-results/hyperlinktest.xml; fi
-	$(BINDIR)/docxtotei --profile=transcription test-rtf2tei.docx temp.xml
+	$(BINDIR)/docxtotei $(FLAGS) --profile=transcription test-rtf2tei.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-rtf2tei.xml  && rm temp.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test-rtf2tei.xml expected-results/test-rtf2tei.xml; fi
-	$(BINDIR)/docxtotei --profile=transcription test29.docx temp.xml
+	$(BINDIR)/docxtotei $(FLAGS) --profile=transcription test29.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test29.xml  && rm temp.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test29.xml expected-results/test29.xml; fi
-	$(BINDIR)/docxtotei --profile=tei test37.docx temp.xml
+	$(BINDIR)/docxtotei $(FLAGS) --profile=tei test37.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test37.xml  && rm temp.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test37.xml expected-results/test37.xml; fi
-	$(BINDIR)/docxtotei --profile=tei test40.docx temp.xml
+	$(BINDIR)/docxtotei $(FLAGS) --profile=tei test40.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test40.xml  && rm temp.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test40.xml expected-results/test40.xml; fi
 
 test-to-docx:
 	@echo BUILD: testing to-docx
-	$(BINDIR)/teitodocx test.xml
+	$(BINDIR)/teitodocx $(FLAGS) test.xml
 	unzip -p test.xml.docx word/document.xml | xmllint --format - > test.xml.docx.document
 	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > test.xml.docx.core
 	if [ $(REGENERATING) -ne 1 ]; \
@@ -334,51 +336,51 @@ test-to-docx:
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test.xml.docx.core expected-results/test.xml.docx.core; fi
 	rm test.xml.docx.document
-	$(BINDIR)/teitodocx test6.xml
+	$(BINDIR)/teitodocx $(FLAGS) test6.xml
 	unzip -p test6.xml.docx word/document.xml | xmllint --format - > test6.xml.docx.document
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test6.xml.docx.document expected-results/test6.xml.docx.document; fi
 	rm test6.xml.docx.document
-	$(BINDIR)/teitodocx testnotes1.xml
+	$(BINDIR)/teitodocx $(FLAGS) testnotes1.xml
 	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > testnotes1.xml.docx.document
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document; fi
 	rm testnotes1.xml.docx.document
 	$(SAXON) testoucscourses.xml ../profiles/default/p4/from.xsl > testoucscoursesp5.xml
-	$(BINDIR)/teitodocx --profile=oucscourses testoucscoursesp5.xml testoucscourses.xml.docx
+	$(BINDIR)/teitodocx $(FLAGS) --profile=oucscourses testoucscoursesp5.xml testoucscourses.xml.docx
 	rm testoucscourses.xml.docx testoucscoursesp5.xml
 
 test-oddity: css
 	@echo BUILD: testing oddity
-	$(BINDIR)/teitohtml5 $(FLAG) --summaryDoc --odd test.odd test.odd.html
+	$(BINDIR)/teitohtml5 $(FLAGS) --summaryDoc --odd test.odd test.odd.html
 	xmllint --encode utf-8 --format test.odd.html | perl cleanup.pl> test.temp ; mv test.temp test.odd.html
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test.odd.html expected-results/test.odd.html; fi
-	$(BINDIR)/teitoodd test.odd test.processedodd
+	$(BINDIR)/teitoodd $(FLAGS) test.odd test.processedodd
 	$(SAXON) test.processedodd ../odds/extract-isosch.xsl > test.isosch
 	perl -i -p -e 's/generated .* by /generated by /' test.isosch
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test.isosch expected-results/test.isosch; fi
-	$(BINDIR)/teitornc  $(FLAG) test21.odd test21.odd.rnc
+	$(BINDIR)/teitornc $(FLAGS) test21.odd test21.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test21.odd.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test21.odd.rnc
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test21.odd.rnc expected-results/test21.odd.rnc; fi
-	$(BINDIR)/teitornc  $(FLAG) test15.odd test15.odd.rnc
+	$(BINDIR)/teitornc  $(FLAGS) test15.odd test15.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test15.odd.rnc
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test15.odd.rnc expected-results/test15.odd.rnc; fi
-	$(BINDIR)/teitohtml5 $(FLAG) --summaryDoc --lang=es --profile=tei --odd test15.odd test15.odd.html
+	$(BINDIR)/teitohtml5 $(FLAGS) --summaryDoc --lang=es --profile=tei --odd test15.odd test15.odd.html
 	xmllint --encode utf-8 --format test15.odd.html | perl cleanup.pl> test.temp ; mv test.temp test15.odd.html
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test15.odd.html expected-results/test15.odd.html; fi
 	$(SAXON) -it:main  -xsl:../tools/oddbyexample.xsl corpus=`pwd`/bare | sed 's/<p>Derived from.*/<p\/>/' >  oddbyexample.odd
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  oddbyexample.odd expected-results/oddbyexample.odd; fi
-	$(BINDIR)/teitoxsd  $(FLAG) oddbyexample.odd  oddbyexample.xsd
-	$(BINDIR)/teitornc  $(FLAG) oddbyexample.odd  oddbyexample.rnc
-	$(BINDIR)/teitodtd  $(FLAG) oddbyexample.odd  oddbyexample.dtd
+	$(BINDIR)/teitoxsd  $(FLAGS) oddbyexample.odd  oddbyexample.xsd
+	$(BINDIR)/teitornc  $(FLAGS) oddbyexample.odd  oddbyexample.rnc
+	$(BINDIR)/teitodtd  $(FLAGS) oddbyexample.odd  oddbyexample.dtd
 	$(JING) -c oddbyexample.rnc bare/test2.xml
 	$(JING) oddbyexample.xsd bare/test2.xml
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test2.xml
@@ -388,10 +390,11 @@ test-oddity: css
 	$(SAXON) -s:testdrama.odd -xsl:../odds/odd2odd.xsl -o:testdrama.compiled.xml
 	perl -p -i -e 's+ xml:base=".*testdrama.odd"++' testdrama.compiled.xml
 	perl -i -pe 'BEGIN{undef $$/;} s/<\?TEIVERSION[^?]+\?>//smg' testdrama.compiled.xml
+	perl -i -pe 's+(schemaSpec.*source=")$(DEFAULTSOURCE)+$$1https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml+' testdrama.compiled.xml
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  testdrama.compiled.xml expected-results/testdrama.compiled.xml; fi
-	$(BINDIR)/teitornc $(FLAG) test30.odd test30.rnc
-	$(BINDIR)/teitodtd $(FLAG) test30.odd test30.dtd
+	$(BINDIR)/teitornc $(FLAGS) test30.odd test30.rnc
+	$(BINDIR)/teitodtd $(FLAGS) test30.odd test30.dtd
 	perl -p -i -e 's/generated from ODD source .*//' test30.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test30.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test30.dtd
@@ -405,9 +408,9 @@ test-oddity: css
 # MDH 2017-01-07: THE FOLLOWING LINES WILL integrate LB's new pure ODD 
 # master test to replace originals, BUT ONLY WHEN THINGS ARE WORKING PROPERLY.
 # Generate DTD from ODD.
-#	$(BINDIR)/teitodtd $(FLAG) testODD.odd testODD.dtd
+#	$(BINDIR)/teitodtd $(FLAGS) testODD.odd testODD.dtd
 # Generate RNC from the same file.
-#	$(BINDIR)/teitornc $(FLAG) testODD.odd testODD.rnc
+#	$(BINDIR)/teitornc $(FLAGS) testODD.odd testODD.rnc
 # Trim all sorts of piffle out of the DTD and RNC before we compare them with the expected results.
 #	perl -p -i -e 's/generated from ODD source .*//' testODD.dtd
 #	perl -i -pe 'BEGIN{undef $$/;} s/<!--\nDTD[^>]*-->\n//smg' testODD.dtd
@@ -420,8 +423,8 @@ test-oddity: css
 #		then diff  testODD.rnc expected-results/testODD.rnc; fi
 # NOTE: THERE SHOULD BE VALIDATION OF AN INSTANCE FILE AGAINST THE DTD HERE.	
 # OLD ORIGINAL CODE STILL BEING USED FOR THE MOMENT.
-	$(BINDIR)/teitodtd $(FLAG) test-pure.odd test-pure.dtd
-	$(BINDIR)/teitornc $(FLAG) test-pure.odd test-pure.rnc
+	$(BINDIR)/teitodtd $(FLAGS) test-pure.odd test-pure.dtd
+	$(BINDIR)/teitornc $(FLAGS) test-pure.odd test-pure.rnc
 	xmllint --noout --dtdvalid test-pure.dtd test-pure.xml
 	perl -p -i -e 's/generated from ODD source .*//' test-pure.dtd
 	perl -i -pe 'BEGIN{undef $$/;} s/<!--\nDTD[^>]*-->\n//smg' test-pure.dtd
@@ -431,13 +434,13 @@ test-oddity: css
 		then diff  test-pure.rnc expected-results/test-pure.rnc; fi
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test-pure.dtd expected-results/test-pure.dtd; fi
-	$(BINDIR)/teitohtml $(FLAG) --odd test-pure.odd test-pure.odd.html
+	$(BINDIR)/teitohtml $(FLAGS) --odd test-pure.odd test-pure.odd.html
 	xmllint --encode utf-8 --format test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure.odd.html
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test-pure.odd.html expected-results/test-pure.odd.html; fi
-	$(BINDIR)/teitodtd $(FLAG) test-pure2.odd test-pure2.dtd
-	$(BINDIR)/teitornc $(FLAG) test-pure2.odd test-pure2.rnc
-	$(BINDIR)/teitohtml $(FLAG) --odd test-pure2.odd test-pure2.odd.html
+	$(BINDIR)/teitodtd $(FLAGS) test-pure2.odd test-pure2.dtd
+	$(BINDIR)/teitornc $(FLAGS) test-pure2.odd test-pure2.rnc
+	$(BINDIR)/teitohtml $(FLAGS) --odd test-pure2.odd test-pure2.odd.html
 	xmllint --noout --dtdvalid test-pure2.dtd test-pure2.xml
 	xmllint --encode utf-8 --format test-pure2.odd.html | perl cleanup.pl> test.temp ; mv test.temp test-pure2.odd.html
 	perl -p -i -e 's/generated from ODD source .*//' test-pure2.dtd
@@ -466,15 +469,15 @@ test-oddity: css
 	rm test.odd2xslstripspace
 
 moreoddity:
-	$(BINDIR)/teitoxsd $(FLAG) test.odd test.xsd
-	$(BINDIR)/teitodtd test.odd test.dtd
-	$(BINDIR)/teitornc test.odd test.rnc
+	$(BINDIR)/teitoxsd $(FLAGS) test.odd test.xsd
+	$(BINDIR)/teitodtd $(FLAGS) test.odd test.dtd
+	$(BINDIR)/teitornc $(FLAGS) test.odd test.rnc
 
 test-namespaces:
 	@echo BUILD: testing namespaces
 # This test checks the rnc files so that to make sure we are testing
 # what we think we are testing.
-	$(BINDIR)/teitornc test33.odd test33.rnc
+	$(BINDIR)/teitornc $(FLAGS) test33.odd test33.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test33.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test33.rnc
 	if [ $(REGENERATING) -ne 1 ]; \
@@ -483,7 +486,7 @@ test-namespaces:
 	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test33.json
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test33.json expected-results/test33.json; fi
-	$(BINDIR)/teitornc test34.odd test34.rnc
+	$(BINDIR)/teitornc $(FLAGS) test34.odd test34.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test34.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test34.rnc
 	if [ $(REGENERATING) -ne 1 ]; \
@@ -497,11 +500,11 @@ test-namespaces:
 	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' test34.combined.json
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test34.combined.json expected-results/test34.combined.json; fi
-	$(BINDIR)/teitohtml --odd --summaryDoc test34.odd test34.odd.html
+	$(BINDIR)/teitohtml $(FLAGS) --odd --summaryDoc test34.odd test34.odd.html
 	xmllint --encode utf-8 --format test34.odd.html | perl cleanup.pl> test.temp ; mv test.temp test34.odd.html
 	if [ $(REGENERATING) -ne 1 ]; \
 		then diff  test34.odd.html expected-results/test34.odd.html; fi
-	$(BINDIR)/teitornc test35.odd test35.rnc
+	$(BINDIR)/teitornc $(FLAGS) test35.odd test35.rnc
 	perl -p -i -e 's/generated from ODD source .*//' test35.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' test35.rnc
 	if [ $(REGENERATING) -ne 1 ]; \
@@ -509,7 +512,7 @@ test-namespaces:
 
 test-scripts:
 	for i in $(SCRIPTS); do $(BINDIR)/$$i $(FLAGS) maria.xml $$i.result && rm $$i.result; done
-	$(BINDIR)/teitoodd test16.odd temp.odd
+	$(BINDIR)/teitoodd $(FLAGS) test16.odd temp.odd
 	for i in $(SCHEMASCRIPTS) ; do $(BINDIR)/$$i $(FLAGS) temp.odd $$i.result && rm $$i.result; done
 	rm temp.odd
 

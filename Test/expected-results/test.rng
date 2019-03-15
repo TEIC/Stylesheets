@@ -29,6 +29,7 @@
       <choice>
         <text/>
         <ref name="model.gLike"/>
+        <ref name="model.qLike"/>
         <ref name="model.phrase"/>
         <ref name="model.global"/>
       </choice>
@@ -222,7 +223,7 @@
     <optional>
       <attribute name="unit">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">names the unit used for the measurement
-Suggested values include: 1] cm (centimetres) ; 2] mm (millimetres) ; 3] in (inches) ; 4] lines; 5] chars (characters) </a:documentation>
+Suggested values include: 1] cm (centimetres); 2] mm (millimetres); 3] in (inches); 4] lines; 5] chars (characters)</a:documentation>
         <choice>
           <value>cm</value>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(centimetres) </a:documentation>
@@ -992,7 +993,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
     <optional>
       <attribute name="unit">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the units used for the measurement, usually using the standard symbol for the desired units.
-Suggested values include: 1] m (metre) ; 2] kg (kilogram) ; 3] s (second) ; 4] Hz (hertz) ; 5] Pa (pascal) ; 6] Ω (ohm) ; 7] L (litre) ; 8] t (tonne) ; 9] ha (hectare) ; 10] Å (ångström) ; 11] mL (millilitre) ; 12] cm (centimetre) ; 13] dB (decibel) ; 14] kbit (kilobit) ; 15] Kibit (kibibit) ; 16] kB (kilobyte) ; 17] KiB (kibibyte) ; 18] MB (megabyte) ; 19] MiB (mebibyte) </a:documentation>
+Suggested values include: 1] m (metre); 2] kg (kilogram); 3] s (second); 4] Hz (hertz); 5] Pa (pascal); 6] Ω (ohm); 7] L (litre); 8] t (tonne); 9] ha (hectare); 10] Å (ångström); 11] mL (millilitre); 12] cm (centimetre); 13] dB (decibel); 14] kbit (kilobit); 15] Kibit (kibibit); 16] kB (kilobyte); 17] KiB (kibibyte); 18] MB (megabyte); 19] MiB (mebibyte)</a:documentation>
         <choice>
           <value>m</value>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(metre) SI base unit of length</a:documentation>
@@ -1385,44 +1386,6 @@ The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow 
             </sch:assert>
     </sch:rule>
   </pattern>
-  <define name="att.tableDecoration.attributes">
-    <ref name="att.tableDecoration.attribute.role"/>
-    <ref name="att.tableDecoration.attribute.rows"/>
-    <ref name="att.tableDecoration.attribute.cols"/>
-  </define>
-  <define name="att.tableDecoration.attribute.role">
-    <optional>
-      <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="role" a:defaultValue="data">
-        <a:documentation>indicates the kind of information held in this cell or in each cell of this row.
-Suggested values include: 1] label; 2] data</a:documentation>
-        <choice>
-          <value>label</value>
-          <a:documentation>labelling or descriptive information only.</a:documentation>
-          <value>data</value>
-          <a:documentation>data values.</a:documentation>
-          <data type="token">
-            <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
-          </data>
-        </choice>
-      </attribute>
-    </optional>
-  </define>
-  <define name="att.tableDecoration.attribute.rows">
-    <optional>
-      <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="rows" a:defaultValue="1">
-        <a:documentation>indicates the number of rows occupied by this cell or row.</a:documentation>
-        <data type="nonNegativeInteger"/>
-      </attribute>
-    </optional>
-  </define>
-  <define name="att.tableDecoration.attribute.cols">
-    <optional>
-      <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="cols" a:defaultValue="1">
-        <a:documentation>(columns) indicates the number of columns occupied by this cell or row.</a:documentation>
-        <data type="nonNegativeInteger"/>
-      </attribute>
-    </optional>
-  </define>
   <define name="att.timed.attributes">
     <ref name="att.timed.attribute.start"/>
     <ref name="att.timed.attribute.end"/>
@@ -3253,7 +3216,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
     <optional>
       <attribute name="extent">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates whether the pronunciation or orthography applies to all or part of a word.
-Suggested values include: 1] full (full form) ; 2] pref (prefix) ; 3] suff (suffix) ; 4] inf (infix) ; 5] part (partial) </a:documentation>
+Suggested values include: 1] full (full form); 2] pref (prefix); 3] suff (suffix); 4] inf (infix); 5] part (partial)</a:documentation>
         <choice>
           <value>full</value>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(full form) </a:documentation>
@@ -3554,9 +3517,26 @@ Suggested values include: 1] spoken; 2] thought; 3] written; 4] soCalled; 5] for
     <element name="desc">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components]</a:documentation>
       <ref name="macro.limitedContent"/>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-desc-deprecationInfo-only-in-deprecated-constraint-rule-10">
+        <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:desc[ @type eq 'deprecationInfo']">
+          <sch:assert test="../@validUntil">Information about a
+	deprecation should only be present in a specification element
+	that is being deprecated: that is, only an element that has a
+	@validUntil attribute should have a child &lt;desc
+	type="deprecationInfo"&gt;.</sch:assert>
+        </sch:rule>
+      </pattern>
       <ref name="att.global.attributes"/>
       <ref name="att.translatable.attributes"/>
-      <ref name="att.typed.attributes"/>
+      <ref name="att.typed.attribute.subtype"/>
+      <optional>
+        <attribute name="type">
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">characterizes the element in some sense, using any convenient classification scheme or typology.</a:documentation>
+          <data type="token">
+            <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+          </data>
+        </attribute>
+      </optional>
       <empty/>
     </element>
   </define>
@@ -3929,7 +3909,7 @@ Measures]</a:documentation>
   </define>
   <define name="date">
     <element name="date">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a date in any format. [3.5.4. Dates and Times 2.2.4. Publication, Distribution, Licensing, etc. 2.6. The Revision Description 3.11.2.4. Imprint, Size of a Document, and Reprint Information 15.2.3. The Setting Description 13.3.6. Dates and Times]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a date in any format. [3.5.4. Dates and Times 2.2.4. Publication, Distribution, Licensing, etc. 2.6. The Revision Description 3.11.2.4. Imprint, Size of a Document, and Reprint Information 15.2.3. The Setting Description 13.3.7. Dates and Times]</a:documentation>
       <zeroOrMore>
         <choice>
           <text/>
@@ -3939,6 +3919,7 @@ Measures]</a:documentation>
         </choice>
       </zeroOrMore>
       <ref name="att.global.attributes"/>
+      <ref name="att.canonical.attributes"/>
       <ref name="att.datable.attributes"/>
       <ref name="att.editLike.attributes"/>
       <ref name="att.dimensions.attributes"/>
@@ -4080,7 +4061,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
           </group>
         </zeroOrMore>
       </group>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-list-gloss-list-must-have-labels-constraint-rule-10">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-list-gloss-list-must-have-labels-constraint-rule-11">
         <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:list[@type='gloss']">
           <sch:assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</sch:assert>
         </sch:rule>
@@ -4552,7 +4533,7 @@ Elements]</a:documentation>
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the title according to some convenient typology.
-Sample values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4] short; 5] desc (descriptive) </a:documentation>
+Sample values include: 1] main; 2] sub (subordinate); 3] alt (alternate); 4] short; 5] desc (descriptive)</a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -4749,7 +4730,7 @@ If the @target attribute on <sch:name/> is used, the
 relatedItem element must be empty</sch:report>
         </rule>
       </pattern>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-relatedItem-targetorcontent1-constraint-assert-7">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-relatedItem-targetorcontent1-constraint-assert-8">
         <rule context="tei:relatedItem">
           <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="@target or child::*">A relatedItem element should have either a 'target' attribute
         or a child element to indicate the related bibliographic item</sch:assert>
@@ -4824,7 +4805,7 @@ relatedItem element must be empty</sch:report>
           </group>
         </zeroOrMore>
       </group>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-lg-atleast1oflggapl-constraint-assert-8">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-lg-atleast1oflggapl-constraint-assert-9">
         <rule context="tei:lg">
           <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
         must contain at least one child l, lg or gap element.</sch:assert>
@@ -5899,7 +5880,7 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
       <optional>
         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="datum" a:defaultValue="WGS84">
           <a:documentation>supplies a commonly used code name for the datum employed.
-Suggested values include: 1] WGS84 (World Geodetic System) ; 2] MGRS (Military Grid Reference System) ; 3] OSGB36 (ordnance survey great britain) ; 4] ED50 (European Datum coordinate system) </a:documentation>
+Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Grid Reference System); 3] OSGB36 (ordnance survey great britain); 4] ED50 (European Datum coordinate system)</a:documentation>
           <choice>
             <value>WGS84</value>
             <a:documentation>(World Geodetic System) a pair of numbers to be interpreted as latitude followed by longitude according to the World Geodetic System.</a:documentation>
@@ -6524,7 +6505,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
     <element name="path">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">defines any line passing through two or more points within a surface element. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]</a:documentation>
       <empty/>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-path-pathmustnotbeclosed-constraint-rule-11">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-path-pathmustnotbeclosed-constraint-rule-12">
         <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:path[@points]">
           <sch:let name="firstPair" value="tokenize( normalize-space( @points ), ' ')[1]"/>
           <sch:let name="lastPair" value="tokenize( normalize-space( @points ), ' ')[last()]"/>
@@ -6570,12 +6551,12 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
     <element name="addSpan">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(added span of text) marks the beginning of a longer sequence of text added by an author, scribe, annotator or corrector (see also add). [11.3.1.4. Additions and Deletions]</a:documentation>
       <empty/>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-addSpan-spanTo-constraint-assert-9">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-addSpan-spanTo-constraint-assert-10">
         <rule context="tei:addSpan">
           <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="@spanTo">The @spanTo attribute of <sch:name/> is required.</sch:assert>
         </rule>
       </pattern>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-addSpan-spanTo_fr-constraint-assert-10">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-addSpan-spanTo_fr-constraint-assert-11">
         <rule context="tei:addSpan">
           <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="@spanTo">L'attribut spanTo est requis.</sch:assert>
         </rule>
@@ -6603,13 +6584,13 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
     <element name="damageSpan">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(damaged span of text) marks the beginning of a longer sequence of text which is damaged in some way but still legible. [11.3.3.1. Damage, Illegibility, and Supplied Text]</a:documentation>
       <empty/>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-damageSpan-spanTo-constraint-assert-11">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-damageSpan-spanTo-constraint-assert-12">
         <rule context="tei:damageSpan">
           <assert xmlns:rng="http://relaxng.org/ns/structure/1.0" test="@spanTo">
 The @spanTo attribute of <name/> is required.</assert>
         </rule>
       </pattern>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-damageSpan-spanTo_fr-constraint-assert-12">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-damageSpan-spanTo_fr-constraint-assert-13">
         <rule context="tei:damageSpan">
           <assert xmlns:rng="http://relaxng.org/ns/structure/1.0" test="@spanTo">L'attribut spanTo est requis.</assert>
         </rule>
@@ -6625,12 +6606,12 @@ The @spanTo attribute of <name/> is required.</assert>
     <element name="delSpan">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(deleted span of text) marks the beginning of a longer sequence of text deleted, marked as deleted, or otherwise signaled as superfluous or spurious by an author, scribe, annotator, or corrector. [11.3.1.4. Additions and Deletions]</a:documentation>
       <empty/>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-delSpan-spanTo-constraint-assert-13">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-delSpan-spanTo-constraint-assert-14">
         <rule context="tei:delSpan">
           <assert xmlns:rng="http://relaxng.org/ns/structure/1.0" test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
         </rule>
       </pattern>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-delSpan-spanTo_fr-constraint-assert-14">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-delSpan-spanTo_fr-constraint-assert-15">
         <rule context="tei:delSpan">
           <assert xmlns:rng="http://relaxng.org/ns/structure/1.0" test="@spanTo">L'attribut spanTo est requis.</assert>
         </rule>
@@ -6663,7 +6644,7 @@ The @spanTo attribute of <name/> is required.</assert>
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the material encoded according to some useful typology.
-Sample values include: 1] header; 2] footer; 3] pageNum (page number) ; 4] lineNum (line number) ; 5] sig (signature) ; 6] catch (catchword) </a:documentation>
+Sample values include: 1] header; 2] footer; 3] pageNum (page number); 4] lineNum (line number); 5] sig (signature); 6] catch (catchword)</a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -6789,7 +6770,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum (page number) ; 4] lineN
           <ref name="model.milestoneLike"/>
         </choice>
       </oneOrMore>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-subst-substContents1-constraint-assert-15">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-subst-substContents1-constraint-assert-16">
         <rule context="tei:subst">
           <assert xmlns:rng="http://relaxng.org/ns/structure/1.0" test="child::tei:add and child::tei:del"><name/> must have at least one child add and at least one child del</assert>
         </rule>
@@ -8465,7 +8446,7 @@ Suggested values include: 1] initial; 2] final</a:documentation>
       <optional>
         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="type" a:defaultValue="main">
           <a:documentation>specifies the role of this subdivision of the title.
-Suggested values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4] short; 5] desc (descriptive) </a:documentation>
+Suggested values include: 1] main; 2] sub (subordinate); 3] alt (alternate); 4] short; 5] desc (descriptive)</a:documentation>
           <choice>
             <value>main</value>
             <a:documentation>main title of the work</a:documentation>
@@ -8755,7 +8736,7 @@ Suggested values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4
     <element name="link">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">defines an association or hypertextual link among elements or passages, of some type not more precisely specifiable by other elements. [16.1. Links]</a:documentation>
       <empty/>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-link-linkTargets3-constraint-assert-16">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-link-linkTargets3-constraint-assert-17">
         <rule context="tei:link">
           <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="contains(normalize-space(@target),' ')">You must supply at least two values for @target or  on <sch:name/>
                </sch:assert>
@@ -8851,7 +8832,7 @@ Suggested values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4
       <optional>
         <attribute name="unit">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the unit of time in which the interval value is expressed, if this is not inherited from the parent timeline.
-Suggested values include: 1] d (days) ; 2] h (hours) ; 3] min (minutes) ; 4] s (seconds) ; 5] ms (milliseconds) </a:documentation>
+Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (seconds); 5] ms (milliseconds)</a:documentation>
           <choice>
             <value>d</value>
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(days) </a:documentation>
@@ -8910,7 +8891,7 @@ Suggested values include: 1] d (days) ; 2] h (hours) ; 3] min (minutes) ; 4] s (
       <optional>
         <attribute name="unit">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the unit of time corresponding to the interval value of the timeline or of its constituent points in time.
-Suggested values include: 1] d (days) ; 2] h (hours) ; 3] min (minutes) ; 4] s (seconds) ; 5] ms (milliseconds) </a:documentation>
+Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (seconds); 5] ms (milliseconds)</a:documentation>
           <choice>
             <value>d</value>
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(days) </a:documentation>
@@ -8956,7 +8937,7 @@ Suggested values include: 1] d (days) ; 2] h (hours) ; 3] min (minutes) ; 4] s (
           <ref name="model.certLike"/>
         </choice>
       </zeroOrMore>
-      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-join-joinTargets3-constraint-assert-17">
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-join-joinTargets3-constraint-assert-18">
         <rule context="tei:join">
           <assert xmlns:rng="http://relaxng.org/ns/structure/1.0" test="contains(@target,' ')">
 You must supply at least two values for @target on <name/>
@@ -9091,12 +9072,13 @@ You must supply at least two values for @target on <name/>
   </define>
   <define name="att.entryLike.attributes">
     <ref name="att.entryLike.attribute.type"/>
+    <ref name="att.typed.attribute.subtype"/>
   </define>
   <define name="att.entryLike.attribute.type">
     <optional>
       <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="type" a:defaultValue="main">
         <a:documentation>indicates type of entry, in dictionaries with multiple types.
-Suggested values include: 1] main; 2] hom (homograph) ; 3] xref (cross reference) ; 4] affix; 5] abbr (abbreviation) ; 6] supplemental; 7] foreign</a:documentation>
+Suggested values include: 1] main; 2] hom (homograph); 3] xref (cross reference); 4] affix; 5] abbr (abbreviation); 6] supplemental; 7] foreign</a:documentation>
         <choice>
           <value>main</value>
           <a:documentation>a main entry (default).</a:documentation>
@@ -9645,7 +9627,7 @@ Suggested values include: 1] simple; 2] lemma; 3] variant; 4] compound; 5] deriv
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the grammatical information given according to some convenient typology—in the case of terminological information, preferably the dictionary of data element types specified in ISO 12620.
-Sample values include: 1] pos (part of speech) ; 2] gen (gender) ; 3] num (number) ; 4] animate; 5] proper</a:documentation>
+Sample values include: 1] pos (part of speech); 2] gen (gender); 3] num (number); 4] animate; 5] proper</a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -9824,7 +9806,7 @@ Sample values include: 1] abbrev; 2] verbTable</a:documentation>
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the usage information using any convenient typology.
-Sample values include: 1] geo (geographic) ; 2] time; 3] dom (domain) ; 4] register; 5] style; 6] plev (preference level) ; 7] lang (language) ; 8] gram (grammatical) ; 9] syn (synonym) ; 10] hyper (hypernym) ; 11] colloc (collocation) ; 12] comp (complement) ; 13] obj (object) ; 14] subj (subject) ; 15] verb; 16] hint</a:documentation>
+Sample values include: 1] geo (geographic); 2] time; 3] dom (domain); 4] register; 5] style; 6] plev (preference level); 7] lang (language); 8] gram (grammatical); 9] syn (synonym); 10] hyper (hypernym); 11] colloc (collocation); 12] comp (complement); 13] obj (object); 14] subj (subject); 15] verb; 16] hint</a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -9869,7 +9851,7 @@ Sample values include: 1] geo (geographic) ; 2] time; 3] dom (domain) ; 4] regis
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the type of cross reference, using any convenient typology.
-Sample values include: 1] syn (synonym) ; 2] etym (etymological) ; 3] cf (compare or consult) ; 4] illus (illustration) </a:documentation>
+Sample values include: 1] syn (synonym); 2] etym (etymological); 3] cf (compare or consult); 4] illus (illustration)</a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -9914,7 +9896,7 @@ Sample values include: 1] syn (synonym) ; 2] etym (etymological) ; 3] cf (compar
       <optional>
         <attribute name="type">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the kind of typographic modification made to the headword in the reference.
-Sample values include: 1] cap (capital) ; 2] noHyph (no hyphen) </a:documentation>
+Sample values include: 1] cap (capital); 2] noHyph (no hyphen)</a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
           </data>
@@ -9939,6 +9921,44 @@ Sample values include: 1] cap (capital) ; 2] noHyph (no hyphen) </a:documentatio
       <ref name="att.notated.attributes"/>
       <empty/>
     </element>
+  </define>
+  <define name="att.tableDecoration.attributes">
+    <ref name="att.tableDecoration.attribute.role"/>
+    <ref name="att.tableDecoration.attribute.rows"/>
+    <ref name="att.tableDecoration.attribute.cols"/>
+  </define>
+  <define name="att.tableDecoration.attribute.role">
+    <optional>
+      <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="role" a:defaultValue="data">
+        <a:documentation>indicates the kind of information held in this cell or in each cell of this row.
+Suggested values include: 1] label; 2] data</a:documentation>
+        <choice>
+          <value>label</value>
+          <a:documentation>labelling or descriptive information only.</a:documentation>
+          <value>data</value>
+          <a:documentation>data values.</a:documentation>
+          <data type="token">
+            <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.tableDecoration.attribute.rows">
+    <optional>
+      <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="rows" a:defaultValue="1">
+        <a:documentation>indicates the number of rows occupied by this cell or row.</a:documentation>
+        <data type="nonNegativeInteger"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.tableDecoration.attribute.cols">
+    <optional>
+      <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="cols" a:defaultValue="1">
+        <a:documentation>(columns) indicates the number of columns occupied by this cell or row.</a:documentation>
+        <data type="nonNegativeInteger"/>
+      </attribute>
+    </optional>
   </define>
   <define name="table">
     <element name="table">

@@ -2053,7 +2053,7 @@ select="$makeDecls"/></xsl:message>
   <xsl:template name="die">
     <xsl:param name="message"/>
     <xsl:message terminate="yes">
-      <xsl:text>Error: odd2odd.xsl: </xsl:text> 
+      <xsl:text>Error: teiodds.xsl: </xsl:text> 
       <xsl:value-of select="$message"/>
     </xsl:message>
   </xsl:template>

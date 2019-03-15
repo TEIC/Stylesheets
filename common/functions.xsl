@@ -1196,10 +1196,14 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
             </xsl:variable>
             <xsl:variable name="firstLang" select="($langs)[1]"/>
-            <xsl:sequence select="tei:makeGloss(.,$langs)"/>
-            <xsl:if test="following-sibling::tei:valItem">
-              <xsl:text>; </xsl:text>
-            </xsl:if>
+            <xsl:variable name="gloss"
+                          select="normalize-space( string-join( tei:makeGloss(.,$langs),'') )"/>
+            <xsl:value-of select="concat(
+                                    if ($gloss ne '') then '&#x20;' else '',
+                                    $gloss,
+                                    if (following-sibling::tei:valItem) then ';' else '',
+                                    if (position() ne last()) then '&#x20;' else ''
+                                    )"/>
           </xsl:for-each>
         </xsl:when>
       </xsl:choose>
@@ -1246,6 +1250,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="context"/>
     <xsl:param name="langs"/>
 
+    <!-- This function returns a sequence of strings that may include
+         leading or trailing whitespace. -->
     <xsl:variable name="firstLang" select="($langs)[1]"/>
     <xsl:for-each select="$context">
       <xsl:choose>
@@ -1276,7 +1282,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:variable>
           <xsl:choose>
             <xsl:when test="$G='' and tei:gloss[(not(@xml:lang) or @xml:lang='en')]">
-              <xsl:text> (</xsl:text>
+              <xsl:text>(</xsl:text>
               <xsl:apply-templates select="tei:gloss[(not(@xml:lang) or @xml:lang='en')]" mode="inLanguage"/>
               <xsl:text>) </xsl:text>
             </xsl:when>

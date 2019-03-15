@@ -151,13 +151,15 @@
 	  </attList>
 	</elementSpec>		
 
-	<!-- Test changing a content model: -->
+	<!-- Test changing a content model, and simultaneously test
+	     @minOccurs and @maxOccurs on <elementRef>: -->
 	<elementSpec ident="bibl" mode="change" module="core">
           <desc>A short bibliographic citation with nothing but author, title, and optional date</desc>
           <content>
             <sequence>
-              <elementRef key="author" minOccurs="1" maxOccurs="unbounded"/>
-              <elementRef key="title"/>
+              <elementRef key="author" minOccurs="2" maxOccurs="unbounded"/>
+              <elementRef key="title" minOccurs="1" maxOccurs="8"/>
+	      <elementRef key="publisher" minOccurs="0" maxOccurs="3"/>
               <elementRef key="date" minOccurs="0" maxOccurs="1"/>
             </sequence>
           </content>
@@ -174,7 +176,7 @@
             <attDef ident="ana" mode="change" usage="req"/>
           </attList>
         </elementSpec>
-        
+
 	<!-- Test constraint of content to specific value list, and
 	     addition of remarks: -->
         <elementSpec ident="email" module="core" mode="change">
