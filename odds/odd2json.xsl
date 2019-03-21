@@ -47,15 +47,12 @@
             </p> 
             <p>Author: See AUTHORS</p>
             
-            <p>Copyright: 2017, TEI Consortium</p>
+            <p>Copyright: 2019, TEI Consortium</p>
         </desc>
     </doc>
     
     <xsl:output method="text"/>
     
-    <xsl:param name="lang" select="'en'">
-        <!-- Set this to 'all' to include documentation in all languages. -->
-    </xsl:param>
     <xsl:param name="serializeDocs" select="true()"/>
     <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
     <xsl:param name="defaultTEIVersion">current</xsl:param>
@@ -473,7 +470,7 @@
                     <j:array key="valDesc">
                         <xsl:for-each select="tei:valDesc">
                             <xsl:choose>
-                                <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
+                                <xsl:when test="@xml:lang and @xml:lang = $doclang">
                                     <xsl:call-template name="makeDesc"/>                  
                                 </xsl:when>
                                 <xsl:otherwise>
@@ -581,7 +578,7 @@
         <j:array key="desc">
             <xsl:for-each select="tei:desc">
                 <xsl:choose>
-                    <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
+                    <xsl:when test="ancestor-or-self::*[@xml:lang] and ancestor-or-self::*[@xml:lang = $doclang]">
                         <xsl:call-template name="makeDesc"/>                  
                     </xsl:when>
                     <xsl:when test="not(@xml:lang)">
@@ -597,7 +594,7 @@
             <j:array key="gloss">
                 <xsl:for-each select="tei:gloss">
                     <xsl:choose>
-                        <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
+                        <xsl:when test="@xml:lang and @xml:lang = $doclang">
                             <xsl:call-template name="serializeElement"/>
                         </xsl:when>
                         <xsl:when test="not(@xml:lang)">
