@@ -60,7 +60,7 @@
     <xsl:param name="configDirectory"/>
     <xsl:param name="currentDirectory"/>
     <xsl:param name="verbose">false</xsl:param>
-    <xsl:param name="lang" select="'en'"/>
+    <xsl:param name="doclang" select="'en'"/>
     
     <xsl:variable name="DEFAULTSOURCE">
         <xsl:choose>
