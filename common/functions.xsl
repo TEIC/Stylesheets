@@ -1311,7 +1311,7 @@ of this software, even if advised of the possibility of such damage.
             * Note that $myns will be undefined both when the ancestor
             * <elementSpec> does not have an @ns, and when there is no
             * ancestor <elementSpec>. *-->
-        <xsl:when test="not($myns)  or  $myns='http://www.tei-c.org/ns/1.0'">
+        <xsl:when test="not($myns)  or  $myns eq 'http://www.tei-c.org/ns/1.0'">
           <xsl:text>tei:</xsl:text>
         </xsl:when>
         <!--* otherwise, if an ancestor has a suitable <sch:ns> element, 
