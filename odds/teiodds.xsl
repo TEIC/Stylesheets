@@ -1233,19 +1233,34 @@ select="$makeDecls"/></xsl:message>
               <xsl:comment>Start of import of <xsl:value-of select="@url"/>
               </xsl:comment>
               <div xmlns="http://relaxng.org/ns/structure/1.0">
-                <xsl:for-each select="doc(resolve-uri(@url,$BASE))/rng:grammar">
-                  <!-- the "expandRNG" processing changed 2011-08-25 by Syd Bauman: -->
-                  <!-- added a 'prefix' parameter which value is prefixed to pattern -->
-                  <!-- names in the included schema. This prevents collisions in the -->
-                  <!-- output RNG. -->
-                  <xsl:apply-templates mode="expandRNG" select="@*|node()">
-                    <xsl:with-param name="prefix">
-		      <xsl:if test="$me-the-moduleRef/@prefix">
-			<xsl:value-of select="$me-the-moduleRef/@prefix"/>
-		      </xsl:if>
-                    </xsl:with-param>
-                  </xsl:apply-templates>
-                </xsl:for-each>
+                <xsl:choose>
+                  <xsl:when test="doc-available(resolve-uri(@url,$BASE))">
+                    <xsl:for-each select="doc(resolve-uri(@url,$BASE))/rng:grammar">
+                      <!-- the "expandRNG" processing changed 2011-08-25 by Syd Bauman: -->
+                      <!-- added a 'prefix' parameter which value is prefixed to pattern -->
+                      <!-- names in the included schema. This prevents collisions in the -->
+                      <!-- output RNG. -->
+                      <xsl:apply-templates mode="expandRNG" select="@*|node()">
+                        <xsl:with-param name="prefix">
+                          <xsl:if test="$me-the-moduleRef/@prefix">
+                            <xsl:value-of select="$me-the-moduleRef/@prefix"/>
+                          </xsl:if>
+                        </xsl:with-param>
+                      </xsl:apply-templates>
+                    </xsl:for-each>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:message terminate="yes">
+                      <xsl:text>Document not available: </xsl:text>
+                      <xsl:value-of select="@url"/>
+                    </xsl:message>
+                    <!--
+                    <xsl:call-template name="die">
+                      <xsl:with-param name="message" select="concat('Document not available: ', @url)"/>
+                    </xsl:call-template>
+                    -->
+                  </xsl:otherwise>
+                </xsl:choose>
                 <xsl:apply-templates mode="justcopy"  select="tei:content/*"/>
               </div>
               <xsl:comment>End of import of <xsl:value-of select="@url"/>
