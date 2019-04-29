@@ -331,6 +331,13 @@ of this software, even if advised of the possibility of such damage.
         <xsl:copy-of select="@*"/>
         <xsl:if test="$useVersionFromTEI='true'">
           <xsl:processing-instruction name="TEIVERSION">
+            <!-- 
+                 Generate a string based on the fileDesc/editionStmt/edition
+                 element(s) in the p5subset.xml file. (Note that this would
+                 look ugly if there were more than one editionStmt/edition,
+                 but there is only one in that file.)
+                 See ticket https://github.com/TEIC/Stylesheets/issues/355.
+            -->
             <xsl:call-template name="odd2odd-getversion"/>
           </xsl:processing-instruction>
         </xsl:if>
@@ -1970,6 +1977,13 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="odd2odd-getversion">
+    <!-- 
+         Note:
+         This template generates a single string which is the concatonation 
+         of all the fileDesc/editionStmt/edition elements. Luckily it only
+         reads p5subset.xml which has one and only one such element. See
+         https://github.com/TEIC/Stylesheets/issues/355.
+    -->
     <xsl:choose>
       <xsl:when test="key('odd2odd-SCHEMASPECS',$whichSchemaSpec)">
         <xsl:for-each
