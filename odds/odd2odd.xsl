@@ -113,10 +113,23 @@ of this software, even if advised of the possibility of such damage.
    <!-- all of these use a combination of @ident _and_ @ns (where
    present), in case of duplication of names across schemes -->
 
-  <xsl:key name="odd2odd-CHANGE"     match="tei:classSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-CHANGE"     match="tei:dataSpec[@mode eq 'change']"   use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-CHANGE"     match="tei:elementSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-CHANGE"     match="tei:macroSpec[@mode eq 'change']"   use="tei:uniqueName(.)"/>
+  <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="1"/>
+  
+  <xsl:variable name="whichSchemaSpec">
+    <xsl:choose>
+      <xsl:when test="not($selectedSchema='')">
+        <xsl:value-of select="$selectedSchema"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="key('LISTSCHEMASPECS',1)[1]/@ident"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  
+  <xsl:key name="odd2odd-CHANGE"     match="tei:classSpec[@mode eq 'change'][ancestor::tei:schemaSpec[@ident=$whichSchemaSpec]]" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-CHANGE"     match="tei:dataSpec[@mode eq 'change'][ancestor::tei:schemaSpec[@ident=$whichSchemaSpec]]"   use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-CHANGE"     match="tei:elementSpec[@mode eq 'change'][ancestor::tei:schemaSpec[@ident=$whichSchemaSpec]]" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-CHANGE"     match="tei:macroSpec[@mode eq 'change'][ancestor::tei:schemaSpec[@ident=$whichSchemaSpec]]"   use="tei:uniqueName(.)"/>
 
   <xsl:key name="odd2odd-DELETE"   match="tei:classSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-DELETE"   match="tei:macroSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
@@ -128,20 +141,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-REPLACE" match="tei:elementSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-REPLACE"  match="tei:macroSpec[@mode eq 'replace']"   use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-REPLACEATT"     match="tei:attDef[@mode eq 'replace']" use="concat(../../@ident,'_',@ident)"/>
-
-  
-  <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="1"/>
-
-  <xsl:variable name="whichSchemaSpec">
-    <xsl:choose>
-      <xsl:when test="not($selectedSchema='')">
-        <xsl:value-of select="$selectedSchema"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="key('LISTSCHEMASPECS',1)[1]/@ident"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
 
 
   <xsl:variable name="DEFAULTSOURCE">
@@ -507,19 +506,17 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
 
-  <!-- Disabled this part for fixing issues with multiple schemaSpecs in one ODD file, see https://github.com/TEIC/Stylesheets/issues/249 -->
-  <!--<xsl:template match="tei:elementSpec[@mode eq 'change']|tei:classSpec[@mode eq 'change']|tei:macroSpec[@mode eq 'change']|tei:dataSpec[@mode eq 'change']"
-                mode="pass0">
+  <xsl:template match="tei:elementSpec[@mode eq 'change']|tei:classSpec[@mode eq 'change']|tei:macroSpec[@mode eq 'change']|tei:dataSpec[@mode eq 'change']" mode="pass0">    
     <xsl:choose>
       <xsl:when test="count(key('odd2odd-CHANGE',@ident))&gt;1">
         <xsl:if
-            test="generate-id(.)=generate-id(key('odd2odd-CHANGE',@ident)[1])">
+          test="generate-id(.)=generate-id(key('odd2odd-CHANGE',@ident)[1])">
           <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:for-each select="key('odd2odd-CHANGE',@ident)">
               <xsl:apply-templates
-                  select="*|text()|comment()|processing-instruction()"
-                  mode="pass0"/>
+                select="*|text()|comment()|processing-instruction()"
+                mode="pass0"/>
             </xsl:for-each>
           </xsl:copy>
         </xsl:if>
@@ -531,7 +528,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:copy>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>-->
+  </xsl:template>
 
   <!-- ******************* Phase 1, expand schemaSpec ********************************* -->
 
