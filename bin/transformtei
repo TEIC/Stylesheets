@@ -83,6 +83,7 @@ verbose=false
 summaryDoc=""
 antflag="-q -Djava.awt.headless=true"
 TEISOURCE=
+TEISOURCE_DEFAULT=https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml
 
 # epub only
 overlayfile=
@@ -166,16 +167,36 @@ then
 	profiledir=$APPHOME/profiles
     fi
 fi
+
+# **************************************** #
+# *** work out defaultSource parameter *** # 
+# ***  to pass to the XSL Stylesheets  *** #
+# **************************************** #  
+# case 1: no localsource set, we'll use the hard-coded values 
+# for the source as set in the XSL Stylesheets
 if test "x$TEISOURCE" = "x"
 then
-  localsource=""
-  echo "WARNING: No localsource set. Will get a copy from http://www.tei-c.org/Vault/P5/."
-else 
+  defaultSource="\"$TEISOURCE_DEFAULT\""
+  echo "WARNING: No localsource set. Will get a copy from $TEISOURCE_DEFAULT if necessary."
+
+# case 2: localsource is set and starts with 'http',
+# thus pointing at a remote resource
+elif [ "$TEISOURCE" != "${TEISOURCE#http}" ]
+then
+  echo "using remote resource $TEISOURCE as default source" 
+  defaultSource="\"$TEISOURCE\""
+
+# case 3: localsource is set and the local file exists
+elif test -e $TEISOURCE
+then
   REALD=`dirname "$TEISOURCE"`
   SDIR=`(cd $REALD; pwd)`
   REALSOURCE=$SDIR/`basename $TEISOURCE`
-  echo using $REALSOURCE as default source
-  localsource=" -DdefaultSource=\"$REALSOURCE\" "
+  echo "using local file $REALSOURCE as default source"
+  defaultSource="\"$REALSOURCE\""
+# last case: exit with error
+else 
+  die "unable to get localsource from $TEISOURCE"
 fi
 
 in=${1:?"no input file supplied; for usage syntax $0 --help"}
@@ -216,7 +237,7 @@ esac
 echo Convert $infile to $outdir/$outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
 ant $antflag -f "$APPHOME/$format/build-$direction.xml" \
 	-lib "${SAXONJAR}" $debug \
-    $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress $localsource \
+    $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress \
         -Dodd=$odd \
         -Dsaxon.jar="${SAXONJAR}" \
         -Dtrang.jar="${TRANGJAR}" \
@@ -231,6 +252,7 @@ ant $antflag -f "$APPHOME/$format/build-$direction.xml" \
 	-Dlang=$lang \
 	-Dsubject=$subject \
 	-Dcoverimage=$cover \
-	-Doxygenlib=$oxygenlib
+	-Doxygenlib=$oxygenlib \
+	-DdefaultSource=$defaultSource
 
 	

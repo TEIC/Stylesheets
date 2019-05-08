@@ -1843,6 +1843,8 @@ select="$makeDecls"/></xsl:message>
     <xsl:choose>
       <xsl:when test="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']">
         <!-- JC Additions to form proper URL from version number -->
+       <!--   MH and SB: Note that this PI is created during odd2odd.xsl, and used to store version 
+                  information from p5subset.xml. -->
         <xsl:variable name="TEIVersion"
           select="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION'][1]"/>
         <xsl:variable name="TEIVersion-edition"
@@ -2456,6 +2458,17 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
 
+  <xsl:template match="tei:ref[@target]">
+    <a xmlns="http://www.w3.org/1999/xhtml"  href="{@target}"><xsl:value-of select="."/></a>
+  </xsl:template>
+  
+  <xsl:template match="tei:gi">
+    <code xmlns="http://www.w3.org/1999/xhtml">&lt;<xsl:value-of select="."/>&gt;</code>
+  </xsl:template>
+  <xsl:template match="tei:att">
+    <code xmlns="http://www.w3.org/1999/xhtml">@<xsl:value-of select="."/></code>
+  </xsl:template>
+	
   <xsl:template name="schematronInContent">
     <xsl:for-each select="tei:constraintSpec/tei:constraint/*">
       <xsl:call-template name="processSchematron"/>

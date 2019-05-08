@@ -47,15 +47,12 @@
             </p> 
             <p>Author: See AUTHORS</p>
             
-            <p>Copyright: 2017, TEI Consortium</p>
+            <p>Copyright: 2019, TEI Consortium</p>
         </desc>
     </doc>
     
     <xsl:output method="text"/>
     
-    <xsl:param name="lang" select="'en'">
-        <!-- Set this to 'all' to include documentation in all languages. -->
-    </xsl:param>
     <xsl:param name="serializeDocs" select="true()"/>
     <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
     <xsl:param name="defaultTEIVersion">current</xsl:param>
@@ -63,6 +60,7 @@
     <xsl:param name="configDirectory"/>
     <xsl:param name="currentDirectory"/>
     <xsl:param name="verbose">false</xsl:param>
+    <xsl:param name="doclang" select="'en'"/>
     
     <xsl:variable name="DEFAULTSOURCE">
         <xsl:choose>
@@ -473,13 +471,12 @@
                     <j:array key="valDesc">
                         <xsl:for-each select="tei:valDesc">
                             <xsl:choose>
-                                <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
+                                <xsl:when test="@xml:lang and @xml:lang = $doclang">
                                     <xsl:call-template name="makeDesc"/>                  
                                 </xsl:when>
-                                <xsl:when test="not(@xml:lang)">
+                                <xsl:otherwise>
                                     <xsl:call-template name="makeDesc"/>
-                                </xsl:when>
-                                <xsl:otherwise/>
+                                </xsl:otherwise>
                             </xsl:choose>              
                         </xsl:for-each>
                     </j:array>
@@ -511,7 +508,7 @@
                     <xsl:if test="tei:valList">
                         <j:map key="valList">
                             <j:string key="type">
-                                <xsl:value-of select="@type"/>
+                                <xsl:value-of select="tei:valList/@type"/>
                             </j:string>
                             <j:array key="valItem">
                                 <xsl:for-each select="tei:valList/tei:valItem">
@@ -582,7 +579,7 @@
         <j:array key="desc">
             <xsl:for-each select="tei:desc">
                 <xsl:choose>
-                    <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
+                    <xsl:when test="ancestor-or-self::*[@xml:lang] and ancestor-or-self::*[@xml:lang = $doclang]">
                         <xsl:call-template name="makeDesc"/>                  
                     </xsl:when>
                     <xsl:when test="not(@xml:lang)">
@@ -598,7 +595,7 @@
             <j:array key="gloss">
                 <xsl:for-each select="tei:gloss">
                     <xsl:choose>
-                        <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
+                        <xsl:when test="@xml:lang and @xml:lang = $doclang">
                             <xsl:call-template name="serializeElement"/>
                         </xsl:when>
                         <xsl:when test="not(@xml:lang)">

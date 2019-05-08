@@ -1202,7 +1202,7 @@ of this software, even if advised of the possibility of such damage.
                                     if ($gloss ne '') then '&#x20;' else '',
                                     $gloss,
                                     if (following-sibling::tei:valItem) then ';' else '',
-                                    '&#x20;'
+                                    if (position() ne last()) then '&#x20;' else ''
                                     )"/>
           </xsl:for-each>
         </xsl:when>
@@ -1298,29 +1298,56 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>which prefix for schematron</desc>
   </doc>
-
+  <!--* tei:generate-nsprefix-schematron($e)
+      * Calculate a namespace prefix for a given element, or fail. *-->
   <xsl:function name="tei:generate-nsprefix-schematron" as="xs:string">
-    <xsl:param name="e"/>
+    <xsl:param name="e" as="element()"/>
     <xsl:for-each select="$e">
-      <xsl:variable name="myns" select="ancestor::tei:elementSpec/@ns"/>
+      <xsl:variable name="myns" select="normalize-space( ancestor::tei:elementSpec/@ns )"/>
+      <xsl:variable name="prefixes" select="in-scope-prefixes(.)" as="xs:string*"/>
+      <xsl:variable name="uris" select="for $pre in $prefixes return namespace-uri-for-prefix( $pre,$e)" as="xs:anyURI*"/>
       <xsl:choose>
-        <xsl:when test="not($myns) or $myns='http://www.tei-c.org/ns/1.0'">
+        <!--* if ns is not specified or is tei, use 'tei'
+            * Note that $myns will be undefined both when the ancestor
+            * <elementSpec> does not have an @ns, and when there is no
+            * ancestor <elementSpec>. *-->
+        <xsl:when test="not($myns)  or  $myns eq 'http://www.tei-c.org/ns/1.0'">
           <xsl:text>tei:</xsl:text>
         </xsl:when>
+        <!--* otherwise, if an ancestor has a suitable <sch:ns> element, 
+            * use the one belonging to the nearest such ancestor *-->
+        <xsl:when test="ancestor::*/sch:ns[ normalize-space(@uri) eq $myns ]">
+          <xsl:variable name="a" as="element()"
+                        select="ancestor::*[sch:ns[ normalize-space(@uri) eq $myns ]][1]"/>
+          <xsl:variable name="prefix" as="xs:string*"
+                        select="$a/sch:ns[ normalize-space(@uri) eq $myns ]/normalize-space(@prefix)"/>
+          <xsl:value-of select="concat( $prefix[1],':')"/>
+        </xsl:when>
+        <!--* Otherwise, if the actual declaration has a suitable
+            * namespace node, use the current prefix. Or, to be
+            * exact, any one of the current non-null prefixes.
+            * We'll take the first one presented.
+            *-->
+        <xsl:when test="$uris = $myns  and  $myns ne ''">
+          <xsl:variable name="indx" select="index-of( $uris, $myns )[1]"/>
+          <xsl:value-of select="concat( $prefixes[$indx],':')"/>
+        </xsl:when>
+        <!--* If no ancestor has a suitable sch:ns child, and we don't
+            * have any local namespace bindings with non-zero
+            * prefixes, then we are desperate and we will take any 
+            * sch:ns in the schemaSpec (this is getting a bit desperate) *-->   
+        <xsl:when test="ancestor::tei:schemaSpec//sch:ns[ normalize-space(@uri) eq $myns ]">
+          <xsl:variable name="NSs" select="ancestor::tei:schemaSpec//sch:ns[ normalize-space(@uri) eq $myns ]"/>
+          <xsl:value-of select="concat($NSs[1]/normalize-space(@prefix),':')"/>
+        </xsl:when>
         <xsl:otherwise>
-          <xsl:choose>
-            <xsl:when test="ancestor::tei:schemaSpec//sch:ns[@uri=$myns]">
-              <xsl:value-of
-                  select="concat(ancestor::tei:schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="ancestor::tei:elementSpec/@ident"/></xsl:message>
-            </xsl:otherwise>
-          </xsl:choose>
+          <xsl:message terminate="yes"
+                       select="concat('schematron rule cannot work out prefix for ', ancestor::tei:elementSpec/@ident, '.')"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>find version of stylesheets</desc>
