@@ -14,7 +14,7 @@ and should not be treated as the definitive view of the TEI Consortium.
 ## Prerequisites
 The package assumes that you have several additional tools installed. Their availability on your system can be verified by issuing the command `make check`.
 
-In particular, Stylesheets assume that you use `ant` version 1.9.x+. If for some reason, you need to use `ant` 1.8.x, you should remove all four occurences of the attribute `@zip64Mode` from the file `common/teianttasks.xml`.
+In particular, Stylesheets assume that you use `ant` version 1.9.x+. If for some reason, you need to use `ant` 1.8.x, you should remove all occurences of the attribute `@zip64Mode` from the file `common/teianttasks.xml`.
 
 It is helpful to have the TEI environment installed locally. Please refer to http://www.tei-c.org/Guidelines/P5/get.xml for hints on how to do that.
 
