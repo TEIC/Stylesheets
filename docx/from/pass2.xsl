@@ -327,7 +327,15 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="parent::tei:head and .=' '"/>
       <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']  and tei:g[@ref='x:tab']"/>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[concat(@rend,@style)=$r]]"/>
+      
+      <!-- 
+           The following when statements make sure that tei:hi with the same @rend and @style are merged
+           together. We assume that the first tei:hi with text data will be processed and will pull in
+           text data from immediately following tei:hi elements. Therefore, tei:hi elements with a preceding
+           tei:hi with the same @rend and @style will *not* be processed.
+      -->
+      
+      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[concat(@rend,@style)=$r][* or text()]]"/>
       <xsl:when test="preceding-sibling::node()[1][self::tei:seg and .=' ']   and  preceding-sibling::node()[2][self::tei:hi[concat(@rend,@style)=$r]]"/>
       <xsl:when test="($r='bold' or $r='italic') and .=' '">
         <xsl:text> </xsl:text>
@@ -598,16 +606,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:processing-instruction name="biblio">
 	  <xsl:value-of select="$target"/>
 	</xsl:processing-instruction>
-	<xsl:choose>
-          <xsl:when test="count(text()) &lt; 2">
-            <xsl:apply-templates mode="pass2"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="text()[1]"/>
-            <xsl:apply-templates select="*" mode="pass2"/>
-            <xsl:value-of select="remove(text(), 1)"/>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:apply-templates mode="pass2"/>
       </xsl:when>
       <xsl:when test="matches(@target,'^LINK Excel.Sheet.')">
 	<xsl:sequence select="tei:docxError('cannot embed Excel  spreadsheet')"/>
