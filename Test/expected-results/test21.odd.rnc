@@ -1,5 +1,6 @@
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
-namespace ns1 = "http://www.isocat.org/ns/dcr"
+namespace ns1 = "http://www.w3.org/1999/xhtml"
+namespace ns2 = "http://www.isocat.org/ns/dcr"
 namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 default namespace tei = "http://www.tei-c.org/ns/1.0"
@@ -100,8 +101,15 @@ att.ranging.attribute.max =
     | xsd:decimal
   }?
 att.ranging.attribute.confidence =
-  
-  ## specifies the degree of statistical confidence (between zero and one) that a value falls within the range specified by min and max, or the proportion of observed values that fall within that range.
+  [
+    a:documentation [
+      "specifies the degree of statistical confidence (between zero and one) that a value falls within the range specified by "
+      ns1:code [ "@min" ]
+      " and "
+      ns1:code [ "@max" ]
+      ", or the proportion of observed values that fall within that range."
+    ]
+  ]
   attribute confidence { xsd:double }?
 att.dimensions.attributes =
   att.ranging.attributes,
@@ -187,8 +195,15 @@ att.damaged.attribute.agent =
     xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 att.damaged.attribute.degree =
-  
-  ## indique le degré (la gravité) du dommage subi, selon une grille appropriée. L'attribut degree doit être utilisé dans le seul cas où le texte peut être lu avec certitude ; le texte restitué en utilisant d'autres sources doit être encodé au moyen de l'élément supplied.
+  [
+    a:documentation [
+      "indique le degré (la gravité) du dommage subi, selon une grille appropriée. L'attribut "
+      ns1:code [ "@degree" ]
+      " doit être utilisé dans le seul cas où le texte peut être lu avec certitude ; le texte restitué en utilisant d'autres sources doit être encodé au moyen de l'élément "
+      ns1:code [ "<supplied>" ]
+      "."
+    ]
+  ]
   attribute degree {
     xsd:double
     | (
@@ -217,8 +232,13 @@ att.breaking.attribute.break =
   }?
 att.cReferencing.attributes = att.cReferencing.attribute.cRef
 att.cReferencing.attribute.cRef =
-  
-  ## (référence canonique) précise la cible du pointeur en fournissant une référence canonique issue d'un modèle défini par un élément refsDecldans l'En-tête TEI.
+  [
+    a:documentation [
+      "(référence canonique) précise la cible du pointeur en fournissant une référence canonique issue d'un modèle défini par un élément "
+      ns1:code [ "<refsDecl>" ]
+      "dans l'En-tête TEI."
+    ]
+  ]
   attribute cRef { xsd:string }?
 att.datable.w3c.attributes =
   att.datable.w3c.attribute.when,
@@ -389,13 +409,13 @@ att.datcat.attributes =
 att.datcat.attribute.datcat =
   
   ## contains a PID (persistent identifier) that aligns the given element with the appropriate Data Category (or categories) in ISOcat.
-  attribute ns1:datcat {
+  attribute ns2:datcat {
     list { xsd:anyURI+ }
   }?
 att.datcat.attribute.valueDatcat =
   
   ## contains a PID (persistent identifier) that aligns the content of the given element or the value of the given attribute with the appropriate simple Data Category (or categories) in ISOcat.
-  attribute ns1:valueDatcat {
+  attribute ns2:valueDatcat {
     list { xsd:anyURI+ }
   }?
 att.declarable.attributes = att.declarable.attribute.default
@@ -591,8 +611,14 @@ att.global.attribute.xmlid =
   ## (identifiant) fournit un identifiant unique pour l'élément qui porte l'attribut
   attribute xml:id { xsd:ID }?
 att.global.attribute.xmllang =
-  
-  ## (langue) indique la langue du contenu de l'élément en utilisant les codes du RFC 3066
+  [
+    a:documentation [
+      "(langue) indique la langue du contenu de l'élément en utilisant les codes du "
+      ns1:a [ href = "http://www.ietf.org/rfc/rfc3066.txt" "RFC 3066" ]
+      "\x{a}" ~
+      "            "
+    ]
+  ]
   attribute xml:lang {
     xsd:language
     | (
@@ -626,8 +652,13 @@ att.handFeatures.attribute.scribe =
   ## donne un nom normalisé ou un autre identifiant pour le scribe reconnu comme responsable de cette main.
   attribute scribe { xsd:Name }?
 att.handFeatures.attribute.scribeRef =
-  
-  ## points to a full description of the scribe concerned, typically supplied by a person element elsewhere in the description.
+  [
+    a:documentation [
+      "points to a full description of the scribe concerned, typically supplied by a "
+      ns1:code [ "<person>" ]
+      " element elsewhere in the description."
+    ]
+  ]
   attribute scribeRef {
     list { xsd:anyURI+ }
   }?
@@ -638,8 +669,13 @@ att.handFeatures.attribute.script =
     list { xsd:Name+ }
   }?
 att.handFeatures.attribute.scriptRef =
-  
-  ## points to a full description of the script or writing style used by this hand, typically supplied by a scriptNote element elsewhere in the description.
+  [
+    a:documentation [
+      "points to a full description of the script or writing style used by this hand, typically supplied by a "
+      ns1:code [ "<scriptNote>" ]
+      " element elsewhere in the description."
+    ]
+  ]
   attribute scriptRef {
     list { xsd:anyURI+ }
   }?
@@ -908,8 +944,18 @@ att.pointing.attributes =
   att.pointing.attribute.target,
   att.pointing.attribute.evaluate
 att.pointing.attribute.targetLang =
-  
-  ## specifies the language of the content to be found at the destination referenced by target, using a language tag generated according to BCP 47.
+  [
+    a:documentation [
+      "specifies the language of the content to be found at the destination referenced by "
+      ns1:code [ "@target" ]
+      ", using a language tag generated according to "
+      ns1:a [
+        href = "http://www.rfc-editor.org/rfc/bcp/bcp47.txt"
+        "BCP 47"
+      ]
+      "."
+    ]
+  ]
   attribute targetLang {
     xsd:language
     | (
@@ -968,8 +1014,19 @@ att.pointing.group.attribute.domains =
     list { xsd:anyURI, xsd:anyURI, xsd:anyURI* }
   }?
 att.pointing.group.attribute.targFunc =
-  
-  ## (fonction cible) décrit la fonction de chacune des valeurs de l'attribut target pour les balises incluses link, join, ou alt.
+  [
+    a:documentation [
+      "(fonction cible) décrit la fonction de chacune des valeurs de l'attribut "
+      ns1:code [ "@target" ]
+      " pour les balises incluses "
+      ns1:code [ "<link>" ]
+      ", "
+      ns1:code [ "<join>" ]
+      ", ou "
+      ns1:code [ "<alt>" ]
+      "."
+    ]
+  ]
   attribute targFunc {
     list {
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" },
@@ -1060,8 +1117,13 @@ att.styleDef.attribute.scheme =
       "other"
   }?
 att.styleDef.attribute.schemeVersion =
-  
-  ## supplies a version number for the style language provided in scheme.
+  [
+    a:documentation [
+      "supplies a version number for the style language provided in "
+      ns1:code [ "@scheme" ]
+      "."
+    ]
+  ]
   attribute schemeVersion {
     xsd:token { pattern = "[\d]+[a-z]*[\d]*(\.[\d]+[a-z]*[\d]*){0,3}" }
   }?
@@ -1170,14 +1232,24 @@ att.citing.attribute.unit =
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 att.citing.attribute.from =
-  
-  ## specifies the starting point of the range of units indicated by the unit attribute.
+  [
+    a:documentation [
+      "specifies the starting point of the range of units indicated by the "
+      ns1:code [ "@unit" ]
+      " attribute."
+    ]
+  ]
   attribute from {
     xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 att.citing.attribute.to =
-  
-  ## specifies the end-point of the range of units indicated by the unit attribute.
+  [
+    a:documentation [
+      "specifies the end-point of the range of units indicated by the "
+      ns1:code [ "@unit" ]
+      " attribute."
+    ]
+  ]
   attribute to {
     xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
@@ -1951,14 +2023,24 @@ att.milestoneUnit.attribute.unit =
   ## fournit un nom conventionnel pour le type de section qui change à partir de cette balise de bornage
   ## Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] canto; 7] speaker; 8] stanza; 9] act; 10] scene; 11] section; 12] absent; 13] unnumbered
   attribute unit {
-    
-    ## sauts de page matériels (synonymes de l'élément pb)
+    [
+      a:documentation [
+        "sauts de page matériels (synonymes de l'élément "
+        ns1:code [ "<pb>" ]
+        ")"
+      ]
+    ]
     "page"
     | 
       ## sauts de colonnes
       "column"
-    | 
-      ## sauts de ligne (synonymes de l'élémentlb)
+    | [
+        a:documentation [
+          "sauts de ligne (synonymes de l'élément"
+          ns1:code [ "<lb>" ]
+          ")"
+        ]
+      ]
       "line"
     | 
       ## n'importe quel unité désignée par les termes livre, liber, etc.
@@ -2713,8 +2795,13 @@ ref =
     ## describes the nature of the items in the list.
     ## Suggested values include: 1] gloss; 2] index; 3] instructions; 4] litany; 5] syllogism
     attribute type {
-      
-      ## chaque item de la liste commente un terme ou un concept qui est donné par un élément label précédant l'item de la liste.
+      [
+        a:documentation [
+          "chaque item de la liste commente un terme ou un concept qui est donné par un élément "
+          ns1:code [ "<label>" ]
+          " précédant l'item de la liste."
+        ]
+      ]
       "gloss"
       | 
         ## each list item is an entry in an index such as the alphabetical topical index at the back of a print volume.
@@ -2851,8 +2938,13 @@ binaryObject =
     att.media.attributes,
     att.timed.attributes,
     att.typed.attributes,
-    
-    ## l'encodage utilisé pour encoder les données binaires. Sans autre spécification il est supposé s'agir de Base64.
+    [
+      a:documentation [
+        "l'encodage utilisé pour encoder les données binaires. Sans autre spécification il est supposé s'agir de "
+        ns1:a [ href = "http://en.wikipedia.org/wiki/Base64" "Base64" ]
+        "."
+      ]
+    ]
     attribute encoding {
       list {
         xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
@@ -3428,8 +3520,13 @@ divGen =
     empty
   }
 textLang =
-  
-  ## (langues du texte) décrit les langues et systèmes d'écriture utilisés dans un manuscrit (et non dans la description du manuscrit, dont les langues et systèmes d'écriture sont décrits dans l'élément langUsage). [3.11.2.4. Imprint, Size of a Document, and Reprint Information 10.6.6. Languages and Writing Systems]
+  [
+    a:documentation [
+      "(langues du texte) décrit les langues et systèmes d'écriture utilisés dans un manuscrit (et non dans la description du manuscrit, dont les langues et systèmes d'écriture sont décrits dans l'élément "
+      ns1:code [ "<langUsage>" ]
+      "). [3.11.2.4. Imprint, Size of a Document, and Reprint Information 10.6.6. Languages and Writing Systems]"
+    ]
+  ]
   element textLang {
     macro.phraseSeq,
     att.global.attributes,
@@ -3506,8 +3603,13 @@ att.datable.custom.attribute.datingPoint =
   ## supplies a pointer to some location defining a named point in time with reference to which the datable item is understood to have occurred
   attribute datingPoint { xsd:anyURI }?
 att.datable.custom.attribute.datingMethod =
-  
-  ## supplies a pointer to a calendar element or other means of interpreting the values of the custom dating attributes.
+  [
+    a:documentation [
+      "supplies a pointer to a "
+      ns1:code [ "<calendar>" ]
+      " element or other means of interpreting the values of the custom dating attributes."
+    ]
+  ]
   attribute datingMethod { xsd:anyURI }?
 model.persNamePart =
   surname | forename | genName | nameLink | addName | roleName
@@ -3909,8 +4011,14 @@ event =
     att.typed.attributes,
     att.naming.attributes,
     att.sortable.attributes,
-    
-    ## indique la localisation d'un évènement en pointant vers un élément place
+    [
+      a:documentation [
+        "indique la localisation d'un évènement en pointant vers un élément "
+        ns1:code [ "<place>" ]
+        "\x{a}" ~
+        "               "
+      ]
+    ]
     attribute where { xsd:anyURI }?,
     empty
   }
@@ -3950,8 +4058,13 @@ geo =
     text, att.global.attributes, att.declaring.attributes, empty
   }
 langKnowledge =
-  
-  ## (connaissances linguistiques) synthétise l'état des connaissances linguistiques d'une personne, soit en texte libre soit par une liste d'éléments langKnown. [13.3.2.1. Personal Characteristics]
+  [
+    a:documentation [
+      "(connaissances linguistiques) synthétise l'état des connaissances linguistiques d'une personne, soit en texte libre soit par une liste d'éléments "
+      ns1:code [ "<langKnown>" ]
+      ". [13.3.2.1. Personal Characteristics]"
+    ]
+  ]
   element langKnowledge {
     (model.pLike | langKnown+),
     att.global.attributes,
@@ -4098,11 +4211,21 @@ occupation =
     attribute type {
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
-    
-    ## identifie le système de classification ou la taxinomie utilisés, en fournissant l'identifiant d'un élément taxonomy déclaré ailleurs dans l'en-tête.
+    [
+      a:documentation [
+        "identifie le système de classification ou la taxinomie utilisés, en fournissant l'identifiant d'un élément "
+        ns1:code [ "<taxonomy>" ]
+        " déclaré ailleurs dans l'en-tête."
+      ]
+    ]
     attribute scheme { xsd:anyURI }?,
-    
-    ## contient un code d'activité défini dans le système de classification ou dans la taxonomie déclaré dans l'attribut scheme.
+    [
+      a:documentation [
+        "contient un code d'activité défini dans le système de classification ou dans la taxonomie déclaré dans l'attribut "
+        ns1:code [ "@scheme" ]
+        "."
+      ]
+    ]
     attribute code { xsd:anyURI }?,
     empty
   }
@@ -4418,8 +4541,13 @@ socecStatus =
     
     ## identifie le système de classification ou la taxinomie utilisés.
     attribute scheme { xsd:anyURI }?,
-    
-    ## contient un code de statut existant dans le système de classification ou dans la taxonomie déclarés au moyen de l'attribut source.
+    [
+      a:documentation [
+        "contient un code de statut existant dans le système de classification ou dans la taxonomie déclarés au moyen de l'attribut "
+        ns1:code [ "@source" ]
+        "."
+      ]
+    ]
     attribute code { xsd:anyURI }?,
     empty
   }
@@ -4696,8 +4824,17 @@ idno =
     ## classe un numéro dans une catégorie, par exemple comme étant un numéro ISBN ou comme appartenant une autre série normalisée.
     ## Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7] OCLC
     attribute type {
-      
-      ## International Standard Book Number: a 13- or (if assigned prior to 2007) 10-digit identifying number assigned by the publishing industry to a published book or similar item, registered with the International ISBN Agency.
+      [
+        a:documentation [
+          "International Standard Book Number: a 13- or (if assigned prior to 2007) 10-digit identifying number assigned by the publishing industry to a published book or similar item, registered with the "
+          ns1:a [
+            href = "https://www.isbn-international.org"
+            " International ISBN Agency."
+          ]
+          "\x{a}" ~
+          "                  "
+        ]
+      ]
       "ISBN"
       | 
         ## International Standard Serial Number: an eight-digit number to uniquely identify a serial publication.
@@ -5034,8 +5171,13 @@ tagsDecl =
   element tagsDecl {
     (rendition*, \namespace*),
     att.global.attributes,
-    
-    ## indicates whether the element types listed exhaustively include all those found within text, or represent only a subset.
+    [
+      a:documentation [
+        "indicates whether the element types listed exhaustively include all those found within "
+        ns1:code [ "<text>" ]
+        ", or represent only a subset."
+      ]
+    ]
     attribute partial { xsd:boolean }?,
     empty
   }
@@ -5051,8 +5193,13 @@ tagUsage =
     
     ## spécifie le nombre d’occurrences de cet élément dans le texte.
     attribute occurs { xsd:nonNegativeInteger }?,
-    
-    ## (avec identificateur unique) spécifie le nombre d’occurrences de cet élément dans le texte qui porte une valeur donnée pour l’attribut global xml:id.
+    [
+      a:documentation [
+        "(avec identificateur unique) spécifie le nombre d’occurrences de cet élément dans le texte qui porte une valeur donnée pour l’attribut global "
+        ns1:code [ "@xml:id" ]
+        "."
+      ]
+    ]
     attribute withId { xsd:nonNegativeInteger }?,
     empty
   }
@@ -5080,8 +5227,13 @@ rendition =
     attribute scope {
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
-    
-    ## contains a selector or series of selectors specifying the elements to which the contained style description applies, expressed in the language specified in the scheme attribute.
+    [
+      a:documentation [
+        "contains a selector or series of selectors specifying the elements to which the contained style description applies, expressed in the language specified in the "
+        ns1:code [ "@scheme" ]
+        " attribute."
+      ]
+    ]
     attribute selector { xsd:string }?,
     empty
   }
@@ -5173,16 +5325,26 @@ category =
     empty
   }
 catDesc =
-  
-  ## (Description de la catégorie) décrit une catégorie particulière à l’intérieur d’une taxinomie ou d’une typologie de texte, sous forme d’un court texte descriptif suivi ou dans les termes des paramètres contextuels utilisés dans l’élément Description du texte textDesc. [2.3.7. The Classification Declaration]
+  [
+    a:documentation [
+      "(Description de la catégorie) décrit une catégorie particulière à l’intérieur d’une taxinomie ou d’une typologie de texte, sous forme d’un court texte descriptif suivi ou dans les termes des paramètres contextuels utilisés dans l’élément Description du texte "
+      ns1:code [ "<textDesc>" ]
+      ". [2.3.7. The Classification Declaration]"
+    ]
+  ]
   element catDesc {
     (text | model.limitedPhrase | model.catDescPart)*,
     att.global.attributes,
     empty
   }
 geoDecl =
-  
-  ## (déclaration de coordonnées géographiques.) documente la notation et les données utilisées pour exprimer les coordonnées géographiques dans l'élément geoailleurs dans le document. [2.3.8. The Geographic Coordinates Declaration]
+  [
+    a:documentation [
+      "(déclaration de coordonnées géographiques.) documente la notation et les données utilisées pour exprimer les coordonnées géographiques dans l'élément "
+      ns1:code [ "<geo>" ]
+      "ailleurs dans le document. [2.3.8. The Geographic Coordinates Declaration]"
+    ]
+  ]
   element geoDecl {
     macro.phraseSeq,
     att.global.attributes,
@@ -5280,8 +5442,15 @@ language =
   element language {
     macro.phraseSeq.limited,
     att.global.attributes,
-    
-    ## (identificateur) fournit un code de langue issu de la recommandation BCP 47 (ou son successeur) utilisé pour identifier la langue précisée par cet élément, référencé par l’attribut global xml:lang s’appliquant à l’élément considéré.
+    [
+      a:documentation [
+        "(identificateur) fournit un code de langue issu de la recommandation "
+        ns1:a [ href = "https://tools.ietf.org/html/bcp47" "BCP 47" ]
+        " (ou son successeur) utilisé pour identifier la langue précisée par cet élément, référencé par l’attribut global "
+        ns1:code [ "@xml:lang" ]
+        " s’appliquant à l’élément considéré."
+      ]
+    ]
     attribute ident {
       xsd:language
       | (
@@ -5448,9 +5617,15 @@ listChange =
     att.global.attributes,
     att.sortable.attributes,
     att.typed.attributes,
-    
-    ## indicates whether the ordering of its child change elements is to be considered significant or not
-    [ a:defaultValue = "true" ] attribute ordered { xsd:boolean }?,
+    [
+      a:defaultValue = "true"
+      a:documentation [
+        "indicates whether the ordering of its child "
+        ns1:code [ "<change>" ]
+        " elements is to be considered significant or not"
+      ]
+    ]
+    attribute ordered { xsd:boolean }?,
     empty
   }
 att.global.linking.attributes =
@@ -5636,8 +5811,13 @@ seg =
     empty
   }
 when =
-  
-  ## indique un point dans le temps, soit relatif à d'autres éléments de l'élément timeline dans lequel il est contenu, soit dans l'absolu. [16.4.2. Placing Synchronous Events in Time]
+  [
+    a:documentation [
+      "indique un point dans le temps, soit relatif à d'autres éléments de l'élément "
+      ns1:code [ "<timeline>" ]
+      " dans lequel il est contenu, soit dans l'absolu. [16.4.2. Placing Synchronous Events in Time]"
+    ]
+  ]
   element when {
     empty,
     att.global.attributes,
@@ -5653,9 +5833,16 @@ when =
       | xsd:time
       | xsd:dateTime
     }?,
-    
-    ## spécifie l'unité de temps dans laquelle la valeur de l'attribut interval est exprimée, si elle n'est pas héritée de l'élément parent timeLine.
-    ## Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (seconds); 5] ms (milliseconds)
+    [
+      a:documentation [
+        "spécifie l'unité de temps dans laquelle la valeur de l'attribut "
+        ns1:code [ "@interval" ]
+        " est exprimée, si elle n'est pas héritée de l'élément parent "
+        ns1:code [ "<timeLine>" ]
+        ".\x{a}" ~
+        "Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (seconds); 5] ms (milliseconds)"
+      ]
+    ]
     attribute unit {
       
       ## (jours) 
@@ -5688,8 +5875,13 @@ when =
            ##
            "unknown")
     }?,
-    
-    ## identifie le point de référence pour déterminer la date ou l'heure de l'élément courant when : cette date ou cette heure s'obtiennent en ajoutant la valeur de l'intervalle à la date du point de référence.
+    [
+      a:documentation [
+        "identifie le point de référence pour déterminer la date ou l'heure de l'élément courant "
+        ns1:code [ "<when>" ]
+        " : cette date ou cette heure s'obtiennent en ajoutant la valeur de l'intervalle à la date du point de référence."
+      ]
+    ]
     attribute since { xsd:anyURI }?,
     empty
   }
@@ -5702,9 +5894,14 @@ timeline =
     
     ## désigne le début de la frise chronologique, c'est-à-dire le moment où elle commence.
     attribute origin { xsd:anyURI }?,
-    
-    ## spécifie l'unité de temps correspondant à la valeur de l'attribut interval de la frise chronologique ou des points temporels qui la constituent.
-    ## Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (seconds); 5] ms (milliseconds)
+    [
+      a:documentation [
+        "spécifie l'unité de temps correspondant à la valeur de l'attribut "
+        ns1:code [ "@interval" ]
+        " de la frise chronologique ou des points temporels qui la constituent.\x{a}" ~
+        "Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (seconds); 5] ms (milliseconds)"
+      ]
+    ]
     attribute unit {
       
       ## (jours) 
@@ -5776,24 +5973,44 @@ join =
     ## indique si les cibles à réunir incluent l'intégralité de l'élément indiqué (le sous-arbre entier y compris sa racine) ou seulement les enfants de la cible (les branches du sous-arbre).
     [ a:defaultValue = "root" ]
     attribute scope {
-      
-      ## les sous-arbres dotés de leur racine qui sont désignés par l'attribut target sont joints ; chaque sous-arbre devient un fils de l'élément virtuel créé par la jointure.
+      [
+        a:documentation [
+          "les sous-arbres dotés de leur racine qui sont désignés par l'attribut "
+          ns1:code [ "@target" ]
+          " sont joints ; chaque sous-arbre devient un fils de l'élément virtuel créé par la jointure."
+        ]
+      ]
       "root"
-      | 
-        ## les fils des sous-arbres désignés par l'attribut target deviennent les fils de l'élément virtuel (c'est-à-dire que les racines des sous-arbres disparaissent).
+      | [
+          a:documentation [
+            "les fils des sous-arbres désignés par l'attribut "
+            ns1:code [ "@target" ]
+            " deviennent les fils de l'élément virtuel (c'est-à-dire que les racines des sous-arbres disparaissent)."
+          ]
+        ]
         "branches"
     }?,
     empty
   }
 joinGrp =
-  
-  ## (groupe de jointures) regroupe une collection d'éléments join ainsi que, éventuellement, des pointeurs. [16.7. Aggregation]
+  [
+    a:documentation [
+      "(groupe de jointures) regroupe une collection d'éléments "
+      ns1:code [ "<join>" ]
+      " ainsi que, éventuellement, des pointeurs. [16.7. Aggregation]"
+    ]
+  ]
   element joinGrp {
     (model.glossLike*, (join | ptr)+),
     att.global.attributes,
     att.pointing.group.attributes,
-    
-    ## décrit le résultat produit par le rassemblement dans cette collection des éléments join.
+    [
+      a:documentation [
+        "décrit le résultat produit par le rassemblement dans cette collection des éléments "
+        ns1:code [ "<join>" ]
+        "."
+      ]
+    ]
     attribute result { xsd:Name }?,
     empty
   }
@@ -5821,16 +6038,32 @@ alt =
         ## (non exclusif) Indique que cette alternative n'est pas exclusive, c'est-à-dire qu'une option au moins est vraie.
         "incl"
     }?,
-    
-    ## Si l'attribut mode a la valeur , chacune des valeurs de l'attribut weights établit la probabilité que l'option correspondante soit vraie. Si l'attribut mode a la valeur , chacune des valeurs de l'attribut weights établit la probabilité que l'option correspondante soit vraie, étant posé qu'au moins une des autres options l'est aussi.
+    [
+      a:documentation [
+        "Si l'attribut "
+        ns1:code [ "@mode" ]
+        " a la valeur , chacune des valeurs de l'attribut "
+        ns1:code [ "@weights" ]
+        " établit la probabilité que l'option correspondante soit vraie. Si l'attribut "
+        ns1:code [ "@mode" ]
+        " a la valeur , chacune des valeurs de l'attribut "
+        ns1:code [ "@weights" ]
+        " établit la probabilité que l'option correspondante soit vraie, étant posé qu'au moins une des autres options l'est aussi."
+      ]
+    ]
     attribute weights {
       list { xsd:double, xsd:double, xsd:double* }
     }?,
     empty
   }
 altGrp =
-  
-  ## (groupe d'alternatives) regroupe une collection d'éléments alt et, éventuellement, de pointeurs. [16.8. Alternation]
+  [
+    a:documentation [
+      "(groupe d'alternatives) regroupe une collection d'éléments "
+      ns1:code [ "<alt>" ]
+      " et, éventuellement, de pointeurs. [16.8. Alternation]"
+    ]
+  ]
   element altGrp {
     (alt | ptr)*,
     att.global.attributes,
@@ -6515,8 +6748,13 @@ musicNotation =
     macro.specialPara, att.global.attributes, empty
   }
 decoDesc =
-  
-  ## (description de la décoration) contient la description de la décoration du manuscrit, soit en une série de paragraphes p, soit sous la forme d'une série d'éléments thématiques decoNote [10.7.3. Bindings, Seals, and Additional Material]
+  [
+    a:documentation [
+      "(description de la décoration) contient la description de la décoration du manuscrit, soit en une série de paragraphes p, soit sous la forme d'une série d'éléments thématiques "
+      ns1:code [ "<decoNote>" ]
+      " [10.7.3. Bindings, Seals, and Additional Material]"
+    ]
+  ]
   element decoDesc {
     (model.pLike+ | (summary?, decoNote+)),
     att.global.attributes,
@@ -6536,8 +6774,13 @@ additions =
   ## (ajouts) contient la description des ajouts significatifs trouvés dans un manuscrit, tels que gloses marginales ou autres annotations. [10.7.2. Writing, Decoration, and Other Notations]
   element additions { macro.specialPara, att.global.attributes, empty }
 bindingDesc =
-  
-  ## (description de la reliure) décrit les reliures actuelles et anciennes d'un manuscrit, soit en une série de paragraphes p, soit sous la forme d'une série d'éléments binding, un pour chaque reliure [10.7.3.1. Binding Descriptions]
+  [
+    a:documentation [
+      "(description de la reliure) décrit les reliures actuelles et anciennes d'un manuscrit, soit en une série de paragraphes p, soit sous la forme d'une série d'éléments "
+      ns1:code [ "<binding>" ]
+      ", un pour chaque reliure [10.7.3.1. Binding Descriptions]"
+    ]
+  ]
   element bindingDesc {
     ((model.pLike | decoNote | condition)+ | binding+),
     att.global.attributes,
@@ -6564,8 +6807,17 @@ binding =
     empty
   }
 sealDesc =
-  
-  ## (description des sceaux) décrit les sceaux ou autres objets attachés au manuscrit, soit en une série de paragraphes p, soit sous la forme d'une série d'éléments seal, complétés éventuellement par des éléments decoNote. [10.7.3.2. Seals]
+  [
+    a:documentation [
+      "(description des sceaux) décrit les sceaux ou autres objets attachés au manuscrit, soit en une série de paragraphes "
+      ns1:code [ "<p>" ]
+      ", soit sous la forme d'une série d'éléments "
+      ns1:code [ "<seal>" ]
+      ", complétés éventuellement par des éléments "
+      ns1:code [ "<decoNote>" ]
+      ". [10.7.3.2. Seals]"
+    ]
+  ]
   element sealDesc {
     (model.pLike+
      | (summary?, (decoNote | seal | condition)+)),
@@ -6666,8 +6918,13 @@ source =
   ## (source) décrit la source des informations contenues dans la description du manuscrit. [10.9.1.1. Record History]
   element source { macro.specialPara, att.global.attributes, empty }
 custodialHist =
-  
-  ## (histoire de la conservation) contient des informations sur l'histoire de la conservation, soit en texte libre, soit sous la forme d'une série d'éléments custEvent. [10.9.1.2. Availability and Custodial History]
+  [
+    a:documentation [
+      "(histoire de la conservation) contient des informations sur l'histoire de la conservation, soit en texte libre, soit sous la forme d'une série d'éléments "
+      ns1:code [ "<custEvent>" ]
+      ". [10.9.1.2. Availability and Custodial History]"
+    ]
+  ]
   element custodialHist {
     (model.pLike+ | custEvent+), att.global.attributes, empty
   }
@@ -6717,8 +6974,13 @@ att.global.facs.attribute.facs =
   }?
 att.global.change.attributes = att.global.change.attribute.change
 att.global.change.attribute.change =
-  
-  ## points to one or more change elements documenting a state or revision campaign to which the element bearing this attribute and its children have been assigned by the encoder.
+  [
+    a:documentation [
+      "points to one or more "
+      ns1:code [ "<change>" ]
+      " elements documenting a state or revision campaign to which the element bearing this attribute and its children have been assigned by the encoder."
+    ]
+  ]
   attribute change {
     list { xsd:anyURI+ }
   }?
@@ -6826,8 +7088,13 @@ surfaceGrp =
     empty
   }
 zone =
-  
-  ## définit une zone rectangulaire contenue dans un élément surface. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]
+  [
+    a:documentation [
+      "définit une zone rectangulaire contenue dans un élément "
+      ns1:code [ "<surface>" ]
+      ". [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]"
+    ]
+  ]
   element zone {
     (text
      | model.graphicLike
@@ -6838,15 +7105,29 @@ zone =
     att.coordinated.attributes,
     att.typed.attributes,
     att.written.attributes,
-    
-    ## indicates the amount by which this zone has been rotated clockwise, with respect to the normal orientation of the parent surface element as implied by the dimensions given in the msDesc element or by the coordinates of the surface itself. The orientation is expressed in arc degrees.
-    [ a:defaultValue = "0" ]
+    [
+      a:defaultValue = "0"
+      a:documentation [
+        "indicates the amount by which this zone has been rotated clockwise, with respect to the normal orientation of the parent "
+        ns1:code [ "<surface>" ]
+        " element as implied by the dimensions given in the "
+        ns1:code [ "<msDesc>" ]
+        " element or by the coordinates of the "
+        ns1:code [ "<surface>" ]
+        " itself. The orientation is expressed in arc degrees."
+      ]
+    ]
     attribute rotate { xsd:nonNegativeInteger }?,
     empty
   }
 path =
-  
-  ## defines any line passing through two or more points within a surface element. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]
+  [
+    a:documentation [
+      "defines any line passing through two or more points within a "
+      ns1:code [ "<surface>" ]
+      " element. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]"
+    ]
+  ]
   element path {
     empty
     >> sch:pattern [
@@ -6933,8 +7214,13 @@ path =
     empty
   }
 addSpan =
-  
-  ## (partie de texte ajoutée) marque le début d'une longue partie de texte ajoutée par un auteur, un copiste, un annotateur ou un correcteur (voir aussi add). [11.3.1.4. Additions and Deletions]
+  [
+    a:documentation [
+      "(partie de texte ajoutée) marque le début d'une longue partie de texte ajoutée par un auteur, un copiste, un annotateur ou un correcteur (voir aussi "
+      ns1:code [ "<add>" ]
+      "). [11.3.1.4. Additions and Deletions]"
+    ]
+  ]
   element addSpan {
     empty
     >> sch:pattern [
@@ -7147,8 +7433,13 @@ fw =
     empty
   }
 handNotes =
-  
-  ## contient un ou plusieurs éléments handNote qui documentent les différentes mains identifiées dans les textes source. [11.3.2.1. Document Hands]
+  [
+    a:documentation [
+      "contient un ou plusieurs éléments "
+      ns1:code [ "<handNote>" ]
+      " qui documentent les différentes mains identifiées dans les textes source. [11.3.2.1. Document Hands]"
+    ]
+  ]
   element handNotes { handNote+, att.global.attributes, empty }
 handShift =
   
@@ -7407,8 +7698,13 @@ undo =
     empty
   }
 TEI =
-  
-  ## (document TEI) contient un seul document conforme à la TEI, qui comprend un en-tête TEI et un texte, soit de façon isolée, soit comme partie d’un élément teiCorpus. [4. Default Text Structure 15.1. Varieties of Composite Text]
+  [
+    a:documentation [
+      "(document TEI) contient un seul document conforme à la TEI, qui comprend un en-tête TEI et un texte, soit de façon isolée, soit comme partie d’un élément "
+      ns1:code [ "<teiCorpus>" ]
+      ". [4. Default Text Structure 15.1. Varieties of Composite Text]"
+    ]
+  ]
   element TEI {
     (teiHeader, model.resourceLike+)
     >> sch:ns [ prefix = "tei" uri = "http://www.tei-c.org/ns/1.0" ]

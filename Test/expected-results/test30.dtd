@@ -1151,7 +1151,7 @@ xml:space (default|preserve) #IMPLIED'>
 <!ATTLIST Menu
  %Tatt.global.attribute.xmlid;
  %Tatt.global.rendition.attribute.rend; >
-<!--doc:(TEI document) contains a single TEI-conformant document, combining a single TEI header with one or more members of the model.resourceLike class. Multiple TEI elements may be combined to form a teiCorpus element. [4. Default Text Structure 15.1. Varieties of Composite Text] -->
+<!--doc:(TEI document) contains a single TEI-conformant document, combining a single TEI header with one or more members of the model.resourceLike class. Multiple <TEI> elements may be combined to form a <teiCorpus> element. [4. Default Text Structure 15.1. Varieties of Composite Text] -->
 <!ELEMENT TEI ((teiHeader,(%model.resourceLike;)+))>
 <!ATTLIST TEI xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST TEI
@@ -1198,7 +1198,7 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.personal.attributes;
  %Tatt.typed.attributes; >
-<!--doc:(added span of text) marks the beginning of a longer sequence of text added by an author, scribe, annotator or corrector (see also add). [11.3.1.4. Additions and Deletions] -->
+<!--doc:(added span of text) marks the beginning of a longer sequence of text added by an author, scribe, annotator or corrector (see also <add>). [11.3.1.4. Additions and Deletions] -->
 <!ELEMENT addSpan  EMPTY>
 <!ATTLIST addSpan xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST addSpan
@@ -1250,7 +1250,7 @@ value %teidata.count;  #IMPLIED >
 target CDATA  #IMPLIED
 mode (excl|incl) #IMPLIED
 weights CDATA  #IMPLIED >
-<!--doc:(alternation group) groups a collection of alt elements and possibly pointers. [16.8. Alternation] -->
+<!--doc:(alternation group) groups a collection of <alt> elements and possibly pointers. [16.8. Alternation] -->
 <!ELEMENT altGrp (alt|ptr)*>
 <!ATTLIST altGrp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST altGrp
@@ -1407,7 +1407,7 @@ type %teidata.enumerated;  #IMPLIED >
 <!ATTLIST calendarDesc xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST calendarDesc
  %Tatt.global.attributes; >
-<!--doc:(category description) describes some category within a taxonomy or text typology, either in the form of a brief prose description or in terms of the situational parameters used by the TEI formal textDesc. [2.3.7. The Classification Declaration] -->
+<!--doc:(category description) describes some category within a taxonomy or text typology, either in the form of a brief prose description or in terms of the situational parameters used by the TEI formal <textDesc>. [2.3.7. The Classification Declaration] -->
 <!ELEMENT catDesc (#PCDATA|%model.limitedPhrase;|_DUMMY_model.catDescPart)*>
 <!ATTLIST catDesc xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST catDesc
@@ -1879,7 +1879,7 @@ Elements] -->
 <!ATTLIST geo
  %Tatt.global.attributes;
  %Tatt.declaring.attributes; >
-<!--doc:(geographic coordinates declaration) documents the notation and the datum used for geographic coordinates expressed as content of the geo element elsewhere within the document. [2.3.8. The Geographic Coordinates Declaration] -->
+<!--doc:(geographic coordinates declaration) documents the notation and the datum used for geographic coordinates expressed as content of the <geo> element elsewhere within the document. [2.3.8. The Geographic Coordinates Declaration] -->
 <!ELEMENT geoDecl %macro.phraseSeq;>
 <!ATTLIST geoDecl xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST geoDecl
@@ -1936,7 +1936,7 @@ datum %teidata.enumerated;  "WGS84"  >
 <!ATTLIST handNote
  %Tatt.global.attributes;
  %Tatt.handFeatures.attributes; >
-<!--doc:contains one or more handNote elements documenting the different hands identified within the source texts. [11.3.2.1. Document Hands] -->
+<!--doc:contains one or more <handNote> elements documenting the different hands identified within the source texts. [11.3.2.1. Document Hands] -->
 <!ELEMENT handNotes (handNote)+>
 <!ATTLIST handNotes xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST handNotes
@@ -2026,7 +2026,7 @@ indexName %teidata.name;  #IMPLIED >
  %Tatt.typed.attributes;
 result %teidata.name;  #IMPLIED
 scope (root|branches) "root"  >
-<!--doc:(join group) groups a collection of join elements and possibly pointers. [16.7. Aggregation] -->
+<!--doc:(join group) groups a collection of <join> elements and possibly pointers. [16.7. Aggregation] -->
 <!ELEMENT joinGrp (((%model.glossLike;)*,(join|ptr)+))>
 <!ATTLIST joinGrp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST joinGrp
@@ -2053,7 +2053,7 @@ scheme %teidata.pointer;  #IMPLIED >
  %Tatt.typed.attributes;
  %Tatt.placement.attributes;
  %Tatt.written.attributes; >
-<!--doc:(language knowledge) summarizes the state of a person's linguistic knowledge, either as prose or by a list of langKnown elements. [13.3.2.1. Personal Characteristics] -->
+<!--doc:(language knowledge) summarizes the state of a person's linguistic knowledge, either as prose or by a list of <langKnown> elements. [13.3.2.1. Personal Characteristics] -->
 <!ELEMENT langKnowledge (((precision)*,(%model.pLike;|(langKnown)+)))>
 <!ATTLIST langKnowledge xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST langKnowledge
@@ -2460,7 +2460,7 @@ Normalization 12. Critical Apparatus] -->
 <!ATTLIST p xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST p
  %Tatt.global.attribute.xmlid; >
-<!--doc:defines any line passing through two or more points within a surface element. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription] -->
+<!--doc:defines any line passing through two or more points within a <surface> element. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription] -->
 <!ELEMENT path  EMPTY>
 <!ATTLIST path xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST path
@@ -3089,7 +3089,7 @@ partial %teidata.truthValue;  #IMPLIED >
 <!ATTLIST taxonomy xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST taxonomy
  %Tatt.global.attributes; >
-<!--doc:contains the whole of a TEI encoded corpus, comprising a single corpus header and one or more TEI elements, each containing a single text header and a text. [4. Default Text Structure 15.1. Varieties of Composite Text] -->
+<!--doc:contains the whole of a TEI encoded corpus, comprising a single corpus header and one or more <TEI> elements, each containing a single text header and a text. [4. Default Text Structure 15.1. Varieties of Composite Text] -->
 <!ELEMENT teiCorpus ((teiHeader,(((%model.resourceLike;)+,(TEI|teiCorpus)*)|(TEI|teiCorpus)+)))>
 <!ATTLIST teiCorpus xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST teiCorpus
@@ -3252,7 +3252,7 @@ since %teidata.pointer;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.declarable.attributes;
  %Tatt.typed.attributes; >
-<!--doc:defines any two-dimensional area within a surface element. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription] -->
+<!--doc:defines any two-dimensional area within a <surface> element. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription] -->
 <!ELEMENT zone (#PCDATA|%model.graphicLike;|%model.global;|surface|%model.linePart;)*>
 <!ATTLIST zone xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST zone
