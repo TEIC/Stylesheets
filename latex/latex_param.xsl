@@ -210,7 +210,7 @@ as a proportion of the page width.</desc>
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
       <desc>Configuration to pass to hypersetup.</desc>
    </doc>
-   <xsl:param name="hyperSetup">linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true</xsl:param>
+   <xsl:param name="hyperSetup">citebordercolor=0.75 0.75 0.75,linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
       <desc>Depth of nesting of reference documentation when processing ODD</desc>
