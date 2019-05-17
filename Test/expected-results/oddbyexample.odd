@@ -3,6 +3,7 @@
    <teiHeader>
       <fileDesc>
          <titleStmt>
+            <title type="short">oddbyexample</title>
             <title>ODD by Example customization</title>
          </titleStmt>
          <publicationStmt>
@@ -44,6 +45,8 @@
                   <attDef ident="require" mode="delete"/>
                </attList>
             </classSpec>
+            <!--Checking module msdescription-->
+            <classRef key="model.physDescPart"/>
             <!--Checking module namesdates-->
             <classRef key="model.persNamePart"/>
             <!--Checking module dictionaries-->
@@ -67,7 +70,6 @@
                </attList>
             </classSpec>
             <!--Checking module tagdocs-->
-            <macroRef key="macro.schemaPattern"/>
             <classRef key="att.combinable"/>
             <classRef key="att.identified"/>
             <classRef key="model.contentPart"/>
@@ -81,6 +83,11 @@
                   <attDef ident="ident" mode="delete"/>
                   <attDef ident="predeclare" mode="delete"/>
                   <attDef ident="module" mode="delete"/>
+               </attList>
+            </classSpec>
+            <classSpec ident="att.ascribed.directed" type="atts" mode="change">
+               <attList>
+                  <attDef ident="toWhom" mode="delete"/>
                </attList>
             </classSpec>
             <classSpec ident="att.dimensions" type="atts" mode="change">
@@ -109,12 +116,6 @@
                <attList>
                   <attDef ident="org" mode="delete"/>
                   <attDef ident="sample" mode="delete"/>
-               </attList>
-            </classSpec>
-            <classSpec ident="att.editLike" type="atts" mode="change">
-               <attList>
-                  <attDef ident="evidence" mode="delete"/>
-                  <attDef ident="instant" mode="delete"/>
                </attList>
             </classSpec>
             <classSpec ident="att.media" type="atts" mode="change">
@@ -168,11 +169,11 @@
                   <attDef ident="type" mode="delete"/>
                </attList>
             </elementSpec>
+            <!--Checking module figures-->
             <!--Checking module header-->
             <moduleRef key="header"
                        include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
             <!--Checking module verse-->
-            <!--Checking module msdescription-->
             <!--Checking module transcr-->
             <!--Checking module linking-->
             <!--Checking module analysis-->

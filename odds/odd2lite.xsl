@@ -514,7 +514,7 @@ of this software, even if advised of the possibility of such damage.
                       <xsl:value-of select="@ident"/>
                     </ref>
                   </hi>:
-                  <xsl:sequence select="tei:makeDescription(.,true())"/>
+                  <xsl:sequence select="tei:makeDescription(., true(), true())"/>
                 </cell>
               </row>
             </xsl:for-each>
@@ -579,6 +579,13 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:gloss" mode="inLanguage">
       <seg>
+        <!--  MDH 2018-04-29: working on ticket 138. Add flag if translation is out of date.   -->
+        <xsl:variable name="transDate" select="@versionDate"/>
+        <xsl:if test="preceding-sibling::tei:gloss[@xml:lang = 'en'][@versionDate gt $transDate]
+          or following-sibling::tei:gloss[@xml:lang = 'en'][@versionDate gt $transDate]">
+          <xsl:attribute name="rend" select="'outOfDateTranslation'"/>
+        </xsl:if>
+        
          <xsl:copy-of select="@xml:lang"/>
          <xsl:value-of select="."/>
       </seg>
@@ -586,6 +593,13 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:desc" mode="inLanguage">
     <seg>
+      <!--  MDH 2018-04-29: working on ticket 138. Add flag if translation is out of date.   -->
+      <xsl:variable name="transDate" select="@versionDate"/>
+      <xsl:if test="preceding-sibling::tei:desc[@xml:lang = 'en'][@versionDate gt $transDate]
+        or following-sibling::tei:desc[@xml:lang = 'en'][@versionDate gt $transDate]">
+        <xsl:attribute name="rend" select="'outOfDateTranslation'"/>
+      </xsl:if>
+     
       <xsl:copy-of select="@xml:lang"/>
       <xsl:apply-templates/>
     </seg>

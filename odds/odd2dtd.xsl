@@ -128,7 +128,7 @@ of this software, even if advised of the possibility of such damage.
 	                    <xsl:text>. </xsl:text>
 			    <xsl:call-template name="copyright"/>
 	                    <xsl:call-template name="makeTEIVersion"/>
-	                    <xsl:sequence select="tei:makeDescription(.,true())"/>
+	                    <xsl:sequence select="tei:makeDescription(., true(), true())"/>
 	                 </xsl:with-param>
                </xsl:call-template>
                <xsl:choose>
@@ -184,7 +184,7 @@ of this software, even if advised of the possibility of such damage.
 		                      <xsl:text>.&#10;</xsl:text>
 				      <xsl:call-template name="copyright"/>
 		                      <xsl:call-template name="makeTEIVersion"/>
-		                      <xsl:sequence select="tei:makeDescription(.,true())"/>
+		                      <xsl:sequence select="tei:makeDescription(., true(), true())"/>
 	                    </xsl:with-param>
                   </xsl:call-template>
                   <xsl:call-template name="datatypeMacros"/>
@@ -305,15 +305,13 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:sequence select="tei:dtdcomment('Start rest of  macro declarations')"/>
       <xsl:for-each select="key('MacroModule',@ident)">
-         <xsl:if test="not(@type='dt')">
-            <xsl:choose>
-               <xsl:when test="@predeclare='true'"/>
-               <!--	    <xsl:when test="key('PredeclareMacros',@ident)"/>-->
-	       <xsl:otherwise>
-		 <xsl:apply-templates mode="tangle" select="."/>
-               </xsl:otherwise>
-            </xsl:choose>
-         </xsl:if>
+        <xsl:choose>
+          <xsl:when test="@predeclare='true'"/>
+          <!--	    <xsl:when test="key('PredeclareMacros',@ident)"/>-->
+	  <xsl:otherwise>
+	    <xsl:apply-templates mode="tangle" select="."/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:for-each>
       <xsl:sequence select="tei:dtdcomment('End macros')"/>
   </xsl:template>
@@ -348,7 +346,7 @@ of this software, even if advised of the possibility of such damage.
 		      separator=""/>
 	    <xsl:call-template name="copyright"/>
             <xsl:call-template name="makeTEIVersion"/>
-            <xsl:sequence select="tei:makeDescription(.,true())"/>
+            <xsl:sequence select="tei:makeDescription(., true(), true())"/>
          </xsl:with-param>
       </xsl:call-template>
       <xsl:choose>
@@ -378,9 +376,9 @@ of this software, even if advised of the possibility of such damage.
          <xsl:call-template name="NameList"/>
       </xsl:if>
 
-      <xsl:if test="tei:dataSpec|tei:macroSpec[@type='dt']">
+      <xsl:if test="tei:dataSpec">
 	<xsl:sequence select="tei:dtdcomment('start datatypes')"/>
-	<xsl:apply-templates mode="tangle" select="tei:dataSpec|tei:macroSpec[@type='dt']"/>
+	<xsl:apply-templates mode="tangle" select="tei:dataSpec"/>
 	<xsl:sequence select="tei:dtdcomment('end datatypes')"/>
       </xsl:if>
 
@@ -410,9 +408,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:sequence select="tei:dtdcomment('end predeclared patterns')"/>
       </xsl:if>
 
-      <xsl:if test="tei:macroSpec[not(@type='dt' or @predeclare='true')]">
+      <xsl:if test="tei:macroSpec[ not( @predeclare eq 'true' ) ]">
 	<xsl:sequence select="tei:dtdcomment('start rest of patterns')"/>
-        <xsl:apply-templates mode="tangle" select="tei:macroSpec[not(@type='dt' or @predeclare='true')]"/>
+        <xsl:apply-templates mode="tangle" select="tei:macroSpec[ not( @predeclare eq 'true' ) ]"/>
 	<xsl:sequence select="tei:dtdcomment('end patterns')"/>
       </xsl:if>
 
@@ -744,7 +742,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="rng:data">
       <xsl:choose>
-         <xsl:when test="parent::tei:content/parent::tei:macroSpec[@type='dt']">
+         <xsl:when test="parent::tei:content/parent::tei:dataSpec">
             <xsl:text> CDATA </xsl:text>
          </xsl:when>
          <xsl:when test="parent::tei:content">
@@ -780,10 +778,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
-  <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:text">
-      <xsl:text> CDATA</xsl:text>
-  </xsl:template>
-  <xsl:template match="tei:dataSpec/tei:content/tei:textNode">
+  <xsl:template match="tei:dataSpec/tei:content/tei:textNode | tei:dataSpec/tei:content/rng:text">
     <xsl:text> CDATA</xsl:text>
   </xsl:template>
   <xsl:template match="tei:macroSpec[@type='epe']/tei:content/rng:text">
@@ -793,7 +788,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text> CDATA</xsl:text>
   </xsl:template>
 
-  <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:choice">
+  <xsl:template match="tei:dataSpec/tei:content/rng:choice">
       <xsl:choose>
          <xsl:when test="rng:value and rng:data">
             <xsl:text> CDATA</xsl:text>
@@ -827,10 +822,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="parent::tei:content/parent::tei:dataSpec">
             <xsl:text> CDATA</xsl:text>
          </xsl:when>
-         <xsl:when test="parent::tei:content/parent::tei:macroSpec[@type='dt']">
-            <xsl:text> CDATA</xsl:text>
-         </xsl:when>
-         <xsl:when test="parent::tei:content/parent::tei:macroSpec[@type='pe']">
+         <xsl:when test="parent::tei:content/parent::tei:macroSpec">
             <xsl:text>#PCDATA</xsl:text>
          </xsl:when>
          <xsl:when test="parent::tei:content and not(following-sibling::rng:*) and not (preceding-sibling::rng:*)">
@@ -1024,7 +1016,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="macroBody">
     <xsl:text>&#10;&lt;!ENTITY </xsl:text>
-    <xsl:if test="not(@type) or @type='defaultpe' or @type='pe' or @type='epe' or @type='dt'">
+    <xsl:if test="not(@type) or @type=('defaultpe','pe','epe')">
       <xsl:text>%</xsl:text>
     </xsl:if>
     <xsl:text> </xsl:text>
@@ -1066,7 +1058,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="dataBody">
     <xsl:text>&#10;&lt;!ENTITY </xsl:text>
-    <xsl:if test="not(@type) or @type='defaultpe' or @type='pe' or @type='epe' or @type='dt'">
+    <xsl:if test="not(@type) or @type=('defaultpe','pe','epe')">
       <xsl:text>%</xsl:text>
     </xsl:if>
     <xsl:text> </xsl:text>
@@ -1139,7 +1131,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:choose>
       </xsl:variable>
       <xsl:text>&#10;&lt;!--doc:</xsl:text>
-      <xsl:sequence select="tei:makeDescription(.,true())"/>
+      <xsl:sequence select="tei:makeDescription(., true(), true())"/>
       <xsl:text> --&gt;&#10;</xsl:text>
       <xsl:text>&lt;!ELEMENT </xsl:text>
       <xsl:value-of select="$ename"/>

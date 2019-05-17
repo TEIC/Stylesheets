@@ -243,7 +243,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:value-of select="if (matches($target,'^_')) then  concat('#',substring($target,2)) else $target"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:value-of select="if (matches($instr,'^_')) then  concat('#',substring($instr,2)) else $instr"/>
+        <xsl:value-of select="if (matches($instr,'(^|#)_')) then replace($instr, '(^|#)_', '#') else $instr"/>
       </xsl:otherwise>
     </xsl:choose>
 </xsl:function>

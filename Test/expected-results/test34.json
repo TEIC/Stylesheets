@@ -1,10 +1,143 @@
-{"title": "Namespace Test","edition": "","generator": "odd2json",
-    "modules": [],"moduleRefs": [{"key":"core","desc":""},
-{"key":"header","desc":""},
-{"key":"linking","desc":""},
-{"key":"tei","desc":""},
-{"key":"textstructure","desc":""}
-],"members": [{"ident":"cit","ns":"http://foo.foo/foo","type":"elementSpec","module":"","desc":"This element encodes a new citation (CASE 1)","classes":[{"model.quoteLike":""}],"model":"TEXT","attributes":[],"classattributes":[]},
-{"ident":"cit","ns":"http://blah.blah/bar","type":"elementSpec","module":"","desc":"This element encodes a new citation (CASE 2)","classes":[{"model.quoteLike":""}],"model":"TEXT","attributes":[],"classattributes":[]},
-{"ident":"q","ns":"http://blah.blah/blah","type":"elementSpec","module":"","desc":"This element encodes a new quote (CASE 4)","classes":[{"model.quoteLike":""}],"model":"TEXT","attributes":[],"classattributes":[]}
-],"elementRefs": [],"modelclasses": [],"classRefs": [],"macros": [],"macroRefs": []}
+
+  { "title" : "Namespace Test",
+    "edition" : "",
+    "generator" : "odd2json3",
+    
+    "modules" : 
+    [  ],
+    "moduleRefs" : 
+    [ 
+      { "key" : "core",
+        "desc" : 
+        [  ],
+        "shortDesc" : "",
+        "gloss" : 
+        [  ] },
+      
+      { "key" : "header",
+        "desc" : 
+        [  ],
+        "shortDesc" : "",
+        "gloss" : 
+        [  ] },
+      
+      { "key" : "linking",
+        "desc" : 
+        [  ],
+        "shortDesc" : "",
+        "gloss" : 
+        [  ] },
+      
+      { "key" : "tei",
+        "desc" : 
+        [  ],
+        "shortDesc" : "",
+        "gloss" : 
+        [  ] },
+      
+      { "key" : "textstructure",
+        "desc" : 
+        [  ],
+        "shortDesc" : "",
+        "gloss" : 
+        [  ] } ],
+    "elements" : 
+    [ 
+      { "ident" : "cit",
+        "ns" : "http:\/\/foo.foo\/foo",
+        "type" : "elementSpec",
+        "module" : "",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\">\n            This element encodes a new citation (CASE 1)\n          <\/desc>" ],
+        "shortDesc" : "\n            This element encodes a new citation (CASE 1)\n          ",
+        "gloss" : 
+        [  ],
+        "altIdent" : 
+        [  ],
+        "classes" : 
+        { "model" : 
+          [ "model.quoteLike" ],
+          "atts" : 
+          [  ],
+          "unknown" : 
+          [  ] },
+        "attributes" : 
+        [  ],
+        "content" : 
+        [ 
+          { "type" : "ref" },
+          
+          { "type" : "oneOrMore" },
+          
+          { "type" : "text" } ] },
+      
+      { "ident" : "cit",
+        "ns" : "http:\/\/blah.blah\/bar",
+        "type" : "elementSpec",
+        "module" : "",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\">\n            This element encodes a new citation (CASE 2)\n          <\/desc>" ],
+        "shortDesc" : "\n            This element encodes a new citation (CASE 2)\n          ",
+        "gloss" : 
+        [  ],
+        "altIdent" : 
+        [  ],
+        "classes" : 
+        { "model" : 
+          [ "model.quoteLike" ],
+          "atts" : 
+          [  ],
+          "unknown" : 
+          [  ] },
+        "attributes" : 
+        [  ],
+        "content" : 
+        [ 
+          { "type" : "ref" },
+          
+          { "type" : "oneOrMore" },
+          
+          { "type" : "text" } ] },
+      
+      { "ident" : "q",
+        "ns" : "http:\/\/blah.blah\/blah",
+        "type" : "elementSpec",
+        "module" : "",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\">\n            This element encodes a new quote (CASE 4)\n          <\/desc>" ],
+        "shortDesc" : "\n            This element encodes a new quote (CASE 4)\n          ",
+        "gloss" : 
+        [  ],
+        "altIdent" : 
+        [  ],
+        "classes" : 
+        { "model" : 
+          [ "model.quoteLike" ],
+          "atts" : 
+          [  ],
+          "unknown" : 
+          [  ] },
+        "attributes" : 
+        [  ],
+        "content" : 
+        [ 
+          { "type" : "ref" },
+          
+          { "type" : "oneOrMore" },
+          
+          { "type" : "text" } ] } ],
+    "classes" : 
+    { "models" : 
+      [  ],
+      "attributes" : 
+      [  ] },
+    "elementRefs" : 
+    [  ],
+    "classRefs" : 
+    [  ],
+    "macros" : 
+    [  ],
+    "datatypes" : 
+    [  ],
+    "macroRefs" : 
+    [  ] }

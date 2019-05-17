@@ -622,6 +622,11 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:when test="ancestor::tei:back">
                      <xsl:value-of select="$lineheightBackpage"/>
                   </xsl:when>
+<!-- MDH 2017-04-02: It turns out that metadata in the header may 
+     also be processed with this, so provide a default. -->
+                   <xsl:otherwise>
+                     <xsl:value-of select="'1'"/>
+                   </xsl:otherwise>
                </xsl:choose>
             </xsl:attribute>
          </xsl:if>
@@ -638,15 +643,16 @@ of this software, even if advised of the possibility of such damage.
          </xsl:if>
          <xsl:if test="@xml:lang">
             <xsl:attribute name="country">
-               <xsl:value-of select="substring-before(@xml:lang,'-')"/>
+               <xsl:value-of select="substring-after(@xml:lang,'-')"/>
             </xsl:attribute>
             <xsl:attribute name="language">
-               <xsl:value-of select="substring-after(@xml:lang,'-')"/>
+               <xsl:value-of select="substring-before(@xml:lang,'-')"/>
             </xsl:attribute>
          </xsl:if>
          <xsl:apply-templates/>
       </block>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
@@ -682,6 +688,23 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>Handle cb, gb,and milestone elements here by summarily ignoring
+        them, because the template in common/common_core.xsl (which calls
+        'makeInline') does not work for us: it spits out text that is not
+        wrapped in an FO element, and thus causes an error. (See issue
+        <a href="https://github.com/TEIC/Stylesheets/issues/334">334</a>.)
+        For some ideas on what *might* be done here instead, you should
+        probably take a look at the template for the tei:pb element as a
+        starting point.</p>
+      <p> — Syd on behalf of TEI Stylesheets group, 2018-11-19</p>
+    </desc>
+  </doc>
+  <xsl:template match="tei:cb|tei:gb|tei:milestone">
+    <xsl:comment> This stylesheet does not handle <xsl:value-of select="local-name(.)"/> yet. </xsl:comment>
+  </xsl:template>
+    
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Quotations</desc>
    </doc>

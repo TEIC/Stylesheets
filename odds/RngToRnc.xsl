@@ -196,7 +196,7 @@
      source schema. A prefix must not be the empty string. Also, it
      must not conflict with any other prefixes in the map or in the
      schema. -->
-  <xsl:param name="prefix-map" select="/.."/>
+  <xsl:param name="prefix-map" select="()"/>
    <!-- recursive:
      If true, recursively process includes and external
      references. Note: no include logic is applied. The external

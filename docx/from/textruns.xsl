@@ -80,13 +80,17 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="commentN" select="@w:id"/>
       <xsl:for-each
 	  select="document(concat($wordDirectory,'/word/comments.xml'))/w:comments/w:comment[@w:id=$commentN]">
-	<note place="comment" resp="{translate(@w:author,' ','_')}">
+	<note place="comment" resp="{concat('#',translate(@w:author,' ','_'))}"><xsl:if test="@w:id"><xsl:attribute name="n"><xsl:value-of select="@w:id"/></xsl:attribute></xsl:if>
 	  <date when="{@w:date}"/>
 	  <xsl:apply-templates/>
 	</note>
       </xsl:for-each>
     </xsl:template>
-
+  
+  <xsl:template match="w:commentRangeStart[@w:id]"><anchor type="commentRangeStart" n="{@w:id}"/></xsl:template>
+  
+  <xsl:template match="w:commentRangeEnd[@w:id]"><anchor type="commentRangeEnd" n="{@w:id}"/></xsl:template>
+  
     <xsl:template match="w:r">
       <xsl:call-template name="processTextrun"/>
     </xsl:template>

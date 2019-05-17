@@ -60,7 +60,7 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
- <xsl:strip-space elements="tei:additional tei:address tei:adminInfo
+ <xsl:strip-space elements="tei:additional tei:adminInfo
 			    tei:altGrp tei:altIdentifier tei:analytic
 			    tei:app tei:appInfo tei:application
 			    tei:arc tei:argument tei:attDef
@@ -87,7 +87,7 @@ of this software, even if advised of the possibility of such damage.
 			    tei:floatingText tei:forest tei:front
 			    tei:fs tei:fsConstraints tei:fsDecl
 			    tei:fsdDecl tei:fvLib tei:gap tei:glyph
-			    tei:graph tei:graphic tei:medua tei:group
+			    tei:graph tei:graphic tei:media tei:group
 			    tei:handDesc tei:handNotes tei:history
 			    tei:hom tei:hyphenation tei:iNode tei:if
 			    tei:imprint tei:incident tei:index

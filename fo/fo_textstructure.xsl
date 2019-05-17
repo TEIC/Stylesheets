@@ -579,9 +579,9 @@ of this software, even if advised of the possibility of such damage.
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>trailer</desc>
+      <desc>trailer and byline are simple blocks.</desc>
    </doc>
-  <xsl:template match="tei:trailer">
+  <xsl:template match="tei:trailer | tei:byline[not(ancestor::tei:titlePage)]">
       <block>
          <xsl:apply-templates/>
       </block>
@@ -590,12 +590,14 @@ of this software, even if advised of the possibility of such damage.
       <desc>[fo] </desc>
    </doc>
   <xsl:template name="Header">
-      <block font-size="12pt" padding-before="6pt">
-         <inline>
-	           <xsl:value-of select="$institution"/>
-         </inline>
-      </block>
-    
+      <xsl:if test="not($institution='')">
+         <block font-size="12pt" padding-before="6pt">
+               <inline>
+      	           <xsl:value-of select="$institution"/>
+               </inline>
+            
+         </block>
+      </xsl:if>
       <block font-size="12pt" font-weight="bold">
          <xsl:sequence select="tei:generateTitle(.)"/>
       </block>
