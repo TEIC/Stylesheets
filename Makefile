@@ -1,5 +1,4 @@
 SFUSER=rahtz
-JING=jing
 DEFAULTSOURCE=https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml
 SAXON=java -jar lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
 DOTSAXON=java -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
@@ -53,8 +52,10 @@ check:
 	@which perl || exit 1
 	@echo -n xmllint: 
 	@which xmllint || exit 1
-	@echo -n jing: 
-	@which ${JING} || exit 1
+	@echo -n ant: 
+	@which ant || exit 1
+	@echo -n xetex: 
+	@which xetex || echo " Warning: Couldn't find xetex executable. While most transformations will work, PDF output will not be possible"
 
 v:
 	perl -p -i -e "s+AppVersion.*/AppVersion+AppVersion>`cat VERSION`</AppVersion+" docx/to/application.xsl
