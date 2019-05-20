@@ -2457,19 +2457,6 @@ select="$makeDecls"/></xsl:message>
     <xsl:apply-templates/>
   </xsl:template>
 
-<!-- Start of new templates added by pull request #336. -->
-  <xsl:template match="tei:ref[@target]">
-    <a xmlns="http://www.w3.org/1999/xhtml"  href="{@target}"><xsl:value-of select="."/></a>
-  </xsl:template>
-  
-  <xsl:template match="tei:gi">
-    <code xmlns="http://www.w3.org/1999/xhtml">&lt;<xsl:value-of select="."/>&gt;</code>
-  </xsl:template>
-  <xsl:template match="tei:att">
-    <code xmlns="http://www.w3.org/1999/xhtml">@<xsl:value-of select="."/></code>
-  </xsl:template>
-  <!-- End of new templates added by pull request #336. -->
-  
   <xsl:template name="schematronInContent">
     <xsl:for-each select="tei:constraintSpec/tei:constraint/*">
       <xsl:call-template name="processSchematron"/>
