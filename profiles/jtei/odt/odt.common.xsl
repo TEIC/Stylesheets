@@ -399,15 +399,11 @@
 <!--   Single quotes or double quotes? Depends on nesting level. -->
     <xsl:variable name="quoteLevel" select="count(ancestor::quote|ancestor::q|ancestor::title[@level='a']|ancestor::title[@level='u']|ancestor::soCalled)"/>
     <xsl:choose>
-      <xsl:when test="$quoteLevel mod 2 = 1"><xsl:value-of select="$lsquo"/><xsl:apply-templates/><xsl:if test="following-sibling::node()[1][self::text()][matches(., '^[\.,!\?]+')]"><xsl:value-of select="following-sibling::text()[1]/replace(., '[^\.,!\?]+.*', '')"/></xsl:if><xsl:value-of select="$rsquo"/></xsl:when>
-      <xsl:otherwise><xsl:value-of select="$ldquo"/><xsl:apply-templates/><xsl:if test="following-sibling::node()[1][self::text()][matches(., '^[\.,!\?]+')]"><xsl:value-of select="following-sibling::text()[1]/replace(., '[^\.,!\?]+.*', '')"/></xsl:if><xsl:value-of select="$rdquo"/></xsl:otherwise>
+      <xsl:when test="$quoteLevel mod 2 = 1"><xsl:value-of select="$lsquo"/><xsl:apply-templates/><xsl:call-template name="include.punctuation"/><xsl:value-of select="$rsquo"/></xsl:when>
+      <xsl:otherwise><xsl:value-of select="$ldquo"/><xsl:apply-templates/><xsl:call-template name="include.punctuation"/><xsl:value-of select="$rdquo"/></xsl:otherwise>
     </xsl:choose>
   </xsl:template>
     
-<!--    This template goes along with the one above, removing any leading punctuation from a text node that 
-        follows a quoted span, because that punctuation should have been pulled into the quotes. -->
-  <xsl:template match="text()[matches(., '^[\.,!\?]')][preceding-sibling::*[1][self::quote[not(parent::cit)] or self::q or self::title[@level='a'] or self::title[@level='u'] or self::soCalled]]"><xsl:value-of select="replace(., '^[\.,!\?]', '')"/></xsl:template>
-  
     <xsl:template match="supplied">[<xsl:apply-templates/>]</xsl:template>
   
 <!-- Gaps are turned into ellipses; if they directly follow a period, we don't add a leading 
@@ -524,6 +520,7 @@
       <xsl:param name="note.counter" tunnel="yes" as="xs:integer" select="0"/>
       <xsl:param name="note.context" tunnel="yes" as="element()?" select="ancestor::*[self::front|self::body|self::back]"/>
       <xsl:variable name="note.nr" select="local:get.note.nr(.) + $note.counter"/>
+      <xsl:call-template name="include.punctuation"/>
       <text:span text:style-name="T1"><text:note text:id="{$note.context/name()}.ftn{$note.nr}" text:note-class="{if (@place eq 'end') then 'endnote' else 'footnote'}"><text:note-citation><xsl:number value="$note.nr" format="{local:format.note.nr($note.context)}"/></text:note-citation><text:note-body><text:p text:style-name="teiFootnote"><text:span text:style-name="footnote_20_reference"/><xsl:text>. </xsl:text> <xsl:apply-templates /></text:p></text:note-body></text:note></text:span>
     </xsl:template>
     
@@ -794,7 +791,7 @@
     <xsl:param name="note.context" select="ancestor::*[self::front|self::body|self::back]" tunnel="yes" as="element()?"/>
     <xsl:variable name="current" select="."/>
     <xsl:variable name="prepared">
-      <xsl:apply-templates select="." mode="prepare"/>
+      <xsl:apply-templates select="." mode="list-prepare"/>
     </xsl:variable>
     <xsl:for-each select="$prepared/list">
       <xsl:choose>
@@ -805,7 +802,7 @@
               <xsl:when test="matches(parent::list/@rend, 'ordered')">
                 <xsl:variable name="number"><xsl:number level="multiple" format="1.a"/></xsl:variable>
                 <text:s/><xsl:value-of select="concat('(', replace($number, '\.', ''), ')')"/><text:s/><xsl:apply-templates><xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/><xsl:with-param name="note.context" select="$note.context" tunnel="yes"/></xsl:apply-templates></xsl:when>
-              <xsl:otherwise><text:s/><xsl:apply-templates><xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/><xsl:with-param name="note.context" select="$note.context" tunnel="yes"/></xsl:apply-templates></xsl:otherwise>
+              <xsl:otherwise><xsl:if test="preceding-sibling::item"><text:s/></xsl:if><xsl:apply-templates><xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/><xsl:with-param name="note.context" select="$note.context" tunnel="yes"/></xsl:apply-templates></xsl:otherwise>
             </xsl:choose>
           </xsl:for-each>
         </xsl:when>
@@ -817,7 +814,7 @@
   </xsl:template>
   
   <!-- [RvdB] wrap all contents of <item> in <p> prior to further processing -->
-  <xsl:template match="list[not(matches(@rend, 'inline'))]/item" mode="prepare">
+  <xsl:template match="list[not(matches(@rend, 'inline'))]/item" mode="list-prepare">
     <xsl:variable name="current" select="."/>
     <xsl:copy>
       <xsl:copy-of select="@*"/>
@@ -843,12 +840,35 @@
     </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="@*|node()" mode="prepare">
+  <!-- [RvdB] in first list pass, just copy the element but process punctuation already 
+       (otherwise, node context gets lost, which disturbs punctuation processing) -->
+  <xsl:template match="quote[not(parent::cit)] | q[not(parent::cit)] | title[@level='a'] | title[@level='u'] | soCalled" mode="list-prepare">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()" mode="#current"/>
+      <xsl:call-template name="include.punctuation"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <!-- [RvdB] in first list pass, just copy the element but process punctuation already 
+       (otherwise, node context gets lost, which disturbs punctuation processing) -->
+  <xsl:template match="note" mode="list-prepare">
+    <xsl:call-template name="include.punctuation"/>
     <xsl:copy>
       <xsl:apply-templates select="@*|node()" mode="#current"/>
     </xsl:copy>
   </xsl:template>
+
+  <!-- [RvdB] in first list pass, process punctuation already  for text nodes
+       (otherwise, node context gets lost, which disturbs punctuation processing) -->  
+  <xsl:template match="text()" mode="list-prepare" priority="1">
+    <xsl:apply-imports/>
+  </xsl:template>
   
+  <xsl:template match="@*|node()" mode="list-prepare">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
     
     <xsl:template match="list/head">
       <text:list-header><text:p text:style-name="teiListHead"><xsl:apply-templates/><xsl:call-template name="punctuate-head"/></text:p></text:list-header>

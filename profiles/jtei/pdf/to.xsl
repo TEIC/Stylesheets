@@ -377,8 +377,7 @@
     <xsl:param name="note.context" select="ancestor::*[self::tei:front|self::tei:body|self::tei:back]" tunnel="yes" as="element()?"/>
     <xsl:variable name="note.nr" select="local:get.note.nr(.)"/>
     <!-- only 'pull' subsequent punctuation once (i.e. unless it is done for the preceding element) -->
-    <xsl:if test="not(preceding-sibling::node()[normalize-space()][1][. intersect key('quotation.elements', local-name())])">
-      <xsl:call-template name="include.punctuation"/>
+    <xsl:call-template name="include.punctuation"/>
     </xsl:if>
     <fo:inline font-size="5.4pt" vertical-align="super">
       <fo:basic-link internal-destination="{$note.context/name()}.note{$note.nr}" id="{$note.context/name()}.noteptr{$note.nr}">
@@ -1123,15 +1122,6 @@
       <fo:block/>
     </xsl:if>
   </xsl:template>
-  
-  <!-- text() following an element for which smart quotes are being generated: skip starting punctuation (this is pulled into the quotation marks) -->
-  <xsl:template match="text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}—]]')]
-    [preceding-sibling::node()[not(self::tei:note)][1]
-    [. intersect key('quotation.elements', local-name())]]
-    |
-    text()[matches(., '^\s*[\p{P}-[\p{Ps}\p{Pe}]]')]
-    [preceding-sibling::node()[1][self::tei:note]]">
-    <xsl:value-of select="replace(., '^(\s*)[\p{P}-[\p{Ps}\p{Pe}]]+', '$1', 's')"/>
-  </xsl:template>
+
       
 </xsl:stylesheet>
