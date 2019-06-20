@@ -378,7 +378,6 @@
     <xsl:variable name="note.nr" select="local:get.note.nr(.)"/>
     <!-- only 'pull' subsequent punctuation once (i.e. unless it is done for the preceding element) -->
     <xsl:call-template name="include.punctuation"/>
-    </xsl:if>
     <fo:inline font-size="5.4pt" vertical-align="super">
       <fo:basic-link internal-destination="{$note.context/name()}.note{$note.nr}" id="{$note.context/name()}.noteptr{$note.nr}">
         <xsl:number value="$note.nr" format="{local:format.note.nr($note.context)}"/>
