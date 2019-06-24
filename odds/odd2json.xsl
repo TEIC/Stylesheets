@@ -474,6 +474,7 @@
                                 <xsl:when test="@xml:lang and @xml:lang = $doclang">
                                     <xsl:call-template name="makeDesc"/>                  
                                 </xsl:when>
+                                <xsl:when test="@xml:lang and not(@xml:lang = $doclang)"/>
                                 <xsl:otherwise>
                                     <xsl:call-template name="makeDesc"/>
                                 </xsl:otherwise>
@@ -579,9 +580,10 @@
         <j:array key="desc">
             <xsl:for-each select="tei:desc">
                 <xsl:choose>
-                    <xsl:when test="ancestor-or-self::*[@xml:lang] and ancestor-or-self::*[@xml:lang = $doclang]">
+                    <xsl:when test="@xml:lang and @xml:lang = $doclang">
                         <xsl:call-template name="makeDesc"/>                  
                     </xsl:when>
+                    <xsl:when test="@xml:lang and not(@xml:lang = $doclang)"/>
                     <xsl:when test="not(@xml:lang)">
                         <xsl:call-template name="makeDesc"/>
                     </xsl:when>
@@ -598,6 +600,7 @@
                         <xsl:when test="@xml:lang and @xml:lang = $doclang">
                             <xsl:call-template name="serializeElement"/>
                         </xsl:when>
+                        <xsl:when test="@xml:lang and not(@xml:lang = $doclang)"/>
                         <xsl:when test="not(@xml:lang)">
                             <xsl:call-template name="serializeElement"/>
                         </xsl:when>
