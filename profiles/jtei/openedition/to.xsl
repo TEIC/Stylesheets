@@ -350,10 +350,8 @@
   <xsl:template match="tei:note">
     <xsl:param name="note.counter" tunnel="yes" as="xs:integer" select="0"/>
     <xsl:param name="note.context" select="ancestor::*[self::tei:front|self::tei:body|self::tei:back]" tunnel="yes" as="element()?"/>
-    <!-- only 'pull' subsequent puntuation once (i.e. unless it is done for the preceding element) -->
-    <xsl:if test="not(preceding-sibling::node()[normalize-space()][1][. intersect key('quotation.elements', local-name())])">
-      <xsl:call-template name="include.punctuation"/>
-    </xsl:if>
+    <!-- 'pull' subsequent puntuation (if necessary) -->
+    <xsl:call-template name="include.punctuation"/>
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:if test="not(@place)">
@@ -974,6 +972,12 @@
   <!-- default processing -->
   <!-- ================== -->  
   
+  <!-- Further processing of text is done in jtei.common.xsl, in order to guarantee uniform 
+       processing of punctuation following quotation marks or footnote markers. -->  
+  <xsl:template match="text()">
+    <xsl:apply-imports/>
+  </xsl:template>
+  
   <xsl:template match="@*|node()" priority="-1">
     <xsl:copy>
       <xsl:call-template name="get.rendition"/>
@@ -985,16 +989,6 @@
   <xsl:template match="comment()|processing-instruction()"/>
   
   <xsl:template match="tei:code/@lang|tei:row/@role|tei:row/@rows|tei:row/@cols|tei:cell/@role|tei:graphic/@width|tei:graphic/@height"/>
-  
-  <!-- text() following an element for which smart quotes are being generated: skip starting punctuation (this is pulled into the quotation marks) -->
-  <xsl:template match="text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}—]]')]
-    [preceding-sibling::node()[not(self::tei:note)][1]
-    [. intersect key('quotation.elements', local-name())]]
-    |
-    text()[matches(., '^\s*[\p{P}-[\p{Ps}\p{Pe}]]')]
-    [preceding-sibling::node()[1][self::tei:note]]">
-    <xsl:value-of select="replace(., '^(\s*)[\p{P}-[\p{Ps}\p{Pe}]]+', '$1', 's')"/>
-  </xsl:template>
 
   <!-- ========= -->
   <!-- functions -->
