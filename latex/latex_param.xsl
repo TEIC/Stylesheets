@@ -125,6 +125,8 @@ the beginning of the document</desc>
 \usepackage{graphicx}
 \usepackage{marginnote}
 
+\renewcommand{\@cite}[1]{#1}
+
 </xsl:text>
 <xsl:if test="not($marginFont='')">
 \renewcommand*{\marginfont}{<xsl:value-of select="$marginFont"/>}
