@@ -446,6 +446,9 @@ of this software, even if advised of the possibility of such damage.
         test="(local-name(.) = 'TEI' and not(local-name(parent::*) = 'teiCorpus')) or local-name(.) = 'teiCorpus'">
         <xsl:text> xmlns="http://www.tei-c.org/ns/1.0"</xsl:text>
       </xsl:if>
+      <xsl:if test="local-name(.) eq 'egXML'">
+	<xsl:text> xmlns="http://www.tei-c.org/ns/Examples"</xsl:text>
+      </xsl:if>
       <xsl:if test="$showNamespaceDecls = 'true' or parent::teix:egXML[tei:match(@rend, 'full')]">
         <xsl:choose>
           <xsl:when test="not(parent::*)">

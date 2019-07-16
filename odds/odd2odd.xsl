@@ -59,7 +59,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="configDirectory"/>
   <xsl:param name="currentDirectory"/>
   <xsl:param name="defaultSource"/>
-  <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
+  <xsl:param name="defaultTEIServer">https://www.tei-c.org/Vault/P5/</xsl:param>
   <xsl:param name="defaultTEIVersion">current</xsl:param>
   <xsl:param name="doclang"/>
   <xsl:param name="selectedSchema"/>
@@ -113,10 +113,23 @@ of this software, even if advised of the possibility of such damage.
    <!-- all of these use a combination of @ident _and_ @ns (where
    present), in case of duplication of names across schemes -->
 
-  <xsl:key name="odd2odd-CHANGE"     match="tei:classSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-CHANGE"     match="tei:dataSpec[@mode eq 'change']"   use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-CHANGE"     match="tei:elementSpec[@mode eq 'change']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-CHANGE"     match="tei:macroSpec[@mode eq 'change']"   use="tei:uniqueName(.)"/>
+  <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="1"/>
+  
+  <xsl:variable name="whichSchemaSpec">
+    <xsl:choose>
+      <xsl:when test="not($selectedSchema='')">
+        <xsl:value-of select="$selectedSchema"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="key('LISTSCHEMASPECS',1)[1]/@ident"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  
+  <xsl:key name="odd2odd-CHANGE"     match="tei:classSpec[@mode eq 'change'][ancestor::tei:schemaSpec[@ident=$whichSchemaSpec]]" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-CHANGE"     match="tei:dataSpec[@mode eq 'change'][ancestor::tei:schemaSpec[@ident=$whichSchemaSpec]]"   use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-CHANGE"     match="tei:elementSpec[@mode eq 'change'][ancestor::tei:schemaSpec[@ident=$whichSchemaSpec]]" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-CHANGE"     match="tei:macroSpec[@mode eq 'change'][ancestor::tei:schemaSpec[@ident=$whichSchemaSpec]]"   use="tei:uniqueName(.)"/>
 
   <xsl:key name="odd2odd-DELETE"   match="tei:classSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-DELETE"   match="tei:macroSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
@@ -128,20 +141,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-REPLACE" match="tei:elementSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-REPLACE"  match="tei:macroSpec[@mode eq 'replace']"   use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-REPLACEATT"     match="tei:attDef[@mode eq 'replace']" use="concat(../../@ident,'_',@ident)"/>
-
-  
-  <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="1"/>
-
-  <xsl:variable name="whichSchemaSpec">
-    <xsl:choose>
-      <xsl:when test="not($selectedSchema='')">
-        <xsl:value-of select="$selectedSchema"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="key('LISTSCHEMASPECS',1)[1]/@ident"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
 
 
   <xsl:variable name="DEFAULTSOURCE">
@@ -287,29 +286,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:function>
 
-  <xsl:function name="tei:generate-nsprefix-schematron" as="xs:string">
-    <xsl:param name="e"/>
-    <xsl:for-each select="$e">
-      <xsl:variable name="myns" select="ancestor::tei:elementSpec/@ns"/>
-      <xsl:choose>
-        <xsl:when test="not($myns) or $myns='http://www.tei-c.org/ns/1.0'">
-          <xsl:text>tei:</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:choose>
-            <xsl:when test="ancestor::tei:schemaSpec//sch:ns[@uri=$myns]">
-              <xsl:value-of
-                  select="concat(ancestor::tei:schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="ancestor::tei:elementSpec/@ident"/></xsl:message>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
-  </xsl:function>
-
   <xsl:template name="die">
     <xsl:param name="message"/>
     <xsl:message terminate="yes">
@@ -354,6 +330,13 @@ of this software, even if advised of the possibility of such damage.
         <xsl:copy-of select="@*"/>
         <xsl:if test="$useVersionFromTEI='true'">
           <xsl:processing-instruction name="TEIVERSION">
+            <!-- 
+                 Generate a string based on the fileDesc/editionStmt/edition
+                 element(s) in the p5subset.xml file. (Note that this would
+                 look ugly if there were more than one editionStmt/edition,
+                 but there is only one in that file.)
+                 See ticket https://github.com/TEIC/Stylesheets/issues/355.
+            -->
             <xsl:call-template name="odd2odd-getversion"/>
           </xsl:processing-instruction>
         </xsl:if>
@@ -507,18 +490,17 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="tei:elementSpec[@mode eq 'change']|tei:classSpec[@mode eq 'change']|tei:macroSpec[@mode eq 'change']|tei:dataSpec[@mode eq 'change']"
-                mode="pass0">
+  <xsl:template match="tei:elementSpec[@mode eq 'change']|tei:classSpec[@mode eq 'change']|tei:macroSpec[@mode eq 'change']|tei:dataSpec[@mode eq 'change']" mode="pass0">    
     <xsl:choose>
       <xsl:when test="count(key('odd2odd-CHANGE',@ident))&gt;1">
         <xsl:if
-            test="generate-id(.)=generate-id(key('odd2odd-CHANGE',@ident)[1])">
+          test="generate-id(.)=generate-id(key('odd2odd-CHANGE',@ident)[1])">
           <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:for-each select="key('odd2odd-CHANGE',@ident)">
               <xsl:apply-templates
-                  select="*|text()|comment()|processing-instruction()"
-                  mode="pass0"/>
+                select="*|text()|comment()|processing-instruction()"
+                mode="pass0"/>
             </xsl:for-each>
           </xsl:copy>
         </xsl:if>
@@ -1993,6 +1975,13 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="odd2odd-getversion">
+    <!-- 
+         Note:
+         This template generates a single string which is the concatonation 
+         of all the fileDesc/editionStmt/edition elements. Luckily it only
+         reads p5subset.xml which has one and only one such element. See
+         https://github.com/TEIC/Stylesheets/issues/355.
+    -->
     <xsl:choose>
       <xsl:when test="key('odd2odd-SCHEMASPECS',$whichSchemaSpec)">
         <xsl:for-each

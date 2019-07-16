@@ -47,15 +47,12 @@
             </p> 
             <p>Author: See AUTHORS</p>
             
-            <p>Copyright: 2017, TEI Consortium</p>
+            <p>Copyright: 2019, TEI Consortium</p>
         </desc>
     </doc>
     
     <xsl:output method="text"/>
     
-    <xsl:param name="lang" select="'en'">
-        <!-- Set this to 'all' to include documentation in all languages. -->
-    </xsl:param>
     <xsl:param name="serializeDocs" select="true()"/>
     <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
     <xsl:param name="defaultTEIVersion">current</xsl:param>
@@ -63,6 +60,7 @@
     <xsl:param name="configDirectory"/>
     <xsl:param name="currentDirectory"/>
     <xsl:param name="verbose">false</xsl:param>
+    <xsl:param name="doclang" select="'en'"/>
     
     <xsl:variable name="DEFAULTSOURCE">
         <xsl:choose>
@@ -278,19 +276,9 @@
                 <j:array key="datatypes">
                     <xsl:for-each select="//tei:dataSpec">
                         <xsl:sort select="@ident"/>
-                        <j:map>
-                            <j:string key="ident">
-                                <xsl:value-of select="@ident"/>
-                            </j:string>
-                            <j:string key="module">
-                                <xsl:value-of select="@module"/>
-                            </j:string>
-                            <j:string key="type">
-                                <xsl:value-of select="@type"/>
-                            </j:string>
-                            <xsl:call-template name="desc"/>
-                            <xsl:call-template name="mode"/>
-                        </j:map>
+                        <xsl:call-template name="getMember">
+                            <xsl:with-param name="attributes" select="false()" />
+                        </xsl:call-template>
                     </xsl:for-each>
                 </j:array>
                 <j:array key="macroRefs">
@@ -398,8 +386,7 @@
         <xsl:for-each select="*">
             <j:map>
                 <xsl:choose>
-                    <xsl:when test="self::tei:elementRef or self::tei:macroRef or self::tei:classRef or
-                                    self::tei:dataRef">
+                    <xsl:when test="self::tei:elementRef or self::tei:macroRef or self::tei:classRef">
                         <j:string key="type"><xsl:value-of select="local-name()"/></j:string>
                         <j:string key="key"><xsl:value-of select="@key"/></j:string>
                     </xsl:when>
@@ -415,6 +402,24 @@
                         <j:string key="type"><xsl:value-of select="local-name()"/></j:string>
                         <j:string key="require"><xsl:value-of select="@require"/></j:string>
                         <j:string key="except"><xsl:value-of select="@except"/></j:string>
+                    </xsl:when>
+                    <xsl:when test="self::tei:dataRef">
+                        <j:string key="type"><xsl:value-of select="local-name()"/></j:string>
+                        <xsl:call-template name="getDataRef"/>
+                    </xsl:when>
+                    <xsl:when test="self::tei:valList">
+                        <j:string key="type">
+                            <xsl:value-of select="local-name()"/>
+                        </j:string>
+                        <j:array key="valItem">
+                            <xsl:for-each select="tei:valItem">
+                                <j:map>
+                                    <j:string key="ident">
+                                        <xsl:value-of select="@ident"/>
+                                    </j:string>
+                                </j:map>                                    
+                            </xsl:for-each>
+                        </j:array>
                     </xsl:when>
                     <xsl:otherwise>
                         <j:string key="type"><xsl:value-of select="local-name()"/></j:string>
@@ -466,13 +471,13 @@
                     <j:array key="valDesc">
                         <xsl:for-each select="tei:valDesc">
                             <xsl:choose>
-                                <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
+                                <xsl:when test="@xml:lang and @xml:lang = $doclang">
                                     <xsl:call-template name="makeDesc"/>                  
                                 </xsl:when>
-                                <xsl:when test="not(@xml:lang)">
+                                <xsl:when test="@xml:lang and not(@xml:lang = $doclang)"/>
+                                <xsl:otherwise>
                                     <xsl:call-template name="makeDesc"/>
-                                </xsl:when>
-                                <xsl:otherwise/>
+                                </xsl:otherwise>
                             </xsl:choose>              
                         </xsl:for-each>
                     </j:array>
@@ -493,35 +498,18 @@
                                     </xsl:when>
                                     <xsl:otherwise>1</xsl:otherwise>
                                 </xsl:choose>
-                            </j:string>
-                            <j:map key="dataRef">
-                                <xsl:for-each select="tei:dataRef">
-                                   <xsl:if test="@key">
-                                       <j:string key="key"><xsl:value-of select="@key"/></j:string>
-                                   </xsl:if>
-                                   <xsl:if test="@name">
-                                       <j:string key="name"><xsl:value-of select="@name"/></j:string>
-                                   </xsl:if>
-                                   <xsl:if test="@ref">
-                                       <j:string key="ref"><xsl:value-of select="@ref"/></j:string>
-                                   </xsl:if>
-                                   <xsl:if test="@restriction">
-                                       <j:string key="restriction"><xsl:value-of select="@restriction"/></j:string>
-                                   </xsl:if>
-                                   <j:array key="dataFacet">
-                                       <xsl:for-each select="tei:dataFacet">
-                                           <j:string key="name"><xsl:value-of select="@name"/></j:string>
-                                           <j:string key="value"><xsl:value-of select="@value"/></j:string>
-                                       </xsl:for-each>
-                                   </j:array>
-                                </xsl:for-each>
-                            </j:map>
+                            </j:string>                            
+                            <xsl:for-each select="tei:dataRef">
+                                <j:map key="dataRef">
+                                    <xsl:call-template name="getDataRef"/>
+                                </j:map>
+                            </xsl:for-each>
                         </xsl:for-each>
                     </j:map>
                     <xsl:if test="tei:valList">
                         <j:map key="valList">
                             <j:string key="type">
-                                <xsl:value-of select="@type"/>
+                                <xsl:value-of select="tei:valList/@type"/>
                             </j:string>
                             <j:array key="valItem">
                                 <xsl:for-each select="tei:valList/tei:valItem">
@@ -543,6 +531,31 @@
                 </j:map>
             </xsl:for-each>
         </j:array>
+    </xsl:template>
+    
+    <xsl:template name="getDataRef">
+        <xsl:if test="@key">
+            <j:string key="key"><xsl:value-of select="@key"/></j:string>
+        </xsl:if>
+        <xsl:if test="@name">
+            <j:string key="name"><xsl:value-of select="@name"/></j:string>
+        </xsl:if>
+        <xsl:if test="@ref">
+            <j:string key="ref"><xsl:value-of select="@ref"/></j:string>
+        </xsl:if>
+        <xsl:if test="@restriction">
+            <j:string key="restriction"><xsl:value-of select="@restriction"/></j:string>
+        </xsl:if>
+        <xsl:if test="tei:dataFacet">
+            <j:array key="dataFacet">
+                <xsl:for-each select="tei:dataFacet">
+                    <j:map>
+                        <j:string key="name"><xsl:value-of select="@name"/></j:string>
+                        <j:string key="value"><xsl:value-of select="@value"/></j:string>
+                    </j:map>
+                </xsl:for-each>
+            </j:array>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template name="serializeElement">
@@ -567,9 +580,10 @@
         <j:array key="desc">
             <xsl:for-each select="tei:desc">
                 <xsl:choose>
-                    <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
+                    <xsl:when test="@xml:lang and @xml:lang = $doclang">
                         <xsl:call-template name="makeDesc"/>                  
                     </xsl:when>
+                    <xsl:when test="@xml:lang and not(@xml:lang = $doclang)"/>
                     <xsl:when test="not(@xml:lang)">
                         <xsl:call-template name="makeDesc"/>
                     </xsl:when>
@@ -583,9 +597,10 @@
             <j:array key="gloss">
                 <xsl:for-each select="tei:gloss">
                     <xsl:choose>
-                        <xsl:when test="@xml:lang and ($lang='all' or @xml:lang = $lang)">
+                        <xsl:when test="@xml:lang and @xml:lang = $doclang">
                             <xsl:call-template name="serializeElement"/>
                         </xsl:when>
+                        <xsl:when test="@xml:lang and not(@xml:lang = $doclang)"/>
                         <xsl:when test="not(@xml:lang)">
                             <xsl:call-template name="serializeElement"/>
                         </xsl:when>

@@ -88,7 +88,7 @@ valList
   <xsl:param name="includeHeader">true</xsl:param>
   <!-- the source of the TEI (just needs *Spec)-->
   <xsl:param name="defaultSource"
-    >http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
+    >https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
   <!-- should we make valList for @rend and @rendition -->
   <xsl:param name="enumerateRend">false</xsl:param>
   <!-- should we make valList for @type -->
