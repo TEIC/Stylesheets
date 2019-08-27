@@ -38,6 +38,7 @@
     <xsl:attribute name="font-size">13pt</xsl:attribute>
     <xsl:attribute name="text-transform">uppercase</xsl:attribute>
     <xsl:attribute name="keep-with-next">always</xsl:attribute>
+    <xsl:attribute name="keep-with-previous">always</xsl:attribute>
     <xsl:attribute name="space-before">1em</xsl:attribute>
     <xsl:attribute name="space-after">1em</xsl:attribute>
   </xsl:attribute-set>
@@ -80,7 +81,7 @@
   <xsl:attribute-set name="egXML.properties">
     <xsl:attribute name="text-align">left</xsl:attribute>
     <xsl:attribute name="text-indent">0pt</xsl:attribute>
-    <xsl:attribute name="keep-together.within-page">5</xsl:attribute>
+    <xsl:attribute name="keep-together.within-page">auto</xsl:attribute>
 <!--    <xsl:attribute name="orphans">5</xsl:attribute>
     <xsl:attribute name="widows">5</xsl:attribute>-->
   </xsl:attribute-set>
@@ -387,7 +388,7 @@
 
   <!-- group figure contents and headings in a block --> 
   <xsl:template match="tei:figure">
-    <fo:block xsl:use-attribute-sets="block.spacing.properties" keep-together.within-page="5">
+    <fo:block xsl:use-attribute-sets="block.spacing.properties" keep-together.within-page="auto">
       <xsl:for-each select="@xml:id">
         <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
       </xsl:for-each>
@@ -923,6 +924,14 @@
     </xsl:for-each>
   </xsl:template>
   
+  <!-- Expand <ptr/> during table normalization, in order to include URLs in column width calculation. -->
+  <xsl:template match="tei:ptr" mode="rowspan colspan">
+    <tei:ref>
+      <xsl:apply-templates select="@*" mode="#current"/>
+      <xsl:value-of select="@target"/>
+    </tei:ref>
+  </xsl:template>
+  
   <xsl:template match="@*|node()" mode="rowspan colspan">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()" mode="#current" />
@@ -987,7 +996,7 @@
         max(
           for $cell in $current//tei:cell[$pos]
           return max((
-            for $a in tokenize($cell, '\s+') 
+            for $a in tokenize($cell, '[-\s/]+') 
             return string-length($a) div max(($cell/@cols, 1)), 
             for $a in $cell//(tei:figure[1])/tei:graphic return 10
           ))
