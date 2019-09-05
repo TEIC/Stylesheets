@@ -155,6 +155,46 @@
       </fo:page-sequence-master>
     </fo:layout-master-set>
   </xsl:template>
+  
+  <!-- If (SVN) metadata are found, include them in custom PDF metadata. -->
+  <xsl:template name="PDF-metadata">
+    <xsl:variable name="metadata" select="local:parse.SVN.id()"/>
+    <xsl:if test="$metadata">
+      <fo:declarations>
+        <pdf:info xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf">
+          <xsl:copy-of select="$metadata"/>
+        </pdf:info>
+      </fo:declarations>
+    </xsl:if>
+  </xsl:template>
+  
+  <!-- If (SVN) metadata are found, include them in a hidden paragraph in the body text. -->
+  <xsl:template name="body-metadata">
+    <xsl:variable name="metadata" select="local:parse.SVN.id()"/>
+    <xsl:if test="$metadata">
+      <fo:block margin-top="1em" color="white" line-height="0px">
+        <xsl:text>SVN keywords: </xsl:text>
+        <xsl:for-each select="local:get.SVNkeyword('Id')">
+          <xsl:value-of select="concat('$Id: ', ., ' $')"/>
+        </xsl:for-each>
+      </fo:block>
+    </xsl:if>
+  </xsl:template>  
+  
+  <!-- This function parses the SVN ID keyword into custom PDF metadata fields. -->
+  <xsl:function name="local:parse.SVN.id">
+    <xsl:for-each select="local:get.SVNkeyword('Id')">
+      <pdf:name key="SVN revision" xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf">
+        <xsl:value-of select="tokenize(., '\s+')[2]"/>
+      </pdf:name>
+      <pdf:name key="last changed" xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf">
+        <xsl:value-of select="string-join(tokenize(., '\s+')[position() = (3, 4)], ', ')"/>
+      </pdf:name>
+      <pdf:name key="last changed by" xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf">
+        <xsl:value-of select="tokenize(., '\s+')[5]"/>
+      </pdf:name>
+    </xsl:for-each>
+  </xsl:function>
 
   <!-- ==================================================================================== -->
   <!-- TEXT SKELETON                                                                        -->
@@ -164,6 +204,8 @@
     <fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
       <!-- page definitions  -->
       <xsl:call-template name="pageDef"/>
+      <!-- metadata -->
+      <xsl:call-template name="PDF-metadata"/>
       <!-- PDF outline -->
       <xsl:call-template name="PDF-outline"/>
       <fo:page-sequence
@@ -200,6 +242,7 @@
           </fo:list-item-body>
         </fo:list-item>
       </fo:list-block>
+      <xsl:call-template name="body-metadata"/>
     </fo:block>
   </xsl:template>
   
