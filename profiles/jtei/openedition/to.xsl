@@ -323,8 +323,10 @@
     <xsl:if test="$metadata">
       <div>
         <p rend="noindent" rendition="#metadata">
-          <xsl:text>SVN ID: </xsl:text>
-          <xsl:value-of select="local:get.SVNkeyword('Id')"/>
+          <xsl:text>SVN keywords: </xsl:text>
+          <xsl:for-each select="local:get.SVNkeyword('Id')[.]">
+            <xsl:value-of select="concat('$Id: ', ., ' $')"/>
+          </xsl:for-each>
         </p>
       </div>
     </xsl:if>

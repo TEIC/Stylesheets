@@ -173,8 +173,10 @@
     <xsl:variable name="metadata" select="local:parse.SVN.id()"/>
     <xsl:if test="$metadata">
       <fo:block margin-top="1em" color="white" line-height="0px">
-        <xsl:text>SVN ID: </xsl:text>
-        <xsl:value-of select="local:get.SVNkeyword('Id')"/>
+        <xsl:text>SVN keywords: </xsl:text>
+        <xsl:for-each select="local:get.SVNkeyword('Id')">
+          <xsl:value-of select="concat('$Id: ', ., ' $')"/>
+        </xsl:for-each>
       </fo:block>
     </xsl:if>
   </xsl:template>  
