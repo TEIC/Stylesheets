@@ -13,6 +13,8 @@
   
   <xsl:import href="i18n.xsl"/>
   
+  <xsl:variable name="doc.root" select="/"/>
+  
   <!-- This parameter controls if footnotes are numbered continously throughout the document --> 
   <xsl:param name="footnote.number.continuous" select="true()"/>
   
@@ -537,6 +539,15 @@
   <xsl:function name="local:get.quoteLevel">
     <xsl:param name="current"/>
     <xsl:value-of select="count($current/ancestor::*[. intersect key('quotation.elements', local-name())])"/>
+  </xsl:function>
+  
+  <!-- This function retrieves the value for an SVN keyword in a comment line -->
+  <xsl:function name="local:get.SVNkeyword">
+    <xsl:param name="keyword.name"/>
+    <xsl:variable name="keyword.lines" select="$doc.root//comment()[contains(., concat('$', $keyword.name, ':'))][1]"/>
+    <xsl:copy-of select="for $keyword in tokenize(normalize-space($keyword.lines), '\$(\s+|$)')[starts-with(., concat('$', $keyword.name, ':'))][1]
+      return replace(normalize-space($keyword), '^.*?:\s+', '')
+      "/>
   </xsl:function>
   
 </xsl:stylesheet>

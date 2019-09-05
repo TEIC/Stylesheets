@@ -238,6 +238,9 @@
       <xsl:apply-templates select="tei:tagsDecl/@*"/>
       <xsl:apply-templates select="tei:tagsDecl/tei:rendition[key('renditionsInUse', @xml:id, current()/root())]"/>
       <xsl:copy-of select="$hiConversion/*[key('hi', @xml:id, current()/root())][not(key('renditionsInUse', @xml:id, current()/root()))]"/>
+      <xsl:if test="local:get.SVNkeyword('Id')">
+        <rendition xml:id="metadata">display:none;</rendition>
+      </xsl:if>
     </tagsDecl>
   </xsl:template>
   
@@ -286,6 +289,16 @@
   <!-- body -->
   <!-- ==== -->
   
+  <!-- body: process contents + add metadata at the end of body text -->
+  <xsl:template match="tei:body[tei:div]">
+    <xsl:copy>
+      <xsl:call-template name="get.rendition"/>
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates/>
+      <xsl:call-template name="body-metadata"/>
+    </xsl:copy>
+  </xsl:template>
+  
   <!-- div-less body: 
        -wrap contents in div
        -add head if that's missing too
@@ -300,8 +313,23 @@
         </xsl:if>
         <xsl:apply-templates/>
       </div>
+      <xsl:call-template name="body-metadata"/>
     </xsl:copy>
   </xsl:template>
+  
+  <!-- If (SVN) metadata are found, include them in a hidden paragraph in the body text. -->
+  <xsl:template name="body-metadata">
+    <xsl:variable name="metadata" select="local:get.SVNkeyword('Id')"/>
+    <xsl:if test="$metadata">
+      <div>
+        <p rend="noindent" rendition="#metadata">
+          <xsl:text>SVN ID: </xsl:text>
+          <xsl:value-of select="local:get.SVNkeyword('Id')"/>
+        </p>
+      </div>
+    </xsl:if>
+  </xsl:template>  
+  
   
   <xsl:template match="tei:body/tei:head">
     <xsl:copy>
