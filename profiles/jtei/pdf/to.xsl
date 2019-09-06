@@ -226,7 +226,6 @@
           </fo:list-item-body>
         </fo:list-item>
       </fo:list-block>
-      <xsl:call-template name="body-metadata"/>
     </fo:block>
   </xsl:template>
   
@@ -275,6 +274,7 @@
   
   <xsl:template name="front">
     <xsl:call-template name="article.title"/>
+    <xsl:call-template name="body-metadata"/>
     <xsl:apply-templates select="/tei:TEI/tei:text/tei:front/tei:div[@type='abstract']"/>
     <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass"/>
     <xsl:call-template name="front.divs"/>
