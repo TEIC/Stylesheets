@@ -542,12 +542,20 @@
   </xsl:function>
   
   <!-- This function retrieves the value for an SVN keyword in a comment line -->
+  <!-- note: keyword can be 
+    -empty ($Id$)
+    -expanded ($Revision: 1234 $)
+  -->
   <xsl:function name="local:get.SVNkeyword">
     <xsl:param name="keyword.name"/>
-    <xsl:variable name="keyword.lines" select="$doc.root//comment()[contains(., concat('$', $keyword.name, ':'))][1]"/>
-    <xsl:copy-of select="for $keyword in tokenize(normalize-space($keyword.lines), '\$(\s+|$)')[starts-with(., concat('$', $keyword.name, ':'))][1]
-      return replace(normalize-space($keyword), '^.*?:\s+', '')
-      "/>
+    <xsl:variable name="keyword.lines" select="$doc.root//comment()[matches(., concat('\$', $keyword.name, '(\$|:)'))][1]"/>
+    <xsl:if test="$keyword.lines">
+      <xsl:analyze-string select="$keyword.lines" regex="\${$keyword.name}(\$|:[^$]+?\$(\s+|$))">
+        <xsl:matching-substring>
+          <xsl:value-of select="normalize-space(.)"/>
+        </xsl:matching-substring>
+      </xsl:analyze-string>
+    </xsl:if>
   </xsl:function>
   
 </xsl:stylesheet>

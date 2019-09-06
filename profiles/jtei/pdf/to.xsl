@@ -155,35 +155,21 @@
       </fo:page-sequence-master>
     </fo:layout-master-set>
   </xsl:template>
-  
-  <!-- If (SVN) metadata are found, include them in custom PDF metadata. -->
-  <xsl:template name="PDF-metadata">
-    <xsl:variable name="metadata" select="local:parse.SVN.id()"/>
-    <xsl:if test="$metadata">
-      <fo:declarations>
-        <pdf:info xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf">
-          <xsl:copy-of select="$metadata"/>
-        </pdf:info>
-      </fo:declarations>
-    </xsl:if>
-  </xsl:template>
-  
+    
   <!-- If (SVN) metadata are found, include them in a hidden paragraph in the body text. -->
   <xsl:template name="body-metadata">
-    <xsl:variable name="metadata" select="local:parse.SVN.id()"/>
+    <xsl:variable name="metadata" select="local:get.SVNkeyword('Id')"/>
     <xsl:if test="$metadata">
       <fo:block margin-top="1em" color="white" line-height="0px">
         <xsl:text>SVN keywords: </xsl:text>
-        <xsl:for-each select="local:get.SVNkeyword('Id')">
-          <xsl:value-of select="concat('$Id: ', ., ' $')"/>
-        </xsl:for-each>
+        <xsl:value-of select="$metadata"/>
       </fo:block>
     </xsl:if>
   </xsl:template>  
   
   <!-- This function parses the SVN ID keyword into custom PDF metadata fields. -->
   <xsl:function name="local:parse.SVN.id">
-    <xsl:for-each select="local:get.SVNkeyword('Id')">
+    <xsl:for-each select="replace(local:get.SVNkeyword('Id'), '^\$Id:\s*(.*?)\s\$$', '$1')[count(tokenize(., '\s')) = 5]">
       <pdf:name key="SVN revision" xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf">
         <xsl:value-of select="tokenize(., '\s+')[2]"/>
       </pdf:name>
@@ -204,8 +190,6 @@
     <fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
       <!-- page definitions  -->
       <xsl:call-template name="pageDef"/>
-      <!-- metadata -->
-      <xsl:call-template name="PDF-metadata"/>
       <!-- PDF outline -->
       <xsl:call-template name="PDF-outline"/>
       <fo:page-sequence
@@ -242,7 +226,6 @@
           </fo:list-item-body>
         </fo:list-item>
       </fo:list-block>
-      <xsl:call-template name="body-metadata"/>
     </fo:block>
   </xsl:template>
   
@@ -291,6 +274,7 @@
   
   <xsl:template name="front">
     <xsl:call-template name="article.title"/>
+    <xsl:call-template name="body-metadata"/>
     <xsl:apply-templates select="/tei:TEI/tei:text/tei:front/tei:div[@type='abstract']"/>
     <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass"/>
     <xsl:call-template name="front.divs"/>
