@@ -37,12 +37,14 @@ theory of liability, whether in contract, strict liability, or tort
 of this software, even if advised of the possibility of such damage.
 
 -->
+  
+  <xsl:param name="defaultSource" select="'https://www.tei-c.org/release/xml/tei/odd/p5subset.xml'"/>
 
   <xsl:template name="main">
     <elementList>
       <xsl:for-each
-	  select="doc('http://www.tei-c.org/release/xml/tei/odd/p5subset.xml')//elementSpec">
-	<gi><xsl:value-of select="@ident"/></gi>
+        select="doc($defaultSource)//elementSpec">
+        <gi><xsl:value-of select="@ident"/></gi>
       </xsl:for-each>
     </elementList>
   </xsl:template>

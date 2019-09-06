@@ -1,10 +1,9 @@
 SFUSER=rahtz
-JING=jing
-SAXON=java -jar lib/saxon9he.jar
-DOTDOTSAXON=java -jar ../../lib/saxon9he.jar
-DOTSAXON=java -jar ../lib/saxon9he.jar
+DEFAULTSOURCE=https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml
+SAXON=java -jar lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
+DOTSAXON=java -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
+DOTDOTSAXON=java -jar ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE) 
 SAXON_ARGS=-ext:on
-
 DIRS=bibtex cocoa common csv docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt p4 pdf profiles/default rdf relaxng rnc schematron simple slides tbx tcp lite tite tools txt html xsd xlsx pdf verbatimxml
 
 SCRIPTS=bin/*to*
@@ -53,8 +52,10 @@ check:
 	@which perl || exit 1
 	@echo -n xmllint: 
 	@which xmllint || exit 1
-	@echo -n jing: 
-	@which ${JING} || exit 1
+	@echo -n ant: 
+	@which ant || exit 1
+	@echo -n xetex: 
+	@which xetex || echo " Warning: Couldn't find xetex executable. While most transformations will work, PDF output will not be possible"
 
 v:
 	perl -p -i -e "s+AppVersion.*/AppVersion+AppVersion>`cat VERSION`</AppVersion+" docx/to/application.xsl
@@ -102,7 +103,7 @@ teioo.jar:
 
 test: clean build common names debversion
 	@echo BUILD Run tests
-	(cd Test; make)
+	(cd Test; make DEFAULTSOURCE=$(DEFAULTSOURCE))
 
 dist: clean release
 	-rm -f tei-xsl-`cat VERSION`.zip
@@ -178,7 +179,7 @@ deb: debversion
 	rm -f tei*xsl*_*deb
 	rm -f tei*xsl*_*changes
 	rm -f tei*xsl*_*build
-	(cd debian-tei-xsl; debclean;debuild --no-lintian  -nc -b -uc -us)
+	(cd debian-tei-xsl; debclean;debuild --no-lintian --preserve-envvar PATH -nc -b -uc -us)
 tag:
 	git tag -a v`cat VERSION` -m 'release version `cat VERSION`'
 	git push --follow-tags
