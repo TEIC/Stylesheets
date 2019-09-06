@@ -467,8 +467,9 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@calendar]">
-            <sch:assert test="string-length(.) gt 0"> @calendar indicates the system or calendar to which the date represented by the content of this element
-belongs, but this <sch:name/> element has no textual content.</sch:assert>
+            <sch:assert test="string-length(.) gt 0"> @calendar indicates the system or calendar to
+              which the date represented by the content of this element belongs, but this
+              <sch:name/> element has no textual content.</sch:assert>
           </sch:rule>
    </pattern>
    <define name="t_att.datable.attribute.period">
@@ -3848,7 +3849,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
                <choice>
                   <ref name="t_model.divTop"/>
                   <ref name="t_model.global"/>
-               <zeroOrMore>
+                  <zeroOrMore>
                      <ref name="t_desc"/>
                   </zeroOrMore>
                </choice>
@@ -4402,8 +4403,6 @@ Elements]</a:documentation>
             <zeroOrMore>
                <ref name="t_model.headLike"/>
             </zeroOrMore>
-      
-      
             <zeroOrMore>
                <ref name="t_desc"/>
             </zeroOrMore>
@@ -5567,8 +5566,8 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
          <group>
             <zeroOrMore>
                <ref name="t_desc"/>
-               </zeroOrMore>
-         <oneOrMore>
+            </zeroOrMore>
+            <oneOrMore>
                <choice>
                   <ref name="t_prefixDef"/>
                   <ref name="t_listPrefixDef"/>
@@ -6129,8 +6128,8 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <group>
             <zeroOrMore>
                <ref name="t_desc"/>
-               </zeroOrMore>
-         <oneOrMore>
+            </zeroOrMore> 
+            <oneOrMore>
                <choice>
                   <ref name="t_listChange"/>
                   <ref name="t_change"/>
@@ -7505,22 +7504,16 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
       <element name="titlePage">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(title page) contains the title page of a text, appearing within the front or back matter. [4.6. Title Pages]</a:documentation>
          <group>
-      
             <zeroOrMore>
                <ref name="t_model.global"/>
             </zeroOrMore>
-      
-      
             <ref name="t_model.titlepagePart"/>
-      
-      
             <zeroOrMore>
                <choice>
-                  <ref name="t_model.titlepagePart"/>
-                  <ref name="t_model.global"/>
+	                 <ref name="t_model.titlepagePart"/>
+	                 <ref name="t_model.global"/>
                </choice>
             </zeroOrMore>
-      
          </group>
          <ref name="t_att.global.attributes"/>
          <optional>
