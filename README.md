@@ -1,6 +1,6 @@
 # Stylesheets
 
-[![Build Status](https://travis-ci.com/TEIC/Stylesheets.svg?branch=dev)](https://travis-ci.org/TEIC/Stylesheets)
+[![Build Status](https://travis-ci.com/TEIC/Stylesheets.svg?branch=dev)](https://travis-ci.com/TEIC/Stylesheets)
 
 TEI XSL Stylesheets
 
