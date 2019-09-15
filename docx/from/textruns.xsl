@@ -355,7 +355,7 @@ of this software, even if advised of the possibility of such damage.
 		
       </xsl:variable>
       <xsl:choose>
-	<xsl:when test="normalize-space(.)=''">
+	<xsl:when test="normalize-space(.)='' and not(w:sym)">
 	    <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:when test="$effects/* or ($styles/* and $preserveEffects='true')">
