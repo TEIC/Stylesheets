@@ -2630,6 +2630,7 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <choice>
          <ref name="t_head"/>
          <ref name="t_byline"/>
+         <ref name="t_dateline"/>
          <ref name="t_argument"/>
          <ref name="t_epigraph"/>
          <ref name="t_docTitle"/>
@@ -5093,14 +5094,11 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
    </define>
    <define name="t_sourceDesc">
       <element name="sourceDesc">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(source description) describes the source from which an electronic text was derived or generated, typically a bibliographic description in the case of a digitized text, or a phrase such as "born digital" for a text which has no previous existence. [2.2.7. The Source Description]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(source description) describes the source(s) from which an electronic text was derived or generated, typically a bibliographic description in the case of a digitized text, or a phrase such as "born digital" for a text which has no previous existence. [2.2.7. The Source Description]</a:documentation>
          <choice>
-      
             <oneOrMore>
                <ref name="t_model.pLike"/>
             </oneOrMore>
-      
-      
             <oneOrMore>
                <choice>
                   <ref name="t_model.biblLike"/>
@@ -5108,7 +5106,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
                   <ref name="t_model.listLike"/>
                </choice>
             </oneOrMore>
-      
          </choice>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
@@ -7504,22 +7501,16 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
       <element name="titlePage">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(title page) contains the title page of a text, appearing within the front or back matter. [4.6. Title Pages]</a:documentation>
          <group>
-      
             <zeroOrMore>
                <ref name="t_model.global"/>
             </zeroOrMore>
-      
-      
             <ref name="t_model.titlepagePart"/>
-      
-      
             <zeroOrMore>
                <choice>
-                  <ref name="t_model.titlepagePart"/>
-                  <ref name="t_model.global"/>
+	                 <ref name="t_model.titlepagePart"/>
+	                 <ref name="t_model.global"/>
                </choice>
             </zeroOrMore>
-      
          </group>
          <ref name="t_att.global.attributes"/>
          <optional>
