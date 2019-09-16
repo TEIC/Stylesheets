@@ -1254,11 +1254,6 @@ select="$makeDecls"/></xsl:message>
                       <xsl:text>Document not available: </xsl:text>
                       <xsl:value-of select="@url"/>
                     </xsl:message>
-                    <!--
-                    <xsl:call-template name="die">
-                      <xsl:with-param name="message" select="concat('Document not available: ', @url)"/>
-                    </xsl:call-template>
-                    -->
                   </xsl:otherwise>
                 </xsl:choose>
                 <xsl:apply-templates mode="justcopy"  select="tei:content/*"/>
