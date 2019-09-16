@@ -13,6 +13,8 @@
   
   <xsl:import href="i18n.xsl"/>
   
+  <xsl:variable name="doc.root" select="/"/>
+  
   <!-- This parameter controls if footnotes are numbered continously throughout the document --> 
   <xsl:param name="footnote.number.continuous" select="true()"/>
   
@@ -84,10 +86,47 @@
     </xsl:if>
   </xsl:template>
   
-  <!-- This template pulls subsequent punctuation into generated quotation 
-    marks. -->
+  <!-- This template pulls subsequent punctuation into generated quotation, or before a 
+       footnote marker. -->
   <xsl:template name="include.punctuation">
-    <xsl:value-of select="following-sibling::node()[not(self::tei:note)][1]/self::text()[matches(., '^\s*[\p{P}-[:;\p{Ps}\p{Pe}—]]')]/replace(., '^\s*([\p{P}-[\p{Ps}\p{Pe}]]+).*', '$1', 's')"/>
+    <xsl:choose>
+      <!-- quotation elements: only place following comma and period before the closing quotation mark -->
+      <!-- condition: the element should not end in a nesting "pulling punctuation quotes" context, 
+           since subsequent punctuation should be pulled inside the innermost quotation marks.
+      -->
+      <xsl:when test="
+        not(self::tei:note) 
+        and
+        not(
+          some $text in descendant::text()[normalize-space()][last()]
+          (: descendant::*: don't include context node itself :)
+          satisfies descendant::*
+            [descendant::text() intersect $text]
+            [. intersect key('quotation.elements', local-name())]
+        )
+      ">
+        <xsl:value-of select="following::node()[not(ancestor-or-self::tei:note[not(current() intersect descendant::*)])][1]/self::text()[matches(., '^\s*[.,]')]/replace(., '^\s*([.,]+).*', '$1', 's')"/>
+      </xsl:when>
+      <!-- footnotes: place all following punctuation marks, except dash, before the footnote marker --> 
+      <!-- condition: the first preceding non-note sibling should not end in a "pulling punctuation 
+           quotes" context, unless the following text node starts with a question or quotation mark.
+      -->
+      <xsl:when test="
+        self::tei:note 
+        and (
+          not(
+            preceding-sibling::node()[not(self::tei:note)][1]
+            [local:endsWithPullingPunctuationQuotes(.)]
+          )
+          or 
+          following::node()[not(ancestor-or-self::tei:note
+            [not(current() intersect descendant::*)])][1]/self::text()
+            [matches(., '^\s*[\p{P}-[.,\p{Ps}\p{Pe}—]]')]
+        )
+      ">
+        <xsl:value-of select="following::node()[not(ancestor-or-self::tei:note[not(current() intersect descendant::*)])][1]/self::text()[matches(., '^\s*[\p{P}-[\p{Ps}\p{Pe}—]]')]/replace(., '^\s*([\p{P}-[\p{Ps}\p{Pe}—]]+).*', '$1', 's')"/>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
   
   <!-- This template creates correct enumerations. -->
@@ -301,6 +340,45 @@
     </xsl:choose>
   </xsl:template>
   
+  <!-- text() starting with punctuation, and following either an element for which smart quotes 
+       or a footnote marker are being generated: skip starting punctuation (this is pulled into 
+       the quotation marks or before the footnote) -->
+  <xsl:template match="text()[matches(., '^\s*[\p{P}-[\p{Ps}\p{Pe}—]]')]" mode="#all">
+    <xsl:choose>
+      <!-- text following a valid "quotation element": skip starting comma or period -->
+      <xsl:when test="
+        self::text()[matches(., '^\s*[.,]')]
+        [preceding-sibling::node()[not(self::tei:note)][1]
+          [local:endsWithPullingPunctuationQuotes(.)]
+        ]
+      ">
+        <xsl:value-of select="replace(., '^(\s*)[.,]+', '$1', 's')"/>
+      </xsl:when>
+      <!-- text following a valid footnote marker: skip all punctuation except dash -->
+      <xsl:when test="self::text()[preceding::node()[1][ancestor::tei:note[not(current() intersect descendant::node())]]]">
+        <xsl:value-of select="replace(., '^(\s*)[\p{P}-[\p{Ps}\p{Pe}—]]+', '$1', 's')"/>
+      </xsl:when>
+      <!-- other text: just copy -->
+      <xsl:otherwise>
+        <xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!-- This function checks if a node ends with quotation marks that pull in subsequent punctuation. -->
+  <!-- For the context node and all its descendants containing the last non-empty text node, it is
+       tested if any of these is a "quotation element". -->
+  <xsl:function name="local:endsWithPullingPunctuationQuotes" as="xs:boolean">
+    <xsl:param name="node"/>
+    <xsl:value-of select="
+      some $text in $node/descendant::text()[normalize-space()][last()]
+      (: descendant-or-self::*: include preceding sibling node itself, too :)
+      satisfies $node/descendant-or-self::*
+        [descendant::text() intersect $text]
+        [. intersect key('quotation.elements', local-name())]
+    "/>
+  </xsl:function>
+  
   <!-- This function creates a space-stripped copy of an author(ing instance) in
     a bibliography that can be compared to other author(ing instance)s, when
     determining if an abbreviated form should be used. -->
@@ -461,6 +539,23 @@
   <xsl:function name="local:get.quoteLevel">
     <xsl:param name="current"/>
     <xsl:value-of select="count($current/ancestor::*[. intersect key('quotation.elements', local-name())])"/>
+  </xsl:function>
+  
+  <!-- This function retrieves the value for an SVN keyword in a comment line -->
+  <!-- note: keyword can be 
+    -empty ($Id$)
+    -expanded ($Revision: 1234 $)
+  -->
+  <xsl:function name="local:get.SVNkeyword">
+    <xsl:param name="keyword.name"/>
+    <xsl:variable name="keyword.lines" select="$doc.root//comment()[matches(., concat('\$', $keyword.name, '(\$|:)'))][1]"/>
+    <xsl:if test="$keyword.lines">
+      <xsl:analyze-string select="$keyword.lines" regex="\${$keyword.name}(\$|:[^$]+?\$(\s+|$))">
+        <xsl:matching-substring>
+          <xsl:value-of select="normalize-space(.)"/>
+        </xsl:matching-substring>
+      </xsl:analyze-string>
+    </xsl:if>
   </xsl:function>
   
 </xsl:stylesheet>

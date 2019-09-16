@@ -179,7 +179,7 @@ deb: debversion
 	rm -f tei*xsl*_*deb
 	rm -f tei*xsl*_*changes
 	rm -f tei*xsl*_*build
-	(cd debian-tei-xsl; debclean;debuild --no-lintian  -nc -b -uc -us)
+	(cd debian-tei-xsl; debclean;debuild --no-lintian --preserve-envvar PATH -nc -b -uc -us)
 tag:
 	git tag -a v`cat VERSION` -m 'release version `cat VERSION`'
 	git push --follow-tags
