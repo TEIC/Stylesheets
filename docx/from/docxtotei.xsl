@@ -195,19 +195,30 @@ of this software, even if advised of the possibility of such damage.
        </xsl:for-each>
      </xsl:variable>		  
      
+     <!-- This pass simply gets rid of empty <tei:hi>s to avoid unwanted 
+       processing in step2. If similar adjustments will become necessary, 
+       we suggest to add them to this step. -->
 
-     <!--
-	 <xsl:result-document href="/tmp/foo.xml">
-	 <xsl:copy-of select="$pass1"/>
-	 </xsl:result-document>
-     -->
-
+     <xsl:variable name="pass1hi">
+       <xsl:for-each select="$pass1">
+         <xsl:apply-templates mode="pass1hi"/>
+       </xsl:for-each>
+     </xsl:variable>
+     
      <!-- Do the final parse and create valid TEI -->
 
-     <xsl:apply-templates select="$pass1" mode="pass2"/>
+     <xsl:apply-templates select="$pass1hi" mode="pass2"/>
      
      <xsl:call-template name="fromDocxFinalHook"/>
    </xsl:template>
+  
+   <xsl:template match="*|@*|comment()|processing-instruction()" mode="pass1hi">
+     <xsl:copy>
+       <xsl:apply-templates select="node()|@*|comment()|processing-instruction()" mode="pass1hi"/>
+     </xsl:copy>
+   </xsl:template>
+  
+   <xsl:template match="tei:hi[not(string(.))]" mode="pass1hi"/>
    
    <xsl:template name="fromDocxFinalHook"/>
    
