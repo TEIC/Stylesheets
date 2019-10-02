@@ -2914,6 +2914,14 @@
           <xsl:text>ANY</xsl:text>
         </xsl:element>
       </xsl:when>
+      <xsl:when test="tei:content//tei:anyElement">
+        <xsl:element namespace="{$outputNS}" name="{$segName}">
+          <xsl:attribute name="{$langAttributeName}">
+            <xsl:value-of select="$documentationLanguage"/>
+          </xsl:attribute>
+          <xsl:text>ANY</xsl:text>
+        </xsl:element>
+      </xsl:when>
       <xsl:when test="tei:content/tei:textNode and count(tei:content/*) = 1">
         <xsl:element namespace="{$outputNS}" name="{$segName}">
           <xsl:attribute name="{$langAttributeName}">
