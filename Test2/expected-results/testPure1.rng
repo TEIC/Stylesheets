@@ -7846,7 +7846,7 @@ Suggested values include: 1] main; 2] sub (subordinate); 3] alt (alternate); 4] 
                <a:documentation>supplies the name of the scheme in which this name is defined.
 Sample values include: 1] TEI; 2] DBK (docbook); 3] XX (unknown); 4] Schematron; 5] HTML</a:documentation>
                <data type="token">
-                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+                  <param name="pattern">[^\p{C}\p{Z}]+</param>
                </data>
             </attribute>
          </optional>
