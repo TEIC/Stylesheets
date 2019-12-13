@@ -15,7 +15,7 @@
   
   <!-- attribute sets -->
   <xsl:attribute-set name="global.flow.properties">
-    <xsl:attribute name="font-family">GentiumPlus</xsl:attribute>
+    <xsl:attribute name="font-family">GentiumPlus,DejaVu</xsl:attribute>
     <xsl:attribute name="font-size">10pt</xsl:attribute>
     <xsl:attribute name="line-height">2</xsl:attribute>
     <xsl:attribute name="text-align">justify</xsl:attribute>

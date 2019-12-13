@@ -627,10 +627,17 @@
 -->
   
   <!-- replace external <ptr/> with <ref>, whose label = @target -->
-  <xsl:template match="tei:ptr[not(@type eq 'crossref')]|tei:ref[not(@type eq 'crossref')][not(normalize-space())]">
+  <xsl:template match="tei:ptr[not(@type eq 'crossref')]|tei:ref[not(@type eq 'crossref')]">
     <ref>
       <xsl:apply-templates select="@*"/>
-      <xsl:value-of select="@target"/>
+      <xsl:choose>
+        <xsl:when test="normalize-space()">
+          <xsl:apply-templates/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="@target"/>
+        </xsl:otherwise>
+      </xsl:choose>
     </ref>
   </xsl:template>
   
