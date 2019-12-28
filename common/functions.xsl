@@ -1555,6 +1555,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:when test="$filesuffix='ogg'">audio/ogg</xsl:when>
           <xsl:when test="$filesuffix='mp3'">audio/mpeg</xsl:when>
           <xsl:when test="$filesuffix='wmf'">image/x-wmf</xsl:when>
+          <xsl:when test="$filesuffix='svg'">image/svg+xml</xsl:when>
           <xsl:otherwise>image/jpeg</xsl:otherwise>
         </xsl:choose>
      </xsl:function>
