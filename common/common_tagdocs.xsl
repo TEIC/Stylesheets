@@ -2184,7 +2184,6 @@
         <xsl:variable name="list">
           <ClassList>
             <xsl:for-each select="key('CLASSMEMBERS', $this, $top )">
-              <xsl:message select="'  key='||local-name(.)||'-'||@ident"/>
               <Item type="{local-name()}" ident="{@ident}">
                 <xsl:call-template name="linkTogether">
                   <xsl:with-param name="name" select="concat(@prefix, @ident)"/>
