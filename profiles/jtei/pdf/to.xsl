@@ -908,7 +908,11 @@
   </xsl:template>
   
   <xsl:template match="tei:cell">
-    <fo:table-cell xsl:use-attribute-sets="table.properties cell.properties">    
+    <fo:table-cell xsl:use-attribute-sets="table.properties cell.properties">
+      <!-- Colspanning cells should have centred content. -->
+      <xsl:if test="@cols[xs:integer(.) gt 1]">
+        <xsl:attribute name="text-align">center</xsl:attribute>
+      </xsl:if>
       <xsl:for-each select="@cols">
         <xsl:attribute name="number-columns-spanned"><xsl:value-of select="."/></xsl:attribute>
       </xsl:for-each>
