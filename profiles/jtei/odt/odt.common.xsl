@@ -580,7 +580,10 @@
             <xsl:when test="teix:egXML">
                 <xsl:apply-templates/>
             </xsl:when>
-            <xsl:otherwise><text:p text:style-name="{if (@role='label' or parent::row[@role='label']) then 'teiParaTinyMarginsHeader' else 'teiParaTinyMargins'}"><xsl:apply-templates/></text:p></xsl:otherwise>
+          <xsl:when test="@cols[xs:integer(.) gt 1]">
+            <text:p text:style-name="{if (@role='label' or parent::row[@role='label']) then 'teiParaTinyMarginsHeaderCentre' else 'teiParaTinyMarginsCentre'}"><xsl:apply-templates/></text:p>
+          </xsl:when>
+          <xsl:otherwise><text:p text:style-name="{if (@role='label' or parent::row[@role='label']) then 'teiParaTinyMarginsHeader' else 'teiParaTinyMargins'}"><xsl:apply-templates/></text:p></xsl:otherwise>
         </xsl:choose>
       </table:table-cell>
     </xsl:template>
