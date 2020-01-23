@@ -10,7 +10,7 @@
   
   <xsl:import href="../../../html/html.xsl"/>
   
-  <xsl:param name="feedbackURL">http://www.tei-c.org/About/contact.xml</xsl:param>
+  <xsl:param name="feedbackURL">https://tei-c.org/about/contact/</xsl:param>
   <xsl:param name="institution"/>
   <xsl:param name="cssFile">en/html/guidelines.css</xsl:param>
   <xsl:template name="copyrightStatement">released under the
