@@ -632,7 +632,7 @@
 -->
   
   <!-- replace external <ptr/> with <ref>, whose label = @target -->
-  <xsl:template match="tei:ptr[not(@type eq 'crossref')]|tei:ref[not(@type eq 'crossref')]">
+  <xsl:template match="tei:ptr[not(@type = ('crossref','bibl'))]|tei:ref[not(@type = ('crossref','bibl'))]">
     <ref>
       <xsl:apply-templates select="@*"/>
       <xsl:choose>
