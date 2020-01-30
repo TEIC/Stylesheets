@@ -783,10 +783,12 @@
       <xsl:variable name="marker">
         <xsl:call-template name="get.inline.list.marker"/>
       </xsl:variable>
-      <fo:inline>
-        <xsl:value-of select="$marker"/>
-      </fo:inline>
-      <xsl:text> </xsl:text>
+      <xsl:for-each select="$marker[normalize-space()]">
+        <fo:inline>
+          <xsl:value-of select="."/>
+          <xsl:text> </xsl:text>
+        </fo:inline>        
+      </xsl:for-each>
       <xsl:apply-templates/>
       <xsl:if test="following-sibling::tei:item">
         <xsl:text> </xsl:text>
