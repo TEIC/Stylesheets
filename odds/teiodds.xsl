@@ -1963,45 +1963,6 @@ select="$makeDecls"/></xsl:message>
   
   <xsl:template name="processSchematron">
     <xsl:choose>
-      <xsl:when test="ancestor::teix:egXML"/>
-      <xsl:when test="self::s:ns">
-        <ns prefix="{@prefix}" uri="{@uri}" xmlns="http://www.ascc.net/xml/schematron"/>
-      </xsl:when>
-      <xsl:when test="(self::s:report or self::s:assert) and ancestor::tei:elementSpec">
-        <pattern xmlns="http://www.ascc.net/xml/schematron">
-          <xsl:attribute name="name">
-	    <xsl:value-of select="tei:makePatternID(.)"/>
-          </xsl:attribute>
-          <rule>
-            <xsl:attribute name="context">
-	      <xsl:sequence
-		  select="tei:generate-nsprefix-schematron(.)"/>
-	      <xsl:choose>
-		<xsl:when test="ancestor::tei:attDef">
-		  <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
-		  <xsl:text>/@</xsl:text>
-		  <xsl:value-of select="ancestor::tei:attDef/@ident"/>
-		  <xsl:text></xsl:text>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-            </xsl:attribute>
-            <xsl:apply-templates mode="justcopy" select="."/>
-          </rule>
-        </pattern>
-      </xsl:when>
-      <xsl:when test="self::s:pattern">
-        <xsl:apply-templates mode="justcopy" select="."/>
-      </xsl:when>
-      <xsl:when test="self::s:rule">
-        <pattern
-          xmlns="http://www.ascc.net/xml/schematron">
-          <xsl:attribute name="name" select="tei:makePatternID(.)"/>
-          <xsl:apply-templates mode="justcopy" select="."/>
-        </pattern>
-      </xsl:when>
       <xsl:when test="self::sch:ns">
         <ns prefix="{@prefix}" uri="{@uri}" xmlns="http://purl.oclc.org/dsdl/schematron"/>
       </xsl:when>
@@ -2014,6 +1975,7 @@ select="$makeDecls"/></xsl:message>
           <xsl:apply-templates mode="justcopy" select="."/>
         </pattern>
       </xsl:when>
+      <xsl:when test="self::sch:let"/>			       <!-- <let> processed below -->
       <xsl:when test="(self::sch:report or self::sch:assert) and
 		      ancestor::tei:elementSpec">
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron">
@@ -2033,12 +1995,12 @@ select="$makeDecls"/></xsl:message>
 		</xsl:otherwise>
 	      </xsl:choose>
             </xsl:attribute>
-            <xsl:apply-templates mode="justcopy" select="."/>
+            <xsl:apply-templates mode="justcopy" select="parent::*/sch:let|."/>
           </rule>
         </pattern>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates mode="justcopy" select="."/>
+	<xsl:apply-templates mode="justcopy" select="parent::*/sch:let|."/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -2475,10 +2437,6 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template match="tei:constrainSpec|tei:constraint">
     <xsl:apply-templates/>
-  </xsl:template>
-
-  <xsl:template match="s:*">
-      <xsl:call-template name="processSchematron"/>
   </xsl:template>
 
   <xsl:template match="sch:*">
