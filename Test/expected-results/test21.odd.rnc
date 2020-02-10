@@ -138,7 +138,7 @@ att.dimensions.attribute.unit =
     | 
       ## (characters) caractères du texte
       "char"
-    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.dimensions.attribute.quantity =
   
@@ -174,7 +174,7 @@ att.dimensions.attribute.scope =
   ## spécifie l'applicabilité de cette mesure, là où plus d'un objet est mesuré.
   ## Sample values include: 1] all; 2] most; 3] range
   attribute scope {
-    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.written.attributes = att.written.attribute.hand
 att.written.attribute.hand =
@@ -192,7 +192,7 @@ att.damaged.attribute.agent =
   ## caractérise la raison des dommages, lorsqu'elle peut être identifiée
   ## Sample values include: 1] rubbing; 2] mildew; 3] smoke
   attribute agent {
-    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.damaged.attribute.degree =
   [
@@ -228,7 +228,7 @@ att.breaking.attribute.break =
   
   ## indique si l'élément qui porte cet attribut peut être considéré comme une espace blanc indiquant la fin d'un mot orthographique.
   attribute break {
-    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.cReferencing.attributes = att.cReferencing.attribute.cRef
 att.cReferencing.attribute.cRef =
@@ -504,7 +504,7 @@ att.docStatus.attribute.status =
   ## Sample values include: 1] approved; 2] candidate; 3] cleared; 4] deprecated; 5] draft; 6] embargoed; 7] expired; 8] frozen; 9] galley; 10] proposed; 11] published; 12] recommendation; 13] submitted; 14] unfinished; 15] withdrawn
   [ a:defaultValue = "draft" ]
   attribute status {
-    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.global.responsibility.attributes =
   att.global.responsibility.attribute.cert,
@@ -550,7 +550,7 @@ att.editLike.attribute.evidence =
        | 
          ## l'intervention ou l'interprétation a été faite par le rédacteur, le catalogueur, ou le chercheur sur la base de leur expertise.
          "conjecture"
-       | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" })+
+       | xsd:token { pattern = "[^\p{C}\p{Z}]+" })+
     }
   }?
 att.editLike.attribute.instant =
@@ -575,7 +575,7 @@ att.global.rendition.attribute.rend =
   ## (interprétation) foobar
   attribute rend {
     list {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
 att.global.rendition.attribute.style =
@@ -684,7 +684,7 @@ att.handFeatures.attribute.medium =
   ## décrit la teinte ou le type d'encre, par exemple brune, ou un autre outil d'écriture, par exemple un crayon.
   attribute medium {
     list {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
 att.handFeatures.attribute.scope =
@@ -707,7 +707,7 @@ att.internetMedia.attribute.mimeType =
   ## (type de média MIME) spécifie le type MIME (multipurpose internet mail extension) applicable.
   attribute mimeType {
     list {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
 att.media.attributes =
@@ -754,7 +754,7 @@ att.measurement.attributes =
 att.measurement.attribute.unit =
   
   ## (unité) indique les unités de mesure utilisées ; il s'agit en général du symbole normalisé pour les unités dont on a besoin.
-  ## Suggested values include: 1] m (metre); 2] kg (kilogram); 3] s (second); 4] Hz (hertz); 5] Pa (pascal); 6] Ω (ohm); 7] L (litre); 8] t (tonne); 9] ha (hectare); 10] Å (ångström); 11] mL (millilitre); 12] cm (centimetre); 13] dB (decibel); 14] kbit (kilobit); 15] Kibit (kibibit); 16] kB (kilobyte); 17] KiB (kibibyte); 18] MB (megabyte); 19] MiB (mebibyte)
+  ## Suggested values include: 1] m (metre); 2] kg (kilogram); 3] s (second); 4] Hz (hertz); 5] Pa (pascal); 6] Ω (ohm); 7] L (litre); 8] t (tonne); 9] ha (hectare); 10] Å (ångström); 11] mL (millilitre); 12] cm (centimetre); 13] dB (decibel); 14] kbit (kilobit); 15] Kibit (kibibit); 16] kB (kilobyte); 17] KiB (kibibyte); 18] MB (megabyte); 19] MiB (mebibyte)
   attribute unit {
     
     ## (mètre) unité SI (système international) de longueur
@@ -773,7 +773,7 @@ att.measurement.attribute.unit =
       "Pa"
     | 
       ## (ohm) unité SI de résistance électrique
-      "Ω"
+      "Ω"
     | 
       ## (litre) 1 dm³
       "L"
@@ -785,7 +785,7 @@ att.measurement.attribute.unit =
       "ha"
     | 
       ## (ångström) 10⁻¹⁰ m
-      "Å"
+      "Å"
     | 
       ## (millilitre) 
       "mL"
@@ -813,7 +813,7 @@ att.measurement.attribute.unit =
     | 
       ## (mébioctet) 2²⁰ ou 1 048 576 octets
       "MiB"
-    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.measurement.attribute.unitRef =
   [
@@ -839,7 +839,7 @@ att.measurement.attribute.commodity =
   ## (article) indique ce qui est mesuré.
   attribute commodity {
     list {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
 sch:pattern [
@@ -876,7 +876,7 @@ att.naming.attribute.role =
   ## may be used to specify further information about the entity referenced by this name in the form of a set of whitespace-separated values, for example the occupation of a person, or the status of a place.
   attribute role {
     list {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
 att.naming.attribute.nymRef =
@@ -890,7 +890,7 @@ att.notated.attribute.notation =
   
   ## précise le nom d'une notation définie précédemment, utilisée dans le contenu de l'élément.
   attribute notation {
-    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.placement.attributes = att.placement.attribute.place
 att.placement.attribute.place =
@@ -929,7 +929,7 @@ att.placement.attribute.place =
        | 
          ## dans un espace prédéfini, par exemple à gauche d'un scripteur précédent
          "inspace"
-       | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" })+
+       | xsd:token { pattern = "[^\p{C}\p{Z}]+" })+
     }
   }?
 att.typed.attributes =
@@ -949,7 +949,7 @@ att.typed.attribute.subtype =
   
   ## (sous-type) fournit une sous-catégorisation de l'élément, si c'est nécessaire.
   attribute subtype {
-    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 sch:pattern [
   id = "test21-att.typed-subtypeTyped-constraint-rule-6"
@@ -1061,9 +1061,9 @@ att.pointing.group.attribute.targFunc =
   ]
   attribute targFunc {
     list {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" },
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" },
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }*
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" },
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" },
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }*
     }
   }?
 att.segLike.attributes =
@@ -1074,14 +1074,14 @@ att.segLike.attribute.function =
   
   ## (fonction) caractérise la fonction du segment.
   attribute function {
-    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.sortable.attributes = att.sortable.attribute.sortKey
 att.sortable.attribute.sortKey =
   
   ## supplies the sort key for this element in an index, list or group which contains it.
   attribute sortKey {
-    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.edition.attributes =
   att.edition.attribute.ed, att.edition.attribute.edRef
@@ -1090,7 +1090,7 @@ att.edition.attribute.ed =
   ## (édition) fournit un identifiant arbitraire pour l'édition source dans laquelle la caractéristique associée (par exemple, une page, une colonne ou un saut de ligne) apparaît à ce point du texte.
   attribute ed {
     list {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
 att.edition.attribute.edRef =
@@ -1202,13 +1202,13 @@ att.transcriptional.attribute.status =
   ## Sample values include: 1] duplicate; 2] duplicate-partial; 3] excessStart; 4] excessEnd; 5] shortStart; 6] shortEnd; 7] partial; 8] unremarkable
   [ a:defaultValue = "unremarkable" ]
   attribute status {
-    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.transcriptional.attribute.cause =
   
   ## documents the presumed cause for the intervention.
   attribute cause {
-    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.transcriptional.attribute.seq =
   
@@ -1261,7 +1261,7 @@ att.citing.attribute.unit =
     | 
       ## the element identifies an entry number or label in a list of entries.
       "entry"
-    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.citing.attribute.from =
   [
@@ -1272,7 +1272,7 @@ att.citing.attribute.from =
     ]
   ]
   attribute from {
-    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 att.citing.attribute.to =
   [
@@ -1283,7 +1283,7 @@ att.citing.attribute.to =
     ]
   ]
   attribute to {
-    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 model.nameLike.agent = name | orgName | persName
 model.nameLike.agent_alternation = name | orgName | persName
@@ -1818,6 +1818,7 @@ model.frontPart.drama = notAllowed
 model.pLike.front =
   head
   | byline
+  | dateline
   | argument
   | epigraph
   | docTitle
@@ -1942,6 +1943,8 @@ model.biblPart =
   | extent
   | availability
   | msIdentifier
+  | explicit
+  | decoNote
 model.frontPart = model.frontPart.drama | listBibl | divGen | titlePage
 model.addrPart = model.nameLike | addrLine | street | postCode | postBox
 model.pPart.data =
@@ -2020,6 +2023,13 @@ model.profileDescPart =
   | correspDesc
   | handNotes
   | listTranspose
+model.standOffPart =
+  model.global.meta
+  | model.biblLike
+  | model.listLike
+  | listChange
+  | seg
+  | zone
 att.formula.attributes = att.formula.attribute.formula
 att.formula.attribute.formula =
   [
@@ -2034,7 +2044,8 @@ model.correspActionPart =
   model.dateLike | model.addressLike | model.nameLike | note
 model.correspContextPart = model.ptrLike | model.pLike | note
 model.correspDescPart = note | correspAction | correspContext
-model.resourceLike = facsimile | sourceDoc | \text
+model.resource = standOff | facsimile | sourceDoc | \text
+model.describedResource = teiCorpus | TEI
 model.objectLike = object | listObject
 att.personal.attributes =
   att.naming.attributes,
@@ -2115,7 +2126,7 @@ att.milestoneUnit.attribute.unit =
     | 
       ## passages figurant dans le texte, mais qui ne sont pas destinés à être inclus comme élément de référence.
       "unnumbered"
-    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+    | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }
 p =
   
@@ -2212,10 +2223,16 @@ distinct =
   element distinct {
     macro.phraseSeq,
     att.global.attributes,
+    att.typed.attribute.subtype,
     
     ## précise la variété de langue ou le registre de langue auquels appartiennent le mot ou l'expression.
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      
+      ## first type
+      "A"
+      | 
+        ## second type
+        "B"
     }?,
     
     ## précise comment l'expression est diachroniquement distincte.
@@ -2309,7 +2326,7 @@ q =
       | 
         ## métalinguistic, i.e. faisant référence à lui-même et non à son référent habituel.
         "mentioned"
-      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -2348,14 +2365,14 @@ desc =
          sch:rule [
            context = "tei:desc[ @type eq 'deprecationInfo']"
            "\x{a}" ~
-           "	              "
+           "               "
            sch:assert [
              test = "../@validUntil"
              "Information about a\x{a}" ~
-             "	deprecation should only be present in a specification element\x{a}" ~
-             "	that is being deprecated: that is, only an element that has a\x{a}" ~
-             "	@validUntil attribute should have a child <desc\x{a}" ~
-             '	type="deprecationInfo">.'
+             "        deprecation should only be present in a specification element\x{a}" ~
+             "        that is being deprecated: that is, only an element that has a\x{a}" ~
+             "        @validUntil attribute should have a child <desc\x{a}" ~
+             '        type="deprecationInfo">.'
            ]
            "\x{a}" ~
            "            "
@@ -2476,14 +2493,14 @@ gap =
          | 
            ## (échantillonnage) 
            "sampling"
-         | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" })+
+         | xsd:token { pattern = "[^\p{C}\p{Z}]+" })+
       }
     }?,
     
     ## lorsque du texte est omis de la transcription en raison d'un dommage, catégorise la cause du dommage, si celle-ci peut être identifiée.
     ## Sample values include: 1] rubbing; 2] mildew; 3] smoke
     attribute agent {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -2538,14 +2555,14 @@ unclear =
          | 
            ##
            "eccentric_ductus"
-         | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" })+
+         | xsd:token { pattern = "[^\p{C}\p{Z}]+" })+
       }
     }?,
     
     ## lorsque la difficulté de transcription vient d'un dommage, catégorise la cause du dommage si celle-ci peut être identifiée
     ## Sample values include: 1] rubbing; 2] mildew; 3] smoke
     attribute agent {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -2606,6 +2623,7 @@ num =
   element num {
     macro.phraseSeq,
     att.global.attributes,
+    att.typed.attribute.subtype,
     att.ranging.attributes,
     
     ## indique le type de valeur numérique
@@ -2623,7 +2641,7 @@ num =
       | 
         ## un pourcentage
         "percentage"
-      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
     ## fournit la valeur d'un nombre sous une forme normalisée.
@@ -2641,11 +2659,17 @@ measure =
   element measure {
     macro.phraseSeq,
     att.global.attributes,
+    att.typed.attribute.subtype,
     att.measurement.attributes,
     
     ## précise le type de mesure exprimée dans la typologie adaptée.
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      
+      ## first type
+      "A"
+      | 
+        ## second type
+        "B"
     }?,
     empty
   }
@@ -2859,7 +2883,7 @@ ref =
       | 
         ## each list item is part of an argument consisting of two or more propositions and a final conclusion derived from them.
         "syllogism"
-      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -2957,7 +2981,7 @@ media =
     ## (type de média MIME) spécifie le type MIME (multipurpose internet mail extension) applicable.
     attribute mimeType {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
     },
     empty
@@ -2991,7 +3015,7 @@ binaryObject =
     ]
     attribute encoding {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
     }?,
     empty
@@ -3501,7 +3525,7 @@ stage =
          | 
            ## plusieurs des indications précédentes
            "mixed"
-         | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" })*
+         | xsd:token { pattern = "[^\p{C}\p{Z}]+" })*
       }
     }?,
     empty
@@ -3510,9 +3534,7 @@ teiCorpus =
   
   ## contient la totalité d'un corpus encodé selon la TEI, comprenant un seul en-tête de corpus et un ou plusieurs éléments TEI dont chacun contient un seul en-tête textuel et un texte. [4. Default Text Structure 15.1. Varieties of Composite Text]
   element teiCorpus {
-    (teiHeader,
-     ((model.resourceLike+, (TEI | teiCorpus)*)
-      | (TEI | teiCorpus)+)),
+    (teiHeader, model.resource*, model.describedResource+),
     att.global.attributes,
     att.typed.attributes,
     
@@ -3528,6 +3550,7 @@ divGen =
   element divGen {
     model.headLike*,
     att.global.attributes,
+    att.typed.attribute.subtype,
     
     ##
     attribute type {
@@ -3596,7 +3619,7 @@ att.datable.custom.attribute.when-custom =
   ## supplies the value of a date or time in some custom standard form.
   attribute when-custom {
     list {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
 att.datable.custom.attribute.notBefore-custom =
@@ -3604,7 +3627,7 @@ att.datable.custom.attribute.notBefore-custom =
   ## specifies the earliest possible date for the event in some custom standard form.
   attribute notBefore-custom {
     list {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
 att.datable.custom.attribute.notAfter-custom =
@@ -3612,7 +3635,7 @@ att.datable.custom.attribute.notAfter-custom =
   ## specifies the latest possible date for the event in some custom standard form.
   attribute notAfter-custom {
     list {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
 att.datable.custom.attribute.from-custom =
@@ -3620,7 +3643,7 @@ att.datable.custom.attribute.from-custom =
   ## indicates the starting point of the period in some custom standard form.
   attribute from-custom {
     list {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
 att.datable.custom.attribute.to-custom =
@@ -3628,7 +3651,7 @@ att.datable.custom.attribute.to-custom =
   ## indicates the ending point of the period in some custom standard form.
   attribute to-custom {
     list {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
 att.datable.custom.attribute.datingPoint =
@@ -3934,7 +3957,7 @@ affiliation =
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] sponsor; 2] recommend; 3] discredit; 4] pledged
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -3952,7 +3975,7 @@ age =
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] western; 2] sui; 3] subjective; 4] objective; 5] inWorld (in world); 6] chronological; 7] biological; 8] psychological; 9] functional
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
     ## fournit un code numérique représentant l'âge ou la tranche d'âge.
@@ -3974,7 +3997,7 @@ birth =
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] caesarean (caesarean section); 2] vaginal (vaginal delivery); 3] exNihilo (ex nihilo); 4] incorporated; 5] founded; 6] established
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -4008,7 +4031,7 @@ death =
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] proclaimed; 2] assumed; 3] verified; 4] clinical; 5] brain; 6] natural; 7] unnatural; 8] fragmentation; 9] dissolution
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -4026,7 +4049,7 @@ education =
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] primary; 2] secondary; 3] undergraduate; 4] graduate; 5] residency; 6] apprenticeship
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -4070,7 +4093,7 @@ faith =
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] practicing; 2] clandestine; 3] patrilineal; 4] matrilineal; 5] convert
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -4109,7 +4132,7 @@ langKnowledge =
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] listening; 2] speaking; 3] reading; 4] writing
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
     ## fournit un ou plusieurs codes de langue valides pour les langues spécifiées.
@@ -4142,7 +4165,7 @@ langKnown =
     
     ## un code indiquant le niveau de connaissance qu'une personne a de cette langue.
     attribute level {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -4233,7 +4256,7 @@ nationality =
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] birth; 2] naturalised; 3] self-assigned
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -4251,7 +4274,7 @@ occupation =
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     [
       a:documentation [
@@ -4292,7 +4315,7 @@ org =
     ## spécifie le rôle principal ou la catégorie d'une organisation.
     attribute role {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
     }?,
     empty
@@ -4333,13 +4356,13 @@ person =
     ## précise le sexe de la personne.
     attribute sex {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
     }?,
     
     ## précise une tranche d'âge pour la personne.
     attribute age {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -4355,20 +4378,20 @@ persona =
     ## précise un rôle principal ou une classification principale pour cette personne.
     attribute role {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
     }?,
     
     ## précise le sexe de la personne.
     attribute sex {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
     }?,
     
     ## précise une tranche d'âge pour la personne.
     attribute age {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -4382,25 +4405,25 @@ personGrp =
     
     ## précise le rôle joué par ce groupe de personnes dans l'interaction.
     attribute role {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
     ## précise le sexe du groupe participant.
     attribute sex {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
     }?,
     
     ## précise la tranche d'âge des participants.
     attribute age {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
     ## précise la taille exacte ou approximative du groupe.
     attribute size {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
     }?,
     empty
@@ -4504,7 +4527,7 @@ relation =
     
     ## fournit un nom pour le type de relation dont elle est une instance.
     attribute name {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     (
      ## identifie les participants actifs dans une relation à sens unique, ou tous les participants dans une relation réciproque.
@@ -4537,7 +4560,7 @@ residence =
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] primary; 2] secondary; 3] temporary; 4] permanent
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -4554,13 +4577,13 @@ sex =
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] explicit; 2] implicit
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
     ## supplies a coded value for sex
     attribute value {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
     }?,
     empty
@@ -4579,7 +4602,7 @@ socecStatus =
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     ## Sample values include: 1] atBirth; 2] atDeath; 3] dependent; 4] inherited; 5] independent
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
     ## identifie le système de classification ou la taxinomie utilisés.
@@ -4903,7 +4926,7 @@ idno =
       | 
         ## OCLC control number (record number) for the union catalog record in WorldCat, a union catalog for member libraries in the Online Computer Library Center global cooperative.
         "OCLC"
-      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -5274,7 +5297,7 @@ rendition =
     ## where CSS is used, provides a way of defining pseudo-elements, that is, styling rules applicable to specific sub-portions of an element.
     ## Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after
     attribute scope {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     [
       a:documentation [
@@ -5386,6 +5409,7 @@ catDesc =
   element catDesc {
     (text | model.limitedPhrase | model.catDescPart)*,
     att.global.attributes,
+    att.canonical.attributes,
     empty
   }
 geoDecl =
@@ -5418,7 +5442,7 @@ geoDecl =
       | 
         ## (système de coordonnées de données européen.) La valeur fournie doit être interprétée comme la latitude suivie de la longitude selon le système de coordonnées de données européen.
         "ED50"
-      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -5652,7 +5676,7 @@ correspAction =
       | 
         ## information concerning the forwarding of a message.
         "forwarded"
-      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -5957,7 +5981,7 @@ when =
       | 
         ## (millisecondes) 
         "ms"
-      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
     ## spécifie la partie numérique d'un intervalle de temps.
@@ -6016,7 +6040,7 @@ timeline =
       | 
         ## (millisecondes) 
         "ms"
-      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
     ## spécifie la partie numérique d'un intervalle de temps.
@@ -6179,6 +6203,42 @@ altGrp =
     }?,
     empty
   }
+standOff =
+  
+  ## Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [16.10. The standOff Container]
+  element standOff {
+    (model.standOffPart+)
+    >> sch:pattern [
+         id =
+           "test21-standOff-nested_standOff_should_be_typed-constraint-assert-13"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:standOff"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "@type or not(ancestor::tei:standOff)"
+             "This\x{a}" ~
+             "      "
+             sch:name [ ]
+             " element must have a @type attribute, since it is\x{a}" ~
+             "      nested inside a "
+             sch:name [ ]
+             "\x{a}" ~
+             "               "
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
+    att.global.attributes,
+    att.typed.attributes,
+    att.declaring.attributes,
+    empty
+  }
 att.msExcerpt.attributes = att.msExcerpt.attribute.defective
 att.msExcerpt.attribute.defective =
   
@@ -6225,7 +6285,7 @@ catchwords =
     macro.phraseSeq
     >> sch:pattern [
          id =
-           "test21-catchwords-catchword_in_msDesc-constraint-assert-13"
+           "test21-catchwords-catchword_in_msDesc-constraint-assert-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6296,11 +6356,16 @@ dimensions =
        ],
     att.global.attributes,
     att.dimensions.attributes,
+    att.typed.attribute.subtype,
     
     ## indique quel aspect de l'objet est mesuré.
-    ## Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniatures; 6] binding; 7] box
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      
+      ## first type
+      "A"
+      | 
+        ## second type
+        "B"
     }?,
     empty
   }
@@ -6350,12 +6415,12 @@ locus =
     
     ## (depuis) Spécifie, sous une forme normalisée, le point de départ de la localisation.
     attribute from {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
     ## (jusqu'à) Spécifie, sous une forme normalisée, la borne de fin pour la localisation.
     attribute to {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -6418,7 +6483,7 @@ secFol =
   element secFol {
     macro.phraseSeq
     >> sch:pattern [
-         id = "test21-secFol-secFol_in_msDesc-constraint-assert-14"
+         id = "test21-secFol-secFol_in_msDesc-constraint-assert-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6447,7 +6512,7 @@ signatures =
     macro.specialPara
     >> sch:pattern [
          id =
-           "test21-signatures-signatures_in_msDesc-constraint-assert-15"
+           "test21-signatures-signatures_in_msDesc-constraint-assert-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6525,19 +6590,25 @@ institution =
   
   ## (institution) Contient le nom d'un organisme (comme une université ou une bibliothèque), avec lequel un manuscrit est identifié ; en général c'est le nom de l'institution qui conserve ce manuscrit. [10.4. The Manuscript Identifier]
   element institution {
-    macro.xtext, att.global.attributes, att.naming.attributes, empty
+    macro.phraseSeq.limited,
+    att.global.attributes,
+    att.naming.attributes,
+    empty
   }
 repository =
   
   ## (lieu de conservation) Contient le nom d'un dépôt dans lequel des manuscrits sont entreposés, et qui peut faire partie d'une institution. [10.4. The Manuscript Identifier]
   element repository {
-    macro.xtext, att.global.attributes, att.naming.attributes, empty
+    macro.phraseSeq.limited,
+    att.global.attributes,
+    att.naming.attributes,
+    empty
   }
 collection =
   
   ## (collection) Contient le nom d'une collection de manuscrits, ceux-ci ne se trouvant pas nécessairement dans le même lieu de conservation. [10.4. The Manuscript Identifier]
   element collection {
-    macro.xtext,
+    macro.phraseSeq.limited,
     att.global.attributes,
     att.naming.attributes,
     att.typed.attributes,
@@ -6699,7 +6770,7 @@ objectDesc =
     
     ## (forme) contient un nom abrégé spécifique au projet, désignant la forme physique du support, par exemple : codex, rouleau, fragment, fragment de feuillet, découpe, etc.
     attribute form {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -6723,7 +6794,7 @@ supportDesc =
       | 
         ##
         "mixed"
-      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -7103,7 +7174,7 @@ att.coordinated.attribute.lry =
   }?
 att.coordinated.attribute.points =
   
-  ## identifies a two dimensional area within the bounding box specified by the other attributes by means of a series of pairs of numbers, each of which gives the x,y coordinates of a point on a line enclosing the area.
+  ## identifies a two dimensional area by means of a series of pairs of numbers, each of which gives the x,y coordinates of a point on a line enclosing the area.
   attribute points {
     list {
       xsd:token {
@@ -7152,7 +7223,7 @@ surface =
     ## describes the method by which this surface is or was connected to the main surface
     ## Sample values include: 1] glued; 2] pinned; 3] sewn
     attribute attachment {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
     ## indicates whether the surface is attached and folded in such a way as to provide two writing surfaces
@@ -7172,13 +7243,14 @@ surfaceGrp =
 zone =
   [
     a:documentation [
-      "définit une zone rectangulaire contenue dans un élément "
+      "définit une surface planaire de tout type par rapport à un élément "
       ns1:code [ "<surface>" ]
       ". [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]"
     ]
   ]
   element zone {
     (text
+     | model.gLike
      | model.graphicLike
      | model.global
      | surface
@@ -7306,7 +7378,7 @@ addSpan =
   element addSpan {
     empty
     >> sch:pattern [
-         id = "test21-addSpan-spanTo-constraint-assert-16"
+         id = "test21-addSpan-spanTo-constraint-assert-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7326,7 +7398,7 @@ addSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-addSpan-spanTo_fr-constraint-assert-17"
+         id = "test21-addSpan-spanTo_fr-constraint-assert-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7394,7 +7466,7 @@ damageSpan =
   element damageSpan {
     empty
     >> sch:pattern [
-         id = "test21-damageSpan-spanTo-constraint-assert-19"
+         id = "test21-damageSpan-spanTo-constraint-assert-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7415,7 +7487,7 @@ damageSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-damageSpan-spanTo_fr-constraint-assert-20"
+         id = "test21-damageSpan-spanTo_fr-constraint-assert-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7444,7 +7516,7 @@ delSpan =
   element delSpan {
     empty
     >> sch:pattern [
-         id = "test21-delSpan-spanTo-constraint-assert-21"
+         id = "test21-delSpan-spanTo-constraint-assert-22"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7464,7 +7536,7 @@ delSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-delSpan-spanTo_fr-constraint-assert-22"
+         id = "test21-delSpan-spanTo_fr-constraint-assert-23"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7504,13 +7576,18 @@ fw =
   element fw {
     macro.phraseSeq,
     att.global.attributes,
+    att.typed.attribute.subtype,
     att.placement.attributes,
     att.written.attributes,
     
     ## caractérise l'information encodée conformément à une typologie appropriée.
-    ## Sample values include: 1] header; 2] footer; 3] pageNum (page number); 4] lineNum (line number); 5] sig (signature); 6] catch (catchword)
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      
+      ## first type
+      "A"
+      | 
+        ## second type
+        "B"
     }?,
     empty
   }
@@ -7605,7 +7682,7 @@ subst =
   element subst {
     ((add | del | model.milestoneLike)+)
     >> sch:pattern [
-         id = "test21-subst-substContents1-constraint-assert-23"
+         id = "test21-subst-substContents1-constraint-assert-24"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7663,7 +7740,7 @@ surplus =
     ## indique les raisons pour lesquelles on considère cette partie de texte comme superflue.
     attribute reason {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
     }?,
     empty
@@ -7680,7 +7757,7 @@ secl =
     ## one or more words indicating why this text has been secluded, e.g. interpolated etc.
     attribute reason {
       list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
     }?,
     empty
@@ -7713,7 +7790,7 @@ metamark =
     
     ## describes the function (for example status, insertion, deletion, transposition) of the metamark.
     attribute function {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
     ## identifies one or more elements to which the metamark applies.
@@ -7790,7 +7867,8 @@ TEI =
     ]
   ]
   element TEI {
-    (teiHeader, model.resourceLike+)
+    (teiHeader,
+     ((model.resource+, TEI*) | TEI+))
     >> sch:ns [ prefix = "tei" uri = "http://www.tei-c.org/ns/1.0" ]
     >> sch:ns [ prefix = "xs" uri = "http://www.w3.org/2001/XMLSchema" ]
     >> sch:ns [
@@ -8144,10 +8222,16 @@ titlePage =
      model.titlepagePart,
      (model.titlepagePart | model.global)*),
     att.global.attributes,
+    att.typed.attribute.subtype,
     
     ## classe la page de titre selon la typologie appropriée.
     attribute type {
-      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      
+      ## first type
+      "A"
+      | 
+        ## second type
+        "B"
     }?,
     empty
   }
@@ -8166,6 +8250,7 @@ titlePart =
   element titlePart {
     macro.paraContent,
     att.global.attributes,
+    att.typed.attribute.subtype,
     
     ## précise le rôle de cette subdivision du titre.
     ## Suggested values include: 1] main; 2] sub (subordinate); 3] alt (alternate); 4] short; 5] desc (descriptive)
@@ -8188,7 +8273,7 @@ titlePart =
         ## (description paraphrastique de
         ##                             l’ouvrage.) texte qui paraphrase l'oeuvre.
         "desc"
-      | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }

@@ -85,11 +85,11 @@ The element indicated by @spanTo (<value-of select="@spanTo"/>) must follow the 
    </pattern>
    <pattern id="schematron-constraint-test-desc-deprecationInfo-only-in-deprecated-12">
       <rule context="tei:desc[ @type eq 'deprecationInfo']">
-	        <assert test="../@validUntil">Information about a
-	deprecation should only be present in a specification element
-	that is being deprecated: that is, only an element that has a
-	@validUntil attribute should have a child &lt;desc
-	type="deprecationInfo"&gt;.</assert>
+        <assert test="../@validUntil">Information about a
+        deprecation should only be present in a specification element
+        that is being deprecated: that is, only an element that has a
+        @validUntil attribute should have a child &lt;desc
+        type="deprecationInfo"&gt;.</assert>
       </rule>
     </pattern>
    <pattern id="schematron-constraint-test-ptr-ptrAtts-13">
@@ -224,6 +224,14 @@ The @spanTo attribute of <name/> is required.</assert>
       <rule context="tei:join">
          <assert test="contains(@target,' ')">
 You must supply at least two values for @target on <name/>
+         </assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-standOff-nested_standOff_should_be_typed-37">
+      <rule context="tei:standOff">
+         <assert test="@type or not(ancestor::tei:standOff)">This
+      <name/> element must have a @type attribute, since it is
+      nested inside a <name/>
          </assert>
       </rule>
    </pattern>

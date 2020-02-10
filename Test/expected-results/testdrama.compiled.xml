@@ -1318,6 +1318,7 @@ associated with a dated element, at the time indicated.</desc>
       <gloss versionDate="2008-04-06" xml:lang="es">certeza</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">certitude</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">certezza</gloss>
+      <gloss versionDate="2019-09-16" xml:lang="ja">確実性</gloss>
       <desc versionDate="2009-11-02" xml:lang="en">signifies the degree of certainty associated with the intervention or interpretation.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">간섭 또는 해석과 연관된 확실성의 정도를 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">表示該更動或詮釋的相關正確度。</desc>
@@ -1328,6 +1329,7 @@ associated with a dated element, at the time indicated.</desc>
         intervención o la interpretación.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">corrisponde al grado di certezza associato
         all'intervento o interpretazione</desc>
+      <desc xml:lang="ja" versionDate="2019-09-16">介入や解釈に関する確信度を示す。 </desc>
       <datatype>
         <dataRef key="teidata.probCert"/>
       </datatype>
@@ -1338,11 +1340,12 @@ associated with a dated element, at the time indicated.</desc>
       <gloss versionDate="2008-04-06" xml:lang="es">parte responsable</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">responsable</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">responsabile</gloss>
+      <gloss versionDate="2019-09-16" xml:lang="ja">責任者</gloss>
       <desc versionDate="2009-11-02" xml:lang="en">indicates the agency responsible for the intervention or interpretation, for example an
         editor or transcriber.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">편집자 또는 전사자와 같이 또는 해석에 대한 책임이 있는 대리인을 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出負責該更動或詮釋的代理者，例如編輯或轉錄者。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該解釈や調整の責任者を示す．例えば，編集者，翻訳者など．</desc>
+      <desc versionDate="2019-09-16" xml:lang="ja">介入や解釈の責任者を示す．例えば，編集者，翻刻者など。</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">indique l'agent responsable de l'intervention ou de
         l'interprétation, par exemple un éditeur ou un transcripteur.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el agente responsable de la intervención o la
@@ -1360,6 +1363,7 @@ associated with a dated element, at the time indicated.</desc>
           Pointing to multiple <gi>respStmt</gi>s allows the encoder to specify 
           clearly each of the roles played in part of a TEI file (creating, 
           transcribing, encoding, editing, proofing etc.).</p></remarks>
+      <remarks versionDate="2019-09-16" xml:lang="ja"><p><att>resp</att> が直接個人や組織を指した場合のあいまいさを減らすため，<att>resp</att> は行為者 (<gi>person</gi> or <gi>org</gi>) ではなく <gi>respStmt</gi>, <gi>author</gi>, <gi>editor</gi> などその行為者の正確な役割を明示するエレメントを指して用いることを推奨する．エンコード者は <gi>respStmt</gi> にTEI文書内の役割分担を明確に記述できる（作成・翻刻・エンコード・編集・校正など）。</p></remarks>
   </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -1464,13 +1468,13 @@ associated with a dated element, at the time indicated.</desc>
       <defaultVal>false</defaultVal>
     </attDef>
   </attList>
-  <remarks versionDate="2006-01-05" xml:lang="en">
+  <remarks versionDate="2019-09-15" xml:lang="en">
     <p>The members of this attribute class are typically used to represent any kind of editorial
       intervention in a text, for example a correction or interpretation, or to date or localize
       manuscripts etc.</p>
+    <p>Each pointer on the <att>source</att> (if present)
+      corresponding to a witness or witness group should reference a bibliographic citation such as a <gi>witness</gi>, <gi>msDesc</gi>, or <gi>bibl</gi> element, or another external bibliographic citation, documenting the source concerned.</p>
   </remarks>
-  <remarks xml:lang="en" versionDate="2014-09-09"><p>Each pointer on the <att>source</att> (if present)
-    corresponding to a witness or witness group should reference a bibliographic citation such as a <gi>witness</gi>, <gi>msDesc</gi>, or <gi>bibl</gi> element, or another external bibliographic citation, documenting the source concerned.</p></remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Les membres de cette classe d'attributs sont couramment employés pour représenter tout type
       d'intervention éditoriale dans un texte, par exemple une correction ou une interprétation, ou
@@ -1490,7 +1494,7 @@ associated with a dated element, at the time indicated.</desc>
   </listRef>
 </classSpec><classSpec predeclare="true" module="tei" type="atts" ident="att.global.rendition">
   <desc versionDate="2014-12-02" xml:lang="en">provides rendering attributes common to all elements in the TEI encoding scheme.</desc>
-  
+  <desc versionDate="2019-07-21" xml:lang="ja">TEIの符号化スキーマにおけるすべての要素に共通するレンダリング属性を提供する。</desc>
   <classes/>
     
   
@@ -1504,6 +1508,7 @@ associated with a dated element, at the time indicated.</desc>
       <gloss versionDate="2008-04-06" xml:lang="es">interpretación</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">interprétation</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">resa</gloss>
+      <gloss versionDate="2019-07-21" xml:lang="ja">見た目の表示</gloss>
       <desc versionDate="2005-10-10" xml:lang="en">indicates how the element in question was rendered or presented in the source text.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">문제의 요소가 원본 텍스트에 제시된 방법을 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該元素如何呈現於來源文件中</desc>
@@ -1551,10 +1556,7 @@ associated with a dated element, at the time indicated.</desc>
           varía demasiado de proyecto a proyecto. Observar algunas convenciones que puedan resultar
           útiles en los puntos indicados en las guías de consulta.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 本ガイドラインでは，当該属性<att>rend</att>の値として推奨するも のはない．活字表現の特徴は様々であり，それらのどれを採用するかは
-          プロジェクトごとで異なるからである．当ガイドラインでは，有用な記 述法があれば，その都度示すことになっている． </p>
-      </remarks>
+      <remarks versionDate="2019-07-21" xml:lang="ja"><p>本ガイドラインでは、当該属性<att>rend</att>の値として推奨するものはない。活字化の特徴は様々であり、それらのどれを採用するかはプロジェクトごとでおそろしく異なるからである。当ガイドラインでは、有用な記述法があれば、その都度示すことになっている。<att>rend</att>属性の値は、空白によって区切られる順序不定の個々のトークンの集合である。</p></remarks>
     </attDef>
     <attDef ident="style" usage="opt">
       <desc versionDate="2012-10-05" xml:lang="en">contains an expression in some formal style definition language
@@ -1577,6 +1579,10 @@ the TEI header.</p>
           not be used in conjunction with <att>rend</att>, because the latter does not employ a
           formal style definition language.</p>
       </remarks>
+      <remarks versionDate="2019-07-21" xml:lang="ja">
+        <p>空白を区切り記号とする<att>rend</att>の属性値とは異なり、<att>style</att>属性は空白を含んでもよい。この属性は資料における行に埋め込まれたスタイル情報を記録するためのものであり、何らかの出力を対象とするものではない。</p>
+        <p>この属性の値を表現する形式言語はTEIヘッダにおいて<gi>styleDefDecl</gi>要素を用いて指定されてもよい。</p>
+        <p>もし<att>style</att>と<att>rendition</att>の両方が一つの要素に現れる場合、<att>style</att>は<att>rendition</att>を上書きもしくは補完する。<att>style</att>は<att>rend</att>と同時に用いられるべきではない。後者は形式的なスタイル定義言語を採用しているわけではないから。</p></remarks>
     </attDef>
     <attDef ident="rendition" usage="opt">
       <desc versionDate="2007-09-22" xml:lang="en">points to a description of the rendering or presentation used for this element in the
@@ -1621,6 +1627,10 @@ the TEI header.</p>
           rendition in terms of some appropriate style language, as indicated by the
           <att>scheme</att> attribute.</p>
       </remarks>
+      <remarks versionDate="2019-07-21" xml:lang="ja">
+        <p>属性<att>rendition</att>は，XHTMLの属性<att>class</att>と大変 似たように使用される。但し，重要な違いとして、当該属性は、元資 料の表現を記述するものであり、スクリーン上または紙上でどう表示 されているかを示すものではない。</p>
+        <p> もし<att>rendition</att>属性がCSSのような形式言語において定義されるスタイル定義を参照するのに用いられているなら、<att>rend</att>属性と同時に用いないことが推奨される。属性<att>rendition</att>と属性<att>rend</att>の両方が使用されている場合、後者の値が前者の値を上書きする、または補うと判断される。</p>
+        <p> 当該属性値となるURIは、属性<att>scheme</att>で提示されているス タイル言語により、当該表現を定義する要素<gi>rendition</gi>を示すべきである。</p></remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>L'attribut <att>rendition</att> est employé à peu près de la même manière que l'attribut
             <att>class</att> défini pour XHTML mais avec cette sérieuse différence que sa fonction
@@ -1643,13 +1653,6 @@ the TEI header.</p>
           interpretación prevista en términos de cualquier lenguaje apropiado del estilo, según lo
           indicado por el atributo <att>scheme</att> (esquema).</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 属性<att>rendition</att>は，XHTMLの属性<att>class</att>と大変 似たように使用される．但し，重要な違いとして，当該属性は，元資
-          料の表現を記述するものであり，スクリーン上または紙上でどう表示 されているかを示すものではない． </p>
-        <p> 属性<att>rendition</att>と属性<att>rend</att>の両方が使用され ている場合，後者の値が前者の値を上書きする，または補うと判断さ れる． </p>
-        <p> 当該属性値となるURIは，属性<att>scheme</att>で提示されているス タイル言語により，当該表現を定義する要素<gi>rendition</gi>を示
-          すべきである． </p>
-      </remarks>
     </attDef>
     
     
@@ -1660,10 +1663,12 @@ the TEI header.</p>
 </classSpec><classSpec predeclare="true" xml:id="GBLSRC" module="tei" type="atts" ident="att.global.source">
   <desc versionDate="2016-02-15" xml:lang="en">provides an attribute used by elements to point to an
     external source.</desc>
+  <desc versionDate="2019-09-18" xml:lang="ja">外部ソースを参照する要素によって用いられる属性を示す。</desc>
   <attList>
     <attDef ident="source" usage="opt">
       <desc versionDate="2010-05-09" xml:lang="en">specifies the source from which some aspect of
         this element is drawn.</desc>
+      <desc versionDate="2019-09-18" xml:lang="ja">この要素の何らかの側面を示すソースを指定する。</desc>
       <datatype maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
@@ -1851,12 +1856,12 @@ the TEI header.</p>
 	  ancestral territorial organization.</p>
         </egXML>
       </exemplum>
-      <remarks versionDate="2013-12-06" xml:lang="en">
-        <p>The xml:lang value will be inherited from the immediately
+      <remarks versionDate="2019-11-14" xml:lang="en">
+        <p>The <att>xml:lang</att> value will be inherited from the immediately
 enclosing element, or from its parent, and so on up the document hierarchy.
-It is generally good practice to specify xml:lang at the highest
+It is generally good practice to specify <att>xml:lang</att> at the highest
 appropriate level, noticing that a different default may be needed for the
-teiHeader from that needed for the associated resource element or elements,
+<gi>teiHeader</gi> from that needed for the associated resource element or elements,
 and that a single TEI document may contain texts in many languages.</p>
         <p>The authoritative list of registered language subtags is maintained by IANA and 
           is available at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. 
@@ -1991,9 +1996,8 @@ de la main par laquelle un manuscrit est écrit.</desc>
       <desc versionDate="2010-09-28" xml:lang="en">gives a name or other identifier for the scribe
 believed to be responsible for this hand.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이 필적에 대한 책임이 있다고 간주되는 필기사에 대한 표준명 또는 다른 확인소를 제시한다.</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">
-      当該筆致に対応すると十分に信じられる筆写者の一般的な名前または識
-      別子を示す．
+      <desc versionDate="2019-09-16" xml:lang="ja">
+        当該筆致に対応すると考えられる筆写者の名前またはその他の識別子を示す。
 </desc>
       <desc versionDate="2009-05-27" xml:lang="fr">donne un nom normalisé ou un autre
 identifiant pour le scribe reconnu comme responsable de cette main.</desc>
@@ -2005,6 +2009,7 @@ identifiant pour le scribe reconnu comme responsable de cette main.</desc>
     <attDef ident="scribeRef">
       <desc versionDate="2010-09-28" xml:lang="en">points to a full description of the scribe concerned, typically supplied by a <gi>person</gi> element
       elsewhere in the description.</desc>
+      <desc versionDate="2019-09-16" xml:lang="ja">問題の筆写者についての詳細な記述へポイントする。典型的には記述のどこかで<gi>person</gi>要素によって補われる。</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="script">
@@ -2031,6 +2036,7 @@ this hand, for example <mentioned>secretary</mentioned>, <mentioned>copperplate<
       <desc versionDate="2010-09-28" xml:lang="en">points to a full description of the script or writing style used by
 this hand, typically supplied by a <gi>scriptNote</gi> element
       elsewhere in the description.</desc>
+      <desc versionDate="2019-09-16" xml:lang="ja">問題の筆体や書記スタイルについての詳細な記述へポイントする。典型的には記述のどこかで<gi>scriptNote</gi>要素によって補われる。</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="medium">
@@ -2101,6 +2107,9 @@ occasionnellement dans le manuscrit.</desc>
     <p>Usually either <att>script</att> or <att>scriptRef</att>,
 and similarly, either <att>scribe</att> or
 <att>scribeRef</att>, will be supplied. </p>
+  </remarks>
+  <remarks versionDate="2019-09-16" xml:lang="ja">
+    <p>通常は <att>script</att> または <att>scriptRef</att> そして同様に、 <att>scribe</att> あるいは <att>scribeRef</att> が用いられるだろう。</p>
   </remarks>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHDH">11.3.2.1. Document Hands</ref>
@@ -2325,7 +2334,7 @@ ressource informatique selon une taxinomie normalisée.</desc>
         
         
         
-        <valItem ident="Ω">
+        <valItem ident="Ω">
           <gloss versionDate="2005-11-18" xml:lang="en">ohm</gloss>
           <gloss versionDate="2007-12-20" xml:lang="ko">옴</gloss>
           <gloss versionDate="2007-05-02" xml:lang="zh-TW">歐姆</gloss>
@@ -2395,7 +2404,7 @@ ressource informatique selon une taxinomie normalisée.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">1 hm²</desc>
         </valItem>
         
-        <valItem ident="Å">
+        <valItem ident="Å">
           <gloss versionDate="2005-11-18" xml:lang="en">ångström</gloss>
           <gloss versionDate="2007-12-20" xml:lang="ko">옹스트롱</gloss>
           <gloss versionDate="2007-05-02" xml:lang="zh-TW">埃格斯特朗 (單位)</gloss>
@@ -2609,20 +2618,24 @@ a gallon</measure>, baby?</l></egXML>
          
          
       </p>
+    
+    <p>The unit should normally be named using the standard
+      abbreviation for an SI unit (see further <ptr target="http://www.bipm.org/en/publications/si-brochure/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). However, encoders
+      may also specify measurements using informally defined units such
+      as <val>lines</val> or <val>characters</val>.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p> Cette classe d'attributs fournit un ensemble de trois attributs qui peuvent être
                 employés soit pour régulariser les valeurs de la mesure encodée, soit pour les
                 normaliser en conformité avec un système de mesure normalisé.</p>
+    <p>L'unité doit normalement être nommée avec une abréviation normalisée issue d'une unité SI (voir plus loin <ptr target="http://www.bipm.org/en/publications/si-brochure/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). 
+      Cependant  les encodeurs peuvent aussi spécifier des mesures avec des unités définies de manière informelle, telles que <val>lines</val> ou <val>characters</val>.</p>
   </remarks>
   <remarks xml:lang="es" versionDate="2008-04-06">
-    <p>Esta clase de atributo proporciona un trío de atributos que se pueden utilizar para regularizar los valores de medida que se codifican, o normalizarlos en un sistema de medida estándar.  
-
+    <p>Esta clase de atributo proporciona un trío de atributos que se pueden utilizar para regularizar los valores de medida que se codifican, o normalizarlos en un sistema de medida estándar.
     </p>
-  </remarks>
-  <remarks xml:lang="es" versionDate="2008-04-06">
     <p>La unidad  debe ser nombrada normalmente usando la abreviatura estándar para una unidad SI (véase <ptr target="http://www.bipm.org/en/publications/si-brochure/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). 
-    Sin embargo, los codificadores pueden también especificar las medidas usando unidades definidas informalmente, por ejemplo como <val>líneas</val> o <val>caracteres</val>.</p>
+      Sin embargo, los codificadores pueden también especificar las medidas usando unidades definidas informalmente, por ejemplo como <val>líneas</val> o <val>caracteres</val>.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p>
@@ -2638,25 +2651,13 @@ baby?</l></egXML>
          
          
       </p>
-  </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
     <p>
-    当該単位は，一般には，国際単位系の標準的な略式表記で示されるべきで
-    ある．(詳細は，<ptr target="http://www.bipm.org/en/publications/si-brochure/"/>, 
-    <ptr target="http://physics.nist.gov/cuu/Units/"/>を参照のこと．)
-    けれども，符号化する人は，非公式な計測単位，例えば，
-    <val>lines</val>や<val>characters</val>も使用してもよい．
-</p>
-  </remarks>
-  <remarks versionDate="2005-11-20" xml:lang="en">
-    <p>The unit should normally be named using the standard
-      abbreviation for an SI unit (see further <ptr target="http://www.bipm.org/en/publications/si-brochure/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). However, encoders
-    may also specify measurements using informally defined units such
-    as <val>lines</val> or <val>characters</val>.</p>
-  </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p>L'unité doit normalement être nommée avec une abréviation normalisée issue d'une unité SI (voir plus loin <ptr target="http://www.bipm.org/en/publications/si-brochure/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). 
-    Cependant  les encodeurs peuvent aussi spécifier des mesures avec des unités définies de manière informelle, telles que <val>lines</val> ou <val>characters</val>.</p>
+      当該単位は，一般には，国際単位系の標準的な略式表記で示されるべきで
+      ある．(詳細は，<ptr target="http://www.bipm.org/en/publications/si-brochure/"/>, 
+      <ptr target="http://physics.nist.gov/cuu/Units/"/>を参照のこと．)
+      けれども，符号化する人は，非公式な計測単位，例えば，
+      <val>lines</val>や<val>characters</val>も使用してもよい．
+    </p>
   </remarks>
 </classSpec><classSpec module="tei" xml:id="NAMES" type="atts" ident="att.naming">
   <desc versionDate="2006-01-05" xml:lang="en">provides attributes common to elements which refer to named persons, places, organizations etc.</desc>
@@ -2873,6 +2874,7 @@ this name in the form of a set of whitespace-separated values, for example the o
   </constraintSpec>
   <attList>
     <attDef ident="type" usage="opt">
+      
       <desc versionDate="2005-10-10" xml:lang="en">characterizes the element in some sense, using any convenient
  classification scheme or typology.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">다양한 분류 스키마 또는 유형을 사용해서 요소의 특성을 기술한다.</desc>
@@ -2941,7 +2943,7 @@ sub-classification for the element additional to that provided by its
     used. Alternatively a typology may be defined in the associated
     TEI header. If values are to be taken from a project-specific
     list, this should be defined using the <gi>valList</gi> element in
-    the project-specific schema description, as described in <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/USE.html#MDMDAL">23.3.1.4. Modification of Attribute and Attribute Value Lists</ref> .</p>
+    the project-specific schema description, as described in <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/USE.html#MDMDAL">23.3.1.3. Modification of Attribute and Attribute Value Lists</ref> .</p>
   </remarks>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STECAT">1.3.1. Attribute Classes</ref>
@@ -2962,7 +2964,7 @@ sub-classification for the element additional to that provided by its
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TC.html#TCAPLK">12.2. Linking the Apparatus to the Text</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TD.html#TDTAGCONT">22.5.1.2. Defining Content Models: RELAX NG</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TS.html#TSBA">8.3. Elements Unique to Spoken Texts</ref>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/USE.html#MDMDAL">23.3.1.4. Modification of Attribute and Attribute Value Lists</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/USE.html#MDMDAL">23.3.1.3. Modification of Attribute and Attribute Value Lists</ref>
   </listRef>
 </classSpec><classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" ident="att.pointing">
   <desc versionDate="2016-01-15" xml:lang="en">provides a set of attributes used by all elements which point
@@ -4246,6 +4248,7 @@ in transcribing and in authoring.</desc>
     un documento</desc>
   <classes>
     <memberOf key="model.global"/>
+    <memberOf key="model.standOffPart"/>
   </classes>
   <remarks versionDate="2007-10-03" xml:lang="en">
     <p>Elements in this class are typically used to hold groups of links or of abstract
@@ -4372,6 +4375,7 @@ Elements</ref>
     <memberOf key="model.inter"/>
     
     
+    <memberOf key="model.standOffPart"/>
   </classes>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBI">3.11. Bibliographic Citations and References</ref>
@@ -4408,6 +4412,7 @@ expliquer d'autres parties d'un document.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">agrupa todos los elementos del tipo de lista.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">raggruppa tutti gli elementi del tipo lista</desc>
   <classes>
+    <memberOf key="model.standOffPart"/>
     <memberOf key="model.inter"/>
     
   </classes>
@@ -5209,7 +5214,7 @@ fin d'une division de texte.</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">TEIヘダー内で高々1回出現する，上位レベルの要素をまとめる．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">regroupe des éléments de macrostructure qui peuvent
     apparaître plus d'une fois dans l’en-tête TEI.</desc>
-  <desc versionDate="2006-10-18" xml:lang="de">umfasst Elemente, die innerhalb von TEI Header benutzt
+  <desc versionDate="2020-02-07" xml:lang="de">umfasst Elemente, die innerhalb des TEI-Headers benutzt
     werden dürfen und mehrmals auftreten können.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos que pueden usarse al interno del
       <gi>teiHeader</gi> y aparecen en diversas ocasiones.</desc>
@@ -5268,6 +5273,8 @@ and appear multiple times.</desc>
   können.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">agrupa los elementos que pueden ser usados al interno de <gi>profileDesc</gi> y que aparecen en diversas ocasiones.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">raggruppa gli elementi utilizzati all'interno di <gi>profileDesc</gi> e che appaiono più volte.</desc>
+</classSpec><classSpec module="tei" type="model" ident="model.standOffPart">
+  <desc versionDate="2019-12-25" xml:lang="en">groups elements which may be used as children of <gi>standOff</gi>.</desc>
 </classSpec><macroSpec module="tei" ident="macro.paraContent">
   <gloss versionDate="2005-01-14" xml:lang="en">paragraph content</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">문단 내용</gloss>
@@ -6338,7 +6345,7 @@ which contain an XPath expression.</desc>
   <desc xmlns:tei="http://www.tei-c.org/ns/1.0" versionDate="2007-05-04" xml:lang="es">define una gama de valores de atributos expresados como una única palabra o señal.</desc>
   <desc xmlns:tei="http://www.tei-c.org/ns/1.0" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi espressi come singola parola o singolo token</desc>
   <content xmlns:tei="http://www.tei-c.org/ns/1.0">
-      <dataRef name="token" restriction="(\p{L}|\p{N}|\p{P}|\p{S})+"/>
+      <dataRef name="token" restriction="[^\p{C}\p{Z}]+"/>
    </content>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" versionDate="2005-10-18" xml:lang="en">
       <p>Attributes using this datatype must contain a single
@@ -6363,7 +6370,7 @@ which contain an XPath expression.</desc>
 </dataSpec><dataSpec module="tei" ident="teidata.text">
   <desc xmlns:tei="http://www.tei-c.org/ns/1.0" versionDate="2012-06-17" xml:lang="en">defines the range of attribute values used to express some
   kind of identifying string as a single sequence
-  of unicode characters possibly including whitespace.</desc>
+  of Unicode characters possibly including whitespace.</desc>
   <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xml:lang="fr" versionDate="2007-06-12">définit la gamme des valeurs d'attributs 
       exprimant une chaine de caracteres Unicode, y compris des
   espaces blancs.</desc>
@@ -6538,7 +6545,7 @@ which contain an XPath expression.</desc>
 </classSpec><classSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="model" ident="model.correspDescPart">
     <desc versionDate="2014-01-13" xml:lang="en">groups together metadata
         elements for describing correspondence</desc>
-</classSpec><classSpec module="tei" type="model" ident="model.resourceLike" predeclare="true">
+</classSpec><classSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="model" ident="model.resource" predeclare="true">
   <desc versionDate="2016-02-19" xml:lang="en">groups separate elements
     which constitute the content of a digital resource, as opposed to its
     metadata.</desc>
@@ -6549,6 +6556,14 @@ which contain an XPath expression.</desc>
   <desc versionDate="2009-10-06" xml:lang="fr">regroupe des éléments non-textuels qui, avec un
 en-tête et un texte, constitue un document TEI.</desc>
   <desc versionDate="2007-11-06" xml:lang="it">raggruppa elementi non testuali che possono costituire un documento TEI insieme a un'intestazione e a un testo</desc>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STEC">1.3. The TEI Class System</ref>
+  </listRef>
+</classSpec><classSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="model" ident="model.describedResource" predeclare="true">
+  <desc versionDate="2019-12-10" xml:lang="en">groups elements which
+  contain the content of a digital resource and its metadata; these
+  elements may serve as the outermost or <soCalled>root</soCalled>
+  element of a TEI-conformant document</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STEC">1.3. The TEI Class System</ref>
   </listRef>
@@ -6879,6 +6894,10 @@ one initial.</desc>
           is encountered.</p>
         <p>In addition to the values suggested, other terms may be appropriate (e.g.
           <term>Stephanus</term> for the Stephanus numbers in Plato).</p>
+        
+        <p>The <att>type</att> attribute may be used to characterize the unit boundary in any
+          respect other than simply identifying the type of unit, for example as word-breaking or
+          not. </p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>Si l'élément <gi>milestone</gi> marque le début d'un fragment de texte qui n'est pas
@@ -6889,19 +6908,14 @@ one initial.</desc>
         <p>En plus des valeurs proposées pour cet attribut, d'autres termes peuvent être appropriés
           (par ex. <term>Stephanus</term> pour les numéros dits de Henri Estienne dans les éditions
           de Platon).</p>
+        <p>L'attribut <att>type</att> sera utilisé pour caractériser l’unité de bornage sans autre
+          précaution d’emploi que celle de l'identification du type d'unité, par exemple s’il s’agit
+          d’un mot coupé ou pas.</p>
       </remarks>
       <remarks xml:lang="ja" versionDate="2008-04-05">
         <p> 標石要素が参照版中にはないテキスト部分の始点を示す場合、属性 <att>unit</att>には，特別な値<term>absent</term>が付与されるか
           もしれない。一般的な解釈では，等が版に対応する次の要素 <gi>milestone</gi>が出現するまで、当該参照版はテキストを含まな い。 </p>
         <p> ここに挙げた属性値以外にも適切なものはあるだろう(例えば、プラ トンの作品を表すステファヌス番号を示す値<term>Stephanus</term> など。 </p>
-        <p>The <att>type</att> attribute may be used to characterize the unit boundary in any
-          respect other than simply identifying the type of unit, for example as word-breaking or
-          not. </p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>L'attribut <att>type</att> sera utilisé pour caractériser l’unité de bornage sans autre
-          précaution d’emploi que celle de l'identification du type d'unité, par exemple s’il s’agit
-          d’un mot coupé ou pas.</p>
       </remarks>
     </attDef>
   </attList>
@@ -7129,7 +7143,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <p> Tu sais quoi ? On l'aurait proposé pour<emph>la médaille</emph> ! </p>
+      <p> Tu sais quoi ? On l'aurait proposé pour <emph>la médaille</emph> ! </p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
@@ -7218,12 +7232,13 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.emphLike"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
+    <attDef ident="type" usage="opt" mode="change">
       <desc versionDate="2005-01-14" xml:lang="en">specifies the sublanguage or register to which the word or phrase is being
                 assigned</desc>
       <desc versionDate="2007-12-20" xml:lang="ko"> 단어나 구가 속하는 하위언어 또는 레지스터를 명시한다.</desc>
@@ -7387,8 +7402,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
             <quotation marks="none"/>
           </editorialDecl>
           <!-- ... -->
-          <p>
-            Tantripp had brought a card, and said that there was a gentleman waiting in the lobby. 
+          <p>Tantripp had brought a card, and said that <said direct="false">there was a gentleman waiting in the lobby</said>. 
             The courier had told him that <said direct="false">only Mrs. Casaubon was at home</said>, 
             but he said <said direct="false">he was a relation of Mr. Casaubon's: would she see him?</said> 
                </p>
@@ -8018,43 +8032,38 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
     <gi>desc</gi> is a valid child of that element.</desc>
     <constraint>
       <sch:rule context="tei:desc[ @type eq 'deprecationInfo']">
-	<sch:assert test="../@validUntil">Information about a
-	deprecation should only be present in a specification element
-	that is being deprecated: that is, only an element that has a
-	@validUntil attribute should have a child &lt;desc
-	type="deprecationInfo"&gt;.</sch:assert>
+        <sch:assert test="../@validUntil">Information about a
+        deprecation should only be present in a specification element
+        that is being deprecated: that is, only an element that has a
+        @validUntil attribute should have a child &lt;desc
+        type="deprecationInfo"&gt;.</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
     <attDef ident="type" mode="change">
       <valList type="semi">
-	<valItem ident="deprecationInfo">
-	  <gloss versionDate="2018-09-14" xml:lang="en">deprecation
-	  information</gloss>
-	  <desc versionDate="2018-09-14" xml:lang="en">This element
-	  describes why or how its parent element is being deprecated,
-	  typically including recommendations for alternate
-	  encoding.</desc>
-	</valItem>
+        <valItem ident="deprecationInfo">
+          <gloss versionDate="2018-09-14" xml:lang="en">deprecation
+          information</gloss>
+          <desc versionDate="2018-09-14" xml:lang="en">This element
+          describes why or how its parent element is being deprecated,
+          typically including recommendations for alternate
+          encoding.</desc>
+        </valItem>
       </valList>
       <exemplum xml:lang="en">
-	<egXML xmlns="http://www.tei-c.org/ns/Examples">
-	  <elementSpec module="core" ident="teiCorpus" validUntil="2027-10-20">
-	    <desc versionDate="2017-02-07" xml:lang="en">contains the
-	    whole of a TEI encoded corpus, comprising a single corpus
-	    header and one or more <gi>TEI</gi> elements, each
-	    containing a single text header and a text.</desc>
-	    <desc type="deprecationInfo" xml:lang="en">The
-	    <gi>TEI</gi> element is now permitted to nest directly
-	    within a <gi>TEI</gi> element. Thus the recommended
-	    encoding of a corpus is to use <gi>TEI</gi> with a
-	    <att>type</att> of <val>corpus</val> as the outermost
-	    element of a set of TEI documents that are to be treated
-	    as a single corpus.</desc>
-	    <!-- ... -->
-	  </elementSpec>
-	</egXML>
+        
+        
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+           <dataSpec module="tei" ident="teidata.point" validUntil="2050-02-25">
+            <desc type="deprecationInfo" versionDate="2018-09-14" xml:lang="en">Several standards bodies, including NIST in the USA,
+            strongly recommend against ending the representation of a number
+            with a decimal point. So instead of <q>3.</q> use either <q>3</q>
+            or <q>3.0</q>.</desc>
+            <!-- ... -->
+         </dataSpec>
+        </egXML>
       </exemplum>
     </attDef>
   </attList>
@@ -10090,6 +10099,7 @@ TOURS</addrLine>
   <desc versionDate="2016-11-25" xml:lang="de">beinhaltet eine Zahl, die auf beliebige Art geschrieben sein kann.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.measureLike"/>
     <memberOf key="att.ranging"/>
   </classes>
@@ -10097,7 +10107,7 @@ TOURS</addrLine>
     <macroRef key="macro.phraseSeq"/>
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
+    <attDef ident="type" mode="change" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">indicates the type of numeric value.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">수치의 유형을 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出數值的種類。</desc>
@@ -10107,7 +10117,7 @@ TOURS</addrLine>
       <desc versionDate="2007-01-21" xml:lang="it">indica il tipo di valore numerico</desc>
       <desc versionDate="2016-11-25" xml:lang="de">bestimmt die Art des numerischen Wertes.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="semi">
+      <valList type="semi" mode="add">
         <valItem ident="cardinal">
           <desc versionDate="2007-06-27" xml:lang="en">absolute number, e.g. 21, 21.5</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">예를 들어, 21, 21.5와 같은 절대값</desc>
@@ -10259,6 +10269,7 @@ Measures</ref>
         quantità di un oggetto o bene, contenente di solito il numero, l'unità e il nome del bene.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.measureLike"/>
     <memberOf key="att.measurement"/>
   </classes>
@@ -10266,7 +10277,7 @@ Measures</ref>
     <macroRef key="macro.phraseSeq"/>
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
+    <attDef ident="type" mode="change" usage="opt">
       <desc versionDate="2005-11-18" xml:lang="en">specifies the type of measurement in any convenient typology.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">편리한 방식으로 측정 유형을 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">用任何適合的分類方法來說明度量的種類。</desc>
@@ -10281,7 +10292,7 @@ Measures</ref>
     </attDef>
   </attList>
   <exemplum versionDate="2019-07-09" xml:lang="en">
-    <p>This example references a definition of a measurement unit declared in the TEI Header: </p>
+    <p>This example references a definition of a measurement unit declared in the TEI header: </p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
       <measure type="weight"><num>2</num> pounds of flesh</measure>
       <measure type="currency">£10-11-6d</measure>
@@ -10440,7 +10451,7 @@ Measures</ref>
      <macroRef key="macro.phraseSeq"/>
   </content>
   <exemplum xml:lang="en" versionDate="2019-07-10">
-    <p>Here is an example of a <gi>unit</gi> element holding a <att>unitRef</att> attribute that points to a definition of the unit in the TEI Header.</p>
+    <p>Here is an example of a <gi>unit</gi> element holding a <att>unitRef</att> attribute that points to a definition of the unit in the TEI header.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <measure><num>3</num> <unit unitRef="#ell">ells</unit></measure>
 
@@ -10961,11 +10972,15 @@ Measures</ref>
       </choice> 
     </egXML>
   </exemplum>
-  <remarks versionDate="2016-08-12" xml:lang="en">
+  <remarks versionDate="2017-11-17" xml:lang="en">
       <p>The content of this element should be the expanded
       abbreviation, usually (but not always) a complete word or
       phrase. The <gi>ex</gi> element provided by the <ident type="module">transcr</ident> module may be used to mark up
       sequences of letters supplied within such an expansion.</p>
+    
+    <p>If abbreviations are expanded silently, this practice should be
+      documented in the <gi>editorialDecl</gi>, either with a
+      <gi>normalization</gi> element or a <gi>p</gi>.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>En général, le contenu de cet élément doit être une expression ou un mot complet. L'élément
@@ -10976,17 +10991,10 @@ Measures</ref>
     <p> 当該要素の内容は，完全な語句であるべきである． <ident type="module">転記モジュール</ident>にある要素<gi>ex</gi>
       を使い，省略形の元の形を文字列として示すことができる． </p>
   </remarks>
-  <remarks xml:lang="de" versionDate="2016-11-25">
+  <remarks xml:lang="de" versionDate="2017-11-18">
       <p>Der Inhalt dieses Elements sollte die aufgelöste Abkürzung sein, üblicherweise ein vollständiges Wort oder eine Phrase. 
           Das <gi>ex</gi>-Element aus dem Modul <ident type="module">transcr</ident> 
           kann verwendet werden, um einzelne Buchstaben innerhalb der Auflösung auszuzeichnen.  </p>
-  </remarks>
-  <remarks xml:lang="en" versionDate="2017-11-17">
-    <p>If abbreviations are expanded silently, this practice should be
-    documented in the <gi>editorialDecl</gi>, either with a
-    <gi>normalization</gi> element or a <gi>p</gi>.</p>
-  </remarks>
-  <remarks xml:lang="de" versionDate="2017-11-18"> 
     <p>Werden Abkürzungen stillschweigend aufgelöst, 
       sollte diese Vorgehensweise im TEI-Header über das <gi>editorialDecl</gi>-Element dokumentiert werden, 
       entweder in einem <gi>normalization</gi>- oder einem <gi>p</gi>-Element.</p>
@@ -11259,8 +11267,6 @@ attributes @target and @cRef may be supplied on <name/>.</report>
         aspects of a list, while using <att>type</att> for the more
         appropriate task of characterizing the nature of the content
         of a list.</p>
-      </remarks>
-      <remarks versionDate="2005-01-14" xml:lang="en">
         <p>The formal syntax of the element declarations allows
         <gi>label</gi> tags to be omitted from lists tagged <tag>list
         type="gloss"</tag>; this is however a semantic error.</p>
@@ -11278,8 +11284,6 @@ attributes @target and @cRef may be supplied on <name/>.</report>
               die Darstellung oder das Erscheinungsbild einer Liste zu kodieren (also ob sie z. B. nummeriert oder mit Symbolen 
               versehen ist). Die aktuelle Empfehlung ist, dafür die Attribute <att>rend</att> oder <att>style</att> zu verwenden, 
               während mit <att>type</att> der Inhalt der Liste charakterisiert werden sollte.</p>
-      </remarks>
-        <remarks versionDate="2016-11-25" xml:lang="de">
             <p>Die formale Syntax der Elementdeklaration 
                 erlaubt es, Listen vom <tag>list type="gloss"</tag> ohne das Element <gi>label</gi> zu verwenden; das ist jedoch ein 
                 semantischer Fehler.</p>
@@ -13905,10 +13909,10 @@ places, in particular where  multiple names are given.</p>
   <desc versionDate="2017-06-04" xml:lang="de">beinhaltet einen Titel eines beliebigen Werks.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.emphLike"/>
     
     <memberOf key="att.canonical"/>
-    <memberOf key="att.typed"/>
     <memberOf key="att.datable"/>
   </classes>
   <content>
@@ -14235,12 +14239,11 @@ titolo</desc>
       </valList>
       <remarks versionDate="2005-01-14" xml:lang="en">
         <p>This attribute is provided for convenience in analysing
-titles and processing them according to their
-type; where such specialized processing is not
-necessary, there is no need for such analysis, and
-the entire title, including subtitles and any
-parallel titles, may be enclosed within a single
-<gi>title</gi> element.</p>
+        titles and processing them according to their type; where such
+        specialized processing is not necessary, there is no need for
+        such analysis, and the entire title, including subtitles and
+        any parallel titles, may be enclosed within a single
+        <gi>title</gi> element.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>Cet attribut est utile pour analyser les titres et les
@@ -15850,31 +15853,16 @@ by the stage direction.</p>
     einem oder mehreren <gi>TEI</gi>-Elementen, die jeweils einen eigenen TEI-Header und Text
     enthalten.</desc>
   <classes>
+    <memberOf key="model.describedResource"/>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
   </classes>
   <content>
+    
     <sequence>
       <elementRef key="teiHeader"/>
-      <alternate>
-        <sequence>
-          
-            <classRef key="model.resourceLike" minOccurs="1" maxOccurs="unbounded"/>
-          
-          
-            <alternate minOccurs="0" maxOccurs="unbounded">
-              <elementRef key="TEI"/>
-              <elementRef key="teiCorpus"/>
-            </alternate>
-          
-        </sequence>
-        
-          <alternate minOccurs="1" maxOccurs="unbounded">
-            <elementRef key="TEI"/>
-            <elementRef key="teiCorpus"/>
-          </alternate>
-        
-      </alternate>
+      <classRef key="model.resource" minOccurs="0" maxOccurs="unbounded"/>
+      <classRef key="model.describedResource" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </content>
   <attList>
@@ -15984,10 +15972,9 @@ by the stage direction.</p>
       </teiCorpus>
     </egXML>
   </exemplum>
-  <remarks versionDate="2005-12-24" xml:lang="en">
-    <p rend="dataDesc">Must contain one TEI header for the corpus, and a series of <gi>TEI</gi>
-      elements, one for each text.</p>
-    <p>This element is mandatory when applicable.</p>
+  <remarks versionDate="2019-12-09" xml:lang="en">
+    <p rend="dataDesc">Should contain one TEI header for the corpus, and
+    a series of <gi>TEI</gi> elements, one for each text.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p rend="dataDesc">Cet élément doit contenir un en-tête TEI pour le corpus, et une suite
@@ -16029,14 +16016,13 @@ by the stage direction.</p>
     <memberOf key="att.global"/>
     <memberOf key="model.frontPart"/>
     <memberOf key="model.divGenLike"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
-    
       <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
-    
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
+    <attDef ident="type" usage="opt" mode="change">
       <desc versionDate="2005-01-14" xml:lang="en">specifies what type of generated text division (e.g. index,
                 table of contents, etc.) is to appear.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">생성된 텍스트 구역의 유형(예, 색인, 목차 등)을 명시한다.</desc>
@@ -16048,7 +16034,7 @@ by the stage direction.</p>
       <desc versionDate="2007-05-04" xml:lang="es">especifica que tipo de divisón de texto generada aparece (p.ej. índice, tabla de contenidos, etc.)</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica quale tipo di partizione testuale generata (ad esempio indice, sommario, ecc.) apparirà</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
+      <valList type="open" mode="add">
         <valItem ident="index">
           <desc versionDate="2007-06-27" xml:lang="en">an index is to be generated and inserted at this point.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">색인은 이 지점에서 생성되고 삽입된다.</desc>
@@ -16321,7 +16307,7 @@ containing the description. </p>
 <p>In all cases, languages should be identified by means of a standardized
 <soCalled>language tag</soCalled> generated according to <ref target="https://tools.ietf.org/html/bcp47">BCP 47</ref>. Additional
 documentation for the language may be provided by a <gi>language</gi>
-element in the TEI Header.
+element in the TEI header.
 </p>
   </remarks>
   <listRef>
@@ -16445,15 +16431,10 @@ element in the TEI Header.
   <content>
     <sequence>
       <elementRef key="fileDesc"/>
-      
-        <classRef key="model.teiHeaderPart" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <elementRef key="revisionDesc" minOccurs="0"/>
-      
+      <classRef key="model.teiHeaderPart" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="revisionDesc" minOccurs="0"/>
     </sequence>
   </content>
-  
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <teiHeader>
@@ -17999,7 +17980,7 @@ définissant les droits d'utilisation.</desc>
   <gloss versionDate="2008-04-06" xml:lang="es">descripción de la fuente</gloss>
   <gloss versionDate="2007-11-06" xml:lang="it">descrizione della fonte</gloss>
     <gloss versionDate="2016-11-17" xml:lang="de">Beschreibung der Quellen</gloss>
-  <desc versionDate="2008-12-09" xml:lang="en">describes the source from which an electronic text was derived or generated, typically a
+  <desc versionDate="2008-12-09" xml:lang="en">describes the source(s) from which an electronic text was derived or generated, typically a
     bibliographic description in the case of a digitized text, or a phrase such as "born digital"
     for a text which has no previous existence.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">décrit la source à partir de laquelle un texte électronique a été
@@ -18021,16 +18002,12 @@ définissant les droits d'utilisation.</desc>
   </classes>
   <content>
     <alternate>
-      
         <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
-      
-      
         <alternate minOccurs="1" maxOccurs="unbounded">
           <classRef key="model.biblLike"/>
           <classRef key="model.sourceDescPart"/>
           <classRef key="model.listLike"/>
         </alternate>
-      
     </alternate>
   </content>
   <exemplum xml:lang="en">
@@ -19623,8 +19600,6 @@ the target element</desc>
         <p>Since the default value of the <att>scheme</att> attribute is assumed to be CSS, the default 
         expectation for this attribute, in the absence of <att>scheme</att>, is that CSS selector
         syntax will be used.</p>
-      </remarks>
-      <remarks versionDate="2015-06-14" xml:lang="en">
         <p>While <att>rendition</att> is used to point from an element in the transcribed source to a 
         <gi>rendition</gi> element in the header which describes how it appears, the <att>selector</att>
         attribute allows the encoder to point in the other direction: from a <gi>rendition</gi> in the
@@ -20495,6 +20470,7 @@ codes used elsewhere in the text.</desc>
     situazionali usati in modo formale dall'elemento TEI <gi>textDesc</gi>.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.canonical"/>
   </classes>
   <content>
     
@@ -20755,7 +20731,7 @@ codes used elsewhere in the text.</desc>
       <unitDef xml:id="pechys" type="length">
         <label>πῆχυς</label>
         <placeName ref="#athens"/>
-        <conversion fromUnit="#daktylos" toUnit="#pechys" formula="24"/>
+        <conversion fromUnit="#daktylos" toUnit="#pechys" formula="$fromUnit div 24"/>
         <desc>Equivalent to a cubit or 24 daktyloi.</desc>
       </unitDef>
       <unitDef xml:id="daktylos" type="length">
@@ -22582,22 +22558,23 @@ supplied to printer.</change>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/MS.html#msph2">10.7.2. Writing, Decoration, and Other Notations</ref>
   </listRef>
-</elementSpec><elementSpec ident="listChange" module="header">
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" ident="listChange" module="header">
   <desc versionDate="2013-04-14" xml:lang="en">groups a number of change descriptions associated 
 with either the creation of a source text or the revision of an encoded text.</desc>
   <classes>
+    <memberOf key="model.standOffPart"/>
     <memberOf key="att.global"/>
     <memberOf key="att.sortable"/>
     <memberOf key="att.typed"/>
   </classes>
   <content>  
-     <sequence>
-       <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/> 
+    <sequence>
+      <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/> 
       <alternate minOccurs="1" maxOccurs="unbounded">
         <elementRef key="listChange"/>
         <elementRef key="change"/>
       </alternate>
-     </sequence>
+    </sequence>
   </content>
   <attList>
     <attDef ident="ordered">
@@ -22644,7 +22621,7 @@ during the evolution of the encoded representation of that text.</p>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD6">2.6. The Revision Description</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PH-changes">11.7. Identifying Changes and Revisions</ref>
   </listRef>
-</elementSpec><elementSpec module="textstructure" ident="TEI">
+</elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="textstructure" ident="TEI">
   <gloss versionDate="2005-12-24" xml:lang="en">TEI document</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">TEI 문서</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">TEI文件</gloss>
@@ -22653,41 +22630,49 @@ during the evolution of the encoded representation of that text.</p>
   <gloss versionDate="2007-05-04" xml:lang="es">documento TEI</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">documento TEI</gloss>
   <gloss versionDate="2018-12-17" xml:lang="ja">TEI文書</gloss>
-  <desc versionDate="2017-02-07" xml:lang="en">contains a single TEI-conformant document, combining
-    a single TEI header with one or more members of the <ident type="class">model.resourceLike</ident> class. Multiple <gi>TEI</gi>
-    elements may be combined to form a <gi>teiCorpus</gi> element.</desc>
+  <desc versionDate="2019-06-27" xml:lang="en">contains a single TEI-conformant document, combining
+    a single TEI header with one or more members of the <ident type="class">model.resource</ident> class. Multiple <gi>TEI</gi>
+    elements may be combined within a <gi>TEI</gi> (or <gi>teiCorpus</gi>) element.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">TEI 헤더와 텍스트로 구성된 단일 TEI 구조 문서를 포함한다. 독립 요소 또는 <gi>teiCorpus</gi> 요소의 부분.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含符合TEI標準的單一文件，由一個TEI標頭及一份文本組成，可單獨出現或是作為元素<gi>teiCorpus</gi>的一部分。</desc>
-  <desc versionDate="2018-12-17" xml:lang="ja">一つ以上の<ident type="class">model.resourceLike</ident>クラスを持つ一つのTEIヘッダを持つ，単一のTEI準拠文書を含む．<gi>teiCorpus</gi>エレメントには複数の<gi>TEI</gi>要素が含まれてもよい．</desc>
+  <desc versionDate="2018-12-17" xml:lang="ja">一つ以上の<ident type="class">model.resource</ident>クラスを持つ一つのTEIヘッダを持つ，単一のTEI準拠文書を含む．<gi>teiCorpus</gi>エレメントには複数の<gi>TEI</gi>要素が含まれてもよい．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient un seul document conforme à la TEI, qui
             comprend un en-tête TEI et un texte, soit de façon isolée, soit comme  partie d’un
             élément <gi>teiCorpus</gi>.</desc>
   <desc versionDate="2017-06-13" xml:lang="de">enthält ein einzelnes TEI-konformes Dokument, das aus einem einzigen TEI-Header und einem oder
-    mehreren Mitgliedern der <ident type="class">model.resourceLike</ident>-Klasse besteht. Mehrere
+    mehreren Mitgliedern der <ident type="class">model.resource</ident>-Klasse besteht. Mehrere
     <gi>TEI</gi>-Elemente können in einem <gi>teiCorpus</gi>-Element zusammengefasst werden.</desc>
-  <desc versionDate="2017-02-06" xml:lang="es">contiene un solo documento conforme a la norma TEI, combinando una sola cabecera TEI (teiHeader) con uno o más miembros de la clase <ident type="class">model.resourceLike</ident>. Múltiples elementos TEI se pueden combinar para formar un elemento <gi>teiCorpus</gi>.
+  <desc versionDate="2017-02-06" xml:lang="es">contiene un solo documento conforme a la norma TEI, combinando una sola cabecera TEI (teiHeader) con uno o más miembros de la clase <ident type="class">model.resource</ident>. Múltiples elementos TEI se pueden combinar para formar un elemento <gi>teiCorpus</gi>.
    </desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene un documento TEI-conforme, comprendente un'intestazione e un testo, sia esso isolato o parte di un elemento <gi>teiCorpus</gi>
    </desc>
   <classes>
+    <memberOf key="model.describedResource"/>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
   </classes>
   <content>
+    
     <sequence>
       <elementRef key="teiHeader"/>
-      <classRef key="model.resourceLike" minOccurs="1" maxOccurs="unbounded"/>
+      <alternate>
+	<sequence>
+	  <classRef key="model.resource" minOccurs="1" maxOccurs="unbounded"/>
+	  <elementRef key="TEI" minOccurs="0" maxOccurs="unbounded"/>
+	</sequence>
+	<elementRef key="TEI" minOccurs="1" maxOccurs="unbounded"/>
+      </alternate>
     </sequence>
   </content>
   <constraintSpec ident="c1" scheme="schematron">
     <constraint>
-      <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
-      <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
+      <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+      <sch:ns prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="c2" scheme="schematron">
     <constraint>
-      <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
+      <sch:ns prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
     </constraint>
   </constraintSpec>
   <attList>
@@ -22763,12 +22748,12 @@ during the evolution of the encoded representation of that text.</p>
             </sourceDesc>
           </fileDesc>
         </teiHeader>
-<facsimile>
-<graphic url="page1.png"/>
-<graphic url="page2.png"/>
-<graphic url="page3.png"/>
-<graphic url="page4.png"/>
-</facsimile>
+	<facsimile>
+	  <graphic url="page1.png"/>
+	  <graphic url="page2.png"/>
+	  <graphic url="page3.png"/>
+	  <graphic url="page4.png"/>
+	</facsimile>
       </TEI>
     </egXML>
   </exemplum>
@@ -22823,7 +22808,7 @@ during the evolution of the encoded representation of that text.</p>
   </exemplum>
   <remarks versionDate="2015-03-10" xml:lang="en">
     <p>This element is required. It is customary to specify the
-TEI namespace <code>http://www.tei-c.org/ns/1.0</code> on it, using
+    TEI namespace <code>http://www.tei-c.org/ns/1.0</code> on it, using
     the <att>xmlns</att> attribute.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
@@ -22866,31 +22851,23 @@ TEI namespace <code>http://www.tei-c.org/ns/1.0</code> on it, using
     <memberOf key="att.declaring"/>
     <memberOf key="att.typed"/>
     <memberOf key="att.written"/>
-    <memberOf key="model.resourceLike"/>
+    <memberOf key="model.resource"/>
   </classes>
   <content>
     <sequence>
-      
-        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      
+      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       <sequence minOccurs="0">
         <elementRef key="front"/>
-        
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        
+	<classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
       <alternate>
         <elementRef key="body"/>
         <elementRef key="group"/>
       </alternate>
-      
-        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      
+      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       <sequence minOccurs="0">
         <elementRef key="back"/>
-        
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        
+	<classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
     </sequence>
   </content>
@@ -24912,6 +24889,7 @@ it may optionally be tagged using the <gi>docAuthor</gi> element.</p>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.divWrapper"/>
+    <memberOf key="model.pLike.front"/>
   </classes>
   <content>
     
@@ -24929,6 +24907,16 @@ it may optionally be tagged using the <gi>docAuthor</gi> element.</p>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <dateline>Walden, this 29. of August 1592</dateline>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2019-09-14" xml:lang="la">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <front>
+        <dateline>Datum in Mexico <date when="1531">primo die Augusti 1531</date></dateline>
+        <p>
+          Al muy Magnifico y muy Reverendo Señor el Señor <rs type="person" ref="#IoannesDantiscus">obispo diócesis Colmensis</rs>
+        </p>
+      </front>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
@@ -25572,26 +25560,21 @@ lettre.</desc>
     peritesto iniziale o finale</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.frontPart"/>
   </classes>
   <content>
     <sequence>
-      
-        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <classRef key="model.titlepagePart"/>
-      
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.titlepagePart"/>
-          <classRef key="model.global"/>
-        </alternate>
-      
+      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      <classRef key="model.titlepagePart"/>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+	<classRef key="model.titlepagePart"/>
+	<classRef key="model.global"/>
+      </alternate>
     </sequence>
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
+    <attDef ident="type" mode="change" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">classifies the title page according to any convenient typology.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">다양한 유형에 따라서 제목 페이지를 분류한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">將題名頁分類。</desc>
@@ -25768,6 +25751,7 @@ indicated on a title page.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una sezione o partizione del titolo di un'opera, come specificato nel frontespizio</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.titlepagePart"/>
     <memberOf key="model.pLike.front"/>
   </classes>
@@ -25775,7 +25759,7 @@ indicated on a title page.</desc>
     <macroRef key="macro.paraContent"/>
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
+    <attDef ident="type" mode="change" usage="opt">
       <gloss versionDate="2017-06-19" xml:lang="de">Titelart</gloss>
       <desc versionDate="2005-01-14" xml:lang="en">specifies the role of this subdivision of the title.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">제목의 하위 구역에 대한 역할을 명시한다.</desc>
@@ -25788,7 +25772,7 @@ indicated on a title page.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica il ruolo di tale sezione o partizione all'interno del titolo</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>main</defaultVal>
-      <valList type="semi">
+      <valList type="semi" mode="add">
         <valItem ident="main">
           <gloss versionDate="2017-06-19" xml:lang="de">Haupttitel</gloss>
           <desc versionDate="2007-06-27" xml:lang="en">main title of the work</desc>
@@ -26408,8 +26392,8 @@ the date of the entire document, not for any subset or part of it.</p>
       <front>
         <epigraph>
           <quote>Nam Sibyllam quidem Cumis ego ipse oculis meis vidi in ampulla
-            pendere, et cum illi pueri dicerent: <q xml:lang="gr">Σίβυλλα τί
-              θέλεις</q>; respondebat illa: <q xml:lang="gr">ὰποθανεῖν θέλω.</q>
+            pendere, et cum illi pueri dicerent: <q xml:lang="grc">Σίβυλλα τί
+              θέλεις</q>; respondebat illa: <q xml:lang="grc">ὰποθανεῖν θέλω.</q>
           </quote>
         </epigraph>
         <div type="dedication">
@@ -26776,8 +26760,7 @@ the date of the entire document, not for any subset or part of it.</p>
   <desc versionDate="2016-02-16" xml:lang="en">provides a set of attributes for hypertextual linking.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">하이퍼텍스트와 다른 연결에 대한 속성의 집합을 정의한다. 이것은 연결에 대한 부가적 태그 집합이 선택될 때 모든 요소에 가능해야 한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">定義一組用於超文字連結及其他連結的屬性，當連結的附加標籤組被選擇時，這些屬性可用於所有元素。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">リンクに関する付加的タグが使用される場合，全ての要素に付与可能な，リ
-  ンクやハイパーテキストのための属性を定義する．</desc>
+  <desc versionDate="2019-07-21" xml:lang="ja">ハイパーテキストリンクの属性セットを提供する。</desc>
   <desc versionDate="2016-02-16" xml:lang="fr">fournit un ensemble d'attributs pour décrire les
       liens hypertextuels.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">define un conjunto de atributos para hipertexto u otro vínculo habilitado para todos los elementos cuando se selecciona la etiqueta adicional para los enlaces.</desc>
@@ -26789,6 +26772,7 @@ the date of the entire document, not for any subset or part of it.</p>
       <gloss versionDate="2008-04-06" xml:lang="es">correspondencia</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">correspond</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">corrispondente</gloss>
+      <gloss versionDate="2019-07-21" xml:lang="ja">対応</gloss>
       <desc versionDate="2005-10-10" xml:lang="en">points to elements that correspond to the current
       element in some way.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">어떤 식으로든 현 요소와 일치하는 요소를 가리킨다.</desc>
@@ -26864,6 +26848,7 @@ the date of the entire document, not for any subset or part of it.</p>
       <gloss versionDate="2008-04-06" xml:lang="es">sincrónico</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">synchrone</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">sincrono</gloss>
+      <gloss versionDate="2019-07-21" xml:lang="ja">連動</gloss>
       <desc versionDate="2005-10-10" xml:lang="en">points to elements that are synchronous with the current
       element.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">현 요소와 동시 발생하는 요소를 가리킨다.</desc>
@@ -26924,6 +26909,9 @@ the date of the entire document, not for any subset or part of it.</p>
       seguente all'interno di un aggregazione virtuale di cui l'elemento corrente fa parte</desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2017-05-02" xml:lang="en"><p>It is recommended that the element indicated be of the same type as the element bearing this attribute.</p></remarks>
+      <remarks xml:lang="ja" versionDate="2019-09-16">
+        <p>指定された要素も、この属性を持つ要素と同じ型であることが推奨される。</p>
+      </remarks>
     </attDef>
     <attDef ident="prev" usage="opt">
       <gloss versionDate="2007-07-04" xml:lang="en">previous</gloss>
@@ -26931,6 +26919,7 @@ the date of the entire document, not for any subset or part of it.</p>
       <gloss versionDate="2008-04-06" xml:lang="es">anterior</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr"> précédent</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">precedente</gloss>
+      <gloss versionDate="2019-07-21" xml:lang="ja">前の</gloss>
       <desc versionDate="2005-10-10" xml:lang="en">points to the previous element of a virtual aggregate of
       which the current element is part.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">현 요소가 그 부분인 가상 집합의 이전 요소를 가리킨다.</desc>
@@ -26943,7 +26932,9 @@ the date of the entire document, not for any subset or part of it.</p>
       precedente all'interno di un aggregazione virtuale di cui l'elemento corrente fa parte</desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2017-05-02" xml:lang="en"><p>It is recommended that the element indicated be of the same type as the element bearing this attribute.</p></remarks>
-      
+      <remarks xml:lang="ja" versionDate="2019-09-16">
+        <p>指定された要素も、この属性を持つ要素と同じ型であることが推奨される。</p>
+      </remarks>
     </attDef>
     <attDef ident="exclude" usage="opt">
       <desc versionDate="2005-10-10" xml:lang="en">points to elements that are in exclusive alternation
@@ -27303,13 +27294,14 @@ the date of the entire document, not for any subset or part of it.</p>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una qualsiasi unità testuale a livello sintagmatico (ivi compresi altri elementi del tipo seg)</desc>
   <desc versionDate="2017-06-19" xml:lang="de">beschreibt Segmente eines Texts unterhalb des <soCalled>Chunk-Level</soCalled>.</desc>
   <classes>
-    <memberOf key="att.global"/>
     <memberOf key="model.segLike"/>
+    <memberOf key="model.choicePart"/>
+    
+    <memberOf key="model.standOffPart"/>
+    <memberOf key="att.global"/>
     <memberOf key="att.segLike"/>
     <memberOf key="att.typed"/>
     <memberOf key="att.written"/>
-    <memberOf key="model.choicePart"/>
-    
     <memberOf key="att.notated"/>
   </classes>
   <content>
@@ -27420,7 +27412,7 @@ the date of the entire document, not for any subset or part of it.</p>
       <desc versionDate="2007-01-21" xml:lang="it">indica un valore temporale assoluto</desc>
       <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
       <remarks versionDate="2009-07-13" xml:lang="en">
-        <p>This attribute should always be specified on a <gi>when</gi> element which serves as the target for the <att>origin</att> attribute of a <gi>timeLine</gi>. </p>
+        <p>This attribute should always be specified on a <gi>when</gi> element which serves as the target for the <att>origin</att> attribute of a <gi>timeline</gi>. </p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2009-10-06">
         <p>Cet attribut est obligatoire pour l'élément <gi>when</gi> qui est désigné comme cible par l'attribut <att>origin</att> de l'élément <tag>timeline</tag>. </p>
@@ -28224,6 +28216,132 @@ You must supply at least two values for @target on <name/>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SAAT">16.8. Alternation</ref>
   </listRef>
+</elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="standOff" mode="add" module="linking">
+  <desc xml:lang="en" versionDate="2018-10-31">Functions as a
+  container element for linked data, contextual information, and
+  stand-off annotations embedded in a TEI document.</desc>
+  <classes>
+    <memberOf key="model.resource"/>
+    <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.declaring"/>
+  </classes>
+  <content>
+    <classRef key="model.standOffPart" minOccurs="1" maxOccurs="unbounded"/>
+  </content>
+  <constraintSpec ident="nested_standOff_should_be_typed" scheme="schematron" mode="add">
+    <constraint>
+      <sch:assert test="@type or not(ancestor::tei:standOff)">This
+      <sch:name/> element must have a @type attribute, since it is
+      nested inside a <sch:name/></sch:assert>
+    </constraint>
+  </constraintSpec>
+  <exemplum xml:lang="en" versionDate="2019-12-25">
+    <p>This example shows an encoding of morphosyntactic features similar to the encoding
+    system used by <ref target="#ISO24611">ISO 24611 (MAF)</ref>.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE" valid="feasible">
+      <TEI>
+        <teiHeader> <!-- ... --> </teiHeader>
+        <text>
+          <body>
+            <!-- ... -->
+            <p>
+              <w xml:id="w51">I</w>
+              <w xml:id="w52">wanna</w>
+              <w xml:id="w53">put</w>
+              <w xml:id="w54">up</w>
+              <w xml:id="w55">new</w>
+              <w xml:id="w56">wallpaper</w>
+              <pc>.</pc>
+            </p>
+            <!-- ... -->
+          </body>
+        </text>
+        <standOff type="morphosyntax">
+          <spanGrp type="wordForm">
+            <span target="#w51" ana="#fs01"/>
+            <span target="#w52" ana="#fs02"/>
+            <span target="#w52" ana="#fs03"/>
+            <span target="#w53 #w54" ana="#fs04"/>
+            <span target="#w55" ana="#fs05"/>
+            <span target="#w56" ana="#fs06"/>
+          </spanGrp>
+          <fs xml:id="fs01">
+            <f name="lemma"> <string>I</string> </f>
+            <f name="pos"> <symbol value="PP"/> </f>
+          </fs>
+          <fs xml:id="fs02">
+            <f name="lemma"> <string>want</string> </f>
+            <f name="pos"> <symbol value="VBP"/> </f>
+          </fs>
+          <fs xml:id="fs03">
+            <f name="lemma"> <string>to</string> </f>
+            <f name="pos"> <symbol value="TO"/> </f>
+          </fs>
+          <fs xml:id="fs04">
+            <f name="lemma"> <string>put up</string> </f>
+            <f name="pos"> <symbol value="VB"/> </f>
+          </fs>
+          <fs xml:id="fs05">
+            <f name="lemma"> <string>new</string> </f>
+            <f name="pos"> <symbol value="JJ"/> </f>
+          </fs>
+          <fs xml:id="fs06">
+            <f name="lemma"> <string>wallpaper</string> </f>
+            <f name="pos"> <symbol value="NN"/> </f>
+          </fs>
+        </standOff>
+      </TEI>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en" versionDate="2019-12-28">
+    <p>This example shows an encoding of contextual
+    information which is referred to from the main text.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#MLK01" valid="feasible">
+      <TEI>
+	<teiHeader> <!-- ... --> </teiHeader>
+	<standOff>
+	  <listPlace>
+	    <place xml:id="LATL">
+	      <placeName>Atlanta</placeName>
+	      <location>
+		<region key="US-GA">Georgia</region>
+		<country key="USA">United States of America</country>
+		<geo>33.755 -84.39</geo>
+	      </location>
+	      <population when="1963" type="interpolatedCensus" quantity="489359" source="https://www.biggestuscities.com/city/atlanta-georgia"/>
+	    </place>
+	    <place xml:id="LBHM">
+	      <placeName>Birmingham</placeName>
+	      <location>
+		<region key="US-AL">Alabama</region>
+		<country key="USA">United States of America</country>
+		<geo>33.653333 -86.808889</geo>
+	      </location>
+	      <population when="1963" type="interpolatedCensus" quantity="332891" source="https://www.biggestuscities.com/city/birmingham-alabama"/>
+	    </place>
+	  </listPlace>
+	</standOff>
+	<text>
+	  <body>
+	    <!-- ... -->
+	    <p>Moreover, I am <choice><sic>congnizant</sic><corr>cognizant</corr></choice> of the interrelatedness of all communities and
+	    <lb/>states.  I cannot sit idly by in <placeName ref="#LATL">Atlanta</placeName> and not be concerned about what happens
+	    <lb/>in <placeName ref="#LBHM">Birmingham</placeName>.  <seg xml:id="FQ17">Injustice anywhere is a threat to justice everywhere.</seg>  We
+	    <lb/>are caught in an inescapable network of mutuality, tied in a single garment
+	    <lb/>of destiny.  Whatever affects one directly affects all indirectly. Never
+	    <lb/>again can we afford to live with the narrow, provincial <soCalled rendition="#Rqms">outside agitator</soCalled>
+	    <lb/>idea.  Anyone who lives inside the United States can never be considered
+	    <lb/>an outsider anywhere in this country.</p>
+	    <!-- ... -->
+	  </body>
+	</text>
+      </TEI>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SASOstdf">16.10. The standOff Container</ref>
+  </listRef>
 </elementSpec><elementSpec module="drama" ident="set">
   <gloss versionDate="2007-07-04" xml:lang="en">setting</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">배경</gloss>
@@ -28747,46 +28865,34 @@ You must supply at least two values for @target on <name/>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含單一角色名單或出場人物列表。</desc>
   <desc versionDate="2008-04-06" xml:lang="es">contiene una única lista con los personajes del reparto.</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">ひとつの配役リストまたは配役表を示す．</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">contient la distribution ou la liste des
-    personnages.</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">contient la distribution ou la liste des personnages.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene un unico elenco dei personaggio le dramatis personae.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.inter"/>
     <memberOf key="model.frontPart.drama"/>
+    <memberOf key="model.standOffPart"/>
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.divTop"/>
-          <classRef key="model.global"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <classRef key="model.global"/>
+      </alternate>
       <sequence minOccurs="0" maxOccurs="unbounded">
-        
-          <classRef key="model.common"/>
-        
-        
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        
+        <classRef key="model.common"/>
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
       <sequence minOccurs="1" maxOccurs="unbounded">
         <alternate>
           <elementRef key="castItem"/>
           <elementRef key="castGroup"/>
         </alternate>
-        
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
       <sequence minOccurs="0" maxOccurs="unbounded">
-        
-          <classRef key="model.common"/>
-        
-        
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        
+        <classRef key="model.common"/>
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
     </sequence>
   </content>
@@ -29269,20 +29375,19 @@ either a single role or a list of non-speaking roles.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una singola voce all'interno della lista dei personaggi, descrive o un ruolo o una lista di ruoli privi di battute.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
-    
       <alternate minOccurs="0" maxOccurs="unbounded">
         <textNode/>
         <classRef key="model.gLike"/>
         <classRef key="model.castItemPart"/>
         <classRef key="model.phrase"/>
         <classRef key="model.global"/>
-      </alternate>
-    
+      </alternate>  
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
+    <attDef ident="type" mode="change" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">characterizes the cast item.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">배역 항목의 특성 기술</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">說明角色項目的特性。</desc>
@@ -29612,12 +29717,13 @@ young man would present to his lady love. It makes me blush!
     personaggi.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.stageLike"/>
     <memberOf key="att.ascribed.directed"/>
   </classes>
   <content><empty/></content>
   <attList>
-    <attDef ident="type" usage="opt">
+    <attDef ident="type" mode="change" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">characterizes the movement, for example as an entrance or exit.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">예를 들어 입장 또는 퇴장과 같은, 이동의 특성을 기술한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">說明舞台動作，例如進場或退場。</desc>
@@ -29975,13 +30081,14 @@ Out the window the body of a dead man suddenly slams into frame
     descritti in una sceneggiatura o di un copione radiofonico.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.stageLike"/>
   </classes>
   <content>
     <macroRef key="macro.paraContent"/>
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
+    <attDef ident="type" mode="change" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">categorizes the sound in some respect, e.g. as music, special effect, etc.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">어떤 측면에서 음향을 분류한다. 예, 음악, 특수 효과음 등.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">將聲音從某方面來分類，例如音樂，特殊音效等。</desc>
@@ -30182,13 +30289,14 @@ meant for the actors.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">descrive particolari indicazioni di scena non indirizzate agli attori.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.stageLike"/>
   </classes>
   <content>
     <macroRef key="macro.paraContent"/>
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
+    <attDef ident="type" mode="change" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">categorizes the technical stage direction.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">전문적 무대 지시를 분류한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">技術性舞台指示類型</desc>
