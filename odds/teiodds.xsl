@@ -530,7 +530,7 @@ of this software, even if advised of the possibility of such damage.
               </xsl:choose>
             </xsl:with-param>
             <xsl:with-param name="declare" select="$declare"/>
-          </xsl:call-template>
+         </xsl:call-template>
         </Wrapper>
       </xsl:with-param>
     </xsl:call-template>
@@ -1963,21 +1963,18 @@ select="$makeDecls"/></xsl:message>
   
   <xsl:template name="processSchematron">
     <xsl:choose>
-      <xsl:when test="self::sch:ns">
-        <ns prefix="{@prefix}" uri="{@uri}" xmlns="http://purl.oclc.org/dsdl/schematron"/>
-      </xsl:when>
-      <xsl:when test="self::sch:pattern">
+      <xsl:when test="self::sch:ns | self::sch:pattern">
         <xsl:apply-templates mode="justcopy" select="."/>
       </xsl:when>
-      <xsl:when test="self::sch:rule">
+      <xsl:when test="self::sch:rule[not(preceding-sibling::sch:rule)]">
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron">
           <xsl:attribute name="id" select="tei:makePatternID(.)"/>
-          <xsl:apply-templates mode="justcopy" select="."/>
+          <xsl:apply-templates mode="justcopy" select="../sch:rule"/>
         </pattern>
       </xsl:when>
-      <xsl:when test="self::sch:let"/>			       <!-- <let> processed below -->
-      <xsl:when test="(self::sch:report or self::sch:assert) and
-		      ancestor::tei:elementSpec">
+      <xsl:when test="self::sch:rule"/>  <!-- processed immediately above -->
+      <xsl:when test="self::sch:let"/>  <!-- <let> processed below -->
+      <xsl:when test="(self::sch:assert|self::sch:report)[not( preceding-sibling::sch:assert|preceding-sibling::sch:report )]">
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron">
           <xsl:attribute name="id" select="tei:makePatternID(.)"/>
           <rule>
@@ -1995,10 +1992,11 @@ select="$makeDecls"/></xsl:message>
 		</xsl:otherwise>
 	      </xsl:choose>
             </xsl:attribute>
-            <xsl:apply-templates mode="justcopy" select="parent::*/sch:let|."/>
+            <xsl:apply-templates mode="justcopy" select="parent::*/(sch:let|sch:assert|sch:report)"/>
           </rule>
         </pattern>
       </xsl:when>
+      <xsl:when test="self::sch:assert|self::sch:report"/>  <!-- processed immediately above -->
       <xsl:otherwise>
 	<xsl:apply-templates mode="justcopy" select="parent::*/sch:let|."/>
       </xsl:otherwise>
@@ -2440,7 +2438,7 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
   <xsl:template match="sch:*">
-      <xsl:call-template name="processSchematron"/>
+    <xsl:call-template name="processSchematron"/>
   </xsl:template>
   
 </xsl:stylesheet>

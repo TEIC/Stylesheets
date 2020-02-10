@@ -1464,12 +1464,12 @@ of this software, even if advised of the possibility of such damage.
            "xml:id" (or anything else with a colon). Note that the
            value we are generating has to be an XML NCName. The value
            of almost any @ident in the TEI is an XML Name, with two
-           exceptions: prefixDef/@ident (which can contain '+, and can
-           even start with '+', '-', or '.') and valItem/@ident (which
-           can contain *anything*). However, neither <prefixDef> nor
-           <valItem> have <constraintSpec>s, so we don't have to worry
-           about those here. If we did, the clever XSLT 1.0 version of
-           that XPath is
+           exceptions: prefixDef/@ident (which can contain '+', and
+           can even start with '+', '-', or '.') and valItem/@ident
+           (which can contain *anything*). However, neither
+           <prefixDef> nor <valItem> have <constraintSpec>s, so we
+           don't have to worry about those here. If we did, the clever
+           XSLT 1.0 version of that XPath is
              ../ancestor::*[@ident]/@ident/translate( ., translate( .,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-',''),'')
            That is probably blazingly fast, but (besides being hard to
            read and understand) has the disadvantage that it

@@ -3321,18 +3321,6 @@ relatedItem =
              "relatedItem element must be empty"
            ]
            "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ]
-    >> sch:pattern [
-         id = "test21-relatedItem-targetorcontent1-constraint-assert-8"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:relatedItem"
-           "\x{a}" ~
            "               "
            sch:assert [
              test = "@target or child::*"
@@ -6281,18 +6269,6 @@ dimensions =
              "      "
            ]
            "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ]
-    >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint-report-19"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:dimensions"
-           "\x{a}" ~
            "               "
            sch:report [
              test = "count(tei:height)> 1"
@@ -6302,18 +6278,6 @@ dimensions =
              " may appear once only\x{a}" ~
              "      "
            ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ]
-    >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint-report-20"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:dimensions"
            "\x{a}" ~
            "               "
            sch:report [
