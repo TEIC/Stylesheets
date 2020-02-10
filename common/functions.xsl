@@ -1123,21 +1123,28 @@ of this software, even if advised of the possibility of such damage.
       <!-- first the gloss -->
       <xsl:sequence select="tei:makeGloss(.,$langs)"/>
       <!-- now the description -->
+      <!--
+	  Change, 2020-02-10 in response to #418:
+	  Only look at, count, or copy those <desc> elements that do
+	  NOT have a @type of "deprecationInfo". Note that we use
+	  not(@type eq 'dI') because using just @type ne 'dI' does not
+	  include those <desc>s that do not have @type at all.
+      -->
       <xsl:choose>
-        <xsl:when test="not(tei:desc)"> </xsl:when>
-        <xsl:when test="count(tei:desc)=1">
-          <xsl:for-each select="tei:desc">
+        <xsl:when test="not(tei:desc[ not( @type eq 'deprecationInfo' ) ])"> </xsl:when>
+        <xsl:when test="count(tei:desc[ not( @type eq 'deprecationInfo' ) ])=1">
+          <xsl:for-each select="tei:desc[ not( @type eq 'deprecationInfo' ) ]">
             <xsl:apply-templates select="." mode="inLanguage"/>
           </xsl:for-each>
         </xsl:when>
-        <xsl:when test="tei:desc[@xml:lang=$firstLang]">
-          <xsl:for-each select="tei:desc[@xml:lang=$firstLang]">
+        <xsl:when test="tei:desc[ not( @type eq 'deprecationInfo' ) ][@xml:lang=$firstLang]">
+          <xsl:for-each select="tei:desc[ not( @type eq 'deprecationInfo' ) ][@xml:lang=$firstLang]">
             <xsl:apply-templates select="." mode="inLanguage"/>
           </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
           <xsl:variable name="D">
-            <xsl:for-each select="tei:desc">
+            <xsl:for-each select="tei:desc[ not( @type eq 'deprecationInfo' ) ]">
               <xsl:variable name="currentLang"   select="tei:findLanguage(.)"/>
               <xsl:if test="$currentLang=($langs)">
                 <xsl:apply-templates select="." mode="inLanguage"/>
@@ -1145,8 +1152,8 @@ of this software, even if advised of the possibility of such damage.
             </xsl:for-each>
           </xsl:variable>
           <xsl:choose>
-            <xsl:when test="$D='' and tei:desc[(not(@xml:lang) or @xml:lang='en')]">
-              <xsl:for-each select="tei:desc[(not(@xml:lang) or @xml:lang='en')]">
+            <xsl:when test="$D='' and tei:desc[ not( @type eq 'deprecationInfo' ) ][(not(@xml:lang) or @xml:lang='en')]">
+              <xsl:for-each select="tei:desc[ not( @type eq 'deprecationInfo' ) ][(not(@xml:lang) or @xml:lang='en')]">
                 <xsl:apply-templates select="." mode="inLanguage"/>
               </xsl:for-each>
             </xsl:when>
@@ -1165,7 +1172,7 @@ of this software, even if advised of the possibility of such damage.
           The original code, which had separate templates for tei:valList[@type=open] and
           tei:valList[@type=semi], was very redundant. However, it may have been very clever
           in how it handled the case of multiple child <valList>s. Or, it may have obliviously
-          worked in that caes, producing passable, if not ideal, outupt. Depends on your point
+          worked in that case, producing passable, if not ideal, outupt. Depends on your point
           of view, in part.
           I believe we reproduce what it did, whether you like it or not, by using '=' instead
           of 'eq' in the "if" comparison in the definition of $msg.
