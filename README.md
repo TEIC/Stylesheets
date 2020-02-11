@@ -42,7 +42,7 @@ make doc
 ```
 
 It will then be available at `release/xslcommon/doc/tei-xsl/index.html`.
-=======
+
 
 ## About the Text Encoding Initiative (TEI)
 
