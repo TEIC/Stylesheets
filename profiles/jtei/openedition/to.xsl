@@ -144,7 +144,7 @@
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:attribute name="xsi:schemaLocation">
-        <xsl:text>http://www.tei-c.org/ns/1.0 http://lodel.org/ns/tei.openedition.1.5.2/tei.openedition.1.5.2.xsd</xsl:text>
+        <xsl:text>http://www.tei-c.org/ns/1.0 http://lodel.org/ns/tei/tei.openedition.1.6.2/document.xsd</xsl:text>
       </xsl:attribute>
       <xsl:apply-templates/>
     </xsl:copy>
@@ -282,7 +282,7 @@
     <xsl:attribute name="{$name}">
       <xsl:choose>
         <xsl:when test=". eq 'authorNotes'">author</xsl:when>
-        <xsl:when test=". eq 'editorNotes'">editor</xsl:when>
+        <xsl:when test=". eq 'editorNotes'">publisher</xsl:when>
         <xsl:when test=". eq 'acknowledgements'">ack</xsl:when>
         <xsl:when test=". eq 'corrections'">correction</xsl:when>
         <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
