@@ -27,7 +27,7 @@
   <xsl:param name="auto">false</xsl:param>
   <xsl:param name="numberFrontHeadings">true</xsl:param>
   <xsl:param name="displayMode">rnc</xsl:param>
-  <xsl:param name="feedbackURL">http://www.tei-c.org/Consortium/contact.xml</xsl:param>
+  <xsl:param name="feedbackURL">https://tei-c.org/about/contact/</xsl:param>
   <xsl:param name="homeLabel">TEI P5 Guidelines</xsl:param>
   <xsl:param name="homeWords">TEI P5</xsl:param>
   <xsl:param name="institution">Text Encoding Initiative</xsl:param>

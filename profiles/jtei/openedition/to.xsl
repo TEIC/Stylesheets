@@ -59,7 +59,7 @@
   -->
 
   <!-- an index of TEI input elements that should be converted to <hi> -->
-  <xsl:key name="hi" match="
+  <xsl:key name="renditions" match="
     tei:gi
     |tei:att
     |tei:tag
@@ -77,8 +77,9 @@
     |tei:table/tei:head
     |tei:foreign
     |tei:table
-    |tei:row/@role
-    |tei:cell/@role
+    |tei:row[@role eq 'label']/tei:cell
+    |tei:cell[@role eq 'label']
+    |tei:cell[xs:integer(@cols) gt 1]
     |tei:table[@rend='border']//tei:cell
     |tei:num[@type='ordinal']
     |tei:title[@level = ('m', 'j')]
@@ -118,15 +119,19 @@
     <rendition xml:id="glosslabel" scheme="css">display:block;font-weight:bold;margin: 1em 0 1em -2em;</rendition>
     <rendition xml:id="foreign" scheme="css">font-style:italic;</rendition>
     <rendition xml:id="tr-label" scheme="css">background-color: silver;font-weight:bold;</rendition>
+    <rendition xml:id="tr-label.colspan" scheme="css">background-color: silver;font-weight:bold;text-align:center;</rendition>
     <rendition xml:id="td-label" scheme="css">font-weight:bold;</rendition>
+    <rendition xml:id="td-label.colspan" scheme="css">font-weight:bold;text-align:center;</rendition>
+    <rendition xml:id="td.colspan" scheme="css">text-align:center;</rendition>
     
     <rendition xml:id="table.border" scheme="css">border: 1px solid black;border-collapse:collapse;</rendition>
     <rendition xml:id="tr-label.border" scheme="css">background-color: silver;font-weight:bold;border:1px solid black;</rendition>
+    <rendition xml:id="tr-label.border.colspan" scheme="css">background-color: silver;font-weight:bold;border:1px solid black;text-align:center;</rendition>
     <rendition xml:id="td-label.border" scheme="css">font-weight:bold;border:1px solid black;</rendition>
+    <rendition xml:id="td-label.border.colspan" scheme="css">font-weight:bold;border:1px solid black;text-align:center;</rendition>
     
     <rendition xml:id="td.border" scheme="css">border: 1px solid black;</rendition>
-    <rendition xml:id="tr.border" scheme="css">border: 1px solid black;</rendition>
-    <rendition xml:id="th.border" scheme="css">border: 1px solid black;</rendition>
+    <rendition xml:id="td.border.colspan" scheme="css">border: 1px solid black;text-align:center;</rendition>
     
     <!-- for paragraph indentation
     <rendition xml:id="p.indent" scheme="css">display:none;</rendition>
@@ -237,7 +242,10 @@
     <tagsDecl>
       <xsl:apply-templates select="tei:tagsDecl/@*"/>
       <xsl:apply-templates select="tei:tagsDecl/tei:rendition[key('renditionsInUse', @xml:id, current()/root())]"/>
-      <xsl:copy-of select="$hiConversion/*[key('hi', @xml:id, current()/root())][not(key('renditionsInUse', @xml:id, current()/root()))]"/>
+      <xsl:copy-of select="$hiConversion/*[key('renditions', @xml:id, current()/root())][not(key('renditionsInUse', @xml:id, current()/root()))]"/>
+      <xsl:if test="local:get.SVNkeyword('Id')">
+        <rendition xml:id="metadata">display:none;</rendition>
+      </xsl:if>
     </tagsDecl>
   </xsl:template>
   
@@ -286,6 +294,16 @@
   <!-- body -->
   <!-- ==== -->
   
+  <!-- body: process contents + add metadata at the end of body text -->
+  <xsl:template match="tei:body[tei:div]">
+    <xsl:copy>
+      <xsl:call-template name="get.rendition"/>
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates/>
+      <xsl:call-template name="body-metadata"/>
+    </xsl:copy>
+  </xsl:template>
+  
   <!-- div-less body: 
        -wrap contents in div
        -add head if that's missing too
@@ -300,8 +318,23 @@
         </xsl:if>
         <xsl:apply-templates/>
       </div>
+      <xsl:call-template name="body-metadata"/>
     </xsl:copy>
   </xsl:template>
+  
+  <!-- If (SVN) metadata are found, include them in a hidden paragraph in the body text. -->
+  <xsl:template name="body-metadata">
+    <xsl:variable name="metadata" select="local:get.SVNkeyword('Id')"/>
+    <xsl:if test="$metadata">
+      <div>
+        <p rend="noindent" rendition="#metadata">
+          <xsl:text>SVN keywords: </xsl:text>
+          <xsl:value-of select="$metadata"/>
+        </p>
+      </div>
+    </xsl:if>
+  </xsl:template>  
+  
   
   <xsl:template match="tei:body/tei:head">
     <xsl:copy>
@@ -599,10 +632,17 @@
 -->
   
   <!-- replace external <ptr/> with <ref>, whose label = @target -->
-  <xsl:template match="tei:ptr[not(@type eq 'crossref')]|tei:ref[not(@type eq 'crossref')][not(normalize-space())]">
+  <xsl:template match="tei:ptr[not(@type = ('crossref','bibl'))]|tei:ref[not(@type = ('crossref','bibl'))]">
     <ref>
       <xsl:apply-templates select="@*"/>
-      <xsl:value-of select="@target"/>
+      <xsl:choose>
+        <xsl:when test="normalize-space()">
+          <xsl:apply-templates/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="@target"/>
+        </xsl:otherwise>
+      </xsl:choose>
     </ref>
   </xsl:template>
   
@@ -727,7 +767,7 @@
   </xsl:template>
   
   <!-- transform other 'flagged' elements (see index in 'hi' key) to hi with corresponding @rendition -->
-  <xsl:template match="*[key('hi', local-name())]" priority="-.5">
+  <xsl:template match="*[key('renditions', local-name())]" priority="-.5">
     <hi>
       <xsl:apply-templates select="@*"/>
       <xsl:call-template name="get.rendition"/>
@@ -928,9 +968,7 @@
   <xsl:template match="tei:cell">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
-      <xsl:for-each select="(@role,parent::tei:row/@role,.)[not(. = 'data')][1]">
-        <xsl:call-template name="get.rendition"/>
-      </xsl:for-each>
+      <xsl:call-template name="get.rendition"/>
       <xsl:apply-templates/>      
     </xsl:copy>
   </xsl:template>
@@ -1026,12 +1064,27 @@
       <xsl:when test="$node/self::tei:list[@type eq 'gloss']">glosslist</xsl:when>
       <xsl:when test="$node/self::node()[parent::tei:label[parent::tei:list[@type eq 'gloss']]]">glosslabel</xsl:when>
       <xsl:when test="$node/self::tei:table[@rend='border']">table.border</xsl:when>
-      <xsl:when test="$node[name() eq 'role'][. eq 'label'][parent::tei:row[ancestor::tei:table[1][@rend='border']]]">tr-label.border</xsl:when>
-      <xsl:when test="$node[name() eq 'role'][. eq 'label'][parent::tei:cell[ancestor::tei:table[1][@rend='border']]]">td-label.border</xsl:when>
-      <xsl:when test="$node/self::tei:cell[ancestor::tei:table[1][@rend='border']]">td.border</xsl:when>
+      <xsl:when test="$node/self::tei:cell[xs:integer(@cols) gt 1 or ancestor::tei:table[1][@rend eq 'border'] or @role eq 'label' or parent::tei:row[@role eq 'label']]">
+        <xsl:variable name="parts">
+          <xsl:choose>
+            <xsl:when test="$node/parent::tei:row[@role eq 'label']">
+              <xsl:text>tr-label</xsl:text>
+            </xsl:when>
+            <xsl:when test="$node[@role eq 'label']">
+              <xsl:text>td-label</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>td</xsl:otherwise>
+          </xsl:choose>
+          <xsl:if test="$node/ancestor::tei:table[1][@rend eq 'border']">
+            <xsl:text>.border</xsl:text>
+          </xsl:if>
+          <xsl:if test="$node[xs:integer(@cols) gt 1]">
+            <xsl:text>.colspan</xsl:text>
+          </xsl:if>
+        </xsl:variable>
+        <xsl:value-of select="string-join($parts, '')"/>
+      </xsl:when>
       <xsl:when test="$node/self::tei:table">table</xsl:when>
-      <xsl:when test="$node[name() eq 'role'][. eq 'label'][parent::tei:row]">tr-label</xsl:when>
-      <xsl:when test="$node[name() eq 'role'][. eq 'label'][parent::tei:cell]">td-label</xsl:when>
       <xsl:when test="$node/self::tei:num[@type eq 'ordinal']">sup</xsl:when>
       <xsl:when test="$node/self::tei:title[@level = ('m', 'j')]">italic</xsl:when>
       <!-- for paragraph indentation

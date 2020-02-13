@@ -63,15 +63,15 @@
         "type" : "elementSpec",
         "module" : "textstructure",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2017-02-07\" xml:lang=\"en\">contains a single TEI-conformant document, combining\n    a single TEI header with one or more members of the <ident type=\"class\">model.resourceLike<\/ident> class. Multiple <gi>TEI<\/gi>\n    elements may be combined to form a <gi>teiCorpus<\/gi> element.<\/desc>" ],
-        "shortDesc" : "(TEI document) contains a single TEI-conformant document, combining\n    a single TEI header with one or more members of the model.resourceLike class. Multiple TEI\n    elements may be combined to form a teiCorpus element.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2019-06-27\" xml:lang=\"en\">contains a single TEI-conformant document, combining\n    a single TEI header with one or more members of the <ident type=\"class\">model.resource<\/ident> class. Multiple <gi>TEI<\/gi>\n    elements may be combined within a <gi>TEI<\/gi> (or <gi>teiCorpus<\/gi>) element.<\/desc>" ],
+        "shortDesc" : "(TEI document) contains a single TEI-conformant document, combining\n    a single TEI header with one or more members of the model.resource class. Multiple TEI\n    elements may be combined within a TEI (or teiCorpus) element.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-12-24\" xml:lang=\"en\">TEI document<\/gloss>" ],
         "altIdent" : 
         [  ],
         "classes" : 
         { "model" : 
-          [  ],
+          [ "model.describedResource" ],
           "atts" : 
           [ "att.global",
             "att.typed" ],
@@ -108,8 +108,24 @@
               { "type" : "elementRef",
                 "key" : "teiHeader" },
               
-              { "type" : "classRef",
-                "key" : "model.resourceLike" } ] } ] },
+              { "type" : "alternate",
+                "minOccurs" : "1",
+                "maxOccurs" : "1",
+                "content" : 
+                [ 
+                  { "type" : "sequence",
+                    "minOccurs" : "1",
+                    "maxOccurs" : "1",
+                    "content" : 
+                    [ 
+                      { "type" : "classRef",
+                        "key" : "model.resource" },
+                      
+                      { "type" : "elementRef",
+                        "key" : "TEI" } ] },
+                  
+                  { "type" : "elementRef",
+                    "key" : "TEI" } ] } ] } ] },
       
       { "ident" : "ab",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -1658,7 +1674,8 @@
         { "model" : 
           [  ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.canonical" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -2600,7 +2617,8 @@
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.divWrapper" ],
+          [ "model.divWrapper",
+            "model.pLike.front" ],
           "atts" : 
           [ "att.global" ],
           "unknown" : 
@@ -2701,10 +2719,10 @@
               [ 
                 { "ident" : "deprecationInfo",
                   "desc" : 
-                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-09-14\" xml:lang=\"en\">This element\n\t  describes why or how its parent element is being deprecated,\n\t  typically including recommendations for alternate\n\t  encoding.<\/desc>" ],
-                  "shortDesc" : "(deprecation\n\t  information) This element\n\t  describes why or how its parent element is being deprecated,\n\t  typically including recommendations for alternate\n\t  encoding.",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-09-14\" xml:lang=\"en\">This element\n          describes why or how its parent element is being deprecated,\n          typically including recommendations for alternate\n          encoding.<\/desc>" ],
+                  "shortDesc" : "(deprecation\n          information) This element\n          describes why or how its parent element is being deprecated,\n          typically including recommendations for alternate\n          encoding.",
                   "gloss" : 
-                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-09-14\" xml:lang=\"en\">deprecation\n\t  information<\/gloss>" ],
+                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-09-14\" xml:lang=\"en\">deprecation\n          information<\/gloss>" ],
                   "altIdent" : 
                   [  ] } ] } } ],
         "content" : 
@@ -2727,14 +2745,15 @@
         { "model" : 
           [ "model.emphLike" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
         [ 
           { "onElement" : true,
             "ident" : "type",
-            "mode" : "add",
+            "mode" : "change",
             "ns" : "",
             "usage" : "opt",
             "desc" : 
@@ -3740,14 +3759,15 @@
           [ "model.frontPart",
             "model.divGenLike" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
         [ 
           { "onElement" : true,
             "ident" : "type",
-            "mode" : "add",
+            "mode" : "change",
             "ns" : "",
             "usage" : "opt",
             "desc" : 
@@ -6369,7 +6389,7 @@
         [  ],
         "classes" : 
         { "model" : 
-          [  ],
+          [ "model.standOffPart" ],
           "atts" : 
           [ "att.global",
             "att.sortable",
@@ -6475,6 +6495,7 @@
           [ "model.measureLike" ],
           "atts" : 
           [ "att.global",
+            "att.typed",
             "att.measurement" ],
           "unknown" : 
           [  ] },
@@ -6482,7 +6503,7 @@
         [ 
           { "onElement" : true,
             "ident" : "type",
-            "mode" : "add",
+            "mode" : "change",
             "ns" : "",
             "usage" : "opt",
             "desc" : 
@@ -7125,6 +7146,7 @@
           [ "model.measureLike" ],
           "atts" : 
           [ "att.global",
+            "att.typed",
             "att.ranging" ],
           "unknown" : 
           [  ] },
@@ -7132,7 +7154,7 @@
         [ 
           { "onElement" : true,
             "ident" : "type",
-            "mode" : "add",
+            "mode" : "change",
             "ns" : "",
             "usage" : "opt",
             "desc" : 
@@ -8754,7 +8776,8 @@
         "classes" : 
         { "model" : 
           [ "model.segLike",
-            "model.choicePart" ],
+            "model.choicePart",
+            "model.standOffPart" ],
           "atts" : 
           [ "att.global",
             "att.segLike",
@@ -8998,8 +9021,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-12-09\" xml:lang=\"en\">describes the source from which an electronic text was derived or generated, typically a\n    bibliographic description in the case of a digitized text, or a phrase such as \"born digital\"\n    for a text which has no previous existence.<\/desc>" ],
-        "shortDesc" : "(source description) describes the source from which an electronic text was derived or generated, typically a\n    bibliographic description in the case of a digitized text, or a phrase such as \"born digital\"\n    for a text which has no previous existence.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-12-09\" xml:lang=\"en\">describes the source(s) from which an electronic text was derived or generated, typically a\n    bibliographic description in the case of a digitized text, or a phrase such as \"born digital\"\n    for a text which has no previous existence.<\/desc>" ],
+        "shortDesc" : "(source description) describes the source(s) from which an electronic text was derived or generated, typically a\n    bibliographic description in the case of a digitized text, or a phrase such as \"born digital\"\n    for a text which has no previous existence.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-07-04\" xml:lang=\"en\">source description<\/gloss>" ],
         "altIdent" : 
@@ -9291,6 +9314,33 @@
         [ 
           { "type" : "macroRef",
             "key" : "macro.specialPara" } ] },
+      
+      { "ident" : "standOff",
+        "ns" : "http:\/\/foo.foo\/foo",
+        "type" : "elementSpec",
+        "module" : "linking",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-10-31\">Functions as a\n  container element for linked data, contextual information, and\n  stand-off annotations embedded in a TEI document.<\/desc>" ],
+        "shortDesc" : "Functions as a\n  container element for linked data, contextual information, and\n  stand-off annotations embedded in a TEI document.",
+        "gloss" : 
+        [  ],
+        "altIdent" : 
+        [  ],
+        "classes" : 
+        { "model" : 
+          [ "model.resource" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.declaring" ],
+          "unknown" : 
+          [  ] },
+        "attributes" : 
+        [  ],
+        "content" : 
+        [ 
+          { "type" : "classRef",
+            "key" : "model.standOffPart" } ] },
       
       { "ident" : "stdVals",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -9608,7 +9658,7 @@
         [  ],
         "classes" : 
         { "model" : 
-          [  ],
+          [ "model.describedResource" ],
           "atts" : 
           [ "att.global",
             "att.typed" ],
@@ -9645,40 +9695,11 @@
               { "type" : "elementRef",
                 "key" : "teiHeader" },
               
-              { "type" : "alternate",
-                "minOccurs" : "1",
-                "maxOccurs" : "1",
-                "content" : 
-                [ 
-                  { "type" : "sequence",
-                    "minOccurs" : "1",
-                    "maxOccurs" : "1",
-                    "content" : 
-                    [ 
-                      { "type" : "classRef",
-                        "key" : "model.resourceLike" },
-                      
-                      { "type" : "alternate",
-                        "minOccurs" : "0",
-                        "maxOccurs" : "unbounded",
-                        "content" : 
-                        [ 
-                          { "type" : "elementRef",
-                            "key" : "TEI" },
-                          
-                          { "type" : "elementRef",
-                            "key" : "teiCorpus" } ] } ] },
-                  
-                  { "type" : "alternate",
-                    "minOccurs" : "1",
-                    "maxOccurs" : "unbounded",
-                    "content" : 
-                    [ 
-                      { "type" : "elementRef",
-                        "key" : "TEI" },
-                      
-                      { "type" : "elementRef",
-                        "key" : "teiCorpus" } ] } ] } ] } ] },
+              { "type" : "classRef",
+                "key" : "model.resource" },
+              
+              { "type" : "classRef",
+                "key" : "model.describedResource" } ] } ] },
       
       { "ident" : "teiHeader",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -9760,7 +9781,7 @@
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.resourceLike" ],
+          [ "model.resource" ],
           "atts" : 
           [ "att.global",
             "att.declaring",
@@ -10108,8 +10129,8 @@
           [ "model.emphLike" ],
           "atts" : 
           [ "att.global",
-            "att.canonical",
             "att.typed",
+            "att.canonical",
             "att.datable" ],
           "unknown" : 
           [  ] },
@@ -10270,14 +10291,15 @@
         { "model" : 
           [ "model.frontPart" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
         [ 
           { "onElement" : true,
             "ident" : "type",
-            "mode" : "add",
+            "mode" : "change",
             "ns" : "",
             "usage" : "opt",
             "desc" : 
@@ -10334,14 +10356,15 @@
           [ "model.titlepagePart",
             "model.pLike.front" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
         [ 
           { "onElement" : true,
             "ident" : "type",
-            "mode" : "add",
+            "mode" : "change",
             "ns" : "",
             "usage" : "opt",
             "desc" : 
@@ -10992,7 +11015,8 @@
           [  ],
           "classes" : 
           { "model" : 
-            [ "model.inter" ],
+            [ "model.inter",
+              "model.standOffPart" ],
             "atts" : 
             [  ],
             "unknown" : 
@@ -11135,6 +11159,18 @@
           "desc" : 
           [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-10-07\" xml:lang=\"en\">groups elements which contain a description of their function.<\/desc>" ],
           "shortDesc" : "groups elements which contain a description of their function.",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ] },
+        
+        { "ident" : "model.describedResource",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2019-12-10\" xml:lang=\"en\">groups elements which\n  contain the content of a digital resource and its metadata; these\n  elements may serve as the outermost or <soCalled>root<\/soCalled>\n  element of a TEI-conformant document<\/desc>" ],
+          "shortDesc" : "groups elements which\n  contain the content of a digital resource and its metadata; these\n  elements may serve as the outermost or root\n  element of a TEI-conformant document",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -11511,7 +11547,8 @@
           [  ],
           "classes" : 
           { "model" : 
-            [ "model.global" ],
+            [ "model.global",
+              "model.standOffPart" ],
             "atts" : 
             [  ],
             "unknown" : 
@@ -11726,7 +11763,8 @@
           [  ],
           "classes" : 
           { "model" : 
-            [ "model.inter" ],
+            [ "model.standOffPart",
+              "model.inter" ],
             "atts" : 
             [  ],
             "unknown" : 
@@ -12163,7 +12201,7 @@
             "unknown" : 
             [  ] } },
         
-        { "ident" : "model.resourceLike",
+        { "ident" : "model.resource",
           "ns" : "http:\/\/foo.foo\/foo",
           "type" : "classSpec",
           "module" : "tei",
@@ -12262,6 +12300,18 @@
             [  ],
             "unknown" : 
             [  ] } },
+        
+        { "ident" : "model.standOffPart",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2019-12-25\" xml:lang=\"en\">groups elements which may be used as children of <gi>standOff<\/gi>.<\/desc>" ],
+          "shortDesc" : "groups elements which may be used as children of standOff.",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ] },
         
         { "ident" : "model.teiHeaderPart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -14493,7 +14543,7 @@
                     "altIdent" : 
                     [  ] },
                   
-                  { "ident" : "Ω",
+                  { "ident" : "Ω",
                     "desc" : 
                     [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-11-18\" xml:lang=\"en\">SI unit of electric resistance<\/desc>" ],
                     "shortDesc" : "(ohm) SI unit of electric resistance",
@@ -14529,7 +14579,7 @@
                     "altIdent" : 
                     [  ] },
                   
-                  { "ident" : "Å",
+                  { "ident" : "Å",
                     "desc" : 
                     [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-11-18\" xml:lang=\"en\">10⁻¹⁰ m<\/desc>" ],
                     "shortDesc" : "(ångström) 10⁻¹⁰ m",
@@ -16549,8 +16599,8 @@
         "type" : "dataSpec",
         "module" : "tei",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-06-17\" xml:lang=\"en\">defines the range of attribute values used to express some\n  kind of identifying string as a single sequence\n  of unicode characters possibly including whitespace.<\/desc>" ],
-        "shortDesc" : "defines the range of attribute values used to express some\n  kind of identifying string as a single sequence\n  of unicode characters possibly including whitespace.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-06-17\" xml:lang=\"en\">defines the range of attribute values used to express some\n  kind of identifying string as a single sequence\n  of Unicode characters possibly including whitespace.<\/desc>" ],
+        "shortDesc" : "defines the range of attribute values used to express some\n  kind of identifying string as a single sequence\n  of Unicode characters possibly including whitespace.",
         "gloss" : 
         [  ],
         "altIdent" : 
@@ -16625,7 +16675,7 @@
         [ 
           { "type" : "dataRef",
             "name" : "token",
-            "restriction" : "(\\p{L}|\\p{N}|\\p{P}|\\p{S})+" } ] },
+            "restriction" : "[^\\p{C}\\p{Z}]+" } ] },
       
       { "ident" : "teidata.xTruthValue",
         "ns" : "http:\/\/foo.foo\/foo",

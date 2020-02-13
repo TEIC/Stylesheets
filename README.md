@@ -1,6 +1,6 @@
 # Stylesheets
 
-[![Build Status](https://travis-ci.org/TEIC/Stylesheets.svg?branch=dev)](https://travis-ci.org/TEIC/Stylesheets)
+[![Build Status](https://travis-ci.com/TEIC/Stylesheets.svg?branch=dev)](https://travis-ci.com/TEIC/Stylesheets)
 
 TEI XSL Stylesheets
 
@@ -10,6 +10,8 @@ This is a family of XSLT 2.0 stylesheets to transform TEI XML documents to vario
 *   attempt to define a standard TEI processing or rendering model
 
 and should not be treated as the definitive view of the TEI Consortium.
+
+For more information, see https://tei-c.org/tools/stylesheets/
 
 ## Prerequisites
 The package assumes that you have several additional tools installed. Their availability on your system can be verified by issuing the command `make check`.
@@ -30,6 +32,16 @@ Assuming you have a copy of the TEI Guidelines repository alongside your copy of
 bin/teitornc --odd ../TEI/P5/Exemplars/tei_lite.odd tei_lite.rnc
 ```
 will produce a RelaxNG Compact Syntax schema for TEI Lite.
+
+## Documentation
+
+To build the documentation, run:
+
+```bash
+make doc
+```
+
+It will then be available at `release/xslcommon/doc/tei-xsl/index.html`.
 
 
 ## About the Text Encoding Initiative (TEI)

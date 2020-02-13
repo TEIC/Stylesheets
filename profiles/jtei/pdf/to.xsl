@@ -15,7 +15,7 @@
   
   <!-- attribute sets -->
   <xsl:attribute-set name="global.flow.properties">
-    <xsl:attribute name="font-family">GentiumPlus</xsl:attribute>
+    <xsl:attribute name="font-family">GentiumPlus,DejaVu</xsl:attribute>
     <xsl:attribute name="font-size">10pt</xsl:attribute>
     <xsl:attribute name="line-height">2</xsl:attribute>
     <xsl:attribute name="text-align">justify</xsl:attribute>
@@ -38,6 +38,7 @@
     <xsl:attribute name="font-size">13pt</xsl:attribute>
     <xsl:attribute name="text-transform">uppercase</xsl:attribute>
     <xsl:attribute name="keep-with-next">always</xsl:attribute>
+    <xsl:attribute name="keep-with-previous">always</xsl:attribute>
     <xsl:attribute name="space-before">1em</xsl:attribute>
     <xsl:attribute name="space-after">1em</xsl:attribute>
   </xsl:attribute-set>
@@ -80,7 +81,7 @@
   <xsl:attribute-set name="egXML.properties">
     <xsl:attribute name="text-align">left</xsl:attribute>
     <xsl:attribute name="text-indent">0pt</xsl:attribute>
-    <xsl:attribute name="keep-together.within-page">5</xsl:attribute>
+    <xsl:attribute name="keep-together.within-page">auto</xsl:attribute>
 <!--    <xsl:attribute name="orphans">5</xsl:attribute>
     <xsl:attribute name="widows">5</xsl:attribute>-->
   </xsl:attribute-set>
@@ -154,6 +155,32 @@
       </fo:page-sequence-master>
     </fo:layout-master-set>
   </xsl:template>
+    
+  <!-- If (SVN) metadata are found, include them in a hidden paragraph in the body text. -->
+  <xsl:template name="body-metadata">
+    <xsl:variable name="metadata" select="local:get.SVNkeyword('Id')"/>
+    <xsl:if test="$metadata">
+      <fo:block margin-top="1em" color="white" line-height="0px">
+        <xsl:text>SVN keywords: </xsl:text>
+        <xsl:value-of select="$metadata"/>
+      </fo:block>
+    </xsl:if>
+  </xsl:template>  
+  
+  <!-- This function parses the SVN ID keyword into custom PDF metadata fields. -->
+  <xsl:function name="local:parse.SVN.id">
+    <xsl:for-each select="replace(local:get.SVNkeyword('Id'), '^\$Id:\s*(.*?)\s\$$', '$1')[count(tokenize(., '\s')) = 5]">
+      <pdf:name key="SVN revision" xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf">
+        <xsl:value-of select="tokenize(., '\s+')[2]"/>
+      </pdf:name>
+      <pdf:name key="last changed" xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf">
+        <xsl:value-of select="string-join(tokenize(., '\s+')[position() = (3, 4)], ', ')"/>
+      </pdf:name>
+      <pdf:name key="last changed by" xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf">
+        <xsl:value-of select="tokenize(., '\s+')[5]"/>
+      </pdf:name>
+    </xsl:for-each>
+  </xsl:function>
 
   <!-- ==================================================================================== -->
   <!-- TEXT SKELETON                                                                        -->
@@ -247,6 +274,7 @@
   
   <xsl:template name="front">
     <xsl:call-template name="article.title"/>
+    <xsl:call-template name="body-metadata"/>
     <xsl:apply-templates select="/tei:TEI/tei:text/tei:front/tei:div[@type='abstract']"/>
     <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass"/>
     <xsl:call-template name="front.divs"/>
@@ -387,7 +415,7 @@
 
   <!-- group figure contents and headings in a block --> 
   <xsl:template match="tei:figure">
-    <fo:block xsl:use-attribute-sets="block.spacing.properties" keep-together.within-page="5">
+    <fo:block xsl:use-attribute-sets="block.spacing.properties" keep-together.within-page="auto">
       <xsl:for-each select="@xml:id">
         <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
       </xsl:for-each>
@@ -755,10 +783,12 @@
       <xsl:variable name="marker">
         <xsl:call-template name="get.inline.list.marker"/>
       </xsl:variable>
-      <fo:inline>
-        <xsl:value-of select="$marker"/>
-      </fo:inline>
-      <xsl:text> </xsl:text>
+      <xsl:for-each select="$marker[normalize-space()]">
+        <fo:inline>
+          <xsl:value-of select="."/>
+          <xsl:text> </xsl:text>
+        </fo:inline>        
+      </xsl:for-each>
       <xsl:apply-templates/>
       <xsl:if test="following-sibling::tei:item">
         <xsl:text> </xsl:text>
@@ -880,7 +910,11 @@
   </xsl:template>
   
   <xsl:template match="tei:cell">
-    <fo:table-cell xsl:use-attribute-sets="table.properties cell.properties">    
+    <fo:table-cell xsl:use-attribute-sets="table.properties cell.properties">
+      <!-- Colspanning cells should have centred content. -->
+      <xsl:if test="@cols[xs:integer(.) gt 1]">
+        <xsl:attribute name="text-align">center</xsl:attribute>
+      </xsl:if>
       <xsl:for-each select="@cols">
         <xsl:attribute name="number-columns-spanned"><xsl:value-of select="."/></xsl:attribute>
       </xsl:for-each>
@@ -921,6 +955,14 @@
     <xsl:for-each select="$table_with_no_colspans">
       <xsl:apply-templates mode="rowspan" />
     </xsl:for-each>
+  </xsl:template>
+  
+  <!-- Expand <ptr/> during table normalization, in order to include URLs in column width calculation. -->
+  <xsl:template match="tei:ptr" mode="rowspan colspan">
+    <tei:ref>
+      <xsl:apply-templates select="@*" mode="#current"/>
+      <xsl:value-of select="@target"/>
+    </tei:ref>
   </xsl:template>
   
   <xsl:template match="@*|node()" mode="rowspan colspan">
@@ -987,7 +1029,7 @@
         max(
           for $cell in $current//tei:cell[$pos]
           return max((
-            for $a in tokenize($cell, '\s+') 
+            for $a in tokenize($cell, '[-\s/]+') 
             return string-length($a) div max(($cell/@cols, 1)), 
             for $a in $cell//(tei:figure[1])/tei:graphic return 10
           ))

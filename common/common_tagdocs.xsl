@@ -2174,7 +2174,7 @@
     <xsl:param name="depth">1</xsl:param>
     <xsl:param name="me"/>
     <xsl:variable name="this" select="@ident"/>
-    <xsl:if test="not($this = $me) and key('CLASSMEMBERS', $this)">
+    <xsl:if test="not($this = $me) and key('CLASSMEMBERS', $this, $top )">
       <xsl:element namespace="{$outputNS}" name="{$hiName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>showmembers</xsl:text>
@@ -2183,7 +2183,7 @@
         <xsl:if test="$depth > 1"> [</xsl:if>
         <xsl:variable name="list">
           <ClassList>
-            <xsl:for-each select="key('CLASSMEMBERS', $this)">
+            <xsl:for-each select="key('CLASSMEMBERS', $this, $top )">
               <Item type="{local-name()}" ident="{@ident}">
                 <xsl:call-template name="linkTogether">
                   <xsl:with-param name="name" select="concat(@prefix, @ident)"/>
@@ -2907,6 +2907,14 @@
     <xsl:variable name="name" select="concat(@prefix, @ident)"/>
     <xsl:choose>
       <xsl:when test="tei:content//rng:ref[@name = 'macro.anyXML']">
+        <xsl:element namespace="{$outputNS}" name="{$segName}">
+          <xsl:attribute name="{$langAttributeName}">
+            <xsl:value-of select="$documentationLanguage"/>
+          </xsl:attribute>
+          <xsl:text>ANY</xsl:text>
+        </xsl:element>
+      </xsl:when>
+      <xsl:when test="tei:content//tei:anyElement">
         <xsl:element namespace="{$outputNS}" name="{$segName}">
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
