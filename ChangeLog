@@ -1,3 +1,268 @@
+2020-02-13  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	upped version for release
+
+	YOUR COMMIT MESSAGE
+
+2020-02-11  Syd Bauman  <s.bauman@neu.edu>
+
+	Update an expected result
+
+2020-02-11  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	remove header style from paragraph
+
+2020-02-10  Syd Bauman  <s.bauman@neu.edu>
+
+	Update tests to match
+
+	Fix #418: Ignore 'desc' elements that have a type= of "deprecationInfo" when making tagdocs.
+
+2020-02-09  Syd Bauman  <s.bauman@neu.edu>
+
+	Fix TEI issue 1625: Kludge teiodds.xsl so that it processes all of the sch:rule children, or all of the sch:assert and sch:report children, of the tei:constraint at one time, thus plopping them all into a single sch:pattern in the RNG output. Seems to work in small tests, but more excersiging is in order.
+
+2020-02-04  Syd Bauman  <s.bauman@neu.edu>
+
+	Fix #403: With @peterstadler and @raffazizzi, change code so the SCH:LET element is specifically copied in right place. (Does not work if a context= attribute of "." is specified.
+
+2020-01-30  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #416 from rvdb/jTEI-fixlist
+	removed a spurious whitespace before simple inline lists
+
+2020-01-28  rvdb  <ron.vandenbranden@kantl.be>
+
+	removed a spurious whitespace before simple inline lists
+
+2020-01-28  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #414 from rvdb/jTEI-fixrelativelinks
+	fixed a mistake from https://github.com/TEIC/Stylesheets/pull/406: do…
+
+2020-01-28  rvdb  <ron.vandenbranden@kantl.be>
+
+	fixed a mistake from https://github.com/TEIC/Stylesheets/pull/406: don't copy any relative links ("crossref", "bibl")
+
+2020-01-24  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #394 from TEIC/issue312
+	change to full URLs for CSS imports
+
+2020-01-23  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	adjusting feedback URLs
+	related to https://github.com/TEIC/TEI/issues/1936
+
+2020-01-22  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #410 from rvdb/jTEI-centercolspan
+	added automatic centering of table cells spanning multiple columns
+
+2020-01-22  rvdb  <ron.vandenbranden@kantl.be>
+
+	added automatic centering of table cells spanning multiple columns
+	fixes https://github.com/TEIC/Stylesheets/issues/409
+
+2020-01-21  Syd Bauman  <s.bauman@neu.edu>
+
+	Fix #404, take 3: Copied over expected test results for 15. (Old version did not have 'abbr', 'desc', or several other elements it should have\!)
+
+	Fix #404 again: Oops. Forgot to remove an <xsl:message>.
+
+	merge in dev
+
+	Fix #404: With @martindholmes, @martinascholger, @peterstadler, @lujessica, add the '' parameter to the call to key() so that CLASSMEMBERS is instantiated on the input compiled ODD (we hope) rather than whatever the current messed-up set of constructs is.
+
+2019-12-28  martindholmes  <mholmes@uvic.ca>
+
+	Adding a mime type for SVG images.
+
+2019-12-13  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #406 from rvdb/jTEI-fixes
+	jTEI fixes
+
+2019-12-13  rvdb  <ron.vandenbranden@kantl.be>
+
+	fixed processing of tei:ref
+
+	added DejaVu as substitution font for GentiumPlus
+
+	Merge branch 'dev' of https://github.com/rvdb/Stylesheets into dev
+
+	Merge branch 'dev' of https://github.com/rvdb/Stylesheets into dev
+
+	take into account <ptr> targets when calculating table column width ratio
+
+2019-12-13  Elisa Beshero-Bondar  <ebbondar@gmail.com>
+
+	incrementing post-release version 7.48.0a
+
+2019-10-16  martindholmes  <mholmes@uvic.ca>
+
+	Missed one change in expected results.
+
+	Fix for expected results following recent changes to P5 specs.
+
+2019-10-15  martindholmes  <mholmes@uvic.ca>
+
+	Change to expected results from TEI commit 4d3ae73982d8be280f3ecfc6c75372224e8a2b7f.
+
+2019-10-02  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix for #396.
+
+2019-09-29  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	remove replaced jquery library #395
+
+	upgrade jquery library #395
+
+2019-09-20  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	switch scheme to https
+	for `unparsed-text()` does not follow redirects and Saxon does not support catalog files for unparsed text files, see https://www.saxonica.com/html/documentation/sourcedocs/xml-catalogs.html
+
+	replace relative paths with full URLs #312
+
+2019-09-16  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+	Added a step to remove empty tei:hi before final clean up step.
+
+2019-09-16  Peter Daengeli  <pdaengeli@mac.com>
+
+	Improve error handling for faulty moduleRef uri (#369)
+	* Improve error handling for faulty moduleRef uri
+	
+	This PR intends to communicate the cause of failure more clearly in cases where external modules are referenced and the resource is not available/parseable during conversion.
+	
+	We found this with @textloop when trying to include
+	
+	```xml
+	<moduleRef url="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/mathml2-main.rng"/>
+	```
+	which is now (after the February incident?) forwarded to https.
+	
+	**Error message before this change:**
+	
+	```
+	System ID: /Volumes/WORKBENCH/gitlab/testing/schema/tei_hal.odd
+	Scenario: TEI ODD to RELAX NG XML - Copy
+	Build file: /Applications/oXygen XML/oxygen 21.0/frameworks/tei/xml/tei/stylesheet/relaxng/build-to.xml
+	Engine name: ANT
+	Severity: fatal
+	Description: Transformation failed. /Applications/oXygen XML/oxygen 21.0/frameworks/tei/xml/tei/stylesheet/common/teianttasks.xml:356: ; SystemID: file:/Applications/oXygen%20XML/oxygen%2021.0/frameworks/tei/xml/tei/stylesheet/odds/teiodds.xsl; Line#: 1238; Column#: 20
+	```
+	```
+	     [xslt] start importing moduleRef components
+	     [xslt]  .... import module [http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/mathml2-main.rng] 
+	     [xslt] http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/mathml2-main.rng:6:3: Fatal Error! Error reported by XML parser Cause: org.xml.sax.SAXParseException; systemId: http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/mathml2-main.rng; lineNumber: 6; columnNumber: 3; The element type "hr" must be terminated by the matching end-tag "</hr>".
+	     [xslt] Failed to process /Volumes/WORKBENCH/gitlab/testing/schema/tei_hal.odd.processedodd
+	```
+	
+	**Error message after this change:**
+	
+	```
+	System ID: /Volumes/WORKBENCH/gitlab/testing/schema/tei_hal.odd
+	Scenario: TEI ODD to RELAX NG XML - Copy
+	Build file: /Applications/oXygen XML/oxygen 21.0/frameworks/tei/xml/tei/stylesheet/relaxng/build-to.xml
+	Engine name: ANT
+	Severity: fatal
+	Description: Transformation failed. Fatal error during transformation using /Applications/oXygen XML/oxygen 21.0/frameworks/tei/xml/tei/stylesheet/profiles/default/relaxng/to.xsl: Processing terminated by xsl:message at line 1255 in teiodds.xsl; SystemID: file:/Applications/oXygen%20XML/oxygen%2021.0/frameworks/tei/xml/tei/stylesheet/odds/teiodds.xsl; Line#: 1255; Column#: 4
+	```
+	```
+	     [xslt] start importing moduleRef components
+	     [xslt]  .... import module [http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/mathml2-main.rng] 
+	     [xslt] Document not available: http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/mathml2-main.rng
+	     [xslt] /Applications/oXygen XML/oxygen 21.0/frameworks/tei/xml/tei/stylesheet/odds/teiodds.xsl:1255:4: Fatal Error! Processing terminated by xsl:message at line 1255 in teiodds.xsl
+	     [xslt] Failed to process /Volumes/WORKBENCH/gitlab/testing/schema/tei_hal.odd.processedodd
+	```
+	
+	It would also be possible to call the (otherwise unused) `die` template, but getting the right line number immediately in the error message seems preferable.
+	
+	* remove comment from pull request
+
+2019-09-16  James Cummings  <296651+jamescummings@users.noreply.github.com>
+
+	Merge pull request #377 from bfirsh/patch-1
+	Add instructions on how to build documentation
+
+	Merge branch 'dev' into patch-1
+
+2019-09-16  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Merge branch 'dev' into pr109fix
+
+2019-09-15  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	colored symbols in docx2tei (#390)
+	* apply fix provided by @tomazerjavec #389
+	
+	Co-Authored-By: Tomaž Erjavec <tomazerjavec@users.noreply.github.com>
+	
+	* trying to fix indentation
+	
+	* add test for issue #389
+
+2019-09-14  martindholmes  <mholmes@uvic.ca>
+
+	Fix for expected-results, now we're running explicitly against p5subset.xml from the Jenkins P5-dev build.
+
+2019-09-14  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	update travis URL (part 2)
+
+	update travis URL
+
+2019-09-14  martindholmes  <mholmes@uvic.ca>
+
+	Tweak to expected-results.
+
+2019-09-06  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #392 from rvdb/jTEI-svnkeywords
+	refined SVN keyword processing, so that unexpanded keywords (e.g. $Id…
+
+2019-09-06  martindholmes  <mholmes@uvic.ca>
+
+	Whitespace issues in expected results.
+
+	More fixes for expected results.
+
+	Updating expected-results for most recent changes to P5.
+
+2019-09-05  rvdb  <ron.vandenbranden@kantl.be>
+
+	in PDF output, moved SVN keywords to title page, before abstract (so it doesn't disturb searching in PDF)
+
+	refined SVN keyword processing, so that unexpanded keywords (e.g. $Id$) are copied as well (in order to copy the unexpanded keywords to the debug output)
+
+2019-09-05  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #391 from rvdb/jTEI-svnkeywords
+	added processing of the SVN $Id$ keyword
+
+2019-09-05  rvdb  <ron.vandenbranden@kantl.be>
+
+	small adjustment to include SVN keywords literally (in order to be able to ignore them in jTEI debug output files)
+
+	added processing of the SVN $Id$ keyword
+
+2019-08-27  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #388 from rvdb/jTEI-improve-tablecolumns
+	take into account <ptr> targets when calculating table column width ratio.
+
+2019-08-27  rvdb  <ron.vandenbranden@kantl.be>
+
+	take into account <ptr> targets when calculating table column width ratio
+
+2019-07-16  Elisa Beshero-Bondar  <ebbondar@gmail.com>
+
+	incrementing post-release version 7.48.0a
 2019-07-16  Peter Stadler  <stadlerpeter@yahoo.fr>
 
 	update expected results
