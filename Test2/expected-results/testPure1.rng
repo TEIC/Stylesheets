@@ -2963,6 +2963,15 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
          <ref name="t_correspDesc"/>
       </choice>
    </define>
+   <define name="t_model.standOffPart">
+      <choice>
+         <ref name="t_model.global.meta"/>
+         <ref name="t_model.biblLike"/>
+         <ref name="t_model.listLike"/>
+         <ref name="t_listChange"/>
+         <ref name="t_seg"/>
+      </choice>
+   </define>
    <define name="t_att.formula.attributes">
       <ref name="t_att.formula.attribute.formula"/>
    </define>
@@ -2996,9 +3005,16 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
          <ref name="t_correspContext"/>
       </choice>
    </define>
-   <define name="t_model.resourceLike">
+   <define name="t_model.resource">
       <choice>
+         <ref name="t_standOff"/>
          <ref name="t_text"/>
+      </choice>
+   </define>
+   <define name="t_model.describedResource">
+      <choice>
+         <ref name="t_teiCorpus"/>
+         <ref name="t_TEI"/>
       </choice>
    </define>
    <define name="t_att.personal.attributes">
@@ -3292,11 +3308,11 @@ Suggested values include: 1] spoken; 2] thought; 3] written; 4] soCalled; 5] for
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
                       context="tei:desc[ @type eq 'deprecationInfo']">
-	              <sch:assert test="../@validUntil">Information about a
-	deprecation should only be present in a specification element
-	that is being deprecated: that is, only an element that has a
-	@validUntil attribute should have a child &lt;desc
-	type="deprecationInfo"&gt;.</sch:assert>
+               <sch:assert test="../@validUntil">Information about a
+        deprecation should only be present in a specification element
+        that is being deprecated: that is, only an element that has a
+        @validUntil attribute should have a child &lt;desc
+        type="deprecationInfo"&gt;.</sch:assert>
             </sch:rule>
          </pattern>
          <ref name="t_att.global.attributes"/>
@@ -4447,11 +4463,6 @@ Elements]</a:documentation>
                            test="@target and count( child::* ) &gt; 0">
 If the @target attribute on <sch:name/> is used, the
 relatedItem element must be empty</sch:report>
-            </rule>
-         </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-relatedItem-targetorcontent1-constraint-assert-8">
-            <rule context="tei:relatedItem">
                <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
@@ -4664,31 +4675,12 @@ Suggested values include: 1] setting; 2] entrance; 3] exit; 4] business; 5] nove
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains the whole of a TEI encoded corpus, comprising a single corpus header and one or more <code xmlns="http://www.w3.org/1999/xhtml">&lt;TEI&gt;</code> elements, each containing a single text header and a text. [4. Default Text Structure 15.1. Varieties of Composite Text]</a:documentation>
          <group>
             <ref name="t_teiHeader"/>
-            <choice>
-               <group>
-          
-                  <oneOrMore>
-                     <ref name="t_model.resourceLike"/>
-                  </oneOrMore>
-          
-          
-                  <zeroOrMore>
-                     <choice>
-                        <ref name="t_TEI"/>
-                        <ref name="t_teiCorpus"/>
-                     </choice>
-                  </zeroOrMore>
-          
-               </group>
-        
-               <oneOrMore>
-                  <choice>
-                     <ref name="t_TEI"/>
-                     <ref name="t_teiCorpus"/>
-                  </choice>
-               </oneOrMore>
-        
-            </choice>
+            <zeroOrMore>
+               <ref name="t_model.resource"/>
+            </zeroOrMore>
+            <oneOrMore>
+               <ref name="t_model.describedResource"/>
+            </oneOrMore>
          </group>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.typed.attributes"/>
@@ -4779,16 +4771,12 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(TEI header) supplies descriptive and declarative metadata associated with a digital resource or set of resources. [2.1.1. The TEI Header and Its Components 15.1. Varieties of Composite Text]</a:documentation>
          <group>
             <ref name="t_fileDesc"/>
-      
             <zeroOrMore>
                <ref name="t_model.teiHeaderPart"/>
             </zeroOrMore>
-      
-      
             <optional>
                <ref name="t_revisionDesc"/>
             </optional>
-      
          </group>
          <ref name="t_att.global.attributes"/>
          <empty/>
@@ -6873,24 +6861,64 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
          <empty/>
       </element>
    </define>
+   <define name="t_standOff">
+      <element name="standOff">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [16.10. The standOff Container]</a:documentation>
+         <oneOrMore>
+            <ref name="t_model.standOffPart"/>
+         </oneOrMore>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  id="testPure1-standOff-nested_standOff_should_be_typed-constraint-assert-11">
+            <rule context="tei:standOff">
+               <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                           xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                           xmlns="http://www.tei-c.org/ns/1.0"
+                           test="@type or not(ancestor::tei:standOff)">This
+      <sch:name/> element must have a @type attribute, since it is
+      nested inside a <sch:name/>
+               </sch:assert>
+            </rule>
+         </pattern>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <ref name="t_att.declaring.attributes"/>
+         <empty/>
+      </element>
+   </define>
    <define name="t_TEI">
       <element name="TEI">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(TEI document) contains a single TEI-conformant document, combining a single TEI header with one or more members of the model.resourceLike class. Multiple <code xmlns="http://www.w3.org/1999/xhtml">&lt;TEI&gt;</code> elements may be combined to form a <code xmlns="http://www.w3.org/1999/xhtml">&lt;teiCorpus&gt;</code> element. [4. Default Text Structure 15.1. Varieties of Composite Text]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(TEI document) contains a single TEI-conformant document, combining a single TEI header with one or more members of the model.resource class. Multiple <code xmlns="http://www.w3.org/1999/xhtml">&lt;TEI&gt;</code> elements may be combined within a <code xmlns="http://www.w3.org/1999/xhtml">&lt;TEI&gt;</code> (or <code xmlns="http://www.w3.org/1999/xhtml">&lt;teiCorpus&gt;</code>) element. [4. Default Text Structure 15.1. Varieties of Composite Text]</a:documentation>
          <group>
             <ref name="t_teiHeader"/>
-            <oneOrMore>
-               <ref name="t_model.resourceLike"/>
-            </oneOrMore>
+            <choice>
+	              <group>
+	                 <oneOrMore>
+                     <ref name="t_model.resource"/>
+                  </oneOrMore>
+	                 <zeroOrMore>
+                     <ref name="t_TEI"/>
+                  </zeroOrMore>
+	              </group>
+	              <oneOrMore>
+                  <ref name="t_TEI"/>
+               </oneOrMore>
+            </choice>
          </group>
-         <ns xmlns="http://purl.oclc.org/dsdl/schematron"
-             prefix="tei"
-             uri="http://www.tei-c.org/ns/1.0"/>
-         <ns xmlns="http://purl.oclc.org/dsdl/schematron"
-             prefix="xs"
-             uri="http://www.w3.org/2001/XMLSchema"/>
-         <ns xmlns="http://purl.oclc.org/dsdl/schematron"
-             prefix="rng"
-             uri="http://relaxng.org/ns/structure/1.0"/>
+         <sch:ns xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                 xmlns="http://www.tei-c.org/ns/1.0"
+                 prefix="tei"
+                 uri="http://www.tei-c.org/ns/1.0"/>
+         <sch:ns xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                 xmlns="http://www.tei-c.org/ns/1.0"
+                 prefix="xs"
+                 uri="http://www.w3.org/2001/XMLSchema"/>
+         <sch:ns xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                 xmlns="http://www.tei-c.org/ns/1.0"
+                 prefix="rng"
+                 uri="http://relaxng.org/ns/structure/1.0"/>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.typed.attributes"/>
          <optional>
@@ -6908,38 +6936,30 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
       <element name="text">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a single text of any kind, whether unitary or composite, for example a poem or drama, a collection of essays, a novel, a dictionary, or a corpus sample. [4. Default Text Structure 15.1. Varieties of Composite Text]</a:documentation>
          <group>
-      
             <zeroOrMore>
                <ref name="t_model.global"/>
             </zeroOrMore>
-      
             <optional>
                <group>
                   <ref name="t_front"/>
-        
-                  <zeroOrMore>
+	                 <zeroOrMore>
                      <ref name="t_model.global"/>
                   </zeroOrMore>
-        
                </group>
             </optional>
             <choice>
                <ref name="t_body"/>
                <ref name="t_group"/>
             </choice>
-      
             <zeroOrMore>
                <ref name="t_model.global"/>
             </zeroOrMore>
-      
             <optional>
                <group>
                   <ref name="t_back"/>
-        
-                  <zeroOrMore>
+	                 <zeroOrMore>
                      <ref name="t_model.global"/>
                   </zeroOrMore>
-        
                </group>
             </optional>
          </group>
