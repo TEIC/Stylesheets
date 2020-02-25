@@ -61,7 +61,7 @@ of this software, even if advised of the possibility of such damage.</p>
   -->
   <xsl:variable name="filename" select="tokenize( base-uri(/),'/')[last()]"/>
   <xsl:param name="version" select="replace( $filename, '^readme-([0-9aαbβ.-]+)\.xml$','$1')"/>
-  <xsl:param name="vault" select="'http://www.tei-c.org/Vault/P5'"/>
+  <xsl:param name="vault" select="'https://www.tei-c.org/Vault/P5'"/>
   <xsl:param name="docPath" select="'doc/tei-p5-doc/en/html'"/>
   <xsl:variable name="testVersionedDocument" select="concat( $vault,'/',$version,'/VERSION')"/>
   <xsl:variable name="tagdocStart" select="concat( $vault,'/',$version,'/',$docPath,'/ref-')"/>

@@ -1761,6 +1761,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:when>
         </xsl:choose>
         <xsl:choose>
+          
           <xsl:when test="$New/tei:defaultVal">
             <xsl:apply-templates mode="justcopy" select="$New/tei:defaultVal"/>
           </xsl:when>
