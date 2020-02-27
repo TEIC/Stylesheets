@@ -184,7 +184,7 @@
   
   <!--Front -->
   <xsl:template match="front">
-    <xsl:apply-templates select="div[@type='abstract']"/>
+    <xsl:apply-templates select="child::div[@type='abstract']"/>
     <xsl:call-template name="front.divs"/>
   </xsl:template>
   
@@ -929,7 +929,7 @@
     <xsl:function name="local:isSelfClosing" as="xs:boolean">
       <xsl:param name="el" as="node()"/>
         <xsl:variable name="tagName" select="local-name($el)"/>
-        <xsl:value-of select="$tagName = ('lb', 'pb', 'cb') or xs:string($el) = ''"/>
+        <xsl:sequence select="$tagName = ('lb', 'pb', 'cb') or xs:string($el) = ''"/>
     </xsl:function>
     
     

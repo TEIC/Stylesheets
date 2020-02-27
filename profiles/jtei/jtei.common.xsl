@@ -370,7 +370,7 @@
        tested if any of these is a "quotation element". -->
   <xsl:function name="local:endsWithPullingPunctuationQuotes" as="xs:boolean">
     <xsl:param name="node"/>
-    <xsl:value-of select="
+    <xsl:sequence select="
       some $text in $node/descendant::text()[normalize-space()][last()]
       (: descendant-or-self::*: include preceding sibling node itself, too :)
       satisfies $node/descendant-or-self::*
