@@ -2988,9 +2988,7 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:element namespace="{$outputNS}" name="{$divName}">
-            <xsl:attribute name="{$rendName}">
-              <xsl:text>specChildren</xsl:text>
-            </xsl:attribute>
+            <xsl:attribute name="{$rendName}" select="'specChildren'"/>
             <xsl:for-each-group select="*" group-by="@module">
               <xsl:sort select="@module"/>
               <xsl:element namespace="{$outputNS}" name="{$divName}">
@@ -3000,6 +2998,13 @@
                 <xsl:choose>
                   <xsl:when test="@type='TEXT'">
                     <xsl:sequence select="tei:i18n('character data')"/>
+                  </xsl:when>
+                  <!-- Stylesheets group has concerns about if, and how, the
+                    following should be internationalized. For now, just keep
+                    it so simple it does not need translation.
+                    — 2020-03-17 -->
+                  <xsl:when test="@type eq 'XSD'">
+                    <xsl:sequence select="'XSD '||@name"/>
                   </xsl:when>
                   <xsl:when test="@type='ANYXML'">
                     <xsl:for-each select="$here">
@@ -3051,9 +3056,18 @@
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="followRef">
+    <!-- 
+      Note that the @prefix being specified on the <Element> elements
+      we generate are mostly empty, as the current node when we are
+      called is a <tei:content> which does not have an @prefix.
+      — Stylesheets group, 2020-03-17
+    -->
     <xsl:if test=".//rng:text or .//rng:data or .//tei:textNode">
       <Element prefix="{@prefix}" type="TEXT" module="~TEXT"/>
     </xsl:if>
+    <xsl:for-each select="distinct-values( .//tei:dataRef/@name )">
+      <Element prefix="" type="XSD" module="~XSD" name="{.}"/>
+    </xsl:for-each>
     <xsl:for-each
       select=".//rng:ref | .//tei:elementRef | .//tei:classRef | .//tei:macroRef | .//tei:dataRef">
       <xsl:if
