@@ -4296,7 +4296,7 @@ occupation =
   }
 org =
   
-  ## (organisation) fournit des informations sur une organisation identifiable, telle qu'une entreprise, une tribu ou tout autre groupement de personnes. [13.2.2. Organizational Names]
+  ## (organisation) fournit des informations sur une organisation identifiable, telle qu'une entreprise, une tribu ou tout autre groupement de personnes. [13.3.3. Organizational Data]
   element org {
     (model.headLike*,
      (model.pLike*
@@ -7776,9 +7776,7 @@ line =
 listTranspose =
   
   ## supplies a list of transpositions, each of which is indicated at some point in a document typically by means of metamarks. [11.3.4.5. Transpositions]
-  element listTranspose {
-    (desc*, transpose+), att.global.attributes, empty
-  }
+  element listTranspose { desc*, att.global.attributes, empty }
 metamark =
   
   ## contains or describes any kind of graphic or written signal within a document the function of which is to determine how it should be read rather than forming part of the actual content of the document. [11.3.4.2. Metamarks]
@@ -7838,10 +7836,6 @@ retrace =
     att.dimensions.attributes,
     empty
   }
-transpose =
-  
-  ## describes a single textual transposition as an ordered list of at least two pointers specifying the order in which the elements indicated should be re-combined. [11.3.4.5. Transpositions]
-  element transpose { (ptr, ptr+), att.global.attributes, empty }
 undo =
   
   ## indicates one or more marked-up interventions in a document which have subsequently been marked for cancellation. [11.3.4.4. Confirmation, Cancellation, and Reinstatement of Modifications]

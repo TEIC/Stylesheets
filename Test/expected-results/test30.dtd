@@ -2469,7 +2469,7 @@ code %teidata.pointer;  #IMPLIED >
 <!ATTLIST opener
  %Tatt.global.attributes;
  %Tatt.written.attributes; >
-<!--doc:(organization) provides information about an identifiable organization such as a business, a tribe, or any other grouping of people. [13.2.2. Organizational Names] -->
+<!--doc:(organization) provides information about an identifiable organization such as a business, a tribe, or any other grouping of people. [13.3.3. Organizational Data] -->
 <!ELEMENT org (((%model.headLike;)*,((%model.pLike;)*|(%model.labelLike;|%model.nameLike;|%model.placeLike;|%model.orgPart;|%model.milestoneLike;)*),(%model.noteLike;|%model.biblLike;|linkGrp|link|ptr)*,(%model.personLike;)*))>
 <!ATTLIST org xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST org
@@ -3255,11 +3255,6 @@ type %teidata.enumerated;  "main"  >
  %Tatt.naming.attributes;
  %Tatt.typed.attributes;
  %Tatt.dimensions.attributes; >
-<!--doc:describes a single textual transposition as an ordered list of at least two pointers specifying the order in which the elements indicated should be re-combined. [11.3.4.5. Transpositions] -->
-<!ELEMENT transpose ((ptr,(ptr)+))>
-<!ATTLIST transpose xmlns CDATA "http://www.tei-c.org/ns/1.0">
-<!ATTLIST transpose
- %Tatt.global.attributes; >
 <!--doc:contains a word, phrase, or passage which cannot be transcribed with certainty because it is illegible or inaudible in the source. [11.3.3.1. Damage, Illegibility, and Supplied Text 3.4.3. Additions, Deletions, and Omissions] -->
 <!ELEMENT unclear %macro.paraContent;>
 <!ATTLIST unclear xmlns CDATA "http://www.tei-c.org/ns/1.0">

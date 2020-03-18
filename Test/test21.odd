@@ -36,7 +36,11 @@
         <moduleRef key="header"/>
         <moduleRef key="linking"/>
         <moduleRef key="msdescription"/>
-        <moduleRef key="transcr"/>
+        <!-- MDH 2020-03-18: removing <transpose> because it has changed
+          its content model in the dev tree, so tests fail; without it, tests can
+          (I hope) be successfully run against both the dev tree and the current
+          P5 release. -->
+        <moduleRef key="transcr" except="transpose"/>
         <moduleRef key="textstructure"/>
         <!-- Delete an attribute from an attribute class -->
         <classSpec ident="att.global" mode="change">
