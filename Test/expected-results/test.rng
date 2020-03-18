@@ -7000,9 +7000,6 @@ The @spanTo attribute of <name/> is required.</assert>
         <zeroOrMore>
           <ref name="desc"/>
         </zeroOrMore>
-        <oneOrMore>
-          <ref name="transpose"/>
-        </oneOrMore>
       </group>
       <ref name="att.global.attributes"/>
       <empty/>
@@ -7077,19 +7074,6 @@ The @spanTo attribute of <name/> is required.</assert>
       <ref name="att.spanning.attributes"/>
       <ref name="att.transcriptional.attributes"/>
       <ref name="att.dimensions.attributes"/>
-      <empty/>
-    </element>
-  </define>
-  <define name="transpose">
-    <element name="transpose">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes a single textual transposition as an ordered list of at least two pointers specifying the order in which the elements indicated should be re-combined. [11.3.4.5. Transpositions]</a:documentation>
-      <group>
-        <ref name="ptr"/>
-        <oneOrMore>
-          <ref name="ptr"/>
-        </oneOrMore>
-      </group>
-      <ref name="att.global.attributes"/>
       <empty/>
     </element>
   </define>
