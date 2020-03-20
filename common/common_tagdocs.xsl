@@ -3004,7 +3004,7 @@
                     it so simple it does not need translation.
                     — 2020-03-17 -->
                   <xsl:when test="@type eq 'XSD'">
-                    <xsl:sequence select="'XSD '||@name"/>
+                    <xsl:sequence select="concat('XSD ', @name)"/>
                   </xsl:when>
                   <xsl:when test="@type='ANYXML'">
                     <xsl:for-each select="$here">
