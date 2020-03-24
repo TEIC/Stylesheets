@@ -708,6 +708,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:dataRef" mode="#default tangle">
+    <xsl:param name="restriction"/>
     <xsl:choose>
       <xsl:when test="@name">
         <rng:data type="{@name}">
@@ -720,19 +721,22 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:value-of select="@restriction"/>
               </rng:param>
             </xsl:when>
+            <xsl:when test="$restriction">
+              <rng:param name="pattern">
+                <xsl:value-of select="$restriction"/>
+              </rng:param>
+            </xsl:when>
           </xsl:choose>
         </rng:data>
       </xsl:when>
       <xsl:when test="@key">
+        <xsl:variable name="restrict" select="@restriction"/>
         <xsl:for-each select="key('LOCALIDENTS', @key)">
-          <xsl:choose>
-            <xsl:when test="tei:content">
-              <xsl:apply-templates select="tei:content/*"/>
-            </xsl:when>
-            <xsl:when test="tei:datatype">
-              <xsl:apply-templates select="tei:datatype/*"/>
-            </xsl:when>
-          </xsl:choose>
+          <xsl:if test="tei:content">
+            <xsl:apply-templates select="tei:content/*">
+              <xsl:with-param name="restriction" select="$restrict"/>
+            </xsl:apply-templates>
+          </xsl:if>
         </xsl:for-each>
       </xsl:when>
     </xsl:choose>
