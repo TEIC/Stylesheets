@@ -3715,7 +3715,9 @@ Measures]</a:documentation>
          <optional>
             <attribute name="sameAs">
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to an element that is the same as the current element.</a:documentation>
-               <data type="nonNegativeInteger"/>
+               <data type="nonNegativeInteger">
+                  <param name="pattern">[0-9][0-9]?</param>
+               </data>
             </attribute>
          </optional>
          <optional>
