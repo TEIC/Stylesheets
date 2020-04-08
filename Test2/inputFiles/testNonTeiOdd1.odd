@@ -544,7 +544,7 @@
                <constraintSpec ident="periodsAndCommasOutsideLinks" scheme="schematron">
                   <constraint>
                      <sch:rule context="xh:a[@href]">
-                        <sch:assert test="not(matches(., '[\.,:;]\s*$')) or matches(., '((Esq\.)|(A\.\s*W\.)|(\.\s*\.\s*\.))$')"> Don't include trailing periods and commas inside link text.
+                        <sch:assert test="not(matches(., '[\.,:;]\s*$')) or matches(., '((Esq\.)|(A\.\s*W\.)|(\.\s*\.\s*\.))$')"> Don't include trailing punctuation inside link text.
                         </sch:assert>
                      </sch:rule>
                   </constraint>

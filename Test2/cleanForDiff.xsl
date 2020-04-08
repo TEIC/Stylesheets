@@ -64,9 +64,14 @@
             <xsl:copy-of select="@*"/>
         </xsl:copy>
     </xsl:template>
+
+<!-- We don't care about the details of whitespace -->
+    <xsl:template match="text()">
+      <xsl:value-of select="replace( .,'\s\s+','&#x20;')"/>
+    </xsl:template>
     
-<!--  Default identity transform.  -->
-    <xsl:template match="@* | node()" priority="-1" mode="#all">
+<!--  Default identity transform for things not matched above  -->
+    <xsl:template match="@* | * | processing-instruction()" priority="-1" mode="#all">
         <xsl:copy>
             <xsl:apply-templates mode="#current" select="@*|node()"/>
         </xsl:copy>

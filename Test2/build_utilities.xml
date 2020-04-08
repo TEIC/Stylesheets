@@ -144,30 +144,34 @@
     <!--  If not regenerating, then diff the file.      -->
     <trycatch if:blank="${regenerate}">
       <try>
-        <echo message="diff A: ${inFile}"/>
-        <echo message="diff B: ${otherFile}"/>
-        <fail message="${inFile} is different from ${otherFile}.">    
+        <echo message="about to compare files:"/>
+	<!-- 
+	     Note: the format of the following message is designed to allow
+	     the user to copy-and-paste the two file paths into a `diff` or
+	     `cp` command. Just select everything after the '='.
+	-->
+        <echo message="inFile otherFile = ${inFile} ${otherFile}"/>
+        <fail message="Sadly, ${inFile} is different from ${otherFile}.">    
           <condition>
             <not>
-              <filesmatch file1="${inFile}" file2="${otherFile}"/>
+              <filesmatch textfile="true" file1="${inFile}" file2="${otherFile}"/>
             </not>
           </condition>
         </fail>
       </try>
       <catch>
-        <echo message="ERROR: DIFF FAILURE..."/>
+        <echo message="ERROR: &lt;filesmatch> FAILURE..."/>
         <!--  Note: this currently depends on the command-line diff app
       available on *NIX platforms, but we could fork here and 
       call diff.exe on Windows. Even if we don't, the build 
       should only fail here on Windows if the files are different;
       there would simply be less in the way of useful output. -->
         <exec dir="." executable="diff">
-          <arg line="-u"/>
-          <arg line="-b"/>
+	  <arg line="-C0"/>	<!-- MDH may change this back to -u, but SDB likes -C0 -->
           <arg file="${inFile}"/>
           <arg file="${otherFile}"/>
         </exec>
-        <fail message="Build failed because of differences between  ${inFile} and ${otherFile}. See diff output above."/>
+        <fail message="Build failed because of differences between ${inFile} and ${otherFile}. See diff output above."/>
       </catch>
     </trycatch>
   </target>
