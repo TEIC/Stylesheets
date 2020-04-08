@@ -105,7 +105,7 @@ of this software, even if advised of the possibility of such damage.
 		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
 	           <xsl:text>}</xsl:text>
          </xsl:when>
-         <xsl:when test="lang('kr')">
+         <xsl:when test="lang('ko')">
 	           <xsl:text>{\textKorean </xsl:text>
 		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
 	           <xsl:text>}</xsl:text>
