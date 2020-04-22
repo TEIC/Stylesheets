@@ -859,7 +859,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="@first"><xsl:text>  Main hand : </xsl:text><xsl:value-of select="@first"/></xsl:if>
       <xsl:if test="@mainLang"><xsl:text> Main language: </xsl:text><xsl:value-of select="@mainLang"/>
       </xsl:if>
-      <xsl:if test="@resp"><xsl:text>  Responsibiity: </xsl:text><xsl:value-of select="@resp"/></xsl:if>
+      <xsl:if test="@resp"><xsl:text>  Responsibility: </xsl:text><xsl:value-of select="@resp"/></xsl:if>
       
     </handNote>
   </xsl:template>
