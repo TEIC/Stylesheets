@@ -189,7 +189,19 @@
         <xsl:apply-templates/>
     </xsl:template>
 
-    <xsl:template match="p|trailer">
+    <xsl:template match="hi[@rend = 'bold']">
+        <xsl:text>**</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text>**</xsl:text>
+    </xsl:template>
+
+    <xsl:template match="l">
+        <xsl:apply-templates/>
+        <xsl:text>  </xsl:text>
+        <xsl:call-template name="newline"/>
+    </xsl:template>
+
+    <xsl:template match="p|trailer|lg">
         <xsl:call-template name="newline"/>
         <xsl:apply-templates/>
         <xsl:call-template name="newline"/>
