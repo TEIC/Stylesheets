@@ -213,6 +213,12 @@
         <xsl:call-template name="newline"/>
     </xsl:template>
 
+    <xsl:template match="note/p|ref">
+        <xsl:text> \[</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text>\] </xsl:text>
+    </xsl:template>
+
     <xsl:template match="head">
         <xsl:choose>
             <xsl:when test="parent::castList"/>
