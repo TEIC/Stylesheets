@@ -189,6 +189,12 @@
         <xsl:apply-templates/>
     </xsl:template>
 
+    <xsl:template match="q">
+        <xsl:text>“</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text>”</xsl:text>
+    </xsl:template>
+
     <xsl:template match="hi[@rend = 'bold']">
         <xsl:text>**</xsl:text>
         <xsl:apply-templates/>
