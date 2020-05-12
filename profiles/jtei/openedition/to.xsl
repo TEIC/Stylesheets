@@ -805,7 +805,8 @@
     </xsl:choose>
   </xsl:template>
       
-  <xsl:template match="tei:title[not(@level)][not(ancestor::tei:teiHeader)]">
+  <!-- skip all other titles in the text -->
+  <xsl:template match="tei:text//tei:title[not(@level = ('a','u', 'm', 'j'))]">
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -974,6 +975,10 @@
   </xsl:template>
   
   <xsl:template match="tei:text//tei:date" priority="0">
+    <xsl:apply-templates/>
+  </xsl:template>
+  
+  <xsl:template match="tei:text//tei:email">
     <xsl:apply-templates/>
   </xsl:template>
 
