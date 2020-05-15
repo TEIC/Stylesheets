@@ -162,8 +162,12 @@
       should only fail here on Windows if the files are different;
       there would simply be less in the way of useful output. -->
         <exec dir="." executable="diff">
-          <arg line="-u"/>
           <arg line="-b"/>
+          <arg line="--old-line-format='output: %L'"/>
+          <arg line="--new-line-format='expect: %L'"/>
+          <arg line="--unchanged-line-format=''"/>
+          <!-- This won't work because ant is logging the output. -->
+          <!--<arg line="-\-color=always"/>-->
           <arg file="${inFile}"/>
           <arg file="${otherFile}"/>
         </exec>
