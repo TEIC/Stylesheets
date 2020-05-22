@@ -144,12 +144,17 @@
     <!--  If not regenerating, then diff the file.      -->
     <trycatch if:blank="${regenerate}">
       <try>
-        <echo message="diff A: ${inFile}"/>
-        <echo message="diff B: ${otherFile}"/>
-        <fail message="${inFile} is different from ${otherFile}.">    
+        <echo message="about to compare files:"/>
+	<!-- 
+	     Note: the format of the following message is designed to allow
+	     the user to copy-and-paste the two file paths into a `diff` or
+	     `cp` command. Just select everything after the '='.
+	-->
+        <echo message="inFile otherFile = ${inFile} ${otherFile}"/>
+        <fail message="Sadly, ${inFile} is different from ${otherFile}.">    
           <condition>
             <not>
-              <filesmatch file1="${inFile}" file2="${otherFile}"/>
+              <filesmatch textfile="true" file1="${inFile}" file2="${otherFile}"/>
             </not>
           </condition>
         </fail>
@@ -171,7 +176,7 @@
           <arg file="${inFile}"/>
           <arg file="${otherFile}"/>
         </exec>
-        <fail message="Build failed because of differences between  ${inFile} and ${otherFile}. See diff output above."/>
+        <fail message="Build failed because of differences between ${inFile} and ${otherFile}. See diff output above."/>
       </catch>
     </trycatch>
   </target>
