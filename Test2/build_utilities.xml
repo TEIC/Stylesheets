@@ -96,6 +96,23 @@
     </delete>
   </target>
   
+  <target name="makeNamesFile">
+    <description>
+      TARGET makeNamesFile
+      This target runs the process to get the tools.getnames.xsl
+      transformation to generate the local names.xml file which is
+      used in ODT and DOCX transformations.
+    </description>
+    <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+      <arg value="-it:main"/>
+      <arg value="-xsl:${basedir}/../tools/getnames.xsl"/>
+      <arg value="-o:${basedir}/../names.xml"/>
+      <arg value="--suppressXsltNamespaceCheck:on"/>
+      <arg value="-versionmsg:off"/>
+      <arg value="-dtd:off"/>
+    </java>
+  </target>
+  
   <!--  These targets deal with diffing the results of transformations against
       expected results. The transformation result files are typically in the root 
       Test folder; the files to diff them against are in the Test2/expected-results
