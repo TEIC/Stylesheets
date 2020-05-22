@@ -93,15 +93,26 @@
     <delete  includeemptydirs="true">
       <fileset refid="symlinksToCssFiles"/>
       <fileset refid="generatedFiles"/>
+      <file file="${basedir}/../names.xml"/>
     </delete>
   </target>
   
-  <target name="makeNamesFile">
+  <target name="checkForNamesFile">
+    <description>
+      TARGET checkForNamesFile
+      This checks whether the names.xml file has already been
+      created, and if it has, sets a property.
+    </description>
+    <available file="${basedir}/../names.xml" property="namesFileAvailable" />
+  </target>
+  
+  <target name="makeNamesFile" depends="checkForNamesFile" unless="namesFileAvailable">
     <description>
       TARGET makeNamesFile
       This target runs the process to get the tools.getnames.xsl
       transformation to generate the local names.xml file which is
-      used in ODT and DOCX transformations.
+      used in ODT and DOCX transformations. This should run only
+      once per run of test sequence.
     </description>
     <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
       <arg value="-it:main"/>
