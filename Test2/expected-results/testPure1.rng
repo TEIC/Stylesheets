@@ -6138,7 +6138,28 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <empty/>
       </element>
    </define>
+   <define name="t_att.lexicographic.normalized.attributes">
+      <ref name="t_att.lexicographic.normalized.attribute.norm"/>
+      <ref name="t_att.lexicographic.normalized.attribute.orig"/>
+   </define>
+   <define name="t_att.lexicographic.normalized.attribute.norm">
+      <optional>
+         <attribute name="norm">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(normalized) provides the normalized/standardized form of information present in the source text in a non-normalized form</a:documentation>
+            <data type="string"/>
+         </attribute>
+      </optional>
+   </define>
+   <define name="t_att.lexicographic.normalized.attribute.orig">
+      <optional>
+         <attribute name="orig">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(original) gives the original string or is the empty string when the element does not appear in the source text.</a:documentation>
+            <data type="string"/>
+         </attribute>
+      </optional>
+   </define>
    <define name="t_att.linguistic.attributes">
+      <ref name="t_att.lexicographic.normalized.attributes"/>
       <ref name="t_att.linguistic.attribute.lemma"/>
       <ref name="t_att.linguistic.attribute.lemmaRef"/>
       <ref name="t_att.linguistic.attribute.pos"/>
