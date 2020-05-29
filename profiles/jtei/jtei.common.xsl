@@ -281,8 +281,8 @@
     <xsl:apply-templates select="$abstract.blockquote" mode="serialize"/>
   </xsl:template>
 
-  <!-- This template trims whitespace on text() nodes that are being promoted to <p>. -->
-  <xsl:template name="trim.promoted.text">
+  <!-- This template pre-processes text() nodes that are being promoted to <p>, and trims spurious whitespace afterwards. -->
+  <xsl:template name="process.promoted.text">
     <xsl:variable name="processed">
       <xsl:apply-templates select="."/>
     </xsl:variable>

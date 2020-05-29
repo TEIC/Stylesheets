@@ -372,10 +372,15 @@
             <xsl:if test="ancestor::tei:label[parent::tei:list[@type='gloss']]">
               <xsl:attribute name="rendition">#glosslabel</xsl:attribute>
             </xsl:if>
+            <!-- This is strictly speaking cosmetical, to reduce spurious whitespace. If this is no concern, further processing could be simplified with
+            
+            <xsl:apply-templates select="current-group()"/>
+            
+            -->
             <xsl:for-each select="current-group()">
               <xsl:choose>
                 <xsl:when test="self::text()">
-                  <xsl:call-template name="trim.promoted.text"/>
+                  <xsl:call-template name="process.promoted.text"/>
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:apply-templates select="."/>
@@ -393,9 +398,10 @@
               <xsl:attribute name="rendition">#glosslabel</xsl:attribute>
             </xsl:if>
             <xsl:for-each select="current-group()[position() > 1]">
+              <!-- Pre-process text() nodes only, in order to trim spurious whitespace afterwards. --> 
               <xsl:choose>
                 <xsl:when test="self::text()">
-                  <xsl:call-template name="trim.promoted.text"/>
+                  <xsl:call-template name="process.promoted.text"/>
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:apply-templates select="."/>
@@ -914,7 +920,7 @@
                 <xsl:for-each select="current-group()[position() > 1]">
                   <xsl:choose>
                     <xsl:when test="self::text()">
-                      <xsl:call-template name="trim.promoted.text"/>
+                      <xsl:call-template name="process.promoted.text"/>
                     </xsl:when>
                     <xsl:otherwise>
                       <xsl:apply-templates select="."/>

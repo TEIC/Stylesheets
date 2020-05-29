@@ -321,10 +321,15 @@
       <xsl:when test="current-group()[1][not(self::cit|self::table|self::list|self::figure|self::teix:egXML|self::eg|self::ptr[starts-with(@target, 'video:')])]">
         <xsl:if test="some $node in current-group() satisfies not($node/self::text()[not(normalize-space())])">
           <text:p text:style-name="{local:get.p.style(current-group()[1])}">
+            <!-- This is strictly speaking cosmetical, to reduce spurious whitespace. If this is no concern, further processing could be simplified with
+            
+            <xsl:apply-templates select="current-group()"/>
+            
+            -->
             <xsl:for-each select="current-group()">
               <xsl:choose>
                 <xsl:when test="self::text()">
-                  <xsl:call-template name="trim.promoted.text"/>
+                  <xsl:call-template name="process.promoted.text"/>
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:apply-templates select="."/>
@@ -339,8 +344,10 @@
         <xsl:if test="some $node in current-group()[position() > 1] satisfies not($node/self::text()[not(normalize-space())])">
           <text:p text:style-name="{local:get.p.style(current-group()[2])}">
             <xsl:for-each select="current-group()[position() > 1]">
+              <!-- Pre-process text() nodes only, in order to trim spurious whitespace afterwards. --> 
               <xsl:choose>
-                <xsl:when test="self::text()">                  <xsl:call-template name="trim.promoted.text"/>
+                <xsl:when test="self::text()">
+                  <xsl:call-template name="process.promoted.text"/>
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:apply-templates select="."/>
@@ -837,7 +844,7 @@
                 <xsl:for-each select="current-group()[position() > 1]">
                   <xsl:choose>
                     <xsl:when test="self::text()">
-                      <xsl:call-template name="trim.promoted.text"/>
+                      <xsl:call-template name="process.promoted.text"/>
                     </xsl:when>
                     <xsl:otherwise>
                       <xsl:apply-templates select="."/>
