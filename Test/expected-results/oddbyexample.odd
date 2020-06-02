@@ -60,10 +60,8 @@
             <classSpec ident="att.lexicographic" type="atts" mode="change">
                <attList>
                   <attDef ident="expand" mode="delete"/>
-                  <attDef ident="norm" mode="delete"/>
                   <attDef ident="split" mode="delete"/>
                   <attDef ident="value" mode="delete"/>
-                  <attDef ident="orig" mode="delete"/>
                   <attDef ident="location" mode="delete"/>
                   <attDef ident="mergedIn" mode="delete"/>
                   <attDef ident="opt" mode="delete"/>
@@ -178,6 +176,16 @@
             <!--Checking module transcr-->
             <!--Checking module linking-->
             <!--Checking module analysis-->
+            <classRef key="att.linguistic"/>
+            <classSpec ident="att.linguistic" type="atts" mode="change">
+               <attList>
+                  <attDef ident="lemma" mode="delete"/>
+                  <attDef ident="lemmaRef" mode="delete"/>
+                  <attDef ident="pos" mode="delete"/>
+                  <attDef ident="msd" mode="delete"/>
+                  <attDef ident="join" mode="delete"/>
+               </attList>
+            </classSpec>
             <!--Checking module textstructure-->
             <moduleRef key="textstructure" include="TEI text body"/>
             <elementSpec ident="TEI" mode="change">
