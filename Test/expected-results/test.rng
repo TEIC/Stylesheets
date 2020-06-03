@@ -9229,8 +9229,10 @@ Suggested values include: 1] main; 2] hom (homograph); 3] xref (cross reference)
   <define name="att.lexicographic.attributes">
     <ref name="att.datcat.attributes"/>
     <ref name="att.lexicographic.attribute.expand"/>
+    <ref name="att.lexicographic.attribute.norm"/>
     <ref name="att.lexicographic.attribute.split"/>
     <ref name="att.lexicographic.attribute.value"/>
+    <ref name="att.lexicographic.attribute.orig"/>
     <ref name="att.lexicographic.attribute.location"/>
     <ref name="att.lexicographic.attribute.mergedIn"/>
     <ref name="att.lexicographic.attribute.opt"/>
@@ -9239,6 +9241,14 @@ Suggested values include: 1] main; 2] hom (homograph); 3] xref (cross reference)
     <optional>
       <attribute name="expand">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives an expanded form of information presented more concisely in the dictionary</a:documentation>
+        <data type="string"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.lexicographic.attribute.norm">
+    <optional>
+      <attribute name="norm">
+        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(normalized) gives a normalized form of information given by the source text in a non-normalized form</a:documentation>
         <data type="string"/>
       </attribute>
     </optional>
@@ -9255,6 +9265,14 @@ Suggested values include: 1] main; 2] hom (homograph); 3] xref (cross reference)
     <optional>
       <attribute name="value">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives a value which lacks any realization in the printed source text.</a:documentation>
+        <data type="string"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.lexicographic.attribute.orig">
+    <optional>
+      <attribute name="orig">
+        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(original) gives the original string or is the empty string when the element does not appear in the source text.</a:documentation>
         <data type="string"/>
       </attribute>
     </optional>
