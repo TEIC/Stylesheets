@@ -244,9 +244,9 @@ characters. The normal characters remain active for LaTeX commands.
   \catcode`⃥=\active \def⃥{\textbackslash}
   \catcode`❴=\active \def❴{\{}
   \catcode`❵=\active \def❵{\}}
-  \def\textJapanese{\fontspec{IPAMincho}}
-  \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
-  \def\textKorean{\fontspec{Baekmuk Gulim} }
+  \def\textJapanese{\fontspec{<xsl:value-of select="$japaneseFont"/>}}
+  \def\textChinese{\fontspec{<xsl:value-of select="$chineseFont"/>}}
+  \def\textKorean{\fontspec{<xsl:value-of select="$koreanFont"/>}}
   \setmonofont{<xsl:value-of select="$typewriterFont"/>}
   <xsl:if test="not($sansFont='')">
     \setsansfont{<xsl:value-of select="$sansFont"/>}
@@ -393,6 +393,13 @@ characters. The normal characters remain active for LaTeX commands.
 <xsl:param name="calligraphicFont">Lucida Calligraphy</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Command to set margin font</desc>   </doc>
 <xsl:param name="marginFont">\itshape\footnotesize</xsl:param>
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for Chinese script</desc>   </doc>
+<xsl:param name="chineseFont">Noto Sans CJK SC</xsl:param>
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for Korean script</desc>   </doc>
+<xsl:param name="koreanFont">Noto Sans CJK KR</xsl:param>
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for Japanese script</desc>   </doc>
+<xsl:param name="japaneseFont">Noto Sans CJK JP</xsl:param>
+  
   <xsl:param name="longtables">true</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
