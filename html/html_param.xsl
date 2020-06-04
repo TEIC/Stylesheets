@@ -110,11 +110,11 @@ of this software, even if advised of the possibility of such damage.
       <desc>CSS style file to be associated with output file(s)</desc>
 
    </doc>
-  <xsl:param name="cssFile" as="xs:string">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
+  <xsl:param name="cssFile" as="xs:string">https://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
       <desc>CSS style file for print; this will be given a media=print attribute.</desc>
    </doc>
-  <xsl:param name="cssPrintFile" as="xs:string">http://www.tei-c.org/release/xml/tei/stylesheet/tei-print.css</xsl:param>
+  <xsl:param name="cssPrintFile" as="xs:string">https://www.tei-c.org/release/xml/tei/stylesheet/tei-print.css</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
       <desc>Secondary CSS style file; this will be given a media=screen attribute,
 so that it does not affect printing. It should be used for screen layout.</desc>
@@ -308,8 +308,8 @@ will generate an &lt;h2&gt;</p>
       <desc>[html] Logo</desc>
    </doc>
   <xsl:template name="logoPicture">
-      <a class="framelogo" href="http://www.tei-c.org/Stylesheets/">
-         <img src="http://www.tei-c.org/release/common/doc/tei-xsl-common/teixsl.png" vspace="5" width="124"
+      <a class="framelogo" href="https://www.tei-c.org/Stylesheets/">
+         <img src="https://www.tei-c.org/release/common/doc/tei-xsl-common/teixsl.png" vspace="5" width="124"
               height="161"
               border="0"
               alt="created by TEI XSL Stylesheets"/>

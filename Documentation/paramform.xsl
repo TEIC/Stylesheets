@@ -161,7 +161,7 @@ return "";
  id="stylebear">
 <p>Location of XSL stylesheets:
  <html:input type="textbox" name="TEIXSL" size="48"
-	     value="http://www.tei-c.org/release/xml"/></p>
+	     value="https://www.tei-c.org/release/xml"/></p>
 
 
 <p>Name of output file:

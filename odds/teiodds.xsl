@@ -1877,7 +1877,7 @@ select="$makeDecls"/></xsl:message>
           </xsl:choose>
         </xsl:variable>
         <xsl:variable name="versionURL"
-          select="concat('http://www.tei-c.org/Vault/P5/', $TEIVersionWithoutFullStop, '/')"/>
+          select="concat('https://www.tei-c.org/Vault/P5/', $TEIVersionWithoutFullStop, '/')"/>
         <xsl:text>&#10;TEI Edition: </xsl:text>
         <xsl:value-of select="$TEIVersion"/>
         <xsl:text>&#10;TEI Edition Location: </xsl:text>

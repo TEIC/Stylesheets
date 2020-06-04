@@ -510,7 +510,7 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:value-of select="concat($idPrefix,@ident)"/>
                   </xsl:attribute>
                   <hi>
-                    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html">
+                    <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html">
                       <xsl:value-of select="@ident"/>
                     </ref>
                   </hi>:

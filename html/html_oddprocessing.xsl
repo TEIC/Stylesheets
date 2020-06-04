@@ -396,7 +396,7 @@ of this software, even if advised of the possibility of such damage.
             | tei:elementSpec[not(@mode or @rend)]">
             <xsl:sort select="lower-case(@ident)"/>
             <tr>
-              <td id="{@ident}"><a href="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html"><xsl:value-of select="@ident"/></a>:
+              <td id="{@ident}"><a href="https://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html"><xsl:value-of select="@ident"/></a>:
 		     <xsl:sequence select="tei:makeDescription(., true(), true())"/></td>
             </tr>
           </xsl:for-each>
