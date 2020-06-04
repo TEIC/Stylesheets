@@ -43,7 +43,7 @@
   <xsl:key name="CHILDMOD" match="Element" use="@module"/>
   <xsl:variable name="Original" select="/"/>
   <xsl:param name="teiWeb">
-    <xsl:text>http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
+    <xsl:text>https://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
   </xsl:param>
   <xsl:template match="tei:ptr | tei:ref" mode="weave">
     <xsl:choose>
