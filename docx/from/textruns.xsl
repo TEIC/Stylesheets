@@ -247,10 +247,10 @@ of this software, even if advised of the possibility of such damage.
 	  <n>subscript</n>
 	</xsl:if>
 	
-	<xsl:if test="w:rPr/w:i or
+	<xsl:if test="w:rPr/w:i[not(@w:val='0')] or
 		      (ancestor::w:tc 
 		      and
-		      ($extracolumn/w:rPr/w:i  or $extrarow/w:rPr/w:i)
+		      ($extracolumn/w:rPr/w:i[not(@w:val='0')]  or $extrarow/w:rPr/w:i[not(@w:val='0')])
 		      )">
 	  <n>italic</n>
 	</xsl:if>
@@ -263,10 +263,10 @@ of this software, even if advised of the possibility of such damage.
 		      )">
 	    <n>normalweight</n>
 	  </xsl:when>
-	  <xsl:when test="w:rPr/w:b or
+	  <xsl:when test="w:rPr/w:b[not(@w:val='0')] or
 		      (ancestor::w:tc 
 		      and
-		      ($extracolumn/w:rPr/w:b  or $extrarow/w:rPr/w:b)
+		      ($extracolumn/w:rPr/w:b[not(@w:val='0')]  or $extrarow/w:rPr/w:b[not(@w:val='0')])
 		      )">
 	    <n>bold</n>
 	  </xsl:when>
