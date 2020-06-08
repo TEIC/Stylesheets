@@ -175,8 +175,8 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     <xsl:template name="basicStyles">
       <xsl:param name="parented">false</xsl:param>
-      <xsl:param name="extrarow"  tunnel="yes"/>
-     <xsl:param name="extracolumn"   tunnel="yes"/>     
+      <xsl:param name="extrarow"  tunnel="yes" as="node()?"/>
+     <xsl:param name="extracolumn"   tunnel="yes" as="node()?"/>     
      <xsl:variable name="styles">
        <xsl:choose>
 	 <xsl:when test="w:rPr/w:rFonts  and not(w:rPr/w:rFonts/@w:ascii)"/>
