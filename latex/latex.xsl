@@ -110,6 +110,11 @@ of this software, even if advised of the possibility of such damage.
 		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
 	           <xsl:text>}</xsl:text>
          </xsl:when>
+        <xsl:when test="lang('ar')">
+          <xsl:text>\hbox{</xsl:text>
+          <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
          <xsl:otherwise>
 	   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
          </xsl:otherwise>
