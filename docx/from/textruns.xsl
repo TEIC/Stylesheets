@@ -176,7 +176,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:template name="basicStyles">
       <xsl:param name="parented">false</xsl:param>
       <xsl:param name="extrarow"  tunnel="yes" as="node()?"/>
-     <xsl:param name="extracolumn"   tunnel="yes" as="node()?"/>     
+      <xsl:param name="extracolumn"   tunnel="yes" as="node()?"/>
+      <xsl:variable name="wVal.off" select="('0','false','off')"/>
      <xsl:variable name="styles">
        <xsl:choose>
 	 <xsl:when test="w:rPr/w:rFonts  and not(w:rPr/w:rFonts/@w:ascii)"/>
@@ -247,26 +248,26 @@ of this software, even if advised of the possibility of such damage.
 	  <n>subscript</n>
 	</xsl:if>
 	
-	<xsl:if test="w:rPr/w:i or
+	<xsl:if test="w:rPr/w:i[not(@w:val=$wVal.off)] or
 		      (ancestor::w:tc 
 		      and
-		      ($extracolumn/w:rPr/w:i  or $extrarow/w:rPr/w:i)
+		      ($extracolumn/w:rPr/w:i[not(@w:val=$wVal.off)]  or $extrarow/w:rPr/w:i[not(@w:val=$wVal.off)])
 		      )">
 	  <n>italic</n>
 	</xsl:if>
 
 	<xsl:choose>
-	  <xsl:when test="w:rPr/w:b/@w:val='0' or
+	  <xsl:when test="w:rPr/w:b/@w:val=$wVal.off or
 		      (ancestor::w:tc 
 		      and
-		      ($extracolumn/w:rPr/w:b/@w:val='0' or $extrarow/w:rPr/w:b/@w:val='0')
+		      ($extracolumn/w:rPr/w:b/@w:val=$wVal.off or $extrarow/w:rPr/w:b/@w:val=$wVal.off)
 		      )">
 	    <n>normalweight</n>
 	  </xsl:when>
-	  <xsl:when test="w:rPr/w:b or
+	  <xsl:when test="w:rPr/w:b[not(@w:val=$wVal.off)] or
 		      (ancestor::w:tc 
 		      and
-		      ($extracolumn/w:rPr/w:b  or $extrarow/w:rPr/w:b)
+		      ($extracolumn/w:rPr/w:b[not(@w:val=$wVal.off)]  or $extrarow/w:rPr/w:b[not(@w:val=$wVal.off)])
 		      )">
 	    <n>bold</n>
 	  </xsl:when>
@@ -291,19 +292,19 @@ of this software, even if advised of the possibility of such damage.
 	  </n>
 	</xsl:if>
 
-	<xsl:if test="w:rPr/w:strike or
+        <xsl:if test="w:rPr/w:strike[not(@w:val=$wVal.off)] or
 		      (ancestor::w:tc 
 		      and
-		      ($extracolumn/w:rPr/w:strike  or $extrarow/w:rPr/w:strike)
+		      ($extracolumn/w:rPr/w:strike[not(@w:val=$wVal.off)]  or $extrarow/w:rPr/w:strike[not(@w:val=$wVal.off)])
 		      )">
 
 	  <n>strikethrough</n>
 	</xsl:if>
 
-	<xsl:if test="w:rPr/w:dstrike or
+        <xsl:if test="w:rPr/w:dstrike[not(@w:val=$wVal.off)] or
 		      (ancestor::w:tc 
 		      and
-		      ($extracolumn/w:rPr/w:dstrike  or $extrarow/w:rPr/w:dstrike)
+		      ($extracolumn/w:rPr/w:dstrike[not(@w:val=$wVal.off)]  or $extrarow/w:rPr/w:dstrike[not(@w:val=$wVal.off)])
 		      )">
 	  <n>doublestrikethrough</n>
 	</xsl:if>
@@ -320,18 +321,18 @@ of this software, even if advised of the possibility of such damage.
 	  <n>doubleunderline</n>
 	</xsl:if>
 
-	<xsl:if test="w:rPr/w:smallCaps or
+        <xsl:if test="w:rPr/w:smallCaps[not(@w:val=$wVal.off)] or
 		      (ancestor::w:tc 
 		      and
-		      ($extracolumn/w:rPr/w:smallCaps  or $extrarow/w:rPr/w:smallCaps)
+		      ($extracolumn/w:rPr/w:smallCaps[not(@w:val=$wVal.off)]  or $extrarow/w:rPr/w:smallCaps[not(@w:val=$wVal.off)])
 		      )">
 	  <n>smallcaps</n>
 	</xsl:if>
 
-	<xsl:if test="w:rPr/w:caps or
+        <xsl:if test="w:rPr/w:caps[not(@w:val=$wVal.off)] or
 		      (ancestor::w:tc 
 		      and
-		      ($extracolumn/w:rPr/w:caps  or $extrarow/w:rPr/w:caps)
+		      ($extracolumn/w:rPr/w:caps[not(@w:val=$wVal.off)]  or $extrarow/w:rPr/w:caps[not(@w:val=$wVal.off)])
 		      )">
 	  <n>allcaps</n>
 	</xsl:if>
