@@ -1,5 +1,5 @@
 SFUSER=rahtz
-DEFAULTSOURCE=https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml
+DEFAULTSOURCE=$(shell pwd)/source/p5subset.xml
 SAXON=java -jar lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
 DOTSAXON=java -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
 DOTDOTSAXON=java -jar ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE) 
@@ -102,8 +102,8 @@ teioo.jar:
 	(cd odt;  mkdir TEIP5; $(DOTSAXON) -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
 
 test: clean build common names debversion
-	@echo BUILD Run tests
-	(cd Test; make DEFAULTSOURCE=$(DEFAULTSOURCE))
+	@echo "BUILD Run tests. (Note: Test/Makefile sets its own DEFAULTSOURCE.)"
+	(cd Test; make)
 
 dist: clean release
 	-rm -f tei-xsl-`cat VERSION`.zip
