@@ -674,7 +674,20 @@
           <xsl:apply-templates/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="@target"/>
+          <!-- Inject a zero-width space after slashes and periods to add more places where browsers
+               can wrap long URLs. 
+               Note: in order to avoid breaking in between repeated slashes and periods, and within 
+               '../',  this replacement has to happen in two passes.
+          -->
+          <xsl:value-of select="
+            replace(
+              replace(
+                @target,
+                '([/])([^/])',
+                '$1&#8203;$2')
+            , '([\.])([^\./])',
+            '$1&#8203;$2')
+          "/>
         </xsl:otherwise>
       </xsl:choose>
     </ref>
