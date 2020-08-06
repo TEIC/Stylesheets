@@ -244,7 +244,7 @@
           false so we can stop building ugly and superfluous lists 
           in Guidelines ref pages. See issue #296. -->
         <xsl:sequence select="tei:makeDescription(., true(), false())"/>
-        <xsl:element namespace="{$outputNS}" name="{$ulName}">
+        <xsl:element namespace="{$outputNS}" name="{$tableName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>attDef</xsl:text>
           </xsl:attribute>
