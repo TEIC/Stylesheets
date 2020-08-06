@@ -244,7 +244,7 @@
           false so we can stop building ugly and superfluous lists 
           in Guidelines ref pages. See issue #296. -->
         <xsl:sequence select="tei:makeDescription(., true(), false())"/>
-        <xsl:element namespace="{$outputNS}" name="{$tableName}">
+        <xsl:element namespace="{$outputNS}" name="{$ulName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>attDef</xsl:text>
           </xsl:attribute>
@@ -2395,113 +2395,15 @@
   
   <!-- MDH & SB working on ticket #1657 2018-09-10. -->
   <xsl:template match="tei:divGen[@type = 'deprecationcat']">
-    <xsl:element namespace="{$outputNS}" name="{$tableName}">
+    <xsl:element namespace="{$outputNS}" name="{$ulName}">
       <xsl:attribute name="{$rendName}">
         <xsl:text>deprecationcat</xsl:text>
       </xsl:attribute>
-      <xsl:element namespace="{$outputNS}" name="{$rowName}">
-        <xsl:element namespace="{$outputNS}" name="{$cellName}">
-          <xsl:element namespace="{$outputNS}" name="{$hiName}">
-            <xsl:attribute name="{$rendName}">
-              <xsl:text>label</xsl:text>
-            </xsl:attribute>
-            <xsl:attribute name="{$langAttributeName}">
-              <xsl:value-of select="$documentationLanguage"/>
-            </xsl:attribute>
-            <xsl:sequence select="tei:i18n('Identifier')"/>
-          </xsl:element>
-        </xsl:element>
-        <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:element namespace="{$outputNS}" name="{$hiName}">
-              <xsl:attribute name="{$rendName}">
-                <xsl:text>label</xsl:text>
-              </xsl:attribute>
-              <xsl:attribute name="{$langAttributeName}">
-                <xsl:value-of select="$documentationLanguage"/>
-              </xsl:attribute>
-              <xsl:sequence select="tei:i18n('ComponentType')"/>
-            </xsl:element>
-        </xsl:element>
-        <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:element namespace="{$outputNS}" name="{$hiName}">
-              <xsl:attribute name="{$rendName}">
-                <xsl:text>label</xsl:text>
-              </xsl:attribute>
-              <xsl:attribute name="{$langAttributeName}">
-                <xsl:value-of select="$documentationLanguage"/>
-              </xsl:attribute>
-              <xsl:sequence select="tei:i18n('validuntil')"/>
-            </xsl:element>
-        </xsl:element>
-        <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:element namespace="{$outputNS}" name="{$hiName}">
-              <xsl:attribute name="{$rendName}">
-                <xsl:text>label</xsl:text>
-              </xsl:attribute>
-              <xsl:attribute name="{$langAttributeName}">
-                <xsl:value-of select="$documentationLanguage"/>
-              </xsl:attribute>
-              <xsl:sequence select="tei:i18n('Description')"/>
-            </xsl:element>
-        </xsl:element>
-      </xsl:element>
       <xsl:for-each select="//tei:*[@validUntil]">
         <xsl:sort select="@validUntil"/>
-        <xsl:element namespace="{$outputNS}" name="{$rowName}">
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:choose>
-              <xsl:when test="self::tei:attDef or self::tei:constraintSpec">
-                <xsl:variable name="targetIdent" select="ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident"/>
-                  <xsl:call-template name="linkTogether">
-                    <xsl:with-param name="name">
-                      <xsl:value-of select="$targetIdent"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="reftext">
-                      <xsl:value-of select="concat($targetIdent, ' / ', if (self::attDef) then '@' else '', @ident)"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="class">
-                      <xsl:text>link_odd</xsl:text>
-                    </xsl:with-param>
-                  </xsl:call-template>
-              </xsl:when>
-              <xsl:when test="self::tei:valItem or self::tei:valDesc">
-                <xsl:variable name="targetIdent" select="ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident"/>
-                  <xsl:call-template name="linkTogether">
-                    <xsl:with-param name="name">
-                      <xsl:value-of select="$targetIdent"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="reftext">
-                      <xsl:value-of select="concat($targetIdent, ' / ', ancestor::tei:attDef[1]/@ident, ' / ', @ident)"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="class">
-                      <xsl:text>link_odd</xsl:text>
-                    </xsl:with-param>
-                  </xsl:call-template>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:call-template name="linkTogether">
-                    <xsl:with-param name="name">
-                      <xsl:value-of select="@ident"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="reftext">
-                      <xsl:value-of select="@ident"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="class">
-                      <xsl:text>link_odd</xsl:text>
-                    </xsl:with-param>
-                  </xsl:call-template></xsl:otherwise>
-            </xsl:choose>
-          </xsl:element>
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:value-of select="local-name(.)"/>
-          </xsl:element>
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:value-of select="@validUntil"/>
-            <xsl:if test="xs:date(@validUntil) lt current-date()">!!!</xsl:if>
-          </xsl:element>
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:apply-templates select="descendant::tei:desc[@type='deprecationInfo'][1]"/>
-          </xsl:element>
+        <xsl:element namespace="{$outputNS}" name="{$itemName}">
+          <xsl:apply-templates select="descendant::tei:desc[@type='deprecationInfo'][1]"/><xsl:text> </xsl:text>
+          <xsl:value-of select="tei:i18n('validuntil')"/><xsl:text> </xsl:text><xsl:value-of select="@validUntil"/>.
         </xsl:element>
       </xsl:for-each>
     </xsl:element>
