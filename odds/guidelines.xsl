@@ -903,17 +903,6 @@
 
     </address>
     </div>
-    <xsl:if test="not($googleAnalytics='')">
-      <script src="http://www.google-analytics.com/urchin.js"
-	      type="text/javascript"><!-- load goohle analytics --></script>
-      <script type="text/javascript">
-	<xsl:text>_uacct = "</xsl:text>
-	<xsl:value-of select="$googleAnalytics"/>
-	<xsl:text>";
-	urchinTracker();
-	</xsl:text>
-      </script>
-      </xsl:if>
   </xsl:template>
 
   <xsl:template match="tei:licence"/>
