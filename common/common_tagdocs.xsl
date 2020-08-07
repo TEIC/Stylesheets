@@ -2403,7 +2403,11 @@
         <xsl:sort select="@validUntil"/>
         <xsl:element namespace="{$outputNS}" name="{$itemName}">
           <xsl:apply-templates select="descendant::tei:desc[@type='deprecationInfo'][1]"/><xsl:text> </xsl:text>
-          <xsl:value-of select="tei:i18n('validuntil')"/><xsl:text> </xsl:text><xsl:value-of select="@validUntil"/>.
+          <xsl:value-of select="tei:i18n('validuntil')"/><xsl:text> </xsl:text>
+          <xsl:element namespace="{$outputNS}" name="{$segName}">
+            <xsl:attribute name="{$rendName}">deprecationdate</xsl:attribute>
+            <xsl:value-of select="@validUntil"/>
+          </xsl:element>.
         </xsl:element>
       </xsl:for-each>
     </xsl:element>
