@@ -596,7 +596,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>[common] give language-specific version of a word or phrase<param name="word">the word(s) to translate</param>
       </desc>
   </doc>
-  <xsl:function name="tei:i18n" as="xs:string">
+  <xsl:function name="tei:i18n" as="xs:string*">
     <xsl:param name="word"/>
     <xsl:variable name="Word">
       <xsl:value-of select="normalize-space($word)"/>
