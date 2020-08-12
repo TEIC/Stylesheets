@@ -619,7 +619,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]"/>
             </xsl:when>
             <xsl:when test="key('KEYS',$Word)/text[@lang3=$documentationLanguage]">
-              <xsl:value-of select="key('KEYS',$Word)/text[lang3=$documentationLanguage]"/>
+              <xsl:value-of select="key('KEYS',$Word)/text[@lang3=$documentationLanguage]"/>
             </xsl:when>
             <xsl:otherwise>
               <!--
