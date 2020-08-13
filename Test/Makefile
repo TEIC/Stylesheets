@@ -1,19 +1,58 @@
-VERSION=`cat VERSION`
-DIFFNOW=1
-# 1 = do diff; 0 = don't do diffs now, just put into actual_results/
+#
+# TEI Stylesheets repo original Test system
+# 
+
+
+################################
+# global variable declarations #
+################################
+
+# Do we perform comparisons between the actual outputs and expected
+# outputs now (and thus fail as soon as there is a difference), or
+# not (in which case user is expected to compare them after we're
+# done building them here)?
+DIFFNOW=1			# 1 = do diff now; 0 = don't do diffs now
+
+# Directories for holding outputs and expected outputs
+# (NB—no ending slashes):
 AR=actual-results
 ER=expected-results
-ARTN=$(AR)/testnotes
+
+# The directory in whch the various `teitoXXX` and `XXXtotei` commands can
+# be found:
 BINDIR=../bin
+
+# Path to the version of P5 source to use by default
+# (Note this is the p5subset used to solve circularity -- see
+# ???https://pointer.to.tei/doc/on/circularity/solution???):
 DEFAULTSOURCE=../source/p5subset.xml
+
+# Several XSLT programs have a parameter that allow the routine to output
+# fixed date (and possibly version) information just to make comparison
+# easier. At the time of this writing, those programs are:
+#   ../common/functions.xsl,
+#   ../docx/to/teitodocx.xsl,
+#   ../odt/teitoodt.xsl, and
+#   ../rdf/make-acdc.xsl.
 SAXONOPT=useFixedDate=true
-SAXON=java -Djava.awt.headless=true -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
-UP1SAXON=java -Djava.awt.headless=true -jar ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
-UP2SAXON=java -Djava.awt.headless=true -jar ../../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
-JING=java -Djava.awt.headless=true -jar ../lib/lib/jing-20120724.0.0.jar 
+
+# Establish commands for `saxon` and `jing`. (Note: at present UP1SAXON is
+# unused, just here to show the pattern).
+JAVAPRE=java -Djava.awt.headless=true -jar
+SAXON=$(JAVAPRE) ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
+UP1SAXON=$(JAVAPRE) ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
+UP2SAXON=$(JAVAPRE) ../../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
+JING=$(JAVAPRE) ../lib/lib/jing-20120724.0.0.jar
+
 # flags used for the commands running from $(BINDIR), e.g. `bin/teitorelaxng` 
 FLAGS=--localsource=$(DEFAULTSOURCE)
+
+# Location of oXygen. Only used in the test-pureant target, which is not run
+# by any other target.
 OXY=/usr/share/oxygen
+
+# Lists of programs (in the $(BINDIR) directory) executed by the
+# test-scripts target.
 SCRIPTS=teitobibtex \
 	teitodocbook \
 	teitodocx \
@@ -28,13 +67,65 @@ SCRIPTS=teitobibtex \
 	teitopdf \
 	teitordf \
 	teitotxt
-
 SCHEMASCRIPTS=teitornc \
 	teitorelaxng \
 	teitoxsd \
 	teitodtd
 
+
+###############################
+# First target is the default #
+# (not matter what its name). #
+###############################
+
 default: actual test.rng test-to-html test-p4top5 test-oddity test-scripts test-namespaces test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt test-markdown test-cocoa test-epub
+
+
+###################
+# rest of targets #
+###################
+
+help:
+	@echo "Runs TEI Stylesheets repo original tests; for new and improved tests, see the"
+	@echo "Test2/ directory."
+	@echo ""
+	@echo "Only the main 'default' target is briefly documented here."
+	@echo ""
+	@echo "Lots of tests are run by default. For the majority of them, the test generates"
+	@echo "some output (put into $(AR)/) which is to be compared to what the expected"
+	@echo "output of that test (stored in $(ER)/). If the parameter DIFFNOW is set to"
+	@echo "1 (the default), the results of each test are compared to the expected result"
+	@echo "immediately, and the process fails and stops if a difference is found. If the"
+	@echo "parameter DIFFNOW is set to 0 (or anything not '1', really), then the"
+	@echo "comparison is deferred. This allows the user to compare them all at once after"
+	@echo "the entire test has run. This DIFFNOW=0 is often easier for interactive use,"
+	@echo "but DIFFNOW=1 better for running from another process that needs to know if"
+	@echo "there is a failure."
+	@echo ""
+	@echo "Suggested sequence for interactive use is:"
+	@echo "$$ make clean"
+	@echo "$$ make DIFFNOW=0"
+	@echo "$$ diff -C0 -r $(AR)/ $(ER)/ | perl -pe 's,^diff -C0," '\\n\\n#########\\ndiff' " -C0,;'"
+	@echo "$$ # note: ignore differences in files ending in '.listing'; if there are any use:"
+	@echo '$$ for f in $(AR)/*.listing ; do diff -C0 <(sort $$f) <(sort $(ER)/$$(basename $$f)); done'
+	@echo "$$ # as the sort order is apparently inconsequential."
+	@echo ""
+	@echo "When the diff of the two directories is performed, the following files are"
+	@echo "expected to be in only $(AR)/, not $(ER)/. (Listed here"
+	@echo "in the likely order in which they will be listed by diff.)"
+	@echo "  Only in $(AR)/: oddbyexample.dtd"
+	@echo "  Only in $(AR)/: oddbyexample.rnc"
+	@echo "  Only in $(AR)/: oddbyexample.xsd"
+	@echo "  Only in $(AR)/: Pictures"
+	@echo "  Only in $(AR)/: test34.combined.odd"
+	@echo "  Only in $(AR)/: test_3.epub"
+	@echo "  Only in $(AR)/: test3.html"
+	@echo "  Only in $(AR)/: test4.html"
+	@echo "  Only in $(AR)/: testoucscoursesp5.xml"
+	@echo "  Only in $(AR)/: testoucscourses.xml.docx"
+	@echo "  Only in $(AR)/: test-pages.epub"
+	@echo "  Only in $(AR)/: test.processedodd"
+	@echo "  Only in $(AR)/: xml.tmp"
 
 actual:
 	mkdir -p $(AR)
@@ -264,21 +355,19 @@ test-fo: actual
 test-epub: actual css
 	@echo BUILD: testing epub
 	$(BINDIR)/teitoepub3 $(FLAGS) test.xml $(AR)/test_3.epub
-	java -Djava.awt.headless=true -jar ../lib/epubcheck3.jar $(AR)/test_3.epub
+	$(JAVAPRE) ../lib/epubcheck3.jar $(AR)/test_3.epub
 
 	$(BINDIR)/teitoepub $(FLAGS) test.xml $(AR)/test.epub
-	java -Djava.awt.headless=true -jar ../lib/epubcheck3.jar $(AR)/test.epub
+	$(JAVAPRE) ../lib/epubcheck3.jar $(AR)/test.epub
 
 	unzip -t $(AR)/test.epub > $(AR)/test.epub.listing
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then bash -c 'diff  <(sort $(AR)/test.epub.listing) <(sort $(ER)/test.epub.listing)'; fi
-	rm $(AR)/test.epub.listing
 
 	$(BINDIR)/teitoepub $(FLAGS) --fileperpage test.xml $(AR)/test-pages.epub
 	unzip -t $(AR)/test-pages.epub > $(AR)/test.epub.listing2
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then bash -c 'diff  <(sort $(AR)/test.epub.listing2) <(sort $(ER)/test.epub.listing2)'; fi
-	rm $(AR)/test.epub.listing2
 
 test-rdf: actual
 	@echo BUILD: testing rdf
@@ -384,29 +473,25 @@ test-to-docx:
 	@echo BUILD: testing to-docx
 
 	$(BINDIR)/teitodocx $(FLAGS) test.xml
-	unzip -p test.xml.docx word/document.xml | xmllint --format - > $(AR)/test.xml.docx.document
-	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > $(AR)/test.xml.docx.core
+	unzip -p test.xml.docx word/document.xml | xmllint --format - > $(AR)/test.xml.docx_document.xml
+	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > $(AR)/test.xml.docx_core.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.xml.docx.document $(ER)/test.xml.docx.document; fi
+		then diff  $(AR)/test.xml.docx_document.xml $(ER)/test.xml.docx_document.xml; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.xml.docx.core $(ER)/test.xml.docx.core; fi
-	rm $(AR)/test.xml.docx.document
+		then diff  $(AR)/test.xml.docx_core.xml $(ER)/test.xml.docx_core.xml; fi
 
 	$(BINDIR)/teitodocx $(FLAGS) test6.xml
-	unzip -p test6.xml.docx word/document.xml | xmllint --format - > $(AR)/test6.xml.docx.document
+	unzip -p test6.xml.docx word/document.xml | xmllint --format - > $(AR)/test6.xml.docx_document.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test6.xml.docx.document $(ER)/test6.xml.docx.document; fi
-	rm $(AR)/test6.xml.docx.document
+		then diff  $(AR)/test6.xml.docx_document.xml $(ER)/test6.xml.docx_document.xml; fi
 
 	$(BINDIR)/teitodocx $(FLAGS) testnotes1.xml
-	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > $(AR)/testnotes1.xml.docx.document
+	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > $(AR)/testnotes1.xml.docx_document.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/testnotes1.xml.docx.document $(ER)/testnotes1.xml.docx.document; fi
-	rm $(AR)/testnotes1.xml.docx.document
+		then diff  $(AR)/testnotes1.xml.docx_document.xml $(ER)/testnotes1.xml.docx_document.xml; fi
 
 	$(SAXON) testoucscourses.xml ../profiles/default/p4/from.xsl > $(AR)/testoucscoursesp5.xml
 	$(BINDIR)/teitodocx $(FLAGS) --profile=oucscourses $(AR)/testoucscoursesp5.xml $(AR)/testoucscourses.xml.docx
-	rm $(AR)/testoucscourses.xml.docx $(AR)/testoucscoursesp5.xml
 
 test-oddity: actual css
 	@echo BUILD: testing oddity
@@ -623,19 +708,9 @@ profile:
 
 clean:
 	(cd ..; for i in css/*; do rm -f `basename $$i`;done)
-	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *vrb *out *log *nav *ent *snm *toc *.end *.1 *.2 test.xsd test.zip test*.dtd test-indexes.xml test37.xml test38.xml test39.xml test40.xml
-	rm -f test*.rnc test*.json test*.rnc test*.combined.odd test*listing* test*.tei test*.rng test*.html5 test*.processedodd *.isosch
-	rm -f oddbyexample.* index*div*html
-	rm -f testdrama.compiled.xml
-	rm -f test5.odt test7.xml test18.xml test19.xml test-index.xml test7.zip test11.xml test11a.xml test9.docx test9.odt content.xml.odt.listing content.xml.odt test.xml.docx.core test7.docx hyperlinktest.xml
-	rm -f A54031.xml dcr.result test-rtf2tei.xml test29.xml dcr.tmp xml.tmp
-	rm -f xml.result
-	rm -rf charts/ embeddings/ media/ _rels/ \[Content_Types\].xml
-	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype files
-	rm -f test.xlsx.xml *.result.tex *.result.pdf _slidelogo.png
-	rm -f content.xml
-	rm -f cocoatest*.xml
-	rm -fr $(AR)/
+	rm -f *.result.tex test*.xml.docx *~
+	rm -f dcr.tmp xml.tmp
+	rm -fr $(AR)/ charts/ embeddings/ media/ Pictures/
 
 oddtree:
 	$(SAXON) -s:http://www.tei-c.org/release/xml/tei/odd/p5subset.xml -xsl:../tools/odd-to-tree.xsl -o:oddtree.xml
