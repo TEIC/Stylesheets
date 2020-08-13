@@ -1926,22 +1926,28 @@
             "content" : 
             [ 
               { "type" : "classRef",
-                "key" : "model.qLike" },
+                "key" : "model.biblLike" },
               
               { "type" : "classRef",
                 "key" : "model.egLike" },
               
               { "type" : "classRef",
-                "key" : "model.biblLike" },
-              
-              { "type" : "classRef",
-                "key" : "model.ptrLike" },
+                "key" : "model.entryPart" },
               
               { "type" : "classRef",
                 "key" : "model.global" },
               
               { "type" : "classRef",
-                "key" : "model.entryPart" } ] } ] },
+                "key" : "model.graphicLike" },
+              
+              { "type" : "classRef",
+                "key" : "model.ptrLike" },
+              
+              { "type" : "classRef",
+                "key" : "model.qLike" },
+              
+              { "type" : "elementRef",
+                "key" : "pc" } ] } ] },
       
       { "ident" : "cit",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -6443,8 +6449,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-11-23\" xml:lang=\"en\">contains a list of definitions of prefixing schemes used in <ident type=\"datatype\">data.pointer<\/ident> values, showing how abbreviated URIs using each scheme may be expanded into full URIs.<\/desc>" ],
-        "shortDesc" : "(list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-11-23\" xml:lang=\"en\">contains a list of definitions of prefixing schemes used in <ident type=\"datatype\">teidata.pointer<\/ident> values, showing how abbreviated URIs using each scheme may be expanded into full URIs.<\/desc>" ],
+        "shortDesc" : "(list of prefix definitions) contains a list of definitions of prefixing schemes used in teidata.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-11-22\" xml:lang=\"en\">list of prefix definitions<\/gloss>" ],
         "altIdent" : 
@@ -7491,8 +7497,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-12-26\" xml:lang=\"en\">defines a prefixing scheme used in <ident type=\"datatype\">data.pointer<\/ident> values,\n  showing how abbreviated URIs using the scheme may be expanded into full URIs.<\/desc>" ],
-        "shortDesc" : "(prefix definition) defines a prefixing scheme used in data.pointer values,\n  showing how abbreviated URIs using the scheme may be expanded into full URIs.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-12-26\" xml:lang=\"en\">defines a prefixing scheme used in <ident type=\"datatype\">teidata.pointer<\/ident> values,\n  showing how abbreviated URIs using the scheme may be expanded into full URIs.<\/desc>" ],
+        "shortDesc" : "(prefix definition) defines a prefixing scheme used in teidata.pointer values,\n  showing how abbreviated URIs using the scheme may be expanded into full URIs.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-11-22\" xml:lang=\"en\">prefix definition<\/gloss>" ],
         "altIdent" : 
@@ -8893,7 +8899,8 @@
         { "model" : 
           [  ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.declarable" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10872,8 +10879,8 @@
             "ns" : "",
             "usage" : "opt",
             "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-19\" xml:lang=\"en\">specifies a time\n      interval either as a number or as one of the keywords defined\n      by the datatype data.interval<\/desc>" ],
-            "shortDesc" : "specifies a time\n      interval either as a number or as one of the keywords defined\n      by the datatype data.interval",
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-19\" xml:lang=\"en\">specifies a time\n      interval either as a number or as one of the keywords defined\n      by the datatype <ident type=\"datatype\">teidata.interval<\/ident><\/desc>" ],
+            "shortDesc" : "specifies a time\n      interval either as a number or as one of the keywords defined\n      by the datatype teidata.interval",
             "gloss" : 
             [  ],
             "altIdent" : 

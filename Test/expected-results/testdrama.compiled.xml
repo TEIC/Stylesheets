@@ -5456,7 +5456,7 @@ used for transcribing extant documents.</desc>
 	</p>
   </remarks>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xml:lang="ja" versionDate="2008-04-05">
-      <p> 確信度は，<val>high</val>, <val>medium</val>, <val>low</val>のうち の1つが選択される．より詳細に示したい場合には， <ident type="datatype">data.probability</ident>を単独または追加と して使用することができる． </p>
+      <p> 確信度は，<val>high</val>, <val>medium</val>, <val>low</val>のうち の1つが選択される．より詳細に示したい場合には， <ident type="datatype">teidata.probability</ident>を単独または追加と して使用することができる． </p>
   </remarks>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" versionDate="2009-05-25" xml:lang="fr">
       <p>Le degré de certitude peut être exprimé par l'une des valeurs symboliques prédéfinies
@@ -5751,20 +5751,20 @@ value.</desc>
     inappropriate; if the attribute concerned may have a value other
     than true or false, e.g. <val>unknown</val>, or
     <val>inapplicable</val>, it should have the extended version of
-    this datatype: <ident type="datatype">data.xTruthValue</ident>.</p>
+    this datatype: <ident type="datatype">teidata.xTruthValue</ident>.</p>
   </remarks>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xml:lang="ja" versionDate="2008-04-05">
       <p>
     曖昧な値が許されない場合に使われるデータ型になる．属性値が真偽値で
     ない場合，例えば"unknown"や"inapplicable"の場合には，当該データ型
-    の拡張版であるdata.xTruthValueを使うべきである．
+    の拡張版であるteidata.xTruthValueを使うべきである．
     </p>
   </remarks>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xml:lang="fr" versionDate="2007-06-12">
       <p>Ce type de données ne s'applique que dans les cas où l'incertitude est 
       inappropriée ; c’est-à-dire si l'attribut concerné peut avoir une valeur autre 
       que vrai ou faux, par ex. <val>inconnu</val>, ou <val>inapplicable</val>, il devrait  alors y
-      avoir la version étendue de ce  type de données : data.xTruthValue.
+      avoir la version étendue de ce  type de données : teidata.xTruthValue.
     </p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.xTruthValue">
@@ -5792,14 +5792,14 @@ value.</desc>
    </content>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" versionDate="2010-10-29" xml:lang="en">
       <p>In cases where where uncertainty is inappropriate, use the
-    datatype <ident type="datatype">data.TruthValue</ident>.</p>
+    datatype <ident type="datatype">teidata.TruthValue</ident>.</p>
   </remarks>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xml:lang="ja" versionDate="2008-04-05">
-      <p> 不明な場合がなければ，データ型data.TruthValueを使用する． </p>
+      <p> 不明な場合がなければ，データ型teidata.TruthValueを使用する． </p>
   </remarks>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xml:lang="fr" versionDate="2007-06-12">
       <p>Dans le cas où l'incertitude n’est pas adaptée, employer plutot
-    le type de données <ident>data.TruthValue</ident>.</p>
+    le type de données <ident>teidata.TruthValue</ident>.</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.language">
   <desc xmlns:tei="http://www.tei-c.org/ns/1.0" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values used to identify a particular combination of human
@@ -7807,12 +7807,14 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
   <content>
     
       <alternate minOccurs="1" maxOccurs="unbounded">
-        <classRef key="model.qLike"/>
-        <classRef key="model.egLike"/>
         <classRef key="model.biblLike"/>
-        <classRef key="model.ptrLike"/>
-        <classRef key="model.global"/>
+        <classRef key="model.egLike"/>
         <classRef key="model.entryPart"/>
+        <classRef key="model.global"/>
+        <classRef key="model.graphicLike"/>
+        <classRef key="model.ptrLike"/>
+        <classRef key="model.qLike"/>
+        <elementRef key="pc"/>
       </alternate>
     
     
@@ -7894,6 +7896,20 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
           </cit>
         </cit>
       </entry>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="mul">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <cit type="example">
+        <quote xml:lang="mix">Ka'an yu tsa'a Pedro.</quote>
+        <media url="soundfiles-gen:S_speak_1s_on_behalf_of_Pedro_01_02_03_TS.wav" mimeType="audio/wav"/>
+        <cit type="translation">
+          <quote xml:lang="en">I'm speaking on behalf of Pedro.</quote>
+        </cit>
+        <cit type="translation">
+          <quote xml:lang="es">Estoy hablando de parte de Pedro.</quote>
+        </cit>
+      </cit>
     </egXML>
   </exemplum>
   <listRef>
@@ -10193,17 +10209,17 @@ TOURS</addrLine>
       <valDesc xml:lang="fr">une valeur numérique.</valDesc>
       <valDesc xml:lang="de">ein numerischer Wert</valDesc>
       <remarks versionDate="2005-11-01" xml:lang="en">
-        <p>The standard form used is defined by the TEI datatype data.numeric.</p>
+        <p>The standard form used is defined by the TEI datatype <ident type="datatype">teidata.numeric</ident>.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>La forme normalisée utilisée est définie par le type de données TEI
                 qui concerne les données numériques.</p>
       </remarks>
       <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 標準的な形式は，TEIデータ型data.numericで定義されている． </p>
+        <p> 標準的な形式は，TEIデータ型teidata.numericで定義されている． </p>
       </remarks>
       <remarks xml:lang="de" versionDate="2016-11-25">
-          <p>Die benutzte standardisierte Form wird im TEI-Datentyp <ident type="datatype">data.numeric</ident> definiert.</p>
+          <p>Die benutzte standardisierte Form wird im TEI-Datentyp <ident type="datatype">teidata.numeric</ident> definiert.</p>
       </remarks>
     </attDef>
   </attList>
@@ -16639,7 +16655,7 @@ element in the TEI header.
         
         <elementRef key="publicationStmt"/>
         
-          <elementRef key="seriesStmt" minOccurs="0"/>
+          <elementRef key="seriesStmt" minOccurs="0" maxOccurs="unbounded"/>
         
         
           <elementRef key="notesStmt" minOccurs="0"/>
@@ -17823,6 +17839,7 @@ définissant les droits d'utilisation.</desc>
     eventualmente la pubblicazione appartiene.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.declarable"/>
   </classes>
   <content>
     <alternate>
@@ -18077,7 +18094,7 @@ définissant les droits d'utilisation.</desc>
           <elementRef key="editionStmt" minOccurs="0"/>
           <elementRef key="extent" minOccurs="0"/>
           <elementRef key="publicationStmt"/>
-          <elementRef key="seriesStmt" minOccurs="0"/>
+          <elementRef key="seriesStmt" minOccurs="0" maxOccurs="unbounded"/>
           <elementRef key="notesStmt" minOccurs="0"/>
         </sequence>
         <elementRef key="sourceDesc" minOccurs="0" maxOccurs="unbounded"/>
@@ -19832,7 +19849,7 @@ the target element</desc>
   </listRef>
 </elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="prefixDef">
   <gloss versionDate="2012-11-22" xml:lang="en">prefix definition</gloss>
-  <desc versionDate="2012-12-26" xml:lang="en">defines a prefixing scheme used in <ident type="datatype">data.pointer</ident> values,
+  <desc versionDate="2012-12-26" xml:lang="en">defines a prefixing scheme used in <ident type="datatype">teidata.pointer</ident> values,
   showing how abbreviated URIs using the scheme may be expanded into full URIs.</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -19878,7 +19895,7 @@ the target element</desc>
   </listRef>
 </elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="listPrefixDef">
   <gloss versionDate="2012-11-22" xml:lang="en">list of prefix definitions</gloss>
-  <desc versionDate="2012-11-23" xml:lang="en">contains a list of definitions of prefixing schemes used in <ident type="datatype">data.pointer</ident> values, showing how abbreviated URIs using each scheme may be expanded into full URIs.</desc>
+  <desc versionDate="2012-11-23" xml:lang="en">contains a list of definitions of prefixing schemes used in <ident type="datatype">teidata.pointer</ident> values, showing how abbreviated URIs using each scheme may be expanded into full URIs.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.encodingDescPart"/>
@@ -27466,7 +27483,7 @@ the date of the entire document, not for any subset or part of it.</p>
     <attDef ident="interval" usage="opt">
       <desc versionDate="2013-11-19" xml:lang="en">specifies a time
       interval either as a number or as one of the keywords defined
-      by the datatype data.interval</desc>
+      by the datatype <ident type="datatype">teidata.interval</ident></desc>
       <desc versionDate="2007-12-20" xml:lang="ko">시구간의 수치 부분을 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指明時間區段中的數值部份</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">時間幅を数値で示す．</desc>

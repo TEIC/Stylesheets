@@ -2030,12 +2030,13 @@ tei_cit =
   
   ## (cited quotation) contains a quotation from some other document, together with a bibliographic reference to its source. In a dictionary it may contain an example text with at least one occurrence of the word form, used in the sense being described, or a translation of the headword, or an example. [3.3.3. Quotation 4.3.1. Grouped Texts 9.3.5.1. Examples]
   element cit {
-    (tei_model.qLike
+    (tei_model.biblLike
      | tei_model.egLike
-     | tei_model.biblLike
-     | tei_model.ptrLike
+     | tei_model.entryPart
      | tei_model.global
-     | tei_model.entryPart)+,
+     | tei_model.graphicLike
+     | tei_model.ptrLike
+     | tei_model.qLike)+,
     tei_att.global.attributes,
     tei_att.typed.attributes,
     empty
@@ -3324,7 +3325,7 @@ tei_fileDesc =
       tei_editionStmt?,
       tei_extent?,
       tei_publicationStmt,
-      tei_seriesStmt?,
+      tei_seriesStmt*,
       tei_notesStmt?),
      tei_sourceDesc+),
     tei_att.global.attributes,
@@ -3499,6 +3500,7 @@ tei_seriesStmt =
         (tei_editor | tei_respStmt)*,
         (tei_idno | tei_biblScope)*)),
     tei_att.global.attributes,
+    tei_att.declarable.attributes,
     empty
   }
 tei_notesStmt =
@@ -3529,7 +3531,7 @@ tei_biblFull =
        tei_editionStmt?,
        tei_extent?,
        tei_publicationStmt,
-       tei_seriesStmt?,
+       tei_seriesStmt*,
        tei_notesStmt?),
       tei_sourceDesc*)
      | (tei_fileDesc, tei_profileDesc)),
@@ -3878,7 +3880,7 @@ tei_cRefPattern =
   }
 tei_prefixDef =
   
-  ## (prefix definition) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
+  ## (prefix definition) defines a prefixing scheme used in teidata.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element prefixDef {
     tei_model.pLike*,
     tei_att.global.attributes,
@@ -3892,7 +3894,7 @@ tei_prefixDef =
   }
 tei_listPrefixDef =
   
-  ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
+  ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in teidata.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element listPrefixDef {
     (tei_desc*, (tei_prefixDef | tei_listPrefixDef)+),
     tei_att.global.attributes,
@@ -5036,7 +5038,7 @@ tei_when =
       | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
-    ## specifies a time interval either as a number or as one of the keywords defined by the datatype data.interval
+    ## specifies a time interval either as a number or as one of the keywords defined by the datatype teidata.interval
     attribute interval {
       xsd:float
       | (

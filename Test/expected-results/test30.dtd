@@ -1352,7 +1352,7 @@ status (free|unknown|restricted) #IMPLIED >
  %Tatt.sortable.attributes;
  %Tatt.docStatus.attributes; >
 <!--doc:(fully-structured bibliographic citation) contains a fully-structured bibliographic citation, in which all components of the TEI file description are present. [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2. The File Description 2.2.7. The Source Description 15.3.2. Declarable Elements] -->
-<!ELEMENT biblFull (((titleStmt,(editionStmt)?,(extent)?,publicationStmt,(seriesStmt)?,(notesStmt)?),(sourceDesc)*)|(fileDesc,profileDesc))>
+<!ELEMENT biblFull (((titleStmt,(editionStmt)?,(extent)?,publicationStmt,(seriesStmt)*,(notesStmt)?),(sourceDesc)*)|(fileDesc,profileDesc))>
 <!ATTLIST biblFull xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST biblFull
  %Tatt.global.attributes;
@@ -1480,7 +1480,7 @@ target CDATA  #IMPLIED >
 <!ATTLIST choice
  %Tatt.global.attributes; >
 <!--doc:(cited quotation) contains a quotation from some other document, together with a bibliographic reference to its source. In a dictionary it may contain an example text with at least one occurrence of the word form, used in the sense being described, or a translation of the headword, or an example. [3.3.3. Quotation 4.3.1. Grouped Texts 9.3.5.1. Examples] -->
-<!ELEMENT cit (%model.qLike;|_DUMMY_model.egLike|%model.biblLike;|%model.ptrLike;|%model.global;|_DUMMY_model.entryPart)+>
+<!ELEMENT cit (%model.biblLike;|_DUMMY_model.egLike|_DUMMY_model.entryPart|%model.global;|%model.graphicLike;|%model.ptrLike;|%model.qLike;|pc)+>
 <!ATTLIST cit xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST cit
  %Tatt.global.attributes;
@@ -1824,7 +1824,7 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.typed.attributes;
  %Tatt.written.attributes; >
 <!--doc:(file description) contains a full bibliographic description of an electronic file. [2.2. The File Description 2.1.1. The TEI Header and Its Components] -->
-<!ELEMENT fileDesc (((titleStmt,(editionStmt)?,(extent)?,publicationStmt,(seriesStmt)?,(notesStmt)?),(sourceDesc)+))>
+<!ELEMENT fileDesc (((titleStmt,(editionStmt)?,(extent)?,publicationStmt,(seriesStmt)*,(notesStmt)?),(sourceDesc)+))>
 <!ATTLIST fileDesc xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST fileDesc
  %Tatt.global.attributes; >
@@ -2239,7 +2239,7 @@ ordered %teidata.truthValue;  "true"  >
  %Tatt.typed.attributes;
  %Tatt.declarable.attributes;
  %Tatt.sortable.attributes; >
-<!--doc:(list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers] -->
+<!--doc:(list of prefix definitions) contains a list of definitions of prefixing schemes used in teidata.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers] -->
 <!ELEMENT listPrefixDef (((desc)*,(prefixDef|listPrefixDef)+))>
 <!ATTLIST listPrefixDef xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST listPrefixDef
@@ -2477,7 +2477,7 @@ code %teidata.pointer;  #IMPLIED >
  %Tatt.typed.attributes;
  %Tatt.editLike.attributes;
  %Tatt.sortable.attributes;
-role CDATA  #IMPLIED >
+role NMTOKENS  #IMPLIED >
 <!--doc:(organization name) contains an organizational name. [13.2.2. Organizational Names] -->
 <!ELEMENT orgName %macro.phraseSeq;>
 <!ATTLIST orgName xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2608,7 +2608,7 @@ bill CDATA #IMPLIED >
 <!ATTLIST postscript
  %Tatt.global.attributes;
  %Tatt.written.attributes; >
-<!--doc:(prefix definition) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers] -->
+<!--doc:(prefix definition) defines a prefixing scheme used in teidata.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers] -->
 <!ELEMENT prefixDef (%model.pLike;)*>
 <!ATTLIST prefixDef xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST prefixDef
@@ -2898,7 +2898,8 @@ reason CDATA  #IMPLIED >
 <!ELEMENT seriesStmt ((%model.pLike;)+|((title)+,(editor|respStmt)*,(idno|biblScope)*))>
 <!ATTLIST seriesStmt xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST seriesStmt
- %Tatt.global.attributes; >
+ %Tatt.global.attributes;
+ %Tatt.declarable.attributes; >
 <!--doc:describes one particular setting in which a language interaction takes place. [15.2.3. The Setting Description] -->
 <!ELEMENT setting (persName|platypus|%model.dateLike;|%model.settingPart;)+>
 <!ATTLIST setting xmlns CDATA "http://www.tei-c.org/ns/1.0">

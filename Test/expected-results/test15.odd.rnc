@@ -1903,12 +1903,13 @@ cit =
   
   ## (cited quotation) contains a quotation from some other document, together with a bibliographic reference to its source. In a dictionary it may contain an example text with at least one occurrence of the word form, used in the sense being described, or a translation of the headword, or an example. [3.3.3. Quotation 4.3.1. Grouped Texts 9.3.5.1. Examples]
   element cit {
-    (model.qLike
+    (model.biblLike
      | model.egLike
-     | model.biblLike
-     | model.ptrLike
+     | model.entryPart
      | model.global
-     | model.entryPart)+,
+     | model.graphicLike
+     | model.ptrLike
+     | model.qLike)+,
     att.global.attributes,
     att.typed.attributes,
     empty
@@ -3138,7 +3139,7 @@ fileDesc =
       editionStmt?,
       extent?,
       publicationStmt,
-      seriesStmt?,
+      seriesStmt*,
       notesStmt?),
      sourceDesc+),
     att.global.attributes,
@@ -3307,6 +3308,7 @@ seriesStmt =
     (model.pLike+
      | (title+, (editor | respStmt)*, (idno | biblScope)*)),
     att.global.attributes,
+    att.declarable.attributes,
     empty
   }
 notesStmt =
@@ -3333,7 +3335,7 @@ biblFull =
        editionStmt?,
        extent?,
        publicationStmt,
-       seriesStmt?,
+       seriesStmt*,
        notesStmt?),
       sourceDesc*)
      | (fileDesc, profileDesc)),
@@ -3682,7 +3684,7 @@ cRefPattern =
   }
 prefixDef =
   
-  ## (prefix definition) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
+  ## (prefix definition) defines a prefixing scheme used in teidata.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element prefixDef {
     model.pLike*,
     att.global.attributes,
@@ -3696,7 +3698,7 @@ prefixDef =
   }
 listPrefixDef =
   
-  ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
+  ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in teidata.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element listPrefixDef {
     (desc*, (prefixDef | listPrefixDef)+),
     att.global.attributes,
@@ -4804,7 +4806,7 @@ when =
       | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
-    ## specifies a time interval either as a number or as one of the keywords defined by the datatype data.interval
+    ## specifies a time interval either as a number or as one of the keywords defined by the datatype teidata.interval
     attribute interval {
       xsd:float
       | (
