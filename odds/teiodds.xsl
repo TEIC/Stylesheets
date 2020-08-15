@@ -117,8 +117,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:dataSpec/tei:content//tei:dataRef" name="MACROREFS"  use="@key"/>
 
   <xsl:key match="tei:elementSpec|tei:classSpec" name="CLASSMEMBERS" use="tei:classes/tei:memberOf/@key"/>
+  <xsl:key match="tei:classRef" name="CLASSMEMBERS" use="@key"/>
   <xsl:key match="tei:elementSpec" name="CLASSMEMBERS-ELEMENTS" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key match="tei:classSpec" name="CLASSMEMBERS-CLASSES" use="tei:classes/tei:memberOf/@key"/>
+  <xsl:key match="tei:classRef" name="CLASSMEMBERS-CLASSES" use="@key"/>
   <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec" name="IDENTS" use="concat(@prefix,@ident)"/>
 
   <xsl:key match="tei:macroSpec|tei:dataSpec" name="MACRODOCS" use="1"/>
@@ -2137,7 +2139,9 @@ select="$makeDecls"/></xsl:message>
         <xsl:when test="not(@expand) and (@include or @except)">
           <xsl:variable name="context" select="."/>
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
-            <xsl:if test="key('IDENTS',@ident) and tei:includeMember(@ident,$except,$include)">
+	    <xsl:variable name="className"
+			  select="if (self::tei:classRef) then @key else @ident"/>
+            <xsl:if test="key('IDENTS',@ident) and tei:includeMember($className,$except,$include)">
               <xsl:apply-templates select="." mode="classmember">
                 <xsl:with-param name="theClass" select="$this"/>
                 <xsl:with-param name="suffix" select="$context/@expand"/>
@@ -2150,7 +2154,9 @@ select="$makeDecls"/></xsl:message>
         </xsl:when>
         <xsl:when test="@expand='sequence'">
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
-            <xsl:if test="tei:includeMember(@ident,$except,$include)">
+	    <xsl:variable name="className"
+			  select="if (self::tei:classRef) then @key else @ident"/>
+            <xsl:if test="tei:includeMember($className,$except,$include)">
               <xsl:apply-templates select="." mode="classmember">
                 <xsl:with-param name="theClass" select="$this"/>
                 <xsl:with-param name="suffix" select="@expand"/>
@@ -2160,7 +2166,9 @@ select="$makeDecls"/></xsl:message>
         </xsl:when>
         <xsl:when test="@expand='sequenceOptional'">
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
-            <xsl:if test="tei:includeMember(@ident,$except,$include)">
+	    <xsl:variable name="className"
+			  select="if (self::tei:classRef) then @key else @ident"/>
+            <xsl:if test="tei:includeMember($className,$except,$include)">
               <optional xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:apply-templates select="." mode="classmember">
                   <xsl:with-param name="theClass" select="$this"/>
@@ -2172,7 +2180,9 @@ select="$makeDecls"/></xsl:message>
         </xsl:when>
         <xsl:when test="@expand='sequenceRepeatable'">
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
-            <xsl:if test="tei:includeMember(@ident,$except,$include)">	      
+	    <xsl:variable name="className"
+			  select="if (self::tei:classRef) then @key else @ident"/>
+            <xsl:if test="tei:includeMember($className,$except,$include)">	      
               <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:apply-templates select="." mode="classmember">
                   <xsl:with-param name="theClass" select="$this"/>
@@ -2184,7 +2194,9 @@ select="$makeDecls"/></xsl:message>
         </xsl:when>
         <xsl:when test="@expand='sequenceOptionalRepeatable'">
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
-            <xsl:if test="tei:includeMember(@ident,$except,$include)">	      
+	    <xsl:variable name="className"
+			  select="if (self::tei:classRef) then @key else @ident"/>
+            <xsl:if test="tei:includeMember($className,$except,$include)">	      
               <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:apply-templates select="." mode="classmember">
                   <xsl:with-param name="suffix" select="@expand"/>
@@ -2197,7 +2209,9 @@ select="$makeDecls"/></xsl:message>
         <xsl:otherwise>
           <choice xmlns="http://relaxng.org/ns/structure/1.0">
             <xsl:for-each select="key('CLASSMEMBERS',$this)">
-              <xsl:if test="tei:includeMember(@ident,$except,$include)">
+	    <xsl:variable name="className"
+			  select="if (self::tei:classRef) then @key else @ident"/>
+              <xsl:if test="tei:includeMember($className,$except,$include)">
                 <xsl:apply-templates select="." mode="classmember">
                   <xsl:with-param name="suffix" select="@expand"/>
                   <xsl:with-param name="theClass" select="$this"/>
