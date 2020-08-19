@@ -866,6 +866,12 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
-
+  
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>General conversion of all xml:id attributes to id attributes in HTML output.</desc>
+  </doc>  
+  <xsl:template match="@xml:id">
+    <xsl:attribute name="id" select="."/>
+  </xsl:template>
 </xsl:stylesheet>

@@ -164,6 +164,11 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates/>
             <xsl:text>}</xsl:text>
          </xsl:when>
+         <xsl:when test="@xml:lang='ko'">
+            <xsl:text>{\textKorean </xsl:text>
+            <xsl:apply-templates/>
+            <xsl:text>}</xsl:text>
+         </xsl:when>
          <xsl:otherwise>
             <xsl:apply-templates/>
          </xsl:otherwise>

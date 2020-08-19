@@ -76,8 +76,10 @@
      the latest dev Jenkins build of p5subset.xml to a local folder.
      Passing -Dlocalsource=DIR fails, but -Dlocalsource=DIR/p5subset.xml works 
      for some reason.
+     
+     Here we use the local p5subset.xml in the Stylesheets repository.
     -->
-    <property name="localsource" value=""/>
+    <property name="localsource" value="${basedir}/../source/p5subset.xml"/>
     
 <!-- Properties for downloading, unzipping and using FOP 2.2 dist, used in creating PDFs from XSL:FO.
      We're stuck at 2.2 because no hyphenation lib is available for 2.3 yet. -->

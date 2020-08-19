@@ -43,7 +43,7 @@
   <xsl:key name="CHILDMOD" match="Element" use="@module"/>
   <xsl:variable name="Original" select="/"/>
   <xsl:param name="teiWeb">
-    <xsl:text>http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
+    <xsl:text>https://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
   </xsl:param>
   <xsl:template match="tei:ptr | tei:ref" mode="weave">
     <xsl:choose>
@@ -2395,113 +2395,19 @@
   
   <!-- MDH & SB working on ticket #1657 2018-09-10. -->
   <xsl:template match="tei:divGen[@type = 'deprecationcat']">
-    <xsl:element namespace="{$outputNS}" name="{$tableName}">
+    <xsl:element namespace="{$outputNS}" name="{$ulName}">
       <xsl:attribute name="{$rendName}">
         <xsl:text>deprecationcat</xsl:text>
       </xsl:attribute>
-      <xsl:element namespace="{$outputNS}" name="{$rowName}">
-        <xsl:element namespace="{$outputNS}" name="{$cellName}">
-          <xsl:element namespace="{$outputNS}" name="{$hiName}">
-            <xsl:attribute name="{$rendName}">
-              <xsl:text>label</xsl:text>
-            </xsl:attribute>
-            <xsl:attribute name="{$langAttributeName}">
-              <xsl:value-of select="$documentationLanguage"/>
-            </xsl:attribute>
-            <xsl:sequence select="tei:i18n('Identifier')"/>
-          </xsl:element>
-        </xsl:element>
-        <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:element namespace="{$outputNS}" name="{$hiName}">
-              <xsl:attribute name="{$rendName}">
-                <xsl:text>label</xsl:text>
-              </xsl:attribute>
-              <xsl:attribute name="{$langAttributeName}">
-                <xsl:value-of select="$documentationLanguage"/>
-              </xsl:attribute>
-              <xsl:sequence select="tei:i18n('ComponentType')"/>
-            </xsl:element>
-        </xsl:element>
-        <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:element namespace="{$outputNS}" name="{$hiName}">
-              <xsl:attribute name="{$rendName}">
-                <xsl:text>label</xsl:text>
-              </xsl:attribute>
-              <xsl:attribute name="{$langAttributeName}">
-                <xsl:value-of select="$documentationLanguage"/>
-              </xsl:attribute>
-              <xsl:sequence select="tei:i18n('validuntil')"/>
-            </xsl:element>
-        </xsl:element>
-        <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:element namespace="{$outputNS}" name="{$hiName}">
-              <xsl:attribute name="{$rendName}">
-                <xsl:text>label</xsl:text>
-              </xsl:attribute>
-              <xsl:attribute name="{$langAttributeName}">
-                <xsl:value-of select="$documentationLanguage"/>
-              </xsl:attribute>
-              <xsl:sequence select="tei:i18n('Description')"/>
-            </xsl:element>
-        </xsl:element>
-      </xsl:element>
       <xsl:for-each select="//tei:*[@validUntil]">
         <xsl:sort select="@validUntil"/>
-        <xsl:element namespace="{$outputNS}" name="{$rowName}">
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:choose>
-              <xsl:when test="self::tei:attDef or self::tei:constraintSpec">
-                <xsl:variable name="targetIdent" select="ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident"/>
-                  <xsl:call-template name="linkTogether">
-                    <xsl:with-param name="name">
-                      <xsl:value-of select="$targetIdent"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="reftext">
-                      <xsl:value-of select="concat($targetIdent, ' / ', if (self::attDef) then '@' else '', @ident)"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="class">
-                      <xsl:text>link_odd</xsl:text>
-                    </xsl:with-param>
-                  </xsl:call-template>
-              </xsl:when>
-              <xsl:when test="self::tei:valItem or self::tei:valDesc">
-                <xsl:variable name="targetIdent" select="ancestor::*[ends-with(local-name(), 'Spec')][1]/@ident"/>
-                  <xsl:call-template name="linkTogether">
-                    <xsl:with-param name="name">
-                      <xsl:value-of select="$targetIdent"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="reftext">
-                      <xsl:value-of select="concat($targetIdent, ' / ', ancestor::tei:attDef[1]/@ident, ' / ', @ident)"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="class">
-                      <xsl:text>link_odd</xsl:text>
-                    </xsl:with-param>
-                  </xsl:call-template>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:call-template name="linkTogether">
-                    <xsl:with-param name="name">
-                      <xsl:value-of select="@ident"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="reftext">
-                      <xsl:value-of select="@ident"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="class">
-                      <xsl:text>link_odd</xsl:text>
-                    </xsl:with-param>
-                  </xsl:call-template></xsl:otherwise>
-            </xsl:choose>
-          </xsl:element>
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:value-of select="local-name(.)"/>
-          </xsl:element>
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:element namespace="{$outputNS}" name="{$itemName}">
+          <xsl:apply-templates select="descendant::tei:desc[@type='deprecationInfo'][1]"/><xsl:text> </xsl:text>
+          <xsl:value-of select="tei:i18n('validuntil')"/><xsl:text> </xsl:text>
+          <xsl:element namespace="{$outputNS}" name="{$segName}">
+            <xsl:attribute name="{$rendName}">deprecationdate</xsl:attribute>
             <xsl:value-of select="@validUntil"/>
-            <xsl:if test="xs:date(@validUntil) lt current-date()">!!!</xsl:if>
-          </xsl:element>
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:apply-templates select="descendant::tei:desc[@type='deprecationInfo'][1]"/>
-          </xsl:element>
+          </xsl:element>.
         </xsl:element>
       </xsl:for-each>
     </xsl:element>
@@ -2988,9 +2894,7 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:element namespace="{$outputNS}" name="{$divName}">
-            <xsl:attribute name="{$rendName}">
-              <xsl:text>specChildren</xsl:text>
-            </xsl:attribute>
+            <xsl:attribute name="{$rendName}" select="'specChildren'"/>
             <xsl:for-each-group select="*" group-by="@module">
               <xsl:sort select="@module"/>
               <xsl:element namespace="{$outputNS}" name="{$divName}">
@@ -3000,6 +2904,13 @@
                 <xsl:choose>
                   <xsl:when test="@type='TEXT'">
                     <xsl:sequence select="tei:i18n('character data')"/>
+                  </xsl:when>
+                  <!-- Stylesheets group has concerns about if, and how, the
+                    following should be internationalized. For now, just keep
+                    it so simple it does not need translation.
+                    — 2020-03-17 -->
+                  <xsl:when test="@type eq 'XSD'">
+                    <xsl:sequence select="concat('XSD ', @name)"/>
                   </xsl:when>
                   <xsl:when test="@type='ANYXML'">
                     <xsl:for-each select="$here">
@@ -3051,9 +2962,18 @@
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="followRef">
+    <!-- 
+      Note that the @prefix being specified on the <Element> elements
+      we generate are mostly empty, as the current node when we are
+      called is a <tei:content> which does not have an @prefix.
+      — Stylesheets group, 2020-03-17
+    -->
     <xsl:if test=".//rng:text or .//rng:data or .//tei:textNode">
       <Element prefix="{@prefix}" type="TEXT" module="~TEXT"/>
     </xsl:if>
+    <xsl:for-each select="distinct-values( .//tei:dataRef/@name )">
+      <Element prefix="" type="XSD" module="~XSD" name="{.}"/>
+    </xsl:for-each>
     <xsl:for-each
       select=".//rng:ref | .//tei:elementRef | .//tei:classRef | .//tei:macroRef | .//tei:dataRef">
       <xsl:if

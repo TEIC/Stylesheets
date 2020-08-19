@@ -84,7 +84,7 @@
     </sequential>
   </macrodef>-->
   
-  <target name="teiFileToOdt">
+  <target name="teiFileToOdt" depends="makeNamesFile">
     <description>
       TARGET teiFileToOdt
       Converts a single TEI file to odt, then extracts the content.xml from
@@ -128,7 +128,7 @@
    
   </target>
   
-  <target name="teiFileFromOdt" depends="getLatestTeiAll">
+  <target name="teiFileFromOdt" depends="getLatestTeiAll, makeNamesFile">
     <description>
       TARGET teiFileFromOdt
       Converts a single ODT file to TEI, validates the result with Jing,

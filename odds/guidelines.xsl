@@ -903,17 +903,6 @@
 
     </address>
     </div>
-    <xsl:if test="not($googleAnalytics='')">
-      <script src="http://www.google-analytics.com/urchin.js"
-	      type="text/javascript"><!-- load goohle analytics --></script>
-      <script type="text/javascript">
-	<xsl:text>_uacct = "</xsl:text>
-	<xsl:value-of select="$googleAnalytics"/>
-	<xsl:text>";
-	urchinTracker();
-	</xsl:text>
-      </script>
-      </xsl:if>
   </xsl:template>
 
   <xsl:template match="tei:licence"/>
@@ -940,7 +929,7 @@
       </div>
       <div id="searchbox" style="float:left;">
         <form action="http://www.google.com/search" method="get">
-          <fieldset><input style="color:#225588;" value="" maxlength="255" size="20" name="q" type="text"/>&#160;<select name="sitesearch"><option value="http://www.tei-c.org/">Entire site</option><option value="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/" selected="selected">P5 Guidelines
+          <fieldset><input style="color:#225588;" value="" maxlength="255" size="20" name="q" type="text"/>&#160;<select name="sitesearch"><option value="http://www.tei-c.org/">Entire site</option><option value="https://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/" selected="selected">P5 Guidelines
 	    <xsl:choose><xsl:when test="$documentationLanguage='en'"> — English</xsl:when><xsl:when test="$documentationLanguage='de'"> — Deutsch</xsl:when><xsl:when test="$documentationLanguage='es'"> — Español</xsl:when><xsl:when test="$documentationLanguage='it'"> — Italiano</xsl:when><xsl:when test="$documentationLanguage='fr'"> — Français</xsl:when><xsl:when test="$documentationLanguage='ja'"> — 日本語</xsl:when><xsl:when test="$documentationLanguage='kr'"> — 한국어</xsl:when><xsl:when test="$documentationLanguage='zh-TW'"> — 中文</xsl:when></xsl:choose>
 	    </option></select>&#160;<input style="font-size:100%; font-weight:bold;      color:#FFFFFF; background-color:#225588; height: 2em;" value="Search" type="submit"/></fieldset>
         </form>

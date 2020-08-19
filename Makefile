@@ -1,5 +1,5 @@
 SFUSER=rahtz
-DEFAULTSOURCE=https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml
+DEFAULTSOURCE=$(shell pwd)/source/p5subset.xml
 SAXON=java -jar lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
 DOTSAXON=java -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
 DOTDOTSAXON=java -jar ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE) 
@@ -102,8 +102,8 @@ teioo.jar:
 	(cd odt;  mkdir TEIP5; $(DOTSAXON) -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
 
 test: clean build common names debversion
-	@echo BUILD Run tests
-	(cd Test; make DEFAULTSOURCE=$(DEFAULTSOURCE))
+	@echo "BUILD Run tests. (Note: Test/Makefile sets its own DEFAULTSOURCE.)"
+	(cd Test; make)
 
 dist: clean release
 	-rm -f tei-xsl-`cat VERSION`.zip
@@ -119,11 +119,12 @@ dist: clean release
 release: common doc oxygendoc build profiles
 
 installxsl: build teioo.jar
-	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
+	mkdir -p ${PREFIX}/share/xml/tei/stylesheet ${PREFIX}/bin ${PREFIX}/source
 	(tar cf - lib teioo.jar) | (cd ${PREFIX}/share/xml/tei/stylesheet; tar xf - )
 	(cd release/xsl; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
-	mkdir -p ${PREFIX}/bin
-	cp bin/transformtei ${PREFIX}/bin
+	cp --preserve=timestamps bin/transformtei ${PREFIX}/bin
+	cp --preserve=timestamps source/p5subset.xml ${PREFIX}/source
+	# Shouldn't the "/usr" in the following line be ${PREFIX} ? —Syd & Martin, 2020-07-03
 	perl -p -i -e 's+^APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/transformtei
 	chmod 755 ${PREFIX}/bin/transformtei
 	for i in $(SCRIPTS); do  (cd ${PREFIX}/bin; rm -f `basename $$i`;  ln -s transformtei `basename $$i`); done

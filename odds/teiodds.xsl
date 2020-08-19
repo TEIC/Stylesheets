@@ -63,7 +63,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="configDirectory"/>
   <xsl:param name="currentDirectory"/>
   <xsl:param name="defaultSource"></xsl:param>
-  <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
+  <xsl:param name="defaultTEIServer">https://www.tei-c.org/Vault/P5/</xsl:param>
   <xsl:param name="defaultTEIVersion">current</xsl:param>
   <xsl:param name="idPrefix"/>
   <xsl:param name="lang"/>
@@ -1877,7 +1877,7 @@ select="$makeDecls"/></xsl:message>
           </xsl:choose>
         </xsl:variable>
         <xsl:variable name="versionURL"
-          select="concat('http://www.tei-c.org/Vault/P5/', $TEIVersionWithoutFullStop, '/')"/>
+          select="concat('https://www.tei-c.org/Vault/P5/', $TEIVersionWithoutFullStop, '/')"/>
         <xsl:text>&#10;TEI Edition: </xsl:text>
         <xsl:value-of select="$TEIVersion"/>
         <xsl:text>&#10;TEI Edition Location: </xsl:text>
@@ -1979,15 +1979,25 @@ select="$makeDecls"/></xsl:message>
           <xsl:attribute name="id" select="tei:makePatternID(.)"/>
           <rule>
             <xsl:attribute name="context">
-	      <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>
 	      <xsl:choose>
-		<xsl:when test="ancestor::tei:attDef">
+		<!-- in <attDef> in <elementSpec>: -->
+		<xsl:when test="ancestor::tei:attDef/ancestor::tei:elementSpec">
+		  <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>
 		  <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
 		  <xsl:text>/@</xsl:text>
 		  <xsl:value-of select="ancestor::tei:attDef/@ident"/>
-		  <xsl:text></xsl:text>
+		  <xsl:text></xsl:text> <!-- what does this do? —Syd, 2020-02-15 -->
 		</xsl:when>
+		<!-- in <attDef> in something else: -->
+		<xsl:when test="ancestor::tei:attDef">
+		  <xsl:text>@</xsl:text>
+		  <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+		</xsl:when>		  
 		<xsl:otherwise>
+		  <!-- ?? I guess we figure we must be in an
+		       <elementSpec>, but I am not at all convinced
+		       that is necessarily true. —Syd, 2020-02-15 -->
+		  <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>
 		  <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
 		</xsl:otherwise>
 	      </xsl:choose>

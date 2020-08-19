@@ -57,7 +57,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="feedbackURL"/>
   <xsl:param name="searchURL"/>
   <xsl:template name="copyrightStatement"></xsl:template>
-  <xsl:param name="parentURL">http://www.tei-c.org/</xsl:param>
+  <xsl:param name="parentURL">https://www.tei-c.org/</xsl:param>
   <xsl:param name="parentWords">TEI</xsl:param>
 
 </xsl:stylesheet>

@@ -144,7 +144,7 @@
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:attribute name="xsi:schemaLocation">
-        <xsl:text>http://www.tei-c.org/ns/1.0 http://lodel.org/ns/tei.openedition.1.5.2/tei.openedition.1.5.2.xsd</xsl:text>
+        <xsl:text>http://www.tei-c.org/ns/1.0 http://lodel.org/ns/tei/tei.openedition.1.6.2/document.xsd</xsl:text>
       </xsl:attribute>
       <xsl:apply-templates/>
     </xsl:copy>
@@ -282,7 +282,7 @@
     <xsl:attribute name="{$name}">
       <xsl:choose>
         <xsl:when test=". eq 'authorNotes'">author</xsl:when>
-        <xsl:when test=". eq 'editorNotes'">editor</xsl:when>
+        <xsl:when test=". eq 'editorNotes'">publisher</xsl:when>
         <xsl:when test=". eq 'acknowledgements'">ack</xsl:when>
         <xsl:when test=". eq 'corrections'">correction</xsl:when>
         <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
@@ -356,32 +356,66 @@
     </xsl:copy>
   </xsl:template>
   
+  <!-- copy paragraphs, but break out nested paragraph-splitting blocks (tables, list, block quotes, ...). --> 
   <xsl:template match="tei:p">
-    <xsl:variable name="current" select="."/>
     <xsl:for-each-group select="node()" group-starting-with="tei:cit|tei:table|tei:list[not(tokenize(@rend, '\s+') = 'inline')]|tei:figure|eg:egXML|tei:eg|tei:ptr[starts-with(@target, 'video:')]">
-      <xsl:choose>
-        <xsl:when test="current-group()[1][not(self::tei:cit|self::tei:table|self::tei:list|self::tei:figure|self::eg:egXML|self::tei:eg|self::tei:ptr[starts-with(@target, 'video:')])]">
-          <xsl:call-template name="p.create">
-            <xsl:with-param name="context" select="current-group()"/>
-            <xsl:with-param name="current" select="$current"/>
-          </xsl:call-template>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates select="current-group()[1]"/>
-          <xsl:if test="current-group()[position() > 1]">
-            <xsl:call-template name="p.create">
-              <xsl:with-param name="context" select="current-group()[position() > 1]"/>
-              <xsl:with-param name="current" select="$current"/>
-            </xsl:call-template>
-          </xsl:if>
-        </xsl:otherwise>
-      </xsl:choose>
+      <xsl:call-template name="promote.nested.blocks"/>
     </xsl:for-each-group>
+  </xsl:template>
+
+  <!-- This template groups all of the context nodes that are no paragraph-splitting blocks (tables, list, block quotes, ...) inside paragraphs, and normalizes whitespace for text preceding or following these blocks. -->
+  <xsl:template name="promote.nested.blocks">
+    <xsl:choose>
+      <xsl:when test="current-group()[1][not(self::tei:cit|self::tei:table|self::tei:list|self::tei:figure|self::eg:egXML|self::tei:eg|self::tei:ptr[starts-with(@target, 'video:')])]">
+        <xsl:if test="some $node in current-group() satisfies not($node/self::text()[not(normalize-space())])">
+          <p>
+            <xsl:if test="ancestor::tei:label[parent::tei:list[@type='gloss']]">
+              <xsl:attribute name="rendition">#glosslabel</xsl:attribute>
+            </xsl:if>
+            <!-- This is strictly speaking cosmetical, to reduce spurious whitespace. If this is no concern, further processing could be simplified with
+            
+            <xsl:apply-templates select="current-group()"/>
+            
+            -->
+            <xsl:for-each select="current-group()">
+              <xsl:choose>
+                <xsl:when test="self::text()">
+                  <xsl:call-template name="process.promoted.text"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:apply-templates select="."/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:for-each>
+          </p>
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="current-group()[1]"/>
+        <xsl:if test="some $node in current-group()[position() > 1] satisfies not($node/self::text()[not(normalize-space())])">
+          <p rend="noindent">
+            <xsl:if test="ancestor::tei:label[parent::tei:list[@type='gloss']]">
+              <xsl:attribute name="rendition">#glosslabel</xsl:attribute>
+            </xsl:if>
+            <xsl:for-each select="current-group()[position() > 1]">
+              <!-- Pre-process text() nodes only, in order to trim spurious whitespace afterwards. --> 
+              <xsl:choose>
+                <xsl:when test="self::text()">
+                  <xsl:call-template name="process.promoted.text"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:apply-templates select="."/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:for-each>
+          </p>
+        </xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <!-- add @n to <note> -->
   <xsl:template match="tei:note">
-    <xsl:param name="note.counter" tunnel="yes" as="xs:integer" select="0"/>
     <xsl:param name="note.context" select="ancestor::*[self::tei:front|self::tei:body|self::tei:back]" tunnel="yes" as="element()?"/>
     <!-- 'pull' subsequent puntuation (if necessary) -->
     <xsl:call-template name="include.punctuation"/>
@@ -392,7 +426,7 @@
       </xsl:if>
       <xsl:attribute name="n">
         <!-- notes inside lists are processed in isolation; therefore add counter of notes preceding the parent list (if available) to the relative numbering -->
-        <xsl:number value="local:get.note.nr(.) + $note.counter" format="{local:format.note.nr($note.context)}"/>
+        <xsl:number value="local:get.note.nr(.)" format="{local:format.note.nr($note.context)}"/>
       </xsl:attribute>
       <xsl:choose>
         <xsl:when test="tei:p">
@@ -640,7 +674,20 @@
           <xsl:apply-templates/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="@target"/>
+          <!-- Inject a zero-width space after slashes and periods to add more places where browsers
+               can wrap long URLs. 
+               Note: in order to avoid breaking in between repeated slashes and periods, and within 
+               '../',  this replacement has to happen in two passes.
+          -->
+          <xsl:value-of select="
+            replace(
+              replace(
+                @target,
+                '([/])([^/])',
+                '$1&#8203;$2')
+            , '([\.])([^\./])',
+            '$1&#8203;$2')
+          "/>
         </xsl:otherwise>
       </xsl:choose>
     </ref>
@@ -805,7 +852,8 @@
     </xsl:choose>
   </xsl:template>
       
-  <xsl:template match="tei:title[not(@level)][not(ancestor::tei:teiHeader)]">
+  <!-- skip all other titles in the text -->
+  <xsl:template match="tei:text//tei:title[not(@level = ('a','u', 'm', 'j'))]">
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -856,31 +904,53 @@
       <xsl:call-template name="punctuate-head"/>
     </p>
   </xsl:template>
-
-  <!-- [RvdB] added preprocessing step, which just copies the list, but wraps all contents of <item> in <p> prior to further processing -->
+  
+  <!-- process <head> as paragraph preceding the <list> -->
   <xsl:template match="tei:list">
-    <xsl:param name="note.counter" tunnel="yes" as="xs:integer" select="0"/>
-    <xsl:param name="note.context" select="ancestor::*[self::tei:front|self::tei:body|self::tei:back]" tunnel="yes" as="element()?"/>
-    <xsl:variable name="current" select="."/>
-    <xsl:variable name="list.prepare">
-      <xsl:apply-templates select="." mode="list.prepare"/>
-    </xsl:variable>
-    <xsl:variable name="list.complete">
-      <xsl:for-each select="$list.prepare/tei:list">
-        <xsl:apply-templates select="tei:head"/>
-        <xsl:copy>
-          <xsl:apply-templates select="@*"/>
-          <xsl:call-template name="get.rendition"/>        
-          <xsl:apply-templates select="node()[not(self::tei:head)]">
-            <xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/>
-            <xsl:with-param name="note.context" select="$note.context" tunnel="yes"/>
-          </xsl:apply-templates>
-        </xsl:copy>
-      </xsl:for-each>
-    </xsl:variable>
-    <xsl:apply-templates select="$list.complete" mode="list.finish"/>
+    <xsl:apply-templates select="tei:head"/>
+    <xsl:copy>
+      <xsl:apply-templates select="@*"/>
+      <xsl:call-template name="get.rendition"/>        
+      <xsl:apply-templates select="node()[not(self::tei:head)]"/>
+    </xsl:copy>
   </xsl:template>
   
+  <!-- output list <item> and <label> as <item> elements; group everything that's not inside a paragraph or paragraph-splitting block inside paragraphs -->
+  <xsl:template match="tei:list[not(matches(@rend, 'inline'))]/tei:item|tei:list[not(matches(@rend, 'inline'))]/tei:label">
+    <item>
+      <xsl:copy-of select="@*"/>
+      <!-- start by grouping on <p> also, to catch mixed cases -->
+      <xsl:for-each-group select="node()" group-starting-with="tei:p|tei:cit|tei:table|tei:list[not(tokenize(@rend, '\s+') = 'inline')]|tei:figure|eg:egXML|tei:eg|tei:ptr[starts-with(@target, 'video:')]">
+        <xsl:choose>
+          <!-- when first group starts with <p>, copy that and promote following text to <p> -->
+          <xsl:when test="current-group()[1][self::tei:p]">
+            <!-- copy existing <p> -->
+            <xsl:apply-templates select="current-group()[1]"/>
+            <!-- wrap remaining text in <p> -->
+            <xsl:if test="count(current-group()[not(self::text()[not(normalize-space())])]) > 1">
+              <p>
+                <!-- trim remaining text; copy other content -->
+                <xsl:for-each select="current-group()[position() > 1]">
+                  <xsl:choose>
+                    <xsl:when test="self::text()">
+                      <xsl:call-template name="process.promoted.text"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:apply-templates select="."/>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:for-each>
+              </p>
+            </xsl:if>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:call-template name="promote.nested.blocks"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each-group>
+    </item>
+  </xsl:template>
+
   <xsl:template match="tei:list/@rend">
     <xsl:attribute name="type">
       <xsl:choose>
@@ -899,61 +969,8 @@
       -transform label to item
       -assign rendition class to label contents
    -->
-  <xsl:template match="tei:list/@type[. = 'gloss']" mode="list.finish">
+  <xsl:template match="tei:list/@type[. = 'gloss']">
     <xsl:attribute name="type">unordered</xsl:attribute>
-  </xsl:template>
-
-  <xsl:template match="tei:list[@type='gloss']/tei:label" mode="list.finish">
-    <item>
-      <xsl:apply-templates select="@*|node()" mode="#current"/>
-    </item>
-  </xsl:template>
-
-  <xsl:template match="tei:list[@type='gloss']/tei:label/*" mode="list.finish">
-    <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <xsl:call-template name="get.rendition"/>
-      <xsl:apply-templates select="node()" mode="#current"/>
-    </xsl:copy>
-  </xsl:template>
-
-  <xsl:template match="@*|node()" mode="list.finish">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="#current"/>
-    </xsl:copy>
-  </xsl:template>
-  
-  <!-- [RvdB] wrap all contents of <item> in <p> prior to further processing -->
-  <xsl:template match="tei:list[not(matches(@rend, 'inline'))]/tei:item|tei:list[not(matches(@rend, 'inline'))]/tei:label" mode="list.prepare">
-    <xsl:variable name="current" select="."/>
-    <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <xsl:for-each-group select="node()" group-starting-with="node()[self::tei:p]">
-        <xsl:choose>
-          <xsl:when test="current-group()[1][not(self::tei:p)]">
-            <xsl:call-template name="p.create">
-              <xsl:with-param name="context" select="current-group()"/>
-              <xsl:with-param name="current" select="$current"/>
-            </xsl:call-template>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:apply-templates select="current-group()[1]" mode="#current"/>
-            <xsl:if test="current-group()[position() > 1]">
-              <xsl:call-template name="p.create">
-                <xsl:with-param name="context" select="current-group()[position() > 1]"/>
-                <xsl:with-param name="current" select="$current"/>
-              </xsl:call-template>
-            </xsl:if>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:for-each-group>
-    </xsl:copy>
-  </xsl:template>
-  
-  <xsl:template match="@*|node()" mode="list.prepare" priority="-1">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="#current"/>
-    </xsl:copy>
   </xsl:template>
   
   <xsl:template match="tei:table">
@@ -974,6 +991,10 @@
   </xsl:template>
   
   <xsl:template match="tei:text//tei:date" priority="0">
+    <xsl:apply-templates/>
+  </xsl:template>
+  
+  <xsl:template match="tei:text//tei:email">
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -1054,15 +1075,16 @@
   </xsl:function>
   
   <!-- function for mapping original element names with output rendition definitions -->
+  <!-- note: if multiple rendition definitions apply, the last is chosen, so make sure to put the one that should take precedence last -->
   <xsl:function name="local:map.styles" as="xs:string?">
     <xsl:param name="node"/>
     <xsl:choose>
       <xsl:when test="$node/self::tei:item/parent::tei:list[tokenize(@rend, '\s+') = 'inline'][not(tokenize(@rend, '\s+') = 'simple')]">inlinelabel</xsl:when>
       <xsl:when test="$node/self::tei:head/(parent::tei:list|parent::tei:table)">p.head</xsl:when>
-      <xsl:when test="$node[self::tei:list or self::tei:table]/parent::tei:quote/parent::tei:cit or $node/self::tei:cit[tei:quote/(tei:table|tei:list)]">citation</xsl:when>
       <xsl:when test="$node/self::tei:list[tokenize(@rend, '\s+') = 'inline'][not(tokenize(@rend, '\s+') = 'simple')]">simplelist</xsl:when>
       <xsl:when test="$node/self::tei:list[@type eq 'gloss']">glosslist</xsl:when>
-      <xsl:when test="$node/self::node()[parent::tei:label[parent::tei:list[@type eq 'gloss']]]">glosslabel</xsl:when>
+      <xsl:when test="$node[self::tei:list or self::tei:table]/parent::tei:quote/parent::tei:cit or $node/self::tei:cit[tei:quote/(tei:table|tei:list)]">citation</xsl:when>
+      <xsl:when test="$node[self::text() or self::tei:p][parent::tei:label[parent::tei:list[@type eq 'gloss']]]">glosslabel</xsl:when>
       <xsl:when test="$node/self::tei:table[@rend='border']">table.border</xsl:when>
       <xsl:when test="$node/self::tei:cell[xs:integer(@cols) gt 1 or ancestor::tei:table[1][@rend eq 'border'] or @role eq 'label' or parent::tei:row[@role eq 'label']]">
         <xsl:variable name="parts">

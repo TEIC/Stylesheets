@@ -5207,7 +5207,7 @@ Toccupation =
   }
 Torg =
   
-  ## (organization) provides information about an identifiable organization such as a business, a tribe, or any other grouping of people. [13.2.2. Organizational Names]
+  ## (organization) provides information about an identifiable organization such as a business, a tribe, or any other grouping of people. [13.3.3. Organizational Data]
   element org {
     (Tmodel.headLike*,
      (Tmodel.pLike*
@@ -6324,9 +6324,7 @@ Tline =
 TlistTranspose =
   
   ## supplies a list of transpositions, each of which is indicated at some point in a document typically by means of metamarks. [11.3.4.5. Transpositions]
-  element listTranspose {
-    (Tdesc*, Ttranspose+), Tatt.global.attributes, empty
-  }
+  element listTranspose { Tdesc*, Tatt.global.attributes, empty }
 Tmetamark =
   
   ## contains or describes any kind of graphic or written signal within a document the function of which is to determine how it should be read rather than forming part of the actual content of the document. [11.3.4.2. Metamarks]
@@ -6386,10 +6384,6 @@ Tretrace =
     Tatt.dimensions.attributes,
     empty
   }
-Ttranspose =
-  
-  ## describes a single textual transposition as an ordered list of at least two pointers specifying the order in which the elements indicated should be re-combined. [11.3.4.5. Transpositions]
-  element transpose { (Tptr, Tptr+), Tatt.global.attributes, empty }
 Tundo =
   
   ## indicates one or more marked-up interventions in a document which have subsequently been marked for cancellation. [11.3.4.4. Confirmation, Cancellation, and Reinstatement of Modifications]

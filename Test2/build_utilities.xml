@@ -93,7 +93,35 @@
     <delete  includeemptydirs="true">
       <fileset refid="symlinksToCssFiles"/>
       <fileset refid="generatedFiles"/>
+      <file file="${basedir}/../names.xml"/>
     </delete>
+  </target>
+  
+  <target name="checkForNamesFile">
+    <description>
+      TARGET checkForNamesFile
+      This checks whether the names.xml file has already been
+      created, and if it has, sets a property.
+    </description>
+    <available file="${basedir}/../names.xml" property="namesFileAvailable" />
+  </target>
+  
+  <target name="makeNamesFile" depends="checkForNamesFile" unless="namesFileAvailable">
+    <description>
+      TARGET makeNamesFile
+      This target runs the process to get the tools.getnames.xsl
+      transformation to generate the local names.xml file which is
+      used in ODT and DOCX transformations. This should run only
+      once per run of test sequence.
+    </description>
+    <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+      <arg value="-it:main"/>
+      <arg value="-xsl:${basedir}/../tools/getnames.xsl"/>
+      <arg value="-o:${basedir}/../names.xml"/>
+      <arg value="--suppressXsltNamespaceCheck:on"/>
+      <arg value="-versionmsg:off"/>
+      <arg value="-dtd:off"/>
+    </java>
   </target>
   
   <!--  These targets deal with diffing the results of transformations against
@@ -144,12 +172,17 @@
     <!--  If not regenerating, then diff the file.      -->
     <trycatch if:blank="${regenerate}">
       <try>
-        <echo message="diff A: ${inFile}"/>
-        <echo message="diff B: ${otherFile}"/>
-        <fail message="${inFile} is different from ${otherFile}.">    
+        <echo message="about to compare files:"/>
+	<!-- 
+	     Note: the format of the following message is designed to allow
+	     the user to copy-and-paste the two file paths into a `diff` or
+	     `cp` command. Just select everything after the '='.
+	-->
+        <echo message="inFile otherFile = ${inFile} ${otherFile}"/>
+        <fail message="Sadly, ${inFile} is different from ${otherFile}.">    
           <condition>
             <not>
-              <filesmatch file1="${inFile}" file2="${otherFile}"/>
+              <filesmatch textfile="true" file1="${inFile}" file2="${otherFile}"/>
             </not>
           </condition>
         </fail>
@@ -162,12 +195,16 @@
       should only fail here on Windows if the files are different;
       there would simply be less in the way of useful output. -->
         <exec dir="." executable="diff">
-          <arg line="-u"/>
           <arg line="-b"/>
+          <arg line="--old-line-format='output: %L'"/>
+          <arg line="--new-line-format='expect: %L'"/>
+          <arg line="--unchanged-line-format=''"/>
+          <!-- This won't work because ant is logging the output. -->
+          <!--<arg line="-\-color=always"/>-->
           <arg file="${inFile}"/>
           <arg file="${otherFile}"/>
         </exec>
-        <fail message="Build failed because of differences between  ${inFile} and ${otherFile}. See diff output above."/>
+        <fail message="Build failed because of differences between ${inFile} and ${otherFile}. See diff output above."/>
       </catch>
     </trycatch>
   </target>

@@ -636,7 +636,7 @@ valList
           >true</xsl:when>
         <xsl:when test="@ident='type' and $enumerateType='true'">true</xsl:when>
         <xsl:when test="valList[@type='closed']">true</xsl:when>
-        <xsl:when test="datatype/rng:ref[@name='data.enumerated']"
+        <xsl:when test="datatype/dataRef[@key='teidata.enumerated']"
           >true</xsl:when>
         <!--
       <xsl:when
