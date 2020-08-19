@@ -665,6 +665,219 @@
         [ 
           { "type" : "empty" } ] },
       
+      { "ident" : "annotation",
+        "ns" : "http:\/\/foo.foo\/foo",
+        "type" : "elementSpec",
+        "module" : "linking",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-07-31\" xml:lang=\"en\">represents an annotation following the <ref target=\"#WADM\">Web\n      Annotation Data Model<\/ref>.<\/desc>" ],
+        "shortDesc" : "represents an annotation following the Web\n      Annotation Data Model.",
+        "gloss" : 
+        [  ],
+        "altIdent" : 
+        [  ],
+        "classes" : 
+        { "model" : 
+          [ "model.annotationLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.pointing" ],
+          "unknown" : 
+          [  ] },
+        "attributes" : 
+        [ 
+          { "onElement" : true,
+            "ident" : "motivation",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [  ],
+            "shortDesc" : "",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.enumerated" } },
+            "valList" : 
+            { "type" : "closed",
+              "valItem" : 
+              [ 
+                { "ident" : "assessing",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to assess the target resource in\n            some way, rather than simply make a comment about it<\/desc>" ],
+                  "shortDesc" : "intent is to assess the target resource in\n            some way, rather than simply make a comment about it",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "bookmarking",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to create a bookmark to the target\n            or part thereof<\/desc>" ],
+                  "shortDesc" : "intent is to create a bookmark to the target\n            or part thereof",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "classifying",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to classify the target in some\n            way<\/desc>" ],
+                  "shortDesc" : "intent is to classify the target in some\n            way",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "commenting",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to comment about the target<\/desc>" ],
+                  "shortDesc" : "intent is to comment about the target",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "describing",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to describe the target, rather than\n            (for example) comment on it<\/desc>" ],
+                  "shortDesc" : "intent is to describe the target, rather than\n            (for example) comment on it",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "editing",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to request an edit or a change to\n            the target resource<\/desc>" ],
+                  "shortDesc" : "intent is to request an edit or a change to\n            the target resource",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "highlighting",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to highlight the target resource or\n            a segment thereof<\/desc>" ],
+                  "shortDesc" : "intent is to highlight the target resource or\n            a segment thereof",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "identifying",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to assign an identity to the\n            target<\/desc>" ],
+                  "shortDesc" : "intent is to assign an identity to the\n            target",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "linking",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to link to a resource related to\n            the target<\/desc>" ],
+                  "shortDesc" : "intent is to link to a resource related to\n            the target",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "moderating",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to assign some value or quality to\n            the target<\/desc>" ],
+                  "shortDesc" : "intent is to assign some value or quality to\n            the target",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "questioning",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to ask a question about the\n            target<\/desc>" ],
+                  "shortDesc" : "intent is to ask a question about the\n            target",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "replying",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to reply to a previous statement,\n            either an annotation or another resource<\/desc>" ],
+                  "shortDesc" : "intent is to reply to a previous statement,\n            either an annotation or another resource",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "tagging",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2020-08-10\">intent is to associate a tag with the\n            target<\/desc>" ],
+                  "shortDesc" : "intent is to associate a tag with the\n            target",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] } ] } },
+          
+          { "onElement" : true,
+            "ident" : "target",
+            "mode" : "change",
+            "ns" : "",
+            "usage" : "req",
+            "desc" : 
+            [  ],
+            "shortDesc" : "",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            {  } },
+          
+          { "onElement" : true,
+            "ident" : "xml:id",
+            "mode" : "change",
+            "ns" : "",
+            "usage" : "req",
+            "desc" : 
+            [  ],
+            "shortDesc" : "",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            {  } } ],
+        "content" : 
+        [ 
+          { "type" : "sequence",
+            "minOccurs" : "1",
+            "maxOccurs" : "1",
+            "content" : 
+            [ 
+              { "type" : "elementRef",
+                "key" : "respStmt" },
+              
+              { "type" : "elementRef",
+                "key" : "revisionDesc" },
+              
+              { "type" : "elementRef",
+                "key" : "licence" },
+              
+              { "type" : "classRef",
+                "key" : "model.annotationPart.body" } ] } ] },
+      
       { "ident" : "appInfo",
         "ns" : "http:\/\/foo.foo\/foo",
         "type" : "elementSpec",
@@ -1926,22 +2139,31 @@
             "content" : 
             [ 
               { "type" : "classRef",
-                "key" : "model.qLike" },
+                "key" : "model.biblLike" },
               
               { "type" : "classRef",
                 "key" : "model.egLike" },
               
               { "type" : "classRef",
-                "key" : "model.biblLike" },
-              
-              { "type" : "classRef",
-                "key" : "model.ptrLike" },
+                "key" : "model.entryPart" },
               
               { "type" : "classRef",
                 "key" : "model.global" },
               
               { "type" : "classRef",
-                "key" : "model.entryPart" } ] } ] },
+                "key" : "model.graphicLike" },
+              
+              { "type" : "classRef",
+                "key" : "model.ptrLike" },
+              
+              { "type" : "classRef",
+                "key" : "model.attributable" },
+              
+              { "type" : "elementRef",
+                "key" : "pc" },
+              
+              { "type" : "elementRef",
+                "key" : "q" } ] } ] },
       
       { "ident" : "cit",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -4381,7 +4603,7 @@
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.qLike" ],
+          [ "model.attributable" ],
           "atts" : 
           [ "att.global",
             "att.declaring",
@@ -6317,6 +6539,53 @@
                   { "type" : "classRef",
                     "key" : "model.global" } ] } ] } ] },
       
+      { "ident" : "listAnnotation",
+        "ns" : "http:\/\/foo.foo\/foo",
+        "type" : "elementSpec",
+        "module" : "linking",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-03-08\" xml:lang=\"en\">contains a list of annotations, typically encoded as\n      <gi>annotation<\/gi>, <gi>annotationBlock<\/gi>, or <gi>note<\/gi>, possibly organized with\n    nested <gi>listAnnotation<\/gi> elements.<\/desc>" ],
+        "shortDesc" : "contains a list of annotations, typically encoded as\n      annotation, annotationBlock, or note, possibly organized with\n    nested listAnnotation elements.",
+        "gloss" : 
+        [  ],
+        "altIdent" : 
+        [  ],
+        "classes" : 
+        { "model" : 
+          [ "model.standOffPart" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.notated",
+            "att.declaring" ],
+          "unknown" : 
+          [  ] },
+        "attributes" : 
+        [  ],
+        "content" : 
+        [ 
+          { "type" : "sequence",
+            "minOccurs" : "1",
+            "maxOccurs" : "1",
+            "content" : 
+            [ 
+              { "type" : "classRef",
+                "key" : "model.headLike" },
+              
+              { "type" : "classRef",
+                "key" : "model.labelLike" },
+              
+              { "type" : "alternate",
+                "minOccurs" : "1",
+                "maxOccurs" : "unbounded",
+                "content" : 
+                [ 
+                  { "type" : "classRef",
+                    "key" : "model.annotationLike" },
+                  
+                  { "type" : "elementRef",
+                    "key" : "listAnnotation" } ] } ] } ] },
+      
       { "ident" : "listBibl",
         "ns" : "http:\/\/foo.foo\/foo",
         "type" : "elementSpec",
@@ -6443,8 +6712,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-11-23\" xml:lang=\"en\">contains a list of definitions of prefixing schemes used in <ident type=\"datatype\">data.pointer<\/ident> values, showing how abbreviated URIs using each scheme may be expanded into full URIs.<\/desc>" ],
-        "shortDesc" : "(list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-11-23\" xml:lang=\"en\">contains a list of definitions of prefixing schemes used in <ident type=\"datatype\">teidata.pointer<\/ident> values, showing how abbreviated URIs using each scheme may be expanded into full URIs.<\/desc>" ],
+        "shortDesc" : "(list of prefix definitions) contains a list of definitions of prefixing schemes used in teidata.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-11-22\" xml:lang=\"en\">list of prefix definitions<\/gloss>" ],
         "altIdent" : 
@@ -7040,9 +7309,11 @@
         "classes" : 
         { "model" : 
           [ "model.noteLike",
+            "model.annotationLike",
             "model.correspDescPart",
             "model.correspActionPart",
-            "model.correspContextPart" ],
+            "model.correspContextPart",
+            "model.annotationPart.body" ],
           "atts" : 
           [ "att.global",
             "att.placement",
@@ -7491,8 +7762,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-12-26\" xml:lang=\"en\">defines a prefixing scheme used in <ident type=\"datatype\">data.pointer<\/ident> values,\n  showing how abbreviated URIs using the scheme may be expanded into full URIs.<\/desc>" ],
-        "shortDesc" : "(prefix definition) defines a prefixing scheme used in data.pointer values,\n  showing how abbreviated URIs using the scheme may be expanded into full URIs.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-12-26\" xml:lang=\"en\">defines a prefixing scheme used in <ident type=\"datatype\">teidata.pointer<\/ident> values,\n  showing how abbreviated URIs using the scheme may be expanded into full URIs.<\/desc>" ],
+        "shortDesc" : "(prefix definition) defines a prefixing scheme used in teidata.pointer values,\n  showing how abbreviated URIs using the scheme may be expanded into full URIs.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-11-22\" xml:lang=\"en\">prefix definition<\/gloss>" ],
         "altIdent" : 
@@ -7621,14 +7892,15 @@
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.ptrLike" ],
+          [ "model.annotationPart.body",
+            "model.ptrLike" ],
           "atts" : 
-          [ "att.global",
-            "att.pointing",
-            "att.internetMedia",
-            "att.typed",
+          [ "att.cReferencing",
             "att.declaring",
-            "att.cReferencing" ],
+            "att.global",
+            "att.internetMedia",
+            "att.pointing",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7861,7 +8133,8 @@
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.qLike" ],
+          [ "model.hiLike",
+            "model.common" ],
           "atts" : 
           [ "att.global",
             "att.ascribed.directed" ],
@@ -8120,14 +8393,15 @@
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.ptrLike" ],
+          [ "model.annotationPart.body",
+            "model.ptrLike" ],
           "atts" : 
-          [ "att.global",
-            "att.pointing",
-            "att.internetMedia",
-            "att.typed",
+          [ "att.cReferencing",
             "att.declaring",
-            "att.cReferencing" ],
+            "att.global",
+            "att.internetMedia",
+            "att.pointing",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8586,7 +8860,7 @@
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.qLike" ],
+          [ "model.attributable" ],
           "atts" : 
           [ "att.global",
             "att.ascribed.directed" ],
@@ -8893,7 +9167,8 @@
         { "model" : 
           [  ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.declarable" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9129,10 +9404,18 @@
                         "key" : "model.stageLike" },
                       
                       { "type" : "classRef",
-                        "key" : "model.qLike" } ] },
+                        "key" : "model.attributable" } ] },
                   
-                  { "type" : "classRef",
-                    "key" : "model.global" } ] } ] } ] },
+                  { "type" : "alternate",
+                    "minOccurs" : "1",
+                    "maxOccurs" : "1",
+                    "content" : 
+                    [ 
+                      { "type" : "classRef",
+                        "key" : "model.global" },
+                      
+                      { "type" : "elementRef",
+                        "key" : "q" } ] } ] } ] } ] },
       
       { "ident" : "speaker",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -10872,8 +11155,8 @@
             "ns" : "",
             "usage" : "opt",
             "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-19\" xml:lang=\"en\">specifies a time\n      interval either as a number or as one of the keywords defined\n      by the datatype data.interval<\/desc>" ],
-            "shortDesc" : "specifies a time\n      interval either as a number or as one of the keywords defined\n      by the datatype data.interval",
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-19\" xml:lang=\"en\">specifies a time\n      interval either as a number or as one of the keywords defined\n      by the datatype <ident type=\"datatype\">teidata.interval<\/ident><\/desc>" ],
+            "shortDesc" : "specifies a time\n      interval either as a number or as one of the keywords defined\n      by the datatype teidata.interval",
             "gloss" : 
             [  ],
             "altIdent" : 
@@ -10978,6 +11261,37 @@
             "unknown" : 
             [  ] } },
         
+        { "ident" : "model.annotationLike",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-03-11\" xml:lang=\"en\">groups elements used to represent annotations.<\/desc>" ],
+          "shortDesc" : "groups elements used to represent annotations.",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.standOffPart" ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
+        
+        { "ident" : "model.annotationPart.body",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-07-31\" xml:lang=\"en\">groups elements which may be used as an <gi>annotation<\/gi> body.<\/desc>" ],
+          "shortDesc" : "groups elements which may be used as an annotation body.",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ] },
+        
         { "ident" : "model.applicationLike",
           "ns" : "http:\/\/foo.foo\/foo",
           "type" : "classSpec",
@@ -10989,6 +11303,25 @@
           [  ],
           "altIdent" : 
           [  ] },
+        
+        { "ident" : "model.attributable",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-08-05\" xml:lang=\"en\">groups elements that contain a word or phrase that can be attributed to a source.<\/desc>" ],
+          "shortDesc" : "groups elements that contain a word or phrase that can be attributed to a source.",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.inter" ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
         
         { "ident" : "model.availabilityPart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12163,25 +12496,6 @@
           "altIdent" : 
           [  ] },
         
-        { "ident" : "model.qLike",
-          "ns" : "http:\/\/foo.foo\/foo",
-          "type" : "classSpec",
-          "module" : "tei",
-          "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-10-10\" xml:lang=\"en\">groups elements related to highlighting which can appear either within or between\n    chunk-level elements.<\/desc>" ],
-          "shortDesc" : "groups elements related to highlighting which can appear either within or between\n    chunk-level elements.",
-          "gloss" : 
-          [  ],
-          "altIdent" : 
-          [  ],
-          "classes" : 
-          { "model" : 
-            [ "model.inter" ],
-            "atts" : 
-            [  ],
-            "unknown" : 
-            [  ] } },
-        
         { "ident" : "model.quoteLike",
           "ns" : "http:\/\/foo.foo\/foo",
           "type" : "classSpec",
@@ -12195,7 +12509,7 @@
           [  ],
           "classes" : 
           { "model" : 
-            [ "model.qLike" ],
+            [ "model.attributable" ],
             "atts" : 
             [  ],
             "unknown" : 
