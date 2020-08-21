@@ -33,6 +33,9 @@
      expected results en masse. -->
   <property name="regenerate" value=""/>
   
+  <!-- Flag for debugging, which, if set, will leave temporary files in place. -->
+  <property name="debug" value="false"/>
+  
   <!-- AN ASSORTMENT OF FILE PATHS. -->
   <!-- Location of transformtei script and its symlinked callers.   -->
   <property name="bin" value="../bin"/>
@@ -239,11 +242,18 @@
     <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
       <arg value="-s:${inFile}"/>
       <arg value="-xsl:${basedir}/cleanForDiff.xsl"/>
-      <arg value="-o:${inFile}"/>
+      <arg value="-o:${inFile}_uncleaned"/>
       <arg value="--suppressXsltNamespaceCheck:on"/>
       <arg value="-versionmsg:off"/>
       <arg value="-dtd:off"/>
     </java>
+    <copy file="${inFile}_uncleaned" tofile="${inFile}"/>
+    <if>
+      <equals arg1="${debug}" arg2="false"/>
+      <then>
+        <delete file="${inFile}_uncleaned"/>
+      </then>
+    </if>
   </target>
   
   <target name="lintFormat">
