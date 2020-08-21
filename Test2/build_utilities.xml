@@ -239,19 +239,25 @@
     </description>
     <echo level="info" message="Clean ${inFile} ready for diffing with expected results."/>
     <replaceregexp file="${inFile}" match="^\s*&lt;!DOCTYPE[^>]+>" replace=""/>
+    <propertyregex property="cleanedFileName"
+      input="${inFile}"
+      regexp="(\..+$)"
+      replace="_cleaned\1"
+      global="true" />
     <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
       <arg value="-s:${inFile}"/>
       <arg value="-xsl:${basedir}/cleanForDiff.xsl"/>
-      <arg value="-o:${inFile}_uncleaned"/>
+      <arg value="-o:${cleanedFileName}"/>
       <arg value="--suppressXsltNamespaceCheck:on"/>
       <arg value="-versionmsg:off"/>
       <arg value="-dtd:off"/>
     </java>
-    <copy file="${inFile}_uncleaned" tofile="${inFile}"/>
+    <echo level="info" message="Copying ${cleanedFileName} over ${inFile}"/>
+    <copy file="${cleanedFileName}" tofile="${inFile}" overwrite="true"/>
     <if>
       <equals arg1="${debug}" arg2="false"/>
       <then>
-        <delete file="${inFile}_uncleaned"/>
+        <delete file="${cleanedFileName}"/>
       </then>
     </if>
   </target>
