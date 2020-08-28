@@ -21,7 +21,11 @@ Tmacro.paraContent =
    | Tmodel.lLike)*
 Tmacro.limitedContent = (text | Tmodel.limitedPhrase | Tmodel.inter)*
 Tmacro.phraseSeq =
-  (text | Tmodel.gLike | Tmodel.qLike | Tmodel.phrase | Tmodel.global)*
+  (text
+   | Tmodel.gLike
+   | Tmodel.attributable
+   | Tmodel.phrase
+   | Tmodel.global)*
 Tmacro.phraseSeq.limited =
   (text | Tmodel.limitedPhrase | Tmodel.global)*
 Tmacro.specialPara =
@@ -1266,12 +1270,12 @@ Tmodel.nameLike.agent_sequenceOptionalRepeatable =
 Tmodel.nameLike.agent_sequenceRepeatable =
   Tname+, TorgName+, TpersName+, Tplatypus+
 Tmodel.segLike = Tseg
-Tmodel.hiLike = Thi
-Tmodel.hiLike_alternation = Thi
-Tmodel.hiLike_sequence = Thi
-Tmodel.hiLike_sequenceOptional = Thi?
-Tmodel.hiLike_sequenceOptionalRepeatable = Thi*
-Tmodel.hiLike_sequenceRepeatable = Thi+
+Tmodel.hiLike = Thi | Tq
+Tmodel.hiLike_alternation = Thi | Tq
+Tmodel.hiLike_sequence = Thi, Tq
+Tmodel.hiLike_sequenceOptional = Thi?, Tq?
+Tmodel.hiLike_sequenceOptionalRepeatable = Thi*, Tq*
+Tmodel.hiLike_sequenceRepeatable = Thi+, Tq+
 Tmodel.emphLike =
   Tforeign
   | Temph
@@ -1760,20 +1764,17 @@ Tmodel.quoteLike_sequence = Tquote, Tcit
 Tmodel.quoteLike_sequenceOptional = Tquote?, Tcit?
 Tmodel.quoteLike_sequenceOptionalRepeatable = Tquote*, Tcit*
 Tmodel.quoteLike_sequenceRepeatable = Tquote+, Tcit+
-Tmodel.qLike = Tmodel.quoteLike | Tsaid | Tq | TfloatingText
-Tmodel.qLike_alternation =
-  Tmodel.quoteLike_alternation | Tsaid | Tq | TfloatingText
-Tmodel.qLike_sequence =
-  Tmodel.quoteLike_sequence, Tsaid, Tq, TfloatingText
-Tmodel.qLike_sequenceOptional =
-  Tmodel.quoteLike_sequenceOptional?, Tsaid?, Tq?, TfloatingText?
-Tmodel.qLike_sequenceOptionalRepeatable =
-  Tmodel.quoteLike_sequenceOptionalRepeatable*,
-  Tsaid*,
-  Tq*,
-  TfloatingText*
-Tmodel.qLike_sequenceRepeatable =
-  Tmodel.quoteLike_sequenceRepeatable+, Tsaid+, Tq+, TfloatingText+
+Tmodel.attributable = Tmodel.quoteLike | Tsaid | TfloatingText
+Tmodel.attributable_alternation =
+  Tmodel.quoteLike_alternation | Tsaid | TfloatingText
+Tmodel.attributable_sequence =
+  Tmodel.quoteLike_sequence, Tsaid, TfloatingText
+Tmodel.attributable_sequenceOptional =
+  Tmodel.quoteLike_sequenceOptional?, Tsaid?, TfloatingText?
+Tmodel.attributable_sequenceOptionalRepeatable =
+  Tmodel.quoteLike_sequenceOptionalRepeatable*, Tsaid*, TfloatingText*
+Tmodel.attributable_sequenceRepeatable =
+  Tmodel.quoteLike_sequenceRepeatable+, Tsaid+, TfloatingText+
 Tmodel.respLike =
   Tauthor
   | Teditor
@@ -1930,8 +1931,8 @@ Tmodel.inter =
   | Tmodel.labelLike
   | Tmodel.listLike
   | Tmodel.stageLike
-  | Tmodel.qLike
-Tmodel.common = Tmodel.divPart | Tmodel.inter
+  | Tmodel.attributable
+Tmodel.common = Tmodel.divPart | Tmodel.inter | Tq
 Tmodel.phrase =
   Tmodel.segLike
   | Tmodel.highlighted
@@ -1954,6 +1955,8 @@ Tmodel.limitedPhrase =
 Tmodel.divLike = Tdiv
 Tmodel.divGenLike = TdivGen
 Tmodel.div1Like = notAllowed
+Tmodel.annotationLike = Tnote | Tannotation
+Tmodel.annotationPart.body = Tptr | Tref | Tnote
 Tmodel.applicationLike = Tapplication
 Tmodel.teiHeaderPart = TencodingDesc | TprofileDesc | TxenoData
 Tmodel.sourceDescPart = notAllowed
@@ -1993,9 +1996,11 @@ Tmodel.standOffPart =
   Tmodel.global.meta
   | Tmodel.biblLike
   | Tmodel.listLike
+  | Tmodel.annotationLike
   | TlistChange
   | Tzone
   | Tseg
+  | TlistAnnotation
 Tatt.formula.attributes = Tatt.formula.attribute.formula
 Tatt.formula.attribute.formula =
   [
@@ -2280,7 +2285,8 @@ Tcit =
      | Tmodel.global
      | Tmodel.graphicLike
      | Tmodel.ptrLike
-     | Tmodel.qLike)+,
+     | Tmodel.attributable
+     | Tq)+,
     Tatt.global.attributes,
     Tatt.typed.attributes,
     empty
@@ -2701,12 +2707,12 @@ Tptr =
          "\x{a}" ~
          "         "
        ],
-    Tatt.global.attributes,
-    Tatt.pointing.attributes,
-    Tatt.internetMedia.attributes,
-    Tatt.typed.attributes,
-    Tatt.declaring.attributes,
     Tatt.cReferencing.attributes,
+    Tatt.declaring.attributes,
+    Tatt.global.attributes,
+    Tatt.internetMedia.attributes,
+    Tatt.pointing.attributes,
+    Tatt.typed.attributes,
     empty
   }
 Tref =
@@ -2736,12 +2742,12 @@ Tref =
          "\x{a}" ~
          "         "
        ],
-    Tatt.global.attributes,
-    Tatt.pointing.attributes,
-    Tatt.internetMedia.attributes,
-    Tatt.typed.attributes,
-    Tatt.declaring.attributes,
     Tatt.cReferencing.attributes,
+    Tatt.declaring.attributes,
+    Tatt.global.attributes,
+    Tatt.internetMedia.attributes,
+    Tatt.pointing.attributes,
+    Tatt.typed.attributes,
     empty
   }
 Tlist =
@@ -3402,8 +3408,8 @@ Tsp =
        | Tmodel.pLike
        | Tmodel.listLike
        | Tmodel.stageLike
-       | Tmodel.qLike),
-      Tmodel.global*)+),
+       | Tmodel.attributable),
+      (Tmodel.global* | Tq))+),
     Tatt.global.attributes,
     Tatt.ascribed.directed.attributes,
     empty
@@ -4481,7 +4487,7 @@ TrevisionDesc =
   }
 Tchange =
   
-  ## documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.6. The Revision Description 2.4.1. Creation 11.7. Identifying Changes and Revisions]
+  ## documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.6. The Revision Description 2.4.1. Creation 11.6. Identifying Changes and Revisions]
   element change {
     Tmacro.specialPara,
     Tatt.ascribed.attributes,
@@ -4498,7 +4504,7 @@ Tchange =
   }
 TlistChange =
   
-  ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.7. Identifying Changes and Revisions]
+  ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.6. Identifying Changes and Revisions]
   element listChange {
     (Tdesc*, (TlistChange | Tchange)+),
     Tatt.global.attributes,
@@ -6119,7 +6125,7 @@ Tex =
   }
 Tfw =
   
-  ## (forme work) contains a running head (e.g. a header, footer), catchword, or similar material appearing on the current page. [11.6. Headers, Footers, and Similar Matter]
+  ## (forme work) contains a running head (e.g. a header, footer), catchword, or similar material appearing on the current page. [11.5. Headers, Footers, and Similar Matter]
   element fw {
     Tmacro.phraseSeq,
     Tatt.global.attributes,
@@ -6182,7 +6188,7 @@ Trestore =
   }
 Tspace =
   
-  ## indicates the location of a significant space in the text. [11.5.1. Space]
+  ## indicates the location of a significant space in the text. [11.4.1. Space]
   element space {
     (Tmodel.descLike | Tmodel.certLike)*,
     Tatt.global.attribute.xmlid,
@@ -6221,9 +6227,9 @@ Tspace =
   }
 Tsubst =
   
-  ## (substitution) groups one or more deletions with one or more additions when the combination is to be regarded as a single intervention in the text. [11.3.1.5. Substitutions]
+  ## (substitution) groups one or more deletions (or surplus text) with one or more additions when the combination is to be regarded as a single intervention in the text. [11.3.1.5. Substitutions]
   element subst {
-    ((Tadd | Tdel | Tmodel.milestoneLike)+)
+    ((Tadd | Tsurplus | Tdel | Tmodel.milestoneLike)+)
     >> sch:pattern [
          id = "testbasic-subst-substContents1-constraint-assert-17"
          "\x{a}" ~
@@ -6233,11 +6239,12 @@ Tsubst =
            "\x{a}" ~
            "               "
            sch:assert [
-             test = "child::tei:add and child::tei:del"
+             test =
+               "child::tei:add and (child::tei:del or child::tei:surplus)"
              "\x{a}" ~
              "                  "
              sch:name [ ]
-             " must have at least one child add and at least one child del"
+             " must have at least one child add and at least one child del or surplus"
            ]
            "\x{a}" ~
            "            "
@@ -6252,7 +6259,7 @@ Tsubst =
   }
 TsubstJoin =
   
-  ## (substitution join) identifies a series of possibly fragmented additions, deletions or other revisions on a manuscript that combine to make up a single intervention in the text [11.3.1.5. Substitutions]
+  ## (substitution join) identifies a series of possibly fragmented additions, deletions, or other revisions on a manuscript that combine to make up a single intervention in the text [11.3.1.5. Substitutions]
   element substJoin {
     (Tmodel.descLike | Tmodel.certLike)*,
     Tatt.global.attributes,
@@ -6919,6 +6926,119 @@ TstandOff =
     Tatt.global.attributes,
     Tatt.typed.attributes,
     Tatt.declaring.attributes,
+    empty
+  }
+TlistAnnotation =
+  [
+    a:documentation [
+      "contains a list of annotations, typically encoded as "
+      ns1:code [ "<annotation>" ]
+      ", "
+      ns1:code [ "<annotationBlock>" ]
+      ", or "
+      ns1:code [ "<note>" ]
+      ", possibly organized with nested "
+      ns1:code [ "<listAnnotation>" ]
+      " elements. [16.10. The standOff Container]"
+    ]
+  ]
+  element listAnnotation {
+    (Tmodel.headLike*,
+     Tmodel.labelLike*,
+     (Tmodel.annotationLike | TlistAnnotation)+),
+    Tatt.global.attributes,
+    Tatt.typed.attributes,
+    Tatt.notated.attributes,
+    Tatt.declaring.attributes,
+    empty
+  }
+Tannotation =
+  [
+    a:documentation [
+      "represents an annotation following the "
+      ns1:a [
+        href = "#WADM"
+        "Web\x{a}" ~
+        "      Annotation Data Model"
+      ]
+      ". [16.10. The standOff Container]"
+    ]
+  ]
+  element annotation {
+    (TrespStmt*,
+     TrevisionDesc*,
+     Tlicence*,
+     Tmodel.annotationPart.body*),
+    Tatt.global.attribute.xmllang,
+    Tatt.global.attribute.xmlbase,
+    Tatt.global.attribute.xmlspace,
+    Tatt.global.rendition.attribute.rend,
+    Tatt.global.rendition.attribute.style,
+    Tatt.global.rendition.attribute.rendition,
+    Tatt.global.linking.attribute.sameAs,
+    Tatt.global.linking.attribute.copyOf,
+    Tatt.global.linking.attribute.exclude,
+    Tatt.global.linking.attribute.select,
+    Tatt.global.facs.attribute.facs,
+    Tatt.global.change.attribute.change,
+    Tatt.global.responsibility.attribute.cert,
+    Tatt.global.responsibility.attribute.resp,
+    Tatt.global.source.attribute.source,
+    Tatt.pointing.attribute.targetLang,
+    Tatt.pointing.attribute.evaluate,
+    
+    ## (identifier) provides a unique identifier for the element bearing the attribute.
+    attribute xml:id { xsd:ID },
+    
+    ## specifies the destination of the reference by supplying one or more URI References
+    attribute target {
+      list { xsd:anyURI+ }
+    },
+    
+    ##
+    attribute motivation {
+      list {
+        (
+         ## intent is to assess the target resource in some way, rather than simply make a comment about it
+         "assessing"
+         | 
+           ## intent is to create a bookmark to the target or part thereof
+           "bookmarking"
+         | 
+           ## intent is to classify the target in some way
+           "classifying"
+         | 
+           ## intent is to comment about the target
+           "commenting"
+         | 
+           ## intent is to describe the target, rather than (for example) comment on it
+           "describing"
+         | 
+           ## intent is to request an edit or a change to the target resource
+           "editing"
+         | 
+           ## intent is to highlight the target resource or a segment thereof
+           "highlighting"
+         | 
+           ## intent is to assign an identity to the target
+           "identifying"
+         | 
+           ## intent is to link to a resource related to the target
+           "linking"
+         | 
+           ## intent is to assign some value or quality to the target
+           "moderating"
+         | 
+           ## intent is to ask a question about the target
+           "questioning"
+         | 
+           ## intent is to reply to a previous statement, either an annotation or another resource
+           "replying"
+         | 
+           ## intent is to associate a tag with the target
+           "tagging")+
+      }
+    }?,
     empty
   }
 TTEI =

@@ -20,7 +20,11 @@ macro.paraContent =
    | model.lLike)*
 macro.limitedContent = (text | model.limitedPhrase | model.inter)*
 macro.phraseSeq =
-  (text | model.gLike | model.qLike | model.phrase | model.global)*
+  (text
+   | model.gLike
+   | model.attributable
+   | model.phrase
+   | model.global)*
 macro.phraseSeq.limited = (text | model.limitedPhrase | model.global)*
 macro.specialPara =
   (text
@@ -1240,12 +1244,12 @@ model.nameLike.agent_sequenceOptional = name?
 model.nameLike.agent_sequenceOptionalRepeatable = name*
 model.nameLike.agent_sequenceRepeatable = name+
 model.segLike = seg
-model.hiLike = hi
-model.hiLike_alternation = hi
-model.hiLike_sequence = hi
-model.hiLike_sequenceOptional = hi?
-model.hiLike_sequenceOptionalRepeatable = hi*
-model.hiLike_sequenceRepeatable = hi+
+model.hiLike = hi | q
+model.hiLike_alternation = hi | q
+model.hiLike_sequence = hi, q
+model.hiLike_sequenceOptional = hi?, q?
+model.hiLike_sequenceOptionalRepeatable = hi*, q*
+model.hiLike_sequenceRepeatable = hi+, q+
 model.emphLike =
   foreign
   | emph
@@ -1433,16 +1437,17 @@ model.quoteLike_sequence = quote, cit
 model.quoteLike_sequenceOptional = quote?, cit?
 model.quoteLike_sequenceOptionalRepeatable = quote*, cit*
 model.quoteLike_sequenceRepeatable = quote+, cit+
-model.qLike = model.quoteLike | said | q | floatingText
-model.qLike_alternation =
-  model.quoteLike_alternation | said | q | floatingText
-model.qLike_sequence = model.quoteLike_sequence, said, q, floatingText
-model.qLike_sequenceOptional =
-  model.quoteLike_sequenceOptional?, said?, q?, floatingText?
-model.qLike_sequenceOptionalRepeatable =
-  model.quoteLike_sequenceOptionalRepeatable*, said*, q*, floatingText*
-model.qLike_sequenceRepeatable =
-  model.quoteLike_sequenceRepeatable+, said+, q+, floatingText+
+model.attributable = model.quoteLike | said | floatingText
+model.attributable_alternation =
+  model.quoteLike_alternation | said | floatingText
+model.attributable_sequence =
+  model.quoteLike_sequence, said, floatingText
+model.attributable_sequenceOptional =
+  model.quoteLike_sequenceOptional?, said?, floatingText?
+model.attributable_sequenceOptionalRepeatable =
+  model.quoteLike_sequenceOptionalRepeatable*, said*, floatingText*
+model.attributable_sequenceRepeatable =
+  model.quoteLike_sequenceRepeatable+, said+, floatingText+
 model.respLike =
   author | editor | respStmt | meeting | sponsor | funder | principal
 model.divWrapper =
@@ -1562,8 +1567,8 @@ model.inter =
   | model.labelLike
   | model.listLike
   | model.stageLike
-  | model.qLike
-model.common = model.divPart | model.inter
+  | model.attributable
+model.common = model.divPart | model.inter | q
 model.phrase =
   model.segLike
   | model.highlighted
@@ -1592,6 +1597,8 @@ model.div4Like = div4
 model.div5Like = div5
 model.div6Like = div6
 model.div7Like = div7
+model.annotationLike = note | annotation
+model.annotationPart.body = ptr | ref | note
 model.applicationLike = application
 model.teiHeaderPart = encodingDesc | profileDesc | xenoData
 model.sourceDescPart = notAllowed
@@ -1625,7 +1632,13 @@ model.profileDescPart =
   | calendarDesc
   | correspDesc
 model.standOffPart =
-  model.global.meta | model.biblLike | model.listLike | listChange | seg
+  model.global.meta
+  | model.biblLike
+  | model.listLike
+  | model.annotationLike
+  | listChange
+  | seg
+  | listAnnotation
 att.formula.attributes = att.formula.attribute.formula
 att.formula.attribute.formula =
   [
@@ -1909,7 +1922,8 @@ cit =
      | model.global
      | model.graphicLike
      | model.ptrLike
-     | model.qLike)+,
+     | model.attributable
+     | q)+,
     att.global.attributes,
     att.typed.attributes,
     empty
@@ -2330,12 +2344,12 @@ ptr =
          "\x{a}" ~
          "         "
        ],
-    att.global.attributes,
-    att.pointing.attributes,
-    att.internetMedia.attributes,
-    att.typed.attributes,
-    att.declaring.attributes,
     att.cReferencing.attributes,
+    att.declaring.attributes,
+    att.global.attributes,
+    att.internetMedia.attributes,
+    att.pointing.attributes,
+    att.typed.attributes,
     empty
   }
 ref =
@@ -2365,12 +2379,12 @@ ref =
          "\x{a}" ~
          "         "
        ],
-    att.global.attributes,
-    att.pointing.attributes,
-    att.internetMedia.attributes,
-    att.typed.attributes,
-    att.declaring.attributes,
     att.cReferencing.attributes,
+    att.declaring.attributes,
+    att.global.attributes,
+    att.internetMedia.attributes,
+    att.pointing.attributes,
+    att.typed.attributes,
     empty
   }
 \list =
@@ -2992,8 +3006,8 @@ sp =
        | model.pLike
        | model.listLike
        | model.stageLike
-       | model.qLike),
-      model.global*)+),
+       | model.attributable),
+      (model.global* | q))+),
     att.global.attributes,
     att.ascribed.directed.attributes,
     empty
@@ -4057,7 +4071,7 @@ revisionDesc =
   }
 change =
   
-  ## documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.6. The Revision Description 2.4.1. Creation 11.7. Identifying Changes and Revisions]
+  ## documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.6. The Revision Description 2.4.1. Creation 11.6. Identifying Changes and Revisions]
   element change {
     macro.specialPara,
     att.ascribed.attributes,
@@ -4074,7 +4088,7 @@ change =
   }
 listChange =
   
-  ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.7. Identifying Changes and Revisions]
+  ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.6. Identifying Changes and Revisions]
   element listChange {
     (desc*, (listChange | change)+),
     att.global.attributes,
@@ -5057,6 +5071,119 @@ standOff =
     att.global.attributes,
     att.typed.attributes,
     att.declaring.attributes,
+    empty
+  }
+listAnnotation =
+  [
+    a:documentation [
+      "contains a list of annotations, typically encoded as "
+      ns1:code [ "<annotation>" ]
+      ", "
+      ns1:code [ "<annotationBlock>" ]
+      ", or "
+      ns1:code [ "<note>" ]
+      ", possibly organized with nested "
+      ns1:code [ "<listAnnotation>" ]
+      " elements. [16.10. The standOff Container]"
+    ]
+  ]
+  element listAnnotation {
+    (model.headLike*,
+     model.labelLike*,
+     (model.annotationLike | listAnnotation)+),
+    att.global.attributes,
+    att.typed.attributes,
+    att.notated.attributes,
+    att.declaring.attributes,
+    empty
+  }
+annotation =
+  [
+    a:documentation [
+      "represents an annotation following the "
+      ns1:a [
+        href = "#WADM"
+        "Web\x{a}" ~
+        "      Annotation Data Model"
+      ]
+      ". [16.10. The standOff Container]"
+    ]
+  ]
+  element annotation {
+    (respStmt*, revisionDesc*, licence*, model.annotationPart.body*),
+    att.global.attribute.n,
+    att.global.attribute.xmllang,
+    att.global.attribute.xmlbase,
+    att.global.attribute.xmlspace,
+    att.global.rendition.attribute.rend,
+    att.global.rendition.attribute.style,
+    att.global.rendition.attribute.rendition,
+    att.global.linking.attribute.corresp,
+    att.global.linking.attribute.synch,
+    att.global.linking.attribute.sameAs,
+    att.global.linking.attribute.copyOf,
+    att.global.linking.attribute.next,
+    att.global.linking.attribute.prev,
+    att.global.linking.attribute.exclude,
+    att.global.linking.attribute.select,
+    att.global.responsibility.attribute.cert,
+    att.global.responsibility.attribute.resp,
+    att.global.source.attribute.source,
+    att.pointing.attribute.targetLang,
+    att.pointing.attribute.evaluate,
+    
+    ## (identifier) provides a unique identifier for the element bearing the attribute.
+    attribute xml:id { xsd:ID },
+    
+    ## specifies the destination of the reference by supplying one or more URI References
+    attribute target {
+      list { xsd:anyURI+ }
+    },
+    
+    ##
+    attribute motivation {
+      list {
+        (
+         ## intent is to assess the target resource in some way, rather than simply make a comment about it
+         "assessing"
+         | 
+           ## intent is to create a bookmark to the target or part thereof
+           "bookmarking"
+         | 
+           ## intent is to classify the target in some way
+           "classifying"
+         | 
+           ## intent is to comment about the target
+           "commenting"
+         | 
+           ## intent is to describe the target, rather than (for example) comment on it
+           "describing"
+         | 
+           ## intent is to request an edit or a change to the target resource
+           "editing"
+         | 
+           ## intent is to highlight the target resource or a segment thereof
+           "highlighting"
+         | 
+           ## intent is to assign an identity to the target
+           "identifying"
+         | 
+           ## intent is to link to a resource related to the target
+           "linking"
+         | 
+           ## intent is to assign some value or quality to the target
+           "moderating"
+         | 
+           ## intent is to ask a question about the target
+           "questioning"
+         | 
+           ## intent is to reply to a previous statement, either an annotation or another resource
+           "replying"
+         | 
+           ## intent is to associate a tag with the target
+           "tagging")+
+      }
+    }?,
     empty
   }
 att.tableDecoration.attributes =
