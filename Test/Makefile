@@ -75,7 +75,7 @@ SCHEMASCRIPTS=teitornc \
 
 ###############################
 # First target is the default #
-# (not matter what its name). #
+# (no matter what its name).  #
 ###############################
 
 default: actual test.rng test-to-html test-p4top5 test-oddity test-scripts test-namespaces test-from-html test-latex test-fo test-to-docx test-from-docx test-xlsx test-rdf test-text test-odt test-markdown test-cocoa test-epub
