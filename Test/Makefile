@@ -708,7 +708,7 @@ profile:
 
 clean:
 	(cd ..; for i in css/*; do rm -f `basename $$i`;done)
-	rm -f *.result.tex test*.xml.docx *~
+	rm -f teitopdf.result.* test*.xml.docx *~
 	rm -f dcr.tmp xml.tmp
 	rm -fr $(AR)/ charts/ embeddings/ media/ Pictures/
 
