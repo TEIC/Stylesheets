@@ -17,6 +17,18 @@ Example usages:
 
 `ant odt` runs only the odt tests. Similarly, `ant docx`, `ant fo`, `ant odd`, and others.
 
+### How the tests are run
+
+Some tests are run by invoking the bin/thing2thing symlinks, which call the universal bin/transformtei script. Others are run by directly invoking Saxon to do an XSLT tranformation. The latter approach is faster and simpler for transformation which involve only XSLT transformation; where other processes are used (such as FO to PDF conversion) the bin script is more straightforward. Read the ant files for more info.
+
+
+### Tests not included
+
+Note that the following tests that used to be run in Test are not [yet] covered in Test2:
+
+ [TODO: @sydb and @martindholmes are working on this list.]
+
+
 
 
 

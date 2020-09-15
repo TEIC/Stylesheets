@@ -26,7 +26,7 @@ tei_macro.limitedContent =
 tei_macro.phraseSeq =
   (text
    | tei_model.gLike
-   | tei_model.qLike
+   | tei_model.attributable
    | tei_model.phrase
    | tei_model.global)*
 tei_macro.phraseSeq.limited =
@@ -1254,12 +1254,12 @@ tei_model.nameLike.agent_sequenceOptional = tei_name?
 tei_model.nameLike.agent_sequenceOptionalRepeatable = tei_name*
 tei_model.nameLike.agent_sequenceRepeatable = tei_name+
 tei_model.segLike = tei_seg
-tei_model.hiLike = tei_hi
-tei_model.hiLike_alternation = tei_hi
-tei_model.hiLike_sequence = tei_hi
-tei_model.hiLike_sequenceOptional = tei_hi?
-tei_model.hiLike_sequenceOptionalRepeatable = tei_hi*
-tei_model.hiLike_sequenceRepeatable = tei_hi+
+tei_model.hiLike = tei_hi | tei_q
+tei_model.hiLike_alternation = tei_hi | tei_q
+tei_model.hiLike_sequence = tei_hi, tei_q
+tei_model.hiLike_sequenceOptional = tei_hi?, tei_q?
+tei_model.hiLike_sequenceOptionalRepeatable = tei_hi*, tei_q*
+tei_model.hiLike_sequenceRepeatable = tei_hi+, tei_q+
 tei_model.emphLike =
   tei_foreign
   | tei_emph
@@ -1515,27 +1515,20 @@ tei_model.quoteLike_sequenceOptionalRepeatable =
   tei_quote*, tei_cit*, foo_cit*, bar_cit*, blah_q*
 tei_model.quoteLike_sequenceRepeatable =
   tei_quote+, tei_cit+, foo_cit+, bar_cit+, blah_q+
-tei_model.qLike =
-  tei_model.quoteLike | tei_said | tei_q | tei_floatingText
-tei_model.qLike_alternation =
-  tei_model.quoteLike_alternation | tei_said | tei_q | tei_floatingText
-tei_model.qLike_sequence =
-  tei_model.quoteLike_sequence, tei_said, tei_q, tei_floatingText
-tei_model.qLike_sequenceOptional =
-  tei_model.quoteLike_sequenceOptional?,
-  tei_said?,
-  tei_q?,
-  tei_floatingText?
-tei_model.qLike_sequenceOptionalRepeatable =
+tei_model.attributable =
+  tei_model.quoteLike | tei_said | tei_floatingText
+tei_model.attributable_alternation =
+  tei_model.quoteLike_alternation | tei_said | tei_floatingText
+tei_model.attributable_sequence =
+  tei_model.quoteLike_sequence, tei_said, tei_floatingText
+tei_model.attributable_sequenceOptional =
+  tei_model.quoteLike_sequenceOptional?, tei_said?, tei_floatingText?
+tei_model.attributable_sequenceOptionalRepeatable =
   tei_model.quoteLike_sequenceOptionalRepeatable*,
   tei_said*,
-  tei_q*,
   tei_floatingText*
-tei_model.qLike_sequenceRepeatable =
-  tei_model.quoteLike_sequenceRepeatable+,
-  tei_said+,
-  tei_q+,
-  tei_floatingText+
+tei_model.attributable_sequenceRepeatable =
+  tei_model.quoteLike_sequenceRepeatable+, tei_said+, tei_floatingText+
 tei_model.respLike =
   tei_author
   | tei_editor
@@ -1675,8 +1668,8 @@ tei_model.inter =
   | tei_model.labelLike
   | tei_model.listLike
   | tei_model.stageLike
-  | tei_model.qLike
-tei_model.common = tei_model.divPart | tei_model.inter
+  | tei_model.attributable
+tei_model.common = tei_model.divPart | tei_model.inter | tei_q
 tei_model.phrase =
   tei_model.segLike
   | tei_model.highlighted
@@ -1705,6 +1698,8 @@ tei_model.div4Like = tei_div4
 tei_model.div5Like = tei_div5
 tei_model.div6Like = tei_div6
 tei_model.div7Like = tei_div7
+tei_model.annotationLike = tei_note | tei_annotation
+tei_model.annotationPart.body = tei_ptr | tei_ref | tei_note
 tei_model.applicationLike = tei_application
 tei_model.teiHeaderPart =
   tei_encodingDesc | tei_profileDesc | tei_xenoData
@@ -1742,8 +1737,10 @@ tei_model.standOffPart =
   tei_model.global.meta
   | tei_model.biblLike
   | tei_model.listLike
+  | tei_model.annotationLike
   | tei_listChange
   | tei_seg
+  | tei_listAnnotation
 tei_att.formula.attributes = tei_att.formula.attribute.formula
 tei_att.formula.attribute.formula =
   [
@@ -2030,12 +2027,14 @@ tei_cit =
   
   ## (cited quotation) contains a quotation from some other document, together with a bibliographic reference to its source. In a dictionary it may contain an example text with at least one occurrence of the word form, used in the sense being described, or a translation of the headword, or an example. [3.3.3. Quotation 4.3.1. Grouped Texts 9.3.5.1. Examples]
   element cit {
-    (tei_model.qLike
+    (tei_model.biblLike
      | tei_model.egLike
-     | tei_model.biblLike
-     | tei_model.ptrLike
+     | tei_model.entryPart
      | tei_model.global
-     | tei_model.entryPart)+,
+     | tei_model.graphicLike
+     | tei_model.ptrLike
+     | tei_model.attributable
+     | tei_q)+,
     tei_att.global.attributes,
     tei_att.typed.attributes,
     empty
@@ -2472,12 +2471,12 @@ tei_ptr =
          "\x{a}" ~
          "         "
        ],
-    tei_att.global.attributes,
-    tei_att.pointing.attributes,
-    tei_att.internetMedia.attributes,
-    tei_att.typed.attributes,
-    tei_att.declaring.attributes,
     tei_att.cReferencing.attributes,
+    tei_att.declaring.attributes,
+    tei_att.global.attributes,
+    tei_att.internetMedia.attributes,
+    tei_att.pointing.attributes,
+    tei_att.typed.attributes,
     empty
   }
 tei_ref =
@@ -2507,12 +2506,12 @@ tei_ref =
          "\x{a}" ~
          "         "
        ],
-    tei_att.global.attributes,
-    tei_att.pointing.attributes,
-    tei_att.internetMedia.attributes,
-    tei_att.typed.attributes,
-    tei_att.declaring.attributes,
     tei_att.cReferencing.attributes,
+    tei_att.declaring.attributes,
+    tei_att.global.attributes,
+    tei_att.internetMedia.attributes,
+    tei_att.pointing.attributes,
+    tei_att.typed.attributes,
     empty
   }
 tei_list =
@@ -3175,8 +3174,8 @@ tei_sp =
        | tei_model.pLike
        | tei_model.listLike
        | tei_model.stageLike
-       | tei_model.qLike),
-      tei_model.global*)+),
+       | tei_model.attributable),
+      (tei_model.global* | tei_q))+),
     tei_att.global.attributes,
     tei_att.ascribed.directed.attributes,
     empty
@@ -3324,7 +3323,7 @@ tei_fileDesc =
       tei_editionStmt?,
       tei_extent?,
       tei_publicationStmt,
-      tei_seriesStmt?,
+      tei_seriesStmt*,
       tei_notesStmt?),
      tei_sourceDesc+),
     tei_att.global.attributes,
@@ -3499,6 +3498,7 @@ tei_seriesStmt =
         (tei_editor | tei_respStmt)*,
         (tei_idno | tei_biblScope)*)),
     tei_att.global.attributes,
+    tei_att.declarable.attributes,
     empty
   }
 tei_notesStmt =
@@ -3529,7 +3529,7 @@ tei_biblFull =
        tei_editionStmt?,
        tei_extent?,
        tei_publicationStmt,
-       tei_seriesStmt?,
+       tei_seriesStmt*,
        tei_notesStmt?),
       tei_sourceDesc*)
      | (tei_fileDesc, tei_profileDesc)),
@@ -3878,7 +3878,7 @@ tei_cRefPattern =
   }
 tei_prefixDef =
   
-  ## (prefix definition) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
+  ## (prefix definition) defines a prefixing scheme used in teidata.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element prefixDef {
     tei_model.pLike*,
     tei_att.global.attributes,
@@ -3892,7 +3892,7 @@ tei_prefixDef =
   }
 tei_listPrefixDef =
   
-  ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
+  ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in teidata.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element listPrefixDef {
     (tei_desc*, (tei_prefixDef | tei_listPrefixDef)+),
     tei_att.global.attributes,
@@ -4262,7 +4262,7 @@ tei_revisionDesc =
   }
 tei_change =
   
-  ## documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.6. The Revision Description 2.4.1. Creation 11.7. Identifying Changes and Revisions]
+  ## documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.6. The Revision Description 2.4.1. Creation 11.6. Identifying Changes and Revisions]
   element change {
     tei_macro.specialPara,
     tei_att.ascribed.attributes,
@@ -4279,7 +4279,7 @@ tei_change =
   }
 tei_listChange =
   
-  ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.7. Identifying Changes and Revisions]
+  ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.6. Identifying Changes and Revisions]
   element listChange {
     (tei_desc*, (tei_listChange | tei_change)+),
     tei_att.global.attributes,
@@ -5036,7 +5036,7 @@ tei_when =
       | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     
-    ## specifies a time interval either as a number or as one of the keywords defined by the datatype data.interval
+    ## specifies a time interval either as a number or as one of the keywords defined by the datatype teidata.interval
     attribute interval {
       xsd:float
       | (
@@ -5287,6 +5287,122 @@ tei_standOff =
     tei_att.global.attributes,
     tei_att.typed.attributes,
     tei_att.declaring.attributes,
+    empty
+  }
+tei_listAnnotation =
+  [
+    a:documentation [
+      "contains a list of annotations, typically encoded as "
+      ns1:code [ "<annotation>" ]
+      ", "
+      ns1:code [ "<annotationBlock>" ]
+      ", or "
+      ns1:code [ "<note>" ]
+      ", possibly organized with nested "
+      ns1:code [ "<listAnnotation>" ]
+      " elements. [16.10. The standOff Container]"
+    ]
+  ]
+  element listAnnotation {
+    (tei_model.headLike*,
+     tei_model.labelLike*,
+     (tei_model.annotationLike | tei_listAnnotation)+),
+    tei_att.global.attributes,
+    tei_att.typed.attributes,
+    tei_att.notated.attributes,
+    tei_att.declaring.attributes,
+    empty
+  }
+tei_annotation =
+  [
+    a:documentation [
+      "represents an annotation following the "
+      ns1:a [
+        href = "#WADM"
+        "Web\x{a}" ~
+        "      Annotation Data Model"
+      ]
+      ". [16.10. The standOff Container]"
+    ]
+  ]
+  element annotation {
+    (tei_respStmt*,
+     tei_revisionDesc*,
+     tei_licence*,
+     tei_model.annotationPart.body*),
+    tei_att.global.attribute.n,
+    tei_att.global.attribute.xmllang,
+    tei_att.global.attribute.xmlbase,
+    tei_att.global.attribute.xmlspace,
+    tei_att.global.rendition.attribute.rend,
+    tei_att.global.rendition.attribute.style,
+    tei_att.global.rendition.attribute.rendition,
+    tei_att.global.linking.attribute.corresp,
+    tei_att.global.linking.attribute.synch,
+    tei_att.global.linking.attribute.sameAs,
+    tei_att.global.linking.attribute.copyOf,
+    tei_att.global.linking.attribute.next,
+    tei_att.global.linking.attribute.prev,
+    tei_att.global.linking.attribute.exclude,
+    tei_att.global.linking.attribute.select,
+    tei_att.global.responsibility.attribute.cert,
+    tei_att.global.responsibility.attribute.resp,
+    tei_att.global.source.attribute.source,
+    tei_att.pointing.attribute.targetLang,
+    tei_att.pointing.attribute.evaluate,
+    
+    ## (identifier) provides a unique identifier for the element bearing the attribute.
+    attribute xml:id { xsd:ID },
+    
+    ## specifies the destination of the reference by supplying one or more URI References
+    attribute target {
+      list { xsd:anyURI+ }
+    },
+    
+    ##
+    attribute motivation {
+      list {
+        (
+         ## intent is to assess the target resource in some way, rather than simply make a comment about it
+         "assessing"
+         | 
+           ## intent is to create a bookmark to the target or part thereof
+           "bookmarking"
+         | 
+           ## intent is to classify the target in some way
+           "classifying"
+         | 
+           ## intent is to comment about the target
+           "commenting"
+         | 
+           ## intent is to describe the target, rather than (for example) comment on it
+           "describing"
+         | 
+           ## intent is to request an edit or a change to the target resource
+           "editing"
+         | 
+           ## intent is to highlight the target resource or a segment thereof
+           "highlighting"
+         | 
+           ## intent is to assign an identity to the target
+           "identifying"
+         | 
+           ## intent is to link to a resource related to the target
+           "linking"
+         | 
+           ## intent is to assign some value or quality to the target
+           "moderating"
+         | 
+           ## intent is to ask a question about the target
+           "questioning"
+         | 
+           ## intent is to reply to a previous statement, either an annotation or another resource
+           "replying"
+         | 
+           ## intent is to associate a tag with the target
+           "tagging")+
+      }
+    }?,
     empty
   }
 foo_cit =

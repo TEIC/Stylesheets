@@ -20,7 +20,11 @@ macro.paraContent =
    | model.lLike)*
 macro.limitedContent = (text | model.limitedPhrase | model.inter)*
 macro.phraseSeq =
-  (text | model.gLike | model.qLike | model.phrase | model.global)*
+  (text
+   | model.gLike
+   | model.attributable
+   | model.phrase
+   | model.global)*
 macro.phraseSeq.limited = (text | model.limitedPhrase | model.global)*
 macro.specialPara =
   (text
@@ -1293,12 +1297,12 @@ model.nameLike.agent_sequenceOptionalRepeatable =
   name*, orgName*, persName*
 model.nameLike.agent_sequenceRepeatable = name+, orgName+, persName+
 model.segLike = seg
-model.hiLike = hi
-model.hiLike_alternation = hi
-model.hiLike_sequence = hi
-model.hiLike_sequenceOptional = hi?
-model.hiLike_sequenceOptionalRepeatable = hi*
-model.hiLike_sequenceRepeatable = hi+
+model.hiLike = hi | q
+model.hiLike_alternation = hi | q
+model.hiLike_sequence = hi, q
+model.hiLike_sequenceOptional = hi?, q?
+model.hiLike_sequenceOptionalRepeatable = hi*, q*
+model.hiLike_sequenceRepeatable = hi+, q+
 model.emphLike =
   foreign
   | emph
@@ -1792,15 +1796,15 @@ model.quoteLike_sequence = quote, cit
 model.quoteLike_sequenceOptional = quote?, cit?
 model.quoteLike_sequenceOptionalRepeatable = quote*, cit*
 model.quoteLike_sequenceRepeatable = quote+, cit+
-model.qLike = model.quoteLike | said | q
-model.qLike_alternation = model.quoteLike_alternation | said | q
-model.qLike_sequence = model.quoteLike_sequence, said, q
-model.qLike_sequenceOptional =
-  model.quoteLike_sequenceOptional?, said?, q?
-model.qLike_sequenceOptionalRepeatable =
-  model.quoteLike_sequenceOptionalRepeatable*, said*, q*
-model.qLike_sequenceRepeatable =
-  model.quoteLike_sequenceRepeatable+, said+, q+
+model.attributable = model.quoteLike | said
+model.attributable_alternation = model.quoteLike_alternation | said
+model.attributable_sequence = model.quoteLike_sequence, said
+model.attributable_sequenceOptional =
+  model.quoteLike_sequenceOptional?, said?
+model.attributable_sequenceOptionalRepeatable =
+  model.quoteLike_sequenceOptionalRepeatable*, said*
+model.attributable_sequenceRepeatable =
+  model.quoteLike_sequenceRepeatable+, said+
 model.respLike =
   author | editor | respStmt | meeting | sponsor | funder | principal
 model.divWrapper =
@@ -1959,8 +1963,8 @@ model.inter =
   | model.labelLike
   | model.listLike
   | model.stageLike
-  | model.qLike
-model.common = model.divPart | model.inter
+  | model.attributable
+model.common = model.divPart | model.inter | q
 model.phrase =
   model.segLike
   | model.highlighted
@@ -1989,6 +1993,8 @@ model.div4Like = div4
 model.div5Like = div5
 model.div6Like = div6
 model.div7Like = div7
+model.annotationLike = note | annotation
+model.annotationPart.body = ptr | ref | note
 model.applicationLike = application
 model.teiHeaderPart = encodingDesc | profileDesc | xenoData
 model.sourceDescPart = notAllowed
@@ -2027,8 +2033,10 @@ model.standOffPart =
   model.global.meta
   | model.biblLike
   | model.listLike
+  | model.annotationLike
   | listChange
   | seg
+  | listAnnotation
   | zone
 att.formula.attributes = att.formula.attribute.formula
 att.formula.attribute.formula =
@@ -2334,12 +2342,14 @@ cit =
   
   ## (citation) citation provenant d'un autre document comprenant la référence bibliographique de sa source. Dans un dictionnaire il peut contenir un exemple avec au moins une occurrence du mot employé dans l’acception qui est décrite, ou une traduction du mot-clé, ou un exemple. [3.3.3. Quotation 4.3.1. Grouped Texts 9.3.5.1. Examples]
   element cit {
-    (model.qLike
+    (model.biblLike
      | model.egLike
-     | model.biblLike
-     | model.ptrLike
+     | model.entryPart
      | model.global
-     | model.entryPart)+,
+     | model.graphicLike
+     | model.ptrLike
+     | model.attributable
+     | q)+,
     att.global.attributes,
     att.typed.attributes,
     empty
@@ -2774,12 +2784,12 @@ ptr =
          "\x{a}" ~
          "         "
        ],
-    att.global.attributes,
-    att.pointing.attributes,
-    att.internetMedia.attributes,
-    att.typed.attribute.subtype,
-    att.declaring.attributes,
     att.cReferencing.attributes,
+    att.declaring.attributes,
+    att.global.attributes,
+    att.internetMedia.attributes,
+    att.pointing.attributes,
+    att.typed.attribute.subtype,
     
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
     attribute type {
@@ -2819,12 +2829,12 @@ ref =
          "\x{a}" ~
          "         "
        ],
-    att.global.attributes,
-    att.pointing.attributes,
-    att.internetMedia.attributes,
-    att.typed.attributes,
-    att.declaring.attributes,
     att.cReferencing.attributes,
+    att.declaring.attributes,
+    att.global.attributes,
+    att.internetMedia.attributes,
+    att.pointing.attributes,
+    att.typed.attributes,
     empty
   }
 \list =
@@ -3475,8 +3485,8 @@ sp =
        | model.pLike
        | model.listLike
        | model.stageLike
-       | model.qLike),
-      model.global*)+),
+       | model.attributable),
+      (model.global* | q))+),
     att.global.attributes,
     att.ascribed.directed.attributes,
     empty
@@ -4800,7 +4810,7 @@ fileDesc =
       editionStmt?,
       extent?,
       publicationStmt,
-      seriesStmt?,
+      seriesStmt*,
       notesStmt?),
      sourceDesc+),
     att.global.attributes,
@@ -4969,6 +4979,7 @@ seriesStmt =
     (model.pLike+
      | (title+, (editor | respStmt)*, (idno | biblScope)*)),
     att.global.attributes,
+    att.declarable.attributes,
     empty
   }
 notesStmt =
@@ -4995,7 +5006,7 @@ biblFull =
        editionStmt?,
        extent?,
        publicationStmt,
-       seriesStmt?,
+       seriesStmt*,
        notesStmt?),
       sourceDesc*)
      | (fileDesc, profileDesc)),
@@ -5339,7 +5350,7 @@ cRefPattern =
   }
 prefixDef =
   
-  ## (prefix definition) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
+  ## (prefix definition) defines a prefixing scheme used in teidata.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element prefixDef {
     model.pLike*,
     att.global.attributes,
@@ -5353,7 +5364,7 @@ prefixDef =
   }
 listPrefixDef =
   
-  ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
+  ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in teidata.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element listPrefixDef {
     (desc*, (prefixDef | listPrefixDef)+),
     att.global.attributes,
@@ -5707,7 +5718,7 @@ revisionDesc =
   }
 change =
   
-  ## résume une modification ou une correction apportée à une version particulière d’un texte électronique partagé entre plusieurs chercheurs. [2.6. The Revision Description 2.4.1. Creation 11.7. Identifying Changes and Revisions]
+  ## résume une modification ou une correction apportée à une version particulière d’un texte électronique partagé entre plusieurs chercheurs. [2.6. The Revision Description 2.4.1. Creation 11.6. Identifying Changes and Revisions]
   element change {
     macro.specialPara,
     att.ascribed.attributes,
@@ -5733,7 +5744,7 @@ scriptNote =
   }
 listChange =
   
-  ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.7. Identifying Changes and Revisions]
+  ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.6. Identifying Changes and Revisions]
   element listChange {
     (desc*, (listChange | change)+),
     att.global.attributes,
@@ -6237,6 +6248,120 @@ standOff =
     att.global.attributes,
     att.typed.attributes,
     att.declaring.attributes,
+    empty
+  }
+listAnnotation =
+  [
+    a:documentation [
+      "contains a list of annotations, typically encoded as "
+      ns1:code [ "<annotation>" ]
+      ", "
+      ns1:code [ "<annotationBlock>" ]
+      ", or "
+      ns1:code [ "<note>" ]
+      ", possibly organized with nested "
+      ns1:code [ "<listAnnotation>" ]
+      " elements. [16.10. The standOff Container]"
+    ]
+  ]
+  element listAnnotation {
+    (model.headLike*,
+     model.labelLike*,
+     (model.annotationLike | listAnnotation)+),
+    att.global.attributes,
+    att.typed.attributes,
+    att.notated.attributes,
+    att.declaring.attributes,
+    empty
+  }
+annotation =
+  [
+    a:documentation [
+      "represents an annotation following the "
+      ns1:a [
+        href = "#WADM"
+        "Web\x{a}" ~
+        "      Annotation Data Model"
+      ]
+      ". [16.10. The standOff Container]"
+    ]
+  ]
+  element annotation {
+    (respStmt*, revisionDesc*, licence*, model.annotationPart.body*),
+    att.global.attribute.xmllang,
+    att.global.attribute.xmlbase,
+    att.global.attribute.xmlspace,
+    att.global.rendition.attribute.rend,
+    att.global.rendition.attribute.style,
+    att.global.rendition.attribute.rendition,
+    att.global.linking.attribute.corresp,
+    att.global.linking.attribute.synch,
+    att.global.linking.attribute.sameAs,
+    att.global.linking.attribute.copyOf,
+    att.global.linking.attribute.next,
+    att.global.linking.attribute.prev,
+    att.global.linking.attribute.exclude,
+    att.global.linking.attribute.select,
+    att.global.facs.attribute.facs,
+    att.global.change.attribute.change,
+    att.global.responsibility.attribute.cert,
+    att.global.responsibility.attribute.resp,
+    att.global.source.attribute.source,
+    att.pointing.attribute.targetLang,
+    att.pointing.attribute.evaluate,
+    
+    ## (identifiant) fournit un identifiant unique pour l'élément qui porte l'attribut
+    attribute xml:id { xsd:ID },
+    
+    ## précise la cible de la référence en donnant une ou plusieurs références URI
+    attribute target {
+      list { xsd:anyURI+ }
+    },
+    
+    ##
+    attribute motivation {
+      list {
+        (
+         ## intent is to assess the target resource in some way, rather than simply make a comment about it
+         "assessing"
+         | 
+           ## intent is to create a bookmark to the target or part thereof
+           "bookmarking"
+         | 
+           ## intent is to classify the target in some way
+           "classifying"
+         | 
+           ## intent is to comment about the target
+           "commenting"
+         | 
+           ## intent is to describe the target, rather than (for example) comment on it
+           "describing"
+         | 
+           ## intent is to request an edit or a change to the target resource
+           "editing"
+         | 
+           ## intent is to highlight the target resource or a segment thereof
+           "highlighting"
+         | 
+           ## intent is to assign an identity to the target
+           "identifying"
+         | 
+           ## intent is to link to a resource related to the target
+           "linking"
+         | 
+           ## intent is to assign some value or quality to the target
+           "moderating"
+         | 
+           ## intent is to ask a question about the target
+           "questioning"
+         | 
+           ## intent is to reply to a previous statement, either an annotation or another resource
+           "replying"
+         | 
+           ## intent is to associate a tag with the target
+           "tagging")+
+      }
+    }?,
     empty
   }
 att.msExcerpt.attributes = att.msExcerpt.attribute.defective
@@ -7572,7 +7697,7 @@ ex =
   }
 fw =
   
-  ## (élément de mise en page) permet d'encoder un titre courant (en haut ou en bas de la page), une réclame ou une autre information comparable, qui apparaît sur la page courante. [11.6. Headers, Footers, and Similar Matter]
+  ## (élément de mise en page) permet d'encoder un titre courant (en haut ou en bas de la page), une réclame ou une autre information comparable, qui apparaît sur la page courante. [11.5. Headers, Footers, and Similar Matter]
   element fw {
     macro.phraseSeq,
     att.global.attributes,
@@ -7635,7 +7760,7 @@ restore =
   }
 space =
   
-  ## (espace) permet de situer un espace significatif dans le texte édité. [11.5.1. Space]
+  ## (espace) permet de situer un espace significatif dans le texte édité. [11.4.1. Space]
   element space {
     (model.descLike | model.certLike)*,
     att.global.attribute.xmlid,
@@ -7680,7 +7805,7 @@ subst =
   
   ## ( substitution) regroupe une ou plusieurs parties de texte supprimées et une ou plusieurs parties de texte ajoutées, lorsque cette combinaison peut être considérée comme une intervention unique sur le texte. [11.3.1.5. Substitutions]
   element subst {
-    ((add | del | model.milestoneLike)+)
+    ((add | surplus | del | model.milestoneLike)+)
     >> sch:pattern [
          id = "test21-subst-substContents1-constraint-assert-24"
          "\x{a}" ~
@@ -7690,11 +7815,12 @@ subst =
            "\x{a}" ~
            "               "
            sch:assert [
-             test = "child::tei:add and child::tei:del"
+             test =
+               "child::tei:add and (child::tei:del or child::tei:surplus)"
              "\x{a}" ~
              "                  "
              sch:name [ ]
-             " must have at least one child add and at least one child del"
+             " must have at least one child add and at least one child del or surplus"
            ]
            "\x{a}" ~
            "            "
@@ -7709,7 +7835,7 @@ subst =
   }
 substJoin =
   
-  ## (jointure de substitution) identifies a series of possibly fragmented additions, deletions or other revisions on a manuscript that combine to make up a single intervention in the text [11.3.1.5. Substitutions]
+  ## (jointure de substitution) identifies a series of possibly fragmented additions, deletions, or other revisions on a manuscript that combine to make up a single intervention in the text [11.3.1.5. Substitutions]
   element substJoin {
     (model.descLike | model.certLike)*,
     att.global.attributes,
