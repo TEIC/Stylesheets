@@ -189,23 +189,59 @@
         <xsl:for-each select="//tei:elementSpec">
           <xsl:sort select="@ident"/>
           <xsl:variable name="gi" select="@ident"/>
+	  <!-- Process this element by looking at its <tei:content>.
+	       If it should be in the <xsl:strip-space> @elememnt
+	       list, then add its name here (if it should not, just
+	       ignore it). -->
           <xsl:choose>
-	    <xsl:when test="tei:content//rng:ref[@name='macro.anyXML']"/>
-	    <xsl:when test="tei:content/rng:empty"/>
-	    <xsl:when test="tei:content/rng:text and count(tei:content/rng:*)=1"/>
+	    <!-- Ignore, and thus do not strip space, from elements
+	         that allow arbitrary XML content anywhere inside
+	         their content models. -->
+            <xsl:when test="tei:content//rng:ref[@name eq 'macro.anyXML']"/>
+	    <xsl:when test="tei:content//tei:anyElement">
+	      <xsl:message select="'debug: I found any in '||$gi||'.'"/>
+	    </xsl:when>
+	    <!-- Ignore, and thus do not strip space, from elements
+	         that allow #PCDATA as a child node. -->
+            <xsl:when test="tei:content/rng:text and count(tei:content/rng:*) eq 1"/>
+            <xsl:when test="tei:content/tei:textNode and count(tei:content/*) eq 1"/>
+	    <!-- Ignore empty elements, they have no space to strip. :-) -->
+            <xsl:when test="tei:content/rng:empty | tei:content/tei:empty"/>
             <xsl:otherwise>
+	      <!-- This is an elementSpec we need to pay attention to.
+	           Create a variable ($Children) which is a sequence
+	           of <Elmement> children. (See common_tagdocs.xsl.) -->
               <xsl:variable name="Children">
                 <xsl:for-each select="tei:content">
+		  <!-- The <for-each> is here to set the context node
+		       for followRef, as there is, by definition, only
+		       0 or 1 <content> children of the current
+		       <elementSpec>. -->
                   <xsl:call-template name="followRef"/>
                 </xsl:for-each>
               </xsl:variable>
 	      <xsl:for-each select="$Children">
+		<!-- Look at each of those sets of <Element>s in our
+		     content model ... -->
 		<xsl:choose>
-		  <xsl:when test="Element[@type='TEXT'] and
-                                  count(Element)=1"/>
-                  <xsl:when test="count(Element)=0"/>
-                  <xsl:when test="Element[@type='TEXT']"/>
+		  <!-- If there are no <Element>s in the set, our
+		       content model is empty, and we ignore this
+		       element, there is no space to strip. -->
+                  <xsl:when test="count(Element) eq 0"/>
+		  <!-- If the @type of at least one <Element> is TEXT
+		       or XSD, ignore this element as we should not be
+		       stripping space of content text nodes. (You
+		       might think that <gi> and <att>, our elements
+		       with @type of XSD, should have whitespace
+		       stripped, as the content is definitionally only
+		       an xs:Name. But strip-space is about whitespace
+		       only nodes, and there cannot be a whitespace
+		       only child of either of those elements.) -->
+		  <xsl:when test="Element[ @type = ('TEXT','XSD')]"/>
                   <xsl:otherwise>
+		    <!-- Doesn't meet any of the criteria above,
+		         include it in our list of GIs in the @element
+		         of <strip-space>.-->
                     <xsl:value-of select="$gi"/>
                     <xsl:text> </xsl:text>
                   </xsl:otherwise>
