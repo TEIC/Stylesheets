@@ -48,17 +48,19 @@ case $format in
 	;;
 esac
 
-if [ $script = "teitoepub" ]
-then
+case "$script" in
+    teitoepub*) # could be teitoepub or teitoepub3
 echo "  --fileperpage        # create output files one per page "
 echo "  --nocompress	     # disable compression of epub output file"
-fi
+    ;;
+esac
+
 echo 
 echo "  Options, shown with defaults:"
 echo "  --saxonjar=$SAXONJAR  # location of Saxon jar file"
 echo "  --trangjar=$TRANGJAR  # location of trang jar file"
-if [ $script = "teitoepub" ]
-then
+case "$script" in
+    teitoepub*) # could be teitoepub or teitoepub3
 echo "  --mediaoverlay       # create media overlays from timeline data "
 echo "  --coverimage=        # name of JPEG file for ebook cover"
 echo "  --css=               # supply name of CSS file "
@@ -68,7 +70,9 @@ echo "  --subject=           # subject/category for ebook "
 echo "  --uid=               # unique URN for ebook "
 echo "  --viewportwidth=     # viewport width for epub fixed-size pages "
 echo "  --viewportheight=    # viewport height for epub fixed-size pages "
-fi
+    ;;
+esac
+
 echo
 echo "Stylesheet family version: $version"
 }
