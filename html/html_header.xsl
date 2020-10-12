@@ -53,19 +53,26 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-  <xsl:key name="ALL-EXTRENDITION" match="tei:*/@rendition[not(starts-with(.,'simple:') or starts-with(.,'#'))]" use="1"/>
+  <xsl:key name="ALL-EXTRENDITION"
+	   match="@rendition
+		  [not( ancestor::teix:* )]
+		  [not( starts-with( ., 'simple:') or starts-with( ., '#') )]"
+	   use="1" />
   <xsl:key name="EXTRENDITION"
-    match="tei:*/@rendition[not(starts-with(.,'simple:') or starts-with(.,'#'))]" use="."/>
+	   match="@rendition
+		  [not( ancestor::teix:* )]
+		  [not( starts-with( ., 'simple:') or starts-with( ., '#') )]"
+	   use="." />
   <xsl:key name="ALL-LOCALRENDITION" match="tei:rendition" use='1'/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element teiHeader</desc>
-   </doc>
+    <desc>Process element teiHeader</desc>
+  </doc>
   <xsl:template match="tei:teiHeader"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>make a style section from rendition elements in the header</desc>
-   </doc>
+    <desc>make a style section from rendition elements in the header</desc>
+  </doc>
   
   <xsl:template name="generateLocalCSS">
       <xsl:if test="key('ALL-LOCALRENDITION',1)">
