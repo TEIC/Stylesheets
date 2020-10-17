@@ -276,14 +276,20 @@ of this software, even if advised of the possibility of such damage.
   </xsl:function>
 
   <xsl:function name="tei:uniqueName" as="xs:string">
-    <xsl:param name="e"/>
-    <xsl:for-each select="$e">
-      <xsl:sequence select="concat(
-        if (@ns eq 'http://www.tei-c.org/ns/1.0') then ''
-        else if (@ns) then @ns
-        else if (ancestor::tei:schemaSpec/@ns) then
-        ancestor::tei:schemaSpec/@ns else '',@ident)"/>
-    </xsl:for-each>
+    <xsl:param name="spec" as="element()"/>
+    <xsl:variable name="ns" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="$spec instance of element(tei:elementSpec)">
+          <xsl:variable name="ns" as="xs:string" select="($spec/@ns, $spec/ancestor::tei:schemaSpec/@ns, 'http://www.tei-c.org/ns/1.0')[1]"/>
+          <xsl:value-of select="if ($ns eq 'http://www.tei-c.org/ns/1.0') then $spec/@ident else concat($ns, $spec/@ident)"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:variable name="ns" as="xs:string" select="($spec/@ns, 'http://www.tei-c.org/ns/1.0')[1]"/>
+          <xsl:value-of select="if ($ns eq 'http://www.tei-c.org/ns/1.0') then $spec/@ident else concat($ns, $spec/@ident)"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:value-of select="if ($ns eq 'http://www.tei-c.org/ns/1.0') then $spec/@ident else concat($ns, $spec/@ident)"/>
   </xsl:function>
 
   <xsl:template name="die">
