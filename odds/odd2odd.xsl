@@ -280,12 +280,10 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="ns" as="xs:string">
       <xsl:choose>
         <xsl:when test="$spec instance of element(tei:elementSpec)">
-          <xsl:variable name="ns" as="xs:string" select="($spec/@ns, $spec/ancestor::tei:schemaSpec/@ns, 'http://www.tei-c.org/ns/1.0')[1]"/>
-          <xsl:value-of select="if ($ns eq 'http://www.tei-c.org/ns/1.0') then $spec/@ident else concat($ns, $spec/@ident)"/>
+          <xsl:value-of select="($spec/@ns, $spec/ancestor::tei:schemaSpec/@ns, 'http://www.tei-c.org/ns/1.0')[1]"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:variable name="ns" as="xs:string" select="($spec/@ns, 'http://www.tei-c.org/ns/1.0')[1]"/>
-          <xsl:value-of select="if ($ns eq 'http://www.tei-c.org/ns/1.0') then $spec/@ident else concat($ns, $spec/@ident)"/>
+          <xsl:value-of select="($spec/@ns, 'http://www.tei-c.org/ns/1.0')[1]"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
