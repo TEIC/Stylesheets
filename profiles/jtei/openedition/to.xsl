@@ -278,8 +278,7 @@
   </xsl:template>
   
   <xsl:template match="tei:front/tei:div[@type = $div.types.front]/@type">
-    <xsl:variable name="name" select="if (../@type = $notes.type.front) then 'resp' else name()"/>
-    <xsl:attribute name="{$name}">
+    <xsl:attribute name="{name()}">
       <xsl:choose>
         <xsl:when test=". eq 'authorNotes'">author</xsl:when>
         <xsl:when test=". eq 'editorNotes'">publisher</xsl:when>
