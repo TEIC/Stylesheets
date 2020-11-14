@@ -91,13 +91,13 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:when test="tei:match(@rend,'none')"/>
 	     <xsl:when test="starts-with(@facs,'tcp:')"/>
 	     <xsl:when test="starts-with(@facs,'unknown:')"/>
-             <xsl:when test="starts-with(@facs, '#') and empty(id(substring(@facs, 2)))">
-               <xsl:message>The target '<xsl:value-of select="@facs"/>' is not defined in this document</xsl:message>
-             </xsl:when>
 	     <xsl:otherwise>
 	       <xsl:variable name="F">
 		 <xsl:choose>
 		   <xsl:when test="starts-with(@facs,'#')">
+                     <xsl:if test="empty(id(substring(@facs, 2)))">
+                       <xsl:message>The target '<xsl:value-of select="@facs"/>' is not defined in this document</xsl:message>
+                     </xsl:if>
 		     <xsl:for-each
 			 select="id(substring(@facs,2))">
 		       <xsl:value-of select="tei:resolveURI(.,descendant-or-self::*[@url][1]/@url)"/>
