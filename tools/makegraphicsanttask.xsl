@@ -118,6 +118,9 @@ of this software, even if advised of the possibility of such damage.
 		 <xsl:value-of select="tokenize($F,'\.')[last()]"/>
 	       </xsl:variable>
 	       <xsl:choose>
+                 <xsl:when test="$F = ''">
+                   <xsl:message>Unable to determine source file name of '<xsl:value-of select="@facs"/>'"</xsl:message>
+                 </xsl:when>
 		 <xsl:when test="contains($F,':')">
 		   <get src="{$F}" dest="{$target}"/>
 		 </xsl:when>
