@@ -173,9 +173,9 @@ of this software, even if advised of the possibility of such damage.
                     <!-- figure out what numbering scheme to use -->
                     <xsl:choose>
 		        <xsl:when test="$style='dl'">gloss</xsl:when>
-                        <xsl:when test="string-length($numfmt)=0">unordered</xsl:when>
-                        <xsl:when test="$numfmt='bullet'">unordered</xsl:when>
-                        <xsl:otherwise>ordered</xsl:otherwise>
+                        <xsl:when test="string-length($numfmt)=0">simple</xsl:when>
+                        <xsl:when test="$numfmt='bullet'">bulleted</xsl:when>
+                        <xsl:otherwise>numbered</xsl:otherwise>
                     </xsl:choose>
                 </xsl:otherwise>
             </xsl:choose>
