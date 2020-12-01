@@ -784,7 +784,6 @@
 	</xsl:attribute>
 	<xsl:text>&#x2693;</xsl:text>
       </a>
-      <xsl:text>&#160;</xsl:text>
     </xsl:variable>
     <div style="float: right;">
       <xsl:choose>
