@@ -286,7 +286,7 @@
       <xsl:variable name="langs">
         <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
       </xsl:variable>
-      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outputDir}/examples-{$me}.html" method="{$outputMethod}">
+      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outputDir}/all_examples_of_{$me}.html" method="{$outputMethod}">
         <html>
 	  <xsl:variable name="pagetitle">
 	    <xsl:sequence select="tei:i18n('Example')"/>
@@ -394,7 +394,7 @@
             </div>
             <xsl:call-template name="stdfooter">
               <xsl:with-param name="file">
-                <xsl:text>examples-</xsl:text>
+                <xsl:text>all_examples_of_</xsl:text>
                 <xsl:value-of select="$me"/>
               </xsl:with-param>
             </xsl:call-template>
@@ -809,7 +809,7 @@
 	</xsl:when>
       </xsl:choose>
       <xsl:for-each select="ancestor::tei:elementSpec">
-	<a href="examples-{@ident}.html">
+	<a href="all_examples_of_{@ident}.html">
 	  <xsl:sequence select="tei:i18n('Show all')"/>
 	</a>
 	<xsl:text>&#160;</xsl:text>
