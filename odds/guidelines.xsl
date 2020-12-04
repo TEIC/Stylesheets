@@ -792,7 +792,7 @@
 	    <xsl:attribute name="href">
 	      <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
 	    </xsl:attribute>
-	    <xsl:text>bibliography</xsl:text>
+	    <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
 	    <!--	  <span class="citLink">&#x270d;</span>-->
 	  </a>
 	  <xsl:text>&#160;</xsl:text>
@@ -802,7 +802,7 @@
 	    <xsl:attribute name="href">
 	      <xsl:apply-templates mode="generateLink" select="id(substring(@source,2))"/>
 	    </xsl:attribute>
-	    <xsl:text>bibliography</xsl:text>
+	    <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
 	    <!--	  <span class="citLink">&#x270d;</span>-->
 	  </a>
 	  <xsl:text>&#160;</xsl:text>
@@ -825,7 +825,7 @@
           <xsl:attribute name="href">
             <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
           </xsl:attribute>
-          <xsl:text>bibliography</xsl:text>
+	  <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
         </a>
       </div>
     </xsl:if>
