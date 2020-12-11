@@ -239,7 +239,10 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element eg</desc>
   </doc>
   <xsl:template match="tei:eg">
-    <pre>
+    <xsl:variable name="myID">
+      <xsl:apply-templates select="." mode="ident"/>
+    </xsl:variable>
+    <pre id="{$myID}">
       <xsl:if test="$cssFile">
         <xsl:attribute name="class">
           <xsl:text>pre_eg</xsl:text>
@@ -249,6 +252,9 @@ of this software, even if advised of the possibility of such damage.
         </xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
+      <a href="#{$myID}" style="float: right; text-decoration: none;">
+	<xsl:text>&#x2693;</xsl:text>
+      </a>
     </pre>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
