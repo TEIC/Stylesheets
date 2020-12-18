@@ -252,7 +252,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
-      <a href="#{$myID}" style="float: right; text-decoration: none;">
+      <a href="#{$myID}" class="anchorlink">
 	<xsl:text>&#x2693;</xsl:text>
       </a>
     </pre>
