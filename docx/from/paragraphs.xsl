@@ -145,13 +145,13 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:variable name="styleprop" select="doc($styleDoc)//w:style[@w:styleId=$style]"/>
 		<!-- if yes, gather info about text alignment, bold, italic, font size, face, underlining, sub- and superscript into @style -->
 		<xsl:if test="$styleprop/node()">
-				<xsl:if test="count($styleprop/w:rPr[w:b])>0">
+				<xsl:if test="tei:onOff($styleprop/w:rPr/w:b/@w:val)">
 					<xsl:text>font-weight: bold; </xsl:text>
 				</xsl:if>
-				<xsl:if test="count($styleprop/w:rPr[w:i])>0">
+		  <xsl:if test="tei:onOff($styleprop/w:rPr/w:i/@w:val)">
 					<xsl:text>font-style: italic; </xsl:text>
 				</xsl:if>
-				<xsl:if test="count($styleprop/w:rPr[w:u])>0">
+				<xsl:if test="tei:onOff($styleprop/w:rPr/w:u/@w:val)">
 					<xsl:text>text-decoration: underline; </xsl:text>
 				</xsl:if>
 				<xsl:if test="count($styleprop/w:pPr[w:jc])>0">
