@@ -231,7 +231,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     
     <!-- right-to-left text -->
-    <xsl:variable name="dir" select="tei:onOff(w:rPr/w:rtl/@w:val) or tei:onOff(parent::w:p/w:pPr/w:rPr/w:rtl/@w:val)"/>
+    <xsl:variable name="dir" select="tei:onOff(w:rPr/w:rtl) or tei:onOff(parent::w:p/w:pPr/w:rPr/w:rtl)"/>
           
     <xsl:variable name="effects">
       <xsl:call-template name="fromDocxEffectsHook"/>
