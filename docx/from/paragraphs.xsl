@@ -145,18 +145,18 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:variable name="styleprop" select="doc($styleDoc)//w:style[@w:styleId=$style]"/>
 		<!-- if yes, gather info about text alignment, bold, italic, font size, face, underlining, sub- and superscript into @style -->
 		<xsl:if test="$styleprop/node()">
-				<xsl:if test="tei:onOff($styleprop/w:rPr/w:b/@w:val)">
+				<xsl:if test="tei:onOff($styleprop/w:rPr/w:b)">
 					<xsl:text>font-weight: bold; </xsl:text>
 				</xsl:if>
-		  <xsl:if test="tei:onOff($styleprop/w:rPr/w:i/@w:val)">
+		  <xsl:if test="tei:onOff($styleprop/w:rPr/w:i)">
 					<xsl:text>font-style: italic; </xsl:text>
 				</xsl:if>
-				<xsl:if test="tei:onOff($styleprop/w:rPr/w:u/@w:val)">
+				<xsl:if test="tei:onOff($styleprop/w:rPr/w:u)">
 					<xsl:text>text-decoration: underline; </xsl:text>
 				</xsl:if>
 				<xsl:if test="count($styleprop/w:pPr[w:jc])>0">
 					<xsl:text>text-align:</xsl:text>
-					<xsl:value-of select="$styleprop/w:pPr/w:jc/@w:val"/>
+					<xsl:value-of select="$styleprop/w:pPr/w:jc"/>
 					<xsl:text>; </xsl:text>
 				</xsl:if>
 		</xsl:if>	
@@ -197,7 +197,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:attribute name="style">
           <xsl:value-of select="$retrievedStyles"/>
           <xsl:value-of select="$localStyles"/>
-          <xsl:if test="tei:onOff(w:pPr/w:pStyle/w:rPr/w:rtl/@w:val)">>
+          <xsl:if test="tei:onOff(w:pPr/w:pStyle/w:rPr/w:rtl)">>
             <xsl:text>direction:rtl;</xsl:text>
           </xsl:if>
         </xsl:attribute>
