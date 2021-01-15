@@ -277,16 +277,24 @@ of this software, even if advised of the possibility of such damage.
 </xsl:function>
   
   <xsl:function name="tei:onOff" as="xs:boolean">
-    <xsl:param name="val"/>
+    <xsl:param name="e"/>
     <xsl:choose>
-      <xsl:when test="$val = 'true'"><xsl:sequence select="true()"/></xsl:when>
-      <xsl:when test="$val = 'on'"><xsl:sequence select="true()"/></xsl:when>
-      <xsl:when test="$val = '1'"><xsl:sequence select="true()"/></xsl:when>
-      <xsl:when test="$val = 'false'"><xsl:sequence select="false()"/></xsl:when>
-      <xsl:when test="$val = 'off'"><xsl:sequence select="false()"/></xsl:when>
-      <xsl:when test="$val = '0'"><xsl:sequence select="false()"/></xsl:when>
+      <xsl:when test="exists($e)">
+        <xsl:variable name="val" select="$e/@w:val"/>
+        <xsl:choose>
+          <xsl:when test="not(exists($val))"><xsl:sequence select="true()"/></xsl:when>
+          <xsl:when test="$val = 'true'"><xsl:sequence select="true()"/></xsl:when>
+          <xsl:when test="$val = 'on'"><xsl:sequence select="true()"/></xsl:when>
+          <xsl:when test="$val = '1'"><xsl:sequence select="true()"/></xsl:when>
+          <xsl:when test="$val = 'false'"><xsl:sequence select="false()"/></xsl:when>
+          <xsl:when test="$val = 'off'"><xsl:sequence select="false()"/></xsl:when>
+          <xsl:when test="$val = '0'"><xsl:sequence select="false()"/></xsl:when>
+          <xsl:otherwise><xsl:sequence select="false()"/></xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
       <xsl:otherwise><xsl:sequence select="false()"/></xsl:otherwise>
     </xsl:choose>
+    
   </xsl:function>
 
 </xsl:stylesheet>
