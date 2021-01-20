@@ -282,11 +282,15 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="exists($e)">
         <xsl:variable name="val" select="$e/@w:val"/>
         <xsl:choose>
+          <xsl:when test="$e/self::w:u and not(exists($val))"><xsl:sequence select="false()"/></xsl:when>
           <xsl:when test="not(exists($val))"><xsl:sequence select="true()"/></xsl:when>
           <xsl:when test="$val = 'true'"><xsl:sequence select="true()"/></xsl:when>
           <xsl:when test="$val = 'on'"><xsl:sequence select="true()"/></xsl:when>
           <xsl:when test="$val = '1'"><xsl:sequence select="true()"/></xsl:when>
+          <xsl:when test="$val = 'single'"><xsl:sequence select="true()"/></xsl:when>
+          <xsl:when test="$val = 'double'"><xsl:sequence select="true()"/></xsl:when>
           <xsl:when test="$val = 'false'"><xsl:sequence select="false()"/></xsl:when>
+          <xsl:when test="$val = 'none'"><xsl:sequence select="false()"/></xsl:when>
           <xsl:when test="$val = 'off'"><xsl:sequence select="false()"/></xsl:when>
           <xsl:when test="$val = '0'"><xsl:sequence select="false()"/></xsl:when>
           <xsl:otherwise><xsl:sequence select="false()"/></xsl:otherwise>
