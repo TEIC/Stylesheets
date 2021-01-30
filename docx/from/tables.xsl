@@ -404,7 +404,7 @@ of this software, even if advised of the possibility of such damage.
 	              <cell>
 	                <xsl:if test="$preserveEffects='true'"> 
 	                  <xsl:attribute name="style">
-	                    <xsl:text>text-align:</xsl:text>
+	                    <xsl:text>text-align: </xsl:text>
 	                    <xsl:choose>
 	                      <xsl:when test="w:p/w:pPr/w:jc">
 	                        <xsl:value-of
