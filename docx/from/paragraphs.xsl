@@ -151,12 +151,12 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:if test="tei:onOff($styleprop/w:rPr/w:i)">
 					<xsl:text>font-style: italic; </xsl:text>
 				</xsl:if>
-				<xsl:if test="tei:onOff($styleprop/w:rPr/w:u)">
+				<xsl:if test="$styleprop/w:rPr/w:u/@w:val = 'single'">
 					<xsl:text>text-decoration: underline; </xsl:text>
 				</xsl:if>
 				<xsl:if test="count($styleprop/w:pPr[w:jc])>0">
-					<xsl:text>text-align:</xsl:text>
-					<xsl:value-of select="$styleprop/w:pPr/w:jc"/>
+					<xsl:text>text-align: </xsl:text>
+					<xsl:value-of select="tei:justification($styleprop/w:pPr/w:jc)"/>
 					<xsl:text>; </xsl:text>
 				</xsl:if>
 		</xsl:if>	
@@ -184,10 +184,9 @@ of this software, even if advised of the possibility of such damage.
         </xsl:if>
       </xsl:variable>
       <xsl:variable name="localStyles">
-        <xsl:if test="$preserveEffects='true' and w:pPr/w:jc and
-          w:pPr/w:jc/@w:val !='both'">
-          <xsl:text>text-align:</xsl:text>
-          <xsl:value-of select="w:pPr/w:jc/@w:val"/>
+        <xsl:if test="$preserveEffects='true' and w:pPr/w:jc">
+          <xsl:text>text-align: </xsl:text>
+          <xsl:value-of select="tei:justification(w:pPr/w:jc)"/>
           <xsl:text>;</xsl:text>
         </xsl:if>
       </xsl:variable>

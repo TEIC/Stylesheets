@@ -276,19 +276,21 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
 </xsl:function>
   
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Returns true or false for value types that may be "on" or "off". 
+          If the parent element exists but does not have a @w:val, the
+          function returns true.</desc>
+  </doc>
   <xsl:function name="tei:onOff" as="xs:boolean">
     <xsl:param name="e"/>
     <xsl:choose>
       <xsl:when test="exists($e)">
         <xsl:variable name="val" select="$e/@w:val"/>
         <xsl:choose>
-          <xsl:when test="$e/self::w:u and not(exists($val))"><xsl:sequence select="false()"/></xsl:when>
           <xsl:when test="not(exists($val))"><xsl:sequence select="true()"/></xsl:when>
           <xsl:when test="$val = 'true'"><xsl:sequence select="true()"/></xsl:when>
           <xsl:when test="$val = 'on'"><xsl:sequence select="true()"/></xsl:when>
           <xsl:when test="$val = '1'"><xsl:sequence select="true()"/></xsl:when>
-          <xsl:when test="$val = 'single'"><xsl:sequence select="true()"/></xsl:when>
-          <xsl:when test="$val = 'double'"><xsl:sequence select="true()"/></xsl:when>
           <xsl:when test="$val = 'false'"><xsl:sequence select="false()"/></xsl:when>
           <xsl:when test="$val = 'none'"><xsl:sequence select="false()"/></xsl:when>
           <xsl:when test="$val = 'off'"><xsl:sequence select="false()"/></xsl:when>
@@ -298,7 +300,22 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise><xsl:sequence select="false()"/></xsl:otherwise>
     </xsl:choose>
-    
+  </xsl:function>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Translates standard justification values into CSS text-align values.</desc>
+  </doc>
+  <xsl:function name="tei:justification" as="xs:string">
+    <xsl:param name="jc"/>
+    <xsl:choose>
+      <xsl:when test="$jc/@w:val='start'">left</xsl:when>
+      <xsl:when test="$jc/@w:val='end'">right</xsl:when>
+      <xsl:when test="$jc/@w:val='left'">left</xsl:when>
+      <xsl:when test="$jc/@w:val='right'">right</xsl:when>
+      <xsl:when test="$jc/@w:val='center'">center</xsl:when>
+      <xsl:when test="$jc/@w:val='both'">justify</xsl:when>
+      <xsl:otherwise>left</xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
 
 </xsl:stylesheet>
