@@ -774,41 +774,50 @@
   </xsl:template>
 
   <xsl:template name="egXMLEndHook">
-    <xsl:choose>
-      <xsl:when test="@corresp and id(substring(@corresp,2))">
-	<div style="float: right;">
+    <xsl:variable name="selfAnchor">
+      <!-- Generate a link to myself so users can easily copy-and-paste a pointer to me -->
+      <a class="bookmarklink">
+	<xsl:attribute name="href">
+	  <xsl:text>#</xsl:text>
+	  <!-- Our current context node is an <egXML>, so find its ID: -->
+	  <xsl:apply-templates mode="ident" select="."/>
+	</xsl:attribute>
+	<xsl:text>&#x2693;</xsl:text>
+      </a>
+    </xsl:variable>
+    <div style="float: right;">
+      <xsl:choose>
+	<xsl:when test="@corresp and id(substring(@corresp,2))">
 	  <a>
 	    <xsl:attribute name="href">
 	      <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
 	    </xsl:attribute>
-	    <xsl:text>bibliography</xsl:text>
+	    <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
 	    <!--	  <span class="citLink">&#x270d;</span>-->
 	  </a>
 	  <xsl:text>&#160;</xsl:text>
-	</div>
-      </xsl:when>
-      <xsl:when test="@source and id(substring(@source,2))">
-	<div style="float: right;">
+	</xsl:when>
+	<xsl:when test="@source and id(substring(@source,2))">
 	  <a>
 	    <xsl:attribute name="href">
 	      <xsl:apply-templates mode="generateLink" select="id(substring(@source,2))"/>
 	    </xsl:attribute>
-	    <xsl:text>bibliography</xsl:text>
+	    <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
 	    <!--	  <span class="citLink">&#x270d;</span>-->
 	  </a>
 	  <xsl:text>&#160;</xsl:text>
-	</div>
-      </xsl:when>
-    </xsl:choose>
-    <xsl:for-each select="ancestor::tei:elementSpec">
-      <div style="float: right;">
-        <a href="examples-{@ident}.html">
-          <xsl:sequence select="tei:i18n('Show all')"/>
-        </a>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:for-each select="ancestor::tei:elementSpec">
+	<a href="examples-{@ident}.html">
+	  <xsl:sequence select="tei:i18n('Show all')"/>
+	</a>
 	<xsl:text>&#160;</xsl:text>
-      </div>
-    </xsl:for-each>
+      </xsl:for-each>
+      <xsl:sequence select="$selfAnchor"/>
+    </div>
   </xsl:template>
+
   <xsl:template name="figureHook">
     <xsl:if test="@corresp and id(substring(@corresp,2))">
       <div style="float: right;">
@@ -816,7 +825,7 @@
           <xsl:attribute name="href">
             <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
           </xsl:attribute>
-          <xsl:text>bibliography</xsl:text>
+	  <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
         </a>
       </div>
     </xsl:if>

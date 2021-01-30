@@ -44,54 +44,6 @@ of this software, even if advised of the possibility of such damage.
   </doc>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process elements teix:egXML</desc>
-  </doc>
-  <xsl:template match="teix:egXML">
-    <xsl:param name="simple">false</xsl:param>
-    <xsl:param name="highlight"/>
-    <div>
-      <xsl:attribute name="id">
-        <xsl:apply-templates mode="ident" select="."/>
-      </xsl:attribute>
-      <xsl:attribute name="class">
-	<xsl:text>pre</xsl:text>
-	<xsl:if test="not(*)">
-	  <xsl:text> cdata</xsl:text>
-	</xsl:if>
-	<xsl:choose>
-	  <xsl:when test="@valid='feasible'">
-	    <xsl:text> egXML_feasible</xsl:text>
-	  </xsl:when>
-	  <xsl:when test="@valid='false'">
-	    <xsl:text> egXML_invalid</xsl:text>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:text> egXML_valid</xsl:text>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:attribute>
-      <xsl:choose>
-        <xsl:when test="$simple='true'">
-          <xsl:apply-templates mode="verbatim">
-            <xsl:with-param name="highlight">
-              <xsl:value-of select="$highlight"/>
-            </xsl:with-param>
-          </xsl:apply-templates>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:call-template name="egXMLStartHook"/>
-          <xsl:apply-templates mode="verbatim">
-            <xsl:with-param name="highlight">
-              <xsl:value-of select="$highlight"/>
-            </xsl:with-param>
-          </xsl:apply-templates>
-          <xsl:call-template name="egXMLEndHook"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </div>
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element ident</desc>
   </doc>
   <xsl:template match="tei:ident">
@@ -283,6 +235,55 @@ of this software, even if advised of the possibility of such damage.
     <td colspan="3"><xsl:apply-templates/></td>
   </tr>
 </xsl:template>
+
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+  <desc>Process elements teix:egXML</desc>
+</doc>
+<xsl:template match="teix:egXML">
+  <xsl:param name="simple">false</xsl:param>
+  <xsl:param name="highlight"/>
+  <div>
+    <xsl:attribute name="id">
+      <xsl:apply-templates mode="ident" select="."/>
+    </xsl:attribute>
+    <xsl:attribute name="class">
+      <xsl:text>pre</xsl:text>
+      <xsl:if test="not(*)">
+	<xsl:text> cdata</xsl:text>
+      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="@valid='feasible'">
+	  <xsl:text> egXML_feasible</xsl:text>
+	</xsl:when>
+	<xsl:when test="@valid='false'">
+	  <xsl:text> egXML_invalid</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text> egXML_valid</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <xsl:choose>
+      <xsl:when test="$simple='true'">
+	<xsl:apply-templates mode="verbatim">
+	  <xsl:with-param name="highlight">
+	    <xsl:value-of select="$highlight"/>
+	  </xsl:with-param>
+	</xsl:apply-templates>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="egXMLStartHook"/>
+	<xsl:apply-templates mode="verbatim">
+	  <xsl:with-param name="highlight">
+	    <xsl:value-of select="$highlight"/>
+	  </xsl:with-param>
+	</xsl:apply-templates>
+	<xsl:call-template name="egXMLEndHook"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </div>
+</xsl:template>
+
 <xsl:template match="tei:classes">
   <tr>
     <td>Classes</td>
