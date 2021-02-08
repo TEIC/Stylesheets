@@ -154,15 +154,15 @@ of this software, even if advised of the possibility of such damage.
 
    <xsl:template match="tei:seg[@xml:lang]">
       <xsl:choose>
-         <xsl:when test="@xml:lang='zh-TW'">
+         <xsl:when test="@xml:lang=('zh','zh-TW')">
             <xsl:text>{\textChinese </xsl:text>
             <xsl:apply-templates/>
             <xsl:text>}</xsl:text>
          </xsl:when>
          <xsl:when test="@xml:lang='ja'">
-            <xsl:text>{\textJapanese </xsl:text>
+            <xsl:text>{\textJapanese {</xsl:text>
             <xsl:apply-templates/>
-            <xsl:text>}</xsl:text>
+            <xsl:text>}}</xsl:text>
          </xsl:when>
          <xsl:when test="@xml:lang='ko'">
             <xsl:text>{\textKorean </xsl:text>
@@ -309,14 +309,21 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template match="tei:hi[tei:match(@rend,'label')  or tei:match(@rend,'defaultVal')]">
       <xsl:text>{</xsl:text>
       <xsl:choose>
-         <xsl:when test="@xml:lang='zh-TW'">
-            <xsl:text>\textChinese </xsl:text>
-            <xsl:apply-templates/>
-         </xsl:when>
          <xsl:when test="@xml:lang='ja'">
-            <xsl:text>\textJapanese </xsl:text>
+            <xsl:text>\textJapanese {</xsl:text>
             <xsl:apply-templates/>
+            <xsl:text>}</xsl:text>
          </xsl:when>
+        <xsl:when test="@xml:lang='ko'">
+          <xsl:text>\textKorean {</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
+        <xsl:when test="@xml:lang=('zh','zh-TW')">
+          <xsl:text>\textChinese {</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
          <xsl:otherwise>
             <xsl:apply-templates/>
          </xsl:otherwise>
