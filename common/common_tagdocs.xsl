@@ -2499,11 +2499,7 @@
     <desc>Process element desc</desc>
   </doc>
   <xsl:template match="tei:desc">
-    <!-- Changed 2021-02-12 by Syd, Martin, &amp; Nick to copy the
-         <desc> element itself in addition to applying templates. -->
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()"/>
-    </xsl:copy>
+    <xsl:apply-templates/>
   </xsl:template>
   <!-- pretty printing of RNC -->
   <xsl:template match="nc" mode="keep">
