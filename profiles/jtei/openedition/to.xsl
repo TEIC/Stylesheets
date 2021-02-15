@@ -175,7 +175,7 @@
   <xsl:template match="tei:titleStmt/tei:title[not(@type='main')]"/>
   
   <!-- wrap other <author>|<editor> children in <s> -->
-  <xsl:template match="tei:titleStmt/tei:author/*|tei:titleStmt/tei:editor/*" priority="0">
+  <xsl:template match="tei:titleStmt/tei:author/*|tei:titleStmt/tei:editor/*" priority="-0.5">
     <xsl:copy-of select="local:wrap(., 's')"/>
   </xsl:template>
 
@@ -414,7 +414,7 @@
   </xsl:template>
   
   <!-- add @n to <note> -->
-  <xsl:template match="tei:note">
+  <xsl:template match="tei:text//tei:note">
     <xsl:param name="note.context" select="ancestor::*[self::tei:front|self::tei:body|self::tei:back]" tunnel="yes" as="element()?"/>
     <!-- 'pull' subsequent puntuation (if necessary) -->
     <xsl:call-template name="include.punctuation"/>
