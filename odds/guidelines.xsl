@@ -417,10 +417,6 @@
       <xsl:attribute name="{if ($outputTarget='html5') then 'property' else 'name'}">DC.Language</xsl:attribute>
       <xsl:attribute name="content">SCHEME=iso639 <xsl:value-of select="$documentationLanguage"/></xsl:attribute>
     </meta>
-    <meta>
-	<xsl:attribute name="{if ($outputTarget='html5') then 'property' else 'name'}">DC.Creator.Address</xsl:attribute>
-	<xsl:attribute name="content">tei@oucs.ox.ac.uk</xsl:attribute>
-    </meta>
     <xsl:choose>
       <xsl:when test="$outputTarget='html5' or $outputTarget='epub3'">
 	<meta charset="{$outputEncoding}"/>
