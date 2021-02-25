@@ -31,7 +31,7 @@
          <choice>
             <text/>
             <ref name="t_model.gLike"/>
-            <ref name="t_model.qLike"/>
+            <ref name="t_model.attributable"/>
             <ref name="t_model.phrase"/>
             <ref name="t_model.global"/>
          </choice>
@@ -423,7 +423,8 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.datable.w3c-att-datable-w3c-when-constraint-rule-1">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+      <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@when]">
@@ -432,7 +433,8 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
    </pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.datable.w3c-att-datable-w3c-from-constraint-rule-2">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+      <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@from]">
@@ -441,7 +443,8 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
    </pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.datable.w3c-att-datable-w3c-to-constraint-rule-3">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+      <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@to]">
@@ -463,7 +466,8 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.datable-calendar-calendar-constraint-rule-4">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+      <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@calendar]">
@@ -961,19 +965,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
       </attribute>
    </define>
    <define name="t_att.interpLike.attributes">
-      <ref name="t_att.interpLike.attribute.type"/>
       <ref name="t_att.interpLike.attribute.inst"/>
-   </define>
-   <define name="t_att.interpLike.attribute.type">
-      <optional>
-         <attribute name="type">
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates what kind of phenomenon is being noted in the passage.
-Sample values include: 1] image; 2] character; 3] theme; 4] allusion</a:documentation>
-            <data type="token">
-               <param name="pattern">[^\p{C}\p{Z}]+</param>
-            </data>
-         </attribute>
-      </optional>
    </define>
    <define name="t_att.interpLike.attribute.inst">
       <optional>
@@ -1082,7 +1074,8 @@ Suggested values include: 1] m (metre); 2] kg (kilogram); 3] s (second); 4] Hz (
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.measurement-att-measurement-unitRef-constraint-rule-5">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+      <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@unitRef]">
@@ -1188,7 +1181,8 @@ Suggested values include: 1] below; 2] bottom; 3] margin; 4] top; 5] opposite; 6
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.typed-subtypeTyped-constraint-rule-6">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+      <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@subtype]">
@@ -1217,7 +1211,8 @@ Suggested values include: 1] below; 2] bottom; 3] margin; 4] top; 5] opposite; 6
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.pointing-targetLang-targetLang-constraint-rule-7">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+      <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
@@ -1362,7 +1357,8 @@ Suggested values include: 1] below; 2] bottom; 3] margin; 4] top; 5] opposite; 6
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.spanning-spanTo-spanTo-2-constraint-rule-8">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+      <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@spanTo]">
@@ -1404,7 +1400,8 @@ The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow 
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="testPure1-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-9">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+      <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 context="tei:*[@schemeVersion]">
@@ -1612,29 +1609,41 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
    <define name="t_model.hiLike">
       <choice>
          <ref name="t_hi"/>
+         <ref name="t_q"/>
       </choice>
    </define>
    <define name="t_model.hiLike_alternation">
       <choice>
          <ref name="t_hi"/>
+         <ref name="t_q"/>
       </choice>
    </define>
    <define name="t_model.hiLike_sequence">
       <ref name="t_hi"/>
+      <ref name="t_q"/>
    </define>
    <define name="t_model.hiLike_sequenceOptional">
       <optional>
          <ref name="t_hi"/>
+      </optional>
+      <optional>
+         <ref name="t_q"/>
       </optional>
    </define>
    <define name="t_model.hiLike_sequenceOptionalRepeatable">
       <zeroOrMore>
          <ref name="t_hi"/>
       </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_q"/>
+      </zeroOrMore>
    </define>
    <define name="t_model.hiLike_sequenceRepeatable">
       <oneOrMore>
          <ref name="t_hi"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_q"/>
       </oneOrMore>
    </define>
    <define name="t_model.emphLike">
@@ -2523,29 +2532,26 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
          <ref name="t_cit"/>
       </oneOrMore>
    </define>
-   <define name="t_model.qLike">
+   <define name="t_model.attributable">
       <choice>
          <ref name="t_model.quoteLike"/>
          <ref name="t_said"/>
-         <ref name="t_q"/>
          <ref name="t_floatingText"/>
       </choice>
    </define>
-   <define name="t_model.qLike_alternation">
+   <define name="t_model.attributable_alternation">
       <choice>
          <ref name="t_model.quoteLike_alternation"/>
          <ref name="t_said"/>
-         <ref name="t_q"/>
          <ref name="t_floatingText"/>
       </choice>
    </define>
-   <define name="t_model.qLike_sequence">
+   <define name="t_model.attributable_sequence">
       <ref name="t_model.quoteLike_sequence"/>
       <ref name="t_said"/>
-      <ref name="t_q"/>
       <ref name="t_floatingText"/>
    </define>
-   <define name="t_model.qLike_sequenceOptional">
+   <define name="t_model.attributable_sequenceOptional">
       <optional>
          <ref name="t_model.quoteLike_sequenceOptional"/>
       </optional>
@@ -2553,13 +2559,10 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
          <ref name="t_said"/>
       </optional>
       <optional>
-         <ref name="t_q"/>
-      </optional>
-      <optional>
          <ref name="t_floatingText"/>
       </optional>
    </define>
-   <define name="t_model.qLike_sequenceOptionalRepeatable">
+   <define name="t_model.attributable_sequenceOptionalRepeatable">
       <zeroOrMore>
          <ref name="t_model.quoteLike_sequenceOptionalRepeatable"/>
       </zeroOrMore>
@@ -2567,21 +2570,15 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
          <ref name="t_said"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_q"/>
-      </zeroOrMore>
-      <zeroOrMore>
          <ref name="t_floatingText"/>
       </zeroOrMore>
    </define>
-   <define name="t_model.qLike_sequenceRepeatable">
+   <define name="t_model.attributable_sequenceRepeatable">
       <oneOrMore>
          <ref name="t_model.quoteLike_sequenceRepeatable"/>
       </oneOrMore>
       <oneOrMore>
          <ref name="t_said"/>
-      </oneOrMore>
-      <oneOrMore>
-         <ref name="t_q"/>
       </oneOrMore>
       <oneOrMore>
          <ref name="t_floatingText"/>
@@ -2863,13 +2860,14 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
          <ref name="t_model.labelLike"/>
          <ref name="t_model.listLike"/>
          <ref name="t_model.stageLike"/>
-         <ref name="t_model.qLike"/>
+         <ref name="t_model.attributable"/>
       </choice>
    </define>
    <define name="t_model.common">
       <choice>
          <ref name="t_model.divPart"/>
          <ref name="t_model.inter"/>
+         <ref name="t_q"/>
       </choice>
    </define>
    <define name="t_model.phrase">
@@ -2909,6 +2907,19 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
    </define>
    <define name="t_model.div1Like">
       <notAllowed/>
+   </define>
+   <define name="t_model.annotationLike">
+      <choice>
+         <ref name="t_note"/>
+         <ref name="t_annotation"/>
+      </choice>
+   </define>
+   <define name="t_model.annotationPart.body">
+      <choice>
+         <ref name="t_ptr"/>
+         <ref name="t_ref"/>
+         <ref name="t_note"/>
+      </choice>
    </define>
    <define name="t_model.applicationLike">
       <choice>
@@ -2968,8 +2979,10 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
          <ref name="t_model.global.meta"/>
          <ref name="t_model.biblLike"/>
          <ref name="t_model.listLike"/>
+         <ref name="t_model.annotationLike"/>
          <ref name="t_listChange"/>
          <ref name="t_seg"/>
+         <ref name="t_listAnnotation"/>
       </choice>
    </define>
    <define name="t_att.formula.attributes">
@@ -3269,12 +3282,15 @@ Suggested values include: 1] spoken; 2] thought; 3] written; 4] soCalled; 5] for
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(cited quotation) contains a quotation from some other document, together with a bibliographic reference to its source. In a dictionary it may contain an example text with at least one occurrence of the word form, used in the sense being described, or a translation of the headword, or an example. [3.3.3. Quotation 4.3.1. Grouped Texts 9.3.5.1. Examples]</a:documentation>
          <oneOrMore>
             <choice>
-               <ref name="t_model.qLike"/>
-               <ref name="t_model.egLike"/>
                <ref name="t_model.biblLike"/>
-               <ref name="t_model.ptrLike"/>
-               <ref name="t_model.global"/>
+               <ref name="t_model.egLike"/>
                <ref name="t_model.entryPart"/>
+               <ref name="t_model.global"/>
+               <ref name="t_model.graphicLike"/>
+               <ref name="t_model.ptrLike"/>
+               <ref name="t_model.attributable"/>
+               <ref name="t_pc"/>
+               <ref name="t_q"/>
             </choice>
          </oneOrMore>
          <ref name="t_att.global.attributes"/>
@@ -3828,12 +3844,12 @@ Sample values include: 1] suspension; 2] contraction; 3] brevigraph; 4] superscr
 attributes @target and @cRef may be supplied on <name/>.</report>
             </rule>
          </pattern>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.pointing.attributes"/>
-         <ref name="t_att.internetMedia.attributes"/>
-         <ref name="t_att.typed.attributes"/>
-         <ref name="t_att.declaring.attributes"/>
          <ref name="t_att.cReferencing.attributes"/>
+         <ref name="t_att.declaring.attributes"/>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.internetMedia.attributes"/>
+         <ref name="t_att.pointing.attributes"/>
+         <ref name="t_att.typed.attributes"/>
          <empty/>
       </element>
    </define>
@@ -3851,12 +3867,12 @@ attributes @target and @cRef may be supplied on <name/>.</report>
                </report>
             </rule>
          </pattern>
-         <ref name="t_att.global.attributes"/>
-         <ref name="t_att.pointing.attributes"/>
-         <ref name="t_att.internetMedia.attributes"/>
-         <ref name="t_att.typed.attributes"/>
-         <ref name="t_att.declaring.attributes"/>
          <ref name="t_att.cReferencing.attributes"/>
+         <ref name="t_att.declaring.attributes"/>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.internetMedia.attributes"/>
+         <ref name="t_att.pointing.attributes"/>
+         <ref name="t_att.typed.attributes"/>
          <empty/>
       </element>
    </define>
@@ -4606,13 +4622,14 @@ relatedItem element must be empty</sch:report>
                      <ref name="t_model.pLike"/>
                      <ref name="t_model.listLike"/>
                      <ref name="t_model.stageLike"/>
-                     <ref name="t_model.qLike"/>
+                     <ref name="t_model.attributable"/>
                   </choice>
-        
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-        
+                  <choice>
+                     <zeroOrMore>
+                        <ref name="t_model.global"/>
+                     </zeroOrMore>
+                     <ref name="t_q"/>
+                  </choice>
                </group>
             </oneOrMore>
          </group>
@@ -4802,9 +4819,9 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
         
                <ref name="t_publicationStmt"/>
         
-               <optional>
+               <zeroOrMore>
                   <ref name="t_seriesStmt"/>
-               </optional>
+               </zeroOrMore>
         
         
                <optional>
@@ -5066,6 +5083,7 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
             </group>
          </choice>
          <ref name="t_att.global.attributes"/>
+         <ref name="t_att.declarable.attributes"/>
          <empty/>
       </element>
    </define>
@@ -5116,9 +5134,9 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
                      <ref name="t_extent"/>
                   </optional>
                   <ref name="t_publicationStmt"/>
-                  <optional>
+                  <zeroOrMore>
                      <ref name="t_seriesStmt"/>
-                  </optional>
+                  </zeroOrMore>
                   <optional>
                      <ref name="t_notesStmt"/>
                   </optional>
@@ -5532,7 +5550,7 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
    </define>
    <define name="t_prefixDef">
       <element name="prefixDef">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(prefix definition) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(prefix definition) defines a prefixing scheme used in teidata.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]</a:documentation>
          <zeroOrMore>
             <ref name="t_model.pLike"/>
          </zeroOrMore>
@@ -5549,7 +5567,7 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
    </define>
    <define name="t_listPrefixDef">
       <element name="listPrefixDef">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(list of prefix definitions) contains a list of definitions of prefixing schemes used in teidata.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]</a:documentation>
          <group>
             <zeroOrMore>
                <ref name="t_desc"/>
@@ -6090,7 +6108,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
    </define>
    <define name="t_change">
       <element name="change">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.6. The Revision Description 2.4.1. Creation 11.7. Identifying Changes and Revisions]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [2.6. The Revision Description 2.4.1. Creation 11.6. Identifying Changes and Revisions]</a:documentation>
          <ref name="t_macro.specialPara"/>
          <ref name="t_att.ascribed.attributes"/>
          <ref name="t_att.datable.attributes"/>
@@ -6112,7 +6130,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
    </define>
    <define name="t_listChange">
       <element name="listChange">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.7. Identifying Changes and Revisions]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.6. Identifying Changes and Revisions]</a:documentation>
          <group>
             <zeroOrMore>
                <ref name="t_desc"/>
@@ -6457,6 +6475,7 @@ The attributes @to and @from on <name/> may each contain only a single value</re
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.interpLike.attributes"/>
          <ref name="t_att.pointing.attributes"/>
+         <ref name="t_att.typed.attributes"/>
          <optional>
             <attribute name="from">
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the identifier of the node which is the starting point of the span of text being annotated; if not accompanied by a <code xmlns="http://www.w3.org/1999/xhtml">@to</code> attribute, gives the identifier of the node of the entire span of text being annotated.</a:documentation>
@@ -6480,6 +6499,7 @@ The attributes @to and @from on <name/> may each contain only a single value</re
          </zeroOrMore>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.interpLike.attributes"/>
+         <ref name="t_att.typed.attributes"/>
          <empty/>
       </element>
    </define>
@@ -6496,6 +6516,7 @@ The attributes @to and @from on <name/> may each contain only a single value</re
          </zeroOrMore>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.interpLike.attributes"/>
+         <ref name="t_att.typed.attributes"/>
          <empty/>
       </element>
    </define>
@@ -6516,6 +6537,7 @@ The attributes @to and @from on <name/> may each contain only a single value</re
          </group>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.interpLike.attributes"/>
+         <ref name="t_att.typed.attributes"/>
          <empty/>
       </element>
    </define>
@@ -6603,7 +6625,8 @@ The attributes @to and @from on <name/> may each contain only a single value</re
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-link-linkTargets3-constraint-assert-10">
             <rule context="tei:link">
-               <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+               <sch:assert xmlns:xi="http://www.w3.org/2001/XInclude"
+                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
                            test="contains(normalize-space(@target),' ')">You must supply at least two values for @target or  on <sch:name/>
@@ -6628,7 +6651,8 @@ The attributes @to and @from on <name/> may each contain only a single value</re
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-linkGrp-eight_is_enough-constraint-report-18">
             <rule context="tei:linkGrp">
-               <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+               <sch:report xmlns:xi="http://www.w3.org/2001/XInclude"
+                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
                            test="count(*)&gt;8">Too many links!</sch:report>
@@ -6646,7 +6670,8 @@ The attributes @to and @from on <name/> may each contain only a single value</re
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-ab-abstractModel-structure-ab-constraint-report-19">
             <rule context="tei:ab">
-               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+               <report xmlns:xi="http://www.w3.org/2001/XInclude"
+                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
         Abstract model violation: ab may not occur inside paragraphs or other ab elements.
@@ -6656,7 +6681,8 @@ The attributes @to and @from on <name/> may each contain only a single value</re
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-ab-abstractModel-structure-l-constraint-report-20">
             <rule context="tei:ab">
-               <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+               <report xmlns:xi="http://www.w3.org/2001/XInclude"
+                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        test="ancestor::tei:l or ancestor::tei:lg">
         Abstract model violation: Lines may not contain higher-level divisions such as p or ab.
@@ -6735,7 +6761,7 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
          </optional>
          <optional>
             <attribute name="interval">
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies a time interval either as a number or as one of the keywords defined by the datatype data.interval</a:documentation>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies a time interval either as a number or as one of the keywords defined by the datatype teidata.interval</a:documentation>
                <choice>
                   <data type="float"/>
                   <choice>
@@ -6893,7 +6919,8 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-standOff-nested_standOff_should_be_typed-constraint-assert-11">
             <rule context="tei:standOff">
-               <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+               <sch:assert xmlns:xi="http://www.w3.org/2001/XInclude"
+                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
                            test="@type or not(ancestor::tei:standOff)">This
@@ -6905,6 +6932,120 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.typed.attributes"/>
          <ref name="t_att.declaring.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_listAnnotation">
+      <element name="listAnnotation">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a list of annotations, typically encoded as <code xmlns="http://www.w3.org/1999/xhtml">&lt;annotation&gt;</code>, <code xmlns="http://www.w3.org/1999/xhtml">&lt;annotationBlock&gt;</code>, or <code xmlns="http://www.w3.org/1999/xhtml">&lt;note&gt;</code>, possibly organized with nested <code xmlns="http://www.w3.org/1999/xhtml">&lt;listAnnotation&gt;</code> elements. [16.10. The standOff Container]</a:documentation>
+         <group>
+            <zeroOrMore>
+               <ref name="t_model.headLike"/>
+            </zeroOrMore>
+            <zeroOrMore>
+               <ref name="t_model.labelLike"/>
+            </zeroOrMore>
+            <oneOrMore>
+               <choice>
+                  <ref name="t_model.annotationLike"/>
+                  <ref name="t_listAnnotation"/>
+               </choice>
+            </oneOrMore>
+         </group>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.typed.attributes"/>
+         <ref name="t_att.notated.attributes"/>
+         <ref name="t_att.declaring.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_annotation">
+      <element name="annotation">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">represents an annotation following the <a xmlns="http://www.w3.org/1999/xhtml" href="#WADM">Web
+      Annotation Data Model</a>. [16.10. The standOff Container]</a:documentation>
+         <group>
+            <zeroOrMore>
+               <ref name="t_respStmt"/>
+            </zeroOrMore>
+            <zeroOrMore>
+               <ref name="t_revisionDesc"/>
+            </zeroOrMore>
+            <zeroOrMore>
+               <ref name="t_licence"/>
+            </zeroOrMore>
+            <zeroOrMore>
+               <ref name="t_model.annotationPart.body"/>
+            </zeroOrMore>
+         </group>
+         <ref name="t_att.global.attribute.n"/>
+         <ref name="t_att.global.attribute.xmllang"/>
+         <ref name="t_att.global.attribute.xmlbase"/>
+         <ref name="t_att.global.attribute.xmlspace"/>
+         <ref name="t_att.global.rendition.attribute.rend"/>
+         <ref name="t_att.global.rendition.attribute.style"/>
+         <ref name="t_att.global.rendition.attribute.rendition"/>
+         <ref name="t_att.global.linking.attribute.corresp"/>
+         <ref name="t_att.global.linking.attribute.sameAs"/>
+         <ref name="t_att.global.linking.attribute.copyOf"/>
+         <ref name="t_att.global.linking.attribute.next"/>
+         <ref name="t_att.global.linking.attribute.prev"/>
+         <ref name="t_att.global.linking.attribute.exclude"/>
+         <ref name="t_att.global.linking.attribute.select"/>
+         <ref name="t_att.global.analytic.attribute.ana"/>
+         <ref name="t_att.global.responsibility.attribute.cert"/>
+         <ref name="t_att.global.responsibility.attribute.resp"/>
+         <ref name="t_att.global.source.attribute.source"/>
+         <ref name="t_att.pointing.attribute.targetLang"/>
+         <ref name="t_att.pointing.attribute.evaluate"/>
+         <attribute name="xml:id">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(identifier) provides a unique identifier for the element bearing the attribute.</a:documentation>
+            <data type="ID"/>
+         </attribute>
+         <attribute name="target">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the destination of the reference by supplying one or more URI References</a:documentation>
+            <list>
+               <oneOrMore>
+                  <data type="anyURI"/>
+               </oneOrMore>
+            </list>
+         </attribute>
+         <optional>
+            <attribute name="motivation">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <list>
+                  <oneOrMore>
+                     <choice>
+                        <value>assessing</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to assess the target resource in some way, rather than simply make a comment about it</a:documentation>
+                        <value>bookmarking</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to create a bookmark to the target or part thereof</a:documentation>
+                        <value>classifying</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to classify the target in some way</a:documentation>
+                        <value>commenting</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to comment about the target</a:documentation>
+                        <value>describing</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to describe the target, rather than (for example) comment on it</a:documentation>
+                        <value>editing</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to request an edit or a change to the target resource</a:documentation>
+                        <value>highlighting</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to highlight the target resource or a segment thereof</a:documentation>
+                        <value>identifying</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to assign an identity to the target</a:documentation>
+                        <value>linking</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to link to a resource related to the target</a:documentation>
+                        <value>moderating</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to assign some value or quality to the target</a:documentation>
+                        <value>questioning</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to ask a question about the target</a:documentation>
+                        <value>replying</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to reply to a previous statement, either an annotation or another resource</a:documentation>
+                        <value>tagging</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">intent is to associate a tag with the target</a:documentation>
+                     </choice>
+                  </oneOrMore>
+               </list>
+            </attribute>
+         </optional>
          <empty/>
       </element>
    </define>

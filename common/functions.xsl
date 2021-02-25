@@ -227,6 +227,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
+        <xsl:when test="ancestor-or-self::*[@xml:lang][1]/@xml:lang = ('ja','zh','zh-TW','ko')">false</xsl:when>
         <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'italic')]">true</xsl:when>
         <xsl:when test="self::tei:emph">true</xsl:when>
         <xsl:when test="self::tei:hi[not(@rend)]">true</xsl:when>

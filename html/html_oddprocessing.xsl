@@ -215,59 +215,14 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </span>
   </xsl:template>
+
   <xsl:template name="emptySlash">
     <xsl:param name="name"/>
     <span class="emptySlash">
       <xsl:value-of select="$name"/>
     </span>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process elements teix:egXML</desc>
-  </doc>
-  <xsl:template match="teix:egXML">
-    <xsl:param name="simple">false</xsl:param>
-    <xsl:param name="highlight"/>
-    <div>
-      <xsl:attribute name="id">
-        <xsl:apply-templates mode="ident" select="."/>
-      </xsl:attribute>
-      <xsl:attribute name="class">
-	<xsl:text>pre</xsl:text>
-	<xsl:if test="not(*)">
-	  <xsl:text> cdata</xsl:text>
-	</xsl:if>
-	<xsl:choose>
-	  <xsl:when test="@valid='feasible'">
-	    <xsl:text> egXML_feasible</xsl:text>
-	  </xsl:when>
-	  <xsl:when test="@valid='false'">
-	    <xsl:text> egXML_invalid</xsl:text>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:text> egXML_valid</xsl:text>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:attribute>
-      <xsl:choose>
-        <xsl:when test="$simple='true'">
-          <xsl:apply-templates mode="verbatim">
-            <xsl:with-param name="highlight">
-              <xsl:value-of select="$highlight"/>
-            </xsl:with-param>
-          </xsl:apply-templates>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:call-template name="egXMLStartHook"/>
-          <xsl:apply-templates mode="verbatim">
-            <xsl:with-param name="highlight">
-              <xsl:value-of select="$highlight"/>
-            </xsl:with-param>
-          </xsl:apply-templates>
-          <xsl:call-template name="egXMLEndHook"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </div>
-  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] <param name="grammar">grammar</param>
          <param name="content">content</param>

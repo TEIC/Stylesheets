@@ -124,6 +124,9 @@ of this software, even if advised of the possibility of such damage.
                         <xsl:value-of select="substring-before(@width,'px')"/>
                         <xsl:text>pt</xsl:text>
                      </xsl:when>
+                    <xsl:when test="ends-with(@width,'em')">
+                      <xsl:value-of select="@width"/>
+                    </xsl:when>
                      <xsl:when test="ends-with(@width,'in')">
                         <xsl:value-of select="@width"/>
                      </xsl:when>

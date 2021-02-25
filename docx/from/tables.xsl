@@ -372,96 +372,98 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <table>
-		<xsl:call-template name="table-rendition"/>
-		<xsl:call-template name="table-header"/>
-		<xsl:for-each select="w:tr">
-		  <xsl:variable name="overrideRow">
-		    <xsl:choose>
-		      <xsl:when test="not(preceding-sibling::w:tr)">
-			<xsl:copy-of
-			    select="tei:extrapolateTableFirstRow(.)"/>
-		      </xsl:when>
-		      <xsl:when test="not(following-sibling::w:tr)">
-			<xsl:copy-of
-			    select="tei:extrapolateTableLastRow(.)"/>
-		      </xsl:when>
-		    </xsl:choose>
-		  </xsl:variable>
-		  <row>
-		    <xsl:for-each select="w:tc">
-		      <xsl:variable name="overrideColumn">
-			<xsl:choose>
-			  <xsl:when test="not(preceding-sibling::w:tc)">
-			    <xsl:copy-of
-			      select="tei:extrapolateTableFirstColumn(.)"/>
-			  </xsl:when>
-			  <xsl:when test="not(following-sibling::w:tc)">
-			    <xsl:copy-of
-				select="tei:extrapolateTableLastColumn(.)"/>
-			  </xsl:when>
-			</xsl:choose>
-		      </xsl:variable>
-		      <cell>
-		      	<xsl:if test="$preserveEffects='true'"> 
-		      		<xsl:attribute name="rend">
-			    <xsl:choose>
-			      <xsl:when test="w:p/w:pPr/w:jc">
-			      	<xsl:value-of
-				  select="w:p[1]/w:pPr/w:jc/@w:val"/>
-			      </xsl:when>
-			      <xsl:when test="$overrideRow/w:pPr/w:jc">
-				<xsl:value-of
-				  select="$overrideRow/w:pPr/w:jc/@w:val"/>
-			      </xsl:when>
-			      <xsl:when test="$overrideColumn/w:pPr/w:jc">
-				<xsl:value-of
-				  select="$overrideColumn/w:pPr/w:jc/@w:val"/>
-			      </xsl:when>
-			      <xsl:otherwise>
-				<xsl:text>left</xsl:text>
-			      </xsl:otherwise>
-			    </xsl:choose>
-			  </xsl:attribute>
-	  </xsl:if>
-			
-			<xsl:if test="w:tcPr/w:gridSpan">
-			  <xsl:attribute name="cols" select="w:tcPr/w:gridSpan/@w:val"/>
-			</xsl:if>
-			<xsl:variable name="val">
-			  <xsl:value-of
-			      select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
-			</xsl:variable>
-			<xsl:choose>
-			  <xsl:when test="$val='[No Paragraph Style]'"/>
-			  <xsl:when test="$val='Table text (9)'"/>
-			  <xsl:when test="$val='Table Contents'"/>
-			  <xsl:when test="string-length($val)=0"/>
-			  <xsl:otherwise>
-			    <xsl:attribute name="rend">
-			      <xsl:value-of select="replace($val,' ','_')"/>
-			      <xsl:if test="w:tcPr/w:shd/@w:fill and not(w:tcPr/w:shd/@w:fill='auto')">
-				<xsl:text> background-color(</xsl:text>
-				<xsl:value-of select="w:tcPr/w:shd/@w:fill"/>
-				<xsl:text>)</xsl:text>
-			      </xsl:if>
-			    </xsl:attribute>
-			  </xsl:otherwise>
-			  </xsl:choose>
-			  <xsl:if test="w:tcPr/w:gridSpan">
-			    <xsl:attribute name="cols">
-			      <xsl:value-of select="w:tcPr/w:gridSpan/@w:val"/>
-			    </xsl:attribute>
-			  </xsl:if>
-			  <xsl:call-template name="mainProcess">
-			    <xsl:with-param name="extrarow"
-					    select="$overrideRow"  tunnel="yes"/>
-			    <xsl:with-param name="extracolumn"
-					    select="$overrideColumn"  tunnel="yes"/>
-			  </xsl:call-template>
-		      </cell>
-		    </xsl:for-each>
-		  </row>
-		</xsl:for-each>
+		      <xsl:call-template name="table-rendition"/>
+		      <xsl:call-template name="table-header"/>
+	        <xsl:for-each select="w:tr">
+	          <xsl:variable name="overrideRow">
+	            <xsl:choose>
+	              <xsl:when test="not(preceding-sibling::w:tr)">
+	                <xsl:copy-of
+	                  select="tei:extrapolateTableFirstRow(.)"/>
+	              </xsl:when>
+	              <xsl:when test="not(following-sibling::w:tr)">
+	                <xsl:copy-of
+	                  select="tei:extrapolateTableLastRow(.)"/>
+	              </xsl:when>
+	            </xsl:choose>
+	          </xsl:variable>
+	          <row>
+	            <xsl:for-each select="w:tc">
+	              <xsl:variable name="overrideColumn">
+	                <xsl:choose>
+	                  <xsl:when test="not(preceding-sibling::w:tc)">
+	                    <xsl:copy-of
+	                      select="tei:extrapolateTableFirstColumn(.)"/>
+	                  </xsl:when>
+	                  <xsl:when test="not(following-sibling::w:tc)">
+	                    <xsl:copy-of
+	                      select="tei:extrapolateTableLastColumn(.)"/>
+	                  </xsl:when>
+	                </xsl:choose>
+	              </xsl:variable>
+	              <cell>
+	                <xsl:if test="$preserveEffects='true'"> 
+	                  <xsl:attribute name="style">
+	                    <xsl:text>text-align: </xsl:text>
+	                    <xsl:choose>
+	                      <xsl:when test="w:p/w:pPr/w:jc">
+	                        <xsl:value-of
+	                          select="tei:justification(w:p[1]/w:pPr/w:jc)"/>
+	                      </xsl:when>
+	                      <xsl:when test="$overrideRow/w:pPr/w:jc">
+	                        <xsl:value-of
+	                          select="tei:justification($overrideRow/w:pPr/w:jc)"/>
+	                      </xsl:when>
+	                      <xsl:when test="$overrideColumn/w:pPr/w:jc">
+	                        <xsl:value-of
+	                          select="tei:justification($overrideColumn/w:pPr/w:jc)"/>
+	                      </xsl:when>
+	                      <xsl:otherwise>
+	                        <xsl:text>left</xsl:text>
+	                      </xsl:otherwise>
+	                    </xsl:choose>
+	                    <xsl:text>;</xsl:text>
+	                  </xsl:attribute>
+	                </xsl:if>
+	                
+	                <xsl:if test="w:tcPr/w:gridSpan">
+	                  <xsl:attribute name="cols" select="w:tcPr/w:gridSpan/@w:val"/>
+	                </xsl:if>
+	                <xsl:variable name="val">
+	                  <xsl:value-of
+	                    select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
+	                </xsl:variable>
+	                <xsl:choose>
+	                  <xsl:when test="$val='[No Paragraph Style]'"/>
+	                  <xsl:when test="$val='Table text (9)'"/>
+	                  <xsl:when test="$val='Table Contents'"/>
+	                  <xsl:when test="string-length($val)=0"/>
+	                  <xsl:otherwise>
+	                    <xsl:attribute name="rend">
+	                      <xsl:value-of select="replace($val,' ','_')"/>
+	                      <xsl:if test="w:tcPr/w:shd/@w:fill and not(w:tcPr/w:shd/@w:fill='auto')">
+	                        <xsl:text> background-color(</xsl:text>
+	                        <xsl:value-of select="w:tcPr/w:shd/@w:fill"/>
+	                        <xsl:text>)</xsl:text>
+	                      </xsl:if>
+	                    </xsl:attribute>
+	                  </xsl:otherwise>
+	                </xsl:choose>
+	                <xsl:if test="w:tcPr/w:gridSpan">
+	                  <xsl:attribute name="cols">
+	                    <xsl:value-of select="w:tcPr/w:gridSpan/@w:val"/>
+	                  </xsl:attribute>
+	                </xsl:if>
+	                <xsl:call-template name="mainProcess">
+	                  <xsl:with-param name="extrarow"
+	                    select="$overrideRow"  tunnel="yes"/>
+	                  <xsl:with-param name="extracolumn"
+	                    select="$overrideColumn"  tunnel="yes"/>
+	                </xsl:call-template>
+	              </cell>
+	            </xsl:for-each>
+	          </row>
+	        </xsl:for-each>
 	      </table>
 	    </xsl:otherwise>
 	  </xsl:choose>
@@ -504,7 +506,7 @@ of this software, even if advised of the possibility of such damage.
 				   </xsl:if>
 		                   <xsl:if test="w:p/w:pPr/w:jc">
 		                      <xsl:attribute name="align">
-			                        <xsl:value-of select="w:p[w:pPr/w:jc/@w:val][1]/w:pPr/w:jc/@w:val"/>
+			                        <xsl:value-of select="tei:justification(w:p[w:pPr/w:jc/@w:val][1]/w:pPr/w:jc)"/>
 		                      </xsl:attribute>
 		                   </xsl:if>
 		                   <xsl:if test="w:tcPr/w:gridSpan">

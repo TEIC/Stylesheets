@@ -445,7 +445,7 @@
     <xsl:choose>
       <!-- Count footnotes continuously throughout the document is this is set in the stylesheet parameter -->
       <xsl:when test="$footnote.number.continuous">
-        <xsl:number select="$node" level="any"/>
+        <xsl:number select="$node" level="any" from="tei:text"/>
       </xsl:when>
       <!-- Otherwise, restart footnote numbering for each front, body, or back section -->
       <xsl:otherwise>

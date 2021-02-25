@@ -218,7 +218,7 @@ of this software, even if advised of the possibility of such damage.
      </xsl:copy>
    </xsl:template>
   
-   <xsl:template match="tei:hi[not(string(.))]" mode="pass1hi"/>
+   <xsl:template match="tei:hi[not(string(.)) and not(*)]" mode="pass1hi"/>
    
    <xsl:template name="fromDocxFinalHook"/>
    

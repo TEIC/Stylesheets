@@ -86,11 +86,27 @@ of this software, even if advised of the possibility of such damage.
       <p>zap empty p</p>
     </desc>
   </doc>
-  <xsl:template match="tei:p[not(.//tei:pb) and       normalize-space(.)='']" mode="pass2"		priority="99"/>
-  <xsl:template match="tei:figure/tei:p[tei:graphic and count(*)=1]" mode="pass2" priority="101">
-    <xsl:apply-templates mode="pass2"/>
+  <xsl:template match="tei:p[not(.//tei:pb) and normalize-space(.)='']" mode="pass2"		priority="99"/>
+  
+  <xsl:template match="tei:figure/tei:p[.//tei:graphic]" mode="pass2" priority="101">
+    <xsl:choose>
+      <xsl:when test="preceding-sibling::tei:p[.//tei:graphic]">
+        <figure>
+          <xsl:apply-templates select="*" mode="pass2"/>
+        </figure>
+      </xsl:when>
+      <xsl:when test="following-sibling::tei:p[.//tei:graphic]">
+        <figure>
+          <xsl:apply-templates select="*" mode="pass2"/>
+        </figure>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="*" mode="pass2"/>
+      </xsl:otherwise>
+    </xsl:choose>
+    
   </xsl:template>
-
+    
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Singleton paragraphs in cells dropped</desc>
   </doc>
@@ -444,35 +460,94 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc> &lt;CAPTION&gt; belongs to nearest figure or table</desc>
+    <desc> &lt;CAPTION&gt; belongs to nearest figure or table. Tables with multi-paragraph preceding
+          CAPTIONs or with follwing captions are wrapped in a figure and the first para becomes a &lt;head&gt;, 
+          while subsequent ones become &lt;figDescs&gt;. A single preceding CAPTION paragraph becomes an 
+          internal header. Figure captions become headers and figDescs in a similar way.</desc>
   </doc>
   <xsl:template match="tei:CAPTION" mode="pass2"/>
-  <xsl:template match="tei:table|tei:figure" mode="pass2">
-    <xsl:copy>
-      <xsl:apply-templates select="@*" mode="pass2"/>
-      <xsl:apply-templates mode="pass2"/>
-      <xsl:if test="preceding-sibling::*[1][self::tei:CAPTION] and 
-        following-sibling::*[1][self::tei:CAPTION]">
-        <xsl:message>
-          <xsl:text>WARN: Possible confusion on where these captions belong: [[</xsl:text>
-          <xsl:value-of select="concat(preceding-sibling::*[1],']] and [[',
-            following-sibling::*[1],']]')"/>
-        </xsl:message>
-      </xsl:if>
-      <xsl:choose>
-        <xsl:when test="following-sibling::*[1][self::tei:CAPTION]">
-          <xsl:apply-templates
-            select="following-sibling::*[1][self::tei:CAPTION]/*" mode="pass2"/>
-        </xsl:when>
-        <xsl:when test="preceding-sibling::*[1][self::tei:CAPTION]">
-          <xsl:apply-templates
-            select="preceding-sibling::*[1][self::tei:CAPTION]/*" mode="pass2"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:copy>
+  
+  <xsl:template match="tei:table" mode="pass2">
+    <xsl:variable name="preceding-caption" select="preceding-sibling::*[1][self::tei:CAPTION][string-length(string-join(.//text(), '')) gt 0]"/>
+    <xsl:variable name="following-caption" select="following-sibling::*[1][self::tei:CAPTION][string-length(string-join(.//text(), '')) gt 0]"/>
+    <xsl:if test="preceding-sibling::*[1][self::tei:CAPTION] and 
+      following-sibling::*[1][self::tei:CAPTION]">
+      <xsl:message>
+        <xsl:text>WARN: Possible confusion on where these captions belong: [[</xsl:text>
+        <xsl:value-of select="concat(preceding-sibling::*[1],']] and [[',
+          following-sibling::*[1],']]')"/>
+      </xsl:message>
+    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="$preceding-caption[count(tei:p) gt 1] or $following-caption">
+        <figure>
+          <xsl:if test="$preceding-caption">
+            <head>
+              <xsl:apply-templates select="$preceding-caption/tei:p[1]/node()" mode="pass2"/>
+            </head>
+          </xsl:if>
+          <xsl:for-each select="$preceding-caption/tei:p[position() gt 1]">
+            <p>
+              <xsl:apply-templates select="@*" mode="pass2"/>
+              <xsl:apply-templates mode="pass2"/>
+            </p>
+          </xsl:for-each>
+          <xsl:copy>
+            <xsl:apply-templates select="@*" mode="pass2"/>
+            <xsl:apply-templates mode="pass2"/>
+          </xsl:copy>
+          <xsl:for-each select="$following-caption/tei:p">
+            <head>
+              <xsl:apply-templates mode="pass2"/>
+            </head>
+          </xsl:for-each>
+        </figure>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy>
+          <xsl:apply-templates select="@*" mode="pass2"/>
+          <xsl:if test="count($preceding-caption/tei:p) = 1">
+            <head>
+              <xsl:apply-templates select="$preceding-caption/tei:p/node()" mode="pass2"/>
+            </head>
+          </xsl:if>
+          <xsl:apply-templates mode="pass2"/>
+        </xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
-  
+  <xsl:template match="tei:figure" mode="pass2">
+    <xsl:variable name="preceding-caption" select="preceding-sibling::*[1][self::tei:CAPTION][string-length(string-join(.//text(), '')) gt 0]"/>
+    <xsl:variable name="following-caption" select="following-sibling::*[1][self::tei:CAPTION][string-length(string-join(.//text(), '')) gt 0]"/>
+    <xsl:if test="preceding-sibling::*[1][self::tei:CAPTION] and 
+      following-sibling::*[1][self::tei:CAPTION]">
+      <xsl:message>
+        <xsl:text>WARN: Possible confusion on where these captions belong: [[</xsl:text>
+        <xsl:value-of select="concat(preceding-sibling::*[1],']] and [[',
+          following-sibling::*[1],']]')"/>
+      </xsl:message>
+    </xsl:if>
+    <xsl:copy>
+      <xsl:if test="$preceding-caption">
+        <head>
+          <xsl:apply-templates select="$preceding-caption/tei:p[1]/node()" mode="pass2"/>
+        </head>
+      </xsl:if>
+      <xsl:for-each select="$preceding-caption/tei:p[position() gt 1]">
+        <p>
+          <xsl:apply-templates mode="pass2"/>
+        </p>
+      </xsl:for-each>
+      <xsl:apply-templates select="@*" mode="pass2"/>
+      <xsl:apply-templates mode="pass2"/>
+      <xsl:for-each select="$following-caption/tei:p">
+        <head>
+          <xsl:apply-templates mode="pass2"/>
+        </head>
+      </xsl:for-each>
+    </xsl:copy>
+  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Rename &lt;p&gt; to a more specific name based on @rend</desc>
