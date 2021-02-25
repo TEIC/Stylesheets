@@ -1,3 +1,230 @@
+2021-02-25  Nicholas Cole  <nicholas.cole@history.ox.ac.uk>
+
+	TEI Stylesheets release 7.51.0
+
+	Change version number for release
+
+2021-02-19  martindholmes  <mholmes@uvic.ca>
+
+	Fix tests following merge of docx-to-tei changes.
+
+2021-02-19  Hugh Cayless  <philomousos@gmail.com>
+
+	Disambiguating figure and table headers.
+
+	Merge branch 'dev' into hcayless_P3
+
+	Fix for #484.
+
+2021-02-16  Hugh Cayless  <philomousos@gmail.com>
+
+	Somehow messed with changelog.
+
+2021-02-16  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #486 from rvdb/note-fix
+	only count footnotes inside tei:text (thanks @martindholmes !)
+
+2021-02-16  rvdb  <ron.vandenbranden@kantl.be>
+
+	only count footnotes inside tei:text (thanks @martindholmes !)
+
+2021-02-15  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #485 from rvdb/note-fix
+	only try to number notes inside tei:text for OpenEdition output
+
+2021-02-15  rvdb  <ron.vandenbranden@kantl.be>
+
+	only try to number notes inside tei:text for OpenEdition output
+
+2021-02-12  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Revert previous commit, as it broke the build; see ticket #444
+
+	Address #444: Found a template for the 'desc' element that copied only the contents, did not preserve the element itself; changed it to copy the entire element. Seems to work.
+
+2021-02-11  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #464 from TEIC/issue_463_mdh_rendition_ns
+	Add namespace sensitivity to xsl:keys used to process @rendition per …
+
+2021-02-08  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixing tests.
+
+	Fixing issues with CJK and PDF.
+
+2021-01-30  Hugh Cayless  <philomousos@gmail.com>
+
+	Merge branch 'dev' into hcayless_P3
+
+	Fixing tests.
+
+	Added space in style for consistency.
+
+2021-01-30  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge pull request #481 from TEIC/issue_471_eg_anchors
+	With @martindholmes do <eg> part of #471
+
+2021-01-30  Hugh Cayless  <philomousos@gmail.com>
+
+	Making text-align for table cells work.
+
+2021-01-29  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Update expected results to match the change
+
+2021-01-22  Hugh Cayless  <philomousos@gmail.com>
+
+	Footnote ids are not necessarily their position.
+
+2021-01-20  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix value handling for w:u.
+
+2021-01-15  Hugh Cayless  <philomousos@gmail.com>
+
+	Updating tests.
+
+	Changed tei:onOff parameter.
+
+	Improved figure handling.
+
+	Changed tei:onOff parameter.
+
+	Update onOff function.
+	Attributes such as bolding, italics, etc., may be switched on by
+	the simple act of including, e.g., a w:i in the style. without
+	a value. So if the element exists, but does not have a @w:val,
+	the function should return true.
+
+2021-01-13  Hugh Cayless  <philomousos@gmail.com>
+
+	Don't kill hi with element content.
+
+	Better handling of boolean properties.
+
+	Better handling for table and figure captions.
+
+2020-12-18  Syd Bauman  <s.bauman@neu.edu>
+
+	Use class: @martindholmes discovered that using the style= attribute for in-line CSS (rather than a class= attribute to refer to CSS elsewhere) causes problems on some servers due to CORS security restrictions (cross-origin resource sharing), so switch our recent change that used style= to a class.
+
+2020-12-12  Syd Bauman  <s.bauman@neu.edu>
+
+	Update expected results to match change
+
+2020-12-11  Syd Bauman  <s.bauman@neu.edu>
+
+	With @martindholmes do <eg> part of #471
+
+2020-12-04  Syd Bauman  <s.bauman@neu.edu>
+
+	Revert re-naming of examples files: I had temporarily renamed the examples files for debugging purposes. Lo and behold it helped us find another bug (see TEI #2070), but is no longer needed.
+
+	Address #478
+
+	Fix: Move template for <teix:egXML> from html_oddprocessing to html_tagdocs. This fixes the problem found in Test2/ in which <teix:egXML> elements were being completely dropped, and does not seem to change the results of the Guidelines build at all (i.e., that still works and gives proper anchors in all <teix:egXML>s).
+
+2020-12-02  Syd Bauman  <s.bauman@neu.edu>
+
+	Debugging for #471:  * Change name of files that have all examples from "examples-GI" to "all_examples_of_GI".
+
+2020-12-01  Syd Bauman  <s.bauman@neu.edu>
+
+	minor improvements:  * remove extraneous space after the U+2693 symbol we just added  * remove (apparently unused) copy of the template that matches teix:egXML
+
+	Work on #471: With Stylesheets group, add an anchor symbol (U+2693) link to each egXML that is a link-to-self (so user can easily copy and paste link to example). Note: have it working for examples in prose and tagdocs, but NOT working yet for examples on the "show all" examples pages, nor for <eg> elements.
+
+2020-11-30  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix RTL handling.
+
+2020-10-30  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #474 from rvdb/note-type
+	Thanks @rvdb !
+
+2020-10-30  rvdb  <ron.vandenbranden@kantl.be>
+
+	replaced erroneous note/@resp attribute with note/@type (cf. https://tei-openedition.readthedocs.io/en/latest/tei.text.html#note-de-lauteur-note-de-la-redaction-erratum-remerciements)
+
+2020-10-12  Syd Bauman  <s.bauman@neu.edu>
+
+	loosen fix: Do not limit the rendition= attributes collected by the EXTRENDITION keys to those on elements in the TEI namespace, rather exclude those that are a descendant of the TEI Examples namespace.
+
+2020-10-07  martindholmes  <mholmes@uvic.ca>
+
+	Add namespace sensitivity to xsl:keys used to process @rendition per issue #463.
+
+2020-09-18  Syd Bauman  <s.bauman@neu.edu>
+
+	Update version number for bug fix
+
+	re-FIX previous commit
+
+	BUG FIX: With Martin Holmes, change the definition of TEISOURCE_DEFAULT so that it gets the source directory relative to the script that is running, rather than the directory that you happen to be running it from.
+
+2020-09-11  Syd Bauman  <s.bauman@neu.edu>
+
+	re-FIX previous commit
+
+	BUG FIX: With Martin Holmes, change the definition of TEISOURCE_DEFAULT so that it gets the source directory relative to the script that is running, rather than the directory that you happen to be running it from.
+
+2020-09-09  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	more cleanup
+	remove LaTeX artifacts produced by target "test-scripts"
+
+2020-09-04  Syd Bauman  <s.bauman@neu.edu>
+
+	merge
+
+	Minor fixes:  * Fix the n= attribute on the TEI element of Test2/inputFiles/testSpecificationDescription1.odd;  * Fix typo in comment of Test/Makefile
+
+2020-09-04  martindholmes  <mholmes@uvic.ca>
+
+	Updates to documentation with @sydb.
+
+	Add more info about readmes to build.xml.
+
+2020-08-29  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge in sydb-makefile-in-Test-dir: Merged the sydb-makefile-in-Test-dir branch into this branch (dev), thus removing the need for #455.
+
+	Update to new release:  * Get new p5subset (https://teijenkins.hcmc.uvic.ca/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5subset.xml to be precise)  * Run ( cd Test && make DIFFNOW=0 )  * Run a slightly modified version of Test2/cleanForDiff.xsl on both actual-results/ and expected-results/ (the modification is not to check URLs point somewhere to avoid a failure)  * Compare the resulting output directories  * Having found all differences make sense given the recent changes to TEI,  * copy all of appropriate files from actual-results/ to expected-results/.
+
+2020-08-22  Syd Bauman  <s.bauman@neu.edu>
+
+	Improve wording of make help output
+
+2020-08-21  martindholmes  <mholmes@uvic.ca>
+
+	Update expected results in Test2.
+
+	Fix for over-broad idref check in clean process.
+
+	Add debug flag and enable retention of uncleaned generated files for debugging.
+
+2020-08-20  martindholmes  <mholmes@uvic.ca>
+
+	More fallout from issue #453: replace deprecated dh_clean -k with dh_prep.
+
+	Another lurking compat value changed to 10 for issue #453.
+
+	Fix for issue #453.
+
+2020-08-19  Hugh Cayless  <philomousos@gmail.com>
+
+	Just prodding the CI.
+
+	Version number.
+
+	Release 7.50.0.
+
+	Fixing tests.
 2020-08-19  Hugh Cayless  <philomousos@gmail.com>
 
 	Updating p5subset.xml
