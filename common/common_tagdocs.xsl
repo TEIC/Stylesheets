@@ -943,17 +943,18 @@
               <!--
                   We want the attributes here as the result of
                   tangling our sibling <attList>(s). However, we do
-                  not want the <constraintSpec>s to be processed, so
-                  here we remove them first, before tangling. See
+                  not want the <constraintSpec>s to be processed. See
                   https://github.com/TEIC/Stylesheets/issues/488
                   and
                   https://github.com/TEIC/TEI/issues/2115.
-                  —Syd, 2021-02-25
+                  To do this, we pass a tunneled parameter to the tangle
+                  mode templates so that they can suppress the constraintSpecs
+                  when rendering the element content model.
+                  —Syd, Martin, Nick, and Martina, 2021-02-25
               -->
-              <xsl:variable name="attList_sans_constraintSpecs">
-                <xsl:apply-templates select="../tei:attList" mode="nuke_constraintSpec"/>
-              </xsl:variable>
-              <xsl:apply-templates mode="tangle" select="$attList_sans_constraintSpecs"/>
+              <xsl:apply-templates mode="tangle" select="../tei:attList">
+                <xsl:with-param as="xs:boolean" name="includeConstraints" tunnel="yes" select="false()"/>
+              </xsl:apply-templates>
               <xsl:for-each select="..">
                 <xsl:call-template name="defineContent"/>
               </xsl:for-each>
@@ -972,27 +973,6 @@
       </xsl:element>
     </xsl:element>
   </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] This template (and the next) exist only to read in an
-    XML fragment (in this case a sequence of &lt;attList> elements)
-    and return the same fragment with any &lt;constraintSpec> elements
-    completely removed. It is only called from the $content parameter
-    of the "schemaOut" template.</desc>
-  </doc>
-  <xsl:template match="@*|node()" mode="nuke_constraintSpec">
-    <xsl:copy>
-      <xsl:apply-templates mode="nuke_constraintSpec" select="@*|node()"/>
-    </xsl:copy>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] This template (and the previous) exist only to read
-    in an XML fragment (in this case a sequence of &lt;attList>
-    elements) and return the same fragment with any
-    &lt;constraintSpec> elements completely removed. It is only called
-    from the $content parameter of the "schemaOut" template.</desc>
-  </doc>
-  <xsl:template match="tei:constraintSpec" priority="2" mode="nuke_constraintSpec"/>
 
   <xsl:template
     match="
