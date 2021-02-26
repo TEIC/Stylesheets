@@ -739,9 +739,9 @@
                 </xsl:otherwise>
               </xsl:choose>
               <!--
-	      <xsl:for-each select="$myatts/a">
-		<xsl:copy-of select="*|text()"/>
-	      </xsl:for-each>
+              <xsl:for-each select="$myatts/a">
+                <xsl:copy-of select="*|text()"/>
+              </xsl:for-each>
 -->
             </xsl:element>
           </xsl:element>
@@ -940,8 +940,20 @@
                   <xsl:call-template name="showClassAtts"/>
                 </xsl:for-each>
               </xsl:if>
-              <xsl:apply-templates mode="tangle"
-                select="../tei:attList"/>
+              <!--
+                  We want the attributes here as the result of
+                  tangling our sibling <attList>(s). However, we do
+                  not want the <constraintSpec>s to be processed, so
+                  here we remove them first, before tangling. See
+                  https://github.com/TEIC/Stylesheets/issues/488
+                  and
+                  https://github.com/TEIC/TEI/issues/2115.
+                  —Syd, 2021-02-25
+              -->
+              <xsl:variable name="attList_sans_constraintSpecs">
+                <xsl:apply-templates select="../tei:attList" mode="nuke_constraintSpec"/>
+              </xsl:variable>
+              <xsl:apply-templates mode="tangle" select="$attList_sans_constraintSpecs"/>
               <xsl:for-each select="..">
                 <xsl:call-template name="defineContent"/>
               </xsl:for-each>
@@ -960,7 +972,28 @@
       </xsl:element>
     </xsl:element>
   </xsl:template>
-  
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] This template (and the next) exist only to read in an
+    XML fragment (in this case a sequence of &lt;attList> elements)
+    and return the same fragment with any &lt;constraintSpec> elements
+    completely removed. It is only called from the $content parameter
+    of the "schemaOut" template.</desc>
+  </doc>
+  <xsl:template match="@*|node()" mode="nuke_constraintSpec">
+    <xsl:copy>
+      <xsl:apply-templates mode="nuke_constraintSpec" select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] This template (and the previous) exist only to read
+    in an XML fragment (in this case a sequence of &lt;attList>
+    elements) and return the same fragment with any
+    &lt;constraintSpec> elements completely removed. It is only called
+    from the $content parameter of the "schemaOut" template.</desc>
+  </doc>
+  <xsl:template match="tei:constraintSpec" priority="2" mode="nuke_constraintSpec"/>
+
   <xsl:template
     match="
       tei:constraintSpec[parent::tei:schemaSpec or parent::tei:elementSpec or
@@ -1098,8 +1131,8 @@
           <xsl:for-each select="tokenize($atts, ' ')">
             <xsl:variable name="TOKEN" select="."/>
             <!-- Show a selected attribute where "$HERE" is the
-	    starting node 
-	    and $TOKEN is attribute we have been asked to display-->
+            starting node 
+            and $TOKEN is attribute we have been asked to display-->
             <xsl:for-each select="$HERE">
               <xsl:choose>
                 <xsl:when test="$TOKEN = '+'">
@@ -1235,7 +1268,7 @@
       <xsl:when
         test="@xml:lang = 'mul' and not($documentationLanguage = 'zh-TW')">
         <!-- will need to generalize this if other langs come along like
-		chinese -->
+                chinese -->
         <xsl:call-template name="showExample"/>
       </xsl:when>
       <xsl:when test="@xml:lang = $documentationLanguage">
@@ -2485,8 +2518,8 @@
           </xsl:attribute>
           <xsl:value-of select="."/>
           <xsl:if test="@validUntil">
-	    <!-- This clause added 2016-07-22 by Syd and Martin so that -->
-	    <!-- default values can be deprecated. See issue #158.      -->
+            <!-- This clause added 2016-07-22 by Syd and Martin so that -->
+            <!-- default values can be deprecated. See issue #158.      -->
             <xsl:element namespace="{$outputNS}" name="{$tableName}">
               <xsl:call-template name="validUntil"/>
             </xsl:element>
