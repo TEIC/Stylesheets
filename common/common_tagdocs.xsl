@@ -739,9 +739,9 @@
                 </xsl:otherwise>
               </xsl:choose>
               <!--
-	      <xsl:for-each select="$myatts/a">
-		<xsl:copy-of select="*|text()"/>
-	      </xsl:for-each>
+              <xsl:for-each select="$myatts/a">
+                <xsl:copy-of select="*|text()"/>
+              </xsl:for-each>
 -->
             </xsl:element>
           </xsl:element>
@@ -940,8 +940,21 @@
                   <xsl:call-template name="showClassAtts"/>
                 </xsl:for-each>
               </xsl:if>
-              <xsl:apply-templates mode="tangle"
-                select="../tei:attList"/>
+              <!--
+                  We want the attributes here as the result of
+                  tangling our sibling <attList>(s). However, we do
+                  not want the <constraintSpec>s to be processed. See
+                  https://github.com/TEIC/Stylesheets/issues/488
+                  and
+                  https://github.com/TEIC/TEI/issues/2115.
+                  To do this, we pass a tunneled parameter to the tangle
+                  mode templates so that they can suppress the constraintSpecs
+                  when rendering the element content model.
+                  —Syd, Martin, Nick, and Martina, 2021-02-25
+              -->
+              <xsl:apply-templates mode="tangle" select="../tei:attList">
+                <xsl:with-param as="xs:boolean" name="includeConstraints" tunnel="yes" select="false()"/>
+              </xsl:apply-templates>
               <xsl:for-each select="..">
                 <xsl:call-template name="defineContent"/>
               </xsl:for-each>
@@ -960,7 +973,7 @@
       </xsl:element>
     </xsl:element>
   </xsl:template>
-  
+
   <xsl:template
     match="
       tei:constraintSpec[parent::tei:schemaSpec or parent::tei:elementSpec or
@@ -1098,8 +1111,8 @@
           <xsl:for-each select="tokenize($atts, ' ')">
             <xsl:variable name="TOKEN" select="."/>
             <!-- Show a selected attribute where "$HERE" is the
-	    starting node 
-	    and $TOKEN is attribute we have been asked to display-->
+            starting node 
+            and $TOKEN is attribute we have been asked to display-->
             <xsl:for-each select="$HERE">
               <xsl:choose>
                 <xsl:when test="$TOKEN = '+'">
@@ -1235,7 +1248,7 @@
       <xsl:when
         test="@xml:lang = 'mul' and not($documentationLanguage = 'zh-TW')">
         <!-- will need to generalize this if other langs come along like
-		chinese -->
+                chinese -->
         <xsl:call-template name="showExample"/>
       </xsl:when>
       <xsl:when test="@xml:lang = $documentationLanguage">
@@ -2485,8 +2498,8 @@
           </xsl:attribute>
           <xsl:value-of select="."/>
           <xsl:if test="@validUntil">
-	    <!-- This clause added 2016-07-22 by Syd and Martin so that -->
-	    <!-- default values can be deprecated. See issue #158.      -->
+            <!-- This clause added 2016-07-22 by Syd and Martin so that -->
+            <!-- default values can be deprecated. See issue #158.      -->
             <xsl:element namespace="{$outputNS}" name="{$tableName}">
               <xsl:call-template name="validUntil"/>
             </xsl:element>
