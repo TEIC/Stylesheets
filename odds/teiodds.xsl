@@ -357,6 +357,11 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:attDef" mode="tangle">
     <xsl:param name="element"/>
+    <!-- This tunneled parameters is set when we are processing
+      attDefs in the context of generating documentation of an 
+      element content model, so that we 
+      don't spew out Schematron in the middle of it. -->
+    <xsl:param tunnel="yes" as="xs:boolean" name="includeConstraints" select="true()"/>
     <xsl:variable name="I">
       <xsl:value-of select="translate(@ident,':','')"/>
     </xsl:variable>
@@ -373,8 +378,9 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
       </xsl:choose>
     </xsl:if>
-    <xsl:apply-templates select="tei:constraintSpec"/>
-
+    <xsl:if test="$includeConstraints = true()">
+      <xsl:apply-templates select="tei:constraintSpec"/>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="tei:attList" mode="tangle">
