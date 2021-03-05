@@ -1,7 +1,7 @@
 <grammar xmlns="http://relaxng.org/ns/structure/1.0"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
          xmlns:tei="http://www.tei-c.org/ns/1.0"
          xmlns:teix="http://www.tei-c.org/ns/Examples"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.w3.org/1999/xhtml">
    <sch:ns xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -33,9 +33,9 @@
                   id="nonTeiOdd-div-headingLevelMustMatchNesting-constraint-assert-1">
             <rule context="xh:div">
                <sch:assert xmlns="http://www.tei-c.org/ns/1.0"
-                           xmlns:xh="http://www.w3.org/1999/xhtml"
-                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            xmlns:gcse="http://www.google.com/cse"
+                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                           xmlns:xh="http://www.w3.org/1999/xhtml"
                            test="if (child::xh:h3) then count(ancestor::xh:div) = 0                             else if (child::xh:h4) then count(ancestor::xh:div) = 1                             else if (child::xh:h5) then count(ancestor::xh:div) = 2                             else not(child::xh:h3 or child::xh:h4 or child::xh:h5)"> The level of your heading (h3, h4 or h5) must fit with the depth of
                            your division nesting; so the top-level div would have h3, a div inside
                            it would have h4, and a div inside that would have h5. </sch:assert>
@@ -166,9 +166,9 @@
                   id="nonTeiOdd-img-imgWithoutCaptionNeedsAltAndTitle-constraint-assert-2">
             <rule context="xh:img">
                <sch:assert xmlns="http://www.tei-c.org/ns/1.0"
-                           xmlns:xh="http://www.w3.org/1999/xhtml"
-                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            xmlns:gcse="http://www.google.com/cse"
+                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                           xmlns:xh="http://www.w3.org/1999/xhtml"
                            test="(@alt and @title) or following-sibling::xh:figcaption or ancestor::xh:ul[@class='gallery']"> If your img element is not inside a figure element with a figcaption,
                            then it requires @alt and @title attributes to provide help for
                            visually-impaired users. </sch:assert>
@@ -423,72 +423,99 @@
       </choice>
    </start>
    <sch:ns xmlns="http://www.tei-c.org/ns/1.0"
-           xmlns:xh="http://www.w3.org/1999/xhtml"
-           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
            xmlns:gcse="http://www.google.com/cse"
+           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+           xmlns:xh="http://www.w3.org/1999/xhtml"
            uri="http://www.w3.org/1999/xhtml"
-           prefix="xh"/> 
+           prefix="xh"/>
    <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                xmlns:xh="http://www.w3.org/1999/xhtml"
+                xmlns:gcse="http://www.google.com/cse"
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                xmlns:gcse="http://www.google.com/cse">
-                        <sch:let name="smartDouble" value="'[“”]'"/>
-                        <sch:let name="smartSingle" value="'[‘’]'"/>
-                        <sch:let name="straightDouble" value="'&#34;'"/>
-                        <sch:let name="straightApos" value="''''"/>
-                        <sch:let name="straightQuotes"
+                xmlns:xh="http://www.w3.org/1999/xhtml">
+      <sch:let name="smartDouble" value="'[“”]'"/>
+      <sch:let name="smartSingle" value="'[‘’]'"/>
+      <sch:let name="straightDouble" value="'&#34;'"/>
+      <sch:let name="straightApos" value="''''"/>
+      <sch:let name="straightQuotes"
                value="concat('[', $straightDouble, $straightApos, ']')"/>
-                     </sch:pattern>
+   </sch:pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="nonTeiOdd-noQuotesInText-constraint-rule-1">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
+                xmlns:gcse="http://www.google.com/cse"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                xmlns:xh="http://www.w3.org/1999/xhtml"
                 context="text()[not(ancestor::xh:script)]">
-                        <sch:assert test="not(matches(., $straightQuotes))"> Do not use straight
+         <sch:assert test="not(matches(., $straightQuotes))"> Do not use straight
                            quotes in text. Use the q element wherever possible; for
                            apostrophes, use the smart version (’). </sch:assert>
-                     </sch:rule>
+      </sch:rule>
    </pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="nonTeiOdd-noDivJustForFigure-constraint-rule-2">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="xh:div">
-                        <sch:assert test="not(count(*) = 1 and child::xh:figure)"> There's no need
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
+                xmlns:gcse="http://www.google.com/cse"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                xmlns:xh="http://www.w3.org/1999/xhtml"
+                context="xh:div">
+         <sch:assert test="not(count(*) = 1 and child::xh:figure)"> There's no need
                            to wrap a figure element in a div. </sch:assert>
-                     </sch:rule>
+      </sch:rule>
    </pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="nonTeiOdd-onlyPermittedImgAttributes-constraint-rule-3">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="xh:img">
-                        <sch:assert test="every $att in @* satisfies local-name($att) = ('src', 'alt', 'title', 'width', 'height', 'id', 'style', 'class')"> Only the following attributes are allowed on img: 'src',
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
+                xmlns:gcse="http://www.google.com/cse"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                xmlns:xh="http://www.w3.org/1999/xhtml"
+                context="xh:img">
+         <sch:assert test="every $att in @* satisfies local-name($att) = ('src', 'alt', 'title', 'width', 'height', 'id', 'style', 'class')"> Only the following attributes are allowed on img: 'src',
                            'alt', 'title', 'id', 'style', 'class', 'width' and
                            'height'. </sch:assert>
-                     </sch:rule>
+      </sch:rule>
    </pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="nonTeiOdd-spacesAfterPeriods-constraint-rule-4">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="xh:*/text()">
-                        <sch:assert test="not(matches(., '[^\.]\.[A-Z]'))"> Don't forget to put a
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
+                xmlns:gcse="http://www.google.com/cse"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                xmlns:xh="http://www.w3.org/1999/xhtml"
+                context="xh:*/text()">
+         <sch:assert test="not(matches(., '[^\.]\.[A-Z]'))"> Don't forget to put a
                            space after every period. </sch:assert>
-                     </sch:rule>
+      </sch:rule>
    </pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="nonTeiOdd-noSpacesInHrefs-constraint-rule-5">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="xh:a">
-                        <sch:assert test="not(matches(@href, '\s+'))"> There should be no spaces in
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
+                xmlns:gcse="http://www.google.com/cse"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                xmlns:xh="http://www.w3.org/1999/xhtml"
+                context="xh:a">
+         <sch:assert test="not(matches(@href, '\s+'))"> There should be no spaces in
                            href attributes (links). </sch:assert>
-                     </sch:rule>
+      </sch:rule>
    </pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="nonTeiOdd-noLinksInLinks-constraint-rule-6">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="xh:a">
-                        <sch:assert test="not(descendant::xh:a[@href])"> Don't place links inside
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
+                xmlns:gcse="http://www.google.com/cse"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                xmlns:xh="http://www.w3.org/1999/xhtml"
+                context="xh:a">
+         <sch:assert test="not(descendant::xh:a[@href])"> Don't place links inside
                            other links. </sch:assert>
-                     </sch:rule>
+      </sch:rule>
    </pattern>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="nonTeiOdd-periodsAndCommasOutsideLinks-constraint-rule-7">
-      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="xh:a[@href]">
-                        <sch:assert test="not(matches(., '[\.,:;]\s*$')) or matches(., '((Esq\.)|(A\.\s*W\.)|(\.\s*\.\s*\.))$')"> Don't include trailing periods and commas inside link text.
+      <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
+                xmlns:gcse="http://www.google.com/cse"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                xmlns:xh="http://www.w3.org/1999/xhtml"
+                context="xh:a[@href]">
+         <sch:assert test="not(matches(., '[\.,:;]\s*$')) or matches(., '((Esq\.)|(A\.\s*W\.)|(\.\s*\.\s*\.))$')"> Don't include trailing periods and commas inside link text.
                         </sch:assert>
-                     </sch:rule>
+      </sch:rule>
    </pattern>
 </grammar>
