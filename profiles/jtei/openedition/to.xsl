@@ -72,7 +72,7 @@
     |tei:cit[tei:quote/(tei:table|tei:list)]
     |tei:list[tokenize(@rend, '\s+')  = 'simple']
     |tei:list[@type eq 'gloss']
-    |tei:list[@type eq 'gloss']/tei:label/node()
+    |tei:list[@type eq 'gloss']/tei:label
     |tei:list/tei:head
     |tei:table/tei:head
     |tei:foreign
@@ -1083,7 +1083,7 @@
       <xsl:when test="$node/self::tei:list[tokenize(@rend, '\s+') = 'inline'][not(tokenize(@rend, '\s+') = 'simple')]">simplelist</xsl:when>
       <xsl:when test="$node/self::tei:list[@type eq 'gloss']">glosslist</xsl:when>
       <xsl:when test="$node[self::tei:list or self::tei:table]/parent::tei:quote/parent::tei:cit or $node/self::tei:cit[tei:quote/(tei:table|tei:list)]">citation</xsl:when>
-      <xsl:when test="$node[self::text() or self::tei:p][parent::tei:label[parent::tei:list[@type eq 'gloss']]]">glosslabel</xsl:when>
+      <xsl:when test="$node[self::tei:label[parent::tei:list[@type eq 'gloss']]]">glosslabel</xsl:when>
       <xsl:when test="$node/self::tei:table[@rend='border']">table.border</xsl:when>
       <xsl:when test="$node/self::tei:cell[xs:integer(@cols) gt 1 or ancestor::tei:table[1][@rend eq 'border'] or @role eq 'label' or parent::tei:row[@role eq 'label']]">
         <xsl:variable name="parts">
