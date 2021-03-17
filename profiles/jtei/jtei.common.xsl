@@ -340,6 +340,14 @@
     </xsl:choose>
   </xsl:template>
 
+  <!-- Default for text() nodes: just copy unmodified. 
+       (This template avoids interference with upstream
+       text() processing in the standard TEI stylesheets.
+  -->
+  <xsl:template match="text()" priority="-1">
+    <xsl:value-of select="."/>
+  </xsl:template>
+
   <!-- This function checks if a node ends with quotation marks that pull in subsequent punctuation. -->
   <!-- For the context node and all its descendants containing the last non-empty text node, it is
        tested if any of these is a "quotation element". -->
