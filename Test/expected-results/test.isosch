@@ -88,24 +88,24 @@ The element indicated by @spanTo (<value-of select="@spanTo"/>) must follow the 
         @validUntil attribute should have a child &lt;desc
         type="deprecationInfo"&gt;.</assert>
       </rule>
-    </pattern>
+   </pattern>
    <pattern id="schematron-constraint-test-rt-target-rt-target-not-span-13">
       <rule context="tei:rt/@target">
-          <report test="../@from | ../@to">When target= is
+         <report test="../@from | ../@to">When target= is
             present, neither from= nor to= should be.</report>
-        </rule>
+      </rule>
    </pattern>
    <pattern id="schematron-constraint-test-rt-from-rt-from-14">
       <rule context="tei:rt/@from">
-          <assert test="../@to">When from= is present, the to=
+         <assert test="../@to">When from= is present, the to=
             attribute of <name/> is required.</assert>
-        </rule>
+      </rule>
    </pattern>
    <pattern id="schematron-constraint-test-rt-to-rt-to-15">
       <rule context="tei:rt/@to">
-          <assert test="../@from">When to= is present, the from=
+         <assert test="../@from">When to= is present, the from=
             attribute of <name/> is required.</assert>
-        </rule>
+      </rule>
    </pattern>
    <pattern id="schematron-constraint-test-ptr-ptrAtts-16">
       <rule context="tei:ptr">
@@ -124,7 +124,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
       <rule context="tei:list[@type='gloss']">
          <assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</assert>
       </rule>
-    </pattern>
+   </pattern>
    <pattern id="schematron-constraint-test-relatedItem-targetorcontent1-19">
       <rule context="tei:relatedItem">
          <report test="@target and count( child::* ) &gt; 0">
@@ -161,20 +161,20 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
       </rule>
    </pattern>
    <pattern id="schematron-constraint-test-citeStructure-delim-citestructure-inner-delim-24">
-          <rule context="tei:citeStructure[parent::tei:citeStructure]">
-            <assert test="@delim">A <name/> with a parent <name/> must have a @delim attribute.</assert>
-          </rule>
-        </pattern>
+      <rule context="tei:citeStructure[parent::tei:citeStructure]">
+         <assert test="@delim">A <name/> with a parent <name/> must have a @delim attribute.</assert>
+      </rule>
+   </pattern>
    <pattern id="schematron-constraint-test-citeStructure-match-citestructure-outer-match-25">
-          <rule context="tei:citeStructure[not(parent::tei:citeStructure)]">
-            <assert test="starts-with(@match,'/')">An XPath in @match on the outer <name/> must start with '/'.</assert>
-          </rule>
-        </pattern>
+      <rule context="tei:citeStructure[not(parent::tei:citeStructure)]">
+         <assert test="starts-with(@match,'/')">An XPath in @match on the outer <name/> must start with '/'.</assert>
+      </rule>
+   </pattern>
    <pattern id="schematron-constraint-test-citeStructure-match-citestructure-inner-match-26">
-          <rule context="tei:citeStructure[parent::tei:citeStructure]">
-            <assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <name/>.</assert>
-          </rule>
-        </pattern>
+      <rule context="tei:citeStructure[parent::tei:citeStructure]">
+         <assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <name/>.</assert>
+      </rule>
+   </pattern>
    <pattern id="schematron-constraint-test-path-pathmustnotbeclosed-27">
       <rule context="tei:path[@points]">
          <let name="firstPair" value="tokenize( normalize-space( @points ), ' ')[1]"/>
@@ -188,7 +188,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
           last elements of this path are the same. To specify a closed polygon, use
           the zone element rather than the path element. </report>
       </rule>
-    </pattern>
+   </pattern>
    <pattern id="schematron-constraint-test-addSpan-spanTo-28">
       <rule context="tei:addSpan">
          <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
@@ -211,11 +211,7 @@ The @spanTo attribute of <name/> is required.</assert>
             <name/> must have at least one child add and at least one child del or surplus</assert>
       </rule>
    </pattern>
-      
-      
-    
-      
-    <pattern id="schematron-constraint-test-div-abstractModel-structure-l-37">
+   <pattern id="schematron-constraint-test-div-abstractModel-structure-l-37">
       <rule context="tei:div">
          <report test="ancestor::tei:l">
         Abstract model violation: Lines may not contain higher-level structural elements such as div.
