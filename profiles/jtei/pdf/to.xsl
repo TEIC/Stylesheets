@@ -29,12 +29,12 @@
   </xsl:attribute-set>
   
   <xsl:attribute-set name="headerfooter.properties">
-    <xsl:attribute name="font-family">Roboto-medium</xsl:attribute>
+    <xsl:attribute name="font-family">Roboto-medium,DejaVu</xsl:attribute>
     <xsl:attribute name="font-size">7pt</xsl:attribute>
   </xsl:attribute-set>
 
   <xsl:attribute-set name="heading.properties">
-    <xsl:attribute name="font-family">Roboto</xsl:attribute>
+    <xsl:attribute name="font-family">Roboto,DejaVu</xsl:attribute>
     <xsl:attribute name="font-size">13pt</xsl:attribute>
     <xsl:attribute name="text-transform">uppercase</xsl:attribute>
     <xsl:attribute name="keep-with-next">always</xsl:attribute>
@@ -44,13 +44,13 @@
   </xsl:attribute-set>
 
   <xsl:attribute-set name="heading.body.properties">
-    <xsl:attribute name="font-family">Roboto-medium</xsl:attribute>
+    <xsl:attribute name="font-family">Roboto-medium,DejaVu</xsl:attribute>
     <xsl:attribute name="keep-with-next">always</xsl:attribute>
     <xsl:attribute name="space-before">1em</xsl:attribute>
   </xsl:attribute-set>
   
   <xsl:attribute-set name="heading.lowerblock.properties">
-    <xsl:attribute name="font-family">Roboto-medium</xsl:attribute>
+    <xsl:attribute name="font-family">Roboto-medium,DejaVu</xsl:attribute>
     <xsl:attribute name="font-size">8.3pt</xsl:attribute>
     <xsl:attribute name="keep-with-next">always</xsl:attribute>
   </xsl:attribute-set>
@@ -74,7 +74,7 @@
   </xsl:attribute-set>
 
   <xsl:attribute-set name="pnr.properties">
-    <xsl:attribute name="font-family">Roboto-medium</xsl:attribute>
+    <xsl:attribute name="font-family">Roboto-medium,DejaVu</xsl:attribute>
     <xsl:attribute name="font-size">7pt</xsl:attribute>
   </xsl:attribute-set>
   
@@ -316,7 +316,7 @@
           </xsl:if>
         </xsl:for-each>
       </fo:block>
-      <fo:block font-family="Roboto-medium" font-size="11pt" margin-top="1cm">
+      <fo:block font-family="Roboto-medium,DejaVu" font-size="11pt" margin-top="1cm">
         <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
           <xsl:call-template name="enumerate"/>
           <xsl:value-of select="string-join(tei:name/(tei:forename, tei:surname), ' ')"/>
@@ -333,7 +333,7 @@
 
   <xsl:template match="tei:front/tei:div[@type = $div.types.front]">
     <fo:block>
-      <fo:block xsl:use-attribute-sets="heading.properties" font-family="Roboto" font-size="13pt">
+      <fo:block xsl:use-attribute-sets="heading.properties" font-family="Roboto,DejaVu" font-size="13pt">
         <xsl:value-of select="i18n:key(concat(@type, '-label'))"/>
       </fo:block>
       <xsl:apply-templates/>
@@ -1068,7 +1068,7 @@
         <xsl:value-of select="i18n:key('index-label')"/>
       </fo:block>
       <fo:block>
-        <fo:inline font-family="Roboto" font-size="9pt" font-weight="bold">
+        <fo:inline font-family="Roboto,DejaVu" font-size="9pt" font-weight="bold">
           <xsl:value-of select="concat(i18n:key('keywords-label'), ': ')"/>
         </fo:inline>
         <xsl:value-of select="string-join(tei:keywords/tei:term, ', ')"/>
