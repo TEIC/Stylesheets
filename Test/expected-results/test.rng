@@ -3691,7 +3691,7 @@ Suggested values include: 1] spoken (spoken); 2] thought (thought); 3] written (
       </optional>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-rt-target-rt-target-not-span-constraint-report-7">
         <rule context="tei:rt/@target">
-          <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="../@from | ../@to">When target= is
+          <sch:report xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="../@from | ../@to">When target= is
             present, neither from= nor to= should be.</sch:report>
         </rule>
       </pattern>
@@ -3703,7 +3703,7 @@ Suggested values include: 1] spoken (spoken); 2] thought (thought); 3] written (
       </optional>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-rt-from-rt-from-constraint-assert-7">
         <rule context="tei:rt/@from">
-          <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="../@to">When from= is present, the to=
+          <sch:assert xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="../@to">When from= is present, the to=
             attribute of <sch:name/> is required.</sch:assert>
         </rule>
       </pattern>
@@ -3715,7 +3715,7 @@ Suggested values include: 1] spoken (spoken); 2] thought (thought); 3] written (
       </optional>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-rt-to-rt-to-constraint-assert-8">
         <rule context="tei:rt/@to">
-          <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="../@from">When to= is present, the from=
+          <sch:assert xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="../@from">When to= is present, the from=
             attribute of <sch:name/> is required.</sch:assert>
         </rule>
       </pattern>
@@ -5924,7 +5924,7 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
         </attribute>
       </optional>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-citeStructure-delim-citestructure-inner-delim-constraint-rule-12">
-        <rule xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:citeStructure[parent::tei:citeStructure]">
+        <rule xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:citeStructure[parent::tei:citeStructure]">
           <assert test="@delim">A <name/> with a parent <name/> must have a @delim attribute.</assert>
         </rule>
       </pattern>
@@ -5933,12 +5933,12 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
         <text/>
       </attribute>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-citeStructure-match-citestructure-outer-match-constraint-rule-13">
-        <rule xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:citeStructure[not(parent::tei:citeStructure)]">
+        <rule xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:citeStructure[not(parent::tei:citeStructure)]">
           <assert test="starts-with(@match,'/')">An XPath in @match on the outer <name/> must start with '/'.</assert>
         </rule>
       </pattern>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-citeStructure-match-citestructure-inner-match-constraint-rule-14">
-        <rule xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:citeStructure[parent::tei:citeStructure]">
+        <rule xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:citeStructure[parent::tei:citeStructure]">
           <assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <name/>.</assert>
         </rule>
       </pattern>
@@ -6818,7 +6818,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(path) defines any line passing through two or more points within a <code xmlns="http://www.w3.org/1999/xhtml">&lt;surface&gt;</code> element. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]</a:documentation>
       <empty/>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-path-pathmustnotbeclosed-constraint-rule-15">
-        <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:path[@points]">
+        <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:path[@points]">
           <sch:let name="firstPair" value="tokenize( normalize-space( @points ), ' ')[1]"/>
           <sch:let name="lastPair" value="tokenize( normalize-space( @points ), ' ')[last()]"/>
           <sch:let name="firstX" value="xs:float( substring-before( $firstPair, ',') )"/>
