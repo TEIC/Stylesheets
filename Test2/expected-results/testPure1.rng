@@ -3421,13 +3421,13 @@ Suggested values include: 1] spoken (spoken); 2] thought (thought); 3] written (
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies a pointer to the base being glossed by this ruby text.</a:documentation>
                <data type="anyURI"/>
             </attribute>
-         </optional> 
+         </optional>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-rt-target-rt-target-not-span-constraint-report-7">
             <rule context="tei:rt/@target">
-               <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+               <sch:report xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                           xmlns="http://www.tei-c.org/ns/1.0"
+                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            test="../@from | ../@to">When target= is
             present, neither from= nor to= should be.</sch:report>
             </rule>
@@ -3437,13 +3437,13 @@ Suggested values include: 1] spoken (spoken); 2] thought (thought); 3] written (
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to the starting point of the span of text being glossed by this ruby text.</a:documentation>
                <data type="anyURI"/>
             </attribute>
-         </optional> 
+         </optional>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-rt-from-rt-from-constraint-assert-7">
             <rule context="tei:rt/@from">
-               <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+               <sch:assert xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                           xmlns="http://www.tei-c.org/ns/1.0"
+                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            test="../@to">When from= is present, the to=
             attribute of <sch:name/> is required.</sch:assert>
             </rule>
@@ -3453,13 +3453,13 @@ Suggested values include: 1] spoken (spoken); 2] thought (thought); 3] written (
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to the ending point of the span of text being glossed.</a:documentation>
                <data type="anyURI"/>
             </attribute>
-         </optional> 
+         </optional>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-rt-to-rt-to-constraint-assert-8">
             <rule context="tei:rt/@to">
-               <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+               <sch:assert xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                           xmlns="http://www.tei-c.org/ns/1.0"
+                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            test="../@from">When to= is present, the from=
             attribute of <sch:name/> is required.</sch:assert>
             </rule>
@@ -4527,8 +4527,6 @@ Elements]</a:documentation>
             <zeroOrMore>
                <choice>
                   <ref name="t_model.milestoneLike"/>
-        
-        
                </choice>
             </zeroOrMore>
             <oneOrMore>
@@ -4539,8 +4537,6 @@ Elements]</a:documentation>
                   <zeroOrMore>
                      <choice>
                         <ref name="t_model.milestoneLike"/>
-          
-          
                      </choice>
                   </zeroOrMore>
                </group>
@@ -5607,9 +5603,9 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
          </optional>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-citeStructure-delim-citestructure-inner-delim-constraint-rule-12">
-            <rule xmlns:xi="http://www.w3.org/2001/XInclude"
+            <rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                   xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                  xmlns:xi="http://www.w3.org/2001/XInclude"
                   context="tei:citeStructure[parent::tei:citeStructure]">
                <assert test="@delim">A <name/> with a parent <name/> must have a @delim attribute.</assert>
             </rule>
@@ -5620,18 +5616,18 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
          </attribute>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-citeStructure-match-citestructure-outer-match-constraint-rule-13">
-            <rule xmlns:xi="http://www.w3.org/2001/XInclude"
+            <rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                   xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                  xmlns:xi="http://www.w3.org/2001/XInclude"
                   context="tei:citeStructure[not(parent::tei:citeStructure)]">
                <assert test="starts-with(@match,'/')">An XPath in @match on the outer <name/> must start with '/'.</assert>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-citeStructure-match-citestructure-inner-match-constraint-rule-14">
-            <rule xmlns:xi="http://www.w3.org/2001/XInclude"
+            <rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                   xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                  xmlns:xi="http://www.w3.org/2001/XInclude"
                   context="tei:citeStructure[parent::tei:citeStructure]">
                <assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <name/>.</assert>
             </rule>
@@ -5754,7 +5750,6 @@ Sample values include: 1] book; 2] chapter; 3] entry; 4] poem; 5] letter; 6] lin
                   <oneOrMore>
                      <choice>
                         <ref name="t_model.descLike"/>
-            
                         <ref name="t_gloss"/>
                      </choice>
                   </oneOrMore>
@@ -5791,7 +5786,6 @@ Sample values include: 1] book; 2] chapter; 3] entry; 4] poem; 5] letter; 6] lin
                <zeroOrMore>
                   <choice>
                      <ref name="t_model.descLike"/>
-          
                      <ref name="t_gloss"/>
                   </choice>
                </zeroOrMore>
@@ -6045,7 +6039,7 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
          <choice>
             <oneOrMore>
                <ref name="t_term"/>
-            </oneOrMore>      
+            </oneOrMore>
             <ref name="t_list"/>
          </choice>
          <ref name="t_att.global.attributes"/>
@@ -6531,9 +6525,9 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-span-targetfrom-constraint-report-15">
             <rule context="tei:span">
-               <report xmlns:xi="http://www.w3.org/2001/XInclude"
+               <report xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       xmlns:xi="http://www.w3.org/2001/XInclude"
                        test="@from and @target">
 Only one of the attributes @target and @from may be supplied on <name/>
                </report>
@@ -6542,9 +6536,9 @@ Only one of the attributes @target and @from may be supplied on <name/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-span-targetto-constraint-report-16">
             <rule context="tei:span">
-               <report xmlns:xi="http://www.w3.org/2001/XInclude"
+               <report xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       xmlns:xi="http://www.w3.org/2001/XInclude"
                        test="@to and @target">
 Only one of the attributes @target and @to may be supplied on <name/>
                </report>
@@ -6553,9 +6547,9 @@ Only one of the attributes @target and @to may be supplied on <name/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-span-tonotfrom-constraint-report-17">
             <rule context="tei:span">
-               <report xmlns:xi="http://www.w3.org/2001/XInclude"
+               <report xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       xmlns:xi="http://www.w3.org/2001/XInclude"
                        test="@to and not(@from)">
 If @to is supplied on <name/>, @from must be supplied as well</report>
             </rule>
@@ -6563,9 +6557,9 @@ If @to is supplied on <name/>, @from must be supplied as well</report>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-span-tofrom-constraint-report-18">
             <rule context="tei:span">
-               <report xmlns:xi="http://www.w3.org/2001/XInclude"
+               <report xmlns:rng="http://relaxng.org/ns/structure/1.0"
                        xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                       xmlns:xi="http://www.w3.org/2001/XInclude"
                        test="contains(normalize-space(@to),' ') or contains(normalize-space(@from),' ')">
 The attributes @to and @from on <name/> may each contain only a single value</report>
             </rule>
