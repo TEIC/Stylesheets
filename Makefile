@@ -1,8 +1,8 @@
 SFUSER=rahtz
 DEFAULTSOURCE=$(shell pwd)/source/p5subset.xml
-SAXON=java -jar lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
-DOTSAXON=java -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
-DOTDOTSAXON=java -jar ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE) 
+SAXON=java -jar lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
+DOTSAXON=java -jar ../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
+DOTDOTSAXON=java -jar ../../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE) 
 SAXON_ARGS=-ext:on
 DIRS=bibtex cocoa common csv docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt p4 pdf profiles/default rdf relaxng rnc schematron simple slides tbx tcp lite tite tools txt html xsd xlsx pdf verbatimxml
 

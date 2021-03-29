@@ -39,9 +39,9 @@ SAXONOPT=useFixedDate=true
 # Establish commands for `saxon` and `jing`. (Note: at present UP1SAXON is
 # unused, just here to show the pattern).
 JAVAPRE=java -Djava.awt.headless=true -jar
-SAXON=$(JAVAPRE) ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
-UP1SAXON=$(JAVAPRE) ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
-UP2SAXON=$(JAVAPRE) ../../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
+SAXON=$(JAVAPRE) ../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
+UP1SAXON=$(JAVAPRE) ../../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
+UP2SAXON=$(JAVAPRE) ../../../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
 JING=$(JAVAPRE) ../lib/lib/jing-20120724.0.0.jar
 
 # flags used for the commands running from $(BINDIR), e.g. `bin/teitorelaxng` 
