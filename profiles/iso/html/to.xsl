@@ -68,8 +68,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:strip-space elements="tei:bibl"/>
    <xsl:param name="numberFormat">uk</xsl:param>
    <xsl:output encoding="utf-8" omit-xml-declaration="yes" method="xhtml"
-               doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
-               doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+     normalization-form="NFC" html-version="5.0"
                indent="yes"/>
 
    <xsl:param name="STDOUT">true</xsl:param>

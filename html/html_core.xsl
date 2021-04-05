@@ -12,6 +12,8 @@
 				xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 				xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
 				exclude-result-prefixes="#all" version="2.0">
+  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
+    exclude-result-prefixes="#all" omit-xml-declaration="yes"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet dealing with elements from the core module, making
@@ -1556,7 +1558,8 @@ of this software, even if advised of the possibility of such damage.
             <xsl:message>Opening file <xsl:value-of select="$outName"/>
                </xsl:message>
           </xsl:if>
-          <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
+          <xsl:result-document encoding="{$outputEncoding}" html-version="{$htmlVersion}" normalization-form="{$normalizationForm}" 
+            href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
             <html>
               <xsl:call-template name="addLangAtt"/>
 	      <xsl:variable name="pagetitle">

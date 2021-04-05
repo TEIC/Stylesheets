@@ -118,9 +118,11 @@ of this software, even if advised of the possibility of such damage.
          <xsl:message>Opening file <xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
-      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
+     <xsl:result-document html-version="{$htmlVersion}"
+                           normalization-form="{$normalizationForm}"
                            encoding="{$outputEncoding}"
                            href="{$outName}"
+                           omit-xml-declaration="{$omitXMLDeclaration}"
                            method="{$outputMethod}">
          <xsl:call-template name="mainslide"/>
       </xsl:result-document>
@@ -348,9 +350,10 @@ of this software, even if advised of the possibility of such damage.
          <xsl:message>Opening file <xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
-      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
-                           encoding="{$outputEncoding}"
+     <xsl:result-document html-version="{$htmlVersion}"
+                           normalization-form="{$normalizationForm}"
                            href="{$outName}"
+                           omit-xml-declaration="{$omitXMLDeclaration}"
                            method="{$outputMethod}">
         <html>
             <xsl:call-template name="addLangAtt"/>
@@ -398,9 +401,11 @@ of this software, even if advised of the possibility of such damage.
 	              <xsl:message>Opening file <xsl:value-of select="$outName"/>
                </xsl:message>
 	           </xsl:if>
-	           <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
+            <xsl:result-document html-version="{$htmlVersion}"
+                                 normalization-form="{$normalizationForm}"
                                  encoding="{$outputEncoding}"
                                  href="{$outName}"
+                                 omit-xml-declaration="{$omitXMLDeclaration}"
                                  method="{$outputMethod}">
 	              <xsl:call-template name="slideout"/>
 	           </xsl:result-document>

@@ -80,10 +80,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="useHeaderFrontMatter">true</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
   
-  <xsl:output method="xml" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
+  <xsl:output method="xhtml" encoding="UTF-8" omit-xml-declaration="yes"  html-version="5.0" normalization-form="NFC" />
   <xsl:param name="outputTarget">html5</xsl:param>
-  <xsl:param name="doctypeSystem">about:legacy-compat</xsl:param>
-  <xsl:param name="doctypePublic"/>
   <xsl:param name="langAttributeName">lang</xsl:param>
 
   <!-- these are ones to override -->

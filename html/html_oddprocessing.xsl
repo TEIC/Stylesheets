@@ -10,7 +10,8 @@
   xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml" >
-
+  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
+    exclude-result-prefixes="#all" omit-xml-declaration="yes"/>
   <xsl:param name="cssFile"/>
   <xsl:param name="cssSecondaryFile"/>
   <xsl:param name="summaryDoc">false</xsl:param>
@@ -137,8 +138,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:variable name="langs">
           <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
         </xsl:variable>
-        <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
-          <xsl:element name="html" namespace="{$outputNamespace}">
+        <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
+          <html>
             <xsl:call-template name="addLangAtt"/>
 	    <xsl:variable name="pagetitle">
 	      <xsl:text>TEI </xsl:text>
@@ -163,7 +164,7 @@ of this software, even if advised of the possibility of such damage.
               </xsl:call-template>
               <xsl:call-template name="bodyEndHook"/>
             </body>
-          </xsl:element>
+          </html>
         </xsl:result-document>
         <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/>

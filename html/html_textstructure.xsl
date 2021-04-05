@@ -8,6 +8,8 @@
    xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
    exclude-result-prefixes="a fo dbk xlink rng tei html
 					 teix its teidocx" version="2.0">
+   <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
+      exclude-result-prefixes="#all" omit-xml-declaration="yes"/>
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet dealing with elements from the textstructure module, making HTML output. </p>
@@ -186,9 +188,8 @@
                      <xsl:message>Opening file (process TEI)<xsl:value-of select="$outName"/>
                      </xsl:message>
                   </xsl:if>
-                  <xsl:result-document doctype-public="{$doctypePublic}"
-                     doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
-                     href="{$outName}" method="{$outputMethod}">
+                  <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
+                     encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
                      <xsl:apply-templates/>
                   </xsl:result-document>
 
@@ -440,9 +441,9 @@
          <xsl:message>Opening file (split TEI)<xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
-      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
-         encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
-
+      <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
+         encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
+     
          <xsl:call-template name="pageLayoutSimple"/>
       </xsl:result-document>
 
@@ -676,8 +677,8 @@
          <xsl:message>Opening file (makeDivPage)<xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
-      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
-         encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
+      <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
+         encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
          <xsl:choose>
             <xsl:when test="$pageLayout = 'Complex'">
                <xsl:call-template name="pageLayoutComplex">
@@ -1026,8 +1027,8 @@
                <xsl:message>Opening file (doPage) <xsl:value-of select="$outName"/>
                </xsl:message>
             </xsl:if>
-            <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
-               encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
+            <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
+               encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
                <xsl:call-template name="pageLayoutComplex">
                   <xsl:with-param name="currentID" select="$currentID"/>
                </xsl:call-template>
@@ -2376,7 +2377,8 @@ function click(d) {
          <xsl:message>Opening file (pageperfile) <xsl:value-of select="$outName"/></xsl:message>
       </xsl:if>
 
-      <xsl:result-document href="{$outName}">
+      <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
+         encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
          <html>
             <xsl:call-template name="addLangAtt"/>
             <xsl:variable name="pagetitle">
@@ -2402,8 +2404,9 @@ function click(d) {
                   </xsl:with-param>
                </xsl:call-template>
             </xsl:variable>
-            <xsl:result-document href="{$outNameFacs}">
-               <html>
+            <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
+               encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
+                <html>
                   <xsl:call-template name="addLangAtt"/>
                   <xsl:variable name="pagetitle">
                      <xsl:sequence select="tei:generateTitle(.)"/>

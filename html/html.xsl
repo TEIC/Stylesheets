@@ -15,6 +15,8 @@
   <xsl:import href="../common/common.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>
   <xsl:import href="html_param.xsl"/>
+  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
+    exclude-result-prefixes="#all" omit-xml-declaration="yes"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p>
