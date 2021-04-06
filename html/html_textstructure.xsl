@@ -2405,7 +2405,7 @@ function click(d) {
                </xsl:call-template>
             </xsl:variable>
             <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
-               encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
+               encoding="{$outputEncoding}" href="{$outNameFacs}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
                 <html>
                   <xsl:call-template name="addLangAtt"/>
                   <xsl:variable name="pagetitle">
