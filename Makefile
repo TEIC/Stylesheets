@@ -89,7 +89,7 @@ doc: oxygendoc linkcss
 	$(SAXON) -o:release/xslcommon/doc/tei-xsl/index.html Documentation/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
 	$(SAXON) -o:release/xslcommon/doc/tei-xsl/style.html Documentation/style.xml  profiles/default/html/to.xsl 
 	cp Documentation/*.png Documentation/teixsl.xml Documentation/style.xml release/xslcommon/doc/tei-xsl
-	cp VERSION tei.css ChangeLog LICENCE release/xslcommon/doc/tei-xsl
+	cp VERSION tei.css ChangeLog LEGAL/LICENCE release/xslcommon/doc/tei-xsl
 
 oxygendoc:
 	# when building Debian packages, the script runs under
