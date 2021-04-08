@@ -3803,6 +3803,7 @@ Measures]</a:documentation>
          <ref name="t_att.global.rendition.attribute.rend"/>
          <ref name="t_att.global.rendition.attribute.style"/>
          <ref name="t_att.global.rendition.attribute.rendition"/>
+         <ref name="t_att.global.linking.attribute.sameAs"/>
          <ref name="t_att.global.linking.attribute.next"/>
          <ref name="t_att.global.linking.attribute.prev"/>
          <ref name="t_att.global.linking.attribute.exclude"/>
@@ -3816,14 +3817,6 @@ Measures]</a:documentation>
             <attribute name="corresp">
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(corresponds) points to elements that correspond to the current element in some way.</a:documentation>
                <data type="nonNegativeInteger"/>
-            </attribute>
-         </optional>
-         <optional>
-            <attribute name="sameAs">
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to an element that is the same as the current element.</a:documentation>
-               <data type="nonNegativeInteger">
-                  <param name="pattern">[0-9][0-9]?</param>
-               </data>
             </attribute>
          </optional>
          <optional>
