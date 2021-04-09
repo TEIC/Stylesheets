@@ -10,7 +10,8 @@
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="tei xlink xhtml m"
                 version="2.0">
-
+   <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
+      omit-xml-declaration="yes"/>
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
