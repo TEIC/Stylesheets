@@ -3332,7 +3332,7 @@ Suggested values include: 1] spoken (spoken); 2] thought (thought); 3] written (
    </define>
    <define name="t_desc">
       <element name="desc">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(description) contains a short description of the purpose, function, or use of its parent element, or when the parent is a documentation element, describes or defines the object being documented.  [22.4.1. Description of Components]</a:documentation>
          <ref name="t_macro.limitedContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-desc-deprecationInfo-only-in-deprecated-constraint-rule-10">
@@ -3350,10 +3350,16 @@ Suggested values include: 1] spoken (spoken); 2] thought (thought); 3] written (
          <ref name="t_att.global.attributes"/>
          <optional>
             <attribute name="type">
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">characterizes the element in some sense, using any convenient classification scheme or typology.</a:documentation>
-               <data type="token">
-                  <param name="pattern">[^\p{C}\p{Z}]+</param>
-               </data>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">characterizes the element in some sense, using any convenient classification scheme or typology.
+Suggested values include: 1] deprecationInfo (deprecation information)</a:documentation>
+               <choice>
+                  <value>deprecationInfo</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(deprecation
+          information) This element describes why or how its parent element is being deprecated, typically including recommendations for alternate encoding.</a:documentation>
+                  <data type="token">
+                     <param name="pattern">[^\p{C}\p{Z}]+</param>
+                  </data>
+               </choice>
             </attribute>
          </optional>
          <empty/>
@@ -6594,9 +6600,14 @@ Sample values include: 1] image; 2] character; 3] theme; 4] allusion</a:document
    <define name="t_spanGrp">
       <element name="spanGrp">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(span group) collects together span tags. [17.3. Spans and Interpretations]</a:documentation>
-         <zeroOrMore>
-            <ref name="t_span"/>
-         </zeroOrMore>
+         <group>
+            <zeroOrMore>
+               <ref name="t_model.descLike"/>
+            </zeroOrMore>
+            <zeroOrMore>
+               <ref name="t_span"/>
+            </zeroOrMore>
+         </group>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.interpLike.attribute.inst"/>
          <optional>
@@ -6762,12 +6773,17 @@ Sample values include: 1] image; 2] character; 3] theme; 4] allusion</a:document
    <define name="t_linkGrp">
       <element name="linkGrp">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(link group) defines a collection of associations or hypertextual links. [16.1. Links]</a:documentation>
-         <oneOrMore>
-            <choice>
-               <ref name="t_link"/>
-               <ref name="t_ptr"/>
-            </choice>
-         </oneOrMore>
+         <group>
+            <zeroOrMore>
+               <ref name="t_model.descLike"/>
+            </zeroOrMore>
+            <oneOrMore>
+               <choice>
+                  <ref name="t_link"/>
+                  <ref name="t_ptr"/>
+               </choice>
+            </oneOrMore>
+         </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="testPure1-linkGrp-eight_is_enough-constraint-report-19">
             <rule context="tei:linkGrp">
@@ -7006,12 +7022,17 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
    <define name="t_altGrp">
       <element name="altGrp">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(alternation group) groups a collection of <code xmlns="http://www.w3.org/1999/xhtml">&lt;alt&gt;</code> elements and possibly pointers. [16.8. Alternation]</a:documentation>
-         <zeroOrMore>
-            <choice>
-               <ref name="t_alt"/>
-               <ref name="t_ptr"/>
-            </choice>
-         </zeroOrMore>
+         <group>
+            <zeroOrMore>
+               <ref name="t_model.descLike"/>
+            </zeroOrMore>
+            <zeroOrMore>
+               <choice>
+                  <ref name="t_alt"/>
+                  <ref name="t_ptr"/>
+               </choice>
+            </zeroOrMore>
+         </group>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.pointing.group.attributes"/>
          <optional>

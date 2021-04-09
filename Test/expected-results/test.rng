@@ -3602,7 +3602,7 @@ Suggested values include: 1] spoken (spoken); 2] thought (thought); 3] written (
   </define>
   <define name="desc">
     <element name="desc">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(description) contains a short description of the purpose, function, or use of its parent element, or when the parent is a documentation element, describes or defines the object being documented.  [22.4.1. Description of Components]</a:documentation>
       <ref name="macro.limitedContent"/>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-desc-deprecationInfo-only-in-deprecated-constraint-rule-10">
         <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:desc[ @type eq 'deprecationInfo']">
@@ -3617,10 +3617,16 @@ Suggested values include: 1] spoken (spoken); 2] thought (thought); 3] written (
       <ref name="att.typed.attribute.subtype"/>
       <optional>
         <attribute name="type">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">characterizes the element in some sense, using any convenient classification scheme or typology.</a:documentation>
-          <data type="token">
-            <param name="pattern">[^\p{C}\p{Z}]+</param>
-          </data>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">characterizes the element in some sense, using any convenient classification scheme or typology.
+Suggested values include: 1] deprecationInfo (deprecation information)</a:documentation>
+          <choice>
+            <value>deprecationInfo</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(deprecation
+          information) This element describes why or how its parent element is being deprecated, typically including recommendations for alternate encoding.</a:documentation>
+            <data type="token">
+              <param name="pattern">[^\p{C}\p{Z}]+</param>
+            </data>
+          </choice>
         </attribute>
       </optional>
       <empty/>
@@ -6956,7 +6962,8 @@ The @spanTo attribute of <name/> is required.</assert>
       <ref name="att.written.attributes"/>
       <optional>
         <attribute name="type">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the material encoded according to some useful typology.</a:documentation>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the material encoded according to some useful typology.
+Sample values include: 1] header; 2] footer; 3] pageNum (page number); 4] lineNum (line number); 5] sig (signature); 6] catch (catchword)</a:documentation>
           <data type="token">
             <param name="pattern">[^\p{C}\p{Z}]+</param>
           </data>
@@ -7354,10 +7361,21 @@ The @spanTo attribute of <name/> is required.</assert>
       <ref name="att.typed.attribute.subtype"/>
       <optional>
         <attribute name="type">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes the type of graph.</a:documentation>
-          <data type="token">
-            <param name="pattern">[^\p{C}\p{Z}]+</param>
-          </data>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes the type of graph.
+Suggested values include: 1] undirected; 2] directed; 3] transitionNetwork; 4] transducer</a:documentation>
+          <choice>
+            <value>undirected</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">undirected graph</a:documentation>
+            <value>directed</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">directed graph</a:documentation>
+            <value>transitionNetwork</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">a directed graph with distinguished initial and final nodes</a:documentation>
+            <value>transducer</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">a transition network with up to two labels on each arc</a:documentation>
+            <data type="token">
+              <param name="pattern">[^\p{C}\p{Z}]+</param>
+            </data>
+          </choice>
         </attribute>
       </optional>
       <optional>
@@ -7390,10 +7408,17 @@ The @spanTo attribute of <name/> is required.</assert>
       <ref name="att.typed.attribute.subtype"/>
       <optional>
         <attribute name="type">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a type for a node.</a:documentation>
-          <data type="token">
-            <param name="pattern">[^\p{C}\p{Z}]+</param>
-          </data>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a type for a node.
+Suggested values include: 1] initial; 2] final</a:documentation>
+          <choice>
+            <value>initial</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">initial node in a transition network</a:documentation>
+            <value>final</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">final node in a transition network</a:documentation>
+            <data type="token">
+              <param name="pattern">[^\p{C}\p{Z}]+</param>
+            </data>
+          </choice>
         </attribute>
       </optional>
       <optional>
@@ -9057,12 +9082,17 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
   <define name="linkGrp">
     <element name="linkGrp">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(link group) defines a collection of associations or hypertextual links. [16.1. Links]</a:documentation>
-      <oneOrMore>
-        <choice>
-          <ref name="link"/>
-          <ref name="ptr"/>
-        </choice>
-      </oneOrMore>
+      <group>
+        <zeroOrMore>
+          <ref name="model.descLike"/>
+        </zeroOrMore>
+        <oneOrMore>
+          <choice>
+            <ref name="link"/>
+            <ref name="ptr"/>
+          </choice>
+        </oneOrMore>
+      </group>
       <ref name="att.global.attributes"/>
       <ref name="att.pointing.group.attributes"/>
       <empty/>
@@ -9280,6 +9310,7 @@ You must supply at least two values for @target on <name/>
         <zeroOrMore>
           <choice>
             <ref name="gloss"/>
+            <ref name="model.descLike"/>
           </choice>
         </zeroOrMore>
         <oneOrMore>
@@ -9349,12 +9380,17 @@ You must supply at least two values for @target on <name/>
   <define name="altGrp">
     <element name="altGrp">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(alternation group) groups a collection of <code xmlns="http://www.w3.org/1999/xhtml">&lt;alt&gt;</code> elements and possibly pointers. [16.8. Alternation]</a:documentation>
-      <zeroOrMore>
-        <choice>
-          <ref name="alt"/>
-          <ref name="ptr"/>
-        </choice>
-      </zeroOrMore>
+      <group>
+        <zeroOrMore>
+          <ref name="model.descLike"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="alt"/>
+            <ref name="ptr"/>
+          </choice>
+        </zeroOrMore>
+      </group>
       <ref name="att.global.attributes"/>
       <ref name="att.pointing.group.attributes"/>
       <optional>
@@ -10055,7 +10091,8 @@ Suggested values include: 1] simple; 2] lemma; 3] variant; 4] compound; 5] deriv
       <ref name="att.lexicographic.attributes"/>
       <optional>
         <attribute name="type">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the grammatical information given according to some convenient typology—in the case of terminological information, preferably the dictionary of data element types specified in <a xmlns="http://www.w3.org/1999/xhtml" href="http://www.isocat.org/">ISO 12620</a>.</a:documentation>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the grammatical information given according to some convenient typology—in the case of terminological information, preferably the dictionary of data element types specified in <a xmlns="http://www.w3.org/1999/xhtml" href="http://www.isocat.org/">ISO 12620</a>.
+Sample values include: 1] pos (part of speech); 2] gen (gender); 3] num (number); 4] animate; 5] proper</a:documentation>
           <data type="token">
             <param name="pattern">[^\p{C}\p{Z}]+</param>
           </data>
@@ -10127,7 +10164,8 @@ Suggested values include: 1] simple; 2] lemma; 3] variant; 4] compound; 5] deriv
       <ref name="att.lexicographic.attributes"/>
       <optional>
         <attribute name="type">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the type of indicator used to specify the inflection class, when it is necessary to distinguish between the usual abbreviated indications (e.g. inv) and other kinds of indicators, such as special codes referring to conjugation patterns, etc.</a:documentation>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the type of indicator used to specify the inflection class, when it is necessary to distinguish between the usual abbreviated indications (e.g. inv) and other kinds of indicators, such as special codes referring to conjugation patterns, etc.
+Sample values include: 1] abbrev; 2] verbTable</a:documentation>
           <data type="token">
             <param name="pattern">[^\p{C}\p{Z}]+</param>
           </data>
@@ -10234,7 +10272,8 @@ Suggested values include: 1] simple; 2] lemma; 3] variant; 4] compound; 5] deriv
       <ref name="att.lexicographic.attributes"/>
       <optional>
         <attribute name="type">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the usage information using any convenient typology.</a:documentation>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the usage information using any convenient typology.
+Sample values include: 1] geo (geographic); 2] time; 3] dom (domain); 4] register (register); 5] style; 6] plev (preference level); 7] lang (language); 8] gram (grammatical); 9] syn (synonym); 10] hyper (hypernym); 11] colloc (collocation); 12] comp (complement); 13] obj (object); 14] subj (subject); 15] verb; 16] hint</a:documentation>
           <data type="token">
             <param name="pattern">[^\p{C}\p{Z}]+</param>
           </data>
@@ -10280,7 +10319,8 @@ Suggested values include: 1] simple; 2] lemma; 3] variant; 4] compound; 5] deriv
       <ref name="att.lexicographic.attributes"/>
       <optional>
         <attribute name="type">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the type of cross reference, using any convenient typology.</a:documentation>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the type of cross reference, using any convenient typology.
+Sample values include: 1] syn (synonym); 2] etym (etymological); 3] cf (compare or consult); 4] illus (illustration)</a:documentation>
           <data type="token">
             <param name="pattern">[^\p{C}\p{Z}]+</param>
           </data>
@@ -10325,7 +10365,8 @@ Suggested values include: 1] simple; 2] lemma; 3] variant; 4] compound; 5] deriv
       <ref name="att.notated.attributes"/>
       <optional>
         <attribute name="type">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the kind of typographic modification made to the headword in the reference.</a:documentation>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the kind of typographic modification made to the headword in the reference.
+Sample values include: 1] cap (capital); 2] noHyph (no hyphen)</a:documentation>
           <data type="token">
             <param name="pattern">[^\p{C}\p{Z}]+</param>
           </data>

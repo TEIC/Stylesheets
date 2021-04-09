@@ -1952,7 +1952,7 @@ soCalled =
   element soCalled { macro.phraseSeq, att.global.attributes, empty }
 desc =
   
-  ## (description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components]
+  ## (description) contains a short description of the purpose, function, or use of its parent element, or when the parent is a documentation element, describes or defines the object being documented.  [22.4.1. Description of Components]
   element desc {
     macro.limitedContent
     >> sch:pattern [
@@ -1982,8 +1982,13 @@ desc =
     att.typed.attribute.subtype,
     
     ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Suggested values include: 1] deprecationInfo (deprecation information)
     attribute type {
-      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+      
+      ## (deprecation
+      ##           information) This element describes why or how its parent element is being deprecated, typically including recommendations for alternate encoding.
+      "deprecationInfo"
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -4937,7 +4942,7 @@ linkGrp =
   
   ## (link group) defines a collection of associations or hypertextual links. [16.1. Links]
   element linkGrp {
-    (link | ptr)+,
+    (model.descLike*, (link | ptr)+),
     att.global.attributes,
     att.pointing.group.attributes,
     empty
@@ -5200,7 +5205,7 @@ joinGrp =
     ]
   ]
   element joinGrp {
-    ((gloss)*, (join | ptr)+),
+    ((gloss | model.descLike)*, (join | ptr)+),
     att.global.attributes,
     att.pointing.group.attributes,
     [
@@ -5262,7 +5267,7 @@ altGrp =
     ]
   ]
   element altGrp {
-    (alt | ptr)*,
+    (model.descLike*, (alt | ptr)*),
     att.global.attributes,
     att.pointing.group.attributes,
     
