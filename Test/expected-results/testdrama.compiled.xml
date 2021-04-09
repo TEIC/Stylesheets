@@ -8135,9 +8135,11 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
   <gloss versionDate="2007-01-21" xml:lang="it">descrizione</gloss>
   <gloss versionDate="2008-12-09" xml:lang="fr">description</gloss>
   <gloss versionDate="2017-06-04" xml:lang="de">Beschreibung</gloss>
-  <desc versionDate="2016-09-25" xml:lang="en">contains a brief
-  description of the object documented by its parent element,
-  typically a documentation element or an entity.</desc>
+  <desc versionDate="2021-03-15" xml:lang="en">contains a short description of the purpose, function, or
+    use of its parent element,
+    or when the parent is a documentation element, describes or defines the object being documented. 
+   
+  </desc>
   <desc versionDate="2007-12-20" xml:lang="ko">요소, 속성, 또는 속성 값의 목적과 적용에 대한 간단한 기술을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一段簡短描述，說明一元素、屬性、或屬性值的應用與目的。</desc>
   <desc versionDate="2008-04-06" xml:lang="ja">当該要素，属性，属性値を採用した目的の簡単な解説を示す．</desc>
@@ -8180,7 +8182,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
   </constraintSpec>
   <attList>
     <attDef ident="type" mode="change">
-      <valList type="semi">
+      <valList type="semi" mode="add">
         <valItem ident="deprecationInfo">
           <gloss versionDate="2018-09-14" xml:lang="en">deprecation
           information</gloss>
@@ -8191,8 +8193,6 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
         </valItem>
       </valList>
       <exemplum xml:lang="en">
-        
-        
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
            <dataSpec module="tei" ident="teidata.point" validUntil="2050-02-25">
             <desc type="deprecationInfo" versionDate="2018-09-14" xml:lang="en">Several standards bodies, including NIST in the USA,
@@ -8205,10 +8205,30 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
       </exemplum>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <desc>contains a brief description of the purpose and intended use  of a documentation element,  or a brief characterisation of a parent entity </desc>
+  <exemplum xml:lang="en" versionDate="2021-03-15">
+    <p>Example of a <gi>desc</gi> element inside a documentation element.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF">
+      <dataSpec module="tei" ident="teidata.point">
+        <desc versionDate="2010-10-17" xml:lang="en">defines the data type used to express a point in cartesian space.</desc>
+        <content>
+          <dataRef name="token" restriction="(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"/>
+        </content>
+        <!-- ... -->
+      </dataSpec>
     </egXML>
+  </exemplum>
+  <exemplum xml:lang="en" versionDate="2021-03-15">
+    <p>Example of a <gi>desc</gi> element in a non-documentation element.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF"> 
+        <place xml:id="KERG2">
+          <placeName>Kerguelen Islands</placeName>
+          <!-- ... -->
+          <terrain>
+            <desc>antarctic tundra</desc>
+          </terrain>
+          <!-- ... -->
+        </place>
+      </egXML> 
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -15009,7 +15029,7 @@ epistemology, methodology and history of
     <p>When a single page is being cited, use the <att>from</att> and <att>to</att> attributes with
       an identical value. When no clear endpoint is provided, the <att>from</att> attribute may be
       used without <att>to</att>; for example a citation such as <q>p. 3ff</q> might be encoded
-        <code>&lt;biblScope from="3"&gt;p. 3ff&lt;biblScope&gt;</code>.</p>
+        <code>&lt;biblScope from="3"&gt;p. 3ff&lt;/biblScope&gt;</code>.</p>
     <p>It is now considered good practice to supply this element as a sibling (rather than a child)
       of <gi>imprint</gi>, since it supplies information which does not constitute part of the
       imprint. </p>
@@ -15018,7 +15038,7 @@ epistemology, methodology and history of
     <p>Wird nur eine einzelne Seite zitiert, erhalten die Attribute <att>from</att> und <att>to</att>
       identische Werte. Gibt es keinen klaren Endpunkt, sollte nur das <att>from</att>-Attribut ohne
       korrespondierendes <att>to</att>-Attribut verwendet werden, zum Beispiel könnte ein Zitat wie
-      <q>S. 3ff.</q> als <code>&lt;biblScope from="3"&gt;p. 3ff&lt;biblScope&gt;</code> kodiert werden.</p>
+      <q>S. 3ff.</q> als <code>&lt;biblScope from="3"&gt;p. 3ff&lt;/biblScope&gt;</code> kodiert werden.</p>
     <p>Es wird nun als gute Praxis angesehen, dieses Element als Geschwisterelement (anstatt eines
       Kindelements) von <gi>imprint</gi> anzugeben, da es Informationen enthält, die nicht Teil des
       Impressums sind.</p>
@@ -15056,7 +15076,7 @@ epistemology, methodology and history of
     <p>When a single page is being cited, use the <att>from</att> and <att>to</att> attributes with
       an identical value. When no clear endpoint is provided, the <att>from</att> attribute may be
       used without <att>to</att>; for example a citation such as <q>p. 3ff</q> might be encoded
-      <code>&lt;biblScope from="3"&gt;p. 3ff&lt;biblScope&gt;</code>.</p>
+      <code>&lt;citedRange from="3"&gt;p. 3ff&lt;/citedRange&gt;</code>.</p>
   </remarks> <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOB">3.12.2.5. Scopes and Ranges in Bibliographic Citations</ref>
   </listRef>
@@ -27646,12 +27666,13 @@ the date of the entire document, not for any subset or part of it.</p>
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    
+    <sequence>
+      <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
       <alternate minOccurs="1" maxOccurs="unbounded">
         <elementRef key="link"/>
         <elementRef key="ptr"/>
       </alternate>
-    
+    </sequence>
   </content>
   <exemplum xml:lang="mul">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -28471,6 +28492,7 @@ You must supply at least two values for @target on <name/>
       <alternate minOccurs="0" maxOccurs="unbounded">
         <elementRef key="equiv"/>
         <elementRef key="gloss"/>
+        <classRef key="model.descLike"/>
       </alternate>
       <alternate minOccurs="1" maxOccurs="unbounded">
         <elementRef key="join"/>
@@ -28684,12 +28706,13 @@ You must supply at least two values for @target on <name/>
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <elementRef key="alt"/>
-        <elementRef key="ptr"/>
-      </alternate>
-    
+    <sequence>
+    <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <elementRef key="alt"/>
+      <elementRef key="ptr"/>
+    </alternate>  
+    </sequence>
   </content>
   <attList>
     <attDef ident="mode" usage="opt">
@@ -30246,7 +30269,7 @@ either a single role or a list of non-speaking roles.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la voce della lista dei personaggi</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>role</defaultVal>
-      <valList type="closed">
+      <valList type="closed" mode="add">
         <valItem ident="role">
           <desc versionDate="2007-06-27" xml:lang="en">the item describes a single role.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">항목이 하나의 배역을 기술한다.</desc>
@@ -30585,7 +30608,7 @@ young man would present to his lady love. It makes me blush!
       <desc versionDate="2007-01-21" xml:lang="it">indica il tipo di movimento, ad esempio come entrata
         o uscita.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="semi">
+      <valList type="semi" mode="add">
         <valItem ident="entrance">
           <desc versionDate="2007-06-27" xml:lang="en">character is entering the stage.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">등장인물이 무대에 등장하고 있다.</desc>
@@ -31160,7 +31183,7 @@ meant for the actors.</desc>
           scène.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">classifica l'indicazione di scena tecnica.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="semi">
+      <valList type="semi" mode="add">
         <valItem ident="light">
           <desc versionDate="2007-06-27" xml:lang="en">a lighting cue</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">조명 신호</desc>

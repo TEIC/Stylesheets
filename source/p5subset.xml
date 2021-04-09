@@ -7,7 +7,7 @@
       </titleStmt>
       <editionStmt>
         <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.3.0.html">4.3.0a</ref>. Last updated on
-	<date when="2021-02-25">25th February 2021</date>, revision <ref target="https://github.com/TEIC/TEI/commit/992e522b8">992e522b8</ref></edition>
+	<date when="2021-03-29">29th March 2021</date>, revision <ref target="https://github.com/TEIC/TEI/commit/ac70ae112">ac70ae112</ref></edition>
       </editionStmt>
       <publicationStmt>
 	<distributor>TEI Consortium</distributor>
@@ -14658,7 +14658,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
   <!-- for the examples below except for the UVic "colonial      -->
   <!-- despatches of Vancouver Island" example, for which thanks -->
   <!-- to Martin Holmes, who posted it on the ticket, FR 453.    --> 
-  <exemplum xmlns:cc="http://web.resource.org/cc/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" versionDate="2015-05-30" xml:lang="en">
+  <exemplum xmlns:cc="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" versionDate="2015-05-30" xml:lang="en">
     <p>In this example, the prefix
     <code>rdf</code> is bound to the namespace <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>, the prefix
     <code>dc</code> is bound to the namespace <code>http://purl.org/dc/elements/1.1/</code>, and the prefix
@@ -14681,7 +14681,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
 	</rdf:RDF>
 </xenoData></egXML>
   </exemplum>
-  <exemplum xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" versionDate="2015-07-11" xml:lang="en">
+  <exemplum xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" versionDate="2015-07-11" xml:lang="en">
     <p>In this example, the prefix
     <code>dc</code> is again bound to the namespace
     <code>http://www.openarchives.org/OAI/2.0/oai_dc/</code>, and the prefix
@@ -16229,9 +16229,11 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
   <gloss versionDate="2007-01-21" xml:lang="it">descrizione</gloss>
   <gloss versionDate="2008-12-09" xml:lang="fr">description</gloss>
   <gloss versionDate="2017-06-04" xml:lang="de">Beschreibung</gloss>
-  <desc versionDate="2016-09-25" xml:lang="en">contains a brief
-  description of the object documented by its parent element,
-  typically a documentation element or an entity.</desc>
+  <desc versionDate="2021-03-15" xml:lang="en">contains a short description of the purpose, function, or
+    use of its parent element,
+    or when the parent is a documentation element, describes or defines the object being documented. 
+   <!--Alternate: provides a short description of that which its parent element represents or documents.-->
+  </desc>
   <desc versionDate="2007-12-20" xml:lang="ko">요소, 속성, 또는 속성 값의 목적과 적용에 대한 간단한 기술을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一段簡短描述，說明一元素、屬性、或屬性值的應用與目的。</desc>
   <desc versionDate="2008-04-06" xml:lang="ja">当該要素，属性，属性値を採用した目的の簡単な解説を示す．</desc>
@@ -16274,7 +16276,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
   </constraintSpec>
   <attList>
     <attDef ident="type" mode="change">
-      <valList type="semi">
+      <valList type="semi" mode="add">
         <valItem ident="deprecationInfo">
           <gloss versionDate="2018-09-14" xml:lang="en">deprecation
           information</gloss>
@@ -16285,12 +16287,6 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
         </valItem>
       </valList>
       <exemplum xml:lang="en">
-        <!-- 2020-01-30 EBB: I'm setting a date in the long distant
-             future for this example because if I put its actual
-             @validUntil historic date (2019) in place, it breaks our
-             build. -->
-        <!-- 2020-01-30 SB: Indeed it does, but why? Shouldn't. See
-             Stylesheets ticket #417. -->
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
            <dataSpec module="tei" ident="teidata.point" validUntil="2050-02-25">
             <desc type="deprecationInfo" versionDate="2018-09-14" xml:lang="en">Several standards bodies, including NIST in the USA,
@@ -16303,10 +16299,30 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
       </exemplum>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <desc>contains a brief description of the purpose and intended use  of a documentation element,  or a brief characterisation of a parent entity </desc>
+  <exemplum xml:lang="en" versionDate="2021-03-15">
+    <p>Example of a <gi>desc</gi> element inside a documentation element.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF">
+      <dataSpec module="tei" ident="teidata.point">
+        <desc versionDate="2010-10-17" xml:lang="en">defines the data type used to express a point in cartesian space.</desc>
+        <content>
+          <dataRef name="token" restriction="(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"/>
+        </content>
+        <!-- ... -->
+      </dataSpec>
     </egXML>
+  </exemplum>
+  <exemplum xml:lang="en" versionDate="2021-03-15">
+    <p>Example of a <gi>desc</gi> element in a non-documentation element.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF"> 
+        <place xml:id="KERG2">
+          <placeName>Kerguelen Islands</placeName>
+          <!-- ... -->
+          <terrain>
+            <desc>antarctic tundra</desc>
+          </terrain>
+          <!-- ... -->
+        </place>
+      </egXML> 
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -23297,7 +23313,7 @@ epistemology, methodology and history of
     <p>When a single page is being cited, use the <att>from</att> and <att>to</att> attributes with
       an identical value. When no clear endpoint is provided, the <att>from</att> attribute may be
       used without <att>to</att>; for example a citation such as <q>p. 3ff</q> might be encoded
-        <code>&lt;biblScope from="3"&gt;p. 3ff&lt;biblScope&gt;</code>.</p>
+        <code>&lt;biblScope from="3"&gt;p. 3ff&lt;/biblScope&gt;</code>.</p>
     <p>It is now considered good practice to supply this element as a sibling (rather than a child)
       of <gi>imprint</gi>, since it supplies information which does not constitute part of the
       imprint. </p>
@@ -23306,7 +23322,7 @@ epistemology, methodology and history of
     <p>Wird nur eine einzelne Seite zitiert, erhalten die Attribute <att>from</att> und <att>to</att>
       identische Werte. Gibt es keinen klaren Endpunkt, sollte nur das <att>from</att>-Attribut ohne
       korrespondierendes <att>to</att>-Attribut verwendet werden, zum Beispiel könnte ein Zitat wie
-      <q>S. 3ff.</q> als <code>&lt;biblScope from="3"&gt;p. 3ff&lt;biblScope&gt;</code> kodiert werden.</p>
+      <q>S. 3ff.</q> als <code>&lt;biblScope from="3"&gt;p. 3ff&lt;/biblScope&gt;</code> kodiert werden.</p>
     <p>Es wird nun als gute Praxis angesehen, dieses Element als Geschwisterelement (anstatt eines
       Kindelements) von <gi>imprint</gi> anzugeben, da es Informationen enthält, die nicht Teil des
       Impressums sind.</p>
@@ -23345,7 +23361,7 @@ epistemology, methodology and history of
     <p>When a single page is being cited, use the <att>from</att> and <att>to</att> attributes with
       an identical value. When no clear endpoint is provided, the <att>from</att> attribute may be
       used without <att>to</att>; for example a citation such as <q>p. 3ff</q> might be encoded
-      <code>&lt;biblScope from="3"&gt;p. 3ff&lt;biblScope&gt;</code>.</p>
+      <code>&lt;citedRange from="3"&gt;p. 3ff&lt;/citedRange&gt;</code>.</p>
   </remarks> <listRef>
     <ptr target="#COBICOB"/>
   </listRef>
@@ -33053,7 +33069,7 @@ either a single role or a list of non-speaking roles.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la voce della lista dei personaggi</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>role</defaultVal>
-      <valList type="closed">
+      <valList type="closed" mode="add">
         <valItem ident="role">
           <desc versionDate="2007-06-27" xml:lang="en">the item describes a single role.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">항목이 하나의 배역을 기술한다.</desc>
@@ -33402,7 +33418,7 @@ young man would present to his lady love. It makes me blush!
       <desc versionDate="2007-01-21" xml:lang="it">indica il tipo di movimento, ad esempio come entrata
         o uscita.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="semi">
+      <valList type="semi" mode="add">
         <valItem ident="entrance">
           <desc versionDate="2007-06-27" xml:lang="en">character is entering the stage.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">등장인물이 무대에 등장하고 있다.</desc>
@@ -33987,7 +34003,7 @@ meant for the actors.</desc>
           scène.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">classifica l'indicazione di scena tecnica.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="semi">
+      <valList type="semi" mode="add">
         <valItem ident="light">
           <desc versionDate="2007-06-27" xml:lang="en">a lighting cue</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">조명 신호</desc>
@@ -36888,7 +36904,7 @@ list of values. Typical values might be <mentioned>IPA</mentioned>,
         un'appropriata tipologia - nel caso di informazioni terminologiche, preferibilmente il
         dizionario di degli elementi specificati in <ref target="http://www.isocat.org/">ISO 12620</ref>.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
+      <valList type="open" mode="add">
         <valItem ident="pos">
           <gloss versionDate="2007-08-25" xml:lang="en">part of speech</gloss>
           <gloss versionDate="2007-12-20" xml:lang="ko">품사</gloss>
@@ -37681,7 +37697,7 @@ list of values. Typical values might be <mentioned>IPA</mentioned>,
         abbreviate solite (ad esempio <mentioned>inv</mentioned>)e altri tipi di indicatori, quali
         codici speciali per fare riferimento al tipo di coniugazione, ecc.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
+      <valList type="open" mode="add">
         <valItem ident="abbrev">
           <desc versionDate="2007-06-27" xml:lang="en">abbreviated indicator</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">축약 지시자</desc>
@@ -38431,7 +38447,7 @@ headword  such as noun, verb, or adjective.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">classifica le informazioni sull'uso secondo una
         tipologia funzionale.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
+      <valList type="open" mode="add">
         <valItem ident="geo">
           <gloss versionDate="2007-07-04" xml:lang="en">geographic</gloss>
           <gloss versionDate="2007-12-20" xml:lang="ko">지리적</gloss>
@@ -38841,7 +38857,7 @@ headword  such as noun, verb, or adjective.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il tipo di riferimento incrociato secondo una
         tipologia funzionale</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
+      <valList type="open" mode="add">
         <valItem ident="syn">
           <gloss versionDate="2007-07-04" xml:lang="en">synonym</gloss>
           <gloss versionDate="2007-12-20" xml:lang="ko">유의어</gloss>
@@ -39433,7 +39449,7 @@ headword  such as noun, verb, or adjective.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il tipo di modifica tipografica del lemma in
         un riferimento.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
+      <valList type="open" mode="add">
         <valItem ident="cap">
           <gloss versionDate="2007-07-04" xml:lang="en">capital</gloss>
           <gloss versionDate="2007-12-20" xml:lang="ko">대문자</gloss>
@@ -39908,7 +39924,7 @@ The element <name/> may appear once only
       <desc versionDate="2007-05-04" xml:lang="es">indica que aspecto del objeto se mide.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica quale aspetto dell'oggetto viene misurato</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
+      <valList type="open" mode="add">
         <valItem ident="leaves">
           <desc versionDate="2007-06-27" xml:lang="en">dimensions relate to one or more leaves (e.g. a single leaf, a
 gathering, or a separately bound part)</desc>
@@ -40434,20 +40450,24 @@ crest, and the legend <q>Cole Deum</q>.</p>
       </msItem>
     </egXML>
   </exemplum>
-  <remarks versionDate="2017-03-29" xml:lang="en">
-    <p>The <att>target</att> attribute should only be used to point to elements that contain or
-      indicate a transcription of the locus being described, as in the first example above. To
-      associate a <gi>locus</gi> element with a page image or other comparable representation, the
-      global <att>facs</att> attribute should be used instead, as shown in the second example. Use
-      of the <att>target</att> attribute to indicate an image is strongly deprecated. The
-        <att>facs</att> attribute may be used to indicate one or more image files, as above, or
-      alternatively it may point to one or more appropriate XML elements, such as the
-        <gi>surface</gi>, <gi>zone</gi> element, <gi>graphic</gi>, or <gi>binaryObject</gi>
-      elements.</p>
-    <p>When a single page is being cited, use the <att>from</att> and <att>to</att> attributes with
-      an identical value. When no clear endpoint is provided, the <att>from</att> attribute may be
-      used without <att>to</att>; for example a citation such as <q>p. 3ff</q> might be encoded
-      <code>&lt;biblScope from="3"&gt;p. 3ff&lt;biblScope&gt;</code>.</p>
+  <remarks versionDate="2021-03-24" xml:lang="en">
+    <p>The <att>target</att> attribute should only be used to point to
+    elements that contain or indicate a transcription of the locus
+    being described, as in the <q>Ben Jonson</q> example.</p>
+    <p>To associate a <gi>locus</gi> element with a page image or
+    other comparable representation, the global <att>facs</att>
+    attribute should be used, as shown in the <q>Birds Praise of
+    Love</q> example. The <att>facs</att> attribute may be used to
+    indicate one or more image files, as in that example, or
+    alternatively it may point to one or more appropriate XML
+    elements, such as the <gi>surface</gi>, <gi>zone</gi>,
+    <gi>graphic</gi>, or <gi>binaryObject</gi> elements.</p>
+    <p>When a single page is being cited, use the <att>from</att> and
+    <att>to</att> attributes with an identical value. When no clear
+    endpoint is provided, the <att>from</att> attribute may be used
+    without <att>to</att>; for example a citation such as <q>p.
+    3ff</q> might be encoded <code>&lt;locus from="3"&gt;p.
+    3ff&lt;/locus&gt;</code>.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2009-04-17">
     <p>L'attribut <att>target</att> doit être utilisé uniquement pour pointer vers des éléments contenant ou référençant une transcription de la partie du manuscrit ainsi localisée, comme dans le premier exemple ci-dessus. Pour associer un élément <gi>locus</gi> avec l'image d'une page ou avec une autre représentation similaire, on doit utiliser l'attribut global <att>facs</att>, comme le montre le deuxième exemple. L'attribut <att>target</att> est déprécié pour établir un lien vers une image. On utilise l'attribut <att>facs</att>, soit pour établir un lien vers un ou plusieurs fichiers image, comme ci-dessus, soit pour pointer vers un ou plusieurs éléments dédiés, tels que
@@ -46246,7 +46266,7 @@ the resumption <anchor xml:id="a23"/> of the text. ...</p>
       <desc versionDate="2007-05-04" xml:lang="es">clasifica las convenciones usadas según una tipología funcional.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">classifica le convenzioni usate secondo una tipologia funzionale</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
+      <valList type="open" mode="add">
         <valItem ident="header">
           <desc versionDate="2007-04-02" xml:lang="en">a running title at the top of the page</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">페이지 상단의 현 제목</desc>
@@ -55168,7 +55188,7 @@ as fragmentary, complete, etc.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica come era costituito il testo.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>single</defaultVal>
-      <valList type="closed">
+      <valList type="closed" mode="add">
         <valItem ident="single">
           <desc versionDate="2007-06-27" xml:lang="en">a single complete text</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">단일 완전 텍스트</desc>
@@ -55286,7 +55306,7 @@ the <att>org</att> attribute on <gi>div</gi> and the
       <desc versionDate="2007-05-04" xml:lang="es">caracteriza la derivación del texto</desc>
       <desc versionDate="2007-01-21" xml:lang="it">classifica la provenienza del testo.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
+      <valList type="open" mode="add">
         <valItem ident="original">
           <desc versionDate="2007-06-27" xml:lang="en">text is original</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">텍스트가 원본이다.</desc>
@@ -55436,7 +55456,7 @@ education, religion, etc.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">clasifica el campo de uso.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">classifica l'ambito di uso.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
+      <valList type="open" mode="add">
         <valItem ident="art">
           <desc versionDate="2007-06-27" xml:lang="en">art and entertainment</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">예술과 연예</desc>
@@ -55590,7 +55610,7 @@ or a non-fictional world.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">clasifica la objetividad de un texto</desc>
       <desc versionDate="2007-01-21" xml:lang="it">classifica la fattualità del testo.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="closed">
+      <valList type="closed" mode="add">
         <valItem ident="fiction">
           <desc versionDate="2007-06-27" xml:lang="en">the text is to be regarded as entirely imaginative</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">텍스트가 전적으로 상상적이라 간주된다.</desc>
@@ -55744,7 +55764,7 @@ form of response or interjection, commentary, etc.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">describe el grado de interacción entre los participantes activos y pasivos en un texto.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica il grado di interazione tra partecipanti attivi e passivi all'interno del testo.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="closed">
+      <valList type="closed" mode="add">
         <valItem ident="none">
           <desc versionDate="2007-06-27" xml:lang="en">no interaction of any kind, e.g. a monologue</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">종류의 상호작용이 없다. 예, 독백.</desc>
@@ -55976,7 +55996,7 @@ prepared or spontaneous.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">una palabra clave que caracteriza el tipo de preparación.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">una parola chiava che caratterizza il grado di spontaneità</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
+      <valList type="open" mode="add">
         <valItem ident="none">
           <desc versionDate="2007-06-27" xml:lang="en">spontaneous or unprepared</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">자발적 또는 준비되지 않은</desc>
@@ -56064,7 +56084,7 @@ text.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica un tipo particular de finalidad</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica un tipo particolare di scopo.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="semi">
+      <valList type="semi" mode="add">
         <valItem ident="persuade">
           <desc versionDate="2007-06-27" xml:lang="en">didactic, advertising, propaganda, etc.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">설교, 광고, 선전 등</desc>
@@ -56423,12 +56443,13 @@ Information with a Text</head>
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    
+    <sequence>
+      <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
       <alternate minOccurs="1" maxOccurs="unbounded">
         <elementRef key="link"/>
         <elementRef key="ptr"/>
       </alternate>
-    
+    </sequence>
   </content>
   <exemplum xml:lang="mul">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -57284,6 +57305,7 @@ You must supply at least two values for @target on <name/>
       <alternate minOccurs="0" maxOccurs="unbounded">
         <elementRef key="equiv"/>
         <elementRef key="gloss"/>
+        <classRef key="model.descLike"/>
       </alternate>
       <alternate minOccurs="1" maxOccurs="unbounded">
         <elementRef key="join"/>
@@ -57500,12 +57522,13 @@ You must supply at least two values for @target on <name/>
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <elementRef key="alt"/>
-        <elementRef key="ptr"/>
-      </alternate>
-    
+    <sequence>
+    <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <elementRef key="alt"/>
+      <elementRef key="ptr"/>
+    </alternate>  
+    </sequence>
   </content>
   <attList>
     <attDef ident="mode" usage="opt">
@@ -59362,8 +59385,11 @@ The attributes @to and @from on <name/> may each contain only a single value</re
     <memberOf key="att.interpLike"/>
     <memberOf key="model.global.meta"/>
   </classes>
-  <content>    
-    <elementRef key="span" minOccurs="0" maxOccurs="unbounded"/>
+  <content>   
+    <sequence>
+      <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="span" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
   </content>
   <attList>
     <!--
@@ -62112,7 +62138,7 @@ connect the nodes.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">describe el tipo de gráfico</desc>
       <desc versionDate="2007-01-21" xml:lang="it">descrive il tipo di grafo</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="semi">
+      <valList type="semi" mode="add">
         <valItem ident="undirected">
           <desc versionDate="2007-06-27" xml:lang="en">undirected graph</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">무방향 그래프</desc>
@@ -62338,7 +62364,7 @@ other analytic element.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">define un tipo de nodo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">definisce un tipo di nodo</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="semi">
+      <valList type="semi" mode="add">
         <valItem ident="initial">
           <desc versionDate="2007-06-27" xml:lang="en">initial node in a transition network</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">전이망에서 시작 노드</desc>
@@ -65056,7 +65082,7 @@ used for recording how parts of the example was rendered.</item>
       <desc versionDate="2009-01-23" xml:lang="fr">indique quel type de balise XML est prévu.</desc>
       <desc versionDate="2008-04-08" xml:lang="it">indica di quale tipo di marcatore XML si tratta</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="closed">
+      <valList type="closed" mode="add">
         <valItem ident="start">
           <desc versionDate="2008-04-05" xml:lang="en">a start-tag, with delimiters &lt; and &gt; is intended</desc>
           <desc versionDate="2009-01-23" xml:lang="fr">une balise de début, délimitée par les signes
@@ -65072,7 +65098,7 @@ used for recording how parts of the example was rendered.</item>
             e &gt;</desc>
         </valItem>
         <valItem ident="empty">
-          <desc versionDate="2008-04-05" xml:lang="en">a empty tag, with delimiters &lt; and /&gt; is intended</desc>
+          <desc versionDate="2008-04-05" xml:lang="en">an empty tag, with delimiters &lt; and /&gt; is intended</desc>
           <desc versionDate="2009-01-23" xml:lang="fr">une balise vide, délimitée par les signes
             &lt; and /&gt; est prévue.</desc>
           <desc versionDate="2008-04-08" xml:lang="it">indica un marcatore vuoto delimitato dai segni
@@ -65617,21 +65643,20 @@ Child elements of <name/> are only allowed when an external module is being load
       </rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec scheme="schematron" ident="not-same-prefix">
-    <constraint>
-      <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
-        <report test="//*[ not( generate-id(.) eq generate-id(      current() ) ) ]/@prefix = @prefix">The prefix attribute
-          of <name/> should not match that of any other
-          element (it would defeat the purpose)</report>
-      </rule>
-    </constraint>
-  </constraintSpec>
   <attList>
     <attDef ident="prefix" usage="opt">
       <desc versionDate="2011-09-21" xml:lang="en">specifies a default prefix which will be
       prepended to all patterns from the imported module</desc>
       <datatype minOccurs="0" maxOccurs="1"><dataRef key="teidata.xmlName"/></datatype>
-      
+      <constraintSpec scheme="schematron" ident="not-same-prefix">
+        <constraint>
+          <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
+            <report test="//*[ not( generate-id(.) eq generate-id(      current() ) ) ]/@prefix = @prefix">The prefix attribute
+	    of <name/> should not match that of any other
+	    element (it would defeat the purpose)</report>
+          </rule>
+        </constraint>
+      </constraintSpec>
       <remarks versionDate="2011-09-21" xml:lang="en">
         <p>Use of this attribute avoids name collisions (and
         thus invalid schemas) when the external schema being
@@ -68704,7 +68729,7 @@ have a  canonical name, supplied as the value for their
       when a <gi>constraintSpec</gi> warns about a deprecated
       construct.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="semi">
+      <valList type="semi" mode="add">
 	<valItem ident="deprecationWarning">
 	  <desc xml:lang="en" versionDate="2018-09-17">Indicates that
 	  this constraint specification warns that some other

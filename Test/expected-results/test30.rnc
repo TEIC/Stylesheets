@@ -2322,7 +2322,7 @@ TsoCalled =
   element soCalled { Tmacro.phraseSeq, Tatt.global.attributes, empty }
 Tdesc =
   
-  ## (description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components]
+  ## (description) contains a short description of the purpose, function, or use of its parent element, or when the parent is a documentation element, describes or defines the object being documented.  [22.4.1. Description of Components]
   element desc {
     Tmacro.limitedContent
     >> sch:pattern [
@@ -2352,8 +2352,13 @@ Tdesc =
     Tatt.typed.attribute.subtype,
     
     ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Suggested values include: 1] deprecationInfo (deprecation information)
     attribute type {
-      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+      
+      ## (deprecation
+      ##           information) This element describes why or how its parent element is being deprecated, typically including recommendations for alternate encoding.
+      "deprecationInfo"
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -6452,6 +6457,7 @@ Tfw =
     Tatt.written.attributes,
     
     ## classifies the material encoded according to some useful typology.
+    ## Sample values include: 1] header; 2] footer; 3] pageNum (page number); 4] lineNum (line number); 5] sig (signature); 6] catch (catchword)
     attribute type {
       xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
@@ -6868,7 +6874,7 @@ TlinkGrp =
   
   ## (link group) defines a collection of associations or hypertextual links. [16.1. Links]
   element linkGrp {
-    (Tlink | Tptr)+,
+    (Tmodel.descLike*, (Tlink | Tptr)+),
     Tatt.global.attributes,
     Tatt.pointing.group.attributes,
     empty
@@ -7132,7 +7138,7 @@ TjoinGrp =
     ]
   ]
   element joinGrp {
-    ((Tgloss)*, (Tjoin | Tptr)+),
+    ((Tgloss | Tmodel.descLike)*, (Tjoin | Tptr)+),
     Tatt.global.attributes,
     Tatt.pointing.group.attributes,
     [
@@ -7194,7 +7200,7 @@ TaltGrp =
     ]
   ]
   element altGrp {
-    (Talt | Tptr)*,
+    (Tmodel.descLike*, (Talt | Tptr)*),
     Tatt.global.attributes,
     Tatt.pointing.group.attributes,
     

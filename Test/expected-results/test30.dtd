@@ -1295,7 +1295,7 @@ target CDATA  #IMPLIED
 mode (excl|incl) #IMPLIED
 weights CDATA  #IMPLIED >
 <!--doc:(alternation group) groups a collection of alt elements and possibly pointers. [16.8. Alternation] -->
-<!ELEMENT altGrp (alt|ptr)*>
+<!ELEMENT altGrp (((%model.descLike;)*,(alt|ptr)*))>
 <!ATTLIST altGrp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST altGrp
  %Tatt.global.attributes;
@@ -1698,7 +1698,7 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.typed.attributes;
  %Tatt.spanning.attributes;
  %Tatt.dimensions.attributes; >
-<!--doc:(description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. [22.4.1. Description of Components] -->
+<!--doc:(description) contains a short description of the purpose, function, or use of its parent element, or when the parent is a documentation element, describes or defines the object being documented.  [22.4.1. Description of Components] -->
 <!ELEMENT desc %macro.limitedContent;>
 <!ATTLIST desc xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST desc
@@ -2125,7 +2125,7 @@ indexName %teidata.name;  #IMPLIED >
 result %teidata.name;  #IMPLIED
 scope (root|branches) "root"  >
 <!--doc:(join group) groups a collection of join elements and possibly pointers. [16.7. Aggregation] -->
-<!ELEMENT joinGrp (((equiv|gloss)*,(join|ptr)+))>
+<!ELEMENT joinGrp (((equiv|gloss|%model.descLike;)*,(join|ptr)+))>
 <!ATTLIST joinGrp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST joinGrp
  %Tatt.global.attributes;
@@ -2224,7 +2224,7 @@ Elements 7.2.5. Speech Contents] -->
  %Tatt.pointing.attributes;
  %Tatt.typed.attributes; >
 <!--doc:(link group) defines a collection of associations or hypertextual links. [16.1. Links] -->
-<!ELEMENT linkGrp (link|ptr)+>
+<!ELEMENT linkGrp (((%model.descLike;)*,(link|ptr)+))>
 <!ATTLIST linkGrp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST linkGrp
  %Tatt.global.attributes;

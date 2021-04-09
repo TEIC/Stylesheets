@@ -2409,13 +2409,13 @@ desc =
     att.typed.attribute.subtype,
     
     ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
+    ## Suggested values include: 1] deprecationInfo (deprecation information)
     attribute type {
       
-      ## first type
-      "A"
-      | 
-        ## second type
-        "B"
+      ## (deprecation
+      ##           information) This element describes why or how its parent element is being deprecated, typically including recommendations for alternate encoding.
+      "deprecationInfo"
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -6148,7 +6148,7 @@ linkGrp =
   
   ## (groupe de liens) définit un ensemble d'associations ou de liens hypertextuels. [16.1. Links]
   element linkGrp {
-    (link | ptr)+,
+    (model.descLike*, (link | ptr)+),
     att.global.attributes,
     att.pointing.group.attributes,
     empty
@@ -6437,7 +6437,7 @@ joinGrp =
     ]
   ]
   element joinGrp {
-    ((gloss)*, (join | ptr)+),
+    ((gloss | model.descLike)*, (join | ptr)+),
     att.global.attributes,
     att.pointing.group.attributes,
     [
@@ -6501,7 +6501,7 @@ altGrp =
     ]
   ]
   element altGrp {
-    (alt | ptr)*,
+    (model.descLike*, (alt | ptr)*),
     att.global.attributes,
     att.pointing.group.attributes,
     
@@ -6787,13 +6787,9 @@ dimensions =
     att.typed.attribute.subtype,
     
     ## indique quel aspect de l'objet est mesuré.
+    ## Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniatures; 6] binding; 7] box
     attribute type {
-      
-      ## first type
-      "A"
-      | 
-        ## second type
-        "B"
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }
@@ -8021,13 +8017,9 @@ fw =
     att.written.attributes,
     
     ## caractérise l'information encodée conformément à une typologie appropriée.
+    ## Sample values include: 1] header; 2] footer; 3] pageNum (page number); 4] lineNum (line number); 5] sig (signature); 6] catch (catchword)
     attribute type {
-      
-      ## first type
-      "A"
-      | 
-        ## second type
-        "B"
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
     empty
   }

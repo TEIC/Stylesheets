@@ -575,16 +575,24 @@
                   [  ] } ] } } ],
         "content" : 
         [ 
-          { "type" : "alternate",
-            "minOccurs" : "0",
-            "maxOccurs" : "unbounded",
+          { "type" : "sequence",
+            "minOccurs" : "1",
+            "maxOccurs" : "1",
             "content" : 
             [ 
-              { "type" : "elementRef",
-                "key" : "alt" },
+              { "type" : "classRef",
+                "key" : "model.descLike" },
               
-              { "type" : "elementRef",
-                "key" : "ptr" } ] } ] },
+              { "type" : "alternate",
+                "minOccurs" : "0",
+                "maxOccurs" : "unbounded",
+                "content" : 
+                [ 
+                  { "type" : "elementRef",
+                    "key" : "alt" },
+                  
+                  { "type" : "elementRef",
+                    "key" : "ptr" } ] } ] } ] },
       
       { "ident" : "analytic",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -3130,8 +3138,8 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-09-25\" xml:lang=\"en\">contains a brief\n  description of the object documented by its parent element,\n  typically a documentation element or an entity.<\/desc>" ],
-        "shortDesc" : "(description) contains a brief\n  description of the object documented by its parent element,\n  typically a documentation element or an entity.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-03-15\" xml:lang=\"en\">contains a short description of the purpose, function, or\n    use of its parent element,\n    or when the parent is a documentation element, describes or defines the object being documented. \n   \n  <\/desc>" ],
+        "shortDesc" : "(description) contains a short description of the purpose, function, or\n    use of its parent element,\n    or when the parent is a documentation element, describes or defines the object being documented. \n   \n  ",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">description<\/gloss>" ],
         "altIdent" : 
@@ -6173,7 +6181,10 @@
                     "key" : "equiv" },
                   
                   { "type" : "elementRef",
-                    "key" : "gloss" } ] },
+                    "key" : "gloss" },
+                  
+                  { "type" : "classRef",
+                    "key" : "model.descLike" } ] },
               
               { "type" : "alternate",
                 "minOccurs" : "1",
@@ -6599,16 +6610,24 @@
         [  ],
         "content" : 
         [ 
-          { "type" : "alternate",
+          { "type" : "sequence",
             "minOccurs" : "1",
-            "maxOccurs" : "unbounded",
+            "maxOccurs" : "1",
             "content" : 
             [ 
-              { "type" : "elementRef",
-                "key" : "link" },
+              { "type" : "classRef",
+                "key" : "model.descLike" },
               
-              { "type" : "elementRef",
-                "key" : "ptr" } ] } ] },
+              { "type" : "alternate",
+                "minOccurs" : "1",
+                "maxOccurs" : "unbounded",
+                "content" : 
+                [ 
+                  { "type" : "elementRef",
+                    "key" : "link" },
+                  
+                  { "type" : "elementRef",
+                    "key" : "ptr" } ] } ] } ] },
       
       { "ident" : "list",
         "ns" : "http:\/\/foo.foo\/foo",
