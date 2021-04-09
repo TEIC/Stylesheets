@@ -131,11 +131,13 @@
 		                      <dataRef name="nonNegativeInteger"/>
 	                    </datatype>
 	                 </attDef>
-	                 <attDef mode="change" ident="sameAs">
+	                <!-- Council is currently divided on whether referencing a datatype using @key
+	                       should be allowed or not; it's currently not allowed. -->
+	                 <!--<attDef mode="change" ident="sameAs">
 	                    <datatype minOccurs="1" maxOccurs="1">
 		                      <dataRef key="teidata.count" restriction="[0-9][0-9]?"/>
 	                    </datatype>
-	                 </attDef>
+	                 </attDef>-->
 	                 <attDef mode="change" ident="copyOf">
 	                    <datatype minOccurs="1" maxOccurs="1">
 		                      <dataRef name="nonNegativeInteger" restriction="[0-9][0-9]?"/>
