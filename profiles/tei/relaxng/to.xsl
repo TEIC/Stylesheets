@@ -5,7 +5,6 @@
     xmlns:html="http://www.w3.org/1999/xhtml" 
     xmlns:i="http://www.iso.org/ns/1.0"
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
-    xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:teix="http://www.tei-c.org/ns/Examples" 

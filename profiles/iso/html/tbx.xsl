@@ -5,7 +5,6 @@
 		xmlns:cals="http://www.oasis-open.org/specs/tm9901"
 		xmlns:html="http://www.w3.org/1999/xhtml"
 		xmlns:teix="http://www.tei-c.org/ns/Examples"
-		xmlns:s="http://www.ascc.net/xml/schematron"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:tei="http://www.tei-c.org/ns/1.0"
 		xmlns:t="http://www.thaiopensource.com/ns/annotations"
