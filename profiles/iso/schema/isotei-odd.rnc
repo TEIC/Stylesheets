@@ -17,7 +17,6 @@ namespace ns8 = "urn:schemas-microsoft-com:vml"
 namespace ns9 =
   "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
 namespace rng = "http://relaxng.org/ns/structure/1.0"
-namespace s = "http://www.ascc.net/xml/schematron"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 namespace xi = "http://www.w3.org/2001/XInclude"
 namespace xlink = "http://www.w3.org/1999/xlink"
@@ -6811,32 +6810,6 @@ constraintSpec =
   element ns6:constraintSpec {
     model.glossLike*,
     (constraint?)
-    >> sch:ns [
-         prefix = "s"
-         uri = "http://www.ascc.net/xml/schematron"
-       ]
-    >> sch:pattern [
-         id = "constraintSpec-constraint-sch"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:constraintSpec"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test =
-               "tei:constraint/s:* and    not(@scheme='schematron')"
-             "\x{a}" ~
-             "	Rules in the Schematron 1.* language must be inside\x{a}" ~
-             "	a constraint with a value of 'schematron' on the scheme attribute\x{a}" ~
-             "      "
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ]
     >> sch:ns [
          prefix = "sch"
          uri = "http://purl.oclc.org/dsdl/schematron"
