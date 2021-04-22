@@ -12,7 +12,7 @@
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
+    exclude-result-prefixes="a fo html i rng sch tei teix xi xs xsl" 
     version="2.0">
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../common/i18n.xsl"/>
