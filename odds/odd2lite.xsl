@@ -4,7 +4,6 @@
 		xmlns:dcr="http://www.isocat.org/ns/dcr"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-		xmlns:s="http://www.ascc.net/xml/schematron" 
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"

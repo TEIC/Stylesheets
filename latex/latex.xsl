@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:s="http://www.ascc.net/xml/schematron"
+<xsl:stylesheet
 		xmlns:xs="http://www.w3.org/2001/XMLSchema"                
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="s xs tei"
+                exclude-result-prefixes="xs tei"
                 version="2.0">
   <xsl:import href="../common/common.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>
