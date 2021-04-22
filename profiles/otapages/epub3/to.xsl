@@ -10,7 +10,7 @@
                 xmlns:t="http://www.thaiopensource.com/ns/annotations"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                exclude-result-prefixes="tei html t a rng s iso tbx cals teix"
+                exclude-result-prefixes="tei html t a rng iso tbx cals teix"
                 version="2.0">
     <xsl:import href="../../../epub3/tei-to-epub3.xsl"/>
 
