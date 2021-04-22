@@ -45,9 +45,8 @@ XSL LaTeX stylesheet to make slides
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                xmlns:s="http://www.ascc.net/xml/schematron"
                 xmlns:map="http://apache.org/cocoon/sitemap/1.0"
-                exclude-result-prefixes="a s map atom xhtml teix tei xsl rng"
+                exclude-result-prefixes="a map atom xhtml teix tei xsl rng"
                 version="2.0">
   <xsl:import href="../latex/latex.xsl"/>
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
