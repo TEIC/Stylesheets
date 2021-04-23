@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:sch="http://www.ascc.net/xml/schematron"
+<xsl:stylesheet 
                 xmlns:m="http://www.w3.org/1998/Math/MathML"
                 xmlns:atom="http://www.w3.org/2005/Atom"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -12,7 +12,7 @@
 		xmlns:iso="http://www.iso.org/ns/1.0"
 		xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 version="2.0"
-                exclude-result-prefixes="xlink xhtml dbk iso rng sch m tei teix atom">
+                exclude-result-prefixes="xlink xhtml dbk iso rng m tei teix atom">
     
     <xsl:import href="../../common/verbatim.xsl"/>
     
