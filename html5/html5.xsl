@@ -8,7 +8,7 @@
 
     <xsl:import href="../html/html.xsl"/>
     <xsl:import href="textstructure.xsl"/>
-    <xsl:output method="xhtml" encoding="UTF-8" omit-xml-declaration="yes"  html-version="5.0" normalization-form="NFC"/>
+    <xsl:output method="html" encoding="UTF-8" omit-xml-declaration="yes"  html-version="5.0" normalization-form="NFC"/>
     <xsl:param name="outputTarget">html5</xsl:param>
     <xsl:param name="divOffset">1</xsl:param>
     <xsl:param name="langAttributeName">lang</xsl:param>
