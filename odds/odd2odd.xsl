@@ -3,7 +3,6 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
-    xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
     xmlns:tei="http://www.tei-c.org/ns/1.0" 

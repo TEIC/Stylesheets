@@ -4,7 +4,6 @@
                 xmlns:saxon="http://saxon.sf.net/"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                xmlns:schold="http://www.ascc.net/xml/schematron"
                 xmlns:iso="http://purl.oclc.org/dsdl/schematron"
                 xmlns:i="http://www.iso.org/ns/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
