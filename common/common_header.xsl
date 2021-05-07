@@ -73,7 +73,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="tei:idno[ lower-case( @type ) = ('url','uri') ]">
+   <xsl:template match="tei:idno[ lower-case( @type ) = ('url','uri') ]">
     <xsl:text> &lt;</xsl:text>
     <xsl:call-template name="makeExternalLink">
       <xsl:with-param name="ptr" select="true()"/>
@@ -87,6 +87,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:idno">
     <xsl:text> </xsl:text>
     <xsl:apply-templates/>
+    <xsl:if test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
+      <xsl:call-template name="makeText">
+	<xsl:with-param name="letters">. </xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="tei:idno[ lower-case( @type ) = 'doi']">
@@ -97,6 +102,11 @@ of this software, even if advised of the possibility of such damage.
         <xsl:value-of select="concat( $DOIResolver, normalize-space(.) )"/>
       </xsl:with-param>
     </xsl:call-template>
+    <xsl:if test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
+      <xsl:call-template name="makeText">
+	<xsl:with-param name="letters">. </xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
 
 </xsl:stylesheet>
