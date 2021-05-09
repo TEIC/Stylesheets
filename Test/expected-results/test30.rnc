@@ -403,8 +403,10 @@ Tatt.datable.attributes =
   Tatt.datable.attribute.period
 Tatt.datable.attribute.calendar =
   
-  ## indicates the system or calendar to which the date represented by the content of this element belongs.
-  attribute calendar { xsd:anyURI }?
+  ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+  attribute calendar {
+    list { xsd:anyURI+ }
+  }?
 sch:pattern [
   id = "testbasic-att.datable-calendar-calendar-constraint-rule-4"
   "\x{a}" ~
@@ -415,7 +417,7 @@ sch:pattern [
     "         "
     sch:assert [
       test = "string-length(.) gt 0"
-      " @calendar indicates the system or calendar to\x{a}" ~
+      " @calendar indicates one or more systems or calendars to\x{a}" ~
       "              which the date represented by the content of this element belongs, but this\x{a}" ~
       "              "
       sch:name [ ]
@@ -428,9 +430,18 @@ sch:pattern [
   "   "
 ]
 Tatt.datable.attribute.period =
-  
-  ## supplies a pointer to some location defining a named period of time within which the datable item is understood to have occurred.
-  attribute period { xsd:anyURI }?
+  [
+    a:documentation [
+      "supplies pointers to one or more definitions of named periods of time (typically "
+      ns1:code [ "<category>" ]
+      "s or "
+      ns1:code [ "<calendar>" ]
+      "s) within which the datable item is understood to have occurred."
+    ]
+  ]
+  attribute period {
+    list { xsd:anyURI+ }
+  }?
 Tatt.datcat.attributes =
   Tatt.datcat.attribute.datcat, Tatt.datcat.attribute.valueDatcat
 Tatt.datcat.attribute.datcat =
@@ -6016,7 +6027,7 @@ TlistNym =
 Tatt.global.facs.attributes = Tatt.global.facs.attribute.facs
 Tatt.global.facs.attribute.facs =
   
-  ## (facsimile) points to all or part of an image which corresponds with the content of the element.
+  ## (facsimile) points to one or more images, portions of an image, or surfaces which correspond to the current element.
   attribute facs {
     list { xsd:anyURI+ }
   }?

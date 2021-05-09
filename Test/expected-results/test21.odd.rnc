@@ -393,7 +393,9 @@ att.datable.attributes =
 att.datable.attribute.calendar =
   
   ## indique le système ou le calendrier auquel appartient la date exprimée dans le contenu de l'élément.
-  attribute calendar { xsd:anyURI }?
+  attribute calendar {
+    list { xsd:anyURI+ }
+  }?
 sch:pattern [
   id = "test21-att.datable-calendar-calendar-constraint-rule-4"
   "\x{a}" ~
@@ -404,7 +406,7 @@ sch:pattern [
     "         "
     sch:assert [
       test = "string-length(.) gt 0"
-      " @calendar indicates the system or calendar to\x{a}" ~
+      " @calendar indicates one or more systems or calendars to\x{a}" ~
       "              which the date represented by the content of this element belongs, but this\x{a}" ~
       "              "
       sch:name [ ]
@@ -419,7 +421,9 @@ sch:pattern [
 att.datable.attribute.period =
   
   ## fournit un pointeur vers un emplacement donné définissant une période de temps nommée durant laquelle l'item concerné s'inscrit.
-  attribute period { xsd:anyURI }?
+  attribute period {
+    list { xsd:anyURI+ }
+  }?
 att.datcat.attributes =
   att.datcat.attribute.datcat, att.datcat.attribute.valueDatcat
 att.datcat.attribute.datcat =

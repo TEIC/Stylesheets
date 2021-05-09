@@ -7,7 +7,7 @@
       </titleStmt>
       <editionStmt>
         <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.3.0.html">4.3.0a</ref>. Last updated on
-	<date when="2021-03-29">29th March 2021</date>, revision <ref target="https://github.com/TEIC/TEI/commit/ac70ae112">ac70ae112</ref></edition>
+	<date when="2021-05-09">9th May 2021</date>, revision <ref target="https://github.com/TEIC/TEI/commit/4a9867b87">4a9867b87</ref></edition>
       </editionStmt>
       <publicationStmt>
 	<distributor>TEI Consortium</distributor>
@@ -1309,7 +1309,7 @@ of any adjacent whitespace</desc>
   </classes>
   <attList>
     <attDef ident="calendar" usage="opt">
-      <desc versionDate="2011-11-25" xml:lang="en">indicates the system or calendar to which the
+      <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
         date represented by the content of this element belongs.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
@@ -1320,21 +1320,34 @@ of any adjacent whitespace</desc>
         una fecha.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
         appartiene.</desc>
-      <datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
       <constraintSpec ident="calendar" scheme="schematron">
         <constraint>
           <sch:rule context="tei:*[@calendar]">
-            <sch:assert test="string-length(.) gt 0"> @calendar indicates the system or calendar to
+            <sch:assert test="string-length(.) gt 0"> @calendar indicates one or more systems or calendars to
               which the date represented by the content of this element belongs, but this
               <sch:name/> element has no textual content.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
       <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="#gregorian">Feb. 22, 1732</date> (<date calendar="#julian" when="1732-02-22"> Feb. 11, 1731/32,
-            O.S.</date>).</egXML>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="#gregorian">Feb. 22, 1732</date> (<date calendar="#julian" when="1732-02-22">Feb. 11, 1731/32,
+            O.S.</date>).
+        </egXML> 
+      </exemplum>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          He was born on <date calendar="#gregorian #julian" when="1732-02-22">Feb. 22, 1732 
+            (Feb. 11, 1731/32, O.S.)</date>.
+        </egXML>
+      </exemplum>
+      <exemplum xml:lang="de">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <date calendar="#julian #gregorian" when="1829-05-19">Dienstag 7/19
+          Mai</date>.
+        </egXML>
       </exemplum>
       <exemplum versionDate="2008-04-06" xml:lang="fr">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Bouiller_Rapport"> L'année
@@ -1353,8 +1366,8 @@ of any adjacent whitespace</desc>
         どの暦日に日付を正規化するかではない。</p></remarks>
     </attDef>
     <attDef ident="period" usage="opt">
-      <desc versionDate="2011-11-25" xml:lang="en">supplies a pointer to some location defining a
-        named period of time within which the datable item is understood to have occurred.</desc>
+      <desc versionDate="2021-04-19" xml:lang="en">supplies pointers to one or more definitions of 
+        named periods of time (typically <gi>category</gi>s or <gi>calendar</gi>s) within which the datable item is understood to have occurred.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">시간을 명시할 수 있는 항목이 일어난 시간의 기간명을 정의하는 특정 위치로의 포인터를
         제공한다.</desc>
       <desc versionDate="2008-04-06" xml:lang="es">suministra un indicador a una localización
@@ -1367,7 +1380,7 @@ of any adjacent whitespace</desc>
       <desc versionDate="2007-11-06" xml:lang="it">fornisce un puntatore a una data posizione
         definendo un determinato periodo di tempo entro il quale l'oggetto da datare è
         collocabile</desc>
-      <datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
     </attDef>
@@ -5636,6 +5649,7 @@ elements used to represent reference systems.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che contengono una descrizione bibliografica</desc>
   <classes>
     <memberOf key="model.inter"/>
+    <memberOf key="model.entryPart.top"/>
     <memberOf key="model.personPart"/>
     <memberOf key="model.msItemPart"/>
     <memberOf key="model.standOffPart"/>
@@ -39316,7 +39330,7 @@ headword  such as noun, verb, or adjective.</desc>
     International Dictionary</title> (New York: Simon and Schuster,
     1973).</bibl>) these derived forms of <mentioned>abeja</mentioned>
     are treated as separate main entries, but there are other embedded
-    phrases shown as<gi>re</gi>s in its main entry for
+    phrases shown as <gi>re</gi>s in its main entry for
     <mentioned>abeja</mentioned>:<q rend="display">abeja,
     f. 1. (ento.) bee. 2. busy bee, hard worker. 3. (astron.) A.,
     Musca. — a. albanila, mason bee; a. carpintera, carpenter bee; a.
@@ -45264,8 +45278,7 @@ the encoder wishes to distinguish these two modes of transcription.</p>
   </listRef>
 </elementSpec>
 <classSpec predeclare="true" module="transcr" type="atts" ident="att.global.facs">
-  <desc versionDate="2016-02-15" xml:lang="en">provides an attribute used to express correspondence
-    between an element containing transcribed text and all or part of an image representing that text.</desc>
+  <desc versionDate="2021-05-09" xml:lang="en">provides attributes used to express correspondence between an element and all or part of a facsimile image or surface.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko"><gi>facsimile</gi> 요소 내에서 이미지 또는 표면부와 관련될 수 있는 요소</desc>
   <desc versionDate="2008-04-06" xml:lang="es">los elementos que se pueden asociar a una imagen o a una
     superficie dentro de un <gi>facsímil</gi>.</desc>
@@ -45281,7 +45294,7 @@ the encoder wishes to distinguish these two modes of transcription.</p>
       <gloss versionDate="2008-04-06" xml:lang="es">facsímil</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">fac-similé</gloss>
       <gloss xml:lang="ja" versionDate="2019-07-21">ファクシミリ</gloss>
-      <desc versionDate="2008-04-05" xml:lang="en">points to all or part of an image which corresponds with the content of the element.</desc>
+      <desc versionDate="2021-05-09" xml:lang="en">points to one or more images, portions of an image, or surfaces which correspond to the current element.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이미지 또는 이 요소와 일치하는 <gi>facsimile</gi> 요소의 부분을 직접 가리킨다.</desc>
       <desc versionDate="2008-04-06" xml:lang="es">indica directamente a la imagen, o a la parte de un
           <gi>facsímil</gi> que se corresponde con este elemento.</desc>
@@ -45290,7 +45303,9 @@ the encoder wishes to distinguish these two modes of transcription.</p>
         d'une image correspondant au contenu de l'élément.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica direttamente un'immagine o una parte di un
         elemento facsimile corrispondente a tale elemento</desc>
-      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <dataRef key="teidata.pointer"/>
+      </datatype>
     </attDef>
   </attList>
   <listRef>
@@ -54170,7 +54185,7 @@ one initial.</desc>
         <desc xml:lang="pt" versionDate="2018-07-12">Nomes e datas</desc>
         <desc xml:lang="ja" versionDate="2018-07-12">名前モジュール</desc>
       </moduleSpec></div></div>
-<div type="div1" xml:id="FT" n="22"><head>Tables, Formulæ, Graphics and Notated Music</head>
+<div type="div1" xml:id="FT" n="22"><head>Tables, Formulæ, Graphics, and Notated Music</head>
 <div type="div2" xml:id="FTTAB"><head>Tables</head>
 <div type="div3" xml:id="FTTAB1"><head>TEI Tables</head>
 <elementSpec module="figures" ident="table">
