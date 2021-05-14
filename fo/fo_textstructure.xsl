@@ -68,13 +68,13 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>root template</desc>
    </doc>
-  <xsl:template match="/tei:TEI">
+  <xsl:template match="/tei:TEI[not(descendant::tei:TEI or descendant::tei:teiCorpus)]">
       <root>
          <xsl:call-template name="setupPagemasters"/>
 	 <xsl:call-template name="mainAction"/>
       </root>
   </xsl:template>
-  <xsl:template match="/tei:teiCorpus">
+  <xsl:template match="/tei:teiCorpus | /tei:TEI[descendant::tei:TEI or descendant::tei:teiCorpus]">
       <root>
          <xsl:call-template name="setupPagemasters"/>
 	 <xsl:apply-templates/>
