@@ -850,9 +850,9 @@ of this software, even if advised of the possibility of such damage.
 	<!-- 4. we are part of an inner text -->
 	<xsl:when test="ancestor::tei:floatingText">true</xsl:when>
 	<!-- 3. we have special rendering on the document -->
-	<xsl:when test="ancestor::tei:TEI/tei:match(@rend,'all') 
-			or ancestor::tei:TEI/tei:match(@rend,'frontpage') 
-			or ancestor::tei:TEI/tei:match(@rend,'nosplit')">true</xsl:when>
+	<xsl:when test="ancestor::tei:TEI[tei:match(./@rend,'all') ]
+			or ancestor::tei:TEI[tei:match(./@rend,'frontpage') ]
+			or ancestor::tei:TEI[tei:match(./@rend,'nosplit')]">true</xsl:when>
 	<!-- 2. we are a singleton -->
 	<xsl:when test="parent::tei:body[count(*)=1] and not(tei:div or
 			tei:div2)">true</xsl:when>
