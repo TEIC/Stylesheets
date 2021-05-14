@@ -65,7 +65,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="mainDocument"/>
   </xsl:template>
 
-  <xsl:template match="tei:teiCorpus/tei:TEI">
+  <xsl:template match="tei:teiCorpus/tei:TEI | tei:TEI/tei:TEI">
     <xsl:apply-templates/>
     <xsl:text>&#10;\par\noindent\rule{\textwidth}{2pt}&#10;\par </xsl:text>
   </xsl:template>
