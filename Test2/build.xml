@@ -101,7 +101,7 @@
       without special parameters. -->
     <fileset id="simpleTeiForHtmlFiles" dir="${inputDir}" includes="testP5ExTcp1.xml, 
         testRendition1.xml, testQuotations1.xml, testWhitespace1.xml, testBinaryObjects1.xml,
-        testCorpus1.xml, testMathML.xml, testStructure1.xml"/>
+        testCorpus1.xml, testCorpusTEIRoot1.xml, testMathML.xml, testStructure1.xml"/>
     
 <!--  HTML input files for conversion into TEI.  -->
     <fileset id="htmlInputFiles" dir="${inputDir}" includes="testHtmlInput1.html"/>
@@ -114,7 +114,7 @@
     
 <!--  TEI files which are converted to XSL:FO.  testMathML.xml has been removed because 
   the JEuclid jar no longer works with recent FOP versions. -->
-    <fileset id="foFiles" dir="${inputDir}" includes="generalP5.xml, testStructure1.xml, testCorpus1.xml,
+    <fileset id="foFiles" dir="${inputDir}" includes="generalP5.xml, testStructure1.xml, testCorpus1.xml, testCorpusTEIRoot1.xml,
         testBibliography1.xml, testNotes1.xml, tei_simplePrint.doc.xml, testQuotations1.xml, testBinaryObjects1.xml"/>
     
 <!--  Files for conversion to RDF.  -->
