@@ -103,8 +103,7 @@
          <!-- we are making a composite layout and there is a TEI or teiCorpus element -->
          <xsl:when
             test="
-               ($pageLayout = 'Complex') and (tei:TEI or
-               tei:teiCorpus or tei:text)">
+               ($pageLayout = 'Complex') and (tei:TEI or tei:teiCorpus or tei:text)">
             <xsl:if test="$verbose = 'true'">
                <xsl:message>case 1: pageLayout <xsl:value-of select="$pageLayout"/>
                </xsl:message>
@@ -387,7 +386,7 @@
          <p>Process root element TEI when inside a corpus</p>
       </desc>
    </doc>
-   <xsl:template match="tei:teiCorpus/tei:TEI">
+   <xsl:template match="tei:teiCorpus/tei:TEI|tei:TEI/tei:TEI">
       <xsl:if test="$verbose = 'true'">
          <xsl:message>TEI HTML inside corpus </xsl:message>
       </xsl:if>
@@ -425,7 +424,7 @@
          <xsl:call-template name="outputChunkName">
             <xsl:with-param name="ident">
                <xsl:choose>
-                  <xsl:when test="parent::tei:teiCorpus">
+                  <xsl:when test="parent::tei:teiCorpus | parent::tei:TEI">
                      <xsl:apply-templates select="." mode="ident"/>
                   </xsl:when>
                   <xsl:otherwise>
@@ -755,7 +754,7 @@
       <desc>[html] corpus identifier</desc>
    </doc>
    <xsl:template name="addCorpusID">
-      <xsl:if test="ancestor-or-self::tei:teiCorpus">
+      <xsl:if test="ancestor-or-self::tei:teiCorpus | ancestor-or-self::tei:TEI[ tei:TEI ]">
          <xsl:for-each select="ancestor-or-self::tei:TEI">
             <xsl:text>-</xsl:text>
             <xsl:choose>
@@ -1706,7 +1705,7 @@ function click(d) {
    </doc>
    <xsl:template name="mainTOC">
       <xsl:choose>
-         <xsl:when test="self::tei:teiCorpus">
+         <xsl:when test="self::tei:teiCorpus | self::tei:TEI[ tei:TEI ]">
             <ul>
                <xsl:for-each select="tei:TEI">
                   <li>
@@ -2791,7 +2790,7 @@ function click(d) {
       <desc>[html] </desc>
    </doc>
    <xsl:template name="topNavigation">
-      <xsl:if test="ancestor::teiCorpus">
+      <xsl:if test="ancestor::teiCorpus|ancestor::tei:TEI[descendant::TEI|descendant::teiCorpus]">
          <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
             <xsl:attribute name="class" select="$alignNavigationPanel"/>
             <xsl:call-template name="nextLink"/>
