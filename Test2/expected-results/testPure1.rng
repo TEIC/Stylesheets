@@ -2679,18 +2679,6 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_docDate"/>
       </choice>
    </define>
-   <define name="t_model.choicePart">
-      <choice>
-         <ref name="t_sic"/>
-         <ref name="t_corr"/>
-         <ref name="t_reg"/>
-         <ref name="t_orig"/>
-         <ref name="t_unclear"/>
-         <ref name="t_abbr"/>
-         <ref name="t_expan"/>
-         <ref name="t_seg"/>
-      </choice>
-   </define>
    <define name="t_model.imprintPart">
       <choice>
          <ref name="t_publisher"/>
@@ -3502,12 +3490,20 @@ Suggested values include: 1] deprecationInfo (deprecation information)</a:docume
    <define name="t_choice">
       <element name="choice">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(choice) groups a number of alternative encodings for the same point in a text. [3.5. Simple Editorial Changes]</a:documentation>
-         <oneOrMore>
-            <choice>
-               <ref name="t_model.choicePart"/>
-               <ref name="t_choice"/>
-            </choice>
-         </oneOrMore>
+         <choice>
+            <interleave>
+               <ref name="t_abbr"/>
+               <ref name="t_expan"/>
+            </interleave>
+            <group>
+               <ref name="t_corr"/>
+               <ref name="t_sic"/>
+            </group>
+            <group>
+               <ref name="t_orig"/>
+               <ref name="t_reg"/>
+            </group>
+         </choice>
          <ref name="t_att.global.attributes"/>
          <empty/>
       </element>
