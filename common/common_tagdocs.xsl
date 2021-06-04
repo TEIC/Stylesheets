@@ -1854,9 +1854,44 @@
       <xsl:attribute name="{$rendName}">
         <xsl:text>tag</xsl:text>
       </xsl:attribute>
-      <xsl:text>&lt;</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>&gt;</xsl:text>
+      <xsl:choose>
+        <xsl:when test="@type eq 'start'">
+          <xsl:text>&lt;</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>&gt;</xsl:text>
+        </xsl:when>
+        <xsl:when test="@type eq 'end'">
+          <xsl:text>&lt;/</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>&gt;</xsl:text>
+        </xsl:when>
+        <xsl:when test="@type eq 'empty'">
+          <xsl:text>&lt;</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>/&gt;</xsl:text>
+        </xsl:when>
+        <xsl:when test="@type eq 'comment'">
+          <xsl:text>&lt;!--</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>--&gt;</xsl:text>
+        </xsl:when>
+        <xsl:when test="@type eq 'pi'">
+          <xsl:text>&lt;?</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>?&gt;</xsl:text>
+        </xsl:when>
+        <xsl:when test="@type eq 'ms'">
+          <xsl:text>&lt;![CDATA[</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>]]&gt;</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <!-- currently the same as type=start -->
+          <xsl:text>&lt;</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>&gt;</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:element>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
