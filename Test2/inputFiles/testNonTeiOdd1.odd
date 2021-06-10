@@ -31,7 +31,27 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
       <div>
         <schemaSpec ident="nonTeiOdd" start="div" ns="http://www.w3.org/1999/xhtml">
 
-          <elementSpec ident="div" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+	  <moduleSpec ident="NTO_heads">
+	    <altIdent type="FPI">Non TEI ODD Test, headings</altIdent>
+	    <desc>This module holds the heading elements of various levels</desc>
+	  </moduleSpec>
+
+	  <moduleSpec ident="NTO_lists">
+	    <altIdent type="FPI">Non TEI ODD Test, lists</altIdent>
+	    <desc>This module holds the elements for lists</desc>
+	  </moduleSpec>
+	  
+	  <moduleSpec ident="NTO_tables">
+	    <idno type="FPI">Non TEI ODD Test, tables</idno>
+	    <desc>This module holds the elemnts for tables</desc>
+	  </moduleSpec>
+	  
+	  <moduleSpec ident="NTO_main">
+	    <idno type="FPI">Non TEI ODD Test, main</idno>
+	    <desc>This module holds the elements of everything else</desc>
+	  </moduleSpec>
+	  
+          <elementSpec ident="div" ns="http://www.w3.org/1999/xhtml" module="NTO_main">
             <gloss>Division of a document; used as the root for content blocks.</gloss>
             <desc>The core container element for a content block. This may also nest, to
             provide subsections.</desc>
@@ -58,7 +78,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </constraintSpec>
           </elementSpec>
 
-          <elementSpec ident="h3" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="h3" ns="http://www.w3.org/1999/xhtml" module="NTO_heads">
             <gloss>Level 3 heading</gloss>
             <desc>The h3 (level 3 heading) element provides the heading for root-level div
             elements.</desc>
@@ -71,7 +91,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </elementSpec>
 
-          <elementSpec ident="h4" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="h4" ns="http://www.w3.org/1999/xhtml" module="NTO_heads">
             <gloss>Level 4 heading</gloss>
             <classes>
               <memberOf key="model.divHeading"/>
@@ -82,7 +102,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </elementSpec>
 
-          <elementSpec ident="h5" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="h5" ns="http://www.w3.org/1999/xhtml" module="NTO_heads">
             <gloss>Level 5 heading</gloss>
             <classes>
               <memberOf key="model.divHeading"/>
@@ -93,7 +113,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </elementSpec>
 
-          <elementSpec ident="p" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="p" ns="http://www.w3.org/1999/xhtml" module="NTO_main">
             <desc>Prose paragraph.</desc>
             <classes>
               <memberOf key="model.divBody"/>
@@ -107,7 +127,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
           <elementSpec ident="blockquote"
                        ns="http://www.w3.org/1999/xhtml"
-                       module="xhtml5">
+                       module="NTO_main">
             <desc>Block quotation.</desc>
             <classes>
               <memberOf key="model.divBody"/>
@@ -122,7 +142,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </elementSpec>
 
-          <elementSpec ident="q" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="q" ns="http://www.w3.org/1999/xhtml" module="NTO_main">
             <desc>Inline quotation. In rendering, quotation marks will be supplied, so do not
             include them.</desc>
             <classes>
@@ -134,7 +154,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </elementSpec>
 
-          <elementSpec ident="ul" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="ul" ns="http://www.w3.org/1999/xhtml" module="NTO_lists">
             <desc>Unordered list, usually bulleted.</desc>
             <classes>
               <memberOf key="model.divBody"/>
@@ -160,7 +180,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </attList>
           </elementSpec>
 
-          <elementSpec ident="ol" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="ol" ns="http://www.w3.org/1999/xhtml" module="NTO_lists">
             <desc>Ordered list, usually numbered.</desc>
             <classes>
               <memberOf key="model.divBody"/>
@@ -171,7 +191,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </elementSpec>
 
-          <elementSpec ident="li" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="li" ns="http://www.w3.org/1999/xhtml" module="NTO_lists">
             <desc>Item in a list.</desc>
             <classes>
               <memberOf key="att.classable"/>
@@ -187,7 +207,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </elementSpec>
 
-          <elementSpec ident="strong" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="strong" ns="http://www.w3.org/1999/xhtml" module="NTO_main">
             <desc>Text that needs to be highlighted because it is important; will be rendered
             by default in bold.</desc>
             <classes>
@@ -199,7 +219,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </elementSpec>
 
-          <elementSpec ident="img" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="img" ns="http://www.w3.org/1999/xhtml" module="NTO_main">
             <desc>Image element. May be rendered inline or as a block, depending on where it
             appears in the document structure.</desc>
             <classes>
@@ -268,7 +288,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </attList>
           </elementSpec>
 
-          <elementSpec ident="em" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="em" ns="http://www.w3.org/1999/xhtml" module="NTO_main">
             <desc>Emphasized text; will be rendered by default in italics.</desc>
             <classes>
               <memberOf key="model.phrase"/>
@@ -282,7 +302,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </elementSpec>
 
-          <elementSpec ident="a" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="a" ns="http://www.w3.org/1999/xhtml" module="NTO_main">
             <classes>
               <memberOf key="model.phrase"/>
               <memberOf key="att.classable"/>
@@ -306,7 +326,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </attList>
           </elementSpec>
 
-          <elementSpec ident="figure" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="figure" ns="http://www.w3.org/1999/xhtml" module="NTO_main">
             <desc>A figure consists of an image and a caption.</desc>
             <classes>
               <memberOf key="model.divBody"/>
@@ -340,7 +360,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
           <elementSpec ident="figcaption"
                        ns="http://www.w3.org/1999/xhtml"
-                       module="xhtml5">
+                       module="NTO_main">
             <desc>Caption for an image in a figure element.</desc>
             <classes>
               <memberOf key="model.phrase"/>
@@ -351,14 +371,14 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </elementSpec>
 
-          <elementSpec ident="td" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="td" ns="http://www.w3.org/1999/xhtml" module="NTO_tables">
             <desc>A table data cell.</desc>
             <content>
               <macroRef key="macro.paraContent"/>
             </content>
           </elementSpec>
 
-          <elementSpec ident="th" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="th" ns="http://www.w3.org/1999/xhtml" module="NTO_tables">
             <desc>A table label or heading cell.</desc>
             <content>
               <macroRef key="macro.paraContent"/>
@@ -377,7 +397,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </attList>
           </elementSpec>
 
-          <elementSpec ident="tr" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="tr" ns="http://www.w3.org/1999/xhtml" module="NTO_tables">
             <desc>A table row.</desc>
             <content>
               <sequence minOccurs="1" maxOccurs="unbounded">
@@ -387,14 +407,14 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </elementSpec>
 
-          <elementSpec ident="caption" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="caption" ns="http://www.w3.org/1999/xhtml" module="NTO_main">
             <desc>A table caption.</desc>
             <content>
               <macroRef key="macro.paraContent"/>
             </content>
           </elementSpec>
 
-          <elementSpec ident="table" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+          <elementSpec ident="table" ns="http://www.w3.org/1999/xhtml" module="NTO_tables">
             <desc>A table.</desc>
             <classes>
               <memberOf key="att.classable"/>
@@ -406,7 +426,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </elementSpec>
 
-          <macroSpec ident="macro.paraContent" module="xhtml5">
+          <macroSpec ident="macro.paraContent" module="NTO_main">
             <desc>Content model for paragraph-type containers such as paragraphs, list items,
             and so on.</desc>
             <content>
@@ -417,7 +437,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </macroSpec>
 
-          <macroSpec ident="macro.divContent" module="xhtml5">
+          <macroSpec ident="macro.divContent" module="NTO_main">
             <desc>Content model for div container.</desc>
             <content>
               <sequence>
@@ -427,19 +447,19 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </content>
           </macroSpec>
 
-          <classSpec type="model" ident="model.phrase" module="xhtml5">
+          <classSpec type="model" ident="model.phrase" module="NTO_main">
             <desc>Groups elements which can appear at the phrase level.</desc>
           </classSpec>
 
-          <classSpec type="model" ident="model.divHeading" module="xhtml5">
+          <classSpec type="model" ident="model.divHeading" module="NTO_main">
             <desc>Groups elements which can function as headings at the top of a div.</desc>
           </classSpec>
 
-          <classSpec type="model" ident="model.divBody" module="xhtml5">
+          <classSpec type="model" ident="model.divBody" module="NTO_main">
             <desc>Groups elements which can appear below the heading in a div.</desc>
           </classSpec>
 
-          <classSpec type="atts" ident="att.classable" module="xhtml5">
+          <classSpec type="atts" ident="att.classable" module="NTO_main">
             <desc>Groups elements which can have a class attribute.</desc>
             <attList>
               <attDef ident="class" usage="opt">
@@ -460,7 +480,7 @@ schematypens="http://purl.oclc.org/dsdl/schematron"?>
             </attList>
           </classSpec>
 
-          <classSpec type="atts" ident="att.identifiable" module="xhtml5">
+          <classSpec type="atts" ident="att.identifiable" module="NTO_main">
             <desc>Groups elements which may have an id attribute.</desc>
             <attList>
               <attDef ident="id" usage="opt">
