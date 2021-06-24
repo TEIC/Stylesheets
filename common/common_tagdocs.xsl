@@ -2508,9 +2508,35 @@
     </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element desc</desc>
+    <desc>Process element desc iff it is the child of a specification
+    element. We only process specification element descriptions (which
+    become just plain text in the RELAX NG annotations, as markup is
+    not allowed in a RELAX NG annotation) here, as a description that
+    is not the child of a specification element (which becomes a
+    &lt;desc> element in the output TEI Lite) are processed
+    elsewhere.</desc>
   </doc>
-  <xsl:template match="tei:desc">
+  <!-- This template changed 2021-06-24 by Stylesheets group in
+       response to ticket #444 in the Stylesheets repo, which
+       complained that a <desc> inside a <graphic> was doing the wrong
+       thing (to wit, copying only the content of the <desc> into the
+       TEI Lite, not the entire <desc> element, because it was being
+       processed by this template without the predicate). -->
+  <xsl:template match="tei:desc[
+                        parent::tei:attDef
+                       |parent::tei:classSpec
+                       |parent::tei:constraintSpec
+                       |parent::tei:dataSpec
+                       |parent::tei:elementSpec
+                       |parent::tei:listRef
+                       |parent::tei:macroSpec
+                       |parent::tei:model
+                       |parent::tei:modelGrp
+                       |parent::tei:modelSequence
+                       |parent::tei:moduleSpec
+                       |parent::tei:paramSpec
+                       |parent::tei:schemaSpec
+                       |parent::tei:valItem ] ">
     <xsl:apply-templates/>
   </xsl:template>
   <!-- pretty printing of RNC -->
