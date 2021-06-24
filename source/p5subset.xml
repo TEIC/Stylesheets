@@ -3,67 +3,67 @@
 <teiHeader>
     <fileDesc>
       <titleStmt>
-	<title>The TEI Guidelines</title>
+        <title>The TEI Guidelines</title>
       </titleStmt>
       <editionStmt>
         <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.3.0.html">4.3.0a</ref>. Last updated on
-	<date when="2021-05-09">9th May 2021</date>, revision <ref target="https://github.com/TEIC/TEI/commit/4a9867b87">4a9867b87</ref></edition>
+        <date when="2021-06-20">20th June 2021</date>, revision <ref target="https://github.com/TEIC/TEI/commit/cc130aa69">cc130aa69</ref></edition>
       </editionStmt>
       <publicationStmt>
-	<distributor>TEI Consortium</distributor>
-	<availability status="restricted">
-	  <licence target="http://creativecommons.org/licenses/by/3.0/">
-	    Distributed under a Creative Commons Attribution 3.0 Unported License.
-	  </licence>
-	  <licence target="http://www.opensource.org/licenses/BSD-2-Clause">
-	    <p>Copyright 2021 TEI Consortium.</p>
-	    <p>All rights reserved.</p>	    
-	    <p>Redistribution and use in source and binary forms, with
-	    or without modification, are permitted provided that the
-	    following conditions are met:</p>
-	    <list>
-	      <item>Redistributions of source code must retain the
-	      above copyright notice, this list of conditions and the
-	      following disclaimer.</item>
-	      <item>Redistributions in binary form must reproduce the
-	      above copyright notice, this list of conditions and the
-	      following disclaimer in the documentation and/or other
-	      materials provided with the distribution.</item>
-	    </list>
-	    <p>This software is provided by the copyright holders and
-	    contributors "as is" and any express or implied
-	    warranties, including, but not limited to, the implied
-	    warranties of merchantability and fitness for a particular
-	    purpose are disclaimed. In no event shall the copyright
-	    holder or contributors be liable for any direct, indirect,
-	    incidental, special, exemplary, or consequential damages
-	    (including, but not limited to, procurement of substitute
-	    goods or services; loss of use, data, or profits; or
-	    business interruption) however caused and on any theory of
-	    liability, whether in contract, strict liability, or tort
-	    (including negligence or otherwise) arising in any way out
-	    of the use of this software, even if advised of the
-	    possibility of such damage.</p>
-	  </licence>
-	  <p>TEI material can be licensed differently depending on the
-	  use you intend to make of it. Hence it is made available
-	  under both the CC+BY and BSD-2 licences. The CC+BY licence
-	  is generally appropriate for usages which treat TEI content
-	  as data or documentation. The BSD-2 licence is generally
-	  appropriate for usage of TEI content in a software
-	  environment. For further information or clarification,
-	  please contact the <ref target="mailto:info@tei-c.org">TEI
-	  Consortium</ref>.
-	  </p>
-	</availability>	  
+        <distributor>TEI Consortium</distributor>
+        <availability status="restricted">
+          <licence target="http://creativecommons.org/licenses/by/3.0/">
+            Distributed under a Creative Commons Attribution 3.0 Unported License.
+          </licence>
+          <licence target="http://www.opensource.org/licenses/BSD-2-Clause">
+            <p>Copyright 2021 TEI Consortium.</p>
+            <p>All rights reserved.</p>     
+            <p>Redistribution and use in source and binary forms, with
+            or without modification, are permitted provided that the
+            following conditions are met:</p>
+            <list>
+              <item>Redistributions of source code must retain the
+              above copyright notice, this list of conditions and the
+              following disclaimer.</item>
+              <item>Redistributions in binary form must reproduce the
+              above copyright notice, this list of conditions and the
+              following disclaimer in the documentation and/or other
+              materials provided with the distribution.</item>
+            </list>
+            <p>This software is provided by the copyright holders and
+            contributors "as is" and any express or implied
+            warranties, including, but not limited to, the implied
+            warranties of merchantability and fitness for a particular
+            purpose are disclaimed. In no event shall the copyright
+            holder or contributors be liable for any direct, indirect,
+            incidental, special, exemplary, or consequential damages
+            (including, but not limited to, procurement of substitute
+            goods or services; loss of use, data, or profits; or
+            business interruption) however caused and on any theory of
+            liability, whether in contract, strict liability, or tort
+            (including negligence or otherwise) arising in any way out
+            of the use of this software, even if advised of the
+            possibility of such damage.</p>
+          </licence>
+          <p>TEI material can be licensed differently depending on the
+          use you intend to make of it. Hence it is made available
+          under both the CC+BY and BSD-2 licences. The CC+BY licence
+          is generally appropriate for usages which treat TEI content
+          as data or documentation. The BSD-2 licence is generally
+          appropriate for usage of TEI content in a software
+          environment. For further information or clarification,
+          please contact the <ref target="mailto:info@tei-c.org">TEI
+          Consortium</ref>.
+          </p>
+        </availability>   
       </publicationStmt>
       <sourceDesc><p>A long history from P2 onwards. See further <ptr target="#PREFS"/></p></sourceDesc>
     </fileDesc>
     <revisionDesc>
       <change>
-	<date>$Date$.</date>
-	  <name>$Id$</name>
-	$Id$
+        <date>$Date$.</date>
+        <name>$Id$</name>
+        $Id$
       </change>
     </revisionDesc>
   </teiHeader>
@@ -2547,26 +2547,27 @@ the TEI header.</p>
       </exemplum>
       <remarks versionDate="2019-11-14" xml:lang="en">
         <p>The <att>xml:lang</att> value will be inherited from the immediately
-enclosing element, or from its parent, and so on up the document hierarchy.
-It is generally good practice to specify <att>xml:lang</att> at the highest
-appropriate level, noticing that a different default may be needed for the
-<gi>teiHeader</gi> from that needed for the associated resource element or elements,
-and that a single TEI document may contain texts in many languages.</p>
+          enclosing element, or from its parent, and so on up the document hierarchy.
+          It is generally good practice to specify <att>xml:lang</att> at the highest
+          appropriate level, noticing that a different default may be needed for the
+          <gi>teiHeader</gi> from that needed for the associated resource element or elements,
+          and that a single TEI document may contain texts in many languages.</p>
+        <p>Only attributes with free text values (rare in these guidelines) will be in the scope of <att>xml:lang</att>.</p>
         <p>The authoritative list of registered language subtags is maintained by IANA and 
           is available at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. 
           For a good general overview of the construction of language tags, see 
           <ptr target="http://www.w3.org/International/articles/language-tags/"/>, and for 
           a practical step-by-step guide, see 
           <ptr target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/>.</p>
-<p>The value used must conform with BCP 47. If the value is a
-      private use code (i.e., starts with <val>x-</val> or contains
-      <val>-x-</val>), a <gi>language</gi> element with a matching
-      value for its <att>ident</att> attribute should be supplied in
-      the TEI header to document this value. Such documentation may
-      also optionally be supplied for non-private-use codes, though
-      these must remain consistent with their
-      <choice><abbr>IETF</abbr><expan>Internet Engineering Task
-      Force</expan></choice> definitions.</p>
+        <p>The value used must conform with BCP 47. If the value is a
+          private use code (i.e., starts with <val>x-</val> or contains
+          <val>-x-</val>), a <gi>language</gi> element with a matching
+          value for its <att>ident</att> attribute should be supplied in
+          the TEI header to document this value. Such documentation may
+          also optionally be supplied for non-private-use codes, though
+          these must remain consistent with their
+          <choice><abbr>IETF</abbr><expan>Internet Engineering Task
+          Force</expan></choice> definitions.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p> Si aucune valeur n'est indiquée pour <att>xml:lang</att>, la valeur de
@@ -31978,12 +31979,12 @@ enjambement is not of particular interest.</p>
    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#eg-rhyme-dutt">
      <lg>
        <l>"Hark! Lakshman! Hark, again that <rhyme label="a">cry</rhyme>!</l>
-       <l>It is, -- it is my husband's <rhyme label="b">voice</rhyme>!</l>
+       <l>It is, — it is my husband's <rhyme label="b">voice</rhyme>!</l>
        <l>hasten, to his succour <rhyme label="a">fly</rhyme>,</l>
        <l>No more hast thou, dear friend, a <rhyme label="b">choice</rhyme>.</l>
        <l>He calls on thee, perhaps his <rhyme label="c">foes</rhyme></l>
        <l>Environ him on all sides <rhyme label="d">round</rhyme>,</l>
-       <l>That wail, -- it means death's final <rhyme label="c">throes</rhyme>!</l>
+       <l>That wail, — it means death's final <rhyme label="c">throes</rhyme>!</l>
        <l>Why standest thou, as magic-<rhyme label="d">bound</rhyme>?</l>
      </lg>
    </egXML>
@@ -37029,8 +37030,8 @@ list of values. Typical values might be <mentioned>IPA</mentioned>,
       </remarks>
       <remarks xml:lang="ja" versionDate="2008-04-05">
         <p> 属性<att>type</att>に付与される値の全リストは， ISO TC 37/SC 3が策定したWD 12620 Computational Aids in
-          Terminologyにあるデータ要素型から得られるだろう． 詳細は，<ref target="http://www.isocat.org/">ISO 12620</ref> Computer applications in terminology -- Data
-          categoriews --を参照のこと． </p>
+          Terminologyにあるデータ要素型から得られるだろう． 詳細は，<ref target="http://www.isocat.org/">ISO 12620</ref> Computer applications in terminology — Data
+          categories — を参照のこと． </p>
       </remarks>
     </attDef>
   </attList>
@@ -65858,6 +65859,7 @@ module, i.e. a named and externally visible group of declarations.</desc>
     <memberOf key="att.global"/>
     <memberOf key="model.divPart"/>
     <memberOf key="model.encodingDescPart"/>
+    <memberOf key="model.frontPart"/>
     <memberOf key="att.identified"/>
     <memberOf key="att.namespaceable"/>
     <memberOf key="att.docStatus"/>
