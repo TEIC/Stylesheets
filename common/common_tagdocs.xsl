@@ -2508,9 +2508,23 @@
     </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element desc</desc>
+    <desc>Process element desc iff it is the child of a specification element</desc>
   </doc>
-  <xsl:template match="tei:desc">
+  <xsl:template match="tei:desc[
+                        parent::tei:attDef
+                       |parent::tei:classSpec
+                       |parent::tei:constraintSpec
+                       |parent::tei:dataSpec
+                       |parent::tei:elementSpec
+                       |parent::tei:listRef
+                       |parent::tei:macroSpec
+                       |parent::tei:model
+                       |parent::tei:modelGrp
+                       |parent::tei:modelSequence
+                       |parent::tei:moduleSpec
+                       |parent::tei:paramSpec
+                       |parent::tei:schemaSpec
+                       |parent::tei:valItem ] ">
     <xsl:apply-templates/>
   </xsl:template>
   <!-- pretty printing of RNC -->
