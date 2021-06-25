@@ -2053,7 +2053,7 @@ att.citeStructurePart.attribute.use =
     a:documentation [
       "(use) supplies an XPath selection pattern using the syntax defined in . The XPath pattern is relative to the context given in "
       ns1:code [ "@match" ]
-      ", which will either be a sibling attribute in the case of  or on the parent  in the case of ."
+      ", which will either be a sibling attribute in the case of `<citeStructure>` or on the parent `<citeStructure>` in the case of `<citeData>`."
     ]
   ]
   attribute use { text }
@@ -5565,7 +5565,7 @@ citeStructure =
        ],
     [
       a:documentation [
-        "(match) supplies an XPath selection pattern using the syntax defined in  which identifies a set of nodes which are citable structural components. The expression may be absolute (beginning with ) or relative. "
+        "(match) supplies an XPath selection pattern using the syntax defined in  which identifies a set of nodes which are citable structural components. The expression may be absolute (beginning with `/`) or relative. "
         ns1:code [ "@match" ]
         " on a "
         ns1:code [ "<citeStructure>" ]
@@ -6482,11 +6482,11 @@ alt =
       a:documentation [
         "Si l'attribut "
         ns1:code [ "@mode" ]
-        " a la valeur , chacune des valeurs de l'attribut "
+        " a la valeur `excl`, chacune des valeurs de l'attribut "
         ns1:code [ "@weights" ]
         " établit la probabilité que l'option correspondante soit vraie. Si l'attribut "
         ns1:code [ "@mode" ]
-        " a la valeur , chacune des valeurs de l'attribut "
+        " a la valeur `incl`, chacune des valeurs de l'attribut "
         ns1:code [ "@weights" ]
         " établit la probabilité que l'option correspondante soit vraie, étant posé qu'au moins une des autres options l'est aussi."
       ]

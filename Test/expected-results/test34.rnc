@@ -1763,7 +1763,7 @@ tei_att.citeStructurePart.attribute.use =
     a:documentation [
       "(use) supplies an XPath selection pattern using the syntax defined in . The XPath pattern is relative to the context given in "
       ns1:code [ "@match" ]
-      ", which will either be a sibling attribute in the case of  or on the parent  in the case of ."
+      ", which will either be a sibling attribute in the case of `<citeStructure>` or on the parent `<citeStructure>` in the case of `<citeData>`."
     ]
   ]
   attribute use { text }
@@ -4048,7 +4048,7 @@ tei_citeStructure =
        ],
     [
       a:documentation [
-        "(match) supplies an XPath selection pattern using the syntax defined in  which identifies a set of nodes which are citable structural components. The expression may be absolute (beginning with ) or relative. "
+        "(match) supplies an XPath selection pattern using the syntax defined in  which identifies a set of nodes which are citable structural components. The expression may be absolute (beginning with `/`) or relative. "
         ns1:code [ "@match" ]
         " on a "
         ns1:code [ "<citeStructure>" ]
