@@ -3,67 +3,67 @@
 <teiHeader>
     <fileDesc>
       <titleStmt>
-	<title>The TEI Guidelines</title>
+        <title>The TEI Guidelines</title>
       </titleStmt>
       <editionStmt>
         <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.3.0.html">4.3.0a</ref>. Last updated on
-	<date when="2021-03-29">29th March 2021</date>, revision <ref target="https://github.com/TEIC/TEI/commit/ac70ae112">ac70ae112</ref></edition>
+        <date when="2021-07-19">19th July 2021</date>, revision <ref target="https://github.com/TEIC/TEI/commit/2f6b034be">2f6b034be</ref></edition>
       </editionStmt>
       <publicationStmt>
-	<distributor>TEI Consortium</distributor>
-	<availability status="restricted">
-	  <licence target="http://creativecommons.org/licenses/by/3.0/">
-	    Distributed under a Creative Commons Attribution 3.0 Unported License.
-	  </licence>
-	  <licence target="http://www.opensource.org/licenses/BSD-2-Clause">
-	    <p>Copyright 2021 TEI Consortium.</p>
-	    <p>All rights reserved.</p>	    
-	    <p>Redistribution and use in source and binary forms, with
-	    or without modification, are permitted provided that the
-	    following conditions are met:</p>
-	    <list>
-	      <item>Redistributions of source code must retain the
-	      above copyright notice, this list of conditions and the
-	      following disclaimer.</item>
-	      <item>Redistributions in binary form must reproduce the
-	      above copyright notice, this list of conditions and the
-	      following disclaimer in the documentation and/or other
-	      materials provided with the distribution.</item>
-	    </list>
-	    <p>This software is provided by the copyright holders and
-	    contributors "as is" and any express or implied
-	    warranties, including, but not limited to, the implied
-	    warranties of merchantability and fitness for a particular
-	    purpose are disclaimed. In no event shall the copyright
-	    holder or contributors be liable for any direct, indirect,
-	    incidental, special, exemplary, or consequential damages
-	    (including, but not limited to, procurement of substitute
-	    goods or services; loss of use, data, or profits; or
-	    business interruption) however caused and on any theory of
-	    liability, whether in contract, strict liability, or tort
-	    (including negligence or otherwise) arising in any way out
-	    of the use of this software, even if advised of the
-	    possibility of such damage.</p>
-	  </licence>
-	  <p>TEI material can be licensed differently depending on the
-	  use you intend to make of it. Hence it is made available
-	  under both the CC+BY and BSD-2 licences. The CC+BY licence
-	  is generally appropriate for usages which treat TEI content
-	  as data or documentation. The BSD-2 licence is generally
-	  appropriate for usage of TEI content in a software
-	  environment. For further information or clarification,
-	  please contact the <ref target="mailto:info@tei-c.org">TEI
-	  Consortium</ref>.
-	  </p>
-	</availability>	  
+        <distributor>TEI Consortium</distributor>
+        <availability status="restricted">
+          <licence target="http://creativecommons.org/licenses/by/3.0/">
+            Distributed under a Creative Commons Attribution 3.0 Unported License.
+          </licence>
+          <licence target="http://www.opensource.org/licenses/BSD-2-Clause">
+            <p>Copyright 2021 TEI Consortium.</p>
+            <p>All rights reserved.</p>     
+            <p>Redistribution and use in source and binary forms, with
+            or without modification, are permitted provided that the
+            following conditions are met:</p>
+            <list>
+              <item>Redistributions of source code must retain the
+              above copyright notice, this list of conditions and the
+              following disclaimer.</item>
+              <item>Redistributions in binary form must reproduce the
+              above copyright notice, this list of conditions and the
+              following disclaimer in the documentation and/or other
+              materials provided with the distribution.</item>
+            </list>
+            <p>This software is provided by the copyright holders and
+            contributors "as is" and any express or implied
+            warranties, including, but not limited to, the implied
+            warranties of merchantability and fitness for a particular
+            purpose are disclaimed. In no event shall the copyright
+            holder or contributors be liable for any direct, indirect,
+            incidental, special, exemplary, or consequential damages
+            (including, but not limited to, procurement of substitute
+            goods or services; loss of use, data, or profits; or
+            business interruption) however caused and on any theory of
+            liability, whether in contract, strict liability, or tort
+            (including negligence or otherwise) arising in any way out
+            of the use of this software, even if advised of the
+            possibility of such damage.</p>
+          </licence>
+          <p>TEI material can be licensed differently depending on the
+          use you intend to make of it. Hence it is made available
+          under both the CC+BY and BSD-2 licences. The CC+BY licence
+          is generally appropriate for usages which treat TEI content
+          as data or documentation. The BSD-2 licence is generally
+          appropriate for usage of TEI content in a software
+          environment. For further information or clarification,
+          please contact the <ref target="mailto:info@tei-c.org">TEI
+          Consortium</ref>.
+          </p>
+        </availability>   
       </publicationStmt>
       <sourceDesc><p>A long history from P2 onwards. See further <ptr target="#PREFS"/></p></sourceDesc>
     </fileDesc>
     <revisionDesc>
       <change>
-	<date>$Date$.</date>
-	  <name>$Id$</name>
-	$Id$
+        <date>$Date$.</date>
+        <name>$Id$</name>
+        $Id$
       </change>
     </revisionDesc>
   </teiHeader>
@@ -1309,7 +1309,7 @@ of any adjacent whitespace</desc>
   </classes>
   <attList>
     <attDef ident="calendar" usage="opt">
-      <desc versionDate="2011-11-25" xml:lang="en">indicates the system or calendar to which the
+      <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
         date represented by the content of this element belongs.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
@@ -1320,21 +1320,34 @@ of any adjacent whitespace</desc>
         una fecha.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
         appartiene.</desc>
-      <datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
       <constraintSpec ident="calendar" scheme="schematron">
         <constraint>
           <sch:rule context="tei:*[@calendar]">
-            <sch:assert test="string-length(.) gt 0"> @calendar indicates the system or calendar to
+            <sch:assert test="string-length(.) gt 0"> @calendar indicates one or more systems or calendars to
               which the date represented by the content of this element belongs, but this
               <sch:name/> element has no textual content.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
       <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="#gregorian">Feb. 22, 1732</date> (<date calendar="#julian" when="1732-02-22"> Feb. 11, 1731/32,
-            O.S.</date>).</egXML>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="#gregorian">Feb. 22, 1732</date> (<date calendar="#julian" when="1732-02-22">Feb. 11, 1731/32,
+            O.S.</date>).
+        </egXML> 
+      </exemplum>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          He was born on <date calendar="#gregorian #julian" when="1732-02-22">Feb. 22, 1732 
+            (Feb. 11, 1731/32, O.S.)</date>.
+        </egXML>
+      </exemplum>
+      <exemplum xml:lang="de">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <date calendar="#julian #gregorian" when="1829-05-19">Dienstag 7/19
+          Mai</date>.
+        </egXML>
       </exemplum>
       <exemplum versionDate="2008-04-06" xml:lang="fr">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Bouiller_Rapport"> L'année
@@ -1353,8 +1366,8 @@ of any adjacent whitespace</desc>
         どの暦日に日付を正規化するかではない。</p></remarks>
     </attDef>
     <attDef ident="period" usage="opt">
-      <desc versionDate="2011-11-25" xml:lang="en">supplies a pointer to some location defining a
-        named period of time within which the datable item is understood to have occurred.</desc>
+      <desc versionDate="2021-04-19" xml:lang="en">supplies pointers to one or more definitions of 
+        named periods of time (typically <gi>category</gi>s or <gi>calendar</gi>s) within which the datable item is understood to have occurred.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">시간을 명시할 수 있는 항목이 일어난 시간의 기간명을 정의하는 특정 위치로의 포인터를
         제공한다.</desc>
       <desc versionDate="2008-04-06" xml:lang="es">suministra un indicador a una localización
@@ -1367,7 +1380,7 @@ of any adjacent whitespace</desc>
       <desc versionDate="2007-11-06" xml:lang="it">fornisce un puntatore a una data posizione
         definendo un determinato periodo di tempo entro il quale l'oggetto da datare è
         collocabile</desc>
-      <datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
     </attDef>
@@ -2534,26 +2547,27 @@ the TEI header.</p>
       </exemplum>
       <remarks versionDate="2019-11-14" xml:lang="en">
         <p>The <att>xml:lang</att> value will be inherited from the immediately
-enclosing element, or from its parent, and so on up the document hierarchy.
-It is generally good practice to specify <att>xml:lang</att> at the highest
-appropriate level, noticing that a different default may be needed for the
-<gi>teiHeader</gi> from that needed for the associated resource element or elements,
-and that a single TEI document may contain texts in many languages.</p>
+          enclosing element, or from its parent, and so on up the document hierarchy.
+          It is generally good practice to specify <att>xml:lang</att> at the highest
+          appropriate level, noticing that a different default may be needed for the
+          <gi>teiHeader</gi> from that needed for the associated resource element or elements,
+          and that a single TEI document may contain texts in many languages.</p>
+        <p>Only attributes with free text values (rare in these guidelines) will be in the scope of <att>xml:lang</att>.</p>
         <p>The authoritative list of registered language subtags is maintained by IANA and 
           is available at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. 
           For a good general overview of the construction of language tags, see 
           <ptr target="http://www.w3.org/International/articles/language-tags/"/>, and for 
           a practical step-by-step guide, see 
           <ptr target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/>.</p>
-<p>The value used must conform with BCP 47. If the value is a
-      private use code (i.e., starts with <val>x-</val> or contains
-      <val>-x-</val>), a <gi>language</gi> element with a matching
-      value for its <att>ident</att> attribute should be supplied in
-      the TEI header to document this value. Such documentation may
-      also optionally be supplied for non-private-use codes, though
-      these must remain consistent with their
-      <choice><abbr>IETF</abbr><expan>Internet Engineering Task
-      Force</expan></choice> definitions.</p>
+        <p>The value used must conform with BCP 47. If the value is a
+          private use code (i.e., starts with <val>x-</val> or contains
+          <val>-x-</val>), a <gi>language</gi> element with a matching
+          value for its <att>ident</att> attribute should be supplied in
+          the TEI header to document this value. Such documentation may
+          also optionally be supplied for non-private-use codes, though
+          these must remain consistent with their
+          <choice><abbr>IETF</abbr><expan>Internet Engineering Task
+          Force</expan></choice> definitions.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p> Si aucune valeur n'est indiquée pour <att>xml:lang</att>, la valeur de
@@ -5636,6 +5650,7 @@ elements used to represent reference systems.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che contengono una descrizione bibliografica</desc>
   <classes>
     <memberOf key="model.inter"/>
+    <memberOf key="model.entryPart.top"/>
     <memberOf key="model.personPart"/>
     <memberOf key="model.msItemPart"/>
     <memberOf key="model.standOffPart"/>
@@ -31964,12 +31979,12 @@ enjambement is not of particular interest.</p>
    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#eg-rhyme-dutt">
      <lg>
        <l>"Hark! Lakshman! Hark, again that <rhyme label="a">cry</rhyme>!</l>
-       <l>It is, -- it is my husband's <rhyme label="b">voice</rhyme>!</l>
+       <l>It is, — it is my husband's <rhyme label="b">voice</rhyme>!</l>
        <l>hasten, to his succour <rhyme label="a">fly</rhyme>,</l>
        <l>No more hast thou, dear friend, a <rhyme label="b">choice</rhyme>.</l>
        <l>He calls on thee, perhaps his <rhyme label="c">foes</rhyme></l>
        <l>Environ him on all sides <rhyme label="d">round</rhyme>,</l>
-       <l>That wail, -- it means death's final <rhyme label="c">throes</rhyme>!</l>
+       <l>That wail, — it means death's final <rhyme label="c">throes</rhyme>!</l>
        <l>Why standest thou, as magic-<rhyme label="d">bound</rhyme>?</l>
      </lg>
    </egXML>
@@ -37015,8 +37030,8 @@ list of values. Typical values might be <mentioned>IPA</mentioned>,
       </remarks>
       <remarks xml:lang="ja" versionDate="2008-04-05">
         <p> 属性<att>type</att>に付与される値の全リストは， ISO TC 37/SC 3が策定したWD 12620 Computational Aids in
-          Terminologyにあるデータ要素型から得られるだろう． 詳細は，<ref target="http://www.isocat.org/">ISO 12620</ref> Computer applications in terminology -- Data
-          categoriews --を参照のこと． </p>
+          Terminologyにあるデータ要素型から得られるだろう． 詳細は，<ref target="http://www.isocat.org/">ISO 12620</ref> Computer applications in terminology — Data
+          categories — を参照のこと． </p>
       </remarks>
     </attDef>
   </attList>
@@ -39316,7 +39331,7 @@ headword  such as noun, verb, or adjective.</desc>
     International Dictionary</title> (New York: Simon and Schuster,
     1973).</bibl>) these derived forms of <mentioned>abeja</mentioned>
     are treated as separate main entries, but there are other embedded
-    phrases shown as<gi>re</gi>s in its main entry for
+    phrases shown as <gi>re</gi>s in its main entry for
     <mentioned>abeja</mentioned>:<q rend="display">abeja,
     f. 1. (ento.) bee. 2. busy bee, hard worker. 3. (astron.) A.,
     Musca. — a. albanila, mason bee; a. carpintera, carpenter bee; a.
@@ -45264,8 +45279,7 @@ the encoder wishes to distinguish these two modes of transcription.</p>
   </listRef>
 </elementSpec>
 <classSpec predeclare="true" module="transcr" type="atts" ident="att.global.facs">
-  <desc versionDate="2016-02-15" xml:lang="en">provides an attribute used to express correspondence
-    between an element containing transcribed text and all or part of an image representing that text.</desc>
+  <desc versionDate="2021-05-09" xml:lang="en">provides attributes used to express correspondence between an element and all or part of a facsimile image or surface.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko"><gi>facsimile</gi> 요소 내에서 이미지 또는 표면부와 관련될 수 있는 요소</desc>
   <desc versionDate="2008-04-06" xml:lang="es">los elementos que se pueden asociar a una imagen o a una
     superficie dentro de un <gi>facsímil</gi>.</desc>
@@ -45281,7 +45295,7 @@ the encoder wishes to distinguish these two modes of transcription.</p>
       <gloss versionDate="2008-04-06" xml:lang="es">facsímil</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">fac-similé</gloss>
       <gloss xml:lang="ja" versionDate="2019-07-21">ファクシミリ</gloss>
-      <desc versionDate="2008-04-05" xml:lang="en">points to all or part of an image which corresponds with the content of the element.</desc>
+      <desc versionDate="2021-05-09" xml:lang="en">points to one or more images, portions of an image, or surfaces which correspond to the current element.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이미지 또는 이 요소와 일치하는 <gi>facsimile</gi> 요소의 부분을 직접 가리킨다.</desc>
       <desc versionDate="2008-04-06" xml:lang="es">indica directamente a la imagen, o a la parte de un
           <gi>facsímil</gi> que se corresponde con este elemento.</desc>
@@ -45290,7 +45304,9 @@ the encoder wishes to distinguish these two modes of transcription.</p>
         d'une image correspondant au contenu de l'élément.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica direttamente un'immagine o una parte di un
         elemento facsimile corrispondente a tale elemento</desc>
-      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <dataRef key="teidata.pointer"/>
+      </datatype>
     </attDef>
   </attList>
   <listRef>
@@ -53201,7 +53217,7 @@ specification.</p></remarks>
         <elementRef key="linkGrp"/>
         <elementRef key="link"/>
       </alternate>
-      <elementRef key="object" minOccurs="0"/>
+      <elementRef key="object" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
     <exemplum xml:lang="en">
@@ -54170,7 +54186,7 @@ one initial.</desc>
         <desc xml:lang="pt" versionDate="2018-07-12">Nomes e datas</desc>
         <desc xml:lang="ja" versionDate="2018-07-12">名前モジュール</desc>
       </moduleSpec></div></div>
-<div type="div1" xml:id="FT" n="22"><head>Tables, Formulæ, Graphics and Notated Music</head>
+<div type="div1" xml:id="FT" n="22"><head>Tables, Formulæ, Graphics, and Notated Music</head>
 <div type="div2" xml:id="FTTAB"><head>Tables</head>
 <div type="div3" xml:id="FTTAB1"><head>TEI Tables</head>
 <elementSpec module="figures" ident="table">
@@ -65843,6 +65859,7 @@ module, i.e. a named and externally visible group of declarations.</desc>
     <memberOf key="att.global"/>
     <memberOf key="model.divPart"/>
     <memberOf key="model.encodingDescPart"/>
+    <memberOf key="model.frontPart"/>
     <memberOf key="att.identified"/>
     <memberOf key="att.namespaceable"/>
     <memberOf key="att.docStatus"/>

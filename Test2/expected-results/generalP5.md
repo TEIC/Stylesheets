@@ -141,7 +141,7 @@ banana
 
 
 # Pictures
-width="2.5in" width=".5in" scale=".5"width="1in"width="1in" style="border:solid green 2pt"height="1in"height="1in" width="2in"height="2in" width="1in"width="10%"height="10%" width="10%"
+width="2.5in" This description is here just to test desc child of graphic.width=".5in" scale=".5"width="1in"width="1in" style="border:solid green 2pt"height="1in"height="1in" width="2in"height="2in" width="1in"width="10%"height="10%" width="10%"
 # MS catalogue
 where is itrepository nameidentifier
 # Extended prose: MARLEY'S GHOST

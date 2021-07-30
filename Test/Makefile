@@ -135,7 +135,8 @@ test.rng: actual
 	xmllint --format test.rng > $(AR)/test.rng && rm test.rng
 	perl -i -pe 'BEGIN{undef $$/;} s/<!--\n ?Schema[^>]+>//smg' $(AR)/test.rng
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.rng $(ER)/test.rng; fi
+		then diff  $(AR)/test.rng $(ER)/test.rng; \
+		else echo "==deferring: \`diff  $(AR)/test.rng $(ER)/test.rng\`"; fi
 
 # I believe the css: target does nothing except ensure that there are symlinks here
 # in the Stylesheets/ directory to each CSS file in the Stylesheets/css/ directory.
@@ -148,53 +149,64 @@ test-to-html: actual css
 	@echo BUILD: testing html
 	$(SAXON)  test.xml ../html/html.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > $(AR)/test.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.html $(ER)/test.html; fi
+		then diff  $(AR)/test.html $(ER)/test.html; \
+		else echo "==deferring: \` diff  $(AR)/test.html $(ER)/test.html \`"; fi
 
 	$(SAXON) $(AR)/test.html checklinks.xsl
 	$(SAXON) test.xml ../html/html.xsl cssFile=../tei.css pageLayout=Complex  $(SAXONOPT)  | xmllint --format - > $(AR)/test-complex.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-complex.html $(ER)/test-complex.html; fi
+		then diff  $(AR)/test-complex.html $(ER)/test-complex.html; \
+		else echo "==deferring: \` diff  $(AR)/test-complex.html $(ER)/test-complex.html \`"; fi
 
 	$(SAXON) test.xml ../profiles/ota/html/to.xsl cssFile=../tei.css $(SAXONOPT)  | xmllint --format - | perl cleanup.pl > $(AR)/test-ota.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-ota.html $(ER)/test-ota.html; fi
+		then diff  $(AR)/test-ota.html $(ER)/test-ota.html; \
+		else echo "==deferring: \` diff  $(AR)/test-ota.html $(ER)/test-ota.html \`"; fi
 
 	$(BINDIR)/teitohtml5 $(FLAGS) test.xml $(AR)/test.html5
 	xmllint --encode utf-8 --format $(AR)/test.html5 | perl cleanup.pl > test.temp
 	mv test.temp $(AR)/test.html5
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.html5 $(ER)/test.html5; fi
+		then diff  $(AR)/test.html5 $(ER)/test.html5; \
+		else echo "==deferring: \` diff  $(AR)/test.html5 $(ER)/test.html5 \`"; fi
 
 	$(SAXON) test20.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > $(AR)/test20.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test20.html $(ER)/test20.html; fi
+		then diff  $(AR)/test20.html $(ER)/test20.html; \
+		else echo "==deferring: \` diff  $(AR)/test20.html $(ER)/test20.html \`"; fi
 
 	$(SAXON) -versionmsg:off  test3.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > $(AR)/test3.html
 	$(SAXON) -versionmsg:off  test4.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > $(AR)/test4.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test4.html $(AR)/test3.html; fi
+		then diff  $(AR)/test4.html $(AR)/test3.html; \
+		else echo "==deferring: \` diff  $(AR)/test4.html $(AR)/test3.html \`"; fi
 
 	$(SAXON) test5.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > $(AR)/test5.xhtml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test5.xhtml $(ER)/test5.xhtml; fi
+		then diff  $(AR)/test5.xhtml $(ER)/test5.xhtml; \
+		else echo "==deferring: \` diff  $(AR)/test5.xhtml $(ER)/test5.xhtml \`"; fi
 	$(JING) -c xhtml.rnc $(AR)/test5.xhtml
 
 	$(SAXON) test6.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > $(AR)/test6.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test6.html $(ER)/test6.html; fi
+		then diff  $(AR)/test6.html $(ER)/test6.html; \
+		else echo "==deferring: \` diff  $(AR)/test6.html $(ER)/test6.html \`"; fi
 	$(JING) -c xhtml.rnc $(AR)/test6.html
 
 	$(SAXON) test14.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > $(AR)/test14.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test14.html $(ER)/test14.html; fi
+		then diff  $(AR)/test14.html $(ER)/test14.html; \
+		else echo "==deferring: \` diff  $(AR)/test14.html $(ER)/test14.html \`"; fi
 
 	$(SAXON) test22.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > $(AR)/test22.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test22.html $(ER)/test22.html; fi
+		then diff  $(AR)/test22.html $(ER)/test22.html; \
+		else echo "==deferring: \` diff  $(AR)/test22.html $(ER)/test22.html \`"; fi
 
 	$(SAXON) test23.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > $(AR)/test23.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test23.html $(ER)/test23.html; fi
+		then diff  $(AR)/test23.html $(ER)/test23.html; \
+		else echo "==deferring: \` diff  $(AR)/test23.html $(ER)/test23.html \`"; fi
 
 	( \
 		mkdir -p $(AR)/testnotes; \
@@ -208,14 +220,16 @@ test-to-html: actual css
 	xmllint --format $(AR)/testnotes/two.html > x ; mv x $(AR)/testnotes/two.html
 	xmllint --format $(AR)/testnotes/three.html > x ; mv x $(AR)/testnotes/three.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  -r  $(AR)/testnotes/ $(ER)/testnotes; fi
+		then diff  -r  $(AR)/testnotes/ $(ER)/testnotes; \
+		else echo "==deferring: \` diff  -r  $(AR)/testnotes/ $(ER)/testnotes \`"; fi
 
 	(mkdir -p $(AR)/testnotes2; cd $(AR)/testnotes2;$(UP2SAXON) ../../testnotes2.xml ../../../html/html.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../../tei.css)
 	xmllint --format $(AR)/testnotes2/index.html > x ; mv x $(AR)/testnotes2/index.html
 	xmllint --format $(AR)/testnotes2/one.html > x ; mv x $(AR)/testnotes2/one.html
 	xmllint --format $(AR)/testnotes2/three.html > x ; mv x $(AR)/testnotes2/three.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  -r  $(AR)/testnotes2 $(ER)/testnotes2; fi
+		then diff  -r  $(AR)/testnotes2 $(ER)/testnotes2; \
+		else echo "==deferring: \` diff  -r  $(AR)/testnotes2 $(ER)/testnotes2 \`"; fi
 
 	(mkdir -p $(AR)/testnotes3; cd $(AR)/testnotes3;$(UP2SAXON) ../../testnotes2.xml ../../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../../tei.css)
 	xmllint --format $(AR)/testnotes3/index.html > x ; mv x $(AR)/testnotes3/index.html
@@ -223,35 +237,43 @@ test-to-html: actual css
 	xmllint --format $(AR)/testnotes3/two.html > x ; mv x $(AR)/testnotes3/two.html
 	xmllint --format $(AR)/testnotes3/three.html > x ; mv x $(AR)/testnotes3/three.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  -r  $(AR)/testnotes3 $(ER)/testnotes3; fi
+		then diff  -r  $(AR)/testnotes3 $(ER)/testnotes3; \
+		else echo "==deferring: \` diff  -r  $(AR)/testnotes3 $(ER)/testnotes3 \`"; fi
 
 	$(SAXON) test24.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > $(AR)/test24.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test24.html $(ER)/test24.html; fi
+		then diff  $(AR)/test24.html $(ER)/test24.html; \
+		else echo "==deferring: \` diff  $(AR)/test24.html $(ER)/test24.html \`"; fi
 	$(SAXON) test25.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > $(AR)/test25.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test25.html $(ER)/test25.html; fi
+		then diff  $(AR)/test25.html $(ER)/test25.html; \
+		else echo "==deferring: \` diff  $(AR)/test25.html $(ER)/test25.html \`"; fi
 	$(SAXON) test27.xml ../html/html.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../css/msdescription.css  | xmllint --format - > $(AR)/test27.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test27.html $(ER)/test27.html; fi
+		then diff  $(AR)/test27.html $(ER)/test27.html; \
+		else echo "==deferring: \` diff  $(AR)/test27.html $(ER)/test27.html \`"; fi
 
 	$(SAXON) test28.xml ../html/html.xsl splitLevel=0  STDOUT=false $(SAXONOPT)
 	xmllint --format index.html > $(AR)/test28.html ; rm index.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test28.html $(ER)/test28.html; fi
+		then diff  $(AR)/test28.html $(ER)/test28.html; \
+		else echo "==deferring: \` diff  $(AR)/test28.html $(ER)/test28.html \`"; fi
 
 	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFiles=../tei.css $(SAXONOPT)  | xmllint --format - > $(AR)/test31.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test31.html $(ER)/test31.html; fi
+		then diff  $(AR)/test31.html $(ER)/test31.html; \
+		else echo "==deferring: \` diff  $(AR)/test31.html $(ER)/test31.html \`"; fi
 
 	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFiles=../tei.css $(SAXONOPT)  | xmllint --format - > $(AR)/test32.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test32.html $(ER)/test32.html; fi
+		then diff  $(AR)/test32.html $(ER)/test32.html; \
+		else echo "==deferring: \` diff  $(AR)/test32.html $(ER)/test32.html \`"; fi
 
 test-from-html: actual
 	$(SAXON) test38.htm ../html/html2tei.xsl $(SAXONOPT)  | xmllint --format - > $(AR)/test38.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test38.xml $(ER)/test38.xml; fi
+		then diff  $(AR)/test38.xml $(ER)/test38.xml; \
+		else echo "==deferring: \` diff  $(AR)/test38.xml $(ER)/test38.xml \`"; fi
 
 test-markdown: actual
 	@echo BUILD: testing markdown
@@ -259,30 +281,36 @@ test-markdown: actual
 	@echo BUILD: markdown to tei
 	$(BINDIR)/markdowntotei $(FLAGS) mdtest1.md $(AR)/mdtest1.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/mdtest1.xml $(ER)/mdtest1.xml; fi
+		then diff  $(AR)/mdtest1.xml $(ER)/mdtest1.xml; \
+		else echo "==deferring: \` diff  $(AR)/mdtest1.xml $(ER)/mdtest1.xml \`"; fi
 
 	@echo BUILD: tei to markdown
 	$(BINDIR)/teitomarkdown $(FLAGS) test.xml $(AR)/mdtest2.md
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/mdtest2.md $(ER)/mdtest2.md; fi
+		then diff  $(AR)/mdtest2.md $(ER)/mdtest2.md; \
+		else echo "==deferring: \` diff  $(AR)/mdtest2.md $(ER)/mdtest2.md \`"; fi
 
 test-cocoa: actual
 	@echo BUILD: testing cocoa to TEI
 	$(BINDIR)/cocoatotei $(FLAGS) cocoatest.txt $(AR)/cocoatest.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/cocoatest.xml $(ER)/cocoatest.xml; fi
+		then diff  $(AR)/cocoatest.xml $(ER)/cocoatest.xml; \
+		else echo "==deferring: \` diff  $(AR)/cocoatest.xml $(ER)/cocoatest.xml \`"; fi
 	$(BINDIR)/cocoatotei $(FLAGS) cocoatest2.txt $(AR)/cocoatest2.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/cocoatest2.xml $(ER)/cocoatest2.xml; fi
+		then diff  $(AR)/cocoatest2.xml $(ER)/cocoatest2.xml; \
+		else echo "==deferring: \` diff  $(AR)/cocoatest2.xml $(ER)/cocoatest2.xml \`"; fi
 
 test-p4top5: actual
 	@echo BUILD: testing p4top5
 	$(SAXON) -o:$(AR)/test17.tei test17.xml ../profiles/default/p4/from.xsl
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test17.tei $(ER)/test17.tei; fi
+		then diff  $(AR)/test17.tei $(ER)/test17.tei; \
+		else echo "==deferring: \` diff  $(AR)/test17.tei $(ER)/test17.tei \`"; fi
 	$(SAXON) A54031.tcp ../tcp/tcp2tei.xsl | xmllint --format - > $(AR)/A54031.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/A54031.xml $(ER)/A54031.xml; fi
+		then diff  $(AR)/A54031.xml $(ER)/A54031.xml; \
+		else echo "==deferring: \` diff  $(AR)/A54031.xml $(ER)/A54031.xml \`"; fi
 
 testsplit:
 	$(SAXON) test6.xml ../html/html.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
@@ -291,31 +319,40 @@ test-latex: actual
 	@echo BUILD: testing latex
 	$(SAXON) -o:$(AR)/test.tex test.xml ../latex/latex.xsl  $(SAXONOPT)
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.tex $(ER)/test.tex; fi
+		then diff  $(AR)/test.tex $(ER)/test.tex; \
+		else echo "==deferring: \` diff  $(AR)/test.tex $(ER)/test.tex \`"; fi
 	$(SAXON) -o:$(AR)/testnotes1.tex testnotes1.xml ../latex/latex.xsl  $(SAXONOPT)
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/testnotes1.tex $(ER)/testnotes1.tex; fi
+		then diff  $(AR)/testnotes1.tex $(ER)/testnotes1.tex; \
+		else echo "==deferring: \` diff  $(AR)/testnotes1.tex $(ER)/testnotes1.tex \`"; fi
 	$(SAXON) -o:$(AR)/test5.tex test5.xml ../latex/latex.xsl  $(SAXONOPT)
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test5.tex $(ER)/test5.tex; fi
+		then diff  $(AR)/test5.tex $(ER)/test5.tex; \
+		else echo "==deferring: \` diff  $(AR)/test5.tex $(ER)/test5.tex \`"; fi
 	$(SAXON) -o:$(AR)/test6.tex test6.xml ../slides/teilatex-slides.xsl $(SAXONOPT)
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test6.tex $(ER)/test6.tex; fi
+		then diff  $(AR)/test6.tex $(ER)/test6.tex; \
+		else echo "==deferring: \` diff  $(AR)/test6.tex $(ER)/test6.tex \`"; fi
 	$(SAXON) -o:$(AR)/test20.tex test20.xml ../latex/latex.xsl $(SAXONOPT)
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test20.tex $(ER)/test20.tex; fi
+		then diff  $(AR)/test20.tex $(ER)/test20.tex; \
+		else echo "==deferring: \` diff  $(AR)/test20.tex $(ER)/test20.tex \`"; fi
 	$(SAXON) -o:$(AR)/test23.tex test23.xml ../latex/latex.xsl $(SAXONOPT)
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test23.tex $(ER)/test23.tex; fi
+		then diff  $(AR)/test23.tex $(ER)/test23.tex; \
+		else echo "==deferring: \` diff  $(AR)/test23.tex $(ER)/test23.tex \`"; fi
 	$(SAXON) -o:$(AR)/test24.tex test24.xml ../latex/latex.xsl $(SAXONOPT)
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test24.tex $(ER)/test24.tex; fi
+		then diff  $(AR)/test24.tex $(ER)/test24.tex; \
+		else echo "==deferring: \` diff  $(AR)/test24.tex $(ER)/test24.tex \`"; fi
 	$(SAXON) -o:$(AR)/test25.tex test25.xml ../latex/latex.xsl $(SAXONOPT)
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test25.tex $(ER)/test25.tex; fi
+		then diff  $(AR)/test25.tex $(ER)/test25.tex; \
+		else echo "==deferring: \` diff  $(AR)/test25.tex $(ER)/test25.tex \`"; fi
 	$(SAXON) -o:$(AR)/test27.tex test27.xml ../latex/latex.xsl $(SAXONOPT)
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test27.tex $(ER)/test27.tex; fi
+		then diff  $(AR)/test27.tex $(ER)/test27.tex; \
+		else echo "==deferring: \` diff  $(AR)/test27.tex $(ER)/test27.tex \`"; fi
 
 test-fo: actual
 	@echo BUILD: testing fo
@@ -325,32 +362,38 @@ test-fo: actual
 	@echo ":gudeD"
 	$(JING) fo.xsd $(AR)/test.fo
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.fo $(ER)/test.fo; fi
+		then diff  $(AR)/test.fo $(ER)/test.fo; \
+		else echo "==deferring: \` diff  $(AR)/test.fo $(ER)/test.fo \`"; fi
 
 	$(SAXON)  test5.xml ../fo/fo.xsl  $(SAXONOPT)  | xmllint --format - > $(AR)/test5.fo
 	$(JING) fo.xsd $(AR)/test5.fo
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test5.fo $(ER)/test5.fo; fi
+		then diff  $(AR)/test5.fo $(ER)/test5.fo; \
+		else echo "==deferring: \` diff  $(AR)/test5.fo $(ER)/test5.fo \`"; fi
 
 	$(SAXON) testnotes1.xml ../fo/fo.xsl  $(SAXONOPT)   | xmllint --format - > $(AR)/testnotes1.fo
 	$(JING) fo.xsd $(AR)/testnotes1.fo
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/testnotes1.fo $(ER)/testnotes1.fo; fi
+		then diff  $(AR)/testnotes1.fo $(ER)/testnotes1.fo; \
+		else echo "==deferring: \` diff  $(AR)/testnotes1.fo $(ER)/testnotes1.fo \`"; fi
 
 	$(SAXON) -o:$(AR)/test24.fo test24.xml ../fo/fo.xsl $(SAXONOPT)
 	$(JING) fo.xsd $(AR)/test24.fo
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test24.fo $(ER)/test24.fo; fi
+		then diff  $(AR)/test24.fo $(ER)/test24.fo; \
+		else echo "==deferring: \` diff  $(AR)/test24.fo $(ER)/test24.fo \`"; fi
 
 	$(SAXON) -o:$(AR)/test25.fo test25.xml ../fo/fo.xsl $(SAXONOPT)
 	$(JING) fo.xsd $(AR)/test25.fo
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test25.fo $(ER)/test25.fo; fi
+		then diff  $(AR)/test25.fo $(ER)/test25.fo; \
+		else echo "==deferring: \` diff  $(AR)/test25.fo $(ER)/test25.fo \`"; fi
 
 	$(SAXON) test27.xml ../fo/fo.xsl $(SAXONOPT) | xmllint --format - > $(AR)/test27.fo
 	$(JING) fo.xsd $(AR)/test27.fo
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test27.fo $(ER)/test27.fo; fi
+		then diff  $(AR)/test27.fo $(ER)/test27.fo; \
+		else echo "==deferring: \` diff  $(AR)/test27.fo $(ER)/test27.fo \`"; fi
 
 test-epub: actual css
 	@echo BUILD: testing epub
@@ -362,30 +405,35 @@ test-epub: actual css
 
 	unzip -t $(AR)/test.epub > $(AR)/test.epub.listing
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then bash -c 'diff  <(sort $(AR)/test.epub.listing) <(sort $(ER)/test.epub.listing)'; fi
+		then bash -c 'diff  <(sort $(AR)/test.epub.listing) <(sort $(ER)/test.epub.listing)'; \
+		else echo "==deferring: \` bash -c 'diff  <(sort $(AR)/test.epub.listing) <(sort $(ER)/test.epub.listing)' \`"; fi
 
 	$(BINDIR)/teitoepub $(FLAGS) --fileperpage test.xml $(AR)/test-pages.epub
 	unzip -t $(AR)/test-pages.epub > $(AR)/test.epub.listing2
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then bash -c 'diff  <(sort $(AR)/test.epub.listing2) <(sort $(ER)/test.epub.listing2)'; fi
+		then bash -c 'diff  <(sort $(AR)/test.epub.listing2) <(sort $(ER)/test.epub.listing2)'; \
+		else echo "==deferring: \` bash -c 'diff  <(sort $(AR)/test.epub.listing2) <(sort $(ER)/test.epub.listing2)' \`"; fi
 
 test-rdf: actual
 	@echo BUILD: testing rdf
 	$(SAXON) -o:$(AR)/test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test12.rdf $(ER)/test12.rdf; fi
+		then diff  $(AR)/test12.rdf $(ER)/test12.rdf; \
+		else echo "==deferring: \` diff  $(AR)/test12.rdf $(ER)/test12.rdf \`"; fi
 
 test-text: actual
 	@echo BUILD: testing text
 	$(BINDIR)/teitotxt $(FLAGS) test14.xml $(AR)/test.text
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.text $(ER)/test.text; fi
+		then diff  $(AR)/test.text $(ER)/test.text; \
+		else echo "==deferring: \` diff  $(AR)/test.text $(ER)/test.text \`"; fi
 
 test-xlsx: actual
 	@echo BUILD: testing xlsx
 	$(BINDIR)/xlsxtotei $(FLAGS) test.xlsx $(AR)/test.xlsx.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.xlsx.xml $(ER)/test.xlsx.xml; fi
+		then diff  $(AR)/test.xlsx.xml $(ER)/test.xlsx.xml; \
+		else echo "==deferring: \` diff  $(AR)/test.xlsx.xml $(ER)/test.xlsx.xml \`"; fi
 
 test-odt:   test.rng
 	(cd ..; $(MAKE) names)
@@ -394,18 +442,21 @@ test-odt:   test.rng
 	$(BINDIR)/teitoodt $(FLAGS) test.xml $(AR)/test.xml.odt
 	unzip -t $(AR)/test.xml.odt | sort > $(AR)/test.xml.odt.listing
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then bash -c 'diff  <(sort $(AR)/test.xml.odt.listing) <(sort $(ER)/test.xml.odt.listing)'; fi
+		then bash -c 'diff  <(sort $(AR)/test.xml.odt.listing) <(sort $(ER)/test.xml.odt.listing)'; \
+		else echo "==deferring: \` bash -c 'diff  <(sort $(AR)/test.xml.odt.listing) <(sort $(ER)/test.xml.odt.listing)' \`"; fi
 
 	unzip -o -q $(AR)/test.xml.odt content.xml
 	xmllint --format content.xml > $(AR)/test.xml.odt_content.xml
 	rm content.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.xml.odt_content.xml $(ER)/test.xml.odt_content.xml; fi
+		then diff  $(AR)/test.xml.odt_content.xml $(ER)/test.xml.odt_content.xml; \
+		else echo "==deferring: \` diff  $(AR)/test.xml.odt_content.xml $(ER)/test.xml.odt_content.xml \`"; fi
 
 	$(BINDIR)/odttotei $(FLAGS) test7.odt $(AR)/test7.xml
 	$(JING) $(AR)/test.rng $(AR)/test7.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test7.xml $(ER)/test7.xml; fi
+		then diff  $(AR)/test7.xml $(ER)/test7.xml; \
+		else echo "==deferring: \` diff  $(AR)/test7.xml $(ER)/test7.xml \`"; fi
 
 test-from-docx: test.rng
 	@echo BUILD: testing from-docx
@@ -414,60 +465,71 @@ test-from-docx: test.rng
 	xmllint --format temp.xml | perl cleanup.pl > $(AR)/test-indexes.xml  && rm temp.xml
 	$(JING) $(AR)/test.rng $(AR)/test-indexes.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-indexes.xml $(ER)/test-indexes.xml; fi
+		then diff  $(AR)/test-indexes.xml $(ER)/test-indexes.xml; \
+		else echo "==deferring: \` diff  $(AR)/test-indexes.xml $(ER)/test-indexes.xml \`"; fi
 
 	$(BINDIR)/docxtotei $(FLAGS) test11.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl> $(AR)/test11.xml  && rm temp.xml
 	$(JING) $(AR)/test.rng $(AR)/test11.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test11.xml $(ER)/test11.xml; fi
+		then diff  $(AR)/test11.xml $(ER)/test11.xml; \
+		else echo "==deferring: \` diff  $(AR)/test11.xml $(ER)/test11.xml \`"; fi
 
 	$(BINDIR)/docxtotei $(FLAGS) --profile=sciencejournal test11.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl> $(AR)/test11a.xml  && rm temp.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test11a.xml $(ER)/test11a.xml; fi
+		then diff  $(AR)/test11a.xml $(ER)/test11a.xml; \
+		else echo "==deferring: \` diff  $(AR)/test11a.xml $(ER)/test11a.xml \`"; fi
 
 	$(BINDIR)/docxtotei $(FLAGS) test19.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > $(AR)/test19.xml  && rm temp.xml
 	$(JING) $(AR)/test.rng $(AR)/test19.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test19.xml $(ER)/test19.xml; fi
+		then diff  $(AR)/test19.xml $(ER)/test19.xml; \
+		else echo "==deferring: \` diff  $(AR)/test19.xml $(ER)/test19.xml \`"; fi
 
 	$(BINDIR)/docxtotei $(FLAGS) test18.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > $(AR)/test18.xml  && rm temp.xml
 	$(JING) $(AR)/test.rng $(AR)/test18.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test18.xml $(ER)/test18.xml; fi
+		then diff  $(AR)/test18.xml $(ER)/test18.xml; \
+		else echo "==deferring: \` diff  $(AR)/test18.xml $(ER)/test18.xml \`"; fi
 
 	$(BINDIR)/docxtotei $(FLAGS) test39.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > $(AR)/test39.xml  && rm temp.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test39.xml $(ER)/test39.xml; fi
+		then diff  $(AR)/test39.xml $(ER)/test39.xml; \
+		else echo "==deferring: \` diff  $(AR)/test39.xml $(ER)/test39.xml \`"; fi
 
 	$(BINDIR)/docxtotei $(FLAGS) hyperlinktest.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > $(AR)/hyperlinktest.xml  && rm temp.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/hyperlinktest.xml $(ER)/hyperlinktest.xml; fi
+		then diff  $(AR)/hyperlinktest.xml $(ER)/hyperlinktest.xml; \
+		else echo "==deferring: \` diff  $(AR)/hyperlinktest.xml $(ER)/hyperlinktest.xml \`"; fi
 
 	$(BINDIR)/docxtotei $(FLAGS) --profile=transcription test-rtf2tei.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > $(AR)/test-rtf2tei.xml  && rm temp.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-rtf2tei.xml $(ER)/test-rtf2tei.xml; fi
+		then diff  $(AR)/test-rtf2tei.xml $(ER)/test-rtf2tei.xml; \
+		else echo "==deferring: \` diff  $(AR)/test-rtf2tei.xml $(ER)/test-rtf2tei.xml \`"; fi
 
 	$(BINDIR)/docxtotei $(FLAGS) --profile=transcription test29.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > $(AR)/test29.xml  && rm temp.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test29.xml $(ER)/test29.xml; fi
+		then diff  $(AR)/test29.xml $(ER)/test29.xml; \
+		else echo "==deferring: \` diff  $(AR)/test29.xml $(ER)/test29.xml \`"; fi
 
 	$(BINDIR)/docxtotei $(FLAGS) --profile=tei test37.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > $(AR)/test37.xml  && rm temp.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test37.xml $(ER)/test37.xml; fi
+		then diff  $(AR)/test37.xml $(ER)/test37.xml; \
+		else echo "==deferring: \` diff  $(AR)/test37.xml $(ER)/test37.xml \`"; fi
 
 	$(BINDIR)/docxtotei $(FLAGS) --profile=tei test40.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > $(AR)/test40.xml  && rm temp.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test40.xml $(ER)/test40.xml; fi
+		then diff  $(AR)/test40.xml $(ER)/test40.xml; \
+		else echo "==deferring: \` diff  $(AR)/test40.xml $(ER)/test40.xml \`"; fi
 
 test-to-docx:
 	@echo BUILD: testing to-docx
@@ -476,19 +538,23 @@ test-to-docx:
 	unzip -p test.xml.docx word/document.xml | xmllint --format - > $(AR)/test.xml.docx_document.xml
 	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > $(AR)/test.xml.docx_core.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.xml.docx_document.xml $(ER)/test.xml.docx_document.xml; fi
+		then diff  $(AR)/test.xml.docx_document.xml $(ER)/test.xml.docx_document.xml; \
+		else echo "==deferring: \` diff  $(AR)/test.xml.docx_document.xml $(ER)/test.xml.docx_document.xml \`"; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.xml.docx_core.xml $(ER)/test.xml.docx_core.xml; fi
+		then diff  $(AR)/test.xml.docx_core.xml $(ER)/test.xml.docx_core.xml; \
+		else echo "==deferring: \` diff  $(AR)/test.xml.docx_core.xml $(ER)/test.xml.docx_core.xml \`"; fi
 
 	$(BINDIR)/teitodocx $(FLAGS) test6.xml
 	unzip -p test6.xml.docx word/document.xml | xmllint --format - > $(AR)/test6.xml.docx_document.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test6.xml.docx_document.xml $(ER)/test6.xml.docx_document.xml; fi
+		then diff  $(AR)/test6.xml.docx_document.xml $(ER)/test6.xml.docx_document.xml; \
+		else echo "==deferring: \` diff  $(AR)/test6.xml.docx_document.xml $(ER)/test6.xml.docx_document.xml \`"; fi
 
 	$(BINDIR)/teitodocx $(FLAGS) testnotes1.xml
 	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > $(AR)/testnotes1.xml.docx_document.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/testnotes1.xml.docx_document.xml $(ER)/testnotes1.xml.docx_document.xml; fi
+		then diff  $(AR)/testnotes1.xml.docx_document.xml $(ER)/testnotes1.xml.docx_document.xml; \
+		else echo "==deferring: \` diff  $(AR)/testnotes1.xml.docx_document.xml $(ER)/testnotes1.xml.docx_document.xml \`"; fi
 
 	$(SAXON) testoucscourses.xml ../profiles/default/p4/from.xsl > $(AR)/testoucscoursesp5.xml
 	$(BINDIR)/teitodocx $(FLAGS) --profile=oucscourses $(AR)/testoucscoursesp5.xml $(AR)/testoucscourses.xml.docx
@@ -499,34 +565,40 @@ test-oddity: actual css
 	$(BINDIR)/teitohtml5 $(FLAGS) --summaryDoc --odd test.odd $(AR)/test.odd.html
 	xmllint --encode utf-8 --format $(AR)/test.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test.odd.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.odd.html $(ER)/test.odd.html; fi
+		then diff  $(AR)/test.odd.html $(ER)/test.odd.html; \
+		else echo "==deferring: \` diff  $(AR)/test.odd.html $(ER)/test.odd.html \`"; fi
 
 	$(BINDIR)/teitoodd $(FLAGS) test.odd $(AR)/test.processedodd
 	$(SAXON) $(AR)/test.processedodd ../odds/extract-isosch.xsl > $(AR)/test.isosch
 	perl -i -p -e 's/This file generated [0-9T:Z-]+ by .extract-isosch.xsl./DELETED TIMESTAMP/' $(AR)/test.isosch
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.isosch $(ER)/test.isosch; fi
+		then diff  $(AR)/test.isosch $(ER)/test.isosch; \
+		else echo "==deferring: \` diff  $(AR)/test.isosch $(ER)/test.isosch \`"; fi
 
 	$(BINDIR)/teitornc $(FLAGS) test21.odd $(AR)/test21.odd.rnc
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test21.odd.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test21.odd.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test21.odd.rnc $(ER)/test21.odd.rnc; fi
+		then diff  $(AR)/test21.odd.rnc $(ER)/test21.odd.rnc; \
+		else echo "==deferring: \` diff  $(AR)/test21.odd.rnc $(ER)/test21.odd.rnc \`"; fi
 
 	$(BINDIR)/teitornc  $(FLAGS) test15.odd $(AR)/test15.odd.rnc
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test15.odd.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test15.odd.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test15.odd.rnc $(ER)/test15.odd.rnc; fi
+		then diff  $(AR)/test15.odd.rnc $(ER)/test15.odd.rnc; \
+		else echo "==deferring: \` diff  $(AR)/test15.odd.rnc $(ER)/test15.odd.rnc \`"; fi
 
 	$(BINDIR)/teitohtml5 $(FLAGS) --summaryDoc --lang=es --profile=tei --odd test15.odd $(AR)/test15.odd.html
 	xmllint --encode utf-8 --format $(AR)/test15.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test15.odd.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test15.odd.html $(ER)/test15.odd.html; fi
+		then diff  $(AR)/test15.odd.html $(ER)/test15.odd.html; \
+		else echo "==deferring: \` diff  $(AR)/test15.odd.html $(ER)/test15.odd.html \`"; fi
 
 	$(SAXON) -it:main  -xsl:../tools/oddbyexample.xsl corpus=`pwd`/bare | sed 's/<p>Derived from.*/<p\/>/' >  $(AR)/oddbyexample.odd
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/oddbyexample.odd $(ER)/oddbyexample.odd; fi
+		then diff  $(AR)/oddbyexample.odd $(ER)/oddbyexample.odd; \
+		else echo "==deferring: \` diff  $(AR)/oddbyexample.odd $(ER)/oddbyexample.odd \`"; fi
 	$(BINDIR)/teitoxsd  $(FLAGS) $(AR)/oddbyexample.odd  $(AR)/oddbyexample.xsd
 	$(BINDIR)/teitornc  $(FLAGS) $(AR)/oddbyexample.odd  $(AR)/oddbyexample.rnc
 	$(BINDIR)/teitodtd  $(FLAGS) $(AR)/oddbyexample.odd  $(AR)/oddbyexample.dtd
@@ -542,7 +614,8 @@ test-oddity: actual css
 	perl -i -pe 'BEGIN{undef $$/;} s/<\?TEIVERSION[^?]+\?>//smg' $(AR)/testdrama.compiled.xml
 	perl -i -pe 's+(schemaSpec.*source=")$(DEFAULTSOURCE)+$$1https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml+' $(AR)/testdrama.compiled.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/testdrama.compiled.xml $(ER)/testdrama.compiled.xml; fi
+		then diff  $(AR)/testdrama.compiled.xml $(ER)/testdrama.compiled.xml; \
+		else echo "==deferring: \` diff  $(AR)/testdrama.compiled.xml $(ER)/testdrama.compiled.xml \`"; fi
 
 	$(BINDIR)/teitornc $(FLAGS) test30.odd $(AR)/test30.rnc
 	$(BINDIR)/teitodtd $(FLAGS) test30.odd $(AR)/test30.dtd
@@ -553,9 +626,11 @@ test-oddity: actual css
 	$(JING) -c $(AR)/test30.rnc test36.xml
 	xmllint --noout --dtdvalid $(AR)/test30.dtd test36.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test30.rnc $(ER)/test30.rnc; fi
+		then diff  $(AR)/test30.rnc $(ER)/test30.rnc; \
+		else echo "==deferring: \` diff  $(AR)/test30.rnc $(ER)/test30.rnc \`"; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test30.dtd $(ER)/test30.dtd; fi
+		then diff  $(AR)/test30.dtd $(ER)/test30.dtd; \
+		else echo "==deferring: \` diff  $(AR)/test30.dtd $(ER)/test30.dtd \`"; fi
 
 # MDH 2017-01-07: THE FOLLOWING LINES WILL integrate LB's new pure ODD 
 # master test to replace originals, BUT ONLY WHEN THINGS ARE WORKING PROPERLY.
@@ -583,13 +658,16 @@ test-oddity: actual css
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test-pure.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test-pure.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-pure.rnc $(ER)/test-pure.rnc; fi
+		then diff  $(AR)/test-pure.rnc $(ER)/test-pure.rnc; \
+		else echo "==deferring: \` diff  $(AR)/test-pure.rnc $(ER)/test-pure.rnc \`"; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-pure.dtd $(ER)/test-pure.dtd; fi
+		then diff  $(AR)/test-pure.dtd $(ER)/test-pure.dtd; \
+		else echo "==deferring: \` diff  $(AR)/test-pure.dtd $(ER)/test-pure.dtd \`"; fi
 	$(BINDIR)/teitohtml $(FLAGS) --odd test-pure.odd $(AR)/test-pure.odd.html
 	xmllint --encode utf-8 --format $(AR)/test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test-pure.odd.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-pure.odd.html $(ER)/test-pure.odd.html; fi
+		then diff  $(AR)/test-pure.odd.html $(ER)/test-pure.odd.html; \
+		else echo "==deferring: \` diff  $(AR)/test-pure.odd.html $(ER)/test-pure.odd.html \`"; fi
 
 	$(BINDIR)/teitodtd $(FLAGS) test-pure2.odd $(AR)/test-pure2.dtd
 	$(BINDIR)/teitornc $(FLAGS) test-pure2.odd $(AR)/test-pure2.rnc
@@ -601,11 +679,14 @@ test-oddity: actual css
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test-pure2.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test-pure2.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-pure2.rnc $(ER)/test-pure2.rnc; fi
+		then diff  $(AR)/test-pure2.rnc $(ER)/test-pure2.rnc; \
+		else echo "==deferring: \` diff  $(AR)/test-pure2.rnc $(ER)/test-pure2.rnc \`"; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-pure2.dtd $(ER)/test-pure2.dtd; fi
+		then diff  $(AR)/test-pure2.dtd $(ER)/test-pure2.dtd; \
+		else echo "==deferring: \` diff  $(AR)/test-pure2.dtd $(ER)/test-pure2.dtd \`"; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-pure2.odd.html $(ER)/test-pure2.odd.html; fi
+		then diff  $(AR)/test-pure2.odd.html $(ER)/test-pure2.odd.html; \
+		else echo "==deferring: \` diff  $(AR)/test-pure2.odd.html $(ER)/test-pure2.odd.html \`"; fi
 
 	$(SAXON) test.odd ../odds/odd2odd.xsl > $(AR)/test.odd2odd
 	$(SAXON) $(AR)/test.odd2odd ../odds/odd2dtd.xsl > $(AR)/test.odd2dtd
@@ -635,36 +716,43 @@ test-namespaces: actual
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test33.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test33.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test33.rnc $(ER)/test33.rnc; fi
+		then diff  $(AR)/test33.rnc $(ER)/test33.rnc; \
+		else echo "==deferring: \` diff  $(AR)/test33.rnc $(ER)/test33.rnc \`"; fi
 	$(SAXON) test33.odd ../odds/odd2json.xsl > $(AR)/test33.json
 	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' $(AR)/test33.json
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test33.json $(ER)/test33.json; fi
+		then diff  $(AR)/test33.json $(ER)/test33.json; \
+		else echo "==deferring: \` diff  $(AR)/test33.json $(ER)/test33.json \`"; fi
 
 	$(BINDIR)/teitornc $(FLAGS) test34.odd $(AR)/test34.rnc
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test34.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test34.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test34.rnc $(ER)/test34.rnc; fi
+		then diff  $(AR)/test34.rnc $(ER)/test34.rnc; \
+		else echo "==deferring: \` diff  $(AR)/test34.rnc $(ER)/test34.rnc \`"; fi
 	$(SAXON) test34.odd ../odds/odd2json.xsl > $(AR)/test34.json
 	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' $(AR)/test34.json
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test34.json $(ER)/test34.json; fi
+		then diff  $(AR)/test34.json $(ER)/test34.json; \
+		else echo "==deferring: \` diff  $(AR)/test34.json $(ER)/test34.json \`"; fi
 	$(SAXON) test34.odd ../odds/odd2odd.xsl > $(AR)/test34.combined.odd
 	$(SAXON) $(AR)/test34.combined.odd ../odds/odd2json.xsl > $(AR)/test34.combined.json
 	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' $(AR)/test34.combined.json
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test34.combined.json $(ER)/test34.combined.json; fi
+		then diff  $(AR)/test34.combined.json $(ER)/test34.combined.json; \
+		else echo "==deferring: \` diff  $(AR)/test34.combined.json $(ER)/test34.combined.json \`"; fi
 	$(BINDIR)/teitohtml $(FLAGS) --odd --summaryDoc test34.odd $(AR)/test34.odd.html
 	xmllint --encode utf-8 --format $(AR)/test34.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test34.odd.html
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test34.odd.html $(ER)/test34.odd.html; fi
+		then diff  $(AR)/test34.odd.html $(ER)/test34.odd.html; \
+		else echo "==deferring: \` diff  $(AR)/test34.odd.html $(ER)/test34.odd.html \`"; fi
 
 	$(BINDIR)/teitornc $(FLAGS) test35.odd $(AR)/test35.rnc
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test35.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test35.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test35.rnc $(ER)/test35.rnc; fi
+		then diff  $(AR)/test35.rnc $(ER)/test35.rnc; \
+		else echo "==deferring: \` diff  $(AR)/test35.rnc $(ER)/test35.rnc \`"; fi
 
 test-scripts:
 	for i in $(SCRIPTS); do $(BINDIR)/$$i $(FLAGS) maria.xml $$i.result && rm $$i.result; done

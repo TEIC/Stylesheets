@@ -879,7 +879,7 @@ Elements</ref>
   </classes>
   <attList>
     <attDef ident="calendar" usage="opt">
-      <desc versionDate="2011-11-25" xml:lang="en">indicates the system or calendar to which the
+      <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
         date represented by the content of this element belongs.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
@@ -890,21 +890,34 @@ Elements</ref>
         una fecha.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
         appartiene.</desc>
-      <datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
       <constraintSpec ident="calendar" scheme="schematron">
         <constraint>
           <sch:rule context="tei:*[@calendar]">
-            <sch:assert test="string-length(.) gt 0"> @calendar indicates the system or calendar to
+            <sch:assert test="string-length(.) gt 0"> @calendar indicates one or more systems or calendars to
               which the date represented by the content of this element belongs, but this
               <sch:name/> element has no textual content.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
       <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="#gregorian">Feb. 22, 1732</date> (<date calendar="#julian" when="1732-02-22"> Feb. 11, 1731/32,
-            O.S.</date>).</egXML>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="#gregorian">Feb. 22, 1732</date> (<date calendar="#julian" when="1732-02-22">Feb. 11, 1731/32,
+            O.S.</date>).
+        </egXML> 
+      </exemplum>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          He was born on <date calendar="#gregorian #julian" when="1732-02-22">Feb. 22, 1732 
+            (Feb. 11, 1731/32, O.S.)</date>.
+        </egXML>
+      </exemplum>
+      <exemplum xml:lang="de">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <date calendar="#julian #gregorian" when="1829-05-19">Dienstag 7/19
+          Mai</date>.
+        </egXML>
       </exemplum>
       <exemplum versionDate="2008-04-06" xml:lang="fr">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Bouiller_Rapport"> L'année
@@ -923,8 +936,8 @@ Elements</ref>
         どの暦日に日付を正規化するかではない。</p></remarks>
     </attDef>
     <attDef ident="period" usage="opt">
-      <desc versionDate="2011-11-25" xml:lang="en">supplies a pointer to some location defining a
-        named period of time within which the datable item is understood to have occurred.</desc>
+      <desc versionDate="2021-04-19" xml:lang="en">supplies pointers to one or more definitions of 
+        named periods of time (typically <gi>category</gi>s or <gi>calendar</gi>s) within which the datable item is understood to have occurred.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">시간을 명시할 수 있는 항목이 일어난 시간의 기간명을 정의하는 특정 위치로의 포인터를
         제공한다.</desc>
       <desc versionDate="2008-04-06" xml:lang="es">suministra un indicador a una localización
@@ -937,7 +950,7 @@ Elements</ref>
       <desc versionDate="2007-11-06" xml:lang="it">fornisce un puntatore a una data posizione
         definendo un determinato periodo di tempo entro il quale l'oggetto da datare è
         collocabile</desc>
-      <datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
     </attDef>
@@ -1962,26 +1975,27 @@ the TEI header.</p>
       </exemplum>
       <remarks versionDate="2019-11-14" xml:lang="en">
         <p>The <att>xml:lang</att> value will be inherited from the immediately
-enclosing element, or from its parent, and so on up the document hierarchy.
-It is generally good practice to specify <att>xml:lang</att> at the highest
-appropriate level, noticing that a different default may be needed for the
-<gi>teiHeader</gi> from that needed for the associated resource element or elements,
-and that a single TEI document may contain texts in many languages.</p>
+          enclosing element, or from its parent, and so on up the document hierarchy.
+          It is generally good practice to specify <att>xml:lang</att> at the highest
+          appropriate level, noticing that a different default may be needed for the
+          <gi>teiHeader</gi> from that needed for the associated resource element or elements,
+          and that a single TEI document may contain texts in many languages.</p>
+        <p>Only attributes with free text values (rare in these guidelines) will be in the scope of <att>xml:lang</att>.</p>
         <p>The authoritative list of registered language subtags is maintained by IANA and 
           is available at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. 
           For a good general overview of the construction of language tags, see 
           <ptr target="http://www.w3.org/International/articles/language-tags/"/>, and for 
           a practical step-by-step guide, see 
           <ptr target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/>.</p>
-<p>The value used must conform with BCP 47. If the value is a
-      private use code (i.e., starts with <val>x-</val> or contains
-      <val>-x-</val>), a <gi>language</gi> element with a matching
-      value for its <att>ident</att> attribute should be supplied in
-      the TEI header to document this value. Such documentation may
-      also optionally be supplied for non-private-use codes, though
-      these must remain consistent with their
-      <choice><abbr>IETF</abbr><expan>Internet Engineering Task
-      Force</expan></choice> definitions.</p>
+        <p>The value used must conform with BCP 47. If the value is a
+          private use code (i.e., starts with <val>x-</val> or contains
+          <val>-x-</val>), a <gi>language</gi> element with a matching
+          value for its <att>ident</att> attribute should be supplied in
+          the TEI header to document this value. Such documentation may
+          also optionally be supplied for non-private-use codes, though
+          these must remain consistent with their
+          <choice><abbr>IETF</abbr><expan>Internet Engineering Task
+          Force</expan></choice> definitions.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p> Si aucune valeur n'est indiquée pour <att>xml:lang</att>, la valeur de
@@ -4459,6 +4473,7 @@ Elements</ref>
   <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che contengono una descrizione bibliografica</desc>
   <classes>
     <memberOf key="model.inter"/>
+    
     
     
     <memberOf key="model.standOffPart"/>
