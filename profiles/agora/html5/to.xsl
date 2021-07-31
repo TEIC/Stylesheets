@@ -8,7 +8,7 @@
     <!-- import base conversion style -->
 
     <xsl:import href="../../../html5/html5.xsl"/>
-    <xsl:import href="../../../html5/microdata.xsl"/>
+    <xsl:import href="../../../html/microdata.xsl"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
