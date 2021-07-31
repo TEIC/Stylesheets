@@ -147,18 +147,18 @@ css:
 
 test-to-html: actual css
 	@echo BUILD: testing html
-	$(SAXON)  test.xml ../html/html.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > $(AR)/test.html
+	$(SAXON)  test.xml ../html/html.xsl cssFile=../tei.css $(SAXONOPT) | tidy -config config_tidy.txt - > $(AR)/test.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test.html $(ER)/test.html; \
 		else echo "==deferring: \` diff  $(AR)/test.html $(ER)/test.html \`"; fi
 
 	$(SAXON) $(AR)/test.html checklinks.xsl
-	$(SAXON) test.xml ../html/html.xsl cssFile=../tei.css pageLayout=Complex  $(SAXONOPT)  | xmllint --format - > $(AR)/test-complex.html
+	$(SAXON) test.xml ../html/html.xsl cssFile=../tei.css pageLayout=Complex  $(SAXONOPT)  | tidy -config config_tidy.txt - > $(AR)/test-complex.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test-complex.html $(ER)/test-complex.html; \
 		else echo "==deferring: \` diff  $(AR)/test-complex.html $(ER)/test-complex.html \`"; fi
 
-	$(SAXON) test.xml ../profiles/ota/html/to.xsl cssFile=../tei.css $(SAXONOPT)  | xmllint --format - | perl cleanup.pl > $(AR)/test-ota.html
+	$(SAXON) test.xml ../profiles/ota/html/to.xsl cssFile=../tei.css $(SAXONOPT)  | tidy -config config_tidy.txt - | perl cleanup.pl > $(AR)/test-ota.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test-ota.html $(ER)/test-ota.html; \
 		else echo "==deferring: \` diff  $(AR)/test-ota.html $(ER)/test-ota.html \`"; fi
@@ -170,40 +170,40 @@ test-to-html: actual css
 		then diff  $(AR)/test.html5 $(ER)/test.html5; \
 		else echo "==deferring: \` diff  $(AR)/test.html5 $(ER)/test.html5 \`"; fi
 
-	$(SAXON) test20.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > $(AR)/test20.html
+	$(SAXON) test20.xml ../html/html.xsl $(SAXONOPT) | tidy -config config_tidy.txt - > $(AR)/test20.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test20.html $(ER)/test20.html; \
 		else echo "==deferring: \` diff  $(AR)/test20.html $(ER)/test20.html \`"; fi
 
-	$(SAXON) -versionmsg:off  test3.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > $(AR)/test3.html
-	$(SAXON) -versionmsg:off  test4.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > $(AR)/test4.html
+	$(SAXON) -versionmsg:off  test3.xml ../html/html.xsl $(SAXONOPT)| tidy -config config_tidy.txt - > $(AR)/test3.html
+	$(SAXON) -versionmsg:off  test4.xml ../html/html.xsl $(SAXONOPT)| tidy -config config_tidy.txt - > $(AR)/test4.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test4.html $(AR)/test3.html; \
 		else echo "==deferring: \` diff  $(AR)/test4.html $(AR)/test3.html \`"; fi
 
-	$(SAXON) test5.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > $(AR)/test5.xhtml
+	$(SAXON) test5.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | tidy -config config_tidy.txt - > $(AR)/test5.xhtml
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test5.xhtml $(ER)/test5.xhtml; \
 		else echo "==deferring: \` diff  $(AR)/test5.xhtml $(ER)/test5.xhtml \`"; fi
 	$(JING) -c xhtml.rnc $(AR)/test5.xhtml
 
-	$(SAXON) test6.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > $(AR)/test6.html
+	$(SAXON) test6.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | tidy -config config_tidy.txt - > $(AR)/test6.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test6.html $(ER)/test6.html; \
 		else echo "==deferring: \` diff  $(AR)/test6.html $(ER)/test6.html \`"; fi
 	$(JING) -c xhtml.rnc $(AR)/test6.html
 
-	$(SAXON) test14.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > $(AR)/test14.html
+	$(SAXON) test14.xml ../html/html.xsl $(SAXONOPT)| tidy -config config_tidy.txt - > $(AR)/test14.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test14.html $(ER)/test14.html; \
 		else echo "==deferring: \` diff  $(AR)/test14.html $(ER)/test14.html \`"; fi
 
-	$(SAXON) test22.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > $(AR)/test22.html
+	$(SAXON) test22.xml ../html/html.xsl $(SAXONOPT)| tidy -config config_tidy.txt - > $(AR)/test22.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test22.html $(ER)/test22.html; \
 		else echo "==deferring: \` diff  $(AR)/test22.html $(ER)/test22.html \`"; fi
 
-	$(SAXON) test23.xml ../html/html.xsl $(SAXONOPT)| xmllint --format - > $(AR)/test23.html
+	$(SAXON) test23.xml ../html/html.xsl $(SAXONOPT)| tidy -config config_tidy.txt - > $(AR)/test23.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test23.html $(ER)/test23.html; \
 		else echo "==deferring: \` diff  $(AR)/test23.html $(ER)/test23.html \`"; fi
@@ -215,62 +215,62 @@ test-to-html: actual css
 			splitLevel=4 useFixedDate=true STDOUT=false \
 			cssFile=../../../tei.css \
 	)
-	xmllint --format $(AR)/testnotes/index.html > x ; mv x $(AR)/testnotes/index.html
-	xmllint --format $(AR)/testnotes/one.html > x ; mv x $(AR)/testnotes/one.html
-	xmllint --format $(AR)/testnotes/two.html > x ; mv x $(AR)/testnotes/two.html
-	xmllint --format $(AR)/testnotes/three.html > x ; mv x $(AR)/testnotes/three.html
+	tidy -config config_tidy.txt $(AR)/testnotes/index.html > x ; mv x $(AR)/testnotes/index.html
+	tidy -config config_tidy.txt $(AR)/testnotes/one.html > x ; mv x $(AR)/testnotes/one.html
+	tidy -config config_tidy.txt $(AR)/testnotes/two.html > x ; mv x $(AR)/testnotes/two.html
+	tidy -config config_tidy.txt $(AR)/testnotes/three.html > x ; mv x $(AR)/testnotes/three.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  -r  $(AR)/testnotes/ $(ER)/testnotes; \
 		else echo "==deferring: \` diff  -r  $(AR)/testnotes/ $(ER)/testnotes \`"; fi
 
 	(mkdir -p $(AR)/testnotes2; cd $(AR)/testnotes2;$(UP2SAXON) ../../testnotes2.xml ../../../html/html.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../../tei.css)
-	xmllint --format $(AR)/testnotes2/index.html > x ; mv x $(AR)/testnotes2/index.html
-	xmllint --format $(AR)/testnotes2/one.html > x ; mv x $(AR)/testnotes2/one.html
-	xmllint --format $(AR)/testnotes2/three.html > x ; mv x $(AR)/testnotes2/three.html
+	tidy -config config_tidy.txt $(AR)/testnotes2/index.html > x ; mv x $(AR)/testnotes2/index.html
+	tidy -config config_tidy.txt $(AR)/testnotes2/one.html > x ; mv x $(AR)/testnotes2/one.html
+	tidy -config config_tidy.txt $(AR)/testnotes2/three.html > x ; mv x $(AR)/testnotes2/three.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  -r  $(AR)/testnotes2 $(ER)/testnotes2; \
 		else echo "==deferring: \` diff  -r  $(AR)/testnotes2 $(ER)/testnotes2 \`"; fi
 
 	(mkdir -p $(AR)/testnotes3; cd $(AR)/testnotes3;$(UP2SAXON) ../../testnotes2.xml ../../../html/html.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../../tei.css)
-	xmllint --format $(AR)/testnotes3/index.html > x ; mv x $(AR)/testnotes3/index.html
-	xmllint --format $(AR)/testnotes3/one.html > x ; mv x $(AR)/testnotes3/one.html
-	xmllint --format $(AR)/testnotes3/two.html > x ; mv x $(AR)/testnotes3/two.html
-	xmllint --format $(AR)/testnotes3/three.html > x ; mv x $(AR)/testnotes3/three.html
+	tidy -config config_tidy.txt $(AR)/testnotes3/index.html > x ; mv x $(AR)/testnotes3/index.html
+	tidy -config config_tidy.txt $(AR)/testnotes3/one.html > x ; mv x $(AR)/testnotes3/one.html
+	tidy -config config_tidy.txt $(AR)/testnotes3/two.html > x ; mv x $(AR)/testnotes3/two.html
+	tidy -config config_tidy.txt $(AR)/testnotes3/three.html > x ; mv x $(AR)/testnotes3/three.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  -r  $(AR)/testnotes3 $(ER)/testnotes3; \
 		else echo "==deferring: \` diff  -r  $(AR)/testnotes3 $(ER)/testnotes3 \`"; fi
 
-	$(SAXON) test24.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > $(AR)/test24.html
+	$(SAXON) test24.xml ../html/html.xsl $(SAXONOPT) | tidy -config config_tidy.txt - > $(AR)/test24.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test24.html $(ER)/test24.html; \
 		else echo "==deferring: \` diff  $(AR)/test24.html $(ER)/test24.html \`"; fi
-	$(SAXON) test25.xml ../html/html.xsl $(SAXONOPT) | xmllint --format - > $(AR)/test25.html
+	$(SAXON) test25.xml ../html/html.xsl $(SAXONOPT) | tidy -config config_tidy.txt - > $(AR)/test25.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test25.html $(ER)/test25.html; \
 		else echo "==deferring: \` diff  $(AR)/test25.html $(ER)/test25.html \`"; fi
-	$(SAXON) test27.xml ../html/html.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../css/msdescription.css  | xmllint --format - > $(AR)/test27.html
+	$(SAXON) test27.xml ../html/html.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../css/msdescription.css  | tidy -config config_tidy.txt - > $(AR)/test27.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test27.html $(ER)/test27.html; \
 		else echo "==deferring: \` diff  $(AR)/test27.html $(ER)/test27.html \`"; fi
 
 	$(SAXON) test28.xml ../html/html.xsl splitLevel=0  STDOUT=false $(SAXONOPT)
-	xmllint --format index.html > $(AR)/test28.html ; rm index.html
+	tidy -config config_tidy.txt index.html > $(AR)/test28.html ; rm index.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test28.html $(ER)/test28.html; \
 		else echo "==deferring: \` diff  $(AR)/test28.html $(ER)/test28.html \`"; fi
 
-	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFiles=../tei.css $(SAXONOPT)  | xmllint --format - > $(AR)/test31.html
+	$(SAXON) test31.xml ../html/html.xsl cssFile="" cssInlineFiles=../tei.css $(SAXONOPT)  | tidy -config config_tidy.txt - > $(AR)/test31.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test31.html $(ER)/test31.html; \
 		else echo "==deferring: \` diff  $(AR)/test31.html $(ER)/test31.html \`"; fi
 
-	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFiles=../tei.css $(SAXONOPT)  | xmllint --format - > $(AR)/test32.html
+	$(SAXON) test32.xml ../html/html.xsl cssFile="" cssInlineFiles=../tei.css $(SAXONOPT)  | tidy -config config_tidy.txt - > $(AR)/test32.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test32.html $(ER)/test32.html; \
 		else echo "==deferring: \` diff  $(AR)/test32.html $(ER)/test32.html \`"; fi
 
 test-from-html: actual
-	$(SAXON) test38.htm ../html/html2tei.xsl $(SAXONOPT)  | xmllint --format - > $(AR)/test38.xml
+	$(SAXON) test38.htm ../html/html2tei.xsl $(SAXONOPT)  | tidy -config config_tidy.txt - > $(AR)/test38.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test38.xml $(ER)/test38.xml; \
 		else echo "==deferring: \` diff  $(AR)/test38.xml $(ER)/test38.xml \`"; fi
