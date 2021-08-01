@@ -270,7 +270,7 @@ test-to-html: actual css
 		else echo "==deferring: \` diff  $(AR)/test32.html $(ER)/test32.html \`"; fi
 
 test-from-html: actual
-	$(SAXON) test38.htm ../html/html2tei.xsl $(SAXONOPT)  | tidy -config config_tidy.txt - > $(AR)/test38.xml
+	$(SAXON) test38.htm ../html/html2tei.xsl $(SAXONOPT)  | xmllint --format - > $(AR)/test38.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test38.xml $(ER)/test38.xml; \
 		else echo "==deferring: \` diff  $(AR)/test38.xml $(ER)/test38.xml \`"; fi
