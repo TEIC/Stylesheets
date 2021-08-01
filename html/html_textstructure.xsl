@@ -801,18 +801,12 @@
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
-      <xsl:choose>
-         <xsl:when test="$outputTarget = 'html'">
-            <xsl:attribute name="xml:lang">
-               <xsl:value-of select="$supplied"/>
-            </xsl:attribute>
-         </xsl:when>
-         <xsl:when test="$outputTarget = 'html5'">
-            <xsl:attribute name="lang">
-               <xsl:value-of select="$supplied"/>
-            </xsl:attribute>
-         </xsl:when>
-      </xsl:choose>
+      <xsl:attribute name="xml:lang">
+         <xsl:value-of select="$supplied"/>
+      </xsl:attribute>
+      <xsl:attribute name="lang">
+         <xsl:value-of select="$supplied"/>
+      </xsl:attribute>
    </xsl:template>
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
