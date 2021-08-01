@@ -7,7 +7,7 @@
     exclude-result-prefixes="tei html skos"
     version="2.0">
     <!-- import base conversion style -->
-    <xsl:import href="../../../html5/html5.xsl"/>
+    <xsl:import href="../../../html/html.xsl"/>
     <xsl:import href="../../../html/microdata.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
