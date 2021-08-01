@@ -185,7 +185,8 @@ test-to-html: actual css
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test5.xhtml $(ER)/test5.xhtml; \
 		else echo "==deferring: \` diff  $(AR)/test5.xhtml $(ER)/test5.xhtml \`"; fi
-	$(JING) -c xhtml.rnc $(AR)/test5.xhtml
+#	$(JING) -c xhtml.rnc $(AR)/test5.xhtml
+# This schema is not compliant with XHTML5. Provisionally commented-out until a XHTML5 validation routine is approved -- hbs 2021-08-01
 
 	$(SAXON) test6.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | tidy -config config_tidy.txt - > $(AR)/test6.html
 	if [ $(DIFFNOW) -eq 1 ]; \
