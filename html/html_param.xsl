@@ -362,7 +362,7 @@ will generate an &lt;h2&gt;</p>
 	<xsl:comment>no nav bar</xsl:comment>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+        <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else 'div'}">
 	  <xsl:for-each select="document($navbarFile,document(''))">
 	    <xsl:for-each select="tei:list/tei:item">
 	      <span class="navbar">

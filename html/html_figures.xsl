@@ -189,7 +189,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:element name="{if ($outputTarget='html5') then 'figure'
+        <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'figure'
 			   else if (tei:isInline(.)) then 'span'
 			   else 'div'}">
           <xsl:call-template name="makeRendition">
@@ -225,7 +225,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="$outputTarget='html5'">
+      <xsl:when test="$outputTarget=('html5', 'html')">
 	<figcaption>
           <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="default">caption</xsl:with-param>

@@ -74,7 +74,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:include href="html_transcr.xsl"/>
   <xsl:include href="html_verse.xsl"/>
   <xsl:include href="html_textstructure_id.xsl"/>
-  
+    
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
       <desc>Stylesheet constant setting the name of the main output file.</desc>
    </doc>
@@ -208,7 +208,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:sequence select="tei:processClass(local-name(), '')"/>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:if test="$outputTarget = 'html5'">
+    <xsl:if test="$outputTarget = ('html5', 'html')">
       <xsl:call-template name="microdata"/>
     </xsl:if>
   </xsl:template>

@@ -181,7 +181,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates select="tei:*[not(self::tei:q or self::tei:quote)]"/>
           </xsl:variable>
           <xsl:choose>
-            <xsl:when test="$outputTarget='html5'">
+            <xsl:when test="$outputTarget=('html5', 'html')">
               <xsl:copy-of select="$contents"/>
             </xsl:when>
             <xsl:otherwise>
@@ -401,7 +401,7 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:for-each>
 	  </xsl:variable>
 	  <xsl:choose>
-	    <xsl:when test="$outputTarget='html5' and number($depth)  &lt; 1">
+	    <xsl:when test="$outputTarget=('html5', 'html') and number($depth)  &lt; 1">
 	      <header>
 		<xsl:copy-of select="$Heading"/>
 	      </header>
@@ -1377,7 +1377,7 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:attribute>
 	  </xsl:if>
           <xsl:choose>
-            <xsl:when test="$outputTarget='html5'">
+            <xsl:when test="$outputTarget=('html5', 'html')">
               <xsl:apply-templates/>
             </xsl:when>
             <xsl:when test="tei:p|tei:l|tei:lg">

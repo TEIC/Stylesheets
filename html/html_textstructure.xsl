@@ -859,7 +859,7 @@
          </xsl:when>
          <xsl:otherwise>
             <xsl:element
-               name="{if ($outputTarget='html5' and number($depth)
+               name="{if ($outputTarget=('html5', 'html') and number($depth)
 			     &lt; 1) then 'section' else 'div'}">
                <xsl:call-template name="microdata"/>
                <xsl:call-template name="divClassAttribute">
@@ -941,7 +941,7 @@
                test="
                   $topNavigationPanel = 'true' and
                   $nav = 'true'">
-               <xsl:element name="{if ($outputTarget='html5') then 'nav'
+               <xsl:element name="{if ($outputTarget= ('html5', 'html')) then 'nav'
 				  else 'div'}">
                   <xsl:call-template name="xrefpanel">
                      <xsl:with-param name="homepage" select="concat($masterFile, $standardSuffix)"/>
@@ -956,7 +956,7 @@
                test="
                   $bottomNavigationPanel = 'true' and
                   $nav = 'true'">
-               <xsl:element name="{if ($outputTarget='html5') then 'nav' else
+               <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else
 				'div'}">
                   <xsl:call-template name="xrefpanel">
                      <xsl:with-param name="homepage" select="concat($masterFile, $standardSuffix)"/>
@@ -1642,7 +1642,7 @@ function click(d) {
                         <xsl:call-template name="sectionHeadHook"/>
                      </h2>
                      <xsl:if test="$topNavigationPanel = 'true'">
-                        <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+                        <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else 'div'}">
                            <xsl:call-template name="xrefpanel">
                               <xsl:with-param name="homepage"
                                  select="concat($masterFile, $standardSuffix)"/>
@@ -1654,7 +1654,7 @@ function click(d) {
                         <xsl:with-param name="depth" select="count(ancestor::tei:div) + 1"/>
                      </xsl:call-template>
                      <xsl:if test="$bottomNavigationPanel = 'true'">
-                        <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+                        <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else 'div'}">
                            <xsl:call-template name="xrefpanel">
                               <xsl:with-param name="homepage"
                                  select="concat($masterFile, $standardSuffix)"/>
@@ -2789,7 +2789,7 @@ function click(d) {
    </doc>
    <xsl:template name="topNavigation">
       <xsl:if test="ancestor::teiCorpus">
-         <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+         <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else 'div'}">
             <xsl:attribute name="class" select="$alignNavigationPanel"/>
             <xsl:call-template name="nextLink"/>
             <xsl:call-template name="previousLink"/>
@@ -2954,7 +2954,7 @@ function click(d) {
                   </xsl:with-param>
                </xsl:call-template>
                <xsl:if test="$topNavigationPanel = 'true'">
-                  <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+                  <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else 'div'}">
                      <xsl:call-template name="xrefpanel">
                         <xsl:with-param name="homepage" select="concat($BaseFile, $standardSuffix)"/>
                         <xsl:with-param name="mode" select="local-name(.)"/>
@@ -2970,7 +2970,7 @@ function click(d) {
                </xsl:call-template>
                <xsl:call-template name="printNotes"/>
                <xsl:if test="$bottomNavigationPanel = 'true'">
-                  <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+                  <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else 'div'}">
                      <xsl:call-template name="xrefpanel">
                         <xsl:with-param name="homepage" select="concat($BaseFile, $standardSuffix)"/>
                         <xsl:with-param name="mode" select="local-name(.)"/>
