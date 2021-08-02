@@ -75,6 +75,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:include href="html_verse.xsl"/>
   <xsl:include href="html_textstructure_id.xsl"/>
   <xsl:param name="divOffset">1</xsl:param>
+  <xsl:param name="langAttributeName">lang</xsl:param>
+  <xsl:param name="doclang"/>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
       <desc>Stylesheet constant setting the name of the main output file.</desc>
