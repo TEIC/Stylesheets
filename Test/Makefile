@@ -164,7 +164,7 @@ test-to-html: actual css
 		else echo "==deferring: \` diff  $(AR)/test-ota.html $(ER)/test-ota.html \`"; fi
 
 	$(BINDIR)/teitohtml5 $(FLAGS) test.xml $(AR)/test.html5
-	xmllint --encode utf-8 --format $(AR)/test.html5 | perl cleanup.pl > test.temp
+	tidy -config config_tidy.txt $(AR)/test.html5 | perl cleanup.pl > test.temp
 	mv test.temp $(AR)/test.html5
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test.html5 $(ER)/test.html5; \
@@ -565,7 +565,7 @@ test-oddity: actual css
 	@echo BUILD: testing oddity
 
 	$(BINDIR)/teitohtml5 $(FLAGS) --summaryDoc --odd test.odd $(AR)/test.odd.html
-	xmllint --encode utf-8 --format $(AR)/test.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test.odd.html
+	tidy -config config_tidy.txt $(AR)/test.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test.odd.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test.odd.html $(ER)/test.odd.html; \
 		else echo "==deferring: \` diff  $(AR)/test.odd.html $(ER)/test.odd.html \`"; fi
@@ -592,7 +592,7 @@ test-oddity: actual css
 		else echo "==deferring: \` diff  $(AR)/test15.odd.rnc $(ER)/test15.odd.rnc \`"; fi
 
 	$(BINDIR)/teitohtml5 $(FLAGS) --summaryDoc --lang=es --profile=tei --odd test15.odd $(AR)/test15.odd.html
-	xmllint --encode utf-8 --format $(AR)/test15.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test15.odd.html
+	tidy -config config_tidy.txt $(AR)/test15.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test15.odd.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test15.odd.html $(ER)/test15.odd.html; \
 		else echo "==deferring: \` diff  $(AR)/test15.odd.html $(ER)/test15.odd.html \`"; fi
@@ -666,7 +666,7 @@ test-oddity: actual css
 		then diff  $(AR)/test-pure.dtd $(ER)/test-pure.dtd; \
 		else echo "==deferring: \` diff  $(AR)/test-pure.dtd $(ER)/test-pure.dtd \`"; fi
 	$(BINDIR)/teitohtml $(FLAGS) --odd test-pure.odd $(AR)/test-pure.odd.html
-	xmllint --encode utf-8 --format $(AR)/test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test-pure.odd.html
+	tidy -config config_tidy.txt $(AR)/test-pure.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test-pure.odd.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test-pure.odd.html $(ER)/test-pure.odd.html; \
 		else echo "==deferring: \` diff  $(AR)/test-pure.odd.html $(ER)/test-pure.odd.html \`"; fi
@@ -675,7 +675,7 @@ test-oddity: actual css
 	$(BINDIR)/teitornc $(FLAGS) test-pure2.odd $(AR)/test-pure2.rnc
 	$(BINDIR)/teitohtml $(FLAGS) --odd test-pure2.odd $(AR)/test-pure2.odd.html
 	xmllint --noout --dtdvalid $(AR)/test-pure2.dtd test-pure2.xml
-	xmllint --encode utf-8 --format $(AR)/test-pure2.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test-pure2.odd.html
+	tidy -config config_tidy.txt $(AR)/test-pure2.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test-pure2.odd.html
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test-pure2.dtd
 	perl -i -pe 'BEGIN{undef $$/;} s/<!--\nDTD[^>]*-->\n//smg' $(AR)/test-pure2.dtd
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test-pure2.rnc
@@ -744,7 +744,7 @@ test-namespaces: actual
 		then diff  $(AR)/test34.combined.json $(ER)/test34.combined.json; \
 		else echo "==deferring: \` diff  $(AR)/test34.combined.json $(ER)/test34.combined.json \`"; fi
 	$(BINDIR)/teitohtml $(FLAGS) --odd --summaryDoc test34.odd $(AR)/test34.odd.html
-	xmllint --encode utf-8 --format $(AR)/test34.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test34.odd.html
+	tidy -config config_tidy.txt $(AR)/test34.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test34.odd.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test34.odd.html $(ER)/test34.odd.html; \
 		else echo "==deferring: \` diff  $(AR)/test34.odd.html $(ER)/test34.odd.html \`"; fi
