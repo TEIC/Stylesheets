@@ -82,7 +82,6 @@ of this software, even if advised of the possibility of such damage.
   
   <xsl:output method="xhtml" encoding="UTF-8" omit-xml-declaration="yes"  html-version="5.0" normalization-form="NFC" />
   <xsl:param name="outputTarget">html5</xsl:param>
-  <xsl:param name="langAttributeName">lang</xsl:param>
 
   <!-- these are ones to override -->
   <xsl:param name="feedbackURL">#</xsl:param>

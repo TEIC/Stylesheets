@@ -75,7 +75,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:include href="html_verse.xsl"/>
   <xsl:include href="html_textstructure_id.xsl"/>
   <xsl:param name="divOffset">1</xsl:param>
-  <xsl:param name="langAttributeName">lang</xsl:param>
   <xsl:param name="doclang"/>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
@@ -156,7 +155,21 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="makeLang">
     <xsl:if test="@xml:lang">
-      <xsl:attribute name="lang" select="@xml:lang"/>
+      <xsl:choose>
+        <xsl:when test="$outputTarget = ('html', 'html5')">
+          <xsl:attribute name="xml:lang">
+            <xsl:value-of select="@xml:lang"/>
+          </xsl:attribute>
+          <xsl:attribute name="lang">
+            <xsl:value-of select="@xml:lang"/>
+          </xsl:attribute>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:attribute name="lang">
+            <xsl:value-of select="@xml:lang"/>
+          </xsl:attribute>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
   </xsl:template>
 
