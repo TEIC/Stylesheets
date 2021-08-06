@@ -843,11 +843,12 @@ of this software, even if advised of the possibility of such damage.
         <ol class="listBibl">
           <xsl:for-each select="*[not(self::tei:head)]">
             <li>
-              <xsl:call-template name="makeAnchor">
+             <xsl:if test="not(@xml:id)">
+               <xsl:call-template name="makeAnchor">
                 <xsl:with-param name="name">
                   <xsl:apply-templates mode="ident" select="."/>
                 </xsl:with-param>
-              </xsl:call-template>
+              </xsl:call-template></xsl:if>
               <xsl:apply-templates select="."/>
             </li>
           </xsl:for-each>
