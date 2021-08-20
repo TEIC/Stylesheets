@@ -546,6 +546,28 @@
             <antcall target="docx"/>
         </parallel>
     </target>
+  
+  <target name="testSeries">
+    <description>
+      TARGET: testSeries
+      This target runs all build and check processes, but in sequence
+      rather than in parallel. This can be a good method of figuring out
+      where a problem is when you've hit one running the tests in parallel,
+      which can have confusing output because messages from different
+      threads appear in an unpredictable sequence.
+    </description>
+    <antcall target="clean"/>
+    <antcall target="oddFilesToRng"/>
+    <antcall target="simpleTeiToHtml"/>
+    <antcall target="markdown"/>
+    <antcall target="cocoaFilesToTei"/>
+    <antcall target="teiFilesToFo"/>
+    <antcall target="teiFilesToRdf"/>
+    <antcall target="teiFilesFromHtml"/>
+    <antcall target="teiFilesFromP4"/>
+    <antcall target="odt"/>
+    <antcall target="docx"/>
+  </target>
     
     <target name="documentation">
         <echo>
