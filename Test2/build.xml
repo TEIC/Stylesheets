@@ -532,8 +532,8 @@
             clean target before everything else, assuming that if you're 
             running all the tests you'll want cruft cleared away first.
         </description>
+        <antcall target="clean"/>
         <parallel failonany="true">
-            <antcall target="clean"/>
             <antcall target="oddFilesToRng"/>
             <antcall target="simpleTeiToHtml"/>
             <antcall target="markdown"/>
