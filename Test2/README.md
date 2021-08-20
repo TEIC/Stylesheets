@@ -11,7 +11,9 @@ Martin  Holmes (@martindholmes) and Syd Bauman (@sydb) are currently doing the w
 
 Example usages:
 
-`ant test` runs all the tests.
+`ant test` runs all the tests in parallel, for optimal speed.
+
+`ant testSeries` runs all the tests in series, which takes longer than in parallel, but can make it much easier to debug a failure because messages from different targets are interspersed.
 
 `ant clean` removes results from previous runs of the tests.
 
