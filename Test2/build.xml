@@ -38,11 +38,15 @@
         which calls ant passing a build-to or build-from file, which calls 
         Saxon....
         
-     You can call this file with many targets, but this:
+     You can call this file with many targets, but either
      
-        ant test
+       ant test
+     or
+       ant testSeries
         
-     will run the set of tests which have been set up so far.
+     will run the all of the tests which have been set up so far (either in
+     parallel, which is faster but can produce messages out-of-order, or in
+     series, which slower but sometimes easier to figure out what happened).
      
      Files used as input to conversions are found in the inputFiles folder;
      results are stored in the outputFiles folder. Running
