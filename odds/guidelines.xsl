@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl" version="2.0">
+<xsl:stylesheet
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:teix="http://www.tei-c.org/ns/Examples"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl"
+    version="2.0">
 
   <xsl:param name="directory">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
@@ -695,8 +707,7 @@
   <!-- link from bibl back to egXML -->
   <xsl:template
       match="tei:listBibl/tei:biblStruct|tei:listBibl/tei:bibl">
-    <xsl:apply-templates/>
-    <xsl:variable name="id" select="@xml:id"/>
+    <xsl:apply-templates select="@xml:id | node()"/>
     <xsl:for-each select="key('BACKLINKS',@xml:id)">
       <!-- XML code examples within tei:exemplum -->
       <xsl:if test="self::teix:egXML and parent::tei:exemplum">
