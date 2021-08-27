@@ -1487,7 +1487,7 @@ tei_model.stageLike_sequenceOptional = tei_stage?
 tei_model.stageLike_sequenceOptionalRepeatable = tei_stage*
 tei_model.stageLike_sequenceRepeatable = tei_stage+
 tei_model.entryPart = notAllowed
-tei_model.global.edit = tei_gap
+tei_model.global.edit = tei_gap | tei_ellipsis
 tei_model.divPart = tei_model.lLike | tei_model.pLike | tei_lg | tei_sp
 tei_model.placeNamePart = notAllowed
 tei_model.placeNamePart_alternation = notAllowed
@@ -1751,17 +1751,6 @@ tei_model.standOffPart =
   | tei_listChange
   | tei_seg
   | tei_listAnnotation
-tei_att.citeStructurePart.attributes =
-  tei_att.citeStructurePart.attribute.use
-tei_att.citeStructurePart.attribute.use =
-  [
-    a:documentation [
-      "(use) supplies an XPath selection pattern using the syntax defined in . The XPath pattern is relative to the context given in "
-      ns1:code [ "@match" ]
-      ", which will either be a sibling attribute in the case of `<citeStructure>` or on the parent `<citeStructure>` in the case of `<citeData>`."
-    ]
-  ]
-  attribute use { text }
 tei_att.formula.attributes = tei_att.formula.attribute.formula
 tei_att.formula.attribute.formula =
   [
@@ -1772,6 +1761,18 @@ tei_att.formula.attribute.formula =
     ]
   ]
   attribute formula { text }?
+tei_att.locatable.attributes = tei_att.locatable.attribute.where
+tei_att.locatable.attribute.where =
+  [
+    a:documentation [
+      "indicates one or more locations by pointing to a "
+      ns1:code [ "<place>" ]
+      " element or other canonical description."
+    ]
+  ]
+  attribute where {
+    list { xsd:anyURI+ }
+  }?
 tei_model.correspActionPart =
   tei_model.dateLike
   | tei_model.addressLike
@@ -1900,9 +1901,9 @@ tei_p =
            "               "
            sch:report [
              test =
-               "ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]"
+               "(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.\x{a}" ~
+             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -2326,6 +2327,16 @@ tei_gap =
     attribute agent {
       xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
+    empty
+  }
+tei_ellipsis =
+  
+  ## (deliberately marked omission) indicates a purposeful marking in the source document signalling that content has been omitted, and may also supply or describe the omitted content. [3.5.3. Additions, Deletions, and Omissions]
+  element tei:ellipsis {
+    tei_model.descLike?,
+    tei_att.global.attributes,
+    tei_att.dimensions.attributes,
+    tei_att.timed.attributes,
     empty
   }
 tei_add =
@@ -3424,6 +3435,17 @@ tei_textLang =
     }?,
     empty
   }
+tei_att.citeStructurePart.attributes =
+  tei_att.citeStructurePart.attribute.use
+tei_att.citeStructurePart.attribute.use =
+  [
+    a:documentation [
+      "(use) supplies an XPath selection pattern using the syntax defined in . The XPath pattern is relative to the context given in "
+      ns1:code [ "@match" ]
+      ", which will either be a sibling attribute in the case of `<citeStructure>` or on the parent `<citeStructure>` in the case of `<citeData>`."
+    ]
+  ]
+  attribute use { text }
 tei_att.patternReplacement.attributes =
   tei_att.patternReplacement.attribute.matchPattern,
   tei_att.patternReplacement.attribute.replacementPattern
@@ -4276,6 +4298,7 @@ tei_conversion =
     tei_att.global.attributes,
     tei_att.datable.attributes,
     tei_att.formula.attributes,
+    tei_att.locatable.attributes,
     [
       a:documentation [
         "indicates a source unit of measure that is to be converted into another unit indicated in "
@@ -4667,9 +4690,10 @@ tei_div =
            "\x{a}" ~
            "               "
            sch:report [
-             test = "ancestor::tei:l"
+             test =
+               "(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level structural elements such as div.\x{a}" ~
+             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -4688,9 +4712,9 @@ tei_div =
            "               "
            sch:report [
              test =
-               "ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)"
+               "(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: p and ab may not contain higher-level structural elements such as div.\x{a}" ~
+             "        Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -5212,9 +5236,10 @@ tei_ab =
            "\x{a}" ~
            "               "
            sch:report [
-             test = "ancestor::tei:l or ancestor::tei:lg"
+             test =
+               "(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level divisions such as p or ab.\x{a}" ~
+             "        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
