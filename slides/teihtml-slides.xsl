@@ -57,7 +57,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:output encoding="utf-8" method="xhtml" omit-xml-declaration="yes"/>
   <xsl:param name="outputEncoding">utf-8</xsl:param>
-  <xsl:param name="outputTarget">html5</xsl:param>
+  <xsl:param name="outputTarget">html</xsl:param>
   <xsl:param name="logoFile"></xsl:param>
   <xsl:param name="logoWidth"></xsl:param>
   <xsl:param name="logoHeight"></xsl:param>
