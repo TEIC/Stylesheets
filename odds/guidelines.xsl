@@ -697,8 +697,7 @@
   <!-- link from bibl back to egXML -->
   <xsl:template
       match="tei:listBibl/tei:biblStruct|tei:listBibl/tei:bibl">
-    <xsl:apply-templates/>
-    <xsl:variable name="id" select="@xml:id"/>
+    <xsl:apply-templates select="@xml:id | node()"/>
     <xsl:for-each select="key('BACKLINKS',@xml:id)">
       <!-- XML code examples within tei:exemplum -->
       <xsl:if test="self::teix:egXML and parent::tei:exemplum">
