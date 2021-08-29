@@ -7,7 +7,7 @@
       </titleStmt>
       <editionStmt>
         <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.3.0.html">4.3.0a</ref>. Last updated on
-        <date when="2021-07-19">19th July 2021</date>, revision <ref target="https://github.com/TEIC/TEI/commit/2f6b034be">2f6b034be</ref></edition>
+        <date when="2021-08-26">26th August 2021</date>, revision <ref target="https://github.com/TEIC/TEI/commit/59a2becc4">59a2becc4</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -369,7 +369,7 @@ Instance</head></div>
     </listRef>
 </classSpec>
 <classSpec module="tei" type="atts" ident="att.canonical">
-  <desc versionDate="2008-09-05" xml:lang="en">provides attributes which can be used to associate a representation such as a name or title
+  <desc versionDate="2008-09-05" xml:lang="en">provides attributes that can be used to associate a representation such as a name or title
     with canonical information about the object being named or referenced.</desc>
   <desc versionDate="2009-05-25" xml:lang="fr">fournit des attributs qui peuvent être utilisés pour
     associer une représentation telle qu'un nom ou un titre à l'information canonique concernant
@@ -642,7 +642,7 @@ The MS. was lost in transmission by mail from <del rend="overstrike"><gap reason
   </attList>
 </classSpec>
 <classSpec module="tei" type="atts" ident="att.written">
-  <desc versionDate="2018-06-15" xml:lang="en">provides an attribute to indicate the hand in which
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes to indicate the hand in which
     the content of an element was written in the source being transcribed.</desc>
   <!--<desc versionDate="2014-01-10" xml:lang="en">provides an attribute to indicate the hand in which
   	the textual content of an element was written in the source being transcribed.</desc>-->
@@ -850,7 +850,7 @@ header (see section <ptr target="#PHDH"/>).</valDesc>
   </listRef>
 </classSpec>
 <classSpec module="tei" type="atts" ident="att.breaking">
-  <desc versionDate="2011-01-30" xml:lang="en">provides an attribute to indicate whether or not the element
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes to indicate whether or not the element
   concerned is considered to  mark the end of an orthographic token in the same way
   as whitespace.</desc>
   <desc xml:lang="fr" versionDate="2007-06-12">fournit un attribut pour indiquer si un élément est
@@ -913,7 +913,7 @@ of any adjacent whitespace</desc>
   </listRef>
 </classSpec>
 <classSpec module="tei" type="atts" ident="att.cReferencing">
-  <desc versionDate="2012-09-23" xml:lang="en">provides an attribute which may be used to supply a
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes that may be used to supply a
   <term>canonical reference</term> as a means of identifying the
   target of a pointer.</desc>
   <desc xml:lang="ja" versionDate="2018-12-31">ポインタのターゲットを識別する手段として<term>canonical reference</term>を提供するために使用される属性を提供する。</desc>
@@ -1431,11 +1431,10 @@ of any adjacent whitespace</desc>
   </listRef>
 </classSpec>
 <classSpec xmlns:dcr="http://www.isocat.org/ns/dcr" module="tei" xml:id="DATCAT" type="atts" ident="att.datcat">
-  <desc versionDate="2013-03-29" xml:lang="en">provides the <att>dcr:datacat</att> and
-  <att>dcr:ValueDatacat</att> attributes which are used to 
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes that are used to 
     align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 
-    standard and stored in the Web repository called ISOCat at <ref target="http://www.isocat.org/">http://www.isocat.org/</ref>.</desc>
-  <desc xml:lang="ja" versionDate="2019-05-20"><att>dcr:datacat</att>属性と<att>dcr:ValueDatacat</att>属性を提供する．これらがXML要素や属性を連携させる日付分類は、国際標準ISO 12620:2009で定義されるものであり，<ref target="http://www.isocat.org/">http://www.isocat.org/</ref>にあるISOCatと呼ばれるWebリポジトリに格納されている．</desc>
+    standard and stored in the Web repository called ISOCat at <ptr target="http://www.isocat.org/"/>.</desc>
+  <desc xml:lang="ja" versionDate="2019-05-20"><att>dcr:datacat</att>属性と<att>dcr:ValueDatacat</att>属性を提供する．これらがXML要素や属性を連携させる日付分類は、国際標準ISO 12620:2009で定義されるものであり，<ptr target="http://www.isocat.org/"/>にあるISOCatと呼ばれるWebリポジトリに格納されている．</desc>
   <attList>
     <attDef ident="datcat" usage="opt" ns="http://www.isocat.org/ns/dcr">
       <desc versionDate="2012-04-15" xml:lang="en">contains a PID (persistent identifier) that aligns the given element with the appropriate 
@@ -1471,11 +1470,11 @@ of any adjacent whitespace</desc>
       their schemas that make use of data categories from a DCR should refer to them using
       this PID. For XML-based resources, like TEI documents, ISO 12620:2009 normative
       Annex A gives a small Data Category Reference XML vocabulary (also available online
-      at <ref target="http://www.isocat.org/12620/">http://www.isocat.org/12620/</ref>),
+      at <ptr target="http://www.isocat.org/12620/"/>),
       which provides two attributes, <att>dcr:datcat</att> and
       <att>dcr:valueDatcat</att>.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2019-06-16"><p>ISO 12620:2009は、データ分類のレジストリ（DCR）に関するデータモデルと手続きについての国際標準である．データ分類は，一つの言語の構造における基本的な記述子として定義される。DCRのデータモデルでは、個々のデータ分類には、ユニークな永続的識別子（PID)、つまり、URIが割り当てられる．DCRからデータ分類を利用する言語資源，あるいは、できることならそのスキーマは、このPIDを用いて参照すべきである。TEI文書のようなXMLベースの資源(<ref target="https://www.iso.org/standard/37243.html">https://www.iso.org/standard/37243.html</ref>にて参照可能)に関しては、ISO 12620:2009 付録 Aに、<att>dcr:datcat</att>属性と<att>dcr:valueDatcat</att>属性を提供する小さなデータ分類参照のXML語彙がある。</p></remarks>
+  <remarks xml:lang="ja" versionDate="2019-06-16"><p>ISO 12620:2009は、データ分類のレジストリ（DCR）に関するデータモデルと手続きについての国際標準である．データ分類は，一つの言語の構造における基本的な記述子として定義される。DCRのデータモデルでは、個々のデータ分類には、ユニークな永続的識別子（PID)、つまり、URIが割り当てられる．DCRからデータ分類を利用する言語資源，あるいは、できることならそのスキーマは、このPIDを用いて参照すべきである。TEI文書のようなXMLベースの資源(<ptr target="https://www.iso.org/standard/37243.html"/>にて参照可能)に関しては、ISO 12620:2009 付録 Aに、<att>dcr:datcat</att>属性と<att>dcr:valueDatcat</att>属性を提供する小さなデータ分類参照のXML語彙がある。</p></remarks>
   <listRef>
     <ptr target="#DIMVLV"/>
     <ptr target="#FSSY"/>
@@ -1612,7 +1611,7 @@ with individual parts of a TEI text are fully defined in chapter <ptr target="#C
   </listRef>
 </classSpec>
 <classSpec module="tei" type="atts" ident="att.fragmentable">
-  <desc versionDate="2016-02-15" xml:lang="en">provides an attribute for representing
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes for representing
     fragmentation of a structural element, typically as 
   a consequence of some overlapping hierarchy.</desc>
   <desc xml:lang="ja" versionDate="2019-06-16">通常は階層関係のオーバーラップなどに起因する、構造を持つ要素の断片化を表現するための属性を与える。</desc>
@@ -2349,7 +2348,7 @@ the TEI header.</p>
   </listRef>
 </classSpec>
 <classSpec predeclare="true" xml:id="GBLSRC" module="tei" type="atts" ident="att.global.source">
-  <desc versionDate="2016-02-15" xml:lang="en">provides an attribute used by elements to point to an
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes used by elements to point to an
     external source.</desc>
   <desc versionDate="2019-09-18" xml:lang="ja">外部ソースを参照する要素によって用いられる属性を示す。</desc>
   <attList>
@@ -3487,7 +3486,7 @@ baby?</l></egXML>
   </remarks>
 </classSpec>
 <classSpec module="core" type="atts" ident="att.milestoneUnit">
-  <desc versionDate="2012-07-16" xml:lang="en">provides an attribute to indicate the type of section which is changing at a specific milestone.</desc>
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes to indicate the type of section which is changing at a specific milestone.</desc>
   <attList>
     <attDef ident="unit" usage="req">
       <desc versionDate="2012-07-16" xml:lang="en">provides a conventional name for the kind of section changing at this milestone.</desc>
@@ -3741,7 +3740,7 @@ this name in the form of a set of whitespace-separated values, for example the o
   </listRef>
 </classSpec>
 <classSpec module="tei" type="atts" ident="att.notated">
-  <desc versionDate="2013-01-11" xml:lang="en">provides an attribute to indicate any specialised notation used for element content.</desc>
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes to indicate any specialised notation used for element content.</desc>
   
   <attList>
     <attDef ident="notation" usage="opt">
@@ -3884,7 +3883,7 @@ this name in the form of a set of whitespace-separated values, for example the o
   </listRef>
 </classSpec>
 <classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" xml:id="TYPED" type="atts" ident="att.typed" predeclare="true">
-  <desc versionDate="2007-10-02" xml:lang="en">provides attributes which can be used to classify or subclassify elements in any way.</desc>
+  <desc versionDate="2007-10-02" xml:lang="en">provides attributes that can be used to classify or subclassify elements in any way.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">요소의 분류 또는 하위분류에서 사용될 수 있는 속성을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供可依任何方法將元素分類或次要分類的一般屬性。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">要素を分類するための属性を示す．
@@ -11997,8 +11996,8 @@ the target element</desc>
     <ptr target="#SACRCS"/>
   </listRef>
 </elementSpec>
-<classSpec module="tei" type="atts" ident="att.citeStructurePart">
-  <desc versionDate="2016-03-15" xml:lang="en">provides attributes for selecting particular elements
+<classSpec module="header" type="atts" ident="att.citeStructurePart">
+  <desc versionDate="2020-02-03" xml:lang="en">provides attributes for selecting particular elements
     within a document.</desc>
   <attList>
     <attDef ident="use" usage="req">
@@ -13111,6 +13110,7 @@ codes used elsewhere in the text.</desc>
     <memberOf key="att.global"/>
     <memberOf key="att.datable"/>
     <memberOf key="att.formula"/>
+    <memberOf key="att.locatable"/>
   </classes>
   <content><empty/></content>
   <attList>
@@ -13204,6 +13204,22 @@ codes used elsewhere in the text.</desc>
   </remarks>
   <listRef>
     <ptr target="#HDUDECL" type="div3"/>
+  </listRef>
+</classSpec>
+<classSpec module="tei" type="atts" ident="att.locatable" predeclare="true">
+  <desc versionDate="2021-07-29" xml:lang="en">provides attributes for referencing locations by pointing to entries in a canonical list of places.</desc>
+  <attList>
+    <attDef ident="where" usage="opt">
+      <desc versionDate="2021-07-29" xml:lang="en">indicates one or more locations by pointing to a <gi>place</gi> element or other canonical description.</desc>
+      <desc versionDate="2021-07-29" xml:lang="fr">indique une ou plusieurs localisations en pointant vers un élément <gi>place</gi> ou autre description canonique.</desc>
+      <desc versionDate="2021-07-29" xml:lang="es">indica una o más localizaciónes señalando un elemento <gi>place</gi> u otra descripción canónica.</desc>
+      <desc versionDate="2021-07-29" xml:lang="it">indica una o più posizioni facendo riferimento a un elemento <gi>place</gi> o altra descrizione canonica.</desc>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
+    </attDef>
+  </attList>
+  <listRef>
+    <ptr target="#HDUDECL" type="div3"/>
+    <ptr target="#NDGEOGste" type="div3"/>
   </listRef>
 </classSpec></div>
 <div type="div3" xml:id="HDSCHSPEC"><head>The Schema Specification</head></div>
@@ -15153,8 +15169,8 @@ supplied to printer.</change>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
-        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
       </report>
     </constraint>
   </constraintSpec>
@@ -16611,7 +16627,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
       <elementRef key="rt" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </content>
-  <exemplum xml:lang="ja" versionDate="2021-02-01">
+  <exemplum xml:lang="mul" versionDate="2021-02-01">
     <p>The word <mentioned>入学試験</mentioned> <mentioned>nyūgakushiken</mentioned>
     (university entrance exam) is glossed with a hiragana phonation guide.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -16663,7 +16679,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
       <macroRef key="macro.phraseSeq"/>
   </content>
   <!-- More examples to be added. -->
-    <exemplum xml:lang="zh" versionDate="2021-02-02">
+    <exemplum xml:lang="mul" versionDate="2021-02-02">
       <p>The word <mentioned>你 好</mentioned> <mentioned>nǐ hǎo</mentioned>
         (hello) is glossed in pinyin to provide a pronunciation guide.</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -16766,7 +16782,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
     </attDef>
   </attList>
   <!-- More examples to be added. -->
-  <exemplum xml:lang="ja" versionDate="2021-02-01">
+  <exemplum xml:lang="mul" versionDate="2021-02-01">
     <p>The word <mentioned>大統領</mentioned> <mentioned>daitōryō</mentioned>
       (president) is glossed character by character in hiragana to provide a pronunciation guide.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -17549,6 +17565,92 @@ Normalization</head>
   </remarks>
   <listRef>
     <ptr target="#COEDADD" type="div1"/>
+  </listRef>
+</elementSpec>
+<elementSpec module="core" ident="ellipsis">
+  <gloss xml:lang="en" versionDate="2021-07-07">deliberately marked omission</gloss>
+  <desc versionDate="2021-07-07" xml:lang="en">indicates a purposeful
+  marking in the source document signalling that content has been
+  omitted, and may also supply or describe the omitted content.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.global.edit"/>
+    <memberOf key="att.dimensions"/>
+    <memberOf key="att.timed"/>
+  </classes>
+  <content>
+    <sequence>
+      <elementRef key="metamark"/>
+      <classRef key="model.descLike" minOccurs="0" maxOccurs="1"/>
+      <elementRef key="supplied" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COEDADD-eg-91">
+      <lg>
+        <l>What projects men make—what queer turns they take,</l>
+        <l>Since <emph>steam</emph> has improved our condition;</l>
+        <l>They never are still, but must cure or must kill</l>
+        <l>With steam physic or steam ammunition.</l>
+        <l>But a short time ago, to a quack you would go,</l>
+        <l>To steam a fat man to a thinner;</l>
+        <l>Now changed from all that, if you wish to get <emph>fat</emph>,</l>
+        <l>Come to Barton’s and eat a <emph>steam dinner!</emph></l>
+        <l>Oh dear! think of a scheme, odd though it seem—</l>
+        <l>I’m sure ’twill succeed if you make it by steam.</l>
+      </lg>
+      <lg>
+        <l>You may sleep, you may dream, you may travel by steam,</l>
+        <l>For the outcry is still to go faster;</l>
+        <l>And what does it reck, should you e’en break your neck,</l>
+        <l>If ’tis <emph>steam</emph> that brings on the disaster?</l>
+        <ellipsis resp="#ChambersEdnbrghJrnl1880">
+        <metamark function="multilineEllipsis"> * * * * </metamark>
+        <desc resp="#teiProjectEditor2021">The printer omits four lines here,  
+         skipping the second half of the second octave, before the refrain.</desc>
+        </ellipsis>
+        <l>Oh dear! think of a scheme, odd though it seem—</l>
+        <l>I’m sure ’twill succeed if you make it by steam.</l>
+      </lg>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COEDADD-eg-92">
+      <lg>
+        <l>You think you’ve lost your love </l>
+        <l>Well, I saw her yesterday </l>
+        <l>It’s you she's thinking of </l>
+        <l>And she told me what to say</l>
+      </lg>
+      <lg xml:id="chorus">
+        <label>[Refrain]</label>
+        <l>She says she loves you </l>
+        <l>And you know that can’t be bad </l>
+        <l>Yes, she loves you </l>
+        <l>And you know you should be glad</l>
+      </lg>
+      <lg>
+        <l>She said you hurt her so </l>
+        <l>She almost lost her mind </l>
+        <l>But now she said she knows </l>
+        <l>You’re not the hurting kind</l>
+      </lg>
+      <ellipsis>
+        <metamark>******</metamark>
+        <supplied copyOf="#chorus"/>
+      </ellipsis>
+    </egXML>
+  </exemplum>
+  <remarks versionDate="2021-07-07" xml:lang="en">
+    <p>Unlike <gi>gap</gi>, which indicates content that the encoder
+    cannot or chooses not to represent, <gi>ellipsis</gi> indicates a
+    passage explicitly signalled in the source document as absent. The
+    <gi>ellipsis</gi> element is not appropriate for every use of
+    ellipsis points, such as when they indicate that a speaker is
+    pausing.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#COEDADD" type="div3"/>
   </listRef>
 </elementSpec>
 <elementSpec module="core" ident="add">
@@ -25622,15 +25724,15 @@ by the stage direction.</p>
   </content>
   <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:l">
-        Abstract model violation: Lines may not contain higher-level structural elements such as div.
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
       </report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-p" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)">
-        Abstract model violation: p and ab may not contain higher-level structural elements such as div.
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
+        Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
       </report>
     </constraint>
   </constraintSpec>
@@ -31622,7 +31724,7 @@ and <val>simplified</val>  for simplified characters. The
        <desc xml:lang="ja" versionDate="2018-07-12">韻文モジュール</desc>
        </moduleSpec>
 <classSpec predeclare="true" module="verse" xml:id="METRICAL" type="atts" ident="att.metrical">
-  <desc versionDate="2005-10-10" xml:lang="en">defines a set of attributes which certain elements may use to
+  <desc versionDate="2005-10-10" xml:lang="en">defines a set of attributes that certain elements may use to
 represent metrical information.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">운율 정보를 표시하기 위하여 특정 요소들이 사용할 수 있는 속성 집합을 정의한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">定義一組特定元素所使用、表示詩行韻律的屬性。</desc>
@@ -31769,7 +31871,7 @@ user-defined alternative notations.</p>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">詩句跨行</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">encabalgamiento</gloss>
   <gloss versionDate="2009-05-25" xml:lang="fr"> enjambement</gloss>
-  <desc versionDate="2016-02-15" xml:lang="en">provides an attribute which may be used to indicate
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes that may be used to indicate
     enjambement of the parent element.</desc>
   <gloss xml:lang="ja" versionDate="2019-06-08">句またがり</gloss>
   <desc versionDate="2007-12-20" xml:lang="ko"><att>enjamb</att> 속성을 포함하는 요소를 모아놓는다.</desc>
@@ -35437,7 +35539,7 @@ very loudly.</p>
   </listRef>
 </classSpec>
 <classSpec module="dictionaries" xml:id="ENTRIES" type="atts" ident="att.entryLike">
-  <desc versionDate="2016-02-15" xml:lang="en">provides an attribute used to distinguish 
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes used to distinguish 
     different styles of dictionary entries.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">사전 표제 항목의 다른 형식을 모아 놓는다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集不同格式的字典辭條</desc>
@@ -37017,7 +37119,7 @@ list of values. Typical values might be <mentioned>IPA</mentioned>,
       <remarks versionDate="2010-07-07" xml:lang="en">
         <p>A much fuller list of values for the <att>type</att>
         attribute may be generated from the data category registry
-        accessible from <ref target="http://www.isocat.org">http://www.isocat.org</ref> and
+        accessible from <ptr target="http://www.isocat.org/"/> and
         maintained by ISO technical committee 37. <!--TC 37/SC 3/WD 12
         620, Computational Aids in Terminology. See ISO 12 620 for
         fuller details.--></p>
@@ -42437,7 +42539,7 @@ element in the TEI header.
   </listRef>
 </classSpec>
 <classSpec module="msdescription" type="atts" ident="att.msClass">
-   <desc versionDate="2017-05-24" xml:lang="en">provides an attribute to indicate text type or classification.</desc>
+   <desc versionDate="2021-08-22" xml:lang="en">provides attributes to indicate text type or classification.</desc>
    <attList>
       <attDef ident="class">
          <desc versionDate="2013-12-21" xml:lang="en">identifies the text types or classifications applicable to this
@@ -45314,7 +45416,7 @@ the encoder wishes to distinguish these two modes of transcription.</p>
   </listRef>
 </classSpec>
 <classSpec ident="att.global.change" predeclare="true" module="transcr" type="atts">
-  <desc versionDate="2011-10-31" xml:lang="en">supplies the <att>change</att> attribute, allowing its member
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes allowing its member
 elements to specify one or more states or revision campaigns with which they are
 associated.</desc>
   <desc xml:lang="ja" versionDate="2019-06-08">そのメンバ要素が関連する1つ以上の状態または改定を指定できるように、<att>change</att>属性を提供する。</desc>
@@ -45492,7 +45594,7 @@ are also understood with reference to this same coordinate system.--> </p>
   </listRef>
 </elementSpec>
 <classSpec module="transcr" type="atts" ident="att.coordinated">
-  <desc versionDate="2016-02-16" xml:lang="en">provides attributes which can be used to position their parent 
+  <desc versionDate="2016-02-16" xml:lang="en">provides attributes that can be used to position their parent 
     element within a two dimensional coordinate system.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">이차원 좌표 체계 내에서 위치될 수 있는 요소</desc>
   <desc versionDate="2008-04-06" xml:lang="es">los elementos se pueden colocar dentro de un sistema de coordenadas bidimensional.</desc>
@@ -47386,144 +47488,7 @@ lemma and usually one or more readings or notes on the relevant passage.</desc>
     <memberOf key="model.global.edit"/>
     <memberOf key="att.typed"/>
   </classes>
-  <content>
-   <!-- <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.global.meta"/>
-          <classRef key="model.global.spoken"/>
-          <classRef key="model.milestoneLike"/>
-          <classRef key="model.noteLike"/>
-          <elementRef key="addSpan"/>
-          <elementRef key="damageSpan"/>
-          <elementRef key="delSpan"/>
-          <elementRef key="gap"/>
-          <elementRef key="space"/>
-          <elementRef key="figure"/>
-          <elementRef key="metamark"/>
-          <elementRef key="notatedMusic"/>
-        </alternate>
-      
-      <sequence minOccurs="0">
-        <elementRef key="lem"/>
-        
-          <alternate minOccurs="0" maxOccurs="unbounded">
-            <classRef key="model.global.meta"/>
-            <classRef key="model.global.spoken"/>
-            <classRef key="model.milestoneLike"/>
-            <classRef key="model.noteLike"/>
-            <elementRef key="addSpan"/>
-            <elementRef key="damageSpan"/>
-            <elementRef key="delSpan"/>
-            <elementRef key="gap"/>
-            <elementRef key="space"/>
-            <elementRef key="figure"/>
-            <elementRef key="metamark"/>
-            <elementRef key="notatedMusic"/>
-          </alternate>
-        
-        <sequence minOccurs="0">
-          <elementRef key="wit"/>
-          
-            <alternate minOccurs="0" maxOccurs="unbounded">
-              <classRef key="model.global.meta"/>
-              <classRef key="model.global.spoken"/>
-              <classRef key="model.milestoneLike"/>
-              <classRef key="model.noteLike"/>
-              <elementRef key="addSpan"/>
-              <elementRef key="damageSpan"/>
-              <elementRef key="delSpan"/>
-              <elementRef key="gap"/>
-              <elementRef key="space"/>
-              <elementRef key="figure"/>
-              <elementRef key="metamark"/>
-              <elementRef key="notatedMusic"/>
-            </alternate>
-          
-        </sequence>
-      </sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <sequence>
-            <classRef key="model.rdgLike"/>
-            
-              <alternate minOccurs="0" maxOccurs="unbounded">
-                <classRef key="model.global.meta"/>
-                <classRef key="model.global.spoken"/>
-                <classRef key="model.milestoneLike"/>
-                <classRef key="model.noteLike"/>
-                <elementRef key="addSpan"/>
-                <elementRef key="damageSpan"/>
-                <elementRef key="delSpan"/>
-                <elementRef key="gap"/>
-                <elementRef key="space"/>
-                <elementRef key="figure"/>
-                <elementRef key="metamark"/>
-                <elementRef key="notatedMusic"/>
-              </alternate>
-            
-            <sequence minOccurs="0">
-              <elementRef key="wit"/>
-              
-                <alternate minOccurs="0" maxOccurs="unbounded">
-                  <classRef key="model.global.meta"/>
-                  <classRef key="model.global.spoken"/>
-                  <classRef key="model.milestoneLike"/>
-                  <classRef key="model.noteLike"/>
-                  <elementRef key="addSpan"/>
-                  <elementRef key="damageSpan"/>
-                  <elementRef key="delSpan"/>
-                  <elementRef key="gap"/>
-                  <elementRef key="space"/>
-                  <elementRef key="figure"/>
-                  <elementRef key="metamark"/>
-                  <elementRef key="notatedMusic"/>
-                </alternate>
-              
-            </sequence>
-          </sequence>
-          <sequence>
-            <elementRef key="rdgGrp"/>
-            
-              <alternate minOccurs="0" maxOccurs="unbounded">
-                <classRef key="model.global.meta"/>
-                <classRef key="model.global.spoken"/>
-                <classRef key="model.milestoneLike"/>
-                <classRef key="model.noteLike"/>
-                <elementRef key="addSpan"/>
-                <elementRef key="damageSpan"/>
-                <elementRef key="delSpan"/>
-                <elementRef key="gap"/>
-                <elementRef key="space"/>
-                <elementRef key="figure"/>
-                <elementRef key="metamark"/>
-                <elementRef key="notatedMusic"/>
-              </alternate>
-            
-            <sequence minOccurs="0">
-              <elementRef key="wit"/>
-              
-                <alternate minOccurs="0" maxOccurs="unbounded">
-                  <classRef key="model.global.meta"/>
-                  <classRef key="model.global.spoken"/>
-                  <classRef key="model.milestoneLike"/>
-                  <classRef key="model.noteLike"/>
-                  <elementRef key="addSpan"/>
-                  <elementRef key="damageSpan"/>
-                  <elementRef key="delSpan"/>
-                  <elementRef key="gap"/>
-                  <elementRef key="space"/>
-                  <elementRef key="figure"/>
-                  <elementRef key="metamark"/>
-                  <elementRef key="notatedMusic"/>
-                </alternate>
-              
-            </sequence>
-          </sequence>
-        </alternate>
-      
-    </sequence>-->
-   
+  <content>   
     <sequence>
       <elementRef key="lem" minOccurs="0"/>
       <alternate maxOccurs="unbounded" minOccurs="0">
@@ -47534,7 +47499,6 @@ lemma and usually one or more readings or notes on the relevant passage.</desc>
         <elementRef key="rdgGrp"/>      
       </alternate>
     </sequence>
-
   </content>
   <attList>
     <attDef ident="type" mode="change" usage="opt">
@@ -47855,13 +47819,12 @@ reading groups, each associated with witness specifications.</p>
       </app>
     </egXML>
   </exemplum>
-  <remarks versionDate="2005-01-14" xml:lang="en">
-    <p>The term <term>lemma</term> is used in text criticism to
-describe the reading in the text itself (as opposed to those in the
-apparatus); this usage is distinct from that of mathematics (where a
-lemma is a major step in a proof) and natural-language processing
-(where a lemma is the dictionary form associated with an inflected
-form in the running text).</p>
+  <remarks versionDate="2021-08-25" xml:lang="en">
+    <p>The term <term>lemma</term> is used in text criticism to describe the reading given in the
+      main text, which may be used as a heading in the apparatus itself. This usage connects it to
+      mathematics (where a lemma is a proven proposition used as a step in a proof, a "given") and
+      natural-language processing (where a lemma is the dictionary headword associated with an
+      inflected form in the running text). </p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Le terme <term>lemma</term> est utilisé dans la critique textuelle pour décrire la
@@ -48761,7 +48724,7 @@ and <gi>rdg</gi>, and also within any of their constituent elements. </p>
   </listRef>
 </classSpec>
 <classSpec module="textcrit" type="atts" ident="att.witnessed">
-  <desc versionDate="2012-04-18" xml:lang="en">supplies the attribute used to identify the witnesses
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes used to identify the witnesses
   supporting a particular reading in a critical apparatus.</desc>
   <classes/>
   <attList>
@@ -50551,6 +50514,7 @@ different witnesses.
     <memberOf key="att.naming"/>
     <memberOf key="att.sortable"/>
     <memberOf key="model.eventLike"/>
+    <memberOf key="att.locatable"/>
   </classes>
   <content>
     <sequence>
@@ -50571,18 +50535,6 @@ different witnesses.
         <elementRef key="event" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
   </content>
-  <attList>
-    <attDef ident="where" usage="opt">
-      <desc versionDate="2007-06-11" xml:lang="en">indicates the location of an event by pointing to a <gi>place</gi> element</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko"><gi>place</gi> 요소를 지시함으로써 사건의 위치를 나타낸다.</desc>
-      <desc versionDate="2008-04-06" xml:lang="es">indica la localización de un acontecimiento señalando un elemento <gi>lugar</gi>
-         </desc>
-      <desc versionDate="2008-12-09" xml:lang="fr">indique la localisation d'un évènement en pointant vers un élément <gi>place</gi>
-         </desc>
-      <desc versionDate="2007-11-06" xml:lang="it">indica la posizione di un evento facendo riferimento a un elemento place</desc>
-      <datatype><dataRef key="teidata.pointer"/></datatype>
-    </attDef>
-  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <person>
@@ -56607,8 +56559,8 @@ Information with a Text</head>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:l or ancestor::tei:lg">
-        Abstract model violation: Lines may not contain higher-level divisions such as p or ab.
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)">
+        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
       </report>
     </constraint>
   </constraintSpec>
@@ -58855,7 +58807,7 @@ etc. as appropriate.</p>
   </listRef>
 </elementSpec>
 <classSpec module="analysis" xml:id="ATTNORM" type="atts" ident="att.lexicographic.normalized">
-  <desc versionDate="2020-02-12" xml:lang="en">provides the <att>norm</att> and <att>orig</att> attributes for usage within word-level elements in the analysis module and within lexicographic microstructure in the dictionaries module.</desc>
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes for usage within word-level elements in the analysis module and within lexicographic microstructure in the dictionaries module.</desc>
   <classes/>
   <attList>
     <attDef ident="norm" usage="opt">
@@ -59610,7 +59562,7 @@ The attributes @to and @from on <name/> may each contain only a single value</re
     of an <gi>interp</gi> with any textual element through its
     <att>ana</att> attribute.</p>
     <p>Alternatively (or, in addition) an <gi>interp</gi> may carry an
-    <att>inst</att> attribute which points to one or more textual
+    <att>inst</att> attribute that points to one or more textual
     elements to which the analysis represented by the content of the
     <gi>interp</gi> applies.</p>
   </remarks>
@@ -66293,7 +66245,7 @@ contains specifications for the elements
   </listRef>
 </elementSpec></div>
 <div type="div2" xml:id="TDcrystals"><head>Specification Elements</head>
-<elementSpec module="tagdocs" ident="elementSpec">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="elementSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">element specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">요소 명시</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -66338,6 +66290,16 @@ contains specifications for the elements
       <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="child-constraint-based-on-mode">
+    <constraint>
+      <sch:rule context="tei:elementSpec[ @mode eq 'delete' ]">
+        <sch:report test="child::*">This elementSpec element has a mode= of "delete" even though it has child elements. Change the mode= to "add", "change", or "replace", or remove the child elements.</sch:report>
+      </sch:rule>
+      <sch:rule context="tei:elementSpec[ @mode = ('add','change','replace') ]">
+        <sch:assert test="child::* | (@* except (@mode, @ident))">This elementSpec element has a mode= of "<sch:value-of select="@mode"/>", but does not have any child elements or schema-changing attributes. Specify child elements, use validUntil=, predeclare=, ns=, or prefix=, or change the mode= to "delete".</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="prefix" usage="opt">
       <desc versionDate="2010-06-23" xml:lang="en">specifies a default prefix which will be
@@ -66652,11 +66614,10 @@ the associated TEI header.</p>
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.glossLike"/>
         <classRef key="model.descLike"/>
-      </alternate>
-      <!-- why ? -->
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <elementRef key="content"/> <!-- need to constrain this -->
-        <elementRef key="valList"/> <!-- also now available inside content -->
+      </alternate> 
+      <alternate minOccurs="0" maxOccurs="1">
+        <elementRef key="content"/> 
+        <elementRef key="valList"/> 
       </alternate>
       <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
       <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
@@ -66707,7 +66668,7 @@ the associated TEI header.</p>
         <classRef key="model.glossLike"/>
         <classRef key="model.descLike"/>
       </alternate>
-      <alternate minOccurs="0" maxOccurs="unbounded">
+      <alternate minOccurs="0" maxOccurs="1">
         <elementRef key="content"/>
         <elementRef key="valList"/>
       </alternate>
@@ -67705,7 +67666,7 @@ have a  canonical name, supplied as the value for their
       </valList>
     </attDef>
     <attDef ident="useSourceRendition" usage="opt">
-      <desc versionDate="2015-08-21" xml:lang="en">whether to obey any rendition attribute which is
+      <desc versionDate="2015-08-21" xml:lang="en">whether to obey any rendition attribute that is
         present.</desc>
       <datatype>
         <dataRef key="teidata.truthValue"/>
@@ -67877,7 +67838,7 @@ have a  canonical name, supplied as the value for their
       </datatype>
     </attDef>
     <attDef ident="useSourceRendition" usage="opt">
-      <desc versionDate="2015-05-15" xml:lang="en">whether to obey any rendition attribute which is
+      <desc versionDate="2015-05-15" xml:lang="en">whether to obey any rendition attribute that is
         present</desc>
       <datatype>
         <dataRef key="teidata.truthValue"/>
@@ -68494,7 +68455,7 @@ have a  canonical name, supplied as the value for their
   </listRef>
 </elementSpec>
 <classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="att.repeatable" type="atts" module="tagdocs">
-  <desc versionDate="2013-11-21" xml:lang="en">supplies attributes for the elements which define
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes for the elements which define
   component parts of a content model.</desc>
   <!-- we know that @minOccurs is castable as an integer, and we know that -->
   <!-- @maxOccurs is either "unbounded" or castable as an integer, because -->
@@ -70048,7 +70009,7 @@ an attribute may take, additional to the information carried by the
   </remarks>
 </classSpec>
 <classSpec module="tagdocs" type="atts" ident="att.identified">
-  <desc versionDate="2010-05-11" xml:lang="en">provides the identifying attribute for elements which can be
+  <desc versionDate="2021-08-22" xml:lang="en">provides identifying attributes for elements which can be
   subsequently referenced by means of a <att>key</att>
   attribute.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko"><att>key</att> 속성에
@@ -70173,7 +70134,7 @@ should correspond to an existing module, via a moduleSpec or
   </attList>
 </classSpec>
 <classSpec module="tagdocs" type="atts" ident="att.namespaceable">
-  <desc versionDate="2012-10-21" xml:lang="en">provides an attribute indicating the target namespace for an
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes indicating the target namespace for an
   object being created</desc>
   <attList>
     <attDef ident="ns" usage="opt">
@@ -70267,12 +70228,14 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="CONARS-eg-102"/>
 <bibl xml:id="COBICOR-eg-246"/>
 <bibl xml:id="CONADA-eg-144"/>
+<bibl xml:id="COEDADD-eg-91"/>
 <bibl xml:id="DIC-CR"/>
 <bibl xml:id="TSSASE-eg-20"/>
 <bibl xml:id="CONARS-eg-101"/>
 <bibl xml:id="COVE-eg-286"/>
 <bibl xml:id="DS-eg-04"/>
 <bibl xml:id="NZETC01"/>
+<bibl xml:id="COEDADD-eg-93"/>
 <bibl xml:id="WD-BASHO"/>
 <bibl xml:id="DRCAST-eg-16"/>
 <bibl xml:id="CO-eg-02"/>
@@ -70383,6 +70346,7 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="DRDIV-eg-31"/>
 <bibl xml:id="VE-eg-03"/>
 <bibl xml:id="G2S"/>
+<bibl xml:id="HDUDECL-TG"/>
 <bibl xml:id="PH-eg-07"/>
 <bibl xml:id="DSBACK-eg-86"/>
 <bibl xml:id="DS-eg-01"/>
@@ -70432,6 +70396,7 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="PH-eg-01"/>
 <bibl xml:id="COHTG-eg-42"/>
 <bibl xml:id="SACS1-eg-48"/>
+<bibl xml:id="COEDADD-eg-92"/>
 <bibl xml:id="AI-BIBL-4"/>
 <bibl xml:id="NH-eg-03"/>
 <bibl xml:id="DRCAST-eg-21"/>
@@ -70451,6 +70416,7 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="STGA-eg-10"/>
 <bibl xml:id="COEDADD-eg-85"/>
 <bibl xml:id="SOURCE-eg-01"/>
+<bibl xml:id="NDGEOGste-Falls"/>
 <bibl xml:id="DSHD-eg-30"/>
 <bibl xml:id="DRPERF-eg-12"/>
 <bibl xml:id="COHQHE-eg-11"/>
@@ -70464,7 +70430,9 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="NJAL"/>
 <bibl xml:id="DR-eg-07"/>
 <bibl xml:id="SA-eg-03"/>
+<bibl xml:id="ja-ritsuryo-weights"/>
 <bibl xml:id="PH-eg-16"/>
+<bibl xml:id="COEDADD-eg-90"/>
 <bibl xml:id="PHegsurp"/>
 <bibl xml:id="TSSASE-eg-37"/>
 <bibl xml:id="CODR-eg-296"/>
@@ -70760,6 +70728,8 @@ should correspond to an existing module, via a moduleSpec or
 <biblStruct xml:id="XMLBASE"/>
 <biblStruct xml:id="XPATH"/>
 <biblStruct xml:id="XPATH2"/>
+<biblStruct xml:id="XPATH30"/>
+<biblStruct xml:id="XPATH31"/>
 <biblStruct xml:id="NAMESPACES"/>
 <biblStruct xml:id="SG-BIBL-1"/>
 <biblStruct xml:id="SG-BIBL-2"/>
