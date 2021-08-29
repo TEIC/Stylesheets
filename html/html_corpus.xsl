@@ -11,8 +11,6 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="a fo rng tei teix"
                 version="2.0">
-   <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
-      exclude-result-prefixes="#all" omit-xml-declaration="yes"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet dealing with elements from the corpus module,
@@ -156,8 +154,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:message>TEI HTML: run end hook template teiEndHook</xsl:message>
       </xsl:if>
       <xsl:call-template name="teiEndHook"/>
-      <xsl:apply-templates select="tei:TEI" mode="split"/>
-                
+      <xsl:apply-templates select="tei:TEI" mode="split"/>                
   </xsl:template>
 
   <xsl:template name="corpusBody">

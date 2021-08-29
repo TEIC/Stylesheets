@@ -12,8 +12,6 @@
 				xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 				xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
 				exclude-result-prefixes="#all" version="2.0">
-  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
-    exclude-result-prefixes="#all" omit-xml-declaration="yes"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet dealing with elements from the core module, making

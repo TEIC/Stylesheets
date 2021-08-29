@@ -8,8 +8,6 @@
    xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
    exclude-result-prefixes="a fo dbk xlink rng tei html
 					 teix its teidocx" version="2.0">
-   <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
-      exclude-result-prefixes="#all" omit-xml-declaration="yes"/>
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet dealing with elements from the textstructure module, making HTML output. </p>
@@ -802,6 +800,8 @@
          </xsl:choose>
       </xsl:variable>
       <xsl:choose>
+<!--         When output format is XHTML, both @xml:lang and @lang attributes are created.
+         For other outputs, just @lang-->
          <xsl:when test="$outputTarget = ('html', 'html5')">
             <xsl:attribute name="xml:lang">
                <xsl:value-of select="$supplied"/>

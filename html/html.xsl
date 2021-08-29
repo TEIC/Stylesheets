@@ -153,21 +153,17 @@ of this software, even if advised of the possibility of such damage.
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] Work out language code </desc>
    </doc>
+<!--  For XHTML5 output, both @xml:lang and @lang attributes are created.
+  For other output formats, such as epub, only @lang is created-->
   <xsl:template name="makeLang">
     <xsl:if test="@xml:lang">
       <xsl:choose>
         <xsl:when test="$outputTarget = ('html', 'html5')">
-          <xsl:attribute name="xml:lang">
-            <xsl:value-of select="@xml:lang"/>
-          </xsl:attribute>
-          <xsl:attribute name="lang">
-            <xsl:value-of select="@xml:lang"/>
-          </xsl:attribute>
+          <xsl:attribute name="xml:lang" select="@xml:lang"/>          
+          <xsl:attribute name="lang" select="@xml:lang"/>          
         </xsl:when>
         <xsl:otherwise>
-          <xsl:attribute name="lang">
-            <xsl:value-of select="@xml:lang"/>
-          </xsl:attribute>
+          <xsl:attribute name="lang" select="@xml:lang"/>          
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>

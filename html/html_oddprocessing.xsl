@@ -9,8 +9,6 @@
   xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml" >
-  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
-    exclude-result-prefixes="#all" omit-xml-declaration="yes"/>
   <xsl:param name="cssFile"/>
   <xsl:param name="cssSecondaryFile"/>
   <xsl:param name="summaryDoc">false</xsl:param>
