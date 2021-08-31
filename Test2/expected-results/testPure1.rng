@@ -2998,6 +2998,15 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_listAnnotation"/>
       </choice>
    </define>
+   <define name="t_att.citeStructurePart.attributes">
+      <ref name="t_att.citeStructurePart.attribute.use"/>
+   </define>
+   <define name="t_att.citeStructurePart.attribute.use">
+      <attribute name="use">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(use) supplies an XPath selection pattern using the syntax defined in . The XPath pattern is relative to the context given in <code xmlns="http://www.w3.org/1999/xhtml">@match</code>, which will either be a sibling attribute in the case of  or on the parent  in the case of .</a:documentation>
+         <text/>
+      </attribute>
+   </define>
    <define name="t_att.formula.attributes">
       <ref name="t_att.formula.attribute.formula"/>
    </define>
@@ -4555,6 +4564,8 @@ Elements]</a:documentation>
             <zeroOrMore>
                <choice>
                   <ref name="t_model.milestoneLike"/>
+        
+        
                </choice>
             </zeroOrMore>
             <oneOrMore>
