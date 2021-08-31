@@ -1756,17 +1756,6 @@ tei_model.standOffPart =
   | tei_listChange
   | tei_seg
   | tei_listAnnotation
-tei_att.citeStructurePart.attributes =
-  tei_att.citeStructurePart.attribute.use
-tei_att.citeStructurePart.attribute.use =
-  [
-    a:documentation [
-      "(use) supplies an XPath selection pattern using the syntax defined in . The XPath pattern is relative to the context given in "
-      ns1:code [ "@match" ]
-      ", which will either be a sibling attribute in the case of  or on the parent  in the case of ."
-    ]
-  ]
-  attribute use { text }
 tei_att.formula.attributes = tei_att.formula.attribute.formula
 tei_att.formula.attribute.formula =
   [

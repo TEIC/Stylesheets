@@ -2018,16 +2018,6 @@ Tmodel.standOffPart =
   | Tzone
   | Tseg
   | TlistAnnotation
-Tatt.citeStructurePart.attributes = Tatt.citeStructurePart.attribute.use
-Tatt.citeStructurePart.attribute.use =
-  [
-    a:documentation [
-      "(use) supplies an XPath selection pattern using the syntax defined in . The XPath pattern is relative to the context given in "
-      ns1:code [ "@match" ]
-      ", which will either be a sibling attribute in the case of  or on the parent  in the case of ."
-    ]
-  ]
-  attribute use { text }
 Tatt.formula.attributes = Tatt.formula.attribute.formula
 Tatt.formula.attribute.formula =
   [

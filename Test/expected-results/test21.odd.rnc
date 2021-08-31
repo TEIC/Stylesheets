@@ -2048,16 +2048,6 @@ model.standOffPart =
   | seg
   | listAnnotation
   | zone
-att.citeStructurePart.attributes = att.citeStructurePart.attribute.use
-att.citeStructurePart.attribute.use =
-  [
-    a:documentation [
-      "(use) supplies an XPath selection pattern using the syntax defined in . The XPath pattern is relative to the context given in "
-      ns1:code [ "@match" ]
-      ", which will either be a sibling attribute in the case of  or on the parent  in the case of ."
-    ]
-  ]
-  attribute use { text }
 att.formula.attributes = att.formula.attribute.formula
 att.formula.attribute.formula =
   [
