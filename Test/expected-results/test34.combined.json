@@ -575,16 +575,24 @@
                   [  ] } ] } } ],
         "content" : 
         [ 
-          { "type" : "alternate",
-            "minOccurs" : "0",
-            "maxOccurs" : "unbounded",
+          { "type" : "sequence",
+            "minOccurs" : "1",
+            "maxOccurs" : "1",
             "content" : 
             [ 
-              { "type" : "elementRef",
-                "key" : "alt" },
+              { "type" : "classRef",
+                "key" : "model.descLike" },
               
-              { "type" : "elementRef",
-                "key" : "ptr" } ] } ] },
+              { "type" : "alternate",
+                "minOccurs" : "0",
+                "maxOccurs" : "unbounded",
+                "content" : 
+                [ 
+                  { "type" : "elementRef",
+                    "key" : "alt" },
+                  
+                  { "type" : "elementRef",
+                    "key" : "ptr" } ] } ] } ] },
       
       { "ident" : "analytic",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -2174,7 +2182,7 @@
         "type" : "elementSpec",
         "module" : "derived-module-foo",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\">\n            This element encodes a new citation (CASE 1)\n          <\/desc>" ],
+        [ "<desc>\n            This element encodes a new citation (CASE 1)\n          <\/desc>" ],
         "shortDesc" : "\n            This element encodes a new citation (CASE 1)\n          ",
         "gloss" : 
         [  ],
@@ -2202,7 +2210,7 @@
         "type" : "elementSpec",
         "module" : "derived-module-foo",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\">\n            This element encodes a new citation (CASE 2)\n          <\/desc>" ],
+        [ "<desc>\n            This element encodes a new citation (CASE 2)\n          <\/desc>" ],
         "shortDesc" : "\n            This element encodes a new citation (CASE 2)\n          ",
         "gloss" : 
         [  ],
@@ -2611,7 +2619,8 @@
           "atts" : 
           [ "att.global",
             "att.datable",
-            "att.formula" ],
+            "att.formula",
+            "att.locatable" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -3130,8 +3139,8 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-09-25\" xml:lang=\"en\">contains a brief\n  description of the object documented by its parent element,\n  typically a documentation element or an entity.<\/desc>" ],
-        "shortDesc" : "(description) contains a brief\n  description of the object documented by its parent element,\n  typically a documentation element or an entity.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-03-15\" xml:lang=\"en\">contains a short description of the purpose, function, or\n    use of its parent element,\n    or when the parent is a documentation element, describes or defines the object being documented. \n   \n  <\/desc>" ],
+        "shortDesc" : "(description) contains a short description of the purpose, function, or\n    use of its parent element,\n    or when the parent is a documentation element, describes or defines the object being documented. \n   \n  ",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">description<\/gloss>" ],
         "altIdent" : 
@@ -4595,6 +4604,44 @@
               
               { "type" : "classRef",
                 "key" : "model.editorialDeclPart" } ] } ] },
+      
+      { "ident" : "ellipsis",
+        "ns" : "http:\/\/foo.foo\/foo",
+        "type" : "elementSpec",
+        "module" : "core",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-07-07\" xml:lang=\"en\">indicates a purposeful\n  marking in the source document signalling that content has been\n  omitted, and may also supply or describe the omitted content.<\/desc>" ],
+        "shortDesc" : "(deliberately marked omission) indicates a purposeful\n  marking in the source document signalling that content has been\n  omitted, and may also supply or describe the omitted content.",
+        "gloss" : 
+        [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-07-07\">deliberately marked omission<\/gloss>" ],
+        "altIdent" : 
+        [  ],
+        "classes" : 
+        { "model" : 
+          [ "model.global.edit" ],
+          "atts" : 
+          [ "att.global",
+            "att.dimensions",
+            "att.timed" ],
+          "unknown" : 
+          [  ] },
+        "attributes" : 
+        [  ],
+        "content" : 
+        [ 
+          { "type" : "sequence",
+            "minOccurs" : "1",
+            "maxOccurs" : "1",
+            "content" : 
+            [ 
+              { "type" : "elementRef",
+                "key" : "metamark" },
+              
+              { "type" : "classRef",
+                "key" : "model.descLike" },
+              
+              { "type" : "elementRef",
+                "key" : "supplied" } ] } ] },
       
       { "ident" : "email",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -6173,7 +6220,10 @@
                     "key" : "equiv" },
                   
                   { "type" : "elementRef",
-                    "key" : "gloss" } ] },
+                    "key" : "gloss" },
+                  
+                  { "type" : "classRef",
+                    "key" : "model.descLike" } ] },
               
               { "type" : "alternate",
                 "minOccurs" : "1",
@@ -6599,16 +6649,24 @@
         [  ],
         "content" : 
         [ 
-          { "type" : "alternate",
+          { "type" : "sequence",
             "minOccurs" : "1",
-            "maxOccurs" : "unbounded",
+            "maxOccurs" : "1",
             "content" : 
             [ 
-              { "type" : "elementRef",
-                "key" : "link" },
+              { "type" : "classRef",
+                "key" : "model.descLike" },
               
-              { "type" : "elementRef",
-                "key" : "ptr" } ] } ] },
+              { "type" : "alternate",
+                "minOccurs" : "1",
+                "maxOccurs" : "unbounded",
+                "content" : 
+                [ 
+                  { "type" : "elementRef",
+                    "key" : "link" },
+                  
+                  { "type" : "elementRef",
+                    "key" : "ptr" } ] } ] } ] },
       
       { "ident" : "list",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -7757,7 +7815,7 @@
             "altIdent" : 
             [  ],
             "valDesc" : 
-            [ "<valDesc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\">a numeric value.<\/valDesc>" ],
+            [ "<valDesc>a numeric value.<\/valDesc>" ],
             "datatype" : 
             { "min" : "1",
               "max" : "1",
@@ -8518,7 +8576,7 @@
         "type" : "elementSpec",
         "module" : "derived-module-foo",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\">\n            This element encodes a new quote (CASE 4)\n          <\/desc>" ],
+        [ "<desc>\n            This element encodes a new quote (CASE 4)\n          <\/desc>" ],
         "shortDesc" : "\n            This element encodes a new quote (CASE 4)\n          ",
         "gloss" : 
         [  ],
@@ -9092,6 +9150,157 @@
           "atts" : 
           [ "att.global",
             "att.docStatus" ],
+          "unknown" : 
+          [  ] },
+        "attributes" : 
+        [  ],
+        "content" : 
+        [ 
+          { "type" : "alternate",
+            "minOccurs" : "1",
+            "maxOccurs" : "1",
+            "content" : 
+            [ 
+              { "type" : "elementRef",
+                "key" : "list" },
+              
+              { "type" : "elementRef",
+                "key" : "listChange" },
+              
+              { "type" : "elementRef",
+                "key" : "change" } ] } ] },
+      
+      { "ident" : "rs",
+        "ns" : "http:\/\/foo.foo\/foo",
+        "type" : "elementSpec",
+        "module" : "core",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a general purpose name or referring string.<\/desc>" ],
+        "shortDesc" : "(referencing string) contains a general purpose name or referring string.",
+        "gloss" : 
+        [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">referencing string<\/gloss>" ],
+        "altIdent" : 
+        [  ],
+        "classes" : 
+        { "model" : 
+          [ "model.nameLike" ],
+          "atts" : 
+          [ "att.global",
+            "att.naming",
+            "att.typed" ],
+          "unknown" : 
+          [  ] },
+        "attributes" : 
+        [  ],
+        "content" : 
+        [ 
+          { "type" : "macroRef",
+            "key" : "macro.phraseSeq" } ] },
+      
+      { "ident" : "rt",
+        "ns" : "http:\/\/foo.foo\/foo",
+        "type" : "elementSpec",
+        "module" : "core",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-02-28\" xml:lang=\"en\">contains a ruby\n    text, an annotation closely associated with a passage of the\n    main text.<\/desc>" ],
+        "shortDesc" : "(ruby text) contains a ruby\n    text, an annotation closely associated with a passage of the\n    main text.",
+        "gloss" : 
+        [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-01-30\" xml:lang=\"en\">ruby text<\/gloss>" ],
+        "altIdent" : 
+        [  ],
+        "classes" : 
+        { "model" : 
+          [  ],
+          "atts" : 
+          [ "att.global",
+            "att.typed",
+            "att.placement",
+            "att.transcriptional" ],
+          "unknown" : 
+          [  ] },
+        "attributes" : 
+        [ 
+          { "onElement" : true,
+            "ident" : "target",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-01-08\" xml:lang=\"en\">supplies a pointer to the\n        base being glossed by this ruby text.<\/desc>" ],
+            "shortDesc" : "supplies a pointer to the\n        base being glossed by this ruby text.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "1",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } },
+          
+          { "onElement" : true,
+            "ident" : "from",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-01-06\">points to the starting point of the span of text\n        being glossed by this ruby text.<\/desc>" ],
+            "shortDesc" : "points to the starting point of the span of text\n        being glossed by this ruby text.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "1",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } },
+          
+          { "onElement" : true,
+            "ident" : "to",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-01-06\">points to the ending point of the span of text\n        being glossed.<\/desc>" ],
+            "shortDesc" : "points to the ending point of the span of text\n        being glossed.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "1",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
+        "content" : 
+        [ 
+          { "type" : "macroRef",
+            "key" : "macro.phraseSeq" } ] },
+      
+      { "ident" : "ruby",
+        "ns" : "http:\/\/foo.foo\/foo",
+        "type" : "elementSpec",
+        "module" : "core",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-02-28\" xml:lang=\"en\">contains a\n  passage of base text along with its associated ruby gloss(es).<\/desc>" ],
+        "shortDesc" : "(ruby container) contains a\n  passage of base text along with its associated ruby gloss(es).",
+        "gloss" : 
+        [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-01-30\" xml:lang=\"en\">ruby container<\/gloss>" ],
+        "altIdent" : 
+        [  ],
+        "classes" : 
+        { "model" : 
+          [ "model.phrase" ],
+          "atts" : 
+          [ "att.global",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -13188,8 +13397,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2011-01-30\" xml:lang=\"en\">provides an attribute to indicate whether or not the element\n  concerned is considered to  mark the end of an orthographic token in the same way\n  as whitespace.<\/desc>" ],
-          "shortDesc" : "provides an attribute to indicate whether or not the element\n  concerned is considered to  mark the end of an orthographic token in the same way\n  as whitespace.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-08-22\" xml:lang=\"en\">provides attributes to indicate whether or not the element\n  concerned is considered to  mark the end of an orthographic token in the same way\n  as whitespace.<\/desc>" ],
+          "shortDesc" : "provides attributes to indicate whether or not the element\n  concerned is considered to  mark the end of an orthographic token in the same way\n  as whitespace.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -13251,8 +13460,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-09-23\" xml:lang=\"en\">provides an attribute which may be used to supply a\n  <term>canonical reference<\/term> as a means of identifying the\n  target of a pointer.<\/desc>" ],
-          "shortDesc" : "provides an attribute which may be used to supply a\n  canonical reference as a means of identifying the\n  target of a pointer.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-08-22\" xml:lang=\"en\">provides attributes that may be used to supply a\n  <term>canonical reference<\/term> as a means of identifying the\n  target of a pointer.<\/desc>" ],
+          "shortDesc" : "provides attributes that may be used to supply a\n  canonical reference as a means of identifying the\n  target of a pointer.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -13284,8 +13493,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-09-05\" xml:lang=\"en\">provides attributes which can be used to associate a representation such as a name or title\n    with canonical information about the object being named or referenced.<\/desc>" ],
-          "shortDesc" : "provides attributes which can be used to associate a representation such as a name or title\n    with canonical information about the object being named or referenced.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-09-05\" xml:lang=\"en\">provides attributes that can be used to associate a representation such as a name or title\n    with canonical information about the object being named or referenced.<\/desc>" ],
+          "shortDesc" : "provides attributes that can be used to associate a representation such as a name or title\n    with canonical information about the object being named or referenced.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -13335,9 +13544,9 @@
         { "ident" : "att.citeStructurePart",
           "ns" : "http:\/\/foo.foo\/foo",
           "type" : "classSpec",
-          "module" : "tei",
+          "module" : "header",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-03-15\" xml:lang=\"en\">provides attributes for selecting particular elements\n    within a document.<\/desc>" ],
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-02-03\" xml:lang=\"en\">provides attributes for selecting particular elements\n    within a document.<\/desc>" ],
           "shortDesc" : "provides attributes for selecting particular elements\n    within a document.",
           "gloss" : 
           [  ],
@@ -13546,8 +13755,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2011-11-25\" xml:lang=\"en\">indicates the system or calendar to which the\n        date represented by the content of this element belongs.<\/desc>" ],
-              "shortDesc" : "indicates the system or calendar to which the\n        date represented by the content of this element belongs.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n        date represented by the content of this element belongs.<\/desc>" ],
+              "shortDesc" : "indicates one or more systems or calendars to which the\n        date represented by the content of this element belongs.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -13556,7 +13765,7 @@
               [  ],
               "datatype" : 
               { "min" : "1",
-                "max" : "1",
+                "max" : "unbounded",
                 "dataRef" : 
                 { "key" : "teidata.pointer" } } },
             
@@ -13566,8 +13775,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2011-11-25\" xml:lang=\"en\">supplies a pointer to some location defining a\n        named period of time within which the datable item is understood to have occurred.<\/desc>" ],
-              "shortDesc" : "supplies a pointer to some location defining a\n        named period of time within which the datable item is understood to have occurred.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-19\" xml:lang=\"en\">supplies pointers to one or more definitions of \n        named periods of time (typically <gi>category<\/gi>s or <gi>calendar<\/gi>s) within which the datable item is understood to have occurred.<\/desc>" ],
+              "shortDesc" : "supplies pointers to one or more definitions of \n        named periods of time (typically categorys or calendars) within which the datable item is understood to have occurred.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -13576,7 +13785,7 @@
               [  ],
               "datatype" : 
               { "min" : "1",
-                "max" : "1",
+                "max" : "unbounded",
                 "dataRef" : 
                 { "key" : "teidata.pointer" } } } ] },
         
@@ -13698,8 +13907,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-03-29\" xml:lang=\"en\">provides the <att>dcr:datacat<\/att> and\n  <att>dcr:ValueDatacat<\/att> attributes which are used to \n    align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 \n    standard and stored in the Web repository called ISOCat at <ref target=\"http:\/\/www.isocat.org\/\">http:\/\/www.isocat.org\/<\/ref>.<\/desc>" ],
-          "shortDesc" : "provides the dcr:datacat and\n  dcr:ValueDatacat attributes which are used to \n    align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 \n    standard and stored in the Web repository called ISOCat at http:\/\/www.isocat.org\/.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-08-22\" xml:lang=\"en\">provides attributes that are used to \n    align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 \n    standard and stored in the Web repository called ISOCat at <ptr target=\"http:\/\/www.isocat.org\/\"\/>.<\/desc>" ],
+          "shortDesc" : "provides attributes that are used to \n    align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 \n    standard and stored in the Web repository called ISOCat at .",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -14505,8 +14714,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-02-15\" xml:lang=\"en\">provides an attribute for representing\n    fragmentation of a structural element, typically as \n  a consequence of some overlapping hierarchy.<\/desc>" ],
-          "shortDesc" : "provides an attribute for representing\n    fragmentation of a structural element, typically as \n  a consequence of some overlapping hierarchy.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-08-22\" xml:lang=\"en\">provides attributes for representing\n    fragmentation of a structural element, typically as \n  a consequence of some overlapping hierarchy.<\/desc>" ],
+          "shortDesc" : "provides attributes for representing\n    fragmentation of a structural element, typically as \n  a consequence of some overlapping hierarchy.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -15043,8 +15252,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-02-15\" xml:lang=\"en\">provides an attribute used by elements to point to an\n    external source.<\/desc>" ],
-          "shortDesc" : "provides an attribute used by elements to point to an\n    external source.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-08-22\" xml:lang=\"en\">provides attributes used by elements to point to an\n    external source.<\/desc>" ],
+          "shortDesc" : "provides attributes used by elements to point to an\n    external source.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -15266,6 +15475,39 @@
                 "max" : "unbounded",
                 "dataRef" : 
                 { "key" : "teidata.word" } } } ] },
+        
+        { "ident" : "att.locatable",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-07-29\" xml:lang=\"en\">provides attributes for referencing locations by pointing to entries in a canonical list of places.<\/desc>" ],
+          "shortDesc" : "provides attributes for referencing locations by pointing to entries in a canonical list of places.",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ],
+          "attributes" : 
+          [ 
+            { "onElement" : false,
+              "ident" : "where",
+              "mode" : "add",
+              "ns" : "",
+              "usage" : "opt",
+              "desc" : 
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-07-29\" xml:lang=\"en\">indicates one or more locations by pointing to a <gi>place<\/gi> element or other canonical description.<\/desc>" ],
+              "shortDesc" : "indicates one or more locations by pointing to a place element or other canonical description.",
+              "gloss" : 
+              [  ],
+              "altIdent" : 
+              [  ],
+              "valDesc" : 
+              [  ],
+              "datatype" : 
+              { "min" : "1",
+                "max" : "unbounded",
+                "dataRef" : 
+                { "key" : "teidata.pointer" } } } ] },
         
         { "ident" : "att.measurement",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -15619,8 +15861,8 @@
           "type" : "classSpec",
           "module" : "core",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-07-16\" xml:lang=\"en\">provides an attribute to indicate the type of section which is changing at a specific milestone.<\/desc>" ],
-          "shortDesc" : "provides an attribute to indicate the type of section which is changing at a specific milestone.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-08-22\" xml:lang=\"en\">provides attributes to indicate the type of section which is changing at a specific milestone.<\/desc>" ],
+          "shortDesc" : "provides attributes to indicate the type of section which is changing at a specific milestone.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -15832,8 +16074,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-01-11\" xml:lang=\"en\">provides an attribute to indicate any specialised notation used for element content.<\/desc>" ],
-          "shortDesc" : "provides an attribute to indicate any specialised notation used for element content.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-08-22\" xml:lang=\"en\">provides attributes to indicate any specialised notation used for element content.<\/desc>" ],
+          "shortDesc" : "provides attributes to indicate any specialised notation used for element content.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -16877,8 +17119,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-10-02\" xml:lang=\"en\">provides attributes which can be used to classify or subclassify elements in any way.<\/desc>" ],
-          "shortDesc" : "provides attributes which can be used to classify or subclassify elements in any way.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-10-02\" xml:lang=\"en\">provides attributes that can be used to classify or subclassify elements in any way.<\/desc>" ],
+          "shortDesc" : "provides attributes that can be used to classify or subclassify elements in any way.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -16930,8 +17172,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-06-15\" xml:lang=\"en\">provides an attribute to indicate the hand in which\n    the content of an element was written in the source being transcribed.<\/desc>" ],
-          "shortDesc" : "provides an attribute to indicate the hand in which\n    the content of an element was written in the source being transcribed.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-08-22\" xml:lang=\"en\">provides attributes to indicate the hand in which\n    the content of an element was written in the source being transcribed.<\/desc>" ],
+          "shortDesc" : "provides attributes to indicate the hand in which\n    the content of an element was written in the source being transcribed.",
           "gloss" : 
           [  ],
           "altIdent" : 

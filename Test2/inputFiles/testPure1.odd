@@ -20,6 +20,12 @@
   </teiHeader>
   <text>
       <body>
+	<p>Here is the TEI badge:
+	<graphic url="http://www.tei-c.org/wp-content/uploads/2016/11/I-use-TEI.png">
+	  <desc>The TEI Badge</desc>
+	</graphic>. It is here to test <gi>desc</gi> in <gi>graphic</gi> in an ODD per
+	<ptr target="https://github.com/TEIC/Stylesheets/issues/444"/>.
+	</p>
          <schemaSpec start="TEI div" ident="testPure1" prefix="t_">
             <desc>This file is intended as input for a conversion to
         RNG and Schematron (and possibly other outputs) as part 
@@ -131,11 +137,13 @@
 		                      <dataRef name="nonNegativeInteger"/>
 	                    </datatype>
 	                 </attDef>
-	                 <attDef mode="change" ident="sameAs">
+	                <!-- Council is currently divided on whether referencing a datatype using @key
+	                       should be allowed or not; it's currently not allowed. -->
+	                 <!--<attDef mode="change" ident="sameAs">
 	                    <datatype minOccurs="1" maxOccurs="1">
 		                      <dataRef key="teidata.count" restriction="[0-9][0-9]?"/>
 	                    </datatype>
-	                 </attDef>
+	                 </attDef>-->
 	                 <attDef mode="change" ident="copyOf">
 	                    <datatype minOccurs="1" maxOccurs="1">
 		                      <dataRef name="nonNegativeInteger" restriction="[0-9][0-9]?"/>

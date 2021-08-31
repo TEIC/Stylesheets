@@ -1,8 +1,8 @@
 SFUSER=rahtz
 DEFAULTSOURCE=$(shell pwd)/source/p5subset.xml
-SAXON=java -jar lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
-DOTSAXON=java -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
-DOTDOTSAXON=java -jar ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE) 
+SAXON=java -jar lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
+DOTSAXON=java -jar ../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
+DOTDOTSAXON=java -jar ../../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE) 
 SAXON_ARGS=-ext:on
 DIRS=bibtex cocoa common csv docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt p4 pdf profiles/default rdf relaxng rnc schematron simple slides tbx tcp lite tite tools txt html xsd xlsx pdf verbatimxml
 
@@ -89,7 +89,7 @@ doc: oxygendoc linkcss
 	$(SAXON) -o:release/xslcommon/doc/tei-xsl/index.html Documentation/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
 	$(SAXON) -o:release/xslcommon/doc/tei-xsl/style.html Documentation/style.xml  profiles/default/html/to.xsl 
 	cp Documentation/*.png Documentation/teixsl.xml Documentation/style.xml release/xslcommon/doc/tei-xsl
-	cp VERSION tei.css ChangeLog LICENCE release/xslcommon/doc/tei-xsl
+	cp VERSION tei.css ChangeLog LEGAL/LICENCE release/xslcommon/doc/tei-xsl
 
 oxygendoc:
 	# when building Debian packages, the script runs under

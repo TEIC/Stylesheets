@@ -334,7 +334,7 @@ sch:pattern [
   sch:rule [
     context = "tei:*[@when]"
     "\x{a}" ~
-    "        "
+    "         "
     sch:report [
       test = "@notBefore|@notAfter|@from|@to"
       role = "nonfatal"
@@ -353,7 +353,7 @@ sch:pattern [
   sch:rule [
     context = "tei:*[@from]"
     "\x{a}" ~
-    "        "
+    "         "
     sch:report [
       test = "@notBefore"
       role = "nonfatal"
@@ -372,7 +372,7 @@ sch:pattern [
   sch:rule [
     context = "tei:*[@to]"
     "\x{a}" ~
-    "        "
+    "         "
     sch:report [
       test = "@notAfter"
       role = "nonfatal"
@@ -393,7 +393,9 @@ att.datable.attributes =
 att.datable.attribute.calendar =
   
   ## indique le système ou le calendrier auquel appartient la date exprimée dans le contenu de l'élément.
-  attribute calendar { xsd:anyURI }?
+  attribute calendar {
+    list { xsd:anyURI+ }
+  }?
 sch:pattern [
   id = "test21-att.datable-calendar-calendar-constraint-rule-4"
   "\x{a}" ~
@@ -401,17 +403,17 @@ sch:pattern [
   sch:rule [
     context = "tei:*[@calendar]"
     "\x{a}" ~
-    "            "
+    "         "
     sch:assert [
       test = "string-length(.) gt 0"
-      " @calendar indicates the system or calendar to\x{a}" ~
+      " @calendar indicates one or more systems or calendars to\x{a}" ~
       "              which the date represented by the content of this element belongs, but this\x{a}" ~
       "              "
       sch:name [ ]
       " element has no textual content."
     ]
     "\x{a}" ~
-    "          "
+    "      "
   ]
   "\x{a}" ~
   "   "
@@ -419,7 +421,9 @@ sch:pattern [
 att.datable.attribute.period =
   
   ## fournit un pointeur vers un emplacement donné définissant une période de temps nommée durant laquelle l'item concerné s'inscrit.
-  attribute period { xsd:anyURI }?
+  attribute period {
+    list { xsd:anyURI+ }
+  }?
 att.datcat.attributes =
   att.datcat.attribute.datcat, att.datcat.attribute.valueDatcat
 att.datcat.attribute.datcat =
@@ -866,7 +870,7 @@ sch:pattern [
   sch:rule [
     context = "tei:*[@unitRef]"
     "\x{a}" ~
-    "        "
+    "         "
     sch:report [
       test = "@unit"
       role = "info"
@@ -980,7 +984,7 @@ sch:pattern [
   sch:rule [
     context = "tei:*[@subtype]"
     "\x{a}" ~
-    "        "
+    "         "
     sch:assert [
       test = "@type"
       "The "
@@ -1023,7 +1027,7 @@ sch:pattern [
   sch:rule [
     context = "tei:*[not(self::tei:schemaSpec)][@targetLang]"
     "\x{a}" ~
-    "            "
+    "         "
     sch:assert [
       test = "@target"
       "@targetLang should only be used on "
@@ -1031,7 +1035,7 @@ sch:pattern [
       " if @target is specified."
     ]
     "\x{a}" ~
-    "          "
+    "      "
   ]
   "\x{a}" ~
   "   "
@@ -1133,7 +1137,7 @@ sch:pattern [
   sch:rule [
     context = "tei:*[@spanTo]"
     "\x{a}" ~
-    "            "
+    "         "
     sch:assert [
       test =
         "id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]"
@@ -1143,10 +1147,10 @@ sch:pattern [
       ") must follow the current element "
       sch:name [ ]
       "\x{a}" ~
-      "                  "
+      "         "
     ]
     "\x{a}" ~
-    "          "
+    "      "
   ]
   "\x{a}" ~
   "   "
@@ -1189,7 +1193,7 @@ sch:pattern [
   sch:rule [
     context = "tei:*[@schemeVersion]"
     "\x{a}" ~
-    "            "
+    "         "
     sch:assert [
       test = "@scheme and not(@scheme = 'free')"
       "\x{a}" ~
@@ -1197,7 +1201,7 @@ sch:pattern [
       "            "
     ]
     "\x{a}" ~
-    "          "
+    "      "
   ]
   "\x{a}" ~
   "   "
@@ -1681,7 +1685,8 @@ model.stageLike_sequenceOptionalRepeatable = stage*
 model.stageLike_sequenceRepeatable = stage+
 model.entryPart = notAllowed
 model.eventLike = event | listEvent
-model.global.edit = gap | addSpan | damageSpan | delSpan | space
+model.global.edit =
+  gap | ellipsis | addSpan | damageSpan | delSpan | space
 model.divPart = model.lLike | model.pLike | lg | sp
 model.persStateLike =
   persName
@@ -2063,6 +2068,18 @@ att.formula.attribute.formula =
     ]
   ]
   attribute formula { text }?
+att.locatable.attributes = att.locatable.attribute.where
+att.locatable.attribute.where =
+  [
+    a:documentation [
+      "indique une ou plusieurs localisations en pointant vers un élément "
+      ns1:code [ "<place>" ]
+      " ou autre description canonique."
+    ]
+  ]
+  attribute where {
+    list { xsd:anyURI+ }
+  }?
 model.correspActionPart =
   model.dateLike | model.addressLike | model.nameLike | note | noteGrp
 model.correspContextPart = model.ptrLike | model.pLike | note | noteGrp
@@ -2190,9 +2207,9 @@ p =
            "               "
            sch:report [
              test =
-               "ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]"
+               "(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.\x{a}" ~
+             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -2620,6 +2637,16 @@ gap =
     }?,
     empty
   }
+ellipsis =
+  
+  ## (deliberately marked omission) indicates a purposeful marking in the source document signalling that content has been omitted, and may also supply or describe the omitted content. [3.5.3. Additions, Deletions, and Omissions]
+  element ellipsis {
+    (metamark, model.descLike?, supplied?),
+    att.global.attributes,
+    att.dimensions.attributes,
+    att.timed.attributes,
+    empty
+  }
 add =
   
   ## ( ajout) contient des lettres, des mots ou des phrases insérés dans le texte par un auteur, un copiste, un annotateur ou un correcteur. [3.5.3. Additions, Deletions, and Omissions]
@@ -2961,7 +2988,7 @@ ref =
          sch:rule [
            context = "tei:list[@type='gloss']"
            "\x{a}" ~
-           "	              "
+           "               "
            sch:assert [
              test = "tei:label"
              'The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element'
@@ -4224,15 +4251,7 @@ event =
     att.typed.attributes,
     att.naming.attributes,
     att.sortable.attributes,
-    [
-      a:documentation [
-        "indique la localisation d'un évènement en pointant vers un élément "
-        ns1:code [ "<place>" ]
-        "\x{a}" ~
-        "               "
-      ]
-    ]
-    attribute where { xsd:anyURI }?,
+    att.locatable.attributes,
     empty
   }
 faith =
@@ -4878,7 +4897,7 @@ object =
      model.headLike*,
      (model.pLike* | (msContents?, physDesc?, history?, additional?)),
      (model.noteLike | model.biblLike | linkGrp | link)*,
-     object?),
+     object*),
     att.global.attributes,
     att.sortable.attributes,
     att.typed.attributes,
@@ -4965,6 +4984,16 @@ listNym =
     att.sortable.attributes,
     empty
   }
+att.citeStructurePart.attributes = att.citeStructurePart.attribute.use
+att.citeStructurePart.attribute.use =
+  [
+    a:documentation [
+      "(use) supplies an XPath selection pattern using the syntax defined in . The XPath pattern is relative to the context given in "
+      ns1:code [ "@match" ]
+      ", which will either be a sibling attribute in the case of `<citeStructure>` or on the parent `<citeStructure>` in the case of `<citeData>`."
+    ]
+  ]
+  attribute use { text }
 att.patternReplacement.attributes =
   att.patternReplacement.attribute.matchPattern,
   att.patternReplacement.attribute.replacementPattern
@@ -5561,7 +5590,7 @@ citeStructure =
        ],
     [
       a:documentation [
-        "(match) supplies an XPath selection pattern using the syntax defined in  which identifies a set of nodes which are citable structural components. The expression may be absolute (beginning with ) or relative. "
+        "(match) supplies an XPath selection pattern using the syntax defined in  which identifies a set of nodes which are citable structural components. The expression may be absolute (beginning with `/`) or relative. "
         ns1:code [ "@match" ]
         " on a "
         ns1:code [ "<citeStructure>" ]
@@ -5789,6 +5818,7 @@ conversion =
     att.global.attributes,
     att.datable.attributes,
     att.formula.attributes,
+    att.locatable.attributes,
     [
       a:documentation [
         "indicates a source unit of measure that is to be converted into another unit indicated in "
@@ -6148,7 +6178,7 @@ linkGrp =
   
   ## (groupe de liens) définit un ensemble d'associations ou de liens hypertextuels. [16.1. Links]
   element linkGrp {
-    (link | ptr)+,
+    (model.descLike*, (link | ptr)+),
     att.global.attributes,
     att.pointing.group.attributes,
     empty
@@ -6189,9 +6219,10 @@ ab =
            "\x{a}" ~
            "               "
            sch:report [
-             test = "ancestor::tei:l or ancestor::tei:lg"
+             test =
+               "(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level divisions such as p or ab.\x{a}" ~
+             "        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -6437,7 +6468,7 @@ joinGrp =
     ]
   ]
   element joinGrp {
-    ((gloss)*, (join | ptr)+),
+    ((gloss | model.descLike)*, (join | ptr)+),
     att.global.attributes,
     att.pointing.group.attributes,
     [
@@ -6478,11 +6509,11 @@ alt =
       a:documentation [
         "Si l'attribut "
         ns1:code [ "@mode" ]
-        " a la valeur , chacune des valeurs de l'attribut "
+        " a la valeur `excl`, chacune des valeurs de l'attribut "
         ns1:code [ "@weights" ]
         " établit la probabilité que l'option correspondante soit vraie. Si l'attribut "
         ns1:code [ "@mode" ]
-        " a la valeur , chacune des valeurs de l'attribut "
+        " a la valeur `incl`, chacune des valeurs de l'attribut "
         ns1:code [ "@weights" ]
         " établit la probabilité que l'option correspondante soit vraie, étant posé qu'au moins une des autres options l'est aussi."
       ]
@@ -6501,7 +6532,7 @@ altGrp =
     ]
   ]
   element altGrp {
-    (alt | ptr)*,
+    (model.descLike*, (alt | ptr)*),
     att.global.attributes,
     att.pointing.group.attributes,
     
@@ -7728,7 +7759,6 @@ path =
          sch:rule [
            context = "tei:path[@points]"
            "\x{a}" ~
-           "        \x{a}" ~
            "               "
            sch:let [
              name = "firstPair"
@@ -7877,7 +7907,7 @@ addSpan =
              ") must follow the current element "
              sch:name [ ]
              "\x{a}" ~
-             "                  "
+             "               "
            ]
            "\x{a}" ~
            "            "
@@ -8386,9 +8416,10 @@ group =
            "\x{a}" ~
            "               "
            sch:report [
-             test = "ancestor::tei:l"
+             test =
+               "(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level structural elements such as div.\x{a}" ~
+             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
@@ -8408,9 +8439,9 @@ group =
            "               "
            sch:report [
              test =
-               "ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)"
+               "(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: p and ab may not contain higher-level structural elements such as div.\x{a}" ~
+             "        Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
              "      "
            ]
            "\x{a}" ~
