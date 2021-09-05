@@ -75,8 +75,8 @@ The element indicated by @spanTo (<value-of select="@spanTo"/>) must follow the 
    </pattern>
    <pattern id="schematron-constraint-test-p-abstractModel-structure-l-11">
       <rule context="tei:p">
-         <report test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
-        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.
+         <report test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
       </report>
       </rule>
    </pattern>
@@ -213,15 +213,15 @@ The @spanTo attribute of <name/> is required.</assert>
    </pattern>
    <pattern id="schematron-constraint-test-div-abstractModel-structure-l-37">
       <rule context="tei:div">
-         <report test="ancestor::tei:l">
-        Abstract model violation: Lines may not contain higher-level structural elements such as div.
+         <report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
       </report>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-test-div-abstractModel-structure-p-38">
       <rule context="tei:div">
-         <report test="ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)">
-        Abstract model violation: p and ab may not contain higher-level structural elements such as div.
+         <report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
+        Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
       </report>
       </rule>
    </pattern>
@@ -240,8 +240,8 @@ The @spanTo attribute of <name/> is required.</assert>
    </pattern>
    <pattern id="schematron-constraint-test-ab-abstractModel-structure-l-41">
       <rule context="tei:ab">
-         <report test="ancestor::tei:l or ancestor::tei:lg">
-        Abstract model violation: Lines may not contain higher-level divisions such as p or ab.
+         <report test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)">
+        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
       </report>
       </rule>
    </pattern>

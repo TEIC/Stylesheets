@@ -2598,6 +2598,7 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
   <define name="model.global.edit">
     <choice>
       <ref name="gap"/>
+      <ref name="ellipsis"/>
       <ref name="addSpan"/>
       <ref name="damageSpan"/>
       <ref name="delSpan"/>
@@ -3250,15 +3251,6 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <ref name="model.entryLike"/>
     </choice>
   </define>
-  <define name="att.citeStructurePart.attributes">
-    <ref name="att.citeStructurePart.attribute.use"/>
-  </define>
-  <define name="att.citeStructurePart.attribute.use">
-    <attribute name="use">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(use) supplies an XPath selection pattern using the syntax defined in . The XPath pattern is relative to the context given in <code xmlns="http://www.w3.org/1999/xhtml">@match</code>, which will either be a sibling attribute in the case of `&lt;citeStructure&gt;` or on the parent `&lt;citeStructure&gt;` in the case of `&lt;citeData&gt;`.</a:documentation>
-      <text/>
-    </attribute>
-  </define>
   <define name="att.formula.attributes">
     <ref name="att.formula.attribute.formula"/>
   </define>
@@ -3267,6 +3259,21 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <attribute name="formula">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">A <code xmlns="http://www.w3.org/1999/xhtml">@formula</code> is provided to describe a mathematical calculation such as a conversion between measurement systems.</a:documentation>
         <text/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.locatable.attributes">
+    <ref name="att.locatable.attribute.where"/>
+  </define>
+  <define name="att.locatable.attribute.where">
+    <optional>
+      <attribute name="where">
+        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates one or more locations by pointing to a <code xmlns="http://www.w3.org/1999/xhtml">&lt;place&gt;</code> element or other canonical description.</a:documentation>
+        <list>
+          <oneOrMore>
+            <data type="anyURI"/>
+          </oneOrMore>
+        </list>
       </attribute>
     </optional>
   </define>
@@ -3416,8 +3423,8 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
       </pattern>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-p-abstractModel-structure-l-constraint-report-6">
         <rule context="tei:p">
-          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
-        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.
+          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
       </report>
         </rule>
       </pattern>
@@ -3839,6 +3846,24 @@ Sample values include: 1] rubbing (rubbing); 2] mildew (mildew); 3] smoke (smoke
           </data>
         </attribute>
       </optional>
+      <empty/>
+    </element>
+  </define>
+  <define name="ellipsis">
+    <element name="ellipsis">
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(deliberately marked omission) indicates a purposeful marking in the source document signalling that content has been omitted, and may also supply or describe the omitted content. [3.5.3. Additions, Deletions, and Omissions]</a:documentation>
+      <group>
+        <ref name="metamark"/>
+        <optional>
+          <ref name="model.descLike"/>
+        </optional>
+        <optional>
+          <ref name="supplied"/>
+        </optional>
+      </group>
+      <ref name="att.global.attributes"/>
+      <ref name="att.dimensions.attributes"/>
+      <ref name="att.timed.attributes"/>
       <empty/>
     </element>
   </define>
@@ -5190,6 +5215,15 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
       <empty/>
     </element>
   </define>
+  <define name="att.citeStructurePart.attributes">
+    <ref name="att.citeStructurePart.attribute.use"/>
+  </define>
+  <define name="att.citeStructurePart.attribute.use">
+    <attribute name="use">
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(use) supplies an XPath selection pattern using the syntax defined in . The XPath pattern is relative to the context given in <code xmlns="http://www.w3.org/1999/xhtml">@match</code>, which will either be a sibling attribute in the case of `&lt;citeStructure&gt;` or on the parent `&lt;citeStructure&gt;` in the case of `&lt;citeData&gt;`.</a:documentation>
+      <text/>
+    </attribute>
+  </define>
   <define name="att.patternReplacement.attributes">
     <ref name="att.patternReplacement.attribute.matchPattern"/>
     <ref name="att.patternReplacement.attribute.replacementPattern"/>
@@ -6209,6 +6243,7 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
       <ref name="att.global.attributes"/>
       <ref name="att.datable.attributes"/>
       <ref name="att.formula.attributes"/>
+      <ref name="att.locatable.attributes"/>
       <attribute name="fromUnit">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates a source unit of measure that is to be converted into another unit indicated in <code xmlns="http://www.w3.org/1999/xhtml">@toUnit</code>.</a:documentation>
         <data type="anyURI"/>
@@ -8107,15 +8142,15 @@ Suggested values include: 1] initial; 2] final</a:documentation>
       </group>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-div-abstractModel-structure-l-constraint-report-15">
         <rule context="tei:div">
-          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="ancestor::tei:l">
-        Abstract model violation: Lines may not contain higher-level structural elements such as div.
+          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
       </report>
         </rule>
       </pattern>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-div-abstractModel-structure-p-constraint-report-16">
         <rule context="tei:div">
-          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)">
-        Abstract model violation: p and ab may not contain higher-level structural elements such as div.
+          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
+        Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
       </report>
         </rule>
       </pattern>
@@ -9120,8 +9155,8 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
       </pattern>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-ab-abstractModel-structure-l-constraint-report-18">
         <rule context="tei:ab">
-          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" test="ancestor::tei:l or ancestor::tei:lg">
-        Abstract model violation: Lines may not contain higher-level divisions such as p or ab.
+          <report xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)">
+        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
       </report>
         </rule>
       </pattern>
