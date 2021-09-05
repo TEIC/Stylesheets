@@ -53,8 +53,13 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
   <xsl:param name="splitLevel">-1</xsl:param>
-  <xsl:param name="cssFile"></xsl:param>
-  <xsl:param name="cssInlineFiles">../tei.css ../odd.css</xsl:param>
+  
+<!--  Default behaviour concerning CSS files is the same as in previous HTML5 output
+  transformation, this is, a link to the file “tei.css”. To change this behaviour and include internal CSS instead
+  (as it was the default in HTML output), declare both the "cssFile" and "cssInlineFile" parameters. — hsb, 2021-09-05 -->
+  
+  <!--<xsl:param name="cssFile"></xsl:param>-->
+  <!--<xsl:param name="cssInlineFiles">../tei.css ../odd.css</xsl:param>-->
   <xsl:param name="institution"></xsl:param>
   <xsl:param name="feedbackURL"/>
   <xsl:param name="searchURL"/>
