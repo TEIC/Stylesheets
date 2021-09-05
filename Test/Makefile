@@ -186,9 +186,9 @@ test-to-html: actual css
 		then diff  $(AR)/test5.xhtml $(ER)/test5.xhtml; \
 		else echo "==deferring: \` diff  $(AR)/test5.xhtml $(ER)/test5.xhtml \`"; fi
 #	$(JING) -c xhtml.rnc $(AR)/test5.xhtml
-# This schema is not compliant with XHTML5 (it doesn’t allow the presence of @lang attribute).
-# Provisionally commented-out until a XHTML5 validation routine is approved -- hbs 2021-08-01
-
+# The xhtml.rnc schema previously used for validation is not actually an XHTML5 schema, but rather an XHTML 1.1 schema. 
+# Notably, it does not permit @lang, which we need. Thus I have provisionally commented-out the validation against it 
+# until we can set up proper XHTML5 validation. — hbs 2021-09-15.
 	$(SAXON) test6.xml ../html/html.xsl  autoBlockQuote=true $(SAXONOPT)  | tidy -config config_tidy.txt - > $(AR)/test6.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test6.html $(ER)/test6.html; \
