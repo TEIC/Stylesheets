@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-    xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:rng="http://relaxng.org/ns/structure/1.0"
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xmlns:teix="http://www.tei-c.org/ns/Examples"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl"
-    version="2.0">
-
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl" version="2.0">
+  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
+     omit-xml-declaration="yes"/>
   <xsl:param name="directory">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
   <xsl:key name="EXAMPLES" match="teix:*[ancestor::teix:egXML]" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
@@ -298,7 +287,8 @@
       <xsl:variable name="langs">
         <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
       </xsl:variable>
-      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outputDir}/examples-{$me}.html" method="{$outputMethod}">
+      <xsl:result-document html-version="{$htmlVersion}"
+        normalization-form="{$normalizationForm}" encoding="{$outputEncoding}" href="{$outputDir}/examples-{$me}.html" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
         <html>
 	  <xsl:variable name="pagetitle">
 	    <xsl:sequence select="tei:i18n('Example')"/>

@@ -15,6 +15,8 @@
   <xsl:import href="../common/common.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>
   <xsl:import href="html_param.xsl"/>
+  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
+    exclude-result-prefixes="#all" omit-xml-declaration="yes"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p>
@@ -71,7 +73,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:include href="html_textcrit.xsl"/>
   <xsl:include href="html_transcr.xsl"/>
   <xsl:include href="html_verse.xsl"/>
-
+  <xsl:include href="html_textstructure_id.xsl"/>
+  <xsl:param name="divOffset">1</xsl:param>
+  <xsl:param name="doclang"/>
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
       <desc>Stylesheet constant setting the name of the main output file.</desc>
    </doc>
@@ -148,9 +153,19 @@ of this software, even if advised of the possibility of such damage.
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] Work out language code </desc>
    </doc>
+<!--  For XHTML5 output, both @xml:lang and @lang attributes are created.
+  For other output formats, such as epub, only @lang is created-->
   <xsl:template name="makeLang">
     <xsl:if test="@xml:lang">
-      <xsl:attribute name="lang" select="@xml:lang"/>
+      <xsl:choose>
+        <xsl:when test="$outputTarget = ('html', 'html5')">
+          <xsl:attribute name="xml:lang" select="@xml:lang"/>          
+          <xsl:attribute name="lang" select="@xml:lang"/>          
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:attribute name="lang" select="@xml:lang"/>          
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
   </xsl:template>
 
@@ -205,7 +220,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:sequence select="tei:processClass(local-name(), '')"/>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:if test="$outputTarget = 'html5'">
+    <xsl:if test="$outputTarget = ('html5', 'html')">
       <xsl:call-template name="microdata"/>
     </xsl:if>
   </xsl:template>

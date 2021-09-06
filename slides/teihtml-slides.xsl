@@ -10,7 +10,6 @@
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="tei xlink xhtml m"
                 version="2.0">
-
   <xsl:import href="../html/html.xsl"/>
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
@@ -56,15 +55,15 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
-  <xsl:output encoding="utf-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN"/>
+  <xsl:output encoding="utf-8" method="xhtml" omit-xml-declaration="yes"/>
   <xsl:param name="outputEncoding">utf-8</xsl:param>
-  <xsl:output method="xml" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
-  <xsl:param name="outputTarget">html5</xsl:param>
+  <xsl:param name="outputTarget">html</xsl:param>
   <xsl:param name="logoFile"></xsl:param>
   <xsl:param name="logoWidth"></xsl:param>
   <xsl:param name="logoHeight"></xsl:param>
-  <xsl:param name="doctypeSystem">about:legacy-compat</xsl:param>
-  <xsl:param name="doctypePublic"/>
+   <xsl:param name="htmlVersion"></xsl:param>
+   <xsl:param name="normalizationForm"></xsl:param>
+   <xsl:param name="omitXMLDeclaration"></xsl:param>
 
   <xsl:template match="tei:div" mode="number">
       <xsl:number level="any"/>
@@ -115,9 +114,11 @@ of this software, even if advised of the possibility of such damage.
          <xsl:message>Opening file <xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
-      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
+     <xsl:result-document html-version="{$htmlVersion}"
+                           normalization-form="{$normalizationForm}"
                            encoding="{$outputEncoding}"
                            href="{$outName}"
+                           omit-xml-declaration="{$omitXMLDeclaration}"
                            method="{$outputMethod}">
          <xsl:call-template name="mainslide"/>
       </xsl:result-document>
@@ -345,7 +346,9 @@ of this software, even if advised of the possibility of such damage.
          <xsl:message>Opening file <xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
-      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
+     <xsl:result-document html-version="{$htmlVersion}"
+                           normalization-form="{$normalizationForm}"
+                           omit-xml-declaration="{$omitXMLDeclaration}"
                            encoding="{$outputEncoding}"
                            href="{$outName}"
                            method="{$outputMethod}">
@@ -395,9 +398,11 @@ of this software, even if advised of the possibility of such damage.
 	              <xsl:message>Opening file <xsl:value-of select="$outName"/>
                </xsl:message>
 	           </xsl:if>
-	           <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
+	           <xsl:result-document html-version="{$htmlVersion}"
+	                              normalization-form="{$normalizationForm}"
                                  encoding="{$outputEncoding}"
                                  href="{$outName}"
+                                 omit-xml-declaration="{$omitXMLDeclaration}"
                                  method="{$outputMethod}">
 	              <xsl:call-template name="slideout"/>
 	           </xsl:result-document>
