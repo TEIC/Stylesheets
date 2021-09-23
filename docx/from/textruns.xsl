@@ -166,8 +166,8 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Creates an element named $style. $style is the word style name with prefix "TEI " or "tei_" stripped off.
-      Override this method if you need to, for example preprocess $style and call the super.
+    <desc>Creates an element named $style and calls basicStyles with parented=true. $style is the word style name with prefix "TEI " or "tei_" stripped off.
+      Override this method if you need to, for example preprocess $style.
     </desc>
   </doc>
   <xsl:template name="elementFromStyle">
