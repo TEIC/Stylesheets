@@ -38,7 +38,8 @@
 	  <xsl:import href="omml2mml.xsl"/>
 	  <xsl:import href="pass0.xsl"/>
 	  <xsl:import href="pass2.xsl"/>
-	
+    <xsl:import href="textruns.xsl"/>
+  
 	  
 	  <xsl:param name="convertGraphics">true</xsl:param>	  
 	  <xsl:param name="mathMethod">mml</xsl:param>	  
@@ -65,7 +66,6 @@
 	  <xsl:include href="maths.xsl"/>
 	  <xsl:include href="paragraphs.xsl"/>
 	  <xsl:include href="tables.xsl"/>
-	  <xsl:include href="textruns.xsl"/>
 	  <xsl:include href="wordsections.xsl"/>
 	
 	
