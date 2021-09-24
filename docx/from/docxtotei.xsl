@@ -38,7 +38,6 @@
 	  <xsl:import href="omml2mml.xsl"/>
 	  <xsl:import href="pass0.xsl"/>
 	  <xsl:import href="pass2.xsl"/>
-
 	  
 	  <xsl:param name="convertGraphics">true</xsl:param>	  
 	  <xsl:param name="mathMethod">mml</xsl:param>	  
