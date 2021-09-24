@@ -55,7 +55,6 @@
 	  <xsl:param name="processChangeInformation">false</xsl:param>
 	  <xsl:param name="pageHeight">890</xsl:param>
       <xsl:param name="pageWidth">576</xsl:param>
-  
 
 	  <xsl:include href="fields.xsl"/>
 	  <xsl:include href="toc.xsl"/>
@@ -65,8 +64,8 @@
 	  <xsl:include href="maths.xsl"/>
 	  <xsl:include href="paragraphs.xsl"/>
 	  <xsl:include href="tables.xsl"/>
-	  <xsl:include href="wordsections.xsl"/>
 	  <xsl:include href="textruns.xsl"/>
+	  <xsl:include href="wordsections.xsl"/>
 
 
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
