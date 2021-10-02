@@ -62,8 +62,26 @@ of this software, even if advised of the possibility of such damage.</p>
   <xsl:variable name="filename" select="tokenize( base-uri(/),'/')[last()]"/>
   <xsl:param name="version" select="replace( $filename, '^readme-([0-9aαbβ.-]+)\.xml$','$1')"/>
   <xsl:param name="vault" select="'https://www.tei-c.org/Vault/P5'"/>
-  <xsl:param name="docPath" select="'doc/tei-p5-doc/en/html'"/>
-  <xsl:variable name="testVersionedDocument" select="concat( $vault,'/',$version,'/VERSION')"/>
+  <!--
+      Note on names of next 3 params:
+
+      There was originally just 1 param for this, $docPath. We
+      discovered the need to use just the initial portion of that path
+      in the generation of $testVersionedDocument (see [1]). It would
+      be perfectly reasonable to just hard-code that path or to chop
+      the $docPath param into two parts and just use the first part
+      for $testVersionedDocument and the concatentation of the two
+      parts for $tagdocStart. But I do not know that there is not some
+      routine that calls this program and tries to set $docPath as a
+      parameter, so I did not want to remove it. Thus it is generated
+      from the two pieces, but can still be overridden. (Note that if
+      it is overridden, the value of $docPath2 may not be what we want
+      in $tagdocStart.)  —Syd, 2021-10-02
+  -->
+  <xsl:param name="docPath1" select="'doc/tei-p5-doc'"/>
+  <xsl:param name="docPath2" select="'en/html'"/>
+  <xsl:param name="docPath" select="concat( $docPath1, '/', $docPath2 )"/>
+  <xsl:variable name="testVersionedDocument" select="concat( $vault,'/',$version,'/',$docpath1,'/VERSION')"/>
   <xsl:variable name="tagdocStart" select="concat( $vault,'/',$version,'/',$docPath,'/ref-')"/>
   
   <xsl:template match="tei:gi|tei:ident[@type eq 'class']">
