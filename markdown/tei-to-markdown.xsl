@@ -2,6 +2,7 @@
     version="2.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xpath-default-namespace="http://www.tei-c.org/ns/1.0">
 
   <xsl:import href="../common/common.xsl"/>
@@ -223,6 +224,45 @@ of this software, even if advised of the possibility of such damage.
 	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+  
+  <!-- TEI graphic elements convert to a simple structure, but it's
+          complicated figuring out where best to get the alt and title 
+          text from. -->
+  <xsl:template match="tei:graphic[@url]">
+    <xsl:variable name="altText" as="xs:string" select="if (parent::tei:figure/tei:figDesc) then 
+                                                                                           xs:string(parent::tei:figure/tei:figDesc[1]) else
+                                                                                      if (parent::tei:figure/tei:head) then 
+                                                                                           xs:string(parent::tei:figure/tei:head[1]) else 
+                                                                                      if (child::tei:desc) then
+                                                                                          xs:string(child::tei:desc[1]) else 'graphic'"/>
+    <xsl:variable name="titleText" as="xs:string" select="if (parent::tei:figure/tei:head) then 
+                                                                                              xs:string(parent::tei:figure/tei:head[1]) else
+                                                                                         if (parent::tei:figure/tei:figDesc) then 
+                                                                                              xs:string(parent::tei:figure/tei:figDesc[1]) else 
+                                                                                         if (child::tei:desc) then
+                                                                                              xs:string(child::tei:desc[1]) else 'graphic'"/>
+    <xsl:variable name="dim" as="xs:string*">
+      <xsl:if test="@width or @height">
+        <xsl:text>{</xsl:text>
+        <xsl:for-each select="@width | @height">
+          <xsl:value-of select="' ' || local-name(.) || '=&quot;' || . || '&quot;'"/> 
+        </xsl:for-each>
+        <xsl:text>}</xsl:text>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:text>![</xsl:text>
+    <xsl:sequence select="$altText"/>
+    <xsl:text>](</xsl:text>
+    <xsl:sequence select="xs:string(@url)"/>
+    <xsl:text> "</xsl:text>
+    <xsl:sequence select="$titleText"/>
+    <xsl:text>")</xsl:text>
+    <xsl:sequence select="string-join($dim, '')"/>
+  </xsl:template>
+  
+  <!-- Suppress all attributes on graphic element. -->
+  <xsl:template match="tei:graphic/@*"/>
+  
 
   <xsl:template match="tei:item|tei:biblStruct">
     <xsl:call-template name="newline"/>
