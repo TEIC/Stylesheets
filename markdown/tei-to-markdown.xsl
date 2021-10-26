@@ -227,20 +227,20 @@ of this software, even if advised of the possibility of such damage.
   
   <!-- TEI graphic elements convert to a simple structure, but it's
           complicated figuring out where best to get the alt and title 
-          text from. -->
+          text from. Thanks @sydb for more elegant XPath. -->
   <xsl:template match="tei:graphic[@url]">
-    <xsl:variable name="altText" as="xs:string" select="if (parent::tei:figure/tei:figDesc) then 
-                                                                                           xs:string(parent::tei:figure/tei:figDesc[1]) else
-                                                                                      if (parent::tei:figure/tei:head) then 
-                                                                                           xs:string(parent::tei:figure/tei:head[1]) else 
-                                                                                      if (child::tei:desc) then
-                                                                                          xs:string(child::tei:desc[1]) else 'graphic'"/>
-    <xsl:variable name="titleText" as="xs:string" select="if (parent::tei:figure/tei:head) then 
-                                                                                              xs:string(parent::tei:figure/tei:head[1]) else
-                                                                                         if (parent::tei:figure/tei:figDesc) then 
-                                                                                              xs:string(parent::tei:figure/tei:figDesc[1]) else 
-                                                                                         if (child::tei:desc) then
-                                                                                              xs:string(child::tei:desc[1]) else 'graphic'"/>
+    <xsl:variable name="altText" as="xs:string" select="xs:string((
+      parent::tei:figure/tei:figDesc[1],
+      parent::tei:figure/tei:head[1],
+      child::tei:desc[1],
+      'graphic'
+      )[1])"/>
+    <xsl:variable name="titleText" as="xs:string" select="xs:string((
+      parent::tei:figure/tei:head[1],
+      parent::tei:figure/figDesc[1],
+      child::tei:desc[1],
+      'graphic'
+      )[1])"/>
     <xsl:variable name="dim" as="xs:string*">
       <xsl:if test="@width or @height">
         <xsl:text>{</xsl:text>
