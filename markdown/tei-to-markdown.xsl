@@ -243,7 +243,7 @@ of this software, even if advised of the possibility of such damage.
       )[1])"/>
     <xsl:variable name="dim" as="xs:string*">
       <xsl:if test="@width or @height">
-        <xsl:text>{</xsl:text>
+        <xsl:text>{:</xsl:text>
         <xsl:for-each select="@width | @height">
           <xsl:value-of select="' ' || local-name(.) || '=&quot;' || . || '&quot;'"/> 
         </xsl:for-each>
