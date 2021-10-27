@@ -250,14 +250,16 @@ of this software, even if advised of the possibility of such damage.
         <xsl:text>}</xsl:text>
       </xsl:if>
     </xsl:variable>
-    <xsl:text>![</xsl:text>
-    <xsl:sequence select="$altText"/>
-    <xsl:text>](</xsl:text>
-    <xsl:sequence select="xs:string(@url)"/>
-    <xsl:text> "</xsl:text>
-    <xsl:sequence select="$titleText"/>
-    <xsl:text>")</xsl:text>
-    <xsl:sequence select="string-join($dim, '')"/>
+    <xsl:sequence select="
+      '!['
+      ||$altText
+      ||']('
+      ||@url
+      ||' &quot;'
+      ||$titleText
+      ||'&quot;)'
+      ||string-join( $dim, '')
+      "/>
   </xsl:template>
   
   <!-- Suppress all attributes on graphic element. -->
