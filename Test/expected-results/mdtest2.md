@@ -83,7 +83,7 @@ An external link as ref and as ptr: .
 # Tables
 
 Tables may have cells that span multiple columns and rows.
-ImageDescriptionCamera directionSVG, JPEG, GIF or PNG formatAll pictures were taken on Jun 27, 2007 Mountain flowers. northSunset over a secondary ridge.north-eastGlacier lake at 2100m altitude.eastSpans HorizontallyHeader 3Spans HorizontallySpans VerticallyabcdeSpans bothfggijSpans Horizontallyklmno
+ImageDescriptionCamera directionSVG, JPEG, GIF or PNG formatAll pictures were taken on Jun 27, 2007 ![graphic](nature1.jpg "graphic")Mountain flowers. north![graphic](nature2.jpg "graphic")Sunset over a secondary ridge.north-east![graphic](nature3.jpg "graphic")Glacier lake at 2100m altitude.eastSpans HorizontallyHeader 3Spans HorizontallySpans VerticallyabcdeSpans bothfggijSpans Horizontallyklmno
 # Lists
 
 Various sorts of list are legal within paragraphs, and you can reference items in lists... 
@@ -141,7 +141,7 @@ banana
 
 
 # Pictures
-width="2.5in" width=".5in" scale=".5"width="1in"width="1in" style="border:solid green 2pt"height="1in"height="1in" width="2in"height="2in" width="1in"width="10%"height="10%" width="10%"
+![graphic](portrait.jpg "graphic")width="2.5in" ![graphic](portrait.jpg "graphic"){: width="2.5in"}width=".5in" ![graphic](portrait.jpg "graphic"){: width="0.5in"}scale=".5"![graphic](portrait.jpg "graphic")width="1in"![graphic](portrait.jpg "graphic"){: width="1in"}width="1in" style="border:solid green 2pt"![graphic](portrait.jpg "graphic"){: width="1in"}height="1in"![graphic](portrait.jpg "graphic"){: height="1in"}height="1in" width="2in"![graphic](portrait.jpg "graphic"){: height="1in" width="2in"}height="2in" width="1in"![graphic](portrait.jpg "graphic"){: height="2in" width="1in"}width="10%"![graphic](portrait.jpg "graphic"){: width="10%"}height="10%" width="10%"![graphic](portrait.jpg "graphic"){: height="10%" width="10%"}
 # MS catalogue
 where is itrepository nameidentifier
 # Extended prose: MARLEY'S GHOST
