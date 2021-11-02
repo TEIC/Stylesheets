@@ -38,7 +38,7 @@ of this software, even if advised of the possibility of such damage.
 
 -->
   
-  <xsl:param name="defaultSource" select="'https://www.tei-c.org/release/xml/tei/odd/p5subset.xml'"/>
+  <xsl:param name="defaultSource" select="'../source/p5subset.xml'"/>
 
   <xsl:template name="main">
     <elementList>
