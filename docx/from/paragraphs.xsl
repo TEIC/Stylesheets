@@ -145,18 +145,18 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:variable name="styleprop" select="doc($styleDoc)//w:style[@w:styleId=$style]"/>
 		<!-- if yes, gather info about text alignment, bold, italic, font size, face, underlining, sub- and superscript into @style -->
 		<xsl:if test="$styleprop/node()">
-				<xsl:if test="count($styleprop/w:rPr[w:b])>0">
+				<xsl:if test="tei:onOff($styleprop/w:rPr/w:b)">
 					<xsl:text>font-weight: bold; </xsl:text>
 				</xsl:if>
-				<xsl:if test="count($styleprop/w:rPr[w:i])>0">
+		  <xsl:if test="tei:onOff($styleprop/w:rPr/w:i)">
 					<xsl:text>font-style: italic; </xsl:text>
 				</xsl:if>
-				<xsl:if test="count($styleprop/w:rPr[w:u])>0">
+				<xsl:if test="$styleprop/w:rPr/w:u/@w:val = 'single'">
 					<xsl:text>text-decoration: underline; </xsl:text>
 				</xsl:if>
 				<xsl:if test="count($styleprop/w:pPr[w:jc])>0">
-					<xsl:text>text-align:</xsl:text>
-					<xsl:value-of select="$styleprop/w:pPr/w:jc/@w:val"/>
+					<xsl:text>text-align: </xsl:text>
+					<xsl:value-of select="tei:justification($styleprop/w:pPr/w:jc)"/>
 					<xsl:text>; </xsl:text>
 				</xsl:if>
 		</xsl:if>	
@@ -167,62 +167,58 @@ of this software, even if advised of the possibility of such damage.
        use the Word style (if provided) to make a TEI rend attribute,
        and check for change records.</desc>
    </doc>
-   <xsl:template name="paragraph-wp">
-   	<xsl:param name="style"/>
-   	<xsl:element name="p">
-       <xsl:if test="string($style) and not($style='Default' or $style='Default Style')">
-	 <xsl:attribute name="rend">
-	   <xsl:value-of select="$style"/>
-	 </xsl:attribute>
-       </xsl:if>
-       <xsl:variable name="retrievedStyles">
-         <!-- Do we want to preserve word styles? -->
-         <xsl:if test="$preserveEffects='true' and not(normalize-space($style)='')">
-     	   <xsl:call-template name="retrieve-styles">
-             <xsl:with-param name="style" select="$style"/>
-           </xsl:call-template>
-         </xsl:if>
-       </xsl:variable>
-       <xsl:variable name="localStyles">
-   	 <xsl:if test="$preserveEffects='true' and w:pPr/w:jc and
-		       w:pPr/w:jc/@w:val !='both'">
-           <xsl:text>text-align:</xsl:text>
-	   <xsl:value-of select="w:pPr/w:jc/@w:val"/>
-	            <xsl:text>;</xsl:text>
-   	 </xsl:if>
-       </xsl:variable>
-       
-       <!-- merge local and retrieved from styles.xml -->
-       <xsl:if test="string($retrievedStyles) or string($localStyles)">
-   	 <xsl:attribute name="style">
-   	   <xsl:value-of select="$retrievedStyles"/>
-   	   <xsl:value-of select="$localStyles"/>
-   	 </xsl:attribute>
-       </xsl:if>
-       
-       <xsl:if test="w:pPr/w:pStyle/w:rPr/w:rtl">
-	 <xsl:attribute name="dir"
-			xmlns="http://www.w3.org/2005/11/its">
-	   <xsl:text>rtl</xsl:text>
-	 </xsl:attribute>
-       </xsl:if>
-       <xsl:choose>
-	 <xsl:when test="w:pPr/w:rPr/w:ins and $processChangeInformation='true'">
-	   <add when="{w:pPr/w:rPr/w:ins/@w:date}" 
-		type="para">
-	     <xsl:call-template name="identifyChange">
-	       <xsl:with-param name="who"
-			       select="w:pPr/w:rPr/w:ins/@w:author"/>
-	     </xsl:call-template>
-	     <xsl:call-template name="process-checking-for-crossrefs"/>
-	   </add>
-	 </xsl:when>
-	 <xsl:otherwise>
-	   <xsl:call-template name="process-checking-for-crossrefs"/>
-	 </xsl:otherwise>
-       </xsl:choose>
-	</xsl:element>
-   </xsl:template>
+  <xsl:template name="paragraph-wp">
+    <xsl:param name="style"/>
+    <xsl:element name="p">
+      <xsl:if test="string($style) and not($style='Default' or $style='Default Style')">
+        <xsl:attribute name="rend">
+          <xsl:value-of select="$style"/>
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:variable name="retrievedStyles">
+        <!-- Do we want to preserve word styles? -->
+        <xsl:if test="$preserveEffects='true' and not(normalize-space($style)='')">
+          <xsl:call-template name="retrieve-styles">
+            <xsl:with-param name="style" select="$style"/>
+          </xsl:call-template>
+        </xsl:if>
+      </xsl:variable>
+      <xsl:variable name="localStyles">
+        <xsl:if test="$preserveEffects='true' and w:pPr/w:jc">
+          <xsl:text>text-align: </xsl:text>
+          <xsl:value-of select="tei:justification(w:pPr/w:jc)"/>
+          <xsl:text>;</xsl:text>
+        </xsl:if>
+      </xsl:variable>
+      
+      <!-- merge local and retrieved from styles.xml -->
+      <xsl:if test="string($retrievedStyles) or string($localStyles)">
+        <xsl:attribute name="style">
+          <xsl:value-of select="$retrievedStyles"/>
+          <xsl:value-of select="$localStyles"/>
+          <xsl:if test="tei:onOff(w:pPr/w:pStyle/w:rPr/w:rtl)">>
+            <xsl:text>direction:rtl;</xsl:text>
+          </xsl:if>
+        </xsl:attribute>
+      </xsl:if>
+      
+      <xsl:choose>
+        <xsl:when test="w:pPr/w:rPr/w:ins and $processChangeInformation='true'">
+          <add when="{w:pPr/w:rPr/w:ins/@w:date}" 
+            type="para">
+            <xsl:call-template name="identifyChange">
+              <xsl:with-param name="who"
+                select="w:pPr/w:rPr/w:ins/@w:author"/>
+            </xsl:call-template>
+            <xsl:call-template name="process-checking-for-crossrefs"/>
+          </add>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="process-checking-for-crossrefs"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:element>
+  </xsl:template>
    
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
      <desc>Processing of any cross-references found.</desc>

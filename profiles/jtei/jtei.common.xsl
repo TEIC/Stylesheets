@@ -281,44 +281,19 @@
     <xsl:apply-templates select="$abstract.blockquote" mode="serialize"/>
   </xsl:template>
 
-  <!-- This template creates paragraphs, and normalizes whitespace for 
-  text preceding or following paragraph-splitting content (tables, block
-  quotes,...). -->
-  <xsl:template name="p.create">
-    <xsl:param name="current"/>
-    <xsl:param name="context"/>
-    <xsl:if test="some $i in $context satisfies ($i/normalize-space() or $i/@*)">
-      <p>
-        <xsl:apply-templates select="$current/@*"/>
-        <xsl:choose>
-          <xsl:when test="position() > 1">
-            <xsl:attribute name="rend">noindent</xsl:attribute>
-          </xsl:when>
-          <xsl:when test="$current/parent::tei:div and $current[preceding-sibling::tei:p]">
-          </xsl:when>
-        </xsl:choose>
-        <xsl:for-each select="$context">
-          <xsl:variable name="processed">
-            <xsl:apply-templates select="." mode="#current"/>
-          </xsl:variable>
-          <xsl:choose>
-            <xsl:when test="self::text()">
-              <xsl:choose>
-                <xsl:when test="position() = 1">
-                  <xsl:value-of select="replace(replace($processed, '^\s+', ''), '\s+$', ' ')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="replace($processed, '\s+$', ' ')"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:copy-of select="$processed"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:for-each>
-      </p>
-    </xsl:if>
+  <!-- This template pre-processes text() nodes that are being promoted to <p>, and trims spurious whitespace afterwards. -->
+  <xsl:template name="process.promoted.text">
+    <xsl:variable name="processed">
+      <xsl:apply-templates select="."/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="position() = 1">
+        <xsl:value-of select="replace(replace($processed, '^\s+', ''), '\s+$', ' ')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="replace($processed, '\s+$', ' ')"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <!-- This template copies author(ing instance)/s if they're different from 
@@ -363,6 +338,14 @@
         <xsl:value-of select="."/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <!-- Default for text() nodes: just copy unmodified. 
+       (This template avoids interference with upstream
+       text() processing in the standard TEI stylesheets.
+  -->
+  <xsl:template match="text()" priority="-1">
+    <xsl:value-of select="."/>
   </xsl:template>
 
   <!-- This function checks if a node ends with quotation marks that pull in subsequent punctuation. -->
@@ -470,7 +453,7 @@
     <xsl:choose>
       <!-- Count footnotes continuously throughout the document is this is set in the stylesheet parameter -->
       <xsl:when test="$footnote.number.continuous">
-        <xsl:number select="$node" level="any"/>
+        <xsl:number select="$node" level="any" from="tei:text"/>
       </xsl:when>
       <!-- Otherwise, restart footnote numbering for each front, body, or back section -->
       <xsl:otherwise>

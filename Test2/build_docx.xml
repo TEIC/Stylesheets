@@ -48,7 +48,7 @@
     
   </target>
   
-  <target name="teiFileToDocx">
+  <target name="teiFileToDocx" depends="makeNamesFile">
     <description>
       TARGET teiFileToDocx
       Converts a single TEI file to docx, then extracts the document.xml
@@ -98,7 +98,7 @@
   </target>
   
     
-  <target name="teiFileFromDocx" depends="getLatestTeiAll">
+  <target name="teiFileFromDocx" depends="getLatestTeiAll, makeNamesFile">
     <description>
       TARGET teiFileFromDocx
       Converts a single DOCX file to TEI, validates the result with Jing,

@@ -1,3 +1,786 @@
+2021-08-29  Elisa Beshero-Bondar  <ebeshero@users.noreply.github.com>
+
+	Merge pull request #522 from TEIC/P5subset
+	Update of the p5subset
+
+2021-08-27  helenasabel  <helena.b.sabel@gmail.com>
+
+	update of expected results in Test2
+
+	update of expected results
+
+	P5 subset update
+
+2021-08-26  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Merge pull request #521 from TEIC/iss516
+	Fix for #520
+
+2021-08-21  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Address #520: Just add processing of xml:id= to the application of templates from <biblStruct> or <bibl> child of <listBibl>.
+
+2021-08-21  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #517 from TEIC/iss516
+	Fix #516: duplication of ids in HTML transformation
+
+2021-08-21  Syd Bauman  <s.bauman@northeastern.edu>
+
+	inconsequential changes: Whitespace and other inconsequential changes that reviewers can summarily ignore.
+
+2021-08-20  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #494 from rvdb/jTEI-fix-language
+	jTEI set default language
+	
+	Hopefully no problems. :-)
+
+2021-08-20  Martin Holmes  <mholmes@uvic.ca>
+
+	Issue 399 rng annotations (#514)
+	* First fix for issue #399: output code element contents with backticks.
+	
+	* Fix expected results for issue #399 fix.
+	
+	* Fixing tests for issue #399 fix.
+
+2021-08-20  Syd Bauman  <s.bauman@northeastern.edu>
+
+	improve description: Tweak the in-file documentation (which user sees when she does 'ant -projecthelp'.
+
+2021-08-20  martindholmes  <mholmes@uvic.ca>
+
+	With @sydb, update documentation to include information about running tests in series with antSeries.
+
+	Move the initial clean target out of the parallel sequence.
+
+	With @sydb, added non-parallel target for running tests not in parallel for easier debugging of test failures.
+
+2021-08-06  helenasabel  <helena.b.sabel@gmail.com>
+
+	update of expected results
+
+	adds condition to avoid the creation of duplicated ids
+
+2021-07-30  ebeshero  <ebbondar@gmail.com>
+
+	updating P5 subset and expected results
+
+2021-07-29  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Address #326: Add id= attribute to the output <div> (with class "tei_front", "tei_body", or "tei_back") that is generated from the input <front>, <body>, or <back> when it has an xml:id=
+
+2021-07-27  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Address #379: Change error message so humans might be able to make sense of it.
+
+2021-06-24  Helena  <helena.b.sabel@gmail.com>
+
+	Merge pull request #512 from TEIC/sydb_444_desc_in_graphic
+	do not process generic <desc> as if it were specification element’s <desc>
+
+2021-06-24  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Per PS, add better documentation and comments to our lovely change.
+
+	Stylesheets group work on #444.
+
+2021-06-24  martindholmes  <mholmes@uvic.ca>
+
+	Update p5subset.xml and fix tests.
+
+2021-05-10  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Oops; updated Test2 to match new subset, too
+
+2021-05-09  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Update source (p5subset): Update P5 source file to latest (TEI/TEIC/#4a9867b87), and modify expected results to match.
+
+2021-05-07  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge pull request #505 from TEIC/sydb-504_space_after_DOI
+	Address issue #504 by adding a space after idno elements inside biblStruct
+
+2021-04-30  martindholmes  <mholmes@uvic.ca>
+
+	Update TEX Test for issue #504.
+
+	Update TEX Test for issue #504.
+
+	Update Test2 for issue #504 fix.
+
+	Merge branch 'sydb-504_space_after_DOI' of github.com:TEIC/Stylesheets into sydb-504_space_after_DOI
+
+	Update Test2 for issue #504 fix.
+
+2021-04-30  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Fix another missing space in biblStruct problem, and start fixing the test suite
+
+	In first crack at fix Martin and I found that DOI processing does not occur in common_core as most other biblio processing, but only in common_header, and it does not have the call to the (somewhat bizzarre) 'makeText' template there. So we added it. Crossing fingers...
+
+2021-04-23  Elisa Beshero-Bondar  <ebeshero@users.noreply.github.com>
+
+	Merge pull request #502 from TEIC/issue-178-remove-old-sch
+	Issue 178 remove old sch
+
+2021-04-22  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Remove some more refs to no longer existant NS
+
+2021-04-22  ebeshero  <ebbondar@gmail.com>
+
+	removing s from result prefixes
+
+	Merge branch 'issue-178-remove-old-sch' of https://github.com/TEIC/Stylesheets into issue-178-remove-old-sch
+
+	updating odd2html to remove s from result prefixes
+
+2021-04-22  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Merge in others'
+
+	Remove excess prefix
+
+2021-04-22  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	remove superfluous script #178
+
+2021-04-22  martinascholger  <martina.scholger@uni-graz.at>
+
+	delete old iso ref
+
+2021-04-22  ebeshero  <ebbondar@gmail.com>
+
+	Merge branch 'issue-178-remove-old-sch' of https://github.com/TEIC/Stylesheets into issue-178-remove-old-sch
+
+	removing old sch from stylesheets
+
+2021-04-22  helenasabel  <helena.b.sabel@gmail.com>
+
+	small fix
+
+2021-04-22  Syd Bauman  <s.bauman@northeastern.edu>
+
+	merge others work
+
+	merge others work
+
+2021-04-22  martindholmes  <mholmes@uvic.ca>
+
+	Merge branch 'issue-178-remove-old-sch' of github.com:TEIC/Stylesheets into issue-178-remove-old-sch
+
+	Nuke old Schematron stuff with Stylesheets Group.
+
+2021-04-22  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	remove outdated schematron declarations
+
+2021-04-22  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Remove some old Schematron namespace decls, etc., per ticket 178
+
+2021-04-22  Hugh Cayless  <philomousos@gmail.com>
+
+	Merge branch 'issue-178-remove-old-sch' of github.com:TEIC/Stylesheets into issue-178-remove-old-sch
+
+	Removed old schematron.
+
+2021-04-22  Nicholas Cole  <nicholas.cole@history.ox.ac.uk>
+
+	NC removing old sch from 7 files
+
+2021-04-20  martindholmes  <mholmes@uvic.ca>
+
+	For issue #497, make FOP version easily configurable, set it to latest 2.6, and suppress MathML test because JEuclid version has not been updated.
+
+2021-04-09  Syd Bauman  <s.bauman@northeastern.edu>
+
+	merge testPure1.rng
+
+	Update source & tests
+
+2021-04-08  martindholmes  <mholmes@uvic.ca>
+
+	More fixes to Test2.
+
+	Update test odd for change to usage of key attribute.
+
+	Account for new location of LICENCE file.
+
+2021-03-29  Martin Holmes  <mholmes@uvic.ca>
+	    Syd Bauman  <s.bauman@northeastern.edu>
+
+	Update Stylesheets to Saxon 10  (#498)
+	* SaxonHE 9 → 10
+	
+	* Expected results update for Saxon 10 in Test2.
+	
+	* First diff fix for Saxon 10: order of atts and namespace declarations in test/rng.
+	
+	* Saxon 10 whitespace-only differences.
+	
+	* Saxon 10 generated-id differences.
+	
+	* Saxon 10 generated-id differences.
+	
+	* Update last 2 results for Saxon 10 (we hope)
+
+2021-03-26  martindholmes  <mholmes@uvic.ca>
+
+	Updating path to FOP binary.
+
+2021-03-25  Syd Bauman  <s.bauman@northeastern.edu>
+
+	splitLevel for HTML: From working on #102, Council Stylesheets group discovers that (as I suspected) the --splitLevel switch was not being processed by the teitohtml5 command. Turns out it was not documented to be passed to ant by that command, but was being passed; however, the ant buildhtml target was ignoring it. This is a fix for both of those problems (transformtei not correctly documenting switch, teianttasks.xml not passing switch to stylesheets).
+
+2021-03-17  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #493 from rvdb/jTEI-fix-ODT-text
+	added a default text() processing template that just copies text() no…
+
+2021-03-17  rvdb  <ron.vandenbranden@kantl.be>
+
+	added English as default (fallback) language
+
+	added a default text() processing template that just copies text() nodes through, and avoids interference with upstream text() processing in the standard TEI stylesheets.
+
+2021-03-15  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #492 from rvdb/jTEI-glosslabelfix
+	fixed a case where the rendition definition for "glosslabel" wasn't i…
+
+2021-03-15  rvdb  <ron.vandenbranden@kantl.be>
+
+	fixed a case where the rendition definition for "glosslabel" wasn't included in the OpenEdition output
+
+2021-03-13  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #491 from rvdb/jTEI-pdf-fonts
+	added DejaVu as fallback font for Roboto
+
+2021-03-13  rvdb  <ron.vandenbranden@kantl.be>
+
+	added DejaVu as fallback font for Roboto
+
+2021-03-12  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Oops; forgot a pair of subdirs
+
+	Update p5subset to 4.3.0a (for the first time)
+
+2021-03-06  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #462 from craigberry/dev
+	Make `teitoepub3` (actually, `teitoepub*`, but we only have symlinks for `teitoepub` and `teitoepub3`) self-recognize just like all the other commandline symlinks to `transformtei`.
+
+2021-02-26  Syd Bauman  <sydb@users.noreply.github.com>
+	    Syd Bauman  <s.bauman@northeastern.edu>
+	    martindholmes  <mholmes@uvic.ca>
+
+	Fix for #488: (#489)
+	* Fix for #488:
+	Remove constraintSpec elements from attLists prior to tangling for use in generating documentation
+	
+	* Working on PR #489 with @sydb, @npcole, and @martinascholger, solving the problem (we hope) with a tunneled parameter.
+
+2021-02-25  Nicholas Cole  <nicholas.cole@history.ox.ac.uk>
+
+	New version number for the next release.
+
+	Add the autogenerated change-log
+
+	TEI Stylesheets release 7.51.0
+
+	Change version number for release
+2021-02-25  Nicholas Cole  <nicholas.cole@history.ox.ac.uk>
+
+	TEI Stylesheets release 7.51.0
+
+	Change version number for release
+
+2021-02-19  martindholmes  <mholmes@uvic.ca>
+
+	Fix tests following merge of docx-to-tei changes.
+
+2021-02-19  Hugh Cayless  <philomousos@gmail.com>
+
+	Disambiguating figure and table headers.
+
+	Merge branch 'dev' into hcayless_P3
+
+	Fix for #484.
+
+2021-02-16  Hugh Cayless  <philomousos@gmail.com>
+
+	Somehow messed with changelog.
+
+2021-02-16  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #486 from rvdb/note-fix
+	only count footnotes inside tei:text (thanks @martindholmes !)
+
+2021-02-16  rvdb  <ron.vandenbranden@kantl.be>
+
+	only count footnotes inside tei:text (thanks @martindholmes !)
+
+2021-02-15  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #485 from rvdb/note-fix
+	only try to number notes inside tei:text for OpenEdition output
+
+2021-02-15  rvdb  <ron.vandenbranden@kantl.be>
+
+	only try to number notes inside tei:text for OpenEdition output
+
+2021-02-12  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Revert previous commit, as it broke the build; see ticket #444
+
+	Address #444: Found a template for the 'desc' element that copied only the contents, did not preserve the element itself; changed it to copy the entire element. Seems to work.
+
+2021-02-11  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #464 from TEIC/issue_463_mdh_rendition_ns
+	Add namespace sensitivity to xsl:keys used to process @rendition per …
+
+2021-02-08  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixing tests.
+
+	Fixing issues with CJK and PDF.
+
+2021-01-30  Hugh Cayless  <philomousos@gmail.com>
+
+	Merge branch 'dev' into hcayless_P3
+
+	Fixing tests.
+
+	Added space in style for consistency.
+
+2021-01-30  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge pull request #481 from TEIC/issue_471_eg_anchors
+	With @martindholmes do <eg> part of #471
+
+2021-01-30  Hugh Cayless  <philomousos@gmail.com>
+
+	Making text-align for table cells work.
+
+2021-01-29  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Update expected results to match the change
+
+2021-01-22  Hugh Cayless  <philomousos@gmail.com>
+
+	Footnote ids are not necessarily their position.
+
+2021-01-20  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix value handling for w:u.
+
+2021-01-15  Hugh Cayless  <philomousos@gmail.com>
+
+	Updating tests.
+
+	Changed tei:onOff parameter.
+
+	Improved figure handling.
+
+	Changed tei:onOff parameter.
+
+	Update onOff function.
+	Attributes such as bolding, italics, etc., may be switched on by
+	the simple act of including, e.g., a w:i in the style. without
+	a value. So if the element exists, but does not have a @w:val,
+	the function should return true.
+
+2021-01-13  Hugh Cayless  <philomousos@gmail.com>
+
+	Don't kill hi with element content.
+
+	Better handling of boolean properties.
+
+	Better handling for table and figure captions.
+
+2020-12-18  Syd Bauman  <s.bauman@neu.edu>
+
+	Use class: @martindholmes discovered that using the style= attribute for in-line CSS (rather than a class= attribute to refer to CSS elsewhere) causes problems on some servers due to CORS security restrictions (cross-origin resource sharing), so switch our recent change that used style= to a class.
+
+2020-12-12  Syd Bauman  <s.bauman@neu.edu>
+
+	Update expected results to match change
+
+2020-12-11  Syd Bauman  <s.bauman@neu.edu>
+
+	With @martindholmes do <eg> part of #471
+
+2020-12-04  Syd Bauman  <s.bauman@neu.edu>
+
+	Revert re-naming of examples files: I had temporarily renamed the examples files for debugging purposes. Lo and behold it helped us find another bug (see TEI #2070), but is no longer needed.
+
+	Address #478
+
+	Fix: Move template for <teix:egXML> from html_oddprocessing to html_tagdocs. This fixes the problem found in Test2/ in which <teix:egXML> elements were being completely dropped, and does not seem to change the results of the Guidelines build at all (i.e., that still works and gives proper anchors in all <teix:egXML>s).
+
+2020-12-02  Syd Bauman  <s.bauman@neu.edu>
+
+	Debugging for #471:  * Change name of files that have all examples from "examples-GI" to "all_examples_of_GI".
+
+2020-12-01  Syd Bauman  <s.bauman@neu.edu>
+
+	minor improvements:  * remove extraneous space after the U+2693 symbol we just added  * remove (apparently unused) copy of the template that matches teix:egXML
+
+	Work on #471: With Stylesheets group, add an anchor symbol (U+2693) link to each egXML that is a link-to-self (so user can easily copy and paste link to example). Note: have it working for examples in prose and tagdocs, but NOT working yet for examples on the "show all" examples pages, nor for <eg> elements.
+
+2020-11-30  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix RTL handling.
+
+2020-10-30  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #474 from rvdb/note-type
+	Thanks @rvdb !
+
+2020-10-30  rvdb  <ron.vandenbranden@kantl.be>
+
+	replaced erroneous note/@resp attribute with note/@type (cf. https://tei-openedition.readthedocs.io/en/latest/tei.text.html#note-de-lauteur-note-de-la-redaction-erratum-remerciements)
+
+2020-10-12  Syd Bauman  <s.bauman@neu.edu>
+
+	loosen fix: Do not limit the rendition= attributes collected by the EXTRENDITION keys to those on elements in the TEI namespace, rather exclude those that are a descendant of the TEI Examples namespace.
+
+2020-10-07  martindholmes  <mholmes@uvic.ca>
+
+	Add namespace sensitivity to xsl:keys used to process @rendition per issue #463.
+
+2020-09-18  Syd Bauman  <s.bauman@neu.edu>
+
+	Update version number for bug fix
+
+	re-FIX previous commit
+
+	BUG FIX: With Martin Holmes, change the definition of TEISOURCE_DEFAULT so that it gets the source directory relative to the script that is running, rather than the directory that you happen to be running it from.
+
+2020-09-11  Syd Bauman  <s.bauman@neu.edu>
+
+	re-FIX previous commit
+
+	BUG FIX: With Martin Holmes, change the definition of TEISOURCE_DEFAULT so that it gets the source directory relative to the script that is running, rather than the directory that you happen to be running it from.
+
+2020-09-09  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	more cleanup
+	remove LaTeX artifacts produced by target "test-scripts"
+
+2020-09-04  Syd Bauman  <s.bauman@neu.edu>
+
+	merge
+
+	Minor fixes:  * Fix the n= attribute on the TEI element of Test2/inputFiles/testSpecificationDescription1.odd;  * Fix typo in comment of Test/Makefile
+
+2020-09-04  martindholmes  <mholmes@uvic.ca>
+
+	Updates to documentation with @sydb.
+
+	Add more info about readmes to build.xml.
+
+2020-08-29  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge in sydb-makefile-in-Test-dir: Merged the sydb-makefile-in-Test-dir branch into this branch (dev), thus removing the need for #455.
+
+	Update to new release:  * Get new p5subset (https://teijenkins.hcmc.uvic.ca/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5subset.xml to be precise)  * Run ( cd Test && make DIFFNOW=0 )  * Run a slightly modified version of Test2/cleanForDiff.xsl on both actual-results/ and expected-results/ (the modification is not to check URLs point somewhere to avoid a failure)  * Compare the resulting output directories  * Having found all differences make sense given the recent changes to TEI,  * copy all of appropriate files from actual-results/ to expected-results/.
+
+2020-08-22  Syd Bauman  <s.bauman@neu.edu>
+
+	Improve wording of make help output
+
+2020-08-21  martindholmes  <mholmes@uvic.ca>
+
+	Update expected results in Test2.
+
+	Fix for over-broad idref check in clean process.
+
+	Add debug flag and enable retention of uncleaned generated files for debugging.
+
+2020-08-20  martindholmes  <mholmes@uvic.ca>
+
+	More fallout from issue #453: replace deprecated dh_clean -k with dh_prep.
+
+	Another lurking compat value changed to 10 for issue #453.
+
+	Fix for issue #453.
+
+2020-08-19  Hugh Cayless  <philomousos@gmail.com>
+
+	Just prodding the CI.
+
+	Version number.
+
+	Release 7.50.0.
+
+	Fixing tests.
+2020-08-19  Hugh Cayless  <philomousos@gmail.com>
+
+	Updating p5subset.xml
+
+	Setting VERSION.
+
+2020-08-14  martindholmes  <mholmes@uvic.ca>
+
+	Fix for issue #456.
+
+2020-08-12  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	minor update for pureODD
+
+	adjust function signature
+	@nikobeer reported the error message "An empty sequence is not allowed as the result of call to tei:i18n". In fact, the `xsl:for-each` (https://github.com/TEIC/Stylesheets/blob/fec23117724718edf72bbc48ad44cd9d1b161dec/common/functions.xsl#L616-L634) may result in zeroOrMore strings so I updated the function signature accordingly. Whether this makes sense probably needs deeper inspection …
+
+	fix typo in xpath predicate
+
+2020-08-07  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix for TEI#1985.
+
+	Enable styling of deprecation dates.
+
+2020-08-06  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixed accidental element renaming.
+
+	Fix for deprecations appendix style.
+
+2020-08-05  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	upgrade jquery library, fixes #433
+
+2020-07-31  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	add copyright statement, closes #413
+	copied copyright statement including year 2011 from https://tei-c.org/guidelines/licensing-and-citation/
+
+2020-07-08  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #450 from rvdb/jTEI-urlchopping
+	added zero-width spaces after slashes and periods in URLs that are be…
+
+2020-07-08  rvdb  <ron.vandenbranden@kantl.be>
+
+	added backslash before periods regex
+
+	added zero-width spaces after slashes and periods in URLs that are being output in the text
+
+2020-07-07  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge pull request #448 from TEIC/subsetSetup
+	Subset setup
+
+2020-07-03  Syd Bauman  <s.bauman@neu.edu>
+
+	Get transformtei to use new source/p5subset
+
+	Get makefile to use local source
+
+	Add local p5subset: Add new directory, source/, which for now has only 1 file, the p5subset against which these Stylesheets should be tested.
+
+2020-06-15  rvdb  <ron.vandenbranden@kantl.be>
+
+	fix for handling @w:val[. = "0"] on //w:i and //w:b elements (#441)
+	* fix for handling @w:val[. = "0"] on //w:i and //w:b elements
+	
+	* expanded fix to:
+	  -other basic styles: w:i, w:b, w:strike, w:dstrike, w:smallCaps, w:caps
+	  -allowed values for @w:val: ('0', 'false', 'off') vs ('1', 'true', 'on')
+	
+	* add test for `@w:val attribute` as provided by @rvdb in #440
+
+2020-06-10  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #443 from TEIC/issue-442
+	Thanks @peterstadler !
+
+2020-06-10  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	add more RTL languages
+	Co-Authored-By: Martin Holmes <mholmes@uvic.ca>
+
+	wrap arabic text in hbox{}, fixes #442
+	NB: only in verbatim (e.g. egXML) environments
+
+2020-06-08  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	force params to hold a node or the empty sequence
+	this fixes some errors "Required item type of first operand of '/' is node(); supplied value has item type xs:string".
+	When no value was passed, it defaulted to the empty string. With the "as" the empty sequence is enforced and subsequent node tests do not fail.
+
+2020-06-04  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #439 from TEIC/issue-400
+	replace http requests/links with https in XSL scripts. I'm slightly ashamed I hadn't done this ages ago.
+
+2020-06-04  Syd Bauman  <s.bauman@neu.edu>
+
+	Update Test2/ to match: Updated a bunch of Test2/expected-results/*.html files to have “https:” instead of “http:”.
+
+2020-06-04  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	update expected results due to changed scheme
+	see 52fec65e
+
+	replace scheme http with https, closes #400
+	Did a `grep -ER "http://(www.)?tei-c.org/(Vault|release)" **/*.xsl` from the repo root and fixed those occurences.
+
+2020-06-03  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	switched the last occurence of 'http' for $defaultTEIServer to 'https', closes #378
+
+	update more latex tests
+
+	update expected results
+	for latest tei2latex changes
+
+	add new parameters $japaneseFont, $chineseFont, and $koreanFont
+	and set NOTO as default. Closes #132, closes #148
+
+	update expected results to fix the build
+	NB: this only tries to fix the default build stylesheets-dev against guidelines-master (aka current release version of p5subset.xml).
+
+2020-06-01  Syd Bauman  <s.bauman@neu.edu>
+
+	Try to fix build: I am not sure, but I think this commit simply reverses a recent one. We are caught in dev-vs-current cycle, here. With this commit, I believe that Stylesheets_dev against P5_dev should pass the tests; however, Stylesheets_dev aaginst P5_released (current) will not (with a diff error in test.rng due to changes to lexicographic attrs). I am not sure what, if anything, could be done to get both to pass simultaneously.
+
+	Fix Test/: Fixed Test/ portion of build process by copying 2 particular output files to expected results, pretty much exactly what @martindholmes and I did on Fri 29 May in Test2/, but apparently forgot to do in Test/.
+
+2020-05-29  martindholmes  <mholmes@uvic.ca>
+
+	With @sydb: Fixing Test2 to handle changes to att.lex in P5.
+
+2020-05-29  Syd Bauman  <s.bauman@neu.edu>
+
+	Partial build fix: Copy over some expected results so that Test should work now; @martindholmes and I are working on Test2/ now.
+
+2020-05-29  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #437 from rvdb/jTEI-improveNestedBlocksHandling
+	refactored handling of nested blocks inside //p and //list/item, thus…
+
+2020-05-29  rvdb  <ron.vandenbranden@kantl.be>
+
+	added some comments for clarification
+
+2020-05-28  rvdb  <ron.vandenbranden@kantl.be>
+
+	refactored handling of nested blocks inside //p and //list/item, thus avoiding opaque pre-processing steps
+
+2020-05-22  martindholmes  <mholmes@uvic.ca>
+
+	Slightly cleaner way to avoid making names.xml multiple times. Issue #435 now done.
+
+	Initial implementation for issue #435. Should fix the problem, but I'd like to optimize a bit.
+
+2020-05-22  Syd Bauman  <s.bauman@neu.edu>
+
+	Improve diff msgs: With @martindholmes finally commit changes I made on 04-08 designed to make the messages about the diff (or filesmatch) process that is about to be executed a bit friendlier.
+
+2020-05-15  martindholmes  <mholmes@uvic.ca>
+
+	Tweaks to diff formatting in Test2.
+
+2020-05-12  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #434 from rvdb/jTEI-openeditionfixes
+	skipped processing of unsupported TEI elements in OpenEdition schema (<title level="s">, <email>)
+
+2020-05-12  rvdb  <ron.vandenbranden@kantl.be>
+
+	skipped processing of unsupported TEI elements in OpenEdition schema (<title level="s">, <email>) fixes https://github.com/TEIC/Stylesheets/issues/430
+
+	updated OpenEdition output to version 1.6.2 (https://tei-openedition.readthedocs.io/en/latest/changelog.html#version-1-6-2)
+
+2020-04-22  lou burnard  <lou.burnard@retired.ox.ac.uk>
+
+	fixed typo
+
+2020-04-09  martindholmes  <mholmes@uvic.ca>
+
+	Fixing expected-results fallout for HTML testing resulting from @sydb's work yesterday.
+
+2020-04-08  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	add switch case for Korean to `tei:bibl` #202
+	NB: At present there are no bibl entries with `@xml:lang='ko'` but I think it makes sense to align the processing of CJK languages
+
+	fix korean language code #202
+
+	add switch case for korean to `tei:seg[@xml:lang]` #202
+	that should fix character display issues in teix:egXML environments, see e.g. the last example of section 22.5.3.2 "Value Specification".
+
+2020-04-07  Syd Bauman  <s.bauman@neu.edu>
+
+	Re-generate tests: due to whitespace changes in html/html_textstructure.xsl, some of the whitespace in output changed.
+
+2020-04-07  Elisa Beshero-Bondar  <ebbondar@gmail.com>
+
+	nearly resolving #326 we hope
+
+2020-03-26  martindholmes  <mholmes@uvic.ca>
+
+	Follow-up on issue #349: updated Test2 expected results and removed note per @sydb's note on ticket.
+
+2020-03-24  Hugh Cayless  <philomousos@gmail.com>
+
+	Fix for #349.
+
+	Updating http to https.
+
+2020-03-20  martindholmes  <mholmes@uvic.ca>
+
+	@sydb used XSLT 3 concatenation operator in XSLT 2 file. Switching to concat() until we switch all stylesheets to 3.0.
+
+2020-03-18  martindholmes  <mholmes@uvic.ca>
+
+	Trying to fix test incompatibility between dev p5subset and release p5subset.
+
+	Attempting fix for build discrepancy where test.rng diff fails when built against dev tree's p5subset. Should (I hope) now build against both dev and release p5subset.
+
+2020-03-17  Syd Bauman  <s.bauman@neu.edu>
+
+	Address #408: Stylesheets group meeting added code to handle <dataRef> elements with name attributes
+
+2020-02-27  rvdb  <ron.vandenbranden@kantl.be>
+
+	fixed some XSLT details to avoid stricter SXWN9000 warnings with Saxon-9.9.1.5 (#421)
+
+2020-02-21  martindholmes  <mholmes@uvic.ca>
+
+	Fixing expected-results in Test2 with @sydb.
+
+2020-02-15  Syd Bauman  <s.bauman@neu.edu>
+
+	Fix #422: When generating the context= of generated <sch:rule> elements, the processSchematron template was always using a namespace prefix (of "tei:") even when the generated context was an attribute (because the placement of the corrent <constraintSpec> was inside an <attDef> that is not itself inside an <elementSpec>). Fixed by adding another <xsl:when> clause.
+
+2020-02-14  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #420 from rvdb/jTEI-openedition
+	updated OpenEdition output to version 1.6.2
+
+2020-02-13  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Increased version number
+
+	Revert "Increased version number"
+	This reverts commit e0c49a6ba54e8b7621fffbd4179ea07a3f4c5ed6.
+
+	Increased version number
+
+	added changelog
+
+	upped version for release
+
+	YOUR COMMIT MESSAGE
 2020-02-13  raffazizzi  <raffaeleviglianti@gmail.com>
 
 	upped version for release

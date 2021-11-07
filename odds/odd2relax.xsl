@@ -5,14 +5,13 @@
     xmlns:html="http://www.w3.org/1999/xhtml" 
     xmlns:i="http://www.iso.org/ns/1.0"
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
-    xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="a fo html i rng s sch xi xs xsl"
+    exclude-result-prefixes="a fo html i rng sch xi xs xsl"
     version="2.0">
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="classatts.xsl"/>
@@ -469,6 +468,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="refdoc"/>
   <xsl:template name="typewriter">
       <xsl:param name="text"/>
+      <xsl:sequence select="'`' || $text || '`'"/>
   </xsl:template>
 
   <xsl:template match="processing-instruction()" mode="tangle">

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                xmlns:s="http://www.ascc.net/xml/schematron"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="s a rng tei teix"
+                exclude-result-prefixes="a rng tei teix"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -154,15 +153,15 @@ of this software, even if advised of the possibility of such damage.
 
    <xsl:template match="tei:seg[@xml:lang]">
       <xsl:choose>
-         <xsl:when test="@xml:lang='zh-TW'">
+         <xsl:when test="@xml:lang=('zh','zh-TW')">
             <xsl:text>{\textChinese </xsl:text>
             <xsl:apply-templates/>
             <xsl:text>}</xsl:text>
          </xsl:when>
          <xsl:when test="@xml:lang='ja'">
-            <xsl:text>{\textJapanese </xsl:text>
+            <xsl:text>{\textJapanese {</xsl:text>
             <xsl:apply-templates/>
-            <xsl:text>}</xsl:text>
+            <xsl:text>}}</xsl:text>
          </xsl:when>
          <xsl:when test="@xml:lang='ko'">
             <xsl:text>{\textKorean </xsl:text>
@@ -309,14 +308,21 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template match="tei:hi[tei:match(@rend,'label')  or tei:match(@rend,'defaultVal')]">
       <xsl:text>{</xsl:text>
       <xsl:choose>
-         <xsl:when test="@xml:lang='zh-TW'">
-            <xsl:text>\textChinese </xsl:text>
-            <xsl:apply-templates/>
-         </xsl:when>
          <xsl:when test="@xml:lang='ja'">
-            <xsl:text>\textJapanese </xsl:text>
+            <xsl:text>\textJapanese {</xsl:text>
             <xsl:apply-templates/>
+            <xsl:text>}</xsl:text>
          </xsl:when>
+        <xsl:when test="@xml:lang='ko'">
+          <xsl:text>\textKorean {</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
+        <xsl:when test="@xml:lang=('zh','zh-TW')">
+          <xsl:text>\textChinese {</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
          <xsl:otherwise>
             <xsl:apply-templates/>
          </xsl:otherwise>

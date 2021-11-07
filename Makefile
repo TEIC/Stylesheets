@@ -1,8 +1,8 @@
 SFUSER=rahtz
-DEFAULTSOURCE=https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml
-SAXON=java -jar lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
-DOTSAXON=java -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
-DOTDOTSAXON=java -jar ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE) 
+DEFAULTSOURCE=$(shell pwd)/source/p5subset.xml
+SAXON=java -jar lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
+DOTSAXON=java -jar ../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
+DOTDOTSAXON=java -jar ../../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE) 
 SAXON_ARGS=-ext:on
 DIRS=bibtex cocoa common csv docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt p4 pdf profiles/default rdf relaxng rnc schematron simple slides tbx tcp lite tite tools txt html xsd xlsx pdf verbatimxml
 
@@ -89,7 +89,7 @@ doc: oxygendoc linkcss
 	$(SAXON) -o:release/xslcommon/doc/tei-xsl/index.html Documentation/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
 	$(SAXON) -o:release/xslcommon/doc/tei-xsl/style.html Documentation/style.xml  profiles/default/html/to.xsl 
 	cp Documentation/*.png Documentation/teixsl.xml Documentation/style.xml release/xslcommon/doc/tei-xsl
-	cp VERSION tei.css ChangeLog LICENCE release/xslcommon/doc/tei-xsl
+	cp VERSION tei.css ChangeLog LEGAL/LICENCE release/xslcommon/doc/tei-xsl
 
 oxygendoc:
 	# when building Debian packages, the script runs under
@@ -102,8 +102,16 @@ teioo.jar:
 	(cd odt;  mkdir TEIP5; $(DOTSAXON) -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
 
 test: clean build common names debversion
-	@echo BUILD Run tests
-	(cd Test; make DEFAULTSOURCE=$(DEFAULTSOURCE))
+	@echo "BUILD Run tests. (Note: Test/Makefile sets its own DEFAULTSOURCE.)"
+	(cd Test && make)
+
+test2: clean build common names debversion
+	@echo "BUILD Run new tests (“Test2”), in series"
+	(cd Test2 && ant testSeries)
+
+test2P: clean build common names debversion
+	@echo "BUILD Run new tests (“Test2”), in parallel"
+	(cd Test2 && ant test)
 
 dist: clean release
 	-rm -f tei-xsl-`cat VERSION`.zip
@@ -119,11 +127,12 @@ dist: clean release
 release: common doc oxygendoc build profiles
 
 installxsl: build teioo.jar
-	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
+	mkdir -p ${PREFIX}/share/xml/tei/stylesheet ${PREFIX}/bin ${PREFIX}/source
 	(tar cf - lib teioo.jar) | (cd ${PREFIX}/share/xml/tei/stylesheet; tar xf - )
 	(cd release/xsl; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
-	mkdir -p ${PREFIX}/bin
-	cp bin/transformtei ${PREFIX}/bin
+	cp --preserve=timestamps bin/transformtei ${PREFIX}/bin
+	cp --preserve=timestamps source/p5subset.xml ${PREFIX}/source
+	# Shouldn't the "/usr" in the following line be ${PREFIX} ? —Syd & Martin, 2020-07-03
 	perl -p -i -e 's+^APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/transformtei
 	chmod 755 ${PREFIX}/bin/transformtei
 	for i in $(SCRIPTS); do  (cd ${PREFIX}/bin; rm -f `basename $$i`;  ln -s transformtei `basename $$i`); done

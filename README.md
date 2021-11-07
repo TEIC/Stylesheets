@@ -1,6 +1,7 @@
 # Stylesheets
 
-[![Build Status](https://travis-ci.com/TEIC/Stylesheets.svg?branch=dev)](https://travis-ci.com/TEIC/Stylesheets)
+[![GitHub release](https://img.shields.io/github/release/TEIC/Stylesheets.svg)](https://github.com/TEIC/Stylesheets/releases)
+[![Stylesheets Tests](https://github.com/TEIC/Stylesheets/actions/workflows/test.yml/badge.svg)](https://github.com/TEIC/Stylesheets/actions/workflows/test.yml)
 
 TEI XSL Stylesheets
 

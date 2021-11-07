@@ -57,7 +57,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
   <xsl:template match="tei:teiCorpus">
-    <xsl:element name="html" namespace="{$outputNamespace}">
+    <html>
       <xsl:call-template name="addLangAtt"/>
       <head>
 	<title>
@@ -83,7 +83,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="bodyEndHook"/>
       </body>
       <xsl:call-template name="teiEndHook"/>
-      </xsl:element>
+    </html>
 
   </xsl:template>
   
@@ -112,13 +112,15 @@ of this software, even if advised of the possibility of such damage.
          <xsl:message>Opening file <xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
-      <xsl:result-document doctype-public="{$doctypePublic}" 
-			   doctype-system="{$doctypeSystem}"
-                           encoding="{$outputEncoding}"
-                           href="{$outName}"
-                           method="{$outputMethod}">
-      
-         <xsl:element name="html" namespace="{$outputNamespace}">
+     <xsl:result-document 
+              encoding="{$outputEncoding}"
+              html-version="{$htmlVersion}"
+              normalization-form="{$normalizationForm}"
+              href="{$outName}"
+              method="{$outputMethod}"
+              omit-xml-declaration="{$omitXMLDeclaration}">
+              
+      <html>
 	   <xsl:call-template name="addLangAtt"/>
 	   <head>
 	     <title>
@@ -142,8 +144,8 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:call-template name="stdfooter"/>
 	     <xsl:call-template name="bodyEndHook"/>
 	   </body>
-         </xsl:element>
-      </xsl:result-document>
+      </html>
+     </xsl:result-document>
       <xsl:if test="$verbose='true'">
          <xsl:message>Closing file <xsl:value-of select="$outName"/>
          </xsl:message>
@@ -152,7 +154,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:message>TEI HTML: run end hook template teiEndHook</xsl:message>
       </xsl:if>
       <xsl:call-template name="teiEndHook"/>
-      <xsl:apply-templates select="tei:TEI" mode="split"/>
+      <xsl:apply-templates select="tei:TEI" mode="split"/>                
   </xsl:template>
 
   <xsl:template name="corpusBody">

@@ -3,7 +3,6 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
-    xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
@@ -253,11 +252,17 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="not(doc-available($source))">
         <xsl:call-template name="die">
-          <xsl:with-param name="message">
-            <xsl:text>Source </xsl:text>
-            <xsl:value-of select='($source,$loc,name($top),base-uri($top))' separator=" + "/>
-            <xsl:text> not readable</xsl:text>
-          </xsl:with-param>
+          <xsl:with-param name="message" as="xs:string"
+                          select="concat(
+                                  'Source document ',
+                                  $source,
+                                  ' is not readable; from ',
+                                  base-uri($top),
+                                  ' (which has an outermost element of ',
+                                  name($top/*),
+                                  '), with loc=',
+                                  $loc
+                                  )"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
@@ -2072,13 +2077,13 @@ of this software, even if advised of the possibility of such damage.
         <xsl:variable name="chapter" select="document($sourceDoc)/id($target)/ancestor-or-self::tei:div[not(ancestor::tei:div)]/@xml:id"/>
         <xsl:choose>
           <xsl:when test="(string-length(normalize-space(.)) &gt; 0) or processing-instruction() or comment()">
-            <ref  xmlns="http://www.tei-c.org/ns/1.0"           target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/{$chapter}.html#{$target}">
+            <ref  xmlns="http://www.tei-c.org/ns/1.0"           target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/{$chapter}.html#{$target}">
               <xsl:apply-templates mode="#current"/>
             </ref>
           </xsl:when>
           <xsl:when test="document($sourceDoc)/id($target)">
             <ref  xmlns="http://www.tei-c.org/ns/1.0"
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/{$chapter}.html#{$target}">
+              target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/{$chapter}.html#{$target}">
               <xsl:for-each select="document($sourceDoc)/id($target)">
                 <xsl:number count="tei:div" format="1.1.1."
                   level="multiple"/>      

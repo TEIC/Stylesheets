@@ -8,8 +8,10 @@
   xmlns:i18n="i18n"
   exclude-result-prefixes="#all">
   
-  <!-- named this variable $jtei.lang to avoid interference with $lang of the TEI framework -->
-  <xsl:param name="jtei.lang" select="//tei:profileDesc/tei:langUsage/tei:language/@ident"/>    
+  <!-- Named this variable $jtei.lang to avoid interference with $lang of the TEI framework.
+       Its value is set to the identifier of the first tei:langUsage element, or English 
+       as default. -->
+  <xsl:param name="jtei.lang" select="(//tei:profileDesc/tei:langUsage/tei:language[1]/@ident, 'en')[normalize-space()][1]"/>    
   
   <!-- added a @pl attribute to include plural forms other than [stem + s] -->
   <xsl:variable name="i18n-lookup">

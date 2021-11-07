@@ -302,68 +302,73 @@
     <xsl:param name="capitalize" as="xs:boolean"/>
     <xsl:value-of select="if ($capitalize) then concat(upper-case(substring($string, 1, 1)), substring($string, 2)) else $string"/>
   </xsl:function>
+  
+  <!-- Skip paragraphs inside notes -->
+  <xsl:template match="note/p">
+    <xsl:apply-templates/>
+  </xsl:template>
 
-<!-- Paragraphs are styled with a single style. 
-    However, we have a problem with paras nested in list items, 
-    which requires some fancy footwork. -->
-    <xsl:template match="p">
-      <xsl:param name="note.context" select="ancestor::*[self::front|self::body|self::back]" tunnel="yes" as="element()?"/>
-        <xsl:choose>
-          <xsl:when test="normalize-space(.) = '' and not(*)"></xsl:when>
-          <!-- [RvdB] give right styling to simple/simplified paragraphs inside lists -->
-          <xsl:when test="(parent::item and not(child::cit or child::table or child::teix:egXML or child::figure or child::list[not(matches(@rend, 'inline'))] or child::eg)) or @rend = 'teiListItem'">
-            <text:p text:style-name="teiListItem">
-              <xsl:apply-templates/>
-            </text:p>
-          </xsl:when>  
-          <xsl:when test="parent::note"><xsl:apply-templates/></xsl:when>
-          <xsl:when test="not(child::cit or child::table or child::teix:egXML or child::figure or child::list[not(matches(@rend, 'inline'))] or child::eg)">
-                <text:p text:style-name="teiPara"><xsl:apply-templates/></text:p>
-            </xsl:when>
-            <xsl:otherwise>
-<!-- We need to pre-process to pull quotes out of paragraphs.               -->
-                <xsl:variable name="preProcessed">
-                    <xsl:call-template name="preProcessNestedBlocks">
-                        <xsl:with-param name="inputPara" select="."/>
-                    </xsl:call-template>
-                </xsl:variable>
-                <xsl:apply-templates select="$preProcessed/*">
-                  <xsl:with-param name="note.context" select="$note.context" tunnel="yes"/>
-                </xsl:apply-templates>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-    
-    
-<!--    This template is designed to take a TEI <p> with a nested block element 
-        and return separate <p> elements for the bits in between the blockquote,
-        as well as the blockquote itself. ODT can't handle nested blocks, it
-        seems.
-        -->
-    <xsl:template name="preProcessNestedBlocks">
-        <xsl:param name="inputPara"/>
-<!--        First we output the first block before the first interrupting element. -->
-        <tei:p>
-          <!-- [RvdB] add @rend='teiListItem' to simplified paragraphs inside lists -->
-          <xsl:if test="$inputPara/parent::item">
-            <xsl:attribute name="rend">teiListItem</xsl:attribute>
-          </xsl:if>
-          <xsl:copy-of select="$inputPara/(*|text())[not(self::cit or self::table or self::teix:egXML or self::figure or self::list[not(matches(@rend, 'inline'))] or self::eg) and not(preceding-sibling::cit or preceding-sibling::table or preceding-sibling::teix:egXML or preceding-sibling::figure or preceding-sibling::list[not(matches(@rend, 'inline'))] or preceding-sibling::eg)]"/>
-        </tei:p>
-<!--        Now we work through each cit and its following bits. -->
-      <xsl:for-each select="cit | table | teix:egXML | figure | list[not(matches(@rend, 'inline'))] | eg">
-            <xsl:variable name="pos" select="position()"/>
-            <xsl:copy-of select="."/>
-            <tei:p>
-              <!-- [RvdB] add @rend='teiListItem' to simplified paragraphs inside lists -->
-              <xsl:if test="$inputPara/parent::item">
-                <xsl:attribute name="rend">teiListItem</xsl:attribute>
-              </xsl:if>
-              <xsl:copy-of select="$inputPara/(*|text())[not(self::cit or self::table or self::teix:egXML or self::figure or self::list[not(matches(@rend, 'inline'))] or self::eg) and count(preceding-sibling::cit | preceding-sibling::table | preceding-sibling::teix:egXML | preceding-sibling::figure | preceding-sibling::list[not(matches(@rend, 'inline'))] | preceding-sibling::eg) = $pos]"/>
-            </tei:p>
-        </xsl:for-each>
-    </xsl:template>
-    
+  <!-- Copy paragraphs, but break out nested paragraph-splitting blocks (tables, list, block quotes, ...). --> 
+  <xsl:template match="p">
+    <xsl:for-each-group select="node()" group-starting-with="cit|table|list[not(tokenize(@rend, '\s+') = 'inline')]|figure|teix:egXML|eg|ptr[starts-with(@target, 'video:')]">
+      <xsl:call-template name="promote.nested.blocks"/>
+    </xsl:for-each-group>
+  </xsl:template>
+  
+  <!-- This template groups all of the context nodes that are no paragraph-splitting blocks (tables, list, block quotes, ...) inside paragraphs, and normalizes whitespace for text preceding or following these blocks. -->
+  <xsl:template name="promote.nested.blocks">
+    <xsl:choose>
+      <xsl:when test="current-group()[1][not(self::cit|self::table|self::list|self::figure|self::teix:egXML|self::eg|self::ptr[starts-with(@target, 'video:')])]">
+        <xsl:if test="some $node in current-group() satisfies not($node/self::text()[not(normalize-space())])">
+          <text:p text:style-name="{local:get.p.style(current-group()[1])}">
+            <!-- This is strictly speaking cosmetical, to reduce spurious whitespace. If this is no concern, further processing could be simplified with
+            
+            <xsl:apply-templates select="current-group()"/>
+            
+            -->
+            <xsl:for-each select="current-group()">
+              <xsl:choose>
+                <xsl:when test="self::text()">
+                  <xsl:call-template name="process.promoted.text"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:apply-templates select="."/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:for-each>
+          </text:p>
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="current-group()[1]"/>          
+        <xsl:if test="some $node in current-group()[position() > 1] satisfies not($node/self::text()[not(normalize-space())])">
+          <text:p text:style-name="{local:get.p.style(current-group()[2])}">
+            <xsl:for-each select="current-group()[position() > 1]">
+              <!-- Pre-process text() nodes only, in order to trim spurious whitespace afterwards. --> 
+              <xsl:choose>
+                <xsl:when test="self::text()">
+                  <xsl:call-template name="process.promoted.text"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:apply-templates select="."/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:for-each>
+          </text:p>            
+        </xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <xsl:function name="local:get.p.style">
+    <xsl:param name="node"/>
+    <xsl:choose>
+      <xsl:when test="$node/ancestor::item">teiListItem</xsl:when>
+      <xsl:otherwise>teiPara</xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  
+      
 <!--    Emphasis and other similar things are italic. -->
     <xsl:template match="emph[@rendition='#italic' or not(@rendition)] | mentioned | foreign | term | hi[@rendition='#italic'] | title[@level=('m', 'j')]">
         <text:span text:style-name="teiItalics"><xsl:apply-templates/></text:span>
@@ -517,9 +522,8 @@
       
 <!--    Footnotes -->
     <xsl:template match="note">
-      <xsl:param name="note.counter" tunnel="yes" as="xs:integer" select="0"/>
       <xsl:param name="note.context" tunnel="yes" as="element()?" select="ancestor::*[self::front|self::body|self::back]"/>
-      <xsl:variable name="note.nr" select="local:get.note.nr(.) + $note.counter"/>
+      <xsl:variable name="note.nr" select="local:get.note.nr(.)"/>
       <xsl:call-template name="include.punctuation"/>
       <text:span text:style-name="T1"><text:note text:id="{$note.context/name()}.ftn{$note.nr}" text:note-class="{if (@place eq 'end') then 'endnote' else 'footnote'}"><text:note-citation><xsl:number value="$note.nr" format="{local:format.note.nr($note.context)}"/></text:note-citation><text:note-body><text:p text:style-name="teiFootnote"><text:span text:style-name="footnote_20_reference"/><xsl:text>. </xsl:text> <xsl:apply-templates /></text:p></text:note-body></text:note></text:span>
     </xsl:template>
@@ -787,92 +791,30 @@
     </xsl:for-each>
   </xsl:template>
   
-<!--    Lists of various kinds. -->
-<!-- [RvdB] added preprocessing step, which just copies the list, but wraps all contents of <item> in <p> prior to further processing -->
+<!-- Regular lists. -->   
   <xsl:template match="list">
-    <xsl:param name="note.counter" tunnel="yes" as="xs:integer" select="0"/>
-    <xsl:param name="note.context" select="ancestor::*[self::front|self::body|self::back]" tunnel="yes" as="element()?"/>
-    <xsl:variable name="current" select="."/>
-    <xsl:variable name="prepared">
-      <xsl:apply-templates select="." mode="list-prepare"/>
-    </xsl:variable>
-    <xsl:for-each select="$prepared/list">
-      <xsl:choose>
-        <xsl:when test="matches(@rend, 'inline')">
-          <xsl:for-each select="item">
-            <xsl:choose>
-              <xsl:when test="matches(parent::list/@rend, 'bulleted')"><text:s/>•<text:s/><xsl:apply-templates><xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/><xsl:with-param name="note.context" select="$note.context" tunnel="yes"/></xsl:apply-templates></xsl:when>
-              <xsl:when test="matches(parent::list/@rend, 'ordered')">
-                <xsl:variable name="number"><xsl:number level="multiple" format="1.a"/></xsl:variable>
-                <text:s/><xsl:value-of select="concat('(', replace($number, '\.', ''), ')')"/><text:s/><xsl:apply-templates><xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/><xsl:with-param name="note.context" select="$note.context" tunnel="yes"/></xsl:apply-templates></xsl:when>
-              <xsl:otherwise><xsl:if test="preceding-sibling::item"><text:s/></xsl:if><xsl:apply-templates><xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/><xsl:with-param name="note.context" select="$note.context" tunnel="yes"/></xsl:apply-templates></xsl:otherwise>
-            </xsl:choose>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:otherwise>
-          <text:list text:style-name="{if (@rend='bulleted') then 'teiListBulleted' else if (@rend='ordered') then 'teiListOrdered' else 'teiListSimple'}"><xsl:apply-templates><xsl:with-param name="note.counter" select="$note.counter + ($current/preceding::tei:note[1]/local:get.note.nr(.), 0)[1]" tunnel="yes"/><xsl:with-param name="note.context" select="$note.context" tunnel="yes"/></xsl:apply-templates></text:list>
-        </xsl:otherwise>
-      </xsl:choose>
+    <text:list text:style-name="{if (@rend='bulleted') then 'teiListBulleted' else if (@rend='ordered') then 'teiListOrdered' else 'teiListSimple'}">
+      <xsl:apply-templates/>
+    </text:list>
+  </xsl:template>
+  
+<!-- Gloss lists. -->  
+  <xsl:template match="list[tokenize(@rend, '\s+') = 'inline']">
+    <xsl:for-each select="item">
+      <xsl:variable name="marker">
+        <xsl:call-template name="get.inline.list.marker"/>
+      </xsl:variable>
+      <xsl:if test="normalize-space($marker)">
+        <xsl:value-of select="$marker"/>
+        <text:s/>
+      </xsl:if>
+      <xsl:apply-templates/>
+      <xsl:if test="following-sibling::item">
+        <text:s/>
+      </xsl:if>
     </xsl:for-each>
   </xsl:template>
-  
-  <!-- [RvdB] wrap all contents of <item> in <p> prior to further processing -->
-  <xsl:template match="list[not(matches(@rend, 'inline'))]/item" mode="list-prepare">
-    <xsl:variable name="current" select="."/>
-    <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <xsl:for-each-group select="node()" group-starting-with="node()[self::p]">
-        <xsl:choose>
-          <xsl:when test="current-group()[1][not(self::p)]">
-            <xsl:call-template name="p.create">
-              <xsl:with-param name="context" select="current-group()"/>
-              <xsl:with-param name="current" select="$current"/>
-            </xsl:call-template>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:copy-of select="current-group()[1]"/>
-            <xsl:if test="current-group()[position() > 1]">
-              <xsl:call-template name="p.create">
-                <xsl:with-param name="context" select="current-group()[position() > 1]"/>
-                <xsl:with-param name="current" select="$current"/>
-              </xsl:call-template>
-            </xsl:if>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:for-each-group>
-    </xsl:copy>
-  </xsl:template>
-  
-  <!-- [RvdB] in first list pass, just copy the element but process punctuation already 
-       (otherwise, node context gets lost, which disturbs punctuation processing) -->
-  <xsl:template match="quote[not(parent::cit)] | q[not(parent::cit)] | title[@level='a'] | title[@level='u'] | soCalled" mode="list-prepare">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="#current"/>
-      <xsl:call-template name="include.punctuation"/>
-    </xsl:copy>
-  </xsl:template>
-  
-  <!-- [RvdB] in first list pass, just copy the element but process punctuation already 
-       (otherwise, node context gets lost, which disturbs punctuation processing) -->
-  <xsl:template match="note" mode="list-prepare">
-    <xsl:call-template name="include.punctuation"/>
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="#current"/>
-    </xsl:copy>
-  </xsl:template>
-
-  <!-- [RvdB] in first list pass, process punctuation already  for text nodes
-       (otherwise, node context gets lost, which disturbs punctuation processing) -->  
-  <xsl:template match="text()" mode="list-prepare" priority="1">
-    <xsl:apply-imports/>
-  </xsl:template>
-  
-  <xsl:template match="@*|node()" mode="list-prepare">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="#current"/>
-    </xsl:copy>
-  </xsl:template>
-    
+      
     <xsl:template match="list/head">
       <text:list-header><text:p text:style-name="teiListHead"><xsl:apply-templates/><xsl:call-template name="punctuate-head"/></text:p></text:list-header>
     </xsl:template>
@@ -880,38 +822,44 @@
 <!--  Suppress the label element, because we handle it inside the item. -->
   <xsl:template match="list/label"/>
     
-  <xsl:template match="list/item">
+<!-- List items: group everything that's not inside a paragraph or paragraph-splitting block inside paragraphs. -->
+  <xsl:template match="list[not(matches(@rend, 'inline'))]/item">
     <text:list-item>
       <xsl:for-each select="preceding-sibling::*[1]/self::label">
         <text:p text:style-name="teiListItem">
           <text:span text:style-name="teiListItemLabel"><xsl:apply-templates/></text:span>
         </text:p>
       </xsl:for-each>
-      <xsl:choose>
-<!-- If there are nested block lists, things get nasty. -->
-        <xsl:when test="child::list[not(matches(@rend, 'inline'))]">
-<!-- We have to split the content into pieces which are block lists 
-          and non-block-lists. Then we process the former as 
-          normal, and the latter within text:p elements. -->
-<!--        First we output the first block before the first interrupting element. -->
-          <text:p text:style-name="teiListItem">
-            <xsl:apply-templates select="(*|text())[not(self::list[not(matches(@rend, 'inline'))] or preceding-sibling::list[not(matches(@rend, 'inline'))])]"/>
-          </text:p>
-          <!--        Now we work through each list and its following bits. -->
-          <xsl:for-each select="list[not(matches(@rend, 'inline'))]">
-            <xsl:variable name="pos" select="position()"/>
-            <xsl:apply-templates select="."/>
-            <text:p text:style-name="teiListItem">
-              <xsl:apply-templates select="(*|text())[not(self::list[not(matches(@rend, 'inline'))]) and count(preceding-sibling::list[not(matches(@rend, 'inline'))]) = $pos]"/>
-            </text:p>
-          </xsl:for-each>
-        </xsl:when>
-        <!-- Otherwise, things are relatively straightforward. -->
-        <xsl:otherwise>
-          <!-- [RvdB] just process <p> children as regular paragraphs -->
-          <xsl:apply-templates/>
-        </xsl:otherwise>
-      </xsl:choose>
+      <!-- start by grouping on <p> also, to catch mixed cases -->
+      <xsl:for-each-group select="node()" group-starting-with="p|cit|table|list[not(tokenize(@rend, '\s+') = 'inline')]|figure|teix:egXML|eg|ptr[starts-with(@target, 'video:')]">
+        <xsl:choose>
+          <!-- when first group starts with <p>, copy that and promote following text to <p> -->
+          <xsl:when test="current-group()[1][self::p]">
+            <!-- copy existing <p> -->
+            <xsl:apply-templates select="current-group()[1]"/>
+            <!-- wrap remaining text in <p> -->
+            <xsl:if test="count(current-group()[not(self::text()[not(normalize-space())])]) > 1">
+              <text:p text:style-name="teiListItem">
+                <!-- trim remaining text; copy other content -->
+                <xsl:for-each select="current-group()[position() > 1]">
+                  <xsl:choose>
+                    <xsl:when test="self::text()">
+                      <xsl:call-template name="process.promoted.text"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:apply-templates select="."/>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:for-each>
+              </text:p>
+            </xsl:if>
+          </xsl:when>
+          <xsl:when test="current-group()[1][self::text()[not(normalize-space())]]"/>
+          <xsl:otherwise>
+            <xsl:call-template name="promote.nested.blocks"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each-group>
     </text:list-item>
   </xsl:template>
 

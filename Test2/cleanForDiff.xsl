@@ -41,7 +41,7 @@
     <xsl:key name="IDS" use="@id" match="*"/>
     
 <!--  Checking of internal links in HTML documents.  -->
-    <xsl:template match="xhtml:a[starts-with(@href,'#')]">
+    <xsl:template match="xhtml:html/descendant::xhtml:a[starts-with(@href,'#')]">
         <xsl:if test="not(key('IDS',substring(@href,2)))">
             <xsl:message terminate="yes">Error: no target for link <xsl:value-of select="@href"/></xsl:message>
         </xsl:if>

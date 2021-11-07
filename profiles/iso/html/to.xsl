@@ -6,13 +6,12 @@
 		xmlns:cals="http://www.oasis-open.org/specs/tm9901"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                xmlns:s="http://www.ascc.net/xml/schematron"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:t="http://www.thaiopensource.com/ns/annotations"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                exclude-result-prefixes="tei html t its a rng s iso tbx cals teix"
+                exclude-result-prefixes="tei html t its a rng iso tbx cals teix"
                 version="2.0">
    <xsl:import href="../../../html/html.xsl"/>
    <xsl:import href="../../../html/html_oddprocessing.xsl"/>
@@ -68,8 +67,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:strip-space elements="tei:bibl"/>
    <xsl:param name="numberFormat">uk</xsl:param>
    <xsl:output encoding="utf-8" omit-xml-declaration="yes" method="xhtml"
-               doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
-               doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+     normalization-form="NFC" html-version="5.0"
                indent="yes"/>
 
    <xsl:param name="STDOUT">true</xsl:param>

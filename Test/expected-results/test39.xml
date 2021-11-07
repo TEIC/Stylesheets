@@ -130,7 +130,7 @@
         <p>This file and the associated profile, as well as a mini Web converter are available at <ref target="http://nl.ijs.si/tei/convert/">http://nl.ijs.si/tei/convert/</ref></p>
         <p>In this document we give as examples the actual Word styles used, and when we refer to them, they are set in <hi rend="italic">italic</hi>, e.g. the style <hi rend="italic">Quote</hi>. To give TEI structures that these styles are converted to we use XPath and underline them, for &lt;note place="left"&gt; we write <hi rend="underline">note[@place = "left"]</hi>.</p>
         <p>Here are some general hints about the conversion of the Word document to TEI using this profile:</p>
-        <list type="unordered">
+        <list rend="bulleted">
           <item>Very fancy formatting and esp. layout are not preserved in the TEI.</item>
           <item>The conversion heavily depends on using Word styles, so using “raw” formatting will not work well.  The styles are here visually distinguished in a certain way, but changing their appearance to better suit individual use does not affect the conversion. Styles that are not used can be also deleted, to have less clutter in the Style gallery. Please note that English style names should be used; the conversion does currently not support styles names in other languages.</item>
           <item>For repetitive tasks (e.g. marking various types of names) it is convenient to define keyboard shortcuts; if only one style (e.g. <hi rend="italic">tei:name</hi>) is being repeatedly applied, then CTRL-Y works as well.</item>
@@ -156,8 +156,8 @@
         <div>
           <head><anchor xml:id="Toc382049199"/><anchor xml:id="Ref395615364"/>Paragraph level styles</head>
           <p>Bulleted and numbered lists are supported, although the numbering style will not survive the conversion, e.g.:</p>
-          <list type="ordered">
-            <item>First item<list type="ordered"><item>Subitem<list type="ordered"><item>Subsubitem</item></list></item></list></item>
+          <list rend="numbered">
+            <item>First item<list rend="numbered"><item>Subitem<list rend="numbered"><item>Subsubitem</item></list></item></list></item>
           </list>
           <p>By using the paragraph level <hi rend="italic">Quote</hi> style a <hi rend="underline">quote</hi> can be produced:</p>
           <p rend="Quote" style="font-style: italic; ">My fake plants died because I did not pretend to water them.</p>
@@ -183,10 +183,19 @@
           </figure>
           <p>It is possible to have two images in one figure (i.e. with one <hi rend="italic">Caption</hi>). As shown in Figure 2 they can be side by side or they can be side by side i.e. separated by a paragraph mark , c.f. Figure 3.</p>
           <figure>
+            <graphic n="1002" width="5.950105555555556cm" height="3.8201583333333335cm" url="media/image2.jpeg" rend="inline"/>
+            <graphic n="1003" width="5.8115194444444445cm" height="3.7982916666666666cm" url="media/image3.jpeg" rend="inline"/>
             <head><anchor xml:id="Ref378324989"/><anchor xml:id="Toc381285978"/>Figure 2 Two images, side by side</head>
           </figure>
           <figure>
-            <graphic n="1005" width="5.368919444444445cm" height="3.5090194444444442cm" url="media/image3.jpeg" rend="inline"/>
+            <figure>
+              <anchor xml:id="Ref378265695"/>
+              <anchor xml:id="Toc381285979"/>
+              <graphic n="1004" width="5.388325cm" height="3.459475cm" url="media/image2.jpeg" rend="inline"/>
+            </figure>
+            <figure>
+              <graphic n="1005" width="5.368919444444445cm" height="3.5090194444444442cm" url="media/image3.jpeg" rend="inline"/>
+            </figure>
             <head>Figure 3 Two images one above the other</head>
           </figure>
           <p>Figures in Word can also be embedded Excel graphs, as is the case with Figure 4. However, this conversion currently does <hi rend="italic">not</hi> work.</p>
@@ -207,138 +216,142 @@
         <div>
           <head><anchor xml:id="Toc382049202"/>Tables</head>
           <p>Tables, even somewhat more complicated ones (e.g. Table 2) can also be converted to TEI. However, the details of their layout and formatting will not be preserved. As with Figures, it is currently not possible to convert embedded Excel spreadsheets.</p>
-          <table rend="rules">
-            <row>
-              <cell rend="left"/>
-              <cell rend="left">
-                <hi rend="bold" style="font-size:9pt">Lendava</hi>
-              </cell>
-              <cell rend="left">
-                <hi rend="bold" style="font-size:9pt">Murska Sobota</hi>
-              </cell>
-              <cell rend="left">
-                <hi rend="bold" style="font-size:9pt">Beltinci</hi>
-              </cell>
-              <cell rend="left">
-                <hi rend="bold" style="font-size:9pt">okoliške vasi</hi>
-              </cell>
-              <cell rend="left">
-                <hi rend="bold" style="font-size:9pt">skupaj</hi>
-              </cell>
-            </row>
-            <row>
-              <cell rend="right">
-                <hi style="font-size:9pt">1778</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">14</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">0</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">0</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">0</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">14</hi>
-              </cell>
-            </row>
-            <row>
-              <cell rend="right">
-                <hi style="font-size:9pt">1793</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">19</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">14</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">21</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">6</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">60</hi>
-              </cell>
-            </row>
-            <row>
-              <cell rend="right">
-                <hi style="font-size:9pt">1812</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">23</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">13</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">40</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">0</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:9pt">76</hi>
-              </cell>
-            </row>
+          <figure>
+            <table rend="rules">
+              <row>
+                <cell style="text-align: left;"/>
+                <cell style="text-align: left;">
+                  <hi rend="bold" style="font-size:9pt">Lendava</hi>
+                </cell>
+                <cell style="text-align: left;">
+                  <hi rend="bold" style="font-size:9pt">Murska Sobota</hi>
+                </cell>
+                <cell style="text-align: left;">
+                  <hi rend="bold" style="font-size:9pt">Beltinci</hi>
+                </cell>
+                <cell style="text-align: left;">
+                  <hi rend="bold" style="font-size:9pt">okoliške vasi</hi>
+                </cell>
+                <cell style="text-align: left;">
+                  <hi rend="bold" style="font-size:9pt">skupaj</hi>
+                </cell>
+              </row>
+              <row>
+                <cell style="text-align: right;">
+                  <hi style="font-size:9pt">1778</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">14</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">0</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">0</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">0</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">14</hi>
+                </cell>
+              </row>
+              <row>
+                <cell style="text-align: right;">
+                  <hi style="font-size:9pt">1793</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">19</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">14</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">21</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">6</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">60</hi>
+                </cell>
+              </row>
+              <row>
+                <cell style="text-align: right;">
+                  <hi style="font-size:9pt">1812</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">23</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">13</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">40</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">0</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:9pt">76</hi>
+                </cell>
+              </row>
+            </table>
             <head><anchor xml:id="Ref378063790"/><lb/><anchor xml:id="Toc381285985"/>Table 1 A Simple table</head>
-          </table>
-          <table rend="rules">
-            <row>
-              <cell rend="center" cols="5">
-                <hi rend="bold" style="font-size:10pt">SLOVENSKE DEŽELE</hi>
-              </cell>
-            </row>
-            <row>
-              <cell rend="left"/>
-              <cell rend="right">
-                <hi style="font-size:10pt">144</hi>
-              </cell>
-              <cell rend="right">
-                <hi style="font-size:10pt">192</hi>
-              </cell>
-              <cell rend="right">
-                <hi style="font-size:10pt">182</hi>
-              </cell>
-            </row>
-            <row>
-              <cell rend="left"/>
-              <cell rend="right">
-                <hi style="font-size:10pt">96</hi>
-              </cell>
-              <cell rend="right">
-                <hi style="font-size:10pt">89</hi>
-              </cell>
-              <cell rend="right">
-                <hi style="font-size:10pt">145</hi>
-              </cell>
-            </row>
-            <row>
-              <cell rend="left">
-                <hi rend="italic" style="font-size:10pt">Ljubljana</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:10pt">(74)</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:10pt">(76)</hi>
-              </cell>
-              <cell rend="right">
-                <hi rend="italic" style="font-size:10pt">(95)</hi>
-              </cell>
-            </row>
-            <row>
-              <cell rend="center" cols="5">
-                <hi rend="bold" style="font-size:10pt">Sodni okraji z ozemlja današnje slovenske Primorske</hi>
-              </cell>
-            </row>
+          </figure>
+          <figure>
+            <table rend="rules">
+              <row>
+                <cell style="text-align: center;" cols="5">
+                  <hi rend="bold" style="font-size:10pt">SLOVENSKE DEŽELE</hi>
+                </cell>
+              </row>
+              <row>
+                <cell style="text-align: left;"/>
+                <cell style="text-align: right;">
+                  <hi style="font-size:10pt">144</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi style="font-size:10pt">192</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi style="font-size:10pt">182</hi>
+                </cell>
+              </row>
+              <row>
+                <cell style="text-align: left;"/>
+                <cell style="text-align: right;">
+                  <hi style="font-size:10pt">96</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi style="font-size:10pt">89</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi style="font-size:10pt">145</hi>
+                </cell>
+              </row>
+              <row>
+                <cell style="text-align: left;">
+                  <hi rend="italic" style="font-size:10pt">Ljubljana</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:10pt">(74)</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:10pt">(76)</hi>
+                </cell>
+                <cell style="text-align: right;">
+                  <hi rend="italic" style="font-size:10pt">(95)</hi>
+                </cell>
+              </row>
+              <row>
+                <cell style="text-align: center;" cols="5">
+                  <hi rend="bold" style="font-size:10pt">Sodni okraji z ozemlja današnje slovenske Primorske</hi>
+                </cell>
+              </row>
+            </table>
             <head><anchor xml:id="Ref378079178"/><anchor xml:id="Toc381285986"/>Table 2 A more complex table with multi columns</head>
-          </table>
+          </figure>
         </div>
         <div>
           <head><anchor xml:id="Toc382049203"/>Indexes</head>
@@ -386,7 +399,7 @@
           <fwPageNum>Page number</fwPageNum>
           <fwHeader>Running Head</fwHeader>
           <p>When transcribing primary sources, the <hi rend="underline">fw</hi> element is used to mark text in the headers and footers of the pages, where the <hi rend="underline">fw/@type</hi> is used to distinguish different types of these “forme works«. To make this annotation easier, several styles are defined which already set the value of <hi rend="underline">@type</hi>:</p>
-          <list type="unordered">
+          <list rend="bulleted">
             <item>catch-words: <hi rend="italic">tei:fwCatch</hi> (<hi rend="underline">fw[@type="catch"]</hi>), example at bottom of previous page;</item>
             <item>running heads: <hi rend="italic">tei:fwHeader</hi> (<hi rend="underline">fw[@type="header"]</hi>), example at top of this page;</item>
             <item>page numbers: <hi rend="italic">tei:fwPageNum</hi> (<hi rend="underline">fw[@type="pageNum"]</hi>), example at top of this page;</item>
@@ -396,7 +409,7 @@
         <div>
           <head><anchor xml:id="Toc382049208"/>Character level styles</head>
           <p>Character level Word styles map to various TEI phrase level elements:</p>
-          <list type="unordered">
+          <list rend="bulleted">
             <item>Basic style (elements) supported are <hi rend="italic">tei:bibl</hi> (<hi rend="underline">bibl</hi>), <hi rend="italic">tei:foreign</hi> (<hi rend="underline">foreign</hi>), <hi rend="italic">tei:q</hi> (<hi rend="underline">q</hi>), e.g.:<lb/>“text <bibl>Bibl</bibl> text <foreign>Foreign</foreign> text <q>Quoted</q> text”.</item>
             <item>There is also <hi rend="italic">tei:quote</hi>, which is used when a <hi rend="underline">quote</hi> is to be used on the character level (note that for paragraph level <hi rend="underline">quote</hi> one must use the default Word <hi rend="italic">Quote</hi> style, as explained in the Section on Paragraph level styles),  e.g.:<lb/>“text <quote>Longer quoted text</quote> and some text”.</item>
             <item>Named entities are marked with <hi rend="italic">tei:name</hi> (<hi rend="underline">name</hi>), <hi rend="italic">tei:persName</hi> (<hi rend="underline">name[@type="person"]</hi>), <hi rend="italic">tei:placeName</hi> (<hi rend="underline">name[@type="place"]</hi>), <hi rend="italic">tei:orgName</hi> (<hi rend="underline">name[@type="org"]</hi>), e.g.:<lb/>“text <name>Name</name> text <persName>Person</persName> text <placeName>Place</placeName> text <orgName>Organisation</orgName> text”.</item>
@@ -407,7 +420,7 @@
             <head><anchor xml:id="Toc382049209"/>Janus elements</head>
             <p>So called Janus (two-faced) elements are used mostly in text-critical editions and are special in that they can represent two alternative paths through the text of the document. When taken as alternative encodings they are wrapped in a <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-subst.html">subst</ref> or <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-choice.html">choice</ref> element. In particular, a contiguous series of <hi rend="underline">del</hi> and <hi rend="underline">add</hi> elements gets in the TEI the parent element <hi rend="underline">subst</hi> , while ordered pairs of <hi rend="underline">abbr</hi> followed by <hi rend="underline">expan</hi>, <hi rend="underline">orig</hi> followed by <hi rend="underline">reg</hi> and <hi rend="underline">sic</hi> followed by <hi rend="underline">corr</hi> get a parent <hi rend="underline">choice</hi> element. </p>
             <p>Examples of use:</p>
-            <list type="unordered">
+            <list rend="bulleted">
               <item><anchor xml:id="foo"/><anchor xml:id="adddel"/>For deletions and additions in the source text use <hi rend="italic">tei:del</hi> (<hi rend="underline">del</hi>) and <hi rend="italic">tei:add</hi> (<hi rend="underline">add</hi>):<lb/>“<del>Delete</del> text <del>Delete</del> <add>Add</add>, text <add>Add</add> <del>Delete</del>, text <del>Delete</del> <add>Add</add> <del>Delete</del> <add>Add</add>, text <add>Add</add>”.</item>
               <item>For abbreviations and their expansions use <hi rend="italic">tei:abbr</hi> (<hi rend="underline">abbr</hi>) and <hi rend="italic">tei:expan</hi> (<hi rend="underline">expan</hi>):<lb/>“<abbr>Abbreviation</abbr> text <abbr>Abbreviation</abbr> <expan>Expansion</expan>, text <expan>Expansion</expan>”.</item>
               <item>For original and regularised text use <hi rend="italic">tei:orig</hi> (orig) and <hi rend="italic">tei:reg</hi> (<hi rend="underline">reg</hi>):<lb/>“<orig>Orig</orig> text <orig>Orig</orig> <reg>Regularised</reg>, text <reg>Regularised</reg>”.</item>
@@ -428,13 +441,13 @@
         <head><anchor xml:id="Toc382049212"/>Conclusions and further work</head>
         <p>We’ve used approach to authoring TEI documents via Word for many years now, but so far the workflow was from RTF to TEI with home grown XSLT, c.f. <ref target="http://nl.ijs.si/e-zrc/rtf2tei/">http://nl.ijs.si/e-zrc/rtf2tei/</ref>. Now we’ve switched to standard Stylesheets, and this document and the associated profile are our attempt in this direction.</p>
         <p>The plan is to:</p>
-        <list type="ordered">
+        <list rend="numbered">
           <item>Fix bugs &amp; add features, c.f. below</item>
           <item>Make a better converter than the current one? Maybe install OxGarage?</item>
-          <item>Split current profile into two: <list type="ordered"><item>for social studies (focus on tables, figures, indexes, names, potentially soft pbs) </item><item>for humanities (facsimile, text-critical and other <hi rend="italic">tei:</hi> styles).</item></list></item>
+          <item>Split current profile into two: <list rend="numbered"><item>for social studies (focus on tables, figures, indexes, names, potentially soft pbs) </item><item>for humanities (facsimile, text-critical and other <hi rend="italic">tei:</hi> styles).</item></list></item>
         </list>
         <p>  Including facsimiles:</p>
-        <list type="unordered">
+        <list rend="bulleted">
           <item>extend the idea of tei: styles to section headings (pass 4?): <lb/>if it is “tei:facsimile” this is the facsimile.</item>
           <item>it can be empty (or maybe just a p) – then a facsimile with hard pb number of surfaces is created </item>
           <item>can have figures directly (with captions or not) </item>
@@ -443,7 +456,7 @@
         </list>
         <div>
           <head><anchor xml:id="Toc382049213"/>TEI Stylesheet bugs</head>
-          <list type="unordered">
+          <list rend="bulleted">
             <item><hi rend="underline">pb</hi>’s at start / end of elements should be promoted upwards as far as they go (and containing elements zapped if then empty) //fixed locally in pass4//</item>
             <item>footnotes are numbered wrongly, as the take note/@n = w:footnoteReference/@w:id but w:id is not necessarily the correct number of the footnote //fixed locally in pass2//</item>
             <item>Embedded Excel spreadsheets are not converted.</item>

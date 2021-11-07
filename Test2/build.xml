@@ -7,6 +7,9 @@
      Stylesheets/Test2/build.xml
      
      ANT TEST FILE FOR THE TEI STYLESHEETS.
+     
+     FOR DETAILED USAGE INFORMATION, SEE THE README*.md FILES
+     IN THE Test2 DIRECTORY.
         
      MDH 2017: This is an EXPERIMENTAL build file which is 
      attempting to wholly replace the Makefile in the Stylesheets/Test
@@ -35,11 +38,15 @@
         which calls ant passing a build-to or build-from file, which calls 
         Saxon....
         
-     You can call this file with many targets, but this:
+     You can call this file with many targets, but either
      
-        ant test
+       ant test
+     or
+       ant testSeries
         
-     will run the set of tests which have been set up so far.
+     will run the all of the tests which have been set up so far (either in
+     parallel, which is faster but can produce messages out-of-order, or in
+     series, which slower but sometimes easier to figure out what happened).
      
      Files used as input to conversions are found in the inputFiles folder;
      results are stored in the outputFiles folder. Running
@@ -76,14 +83,19 @@
      the latest dev Jenkins build of p5subset.xml to a local folder.
      Passing -Dlocalsource=DIR fails, but -Dlocalsource=DIR/p5subset.xml works 
      for some reason.
+     
+     Here we use the local p5subset.xml in the Stylesheets repository.
     -->
-    <property name="localsource" value=""/>
+    <property name="localsource" value="${basedir}/../source/p5subset.xml"/>
     
-<!-- Properties for downloading, unzipping and using FOP 2.2 dist, used in creating PDFs from XSL:FO.
-     We're stuck at 2.2 because no hyphenation lib is available for 2.3 yet. -->
-    <property name="fopDist" value="http://apache.mirror.iweb.ca/xmlgraphics/fop/binaries/fop-2.2-bin.zip"/>
+<!-- Properties for downloading, unzipping and using a FOP dist, used in creating PDFs from XSL:FO.
+      -->
+    <property name="fopVer" value="2.6"/>
+    <property name="fopDist" value="https://archive.apache.org/dist/xmlgraphics/fop/binaries/fop-${fopVer}-bin.zip"/>
     <property name="fopDest" value="${basedir}/../lib"/>
-    <property name="fopHome" value="${basedir}/../lib/fop-2.2"/>
+    <property name="fopHome" value="${basedir}/../lib/fop-${fopVer}"/>
+    
+    <!-- These files don't seem to change with FOP version. -->
     <property name="fopHyphDist" value="https://downloads.sourceforge.net/project/offo/offo-hyphenation/2.2/offo-hyphenation-compiled.zip"/>
     <property name="jeuclidDist" value="https://downloads.sourceforge.net/project/jeuclid/3.1.x/3.1.9/jeuclid-3.1.9-distribution.zip"/>
     
@@ -104,8 +116,9 @@
 <!--  Two cocoa test files which are converted to TEI.  -->
     <fileset id="cocoaFiles" dir="${inputDir}" includes="testCocoa*.txt"/>
     
-<!--  TEI files which are converted to XSL:FO.  -->
-    <fileset id="foFiles" dir="${inputDir}" includes="generalP5.xml, testStructure1.xml, testCorpus1.xml, testMathML.xml, 
+<!--  TEI files which are converted to XSL:FO.  testMathML.xml has been removed because 
+  the JEuclid jar no longer works with recent FOP versions. -->
+    <fileset id="foFiles" dir="${inputDir}" includes="generalP5.xml, testStructure1.xml, testCorpus1.xml,
         testBibliography1.xml, testNotes1.xml, tei_simplePrint.doc.xml, testQuotations1.xml, testBinaryObjects1.xml"/>
     
 <!--  Files for conversion to RDF.  -->
@@ -475,7 +488,7 @@
     </target>
     
 <!--  We want to test FOP, but probably avoid exploding our repo,
-      so we download it. This is hard-coded FOP 2.2. -->
+      so we download it. The FOP version is controlled by a variable fopVer. -->
     <target name="getFop" unless:blank="getFopAlreadyExecuted">
         <description>
             TARGET getFop
@@ -488,11 +501,11 @@
         </description>
         <property name="getFopAlreadyExecuted" value="true" />
         <available property="fopAvailable" file="${fopHome}/fop/build/fop.jar"/>
-        <echo unless:true="${fopAvailable}" message="Downloading FOP 2.2 to test creation of PDFs."/>
+      <echo unless:true="${fopAvailable}" message="Downloading FOP ${fopVer} to test creation of PDFs."/>
         <get unless:true="${fopAvailable}" src="${fopDist}" 
              dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
-        <unzip unless:true="${fopAvailable}" src="${fopDest}/fop-2.2-bin.zip" dest="${fopDest}" failonemptyarchive="true"/>
-        <delete file="${fopDest}/fop-2.2-bin.zip"/>
+      <unzip unless:true="${fopAvailable}" src="${fopDest}/fop-${fopVer}-bin.zip" dest="${fopDest}" failonemptyarchive="true"/>
+      <delete file="${fopDest}/fop-${fopVer}-bin.zip"/>
         
         <available property="fopHyphAvailable" file="${fopHome}/fop/build/fop-hyph.jar"/>
         <echo unless:true="${fopHyphAvailable}" message="Downloading FOP hyphenation jar."/>
@@ -523,8 +536,8 @@
             clean target before everything else, assuming that if you're 
             running all the tests you'll want cruft cleared away first.
         </description>
+        <antcall target="clean"/>
         <parallel failonany="true">
-            <antcall target="clean"/>
             <antcall target="oddFilesToRng"/>
             <antcall target="simpleTeiToHtml"/>
             <antcall target="markdown"/>
@@ -537,6 +550,28 @@
             <antcall target="docx"/>
         </parallel>
     </target>
+  
+  <target name="testSeries">
+    <description>
+      TARGET: testSeries
+      This target runs all build and check processes, but in sequence
+      rather than in parallel. This can be a good method of figuring out
+      where a problem is when you've hit one running the tests in parallel,
+      which can have confusing output because messages from different
+      threads appear in an unpredictable sequence.
+    </description>
+    <antcall target="clean"/>
+    <antcall target="oddFilesToRng"/>
+    <antcall target="simpleTeiToHtml"/>
+    <antcall target="markdown"/>
+    <antcall target="cocoaFilesToTei"/>
+    <antcall target="teiFilesToFo"/>
+    <antcall target="teiFilesToRdf"/>
+    <antcall target="teiFilesFromHtml"/>
+    <antcall target="teiFilesFromP4"/>
+    <antcall target="odt"/>
+    <antcall target="docx"/>
+  </target>
     
     <target name="documentation">
         <echo>

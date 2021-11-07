@@ -36,22 +36,34 @@
   </teiHeader>
   <text>
     <body>
-      <p style="text-align:center;">
-        <hi rend="bold" style="font-size:22pt">Docx To TEI</hi>
-      </p>
-      <p>
-        <hi rend="underline" style="font-size:14pt">Just a Test</hi>
-        <hi style="font-size:14pt">:  I am checkin for footnote</hi>
-        <note place="foot" xml:id="ftn1" n="1">
-          <p rend="footnote text">  This is a simple footnote having hyperlink <ref target="http://www.google.com/">Google site</ref>
-               </p>
-        </note>
-      </p>
-      <p>
-        <hi style="font-size:14pt">This is a colored symbol:</hi>
-        <hi rend="color(FF0000) background(yellow)" style="font-size:14pt">⇒</hi>
-        <hi style="font-size:14pt">(see https://github.com/TEIC/Stylesheets/issues/389)</hi>
-      </p>
+      <div>
+        <p style="text-align: center;">
+          <hi rend="bold" style="font-size:22pt">Docx To TEI</hi>
+        </p>
+        <p>
+          <hi rend="underline" style="font-size:14pt">Just a Test</hi>
+          <hi style="font-size:14pt">:  I am checkin for footnote</hi>
+          <note place="foot" xml:id="ftn1" n="1">
+            <p rend="footnote text">  This is a simple footnote having hyperlink <ref target="http://www.google.com/">Google site</ref>
+                  </p>
+          </note>
+        </p>
+        <p>
+          <hi style="font-size:14pt">This is a colored symbol:</hi>
+          <hi rend="color(FF0000) background(yellow)" style="font-size:14pt">⇒</hi>
+          <hi style="font-size:14pt">(see https://github.com/TEIC/Stylesheets/issues/389)</hi>
+        </p>
+      </div>
+      <div>
+        <head>Test for handling @w:val[. = "0"] on //w:i and //w:b elements (issue <ref target="https://github.com/TEIC/Stylesheets/issues/440">https://github.com/TEIC/Stylesheets/issues/440</ref>)</head>
+        <p>This is text with <hi rend="italic">italic</hi> (without @w:val),<hi rend="italic" xml:space="preserve">italic </hi>(with @w:val=1) and roman (with @w:val=0) formatting.</p>
+        <p>This is text with <hi rend="bold">bold</hi> (without @w:val), <hi rend="bold">bold</hi> (with @w:val=1)<hi rend="normalweight" xml:space="preserve"> and normal-weight </hi>(with @w:val=0) formatting.</p>
+        <p>This is text with <hi rend="strikethrough">strikethrough</hi> (without @w:val), <hi rend="strikethrough">strikethrough</hi> (with @w:val=1) and normal (with @w:val=0) formatting.</p>
+        <p>This is text with <hi rend="doublestrikethrough">double-strikethrough</hi> (without @w:val), <hi rend="doublestrikethrough">double-strikethrough</hi> (with @w:val=1) and normal (with @w:val=0) formatting.</p>
+        <p>This is text with <hi rend="smallcaps">smallcaps</hi> (without @w:val), <hi rend="smallcaps">smallcaps</hi> (with @w:val=1) and lower-case (with @w:val=0) formatting<hi rend="smallcaps">.</hi>
+            </p>
+        <p>This is text with <hi rend="allcaps">allcaps</hi> (without @w:val), <hi rend="allcaps">allcaps</hi> (with @w:val=1) and lower-case (with @w:val=0) formatting.</p>
+      </div>
     </body>
   </text>
 </TEI>

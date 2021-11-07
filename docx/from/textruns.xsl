@@ -173,224 +173,217 @@ of this software, even if advised of the possibility of such damage.
       a) it's not a special para AND the font is the ISO default, OR 
       b) the font for the run is the same as its parent paragraph.</desc>
    </doc>
-    <xsl:template name="basicStyles">
-      <xsl:param name="parented">false</xsl:param>
-      <xsl:param name="extrarow"  tunnel="yes"/>
-     <xsl:param name="extracolumn"   tunnel="yes"/>     
-     <xsl:variable name="styles">
-       <xsl:choose>
-	 <xsl:when test="w:rPr/w:rFonts  and not(w:rPr/w:rFonts/@w:ascii)"/>
-	 <xsl:when test="w:rPr/w:rFonts/@w:ascii  and matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')">
-	   <s><xsl:text>font-family:</xsl:text>
-	     <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
-	   </s>
-	 </xsl:when>
-	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Cambria'"/>
-	 <xsl:when test="matches(w:rPr/w:rFonts/@w:ascii,'^Times')"/>
-	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Calibri'"/>
-	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Arial'"/>
-	 <xsl:when test="w:rPr/w:rFonts/@w:ascii='Verdana'"/>
-	 <xsl:when test="w:rPr/w:rFonts/@w:ascii =
-			 parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii"/>
-	 <xsl:when test="not(w:rPr/w:rFonts)"/>
-	 <xsl:otherwise>
-	   <s><xsl:text>font-family:</xsl:text>
-	       <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
-	   </s>
-	   </xsl:otherwise>
-	 </xsl:choose>
-	 <!-- see also w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
-	 <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
-	 
-	 <xsl:choose>
-	   <xsl:when test="w:rPr/w:sz and $preserveFontSizeChanges='true'">
-	     <s><xsl:text>font-size:</xsl:text>
-	       <xsl:value-of select="number(w:rPr/w:sz/@w:val) div 2"/>
-	       <xsl:text>pt</xsl:text>
-	     </s>
-	   </xsl:when>
-	   <xsl:when test="ancestor::w:tc and $extrarow/w:rPr/w:sz">
-	     <s><xsl:text>font-size:</xsl:text>
-	       <xsl:value-of select="number($extrarow/w:rPr/w:sz/@w:val) div 2"/>
-	       <xsl:text>pt</xsl:text>
-	     </s>
-	   </xsl:when>
-	 <xsl:when test="ancestor::w:tc and $extracolumn/w:rPr/w:sz">
-	   <s><xsl:text>font-size:</xsl:text>
-	     <xsl:value-of select="number($extracolumn/w:rPr/w:sz/@w:val) div 2"/>
-	     <xsl:text>pt</xsl:text>
-	   </s>
-	 </xsl:when>
-	 </xsl:choose>
-	 <xsl:if test="w:rPr/w:position/@w:val and not(w:rPr/w:position/@w:val='0')">
-	 <s><xsl:text>position:</xsl:text>
-	   <xsl:value-of select="w:rPr/w:position/@w:val"/>
-	 </s>
-	 </xsl:if>
-     </xsl:variable>
-     
-     <xsl:variable name="dir">
-	<!-- right-to-left text -->
-	<xsl:if test="w:rPr/w:rtl or parent::w:p/w:pPr/w:rPr/w:rtl">
-	  <xsl:text>rtl</xsl:text>
-	</xsl:if>
-      </xsl:variable>
-     
-      <xsl:variable name="effects">
-	<xsl:call-template name="fromDocxEffectsHook"/>
-	<xsl:if test="w:rPr/w:position[number(@w:val)&lt;-2] or
-		      (ancestor::w:tc 
-		      and
-		      ($extracolumn/w:rPr/w:position[number(@w:val)&lt;-2]
-		      or $extrarow/w:rPr/w:position[number(@w:val)&lt;-2])
-		      )">
-	  <n>subscript</n>
-	</xsl:if>
-	
-	<xsl:if test="w:rPr/w:i or
-		      (ancestor::w:tc 
-		      and
-		      ($extracolumn/w:rPr/w:i  or $extrarow/w:rPr/w:i)
-		      )">
-	  <n>italic</n>
-	</xsl:if>
-
-	<xsl:choose>
-	  <xsl:when test="w:rPr/w:b/@w:val='0' or
-		      (ancestor::w:tc 
-		      and
-		      ($extracolumn/w:rPr/w:b/@w:val='0' or $extrarow/w:rPr/w:b/@w:val='0')
-		      )">
-	    <n>normalweight</n>
-	  </xsl:when>
-	  <xsl:when test="w:rPr/w:b or
-		      (ancestor::w:tc 
-		      and
-		      ($extracolumn/w:rPr/w:b  or $extrarow/w:rPr/w:b)
-		      )">
-	    <n>bold</n>
-	  </xsl:when>
-	</xsl:choose>
-
-	<xsl:if test="w:rPr/w:position[number(@w:val)&gt;2] or
-		      (ancestor::w:tc 
-		      and
-		      ($extracolumn/w:rPr/w:position[number(@w:val)&gt;2]
-		      or $extrarow/w:rPr/w:position[number(@w:val)&gt;2])
-		      )">
-	  <n>superscript</n>
-	</xsl:if>
-
-	<xsl:if test="w:rPr/w:vertAlign or 
-		      (ancestor::w:tc 
-		      and
-		      ($extracolumn/w:rPr/w:vertAlign  or $extrarow/w:rPr/w:vertAlign)
-		      )">
-	  <n>
-	    <xsl:value-of select="w:rPr/w:vertAlign/@w:val"/>
-	  </n>
-	</xsl:if>
-
-	<xsl:if test="w:rPr/w:strike or
-		      (ancestor::w:tc 
-		      and
-		      ($extracolumn/w:rPr/w:strike  or $extrarow/w:rPr/w:strike)
-		      )">
-
-	  <n>strikethrough</n>
-	</xsl:if>
-
-	<xsl:if test="w:rPr/w:dstrike or
-		      (ancestor::w:tc 
-		      and
-		      ($extracolumn/w:rPr/w:dstrike  or $extrarow/w:rPr/w:dstrike)
-		      )">
-	  <n>doublestrikethrough</n>
-	</xsl:if>
-
-	<xsl:if test="w:rPr/w:u[@w:val='single']">
-	  <n>underline</n>
-	</xsl:if>
-
-	<xsl:if test="w:rPr/w:u[@w:val='wave']">
-	  <n>wavyunderline</n>
-	</xsl:if>
-
-	<xsl:if test="w:rPr/w:u[@w:val='double']">
-	  <n>doubleunderline</n>
-	</xsl:if>
-
-	<xsl:if test="w:rPr/w:smallCaps or
-		      (ancestor::w:tc 
-		      and
-		      ($extracolumn/w:rPr/w:smallCaps  or $extrarow/w:rPr/w:smallCaps)
-		      )">
-	  <n>smallcaps</n>
-	</xsl:if>
-
-	<xsl:if test="w:rPr/w:caps or
-		      (ancestor::w:tc 
-		      and
-		      ($extracolumn/w:rPr/w:caps  or $extrarow/w:rPr/w:caps)
-		      )">
-	  <n>allcaps</n>
-	</xsl:if>
-
-	<xsl:if test="w:rPr/w:color and
-		      not(w:rPr/w:color/@w:val='000000' or w:rPr/w:color/@w:val='auto')">
-	  <n>
-	    <xsl:text>color(</xsl:text>
-	    <xsl:value-of select="w:rPr/w:color/@w:val"/>
-	    <xsl:text>)</xsl:text>
-	  </n>
-	</xsl:if>
-
-	<xsl:if test="w:rPr/w:highlight">
-	  <n>
-	    <xsl:text>background(</xsl:text>
-	    <xsl:value-of select="w:rPr/w:highlight/@w:val"/>
-	    <xsl:text>)</xsl:text>
-	  </n>
-	</xsl:if>
-		
-      </xsl:variable>
+  <xsl:template name="basicStyles">
+    <xsl:param name="parented">false</xsl:param>
+    <xsl:param name="extrarow"  tunnel="yes" as="node()?"/>
+    <xsl:param name="extracolumn"   tunnel="yes" as="node()?"/>
+    <xsl:variable name="wVal.off" select="('0','false','off')"/>
+    <xsl:variable name="styles">
       <xsl:choose>
-	<xsl:when test="normalize-space(.)='' and not(w:sym)">
-	    <xsl:apply-templates/>
-	</xsl:when>
-	<xsl:when test="$effects/* or ($styles/* and $preserveEffects='true')">
-	  <xsl:element name="{if ($parented='true') then 'seg' else 'hi'}">
-	    <xsl:if test="$dir!='' and $preserveEffects='true'">
-	      <xsl:attribute name="dir"
-			     xmlns="http://www.w3.org/2005/11/its"
-			     select="$dir"/>
-	    </xsl:if>
-	    <xsl:choose>
-	      <xsl:when test="$effects/*">
-		<xsl:attribute name="rend">
-		  <xsl:value-of select="$effects/*" separator=" "/>
-		</xsl:attribute>
-	      </xsl:when>
-	    </xsl:choose>
-	    <xsl:if test="$styles/* and $preserveEffects='true'">
-	      <xsl:attribute name="style">
-		<xsl:value-of select="($styles/*)" separator=";"/>
-	      </xsl:attribute>
-	    </xsl:if>
-	    <xsl:if test="w:t[@xml:space='preserve']">
-	      <xsl:attribute name="xml:space">preserve</xsl:attribute>
-  	    </xsl:if>
-	    <xsl:apply-templates/>
-	  </xsl:element>
-	</xsl:when>
-	<xsl:otherwise>
-	    <xsl:if test="w:t[@xml:space='preserve'] and $parented='true'">
-	      <xsl:attribute name="xml:space">preserve</xsl:attribute>
-	    </xsl:if>
-	    <xsl:apply-templates/>
-	</xsl:otherwise> 
+        <xsl:when test="w:rPr/w:rFonts  and not(w:rPr/w:rFonts/@w:ascii)"/>
+        <xsl:when test="w:rPr/w:rFonts/@w:ascii  and matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')">
+          <s><xsl:text>font-family:</xsl:text>
+            <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
+          </s>
+        </xsl:when>
+        <xsl:when test="w:rPr/w:rFonts/@w:ascii='Cambria'"/>
+        <xsl:when test="matches(w:rPr/w:rFonts/@w:ascii,'^Times')"/>
+        <xsl:when test="w:rPr/w:rFonts/@w:ascii='Calibri'"/>
+        <xsl:when test="w:rPr/w:rFonts/@w:ascii='Arial'"/>
+        <xsl:when test="w:rPr/w:rFonts/@w:ascii='Verdana'"/>
+        <xsl:when test="w:rPr/w:rFonts/@w:ascii =
+          parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii"/>
+        <xsl:when test="not(w:rPr/w:rFonts)"/>
+        <xsl:otherwise>
+          <s><xsl:text>font-family:</xsl:text>
+            <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
+          </s>
+        </xsl:otherwise>
       </xsl:choose>
-    </xsl:template>
+      <!-- see also w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
+      <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
+      
+      <xsl:choose>
+        <xsl:when test="w:rPr/w:sz and $preserveFontSizeChanges='true'">
+          <s><xsl:text>font-size:</xsl:text>
+            <xsl:value-of select="number(w:rPr/w:sz/@w:val) div 2"/>
+            <xsl:text>pt</xsl:text>
+          </s>
+        </xsl:when>
+        <xsl:when test="ancestor::w:tc and $extrarow/w:rPr/w:sz">
+          <s><xsl:text>font-size:</xsl:text>
+            <xsl:value-of select="number($extrarow/w:rPr/w:sz/@w:val) div 2"/>
+            <xsl:text>pt</xsl:text>
+          </s>
+        </xsl:when>
+        <xsl:when test="ancestor::w:tc and $extracolumn/w:rPr/w:sz">
+          <s><xsl:text>font-size:</xsl:text>
+            <xsl:value-of select="number($extracolumn/w:rPr/w:sz/@w:val) div 2"/>
+            <xsl:text>pt</xsl:text>
+          </s>
+        </xsl:when>
+      </xsl:choose>
+      <xsl:if test="w:rPr/w:position/@w:val and not(w:rPr/w:position/@w:val='0')">
+        <s><xsl:text>position:</xsl:text>
+          <xsl:value-of select="w:rPr/w:position/@w:val"/>
+        </s>
+      </xsl:if>
+    </xsl:variable>
+    
+    <!-- right-to-left text -->
+    <xsl:variable name="dir" select="tei:onOff(w:rPr/w:rtl) or tei:onOff(parent::w:p/w:pPr/w:rPr/w:rtl)"/>
+          
+    <xsl:variable name="effects">
+      <xsl:call-template name="fromDocxEffectsHook"/>
+      <xsl:if test="w:rPr/w:position[number(@w:val)&lt;-2] or
+        (ancestor::w:tc 
+        and
+        ($extracolumn/w:rPr/w:position[number(@w:val)&lt;-2]
+        or $extrarow/w:rPr/w:position[number(@w:val)&lt;-2])
+        )">
+        <n>subscript</n>
+      </xsl:if>
+      
+      <xsl:if test="w:rPr/w:i[not(@w:val=$wVal.off)] or
+        (ancestor::w:tc 
+        and
+        ($extracolumn/w:rPr/w:i[not(@w:val=$wVal.off)]  or $extrarow/w:rPr/w:i[not(@w:val=$wVal.off)])
+        )">
+        <n>italic</n>
+      </xsl:if>
+      
+      <xsl:choose>
+        <xsl:when test="w:rPr/w:b/@w:val=$wVal.off or
+          (ancestor::w:tc 
+          and
+          ($extracolumn/w:rPr/w:b/@w:val=$wVal.off or $extrarow/w:rPr/w:b/@w:val=$wVal.off)
+          )">
+          <n>normalweight</n>
+        </xsl:when>
+        <xsl:when test="w:rPr/w:b[not(@w:val=$wVal.off)] or
+          (ancestor::w:tc 
+          and
+          ($extracolumn/w:rPr/w:b[not(@w:val=$wVal.off)]  or $extrarow/w:rPr/w:b[not(@w:val=$wVal.off)])
+          )">
+          <n>bold</n>
+        </xsl:when>
+      </xsl:choose>
+      
+      <xsl:if test="w:rPr/w:position[number(@w:val)&gt;2] or
+        (ancestor::w:tc 
+        and
+        ($extracolumn/w:rPr/w:position[number(@w:val)&gt;2]
+        or $extrarow/w:rPr/w:position[number(@w:val)&gt;2])
+        )">
+        <n>superscript</n>
+      </xsl:if>
+      
+      <xsl:if test="w:rPr/w:vertAlign or 
+        (ancestor::w:tc 
+        and
+        ($extracolumn/w:rPr/w:vertAlign  or $extrarow/w:rPr/w:vertAlign)
+        )">
+        <n>
+          <xsl:value-of select="w:rPr/w:vertAlign/@w:val"/>
+        </n>
+      </xsl:if>
+      
+      <xsl:if test="w:rPr/w:strike[not(@w:val=$wVal.off)] or
+        (ancestor::w:tc 
+        and
+        ($extracolumn/w:rPr/w:strike[not(@w:val=$wVal.off)]  or $extrarow/w:rPr/w:strike[not(@w:val=$wVal.off)])
+        )">
+        
+        <n>strikethrough</n>
+      </xsl:if>
+      
+      <xsl:if test="w:rPr/w:dstrike[not(@w:val=$wVal.off)] or
+        (ancestor::w:tc 
+        and
+        ($extracolumn/w:rPr/w:dstrike[not(@w:val=$wVal.off)]  or $extrarow/w:rPr/w:dstrike[not(@w:val=$wVal.off)])
+        )">
+        <n>doublestrikethrough</n>
+      </xsl:if>
+      
+      <xsl:if test="w:rPr/w:u[@w:val='single']">
+        <n>underline</n>
+      </xsl:if>
+      
+      <xsl:if test="w:rPr/w:u[@w:val='wave']">
+        <n>wavyunderline</n>
+      </xsl:if>
+      
+      <xsl:if test="w:rPr/w:u[@w:val='double']">
+        <n>doubleunderline</n>
+      </xsl:if>
+      
+      <xsl:if test="w:rPr/w:smallCaps[not(@w:val=$wVal.off)] or
+        (ancestor::w:tc 
+        and
+        ($extracolumn/w:rPr/w:smallCaps[not(@w:val=$wVal.off)]  or $extrarow/w:rPr/w:smallCaps[not(@w:val=$wVal.off)])
+        )">
+        <n>smallcaps</n>
+      </xsl:if>
+      
+      <xsl:if test="w:rPr/w:caps[not(@w:val=$wVal.off)] or
+        (ancestor::w:tc 
+        and
+        ($extracolumn/w:rPr/w:caps[not(@w:val=$wVal.off)]  or $extrarow/w:rPr/w:caps[not(@w:val=$wVal.off)])
+        )">
+        <n>allcaps</n>
+      </xsl:if>
+      
+      <xsl:if test="w:rPr/w:color and
+        not(w:rPr/w:color/@w:val='000000' or w:rPr/w:color/@w:val='auto')">
+        <n>
+          <xsl:text>color(</xsl:text>
+          <xsl:value-of select="w:rPr/w:color/@w:val"/>
+          <xsl:text>)</xsl:text>
+        </n>
+      </xsl:if>
+      
+      <xsl:if test="w:rPr/w:highlight">
+        <n>
+          <xsl:text>background(</xsl:text>
+          <xsl:value-of select="w:rPr/w:highlight/@w:val"/>
+          <xsl:text>)</xsl:text>
+        </n>
+      </xsl:if>
+      
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="normalize-space(.)='' and not(w:sym)">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:when test="$effects/* or ($styles/* and $preserveEffects='true')">
+        <xsl:element name="{if ($parented='true') then 'seg' else 'hi'}">
+          <xsl:choose>
+            <xsl:when test="$effects/*">
+              <xsl:attribute name="rend">
+                <xsl:value-of select="$effects/*" separator=" "/>
+              </xsl:attribute>
+            </xsl:when>
+          </xsl:choose>
+          <xsl:if test="$styles/* and $preserveEffects='true'">
+            <xsl:attribute name="style">
+              <xsl:value-of select="($styles/*)" separator=";"/>
+              <xsl:if test="$dir">direction:rtl;</xsl:if>
+            </xsl:attribute>
+          </xsl:if>
+          <xsl:if test="w:t[@xml:space='preserve']">
+            <xsl:attribute name="xml:space">preserve</xsl:attribute>
+          </xsl:if>
+          <xsl:apply-templates/>
+        </xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:if test="w:t[@xml:space='preserve'] and $parented='true'">
+          <xsl:attribute name="xml:space">preserve</xsl:attribute>
+        </xsl:if>
+        <xsl:apply-templates/>
+      </xsl:otherwise> 
+    </xsl:choose>
+  </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Handle current page breaks inserted by Word</desc>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:s="http://www.ascc.net/xml/schematron"
+<xsl:stylesheet
 		xmlns:xs="http://www.w3.org/2001/XMLSchema"                
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="s xs tei"
+                exclude-result-prefixes="xs tei"
                 version="2.0">
   <xsl:import href="../common/common.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>
@@ -101,15 +101,21 @@ of this software, even if advised of the possibility of such damage.
 	           <xsl:text>}</xsl:text>
          </xsl:when>
          <xsl:when test="lang('ja')">
-	           <xsl:text>{\textJapanese </xsl:text>
+	           <xsl:text>{\textJapanese {</xsl:text>
 		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
-	           <xsl:text>}</xsl:text>
+	           <xsl:text>}}</xsl:text>
          </xsl:when>
          <xsl:when test="lang('ko')">
 	           <xsl:text>{\textKorean </xsl:text>
 		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
 	           <xsl:text>}</xsl:text>
          </xsl:when>
+        <!-- wrap RTL languages in an \hbox, see #442 -->
+        <xsl:when test="lang('ar') or lang('he') or lang('fa') or lang('ur') or lang('sd')">
+          <xsl:text>\hbox{</xsl:text>
+          <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
          <xsl:otherwise>
 	   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
          </xsl:otherwise>
@@ -193,24 +199,39 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="class"/>
       <xsl:param name="content"/>
       <xsl:choose>
-         <xsl:when test="$class='titlem'">
-            <xsl:text>\textit{</xsl:text>
-            <xsl:copy-of select="$content"/>
-            <xsl:text>}</xsl:text>
-         </xsl:when>
-         <xsl:when test="$class='titlej'">
-            <xsl:text>\textit{</xsl:text>
-            <xsl:copy-of select="$content"/>
-            <xsl:text>}</xsl:text>
-         </xsl:when>
-         <xsl:when test="$class='titlea'">
-            <xsl:text>‘</xsl:text>
-	           <xsl:copy-of select="$content"/>
-            <xsl:text>’</xsl:text>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:copy-of select="$content"/>
-         </xsl:otherwise>
+        <xsl:when test="$class='titlem' and tei:findLanguage(.) = 'ja'">
+          <xsl:text>{\textJapanese {</xsl:text>
+          <xsl:copy-of select="$content"/>
+          <xsl:text>}}</xsl:text>
+        </xsl:when>
+        <xsl:when test="$class='titlem' and tei:findLanguage(.) = 'ko'">
+          <xsl:text>{\textKorean {</xsl:text>
+          <xsl:copy-of select="$content"/>
+          <xsl:text>}}</xsl:text>
+        </xsl:when>
+        <xsl:when test="$class='titlem' and tei:findLanguage(.) = ('zh','zh-TW')">
+          <xsl:text>{\textChinese {</xsl:text>
+          <xsl:copy-of select="$content"/>
+          <xsl:text>}}</xsl:text>
+        </xsl:when>
+        <xsl:when test="$class='titlem'">
+          <xsl:text>\textit{</xsl:text>
+          <xsl:copy-of select="$content"/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
+        <xsl:when test="$class='titlej'">
+          <xsl:text>\textit{</xsl:text>
+          <xsl:copy-of select="$content"/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
+        <xsl:when test="$class='titlea'">
+          <xsl:text>‘</xsl:text>
+           <xsl:copy-of select="$content"/>
+          <xsl:text>’</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="$content"/>
+        </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
 
@@ -251,11 +272,26 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="$before"/>
       <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:choose>
-	<xsl:when test="$style=('add','unclear','bibl','docAuthor','titlem','italic','mentioned','term','foreign')">
-	  <xsl:text>\textit{</xsl:text>
-	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
-	  <xsl:text>}</xsl:text>
-	</xsl:when>
+        <xsl:when test="$style=('add','unclear','bibl','docAuthor','titlem','italic','mentioned','term','foreign') and not(tei:findLanguage(.) = ('ja','ko','zh','zh-TW'))">
+      	  <xsl:text>\textit{</xsl:text>
+      	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+      	  <xsl:text>}</xsl:text>
+      	</xsl:when>
+        <xsl:when test="$style=('add','unclear','bibl','docAuthor','titlem','italic','mentioned','term','foreign') and tei:findLanguage(.) = 'ja'">
+          <xsl:text>{\textJapanese </xsl:text>
+          <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
+        <xsl:when test="$style=('add','unclear','bibl','docAuthor','titlem','italic','mentioned','term','foreign') and tei:findLanguage(.) = 'ko'">
+          <xsl:text>{\textKorean </xsl:text>
+          <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
+        <xsl:when test="$style=('add','unclear','bibl','docAuthor','titlem','italic','mentioned','term','foreign') and tei:findLanguage(.) = ('zh','zh-TW')">
+          <xsl:text>{\textChinese </xsl:text>
+          <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
 	<xsl:when test="$style='supplied'">
 	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
 	</xsl:when>

@@ -15,7 +15,7 @@
       
   -->
   <!-- where is a copy of P5? -->
-  <xsl:param name="defaultSource">http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
+  <xsl:param name="defaultSource">https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
   
   <!-- do you want moduleRef generated with @include or @except? -->
   <xsl:param name="method">include</xsl:param>

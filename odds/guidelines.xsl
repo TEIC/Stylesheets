@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl" version="2.0">
-
+  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
+     omit-xml-declaration="yes"/>
   <xsl:param name="directory">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
   <xsl:key name="EXAMPLES" match="teix:*[ancestor::teix:egXML]" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
@@ -286,7 +287,8 @@
       <xsl:variable name="langs">
         <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
       </xsl:variable>
-      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outputDir}/examples-{$me}.html" method="{$outputMethod}">
+      <xsl:result-document html-version="{$htmlVersion}"
+        normalization-form="{$normalizationForm}" encoding="{$outputEncoding}" href="{$outputDir}/examples-{$me}.html" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
         <html>
 	  <xsl:variable name="pagetitle">
 	    <xsl:sequence select="tei:i18n('Example')"/>
@@ -416,10 +418,6 @@
     <meta>
       <xsl:attribute name="{if ($outputTarget='html5') then 'property' else 'name'}">DC.Language</xsl:attribute>
       <xsl:attribute name="content">SCHEME=iso639 <xsl:value-of select="$documentationLanguage"/></xsl:attribute>
-    </meta>
-    <meta>
-	<xsl:attribute name="{if ($outputTarget='html5') then 'property' else 'name'}">DC.Creator.Address</xsl:attribute>
-	<xsl:attribute name="content">tei@oucs.ox.ac.uk</xsl:attribute>
     </meta>
     <xsl:choose>
       <xsl:when test="$outputTarget='html5' or $outputTarget='epub3'">
@@ -699,8 +697,7 @@
   <!-- link from bibl back to egXML -->
   <xsl:template
       match="tei:listBibl/tei:biblStruct|tei:listBibl/tei:bibl">
-    <xsl:apply-templates/>
-    <xsl:variable name="id" select="@xml:id"/>
+    <xsl:apply-templates select="@xml:id | node()"/>
     <xsl:for-each select="key('BACKLINKS',@xml:id)">
       <!-- XML code examples within tei:exemplum -->
       <xsl:if test="self::teix:egXML and parent::tei:exemplum">
@@ -774,41 +771,50 @@
   </xsl:template>
 
   <xsl:template name="egXMLEndHook">
-    <xsl:choose>
-      <xsl:when test="@corresp and id(substring(@corresp,2))">
-	<div style="float: right;">
+    <xsl:variable name="selfAnchor">
+      <!-- Generate a link to myself so users can easily copy-and-paste a pointer to me -->
+      <a class="bookmarklink">
+	<xsl:attribute name="href">
+	  <xsl:text>#</xsl:text>
+	  <!-- Our current context node is an <egXML>, so find its ID: -->
+	  <xsl:apply-templates mode="ident" select="."/>
+	</xsl:attribute>
+	<xsl:text>&#x2693;</xsl:text>
+      </a>
+    </xsl:variable>
+    <div style="float: right;">
+      <xsl:choose>
+	<xsl:when test="@corresp and id(substring(@corresp,2))">
 	  <a>
 	    <xsl:attribute name="href">
 	      <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
 	    </xsl:attribute>
-	    <xsl:text>bibliography</xsl:text>
+	    <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
 	    <!--	  <span class="citLink">&#x270d;</span>-->
 	  </a>
 	  <xsl:text>&#160;</xsl:text>
-	</div>
-      </xsl:when>
-      <xsl:when test="@source and id(substring(@source,2))">
-	<div style="float: right;">
+	</xsl:when>
+	<xsl:when test="@source and id(substring(@source,2))">
 	  <a>
 	    <xsl:attribute name="href">
 	      <xsl:apply-templates mode="generateLink" select="id(substring(@source,2))"/>
 	    </xsl:attribute>
-	    <xsl:text>bibliography</xsl:text>
+	    <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
 	    <!--	  <span class="citLink">&#x270d;</span>-->
 	  </a>
 	  <xsl:text>&#160;</xsl:text>
-	</div>
-      </xsl:when>
-    </xsl:choose>
-    <xsl:for-each select="ancestor::tei:elementSpec">
-      <div style="float: right;">
-        <a href="examples-{@ident}.html">
-          <xsl:sequence select="tei:i18n('Show all')"/>
-        </a>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:for-each select="ancestor::tei:elementSpec">
+	<a href="examples-{@ident}.html">
+	  <xsl:sequence select="tei:i18n('Show all')"/>
+	</a>
 	<xsl:text>&#160;</xsl:text>
-      </div>
-    </xsl:for-each>
+      </xsl:for-each>
+      <xsl:sequence select="$selfAnchor"/>
+    </div>
   </xsl:template>
+
   <xsl:template name="figureHook">
     <xsl:if test="@corresp and id(substring(@corresp,2))">
       <div style="float: right;">
@@ -816,7 +822,7 @@
           <xsl:attribute name="href">
             <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
           </xsl:attribute>
-          <xsl:text>bibliography</xsl:text>
+	  <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
         </a>
       </div>
     </xsl:if>
@@ -903,17 +909,6 @@
 
     </address>
     </div>
-    <xsl:if test="not($googleAnalytics='')">
-      <script src="http://www.google-analytics.com/urchin.js"
-	      type="text/javascript"><!-- load goohle analytics --></script>
-      <script type="text/javascript">
-	<xsl:text>_uacct = "</xsl:text>
-	<xsl:value-of select="$googleAnalytics"/>
-	<xsl:text>";
-	urchinTracker();
-	</xsl:text>
-      </script>
-      </xsl:if>
   </xsl:template>
 
   <xsl:template match="tei:licence"/>
@@ -940,7 +935,7 @@
       </div>
       <div id="searchbox" style="float:left;">
         <form action="http://www.google.com/search" method="get">
-          <fieldset><input style="color:#225588;" value="" maxlength="255" size="20" name="q" type="text"/>&#160;<select name="sitesearch"><option value="http://www.tei-c.org/">Entire site</option><option value="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/" selected="selected">P5 Guidelines
+          <fieldset><input style="color:#225588;" value="" maxlength="255" size="20" name="q" type="text"/>&#160;<select name="sitesearch"><option value="http://www.tei-c.org/">Entire site</option><option value="https://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/" selected="selected">P5 Guidelines
 	    <xsl:choose><xsl:when test="$documentationLanguage='en'"> — English</xsl:when><xsl:when test="$documentationLanguage='de'"> — Deutsch</xsl:when><xsl:when test="$documentationLanguage='es'"> — Español</xsl:when><xsl:when test="$documentationLanguage='it'"> — Italiano</xsl:when><xsl:when test="$documentationLanguage='fr'"> — Français</xsl:when><xsl:when test="$documentationLanguage='ja'"> — 日本語</xsl:when><xsl:when test="$documentationLanguage='kr'"> — 한국어</xsl:when><xsl:when test="$documentationLanguage='zh-TW'"> — 中文</xsl:when></xsl:choose>
 	    </option></select>&#160;<input style="font-size:100%; font-weight:bold;      color:#FFFFFF; background-color:#225588; height: 2em;" value="Search" type="submit"/></fieldset>
         </form>

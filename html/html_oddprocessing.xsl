@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="2.0"
-  exclude-result-prefixes="#default s html a fo rng tei teix"
+  exclude-result-prefixes="#default html a fo rng tei teix"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:s="http://www.ascc.net/xml/schematron"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml" >
-
   <xsl:param name="cssFile"/>
   <xsl:param name="cssSecondaryFile"/>
   <xsl:param name="summaryDoc">false</xsl:param>
@@ -137,8 +135,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:variable name="langs">
           <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
         </xsl:variable>
-        <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
-          <xsl:element name="html" namespace="{$outputNamespace}">
+        <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
+          <html>
             <xsl:call-template name="addLangAtt"/>
 	    <xsl:variable name="pagetitle">
 	      <xsl:text>TEI </xsl:text>
@@ -163,7 +161,7 @@ of this software, even if advised of the possibility of such damage.
               </xsl:call-template>
               <xsl:call-template name="bodyEndHook"/>
             </body>
-          </xsl:element>
+          </html>
         </xsl:result-document>
         <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/>
@@ -215,59 +213,14 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </span>
   </xsl:template>
+
   <xsl:template name="emptySlash">
     <xsl:param name="name"/>
     <span class="emptySlash">
       <xsl:value-of select="$name"/>
     </span>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process elements teix:egXML</desc>
-  </doc>
-  <xsl:template match="teix:egXML">
-    <xsl:param name="simple">false</xsl:param>
-    <xsl:param name="highlight"/>
-    <div>
-      <xsl:attribute name="id">
-        <xsl:apply-templates mode="ident" select="."/>
-      </xsl:attribute>
-      <xsl:attribute name="class">
-	<xsl:text>pre</xsl:text>
-	<xsl:if test="not(*)">
-	  <xsl:text> cdata</xsl:text>
-	</xsl:if>
-	<xsl:choose>
-	  <xsl:when test="@valid='feasible'">
-	    <xsl:text> egXML_feasible</xsl:text>
-	  </xsl:when>
-	  <xsl:when test="@valid='false'">
-	    <xsl:text> egXML_invalid</xsl:text>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:text> egXML_valid</xsl:text>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:attribute>
-      <xsl:choose>
-        <xsl:when test="$simple='true'">
-          <xsl:apply-templates mode="verbatim">
-            <xsl:with-param name="highlight">
-              <xsl:value-of select="$highlight"/>
-            </xsl:with-param>
-          </xsl:apply-templates>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:call-template name="egXMLStartHook"/>
-          <xsl:apply-templates mode="verbatim">
-            <xsl:with-param name="highlight">
-              <xsl:value-of select="$highlight"/>
-            </xsl:with-param>
-          </xsl:apply-templates>
-          <xsl:call-template name="egXMLEndHook"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </div>
-  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] <param name="grammar">grammar</param>
          <param name="content">content</param>
@@ -396,7 +349,7 @@ of this software, even if advised of the possibility of such damage.
             | tei:elementSpec[not(@mode or @rend)]">
             <xsl:sort select="lower-case(@ident)"/>
             <tr>
-              <td id="{@ident}"><a href="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html"><xsl:value-of select="@ident"/></a>:
+              <td id="{@ident}"><a href="https://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html"><xsl:value-of select="@ident"/></a>:
 		     <xsl:sequence select="tei:makeDescription(., true(), true())"/></td>
             </tr>
           </xsl:for-each>

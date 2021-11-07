@@ -12,9 +12,9 @@
   \catcode`⃥=\active \def⃥{\textbackslash}
   \catcode`❴=\active \def❴{\{}
   \catcode`❵=\active \def❵{\}}
-  \def\textJapanese{\fontspec{IPAMincho}}
-  \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
-  \def\textKorean{\fontspec{Baekmuk Gulim} }
+  \def\textJapanese{\fontspec{Noto Sans CJK JP}}
+  \def\textChinese{\fontspec{Noto Sans CJK SC}}
+  \def\textKorean{\fontspec{Noto Sans CJK KR}}
   \setmonofont{DejaVu Sans Mono}
   
 \else
@@ -340,7 +340,7 @@
    \par
 Figure links: \ref{testfig} and \hyperref[testfig]{Lessing pic}\par
  {\persName   Edward George Bulwer-Lytton, Baron Lytton of  {\placeName Knebworth}} via Marsala 24 40126  {\name Bologna}  {\name Italy}\par
-Languages: \textit{Deutsch}; \textit{Italiano}; \textit{Español}; \textit{Français}; \textit{Portugues}; \textit{Russian}; \textit{Svenska}; \textit{日本語}; \textit{中文}.\par
+Languages: \textit{Deutsch}; \textit{Italiano}; \textit{Español}; \textit{Français}; \textit{Portugues}; \textit{Russian}; \textit{Svenska}; {\textJapanese 日本語}; {\textChinese 中文}.\par
 Here is a simple \texttt{<ptr>} to the next section: \textit{\hyperref[P1]{1. Tests}}. Here is a simple \texttt{<ref>}, a \hyperref[P1]{reference to it}. \par 
 \begin{longtable}{P{0.11724137931034483\textwidth}P{0.7327586206896551\textwidth}}
 emph\tabcellsep This is \textit{emph} tag\end{longtable} \par

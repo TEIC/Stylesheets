@@ -110,11 +110,11 @@ of this software, even if advised of the possibility of such damage.
       <desc>CSS style file to be associated with output file(s)</desc>
 
    </doc>
-  <xsl:param name="cssFile" as="xs:string">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
+  <xsl:param name="cssFile" as="xs:string">https://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
       <desc>CSS style file for print; this will be given a media=print attribute.</desc>
    </doc>
-  <xsl:param name="cssPrintFile" as="xs:string">http://www.tei-c.org/release/xml/tei/stylesheet/tei-print.css</xsl:param>
+  <xsl:param name="cssPrintFile" as="xs:string">https://www.tei-c.org/release/xml/tei/stylesheet/tei-print.css</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
       <desc>Secondary CSS style file; this will be given a media=screen attribute,
 so that it does not affect printing. It should be used for screen layout.</desc>
@@ -308,8 +308,8 @@ will generate an &lt;h2&gt;</p>
       <desc>[html] Logo</desc>
    </doc>
   <xsl:template name="logoPicture">
-      <a class="framelogo" href="http://www.tei-c.org/Stylesheets/">
-         <img src="http://www.tei-c.org/release/common/doc/tei-xsl-common/teixsl.png" vspace="5" width="124"
+      <a class="framelogo" href="https://www.tei-c.org/Stylesheets/">
+         <img src="https://www.tei-c.org/release/common/doc/tei-xsl-common/teixsl.png" vspace="5" width="124"
               height="161"
               border="0"
               alt="created by TEI XSL Stylesheets"/>
@@ -332,7 +332,7 @@ will generate an &lt;h2&gt;</p>
       </xsl:if>
       <meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
       <xsl:choose>
-	<xsl:when test="$outputTarget='html5' or $outputTarget='epub3'">
+	<xsl:when test="$outputTarget='epub3'">
 	  <meta charset="utf-8" />
 	</xsl:when>
 	<xsl:otherwise>
@@ -362,7 +362,7 @@ will generate an &lt;h2&gt;</p>
 	<xsl:comment>no nav bar</xsl:comment>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+        <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else 'div'}">
 	  <xsl:for-each select="document($navbarFile,document(''))">
 	    <xsl:for-each select="tei:list/tei:item">
 	      <span class="navbar">
@@ -577,7 +577,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
       <desc>Encoding of output file(s).</desc>
 
    </doc>
-  <xsl:param name="outputEncoding">utf-8</xsl:param>
+  <xsl:param name="outputEncoding">UTF-8</xsl:param>
 
   <xsl:param name="outputNamespace">http://www.w3.org/1999/xhtml</xsl:param>
 
@@ -585,6 +585,18 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
       <desc>Output method for output file(s).</desc>
    </doc>
   <xsl:param name="outputMethod">xhtml</xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
+    <desc>HTML version of output file(s).</desc>
+  </doc>
+  <xsl:param name="htmlVersion">5.0</xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
+    <desc>Normalization form of output file(s).</desc>
+  </doc>
+  <xsl:param name="normalizationForm">NFC</xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
+    <desc>Omission of XML declaration in output file(s).</desc>
+  </doc>
+  <xsl:param name="omitXMLDeclaration">yes</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
       <desc>Suffix of output file(s).</desc>
 

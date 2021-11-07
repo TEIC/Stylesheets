@@ -1,0 +1,32 @@
+# Configuration options: http://api.html-tidy.org/tidy/quickref_5.0.0.html
+# The option "input-xml: yes" enables the XML parser instead of the HTML one. This means that no
+# changes will be added to the HTML by Tidy (and also, there won't be any validation warnings/errors)
+# The other options under "HTML options" and "Miscellaneous Options" are there to ask Tidy to not fix
+# errors in case the HTML parser is selected (and thus get the advantanges of an HTML validation)
+
+#Parser 
+input-xml: yes
+
+#HTML options
+quote-nbsp: no
+drop-empty-paras: no
+drop-empty-elements: no
+coerce-endtags: no
+fix-backslash: no
+fix-uri: no
+fix-bad-comments: no
+join-styles: no
+lower-literals: no
+merge-divs: no
+merge-emphasis: no
+merge-spans: no
+
+#Miscellaneous Options
+tidy-mark: no
+quiet: yes
+#force-output: yes
+
+#Pretty Print Options
+indent: auto
+indent-spaces: 2
+wrap: 0

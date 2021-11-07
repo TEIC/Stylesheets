@@ -189,7 +189,10 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:element name="{if ($outputTarget='html5') then 'figure'
+        <!-- Not sure why we feel it necessary to check output type and use 
+          <figure> iff HTML ... 
+          It seems to me that <figure> should work for anything that calls these HTML stylesheets. — hsb, 2021-09-05 -->
+        <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'figure'
 			   else if (tei:isInline(.)) then 'span'
 			   else 'div'}">
           <xsl:call-template name="makeRendition">
@@ -224,8 +227,12 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="calculateFigureNumber"/>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$outputTarget='html5'">
+    <xsl:choose>      
+      <!-- As it was mentioned when processing tei:figure, I’m not sure why we feel it necessary to 
+        check output type and use <figcaption> iff HTML ... 
+          As with <figure>, it seems to me that <figcaption> should work for anything that calls 
+          these HTML stylesheets. — hsb, 2021-09-05 -->
+      <xsl:when test="$outputTarget=('html5', 'html')">
 	<figcaption>
           <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="default">caption</xsl:with-param>

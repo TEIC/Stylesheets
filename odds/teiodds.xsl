@@ -5,7 +5,6 @@
     xmlns:html="http://www.w3.org/1999/xhtml" 
     xmlns:i="http://www.iso.org/ns/1.0"
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
-    xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
@@ -357,6 +356,11 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:attDef" mode="tangle">
     <xsl:param name="element"/>
+    <!-- This tunneled parameters is set when we are processing
+      attDefs in the context of generating documentation of an 
+      element content model, so that we 
+      don't spew out Schematron in the middle of it. -->
+    <xsl:param tunnel="yes" as="xs:boolean" name="includeConstraints" select="true()"/>
     <xsl:variable name="I">
       <xsl:value-of select="translate(@ident,':','')"/>
     </xsl:variable>
@@ -373,8 +377,9 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
       </xsl:choose>
     </xsl:if>
-    <xsl:apply-templates select="tei:constraintSpec"/>
-
+    <xsl:if test="$includeConstraints = true()">
+      <xsl:apply-templates select="tei:constraintSpec"/>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="tei:attList" mode="tangle">
@@ -1877,7 +1882,7 @@ select="$makeDecls"/></xsl:message>
           </xsl:choose>
         </xsl:variable>
         <xsl:variable name="versionURL"
-          select="concat('http://www.tei-c.org/Vault/P5/', $TEIVersionWithoutFullStop, '/')"/>
+          select="concat('https://www.tei-c.org/Vault/P5/', $TEIVersionWithoutFullStop, '/')"/>
         <xsl:text>&#10;TEI Edition: </xsl:text>
         <xsl:value-of select="$TEIVersion"/>
         <xsl:text>&#10;TEI Edition Location: </xsl:text>

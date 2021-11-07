@@ -6,7 +6,6 @@
 		xmlns:cals="http://www.oasis-open.org/specs/tm9901"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                xmlns:s="http://www.ascc.net/xml/schematron"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:t="http://www.thaiopensource.com/ns/annotations"
@@ -14,7 +13,7 @@
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:its="http://www.w3.org/2005/11/its"
 
-                exclude-result-prefixes="tei html t a rng s iso tbx
+                exclude-result-prefixes="tei html t a rng iso tbx
 					 cals teix w"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
