@@ -204,7 +204,7 @@
 
     <xsl:template match="l">
         <xsl:apply-templates/>
-        <xsl:text>  </xsl:text>
+        <xsl:text xml:space="preserve">  </xsl:text>
         <xsl:call-template name="newline"/>
     </xsl:template>
 
@@ -214,10 +214,20 @@
         <xsl:call-template name="newline"/>
     </xsl:template>
 
-    <xsl:template match="note/p|ref">
-        <xsl:text> \[</xsl:text>
+    <xsl:template match="note">
+        <xsl:call-template name="newline"/>
+        <xsl:text xml:space="preserve">\[</xsl:text>
         <xsl:apply-templates/>
-        <xsl:text>\] </xsl:text>
+        <xsl:text xml:space="preserve">\]</xsl:text>
+        <xsl:call-template name="newline"/>
+    </xsl:template>
+
+    <xsl:template match="ref[@target]">
+        <xsl:text xml:space="preserve">[</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text xml:space="preserve">](</xsl:text>
+        <xsl:value-of select="@target" />
+        <xsl:text xml:space="preserve">)</xsl:text>
     </xsl:template>
 
     <xsl:template match="head">
@@ -242,7 +252,7 @@
                     <xsl:when test="$depth=4">#####</xsl:when>
                     <xsl:otherwise>#</xsl:otherwise>
                 </xsl:choose>
-                <xsl:text> </xsl:text>
+                <xsl:text xml:space="preserve"> </xsl:text>
                 <xsl:apply-templates/>
                 <xsl:call-template name="newline"/>
             </xsl:otherwise>
@@ -294,7 +304,7 @@
         <xsl:call-template name="newline"/>
         <xsl:choose>
             <xsl:when test="tei:isOrderedList(..)">1.</xsl:when>
-            <xsl:otherwise>*</xsl:otherwise>
+            <xsl:otherwise xml:space="preserve">* </xsl:otherwise>
         </xsl:choose>
         <xsl:apply-templates/>
         <xsl:call-template name="newline"/>
