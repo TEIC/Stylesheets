@@ -2669,31 +2669,33 @@
       </xsl:when>
       <xsl:when test="not($clatts = '')">
         <xsl:if test="ancestor::tei:schemaSpec and key('CLASSES', 'att.global')">
-          <xsl:element namespace="{$outputNS}" name="{$segName}">
-            <xsl:attribute name="{$langAttributeName}">
-              <xsl:value-of select="$documentationLanguage"/>
-            </xsl:attribute>
-            <xsl:variable name="word">
-              <xsl:choose>
-                <xsl:when test="not($autoGlobal = 'true')">Attributes</xsl:when>
-                <xsl:when test=".//tei:attDef">In addition to global attributes
-                  and those inherited from</xsl:when>
-                <xsl:otherwise>Global attributes and those inherited
-                  from</xsl:otherwise>
-              </xsl:choose>
-            </xsl:variable>
-            <xsl:sequence select="tei:i18n($word)"/>
-            <xsl:value-of select="$spaceCharacter"/>
-          </xsl:element>
+          <xsl:variable name="word">
+            <xsl:choose>
+              <!-- Per issue 515, the word "Attributes" need not be output here. -->
+              <xsl:when test="not($autoGlobal = 'true')"><!--Attributes--></xsl:when>
+              <xsl:when test=".//tei:attDef">In addition to global attributes
+                and those inherited from</xsl:when>
+              <xsl:otherwise>Global attributes and those inherited
+                from</xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+          <xsl:if test="normalize-space($word) ne ''">
+            <xsl:element namespace="{$outputNS}" name="{$segName}">
+              <xsl:attribute name="{$langAttributeName}">
+                <xsl:value-of select="$documentationLanguage"/>
+              </xsl:attribute>
+              <xsl:sequence select="tei:i18n($word) || $spaceCharacter"/>
+            </xsl:element>
+          </xsl:if>
         </xsl:if>
         <xsl:copy-of select="$clatts"/>
       </xsl:when>
-      <xsl:when
-        test="ancestor::tei:schemaSpec and not(key('CLASSES', 'att.global'))"> </xsl:when>
+      <xsl:when test="ancestor::tei:schemaSpec and not(key('CLASSES', 'att.global'))"> </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="word">
           <xsl:choose>
-            <xsl:when test="not($autoGlobal = 'true')">Attributes</xsl:when>
+            <!-- Per issue 515, the word "Attributes" need not be output here. -->
+            <xsl:when test="not($autoGlobal = 'true')"><!--Attributes--></xsl:when>
             <xsl:when test=".//tei:attDef">In addition to global
               attributes</xsl:when>
             <xsl:otherwise>Global attributes only</xsl:otherwise>
