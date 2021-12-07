@@ -7448,7 +7448,7 @@ Tbody =
      (Tmodel.divGenLike, (Tmodel.global | Tmodel.divGenLike)*)?,
      ((Tmodel.divLike, (Tmodel.global | Tmodel.divGenLike)*)+
       | (Tmodel.div1Like, (Tmodel.global | Tmodel.divGenLike)*)+
-      | ((Tmodel.common, Tmodel.global*)+,
+      | (((Tmodel.common), Tmodel.global*)+,
          ((Tmodel.divLike, (Tmodel.global | Tmodel.divGenLike)*)+
           | (Tmodel.div1Like,
              (Tmodel.global | Tmodel.divGenLike)*)+)?)),
@@ -7489,7 +7489,7 @@ Tdiv =
   element div {
     ((Tmodel.divTop | Tmodel.global)*,
      ((((Tmodel.divLike | Tmodel.divGenLike), Tmodel.global*)+
-       | ((Tmodel.common, Tmodel.global*)+,
+       | (((Tmodel.common), Tmodel.global*)+,
           ((Tmodel.divLike | Tmodel.divGenLike), Tmodel.global*)*)),
       (Tmodel.divBottom, Tmodel.global*)*)?)
     >> sch:pattern [

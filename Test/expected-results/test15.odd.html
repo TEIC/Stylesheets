@@ -627,7 +627,11 @@
     &lt;sequence minOccurs="1" maxOccurs="1"&gt;
      &lt;sequence minOccurs="1"
       maxOccurs="unbounded"&gt;
-      &lt;classRef key="model.common"/&gt;
+      &lt;alternate minOccurs="1"
+       maxOccurs="1"&gt;
+       &lt;elementRef key="schemaSpec"/&gt;
+       &lt;classRef key="model.common"/&gt;
+      &lt;/alternate&gt;
       &lt;classRef key="model.global"
        minOccurs="0" maxOccurs="unbounded"/&gt;
      &lt;/sequence&gt;
@@ -687,8 +691,8 @@ element div
 <a class="link_ref" itemprop="ref" href="#TEI.model.divGenLike" title="model.divGenLike agrupa elementos usados para representar divisiones estructurales que se generan explícitamente porque estan p...">model.divGenLike</a> ), 
 <a class="link_ref" itemprop="ref" href="#TEI.model.global" title="model.global agrupa elementos vacíos que pueden aparecer en cualquier punto de un texto TEI [1.3. The TEI Class System]">model.global</a>* )+
           | (
-               ( 
-<a class="link_ref" itemprop="ref" href="#TEI.model.common" title="model.common agrupa elementos comunes a nivel de fragmentos de texto o internivel. [1.3. The TEI Class System]">model.common</a>, 
+               ( ( schemaSpec | 
+<a class="link_ref" itemprop="ref" href="#TEI.model.common" title="model.common agrupa elementos comunes a nivel de fragmentos de texto o internivel. [1.3. The TEI Class System]">model.common</a> ), 
 <a class="link_ref" itemprop="ref" href="#TEI.model.global" title="model.global agrupa elementos vacíos que pueden aparecer en cualquier punto de un texto TEI [1.3. The TEI Class System]">model.global</a>* )+,
                ( ( 
 <a class="link_ref" itemprop="ref" href="#TEI.model.divLike" title="model.divLike agrupa los elementos usados para representar divisiones estructurales recursivamente.">model.divLike</a> | 
@@ -976,7 +980,7 @@ element div
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Ejemplo</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <div id="index.xml-egXML-d33e1843" class="pre egXML_valid">
+                  <div id="index.xml-egXML-d33e1847" class="pre egXML_valid">
                   <span class="element">&lt;para&gt;</span>Hallgerd was outside. 
                   <span class="element">&lt;q&gt;</span>There is blood on your axe,
                   <span class="element">&lt;/q&gt;</span>she said. 
@@ -1020,12 +1024,12 @@ element div
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Content model</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre id="index.xml-eg-d33e1878" class="pre_eg cdata">
+                  <pre id="index.xml-eg-d33e1882" class="pre_eg cdata">
 &lt;content&gt;
  &lt;macroRef key="macro.paraContent"/&gt;
 &lt;/content&gt;
     
-<a href="#index.xml-eg-d33e1878" class="anchorlink">⚓</a>
+<a href="#index.xml-eg-d33e1882" class="anchorlink">⚓</a>
 </pre>
                 </td>
               </tr>
@@ -1034,7 +1038,7 @@ element div
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Declaración</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre id="index.xml-eg-d33e1885" class="pre_eg">
+                  <pre id="index.xml-eg-d33e1889" class="pre_eg">
 element para
 {
    
@@ -1048,7 +1052,7 @@ element para
    
 <a class="link_ref" itemprop="ref" href="#TEI.macro.paraContent" title="macro.paraContent (contenido del párrafo) define el contenido de párrafos y elementos similares. [1.3. The TEI Class System]">macro.paraContent</a>
 }
-<a href="#index.xml-eg-d33e1885" class="anchorlink">⚓</a>
+<a href="#index.xml-eg-d33e1889" class="anchorlink">⚓</a>
 </pre>
                 </td>
               </tr>
@@ -1481,7 +1485,7 @@ element para
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Ejemplo</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <div id="index.xml-egXML-d33e2975" class="pre egXML_valid">It is spelled 
+                  <div id="index.xml-egXML-d33e2979" class="pre egXML_valid">It is spelled 
                   <span class="element">&lt;q&gt;</span>Tübingen
                   <span class="element">&lt;/q&gt;</span>— to enter the letter 
                   <span class="element">&lt;q&gt;</span>u
@@ -1497,12 +1501,12 @@ element para
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Content model</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre id="index.xml-eg-d33e2989" class="pre_eg cdata">
+                  <pre id="index.xml-eg-d33e2993" class="pre_eg cdata">
 &lt;content&gt;
  &lt;macroRef key="macro.specialPara"/&gt;
 &lt;/content&gt;
     
-<a href="#index.xml-eg-d33e2989" class="anchorlink">⚓</a>
+<a href="#index.xml-eg-d33e2993" class="anchorlink">⚓</a>
 </pre>
                 </td>
               </tr>
@@ -1511,7 +1515,7 @@ element para
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Declaración</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre id="index.xml-eg-d33e2996" class="pre_eg">
+                  <pre id="index.xml-eg-d33e3000" class="pre_eg">
 element q
 {
    
@@ -1533,7 +1537,7 @@ element q
    
 <a class="link_ref" itemprop="ref" href="#TEI.macro.specialPara" title="macro.specialPara (contenido de párrafo especial) define el modelo de contenido de elementos tipo notas o entradas de lista que...">macro.specialPara</a>
 }
-<a href="#index.xml-eg-d33e2996" class="anchorlink">⚓</a>
+<a href="#index.xml-eg-d33e3000" class="anchorlink">⚓</a>
 </pre>
                 </td>
               </tr>
@@ -1649,12 +1653,12 @@ element q
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Content model</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre id="index.xml-eg-d33e3190" class="pre_eg cdata">
+                  <pre id="index.xml-eg-d33e3194" class="pre_eg cdata">
 &lt;content&gt;
  &lt;dataRef key="teidata.word"/&gt;
 &lt;/content&gt;
     
-<a href="#index.xml-eg-d33e3190" class="anchorlink">⚓</a>
+<a href="#index.xml-eg-d33e3194" class="anchorlink">⚓</a>
 </pre>
                 </td>
               </tr>
@@ -1663,10 +1667,10 @@ element q
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Declaración</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre id="index.xml-eg-d33e3197" class="pre_eg">
+                  <pre id="index.xml-eg-d33e3201" class="pre_eg">
 teidata.enumerated = 
 <a class="link_ref" itemprop="ref" href="#TEI.teidata.word" title="teidata.word define una gama de valores de atributos expresados como una única palabra o señal.">teidata.word</a>
-<a href="#index.xml-eg-d33e3197" class="anchorlink">⚓</a>
+<a href="#index.xml-eg-d33e3201" class="anchorlink">⚓</a>
 </pre>
                 </td>
               </tr>
@@ -2871,7 +2875,7 @@ teidata.enumerated =
               <span class="hi" itemprop="hi">
                 <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/es/html/ref-fileDesc.html">fileDesc</a>
               </span>: (
-              <span xml:lang="es" lang="es" class="outOfDateTranslation" itemprop="seg">Descripción del archivo.</span>) 
+              <span xml:lang="es" lang="es" itemprop="seg">Descripción del archivo</span>) 
               <span xml:lang="es" lang="es" itemprop="seg">contiene una descripción bibliográfica completa del archivo electrónico.</span>[
               <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD2">2.2. The File Description</a>
               <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD11">2.1.1. The TEI Header and Its Components</a>]</td>

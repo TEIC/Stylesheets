@@ -6,8 +6,8 @@
         <title>The TEI Guidelines</title>
       </titleStmt>
       <editionStmt>
-        <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.3.0.html">4.3.0a</ref>. Last updated on
-        <date when="2021-08-30">30th August 2021</date>, revision <ref target="https://github.com/TEIC/TEI/commit/d07dfcf91">d07dfcf91</ref></edition>
+        <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.4.0.html">4.4.0a</ref>. Last updated on
+        <date when="2021-11-29">29th November 2021</date>, revision <ref target="https://github.com/TEIC/TEI/commit/6d9f53183">6d9f53183</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -105,7 +105,7 @@ Conventions of this Document</head>
 <div type="div2" xml:id="SG152"><head>Complicating the Issue</head></div>
 <div type="div2" xml:id="SG16"><head>Attributes</head>
 <div type="div3" xml:id="SG-att"><head>Declaring Attributes</head></div>
-<div xml:id="SG-id"><head>Identifiers and Indicators</head></div></div>
+<div type="div3" xml:id="SG-id"><head>Identifiers and Indicators</head></div></div>
 <div type="div2" xml:id="SG-oth"><head>Other Components of an XML Document</head>
 <div type="div3" xml:id="SG-er"><head>Character References</head></div>
 <div type="div3" xml:id="SGname"><head>Namespaces</head>
@@ -7747,7 +7747,7 @@ value.</desc>
             <label>langue</label>
             <item>Code de langue enregistré par l'IANA. Il est presque toujours identique au code
           de langue alphabétique ISO 639-2, s'il y en a un. La liste des sous-étiquettes de langue
-          enregistrées est disponible à : <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>Il est recommandé
+          enregistrées est disponible à : <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. Il est recommandé
           d'écrire ce code en minuscules.</item>
             <label>écriture</label>
             <item>Code ISO 15924 pour l'écriture. Ces codes sont constitués de 4 lettres, et il est
@@ -8604,7 +8604,7 @@ document.--></p>
   <gloss versionDate="2007-12-20" xml:lang="ko">파일 기술</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">檔案描述</gloss>
   <gloss versionDate="2006-10-18" xml:lang="de">Dateibeschreibung</gloss>
-  <gloss versionDate="2007-05-04" xml:lang="es">Descripción del archivo.</gloss>
+  <gloss versionDate="2021-10-15" xml:lang="es">Descripción del archivo</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">descrizione del file</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains a full bibliographic description of an electronic file.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">contient une description bibliographique complète du
@@ -8613,8 +8613,7 @@ document.--></p>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含對電子檔案的完整書目敘述。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">電子ファイルに関する完全な書誌情報を示す．</desc>
     <desc versionDate="2016-11-17" xml:lang="de">enthält die vollständige bibliografische Beschreibung einer elektronischen Datei.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene una descripción bibliográfica completa del
-    archivo electrónico.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene una descripción bibliográfica completa del archivo electrónico.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una descrizione bibliografica completa di un
     file elettronico.</desc>
   <classes>
@@ -13547,6 +13546,7 @@ elements of  <gi>profileDesc</gi> unless these are documenting multiple texts.</
 <elementSpec module="header" ident="abstract">
   <desc versionDate="2012-12-27" xml:lang="en">contains a summary or formal
     abstract prefixed to an existing source document by the encoder.</desc>
+  <desc versionDate="2021-10-20" xml:lang="de">enthält eine (formale) Zusammenfassung, die einem bestehenden Quelldokument vorangestellt wird.</desc>
   <desc versionDate="2018-12-18" xml:lang="ja">符号化する人によって既存の元文書の前に付加された要約または正式な要約を含む．</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -25218,147 +25218,97 @@ by the stage direction.</p>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">單篇文章的整體部分，不包含正文前及正文後資訊。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">前付，後付を除いた，単一の作品の本文全体を示す．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient la totalité du corps d’un seul texte simple, à
-    l’exclusion de toute partie pré- ou post-liminaire.</desc>
+  l’exclusion de toute partie pré- ou post-liminaire.</desc>
   <desc versionDate="2017-06-13" xml:lang="de">enthält den gesamten Textkörper eines eigenständigen Textes, außer den Vorspann (front) und Nachspann (back).</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene el cuerpo completo de un texto unitario,
-    excluyendo los eventuales añadidos paratextuales (prólogos, dedicatorias, apéndices, etc.) al
-    inicio o fin de un texto.</desc>
+  excluyendo los eventuales añadidos paratextuales (prólogos, dedicatorias, apéndices, etc.) al
+  inicio o fin de un texto.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene l'intero corpo di un testo unitario, esclusi
-    eventuale peritesto iniziale e finale</desc>
+  eventuale peritesto iniziale e finale</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.declaring"/>
   </classes>
   <content>
     <sequence>
-      <!-- globals as usual -->
-      
-        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      
-      <!--possibly some divTops, interspersed with globals -->
-      
-        <sequence minOccurs="0">
-          
-            <classRef key="model.divTop"/>
-          
-          
-            <alternate minOccurs="0" maxOccurs="unbounded">
-              <classRef key="model.global"/>
-              <classRef key="model.divTop"/>
-            </alternate>
-          
-        </sequence>
-      
-      <!-- possibly some generated divs, interspersed with globals -->
-      
-        <sequence minOccurs="0">
-          
-            <classRef key="model.divGenLike"/>
-          
-          
-            <alternate minOccurs="0" maxOccurs="unbounded">
-              <classRef key="model.global"/>
-              <classRef key="model.divGenLike"/>
-            </alternate>
-          
-        </sequence>
-      
-      
-        <!-- 
-	   now a choice between
-	   
-	   a) some divLike things, with globals and generated divs
-	     after them if needed 
-	   b) some div1Like things, with globals
-	     and generated divs after them if needed 
-	   c) same again, preceded by model.common
+      <!-- globals as usual -->      
+      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      <!--possibly some divTops, interspersed with globals -->      
+      <sequence minOccurs="0">
+        <classRef key="model.divTop"/>
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.global"/>
+          <classRef key="model.divTop"/>
+        </alternate>          
+      </sequence>
+      <!-- possibly some generated divs, interspersed with globals -->      
+      <sequence minOccurs="0">
+        <classRef key="model.divGenLike"/>
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.global"/>
+          <classRef key="model.divGenLike"/>
+        </alternate>          
+      </sequence>
+      <!-- 
+           now a choice between:           
+           a) some divLike things, with globals and generated
+              divisions after them if needed 
+           b) some div1Like things, with globals
+              and generated divisionss after them if needed 
+           c) same again, preceded by model.common (or <schemaSpec>)
       -->
-        <alternate>
-          <!-- a -->
-          
-            <sequence minOccurs="1" maxOccurs="unbounded">
-              
-                <classRef key="model.divLike"/>
-              
-              
-                <alternate minOccurs="0" maxOccurs="unbounded">
-                  <classRef key="model.global"/>
-                  <classRef key="model.divGenLike"/>
-                </alternate>
-              
-            </sequence>
-          
-          <!-- b -->
-          
-            <sequence minOccurs="1" maxOccurs="unbounded">
-              
-                <classRef key="model.div1Like"/>
-              
-              
-                <alternate minOccurs="0" maxOccurs="unbounded">
-                  <classRef key="model.global"/>
-                  <classRef key="model.divGenLike"/>
-                </alternate>
-              
-            </sequence>
-          
-          <!-- c -->
-          <sequence>
-            <sequence minOccurs="1" maxOccurs="unbounded">
-              
-                <classRef key="model.common"/>
-              
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
-            </sequence>
-            
-              <alternate minOccurs="0">
-                <!-- a -->
-                
-                  <sequence minOccurs="1" maxOccurs="unbounded">
-                    
-                      <classRef key="model.divLike"/>
-                    
-                    
-                      <alternate minOccurs="0" maxOccurs="unbounded">
-                        <classRef key="model.global"/>
-                        <classRef key="model.divGenLike"/>
-                      </alternate>
-                    
-                  </sequence>
-                
-                <!-- b -->
-                
-                  <sequence minOccurs="1" maxOccurs="unbounded">
-                    
-                      <classRef key="model.div1Like"/>
-                    
-                    
-                      <alternate minOccurs="0" maxOccurs="unbounded">
-                        <classRef key="model.global"/>
-                        <classRef key="model.divGenLike"/>
-                      </alternate>
-                    
-                  </sequence>
-                
-              </alternate>
-            
-          </sequence>
-        </alternate>
-        <!-- end of choice -->
-      
-      <!-- finally, some divBottoms interspersed with globals  -->
-      
-        <sequence minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divBottom"/>
-          
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+      <alternate>
+        <!-- a -->          
+        <sequence minOccurs="1" maxOccurs="unbounded">
+          <classRef key="model.divLike"/>
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <classRef key="model.global"/>
+            <classRef key="model.divGenLike"/>
+          </alternate>
         </sequence>
-      
+        <!-- b -->
+        <sequence minOccurs="1" maxOccurs="unbounded">
+          <classRef key="model.div1Like"/>
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <classRef key="model.global"/>
+            <classRef key="model.divGenLike"/>
+          </alternate>
+        </sequence>
+        <!-- c -->
+        <sequence>
+          <sequence minOccurs="1" maxOccurs="unbounded">
+            <alternate minOccurs="1" maxOccurs="1">
+              <elementRef key="schemaSpec"/>
+              <classRef key="model.common"/>
+            </alternate>
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+          </sequence>
+          <alternate minOccurs="0">
+            <!-- a -->
+            <sequence minOccurs="1" maxOccurs="unbounded">
+              <classRef key="model.divLike"/>
+              <alternate minOccurs="0" maxOccurs="unbounded">
+                <classRef key="model.global"/>
+                <classRef key="model.divGenLike"/>
+              </alternate>
+            </sequence>
+            <!-- b -->
+            <sequence minOccurs="1" maxOccurs="unbounded">
+              <classRef key="model.div1Like"/>
+              <alternate minOccurs="0" maxOccurs="unbounded">
+                <classRef key="model.global"/>
+                <classRef key="model.divGenLike"/>
+              </alternate>
+            </sequence>
+          </alternate>
+        </sequence>
+      </alternate>
+      <!-- end of choice -->
+      <!-- finally, some divBottoms interspersed with globals  -->
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divBottom"/>
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
     </sequence>
   </content>
   <exemplum xml:lang="mul">
@@ -25655,12 +25605,12 @@ by the stage direction.</p>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">文本的正文前資訊、正文、及正文後資訊的分段。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">前付，本文，後付中のテキスト部分を示す．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient une subdivision dans le texte préliminaire, dans le
-    corps d’un texte ou dans le texte postliminaire.</desc>
+  corps d’un texte ou dans le texte postliminaire.</desc>
   <desc versionDate="2017-06-13" xml:lang="de">enthält einen Unterabschnitt in Vorspann (front), Textkörper oder Nachspann (back) eines Textes.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una subdivisión del paratexto inicial, del
-    cuerpo del texto o del paratexto final.</desc>
+  cuerpo del texto o del paratexto final.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una suddivisione del peritesto iniziale, del
-    corpo del testo, o del peritesto finale</desc>
+  corpo del testo, o del peritesto finale</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.divLike"/>
@@ -25671,53 +25621,40 @@ by the stage direction.</p>
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.divTop"/>
-          <!--        <rng:ref name="model.headLike"/>-->
-          <classRef key="model.global"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <!-- <rng:ref name="model.headLike"/> -->
+        <classRef key="model.global"/>
+      </alternate>
       <sequence minOccurs="0">
         <alternate>
-          
-            <sequence minOccurs="1" maxOccurs="unbounded">
-              <alternate>
-                <classRef key="model.divLike"/>
-                <classRef key="model.divGenLike"/>
-              </alternate>
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
-            </sequence>
-          
+          <sequence minOccurs="1" maxOccurs="unbounded">
+            <alternate>
+              <classRef key="model.divLike"/>
+              <classRef key="model.divGenLike"/>
+            </alternate>
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+          </sequence>
           <sequence>
             <sequence minOccurs="1" maxOccurs="unbounded">
-              
+              <alternate minOccurs="1" maxOccurs="1">
+                <elementRef key="schemaSpec"/>
                 <classRef key="model.common"/>
-              
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              </alternate>
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
             <sequence minOccurs="0" maxOccurs="unbounded">
               <alternate>
                 <classRef key="model.divLike"/>
                 <classRef key="model.divGenLike"/>
               </alternate>
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
           </sequence>
         </alternate>
         <sequence minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divBottom"/>
-          
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+          <classRef key="model.divBottom"/>
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </sequence>
     </sequence>
@@ -25742,15 +25679,15 @@ by the stage direction.</p>
         <div type="part">
           <head>Fallacies of Authority</head>
           <p>The subject of which is Authority in various shapes, and the object, to repress all
-            exercise of the reasoning faculty.</p>
+          exercise of the reasoning faculty.</p>
           <div n="1" type="chapter">
             <head>The Nature of Authority</head>
             <p>With reference to any proposed measures having for their object the greatest
-              happiness of the greatest number [...]</p>
+            happiness of the greatest number [...]</p>
             <div n="1.1" type="section">
               <head>Analysis of Authority</head>
               <p>What on any given occasion is the legitimate weight or influence to be attached to
-                authority [...] </p>
+              authority [...] </p>
             </div>
             <div n="1.2" type="section">
               <head>Appeal to Authority, in What Cases Fallacious.</head>
@@ -25774,11 +25711,11 @@ by the stage direction.</p>
               <div n="1">
                 <head>I</head>
                 <p>Dans les premiers jours de l'an VIII, au commencement de vendémiaire, ou, pour
-                    se conformer au calendrier actuel, vers la fin du mois de septembre 1799, une
-                    centaine de paysans et un assez grand nombre de bourgeois, partis le matin de
-                    Fougères pour se rendre à Mayenne, gravissaient la montagne de la Pèlerine,
-                    située à mi-chemin environ de Fougères à Ernée, petite ville où les voyageurs
-                    ont coutume de se reposer. </p>
+                se conformer au calendrier actuel, vers la fin du mois de septembre 1799, une
+                centaine de paysans et un assez grand nombre de bourgeois, partis le matin de
+                Fougères pour se rendre à Mayenne, gravissaient la montagne de la Pèlerine,
+                située à mi-chemin environ de Fougères à Ernée, petite ville où les voyageurs
+                ont coutume de se reposer. </p>
               </div>
             </div>
           </div>
@@ -25825,17 +25762,17 @@ by the stage direction.</p>
   <desc versionDate="2007-02-11" xml:lang="en">contains a first-level subdivision of the front, body, or back of a text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트의 전면부, 본문 또는 후면부의 첫 번째 층위 하위 구역을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">文本的正文前資訊、正文及正文後資訊的第一層分段
-    (若未使用區段層次零，區段層次一是最高層的分段。若使用區段層次零，則區段層次一為第二層分段) 。</desc>
+  (若未使用區段層次零，區段層次一是最高層的分段。若使用區段層次零，則區段層次一為第二層分段) 。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">前付，本文，後付中の第1位のテキスト部分を示す．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient une subdivision de premier niveau dans
-    le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.</desc>
+  le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.</desc>
   <desc versionDate="2018-07-18" xml:lang="de">enthält die erste Gliederungsebene von Vorspann (front),
-    Kerntext oder Nachspann (back) eines Textes.</desc>
+  Kerntext oder Nachspann (back) eines Textes.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una subdivisión del primer nivel en el paratexto
-    inicial, en el cuerpo del texto o en el paratexto final.</desc>
+  inicial, en el cuerpo del texto o en el paratexto final.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una sezione di primo livello del peritesto
-    iniziale, del corpo del testo, o del peritesto finale (la più ampia, se div0 non è usato,
-    altrimenti la seconda in ordine gerarchico)</desc>
+  iniziale, del corpo del testo, o del peritesto finale (la più ampia, se div0 non è usato,
+  altrimenti la seconda in ordine gerarchico)</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.divLike"/>
@@ -25845,12 +25782,10 @@ by the stage direction.</p>
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.divTop"/>
-          <classRef key="model.global"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <classRef key="model.global"/>
+      </alternate>
       <sequence minOccurs="0">
         <alternate>
           <sequence minOccurs="1" maxOccurs="unbounded">
@@ -25858,37 +25793,28 @@ by the stage direction.</p>
               <classRef key="model.div2Like"/>
               <classRef key="model.divGenLike"/>
             </alternate>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
           </sequence>
           <sequence>
             <sequence minOccurs="1" maxOccurs="unbounded">
-              
+              <alternate minOccurs="1" maxOccurs="1">
+                <elementRef key="schemaSpec"/>
                 <classRef key="model.common"/>
-              
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              </alternate>
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
             <sequence minOccurs="0" maxOccurs="unbounded">
               <alternate>
                 <classRef key="model.div2Like"/>
                 <classRef key="model.divGenLike"/>
               </alternate>
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
           </sequence>
         </alternate>
         <sequence minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divBottom"/>
-          
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+          <classRef key="model.divBottom"/>
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </sequence>
     </sequence>
@@ -25914,8 +25840,8 @@ by the stage direction.</p>
         <div2 n="I " type="chapitre">
           <head>La Grand'salle</head>
           <p>Il y a aujourd'hui trois cent quarante-huit ans six mois et dix-neuf jours que les
-              parisiens s'éveillèrent au bruit de toutes les cloches sonnant à grande volée dans la
-              triple enceinte de la Cité, de l'Université et de la Ville. </p>
+          parisiens s'éveillèrent au bruit de toutes les cloches sonnant à grande volée dans la
+          triple enceinte de la Cité, de l'Université et de la Ville. </p>
         </div2>
       </div1>
       <div1 n="2" type="livre">
@@ -25923,7 +25849,7 @@ by the stage direction.</p>
         <div2 n="I " type="chapitre">
           <head>De Charybde en Scylla </head>
           <p>La nuit arrive de bonne heure en janvier. Les rues étaient déjà sombres quand
-              Gringoire sortit du Palais.</p>
+          Gringoire sortit du Palais.</p>
         </div2>
       </div1>
     </egXML>
@@ -25944,11 +25870,11 @@ by the stage direction.</p>
   </exemplum>
   <remarks versionDate="2005-01-14" xml:lang="en">
     <p rend="dataDesc">any sequence of low-level structural elements, possibly grouped into lower
-      subdivisions.</p>
+    subdivisions.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p rend="dateDesc">Cet élément contient une séquence d'éléments structurels de bas niveau,
-      éventuellement groupés en subdivisions.</p>
+    éventuellement groupés en subdivisions.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p rend="dataDesc"> 下位区分と成りうる一連の構造単位． </p>
@@ -25966,12 +25892,12 @@ by the stage direction.</p>
   <gloss versionDate="2007-05-04" xml:lang="es">división textual de segundo nivel</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">partizione testuale di livello 2</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains a second-level subdivision of the front, body, or back of a
- text.</desc>
+  text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트의 전면부, 본문 또는 후면부의 두 번째 층위 하위 구역을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">文本的正文前資訊、正文及正文後資訊的第二層分段。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">前付，本文，後付中の第2位のテキスト部分を示す．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient une subdivision de deuxième niveau dans
-   le texte prélimaire, dans le corps d’un texte ou dans le texte postliminaire.</desc>
+  le texte prélimaire, dans le corps d’un texte ou dans le texte postliminaire.</desc>
   <desc versionDate="2006-10-18" xml:lang="de"> enthält die zweite Gliederungsebene von Vorspann (front), Kerntext oder Nachspann (back) eines Textes.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una subdivisión del segundo nivel en el paratexto inicial, en el cuerpo del texto o en el paratexto final.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una sezione di secondo livello del peritesto iniziale, del corpo del testo, o del peritesto finale</desc>
@@ -25984,12 +25910,10 @@ by the stage direction.</p>
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.divTop"/>
-          <classRef key="model.global"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <classRef key="model.global"/>
+      </alternate>
       <sequence minOccurs="0">
         <alternate>
           <sequence minOccurs="1" maxOccurs="unbounded">
@@ -25997,37 +25921,28 @@ by the stage direction.</p>
               <classRef key="model.div3Like"/>
               <classRef key="model.divGenLike"/>
             </alternate>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
           </sequence>
           <sequence>
             <sequence minOccurs="1" maxOccurs="unbounded">
-              
+              <alternate minOccurs="1" maxOccurs="1">
+                <elementRef key="schemaSpec"/>
                 <classRef key="model.common"/>
-              
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              </alternate>
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
             <sequence minOccurs="0" maxOccurs="unbounded">
               <alternate>
                 <classRef key="model.div3Like"/>
                 <classRef key="model.divGenLike"/>
               </alternate>
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
           </sequence>
         </alternate>
         <sequence minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divBottom"/>
-          
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+          <classRef key="model.divBottom"/>
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </sequence>
     </sequence>
@@ -26036,17 +25951,17 @@ by the stage direction.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COXR-eg-164">
       <div1 n="2" type="part">
         <head>The Second Partition:
-           The Cure of Melancholy</head>
+        The Cure of Melancholy</head>
         <div2 n="2.1" type="section">
           <div3 n="2.1.1" type="member">
             <div4 n="2.1.1.1" type="subsection">
               <head>Unlawful Cures rejected.</head>
               <p>Inveterate melancholy, howsoever it may seem to
-      be a continuate, inexorable disease, hard to be
-      cured, accompanying them to their graves most part
-      (as <ref target="#a">Montanus</ref> observes), yet many
-      times it may be helped...	
-   </p>
+              be a continuate, inexorable disease, hard to be
+              cured, accompanying them to their graves most part
+              (as <ref target="#a">Montanus</ref> observes), yet many
+              times it may be helped... 
+              </p>
             </div4>
           </div3>
         </div2>
@@ -26072,13 +25987,13 @@ by the stage direction.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <div1 n="II" type="chapitre">
         <head>Chapitre II. Traitement électronique des données en histoire de la littérature
-            française : bilan provisoire</head>
+        française : bilan provisoire</head>
         <div2 n="2.1" type="section">
           <div3 n="2.1.1" type="subsection">
             <div4 n="2.1.1.1" type="article">
               <head>Les objectifs</head>
               <p>Chaque étudiant est convié à parcourir la banque à partir des différentes entrées
-                  liées au cours magistral qu'il suit en amphithéâtre...</p>
+              liées au cours magistral qu'il suit en amphithéâtre...</p>
             </div4>
           </div3>
         </div2>
@@ -26086,14 +26001,14 @@ by the stage direction.</p>
           <div3 n="2.2.1" type="subsection">
             <head>Sect. II. Subsection I. Exploitation pédagogique de la BDHL</head>
             <p>Pour la plupart des étudiants en Lettres des générations précédentes, un
-                enseignement de l'histoire de la littérature allait de soi... </p>
+            enseignement de l'histoire de la littérature allait de soi... </p>
           </div3>
         </div2>
         <div2 n="2.3" type="section">
           <div3 n="2.3.1" type="subsection">
             <head>Sect. III. Subsection I. Etudes permises par la BDHL</head>
             <p>L'existence d'une banque de données, quelle qu'elle soit, permet d'envisager des
-                traitements statistiques. </p>
+            traitements statistiques. </p>
           </div3>
         </div2>
       </div1>
@@ -26128,15 +26043,15 @@ by the stage direction.</p>
   </exemplum>
   <remarks versionDate="2005-01-14" xml:lang="en">
     <p rend="dataDesc">any sequence of low-level structural elements, possibly grouped
-into lower subdivisions.</p>
+    into lower subdivisions.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p rend="dateDesc">Cet élément contient une séquence d'éléments structurels de bas
-                niveau, éventuellement groupés en subdivisions.</p>
+    niveau, éventuellement groupés en subdivisions.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p rend="dataDesc">
-    下位区分と成りうる一連の構造単位．
+      下位区分と成りうる一連の構造単位．
     </p>
   </remarks>
   <listRef>
@@ -26158,11 +26073,11 @@ into lower subdivisions.</p>
   <desc versionDate="2007-06-12" xml:lang="fr">contient une subdivision de troisième niveau dans
   le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.</desc>
   <desc versionDate="2006-10-18" xml:lang="de"> enthält die dritte Gliederungsebene von Vorspann
-    (front), Kerntext oder Nachspann (back) eines Textes.</desc>
+  (front), Kerntext oder Nachspann (back) eines Textes.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una subdivisión de tercer nivel en el paratexto
-    inicial, en el cuerpo del texto o en el paratexto final.</desc>
+  inicial, en el cuerpo del texto o en el paratexto final.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una sezione di terzo livello del peritesto
-    iniziale, del corpo del testo, o del peritesto finale</desc>
+  iniziale, del corpo del testo, o del peritesto finale</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.divLike"/>
@@ -26172,12 +26087,10 @@ into lower subdivisions.</p>
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.divTop"/>
-          <classRef key="model.global"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <classRef key="model.global"/>
+      </alternate>
       <sequence minOccurs="0">
         <alternate>
           <sequence minOccurs="1" maxOccurs="unbounded">
@@ -26185,37 +26098,28 @@ into lower subdivisions.</p>
               <classRef key="model.div4Like"/>
               <classRef key="model.divGenLike"/>
             </alternate>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
           </sequence>
           <sequence>
             <sequence minOccurs="1" maxOccurs="unbounded">
-              
+              <alternate minOccurs="1" maxOccurs="1">
+                <elementRef key="schemaSpec"/>
                 <classRef key="model.common"/>
-              
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              </alternate>
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
             <sequence minOccurs="0" maxOccurs="unbounded">
               <alternate>
                 <classRef key="model.div4Like"/>
                 <classRef key="model.divGenLike"/>
               </alternate>
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
           </sequence>
         </alternate>
         <sequence minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divBottom"/>
-          
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+          <classRef key="model.divBottom"/>
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </sequence>
     </sequence>
@@ -26248,12 +26152,12 @@ into lower subdivisions.</p>
         <div3 n="2.2.2" type="subsection">
           <head>Sect. II. Subsect. II. Qu'est-ce qu'un dictionnaire de langue ? .</head>
           <p>Un dictionnaire de langue est un dictionnaire donnant les mots d'une langue et leurs
-              emplois...</p>
+          emplois...</p>
         </div3>
         <div3 n="2.2.3" type="subsection">
           <head>Sect. II. Subsect. III. Qu'est-ce qu'un dictionnaire encyclopédique ? </head>
           <p>Un dictionnaire encyclopédique est un dictionnaire qui contient des renseignements
-              sur les choses, sur les idées </p>
+          sur les choses, sur les idées </p>
         </div3>
       </div2>
     </egXML>
@@ -26278,11 +26182,11 @@ into lower subdivisions.</p>
   </exemplum>
   <remarks versionDate="2005-01-14" xml:lang="en">
     <p rend="dataDesc">any sequence of low-level structural elements, possibly grouped into lower
-      subdivisions.</p>
+    subdivisions.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p rend="dateDesc">Cet élément contient une séquence d'éléments structurels de bas niveau,
-      éventuellement groupés en subdivisions.</p>
+    éventuellement groupés en subdivisions.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p rend="dataDesc"> 下位区分と成りうる一連の構造単位． </p>
@@ -26306,11 +26210,11 @@ into lower subdivisions.</p>
   <desc versionDate="2007-06-12" xml:lang="fr"> contient une subdivision de quatrième niveau dans
   le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.</desc>
   <desc versionDate="2006-10-18" xml:lang="de">"&gt; enthält die vierte Gliederungsebene von
-    Vorspann (front), Kerntext oder Nachspann (back) eines Textes.</desc>
+  Vorspann (front), Kerntext oder Nachspann (back) eines Textes.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una subdivisión del cuarto nivel en el paratexto
-    inicial, en el cuerpo del texto o en el paratexto final.</desc>
+  inicial, en el cuerpo del texto o en el paratexto final.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una sezione di quarto livello del peritesto
-    iniziale, del corpo del testo, o del peritesto finale</desc>
+  iniziale, del corpo del testo, o del peritesto finale</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.divLike"/>
@@ -26320,12 +26224,10 @@ into lower subdivisions.</p>
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.divTop"/>
-          <classRef key="model.global"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <classRef key="model.global"/>
+      </alternate>
       <sequence minOccurs="0">
         <alternate>
           <sequence minOccurs="1" maxOccurs="unbounded">
@@ -26333,37 +26235,28 @@ into lower subdivisions.</p>
               <classRef key="model.div5Like"/>
               <classRef key="model.divGenLike"/>
             </alternate>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
           </sequence>
           <sequence>
             <sequence minOccurs="1" maxOccurs="unbounded">
-              
+              <alternate minOccurs="1" maxOccurs="1">
+                <elementRef key="schemaSpec"/>
                 <classRef key="model.common"/>
-              
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              </alternate>
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
             <sequence minOccurs="0" maxOccurs="unbounded">
               <alternate>
                 <classRef key="model.div5Like"/>
                 <classRef key="model.divGenLike"/>
               </alternate>
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
           </sequence>
         </alternate>
         <sequence minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divBottom"/>
-          
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+          <classRef key="model.divBottom"/>
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </sequence>
     </sequence>
@@ -26375,12 +26268,12 @@ into lower subdivisions.</p>
         <div4 n="2.2.1.1" type="subsection">
           <head>Subsect I. — Dyet rectified in substance.</head>
           <p>Diet, <term xml:lang="grc">diaitotiku</term>, <term xml:lang="la">victus</term> or
-            living </p>
+          living </p>
         </div4>
         <div4 n="2.2.2.1" type="subsection">
           <head>Subsect II. — Dyet rectified in quantity.</head>
           <p>Man alone, saith Cardan, eates and drinks without appetite, and useth all his pleasures
-            without necessity </p>
+          without necessity </p>
         </div4>
       </div3>
     </egXML>
@@ -26392,12 +26285,12 @@ into lower subdivisions.</p>
         <div4 n="2.2.1.1" type="alinéa">
           <head>Alinéa I. <term>Horlogerie</term>Lame de ressort.</head>
           <p> Bande d'acier enroulée formant le ressort d'une montre, d'une pendule. (Dict. XIXe
-              et XXe s.).</p>
+          et XXe s.).</p>
         </div4>
         <div4 n="2.2.1.2" type="alinéa">
           <head>Alinéa II. — <term>Menuiserie</term>Lame de parquet</head>
           <p>Lame de parquet. Chacune des bandes de bois qui, emboîtées, constituent le
-            parquet</p>
+          parquet</p>
         </div4>
       </div3>
     </egXML>
@@ -26419,11 +26312,11 @@ into lower subdivisions.</p>
   </exemplum>
   <remarks versionDate="2005-01-14" xml:lang="en">
     <p rend="dataDesc">any sequence of low-level structural elements, possibly grouped into lower
-      subdivisions.</p>
+    subdivisions.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p rend="dateDesc">Cet élément contient une séquence d'éléments structurels de bas niveau,
-      éventuellement groupés en subdivisions.</p>
+    éventuellement groupés en subdivisions.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p rend="dataDesc"> 下位区分と成りうる一連の構造単位． </p>
@@ -26445,13 +26338,13 @@ into lower subdivisions.</p>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">文本的正文前資訊、正文及正文後資訊的第五層分段。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">前付，本文，後付中の第5位のテキスト部分を示す．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr"> contient une subdivision de cinquième niveau dans le
-    texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.</desc>
+  texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.</desc>
   <desc versionDate="2006-10-18" xml:lang="de">"&gt; enthält die fünfte Gliederungsebene von
-    Vorspann (front), Kerntext oder Nachspann (back) eines Textes.</desc>
+  Vorspann (front), Kerntext oder Nachspann (back) eines Textes.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una subdivisión del quinto nivel en el paratexto
-    inicial, en el cuerpo del texto o en el paratexto final.</desc>
+  inicial, en el cuerpo del texto o en el paratexto final.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una sezione di quinto livello del peritesto
-    iniziale, del corpo del testo, o del peritesto finale</desc>
+  iniziale, del corpo del testo, o del peritesto finale</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.divLike"/>
@@ -26461,12 +26354,10 @@ into lower subdivisions.</p>
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.divTop"/>
-          <classRef key="model.global"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <classRef key="model.global"/>
+      </alternate>
       <sequence minOccurs="0">
         <alternate>
           <sequence minOccurs="1" maxOccurs="unbounded">
@@ -26474,37 +26365,28 @@ into lower subdivisions.</p>
               <classRef key="model.div6Like"/>
               <classRef key="model.divGenLike"/>
             </alternate>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
           </sequence>
           <sequence>
             <sequence minOccurs="1" maxOccurs="unbounded">
-              
+              <alternate minOccurs="1" maxOccurs="1">
+                <elementRef key="schemaSpec"/>
                 <classRef key="model.common"/>
-              
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              </alternate>
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
             <sequence minOccurs="0" maxOccurs="unbounded">
               <alternate>
                 <classRef key="model.div6Like"/>
                 <classRef key="model.divGenLike"/>
               </alternate>
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
           </sequence>
         </alternate>
         <sequence minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divBottom"/>
-          
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+          <classRef key="model.divBottom"/>
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </sequence>
     </sequence>
@@ -26543,8 +26425,8 @@ into lower subdivisions.</p>
             <div5>
               <head>Mode</head>
               <p>Peel and quarter the apples taking out their cores; put them into
-the stock, stew them gently till tender, Rub the whole through a
-strainer, add the seasoning. give it one boil up, and serve.</p>
+              the stock, stew them gently till tender, Rub the whole through a
+              strainer, add the seasoning. give it one boil up, and serve.</p>
             </div5>
             <div5>
               <head>Time</head>
@@ -26565,11 +26447,11 @@ strainer, add the seasoning. give it one boil up, and serve.</p>
             <div5>
               <head>The apple</head>
               <p>This useful fruit is mentioned in Holy Writ; and Homer describes it
-as valuable in his time... As a food, the apple cannot be considered
-to rank high, as more than the half of it consists of water, and
-the rest of its properties are not the most nourishing. It is
-however a useful adjunct to other kinds of food, and, when cooked, is
-esteemed as slightly laxative.</p>
+              as valuable in his time... As a food, the apple cannot be considered
+              to rank high, as more than the half of it consists of water, and
+              the rest of its properties are not the most nourishing. It is
+              however a useful adjunct to other kinds of food, and, when cooked, is
+              esteemed as slightly laxative.</p>
             </div5>
           </div4>
           <div4 type="recipe">
@@ -26586,11 +26468,11 @@ esteemed as slightly laxative.</p>
   </exemplum>
   <remarks versionDate="2005-01-14" xml:lang="en">
     <p rend="dataDesc">any sequence of low-level structural elements, possibly grouped into lower
-      subdivisions.</p>
+    subdivisions.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p rend="dateDesc">Cet élément contient une séquence d'éléments structurels de bas niveau,
-      éventuellement groupés en subdivisions.</p>
+    éventuellement groupés en subdivisions.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p rend="dataDesc"> 下位区分と成りうる一連の構造単位． </p>
@@ -26628,12 +26510,10 @@ esteemed as slightly laxative.</p>
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.divTop"/>
-          <classRef key="model.global"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <classRef key="model.global"/>
+      </alternate>
       <sequence minOccurs="0">
         <alternate>
           <sequence minOccurs="1" maxOccurs="unbounded">
@@ -26641,37 +26521,28 @@ esteemed as slightly laxative.</p>
               <classRef key="model.div7Like"/>
               <classRef key="model.divGenLike"/>
             </alternate>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
           </sequence>
           <sequence>
             <sequence minOccurs="1" maxOccurs="unbounded">
-              
+              <alternate minOccurs="1" maxOccurs="1">
+                <elementRef key="schemaSpec"/>
                 <classRef key="model.common"/>
-              
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              </alternate>
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
             <sequence minOccurs="0" maxOccurs="unbounded">
               <alternate>
                 <classRef key="model.div7Like"/>
                 <classRef key="model.divGenLike"/>
               </alternate>
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
           </sequence>
         </alternate>
         <sequence minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divBottom"/>
-          
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+          <classRef key="model.divBottom"/>
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </sequence>
     </sequence>
@@ -26700,7 +26571,7 @@ esteemed as slightly laxative.</p>
               <div6>
                 <head>Mode</head>
                 <p>Line a delicately clean stewpan... Strain through a very 
-fine hair sieve, or tammy, and it will be fit for use</p>
+                fine hair sieve, or tammy, and it will be fit for use</p>
               </div6>
               <div6>
                 <head>Time</head>
@@ -26726,11 +26597,11 @@ fine hair sieve, or tammy, and it will be fit for use</p>
   </exemplum>
   <remarks versionDate="2005-01-14" xml:lang="en">
     <p rend="dataDesc">any sequence of low-level structural elements, possibly grouped into lower
-      subdivisions.</p>
+    subdivisions.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p rend="dateDesc">Cet élément contient une séquence d'éléments structurels de bas niveau,
-      éventuellement groupés en subdivisions.</p>
+    éventuellement groupés en subdivisions.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p rend="dataDesc"> 下位区分と成りうる一連の構造単位． </p>
@@ -26759,109 +26630,102 @@ fine hair sieve, or tammy, and it will be fit for use</p>
     Vorspann (front), Kerntext oder Nachspann (back) eines Textes, die größer als ein Absatz ist.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene la subdivisión más pequeña, pero más grande que
     un párrafo, del paratexto inicial, del cuerpo del texto o del paratexto final.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene la sezione più ristretta, ma più ampia di un
+    <desc versionDate="2007-01-21" xml:lang="it">contiene la sezione più ristretta, ma più ampia di un
     paragrafo, del peritesto iniziale, del corpo del testo, o del peritesto finale</desc>
-  <classes>
-    <memberOf key="att.global"/>
-    <memberOf key="att.divLike"/>
-    <memberOf key="att.typed"/>
-    <memberOf key="att.declaring"/>
-    <memberOf key="model.div7Like"/>
-  </classes>
-  <content>
-    <sequence>
-      
+    <classes>
+      <memberOf key="att.global"/>
+      <memberOf key="att.divLike"/>
+      <memberOf key="att.typed"/>
+      <memberOf key="att.declaring"/>
+      <memberOf key="model.div7Like"/>
+    </classes>
+    <content>
+      <sequence>
         <alternate minOccurs="0" maxOccurs="unbounded">
           <classRef key="model.divTop"/>
           <classRef key="model.global"/>
         </alternate>
-      
-      <sequence minOccurs="0">
-        <sequence minOccurs="1" maxOccurs="unbounded">
-          
-            <classRef key="model.common"/>
-          
-          
+        <sequence minOccurs="0">
+          <sequence minOccurs="1" maxOccurs="unbounded">
+            <alternate minOccurs="1" maxOccurs="1">
+              <elementRef key="schemaSpec"/>
+              <classRef key="model.common"/>
+            </alternate>
             <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
-        </sequence>
-        <sequence minOccurs="0" maxOccurs="unbounded">
-          
+          </sequence>
+          <sequence minOccurs="0" maxOccurs="unbounded">
             <classRef key="model.divBottom"/>
-          
-          
             <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+          </sequence>
         </sequence>
       </sequence>
-    </sequence>
-  </content>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#divEGs">
-      <div2 type="chapter">
-        <head>Recipes</head>
-        <head>Chapter VI.</head>
-        <div3>
-          <head>Fruit and vegetable soups</head>
-          <p>...</p>
-          <div4>
-            <head>Stocks for all kinds of soups</head>
-            <div5 type="recipe">
-              <head>Asparagus soup</head>
-              <div6 type="altRecipe">
-                <head>I.</head>
-                <div7>
-                  <head>Ingredients</head>
-                  <list>
-                    <item> ...</item>
-                  </list>
-                </div7>
-                <div7>
-                  <head>Mode</head>
-                  <p>Put the beef, cut into pieces and rolled in flour, into a
-stewpan...</p>
-                </div7>
-                <!-- ... -->
-              </div6>
-              <div6 type="altRecipe">
-                <head>II.</head>
-                <div7>
-                  <head>Ingredients</head>
-                  <list>
-                    <item> ...</item>
-                  </list>
-                </div7>
-                <div7>
-                  <head>Mode</head>
-                  <p>Boil the peas, and rub them through a sieve; add the gravy...</p>
-                </div7>
-              </div6>
-            </div5>
-          </div4>
-        </div3>
-      </div2>
-    </egXML>
-  </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"> </egXML>
-  </exemplum>
-  <remarks versionDate="2006-07-02" xml:lang="en">
-    <p rend="dataDesc">any sequence of low-level structural elements, e.g., paragraphs (<gi>p</gi>),
+    </content>
+    <exemplum xml:lang="en">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#divEGs">
+        <div2 type="chapter">
+          <head>Recipes</head>
+          <head>Chapter VI.</head>
+          <div3>
+            <head>Fruit and vegetable soups</head>
+            <p>...</p>
+            <div4>
+              <head>Stocks for all kinds of soups</head>
+              <div5 type="recipe">
+                <head>Asparagus soup</head>
+                <div6 type="altRecipe">
+                  <head>I.</head>
+                  <div7>
+                    <head>Ingredients</head>
+                    <list>
+                      <item> ...</item>
+                    </list>
+                  </div7>
+                  <div7>
+                    <head>Mode</head>
+                    <p>Put the beef, cut into pieces and rolled in flour, into a
+                    stewpan...</p>
+                  </div7>
+                  <!-- ... -->
+                </div6>
+                <div6 type="altRecipe">
+                  <head>II.</head>
+                  <div7>
+                    <head>Ingredients</head>
+                    <list>
+                      <item> ...</item>
+                    </list>
+                  </div7>
+                  <div7>
+                    <head>Mode</head>
+                    <p>Boil the peas, and rub them through a sieve; add the gravy...</p>
+                  </div7>
+                </div6>
+              </div5>
+            </div4>
+          </div3>
+        </div2>
+      </egXML>
+    </exemplum>
+    <exemplum versionDate="2008-04-06" xml:lang="fr">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"> </egXML>
+    </exemplum>
+    <remarks versionDate="2006-07-02" xml:lang="en">
+      <p rend="dataDesc">any sequence of low-level structural elements, e.g., paragraphs (<gi>p</gi>),
       lists (<gi>list</gi>), or examples (<gi>eg</gi> or <gi>egXML</gi>).</p>
-  </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p rend="dateDesc">Cet élément contient une séquence d'éléments structurels de bas niveau, par
+    </remarks>
+    <remarks xml:lang="fr" versionDate="2007-06-12">
+      <p rend="dateDesc">Cet élément contient une séquence d'éléments structurels de bas niveau, par
       exemple des paragraphes (<gi>p</gi>), des listes (<gi>list</gi>), ou des exemples (<gi>eg</gi>
       ou <gi>egXML</gi>).</p>
-  </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
-    <p rend="dataDesc"> 一連の低レベル構造単位要素．例えば，段落(<gi>p</gi>)，リスト
-        (<gi>list</gi>)，用例(<gi>eg</gi>または<gi>egXML</gi>)など． </p>
-  </remarks>
-  <listRef>
-    <ptr target="#DSDIV2"/>
-  </listRef>
-</elementSpec>
+    </remarks>
+    <remarks xml:lang="ja" versionDate="2008-04-05">
+      <p rend="dataDesc"> 一連の低レベル構造単位要素．例えば，段落(<gi>p</gi>)，リスト
+      (<gi>list</gi>)，用例(<gi>eg</gi>または<gi>egXML</gi>)など． </p>
+    </remarks>
+    <listRef>
+      <ptr target="#DSDIV2"/>
+    </listRef>
+  </elementSpec>
 <elementSpec module="core" ident="divGen">
   <gloss versionDate="2005-01-14" xml:lang="en">automatically generated text division</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">자동적으로 생성된 텍스트 구역</gloss>
@@ -28802,24 +28666,24 @@ the date of the entire document, not for any subset or part of it.</p>
   <gloss versionDate="2007-05-04" xml:lang="es">paratexto inicial</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">peritesto iniziale</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains any prefatory matter
-    (headers, abstracts, title page, prefaces, dedications, etc.) found at the
-    start of a document, before the main body.</desc>
+  (headers, abstracts, title page, prefaces, dedications, etc.) found at the
+  start of a document, before the main body.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">주 본문 앞에 나타나는 문서의 시작부에서 발견되는 서문
-    자료(헤더, 제목 페이지, 머리말, 헌정사 등)를 포함한다.</desc>
+  자료(헤더, 제목 페이지, 머리말, 헌정사 등)를 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含位於文件最前端、正文之前的項目
-    (標頭、題名頁、前言、獻詞等) 。</desc>
+  (標頭、題名頁、前言、獻詞等) 。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">本文より前，文書の始めにある序文としてあるもの(標題，タイトル，序文， 献辞など)．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient tout ce qui est au début
-    du document, avant le corps du texte : page de titre, dédicaces, préfaces,
-    etc.</desc>
+  du document, avant le corps du texte : page de titre, dédicaces, préfaces,
+  etc.</desc>
   <desc versionDate="2017-06-19" xml:lang="de">enthält alle dem Textkörper vorangestellten Texte (Überschriften, Abstracts, Titelseite,
-    Vorworte, Widmungen, usw.) zu Beginn eines Dokuments.</desc>
+  Vorworte, Widmungen, usw.) zu Beginn eines Dokuments.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene cualquier material
-    paratextual (encabezamiento, frontispicio, prefacio, dedicatoria, etc.) que
-    aparece delante del inicio del texto.</desc>
+  paratextual (encabezamiento, frontispicio, prefacio, dedicatoria, etc.) que
+  aparece delante del inicio del texto.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene qualsiasi materiale
-    peritestuale (intestazioni, frontespizio, prefazioni, dediche, etc.) che si
-    trovi prima dell'inizio del testo vero e proprio</desc>
+  peritestuale (intestazioni, frontespizio, prefazioni, dediche, etc.) che si
+  trovi prima dell'inizio del testo vero e proprio</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.declaring"/>
@@ -28827,10 +28691,10 @@ the date of the entire document, not for any subset or part of it.</p>
   <content>
     <sequence>
       <!-- 
-	   we start with allowing a group of mixed-up p-like elements.
-	   when we are done with them, we can start considering
-	   div-like elements, and the things that
-	   can occur after them.
+           we start with allowing a group of mixed-up p-like elements.
+           when we are done with them, we can start considering
+           div-like elements, and the things that
+           can occur after them.
       -->
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.frontPart"/>
@@ -28875,8 +28739,8 @@ the date of the entire document, not for any subset or part of it.</p>
       <front>
         <epigraph>
           <quote>Nam Sibyllam quidem Cumis ego ipse oculis meis vidi in ampulla
-            pendere, et cum illi pueri dicerent: <q xml:lang="grc">Σίβυλλα τί
-              θέλεις</q>; respondebat illa: <q xml:lang="grc">ὰποθανεῖν θέλω.</q>
+          pendere, et cum illi pueri dicerent: <q xml:lang="grc">Σίβυλλα τί
+          θέλεις</q>; respondebat illa: <q xml:lang="grc">ὰποθανεῖν θέλω.</q>
           </quote>
         </epigraph>
         <div type="dedication">
@@ -28894,12 +28758,12 @@ the date of the entire document, not for any subset or part of it.</p>
         </div>
         <div type="avertissement">
           <p>L'amitié, l'histoire et la littérature m'ont fourni quelques-uns
-            des.personnages de ce livre. Toute autre ressemblance avec des
-            individus vivants ou ayant réellement ou fictivement existé ne
-            saurait être que coïncidence.</p>
+          des.personnages de ce livre. Toute autre ressemblance avec des
+          individus vivants ou ayant réellement ou fictivement existé ne
+          saurait être que coïncidence.</p>
           <epigraph>
             <quote>Regarde de tous tes yeux, regarde <bibl>(Jules Verne, Michel
-                Strogoff )</bibl>
+            Strogoff )</bibl>
             </quote>
           </epigraph>
         </div>
@@ -28908,13 +28772,13 @@ the date of the entire document, not for any subset or part of it.</p>
           <epigraph>
             <quote>
               <q>L'œil suit les chemins qui lui ont été ménagés dans l'oeuvre
-                  <bibl>(Paul Klee, Pädagosisches Skizzenbuch)</bibl>
+              <bibl>(Paul Klee, Pädagosisches Skizzenbuch)</bibl>
               </q>
             </quote>
           </epigraph>
           <p> Au départ, l'art du puzzle semble un art bref, un art mince, tout
-            entier contenu dans un maigre enseignement de la Gestalttheorie :
-            ...</p>
+          entier contenu dans un maigre enseignement de la Gestalttheorie :
+          ...</p>
         </div>
       </front>
     </egXML>
@@ -28925,15 +28789,15 @@ the date of the entire document, not for any subset or part of it.</p>
         <div type="preface">
           <head>Préface</head>
           <p>Tant qu'il existera, par le fait des lois et des moeurs, une
-            damnation sociale créant artificiellement, en pleine civilisation,
-            des enfers, et compliquant d'une fatalité humaine la destinée qui
-            est divine ; tant que les trois problèmes du siècle, la dégradation
-            de l'homme par le prolétariat, la déchéance de la femme par la faim,
-            l'atrophie de l'enfant par la nuit, ne seront pas résolus; tant que,
-            dans certaines régions, l'asphyxie sociale sera possible; en
-            d'autres termes, et à un point de vue plus étendu encore, tant qu'il
-            aura sur la terre ignorance et misère, des livres de la nature de
-            celui-ci pourront ne pas être inutiles.</p>
+          damnation sociale créant artificiellement, en pleine civilisation,
+          des enfers, et compliquant d'une fatalité humaine la destinée qui
+          est divine ; tant que les trois problèmes du siècle, la dégradation
+          de l'homme par le prolétariat, la déchéance de la femme par la faim,
+          l'atrophie de l'enfant par la nuit, ne seront pas résolus; tant que,
+          dans certaines régions, l'asphyxie sociale sera possible; en
+          d'autres termes, et à un point de vue plus étendu encore, tant qu'il
+          aura sur la terre ignorance et misère, des livres de la nature de
+          celui-ci pourront ne pas être inutiles.</p>
           <closer>
             <dateline>
               <name type="place">Hauteville-House</name>
@@ -28978,29 +28842,29 @@ the date of the entire document, not for any subset or part of it.</p>
         <div type="preface">
           <head>Author's Note</head>
           <p>All the characters in this book are purely imaginary, and if the
-            author has used names that may suggest a reference to living persons
-            she has done so inadvertently. ...</p>
+          author has used names that may suggest a reference to living persons
+          she has done so inadvertently. ...</p>
         </div>
       </front>
     </egXML>
   </exemplum>
- <exemplum xml:lang="en"> 
-   <egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <front>
-      <div type="abstract">
-        <div>
-          <head> BACKGROUND:</head>
-          <p>Food insecurity can put children at greater risk of obesity because
+  <exemplum xml:lang="en"> 
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <front>
+        <div type="abstract">
+          <div>
+            <head> BACKGROUND:</head>
+            <p>Food insecurity can put children at greater risk of obesity because
             of altered food choices and nonuniform consumption patterns.</p>
-        </div>
-        <div>
-          <head> OBJECTIVE:</head>
-          <p>We examined the association between obesity and both child-level
+          </div>
+          <div>
+            <head> OBJECTIVE:</head>
+            <p>We examined the association between obesity and both child-level
             food insecurity and personal food insecurity in US children.</p>
-        </div>
-        <div>
-          <head> DESIGN:</head>
-          <p>Data from 9,701 participants in the National Health and Nutrition
+          </div>
+          <div>
+            <head> DESIGN:</head>
+            <p>Data from 9,701 participants in the National Health and Nutrition
             Examination Survey, 2001-2010, aged 2 to 11 years were analyzed.
             Child-level food insecurity was assessed with the US Department of
             Agriculture's Food Security Survey Module based on eight
@@ -29012,34 +28876,36 @@ the date of the entire document, not for any subset or part of it.</p>
             regressions adjusted for sex, race/ethnic group, poverty level, and
             survey year were conducted to describe associations between obesity
             and food insecurity.</p>
-        </div>
-        <div>
-          <head> RESULTS:</head>
-          <p>Obesity was significantly associated with personal food insecurity
+          </div>
+          <div>
+            <head> RESULTS:</head>
+            <p>Obesity was significantly associated with personal food insecurity
             for children aged 6 to 11 years (odds ratio=1.81; 95% CI 1.33 to
             2.48), but not in children aged 2 to 5 years (odds ratio=0.88; 95%
             CI 0.51 to 1.51). Child-level food insecurity was not associated
             with obesity among 2- to 5-year-olds or 6- to 11-year-olds.</p>
-        </div>
-        <div>
-          <head> CONCLUSIONS:</head>
-          <p>Personal food insecurity is associated with an increased risk of
+          </div>
+          <div>
+            <head> CONCLUSIONS:</head>
+            <p>Personal food insecurity is associated with an increased risk of
             obesity only in children aged 6 to 11 years. Personal
             food-insecurity measures may give different results than aggregate
             food-insecurity measures in children.</p>
-        </div></div></front>
-  </egXML></exemplum>
+          </div>
+        </div>
+      </front>
+    </egXML>
+  </exemplum>
   <remarks versionDate="2015-01-30" xml:lang="en">
     <p>Because cultural conventions differ as to which elements are grouped as
-      front matter and which as back matter, the content models for the
-        <gi>front</gi> and <gi>back</gi> elements are identical.</p>
+    front matter and which as back matter, the content models for the
+    <gi>front</gi> and <gi>back</gi> elements are identical.</p>
   </remarks>
   <remarks versionDate="2017-06-19" xml:lang="de">
     <p>Aufgrund von unterschiedlichen kulturellen Konventionen, die Angaben in Vorspann und Nachspann
-      betreffend, sind die Inhaltsmodelle für die Elemente <gi>front</gi> und <gi>back</gi>
-      identisch.</p>
+    betreffend, sind die Inhaltsmodelle für die Elemente <gi>front</gi> und <gi>back</gi>
+    identisch.</p>
   </remarks>
-  
   <listRef>
     <ptr target="#DSTITL"/>
     <ptr target="#DS"/>
@@ -29055,25 +28921,24 @@ the date of the entire document, not for any subset or part of it.</p>
   <gloss versionDate="2007-05-04" xml:lang="es">paratexto final</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">peritesto finale</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains any appendixes, etc. following the main part
-    of a text.</desc>
+  of a text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트의 주요부 뒤에 오는 부록 등을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">在正文之後，包含附錄等。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">後付．本文の後に続く付録などを示す．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient tout supplément placé après la partie
-    principale d'un texte : appendice, etc.</desc>
+  principale d'un texte : appendice, etc.</desc>
   <desc versionDate="2006-10-18" xml:lang="de">enthält Anhänge jeglicher Art, die auf den Hauptteil
-    eines Textes folgen.</desc>
+  eines Textes folgen.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene cualquier tipo de apéndice, etc. que aparece
-    detrás del texto.</desc>
+  detrás del texto.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene qualsiasi appendice che segua il testo vero
-    e proprio</desc>
+  e proprio</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.declaring"/>
   </classes>
   <content>
     <sequence>
-
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.frontPart"/>
         <classRef key="model.pLike.front"/>
@@ -29081,50 +28946,31 @@ the date of the entire document, not for any subset or part of it.</p>
         <classRef key="model.listLike"/>
         <classRef key="model.global"/>
       </alternate>
-
-
-
       <alternate minOccurs="0">
         <sequence>
-
           <classRef key="model.div1Like"/>
-
-
           <alternate minOccurs="0" maxOccurs="unbounded">
             <classRef key="model.frontPart"/>
             <classRef key="model.div1Like"/>
             <classRef key="model.global"/>
           </alternate>
-
         </sequence>
         <sequence>
-
           <classRef key="model.divLike"/>
-
-
           <alternate minOccurs="0" maxOccurs="unbounded">
             <classRef key="model.frontPart"/>
             <classRef key="model.divLike"/>
             <classRef key="model.global"/>
           </alternate>
-
         </sequence>
       </alternate>
-
-
-
       <sequence minOccurs="0">
-
         <classRef key="model.divBottomPart"/>
-
-
         <alternate minOccurs="0" maxOccurs="unbounded">
           <classRef key="model.divBottomPart"/>
           <classRef key="model.global"/>
         </alternate>
-
       </sequence>
-
     </sequence>
   </content>
   <exemplum xml:lang="en">
@@ -29133,8 +28979,8 @@ the date of the entire document, not for any subset or part of it.</p>
         <div type="appendix">
           <head>The Golden Dream or, the Ingenuous Confession</head>
           <p>TO shew the Depravity of human Nature, and how apt the Mind is to be misled by Trinkets
-            and false Appearances, Mrs. Two-Shoes does acknowledge, that after she became rich, she
-            had like to have been, too fond of Money <!-- .... -->
+          and false Appearances, Mrs. Two-Shoes does acknowledge, that after she became rich, she
+          had like to have been, too fond of Money <!-- .... -->
           </p>
         </div>
         <!-- ... -->
@@ -29142,26 +28988,26 @@ the date of the entire document, not for any subset or part of it.</p>
           <head>A letter from the Printer, which he desires may be inserted</head>
           <salute>Sir.</salute>
           <p>I have done with your Copy, so you may return it to the Vatican, if you please;
-            <!-- ... -->
+          <!-- ... -->
           </p>
         </div>
         <div type="advert">
           <head>The Books usually read by the Scholars of Mrs Two-Shoes are these and are sold at Mr
-            Newbery's at the Bible and Sun in St Paul's Church-yard.</head>
+          Newbery's at the Bible and Sun in St Paul's Church-yard.</head>
           <list>
             <item n="1">The Christmas Box, Price 1d.</item>
             <item n="2">The History of Giles Gingerbread, 1d.</item>
             <!-- ... -->
             <item n="42">A Curious Collection of Travels, selected from the Writers of all Nations,
-              10 Vol, Pr. bound 1l.</item>
+            10 Vol, Pr. bound 1l.</item>
           </list>
         </div>
         <div type="advert">
           <head>By the KING's Royal Patent, Are sold by J. NEWBERY, at the Bible and Sun in St.
-            Paul's Church-Yard.</head>
+          Paul's Church-Yard.</head>
           <list>
             <item n="1">Dr. James's Powders for Fevers, the Small-Pox, Measles, Colds, &amp;c. 2s.
-              6d</item>
+            6d</item>
             <item n="2">Dr. Hooper's Female Pills, 1s.</item>
             <!-- ... -->
           </list>
@@ -29176,15 +29022,15 @@ the date of the entire document, not for any subset or part of it.</p>
           <head>APPENDICE I </head>
           <head>CHAPITRE XV bis </head>
           <p>Des cruautez exercées par les Turcs, et autres peuples : et nommément par les
-            Espagnols, beaucoup plus barbares que les Sauvages mesmes </p>
+          Espagnols, beaucoup plus barbares que les Sauvages mesmes </p>
           <p>Premierement Chalcondile en son histoire de la decadence de l'Empire des Grecs, ...</p>
         </div>
         <div n="2" type="appendice">
           <head> Appendice 2</head>
           <head>Advertissement de l'autheur</head>
           <p>Outre les augmentations bien amples, et la revision beaucoup plus exacte que je n'avoye
-            fait és precedentes Editions, j'ai pour le contentement des Lecteurs, plusieurs endroits
-            de ceste quatrieme et derniere monstré ...</p>
+          fait és precedentes Editions, j'ai pour le contentement des Lecteurs, plusieurs endroits
+          de ceste quatrieme et derniere monstré ...</p>
         </div>
       </back>
     </egXML>
@@ -29221,21 +29067,21 @@ the date of the entire document, not for any subset or part of it.</p>
   </exemplum>
   <remarks versionDate="2015-01-30" xml:lang="en">
     <p>Because cultural conventions differ as to which elements are grouped as back matter and which
-      as front matter, the content models for the <gi>back</gi> and <gi>front</gi> elements are
-      identical.</p>
+    as front matter, the content models for the <gi>back</gi> and <gi>front</gi> elements are
+    identical.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Le modèle de contenu de l'élément <gi>back</gi> est identique à celui de l'élément
-        <gi>front</gi>, ce qui permet de rendre compte de pratiques éditoriales qui ont évolué avec
-      l'histoire culturelle.</p>
+    <gi>front</gi>, ce qui permet de rendre compte de pratiques éditoriales qui ont évolué avec
+    l'histoire culturelle.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p> 後付の内容モデルは，文化的背景によっては，前付に相当するものになる． </p>
   </remarks>
   <remarks versionDate="2017-06-19" xml:lang="de">
     <p>Aufgrund von unterschiedlichen kulturellen Konventionen, die Angaben in Vorspann und Nachspann
-      betreffend, sind die Inhaltsmodelle für die Elemente <gi>front</gi> und <gi>back</gi>
-      identisch.</p>
+    betreffend, sind die Inhaltsmodelle für die Elemente <gi>front</gi> und <gi>back</gi>
+    identisch.</p>
   </remarks>
   <listRef>
     <ptr target="#DSBACK"/>
@@ -38258,6 +38104,14 @@ headword  such as noun, verb, or adjective.</desc>
   <content>
     <macroRef key="macro.paraContent"/>
   </content>
+  <!-- Per issue #1800 we wanted <usg> inside <def>, but the following: -->
+  <!-- <content> -->
+  <!--   <alternate minOccurs="0" maxOccurs="unbounded"> -->
+  <!--     <macroRef key="macro.paraContent"/> -->
+  <!--     <elementRef key="usg"/> -->
+  <!--   </alternate> -->
+  <!-- </content> -->
+  <!-- does not work due to DTD generation problems. -->
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <entry>
@@ -39926,7 +39780,7 @@ headword  such as noun, verb, or adjective.</desc>
   </exemplum>
   <remarks versionDate="2019-12-27" xml:lang="en">
     <p>Although the <gi>msDesc</gi> has primarily been designed with a view to encoding manuscript descriptions, it may also be 
-      used for other objects such as early printed books, fasicles, epigraphs, or any text-bearing objects that require substantial description. 
+      used for other objects such as early printed books, fascicles, epigraphs, or any text-bearing objects that require substantial description. 
       If an object is not text-bearing or the reasons for describing the object is not primarily the textual content, the more general <gi>object</gi> may be 
       more suitable.</p>
   </remarks>
@@ -50130,7 +49984,7 @@ different witnesses.
         tranche d'âge.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona un código numérico que representa la edad
         o el intervalo de edad.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">assegna un codice numerco che rappresenta l'età o la
+      <desc versionDate="2007-01-21" xml:lang="it">assegna un codice numerico che rappresenta l'età o la
         fascia di età</desc>
       <datatype><dataRef key="teidata.count"/></datatype>
       <remarks versionDate="2006-10-08" xml:lang="en">
@@ -52428,13 +52282,14 @@ specification.</p></remarks>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="activemutual" scheme="schematron">
+    <!-- Note: this constraint is pointless in RELAX NG land, where
+         the org=choice works. It is useful in DTD land, where the
+         attList/@org has no effect. It looks to me like it is useful
+         in W3C XML Schema land, too, which I find suprising, as I
+         thought XSD could express a disjuntion like that w/o
+         difficulty. (But I may be reading the XSD incorrectly.) 
+         — Syd, 2018-05-01 -->
     <constraint>
-      <!-- Note: this constraint is pointless in RELAX NG land, where the
-	   org=choice works. It is useful in DTD land, where the attList/@org
-	   has no effect. It looks to me like it is useful in W3C XML Schema
-	   land, too, which I find suprising, as I thought XSD could express
-	   a disjuntion like that w/o difficulty. (But I may be reading the
-	   XSD incorrectly.) — Syd, 2018-05-01 -->
       <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@active and @mutual">Only one of the attributes @active and @mutual may be supplied</report>
     </constraint>
   </constraintSpec>
@@ -52444,7 +52299,8 @@ specification.</p></remarks>
     </constraint>
   </constraintSpec>
   <attList>
-  <!-- removed local definition for @type since it is both vacuous and inconsistent with the text : see bug #680 -->  
+    <!-- removed local definition for @type since it is both vacuous
+         and inconsistent with the text : see bug #680 -->
     <attDef ident="name">
       <desc versionDate="2005-10-27" xml:lang="en">supplies a name for the kind of relationship of which this is an instance.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이것이 실례인 관련성 종류에 대한 이름을 제공한다.</desc>
@@ -58925,7 +58781,7 @@ etc. as appropriate.</p>
       <exemplum xml:lang="en">
         <p>An example from the EarlyPrint project showing the use of both <att>norm</att> and <att>orig</att>. The <att>orig</att> attribute preserves the original version (sometimes with spelling errors, often with printer abbreviations), the element content resolves printer abbreviations but retains the original orthography, and the <att>norm</att> attribute holds normalized values:</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <w lemma="commandment" pos="n1" norm="commandment" xml:id="b9avr-018-a-7720" orig="commandemēt">commandement</w>
+          <w lemma="commandment" pos="n1" norm="commandment" xml:id="b9avr-018-a-7720" orig="commandemēt">commandement</w>
         </egXML>
       </exemplum>
     </attDef>
@@ -65809,7 +65665,7 @@ module, i.e. a named and externally visible group of declarations.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">genera uno schema TEI-conforme e la relativa documentazione</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="model.divPart"/>
+    <memberOf key="model.frontPart"/>
     <memberOf key="model.encodingDescPart"/>
     <memberOf key="model.frontPart"/>
     <memberOf key="att.identified"/>
@@ -65828,27 +65684,6 @@ module, i.e. a named and externally visible group of declarations.</desc>
       </alternate>      
     </sequence>
   </content>
-  <constraintSpec validUntil="2021-10-23" scheme="schematron" ident="deprecate_schemaSpec_in_bizarre_places">
-    <!-- This <constraintSpec> should be removed when the class
-         memberships and content models are altered so that this
-         restriction is enforced by closed schema, which is expected
-         to occur in October 2021. -->
-    <desc xml:lang="en" versionDate="2021-02-02">enforces the
-    deprecation of <gi>schemaSpec</gi> as a child of anything other
-    than <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
-    <gi>encodingDesc</gi>, <gi>div</gi>, or any of the numbered
-    division elements. </desc>
-    <desc type="deprecationInfo" xml:lang="en" versionDate="2021-02-02">
-      The use of <gi>schemaSpec</gi> as a child of any element other
-      than <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
-      <gi>encodingDesc</gi>, <gi>div</gi>, or one of the numbered
-      division elements is being withdrawn.</desc>
-    <constraint>
-      <sch:rule context="tei:schemaSpec|teix:schemaSpec">
-	<sch:assert test="             parent::teix:egXML      | parent::tei:encodingDesc  | parent::teix:encodingDesc      | parent::tei:front         | parent::teix:front      | parent::tei:back          | parent::teix:back      | parent::tei:body          | parent::teix:body      | parent::tei:div           | parent::teix:div      | parent::tei:div1          | parent::teix:div1      | parent::tei:div2          | parent::teix:div2      | parent::tei:div3          | parent::teix:div3      | parent::tei:div4          | parent::teix:div4      | parent::tei:div5          | parent::teix:div5      | parent::tei:div6          | parent::teix:div6      | parent::tei:div7          | parent::teix:div7" role="nonfatal">WARNING: use of deprecated construct — the “schemaSpec” element will no longer be a valid child of “<sch:value-of select="name(..)"/>” as of 2021-10-23; instead, it should be a child of “front”, “body”, “back”, “encodingDesc”, or a division element.</sch:assert>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <attList>
     <attDef ident="start" usage="opt">
       <desc versionDate="2010-05-14" xml:lang="en">specifies entry points to the schema, i.e. which patterns
@@ -65887,12 +65722,13 @@ module, i.e. a named and externally visible group of declarations.</desc>
            be mixed in.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>Les deux-points, bien qu'ils soient permis à l'intérieur de la valeur, provoqueront la
-                        génération d'un schéma invalide. </p>
+        <p>Les deux-points, bien qu'ils soient permis à l'intérieur de
+        la valeur, provoqueront la génération d'un schéma invalide.
+        </p>
       </remarks>
       <remarks xml:lang="ja" versionDate="2008-04-05">
         <p>
-        コロンは，値としては認められるが，スキーマ中では使用できない．
+          コロンは，値としては認められるが，スキーマ中では使用できない．
         </p>
       </remarks>
     </attDef>
@@ -65922,9 +65758,10 @@ module, i.e. a named and externally visible group of declarations.</desc>
       <gloss versionDate="2008-04-06" xml:lang="es">lengua de la documentación</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">langue de documentation</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">lingua della documentazione</gloss>
-      <desc versionDate="2012-04-25" xml:lang="en">specifies which languages to
-      use when creating documentation if  the description for an element, attribute, class or macro
-      is available in more than one language</desc>
+      <desc versionDate="2012-04-25" xml:lang="en">specifies which
+      languages to use when creating documentation if the description
+      for an element, attribute, class or macro is available in more
+      than one language</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">요소, 속성, 부류 또는 매크로에 대한 기술이 여러 언어에서 사용 가능한 경우, 문서를 만들 때 사용하는 언어를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">若元素、屬性、元素集或巨集指令描述所使用的語言有一種以上，說明建立文件時要使用那一種語言。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">要素，属性，クラス，マクロの解説が複数言語で可能な場合，解説の言
@@ -65937,7 +65774,8 @@ module, i.e. a named and externally visible group of declarations.</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.language"/></datatype>
     </attDef>
     <attDef ident="defaultExceptions" usage="rec">
-      <gloss versionDate="2016-11-20" xml:lang="en">default namespace exclusions</gloss>
+      <gloss versionDate="2016-11-20" xml:lang="en">default namespace
+      exclusions</gloss>
       <desc versionDate="2016-11-20" xml:lang="en">provides a list of namespaces and/or prefixed element names to be excluded by default from anyName in RELAX NG schemas</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
         <dataRef key="teidata.namespaceOrName"/>
@@ -65958,8 +65796,8 @@ module, i.e. a named and externally visible group of declarations.</desc>
       </schemaSpec>
     </egXML>
     <p>This schema combines elements from the current versions of the drama and core
-modules,  the current release version of the header module, and elements
-from an existing RELAX NG schema available from the URL indicated.</p>
+    modules,  the current release version of the header module, and elements
+    from an existing RELAX NG schema available from the URL indicated.</p>
   </exemplum>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
@@ -65970,26 +65808,24 @@ from an existing RELAX NG schema available from the URL indicated.</p>
         <moduleRef key="textstructure"/>
       </schemaSpec>
     </egXML>
-    <p>This schema starts with a pre-existing customization of the TEI called TEI Bare (a customization with a minimal selection of elements). 
-      The <gi>q</gi> element is not available in TEI Bare, but it can be brought back. In this case, we will get
-      the version defined in TEI P5 release 3.0.0 </p>
+    <p>This schema starts with a pre-existing customization of the TEI
+    called TEI Bare (a customization with a minimal selection of
+    elements). The <gi>q</gi> element is not available in TEI Bare,
+    but it can be brought back. In this case, we will get the version
+    defined in TEI P5 release 3.0.0 </p>
   </exemplum>
   <remarks versionDate="2021-02-02" xml:lang="en">
     <!--
-	oddRef:
-	classRef, dataRef, elementRef, macroRef, and moduleRef
+        oddRef:
+        classRef, dataRef, elementRef, macroRef, and moduleRef
 
-	oddDecl:
-	classSpec, constraintSpec, dataSpec, elementSpec, listRef,
-	macroSpec, moduleSpec, outputRendition, specGrp, and specGrpRef
+        oddDecl:
+        classSpec, constraintSpec, dataSpec, elementSpec, listRef,
+        macroSpec, moduleSpec, outputRendition, specGrp, and specGrpRef
     -->
-    <p>A <gi>schemaSpec</gi> combines references to elements that
-    document a schema with individual specification elements that
-    document a schema to form a unified schema. It should be a child
-    of <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
-    <gi>encodingDesc</gi>, <gi>div</gi>, <gi>div1</gi>, <gi>div2</gi>,
-    <gi>div3</gi>, <gi>div4</gi>, <gi>div5</gi>, <gi>div6</gi>, or
-    <gi>div7</gi>.</p>
+    <p>A <gi>schemaSpec</gi> combines references to modules,
+    individual element or macro declarations, and specification groups
+    together to form a unified schema.</p>
     <p>The processing of the <gi>schemaSpec</gi> element must resolve
     any conflicts amongst the declarations it either contains or
     refers to. Different ODD processors may generate schemas and
@@ -66007,19 +65843,20 @@ from an existing RELAX NG schema available from the URL indicated.</p>
     TEI Guidelines.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p>Un schéma combine des références aux modules ou aux groupes de spécifications avec
-                d'autres déclarations atomiques. Le traitement d'un élément de schéma doit résoudre
-                tous les conflits entre les déclarations qu'il contient ou les références. Des
-                processeurs ODD différents peuvent générer des schémas et une documentation en
-                utilisant différentes syntaxes concrètes.</p>
+    <p>Un schéma combine des références aux modules ou aux groupes de
+    spécifications avec d'autres déclarations atomiques. Le traitement
+    d'un élément de schéma doit résoudre tous les conflits entre les
+    déclarations qu'il contient ou les références. Des processeurs ODD
+    différents peuvent générer des schémas et une documentation en
+    utilisant différentes syntaxes concrètes.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p>
-    スキーマは，モジュールまたは規定集への参照と，他の原子的宣言とを関
-    連づける．スキーマ要素は，関連する宣言間の齟齬を調整しなければなら
-    ない．ODDソフトウェアは，その種類によって，異なるスキーマや文書を
-    生成するかもしれない．
- </p>
+      スキーマは，モジュールまたは規定集への参照と，他の原子的宣言とを関
+      連づける．スキーマ要素は，関連する宣言間の齟齬を調整しなければなら
+      ない．ODDソフトウェアは，その種類によって，異なるスキーマや文書を
+      生成するかもしれない．
+    </p>
   </remarks>
   <listRef>
     <ptr target="#HD5"/>
@@ -68652,9 +68489,26 @@ have a  canonical name, supplied as the value for their
         <classRef key="model.glossLike"/>
         <classRef key="model.descLike"/>
       </alternate>
-      <elementRef key="constraint" minOccurs="0"/>
+      <elementRef key="constraint" minOccurs="0" maxOccurs="1"/>
     </sequence>
-  </content>    
+  </content>
+  <!--
+      Following <constraintSpec> might be more clearly accomplished
+      using abstract patterns, but our build process does not
+      currently support that. For an attempt at using them, see
+      https://github.com/TEIC/TEI/tree/sydb_issue-2179_1st_via_abstract_pats,
+      which was my first attempt at doing this. —Syd, 2021-10-13
+  -->
+  <constraintSpec scheme="schematron" ident="constraint-unless-delete">
+    <constraint>
+      <sch:rule context="tei:constraintSpec[ @mode eq 'delete' ]">
+        <sch:report test="child::tei:constraint">This 'constraintSpec' element has a mode= of "delete" even though it has a child constraint. Change the mode= to "add", "change", or "replace", or remove the 'constraint' child.</sch:report>
+      </sch:rule>
+      <sch:rule context="tei:constraintSpec[ @mode = ('add','replace') ]">
+        <sch:assert test="child::tei:constraint">This 'constraintSpec' element has a mode= of "<sch:value-of select="@mode"/>", but does not a 'constraint' child element. Specify a constraint or change the mode= to "delete".</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <constraintSpec ident="sch_no_more" scheme="schematron">
     <desc xml:lang="en" versionDate="2018-07-06">Relationship between scheme attribute and contents: Schematron 1.x</desc>
     <constraint>
@@ -68693,8 +68547,8 @@ have a  canonical name, supplied as the value for their
           <gloss versionDate="2016-09-27" xml:lang="en">ISO Schematron</gloss>
         </valItem>
       </valList>
-      <remarks versionDate="2016-09-27" xml:lang="en">
-        <p>These Guidelines no longer recommend, and the available TEI
+      <remarks versionDate="2021-09-27" xml:lang="en">
+        <p>These Guidelines no longer recommend, and the current TEI
         stylesheets no longer support, the use of Schematron 1.x
         within <gi>constraintSpec</gi>. Thus the value
         <val>schematron</val> is used to indicate that ISO Schematron
@@ -68708,11 +68562,11 @@ have a  canonical name, supplied as the value for their
       construct.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="semi" mode="add">
-	<valItem ident="deprecationWarning">
-	  <desc xml:lang="en" versionDate="2018-09-17">Indicates that
-	  this constraint specification warns that some other
-	  construct in the schema is deprecated.</desc>
-	</valItem>
+        <valItem ident="deprecationWarning">
+          <desc xml:lang="en" versionDate="2018-09-17">Indicates that
+          this constraint specification warns that some other
+          construct in the schema is deprecated.</desc>
+        </valItem>
       </valList>
     </attDef>
   </attList>
@@ -68733,8 +68587,8 @@ have a  canonical name, supplied as the value for their
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <constraintSpec ident="demo-c2" scheme="schematron">
-        <desc>Implement an accessibility rule which says that pictures should
-    have textual explanations</desc>
+        <desc>Implement an accessibility rule which says that pictures
+        should have textual explanations</desc>
         <constraint>
           <sch:report test="not(tei:figDesc or tei:head)"> You should
           provide information in a figure from which

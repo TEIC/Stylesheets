@@ -7362,7 +7362,9 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                <group>
                   <oneOrMore>
                      <group>
-                        <ref name="t_model.common"/>
+                        <choice>
+                           <ref name="t_model.common"/>
+                        </choice>
                         <zeroOrMore>
                            <ref name="t_model.global"/>
                         </zeroOrMore>
@@ -7507,7 +7509,9 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                      <group>
                         <oneOrMore>
                            <group>
-                              <ref name="t_model.common"/>
+                              <choice>
+                                 <ref name="t_model.common"/>
+                              </choice>
                               <zeroOrMore>
                                  <ref name="t_model.global"/>
                               </zeroOrMore>

@@ -4439,7 +4439,7 @@ body =
      (model.divGenLike, (model.global | model.divGenLike)*)?,
      ((model.divLike, (model.global | model.divGenLike)*)+
       | (model.div1Like, (model.global | model.divGenLike)*)+
-      | ((model.common, model.global*)+,
+      | (((model.common), model.global*)+,
          ((model.divLike, (model.global | model.divGenLike)*)+
           | (model.div1Like, (model.global | model.divGenLike)*)+)?)),
      (model.divBottom, model.global*)*),
@@ -4479,7 +4479,7 @@ floatingText =
   element div {
     ((model.divTop | model.global)*,
      ((((model.divLike | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.divLike | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
@@ -4544,7 +4544,7 @@ div1 =
   element div1 {
     ((model.divTop | model.global)*,
      ((((model.div2Like | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.div2Like | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
@@ -4559,7 +4559,7 @@ div2 =
   element div2 {
     ((model.divTop | model.global)*,
      ((((model.div3Like | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.div3Like | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
@@ -4574,7 +4574,7 @@ div3 =
   element div3 {
     ((model.divTop | model.global)*,
      ((((model.div4Like | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.div4Like | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
@@ -4589,7 +4589,7 @@ div4 =
   element div4 {
     ((model.divTop | model.global)*,
      ((((model.div5Like | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.div5Like | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
@@ -4604,7 +4604,7 @@ div5 =
   element div5 {
     ((model.divTop | model.global)*,
      ((((model.div6Like | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.div6Like | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
@@ -4619,7 +4619,7 @@ div6 =
   element div6 {
     ((model.divTop | model.global)*,
      ((((model.div7Like | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.div7Like | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
@@ -4633,7 +4633,7 @@ div7 =
   ## (level-7 text division) contains the smallest possible subdivision of the front, body or back of a text, larger than a paragraph. [4.1.2. Numbered Divisions]
   element div7 {
     ((model.divTop | model.global)*,
-     ((model.common, model.global*)+,
+     (((model.common), model.global*)+,
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
     att.divLike.attributes,

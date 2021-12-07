@@ -1186,8 +1186,8 @@
         "type" : "elementSpec",
         "module" : "textstructure",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains any appendixes, etc. following the main part\n    of a text.<\/desc>" ],
-        "shortDesc" : "(back matter) contains any appendixes, etc. following the main part\n    of a text.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains any appendixes, etc. following the main part\n  of a text.<\/desc>" ],
+        "shortDesc" : "(back matter) contains any appendixes, etc. following the main part\n  of a text.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">back matter<\/gloss>" ],
         "altIdent" : 
@@ -1701,8 +1701,16 @@
                         "maxOccurs" : "unbounded",
                         "content" : 
                         [ 
-                          { "type" : "classRef",
-                            "key" : "model.common" },
+                          { "type" : "alternate",
+                            "minOccurs" : "1",
+                            "maxOccurs" : "1",
+                            "content" : 
+                            [ 
+                              { "type" : "elementRef",
+                                "key" : "schemaSpec" },
+                              
+                              { "type" : "classRef",
+                                "key" : "model.common" } ] },
                           
                           { "type" : "classRef",
                             "key" : "model.global" } ] },
@@ -3402,8 +3410,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -3518,8 +3534,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -3559,8 +3583,8 @@
         "type" : "elementSpec",
         "module" : "textstructure",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a second-level subdivision of the front, body, or back of a\n text.<\/desc>" ],
-        "shortDesc" : "(level-2 text division) contains a second-level subdivision of the front, body, or back of a\n text.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a second-level subdivision of the front, body, or back of a\n  text.<\/desc>" ],
+        "shortDesc" : "(level-2 text division) contains a second-level subdivision of the front, body, or back of a\n  text.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">level-2 text division<\/gloss>" ],
         "altIdent" : 
@@ -3634,8 +3658,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -3750,8 +3782,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -3866,8 +3906,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -3982,8 +4030,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -4098,8 +4154,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -4185,8 +4249,16 @@
                     "maxOccurs" : "unbounded",
                     "content" : 
                     [ 
-                      { "type" : "classRef",
-                        "key" : "model.common" },
+                      { "type" : "alternate",
+                        "minOccurs" : "1",
+                        "maxOccurs" : "1",
+                        "content" : 
+                        [ 
+                          { "type" : "elementRef",
+                            "key" : "schemaSpec" },
+                          
+                          { "type" : "classRef",
+                            "key" : "model.common" } ] },
                       
                       { "type" : "classRef",
                         "key" : "model.global" } ] },
@@ -4964,8 +5036,8 @@
         "type" : "elementSpec",
         "module" : "textstructure",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains any prefatory matter\n    (headers, abstracts, title page, prefaces, dedications, etc.) found at the\n    start of a document, before the main body.<\/desc>" ],
-        "shortDesc" : "(front matter) contains any prefatory matter\n    (headers, abstracts, title page, prefaces, dedications, etc.) found at the\n    start of a document, before the main body.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains any prefatory matter\n  (headers, abstracts, title page, prefaces, dedications, etc.) found at the\n  start of a document, before the main body.<\/desc>" ],
+        "shortDesc" : "(front matter) contains any prefatory matter\n  (headers, abstracts, title page, prefaces, dedications, etc.) found at the\n  start of a document, before the main body.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">front matter<\/gloss>" ],
         "altIdent" : 
