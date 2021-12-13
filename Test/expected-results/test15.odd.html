@@ -589,7 +589,7 @@
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Schematron</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <div class="pre" itemprop="ab">&lt;s:report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)"&gt; Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText. &lt;/s:report&gt;</div>
+                  <div class="pre" itemprop="ab">&lt;sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)"&gt; Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText. &lt;/sch:report&gt;</div>
                 </td>
               </tr>
               <tr itemprop="row">
@@ -597,7 +597,7 @@
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Schematron</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <div class="pre" itemprop="ab">&lt;s:report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"&gt; Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText. &lt;/s:report&gt;</div>
+                  <div class="pre" itemprop="ab">&lt;sch:report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"&gt; Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText. &lt;/sch:report&gt;</div>
                 </td>
               </tr>
               <tr itemprop="row">
@@ -1008,7 +1008,7 @@ element div
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Schematron</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <div class="pre" itemprop="ab">&lt;s:report test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab) and not(parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"&gt; Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements. &lt;/s:report&gt;</div>
+                  <div class="pre" itemprop="ab">&lt;sch:report test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab) and not(parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"&gt; Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements. &lt;/sch:report&gt;</div>
                 </td>
               </tr>
               <tr itemprop="row">
@@ -1016,7 +1016,7 @@ element div
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Schematron</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <div class="pre" itemprop="ab">&lt;s:report test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)"&gt; Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText. &lt;/s:report&gt;</div>
+                  <div class="pre" itemprop="ab">&lt;sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)"&gt; Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText. &lt;/sch:report&gt;</div>
                 </td>
               </tr>
               <tr itemprop="row">
