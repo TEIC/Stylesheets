@@ -313,7 +313,7 @@
     <attribute name="in"/>
     <attribute name="out"/>
     <sequential>
-      <echo>XSLT generate HTML files (language ${lang})</echo>
+      <echo>XSLT generate HTML files (language ${lang}, style ${teitohtml}, in @{in}, out @{out})</echo>
       <xslt force="yes" style="${teitohtml}" in="@{in}" out="@{out}">
         <xmlcatalog>
           <catalogpath>
