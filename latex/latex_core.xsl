@@ -335,9 +335,20 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element ident</desc>
    </doc>
   <xsl:template match="tei:ident">
-      <xsl:text>\textsf{</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>}</xsl:text>
+    <xsl:text>\textsf{</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@type = ('macro', 'datatype', 'model')">
+        <!--<xsl:message>PROCESSING IDENT OF RELEVANT TYPE</xsl:message>-->
+        <xsl:call-template name="makeInternalLink">
+          <xsl:with-param name="dest" select="text()"/>
+          <xsl:with-param name="body" select="text()"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>}</xsl:text>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
