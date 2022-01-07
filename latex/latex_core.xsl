@@ -337,7 +337,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:ident">
     <xsl:text>\textsf{</xsl:text>
     <xsl:choose>
-      <xsl:when test="@type = ('macro', 'datatype', 'model')">
+      <xsl:when test="@type = ('class', 'datatype', 'macro')">
         <xsl:call-template name="makeInternalLink">
           <xsl:with-param name="dest" select="text()"/>
           <xsl:with-param name="body" select="text()"/>
