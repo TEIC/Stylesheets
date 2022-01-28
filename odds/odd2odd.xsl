@@ -2015,7 +2015,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates mode="justcopy" select="tei:constraintSpec[@mode eq 'change']"/>
     <xsl:for-each select="$ORIGINAL">
       <!-- original source  context -->
-      <xsl:for-each select="tei:constraintSpec">
+      <xsl:for-each select="descendant::tei:constraintSpec">
+        <!-- 2022-01-28: added descendant axis to process all descendant <constraintSpec> elements
+          (e.g. elementSpec/attList/constraintSpec) -->
         <xsl:variable name="CONSTRAINT" select="."/>
         <xsl:variable name="lookingAt">
           <xsl:value-of select="concat(../@ident,'_',@ident)"/>
