@@ -1086,7 +1086,8 @@ att.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { xsd:anyURI }?
 sch:pattern [
-  id = "test15-att.spanning-spanTo-spanTo-2-constraint-rule-8"
+  id =
+    "test15-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1768,7 +1769,8 @@ p =
   element para {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-p-abstractModel-structure-p-constraint-report-5"
+         id =
+           "test15-p-abstractModel-structure-p-in-ab-or-p-constraint-report-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1777,7 +1779,7 @@ p =
            "               "
            sch:report [
              test =
-               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
+               "    (ancestor::tei:ab or ancestor::tei:p)                          and not( ancestor::tei:floatingText                                 |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )"
              "\x{a}" ~
              "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
              "      "
@@ -1789,7 +1791,8 @@ p =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-p-abstractModel-structure-l-constraint-report-6"
+         id =
+           "test15-p-abstractModel-structure-p-in-l-or-lg-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1798,7 +1801,7 @@ p =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)"
+               "    (ancestor::tei:l or ancestor::tei:lg)                          and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )"
              "\x{a}" ~
              "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "
@@ -3060,7 +3063,8 @@ l =
   element l {
     ((text | model.gLike | model.phrase | model.inter | model.global)*)
     >> sch:pattern [
-         id = "test15-l-abstractModel-structure-l-constraint-report-11"
+         id =
+           "test15-l-abstractModel-structure-l-in-l-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3117,7 +3121,8 @@ lg =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-lg-abstractModel-structure-l-constraint-report-12"
+         id =
+           "test15-lg-abstractModel-structure-lg-in-l-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4484,7 +4489,7 @@ floatingText =
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
          id =
-           "test15-div-abstractModel-structure-l-constraint-report-14"
+           "test15-div-abstractModel-structure-div-in-l-or-lg-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4506,7 +4511,7 @@ floatingText =
        ]
     >> sch:pattern [
          id =
-           "test15-div-abstractModel-structure-p-constraint-report-15"
+           "test15-div-abstractModel-structure-div-in-ab-or-p-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4989,7 +4994,7 @@ ab =
     macro.paraContent
     >> sch:pattern [
          id =
-           "test15-ab-abstractModel-structure-ab-constraint-report-16"
+           "test15-ab-abstractModel-structure-ab-in-ab-or-p-constraint-report-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4998,7 +5003,7 @@ ab =
            "               "
            sch:report [
              test =
-               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
+               "    (ancestor::tei:p or ancestor::tei:ab)                          and not( ancestor::tei:floatingText                                  |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )"
              "\x{a}" ~
              "        Abstract model violation: ab may not occur inside paragraphs or other ab elements.\x{a}" ~
              "      "
@@ -5010,7 +5015,8 @@ ab =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-ab-abstractModel-structure-l-constraint-report-17"
+         id =
+           "test15-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5019,7 +5025,7 @@ ab =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)"
+               "    (ancestor::tei:l or ancestor::tei:lg)                         and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )"
              "\x{a}" ~
              "        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "
