@@ -71,12 +71,14 @@ of this software, even if advised of the possibility of such damage.
        whereas <exemplum> elements in ODD customization file are
        copied through. -->
   <xsl:param name="suppressTEIexamples">false</xsl:param>
+  <!-- 2022-02-15: values of constraintSpec/@ident are unique (see TEI issue 2223) thus constraintSpec keys
+    can just contain the value of @ident-->
   <xsl:key name="odd2odd-CHANGEATT" match="tei:attDef[@mode eq 'change']" use="concat(../../@ident,'_',@ident)"/>
-  <xsl:key name="odd2odd-CHANGECONSTRAINT" match="tei:constraintSpec[@mode eq 'change']" use="concat(../@ident,'_',@ident)"/>
+  <xsl:key name="odd2odd-CHANGECONSTRAINT" match="tei:constraintSpec[@mode eq 'change']" use="@ident"/>
   <xsl:key name="odd2odd-CLASS_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:classSpec"/>
   <xsl:key name="odd2odd-DELETEATT" match="tei:attDef[@mode eq 'delete']" use="concat(ancestor::tei:classSpec/@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-DELETEATT" match="tei:attDef[@mode eq 'delete']" use="concat(ancestor::tei:elementSpec/@ident,'_',@ident)"/>
-  <xsl:key name="odd2odd-DELETECONSTRAINT" match="tei:constraintSpec[@mode eq 'delete']" use="concat(../@ident,'_',@ident)"/>
+  <xsl:key name="odd2odd-DELETECONSTRAINT" match="tei:constraintSpec[@mode eq 'delete']" use="@ident"/>
   <xsl:key name="odd2odd-ELEMENT_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:elementSpec"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:dataSpec" use="@ident"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:macroSpec" use="@ident"/>
@@ -104,7 +106,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-REFOBJECTS" use="@key" match="tei:schemaSpec/tei:macroRef[not(ancestor::tei:content)]"/>
   <xsl:key name="odd2odd-REFOBJECTS" use="@key" match="tei:schemaSpec/tei:classRef[not(ancestor::tei:content)]"/>
   <xsl:key name="odd2odd-REFOBJECTS" use="@key" match="tei:schemaSpec/tei:elementRef[not(ancestor::tei:content)]"/>
-  <xsl:key name="odd2odd-REPLACECONSTRAINT" match="tei:constraintSpec[@mode eq 'replace']" use="concat(../@ident,'_',@ident)"/>
+  <xsl:key name="odd2odd-REPLACECONSTRAINT" match="tei:constraintSpec[@mode eq 'replace']" use="@ident"/>
   <xsl:key name="odd2odd-SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
   <xsl:key match="tei:moduleSpec" name="odd2odd-MODULES" use="@ident"/>
 
@@ -2020,13 +2022,13 @@ of this software, even if advised of the possibility of such damage.
           (e.g. elementSpec/attList/constraintSpec) -->
         <xsl:variable name="CONSTRAINT" select="."/>
         <xsl:variable name="lookingAt">
-          <xsl:value-of select="concat(../@ident,'_',@ident)"/>
+          <xsl:value-of select="@ident"/>
         </xsl:variable>
         <xsl:for-each select="$ODD">
           <xsl:choose>
-            <xsl:when test="key('odd2odd-DELETECONSTRAINT',$lookingAt)"/>
-            <xsl:when test="key('odd2odd-REPLACECONSTRAINT',$lookingAt)"/>
-            <xsl:when test="key('odd2odd-CHANGECONSTRAINT',$lookingAt)"/>
+            <xsl:when test="key('odd2odd-DELETECONSTRAINT',$lookingAt)"/>            
+            <xsl:when test="key('odd2odd-REPLACECONSTRAINT',$lookingAt)"/>            
+            <xsl:when test="key('odd2odd-CHANGECONSTRAINT',$lookingAt)"/>            
             <xsl:otherwise>
               <xsl:copy-of select="$CONSTRAINT"/>
             </xsl:otherwise>
