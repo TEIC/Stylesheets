@@ -7,7 +7,7 @@
       </titleStmt>
       <editionStmt>
         <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.4.0.html">4.4.0a</ref>. Last updated on
-        <date when="2022-01-19">19th January 2022</date>, revision <ref target="https://github.com/TEIC/TEI/commit/daab99ca7">daab99ca7</ref></edition>
+        <date when="2022-02-15">15th February 2022</date>, revision <ref target="https://github.com/TEIC/TEI/commit/118a5a6e0">118a5a6e0</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -4454,7 +4454,7 @@ subject, predicate etc. may be more appropriate. Such constraints will typically
   <attList>
     <attDef ident="spanTo" usage="opt">
       <desc versionDate="2005-10-10" xml:lang="en">indicates the end of a span initiated by the element
-	bearing this attribute.</desc>
+        bearing this attribute.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이 속성을 포함하는 요소에 의해 시작된 구간의 끝을 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出文字段的結尾，該文字段以帶有此屬性的元素開頭。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該要素が示す範囲の終点を示す．</desc>
@@ -4462,14 +4462,14 @@ subject, predicate etc. may be more appropriate. Such constraints will typically
       <desc versionDate="2007-05-04" xml:lang="es">indica el final de un fragmento de texto iniciado con el elemento al cual es asignaado el atributo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la fine della porzione di testo che ha inizio con l'elemento a cui è assegnato l'attributo</desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
-      <constraintSpec ident="spanTo-2" scheme="schematron">
+      <constraintSpec ident="spanTo-points-to-following" scheme="schematron">
         <desc xml:lang="en" versionDate="2018-07-06">The @spanTo attribute must point to an element following the
-	current element</desc>
+        current element</desc>
         <constraint>
           <sch:rule context="tei:*[@spanTo]">
             <sch:assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
 The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current element <sch:name/>
-                  </sch:assert>
+            </sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -15135,7 +15135,7 @@ supplied to printer.</change>
   </moduleSpec></div></div>
 <div type="div1" xml:id="CO" n="6"><head>Elements Available in All TEI Documents</head>
 <div type="div2" xml:id="COPA"><head>Paragraphs</head>
-<elementSpec module="core" ident="p">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="p">
   <gloss versionDate="2005-01-14" xml:lang="en">paragraph</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">문단</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">段落</gloss>
@@ -15161,18 +15161,18 @@ supplied to printer.</change>
   <content>
     <macroRef key="macro.paraContent"/>
   </content>
-  <constraintSpec ident="abstractModel-structure-p" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-p-in-ab-or-p" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
+      <sch:report test="    (ancestor::tei:ab or ancestor::tei:p)                          and not( ancestor::tei:floatingText                                 |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )">
         Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-p-in-l-or-lg" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)">
+      <sch:report test="    (ancestor::tei:l or ancestor::tei:lg)                          and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -23975,7 +23975,7 @@ relatedItem element must be empty</sch:report>
 <div type="div3" xml:id="COBIOT"><head>Relationship to Other Bibliographic Schemes</head></div></div>
 <div type="div2" xml:id="CODV"><head>Passages of Verse or Drama</head>
 <div type="div3" xml:id="COVE"><head>Core Tags for Verse</head>
-<elementSpec module="core" ident="l">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="l">
   <gloss versionDate="2005-01-14" xml:lang="en">verse line</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">운문 시행</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">詩行</gloss>
@@ -23999,21 +23999,19 @@ relatedItem element must be empty</sch:report>
     <memberOf key="att.fragmentable"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <textNode/>
-        <classRef key="model.gLike"/>
-        <classRef key="model.phrase"/>
-        <classRef key="model.inter"/>
-        <classRef key="model.global"/>
-      </alternate>
-    
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <textNode/>
+      <classRef key="model.gLike"/>
+      <classRef key="model.phrase"/>
+      <classRef key="model.inter"/>
+      <classRef key="model.global"/>
+    </alternate>
   </content>
-  <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-l-in-l" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
+      <sch:report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
         Abstract model violation: Lines may not contain lines or lg elements.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="und">
@@ -24038,7 +24036,7 @@ relatedItem element must be empty</sch:report>
     <ptr target="#DRPAL"/>
   </listRef>
 </elementSpec>
-<elementSpec module="core" ident="lg">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="lg">
   <gloss versionDate="2005-01-14" xml:lang="en">line group</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">시행군</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">行組</gloss>
@@ -24067,48 +24065,40 @@ relatedItem element must be empty</sch:report>
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.divTop"/>
-          <classRef key="model.global"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <classRef key="model.global"/>
+      </alternate>      
       <alternate>
         <classRef key="model.lLike"/>
         <classRef key="model.stageLike"/>
         <classRef key="model.labelLike"/>
         <elementRef key="lg"/>
       </alternate>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.lLike"/>
-          <classRef key="model.stageLike"/>
-          <classRef key="model.labelLike"/>
-          <classRef key="model.global"/>
-          <elementRef key="lg"/>
-        </alternate>
-      
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        
-          <classRef key="model.divBottom"/>
-        
-        
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.lLike"/>
+        <classRef key="model.stageLike"/>
+        <classRef key="model.labelLike"/>
+        <classRef key="model.global"/>
+        <elementRef key="lg"/>
+      </alternate>
+      <sequence minOccurs="0" maxOccurs="unbounded">        
+        <classRef key="model.divBottom"/>
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
     </sequence>
   </content>
   <constraintSpec scheme="schematron" ident="atleast1oflggapl">
-    <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <constraint>
       <sch:assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
         must contain at least one child l, lg, or gap element.</sch:assert>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-lg-in-l" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
+      <sch:report test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
         Abstract model violation: Lines may not contain line groups.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -25593,7 +25583,7 @@ by the stage direction.</p>
 </elementSpec>
 <div type="div2" xml:id="DSDIV"><head>Divisions of the Body</head>
 <div type="div3" xml:id="DSDIV1"><head>Un-numbered Divisions</head>
-<elementSpec module="textstructure" ident="div">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="textstructure" ident="div">
   <gloss versionDate="2005-01-14" xml:lang="en">text division</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">텍스트 구역</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">文本區段</gloss>
@@ -25660,18 +25650,18 @@ by the stage direction.</p>
       </sequence>
     </sequence>
   </content>
-  <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-div-in-l-or-lg" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
+      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="abstractModel-structure-p" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-div-in-ab-or-p" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
+      <sch:report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
         Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -45801,12 +45791,12 @@ en-tête et un texte, constitue un document TEI.</desc>
     <memberOf key="att.dimensions"/>
   </classes>
   <content><empty/></content>
-  <constraintSpec ident="spanTo" scheme="schematron">
+  <constraintSpec ident="addSpan-requires-spanTo" scheme="schematron">
     <constraint>
       <sch:assert test="@spanTo">The @spanTo attribute of <sch:name/> is required.</sch:assert>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="spanTo_fr" scheme="schematron" xml:lang="fr">
+  <constraintSpec ident="addSpan-requires-spanTo-fr" scheme="schematron" xml:lang="fr">
     <constraint>
       <sch:assert test="@spanTo">L'attribut spanTo est requis.</sch:assert>
     </constraint>
@@ -45931,7 +45921,7 @@ appropriate for which circumstance.</p>
     <ptr target="#PHDA"/>
   </listRef>
 </elementSpec>
-<elementSpec module="transcr" ident="damageSpan">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="transcr" ident="damageSpan">
   <gloss versionDate="2007-09-03" xml:lang="en">damaged span of text</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">텍스트의 손상 구간</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">fragmento de texto dañado</gloss>
@@ -45955,16 +45945,15 @@ endommagée d'une manière quelconque mais toujours lisible.</desc>
     <memberOf key="att.spanning"/>
   </classes>
   <content><empty/></content>
-  <constraintSpec ident="spanTo" scheme="schematron">
+  <constraintSpec ident="damageSpan-requires-spanTo" scheme="schematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@spanTo">
-The @spanTo attribute of <name/> is required.</assert>
+      <sch:assert test="@spanTo">The @spanTo attribute of <sch:name/> is required.</sch:assert>
     </constraint>
   </constraintSpec>
   <!-- FC j'ai traduit ici la contrainte schematron -->
-  <constraintSpec ident="spanTo_fr" scheme="schematron" xml:lang="fr">
+  <constraintSpec ident="damageSpan-requires-spanTo-fr" scheme="schematron" xml:lang="fr">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@spanTo">L'attribut spanTo est requis.</assert>
+      <sch:assert test="@spanTo">L'attribut spanTo est requis.</sch:assert>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -46037,7 +46026,7 @@ the start of the  <anchor xml:id="a34"/> undamaged part of the text. ...</p>
     <ptr target="#PHDA"/>
   </listRef>
 </elementSpec>
-<elementSpec module="transcr" ident="delSpan">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="transcr" ident="delSpan">
   <gloss versionDate="2005-01-14" xml:lang="en">deleted span of text</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">텍스트의 삭제 구간</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">刪除的文字段</gloss>
@@ -46064,15 +46053,15 @@ author, scribe, annotator, or corrector.</desc>
     <memberOf key="att.dimensions"/>
   </classes>
   <content><empty/></content>
-  <constraintSpec ident="spanTo" scheme="schematron">
+  <constraintSpec ident="delSpan-requires-spanTo" scheme="schematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
+      <sch:assert test="@spanTo">The @spanTo attribute of <sch:name/> is required.</sch:assert>
     </constraint>
   </constraintSpec>
   <!-- FC j'ai traduit ici la contrainte schematron -->
-  <constraintSpec ident="spanTo_fr" scheme="schematron" xml:lang="fr">
+  <constraintSpec ident="delSpan-requires-spanTo-fr" scheme="schematron" xml:lang="fr">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@spanTo">L'attribut spanTo est requis.</assert>
+      <sch:assert test="@spanTo">L'attribut spanTo est requis.</sch:assert>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -56381,7 +56370,7 @@ Information with a Text</head>
 <div type="div4" xml:id="SACRmu"><head>Miscellaneous Usages</head></div>
 <div type="div4" xml:id="SACRCS"><head>Citation Structures</head></div></div></div>
 <div type="div2" xml:id="SASE"><head>Blocks, Segments, and Anchors</head>
-<elementSpec module="linking" ident="ab">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="linking" ident="ab">
   <gloss versionDate="2005-01-14" xml:lang="en">anonymous block</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">익명 구역</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">匿名區塊</gloss>
@@ -56407,18 +56396,18 @@ Information with a Text</head>
   <content>
     <macroRef key="macro.paraContent"/>
   </content>
-  <constraintSpec ident="abstractModel-structure-ab" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-ab-in-ab-or-p" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
+      <sch:report test="    (ancestor::tei:p or ancestor::tei:ab)                          and not( ancestor::tei:floatingText                                  |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )">
         Abstract model violation: ab may not occur inside paragraphs or other ab elements.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-ab-in-l-or-lg" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)">
+      <sch:report test="    (ancestor::tei:l or ancestor::tei:lg)                         and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )">
         Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -68538,6 +68527,16 @@ have a  canonical name, supplied as the value for their
       </sch:rule>
     </constraint>
   </constraintSpec>
+  <constraintSpec ident="unique-constraintSpec-ident" scheme="schematron">
+    <constraint>
+      <sch:rule context="tei:constraintSpec[ @mode eq 'add'  or  not( @mode ) ]">
+        <sch:let name="myIdent" value="normalize-space(@ident)"/>
+        <sch:report test="preceding::tei:constraintSpec[ normalize-space(@ident) eq $myIdent ]">
+        The @ident of 'constraintSpec' should be unique; this one (<sch:value-of select="$myIdent"/>) is the same as that of a previous 'constraintSpec'.
+        </sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="scheme" usage="req">
       <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints
@@ -68602,7 +68601,7 @@ have a  canonical name, supplied as the value for their
     <p>This constraint uses SPITBOL (a language which is not
     expressed in XML) to check whether the title and author are identical: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraintSpec ident="local" scheme="SPITBOL">
+      <constraintSpec ident="author_ne_title" scheme="SPITBOL">
         <constraint> 
 (output = leq(title,author)  "title and author cannot be the same")
         </constraint>
@@ -69939,7 +69938,18 @@ should correspond to an existing module, via a moduleSpec or
       <desc versionDate="2013-05-16" xml:lang="en">provides a date before which the construct being defined
       will not be removed.</desc>
       <desc versionDate="2019-04-08" xml:lang="ja">定義されている構文が削除される前の日付を提供する．</desc>
-      <datatype minOccurs="1" maxOccurs="1"><dataRef name="date"/></datatype>
+      <datatype minOccurs="1" maxOccurs="1">
+        <!--
+            WARNING: In the 'valid' target of the build process the
+            validity of @validUntil is tested against xsd:date not by
+            using the schema generated from this definition, but
+            rather by an ad-hoc test in an XSLT program, namely
+            P5/Utilities/extractegXML.xsl. Thus if we ever change the
+            datatype here, we may well need to change it there as
+            well. —Syd, 2022-02-02
+        -->
+        <dataRef name="date"/>
+      </datatype>
       <constraintSpec scheme="schematron" ident="deprecation-two-month-warning">
         <constraint>
           <sch:rule context="tei:*[@validUntil]">
@@ -69979,8 +69989,7 @@ should correspond to an existing module, via a moduleSpec or
         the future. E.g., the documentation for such a construct might
         include the phrase <mentioned>warning: deprecated</mentioned>
         in red.</p>
-      </remarks>
-      
+      </remarks>      
       <remarks versionDate="2019-04-08" xml:lang="ja">
         <p>この属性の値は，（<code>yyyy-mm-dd</code>の形式で）日付を表し，属性がODDに追加された日付より後である必要がある。技術的には，この属性は，指定された日付まで定義されているマークアップ言語の将来のリリースで構造を残す意図のみを表明し，その日付以降に何が起こるかについて主張しない。実際には，<att>validUntil</att>日付の直後に定義されるマークアップ言語の将来のリリースからコンストラクトが削除されることが期待されます。</p>
         <p>ODDプロセッサは，通常，<att>validUntil</att>日付が過去のものである仕様要素を処理しない．ODDプロセッサは，通常，<att>validUntil</att>の日付を持つコンストラクトについてユーザに警告する。例えば，そのような構造のドキュメントには，<mentioned>warning：deprecated</mentioned>というフレーズが赤で表示される。</p>
