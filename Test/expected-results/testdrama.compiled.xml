@@ -3500,7 +3500,7 @@ subject, predicate etc. may be more appropriate. Such constraints will typically
   <attList>
     <attDef ident="spanTo" usage="opt">
       <desc versionDate="2005-10-10" xml:lang="en">indicates the end of a span initiated by the element
-	bearing this attribute.</desc>
+        bearing this attribute.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이 속성을 포함하는 요소에 의해 시작된 구간의 끝을 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出文字段的結尾，該文字段以帶有此屬性的元素開頭。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該要素が示す範囲の終点を示す．</desc>
@@ -3508,14 +3508,14 @@ subject, predicate etc. may be more appropriate. Such constraints will typically
       <desc versionDate="2007-05-04" xml:lang="es">indica el final de un fragmento de texto iniciado con el elemento al cual es asignaado el atributo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la fine della porzione di testo che ha inizio con l'elemento a cui è assegnato l'attributo</desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
-      <constraintSpec ident="spanTo-2" scheme="schematron">
+      <constraintSpec ident="spanTo-points-to-following" scheme="schematron">
         <desc xml:lang="en" versionDate="2018-07-06">The @spanTo attribute must point to an element following the
-	current element</desc>
+        current element</desc>
         <constraint>
           <sch:rule context="tei:*[@spanTo]">
             <sch:assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
 The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current element <sch:name/>
-                  </sch:assert>
+            </sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -7047,7 +7047,7 @@ Elements</ref>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54M">2.3.6.3. Milestone Method</ref>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54">2.3.6. The Reference System Declaration</ref>
   </listRef>
-</classSpec><elementSpec module="core" ident="p">
+</classSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="p">
   <gloss versionDate="2005-01-14" xml:lang="en">paragraph</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">문단</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">段落</gloss>
@@ -7073,18 +7073,18 @@ Elements</ref>
   <content>
     <macroRef key="macro.paraContent"/>
   </content>
-  <constraintSpec ident="abstractModel-structure-p" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-p-in-ab-or-p" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
+      <sch:report test="    (ancestor::tei:ab or ancestor::tei:p)                          and not( ancestor::tei:floatingText                                 |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )">
         Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-p-in-l-or-lg" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)">
+      <sch:report test="    (ancestor::tei:l or ancestor::tei:lg)                          and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -15656,7 +15656,7 @@ relatedItem element must be empty</sch:report>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBIRI">3.12.2.7. Related Items</ref>
   </listRef>
-</elementSpec><elementSpec module="core" ident="l">
+</elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="l">
   <gloss versionDate="2005-01-14" xml:lang="en">verse line</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">운문 시행</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">詩行</gloss>
@@ -15680,21 +15680,19 @@ relatedItem element must be empty</sch:report>
     <memberOf key="att.fragmentable"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <textNode/>
-        <classRef key="model.gLike"/>
-        <classRef key="model.phrase"/>
-        <classRef key="model.inter"/>
-        <classRef key="model.global"/>
-      </alternate>
-    
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <textNode/>
+      <classRef key="model.gLike"/>
+      <classRef key="model.phrase"/>
+      <classRef key="model.inter"/>
+      <classRef key="model.global"/>
+    </alternate>
   </content>
-  <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-l-in-l" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
+      <sch:report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
         Abstract model violation: Lines may not contain lines or lg elements.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="und">
@@ -15718,7 +15716,7 @@ relatedItem element must be empty</sch:report>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#CODV">3.13. Passages of Verse or Drama</ref>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/DR.html#DRPAL">7.2.5. Speech Contents</ref>
   </listRef>
-</elementSpec><elementSpec module="core" ident="lg">
+</elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="lg">
   <gloss versionDate="2005-01-14" xml:lang="en">line group</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">시행군</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">行組</gloss>
@@ -15747,48 +15745,40 @@ relatedItem element must be empty</sch:report>
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.divTop"/>
-          <classRef key="model.global"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <classRef key="model.global"/>
+      </alternate>      
       <alternate>
         <classRef key="model.lLike"/>
         <classRef key="model.stageLike"/>
         <classRef key="model.labelLike"/>
         <elementRef key="lg"/>
       </alternate>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.lLike"/>
-          <classRef key="model.stageLike"/>
-          <classRef key="model.labelLike"/>
-          <classRef key="model.global"/>
-          <elementRef key="lg"/>
-        </alternate>
-      
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        
-          <classRef key="model.divBottom"/>
-        
-        
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.lLike"/>
+        <classRef key="model.stageLike"/>
+        <classRef key="model.labelLike"/>
+        <classRef key="model.global"/>
+        <elementRef key="lg"/>
+      </alternate>
+      <sequence minOccurs="0" maxOccurs="unbounded">        
+        <classRef key="model.divBottom"/>
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
     </sequence>
   </content>
   <constraintSpec scheme="schematron" ident="atleast1oflggapl">
-    <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <constraint>
       <sch:assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
         must contain at least one child l, lg, or gap element.</sch:assert>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-lg-in-l" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
+      <sch:report test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
         Abstract model violation: Lines may not contain line groups.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -24108,7 +24098,7 @@ during the evolution of the encoded representation of that text.</p>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/DS.html#DSFLT">4.3.2. Floating Texts</ref>
   </listRef>
-</elementSpec><elementSpec module="textstructure" ident="div">
+</elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="textstructure" ident="div">
   <gloss versionDate="2005-01-14" xml:lang="en">text division</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">텍스트 구역</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">文本區段</gloss>
@@ -24175,18 +24165,18 @@ during the evolution of the encoded representation of that text.</p>
       </sequence>
     </sequence>
   </content>
-  <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-div-in-l-or-lg" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
+      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="abstractModel-structure-p" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-div-in-ab-or-p" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
+      <sch:report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
         Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -27721,7 +27711,7 @@ the date of the entire document, not for any subset or part of it.</p>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SAPT">16.1. Links</ref>
   </listRef>
-</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="linking" ident="ab">
+</elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" module="linking" ident="ab">
   <gloss versionDate="2005-01-14" xml:lang="en">anonymous block</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">익명 구역</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">匿名區塊</gloss>
@@ -27747,18 +27737,18 @@ the date of the entire document, not for any subset or part of it.</p>
   <content>
     <macroRef key="macro.paraContent"/>
   </content>
-  <constraintSpec ident="abstractModel-structure-ab" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-ab-in-ab-or-p" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
+      <sch:report test="    (ancestor::tei:p or ancestor::tei:ab)                          and not( ancestor::tei:floatingText                                  |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )">
         Abstract model violation: ab may not occur inside paragraphs or other ab elements.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-ab-in-l-or-lg" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)">
+      <sch:report test="    (ancestor::tei:l or ancestor::tei:lg)                         and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )">
         Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">

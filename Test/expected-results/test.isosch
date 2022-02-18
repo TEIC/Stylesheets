@@ -52,7 +52,7 @@
          <assert test="@target">@targetLang should only be used on <name/> if @target is specified.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-att.spanning-spanTo-spanTo-2-8">
+   <pattern id="schematron-constraint-test-att.spanning-spanTo-spanTo-points-to-following-8">
       <rule context="tei:*[@spanTo]">
          <assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
 The element indicated by @spanTo (<value-of select="@spanTo"/>) must follow the current element <name/>
@@ -66,16 +66,16 @@ The element indicated by @spanTo (<value-of select="@spanTo"/>) must follow the 
             </assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-p-abstractModel-structure-p-10">
+   <pattern id="schematron-constraint-test-p-abstractModel-structure-p-in-ab-or-p-10">
       <rule context="tei:p">
-         <report test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
+         <report test="    (ancestor::tei:ab or ancestor::tei:p)                          and not( ancestor::tei:floatingText                                 |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )">
         Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
       </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-p-abstractModel-structure-l-11">
+   <pattern id="schematron-constraint-test-p-abstractModel-structure-p-in-l-or-lg-11">
       <rule context="tei:p">
-         <report test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)">
+         <report test="    (ancestor::tei:l or ancestor::tei:lg)                          and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
       </report>
       </rule>
@@ -134,7 +134,7 @@ relatedItem element must be empty</report>
         or a child element to indicate the related bibliographic item</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-l-abstractModel-structure-l-20">
+   <pattern id="schematron-constraint-test-l-abstractModel-structure-l-in-l-20">
       <rule context="tei:l">
          <report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
         Abstract model violation: Lines may not contain lines or lg elements.
@@ -147,7 +147,7 @@ relatedItem element must be empty</report>
         must contain at least one child l, lg, or gap element.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-lg-abstractModel-structure-l-22">
+   <pattern id="schematron-constraint-test-lg-abstractModel-structure-lg-in-l-22">
       <rule context="tei:lg">
          <report test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
         Abstract model violation: Lines may not contain line groups.
@@ -189,18 +189,17 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
           the zone element rather than the path element. </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-addSpan-spanTo-28">
+   <pattern id="schematron-constraint-test-addSpan-addSpan-requires-spanTo-28">
       <rule context="tei:addSpan">
          <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-damageSpan-spanTo-30">
+   <pattern id="schematron-constraint-test-damageSpan-damageSpan-requires-spanTo-30">
       <rule context="tei:damageSpan">
-         <assert test="@spanTo">
-The @spanTo attribute of <name/> is required.</assert>
+         <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-delSpan-spanTo-32">
+   <pattern id="schematron-constraint-test-delSpan-delSpan-requires-spanTo-32">
       <rule context="tei:delSpan">
          <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
       </rule>
@@ -211,14 +210,14 @@ The @spanTo attribute of <name/> is required.</assert>
             <name/> must have at least one child add and at least one child del or surplus</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-div-abstractModel-structure-l-37">
+   <pattern id="schematron-constraint-test-div-abstractModel-structure-div-in-l-or-lg-37">
       <rule context="tei:div">
          <report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
       </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-div-abstractModel-structure-p-38">
+   <pattern id="schematron-constraint-test-div-abstractModel-structure-div-in-ab-or-p-38">
       <rule context="tei:div">
          <report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
         Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
@@ -231,16 +230,16 @@ The @spanTo attribute of <name/> is required.</assert>
          </assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-ab-abstractModel-structure-ab-40">
+   <pattern id="schematron-constraint-test-ab-abstractModel-structure-ab-in-ab-or-p-40">
       <rule context="tei:ab">
-         <report test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)">
+         <report test="    (ancestor::tei:p or ancestor::tei:ab)                          and not( ancestor::tei:floatingText                                  |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )">
         Abstract model violation: ab may not occur inside paragraphs or other ab elements.
       </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-ab-abstractModel-structure-l-41">
+   <pattern id="schematron-constraint-test-ab-abstractModel-structure-ab-in-l-or-lg-41">
       <rule context="tei:ab">
-         <report test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)">
+         <report test="    (ancestor::tei:l or ancestor::tei:lg)                         and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )">
         Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
       </report>
       </rule>
