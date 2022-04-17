@@ -155,6 +155,9 @@
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
+          <xsl:if test="tei:descOrGlossOutOfDate(.)">
+            <xsl:text> outOfDateTranslation</xsl:text>
+          </xsl:if>
         </xsl:attribute>
         <xsl:sequence select="tei:makeDescription(., true(), true())"/>
         <xsl:apply-templates select="tei:valList"/>
@@ -210,6 +213,9 @@
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
+          <xsl:if test="tei:descOrGlossOutOfDate(.)">
+            <xsl:text> outOfDateTranslation</xsl:text>
+          </xsl:if>
         </xsl:attribute>
         <xsl:sequence select="tei:makeDescription(., false(), true())"/>
         <xsl:apply-templates select="tei:valList"/>
@@ -238,6 +244,9 @@
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
+          <xsl:if test="tei:descOrGlossOutOfDate(.)">
+            <xsl:text> outOfDateTranslation</xsl:text>
+          </xsl:if>
         </xsl:attribute>
         <!-- MDH 2018-01-21: setting third param ($makeMiniList) to 
           false so we can stop building ugly and superfluous lists 
@@ -473,6 +482,9 @@
             <xsl:attribute name="{$colspan}">2</xsl:attribute>
             <xsl:attribute name="{$rendName}">
               <xsl:text>wovenodd-col2</xsl:text>
+              <xsl:if test="tei:descOrGlossOutOfDate(.)">
+                <xsl:text> outOfDateTranslation</xsl:text>
+              </xsl:if>
             </xsl:attribute>
             <xsl:element namespace="{$outputNS}" name="{$hiName}">
               <xsl:attribute name="{$rendName}">
@@ -664,6 +676,9 @@
             <xsl:attribute name="{$colspan}">2</xsl:attribute>
             <xsl:attribute name="{$rendName}">
               <xsl:text>wovenodd-col2</xsl:text>
+              <xsl:if test="tei:descOrGlossOutOfDate(.)">
+                <xsl:text> outOfDateTranslation</xsl:text>
+              </xsl:if>
             </xsl:attribute>
             <xsl:element namespace="{$outputNS}" name="{$hiName}">
               <xsl:attribute name="{$rendName}">
@@ -996,6 +1011,9 @@
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>wovenodd-col2</xsl:text>
+          <xsl:if test="tei:descOrGlossOutOfDate(.)">
+            <xsl:text> outOfDateTranslation</xsl:text>
+          </xsl:if>
         </xsl:attribute>
         <xsl:sequence select="tei:makeDescription(., true(), true())"/>
         <xsl:for-each select="tei:constraint">
@@ -1352,6 +1370,11 @@
         <xsl:element namespace="{$outputNS}" name="{$rowName}">
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:attribute name="{$colspan}">2</xsl:attribute>
+            <xsl:if test="tei:descOrGlossOutOfDate(.)">
+              <xsl:attribute name="{$rendName}">
+                <xsl:text>outOfDateTranslation</xsl:text>
+              </xsl:attribute>
+            </xsl:if>
             <xsl:element namespace="{$outputNS}" name="{$hiName}">
               <xsl:attribute name="{$rendName}">
                 <xsl:text>label</xsl:text>
@@ -1382,6 +1405,9 @@
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:attribute name="{$rendName}">
               <xsl:text>wovenodd-col2</xsl:text>
+              <xsl:if test="tei:descOrGlossOutOfDate(.)">
+                <xsl:text> outOfDateTranslation</xsl:text>
+              </xsl:if>
             </xsl:attribute>
             <xsl:call-template name="generateModelParents">
               <xsl:with-param name="showElements">true</xsl:with-param>
@@ -1418,6 +1444,11 @@
         <xsl:element namespace="{$outputNS}" name="{$rowName}">
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:attribute name="{$colspan}">2</xsl:attribute>
+            <xsl:if test="tei:descOrGlossOutOfDate(.)">
+              <xsl:attribute name="{$rendName}">
+                <xsl:text>outOfDateTranslation</xsl:text>
+              </xsl:attribute>
+            </xsl:if>
             <xsl:element namespace="{$outputNS}" name="{$hiName}">
               <xsl:attribute name="{$rendName}">
                 <xsl:text>label</xsl:text>
@@ -1585,6 +1616,9 @@
       <xsl:element namespace="{$outputNS}" name="{$labelName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>moduleSpecHead</xsl:text>
+          <xsl:if test="tei:descOrGlossOutOfDate(.)">
+            <xsl:text> outOfDateTranslation</xsl:text>
+          </xsl:if>
         </xsl:attribute>
         <xsl:element namespace="{$outputNS}" name="{$segName}">
           <xsl:attribute name="{$langAttributeName}">
@@ -1723,6 +1757,9 @@
         <xsl:element namespace="{$outputNS}" name="{$cellName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>wovenodd-col2</xsl:text>
+            <xsl:if test="preceding-sibling::tei:remarks[@xml:lang='en']/@versionDate gt @versionDate">
+              <xsl:text> outOfDateTranslation</xsl:text>
+            </xsl:if>
           </xsl:attribute>
           <xsl:comment>&#160;</xsl:comment>
           <xsl:apply-templates/>
@@ -1925,6 +1962,9 @@
         <xsl:element namespace="{$outputNS}" name="{$ddName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>odd_value</xsl:text>
+            <xsl:if test="tei:descOrGlossOutOfDate(.)">
+              <xsl:text> outOfDateTranslation</xsl:text>
+            </xsl:if>
           </xsl:attribute>
           <xsl:if test="tei:paramList">
             <xsl:text>(</xsl:text>
