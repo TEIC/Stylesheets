@@ -682,9 +682,7 @@
             <xsl:text>TEI: </xsl:text>
             <xsl:value-of select="tei:head[1]"/>
           </span>
-          <span class="pilcrow">
-            <xsl:text>¶</xsl:text>
-          </span>
+          <xsl:text>&#x2693;</xsl:text>
         </a>
       </span>
     </xsl:if>
@@ -1024,14 +1022,12 @@
               <xsl:text> </xsl:text>
               <xsl:value-of select="$attName"/>
             </span>
-            <span class="pilcrow">
-              <xsl:text>¶</xsl:text>
-            </span>
+            <xsl:text>&#x2693;</xsl:text>
           </a>
         </span>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:comment>No linking pilcrow inserted: attname not provided.</xsl:comment>
+        <xsl:comment>No linking anchor symbol inserted: attname not provided.</xsl:comment>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
