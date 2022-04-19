@@ -1,0 +1,51 @@
+name: Stylesheets Tests
+
+on:
+  push:
+  pull_request:
+    branches: [ dev ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test1:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/teic/jenkins:dev
+      options: "--user root"
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run tests from the Test directory
+        run: make clean test deb dist
+
+      - name: Slack Notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: ${{ job.status }}
+          MSG_MINIMAL: commit,actions url
+
+  test2:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/teic/jenkins:dev
+      options: "--user root"
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run tests from the Test2 directory
+        run: make test2
+        
+      - name: Slack Notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: ${{ job.status }}
+          MSG_MINIMAL: commit,actions url

@@ -103,7 +103,15 @@ teioo.jar:
 
 test: clean build common names debversion
 	@echo "BUILD Run tests. (Note: Test/Makefile sets its own DEFAULTSOURCE.)"
-	(cd Test; make)
+	(cd Test && make)
+
+test2: clean build common names debversion
+	@echo "BUILD Run new tests (“Test2”), in series"
+	(cd Test2 && ant testSeries)
+
+test2P: clean build common names debversion
+	@echo "BUILD Run new tests (“Test2”), in parallel"
+	(cd Test2 && ant test)
 
 dist: clean release
 	-rm -f tei-xsl-`cat VERSION`.zip

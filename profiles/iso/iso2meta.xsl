@@ -47,7 +47,8 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
 
-  <xsl:output method="xhtml" encoding="utf-8"/>
+   <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
+      omit-xml-declaration="yes"/>
 
   <xsl:key name="DIV" match="tei:div" use="@type"/>
 

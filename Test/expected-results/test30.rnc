@@ -1108,7 +1108,8 @@ Tatt.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { xsd:anyURI }?
 sch:pattern [
-  id = "testbasic-att.spanning-spanTo-spanTo-2-constraint-rule-8"
+  id =
+    "testbasic-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -2141,7 +2142,7 @@ Tp =
     Tmacro.paraContent
     >> sch:pattern [
          id =
-           "testbasic-p-abstractModel-structure-p-constraint-report-5"
+           "testbasic-p-abstractModel-structure-p-in-ab-or-p-constraint-report-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2150,7 +2151,7 @@ Tp =
            "               "
            sch:report [
              test =
-               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
+               "    (ancestor::tei:ab or ancestor::tei:p)                          and not( ancestor::tei:floatingText                                 |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )"
              "\x{a}" ~
              "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
              "      "
@@ -2163,7 +2164,7 @@ Tp =
        ]
     >> sch:pattern [
          id =
-           "testbasic-p-abstractModel-structure-l-constraint-report-6"
+           "testbasic-p-abstractModel-structure-p-in-l-or-lg-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2172,7 +2173,7 @@ Tp =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)"
+               "    (ancestor::tei:l or ancestor::tei:lg)                          and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )"
              "\x{a}" ~
              "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "
@@ -3468,7 +3469,7 @@ Tl =
       | Tmodel.global)*)
     >> sch:pattern [
          id =
-           "testbasic-l-abstractModel-structure-l-constraint-report-11"
+           "testbasic-l-abstractModel-structure-l-in-l-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3526,7 +3527,7 @@ Tlg =
        ]
     >> sch:pattern [
          id =
-           "testbasic-lg-abstractModel-structure-l-constraint-report-12"
+           "testbasic-lg-abstractModel-structure-lg-in-l-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3837,8 +3838,16 @@ Tidno =
       | 
         ## Digital Object Identifier: a unique string of letters and numbers assigned to an electronic document.
         "DOI"
-      | 
-        ## Uniform Resource Identifier: a string of characters to uniquely identify a resource which usually contains indication of the means of accessing that resource, the name of its host, and its filepath.
+      | [
+          a:documentation [
+            "Uniform Resource Identifier: a string of characters to uniquely identify a resource, following the syntax of "
+            ns1:a [
+              href = "https://datatracker.ietf.org/doc/html/rfc3986"
+              "RFC 3986"
+            ]
+            "."
+          ]
+        ]
         "URI"
       | 
         ## A data number in the Virtual Internet Authority File assigned to link different names in catalogs around the world for the same entity.
@@ -6309,7 +6318,8 @@ TaddSpan =
   element addSpan {
     empty
     >> sch:pattern [
-         id = "testbasic-addSpan-spanTo-constraint-assert-16"
+         id =
+           "testbasic-addSpan-addSpan-requires-spanTo-constraint-assert-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6329,7 +6339,8 @@ TaddSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-addSpan-spanTo_fr-constraint-assert-17"
+         id =
+           "testbasic-addSpan-addSpan-requires-spanTo-fr-constraint-assert-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6370,7 +6381,8 @@ TdamageSpan =
   element damageSpan {
     empty
     >> sch:pattern [
-         id = "testbasic-damageSpan-spanTo-constraint-assert-18"
+         id =
+           "testbasic-damageSpan-damageSpan-requires-spanTo-constraint-assert-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6379,7 +6391,6 @@ TdamageSpan =
            "               "
            sch:assert [
              test = "@spanTo"
-             "\x{a}" ~
              "The @spanTo attribute of "
              sch:name [ ]
              " is required."
@@ -6391,7 +6402,8 @@ TdamageSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-damageSpan-spanTo_fr-constraint-assert-19"
+         id =
+           "testbasic-damageSpan-damageSpan-requires-spanTo-fr-constraint-assert-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6420,7 +6432,8 @@ TdelSpan =
   element delSpan {
     empty
     >> sch:pattern [
-         id = "testbasic-delSpan-spanTo-constraint-assert-20"
+         id =
+           "testbasic-delSpan-delSpan-requires-spanTo-constraint-assert-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6440,7 +6453,8 @@ TdelSpan =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-delSpan-spanTo_fr-constraint-assert-21"
+         id =
+           "testbasic-delSpan-delSpan-requires-spanTo-fr-constraint-assert-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6914,7 +6928,7 @@ Tab =
     Tmacro.paraContent
     >> sch:pattern [
          id =
-           "testbasic-ab-abstractModel-structure-ab-constraint-report-18"
+           "testbasic-ab-abstractModel-structure-ab-in-ab-or-p-constraint-report-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6923,7 +6937,7 @@ Tab =
            "               "
            sch:report [
              test =
-               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
+               "    (ancestor::tei:p or ancestor::tei:ab)                          and not( ancestor::tei:floatingText                                  |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )"
              "\x{a}" ~
              "        Abstract model violation: ab may not occur inside paragraphs or other ab elements.\x{a}" ~
              "      "
@@ -6936,7 +6950,7 @@ Tab =
        ]
     >> sch:pattern [
          id =
-           "testbasic-ab-abstractModel-structure-l-constraint-report-19"
+           "testbasic-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6945,7 +6959,7 @@ Tab =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)"
+               "    (ancestor::tei:l or ancestor::tei:lg)                         and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )"
              "\x{a}" ~
              "        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "
@@ -7448,7 +7462,7 @@ Tbody =
      (Tmodel.divGenLike, (Tmodel.global | Tmodel.divGenLike)*)?,
      ((Tmodel.divLike, (Tmodel.global | Tmodel.divGenLike)*)+
       | (Tmodel.div1Like, (Tmodel.global | Tmodel.divGenLike)*)+
-      | ((Tmodel.common, Tmodel.global*)+,
+      | (((Tmodel.common), Tmodel.global*)+,
          ((Tmodel.divLike, (Tmodel.global | Tmodel.divGenLike)*)+
           | (Tmodel.div1Like,
              (Tmodel.global | Tmodel.divGenLike)*)+)?)),
@@ -7489,12 +7503,12 @@ Tdiv =
   element div {
     ((Tmodel.divTop | Tmodel.global)*,
      ((((Tmodel.divLike | Tmodel.divGenLike), Tmodel.global*)+
-       | ((Tmodel.common, Tmodel.global*)+,
+       | (((Tmodel.common), Tmodel.global*)+,
           ((Tmodel.divLike | Tmodel.divGenLike), Tmodel.global*)*)),
       (Tmodel.divBottom, Tmodel.global*)*)?)
     >> sch:pattern [
          id =
-           "testbasic-div-abstractModel-structure-l-constraint-report-20"
+           "testbasic-div-abstractModel-structure-div-in-l-or-lg-constraint-report-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7516,7 +7530,7 @@ Tdiv =
        ]
     >> sch:pattern [
          id =
-           "testbasic-div-abstractModel-structure-p-constraint-report-21"
+           "testbasic-div-abstractModel-structure-div-in-ab-or-p-constraint-report-21"
          "\x{a}" ~
          "            "
          sch:rule [

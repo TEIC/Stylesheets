@@ -2941,7 +2941,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:listPerson">
       <xsl:variable name="mylist">
          <tei:list type="unordered">
-	           <xsl:apply-templates/>
+	   <xsl:apply-templates/>
          </tei:list>
       </xsl:variable>
       <xsl:apply-templates select="$mylist"/>

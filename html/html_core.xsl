@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet                 xmlns:m="http://www.w3.org/1998/Math/MathML"
-                                xmlns="http://www.w3.org/1999/xhtml"
-                                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                                xmlns:fo="http://www.w3.org/1999/XSL/Format"
-                                xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                                xmlns:html="http://www.w3.org/1999/xhtml"
-                                xmlns:fn="http://www.w3.org/2005/xpath-functions"
-                                xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                                xmlns:tei="http://www.tei-c.org/ns/1.0"
-                                xmlns:teix="http://www.tei-c.org/ns/Examples"
-                                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                                xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-                                exclude-result-prefixes="#all" version="2.0">
+				xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+				xmlns:fo="http://www.w3.org/1999/XSL/Format"
+				xmlns:xs="http://www.w3.org/2001/XMLSchema"
+				xmlns:html="http://www.w3.org/1999/xhtml"
+				xmlns:fn="http://www.w3.org/2005/xpath-functions"
+				xmlns:rng="http://relaxng.org/ns/structure/1.0"
+				xmlns:tei="http://www.tei-c.org/ns/1.0"
+				xmlns:teix="http://www.tei-c.org/ns/Examples"
+				xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+				xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
+				exclude-result-prefixes="#all" version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet dealing with elements from the core module, making
@@ -179,7 +179,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates select="tei:*[not(self::tei:q or self::tei:quote)]"/>
           </xsl:variable>
           <xsl:choose>
-            <xsl:when test="$outputTarget='html5'">
+            <xsl:when test="$outputTarget=('html5', 'html')">
               <xsl:copy-of select="$contents"/>
             </xsl:when>
             <xsl:otherwise>
@@ -381,33 +381,33 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="not(preceding-sibling::tei:head) and starts-with($parentName,'div') and (tei:keepDivOnPage(..) or 
-                      number($depth)  &gt; number($splitLevel))">
-          <xsl:variable name="Heading">
-            <xsl:for-each select="..">
-              <xsl:call-template name="splitHTMLBlocks">
-                <xsl:with-param name="element" select="if (number($depth)+$divOffset &gt;6) then 'div'
-                                               else
-                                               concat('h',number($depth)+$divOffset)"/>
-                <xsl:with-param name="content">
-                  <xsl:call-template name="sectionHeadHook"/>
-                  <xsl:call-template name="header">
-                    <xsl:with-param name="display">full</xsl:with-param>
-                  </xsl:call-template>
-                </xsl:with-param>
-                <xsl:with-param name="copyid">false</xsl:with-param>
-              </xsl:call-template>
-            </xsl:for-each>
-          </xsl:variable>
-          <xsl:choose>
-            <xsl:when test="$outputTarget='html5' and number($depth)  &lt; 1">
-              <header>
-                <xsl:copy-of select="$Heading"/>
-              </header>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:copy-of select="$Heading"/>
-            </xsl:otherwise>
-          </xsl:choose>
+		      number($depth)  &gt; number($splitLevel))">
+	  <xsl:variable name="Heading">
+	    <xsl:for-each select="..">
+	      <xsl:call-template name="splitHTMLBlocks">
+		<xsl:with-param name="element" select="if (number($depth)+$divOffset &gt;6) then 'div'
+					       else
+					       concat('h',number($depth)+$divOffset)"/>
+		<xsl:with-param name="content">
+		  <xsl:call-template name="sectionHeadHook"/>
+		  <xsl:call-template name="header">
+		    <xsl:with-param name="display">full</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:with-param>
+		<xsl:with-param name="copyid">false</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:variable>
+	  <xsl:choose>
+	    <xsl:when test="$outputTarget=('html5', 'html') and number($depth)  &lt; 1">
+	      <header>
+		<xsl:copy-of select="$Heading"/>
+	      </header>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:copy-of select="$Heading"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -1377,7 +1377,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:attribute>
           </xsl:if>
           <xsl:choose>
-            <xsl:when test="$outputTarget='html5'">
+            <xsl:when test="$outputTarget=('html5', 'html')">
               <xsl:apply-templates/>
             </xsl:when>
             <xsl:when test="tei:p|tei:l|tei:lg">
@@ -1558,7 +1558,8 @@ of this software, even if advised of the possibility of such damage.
             <xsl:message>Opening file <xsl:value-of select="$outName"/>
                </xsl:message>
           </xsl:if>
-          <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
+          <xsl:result-document encoding="{$outputEncoding}" html-version="{$htmlVersion}" normalization-form="{$normalizationForm}" 
+            href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
             <html>
               <xsl:call-template name="addLangAtt"/>
               <xsl:variable name="pagetitle">

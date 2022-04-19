@@ -1086,7 +1086,8 @@ att.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { xsd:anyURI }?
 sch:pattern [
-  id = "test15-att.spanning-spanTo-spanTo-2-constraint-rule-8"
+  id =
+    "test15-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1768,7 +1769,8 @@ p =
   element para {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-p-abstractModel-structure-p-constraint-report-5"
+         id =
+           "test15-p-abstractModel-structure-p-in-ab-or-p-constraint-report-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1777,7 +1779,7 @@ p =
            "               "
            sch:report [
              test =
-               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )"
+               "    (ancestor::tei:ab or ancestor::tei:p)                          and not( ancestor::tei:floatingText                                 |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )"
              "\x{a}" ~
              "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
              "      "
@@ -1789,7 +1791,8 @@ p =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-p-abstractModel-structure-l-constraint-report-6"
+         id =
+           "test15-p-abstractModel-structure-p-in-l-or-lg-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1798,7 +1801,7 @@ p =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)"
+               "    (ancestor::tei:l or ancestor::tei:lg)                          and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )"
              "\x{a}" ~
              "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "
@@ -3060,7 +3063,8 @@ l =
   element l {
     ((text | model.gLike | model.phrase | model.inter | model.global)*)
     >> sch:pattern [
-         id = "test15-l-abstractModel-structure-l-constraint-report-11"
+         id =
+           "test15-l-abstractModel-structure-l-in-l-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3117,7 +3121,8 @@ lg =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-lg-abstractModel-structure-l-constraint-report-12"
+         id =
+           "test15-lg-abstractModel-structure-lg-in-l-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3428,8 +3433,16 @@ idno =
       | 
         ## Digital Object Identifier: a unique string of letters and numbers assigned to an electronic document.
         "DOI"
-      | 
-        ## Uniform Resource Identifier: a string of characters to uniquely identify a resource which usually contains indication of the means of accessing that resource, the name of its host, and its filepath.
+      | [
+          a:documentation [
+            "Uniform Resource Identifier: a string of characters to uniquely identify a resource, following the syntax of "
+            ns1:a [
+              href = "https://datatracker.ietf.org/doc/html/rfc3986"
+              "RFC 3986"
+            ]
+            "."
+          ]
+        ]
         "URI"
       | 
         ## A data number in the Virtual Internet Authority File assigned to link different names in catalogs around the world for the same entity.
@@ -4439,7 +4452,7 @@ body =
      (model.divGenLike, (model.global | model.divGenLike)*)?,
      ((model.divLike, (model.global | model.divGenLike)*)+
       | (model.div1Like, (model.global | model.divGenLike)*)+
-      | ((model.common, model.global*)+,
+      | (((model.common), model.global*)+,
          ((model.divLike, (model.global | model.divGenLike)*)+
           | (model.div1Like, (model.global | model.divGenLike)*)+)?)),
      (model.divBottom, model.global*)*),
@@ -4479,12 +4492,12 @@ floatingText =
   element div {
     ((model.divTop | model.global)*,
      ((((model.divLike | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.divLike | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
          id =
-           "test15-div-abstractModel-structure-l-constraint-report-14"
+           "test15-div-abstractModel-structure-div-in-l-or-lg-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4506,7 +4519,7 @@ floatingText =
        ]
     >> sch:pattern [
          id =
-           "test15-div-abstractModel-structure-p-constraint-report-15"
+           "test15-div-abstractModel-structure-div-in-ab-or-p-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4544,7 +4557,7 @@ div1 =
   element div1 {
     ((model.divTop | model.global)*,
      ((((model.div2Like | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.div2Like | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
@@ -4559,7 +4572,7 @@ div2 =
   element div2 {
     ((model.divTop | model.global)*,
      ((((model.div3Like | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.div3Like | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
@@ -4574,7 +4587,7 @@ div3 =
   element div3 {
     ((model.divTop | model.global)*,
      ((((model.div4Like | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.div4Like | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
@@ -4589,7 +4602,7 @@ div4 =
   element div4 {
     ((model.divTop | model.global)*,
      ((((model.div5Like | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.div5Like | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
@@ -4604,7 +4617,7 @@ div5 =
   element div5 {
     ((model.divTop | model.global)*,
      ((((model.div6Like | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.div6Like | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
@@ -4619,7 +4632,7 @@ div6 =
   element div6 {
     ((model.divTop | model.global)*,
      ((((model.div7Like | model.divGenLike), model.global*)+
-       | ((model.common, model.global*)+,
+       | (((model.common), model.global*)+,
           ((model.div7Like | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
@@ -4633,7 +4646,7 @@ div7 =
   ## (level-7 text division) contains the smallest possible subdivision of the front, body or back of a text, larger than a paragraph. [4.1.2. Numbered Divisions]
   element div7 {
     ((model.divTop | model.global)*,
-     ((model.common, model.global*)+,
+     (((model.common), model.global*)+,
       (model.divBottom, model.global*)*)?),
     att.global.attributes,
     att.divLike.attributes,
@@ -4989,7 +5002,7 @@ ab =
     macro.paraContent
     >> sch:pattern [
          id =
-           "test15-ab-abstractModel-structure-ab-constraint-report-16"
+           "test15-ab-abstractModel-structure-ab-in-ab-or-p-constraint-report-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4998,7 +5011,7 @@ ab =
            "               "
            sch:report [
              test =
-               "not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum         |parent::tei:item         |parent::tei:note         |parent::tei:q         |parent::tei:quote         |parent::tei:remarks         |parent::tei:said         |parent::tei:sp         |parent::tei:stage         |parent::tei:cell         |parent::tei:figure)"
+               "    (ancestor::tei:p or ancestor::tei:ab)                          and not( ancestor::tei:floatingText                                  |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )"
              "\x{a}" ~
              "        Abstract model violation: ab may not occur inside paragraphs or other ab elements.\x{a}" ~
              "      "
@@ -5010,7 +5023,8 @@ ab =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-ab-abstractModel-structure-l-constraint-report-17"
+         id =
+           "test15-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5019,7 +5033,7 @@ ab =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:figure or parent::tei:note or ancestor::tei:floatingText)"
+               "    (ancestor::tei:l or ancestor::tei:lg)                         and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )"
              "\x{a}" ~
              "        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "

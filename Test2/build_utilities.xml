@@ -140,7 +140,7 @@
       it takes a single parameter, inFile.
     </description>
     <!--  Format/indent the result with xmllint.      -->
-    <antcall target="cleanForDiff">
+    <antcall target="cleanForDiff">      
       <param name="inFile" value="${inFile}"/>
     </antcall>
     
@@ -238,7 +238,7 @@
       Current test processes don't process any such files.
     </description>
     <echo level="info" message="Clean ${inFile} ready for diffing with expected results."/>
-    <replaceregexp file="${inFile}" match="^\s*&lt;!DOCTYPE[^>]+>" replace=""/>
+   <!-- <replaceregexp file="${inFile}" match="^\s*&lt;!DOCTYPE[^>]+>" replace=""/>-->
     <propertyregex property="cleanedFileName"
       input="${inFile}"
       regexp="(\..+$)"
@@ -252,7 +252,7 @@
       <arg value="-versionmsg:off"/>
       <arg value="-dtd:off"/>
     </java>
-    <echo level="info" message="Copying ${cleanedFileName} over ${inFile}"/>
+    <echo level="info" message="Copying ${cleanedFileName} over ${inFile}"/>    
     <copy file="${cleanedFileName}" tofile="${inFile}" overwrite="true"/>
     <if>
       <equals arg1="${debug}" arg2="false"/>
