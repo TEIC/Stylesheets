@@ -1,3 +1,222 @@
+2022-04-19  Raff Viglianti  <raffaeleviglianti@gmail.com>
+
+	set to v.7.53.0
+
+	updated p5 subset
+
+2022-04-18  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #542 from TEIC/sydb_issue_537
+	Allow the `<ref>` elements to get processed:
+
+2022-04-17  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Flag out-of-date Translations (#547)
+
+2022-04-16  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	add dedicated processing of links in specLists
+
+2022-04-15  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Revert "Allow the `<ref>` elements to get processed:"
+	This reverts commit 91ae8d75c10092ec206bb516eb27725e0c4b0ddb.
+
+2022-04-05  Syd Bauman  <s.bauman@northeastern.edu>
+
+	only whitespace fixes, no real changes
+
+	Fix namespace; see #546.
+
+2022-03-25  Syd Bauman  <s.bauman@northeastern.edu>
+
+	work on Stylesheets ticket #479
+
+2022-03-23  Syd Bauman  <s.bauman@northeastern.edu>
+
+	With @martinascholger update p5subset.
+
+2022-02-18  martindholmes  <mholmes@uvic.ca>
+
+	Updating Test results for new p5subset.xml.
+
+	Fix Test2 discrepancies due to updated p5subset.xml.
+
+	Updated p5subset.xml to eliminate possible complicating factor in handling https://github.com/TEIC/TEI/issues/2231.
+
+2022-01-28  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Allow the `<ref>` elements to get processed: Stylesheets group, with big thanks to @hcayless, realized a) these things (contents of `<hi>` in intermediate Lite stage that contain the `<ref>`s that were not working) were being processed with `<value-of>`, not `<apply-templates>`; and b) furthermore, the templates for `<ref>` would have been processed if these templates for `<hi>` did not exist, and since all they were doing in 2 of 3 cases was adding boldface we did not like (and failing to process the `<ref>`s), we just nuked 2 of them and fixed the 3rd (which also adds the pointy brackets for element names).
+
+2022-01-24  Helena Bermúdez Sabel  <helena.b.sabel@gmail.com>
+
+	Merge pull request #540 from TEIC/updateP5subset
+	Update p5subset
+
+2022-01-19  Janelle Jenstad  <jenstad@uvic.ca>
+
+	updated tests
+
+	update P5 subset
+
+2022-01-10  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #536 from TEIC/issue-526-mdh-pdf-links
+	Issue 526 mdh pdf links
+
+2022-01-06  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Separate out test of type="class" from that of "dataype" and "macro", and prepend the destination with “TEI.”, thus allowing the link to work.
+
+	Fix an error, but it does not fix the problem
+
+2022-01-03  martindholmes  <mholmes@uvic.ca>
+
+	Remove debug comment.
+
+2021-12-28  martindholmes  <mholmes@uvic.ca>
+
+	Initial work to find the locus of the problem.
+
+2021-12-24  Syd Bauman  <s.bauman@neu.edu>
+
+	Ignorable whitespace changes EXCEPT also added a little info an informational message from the ant task
+
+2021-12-16  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Fix #526: Stylesheets group met today. We tackled and seem to have fixed #526 by changing a single conditional in html_oddprocessing so that <ident> elements are processed as internal links when type=macro or type=datatype, too.
+
+2021-12-07  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Update p5subset
+
+2021-12-02  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	tweak for absolute path references (item 4 of #495)
+	Stylesheets group looked at #495 and changed two little things
+	* reorder attributes to make it more readable (source->target)
+	* use `$F` instead of `@url`: this addresses the issue with the broken absolute path references for `@facs` attributes
+
+	Co-Authored-By: Syd Bauman <sydb@users.noreply.github.com>
+	Co-Authored-By: Elisa Beshero-Bondar <ebeshero@users.noreply.github.com>
+	Co-Authored-By: Martina Scholger <martina.scholger@uni-graz.at>
+	Co-Authored-By: MegJBrown <8483387+MegJBrown@users.noreply.github.com>
+	Co-Authored-By: Raffaele Viglianti <144770+raffazizzi@users.noreply.github.com>
+	Co-Authored-By: Hugh A. Cayless <philomousos@gmail.com>
+
+2021-11-25  Helena Bermúdez Sabel  <helena.b.sabel@gmail.com>
+
+	Merge pull request #531 from TEIC/issue-515-caption
+	Issue #515: “Attribute” repeated in tagdoc
+
+2021-11-25  helenasabel  <helena.b.sabel@gmail.com>
+
+	updated of test15 - word “atributos” no longer appears, as expected
+
+2021-11-25  martindholmes  <mholmes@uvic.ca>
+
+	Working with @helenasabel, @sydb, @martinascholger and @nccole on issue #515: rewrote attribute listings output to suppress unwanted word.
+
+2021-11-19  Hugh Cayless  <philomousos@gmail.com>
+
+	Fixed bug in hyperlink rendering.
+
+2021-11-15  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	add slack notifications for Stylesheet tests
+
+2021-11-05  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Merge pull request #466 from rvdb/docx-list-rend
+	align list processing in docx2tei with GL prose: differentiate between list/@type and list/@rend
+
+	update badges
+
+	add GitHub action for testing
+
+2021-11-04  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	add downloaded FOP files to gitignore
+	quoting from https://github.com/TEIC/Stylesheets/blob/2456660de90509af62603436b587b3d99d3c8c47/Test2/build.xml#L490: "We want to test FOP, but probably avoid exploding our repo …"
+
+	fix docx test in Test2
+
+	fix  test-from-docx
+
+	fix test19
+
+2021-11-02  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Fix #527.
+
+2021-11-01  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #528 from TEIC/issue_511_markdown_images
+	First pass at issue #511: graphics to markdown images.
+
+2021-11-01  martindholmes  <mholmes@uvic.ca>
+
+	Merge branch 'issue_511_markdown_images' of github.com:TEIC/Stylesheets into issue_511_markdown_images
+
+	Update tests for Markdown changes.
+
+2021-11-01  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Catch-up the test files to the modified captions in the input file
+
+	More useful captions
+
+2021-10-26  martindholmes  <mholmes@uvic.ca>
+
+	More elegant code courtesy of @sydb.
+
+	Tested conversion; added colon for Kramdown syntax.
+
+	Reformulated XPath per @sydb. Still needs testing.
+
+2021-10-21  martindholmes  <mholmes@uvic.ca>
+
+	First pass at issue #511: graphics to markdown images.
+
+2021-10-01  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Merge pull request #510 from TEIC/sydb_509_FPI_in_idno
+	Look in <idno> as well as <altIdent> for module FPI
+
+2021-09-09  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Add Test2/ to Makefile: Two new tarets, 'test2' and 'test2P'. The latter runs the tests in Test2/ in parallel, the former in series.
+
+2021-09-05  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #499 from TEIC/iss487
+	update html output declarations to modern XHTML5 #487
+
+2021-09-05  helenasabel  <helena.b.sabel@gmail.com>
+
+	updated Test2 expected-results (with minor change in build_utilities.xml
+
+	kept the same behaviour concerning CSS as in previous teitohtml5
+
+	added/modified comments following @sydb suggestions
+
+	update of expected results (fixed issues after merge)
+
+	fetching dev: merge conflicts in expected-results
+
+2021-08-31  helenasabel  <helena.b.sabel@gmail.com>
+
+	increase of release number
+
+	updated Test2 expected results
+
+	merged of released branch
+
+	update of expected results and P5subset
+
+	merge of release 7.52.0
+
+	update version number and changelog
 2021-08-29  Elisa Beshero-Bondar  <ebeshero@users.noreply.github.com>
 
 	Merge pull request #522 from TEIC/P5subset
