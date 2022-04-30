@@ -755,6 +755,14 @@ test-namespaces: actual
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test35.rnc $(ER)/test35.rnc; \
 		else echo "==deferring: \` diff  $(AR)/test35.rnc $(ER)/test35.rnc \`"; fi
+	
+#HBS 2022-04-30 tests attributes @include and @except
+	$(BINDIR)/teitornc $(FLAGS) testClass.odd $(AR)/testClass.rnc
+	perl -p -i -e 's/generated from ODD source .*//' $(AR)/testClass.rnc
+	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/testClass.rnc
+	if [ $(DIFFNOW) -eq 1 ]; \
+		then diff  $(AR)/testClass.rnc $(ER)/testClass.rnc; \
+		else echo "==deferring: \` diff  $(AR)/testClass.rnc $(ER)/testClass.rnc \`"; fi
 
 test-scripts:
 	for i in $(SCRIPTS); do $(BINDIR)/$$i $(FLAGS) maria.xml $$i.result && rm $$i.result; done
