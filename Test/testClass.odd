@@ -45,13 +45,23 @@
                </classes>
             </elementSpec>
             <moduleRef key="tei"/>
-            <elementSpec ident="testP1">
-               <desc>Default: should generate x | y | z</desc>
+            <elementSpec ident="testP1a">
+               <desc>Default: should generate x | y | z (if default value for @expand was alternation)</desc>
                <classes>
                   <memberOf key="model.divPart"/>
                </classes>
                <content>
                   <classRef key="testClass"/>
+               </content>
+            </elementSpec>
+            
+            <elementSpec ident="testP1b">
+               <desc>Alternate: should generate x | y | z</desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass" expand="alternation"/>
                </content>
             </elementSpec>
 
@@ -119,8 +129,7 @@
             </elementSpec>
 
             <elementSpec ident="testP7">
-               <desc>Should generate ((y|z),(y|z)?, (y|z)?) or maybe (y|z)+ and a schematron rule,
-                  but doesn't </desc>
+               <desc>Should generate  (y | z), ((y | z), (y | z)?)? </desc>
                <classes>
                   <memberOf key="model.divPart"/>
                </classes>
