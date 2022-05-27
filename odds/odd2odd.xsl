@@ -135,11 +135,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-DELETE"   match="tei:dataSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-DELETE"   match="tei:elementSpec[@mode eq 'delete']" use="tei:uniqueName(.)"/>
 
-  <xsl:key name="odd2odd-REPLACE"  match="tei:classSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-REPLACE"  match="tei:dataSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-REPLACE" match="tei:elementSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-REPLACE"  match="tei:macroSpec[@mode eq 'replace']"   use="tei:uniqueName(.)"/>
-  <xsl:key name="odd2odd-REPLACEATT"     match="tei:attDef[@mode eq 'replace']" use="concat(../../@ident,'_',@ident)"/>
+  <xsl:key name="odd2odd-REPLACE"    match="tei:classSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-REPLACE"    match="tei:dataSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-REPLACE"    match="tei:elementSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-REPLACE"    match="tei:macroSpec[@mode eq 'replace']"   use="tei:uniqueName(.)"/>
+  <xsl:key name="odd2odd-REPLACEATT" match="tei:attDef[@mode eq 'replace']" use="concat(../../@ident,'_',@ident)"/>
 
 
   <xsl:variable name="DEFAULTSOURCE">
@@ -281,16 +281,29 @@ of this software, even if advised of the possibility of such damage.
   </xsl:function>
 
   <xsl:function name="tei:uniqueName" as="xs:string">
-    <xsl:param name="e"/>
-    <xsl:for-each select="$e">
-      <xsl:sequence select="concat(
-        if (@ns eq 'http://www.tei-c.org/ns/1.0') then ''
-        else if (@ns) then @ns
-        else if (ancestor::tei:schemaSpec/@ns) then
-        ancestor::tei:schemaSpec/@ns else '',@ident)"/>
-    </xsl:for-each>
+    <xsl:param name="spec" as="element()"/>
+    <xsl:variable name="type_and_ns" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="$spec/self::tei:schemaSpec">
+          <xsl:sequence select="local-name($spec)||( $spec/@ns, 'http://www.tei-c.org/ns/1.0')[1]"/>
+        </xsl:when>
+        <xsl:when test="$spec/self::tei:elementSpec">
+          <xsl:sequence select="local-name($spec)||( $spec/@ns, $spec/ancestor::tei:schemaSpec/@ns, 'http://www.tei-c.org/ns/1.0')[1]"/>
+        </xsl:when>
+        <xsl:when test="$spec/self::tei:*[ not( @ns ) ]">
+          <xsl:sequence select="local-name($spec)"/>
+        </xsl:when>
+        <xsl:when test="$spec/self::tei:*[ @ns ]">
+          <xsl:sequence select="local-name($spec)||$spec/@ns"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:message select="'WARNING: attempt to generate unique string for non-TEI element.'"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:sequence select="$type_and_ns||'_'||$spec/@ident"/>
   </xsl:function>
-
+  
   <xsl:template name="die">
     <xsl:param name="message"/>
     <xsl:message terminate="yes">

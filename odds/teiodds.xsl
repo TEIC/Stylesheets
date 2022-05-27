@@ -2018,24 +2018,11 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
-
   <xsl:function name="tei:message" as="xs:string">
     <xsl:param name="message"/>
     <xsl:message><xsl:copy-of select="$message"/></xsl:message>
     <xsl:text/>
   </xsl:function>
-
-  <xsl:function name="tei:uniqueName" as="xs:string">
-    <xsl:param name="e"/>
-    <xsl:for-each select="$e">
-      <xsl:sequence select="concat(
-	if (@ns='http://www.tei-c.org/ns/1.0') then ''
-	else if (@ns) then @ns
-	else if (ancestor::tei:schemaSpec/@ns) then
-	ancestor::tei:schemaSpec/@ns else '',@ident)"/>
-    </xsl:for-each>
-  </xsl:function>
-
 
   <xsl:template name="die">
     <xsl:param name="message"/>
