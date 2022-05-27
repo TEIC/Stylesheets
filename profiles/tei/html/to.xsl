@@ -3,11 +3,13 @@
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
     exclude-result-prefixes="tei html"
     version="2.0">
     <!-- import base conversion style -->
 
     <xsl:import href="../../../html/html.xsl"/>
+    <xsl:import href="../../../html/microdata.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -51,13 +53,47 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
   <xsl:param name="splitLevel">-1</xsl:param>
-  <xsl:param name="cssFile"></xsl:param>
-  <xsl:param name="cssInlineFiles">../tei.css ../odd.css</xsl:param>
+  
+<!--  Default behaviour concerning CSS files is the same as in previous HTML5 output
+  transformation, this is, a link to the file “tei.css”. To change this behaviour and include internal CSS instead
+  (as it was the default in HTML output), declare both the "cssFile" and "cssInlineFile" parameters. — hsb, 2021-09-05 -->
+  
+  <!--<xsl:param name="cssFile"></xsl:param>-->
+  <!--<xsl:param name="cssInlineFiles">../tei.css ../odd.css</xsl:param>-->
   <xsl:param name="institution"></xsl:param>
   <xsl:param name="feedbackURL"/>
   <xsl:param name="searchURL"/>
   <xsl:template name="copyrightStatement"></xsl:template>
   <xsl:param name="parentURL">https://www.tei-c.org/</xsl:param>
   <xsl:param name="parentWords">TEI</xsl:param>
+
+
+  <xsl:template match="skos:exactMatch">
+    <tt>'<xsl:value-of select="."/>'</tt>
+  </xsl:template>
+  
+  <xsl:template match="tei:valItem">
+    <tr>
+      <td><xsl:sequence select="tei:showMode(@ident,@mode)"/>
+        <xsl:if test="tei:paramList">
+          <xsl:text> (</xsl:text>
+          <xsl:value-of select="tei:paramList/tei:paramSpec/@ident" separator=","/>
+          <xsl:text>)</xsl:text>
+        </xsl:if>
+      </td>
+      <td><xsl:value-of select="tei:desc"/>
+        <xsl:if test="skos:exactMatch">
+          [also   <xsl:apply-templates select="skos:exactMatch"/>]
+        </xsl:if>
+      </td>
+    </tr>
+  </xsl:template>
+  
+  <xsl:template match="tei:att">
+    <span>
+      <xsl:call-template name="makeRendition"/>
+      <xsl:apply-templates/>
+    </span>
+  </xsl:template>
 
 </xsl:stylesheet>

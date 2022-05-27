@@ -252,11 +252,17 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="not(doc-available($source))">
         <xsl:call-template name="die">
-          <xsl:with-param name="message">
-            <xsl:text>Source </xsl:text>
-            <xsl:value-of select='($source,$loc,name($top),base-uri($top))' separator=" + "/>
-            <xsl:text> not readable</xsl:text>
-          </xsl:with-param>
+          <xsl:with-param name="message" as="xs:string"
+                          select="concat(
+                                  'Source document ',
+                                  $source,
+                                  ' is not readable; from ',
+                                  base-uri($top),
+                                  ' (which has an outermost element of ',
+                                  name($top/*),
+                                  '), with loc=',
+                                  $loc
+                                  )"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>

@@ -186,9 +186,8 @@
                      <xsl:message>Opening file (process TEI)<xsl:value-of select="$outName"/>
                      </xsl:message>
                   </xsl:if>
-                  <xsl:result-document doctype-public="{$doctypePublic}"
-                     doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
-                     href="{$outName}" method="{$outputMethod}">
+                  <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
+                     encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
                      <xsl:apply-templates/>
                   </xsl:result-document>
 
@@ -440,9 +439,9 @@
          <xsl:message>Opening file (split TEI)<xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
-      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
-         encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
-
+      <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
+         encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
+     
          <xsl:call-template name="pageLayoutSimple"/>
       </xsl:result-document>
 
@@ -676,8 +675,8 @@
          <xsl:message>Opening file (makeDivPage)<xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
-      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
-         encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
+      <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
+         encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
          <xsl:choose>
             <xsl:when test="$pageLayout = 'Complex'">
                <xsl:call-template name="pageLayoutComplex">
@@ -801,16 +800,21 @@
          </xsl:choose>
       </xsl:variable>
       <xsl:choose>
-         <xsl:when test="$outputTarget = 'html'">
+<!--         When output format is XHTML, both @xml:lang and @lang attributes are created.
+         For other outputs, just @lang-->
+         <xsl:when test="$outputTarget = ('html', 'html5')">
             <xsl:attribute name="xml:lang">
                <xsl:value-of select="$supplied"/>
             </xsl:attribute>
-         </xsl:when>
-         <xsl:when test="$outputTarget = 'html5'">
             <xsl:attribute name="lang">
                <xsl:value-of select="$supplied"/>
             </xsl:attribute>
          </xsl:when>
+         <xsl:otherwise>
+            <xsl:attribute name="lang">
+               <xsl:value-of select="$supplied"/>
+            </xsl:attribute>
+         </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -864,7 +868,7 @@
          </xsl:when>
          <xsl:otherwise>
             <xsl:element
-               name="{if ($outputTarget='html5' and number($depth)
+               name="{if ($outputTarget=('html5', 'html') and number($depth)
 			     &lt; 1) then 'section' else 'div'}">
                <xsl:call-template name="microdata"/>
                <xsl:call-template name="divClassAttribute">
@@ -946,7 +950,7 @@
                test="
                   $topNavigationPanel = 'true' and
                   $nav = 'true'">
-               <xsl:element name="{if ($outputTarget='html5') then 'nav'
+               <xsl:element name="{if ($outputTarget= ('html5', 'html')) then 'nav'
 				  else 'div'}">
                   <xsl:call-template name="xrefpanel">
                      <xsl:with-param name="homepage" select="concat($masterFile, $standardSuffix)"/>
@@ -961,7 +965,7 @@
                test="
                   $bottomNavigationPanel = 'true' and
                   $nav = 'true'">
-               <xsl:element name="{if ($outputTarget='html5') then 'nav' else
+               <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else
 				'div'}">
                   <xsl:call-template name="xrefpanel">
                      <xsl:with-param name="homepage" select="concat($masterFile, $standardSuffix)"/>
@@ -1026,8 +1030,8 @@
                <xsl:message>Opening file (doPage) <xsl:value-of select="$outName"/>
                </xsl:message>
             </xsl:if>
-            <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
-               encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
+            <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
+               encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
                <xsl:call-template name="pageLayoutComplex">
                   <xsl:with-param name="currentID" select="$currentID"/>
                </xsl:call-template>
@@ -1647,7 +1651,7 @@ function click(d) {
                         <xsl:call-template name="sectionHeadHook"/>
                      </h2>
                      <xsl:if test="$topNavigationPanel = 'true'">
-                        <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+                        <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else 'div'}">
                            <xsl:call-template name="xrefpanel">
                               <xsl:with-param name="homepage"
                                  select="concat($masterFile, $standardSuffix)"/>
@@ -1659,7 +1663,7 @@ function click(d) {
                         <xsl:with-param name="depth" select="count(ancestor::tei:div) + 1"/>
                      </xsl:call-template>
                      <xsl:if test="$bottomNavigationPanel = 'true'">
-                        <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+                        <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else 'div'}">
                            <xsl:call-template name="xrefpanel">
                               <xsl:with-param name="homepage"
                                  select="concat($masterFile, $standardSuffix)"/>
@@ -2376,7 +2380,8 @@ function click(d) {
          <xsl:message>Opening file (pageperfile) <xsl:value-of select="$outName"/></xsl:message>
       </xsl:if>
 
-      <xsl:result-document href="{$outName}">
+      <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
+         encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
          <html>
             <xsl:call-template name="addLangAtt"/>
             <xsl:variable name="pagetitle">
@@ -2402,8 +2407,9 @@ function click(d) {
                   </xsl:with-param>
                </xsl:call-template>
             </xsl:variable>
-            <xsl:result-document href="{$outNameFacs}">
-               <html>
+            <xsl:result-document html-version="{$htmlVersion}" normalization-form="{$normalizationForm}"
+               encoding="{$outputEncoding}" href="{$outNameFacs}" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
+                <html>
                   <xsl:call-template name="addLangAtt"/>
                   <xsl:variable name="pagetitle">
                      <xsl:sequence select="tei:generateTitle(.)"/>
@@ -2792,7 +2798,7 @@ function click(d) {
    </doc>
    <xsl:template name="topNavigation">
       <xsl:if test="ancestor::teiCorpus">
-         <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+         <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else 'div'}">
             <xsl:attribute name="class" select="$alignNavigationPanel"/>
             <xsl:call-template name="nextLink"/>
             <xsl:call-template name="previousLink"/>
@@ -2957,7 +2963,7 @@ function click(d) {
                   </xsl:with-param>
                </xsl:call-template>
                <xsl:if test="$topNavigationPanel = 'true'">
-                  <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+                  <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else 'div'}">
                      <xsl:call-template name="xrefpanel">
                         <xsl:with-param name="homepage" select="concat($BaseFile, $standardSuffix)"/>
                         <xsl:with-param name="mode" select="local-name(.)"/>
@@ -2973,7 +2979,7 @@ function click(d) {
                </xsl:call-template>
                <xsl:call-template name="printNotes"/>
                <xsl:if test="$bottomNavigationPanel = 'true'">
-                  <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+                  <xsl:element name="{if ($outputTarget=('html5', 'html')) then 'nav' else 'div'}">
                      <xsl:call-template name="xrefpanel">
                         <xsl:with-param name="homepage" select="concat($BaseFile, $standardSuffix)"/>
                         <xsl:with-param name="mode" select="local-name(.)"/>

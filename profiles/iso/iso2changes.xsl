@@ -56,7 +56,8 @@ of this software, even if advised of the possibility of such damage.
    <xsl:key name="frontDiv" match="tei:div[ancestor::tei:front]" use="1"/>
    <xsl:key name="bodyDiv" match="tei:div[ancestor::tei:body]" use="1"/>
    <xsl:key name="backDiv" match="tei:div[ancestor::tei:back]" use="1"/>
-   <xsl:output method="xhtml" encoding="utf-8"/>
+   <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
+      omit-xml-declaration="yes"/>
    <xsl:template match="/tei:TEI">
       <xsl:variable name="today">
          <xsl:call-template name="whatsTheDate"/>
