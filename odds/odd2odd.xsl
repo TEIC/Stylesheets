@@ -1388,7 +1388,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="minOmaxO" select="tei:minOmaxO( @minOccurs, @maxOccurs )"/>
     <xsl:variable name="min" select="$minOmaxO[1]"/>
     <xsl:variable name="max" select="$minOmaxO[2]"/>
-    <xsl:variable name="otherAtts" select="@*[not(local-name() = ('minOccurs','maxOccurs'))]"/>
+    <xsl:variable name="otherAtts" select="@* except ( @minOccurs, @maxOccurs )"/>
     <!-- 
       for each Pure ODD content model,
       remove reference to any elements which have been
