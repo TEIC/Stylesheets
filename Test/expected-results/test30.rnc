@@ -51,14 +51,18 @@ Tatt.anchoring.attribute.targetEnd =
   
   ## (target end) points to the end of the span to which the note is attached, if the note is not embedded in the text at that point.
   attribute targetEnd {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.ascribed.attributes = Tatt.ascribed.attribute.who
 Tatt.ascribed.attribute.who =
   
   ## indicates the person, or group of people, to whom the element content is ascribed.
   attribute who {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.ascribed.directed.attributes =
   Tatt.ascribed.attributes, Tatt.ascribed.directed.attribute.toWhom
@@ -66,7 +70,9 @@ Tatt.ascribed.directed.attribute.toWhom =
   
   ## indicates the person, or group of people, to whom a speech act or action is directed.
   attribute toWhom {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.canonical.attributes =
   Tatt.canonical.attribute.key, Tatt.canonical.attribute.ref
@@ -78,7 +84,9 @@ Tatt.canonical.attribute.ref =
   
   ## (reference) provides an explicit means of locating a full definition or identity for the entity being named by means of one or more URIs.
   attribute ref {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.ranging.attributes =
   Tatt.ranging.attribute.atLeast,
@@ -203,7 +211,9 @@ Tatt.written.attribute.hand =
       " element describing the hand considered responsible for the content of the element concerned."
     ]
   ]
-  attribute hand { xsd:anyURI }?
+  attribute hand {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 Tatt.damaged.attributes =
   Tatt.dimensions.attributes,
   Tatt.written.attributes,
@@ -405,7 +415,9 @@ Tatt.datable.attribute.calendar =
   
   ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
   attribute calendar {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 sch:pattern [
   id = "testbasic-att.datable-calendar-calendar-constraint-rule-4"
@@ -440,7 +452,9 @@ Tatt.datable.attribute.period =
     ]
   ]
   attribute period {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.datcat.attributes =
   Tatt.datcat.attribute.datcat, Tatt.datcat.attribute.valueDatcat
@@ -448,13 +462,17 @@ Tatt.datcat.attribute.datcat =
   
   ## contains a PID (persistent identifier) that aligns the given element with the appropriate Data Category (or categories) in ISOcat.
   attribute ns2:datcat {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.datcat.attribute.valueDatcat =
   
   ## contains a PID (persistent identifier) that aligns the content of the given element or the value of the given attribute with the appropriate simple Data Category (or categories) in ISOcat.
   attribute ns2:valueDatcat {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.declarable.attributes = Tatt.declarable.attribute.default
 Tatt.declarable.attribute.default =
@@ -472,9 +490,11 @@ Tatt.declarable.attribute.default =
 Tatt.declaring.attributes = Tatt.declaring.attribute.decls
 Tatt.declaring.attribute.decls =
   
-  ## identifies one or more declarable elements within the header, which are understood to apply to the element bearing this attribute and its content.
+  ## (declarations) identifies one or more declarable elements within the header, which are understood to apply to the element bearing this attribute and its content.
   attribute decls {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.fragmentable.attributes = Tatt.fragmentable.attribute.part
 Tatt.fragmentable.attribute.part =
@@ -569,7 +589,9 @@ Tatt.global.responsibility.attribute.resp =
   
   ## (responsible party) indicates the agency responsible for the intervention or interpretation, for example an editor or transcriber.
   attribute resp {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.editLike.attributes =
   Tatt.editLike.attribute.evidence, Tatt.editLike.attribute.instant
@@ -638,15 +660,53 @@ Tatt.global.rendition.attribute.rendition =
   
   ## points to a description of the rendering or presentation used for this element in the source text.
   attribute rendition {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.global.source.attributes = Tatt.global.source.attribute.source
 Tatt.global.source.attribute.source =
   
   ## specifies the source from which some aspect of this element is drawn.
   attribute source {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
+sch:pattern [
+  id =
+    "testbasic-att.global.source-source-only_1_ODD_source-constraint-rule-5"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "tei:*/@source"
+    "\x{a}" ~
+    "         "
+    sch:let [
+      name = "srcs"
+      value = "tokenize( normalize-space(.),' ')"
+    ]
+    "\x{a}" ~
+    "         "
+    sch:report [
+      test =
+        "( parent::tei:classRef                               | parent::tei:dataRef                               | parent::tei:elementRef                               | parent::tei:macroRef                               | parent::tei:moduleRef                               | parent::tei:schemaSpec )                               and                               $srcs[2]"
+      "\x{a}" ~
+      "              When used on a schema description element (like\x{a}" ~
+      "              "
+      sch:value-of [ select = "name(..)" ]
+      "), the @source attribute\x{a}" ~
+      "              should have only 1 value. (This one has "
+      sch:value-of [ select = "count($srcs)" ]
+      ".)\x{a}" ~
+      "            "
+    ]
+    "\x{a}" ~
+    "      "
+  ]
+  "\x{a}" ~
+  "   "
+]
 Tatt.handFeatures.attributes =
   Tatt.handFeatures.attribute.scribe,
   Tatt.handFeatures.attribute.scribeRef,
@@ -667,7 +727,9 @@ Tatt.handFeatures.attribute.scribeRef =
     ]
   ]
   attribute scribeRef {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.handFeatures.attribute.script =
   
@@ -684,7 +746,9 @@ Tatt.handFeatures.attribute.scriptRef =
     ]
   ]
   attribute scriptRef {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.handFeatures.attribute.medium =
   
@@ -752,7 +816,9 @@ Tatt.resourced.attributes = Tatt.resourced.attribute.url
 Tatt.resourced.attribute.url =
   
   ## (uniform resource locator) specifies the URL from which the media concerned may be obtained.
-  attribute url { xsd:anyURI }
+  attribute url {
+    xsd:anyURI { pattern = "\S+" }
+  }
 Tatt.measurement.attributes =
   Tatt.measurement.attribute.unit,
   Tatt.measurement.attribute.unitRef,
@@ -832,7 +898,9 @@ Tatt.measurement.attribute.unitRef =
       " element that defines a unit of measure."
     ]
   ]
-  attribute unitRef { xsd:anyURI }?
+  attribute unitRef {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 Tatt.measurement.attribute.quantity =
   
   ## (quantity) specifies the number of the specified units that comprise the measurement
@@ -851,7 +919,7 @@ Tatt.measurement.attribute.commodity =
   }?
 sch:pattern [
   id =
-    "testbasic-att.measurement-att-measurement-unitRef-constraint-rule-5"
+    "testbasic-att.measurement-att-measurement-unitRef-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -885,7 +953,9 @@ Tatt.naming.attribute.nymRef =
   
   ## (reference to the canonical name) provides a means of locating the canonical form (nym) of the names associated with the object named by the element bearing it.
   attribute nymRef {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.notated.attributes = Tatt.notated.attribute.notation
 Tatt.notated.attribute.notation =
@@ -955,7 +1025,7 @@ Tatt.typed.attribute.subtype =
     xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 sch:pattern [
-  id = "testbasic-att.typed-subtypeTyped-constraint-rule-6"
+  id = "testbasic-att.typed-subtypeTyped-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -998,7 +1068,7 @@ Tatt.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "testbasic-att.pointing-targetLang-targetLang-constraint-rule-7"
+  id = "testbasic-att.pointing-targetLang-targetLang-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1021,7 +1091,9 @@ Tatt.pointing.attribute.target =
   
   ## specifies the destination of the reference by supplying one or more URI References
   attribute target {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.pointing.attribute.evaluate =
   
@@ -1046,7 +1118,11 @@ Tatt.pointing.group.attribute.domains =
   
   ## optionally specifies the identifiers of the elements within which all elements indicated by the contents of this element lie.
   attribute domains {
-    list { xsd:anyURI, xsd:anyURI, xsd:anyURI* }
+    list {
+      xsd:anyURI { pattern = "\S+" },
+      xsd:anyURI { pattern = "\S+" },
+      xsd:anyURI { pattern = "\S+" }*
+    }
   }?
 Tatt.pointing.group.attribute.targFunc =
   [
@@ -1100,16 +1176,20 @@ Tatt.edition.attribute.edRef =
   
   ## (edition reference) provides a pointer to the source edition in which the associated feature (for example, a page, column, or line break) occurs at this point in the text.
   attribute edRef {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.spanning.attributes = Tatt.spanning.attribute.spanTo
 Tatt.spanning.attribute.spanTo =
   
   ## indicates the end of a span initiated by the element bearing this attribute.
-  attribute spanTo { xsd:anyURI }?
+  attribute spanTo {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 sch:pattern [
   id =
-    "testbasic-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-8"
+    "testbasic-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-9"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1165,7 +1245,7 @@ Tatt.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "testbasic-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-9"
+    "testbasic-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-10"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1189,11 +1269,15 @@ Tatt.timed.attributes =
 Tatt.timed.attribute.start =
   
   ## indicates the location within a temporal alignment at which this element begins.
-  attribute start { xsd:anyURI }?
+  attribute start {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 Tatt.timed.attribute.end =
   
   ## indicates the location within a temporal alignment at which this element ends.
-  attribute end { xsd:anyURI }?
+  attribute end {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 Tatt.transcriptional.attributes =
   Tatt.editLike.attributes,
   Tatt.written.attributes,
@@ -2039,7 +2123,9 @@ Tatt.locatable.attribute.where =
     ]
   ]
   attribute where {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tmodel.correspActionPart =
   Tmodel.dateLike
@@ -2142,7 +2228,7 @@ Tp =
     Tmacro.paraContent
     >> sch:pattern [
          id =
-           "testbasic-p-abstractModel-structure-p-in-ab-or-p-constraint-report-5"
+           "testbasic-p-abstractModel-structure-p-in-ab-or-p-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2164,7 +2250,7 @@ Tp =
        ]
     >> sch:pattern [
          id =
-           "testbasic-p-abstractModel-structure-p-in-l-or-lg-constraint-report-6"
+           "testbasic-p-abstractModel-structure-p-in-l-or-lg-constraint-report-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2342,7 +2428,7 @@ Tdesc =
     Tmacro.limitedContent
     >> sch:pattern [
          id =
-           "testbasic-desc-deprecationInfo-only-in-deprecated-constraint-rule-10"
+           "testbasic-desc-deprecationInfo-only-in-deprecated-constraint-rule-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2429,10 +2515,12 @@ Trt =
     Tatt.transcriptional.attributes,
     (
      ## supplies a pointer to the base being glossed by this ruby text.
-     attribute target { xsd:anyURI }?)
+     attribute target {
+       xsd:anyURI { pattern = "\S+" }
+     }?)
     >> sch:pattern [
          id =
-           "testbasic-rt-target-rt-target-not-span-constraint-report-7"
+           "testbasic-rt-target-rt-target-not-span-constraint-report-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2452,7 +2540,9 @@ Trt =
        ],
     (
      ## points to the starting point of the span of text being glossed by this ruby text.
-     attribute from { xsd:anyURI }?)
+     attribute from {
+       xsd:anyURI { pattern = "\S+" }
+     }?)
     >> sch:pattern [
          id = "testbasic-rt-from-rt-from-constraint-assert-7"
          "\x{a}" ~
@@ -2476,7 +2566,9 @@ Trt =
        ],
     (
      ## points to the ending point of the span of text being glossed.
-     attribute to { xsd:anyURI }?)
+     attribute to {
+       xsd:anyURI { pattern = "\S+" }
+     }?)
     >> sch:pattern [
          id = "testbasic-rt-to-rt-to-constraint-assert-8"
          "\x{a}" ~
@@ -2833,7 +2925,7 @@ Tptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "testbasic-ptr-ptrAtts-constraint-report-8"
+         id = "testbasic-ptr-ptrAtts-constraint-report-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2867,7 +2959,7 @@ Tref =
   element ref {
     Tmacro.paraContent
     >> sch:pattern [
-         id = "testbasic-ref-refAtts-constraint-report-9"
+         id = "testbasic-ref-refAtts-constraint-report-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2908,7 +3000,7 @@ Tlist =
      (Tmodel.divBottom, Tmodel.global*)*)
     >> sch:pattern [
          id =
-           "testbasic-list-gloss-list-must-have-labels-constraint-rule-11"
+           "testbasic-list-gloss-list-must-have-labels-constraint-rule-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3070,6 +3162,7 @@ Tgraphic =
     Tatt.media.attributes,
     Tatt.resourced.attributes,
     Tatt.declaring.attributes,
+    Tatt.typed.attributes,
     empty
   }
 TbinaryObject =
@@ -3423,7 +3516,7 @@ TrelatedItem =
     ((Tmodel.biblLike | Tmodel.ptrLike)?)
     >> sch:pattern [
          id =
-           "testbasic-relatedItem-targetorcontent1-constraint-report-10"
+           "testbasic-relatedItem-targetorcontent1-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3455,7 +3548,9 @@ TrelatedItem =
     Tatt.typed.attributes,
     
     ## points to the related bibliographic element by means of an absolute or relative URI reference
-    attribute target { xsd:anyURI }?,
+    attribute target {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
     empty
   }
 Tl =
@@ -3469,7 +3564,7 @@ Tl =
       | Tmodel.global)*)
     >> sch:pattern [
          id =
-           "testbasic-l-abstractModel-structure-l-in-l-constraint-report-11"
+           "testbasic-l-abstractModel-structure-l-in-l-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3527,7 +3622,7 @@ Tlg =
        ]
     >> sch:pattern [
          id =
-           "testbasic-lg-abstractModel-structure-lg-in-l-constraint-report-12"
+           "testbasic-lg-abstractModel-structure-lg-in-l-constraint-report-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3582,6 +3677,7 @@ Tstage =
     Tatt.ascribed.directed.attributes,
     Tatt.global.attributes,
     Tatt.placement.attributes,
+    Tatt.written.attributes,
     
     ## indicates the kind of stage direction.
     ## Suggested values include: 1] setting; 2] entrance; 3] exit; 4] business; 5] novelistic; 6] delivery; 7] modifier; 8] location; 9] mixed
@@ -4049,7 +4145,7 @@ Tquotation =
     (Tmodel.pLike*)
     >> sch:pattern [
          id =
-           "testbasic-quotation-quotationContents-constraint-report-13"
+           "testbasic-quotation-quotationContents-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4222,7 +4318,9 @@ Tnamespace =
     Tatt.global.attributes,
     
     ## specifies the full formal name of the namespace concerned.
-    attribute name { xsd:anyURI },
+    attribute name {
+      xsd:anyURI { pattern = "\S*" }
+    },
     empty
   }
 Trendition =
@@ -4281,7 +4379,7 @@ TciteStructure =
      }?)
     >> sch:pattern [
          id =
-           "testbasic-citeStructure-delim-citestructure-inner-delim-constraint-rule-12"
+           "testbasic-citeStructure-delim-citestructure-inner-delim-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4320,7 +4418,7 @@ TciteStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "testbasic-citeStructure-match-citestructure-outer-match-constraint-rule-13"
+           "testbasic-citeStructure-match-citestructure-outer-match-constraint-rule-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4341,7 +4439,7 @@ TciteStructure =
        ]
     >> sch:pattern [
          id =
-           "testbasic-citeStructure-match-citestructure-inner-match-constraint-rule-14"
+           "testbasic-citeStructure-match-citestructure-inner-match-constraint-rule-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4382,7 +4480,9 @@ TciteData =
     Tatt.citeStructurePart.attributes,
     
     ## (property) A URI indicating a property definition.
-    attribute property { xsd:anyURI },
+    attribute property {
+      xsd:anyURI { pattern = "\S+" }
+    },
     empty
   }
 TcRefPattern =
@@ -4539,7 +4639,9 @@ Tconversion =
         "."
       ]
     ]
-    attribute fromUnit { xsd:anyURI },
+    attribute fromUnit {
+      xsd:anyURI { pattern = "\S+" }
+    },
     [
       a:documentation [
         "the target unit of measurement for a conversion from a source unit referenced in "
@@ -4547,7 +4649,9 @@ Tconversion =
         "."
       ]
     ]
-    attribute toUnit { xsd:anyURI },
+    attribute toUnit {
+      xsd:anyURI { pattern = "\S+" }
+    },
     empty
   }
 TappInfo =
@@ -4663,7 +4767,9 @@ Tkeywords =
         " element, or by some other resource."
       ]
     ]
-    attribute scheme { xsd:anyURI }?,
+    attribute scheme {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
     empty
   }
 TclassCode =
@@ -4679,7 +4785,9 @@ TclassCode =
         " element, or some other resource."
       ]
     ]
-    attribute scheme { xsd:anyURI },
+    attribute scheme {
+      xsd:anyURI { pattern = "\S+" }
+    },
     empty
   }
 TcatRef =
@@ -4696,7 +4804,9 @@ TcatRef =
         " element, or by some other resource."
       ]
     ]
-    attribute scheme { xsd:anyURI }?,
+    attribute scheme {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
     empty
   }
 TcalendarDesc =
@@ -4793,7 +4903,9 @@ Tchange =
     
     ## (target) points to one or more elements that belong to this change.
     attribute target {
-      list { xsd:anyURI+ }
+      list {
+        xsd:anyURI { pattern = "\S+" }+
+      }
     }?,
     empty
   }
@@ -4867,7 +4979,9 @@ Tatt.datable.custom.attribute.to-custom =
 Tatt.datable.custom.attribute.datingPoint =
   
   ## supplies a pointer to some location defining a named point in time with reference to which the datable item is understood to have occurred
-  attribute datingPoint { xsd:anyURI }?
+  attribute datingPoint {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 Tatt.datable.custom.attribute.datingMethod =
   [
     a:documentation [
@@ -4876,7 +4990,9 @@ Tatt.datable.custom.attribute.datingMethod =
       " element or other means of interpreting the values of the custom dating attributes."
     ]
   ]
-  attribute datingMethod { xsd:anyURI }?
+  attribute datingMethod {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 Tmodel.persNamePart =
   Tsurname
   | Tforename
@@ -5539,7 +5655,9 @@ Toccupation =
         " element, or pointing to some other resource."
       ]
     ]
-    attribute scheme { xsd:anyURI }?,
+    attribute scheme {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
     [
       a:documentation [
         "identifies an occupation code defined within the classification system or taxonomy defined by the "
@@ -5547,7 +5665,9 @@ Toccupation =
         " attribute."
       ]
     ]
-    attribute code { xsd:anyURI }?,
+    attribute code {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
     empty
   }
 Torg =
@@ -5763,7 +5883,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-activemutual-constraint-report-14"
+         id = "testbasic-relation-activemutual-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5781,7 +5901,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-activepassive-constraint-report-15"
+         id = "testbasic-relation-activepassive-constraint-report-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5812,17 +5932,23 @@ Trelation =
     (
      ## identifies the active participants in a non-mutual relationship, or all the participants in a mutual one.
      attribute active {
-       list { xsd:anyURI+ }
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
      }?
      | 
        ## supplies a list of participants amongst all of whom the relationship holds equally.
        attribute mutual {
-         list { xsd:anyURI+ }
+         list {
+           xsd:anyURI { pattern = "\S+" }+
+         }
        }?),
     
     ## identifies the passive participants in a non-mutual relationship.
     attribute passive {
-      list { xsd:anyURI+ }
+      list {
+        xsd:anyURI { pattern = "\S+" }+
+      }
     }?,
     empty
   }
@@ -5891,7 +6017,9 @@ TsocecStatus =
         " element or by supplying a URI for an externally-defined system."
       ]
     ]
-    attribute scheme { xsd:anyURI }?,
+    attribute scheme {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
     [
       a:documentation [
         "identifies a status code defined within the classification system or taxonomy defined by the "
@@ -5899,7 +6027,9 @@ TsocecStatus =
         " attribute."
       ]
     ]
-    attribute code { xsd:anyURI }?,
+    attribute code {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
     empty
   }
 Tstate =
@@ -5998,26 +6128,7 @@ TobjectIdentifier =
   
   ## (object identifier) groups one or more identifiers or pieces of locating information concerning a single object. [13.3.5. Objects]
   element objectIdentifier {
-    ((Tmodel.placeNamePart | Tidno | TobjectName | Taddress)*)
-    >> sch:pattern [
-         id =
-           "testbasic-objectIdentifier-objectIdentifier_minimal-constraint-report-16"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:objectIdentifier"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test = "not(count(*) gt 0)"
-             "An objectIdentifier must contain at minimum a single piece of locating or identifying information."
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ],
+    (Tmodel.placeNamePart | Tidno | TobjectName | Taddress)+,
     Tatt.global.attributes,
     empty
   }
@@ -6032,7 +6143,9 @@ Tnym =
     
     ## points to constituent nyms
     attribute parts {
-      list { xsd:anyURI+ }
+      list {
+        xsd:anyURI { pattern = "\S+" }+
+      }
     }?,
     empty
   }
@@ -6055,7 +6168,9 @@ Tatt.global.facs.attribute.facs =
   
   ## (facsimile) points to one or more images, portions of an image, or surfaces which correspond to the current element.
   attribute facs {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.global.change.attributes = Tatt.global.change.attribute.change
 Tatt.global.change.attribute.change =
@@ -6067,7 +6182,9 @@ Tatt.global.change.attribute.change =
     ]
   ]
   attribute change {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.coordinated.attributes =
   Tatt.coordinated.attribute.start,
@@ -6079,7 +6196,9 @@ Tatt.coordinated.attributes =
 Tatt.coordinated.attribute.start =
   
   ## indicates the element within a transcription of the text containing at least the start of the writing represented by this zone or surface.
-  attribute start { xsd:anyURI }?
+  attribute start {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 Tatt.coordinated.attribute.ulx =
   
   ## gives the x coordinate value for the upper left corner of a rectangular space.
@@ -6226,7 +6345,7 @@ Tpath =
   element path {
     empty
     >> sch:pattern [
-         id = "testbasic-path-pathmustnotbeclosed-constraint-rule-15"
+         id = "testbasic-path-pathmustnotbeclosed-constraint-rule-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6528,7 +6647,9 @@ ThandShift =
         " element describing the hand concerned."
       ]
     ]
-    attribute new { xsd:anyURI }?,
+    attribute new {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
     empty
   }
 Tam =
@@ -6577,7 +6698,9 @@ Tspace =
     
     ## (responsible party) (responsible party) indicates the individual responsible for identifying and measuring the space
     attribute resp {
-      list { xsd:anyURI+ }
+      list {
+        xsd:anyURI { pattern = "\S+" }+
+      }
     }?,
     
     ## (dimension) indicates whether the space is horizontal or vertical.
@@ -6716,7 +6839,9 @@ Tmetamark =
     
     ## identifies one or more elements to which the metamark applies.
     attribute target {
-      list { xsd:anyURI+ }
+      list {
+        xsd:anyURI { pattern = "\S+" }+
+      }
     }?,
     empty
   }
@@ -6744,7 +6869,9 @@ Tredo =
     
     ## points to one or more elements representing the interventions which are being reasserted.
     attribute target {
-      list { xsd:anyURI+ }
+      list {
+        xsd:anyURI { pattern = "\S+" }+
+      }
     }?,
     empty
   }
@@ -6771,7 +6898,9 @@ Tundo =
     
     ## points to one or more elements representing the interventions which are to be reverted or undone.
     attribute target {
-      list { xsd:anyURI+ }
+      list {
+        xsd:anyURI { pattern = "\S+" }+
+      }
     }?,
     empty
   }
@@ -7062,7 +7191,9 @@ Twhen =
         " element, which is obtained by adding the interval to the time of the reference point."
       ]
     ]
-    attribute since { xsd:anyURI }?,
+    attribute since {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
     empty
   }
 Ttimeline =
@@ -7073,7 +7204,9 @@ Ttimeline =
     Tatt.global.attributes,
     
     ## designates the origin of the timeline, i.e. the time at which it begins.
-    attribute origin { xsd:anyURI }?,
+    attribute origin {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
     [
       a:documentation [
         "specifies the unit of time corresponding to the "
@@ -7208,7 +7341,11 @@ Talt =
     
     ## specifies the destination of the reference by supplying one or more URI References
     attribute target {
-      list { xsd:anyURI, xsd:anyURI, xsd:anyURI* }
+      list {
+        xsd:anyURI { pattern = "\S+" },
+        xsd:anyURI { pattern = "\S+" },
+        xsd:anyURI { pattern = "\S+" }*
+      }
     }?,
     
     ## states whether the alternations gathered in this collection are exclusive or inclusive.
@@ -7359,7 +7496,9 @@ Tannotation =
     
     ## specifies the destination of the reference by supplying one or more URI References
     attribute target {
-      list { xsd:anyURI+ }
+      list {
+        xsd:anyURI { pattern = "\S+" }+
+      }
     },
     
     ##
@@ -7838,22 +7977,30 @@ Tatt.global.linking.attributes =
 Tatt.global.linking.attribute.sameAs =
   
   ## points to an element that is the same as the current element.
-  attribute sameAs { xsd:anyURI }?
+  attribute sameAs {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 Tatt.global.linking.attribute.copyOf =
   
   ## points to an element of which the current element is a copy.
-  attribute copyOf { xsd:anyURI }?
+  attribute copyOf {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 Tatt.global.linking.attribute.exclude =
   
   ## points to elements that are in exclusive alternation with the current element.
   attribute exclude {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.global.linking.attribute.select =
   
   ## selects one or more alternants; if one alternant is selected, the ambiguity or uncertainty is marked as resolved. If more than one alternant is selected, the degree of ambiguity or uncertainty is marked as reduced by the number of alternants not selected.
   attribute select {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 Tatt.global.attributes =
   Tatt.global.rendition.attributes,
@@ -7890,7 +8037,9 @@ Tatt.global.attribute.xmllang =
 Tatt.global.attribute.xmlbase =
   
   ## provides a base URI reference with which applications can resolve relative URI references into absolute URI references.
-  attribute xml:base { xsd:anyURI }?
+  attribute xml:base {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 Tatt.global.attribute.xmlspace =
   
   ## signals an intention about how white space should be managed by applications.
@@ -7962,7 +8111,7 @@ TMenu =
   }
 start = TTEI | Tdiv
 sch:pattern [
-  id = "testbasic-outerconstraint-constraint-rule-16"
+  id = "testbasic-outerconstraint-constraint-rule-17"
   "\x{a}" ~
   "      "
   sch:rule [

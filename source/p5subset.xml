@@ -6,8 +6,8 @@
         <title>The TEI Guidelines</title>
       </titleStmt>
       <editionStmt>
-        <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.4.0.html">4.4.0a</ref>. Last updated on
-        <date when="2022-03-14">14th March 2022</date>, revision <ref target="https://github.com/TEIC/TEI/commit/3a89ab0a0">3a89ab0a0</ref></edition>
+        <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.5.0.html">4.5.0a</ref>. Last updated on
+        <date when="2022-06-01">1st June 2022</date>, revision <ref target="https://github.com/TEIC/TEI/commit/aeba95253">aeba95253</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -1480,7 +1480,7 @@ of any adjacent whitespace</desc>
     <ptr target="#FSSY"/>
   </listRef>
 </classSpec>
-<classSpec module="tei" xml:id="DECLABL" type="atts" ident="att.declarable">
+<classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" xml:id="DECLABL" type="atts" ident="att.declarable">
   <desc versionDate="2013-02-02" xml:lang="en">provides attributes for those elements in the TEI header which
   may be independently selected by means of  the special purpose <att>decls</att> attribute.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">특별한 목적의 <att>decls</att> 속성을 통해서 독립적으로 선택될 수 있는 TEI 헤더의 요소에 대한 속성을 제공한다.</desc>
@@ -1560,7 +1560,7 @@ il est sélectionné si son parent a été choisi</desc>
     <ptr target="#CCAS"/>
   </listRef>
 </classSpec>
-<classSpec module="tei" xml:id="DECLING" type="atts" ident="att.declaring">
+<classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" xml:id="DECLING" type="atts" ident="att.declaring">
   <desc versionDate="2006-01-05" xml:lang="en">provides attributes for elements which may be independently associated with a particular declarable element within the header, thus overriding the inherited default for that element.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">헤더에서 선언 가능한 어떤 요소와 독립적으로 연관될 수 있는 속성을 제공한다. 이를 통해 그 요소의 상속된 기본값은 무효가 된다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供元素屬性，這些元素可單獨與標頭中一特定可宣告元素相關連，因此超越該特定元素本身的預設值。</desc>
@@ -1573,6 +1573,8 @@ il est sélectionné si son parent a été choisi</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna attributi agli elementi che possono essere autonomamente associati a un determinato elemento dichiarato nell'intestazione, non tenendo conto del default ereditato per quell'elemento</desc>
   <attList>
     <attDef ident="decls" usage="opt">
+      <gloss versionDate="2022-05-05" xml:lang="en">declarations</gloss>
+      <gloss versionDate="2022-05-05" xml:lang="fr">déclarations</gloss>
       <desc versionDate="2005-10-10" xml:lang="en">identifies one or more <term>declarable elements</term> within the
 header, which are understood to apply to the element bearing this
 attribute and its content.</desc>
@@ -1581,7 +1583,7 @@ attribute and its content.</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">TEIヘダーにある，1つ以上の<term>宣言可能要素</term>を示す．
       当該属性を持つ要素や内容に適応されると解釈される．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">identifie un ou plusieurs<term>éléments
-            déclarables </term>dans l'en-tête TEI, qui sont destinés à s'appliquer à l'élément
+            déclarables</term> dans l'en-tête TEI, qui sont destinés à s'appliquer à l'élément
           portant cet attribut et à son contenu.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">identifica uno o más <term>elementos declarables</term> al interno del encabezado, los cuales son válidos para el elemento al cual es adscrito el atributo en cuestión y su contenido.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">identifica uno o più <term>elementi dichiarabili</term> all'interno dell'intestazione,
@@ -2001,7 +2003,6 @@ associated with a dated element, at the time indicated.</desc>
       <desc versionDate="2009-11-02" xml:lang="en">signifies the degree of certainty associated with the intervention or interpretation.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">간섭 또는 해석과 연관된 확실성의 정도를 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">表示該更動或詮釋的相關正確度。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該解釈や調整の確信度を示す．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">donne le degré de certitude associée à l'intervention
         ou à l'interprétation.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">significa el grado de certeza asociado con la
@@ -2347,7 +2348,7 @@ the TEI header.</p>
     <ptr target="#STGAre"/>
   </listRef>
 </classSpec>
-<classSpec predeclare="true" xml:id="GBLSRC" module="tei" type="atts" ident="att.global.source">
+<classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" predeclare="true" xml:id="GBLSRC" module="tei" type="atts" ident="att.global.source">
   <desc versionDate="2021-08-22" xml:lang="en">provides attributes used by elements to point to an
     external source.</desc>
   <desc versionDate="2019-09-18" xml:lang="ja">外部ソースを参照する要素によって用いられる属性を示す。</desc>
@@ -2359,18 +2360,40 @@ the TEI header.</p>
       <datatype maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
+      <constraintSpec scheme="schematron" ident="only_1_ODD_source">
+        <constraint>
+          <sch:rule context="tei:*/@source">
+            <sch:let name="srcs" value="tokenize( normalize-space(.),' ')"/>
+            <sch:report test="( parent::tei:classRef                               | parent::tei:dataRef                               | parent::tei:elementRef                               | parent::tei:macroRef                               | parent::tei:moduleRef                               | parent::tei:schemaSpec )                               and                               $srcs[2]">
+              When used on a schema description element (like
+              <sch:value-of select="name(..)"/>), the @source attribute
+              should have only 1 value. (This one has <sch:value-of select="count($srcs)"/>.)
+            </sch:report>
+          </sch:rule>
+        </constraint>
+      </constraintSpec>
       <remarks xml:lang="en" versionDate="2017-06-06">
-        <p>The <att>source</att> attribute points to an external source. When used on elements
-          describing schema components such as <gi>schemaSpec</gi> or <gi>moduleRef</gi> it
-          identifies the source from which declarations for the components of the object being
-          defined may be obtained. </p>
-        <p> On other elements it provides a pointer to the bibliographical source from which a
-          quotation or citation is drawn. </p>
-        <p>In either case, the location may be provided using any form of URI, for example an
-          absolute URI, a relative URI, or private scheme URI that is expanded to an absolute URI as
-          documented in a <gi>prefixDef</gi>.</p>
-        <p>If more than one location is specified, the default assumption is that the required
-          source should be obtained by combining the resources indicated. </p>
+        <p>The <att>source</att> attribute points to an external
+        source. When used on an element describing a schema component
+        (<gi>classRef</gi>, <gi>dataRef</gi>, <gi>elementRef</gi>,
+        <gi>macroRef</gi>, <gi>moduleRef</gi>, or
+        <!-- these elements were the members of tei:3.0.0_att.readFrom -->
+        <gi>schemaSpec</gi>), it identifies the source from which
+        declarations for the components should be obtained.</p>
+        <p>On other elements it provides a pointer to the
+        bibliographical source from which a quotation or citation is
+        drawn.</p>
+        <p>In either case, the location may be provided using any form
+        of URI, for example an absolute URI, a relative URI, a private
+        scheme URI of the form <code>tei:x.y.z</code>, where
+        <code>x.y.z</code> indicates the version number, e.g.
+        <code>tei:4.3.2</code> for TEI P5 release 4.3.2 or (as a
+        special case) <code>tei:current</code> for whatever is the
+        latest release, or a private scheme URI that is expanded to an
+        absolute URI as documented in a <gi>prefixDef</gi>.</p>
+        <p>When used on elements describing schema components,
+        <att>source</att> should have only one value; when used on
+        other elements multiple values are permitted.</p>
       </remarks>
     </attDef>
   </attList>
@@ -2959,21 +2982,95 @@ ressource informatique selon une taxinomie normalisée.</desc>
       analyse ou une interprétation formelles.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos para elementos que represental un análisis o interpretación formal.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi agli elementi che rappresentano un'analisi o un'interpretazione formali</desc>
-  <classes>
-    <memberOf key="att.typed"/>
-  </classes>
-  <!--
-      We would like to have a replacement @type attribute defined
-      here, so that all members of this class (currently just
-      <(interp|span)(Grp)?>) can inherit better semantics. But due to
-      a known bug (Stylesheets issue #370) doing so breaks the build.
-      Thus I am TEMPORARILY (I hope) copying the definition of @type
-      out of this file and into each of the four memebers: <interp>,
-      <interpGrp>, <span>, and <spanGrp>. So if you need to make any
-      changes to the @type attribute, sorry to say you will need to
-      make it in 4 different places.
+  <!-- 
+       Should be a member of att.typed (so that members of this class
+       get @type & @subtype), but that was causing problems. See
+       https://github.com/TEIC/TEI/issues/2270.
   -->
+  <!-- begin reversion for 2270 -->
   <attList>
+    <attDef ident="type" usage="rec">
+      <desc versionDate="2005-10-10" xml:lang="en">indicates what kind of phenomenon is being noted in the passage.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">현 단락에 표기되고 있는 현상의 종류를 나타낸다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出段落中所註解的現象類別。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該部分で，どのような面が指摘されているのかを示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">indique quel genre de phénomène est noté dans le
+          passage.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica que tipo de fenómeno está siendo anotado en el pasaje.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica quale sia il fenomeno osservato nella porzione di testo in questione</desc>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <valList type="open">
+        <valItem ident="image">
+          <desc versionDate="2007-06-27" xml:lang="en">identifies an image in the passage.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">단락에서 이미지를 식별한다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的影像。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">identifica una imagen en el pasaje.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">当該部分の画像を指示する．</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">identifie une image dans le passage.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">identifica un'immagine all'interno della porzione di testo</desc>
+        </valItem>
+        <valItem ident="character">
+          <desc versionDate="2007-06-27" xml:lang="en">identifies a character associated with the passage.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">단락과 연관된 문자를 식별한다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明與段落相關聯的人物。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">identifica un carácter asociado al pasaje.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">当該部分に関連する文字を指示する．</desc>
+          <desc versionDate="2009-05-27" xml:lang="fr">identifie un personnage associé au
+passage.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">identifica un personaggio associato al brano in questione</desc>
+        </valItem>
+        <valItem ident="theme">
+          <desc versionDate="2007-06-27" xml:lang="en">identifies a theme in the passage.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">단락에서 주제를 식별한다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的主題。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">identifica un tema en el pasaje.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">当該部分にあるテーマを指示する．</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">identifie un thème dans le passage.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">identifica un tema rispetto al brano in questione</desc>
+        </valItem>
+        <valItem ident="allusion">
+          <desc versionDate="2007-06-27" xml:lang="en">identifies an allusion to another text.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">다른 텍스트에 대한 언급을 식별한다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明另一個文本的引用。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">identifica una alusión a otro texto.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">別テキストへの言及．</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">identifie une allusion à un autre
+texte.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">identifica un'allusione a un altro testo</desc>
+        </valItem>
+      </valList>
+    </attDef>
+    <!-- end reversion for 2270 -->
+    <!-- begin addition for 2270 -->
+    <attDef ident="subtype" usage="opt">
+      <gloss xml:lang="en" versionDate="2009-05-29">subtype</gloss>
+      <gloss versionDate="2009-05-29" xml:lang="fr">sous-type</gloss>
+      <desc versionDate="2022-04-16" xml:lang="en">provides a sub-categorization of the phenomenon is being noted in the passage, if needed</desc>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <remarks versionDate="2013-01-13" xml:lang="en">
+        <p>The <att>subtype</att> attribute may be used to provide any
+        sub-classification for the element additional to that provided
+        by its <att>type</att> attribute.</p>
+      </remarks>
+      <remarks xml:lang="fr" versionDate="2007-06-12">
+        <p>L'attribut <att>subtype</att> peut être employé pour
+        fournir une sous-classification pour cet élément, en plus de
+        celle fournie par son propre attribut <att>type</att>.</p>
+      </remarks>
+      <remarks xml:lang="es" versionDate="2008-04-06">
+        <p>El atributo <att>subtype</att> (subtipo) se puede utilizar
+        para proporcionar cualquier subclasificación para el elemento,
+        adicional a ésa proporcionada por su <att>type</att> (tipo) de
+        atributo.</p>
+      </remarks>
+      <remarks xml:lang="ja" versionDate="2008-04-05">
+        <p>
+        属性<att>subtype</att>は，属性<att>type</att>に加えて，当該要
+    素の下位分類を示すために使われる．
+    </p>
+      </remarks>
+    </attDef>
+    <!-- end addition for 2270 -->
     <attDef ident="inst" usage="opt">
       <gloss versionDate="2007-07-02" xml:lang="en">instances</gloss>
       <gloss versionDate="2007-12-20" xml:lang="ko">실례</gloss>
@@ -7850,7 +7947,7 @@ value.</desc>
     indicare i nomi degli spazi in XML come stabilito dalle raccomandazioni tecniche del W3C per gli
     <ref target="https://www.w3.org/TR/1999/REC-xml-names-19990114/">spazi dei nomi in XML</ref>.</desc>
   <content>
-      <dataRef name="anyURI"/>
+      <dataRef restriction="\S*" name="anyURI"/>
    </content>
   <remarks versionDate="2008-02-08" xml:lang="en">
       <p>The range of syntactically valid values is defined by <ref target="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986 <title>Uniform Resource Identifier
@@ -7885,7 +7982,7 @@ value.</desc>
     <alternate>
       <dataRef name="anyURI">
         <!-- no slashes before the required first colon, thus to exclude relative URIs -->
-        <dataFacet name="pattern" value="[^/]+:.*"/>
+        <dataFacet name="pattern" value="[^/\s]+:\S*"/>
       </dataRef>
       <dataRef name="Name">
         <!-- require a colon[1] -->
@@ -8037,7 +8134,7 @@ bibliography and link to that (LB 2013-03-13) -->
       <facsimile>
 	<surface ulx="0" uly="0" lrx="400" lry="280">
 	  <zone points="220,100 300,210 170,250 123,234">
-	    <graphic url="handwriting.png "/>
+	    <graphic url="handwriting.png"/>
 	  </zone>
 	</surface>
       </facsimile>
@@ -8065,7 +8162,7 @@ resource, either within the current document or elsewhere.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">define una gama de valores de atributos usados para proporcionar un indicador de cualquier recurso, bien en el documento corriente o en otro.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per indicare un unico puntatore rispetto a qualsiasi altra risorsa all'interno del documento corrente o altrove</desc>
   <content>
-      <dataRef name="anyURI"/>
+      <dataRef restriction="\S+" name="anyURI"/>
    </content>
   <remarks versionDate="2011-12-12" xml:lang="en">
       <p>The range of syntactically valid values is defined by
@@ -8379,7 +8476,7 @@ integer or the string "unbounded".</desc>
 </dataSpec></div></div>
 <div type="div2" xml:id="STOV"><head>The TEI Infrastructure Module</head>
 <moduleSpec xml:id="DSTTEI2" ident="tei" type="core">
-        <altIdent type="FPI">TEI Infrastructure</altIdent>
+        <idno type="FPI">TEI Infrastructure</idno>
         <desc xml:lang="en" versionDate="2018-07-12">Declarations for classes, datatypes, and macros available to all TEI modules</desc>
         <desc xml:lang="fr" versionDate="2018-07-09">Infrastructure de la TEI</desc>
         <desc xml:lang="zh-TW" versionDate="2018-07-09">所有TEI模組可用的元素集、資料類型、巨集指令之宣告</desc>
@@ -9615,23 +9712,24 @@ distribution of a text.</desc>
     <ptr target="#COBICOI"/>
   </listRef>
 </elementSpec>
-<elementSpec module="header" ident="availability">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="availability">
   <gloss xml:lang="en" versionDate="2007-06-12">availability</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">disponibilité</gloss>
-    <gloss versionDate="2016-11-17" xml:lang="de">Verfügbarkeit</gloss>
+  <gloss versionDate="2022-06-01" xml:lang="it">disponibilità</gloss>
+  <gloss versionDate="2016-11-17" xml:lang="de">Verfügbarkeit</gloss>
   <desc versionDate="2011-11-17" xml:lang="en">supplies information about the availability of a text, for example any restrictions on its
-    use or distribution, its copyright status, any licence applying to it, etc.</desc>
+  use or distribution, its copyright status, any licence applying to it, etc.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">renseigne sur la disponibilité du texte, par exemple sur
-    toutes restrictions quant à son usage ou sa diffusion, son copyright, etc.</desc>
+  toutes restrictions quant à son usage ou sa diffusion, son copyright, etc.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트 이용에 관한 정보를 제시한다. 예를 들어 사용 또는 배포의 제한, 저작권 상태 등.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供關於文件可利用性的資訊，例如使用或發行上的任何限制、版權狀態等。</desc>
   <desc versionDate="2008-04-06" xml:lang="ja">テキストの利用可能性に関する情報を示す．例えば，その使用や頒布， 著作権に関する制限など．</desc>
-    <desc versionDate="2016-11-17" xml:lang="de">liefert Informationen zur Verfügbarkeit eines Textes, zum Beispiel Einschränkungen bezüglich des Gebrauchs oder der Weitergabe, Lizensierungen usw.</desc>
+  <desc versionDate="2016-11-17" xml:lang="de">liefert Informationen zur Verfügbarkeit eines Textes, zum Beispiel Einschränkungen bezüglich des Gebrauchs oder der Weitergabe, Lizensierungen usw.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona información sobre la disponibilidad de un
-    texto, por ejemplo cualquier restricción en cuanto a su uso o distribución, su copyright, etc.</desc>
+  texto, por ejemplo cualquier restricción en cuanto a su uso o distribución, su copyright, etc.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">fornisce informazioni sulla disponibilità di un testo,
-    per esempio su qualsiasi restrizione che si applica alla sua utilizzazione o distribuzione, il
-    suo statuto in merito al copyright, etc.</desc>
+  per esempio su qualsiasi restrizione che si applica alla sua utilizzazione o distribuzione, il
+  suo statuto in merito al copyright, etc.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.publicationStmtPart.detail"/>
@@ -9639,12 +9737,10 @@ distribution of a text.</desc>
     <memberOf key="model.biblPart"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="1" maxOccurs="unbounded">
-        <classRef key="model.availabilityPart"/>
-        <classRef key="model.pLike"/>
-      </alternate>
-    
+    <alternate minOccurs="1" maxOccurs="unbounded">
+      <classRef key="model.availabilityPart"/>
+      <classRef key="model.pLike"/>
+    </alternate>    
   </content>
   <attList>
     <attDef ident="status" usage="opt">
@@ -9652,15 +9748,15 @@ distribution of a text.</desc>
       <gloss versionDate="2016-11-25" xml:lang="de">Statuscode</gloss>
       <desc versionDate="2005-01-14" xml:lang="en">supplies a code identifying the current availability of the text.</desc>
       <desc versionDate="2009-01-05" xml:lang="fr">donne un code caractérisant la disponibilité
-        actuelle d’un texte.</desc>
+      actuelle d’un texte.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">텍스트의 현재 이용 가능성을 식별하는 부호를 제공한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一個代號，用來確認文件目前的可利用性。</desc>
       <desc versionDate="2008-04-06" xml:lang="ja">当該テキストの，現在の利用可能性を表すコードを示す．</desc>
-        <desc versionDate="2016-11-17" xml:lang="de">gibt einen Code an, der die derzeitige Nutzbarkeit eines Textes festlegt.</desc>
+      <desc versionDate="2016-11-17" xml:lang="de">gibt einen Code an, der die derzeitige Nutzbarkeit eines Textes festlegt.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona un código identificativo de la
-        disponibilidad actual del texto.</desc>
+      disponibilidad actual del texto.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">fornisce un codice che identifica l'attuale
-        disponibilità del testo.</desc>
+      disponibilità del testo.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="free">
@@ -9685,7 +9781,7 @@ distribution of a text.</desc>
           <desc versionDate="2008-04-06" xml:lang="es">el estatus del texto es desconocido.</desc>
           <desc versionDate="2008-04-06" xml:lang="ja">当該テキストの利用可能性は不明．</desc>
           <desc versionDate="2007-01-21" xml:lang="it">la disponibilità del testo non è nota</desc>
-            <desc versionDate="2016-11-17" xml:lang="de">der Status des Textes ist unbekannt.</desc>
+          <desc versionDate="2016-11-17" xml:lang="de">der Status des Textes ist unbekannt.</desc>
         </valItem>
         <valItem ident="restricted">
           <gloss xml:lang="en" versionDate="2016-11-25">restricted</gloss>
@@ -9697,7 +9793,7 @@ distribution of a text.</desc>
           <desc versionDate="2008-04-06" xml:lang="es">el texto no está libremente disponible.</desc>
           <desc versionDate="2008-04-06" xml:lang="ja">当該テキストは，自由に使用できない．</desc>
           <desc versionDate="2007-01-21" xml:lang="it">il testo non è disponibile gratuitamente.</desc>
-            <desc versionDate="2016-11-17" xml:lang="de">der Text ist nicht frei verfügbar.</desc>
+          <desc versionDate="2016-11-17" xml:lang="de">der Text ist nicht frei verfügbar.</desc>
         </valItem>
       </valList>
     </attDef>
@@ -9719,8 +9815,8 @@ distribution of a text.</desc>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Abes">
       <availability status="restricted">
         <p>L' ABES a adopté le système Créative Commons pour permettre à tous ceux qui le
-            souhaitent, de reproduire tout ou partie des rubriques du site de l'ABES sur support
-            papier ou support électronique.</p>
+        souhaitent, de reproduire tout ou partie des rubriques du site de l'ABES sur support
+        papier ou support électronique.</p>
       </availability>
     </egXML>
   </exemplum>
@@ -9742,23 +9838,23 @@ distribution of a text.</desc>
       <availability>
         <licence target="http://opensource.org/licenses/MIT">
           <p>The MIT License
-            applies to this document.</p>
+          applies to this document.</p>
           <p>Copyright (C) 2011 by The University of Victoria</p>
           <p>Permission is hereby granted, free of charge, to any person obtaining a copy
-            of this software and associated documentation files (the "Software"), to deal
-            in the Software without restriction, including without limitation the rights
-            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-            copies of the Software, and to permit persons to whom the Software is
-            furnished to do so, subject to the following conditions:</p>
+          of this software and associated documentation files (the "Software"), to deal
+          in the Software without restriction, including without limitation the rights
+          to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+          copies of the Software, and to permit persons to whom the Software is
+          furnished to do so, subject to the following conditions:</p>
           <p>The above copyright notice and this permission notice shall be included in
-            all copies or substantial portions of the Software.</p>
+          all copies or substantial portions of the Software.</p>
           <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-            THE SOFTWARE.</p>
+          IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+          FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+          AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+          LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+          OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+          THE SOFTWARE.</p>
         </licence>
       </availability>
     </egXML>
@@ -9776,7 +9872,7 @@ distribution of a text.</desc>
     <p rend="dataDesc"> 永続的な形式で示されるべきである． </p>
   </remarks>
   <remarks xml:lang="de" versionDate="2016-11-17">
-      <p rend="dataDesc">Es sollte ein einheitliches Format verwendet werden.</p>
+    <p rend="dataDesc">Es sollte ein einheitliches Format verwendet werden.</p>
   </remarks>
   <listRef>
     <ptr target="#HD24"/>
@@ -10028,7 +10124,7 @@ définissant les droits d'utilisation.</desc>
   </listRef>
 </elementSpec></div>
 <div type="div3" xml:id="HD3"><head>The Source Description</head>
-<elementSpec module="header" ident="sourceDesc">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="sourceDesc">
   <gloss versionDate="2007-07-04" xml:lang="en">source description</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">description de la source</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">원전 기술</gloss>
@@ -10050,8 +10146,8 @@ définissant les droits d'utilisation.</desc>
         "born digital" für einen nur in elektronischer Form vorliegenden Text.  </desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona una descripción del texto (o textos) fuente
     del que un texto electrónico deriva o ha sido generado.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it"> fornisce una descrizionei relativa alla o alle fonti da
-    cui è derivato o generato un documento elettronico.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it"> fornisce una descrizione relativa alla o alle fonti da
+    cui è derivato o generato un documento elettronico.</desc>  
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.declarable"/>
@@ -10100,7 +10196,7 @@ définissant les droits d'utilisation.</desc>
     <ptr target="#HD3"/>
   </listRef>
 </elementSpec>
-<elementSpec module="header" ident="biblFull">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="biblFull">
   <gloss versionDate="2007-07-04" xml:lang="en">fully-structured bibliographic citation</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">완전히 구조화된 서지 인용 정보</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -10320,7 +10416,7 @@ formatting or layout information preserved.</p>
   </listRef>
 </elementSpec>
 <div type="div3" xml:id="HD51"><head>The Project Description</head>
-<elementSpec module="header" ident="projectDesc">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="projectDesc">
   <gloss versionDate="2005-01-14" xml:lang="en">project description</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">description du projet</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">프로젝트 기술</gloss>
@@ -10400,7 +10496,7 @@ formatting or layout information preserved.</p>
   </listRef>
 </elementSpec></div>
 <div type="div3" xml:id="HD52"><head>The Sampling Declaration</head>
-<elementSpec module="header" ident="samplingDecl">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="samplingDecl">
   <gloss versionDate="2005-01-14" xml:lang="en">sampling declaration</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">déclaration d'échantillonnage</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">표본 추출 선언</gloss>
@@ -10485,7 +10581,7 @@ formatting or layout information preserved.</p>
   </listRef>
 </elementSpec></div>
 <div type="div3" xml:id="HD53"><head>The Editorial Practices Declaration</head>
-<elementSpec module="header" ident="editorialDecl">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="editorialDecl">
   <gloss versionDate="2005-01-14" xml:lang="en">editorial practice declaration</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">déclaration des pratiques éditoriales</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">편집 실행 선언</gloss>
@@ -10562,7 +10658,7 @@ during the encoding of a text.</desc>
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="header" ident="correction">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="correction">
   <gloss versionDate="2005-01-14" xml:lang="en">correction principles</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">règles de correction</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">수정 원리</gloss>
@@ -10735,7 +10831,7 @@ during the encoding of a text.</desc>
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="header" ident="normalization">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="normalization">
   <gloss xml:lang="en" versionDate="2009-01-05">normalization</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">normalisation</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">indicates the extent of normalization or regularization of the original source carried out
@@ -10881,7 +10977,7 @@ during the encoding of a text.</desc>
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="header" ident="quotation">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="quotation">
   <gloss xml:lang="en" versionDate="2007-06-12">quotation</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">citation</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">specifies editorial practice adopted with respect to quotation marks in the original.</desc>
@@ -11046,7 +11142,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="header" ident="hyphenation">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="hyphenation">
   <gloss xml:lang="en" versionDate="2009-04-27">hyphenation</gloss>
   <gloss versionDate="2009-04-27" xml:lang="fr">césurage</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">summarizes the way in which hyphenation in a source text has been treated in an encoded
@@ -11178,7 +11274,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="header" ident="segmentation">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="segmentation">
   <gloss xml:lang="en" versionDate="2007-06-12">segmentation</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">segmentation</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">describes the principles according to which the text has been segmented, for example into
@@ -11226,7 +11322,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="header" ident="stdVals">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="stdVals">
   <gloss versionDate="2007-07-04" xml:lang="en">standard values</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">valeurs normalisées</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">표준 값</gloss>
@@ -11244,7 +11340,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     oder Zahlenwerte genutzt wird.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">indica el formato usado cuando aparecen fechas
     estandarizadas o valores numéricos.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">specidica il formato usato quando vengono fornite date e
+  <desc versionDate="2007-01-21" xml:lang="it">specifica il formato usato quando vengono fornite date e
     altri valori numerici standardizzati.</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -11282,7 +11378,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="header" ident="interpretation">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="interpretation">
   <gloss xml:lang="en" versionDate="2007-06-12">interpretation</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">Interprétation</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">describes the scope of any analytic or interpretive information added to the text in
@@ -11296,7 +11392,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     die zusätzlich zur Transkription dem Text hinzugefügt wurde.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">describe la finalidad de cualquier información analítica
     o descriptiva añadida al texto en la transcripción.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">descrive l'estenione di qualsiasi informazione analitica
+  <desc versionDate="2007-01-21" xml:lang="it">descrive l'estensione di qualsiasi informazione analitica
     o interpretativa inserita nel testo, in aggiunta alla trascrizione</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -11335,7 +11431,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <ptr target="#HD53"/>
   </listRef>
 </elementSpec>
-<elementSpec module="header" ident="punctuation">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="punctuation">
   <desc versionDate="2013-06-20" xml:lang="en">specifies editorial practice adopted with respect to punctuation marks in the original.</desc>
   <classes>
     <memberOf key="att.declarable"/>
@@ -11777,7 +11873,7 @@ the target element</desc>
     <ptr target="#HD57"/>
   </listRef>
 </elementSpec>
-<elementSpec module="header" ident="styleDefDecl">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="styleDefDecl">
   <gloss versionDate="2012-10-06" xml:lang="en">style definition language declaration</gloss>
   <desc versionDate="2013-04-12" xml:lang="en">specifies the name of the formal language in which style or
   renditional information is supplied elsewhere in the document. The
@@ -11812,7 +11908,7 @@ the target element</desc>
 <div type="div4" xml:id="HD54P"><head>Prose Method</head></div>
 <div type="div4" xml:id="HD54S"><head>Search-and-Replace Method</head></div>
 <div type="div4" xml:id="HD54M"><head>Milestone Method</head>
-<elementSpec module="header" ident="refsDecl">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="refsDecl">
   <gloss versionDate="2005-01-14" xml:lang="en">references declaration</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">Déclaration du système de références</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">참조 선언</gloss>
@@ -12006,7 +12102,7 @@ the target element</desc>
       <gloss versionDate="2020-02-03" xml:lang="en">property</gloss>
       <desc versionDate="2020-02-03" xml:lang="en">A URI indicating a property definition.</desc>
       <datatype>
-        <dataRef name="anyURI"/>
+        <dataRef key="teidata.pointer"/>
       </datatype>
     </attDef>    
   </attList>
@@ -12016,8 +12112,7 @@ the target element</desc>
         <citeData property="http://purl.org/dc/terms/title" use="head"/>
       </citeStructure>
     </egXML>
-  </exemplum>
-  
+  </exemplum>  
   <listRef>
     <ptr target="#CORS6"/>
     <ptr target="#SACRCS"/>
@@ -12931,7 +13026,7 @@ codes used elsewhere in the text.</desc>
   </listRef>
 </elementSpec></div>
 <div type="div3" xml:id="HDGDECL"><head>The Geographic Coordinates Declaration</head>
-<elementSpec module="header" ident="geoDecl">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="geoDecl">
   <gloss versionDate="2007-09-23" xml:lang="en">geographic coordinates declaration</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">지리적 좌표 선언</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">declaración de las coordenadas geográficas</gloss>
@@ -13727,7 +13822,7 @@ elements of  <gi>profileDesc</gi> unless these are documenting multiple texts.</
   </listRef>
 </elementSpec></div>
 <div type="div3" xml:id="HD41"><head>Language Usage</head>
-<elementSpec module="header" ident="langUsage">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="langUsage">
   <gloss versionDate="2005-01-14" xml:lang="en">language usage</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">langue utilisée</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">언어 사용</gloss>
@@ -13913,7 +14008,7 @@ langues, registres, dialectes, etc. présents à l’intérieur d’un texte.</d
   </listRef>
 </elementSpec></div>
 <div type="div3" xml:id="HD43"><head>The Text Classification</head>
-<elementSpec module="header" ident="textClass">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="textClass">
   <gloss versionDate="2005-01-14" xml:lang="en">text classification</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">classification du texte</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">텍스트 분류</gloss>
@@ -14494,11 +14589,13 @@ should be supplied for the <att>scheme</att> attribute.</p>
   </listRef>
 </elementSpec></div>
 <div type="div3" xml:id="HD44CD"><head>Correspondence Description</head>
-<elementSpec module="header" ident="correspDesc">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="correspDesc">
   <gloss versionDate="2014-01-13" xml:lang="en">correspondence
     description</gloss>
+  <gloss versionDate="2021-02-02" xml:lang="it">descrizione di corrispondenza epistolare</gloss>
   <desc versionDate="2015-01-29" xml:lang="en">contains a description
     of the actions related to one act of correspondence.</desc>
+  <desc versionDate="2021-02-02" xml:lang="it">contiene una descrizione delle azioni intorno a un atto di corrispondenza epistolare.</desc>
   <classes>
     <memberOf key="model.profileDescPart"/>
     <memberOf key="att.declarable"/>
@@ -14665,7 +14762,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
         elements for describing correspondence</desc>
 </classSpec></div></div>
 <div type="div2" xml:id="HD9"><head>Non-TEI Metadata</head>
-<elementSpec module="header" ident="xenoData">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="xenoData">
   <gloss versionDate="2015-05-30" xml:lang="en">non-TEI metadata</gloss>
   <desc versionDate="2015-05-30" xml:lang="en">provides a container
   element into which metadata in non-TEI formats may be
@@ -15153,7 +15250,7 @@ supplied to printer.</change>
 <div type="div2" xml:id="HD8"><head>Note for Library Cataloguers</head></div>
 <div><head>The TEI Header Module</head>
 <moduleSpec xml:id="DHD" ident="header">
-    <altIdent type="FPI">Common Metadata</altIdent>
+    <idno type="FPI">Common Metadata</idno>
     <desc xml:lang="en" versionDate="2006-09-13">The TEI header</desc>
     <desc xml:lang="fr" versionDate="2018-07-12">En-tête TEI</desc>
     <desc xml:lang="zh-TW" versionDate="2018-07-12">TEI標頭</desc>
@@ -19414,6 +19511,7 @@ my <num type="ordinal" value="21">twenty-first</num> birthday</p>
   <attList>
     <attDef ident="type" mode="change">
       <gloss xml:lang="en" versionDate="2017-06-25">type</gloss>
+      <gloss xml:lang="es" versionDate="2022-04-28">tipo</gloss>
       <gloss versionDate="2017-06-25" xml:lang="de">Typ</gloss>
       <desc versionDate="2005-01-14" xml:lang="en">allows the encoder to classify the abbreviation according to some convenient
                 typology.</desc>
@@ -19422,8 +19520,7 @@ my <num type="ordinal" value="21">twenty-first</num> birthday</p>
       <desc versionDate="2008-04-05" xml:lang="ja">符号化する人の分類に従って省略名称を付与することができる．</desc>
       <desc versionDate="2009-01-06" xml:lang="fr">permet à l'encodeur de caractériser
                 l'abréviation selon une typologie adéquate</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">permite al codificador clasificar la
-                abreviatura según la tipología conveniente.</desc>
+      <desc versionDate="2022-04-29" xml:lang="es">permite al codificador clasificar la abreviatura según la tipología conveniente.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">pemette al codificatore di classificare
                 l'abbreviazione secondo una tipologia funzionale.</desc>
       <desc versionDate="2016-11-25" xml:lang="de">erlaubt es, die Abkürzung nach einer geeigneten Typologie zu klassifizieren.</desc>
@@ -19539,8 +19636,7 @@ my <num type="ordinal" value="21">twenty-first</num> birthday</p>
           <desc versionDate="2007-06-27" xml:lang="en">the abbreviation is for a geographic name.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">약어가 지명에 대한 것이다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">用於地理名稱的縮寫。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la abreviatura se usa para un nombre
-                        geográfico.</desc>
+          <desc versionDate="2022-04-28" xml:lang="es">la abreviatura se usa para un nombre geográfico.</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">地名の省略形．</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">l'abréviation recouvre un nom
                         géographique.</desc>
@@ -21150,21 +21246,22 @@ psychological significance.
       elektronische Verarbeitung automatisch rekonstruiert werden kann, kann es als unnötig angesehen
       werden, die Nummerierung anzugeben.</p>
   </exemplum>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p>L'attribut global<att>n</att> indique le
-    symbole ou le nombre utilisé pour marquer le point d'insertion
-    dans le texte source, comme dans l'exemple suivant :
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">Mevorakh b. Saadya's
-    mother, the matriarch of the family during the second half of the
-    eleventh century, <note n="126" anchored="true"> The alleged
-    mention of Judah Nagid's mother in a letter from 1071 is, in fact,
-    a reference to Judah's children; cf. above, nn. 111 and
-    54. </note> is well known from Geniza documents published by Jacob
-    Mann.</egXML> Cependant, si les notes sont ordonnées et numérotées
-    et qu’on veuille reconstruire automatiquement leur numérotation
-    par un traitement informatique, il est inutile d’enregistrer le
-    numéro des notes.</p>
-  </remarks>
+  <exemplum xml:lang="fr" versionDate="2007-06-12">
+    <p>L'attribut global <att>n</att> indique le
+      symbole ou le nombre utilisé pour marquer le point d'insertion
+      dans le texte source, comme dans l'exemple suivant :</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">Mevorakh b. Saadya's
+      mother, the matriarch of the family during the second half of the
+      eleventh century, <note n="126" anchored="true"> The alleged
+        mention of Judah Nagid's mother in a letter from 1071 is, in fact,
+        a reference to Judah's children; cf. above, nn. 111 and
+        54. </note> is well known from Geniza documents published by Jacob
+      Mann.</egXML> 
+    <p>Cependant, si les notes sont ordonnées et numérotées
+      et qu’on veuille reconstruire automatiquement leur numérotation
+      par un traitement informatique, il est inutile d’enregistrer le
+      numéro des notes.</p>
+  </exemplum>
   <listRef>
     <ptr target="#CONONO" type="div2"/>
     <ptr target="#HD27"/>
@@ -21385,6 +21482,7 @@ the resource specified by the <att>url</att> attribute.</p>
     <memberOf key="att.media"/>
     <memberOf key="att.resourced"/>
     <memberOf key="att.declaring"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
        <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>   
@@ -21427,6 +21525,35 @@ the resource specified by the <att>url</att> attribute.</p>
           <surface>
             <graphic url="page2-highRes.png"/>
             <graphic url="page2-lowRes.png"/>
+          </surface>
+        </surfaceGrp>
+      </facsimile>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2022-04-08" xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
+      <facsimile>
+        <surfaceGrp n="leaf1" xml:id="spi001">
+          <surface xml:id="spi001r">
+            <graphic type="normal" subtype="thumbnail" url="spi/thumb/001r.jpg"/>
+            <graphic type="normal" subtype="low-res" url="spi/normal/lowRes/001r.jpg"/>
+            <graphic type="normal" subtype="high-res" url="spi/normal/highRes/001r.jpg"/>
+            <graphic type="high-contrast" subtype="low-res" url="spi/contrast/lowRes/001r.jpg"/>
+            <graphic type="high-contrast" subtype="high-res" url="spi/contrast/highRes/001r.jpg"/>
+          </surface>
+          <surface xml:id="spi001v">
+            <graphic type="normal" subtype="thumbnail" url="spi/thumb/001v.jpg"/>
+            <graphic type="normal" subtype="low-res" url="spi/normal/lowRes/001v.jpg"/>
+            <graphic type="normal" subtype="high-res" url="spi/normal/highRes/001v.jpg"/>
+            <graphic type="high-contrast" subtype="low-res" url="spi/contrast/lowRes/001v.jpg"/>
+            <graphic type="high-contrast" subtype="high-res" url="spi/contrast/highRes/001v.jpg"/>
+            <zone xml:id="spi001v_detail01">
+              <graphic type="normal" subtype="thumbnail" url="spi/thumb/001v-detail01.jpg"/>
+              <graphic type="normal" subtype="low-res" url="spi/normal/lowRes/001v-detail01.jpg"/>
+              <graphic type="normal" subtype="high-res" url="spi/normal/highRes/001v-detail01.jpg"/>
+              <graphic type="high-contrast" subtype="low-res" url="spi/contrast/lowRes/001v-detail01.jpg"/>
+              <graphic type="high-contrast" subtype="high-res" url="spi/contrast/highRes/001v-detail01.jpg"/>
+            </zone>
           </surface>
         </surfaceGrp>
       </facsimile>
@@ -23563,7 +23690,7 @@ epistemology, methodology and history of
 </elementSpec></div>
 <div type="div4" xml:id="COBICOS"><head>Series Information</head></div>
 <div type="div4" xml:id="COBIRI"><head>Related Items</head>
-<elementSpec module="core" ident="bibl">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="bibl">
   <gloss versionDate="2005-01-14" xml:lang="en">bibliographic citation</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">서지 인용</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">書目資料</gloss>
@@ -23685,7 +23812,7 @@ epistemology, methodology and history of
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="core" ident="biblStruct">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="biblStruct">
   <gloss versionDate="2005-04-15" xml:lang="en">structured bibliographic citation</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">구조화된 서지 인용</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">結構次要書目</gloss>
@@ -23786,7 +23913,7 @@ epistemology, methodology and history of
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="core" ident="listBibl">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="listBibl">
   <gloss versionDate="2005-01-14" xml:lang="en">citation list</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">인용 목록</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">書目列表</gloss>
@@ -24299,7 +24426,7 @@ relatedItem element must be empty</sch:report>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n23">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n23-24">
       <sp>
         <speaker>祝英台</speaker>
         <p>我就是英台。三年前我想出外求學，故而改扮男裝，不期与梁兄相遇，三載同窗多蒙照顧，英台感激不盡。</p>
@@ -24405,7 +24532,7 @@ relatedItem element must be empty</sch:report>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n24">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n23-24">
       <sp who="#zh-tw_ni #zh-tw_rsa">
         <speaker>梁山伯與祝英台t</speaker>
         <stage type="演講或歌唱">（同時)</stage>
@@ -24449,6 +24576,7 @@ relatedItem element must be empty</sch:report>
     <memberOf key="att.ascribed.directed"/>
     <memberOf key="att.global"/>
     <memberOf key="att.placement"/>
+    <memberOf key="att.written"/>
     <memberOf key="model.stageLike"/>
   </classes>
   <content>
@@ -24644,7 +24772,7 @@ by the stage direction.</p>
 </elementSpec></div></div>
 <div type="div2" xml:id="COOV"><head>Overview of the Core Module </head>
 <moduleSpec xml:id="DCO" ident="core">
-     <altIdent type="FPI">Common Core</altIdent>
+     <idno type="FPI">Common Core</idno>
      <desc xml:lang="en" versionDate="2006-09-13">Elements common to all TEI documents</desc>
      <desc xml:lang="fr" versionDate="2018-07-12">Éléments disponibles pour tous les documents TEI</desc>
      <desc xml:lang="zh-TW" versionDate="2018-07-12">所有TEI文件所通用的元素</desc>
@@ -24674,8 +24802,7 @@ by the stage direction.</p>
   <desc versionDate="2017-06-13" xml:lang="de">enthält ein einzelnes TEI-konformes Dokument, das aus einem einzigen TEI-Header und einem oder
     mehreren Mitgliedern der <ident type="class">model.resource</ident>-Klasse besteht. Mehrere
     <gi>TEI</gi>-Elemente können in einem <gi>teiCorpus</gi>-Element zusammengefasst werden.</desc>
-  <desc versionDate="2017-02-06" xml:lang="es">contiene un solo documento conforme a la norma TEI, combinando una sola cabecera TEI (teiHeader) con uno o más miembros de la clase <ident type="class">model.resource</ident>. Múltiples elementos TEI se pueden combinar para formar un elemento <gi>teiCorpus</gi>.
-   </desc>
+  <desc versionDate="2022-05-02" xml:lang="es">contiene un solo documento conforme a la norma TEI, combinando una sola cabecera TEI (teiHeader) con uno o más miembros de la clase <ident type="class">model.resource</ident>. Múltiples elementos TEI se pueden combinar para formar un elemento <gi>TEI</gi> o <gi>teiCorpus</gi>.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene un documento TEI-conforme, comprendente un'intestazione e un testo, sia esso isolato o parte di un elemento <gi>teiCorpus</gi>
    </desc>
   <classes>
@@ -24688,11 +24815,11 @@ by the stage direction.</p>
     <sequence>
       <elementRef key="teiHeader"/>
       <alternate>
-	<sequence>
-	  <classRef key="model.resource" minOccurs="1" maxOccurs="unbounded"/>
-	  <elementRef key="TEI" minOccurs="0" maxOccurs="unbounded"/>
-	</sequence>
-	<elementRef key="TEI" minOccurs="1" maxOccurs="unbounded"/>
+        <sequence>
+          <classRef key="model.resource" minOccurs="1" maxOccurs="unbounded"/>
+          <elementRef key="TEI" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+        <elementRef key="TEI" minOccurs="1" maxOccurs="unbounded"/>
       </alternate>
     </sequence>
   </content>
@@ -24716,7 +24843,7 @@ by the stage direction.</p>
       <desc versionDate="2018-12-17" xml:lang="ja">当該文書が妥当（に符号化される）TEIスキームの版を示す．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">la version majeure du schéma TEI</desc>
       <desc versionDate="2018-07-18" xml:lang="de">gibt die Versionsnummer der TEI-Richtlinien an, gegen die dieses Dokument validiert wird.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">Versión del esquema TEI</desc>
+      <desc versionDate="2022-05-02" xml:lang="es">especifica el número de versión de las Directrices TEI frente a las cuales este documento es válido.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">versione dello schema TEI</desc>
       <datatype><dataRef key="teidata.version"/></datatype>
       <remarks versionDate="2018-01-24" xml:lang="en">
@@ -24725,8 +24852,9 @@ by the stage direction.</p>
           releases of the fifth major edition of the Guidelines, known as P5. This attribute may be 
           used to associate a TEI document with a specific release of the P5 Guidelines, in the absence 
           of a more precise association provided by the <att>source</att> attribute on the associated 
-          <gi>schemaSpec</gi>. </p>
+          <gi>schemaSpec</gi>.</p>
       </remarks>
+      <remarks versionDate="2022-05-02" xml:lang="es"><p>Durante mucho tiempo, se ha hecho referencia informalmente a las principales ediciones de las Directrices con un nombre compuesto por la letra P (de Propuesta) seguida de un dígito. El lanzamiento actual es uno de los muchos lanzamientos de la quinta edición principal de las Directrices, conocida como P5. Este atributo puede utilizarse para asociar un documento TEI con una publicación específica de las Directrices P5, en ausencia de una asociación más precisa proporcionada por el atributo fuente en el <gi>schemaSpec</gi> asociado.</p></remarks>
       <remarks versionDate="2018-07-18" xml:lang="de">
         <p>Hauptausgaben der TEI-Richtlinien werden seit langem informell mit einem Namen bezeichnet, der sich aus dem Buchstaben P (für proposal) 
           und einer Ziffer zusammensetzt. Die aktuelle Ausgabe ist eine der vielen Ausgaben 
@@ -24749,7 +24877,7 @@ by the stage direction.</p>
             </titleStmt>
             <publicationStmt>
               <p>First published as part of TEI P2, this is the P5
-	      version using a name space.</p>
+              version using a namespace.</p>
             </publicationStmt>
             <sourceDesc>
               <p>No source: this is an original work.</p>
@@ -24780,12 +24908,12 @@ by the stage direction.</p>
             </sourceDesc>
           </fileDesc>
         </teiHeader>
-	<facsimile>
-	  <graphic url="page1.png"/>
-	  <graphic url="page2.png"/>
-	  <graphic url="page3.png"/>
-	  <graphic url="page4.png"/>
-	</facsimile>
+        <facsimile>
+          <graphic url="page1.png"/>
+          <graphic url="page2.png"/>
+          <graphic url="page3.png"/>
+          <graphic url="page4.png"/>
+        </facsimile>
       </TEI>
     </egXML>
   </exemplum>
@@ -24838,10 +24966,11 @@ by the stage direction.</p>
       </TEI>
     </egXML>
   </exemplum>
-  <remarks versionDate="2015-03-10" xml:lang="en">
-    <p>This element is required. It is customary to specify the
-    TEI namespace <code>http://www.tei-c.org/ns/1.0</code> on it, using
-    the <att>xmlns</att> attribute.</p>
+  <remarks versionDate="2022-04-04" xml:lang="en">
+    <p>This element is required. It is customary to specify the TEI
+    namespace <ident type="ns">http://www.tei-c.org/ns/1.0</ident> on
+    it, for example: <tag type="start">TEI version="4.4.0"
+    xml:lang="it" xmlns="http://www.tei-c.org/ns/1.0"</tag>.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Cet élément est obligatoire.</p>
@@ -24851,9 +24980,11 @@ by the stage direction.</p>
       当該要素は必須であり，<att>xmlns</att> 属性を用いてTEIの名前空間 <code>http://www.tei-c.org/ns/1.0</code> を指定することになっている．
     </p>
   </remarks>
-  <remarks versionDate="2017-06-13" xml:lang="de">
-    <p>Dieses Element ist obligatorisch. Es ist notwendig, darin den TEI-Namensraum <ident type="ns">http://www.tei-c.org/ns/1.0</ident> mithilfe des <att>xmlns</att>-Attributs zu
-      spezifizieren.</p>
+  <remarks versionDate="2022-04-07" xml:lang="de">
+    <p>Dieses Element ist obligatorisch. Es ist notwendig, 
+      auch den TEI-Namensraum <ident type="ns">http://www.tei-c.org/ns/1.0</ident> anzugeben, z.B. 
+      <tag type="start">TEI version="4.4.0" xml:lang="it" 
+        xmlns="http://www.tei-c.org/ns/1.0"</tag>.</p>
   </remarks>
   <listRef>
     <ptr target="#DS"/>
@@ -25743,7 +25874,7 @@ by the stage direction.</p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n51">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n51-55">
       <body>
         <div type="part">
           <head>對話的喧囂：巴赫汀文化理論述評</head>
@@ -26034,7 +26165,7 @@ by the stage direction.</p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n53">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n51-55">
       <div1 n="3" type="part">
         <head>第三章：對話性—文化理論的基石</head>
         <div2 n="3.1" type="section">
@@ -26182,7 +26313,7 @@ by the stage direction.</p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n54">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n51-55">
       <div2 n="3.2" type="section">
         <div3 n="3.2.1" type="member">
           <head>打破內在/外在、主觀/客觀的二元對立</head>
@@ -26315,7 +26446,7 @@ by the stage direction.</p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n55">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n51-55">
       <div3 n="3.2.1" type="member">
         <head>打破內在/外在、主觀/客觀的二元對立</head>
         <div4 n="3.2.1.1" type="subsection">
@@ -27407,7 +27538,7 @@ Tubes formed by Lightning — House struck</p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n56">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n56-57">
       <epigraph xml:lang="zh">
         <cit>
           <bibl>俞平伯</bibl>
@@ -28828,7 +28959,7 @@ the date of the entire document, not for any subset or part of it.</p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n57">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n56-57">
       <front>
         <epigraph>
           <quote>小燕子其實也無所愛，只是沉浸在朦朧而飄忽的夏夜夢里罷了。 </quote>
@@ -29109,7 +29240,7 @@ the date of the entire document, not for any subset or part of it.</p>
 </elementSpec></div>
 <div type="div2" xml:id="DSSTRUC"><head>Module for Default Text Structure</head>
 <moduleSpec xml:id="DDS" ident="textstructure">
-    <altIdent type="FPI">Default Text Structure</altIdent>
+    <idno type="FPI">Default Text Structure</idno>
     <desc xml:lang="en" versionDate="2006-09-13">Default text structure</desc>
     <desc xml:lang="fr" versionDate="2018-07-12">Structure textuelle par défaut</desc>
     <desc xml:lang="zh-TW" versionDate="2018-07-12">預設文件結構</desc>
@@ -29139,7 +29270,7 @@ the date of the entire document, not for any subset or part of it.</p>
 <div xml:id="WDCAV"><head>Caveat</head></div>
 <div type="div2" xml:id="WSD-DEF"><head>Formal Definition</head>
 <moduleSpec xml:id="DWD" ident="gaiji">
-  <altIdent type="FPI">Character and Glyph Documentation</altIdent>
+  <idno type="FPI">Character and Glyph Documentation</idno>
   <desc xml:lang="en" versionDate="2006-09-13">Character and glyph documentation</desc>
   <desc xml:lang="fr" versionDate="2018-07-12">Représentation des caractères et des glyphes non standard</desc>
   <desc xml:lang="zh-TW" versionDate="2018-07-12">文字與字體說明</desc>
@@ -30846,7 +30977,7 @@ and <val>simplified</val>  for simplified characters. The
 <div type="div3" xml:id="VEMEana"><head>Metrical Analysis of Stanzaic Verse</head></div></div>
 <div type="div2" xml:id="VERH"><head>Rhyme</head></div>
 <div xml:id="HDMN"><head>Metrical Notation Declaration</head>
-<elementSpec module="verse" ident="metDecl">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="verse" ident="metDecl">
   <gloss versionDate="2007-07-04" xml:lang="en">metrical notation declaration</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">déclaration sur la métrique</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">운율적 표기법 선언</gloss>
@@ -31215,7 +31346,7 @@ and <val>simplified</val>  for simplified characters. The
 <div type="div2" xml:id="VEETC"><head>Encoding Procedures for Other Verse Features</head></div>
 <div type="div2" xml:id="VESTR"><head>Module for Verse</head>
 <moduleSpec xml:id="DVE" ident="verse">
-       <altIdent type="FPI">Verse</altIdent>
+       <idno type="FPI">Verse</idno>
        <desc xml:lang="en" versionDate="2006-09-13">Verse structures</desc>
        <desc xml:lang="fr" versionDate="2018-07-12">Poésie</desc>
        <desc xml:lang="zh-TW" versionDate="2018-07-12">韻文結構</desc>
@@ -31489,7 +31620,7 @@ enjambement is not of particular interest.</p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n64">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n62-64">
       <l>枯藤<caesura/>老樹<caesura/>昏鴉</l>
       <l>小橋<caesura/>流水<caesura/>人家</l>
       <l>古道<caesura/>西風<caesura/>瘦馬</l>
@@ -31867,7 +31998,7 @@ enjambement is not of particular interest.</p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n35">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n35-36">
       <prologue>
         <sp>
           <l>何時姊妹再相逢，雷電轟轟雨蒙蒙？</l>
@@ -32603,7 +32734,7 @@ elements within a cast list.</desc>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n30">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n30-31">
       <castGroup rend="braced">
         <castItem>
           <role>程蝶衣</role>
@@ -32740,7 +32871,7 @@ either a single role or a list of non-speaking roles.</desc>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n31">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n30-31">
       <castItem type="list">張國榮、張豐毅、鞏俐…等等</castItem>
     </egXML>
   </exemplum>
@@ -32786,7 +32917,7 @@ either a single role or a list of non-speaking roles.</desc>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n36">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n35-36">
       <role xml:id="zh-tw_王">鄧肯</role>
       <roleDesc>蘇格蘭國王</roleDesc>
     </egXML>
@@ -33700,7 +33831,7 @@ technical direction applies.</desc>
 </elementSpec></div></div>
 <div><head>Module for Performance Texts</head>
 <moduleSpec xml:id="DDR" ident="drama">
-    <altIdent type="FPI">Performance Texts</altIdent>
+    <idno type="FPI">Performance Texts</idno>
     <desc xml:lang="en" versionDate="2006-09-13">Performance texts</desc>
     <desc xml:lang="fr" versionDate="2018-07-12">Théâtre</desc>
     <desc xml:lang="zh-TW" versionDate="2018-07-12">劇本</desc>
@@ -33711,7 +33842,7 @@ technical direction applies.</desc>
 <div type="div1" xml:id="TS" n="11"><head>Transcriptions of Speech</head>
 <div type="div2" xml:id="TSOV"><head>General Considerations and Overview</head></div>
 <div type="div3" xml:id="HD32"><head>Documenting the Source of Transcribed Speech</head>
-<elementSpec module="spoken" ident="scriptStmt">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="spoken" ident="scriptStmt">
   <gloss versionDate="2005-01-14" xml:lang="en">script statement</gloss>
   <gloss versionDate="2009-04-17" xml:lang="fr">déclaration du script</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">스크립트 진술</gloss>
@@ -33827,7 +33958,7 @@ distinct recordings made by hidden microphone in early February
     <ptr target="#HD3"/>
   </listRef>
 </elementSpec>
-<elementSpec module="spoken" ident="recording">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="spoken" ident="recording">
   <gloss versionDate="2005-01-14" xml:lang="en">recording event</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">enregistrement</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">녹음 사건</gloss>
@@ -34065,7 +34196,7 @@ a public broadcast.</desc>
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="spoken" ident="equipment">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="spoken" ident="equipment">
   <gloss xml:lang="en" versionDate="2009-04-17">equipment</gloss>
   <gloss xml:lang="fr" versionDate="2009-04-17">matériel</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">provides technical details of the equipment and media used for
@@ -34144,7 +34275,7 @@ an audio or video recording used as the source for a spoken text.</desc>
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="spoken" ident="broadcast">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="spoken" ident="broadcast">
   <gloss xml:lang="en" versionDate="2009-04-17">broadcast</gloss>
   <gloss xml:lang="fr" versionDate="2009-04-17">diffusion</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">describes a broadcast used as the source of a spoken text.</desc>
@@ -34935,7 +35066,7 @@ very loudly.</p>
 <div type="div3" xml:id="TSTPAC"><head>Analytic Coding</head></div></div>
 <div><head>Module for Transcribed Speech</head>
 <moduleSpec xml:id="DTS" ident="spoken">
-    <altIdent type="FPI">Transcribed Speech</altIdent>
+    <idno type="FPI">Transcribed Speech</idno>
     <desc xml:lang="en" versionDate="2006-09-13">Transcribed Speech</desc>
     <desc xml:lang="fr" versionDate="2018-07-12">Transcriptions de la parole</desc>
     <desc xml:lang="zh-TW" versionDate="2018-07-12">轉錄的言詞</desc>
@@ -39212,7 +39343,7 @@ headword  such as noun, verb, or adjective.</desc>
 <div type="div2" xml:id="DIFR"><head>Unstructured Entries</head></div>
 <div><head>The Dictionary Module</head>
 <moduleSpec xml:id="DDIBO" ident="dictionaries">
-    <altIdent type="FPI">Dictionaries</altIdent>
+    <idno type="FPI">Dictionaries</idno>
     <desc xml:lang="en" versionDate="2018-07-12">Dictionaries</desc>
     <desc xml:lang="fr" versionDate="2018-07-09">Dictionnaires</desc>
     <desc xml:lang="zh-TW" versionDate="2018-07-09">紙本字典</desc>
@@ -44212,9 +44343,9 @@ Edgar Holden in 1993. Donor number: 1993-034.</p>
           <change when="2009-10-05" who="Markova">Description mise à jour le <date type="crea">5
                 octobre 2009 </date>en vue de l'encodage en TEI des descriptions des reliure de la
               Réserve des livres rares</change>
-          <change when="2009-06-01" who="Le Bars">Description revue le <date type="maj">1er juin
+          <change when="2009-06-01" who="#Le_Bars">Description revue le <date type="maj">1er juin
                 2009 </date> par Fabienne Le Bars</change>
-          <change when="2009-06-25" who="Le Bars">Description validée le<date type="valid">25
+          <change when="2009-06-25" who="#Le_Bars">Description validée le<date type="valid">25
                 juin 2009</date>par Fabienne Le Bars</change>
         </recordHist>
       </adminInfo>
@@ -44771,7 +44902,7 @@ deprecated.
 </elementSpec></div>
 <div type="div2" xml:id="MSref"><head>Module for Manuscript Description</head>
 <moduleSpec xml:id="DMSD2" ident="msdescription">
-    <altIdent type="FPI">Manuscript Description</altIdent>
+    <idno type="FPI">Manuscript Description</idno>
     <desc xml:lang="en" versionDate="2006-09-13">Manuscript Description</desc>
     <desc xml:lang="fr" versionDate="2018-07-12">Description de manuscrits</desc>
     <desc xml:lang="zh-TW" versionDate="2018-07-12">寫本描述</desc>
@@ -45234,13 +45365,13 @@ in section <ptr target="#PH-surfzone"/>.    </p>
       <facsimile>
         <surface ulx="50" uly="20" lrx="400" lry="280">
           <zone ulx="0" uly="0" lrx="500" lry="321">
-            <graphic url="graphic.png "/>
+            <graphic url="graphic.png"/>
           </zone>
         </surface>
       </facsimile>
     </egXML>
     <p>This example defines a zone which has been defined as larger than its parent
-surface in order to match the dimensions of the  graphic it contains.   </p>
+surface in order to match the dimensions of the  graphic it contains.</p>
   </exemplum>
   <remarks versionDate="2018-04-08" xml:lang="en">
     <p>The position of every zone for a given surface is always
@@ -45417,7 +45548,7 @@ en-tête et un texte, constitue un document TEI.</desc>
 <div type="div2" xml:id="PHTRXX"><head>Other Primary Source Features not Covered in these Guidelines</head></div>
 <div><head>Module for Transcription of Primary Sources</head>
 <moduleSpec xml:id="DPH" ident="transcr">
-       <altIdent type="FPI">Transcription of Primary Sources</altIdent>
+       <idno type="FPI">Transcription of Primary Sources</idno>
        <desc xml:lang="en" versionDate="2006-09-13">Transcription of primary sources</desc>
        <desc xml:lang="zh-TW" versionDate="2018-07-12">原文轉錄</desc>
        <desc xml:lang="fr" versionDate="2018-07-12">Représentation de sources primaires</desc>
@@ -46331,7 +46462,7 @@ horizontal components should be classed as <val>vertical</val>.</p>
         horizontale se dépose sur la <space quantity="3" unit="lignes"/>feuille blanche.</egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n62">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n62-64">
       夕陽西下<space quantity="1" unit="minims"/>斷腸人在天涯</egXML>
   </exemplum>
   <remarks versionDate="2005-01-14" xml:lang="en">
@@ -47169,11 +47300,13 @@ reading groups, each associated with witness specifications.</p>
     <ptr target="#TCAPEN"/>
   </listRef>
 </elementSpec>
-<elementSpec module="textcrit" ident="listApp">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="textcrit" ident="listApp">
   <gloss versionDate="2012-08-14" xml:lang="en">list of apparatus entries</gloss>
   <gloss versionDate="2012-07-14" xml:lang="fr">liste d'entrées dans un apparat critique</gloss>
+  <gloss versionDate="2021-02-02" xml:lang="it">lista delle voci di un apparato critico</gloss>
   <desc versionDate="2012-07-15" xml:lang="en">contains a list of apparatus entries.</desc>
   <desc versionDate="2012-07-14" xml:lang="fr">contient une liste d'entrées dans un apparat critique.</desc>
+  <desc versionDate="2021-02-02" xml:lang="it">contiene una lista delle voci di un apparato critico.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.sortable"/>
@@ -47998,7 +48131,7 @@ witness.</desc>
 <div><head>Strategies for Encoding Variation</head></div>
 <div><head>Module for Critical Apparatus</head>
 <moduleSpec xml:id="DTC" ident="textcrit">
-      <altIdent type="FPI">Text Criticism</altIdent>
+      <idno type="FPI">Text Criticism</idno>
       <desc xml:lang="en" versionDate="2018-07-12">Critical Apparatus</desc>
       <desc xml:lang="fr" versionDate="2018-07-09">Apparat critique</desc>
       <desc xml:lang="zh-TW" versionDate="2018-07-09">學術編輯註解</desc>
@@ -48100,9 +48233,9 @@ or external to it.</desc>
       <constraintSpec ident="variantEncodingLocation" scheme="schematron">
         <constraint>
           <sch:rule context="tei:variantEncoding">
-            <sch:assert test="(@location != 'external') or (@method != 'parallel-segmentation')">
+            <sch:report test="@location eq 'external'  and  @method eq 'parallel-segmentation'">
               The @location value "external" is inconsistent with the
-              parallel-segmentation method of apparatus markup.</sch:assert>
+              parallel-segmentation method of apparatus markup.</sch:report>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -48921,16 +49054,16 @@ different witnesses.
   </exemplum>
   <exemplum xml:lang="en" versionDate="2019-07-15">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <p>The <roleName role="#solicitor_general">S.G.</roleName> is the only national public official,
+      <p>The <roleName role="solicitor_general">S.G.</roleName> is the only national public official,
       including the Supreme Court justices, required by statute to be “learned in the law.”</p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en" versionDate="2019-07-15">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <p><persName ref="#NJF"><roleName role="#solicitor_general">Solicitor General</roleName> Noel J. Francisco</persName>,
+      <p><persName ref="#NJF"><roleName role="solicitor_general">Solicitor General</roleName> Noel J. Francisco</persName>,
       representing the administration, asserted in rebuttal that there was nothing to disavow (...)
       <persName ref="#NJF">Francisco</persName> had violated the scrupulous standard of candor about the facts and
-      the law that <roleName role="#solicitor_general">S.G.s</roleName>, in Republican and Democratic administrations
+      the law that <roleName role="solicitor_general">S.G.s</roleName>, in Republican and Democratic administrations
       alike, have repeatedly said they must honor.</p>
     </egXML>
   </exemplum>
@@ -50439,7 +50572,7 @@ different witnesses.
     <ptr target="#CCAHPA"/>
   </listRef>
 </elementSpec>
-<elementSpec module="namesdates" ident="listOrg">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="listOrg">
   <gloss versionDate="2007-07-04" xml:lang="en">list of organizations</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">조직 목록</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">lista de organizaciones</gloss>
@@ -50525,12 +50658,14 @@ different witnesses.
     <ptr target="#NDORG"/>
   </listRef>
 </elementSpec>
-<elementSpec module="namesdates" ident="listEvent">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="listEvent">
   <gloss versionDate="2009-01-21" xml:lang="en">list of events</gloss>
   <gloss xml:lang="fr" versionDate="2009-03-19">liste d'événements</gloss>
+  <gloss versionDate="2021-02-02" xml:lang="it">list di eventi</gloss>
   <desc versionDate="2009-01-21" xml:lang="en">contains a list of descriptions, each of which provides information
     about an identifiable event.</desc>
   <desc versionDate="2009-03-19" xml:lang="fr">contient une liste de descriptions, chacune d'entre elles fournissant des informations sur un événement connu.</desc>
+  <desc versionDate="2021-02-02" xml:lang="it">contiene una lista di descrizioni, ognuna delle quali fornisce informazioni a proposito di un determinato evento.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
@@ -50598,7 +50733,7 @@ raiders and saved the town from capture.</desc>
     <ptr target="#NDPERSbp"/>
   </listRef>
 </elementSpec>
-<elementSpec module="namesdates" ident="listPerson">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="listPerson">
   <gloss versionDate="2007-07-04" xml:lang="en">list of persons</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">개인 목록</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">lista de personas</gloss>
@@ -50622,7 +50757,7 @@ raiders and saved the town from capture.</desc>
     los participantes de una interacción verbal o las personas referidas en una fuente histórica.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una lista di descrizioni, ciascuna delle quali
     fornisce informazioni relative a una persona specifica o a un gruppo di persone, per esempio i
-    partecipanti a un'interazione verbale o le persone identificate da una fonte storica</desc>
+    partecipanti a un'interazione verbale o le persone identificate da una fonte storica</desc>  
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
@@ -50693,7 +50828,7 @@ raiders and saved the town from capture.</desc>
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="namesdates" ident="listPlace">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="listPlace">
   <gloss versionDate="2007-07-04" xml:lang="en">list of places</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">장소 목록</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">lista de lugares</gloss>
@@ -52827,12 +52962,14 @@ specification.</p></remarks>
     <ptr target="#NDOBJ"/>
   </listRef>
  </elementSpec>
-<elementSpec module="namesdates" ident="listObject">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="listObject">
   <gloss versionDate="2018-07-15" xml:lang="en">list of objects</gloss>
   <gloss versionDate="2019-01-22" xml:lang="de">Liste der Objekte</gloss>
+  <gloss versionDate="2021-02-02" xml:lang="it">lista di oggetti</gloss>
   <desc versionDate="2019-01-22" xml:lang="en">contains a list of descriptions, each of which provides information about an
     identifiable physical object.</desc>
   <desc versionDate="2019-01-22" xml:lang="de">enthält eine Liste von Beschreibungen, die jeweils Informationen zu einem identifizierbaren physischen Objekt liefern.</desc>
+  <desc versionDate="2021-02-02" xml:lang="it">contiene una lista di descrizioni, ognuna delle quali fornisce informazioni a proposito di un determinato oggetto fisico.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
@@ -52920,7 +53057,7 @@ specification.</p></remarks>
     <memberOf key="model.biblPart"/>
   </classes>
   <content>
-    <alternate minOccurs="0" maxOccurs="unbounded">
+    <alternate minOccurs="1" maxOccurs="unbounded">
       <classRef key="model.placeNamePart"/>
       <elementRef key="institution"/>
       <elementRef key="repository"/>
@@ -52932,11 +53069,6 @@ specification.</p></remarks>
       <elementRef key="address"/>
     </alternate>
    </content>
-  <constraintSpec scheme="schematron" ident="objectIdentifier_minimal">
-    <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="not(count(*) gt 0)">An objectIdentifier must contain at minimum a single piece of locating or identifying information.</report>
-    </constraint>
-  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <objectIdentifier>
@@ -53060,7 +53192,7 @@ specification.</p></remarks>
     <ptr target="#NDNYM" type="div2"/>
   </listRef>
 </elementSpec>
-<elementSpec module="namesdates" ident="listNym">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="listNym">
   <gloss versionDate="2007-07-04" xml:lang="en">list of canonical names</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">표준 이름 목록</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">lista de nombres canónicos</gloss>
@@ -53280,16 +53412,16 @@ one initial.</desc>
     relative a luoghi e relazioni corrispondenti</desc>
 </classSpec>
 <classSpec module="namesdates" xml:id="DATABLEISO" type="atts" predeclare="true" ident="att.datable.iso">
-  <desc versionDate="2007-04-09" xml:lang="en">provides attributes for normalization of elements that contain datable events using the ISO 8601 standard.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">ISO 8601 표준을 사용해서 날짜를 추정할 수 있는 사건을 포함하는 요소의 규격화를 위한 속성을 제공한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">用於紀錄規格化時間的屬性，該規格使用ISO 8601標準</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">ISO8601に従い，時間事象の正規的方法を示す属性を示す．</desc>
-  <desc versionDate="2009-03-19" xml:lang="fr">fournit des attributs pour la normalisation, selon la norme ISO 8601, d'éléments contenant des évènements
+  <desc versionDate="2022-03-23" xml:lang="en">provides attributes for normalization of elements that contain datable events using the ISO 8601:2004 standard.</desc>
+  <desc versionDate="2022-03-23" xml:lang="ko">ISO 8601:2004 표준을 사용해서 날짜를 추정할 수 있는 사건을 포함하는 요소의 규격화를 위한 속성을 제공한다.</desc>
+  <desc versionDate="2022-03-23" xml:lang="zh-TW">用於紀錄規格化時間的屬性，該規格使用ISO 8601:2004標準</desc>
+  <desc versionDate="2022-03-23" xml:lang="ja">ISO8601:2004に従い，時間事象の正規的方法を示す属性を示す．</desc>
+  <desc versionDate="2022-03-23" xml:lang="fr">fournit des attributs pour la normalisation, selon la norme ISO 8601:2004, d'éléments contenant des évènements
         datables.</desc>
-  <desc versionDate="2007-11-06" xml:lang="it">indica attributi per la normalizzazione tramite lo standard ISO 8601 di elementi che contengono eventi
+  <desc versionDate="2022-03-23" xml:lang="it">indica attributi per la normalizzazione tramite lo standard ISO 8601:2004 di elementi che contengono eventi
         databili</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos para la normalización de elementos que contienen eventos datables usando el
-        estándard ISO 8601.</desc>
+  <desc versionDate="2022-03-23" xml:lang="es">proporciona atributos para la normalización de elementos que contienen eventos datables usando el
+        estándard ISO 8601:2004.</desc>
   <attList>
     <!-- org="choice">-->
     <attDef ident="when-iso" usage="opt">
@@ -53297,7 +53429,7 @@ one initial.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">표준형의 날짜 또는 시간 값을 제시한다.</desc>
       <desc versionDate="2008-04-06" xml:lang="es">proporciona el valor de fecha o de tiempo en una forma estándar.</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">日付や時間を，標準形式で示す．</desc>
-      <desc versionDate="2008-12-09" xml:lang="fr">précise une date exacte pour l'évènement selon la forme normalisée ISO 8601, c'est-à-dire
+      <desc versionDate="2008-12-09" xml:lang="fr">précise une date exacte pour l'évènement selon la forme normalisée ISO 8601:2004, c'est-à-dire
                 aaaa-mm-jj.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica il valore di una data o di un orario in un formato standard</desc>
       <datatype><dataRef key="teidata.temporal.iso"/></datatype>
@@ -53397,7 +53529,7 @@ one initial.</desc>
   <remarks versionDate="2008-07-23" xml:lang="en">
     <p>The value of these attributes should be a normalized
     representation of the date, time, or combined date &amp; time
-    intended, in any of the standard formats specified by ISO 8601,
+    intended, in any of the standard formats specified by ISO 8601:2004,
     using the Gregorian calendar.</p>
     <p>If both <att>when-iso</att> and <att>dur-iso</att> are specified, the values should be interpreted as indicating a span of time by its
       starting time (or date) and duration. That is, <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><date when-iso="2007-06-01" dur-iso="P8D"/></egXML> indicates the same time period as <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><date when-iso="2007-06-01/P8D"/></egXML>
@@ -53405,9 +53537,9 @@ one initial.</desc>
     <p>In providing a <soCalled>regularized</soCalled> form, no claim is made that the form in the source text is incorrect; the regularized form
       is simply that chosen as the main form for purposes of unifying variant forms under a single heading.</p>
   </remarks>
-  <remarks versionDate="2019-03-29" xml:lang="ja"><p>この属性の値は，グレゴリオ暦を用い、ISO8601で定義されるいずれかの標準形式で正規化された日付や時刻，あるいはその組み合わせである。</p>
+  <remarks versionDate="2019-03-29" xml:lang="ja"><p>この属性の値は，グレゴリオ暦を用い、ISO8601:2004で定義されるいずれかの標準形式で正規化された日付や時刻，あるいはその組み合わせである。</p>
     
-    <p> 属性<att>when-iso</att>の値は，ISO8601に従った，日付や時間，ま たはその組み合わせになる．属性<att>calendar</att>がある場合に は，要素内容の歴システムが示される．属<att>calendar</att>は，
+    <p> 属性<att>when-iso</att>の値は，ISO8601:2004に従った，日付や時間，ま たはその組み合わせになる．属性<att>calendar</att>がある場合に は，要素内容の歴システムが示される．属<att>calendar</att>は，
       属性<att>when</att>
       <att>when-iso</att>の歴システムを示すもので はない．これは普通はグレゴリオ暦になる． </p>
     <p> 属性<att>when-iso</att>と<att>dur-iso</att>が付与されている場合， 当該属性値は時間幅を示し，それぞれ始点と幅を示すものになる． 例えば，以下のような場合， <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><date when-iso="2007-06-01" dur-iso="P8D"/></egXML> この記述は，以下のようにも書くことができる． <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><date when-iso="2007-06-01/P8D"/></egXML>
@@ -53416,7 +53548,7 @@ one initial.</desc>
   </remarks>
   <remarks versionDate="2009-03-19" xml:lang="fr">
     <p>La valeur de <att>when-iso</att> doit être une représentation normalisée de la date, de la durée ou d'une combinaison de date et de
-    durée, dans l'un des formats spécifiés dans ISO 8601, selon le calendrier grégorien.</p>
+    durée, dans l'un des formats spécifiés dans ISO 8601:2004, selon le calendrier grégorien.</p>
     <p>Si les attributs <att>when-iso</att> et <att>dur-iso</att> sont tous les deux spécifiés, les valeurs doivent être interprétées comme
       indiquant un intervalle de temps au moyen de son point de départ (ou date) et de sa durée. C'est à dire, <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><date when-iso="2007-06-01" dur-iso="P8D"/></egXML> indique la même période temporelle que <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><date when-iso="2007-06-01/P8D"/></egXML>
     </p>
@@ -53515,12 +53647,12 @@ one initial.</desc>
          <dataRef name="token" restriction="[0-9.,DHMPRSTWYZ/:+\-]+"/>
       </alternate>
    </content>
-  <remarks versionDate="2007-04-13" xml:lang="en">
+  <remarks versionDate="2022-03-23" xml:lang="en">
       <p>If it is likely that the value used is to be compared with another, then a time zone
       indicator should always be included, and only the dateTime representation should be used.</p>
-      <p>For all representations for which ISO 8601 describes both a <term>basic</term> and an
+      <p>For all representations for which ISO 8601:2004 describes both a <term>basic</term> and an
         <term>extended</term> format, these Guidelines recommend use of the extended format.</p>
-      <p>While ISO 8601 permits the use of both <code>00:00</code> and <code>24:00</code> to represent
+      <p>While ISO 8601:2004 permits the use of both <code>00:00</code> and <code>24:00</code> to represent
       midnight, these Guidelines strongly recommend against the use of <code>24:00</code>.
       <!-- As
     there are only 24 hours in a day, numbered "00" through "23", use
@@ -53528,10 +53660,10 @@ one initial.</desc>
     Note that when there is a leap second, it should be indicated with
     23:59:60. --></p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
+  <remarks xml:lang="ja" versionDate="2022-03-23">
       <p> 当該属性値が他の値と比較される場合，時間帯は必ず示されるべきである． またはdateTimeを使うべきである(訳注：この文は修正されるかもしれな い)． </p>
-      <p> ISO 8601には<term>基本形式</term>と<term>拡張形式</term>がある． 本ガイドラインでは拡張形式を使うことを推奨する． </p>
-      <p> ISO 8601では，深夜の12時を示す方法として， <code>00:00</code>と<code>24:00</code>の両方を認めているが，
+      <p> ISO 8601:2004には<term>基本形式</term>と<term>拡張形式</term>がある． 本ガイドラインでは拡張形式を使うことを推奨する． </p>
+      <p> ISO 8601:2004では，深夜の12時を示す方法として， <code>00:00</code>と<code>24:00</code>の両方を認めているが，
         本ガイドラインでは，<code>24:00</code>とは表記しないことを強く推奨 している．
       <!-- As there are only 24 hours in a day, numbered "00" through "23",
     use of "24:00" implies a 25th hour, and some software may be
@@ -53539,14 +53671,14 @@ one initial.</desc>
     indicated with 23:59:60. -->
     </p>
   </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
+  <remarks xml:lang="fr" versionDate="2022-03-23">
       <p> S'il est vraisemblable que la valeur utilisée soit destinée à être comparer à d’autres
       valeurs, alors une indication du fuseau horaire devrait toujours être incluse, et seule la
       représentation <term>dateTime</term> devrait être employée.</p>
-      <p>Pour toutes les représentations pour lesquelles l’ISO 8601 décrit à la fois un format
+      <p>Pour toutes les représentations pour lesquelles l’ISO 8601:2004 décrit à la fois un format
         <term>basique</term> et un format<term> étendu </term>, ce guide d’encodage recommandande
       l’emploi du format <term> étendu </term>.</p>
-      <p> Même si l’ ISO 8601 permet d’écrire à la fois <code>00:00</code> et <code>24:00</code> pour
+      <p> Même si l’ ISO 8601:2004 permet d’écrire à la fois <code>00:00</code> et <code>24:00</code> pour
       minuit, ce guide d’encodage déconseille vivement d’écrire <code>24:00</code>.
       <!-- As
         there are only 24 hours in a day, numbered "00" through "23", use
@@ -53639,7 +53771,7 @@ one initial.</desc>
 <div type="div2" xml:id="NDDATECUSTOM"><head>Using Non-Gregorian Calendars</head></div></div>
 <div><head>Module for Names and Dates</head>
 <moduleSpec xml:id="DND" ident="namesdates">
-        <altIdent type="FPI">Names, dates, persons and places</altIdent>
+        <idno type="FPI">Names, dates, persons and places</idno>
         <desc xml:lang="en" versionDate="2006-09-13">Names and dates</desc>
         <desc xml:lang="fr" versionDate="2018-07-12">Noms, dates, personnes et lieux</desc>
         <desc xml:lang="zh-TW" versionDate="2018-07-12">名稱與日期</desc>
@@ -54253,7 +54385,7 @@ purposes.</p>
 <div type="div3" xml:id="FTGRAMPEG"><head>Photographic and Motion Video Formats</head></div></div>
 <div><head>Module for Tables, Formulæ, Notated Music, and Graphics</head>
 <moduleSpec xml:id="DFTFF" ident="figures">
-      <altIdent type="FPI">Tables, Formulæ, Notated Music, Figures</altIdent>
+      <idno type="FPI">Tables, Formulæ, Notated Music, Figures</idno>
       <desc xml:lang="en" versionDate="2018-07-12">Tables, formulæ, notated music, and figures</desc>
       <desc xml:lang="fr" versionDate="2018-07-09">Tableaux, formules et graphiques</desc>
       <desc xml:lang="zh-TW" versionDate="2018-07-09">表格、方程式與圖表</desc>
@@ -54264,7 +54396,7 @@ purposes.</p>
 <div type="div1" xml:id="CC" n="23"><head>Language Corpora</head>
 <div type="div2" xml:id="CCDEF"><head>Varieties of Composite Text</head></div>
 <div type="div2" xml:id="CCAH"><head>Contextual Information</head>
-<elementSpec module="corpus" ident="textDesc">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="corpus" ident="textDesc">
   <gloss versionDate="2005-01-14" xml:lang="en">text description</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">텍스트 기술</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">文本描述</gloss>
@@ -54343,7 +54475,7 @@ situational parameters.</desc>
     <ptr target="#CCAHTD"/>
   </listRef>
 </elementSpec>
-<elementSpec module="corpus" ident="particDesc">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="corpus" ident="particDesc">
     <gloss versionDate="2005-01-14" xml:lang="en">participation description</gloss>
     <gloss versionDate="2007-12-20" xml:lang="ko">참여 기술</gloss>
     <gloss versionDate="2007-05-02" xml:lang="zh-TW">參與描述</gloss>
@@ -54443,7 +54575,7 @@ situational parameters.</desc>
     <ptr target="#CCAS2"/>-->
     </listRef>
 </elementSpec>
-<elementSpec module="corpus" ident="settingDesc">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="corpus" ident="settingDesc">
     <gloss versionDate="2005-01-14" xml:lang="en">setting description</gloss>
     <gloss versionDate="2007-12-20" xml:lang="ko">무대 기술</gloss>
     <gloss versionDate="2007-05-02" xml:lang="zh-TW">背景描述</gloss>
@@ -55836,7 +55968,7 @@ Information with a Text</head>
 <div type="div2" xml:id="CCREC"><head>Recommendations for the Encoding of Large Corpora</head></div>
 <div><head>Module for Language Corpora</head>
 <moduleSpec xml:id="DCCHDR" ident="corpus">
-    <altIdent type="FPI">Metadata for Language Corpora</altIdent>
+    <idno type="FPI">Metadata for Language Corpora</idno>
     <desc xml:lang="en" versionDate="2018-07-12">Corpus texts</desc>
     <desc xml:lang="fr" versionDate="2018-07-09">Corpus linguistiques</desc>
     <desc xml:lang="zh-TW" versionDate="2018-07-09">文集文本</desc>
@@ -56090,6 +56222,7 @@ Information with a Text</head>
   <remarks versionDate="2005-01-14" xml:lang="en">
     <p>The <gi>ab</gi> element may be used at the encoder's discretion to mark any component-level elements in a text for which no other more specific appropriate markup is defined.</p>
   </remarks>
+  <remarks versionDate="2022-05-02" xml:lang="es"><p>El elemento <gi>ab</gi> se puede utilizar a discreción del codificador para marcar cualquier elemento a nivel de componente en un texto para el que no se haya definido ningún otro marcado apropiado más específico.</p></remarks>
   <remarks xml:lang="fr" versionDate="2009-10-06">
     <p>L'élément <gi>ab</gi> peut être utilisé à la discrétion de l'encodeur pour marquer dans un texte tout élément de niveau composant pour lequel aucune méthode appropriée de balisage plus spécifique n'est définie.</p>
   </remarks>
@@ -57519,7 +57652,7 @@ You must supply at least two values for @target on <name/>
 <div type="div2" xml:id="SAAN"><head>Connecting Analytic and Textual Markup</head></div>
 <div type="div2" xml:id="SAref"><head>Module for Linking, Segmentation, and Alignment</head>
 <moduleSpec xml:id="DSA" ident="linking">
-    <altIdent type="FPI">Linking, Segmentation, and Alignment</altIdent>
+    <idno type="FPI">Linking, Segmentation, and Alignment</idno>
     <desc xml:lang="en" versionDate="2019-07-07">Linking, segmentation, and alignment</desc>
     <desc xml:lang="fr" versionDate="2018-07-12">Liens, segmentation et alignement</desc>
     <desc xml:lang="zh-TW" versionDate="2020-12-20">連結、分割與隊列</desc>
@@ -58727,65 +58860,6 @@ The attributes @to and @from on <name/> may each contain only a single value</re
     </constraint>
   </constraintSpec>
   <attList>
-    <!--
-        The following <attDef> is a copy of the one in the
-        specifications of <interpGrp>, <span>, and <spanGrp>. It
-        *should* be part of the specification of att.interpLike rather
-        than in the specifications of the individual members of that
-        class. However, a bug in the Stylesheets means that won't work
-        at the moment. (See Stylesheets issue #370.)
-    -->
-    <attDef ident="type" usage="rec" mode="replace">
-      <desc versionDate="2005-10-10" xml:lang="en">indicates what kind of phenomenon is being noted in the passage.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">현 단락에 표기되고 있는 현상의 종류를 나타낸다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出段落中所註解的現象類別。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該部分で，どのような面が指摘されているのかを示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">indique quel genre de phénomène est noté dans le
-      passage.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica que tipo de fenómeno está siendo anotado en el pasaje.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica quale sia il fenomeno osservato nella porzione di testo in questione</desc>
-      <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
-        <valItem ident="image">
-          <desc versionDate="2007-06-27" xml:lang="en">identifies an image in the passage.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">단락에서 이미지를 식별한다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的影像。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">identifica una imagen en el pasaje.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">当該部分の画像を指示する．</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">identifie une image dans le passage.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">identifica un'immagine all'interno della porzione di testo</desc>
-        </valItem>
-        <valItem ident="character">
-          <desc versionDate="2007-06-27" xml:lang="en">identifies a character associated with the passage.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">단락과 연관된 문자를 식별한다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明與段落相關聯的人物。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">identifica un carácter asociado al pasaje.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">当該部分に関連する文字を指示する．</desc>
-          <desc versionDate="2009-05-27" xml:lang="fr">identifie un personnage associé au
-          passage.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">identifica un personaggio associato al brano in questione</desc>
-        </valItem>
-        <valItem ident="theme">
-          <desc versionDate="2007-06-27" xml:lang="en">identifies a theme in the passage.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">단락에서 주제를 식별한다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的主題。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">identifica un tema en el pasaje.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">当該部分にあるテーマを指示する．</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">identifie un thème dans le passage.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">identifica un tema rispetto al brano in questione</desc>
-        </valItem>
-        <valItem ident="allusion">
-          <desc versionDate="2007-06-27" xml:lang="en">identifies an allusion to another text.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">다른 텍스트에 대한 언급을 식별한다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明另一個文本的引用。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">identifica una alusión a otro texto.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">別テキストへの言及．</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">identifie une allusion à un autre
-          texte.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">identifica un'allusione a un altro testo</desc>
-        </valItem>
-      </valList>
-    </attDef>
     <attDef ident="from" usage="opt">
       <desc versionDate="2013-01-15" xml:lang="en">gives the identifier of the node which is the starting point of the span of text being annotated; if not accompanied by a <att>to</att> attribute, gives the identifier of the node of the entire span of text being annotated.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">현재 부호를 붙이는 단락의 처음을 명시함; <att>to</att> 속성과 같이 쓰이지 않으면
@@ -58868,67 +58942,6 @@ The attributes @to and @from on <name/> may each contain only a single value</re
       <elementRef key="span" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
-  <attList>
-    <!--
-        The following <attDef> is a copy of the one in the
-        specifications of <interpGrp>, <span>, and <spanGrp>. It
-        *should* be part of the specification of att.interpLike rather
-        than in the specifications of the individual members of that
-        class. However, a bug in the Stylesheets means that won't work
-        at the moment. (See Stylesheets issue #370.)
-    -->
-    <attDef ident="type" usage="rec" mode="replace">
-      <desc versionDate="2005-10-10" xml:lang="en">indicates what kind of phenomenon is being noted in the passage.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">현 단락에 표기되고 있는 현상의 종류를 나타낸다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出段落中所註解的現象類別。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該部分で，どのような面が指摘されているのかを示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">indique quel genre de phénomène est noté dans le
-      passage.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica que tipo de fenómeno está siendo anotado en el pasaje.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica quale sia il fenomeno osservato nella porzione di testo in questione</desc>
-      <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
-        <valItem ident="image">
-          <desc versionDate="2007-06-27" xml:lang="en">identifies an image in the passage.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">단락에서 이미지를 식별한다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的影像。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">identifica una imagen en el pasaje.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">当該部分の画像を指示する．</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">identifie une image dans le passage.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">identifica un'immagine all'interno della porzione di testo</desc>
-        </valItem>
-        <valItem ident="character">
-          <desc versionDate="2007-06-27" xml:lang="en">identifies a character associated with the passage.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">단락과 연관된 문자를 식별한다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明與段落相關聯的人物。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">identifica un carácter asociado al pasaje.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">当該部分に関連する文字を指示する．</desc>
-          <desc versionDate="2009-05-27" xml:lang="fr">identifie un personnage associé au
-          passage.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">identifica un personaggio associato al brano in questione</desc>
-        </valItem>
-        <valItem ident="theme">
-          <desc versionDate="2007-06-27" xml:lang="en">identifies a theme in the passage.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">단락에서 주제를 식별한다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的主題。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">identifica un tema en el pasaje.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">当該部分にあるテーマを指示する．</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">identifie un thème dans le passage.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">identifica un tema rispetto al brano in questione</desc>
-        </valItem>
-        <valItem ident="allusion">
-          <desc versionDate="2007-06-27" xml:lang="en">identifies an allusion to another text.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">다른 텍스트에 대한 언급을 식별한다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明另一個文本的引用。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">identifica una alusión a otro texto.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">別テキストへの言及．</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">identifie une allusion à un autre
-          texte.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">identifica un'allusione a un altro testo</desc>
-        </valItem>
-      </valList>
-    </attDef>
-  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CONAAB-eg-150">
       <u xml:id="UU1">Can I have ten oranges and a kilo of bananas please?</u>
@@ -58988,67 +59001,6 @@ The attributes @to and @from on <name/> may each contain only a single value</re
       <classRef key="model.certLike"/>
     </alternate>
   </content>
-  <attList>
-    <!--
-	The following <attDef> is a copy of the one in the
-	specifications of <interpGrp>, <span>, and <spanGrp>. It
-	*should* be part of the specification of att.interpLike rather
-	than in the specifications of the individual members of that
-	class. However, a bug in the Stylesheets means that won't work
-	at the moment. (See Stylesheets issue #370.)
-    -->
-    <attDef ident="type" usage="rec" mode="replace">
-      <desc versionDate="2005-10-10" xml:lang="en">indicates what kind of phenomenon is being noted in the passage.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">현 단락에 표기되고 있는 현상의 종류를 나타낸다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出段落中所註解的現象類別。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該部分で，どのような面が指摘されているのかを示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">indique quel genre de phénomène est noté dans le
-      passage.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica que tipo de fenómeno está siendo anotado en el pasaje.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica quale sia il fenomeno osservato nella porzione di testo in questione</desc>
-      <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
-	<valItem ident="image">
-	  <desc versionDate="2007-06-27" xml:lang="en">identifies an image in the passage.</desc>
-	  <desc versionDate="2007-12-20" xml:lang="ko">단락에서 이미지를 식별한다.</desc>
-	  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的影像。</desc>
-	  <desc versionDate="2008-04-06" xml:lang="es">identifica una imagen en el pasaje.</desc>
-	  <desc versionDate="2008-04-05" xml:lang="ja">当該部分の画像を指示する．</desc>
-	  <desc versionDate="2008-03-30" xml:lang="fr">identifie une image dans le passage.</desc>
-	  <desc versionDate="2007-01-21" xml:lang="it">identifica un'immagine all'interno della porzione di testo</desc>
-	</valItem>
-	<valItem ident="character">
-	  <desc versionDate="2007-06-27" xml:lang="en">identifies a character associated with the passage.</desc>
-	  <desc versionDate="2007-12-20" xml:lang="ko">단락과 연관된 문자를 식별한다.</desc>
-	  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明與段落相關聯的人物。</desc>
-	  <desc versionDate="2008-04-06" xml:lang="es">identifica un carácter asociado al pasaje.</desc>
-	  <desc versionDate="2008-04-05" xml:lang="ja">当該部分に関連する文字を指示する．</desc>
-	  <desc versionDate="2009-05-27" xml:lang="fr">identifie un personnage associé au
-	  passage.</desc>
-	  <desc versionDate="2007-01-21" xml:lang="it">identifica un personaggio associato al brano in questione</desc>
-	</valItem>
-	<valItem ident="theme">
-	  <desc versionDate="2007-06-27" xml:lang="en">identifies a theme in the passage.</desc>
-	  <desc versionDate="2007-12-20" xml:lang="ko">단락에서 주제를 식별한다.</desc>
-	  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的主題。</desc>
-	  <desc versionDate="2008-04-06" xml:lang="es">identifica un tema en el pasaje.</desc>
-	  <desc versionDate="2008-04-05" xml:lang="ja">当該部分にあるテーマを指示する．</desc>
-	  <desc versionDate="2008-03-30" xml:lang="fr">identifie un thème dans le passage.</desc>
-	  <desc versionDate="2007-01-21" xml:lang="it">identifica un tema rispetto al brano in questione</desc>
-	</valItem>
-	<valItem ident="allusion">
-	  <desc versionDate="2007-06-27" xml:lang="en">identifies an allusion to another text.</desc>
-	  <desc versionDate="2007-12-20" xml:lang="ko">다른 텍스트에 대한 언급을 식별한다.</desc>
-	  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明另一個文本的引用。</desc>
-	  <desc versionDate="2008-04-06" xml:lang="es">identifica una alusión a otro texto.</desc>
-	  <desc versionDate="2008-04-05" xml:lang="ja">別テキストへの言及．</desc>
-	  <desc versionDate="2008-03-30" xml:lang="fr">identifie une allusion à un autre
-	  texte.</desc>
-	  <desc versionDate="2007-01-21" xml:lang="it">identifica un'allusione a un altro testo</desc>
-	</valItem>
-      </valList>
-    </attDef>
-  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <interp type="structuralunit" xml:id="ana_am">aftermath</interp>
@@ -59108,67 +59060,6 @@ The attributes @to and @from on <name/> may each contain only a single value</re
       <elementRef key="interp" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </content>
-  <attList>
-    <!--
-	The following <attDef> is a copy of the one in the
-	specifications of <interpGrp>, <span>, and <spanGrp>. It
-	*should* be part of the specification of att.interpLike rather
-	than in the specifications of the individual members of that
-	class. However, a bug in the Stylesheets means that won't work
-	at the moment. (See Stylesheets issue #370.)
-    -->
-    <attDef ident="type" usage="rec" mode="replace">
-      <desc versionDate="2005-10-10" xml:lang="en">indicates what kind of phenomenon is being noted in the passage.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">현 단락에 표기되고 있는 현상의 종류를 나타낸다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出段落中所註解的現象類別。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該部分で，どのような面が指摘されているのかを示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">indique quel genre de phénomène est noté dans le
-      passage.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica que tipo de fenómeno está siendo anotado en el pasaje.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica quale sia il fenomeno osservato nella porzione di testo in questione</desc>
-      <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="open">
-	<valItem ident="image">
-	  <desc versionDate="2007-06-27" xml:lang="en">identifies an image in the passage.</desc>
-	  <desc versionDate="2007-12-20" xml:lang="ko">단락에서 이미지를 식별한다.</desc>
-	  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的影像。</desc>
-	  <desc versionDate="2008-04-06" xml:lang="es">identifica una imagen en el pasaje.</desc>
-	  <desc versionDate="2008-04-05" xml:lang="ja">当該部分の画像を指示する．</desc>
-	  <desc versionDate="2008-03-30" xml:lang="fr">identifie une image dans le passage.</desc>
-	  <desc versionDate="2007-01-21" xml:lang="it">identifica un'immagine all'interno della porzione di testo</desc>
-	</valItem>
-	<valItem ident="character">
-	  <desc versionDate="2007-06-27" xml:lang="en">identifies a character associated with the passage.</desc>
-	  <desc versionDate="2007-12-20" xml:lang="ko">단락과 연관된 문자를 식별한다.</desc>
-	  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明與段落相關聯的人物。</desc>
-	  <desc versionDate="2008-04-06" xml:lang="es">identifica un carácter asociado al pasaje.</desc>
-	  <desc versionDate="2008-04-05" xml:lang="ja">当該部分に関連する文字を指示する．</desc>
-	  <desc versionDate="2009-05-27" xml:lang="fr">identifie un personnage associé au
-	  passage.</desc>
-	  <desc versionDate="2007-01-21" xml:lang="it">identifica un personaggio associato al brano in questione</desc>
-	</valItem>
-	<valItem ident="theme">
-	  <desc versionDate="2007-06-27" xml:lang="en">identifies a theme in the passage.</desc>
-	  <desc versionDate="2007-12-20" xml:lang="ko">단락에서 주제를 식별한다.</desc>
-	  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的主題。</desc>
-	  <desc versionDate="2008-04-06" xml:lang="es">identifica un tema en el pasaje.</desc>
-	  <desc versionDate="2008-04-05" xml:lang="ja">当該部分にあるテーマを指示する．</desc>
-	  <desc versionDate="2008-03-30" xml:lang="fr">identifie un thème dans le passage.</desc>
-	  <desc versionDate="2007-01-21" xml:lang="it">identifica un tema rispetto al brano in questione</desc>
-	</valItem>
-	<valItem ident="allusion">
-	  <desc versionDate="2007-06-27" xml:lang="en">identifies an allusion to another text.</desc>
-	  <desc versionDate="2007-12-20" xml:lang="ko">다른 텍스트에 대한 언급을 식별한다.</desc>
-	  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明另一個文本的引用。</desc>
-	  <desc versionDate="2008-04-06" xml:lang="es">identifica una alusión a otro texto.</desc>
-	  <desc versionDate="2008-04-05" xml:lang="ja">別テキストへの言及．</desc>
-	  <desc versionDate="2008-03-30" xml:lang="fr">identifie une allusion à un autre
-	  texte.</desc>
-	  <desc versionDate="2007-01-21" xml:lang="it">identifica un'allusione a un altro testo</desc>
-	</valItem>
-      </valList>
-    </attDef>
-  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <interpGrp resp="#TMA" type="structuralunit">
@@ -59233,7 +59124,7 @@ interpretive framework -->
 <div type="div3" xml:id="AILASP"><head>Spoken Text</head></div></div>
 <div><head>Module for Analysis and Interpretation</head>
 <moduleSpec xml:id="DAI" ident="analysis">
-    <altIdent type="FPI">Analysis and Interpretation</altIdent>
+    <idno type="FPI">Analysis and Interpretation</idno>
     <desc xml:lang="en" versionDate="2006-09-13">Simple analytic mechanisms</desc>
     <desc xml:lang="fr" versionDate="2018-07-12">Mécanismes analytiques simples</desc>
     <desc xml:lang="zh-TW" versionDate="2018-07-12">簡易分析機制</desc>
@@ -60309,7 +60200,7 @@ human readability of the feature-system declaration.</p>
 <div type="div2" xml:id="FDEG"><head>A Complete Example</head></div></div>
 <div type="div2" xml:id="FSDEF"><head>Formal Definition and Implementation</head>
 <moduleSpec xml:id="DFS" ident="iso-fs">
-    <altIdent type="FPI">Feature Structures</altIdent>
+    <idno type="FPI">Feature Structures</idno>
     <desc xml:lang="en" versionDate="2006-09-13">Feature structures</desc>
     <desc xml:lang="fr" versionDate="2018-07-12">Structures de traits</desc>
     <desc xml:lang="zh-TW" versionDate="2018-07-12">功能結構 (Feature Structures)</desc>
@@ -63298,7 +63189,7 @@ trees (triangles).</p>
 <div xml:id="GDstem"><head>Representing Textual Transmission</head></div>
 <div><head>Module for Graphs, Networks, and Trees</head>
 <moduleSpec xml:id="DGD" ident="nets">
-    <altIdent type="FPI">Graphs, networks, and trees</altIdent>
+    <idno type="FPI">Graphs, networks, and trees</idno>
     <desc xml:lang="en" versionDate="2018-07-12">Graphs, networks, and trees</desc>
     <desc xml:lang="fr" versionDate="2018-07-09">Graphes, réseaux et arbres</desc>
     <desc xml:lang="zh-TW" versionDate="2018-07-09">圖形、網絡與樹狀結構</desc>
@@ -63901,7 +63792,7 @@ statement, or change log.</p>
 </elementSpec></div>
 <div><head>The Certainty Module</head>
 <moduleSpec xml:id="DCE" ident="certainty">
-  <altIdent type="FPI">Certainty and Uncertainty</altIdent>
+  <idno type="FPI">Certainty and Uncertainty</idno>
   <desc xml:lang="en" versionDate="2019-07-07">Certainty, Precision, and Responsibility</desc>
   <desc xml:lang="fr" versionDate="2018-07-12">Degré de certitude et responsabilité</desc>
   <desc xml:lang="zh-TW" versionDate="2018-07-12">確定程度與不確定程度</desc>
@@ -65134,6 +65025,13 @@ Child elements of <name/> are only allowed when an external module is being load
           </rule>
         </constraint>
       </constraintSpec>
+      <constraintSpec scheme="schematron" ident="not-except-and-include">
+        <constraint>
+          <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
+            <report test="@except and @include">It is an error to supply both the @include and @except attributes</report>
+          </rule>
+        </constraint>
+      </constraintSpec>
       <remarks versionDate="2011-09-21" xml:lang="en">
         <p>Use of this attribute avoids name collisions (and
         thus invalid schemas) when the external schema being
@@ -65209,7 +65107,7 @@ RELAX NG par une localisation externe.</desc>
     </egXML>
   </exemplum>
   <remarks versionDate="2010-05-09" xml:lang="en">
-    <p>If neither <att>include</att> nor <att>exclude</att> is
+    <p>If neither <att>include</att> nor <att>except</att> is
     supplied, the effect of this element is to make all the declarations
     contained by the referenced module available to the schema being
     compiled. If both attributes are supplied, an ODD
@@ -65220,9 +65118,9 @@ processor should signal an error. </p>
     online source from which the specification of that module may be
     read. A URI may alternatively be supplied in the case of a non-TEI
     module, and this is expected to be written as a RELAX NG schema.
-    </p><p>If the <att>uri</att> attribute is used, the <gi>content</gi> element may also be supplied as 
+    </p><p>If the <att>url</att> attribute is used, the <gi>content</gi> element may also be supplied as 
     a child of this element. Its content (which is assumed to be a fragment of RELAX NG code) will be copied
-    along with the content of the resource indicated by the  <att>uri</att> attribute into the 
+    along with the content of the resource indicated by the  <att>url</att> attribute into the 
       target RELAX NG schema. </p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
@@ -65261,8 +65159,8 @@ module, i.e. a named and externally visible group of declarations.</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">いちモジュールの構造，内容，目的を記録する．例えば，外部から名前で参
   照可能な宣言集合などである．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">documente la structure, le contenu et les
-			fonctions d'un module, i.e. d'un groupe de déclarations nommé et 
-			visible extérieurement.</desc>
+                        fonctions d'un module, i.e. d'un groupe de déclarations nommé et 
+                        visible extérieurement.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">documenta la estructura, el contenido y la finalidad de un único módulo, es decir, un grupo de declaraciones específicamente indicado y visible externamente.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">documenta struttura, contenuto e scopo di un unico modulo, cioè un gruppo di dichiarazioni specificamente indicato ed esternamente visibile</desc>
   <classes>
@@ -65272,28 +65170,21 @@ module, i.e. a named and externally visible group of declarations.</desc>
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <sequence>
-      
+    <sequence>      
         <alternate minOccurs="0" maxOccurs="unbounded">
           <classRef key="model.glossLike"/>
+          <elementRef key="idno"/>
           <classRef key="model.descLike"/>
         </alternate>
-      
-      
         <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
         <elementRef key="remarks" minOccurs="0"/>
-      
-      
         <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
-      
     </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <moduleSpec ident="namesdates">
-        <altIdent type="FPI">Names and Dates</altIdent>
+        <idno type="FPI">Names and Dates</idno>
         <desc>Additional elements for names and dates</desc>
       </moduleSpec>
     </egXML>
@@ -65334,6 +65225,7 @@ module, i.e. a named and externally visible group of declarations.</desc>
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.oddRef"/>
         <classRef key="model.oddDecl"/>
+	<elementRef key="listRef"/>
       </alternate>      
     </sequence>
   </content>
@@ -65425,6 +65317,10 @@ module, i.e. a named and externally visible group of declarations.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica la lengua que se ha de utilizar para la creación de la documentación en el caso en que las descripciones de elementos, atributos, clases o macros esten disponibles en más lenguas.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la lingua da utilizzare per la creazione della documentazione nel caso in cui le descrizioni di elementi, attributi, classi o macro siano disponibili in più lingue</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.language"/></datatype>
+      <remarks xml:lang="en" versionDate="2022-04-04">
+        <p>Although multiple languages may be specified, the current
+        TEI ODD processor is only capable of handling one.</p>
+      </remarks>
     </attDef>
     <attDef ident="defaultExceptions" usage="rec">
       <gloss versionDate="2016-11-20" xml:lang="en">default namespace
@@ -65538,13 +65434,12 @@ module, i.e. a named and externally visible group of declarations.</desc>
     <memberOf key="model.oddDecl"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.oddDecl"/>
-        <classRef key="model.oddRef"/>
-        <classRef key="model.divPart"/>
-      </alternate>
-    
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <classRef key="model.oddDecl"/>
+      <classRef key="model.oddRef"/>
+      <classRef key="model.divPart"/>
+      <elementRef key="listRef"/>
+    </alternate>
   </content>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
@@ -65781,6 +65676,12 @@ contains specifications for the elements
     </sequence>
   </content>
   <constraintSpec scheme="schematron" ident="child-constraint-based-on-mode">
+    <!-- 
+         This constraint specification is much like the
+         "empty-based-on-mode" for <constraintSpec> itself, which does
+         something something similar (in that it is based on @mode),
+         but not quite the same.
+    -->
     <constraint>
       <sch:rule context="tei:elementSpec[ @mode eq 'delete' ]">
         <sch:report test="child::*">This elementSpec element has a mode= of "delete" even though it has child elements. Change the mode= to "add", "change", or "replace", or remove the child elements.</sch:report>
@@ -66299,35 +66200,47 @@ portion of an ODD document.</desc>
     <ptr target="#TDENT"/>
   </listRef>
 </elementSpec>
-<elementSpec module="tagdocs" xml:id="LISTREF" ident="listRef">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" xml:id="LISTREF" ident="listRef">
   <gloss versionDate="2005-01-14" xml:lang="en">list of references</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">참조 목록</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">參照列表</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">liste de références</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">lista de referencias</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">lista di riferimenti</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">supplies a list of significant references to places where this element is discussed, in the
-    current document or elsewhere.</desc>
+  <desc versionDate="2022-03-11" xml:lang="en">supplies a list of significant references in the current document or elsewhere.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">현 문서 또는 그 밖의 어디든지 이 요소는 논의된 위치에 대한 중요한 참조 목록을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一個重要參照的列表，這些參照連結到詳述此元素的位置，在此文件裡或是其他地方。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">場所への参照のリストを示す．当該文書中でも外部文書でもよい．</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">fournit une liste de références signifiantes là où cet
-    élément est commenté, dans le document courant ou ailleurs.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">proporciona una lista de referencias significativas a
-    puntos, en el documento corriente u otro lugar, en el que se discute el elemento en cuestión.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">fornisce una lista di riferimenti significativi a punti,
-    nel documento corrente o altrove, in cui è discusso l'elemento in questione</desc>
+  <desc versionDate="2022-03-11" xml:lang="fr">fournit une liste de références signifiantes dans le document courant ou ailleurs.</desc>
+  <desc versionDate="2022-03-11" xml:lang="es">proporciona una lista de referencias significativas a
+    puntos en el documento corriente u otro lugar.</desc>
+  <desc versionDate="2022-03-11" xml:lang="it">fornisce una lista di riferimenti significativi a punti
+    nel documento corrente o altrove.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
-    <memberOf key="model.oddDecl"/>
+    <memberOf key="model.ptrLike"/>
   </classes>
   <content>
     <sequence>
       <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
-    <classRef key="model.ptrLike" minOccurs="1" maxOccurs="unbounded"/>
+      <classRef key="model.ptrLike" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </content>
+ <constraintSpec ident="TagDocsNestinglistRef" scheme="schematron">
+    <constraint>
+      <sch:rule context="( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef">
+        <sch:report test="tei:listRef">In the context of tagset documentation, the listRef element must not self-nest.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="TagDocslistRefChildren" scheme="schematron">
+    <constraint>
+      <sch:rule context="( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef/tei:ptr                        | ( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef/tei:ref">
+        <sch:assert test="@target and not( matches( @target,'\s') )">In the context of tagset documentation, each ptr or ref element inside a listRef must have a target attribute with only 1 pointer as its value.</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <listRef>
@@ -66342,6 +66255,17 @@ portion of an ODD document.</desc>
       </listRef>
     </egXML>
   </exemplum>
+  <remarks versionDate="2022-03-11" xml:lang="en">
+    <p>When <gi>listRef</gi> is used in the context of <ident type="module">tagdocs</ident>, further restrictons apply:
+    <list>
+      <item>It may only contain <gi>ptr</gi> or <gi>ref</gi>
+        elements.</item>
+      <item>Each <gi>ptr</gi> or <gi>ref</gi> child should bear a
+        <att>target</att> attribute, the value of which should be a
+        single URI pointer.</item>
+    </list>
+    </p>
+  </remarks>
 </elementSpec>
 <elementSpec module="tagdocs" ident="exemplum">
   <gloss xml:lang="en" versionDate="2007-06-12">exemplum</gloss>
@@ -66799,7 +66723,7 @@ déclaration de même nom dans la définition courante.</desc>
     <ptr target="#TDcrystalsCEdc"/>
   </listRef>
 </elementSpec>
-<elementSpec module="tagdocs" xml:id="ALTIDENT" ident="altIdent">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" xml:id="ALTIDENT" ident="altIdent">
   <gloss versionDate="2007-07-04" xml:lang="en">alternate identifier</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">교체 확인소</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">identificador alterno</gloss>
@@ -66811,10 +66735,15 @@ déclaration de même nom dans la définition courante.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">어떤 언어에서 요소, 부류, 속성에 대해 권고된 XML 이름을 제시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">標誌用另一種語言來表示的XML元素、元素集、屬性等的名稱。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">特定言語において，XMLの要素，クラス，属性などで推奨される名前を示す．</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">fournit le nom XML recommandé pour un
-                  élément, une classe, un attribut, etc. dans un langage quelconque.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">proporciona el nombre XML recomendado para un elemento, clase, atributo, etc. en alguna lengua.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">fornisce il nome XML consigliato per un elemento, classe, attributo, ecc. in una lingua.</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">fournit le nom XML
+  recommandé pour un élément, une classe, un attribut, etc. dans un
+  langage quelconque.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">proporciona el nombre
+  XML recomendado para un elemento, clase, atributo, etc. en alguna
+  lengua.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">fornisce il nome XML
+  consigliato per un elemento, classe, attributo, ecc. in una
+  lingua.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
@@ -66824,6 +66753,41 @@ déclaration de même nom dans la définition courante.</desc>
     <textNode/>
     <!--ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/-->
   </content>
+  <constraintSpec scheme="schematron" ident="deprecate_altIdent_in_non-ODD_places">
+    <desc>
+      The <gi>altIdent</gi> element should only be a child of
+      <gi>attDef</gi>, <gi>classSpec</gi>, <gi>constraintSpec</gi>,
+      <gi>dataSpec</gi>, <gi>elementSpec</gi>, <gi>macroSpec</gi>, or
+      <gi>valItem</gi>. Thus its use in other places is being
+      deprecated.
+    </desc>
+    <constraint>
+      <sch:report test="  parent::tei:model                         | parent::tei:modelGrp                         | parent::tei:modelSequence                         | parent::tei:paramSpec                         | parent::tei:schemaSpec" role="nonfatal">
+        Use of &lt;altIdent&gt; as a child of &lt;<sch:value-of select="name(..)"/>&gt; is
+        deprecated, and will no longer be valid after 2022-07-14.
+      </sch:report>
+      <sch:report test="parent::tei:moduleSpec" role="nonfatal">
+        Use of &lt;altIdent&gt; to declare the FPI of a module is
+        deprecated, and will no longer be valid after 2022-07-14;
+        please use &lt;idno type="FPI"&gt; instead.
+      </sch:report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec scheme="schematron" ident="altIdent_usually_an_NCName">
+    <desc>
+      Other than when used to indicate the formal public identifier of
+      a module (which is a deprecated usage), the content of
+      <gi>altIdent</gi> should be a single <ident type="datatype">teidata.xmlName</ident>.
+      </desc>
+    <constraint>
+      <sch:rule context="tei:altIdent[ not( parent::tei:moduleSpec or @type eq 'FPI' ) ]">
+        <sch:assert test=". castable as xs:NCName">
+          The content of this 'altIdent' element (<sch:value-of select="normalize-space(.)"/>)
+          should conform to teidata.xmlName.
+        </sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
       <altIdent xml:lang="fr">balisageDoc</altIdent>
@@ -66835,11 +66799,11 @@ déclaration de même nom dans la définition courante.</desc>
     </egXML>
   </exemplum>
   <remarks versionDate="2005-01-14" xml:lang="en">
-    <p>All documentation elements in ODD
-have a  canonical name, supplied as the value for their
-  <att>ident</att> attribute. The <gi>altIdent</gi> element is used to
-  supply an alternative name for the corresponding XML object, perhaps
-  in a different language.</p>
+    <p>All documentation elements in ODD have a canonical name,
+    supplied as the value for their <att>ident</att> attribute. The
+    <gi>altIdent</gi> element is used to supply an alternative name
+    for the corresponding XML object, perhaps in a different
+    language.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Tous les éléments de documentation en ODD ont un nom canonique
@@ -66848,7 +66812,12 @@ have a  canonical name, supplied as the value for their
     l'objet XML correspondant, éventuellement dans un langage
     différent.</p>
   </remarks>
-  <remarks versionDate="2018-12-28" xml:lang="ja"><p>ODDのすべてのドキュメント要素には，<att>ident</att>属性の値として提供される標準名がある．<gi>altIdent</gi>要素は，例えば異なる言語で，対応するXMLオブジェクトの代替名を提供するために使用される．</p></remarks>
+  <remarks versionDate="2018-12-28" xml:lang="ja">
+    <p>ODDのすべてのドキュメント要素には，<att>ident</att>属性の値とし
+    て提供される標準名がある．<gi>altIdent</gi>要素は，例えば異なる言
+    語で，対応するXMLオブジェクトの代替名を提供するために使用される．
+    </p>
+  </remarks>
   <listRef>
     <ptr target="#COHTG"/>
     <ptr target="#TDcrystalsCEdc"/>
@@ -68145,20 +68114,22 @@ have a  canonical name, supplied as the value for their
       <elementRef key="constraint" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </content>
-  <!--
-      Following <constraintSpec> might be more clearly accomplished
-      using abstract patterns, but our build process does not
-      currently support that. For an attempt at using them, see
-      https://github.com/TEIC/TEI/tree/sydb_issue-2179_1st_via_abstract_pats,
-      which was my first attempt at doing this. —Syd, 2021-10-13
-  -->
-  <constraintSpec scheme="schematron" ident="constraint-unless-delete">
+  <constraintSpec scheme="schematron" ident="empty-based-on-mode">
+    <!-- 
+         This constraint specification is much like the
+         "child-constraint-based-on-mode" for <elementSpec>, which
+         does something something similar (in that it is based on
+         @mode), but not quite the same.
+    -->
     <constraint>
-      <sch:rule context="tei:constraintSpec[ @mode eq 'delete' ]">
-        <sch:report test="child::tei:constraint">This 'constraintSpec' element has a mode= of "delete" even though it has a child constraint. Change the mode= to "add", "change", or "replace", or remove the 'constraint' child.</sch:report>
+      <sch:rule context="tei:constraintSpec[ @mode eq 'delete']">
+        <sch:report test="child::*">This constraintSpec element has a mode= of "delete" even though it has child elements. Change the mode= to "add", "change", or "replace", or remove the child elements.</sch:report>
+      </sch:rule>
+      <sch:rule context="tei:constraintSpec[ @mode eq 'change']">
+        <sch:assert test="child::*">This constraintSpec element has a mode= of "change", but does not have any child elements. Specify child elements, or change the mode= to "delete".</sch:assert>
       </sch:rule>
       <sch:rule context="tei:constraintSpec[ @mode = ('add','replace') ]">
-        <sch:assert test="child::tei:constraint">This 'constraintSpec' element has a mode= of "<sch:value-of select="@mode"/>", but does not a 'constraint' child element. Specify a constraint or change the mode= to "delete".</sch:assert>
+        <sch:assert test="child::tei:constraint">This constraintSpec element has a mode= of "<sch:value-of select="@mode"/>", but does not have a child 'constraint' element. Use a child 'constraint' element or change the mode= to "delete" or "change".</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -68271,6 +68242,15 @@ have a  canonical name, supplied as the value for their
       </constraintSpec>
     </egXML>
   </exemplum>
+  <remarks xml:lang="en" versionDate="2022-04-09">
+    <p>A child <gi>constraint</gi> is required when the
+    <att>mode</att> attribute has the value <val>replace</val> or
+    <val>add</val> (or is not specified, as <val>add</val> is the
+    default). No child elements are permitted when the <att>mode</att>
+    attribute has the value <val>delete</val>. At least one child
+    element is required when the <att>mode</att> attribute has the
+    value <val>change</val>.</p>
+  </remarks>
   <listRef>
     <ptr target="#TDTAG"/>
   </listRef>
@@ -69423,8 +69403,7 @@ an attribute may take, additional to the information carried by the
       <defaultVal>add</defaultVal>
       <valList type="closed">
         <valItem ident="add">
-          <desc versionDate="2010-05-11" xml:lang="en">this declaration is added to the current
-            definitions</desc>
+          <desc versionDate="2022-04-12" xml:lang="en">this declaration is part of the current definitions.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">이 선언은 현 정의에 추가된다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">該宣告添加在現有定義中</desc>
           <desc versionDate="2008-04-06" xml:lang="es">esta declaración se agrega a las definiciones
@@ -69432,12 +69411,12 @@ an attribute may take, additional to the information carried by the
           <desc xml:lang="ja" versionDate="2019-01-19">当該宣言は現行定義に追加される．</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">cette déclaration s'ajoute aux définitions
             courantes.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">la dichiarazione è aggiunta alle definizioni
+          <desc versionDate="2022-04-12" xml:lang="it">la dichiarazione fa parte alle definizioni
             correnti</desc>
         </valItem>
         <valItem ident="delete">
-          <desc versionDate="2010-05-11" xml:lang="en">if present already, the whole of the
-            declaration for this object is removed from the current setup</desc>
+          <desc versionDate="2022-04-12" xml:lang="en">the object with the same identifier (and namespace in the case of 
+            an element or attribute) as the current one is no longer part of the current definitions</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">이 선언과 이 선언의 모든 자식들이 현 구성에서 제거된다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">該宣告以及所有子宣告從現有的設定中被移除</desc>
           <desc versionDate="2008-04-06" xml:lang="es">esta declaración y todos sus hijos se
@@ -69445,12 +69424,12 @@ an attribute may take, additional to the information carried by the
           <desc xml:lang="ja" versionDate="2019-01-19">すでに存在する場合，当該宣言と当該以下の子要素は，現行の配置から外される．</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">cette déclaration et tous ses enfants sont
             retirés du système courant.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">la dichiarazione e i suoi discendenti sono
-            esclusi dall'impostazione corrente</desc>
+          <desc versionDate="2022-04-12" xml:lang="it">l'oggetto con lo stesso nome (e namespace nel caso di un elemento
+            o attributo) di quello corrente non fa più parte delle definizioni correnti.</desc>
         </valItem>
         <valItem ident="change">
-          <desc versionDate="2010-05-11" xml:lang="en">this declaration changes the declaration of
-            the same name in the current definition</desc>
+          <desc versionDate="2022-04-12" xml:lang="en">this declaration changes the object of the same identifier (and namespace 
+            in the case of an element or attribute) in the current definition</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">이 선언은 현 정의에서 동일 이름의 선언을 변경한다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">該宣告改變在現有定義中名稱相同的宣告。</desc>
           <desc versionDate="2008-04-06" xml:lang="es">esta declaración cambia la declaración del
@@ -69458,12 +69437,12 @@ an attribute may take, additional to the information carried by the
           <desc xml:lang="ja" versionDate="2019-01-19">当該宣言は，現行定義中の同名宣言を修正する．</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">cette déclaration modifie la déclaration de
             même nom dans la définition courante.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">la dichiarazione modifica la dichiarazione
-            con lo stesso nome nella definizione corrente</desc>
+          <desc versionDate="2022-04-12" xml:lang="it">la dichiarazione modifica l'oggetto con
+            con lo stesso nome (e namespace nel caso di un elemento o attributo) nella definizione corrente.</desc>
         </valItem>
         <valItem ident="replace">
-          <desc versionDate="2010-05-11" xml:lang="en">this declaration replaces the declaration of
-            the same name in the current definition</desc>
+          <desc versionDate="2022-04-12" xml:lang="en">this declaration replaces the object with the same identifier (and 
+            namespace in the case of an element or attribute) in the current definition.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">이 선언은 현 정의에서 동일 이름의 선언을 대체한다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">該宣告代替在現有定義中名稱相同的宣告</desc>
           <desc versionDate="2008-04-06" xml:lang="es">esta declaración substituye la declaración
@@ -69471,27 +69450,51 @@ an attribute may take, additional to the information carried by the
           <desc xml:lang="ja" versionDate="2019-01-19">当該宣言は，現行定義中の同名宣言を置き換える．</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">cette déclaration remplace la déclaration de
             même nom dans la définition courante.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">la dichiarazione sostituisce la dichiarazione
-            con lo stesso nome nella definizione corrente</desc>
+          <desc versionDate="2022-04-12" xml:lang="it">la dichiarazione sostituisce l'oggetto
+            con lo stesso nome (e namespace nel caso di un elemento o attributo) nella definizione corrente.</desc>
         </valItem>
       </valList>
     </attDef>
   </attList>
-  <remarks versionDate="2013-10-23" xml:lang="en">
+  <remarks versionDate="2022-04-12" xml:lang="en">
     <p>An ODD processor should handle the values for <att>mode</att> as follows: <list type="gloss">
         <label>add</label>
-        <item>the object should be created (processing any children in <val>add</val> mode); raise
-          an error if an object with the same identifier already exists</item>
+      <item>the object should be created (processing any children in add mode); raise an error if the object has an identifier and 
+        an object with the same identifier (and namespace in the case of an element or attribute) already exists.</item>
         <label>replace</label>
-        <item>use this object in preference to any existing object with the same identifier, and
-          ignore any children of that object; process any new children in <val>replace</val>
-          mode</item>
+      <item>use this object in preference to any existing object with the same identifier (and namespace in the case of an element or attribute), 
+        and ignore any children of that object; process any new children in replace mode</item>
         <label>delete</label>
-        <item>do not process this object or any existing object with the same identifier; raise an
-          error if any new children supplied </item>
+      <item>do not process this object or any existing object with the same identifier (and namespace in the case of an element or attribute); 
+        the element carrying this attribute must be empty: raise an error if there are any children</item>
         <label>change</label>
-        <item>process this object, and process its children, and those of any existing object with
-          the same identifier, in <val>change</val> mode</item>
+      <item>process this object and its children, replacing only those components of an existing object of the same type with the 
+        same identifier (and namespace in case of an element or attribute) that are explicitly specified. This will change only 
+        those existing attribute values and child elements that appear both in the original specification and in the new specification. 
+        Other children from the original specification will be preserved.</item>
+      </list>
+    </p>
+  </remarks>
+  <remarks xml:lang="it" versionDate="2022-04-12">
+    <p>Un processore ODD dovrebbe considerare i valori dell'attributo <att>mode</att> in questo modo:
+      <list type="gloss">
+        <label>add</label>
+        <item>l'oggetto dovrebbe essere creato, trattando tutti gli elementi figlio che hanno anch'essi il valore <val>add</val>.
+          Se esistesse un oggetto con lo stesso nome (e namespace nel caso di un elemento o attributo) bisognerà dare un errore.
+        </item>
+        <label>replace</label>
+        <item>utilizzare questo oggetto al posto di qualsiasi atro oggetto esistente con lo stesso nome (e namespace nel caso di un elemento o attributo),
+          e ignorare gli elementi figlio di quell'oggetto; trattare tutti gli elementi che hanno anch'essi il valore <val>replace</val>.
+        </item>
+        <label>delete</label>
+        <item>non trattare questo oggetto o qualsiasi altro oggetto con lo stesso nome (e namespace nel caso di un elemento o attributo);
+          l'elemento con questo valore deve essere vuoto: dare un error nel caso in cui contenesse elementi figlio.
+        </item>
+        <label>change</label>
+        <item>trattare questo oggetto e tutti i suoi elementi figlio, sustituendo solo i componenti di un oggetto già esistente e 
+          direttamente specificato dello stesso tipo e con lo stesso nome (e namespace nel caso di un elemento o attributo).
+          Questa operazione cambierà solamente i valori di attributi già esistenti ed elementi figlio che sono presenti sia nella specificazione originale
+          che nella nuova specificazione. Gli altri elementi filgio che fanno parte della specificazione originale verranno mantenuti.</item>
       </list>
     </p>
   </remarks>
@@ -69691,7 +69694,7 @@ should correspond to an existing module, via a moduleSpec or
 <div type="div2" xml:id="TD-LinkingSchemas"><head>Linking Schemas to XML Documents</head></div></div>
 <div type="div2" xml:id="TDformal"><head>Module for Documentation Elements</head>
 <moduleSpec xml:id="DTDDTD" ident="tagdocs">
-        <altIdent type="FPI">Documentation Elements</altIdent>
+        <idno type="FPI">Documentation Elements</idno>
         <desc xml:lang="en" versionDate="2019-07-07">Documentation of TEI and other XML markup languages</desc>
         <desc xml:lang="fr" versionDate="2018-07-12">Éléments de déclaration d’un modèle</desc>
         <desc xml:lang="zh-TW" versionDate="2018-07-12">TEI模組說明</desc>
@@ -69750,94 +69753,131 @@ should correspond to an existing module, via a moduleSpec or
 <div><head>About the Datatypes and Macros Appendix</head></div></div>
 <div xml:id="BIB"><head>Bibliography</head>
 <div><head>Works Cited in Examples in these Guidelines</head>
+<bibl xml:id="biblzh-tw_n20"/>
+<bibl xml:id="fr-ex-Acad"/>
 <bibl xml:id="DROTH-eg-57"/>
+<bibl xml:id="fr-ex-Abes"/>
+<bibl xml:id="biblzh-tw_n44"/>
 <bibl xml:id="VEMEana-eg-23"/>
 <bibl xml:id="CONARS-eg-102"/>
 <bibl xml:id="COBICOR-eg-246"/>
 <bibl xml:id="CONADA-eg-144"/>
 <bibl xml:id="COEDADD-eg-91"/>
+<bibl xml:id="fr-ex-Antigone"/>
+<bibl xml:id="WHITMS2"/>
 <bibl xml:id="DIC-CR"/>
 <bibl xml:id="TSSASE-eg-20"/>
 <bibl xml:id="CONARS-eg-101"/>
+<bibl xml:id="biblzh-tw_n25"/>
+<bibl xml:id="biblzh-tw_n26"/>
+<bibl xml:id="biblzh-tw_n59"/>
+<bibl xml:id="NZETC01"/>
+<bibl xml:id="fr-ex-Balzac-Chouans"/>
+<bibl xml:id="fr-ex-Balzac_Goriot"/>
+<bibl xml:id="fr-ex-Balzac_Vie"/>
 <bibl xml:id="COVE-eg-286"/>
 <bibl xml:id="DS-eg-04"/>
-<bibl xml:id="NZETC01"/>
 <bibl xml:id="COEDADD-eg-93"/>
-<bibl xml:id="WD-BASHO"/>
+<bibl xml:id="fr-ex-Bataille_Arbre"/>
+<bibl xml:id="fr-ex-Baudelaire-chats"/>
+<bibl xml:id="fr-ex-Baudelaire-vie"/>
+<bibl xml:id="biblzh-tw_n30-31"/>
+<bibl xml:id="fr-ex-Beck_Morin"/>
 <bibl xml:id="DRCAST-eg-16"/>
 <bibl xml:id="CO-eg-02"/>
+<bibl xml:id="fr-ex-Becque-ee"/>
 <bibl xml:id="PH-eg-05"/>
-<bibl xml:id="divEGs"/>
 <bibl xml:id="DRPRO-eg-10"/>
+<bibl xml:id="fr-ex-Belloc_Kepas"/>
+<bibl xml:id="fr-ex-Belloc_Neons"/>
 <bibl xml:id="bentham"/>
 <bibl xml:id="TCAPLR-eg-11"/>
-<bibl xml:id="VESTR-eg-1"/>
+<bibl xml:id="fr-ex-Bibliog_Renaissance_Ital"/>
+<bibl xml:id="fr-ex-BnF-Reliures"/>
+<bibl xml:id="fr-ex-Billetdoux"/>
 <bibl xml:id="VE-eg-04"/>
 <bibl xml:id="SG132-neg-1"/>
 <bibl xml:id="en-blake-tyger"/>
 <bibl xml:id="SASE-eg-33"/>
 <bibl xml:id="COLI-eg-171"/>
 <bibl xml:id="FTFOR-eg-10"/>
+<bibl xml:id="fr-ex-Bouiller_Rapport"/>
+<bibl xml:id="fr-ex-Mouchette"/>
 <bibl xml:id="SA-eg-02"/>
 <bibl xml:id="PH-eg-15"/>
+<bibl xml:id="fr-ex-Belloy"/>
 <bibl xml:id="DS-eg-06"/>
 <bibl xml:id="STGA-eg-4"/>
 <bibl xml:id="Burnard-db"/>
+<bibl xml:id="fr-ex-TEI-simpl"/>
 <bibl xml:id="COXR-eg-164"/>
 <bibl xml:id="COLI-eg-172"/>
 <bibl xml:id="VESTR-eg-5"/>
 <bibl xml:id="VEST-eg-5"/>
 <bibl xml:id="NDPER-eg-17"/>
+<bibl xml:id="biblzh-tw_n46"/>
 <bibl xml:id="caedmon"/>
 <bibl xml:id="MasCab"/>
-<bibl xml:id="VESA-eg-1"/>
 <bibl xml:id="COEDREG-eg-74"/>
 <bibl xml:id="AI-BIBL-3"/>
-<bibl xml:id="COPA-eg-02"/>
+<bibl xml:id="fr-ex-catechisme"/>
+<bibl xml:id="VESA-eg-1"/>
+<bibl xml:id="fr-ex-TLFI"/>
 <bibl xml:id="TSBAPA-eg-24"/>
 <bibl xml:id="CORS5-eg-01"/>
 <bibl xml:id="Python"/>
 <bibl xml:id="pythonBrian"/>
 <bibl xml:id="PH-eg-11"/>
 <bibl xml:id="VEST-eg-4"/>
+<bibl xml:id="biblzh-tw_n50"/>
 <bibl xml:id="CholNup"/>
 <bibl xml:id="FS-eg-01"/>
+<bibl xml:id="fr-ex-simjar"/>
 <bibl xml:id="AI-BIBL-1"/>
 <bibl xml:id="DSFRONT-eg-69"/>
 <bibl xml:id="NDPER-eg-18"/>
 <bibl xml:id="DRPERF-eg-13"/>
 <bibl xml:id="CONONO-eg-189"/>
 <bibl xml:id="VEST-eg-3"/>
-<bibl xml:id="COHQHF-eg-8"/>
+<bibl xml:id="fr-ex-Colette-Ecole"/>
 <bibl xml:id="DIC-CED"/>
 <bibl xml:id="DIC-CP"/>
 <bibl xml:id="DSOC-eg-34"/>
 <bibl xml:id="SA-BIBL-2"/>
-<bibl xml:id="PHegsurp2"/>
 <bibl xml:id="NDORG-eg-34"/>
+<bibl xml:id="fr-ex-Corneille_Place-Royale"/>
+<bibl xml:id="fr-ex-Corneille_Theodore"/>
 <bibl xml:id="RESPONS-eg-02"/>
 <bibl xml:id="DS-eg-02"/>
 <bibl xml:id="CREELEY"/>
-<bibl xml:id="DSHD-eg-31"/>
+<bibl xml:id="biblzh-tw_n17"/>
 <bibl xml:id="CONARS-eg-109"/>
+<bibl xml:id="fr-ex-Danhauser"/>
 <bibl xml:id="beagle"/>
-<bibl xml:id="PH-eg-12"/>
+<bibl xml:id="fr-ex-Daudet_lundi"/>
+<bibl xml:id="WD-TWac"/>
 <bibl xml:id="PH-eg-02"/>
+<bibl xml:id="PH-eg-12"/>
 <bibl xml:id="defoeMoll"/>
 <bibl xml:id="COLI-eg-176"/>
 <bibl xml:id="AI-BIBL-2"/>
 <bibl xml:id="DR-eg-04"/>
 <bibl xml:id="deloneyThom"/>
-<bibl xml:id="COBICOR-eg-251"/>
-<bibl xml:id="WD-TWac"/>
+<bibl xml:id="fr-ex-Dennery-notations"/>
 <bibl xml:id="COHQHE-eg-14"/>
 <bibl xml:id="CONARS-eg-103"/>
 <bibl xml:id="VEST-eg-1"/>
+<bibl xml:id="fr-ex-Diderot-Corresp_SV"/>
+<bibl xml:id="biblzh-tw_n40"/>
 <bibl xml:id="DSOC-eg-33"/>
 <bibl xml:id="COHQQ-eg-26"/>
 <bibl xml:id="DSGRP-eg-57"/>
 <bibl xml:id="WD-BOUS"/>
+<bibl xml:id="fr-ex-Babel"/>
+<bibl xml:id="fr-ex-Dubois_Dict_Ling"/>
 <bibl xml:id="PH-eg-04"/>
+<bibl xml:id="fr-ex-Dufournaud"/>
+<bibl xml:id="fr-ex-Duhamel-Pasquier"/>
 <bibl xml:id="eg-rhyme-dutt"/>
 <bibl xml:id="VERH-eg-25"/>
 <bibl xml:id="pos4st"/>
@@ -69847,29 +69887,46 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="SAID-DIRECT-eg-1"/>
 <bibl xml:id="DSAE-eg-38"/>
 <bibl xml:id="COEDADD-eg-89"/>
+<bibl xml:id="SVG-11"/>
+<bibl xml:id="fr-ex-Ernaux-perdre"/>
+<bibl xml:id="fr-ex-Ernaux-photo"/>
+<bibl xml:id="fr-ex-Etudes_Litt"/>
+<bibl xml:id="fr-ex-Constant-Journal"/>
 <bibl xml:id="FieldScreen"/>
 <bibl xml:id="DSDIV3-eg-22"/>
 <bibl xml:id="DRCAST-eg-18"/>
 <bibl xml:id="DS-eg-05"/>
 <bibl xml:id="SAAG-eg-72"/>
 <bibl xml:id="fitrub"/>
+<bibl xml:id="fr-ex-Flaubert_Sal"/>
+<bibl xml:id="fr-ex-Flaubert_Tent"/>
 <bibl xml:id="FTGRA-eg-18"/>
 <bibl xml:id="DSAE-eg-38a"/>
+<bibl xml:id="fr-ex-la-bas-si-jy-suis"/>
+<bibl xml:id="fr-ex-Teleph_sonne"/>
+<bibl xml:id="fr-ex-franglais"/>
 <bibl xml:id="FR1B"/>
+<bibl xml:id="biblzh-tw_n34"/>
 <bibl xml:id="DS-eg-03"/>
 <bibl xml:id="COEDADD-eg-83"/>
+<bibl xml:id="fr-ex-Galland_Mille"/>
 <bibl xml:id="GalswStr"/>
 <bibl xml:id="COEDADD-eg-84"/>
 <bibl xml:id="TSTPPR-eg-58"/>
 <bibl xml:id="COVE-eg-285"/>
 <bibl xml:id="COHTG-eg-43"/>
 <bibl xml:id="FS-BIBL-3"/>
-<bibl xml:id="SASE-eg-40"/>
+<bibl xml:id="GerStra"/>
+<bibl xml:id="PHegsurp2"/>
 <bibl xml:id="STGA-eg-11"/>
-<bibl xml:id="GibAut"/>
+<bibl xml:id="fr-ex-Gide-Journ_fx"/>
+<bibl xml:id="fr-ex-Gide_Journal"/>
 <bibl xml:id="DRPAL-eg-46"/>
 <bibl xml:id="COVE-eg-284"/>
 <bibl xml:id="VEST-eg-2"/>
+<bibl xml:id="fr-ex-Giono-Regain"/>
+<bibl xml:id="fr-ex-Guerre-Troie"/>
+<bibl xml:id="fr-ex-Godefroy"/>
 <bibl xml:id="DRDIV-eg-31"/>
 <bibl xml:id="VE-eg-03"/>
 <bibl xml:id="G2S"/>
@@ -69877,113 +69934,199 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="PH-eg-07"/>
 <bibl xml:id="DSBACK-eg-86"/>
 <bibl xml:id="DS-eg-01"/>
+<bibl xml:id="fr-ex-Greimas_Courtes"/>
 <bibl xml:id="COXR-eg-166"/>
 <bibl xml:id="DIC-DNT"/>
 <bibl xml:id="hallWell"/>
 <bibl xml:id="CONAAB-eg-150"/>
-<bibl xml:id="eebo87070"/>
 <bibl xml:id="COHQQ-eg-29"/>
+<bibl xml:id="eebo87070"/>
 <bibl xml:id="DR-eg-01"/>
 <bibl xml:id="harveyFour"/>
-<bibl xml:id="ND-eg-99"/>
-<bibl xml:id="CH-eg-01"/>
 <bibl xml:id="leviathan"/>
+<bibl xml:id="biblzh-tw_n3"/>
+<bibl xml:id="biblzh-tw_n43"/>
+<bibl xml:id="fr-ex-Fleurs"/>
 <bibl xml:id="DIC-OALD"/>
+<bibl xml:id="biblzh-tw_n5"/>
+<bibl xml:id="fr-ex-Hugo-Notre-Dame"/>
+<bibl xml:id="fr-ex-Hugo-Nuit"/>
+<bibl xml:id="fr-ex-Hugo-miserables"/>
+<bibl xml:id="fr-ex-Hugo-Fen"/>
+<bibl xml:id="fr-ex-Huizinga_Aut"/>
+<bibl xml:id="COBICOR-eg-248"/>
 <bibl xml:id="DR-eg-02"/>
 <bibl xml:id="PH-ib01"/>
 <bibl xml:id="PH-ib04"/>
 <bibl xml:id="PH-ib05"/>
 <bibl xml:id="DRSTA-eg-40"/>
 <bibl xml:id="DROTH-eg-58"/>
-<bibl xml:id="COBICOR-eg-248"/>
+<bibl xml:id="fr-ex-Melanges_Imbs"/>
+<bibl xml:id="fr-ex-Cyrus"/>
+<bibl xml:id="fr-ex-Ionesco-chauve"/>
+<bibl xml:id="biblzh-tw_n61"/>
 <bibl xml:id="TEI-L_b092ac32.2101"/>
 <bibl xml:id="DRDIV-eg-32"/>
+<bibl xml:id="fr-ex-rousscon"/>
 <bibl xml:id="DSAE-eg-36"/>
+<bibl xml:id="fr-ex-Campe"/>
+<bibl xml:id="GibAut"/>
 <bibl xml:id="JonsBart"/>
 <bibl xml:id="DRSP-eg-37"/>
 <bibl xml:id="DRPAL-eg-44"/>
 <bibl xml:id="DSCO-eg-53"/>
+<bibl xml:id="WD-BASHO"/>
 <bibl xml:id="Karstadt-Distinctiones-Thomistarum"/>
 <bibl xml:id="REF-cb-eg-1"/>
+<bibl xml:id="fr-ex-Kilian-Neige"/>
 <bibl xml:id="MLK01"/>
 <bibl xml:id="COHQHF-eg-5"/>
 <bibl xml:id="COHQHD-eg-18"/>
 <bibl xml:id="COHQQ-eg-27"/>
 <bibl xml:id="KNUTHMAD"/>
+<bibl xml:id="fr-ex-Koltes_Quai_Vol"/>
+<bibl xml:id="PHegsurp"/>
 <bibl xml:id="KYD"/>
+<bibl xml:id="fr-ex-Lafayette-Cleves"/>
 <bibl xml:id="VESE-eg-13"/>
 <bibl xml:id="VESE-eg-13x"/>
+<bibl xml:id="fr-ex-ATILF"/>
 <bibl xml:id="CONARS-eg-108"/>
 <bibl xml:id="CONARS-eg-111"/>
+<bibl xml:id="fr-ex-Lamartine"/>
+<bibl xml:id="fr-ex-manus-Saint-Petersbourg"/>
 <bibl xml:id="COHQQ-eg-33"/>
 <bibl xml:id="LANGENPOST"/>
 <bibl xml:id="VESE-eg-9"/>
 <bibl xml:id="punctuseg"/>
+<bibl xml:id="fr-ex-Lavrentev-TEI-BFM"/>
 <bibl xml:id="PH-eg-06"/>
 <bibl xml:id="PH-eg-01"/>
-<bibl xml:id="COHTG-eg-42"/>
-<bibl xml:id="SACS1-eg-48"/>
-<bibl xml:id="COEDADD-eg-92"/>
-<bibl xml:id="AI-BIBL-4"/>
+<bibl xml:id="fr-ex-Grand-Robert"/>
 <bibl xml:id="NH-eg-03"/>
+<bibl xml:id="SACS1-eg-48"/>
+<bibl xml:id="COHTG-eg-42"/>
+<bibl xml:id="COEDADD-eg-92"/>
+<bibl xml:id="fr-ex-Lery"/>
+<bibl xml:id="AI-BIBL-4"/>
+<bibl xml:id="SERAFIN2"/>
 <bibl xml:id="DRCAST-eg-21"/>
 <bibl xml:id="COHQHE-eg-10"/>
+<bibl xml:id="biblzh-tw_n65"/>
+<bibl xml:id="biblzh-tw_n37"/>
+<bibl xml:id="biblzh-tw_n23-24"/>
+<bibl xml:id="biblzh-tw_n29"/>
+<bibl xml:id="biblzh-tw_n41"/>
 <bibl xml:id="DRPRO-eg-7"/>
+<bibl xml:id="biblzh-tw_n58"/>
 <bibl xml:id="COPA-eg-1"/>
 <bibl xml:id="STGA-eg-9"/>
+<bibl xml:id="biblzh-tw_n51-55"/>
+<bibl xml:id="biblzh-tw_n49"/>
 <bibl xml:id="DIC-LDOCE"/>
+<bibl xml:id="fr-ex-Roman-Rose"/>
 <bibl xml:id="FTGRA-eg-16"/>
 <bibl xml:id="lowellAut"/>
+<bibl xml:id="fr-ex-Lichtig"/>
 <bibl xml:id="SASE-eg-41"/>
+<bibl xml:id="biblzh-tw_n2"/>
+<bibl xml:id="biblzh-tw_n6"/>
+<bibl xml:id="biblzh-tw_n9"/>
+<bibl xml:id="biblzh-tw_n15"/>
+<bibl xml:id="biblzh-tw_n16"/>
 <bibl xml:id="VERH-eg-27"/>
 <bibl xml:id="TSBA-eg-19"/>
 <bibl xml:id="MS-eg-001"/>
+<bibl xml:id="fr-ex-Maingeneau_Analyser"/>
 <bibl xml:id="CONARS-eg-106"/>
+<bibl xml:id="fr-ex-Zazie"/>
+<bibl xml:id="fr-ex-Manu_Shan"/>
 <bibl xml:id="PH-BIBL-1"/>
 <bibl xml:id="STGA-eg-10"/>
 <bibl xml:id="COEDADD-eg-85"/>
-<bibl xml:id="SOURCE-eg-01"/>
+<bibl xml:id="fr-ex-Mauriac-Marquise"/>
+<bibl xml:id="fr-ex-Mauss_Sociologie"/>
 <bibl xml:id="NDGEOGste-Falls"/>
+<bibl xml:id="SOURCE-eg-01"/>
 <bibl xml:id="DSHD-eg-30"/>
+<bibl xml:id="fr-ex-Mendes-France"/>
+<bibl xml:id="biblzh-tw_n1"/>
 <bibl xml:id="DRPERF-eg-12"/>
 <bibl xml:id="COHQHE-eg-11"/>
 <bibl xml:id="CO-eg-06"/>
 <bibl xml:id="miltPo"/>
+<bibl xml:id="fr-ex-Moliere_Ecole"/>
+<bibl xml:id="fr-ex-Moliere_Med"/>
+<bibl xml:id="fr-ex-Moliere_Med_Vol"/>
+<bibl xml:id="fr-ex-Montaigne_Essais"/>
+<bibl xml:id="fr-ex-Montesquieu"/>
+<bibl xml:id="fr-ex-Montherlant-Pitie"/>
 <bibl xml:id="PH-eg-03"/>
 <bibl xml:id="PH-eg-09"/>
 <bibl xml:id="CO-eg-04"/>
+<bibl xml:id="COBICOR-eg-251"/>
+<bibl xml:id="divEGs"/>
+<bibl xml:id="fr-ex-Mrejen_Eau"/>
+<bibl xml:id="SA-eg-04"/>
+<bibl xml:id="fr-ex-Hydraul"/>
+<bibl xml:id="fr-ex-Tunis"/>
 <bibl xml:id="PNIN1"/>
 <bibl xml:id="DIC-NPEG"/>
 <bibl xml:id="NJAL"/>
 <bibl xml:id="DR-eg-07"/>
+<bibl xml:id="fr-ex-Ollagnier_Main"/>
+<bibl xml:id="ND-eg-99"/>
+<bibl xml:id="CH-eg-01"/>
+<bibl xml:id="WHITMS1"/>
+<bibl xml:id="fr-ex-Ormesson-douane"/>
 <bibl xml:id="SA-eg-03"/>
 <bibl xml:id="ja-ritsuryo-weights"/>
 <bibl xml:id="PH-eg-16"/>
 <bibl xml:id="COEDADD-eg-90"/>
-<bibl xml:id="PHegsurp"/>
+<bibl xml:id="biblzh-tw_n39"/>
+<bibl xml:id="fr-ex-Pascal_Pensees"/>
 <bibl xml:id="TSSASE-eg-37"/>
 <bibl xml:id="CODR-eg-296"/>
-<bibl xml:id="GerStra"/>
+<bibl xml:id="fr-ex-Pennac_Marchande"/>
+<bibl xml:id="fr-ex-Perec-esp"/>
+<bibl xml:id="fr-ex-Perec-vie"/>
+<bibl xml:id="fr-ex-Perec-choses"/>
 <bibl xml:id="GDFT-eg-12"/>
+<bibl xml:id="fr-ex-Pernoud-femme"/>
 <bibl xml:id="DIC-PLC"/>
 <bibl xml:id="PHILIPOTT"/>
 <bibl xml:id="NH-eg-02"/>
 <bibl xml:id="toWhom-eg-1"/>
 <bibl xml:id="PHOM-eg-secl"/>
 <bibl xml:id="DRSP-eg-34"/>
+<bibl xml:id="fr-ex-Polac"/>
 <bibl xml:id="COHQHE-eg-12"/>
 <bibl xml:id="VEMEsamp-eg-14"/>
 <bibl xml:id="SAPTEG-eg-3"/>
 <bibl xml:id="NDPLAC-eg-55"/>
+<bibl xml:id="fr-ex-Proust-Swann"/>
 <bibl xml:id="COHQQ-eg-23"/>
+<bibl xml:id="biblzh-tw_n52"/>
+<bibl xml:id="fr-ex-Queneau_Journ"/>
+<bibl xml:id="fr-ex-garg"/>
+<bibl xml:id="rab3"/>
+<bibl xml:id="fr-ex-Renard_Journal"/>
 <bibl xml:id="COBICOI-eg-264"/>
+<bibl xml:id="biblzh-tw_n45"/>
 <bibl xml:id="COHTGEG-eg-02"/>
 <bibl xml:id="DIC-PR"/>
+<bibl xml:id="fr-ex-Rohmer-Maud"/>
+<bibl xml:id="fr-ex-Knock"/>
+<bibl xml:id="fr-ex-Cyrano"/>
+<bibl xml:id="fr-ex-Roubaud_Boucle"/>
 <bibl xml:id="COHQQ-eg-35"/>
 <bibl xml:id="AI-eg-01"/>
+<bibl xml:id="fr-ex-Sanctoral-ee"/>
+<bibl xml:id="WD-VERT-IND"/>
+<bibl xml:id="biblzh-tw_n7"/>
+<bibl xml:id="biblzh-tw_n48"/>
 <bibl xml:id="COHTG-eg-44"/>
-<bibl xml:id="SVG-11"/>
-<bibl xml:id="SERAFIN2"/>
+<bibl xml:id="fr-ex-Shakes-Richard-III"/>
 <bibl xml:id="FHENRY5"/>
 <bibl xml:id="THENRY5"/>
 <bibl xml:id="CO-eg-07"/>
@@ -69996,10 +70139,14 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="TwN"/>
 <bibl xml:id="l-td-eg-1"/>
 <bibl xml:id="VEST-eg-6"/>
+<bibl xml:id="biblzh-tw_n33"/>
+<bibl xml:id="biblzh-tw_n35-36"/>
 <bibl xml:id="SAWS"/>
 <bibl xml:id="DR-eg-08"/>
 <bibl xml:id="DRSP-eg-35"/>
 <bibl xml:id="SASE-eg-32"/>
+<bibl xml:id="COHQHF-eg-8"/>
+<bibl xml:id="biblzh-tw_n32"/>
 <bibl xml:id="DSBACK-eg-83"/>
 <bibl xml:id="PH-eg-10"/>
 <bibl xml:id="SMITHWM"/>
@@ -70010,224 +70157,72 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="STOW"/>
 <bibl xml:id="NYT1992"/>
 <bibl xml:id="SUE"/>
+<bibl xml:id="NDDATEA-eg-169"/>
+<bibl xml:id="biblzh-tw_n28"/>
+<bibl xml:id="biblzh-tw_n63"/>
 <bibl xml:id="COEDCOR-eg-71"/>
 <bibl xml:id="swiftLaw"/>
 <bibl xml:id="HD-eg-swinb"/>
 <bibl xml:id="CONARS-eg-110"/>
-<bibl xml:id="NDDATEA-eg-169"/>
+<bibl xml:id="biblzh-tw_n12"/>
+<bibl xml:id="biblzh-tw_n18"/>
+<bibl xml:id="biblzh-tw_n47"/>
+<bibl xml:id="biblzh-tw_n27"/>
 <bibl xml:id="TAYLOR"/>
+<bibl xml:id="COPA-eg-02"/>
+<bibl xml:id="DSHD-eg-31"/>
 <bibl xml:id="COHQQ-eg-30"/>
 <bibl xml:id="DSDIV3X-eg-29"/>
+<bibl xml:id="SASE-eg-40"/>
 <bibl xml:id="NDDATEA-eg-170"/>
 <bibl xml:id="COHQQ-eg-34"/>
 <bibl xml:id="COHQQ-eg-31"/>
 <bibl xml:id="CO-eg-01"/>
 <bibl xml:id="DSCO-eg-51"/>
 <bibl xml:id="NDORG-eg-38"/>
+<bibl xml:id="fr-ex-Angl"/>
 <bibl xml:id="COBITY-eg-240"/>
 <bibl xml:id="SA-eg-01"/>
 <bibl xml:id="MENTIOND-eg-1"/>
+<bibl xml:id="fr-ex-Teste"/>
 <bibl xml:id="VE-eg-02"/>
+<bibl xml:id="fr-ex-Verne-Ballon"/>
+<bibl xml:id="fr-ex-Verne_Chasse"/>
+<bibl xml:id="fr-ex-Verne_Vingt"/>
 <bibl xml:id="VINGE"/>
+<bibl xml:id="fr-ex-Viton-dictionnaire"/>
 <bibl xml:id="PH-eg-13"/>
-<bibl xml:id="DSAE-eg-39"/>
 <bibl xml:id="CO-eg-03"/>
+<bibl xml:id="DSAE-eg-39"/>
 <bibl xml:id="COLI-eg-175"/>
 <bibl xml:id="DIC-W7"/>
-<bibl xml:id="WHITMS1"/>
-<bibl xml:id="WHITMS2"/>
+<bibl xml:id="biblzh-tw_n8"/>
+<bibl xml:id="fr-ex-Weil-Atares"/>
 <bibl xml:id="COHQQ-eg-25"/>
+<bibl xml:id="fr-ex-Winock-Jeanne"/>
 <bibl xml:id="NOTE-eg"/>
 <bibl xml:id="CONADA-eg-143"/>
 <bibl xml:id="NH-eg-01"/>
 <bibl xml:id="CO-eg-08"/>
+<bibl xml:id="VESTR-eg-1"/>
+<bibl xml:id="biblzh-tw_n22"/>
 <bibl xml:id="DRPRO-eg-6"/>
+<bibl xml:id="biblzh-tw_n10"/>
+<bibl xml:id="biblzh-tw_n21"/>
+<bibl xml:id="biblzh-tw_n42"/>
+<bibl xml:id="biblzh-tw_n60"/>
+<bibl xml:id="biblzh-tw_n62-64"/>
+<bibl xml:id="biblzh-tw_n4"/>
+<bibl xml:id="biblzh-tw_n19"/>
+<bibl xml:id="biblzh-tw_n11"/>
+<bibl xml:id="biblzh-tw_n13"/>
+<bibl xml:id="biblzh-tw_n14"/>
+<bibl xml:id="biblzh-tw_n56-57"/>
 <bibl xml:id="LZ"/>
-<bibl xml:id="SA-eg-04"/>
-<bibl xml:id="WD-VERT-IND"/>
 <bibl xml:id="ZUPKO"/>
 <bibl xml:id="NONE"/>
 <bibl xml:id="SELF"/>
-<bibl xml:id="UND"/>
-<bibl xml:id="fr-ex-garg"/>
-<bibl xml:id="fr-ex-simjar"/>
-<bibl xml:id="fr-ex-rousscon"/>
-<bibl xml:id="fr-ex-ATILF"/>
-<bibl xml:id="fr-ex-Abes"/>
-<bibl xml:id="fr-ex-Acad"/>
-<bibl xml:id="fr-ex-Angl"/>
-<bibl xml:id="fr-ex-Antigone"/>
-<bibl xml:id="fr-ex-Babel"/>
-<bibl xml:id="fr-ex-Balzac-Chouans"/>
-<bibl xml:id="fr-ex-Balzac_Goriot"/>
-<bibl xml:id="fr-ex-Balzac_Vie"/>
-<bibl xml:id="fr-ex-Bataille_Arbre"/>
-<bibl xml:id="fr-ex-Baudelaire-chats"/>
-<bibl xml:id="fr-ex-Baudelaire-vie"/>
-<bibl xml:id="fr-ex-Beck_Morin"/>
-<bibl xml:id="fr-ex-Becque-ee"/>
-<bibl xml:id="fr-ex-Belloc_Kepas"/>
-<bibl xml:id="fr-ex-Belloc_Neons"/>
-<bibl xml:id="fr-ex-Belloy"/>
-<bibl xml:id="fr-ex-Bibliog_Renaissance_Ital"/>
-<bibl xml:id="fr-ex-Billetdoux"/>
-<bibl xml:id="fr-ex-BnF-Reliures"/>
-<bibl xml:id="fr-ex-Bouiller_Rapport"/>
-<bibl xml:id="fr-ex-Campe"/>
-<bibl xml:id="fr-ex-Colette-Ecole"/>
-<bibl xml:id="fr-ex-Constant-Journal"/>
-<bibl xml:id="fr-ex-Corneille_Place-Royale"/>
-<bibl xml:id="fr-ex-Corneille_Theodore"/>
-<bibl xml:id="fr-ex-Cyrano"/>
-<bibl xml:id="fr-ex-Cyrus"/>
-<bibl xml:id="fr-ex-Danhauser"/>
-<bibl xml:id="fr-ex-Daudet_lundi"/>
-<bibl xml:id="fr-ex-Dennery-notations"/>
-<bibl xml:id="fr-ex-Diderot-Corresp_SV"/>
-<bibl xml:id="fr-ex-Dubois_Dict_Ling"/>
-<bibl xml:id="fr-ex-Dufournaud"/>
-<bibl xml:id="fr-ex-Duhamel-Pasquier"/>
-<bibl xml:id="fr-ex-Ernaux-perdre"/>
-<bibl xml:id="fr-ex-Ernaux-photo"/>
-<bibl xml:id="fr-ex-Etudes_Litt"/>
-<bibl xml:id="fr-ex-Flaubert_Sal"/>
-<bibl xml:id="fr-ex-Flaubert_Tent"/>
-<bibl xml:id="fr-ex-Fleurs"/>
-<bibl xml:id="fr-ex-Galland_Mille"/>
-<bibl xml:id="fr-ex-Gide-Journ_fx"/>
-<bibl xml:id="fr-ex-Gide_Journal"/>
-<bibl xml:id="fr-ex-Giono-Regain"/>
-<bibl xml:id="fr-ex-Godefroy"/>
-<bibl xml:id="fr-ex-Grand-Robert"/>
-<bibl xml:id="fr-ex-Greimas_Courtes"/>
-<bibl xml:id="fr-ex-Guerre-Troie"/>
-<bibl xml:id="fr-ex-Hugo-Fen"/>
-<bibl xml:id="fr-ex-Hugo-Notre-Dame"/>
-<bibl xml:id="fr-ex-Hugo-Nuit"/>
-<bibl xml:id="fr-ex-Hugo-miserables"/>
-<bibl xml:id="fr-ex-Huizinga_Aut"/>
-<bibl xml:id="fr-ex-Hydraul"/>
-<bibl xml:id="fr-ex-Ionesco-chauve"/>
-<bibl xml:id="fr-ex-Kilian-Neige"/>
-<bibl xml:id="fr-ex-Knock"/>
-<bibl xml:id="fr-ex-Koltes_Quai_Vol"/>
-<bibl xml:id="fr-ex-Lafayette-Cleves"/>
-<bibl xml:id="fr-ex-Lamartine"/>
-<bibl xml:id="fr-ex-Lavrentev-TEI-BFM"/>
-<bibl xml:id="fr-ex-Lery"/>
-<bibl xml:id="fr-ex-Lichtig"/>
-<bibl xml:id="fr-ex-Maingeneau_Analyser"/>
-<bibl xml:id="fr-ex-Manu_Shan"/>
-<bibl xml:id="fr-ex-Mauriac-Marquise"/>
-<bibl xml:id="fr-ex-Mauss_Sociologie"/>
-<bibl xml:id="fr-ex-Melanges_Imbs"/>
-<bibl xml:id="fr-ex-Mendes-France"/>
-<bibl xml:id="fr-ex-Moliere_Ecole"/>
-<bibl xml:id="fr-ex-Moliere_Med"/>
-<bibl xml:id="fr-ex-Moliere_Med_Vol"/>
-<bibl xml:id="fr-ex-Montaigne_Essais"/>
-<bibl xml:id="fr-ex-Montesquieu"/>
-<bibl xml:id="fr-ex-Montherlant-Pitie"/>
-<bibl xml:id="fr-ex-Mouchette"/>
-<bibl xml:id="fr-ex-Mrejen_Eau"/>
-<bibl xml:id="fr-ex-Ollagnier_Main"/>
-<bibl xml:id="fr-ex-Ormesson-douane"/>
-<bibl xml:id="fr-ex-Pascal_Pensees"/>
-<bibl xml:id="fr-ex-Pennac_Marchande"/>
-<bibl xml:id="fr-ex-Perec-choses"/>
-<bibl xml:id="fr-ex-Perec-esp"/>
-<bibl xml:id="fr-ex-Perec-vie"/>
-<bibl xml:id="fr-ex-Pernoud-femme"/>
-<bibl xml:id="fr-ex-Polac"/>
-<bibl xml:id="fr-ex-Proust-Swann"/>
-<bibl xml:id="fr-ex-Queneau_Journ"/>
-<bibl xml:id="fr-ex-Renard_Journal"/>
-<bibl xml:id="fr-ex-Rohmer-Maud"/>
-<bibl xml:id="fr-ex-Roman-Rose"/>
-<bibl xml:id="fr-ex-Roubaud_Boucle"/>
-<bibl xml:id="fr-ex-Sanctoral-ee"/>
-<bibl xml:id="fr-ex-Shakes-Richard-III"/>
-<bibl xml:id="fr-ex-TEI-simpl"/>
-<bibl xml:id="fr-ex-TLFI"/>
-<bibl xml:id="fr-ex-Teleph_sonne"/>
-<bibl xml:id="fr-ex-Teste"/>
-<bibl xml:id="fr-ex-Tunis"/>
-<bibl xml:id="fr-ex-Verne-Ballon"/>
-<bibl xml:id="fr-ex-Verne_Chasse"/>
-<bibl xml:id="fr-ex-Verne_Vingt"/>
-<bibl xml:id="fr-ex-Viton-dictionnaire"/>
-<bibl xml:id="fr-ex-Weil-Atares"/>
-<bibl xml:id="fr-ex-Winock-Jeanne"/>
-<bibl xml:id="fr-ex-Zazie"/>
-<bibl xml:id="fr-ex-catechisme"/>
-<bibl xml:id="fr-ex-franglais"/>
-<bibl xml:id="fr-ex-la-bas-si-jy-suis"/>
-<bibl xml:id="fr-ex-manus-Saint-Petersbourg"/>
-<bibl xml:id="rab3"/>
-<bibl xml:id="biblzh-tw_n1"/>
-<bibl xml:id="biblzh-tw_n2"/>
-<bibl xml:id="biblzh-tw_n3"/>
-<bibl xml:id="biblzh-tw_n4"/>
-<bibl xml:id="biblzh-tw_n5"/>
-<bibl xml:id="biblzh-tw_n6"/>
-<bibl xml:id="biblzh-tw_n7"/>
-<bibl xml:id="biblzh-tw_n8"/>
-<bibl xml:id="biblzh-tw_n9"/>
-<bibl xml:id="biblzh-tw_n10"/>
-<bibl xml:id="biblzh-tw_n11"/>
-<bibl xml:id="biblzh-tw_n12"/>
-<bibl xml:id="biblzh-tw_n13"/>
-<bibl xml:id="biblzh-tw_n14"/>
-<bibl xml:id="biblzh-tw_n15"/>
-<bibl xml:id="biblzh-tw_n16"/>
-<bibl xml:id="biblzh-tw_n17"/>
-<bibl xml:id="biblzh-tw_n18"/>
-<bibl xml:id="biblzh-tw_n19"/>
-<bibl xml:id="biblzh-tw_n20"/>
-<bibl xml:id="biblzh-tw_n21"/>
-<bibl xml:id="biblzh-tw_n22"/>
-<bibl xml:id="biblzh-tw_n23"/>
-<bibl xml:id="biblzh-tw_n24"/>
-<bibl xml:id="biblzh-tw_n25"/>
-<bibl xml:id="biblzh-tw_n26"/>
-<bibl xml:id="biblzh-tw_n27"/>
-<bibl xml:id="biblzh-tw_n28"/>
-<bibl xml:id="biblzh-tw_n29"/>
-<bibl xml:id="biblzh-tw_n30"/>
-<bibl xml:id="biblzh-tw_n31"/>
-<bibl xml:id="biblzh-tw_n32"/>
-<bibl xml:id="biblzh-tw_n33"/>
-<bibl xml:id="biblzh-tw_n34"/>
-<bibl xml:id="biblzh-tw_n35"/>
-<bibl xml:id="biblzh-tw_n36"/>
-<bibl xml:id="biblzh-tw_n37"/>
-<bibl xml:id="biblzh-tw_n39"/>
-<bibl xml:id="biblzh-tw_n40"/>
-<bibl xml:id="biblzh-tw_n41"/>
-<bibl xml:id="biblzh-tw_n42"/>
-<bibl xml:id="biblzh-tw_n43"/>
-<bibl xml:id="biblzh-tw_n44"/>
-<bibl xml:id="biblzh-tw_n45"/>
-<bibl xml:id="biblzh-tw_n46"/>
-<bibl xml:id="biblzh-tw_n47"/>
-<bibl xml:id="biblzh-tw_n48"/>
-<bibl xml:id="biblzh-tw_n49"/>
-<bibl xml:id="biblzh-tw_n50"/>
-<bibl xml:id="biblzh-tw_n51"/>
-<bibl xml:id="biblzh-tw_n52"/>
-<bibl xml:id="biblzh-tw_n53"/>
-<bibl xml:id="biblzh-tw_n54"/>
-<bibl xml:id="biblzh-tw_n55"/>
-<bibl xml:id="biblzh-tw_n56"/>
-<bibl xml:id="biblzh-tw_n57"/>
-<bibl xml:id="biblzh-tw_n58"/>
-<bibl xml:id="biblzh-tw_n59"/>
-<bibl xml:id="biblzh-tw_n60"/>
-<bibl xml:id="biblzh-tw_n61"/>
-<bibl xml:id="biblzh-tw_n62"/>
-<bibl xml:id="biblzh-tw_n63"/>
-<bibl xml:id="biblzh-tw_n64"/>
-<bibl xml:id="biblzh-tw_n65"/></div>
+<bibl xml:id="UND"/></div>
 <div><head>Works Cited Elsewhere in the Text of these Guidelines</head>
 <biblStruct xml:id="KNUTH"/>
 <biblStruct xml:id="PETTY"/>
