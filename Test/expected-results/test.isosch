@@ -40,7 +40,7 @@
    <pattern id="schematron-constraint-test-att.global.source-source-only_1_ODD_source-5">
       <rule context="tei:*/@source">
          <let name="srcs" value="tokenize( normalize-space(.),' ')"/>
-         <report test="( parent::tei:classRef                               | parent::tei:dataRef                               | parent::tei:elementRef                               | parent::tei:macroRef                               | parent::tei:moduleRef                               | parent::tei:schemaSpec )                               and                               $srcs[2]">
+         <report test="( parent::tei:classRef | parent::tei:dataRef | parent::tei:elementRef | parent::tei:macroRef | parent::tei:moduleRef | parent::tei:schemaSpec ) and $srcs[2]">
               When used on a schema description element (like
               <value-of select="name(..)"/>), the @source attribute
               should have only 1 value. (This one has <value-of select="count($srcs)"/>.)
@@ -78,14 +78,14 @@ The element indicated by @spanTo (<value-of select="@spanTo"/>) must follow the 
    </pattern>
    <pattern id="schematron-constraint-test-p-abstractModel-structure-p-in-ab-or-p-11">
       <rule context="tei:p">
-         <report test="    (ancestor::tei:ab or ancestor::tei:p)                          and not( ancestor::tei:floatingText                                 |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )">
+         <report test="(ancestor::tei:ab or ancestor::tei:p) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )">
         Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
       </report>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-test-p-abstractModel-structure-p-in-l-or-lg-12">
       <rule context="tei:p">
-         <report test="    (ancestor::tei:l or ancestor::tei:lg)                          and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )">
+         <report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
       </report>
       </rule>
@@ -194,7 +194,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
          <let name="firstY" value="xs:float( substring-after( $firstPair, ',') )"/>
          <let name="lastX" value="xs:float( substring-before( $lastPair, ',') )"/>
          <let name="lastY" value="xs:float( substring-after( $lastPair, ',') )"/>
-         <report test="$firstX eq $lastX  and  $firstY eq $lastY">The first and
+         <report test="$firstX eq $lastX and $firstY eq $lastY">The first and
           last elements of this path are the same. To specify a closed polygon, use
           the zone element rather than the path element. </report>
       </rule>
@@ -242,14 +242,14 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
    </pattern>
    <pattern id="schematron-constraint-test-ab-abstractModel-structure-ab-in-ab-or-p-41">
       <rule context="tei:ab">
-         <report test="    (ancestor::tei:p or ancestor::tei:ab)                          and not( ancestor::tei:floatingText                                  |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )">
+         <report test="(ancestor::tei:p or ancestor::tei:ab) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )">
         Abstract model violation: ab may not occur inside paragraphs or other ab elements.
       </report>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-test-ab-abstractModel-structure-ab-in-l-or-lg-42">
       <rule context="tei:ab">
-         <report test="    (ancestor::tei:l or ancestor::tei:lg)                         and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )">
+         <report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
         Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
       </report>
       </rule>

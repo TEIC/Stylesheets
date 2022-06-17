@@ -7,7 +7,7 @@
       </titleStmt>
       <editionStmt>
         <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.5.0.html">4.5.0a</ref>. Last updated on
-        <date when="2022-06-01">1st June 2022</date>, revision <ref target="https://github.com/TEIC/TEI/commit/aeba95253">aeba95253</ref></edition>
+        <date when="2022-06-16">16th June 2022</date>, revision <ref target="https://github.com/TEIC/TEI/commit/9c0e52181">9c0e52181</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -1245,22 +1245,7 @@ of any adjacent whitespace</desc>
         <p> Pour la date, le format le plus courant est <code>yyyy-mm-dd</code>, mais on trouve aussi <code>yyyy</code>, <code>--mm</code>, <code>---dd</code>, <code>yyyy-mm</code>, ou <code>--mm-dd</code>. Pour l'heure, on utilise le format <code>hh:mm:ss</code>.</p>
         <p>Il faut noter qu'actuellement ce format ne permet pas d'utiliser la valeur <val>0000</val> pour représenter l'année précédant le début de l'ère chrétienne ; on doit utiliser la valeur <val>-0001</val>.</p>
       </remarks>
-      <remarks xml:lang="es" versionDate="2008-04-06">
-        <p>El valor del atributo <att>cuando</att> es una serie que representa una fecha o una hora, o ambas, en cualquiera de los siguientes formatos:
-	  <list><item>una fecha en los formatos estándares descritos por la <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, p.ej. en el formato más común <code>aaaa-mm-dd</code>, pero también
-	  <code>aaaa</code>, <code>--mm</code>, <code>---dd</code>,
-	  <code>aaaa-mm</code>, o <code>--mm-dd</code>
-                  </item><item>; una hora en el formato estándar descrito en 
-	  <title ref="#XSD2">XML Schema Part 2: Datatypes Second
-	  Edition</title>, es decir. <code>hh: mm: ss</code>
-                  </item><item>; o una fecha y una hora combinadas en los formatos estándares descritos en <title ref="#XSD2">XML Schema Part 2: Datatypes Second
-	  Edition</title>, es decir. <code>aaaa-mm-ddThh: mm: ss</code>
-                  </item></list>.</p>
-        <p>Obligatoriamente el valor de <att>cuando</att> aparecerá en un formato de fecha, tiempo, o ambos formatos combinados, de los reconocidos por W3C <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>. Esto se dará si el componente de la fecha (eventualmente) es una fecha gregoriana o proléptica gregoriana.</p>
-        <p>A la hora de esta escritura, W3C no permite el año <val>0000</val>, que sería utilizado normalmente para representar el año 1 antes de nuestra era. Usando el sistema actual de W3C, el año 1 a.C. se indica con <val>-0001</val>, el año 2 a.C. con <val>-0002</val>, etc. <quote>Es la intención del grupo de trabajo del esquema de XML permitir <val>0000</val> como la representación léxica de 1 a.C. (que es un año bisiesto),
-	  <val>-0001</val> se convertiria en la representación léxica de 2 a.C., <val>-0002</val> de 3 a.C., etc.</quote> Así en algunos casos puede ser ventajoso utilizar en su lugar el atributo <att>cuando-ISO</att>
-	  para indicar los años anteriores a nuestra era.</p>
-      </remarks>
+      <remarks versionDate="2018-09-08" xml:lang="es"><p>El valor del atributo <att>cuando</att> es una serie que representa una fecha o una hora, o ambas, en cualquiera de los siguientes formatos: <list><item>una fecha en los formatos estándares descritos por la <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, p.ej. en el formato más común <code>aaaa-mm-dd</code>, pero también <code>aaaa</code>, <code>--mm</code>, <code>---dd</code>, <code>aaaa-mm</code>, o <code>--mm-dd</code></item><item>; una hora en el formato estándar descrito en <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, es decir. <code>hh: mm: ss</code></item><item>; o una fecha y una hora combinadas en los formatos estándares descritos en <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, es decir. <code>aaaa-mm-ddThh: mm: ss</code></item></list>. Obligatoriamente el valor de <att>cuando</att> aparecerá en un formato de fecha, tiempo, o ambos formatos combinados, de los reconocidos por W3C <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>. Esto se dará si el componente de la fecha (eventualmente) es una fecha gregoriana o proléptica gregoriana. A la hora de esta escritura, W3C no permite el año <val>0000</val>, que sería utilizado normalmente para representar el año 1 antes de nuestra era. Usando el sistema actual de W3C, el año 1 a.C. se indica con <val>-0001</val>, el año 2 a.C. con <val>-0002</val>, etc. <quote>Es la intención del grupo de trabajo del esquema de XML permitir <val>0000</val> como la representación léxica de 1 a.C. (que es un año bisiesto), <val>-0001</val> se convertiria en la representación léxica de 2 a.C., <val>-0002</val> de 3 a.C., etc.</quote> Así en algunos casos puede ser ventajoso utilizar en su lugar el atributo <att>cuando-ISO</att> para indicar los años anteriores a nuestra era.</p></remarks>
       <remarks xml:lang="ja" versionDate="2019-03-28">
         <p>
           この属性の値は，グレゴリオ暦を用い、<title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>で定義されるいずれかの標準形式で正規化された日付や時刻，あるいはその組み合わせである。時間の属性としてもっともよく使われる形式は，<code>yyyy-mm-dd</code>だが，<code>yyyy</code>，<code>--mm</code>，<code>---dd</code>，<code>yyyy-mm</code>，<code>--mm-dd</code>も用いてもよい．時間については，<code>hh:mm:ss</code>が用いられる．この形式は，紀元前1年を表現するのに<val>0000</val>という値を用いることは現在のところ許容していないことには注意されたい．代わりに<val>-0001</val>という値を用いる必要がある．
@@ -2364,7 +2349,7 @@ the TEI header.</p>
         <constraint>
           <sch:rule context="tei:*/@source">
             <sch:let name="srcs" value="tokenize( normalize-space(.),' ')"/>
-            <sch:report test="( parent::tei:classRef                               | parent::tei:dataRef                               | parent::tei:elementRef                               | parent::tei:macroRef                               | parent::tei:moduleRef                               | parent::tei:schemaSpec )                               and                               $srcs[2]">
+            <sch:report test="( parent::tei:classRef | parent::tei:dataRef | parent::tei:elementRef | parent::tei:macroRef | parent::tei:moduleRef | parent::tei:schemaSpec ) and $srcs[2]">
               When used on a schema description element (like
               <sch:value-of select="name(..)"/>), the @source attribute
               should have only 1 value. (This one has <sch:value-of select="count($srcs)"/>.)
@@ -13669,6 +13654,7 @@ elements of  <gi>profileDesc</gi> unless these are documenting multiple texts.</
 <elementSpec module="header" ident="abstract">
   <desc versionDate="2012-12-27" xml:lang="en">contains a summary or formal
     abstract prefixed to an existing source document by the encoder.</desc>
+  <desc versionDate="2018-09-08" xml:lang="es">Contiene un resumen o abstract formal prefijado a una fuente documental por el codificador.</desc>
   <desc versionDate="2021-10-21" xml:lang="it">contiene un riepilogo o <foreign>abstract</foreign> formale aggiunto, in testa a un dato documento di origine, da chi codifica.   </desc>
   <desc versionDate="2021-10-20" xml:lang="de">enthält eine (formale) Zusammenfassung, die einem bestehenden Quelldokument vorangestellt wird.</desc>
   <desc versionDate="2018-12-18" xml:lang="ja">符号化する人によって既存の元文書の前に付加された要約または正式な要約を含む．</desc>
@@ -13705,6 +13691,7 @@ elements of  <gi>profileDesc</gi> unless these are documenting multiple texts.</
       should be encoded as a <gi>div</gi> within the <gi>front</gi>, as it
       should for a born-digital document. </p>
   </remarks>
+  <remarks versionDate="2018-09-08" xml:lang="es"><p>Este elemento debe utilizarse solo en casos en los que el abstract no se encuentra disponible en la fuente original. Cualquier abstract presente en el documento fuente debe ser codificado como un <gi>div</gi> dentro del <gi>front</gi>, como corresponde en los casos de documentos de origen digital.</p></remarks>
   <remarks versionDate="2018-12-18" xml:lang="ja"><p>この要素は，元資料で要約が利用できない場合にのみ使用されます． 元文書に既に存在する任意の要約は，ボーンデジタル文書の場合と同じように，<gi>front</gi>内の<gi>div</gi>として符号化する必要があります．</p></remarks>
   <listRef>
     <ptr target="#HD4ABS"/>
@@ -15288,14 +15275,14 @@ supplied to printer.</change>
   </content>
   <constraintSpec ident="abstractModel-structure-p-in-ab-or-p" scheme="schematron">
     <constraint>
-      <sch:report test="    (ancestor::tei:ab or ancestor::tei:p)                          and not( ancestor::tei:floatingText                                 |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )">
+      <sch:report test="(ancestor::tei:ab or ancestor::tei:p) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )">
         Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
       </sch:report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-p-in-l-or-lg" scheme="schematron">
     <constraint>
-      <sch:report test="    (ancestor::tei:l or ancestor::tei:lg)                          and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )">
+      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
       </sch:report>
     </constraint>
@@ -24972,6 +24959,7 @@ by the stage direction.</p>
     it, for example: <tag type="start">TEI version="4.4.0"
     xml:lang="it" xmlns="http://www.tei-c.org/ns/1.0"</tag>.</p>
   </remarks>
+  <remarks versionDate="2018-09-08" xml:lang="es"><p>Este elemento/campo es requerido/obligatorio. Se acostumbra especificar el espacio del nombre/namespace TEI <code>http://www.tei-c.org/ns/1.0</code> usando el atributo <att>xmlns</att>.</p></remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Cet élément est obligatoire.</p>
   </remarks>
@@ -25987,7 +25975,7 @@ by the stage direction.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Hugo-Notre-Dame">
       <div1 n="1" type="livre">
         <head>livre premier</head>
-        <div2 n="I " type="chapitre">
+        <div2 n="I" type="chapitre">
           <head>La Grand'salle</head>
           <p>Il y a aujourd'hui trois cent quarante-huit ans six mois et dix-neuf jours que les
           parisiens s'éveillèrent au bruit de toutes les cloches sonnant à grande volée dans la
@@ -25996,7 +25984,7 @@ by the stage direction.</p>
       </div1>
       <div1 n="2" type="livre">
         <head>livre deuxième</head>
-        <div2 n="I " type="chapitre">
+        <div2 n="I" type="chapitre">
           <head>De Charybde en Scylla </head>
           <p>La nuit arrive de bonne heure en janvier. Les rues étaient déjà sombres quand
           Gringoire sortit du Palais.</p>
@@ -26930,6 +26918,7 @@ by the stage direction.</p>
         <valItem ident="toc">
           <desc versionDate="2007-05-04" xml:lang="es">una tabla de contenidos.</desc>
           <desc versionDate="2007-06-27" xml:lang="en">a table of contents</desc>
+  <desc versionDate="2018-09-08" xml:lang="es">una tabla de contenidos.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">목차</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">目錄</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">目次．</desc>
@@ -31739,7 +31728,7 @@ enjambement is not of particular interest.</p>
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n65">
-      <lg rhyme=" ou">
+      <lg rhyme="ou">
         <l>故人西辭黃鶴 <rhyme label="lou2">樓</rhyme>，</l>
         <l>煙花三月下揚<rhyme label="jou">州</rhyme>；</l>
         <l>孤帆遠影碧山<rhyme label="jin4">盡</rhyme>，</l>
@@ -33031,6 +33020,7 @@ either a single role or a list of non-speaking roles.</desc>
     marking the components of names, and also of associating names with
     biographical information about a person. </p>
   </remarks>
+  <remarks versionDate="2018-09-08" xml:lang="es"><p>Este elemento debe ser usado solo para marcar el nombre del actor tal como aparece en la fuente. El capítulo <ptr target="#ND"/> comenta/discute formas de marcar los componentes de los nombres,  asi como también asociar nombre con información biográfica sobre una persona</p></remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Cet élément ne devrait être utilisé que pour encoder le nom de l'acteur tel qu'il est donné
                 dans la source. Le chapitre <ptr target="#ND"/>
@@ -35215,7 +35205,7 @@ very loudly.</p>
           <gloss versionDate="2007-12-20" xml:lang="ko">동형이의어</gloss>
           <gloss versionDate="2009-05-25" xml:lang="fr">homographe.</gloss>
           <gloss versionDate="2007-11-06" xml:lang="it">omografo</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">un homógrafo con una entrada separada</gloss>
+          <gloss versionDate="2018-09-08" xml:lang="es">homógrafo </gloss>
           <gloss xml:lang="ja" versionDate="2019-06-16">同形異義語</gloss>
           <desc versionDate="2008-02-01" xml:lang="en">groups information relating to one homograph within an entry.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">표제 항목 내에 하나의 동형이의어와 관련된 정보를 모아 놓는다.</desc>
@@ -35232,10 +35222,7 @@ very loudly.</p>
           <gloss versionDate="2007-12-20" xml:lang="ko">교차 참조</gloss>
           <gloss versionDate="2009-05-25" xml:lang="fr">référence croisée</gloss>
           <gloss versionDate="2007-11-06" xml:lang="it">riferimento incrociato</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">una breve entrada cuya única función es apuntar
-            a otra entrada principal (p.ej. para formas de un verbo irregular o para otras variantes
-            ortográficas: <mentioned>was</mentioned> señala a <mentioned>be</mentioned>, o
-              <mentioned>esthete</mentioned> a <mentioned>aesthete</mentioned>).</gloss>
+          <gloss versionDate="2018-09-08" xml:lang="es">referencia  cruzada</gloss>
           <gloss xml:lang="ja" versionDate="2019-06-08">相互参照</gloss>
           <desc versionDate="2007-06-27" xml:lang="en">a reduced entry whose only function is to point to another main
             entry (e.g. for forms of an irregular verb or for variant spellings:
@@ -35246,10 +35233,7 @@ very loudly.</p>
               <mentioned>aesthete</mentioned>를 지시하는 <mentioned>esthete</mentioned>
                </desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">縮減的辭條，其唯一作用為指向另一個主要辭條 (例如不規則動辭形式或不同拼法的字)</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">una entrada reducida cuya única función es la de
-            señalar otra entrada principal (p.ej. para las formas de un verbo irregular o para los
-            deletreos variables: <mentioned>era</mentioned> señala a <mentioned>es</mentioned>, o
-              <mentioned>esthete</mentioned> a <mentioned>esteta</mentioned>).</desc>
+          <desc versionDate="2018-09-08" xml:lang="es">una breve entrada cuya única función es apuntar a otra entrada principal (p.ej. para formas de un verbo irregular o para otras variantes ortográficas: <mentioned>was</mentioned> señala a <mentioned>be</mentioned>, o <mentioned>esthete</mentioned> a <mentioned>aesthete</mentioned>).</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">相互参照．主項目への参照．例えば，不規則変化動詞の場合には，
               <mentioned>was</mentioned>から<mentioned>be</mentioned>を参照
               したり，異なる綴りの場合には，<mentioned>esthete</mentioned>か ら<mentioned>aesthete</mentioned>を参照する．</desc>
@@ -35278,7 +35262,7 @@ very loudly.</p>
           <gloss versionDate="2007-12-20" xml:lang="ko">생략형</gloss>
           <gloss versionDate="2009-05-25" xml:lang="fr">abréviation.</gloss>
           <gloss versionDate="2007-11-06" xml:lang="it">abbreviazione</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">una entrada para una abreviatura</gloss>
+          <gloss versionDate="2018-09-08" xml:lang="es">abreviatura</gloss>
           <gloss xml:lang="ja" versionDate="2019-06-08">省略</gloss>
           <desc versionDate="2007-06-27" xml:lang="en">an entry for an abbreviation.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">생략형에 대한 표제 항목</desc>
@@ -45354,7 +45338,7 @@ element.</desc>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <surface ulx="14.54" uly="16.14" lrx="0" lry="0">
         <graphic url="stone.jpg"/>
-        <zone points="4.6,6.3 5.25,5.85 6.2,6.6   8.19222,7.4125 9.89222,6.5875 10.9422,6.1375 11.4422,6.7125   8.21722,8.3125 6.2,7.65"/>
+        <zone points="4.6,6.3 5.25,5.85 6.2,6.6 8.19222,7.4125 9.89222,6.5875 10.9422,6.1375 11.4422,6.7125 8.21722,8.3125 6.2,7.65"/>
       </surface>
     </egXML>
     <p>This example defines a non-rectangular zone: see the illustration
@@ -45444,7 +45428,7 @@ element.</desc>
         <sch:let name="firstY" value="xs:float( substring-after( $firstPair, ',') )"/>
         <sch:let name="lastX" value="xs:float( substring-before( $lastPair, ',') )"/>
         <sch:let name="lastY" value="xs:float( substring-after( $lastPair, ',') )"/>
-        <sch:report test="$firstX eq $lastX  and  $firstY eq $lastY">The first and
+        <sch:report test="$firstX eq $lastX and $firstY eq $lastY">The first and
           last elements of this path are the same. To specify a closed polygon, use
           the zone element rather than the path element. </sch:report>
       </sch:rule>
@@ -45628,6 +45612,7 @@ en-tête et un texte, constitue un document TEI.</desc>
     marked; the beginning by the <gi>addSpan</gi> element itself, the
     end by the <att>spanTo</att> attribute.</p>
   </remarks>
+  <remarks versionDate="2018-09-08" xml:lang="es"><p>Tanto el inicio como el final del material que se agrego debe ser marcado; el inicio con el mismo elemento <gi>addSpan</gi>  y el final con el atributo <att>spanTo</att>.</p></remarks>
   <remarks xml:lang="fr" versionDate="2009-11-16">
     <p>Le début et la fin de la partie de texte ajoutée doivent être marqués ; le début, par l'élément
                     <gi>addSpan</gi> lui-même, la fin, par l'attribut <att>spanTo</att>.</p>
@@ -48233,7 +48218,7 @@ or external to it.</desc>
       <constraintSpec ident="variantEncodingLocation" scheme="schematron">
         <constraint>
           <sch:rule context="tei:variantEncoding">
-            <sch:report test="@location eq 'external'  and  @method eq 'parallel-segmentation'">
+            <sch:report test="@location eq 'external' and @method eq 'parallel-segmentation'">
               The @location value "external" is inconsistent with the
               parallel-segmentation method of apparatus markup.</sch:report>
           </sch:rule>
@@ -49749,10 +49734,12 @@ different witnesses.
 	<valItem ident="objective"/>
 	<valItem ident="inWorld">
 	  <gloss versionDate="2017-06-08" xml:lang="en">in world</gloss>
+  <gloss versionDate="2018-09-08" xml:lang="es">en el mundo</gloss>
 	  <gloss versionDate="2018-12-20" xml:lang="ja">物語世界</gloss>
 	  <desc versionDate="2017-06-08" xml:lang="en">age of a fictional character at the time the story
 	  takes place, rather than at the time the story is
 	  told</desc>
+  <desc versionDate="2018-09-08" xml:lang="es">Edad de un personaje ficcional en el tiempo en el que la historia sucede (no en el tiempo en el cual es contada).</desc>
 	  <desc versionDate="2018-12-20" xml:lang="ja">物語を語る時点ではなく，物語の中の時点における架空の人物の年齢．</desc>
 	</valItem>
 	<valItem ident="chronological"/>
@@ -49777,6 +49764,7 @@ different witnesses.
         <p>This attribute may be used to complement a more detailed discussion of a person's age in
           the content of the element</p>
       </remarks>
+  <remarks versionDate="2018-09-08" xml:lang="es"><p>Este atributo debería ser usado para complementar un debate más detallado sobre la edad de la persona en el contenido del elemento</p></remarks>
       <remarks versionDate="2008-12-09" xml:lang="fr">
         <p>Cet attribut peut être utilisé pour compléter les détails sur l'âge d'une personne donnés
           dans l'élément.</p>
@@ -55944,6 +55932,7 @@ language interaction is doing other than speaking, if anything.</desc>
 activities during a spoken text, the <gi>event</gi> element should
 be used.</p>
   </remarks>
+  <remarks versionDate="2018-09-08" xml:lang="es"><p>Para una descripción más detallada de las acciones de los partiipantes durante los parlamentos, debe utilizarse el elemento  <gi>event</gi></p></remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12" source="#UND">
     <p>Pour une description plus fine de toute activité survenant lors d'une communication
                 orale transcrite, utilisez l'élément <gi>event</gi>. </p>
@@ -56193,14 +56182,14 @@ Information with a Text</head>
   </content>
   <constraintSpec ident="abstractModel-structure-ab-in-ab-or-p" scheme="schematron">
     <constraint>
-      <sch:report test="    (ancestor::tei:p or ancestor::tei:ab)                          and not( ancestor::tei:floatingText                                  |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )">
+      <sch:report test="(ancestor::tei:p or ancestor::tei:ab) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )">
         Abstract model violation: ab may not occur inside paragraphs or other ab elements.
       </sch:report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-ab-in-l-or-lg" scheme="schematron">
     <constraint>
-      <sch:report test="    (ancestor::tei:l or ancestor::tei:lg)                         and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )">
+      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
         Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
       </sch:report>
     </constraint>
@@ -61625,7 +61614,7 @@ instead of the <att>adj</att> attribute.</p>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <graph xml:id="fr_cug1" type="undirected" order="5" size="4" rend="LABEL-PLACE bottom center           NODE-FRAME none ARC solid line">
+      <graph xml:id="fr_cug1" type="undirected" order="5" size="4" rend="LABEL-PLACE bottom center NODE-FRAME none ARC solid line">
         <label>Inter-connexions des compagnies aériennes dans le Sud-Ouest des Etats-Unis.</label>
         <node xml:id="fr_lax" degree="2">
           <label>LAX</label>
@@ -64886,7 +64875,7 @@ used for recording how parts of the example was rendered.</item>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <schemaSpec ident="myTEIe" start="TEI">
         <moduleRef key="tei"/>
-        <moduleRef key="core" include="abbr add core addrLine address author bibl biblScope choice cit corr date del desc divGen editor emph expan foreign gap gloss graphic head hi index item l label lb lg list listBibl  mentioned milestone name note num orig p pb ptr pubPlace publisher q ref reg relatedItem resp respStmt rs sic soCalled sp speaker stage teiCorpus term time title unclear"/>
+        <moduleRef key="core" include="abbr add core addrLine address author bibl biblScope choice cit corr date del desc divGen editor emph expan foreign gap gloss graphic head hi index item l label lb lg list listBibl mentioned milestone name note num orig p pb ptr pubPlace publisher q ref reg relatedItem resp respStmt rs sic soCalled sp speaker stage teiCorpus term time title unclear"/>
         <moduleRef key="header" include="authority availability catRef category change classCode classDecl creation distributor edition editionStmt editorialDecl encodingDesc extent fileDesc funder idno keywords langUsage language licence notesStmt principal profileDesc projectDesc publicationStmt refsDecl revisionDesc samplingDecl seriesStmt sourceDesc sponsor taxonomy teiHeader textClass titleStmt"/>
         <moduleRef key="textstructure" include="TEI argument back body byline closer dateline div docAuthor docDate docEdition docImprint docTitle epigraph front group opener postscript salute signed text titlePage titlePart trailer"/>
         <classRef key="att.global.facs"/>
@@ -65019,7 +65008,7 @@ Child elements of <name/> are only allowed when an external module is being load
       <constraintSpec scheme="schematron" ident="not-same-prefix">
         <constraint>
           <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
-            <report test="//*[ not( generate-id(.) eq generate-id(      current() ) ) ]/@prefix = @prefix">The prefix attribute
+            <report test="//*[ not( generate-id(.) eq generate-id( current() ) ) ]/@prefix = @prefix">The prefix attribute
 	    of <name/> should not match that of any other
 	    element (it would defeat the purpose)</report>
           </rule>
@@ -66236,7 +66225,7 @@ portion of an ODD document.</desc>
   </constraintSpec>
   <constraintSpec ident="TagDocslistRefChildren" scheme="schematron">
     <constraint>
-      <sch:rule context="( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef/tei:ptr                        | ( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef/tei:ref">
+      <sch:rule context="( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef/tei:ptr | ( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef/tei:ref">
         <sch:assert test="@target and not( matches( @target,'\s') )">In the context of tagset documentation, each ptr or ref element inside a listRef must have a target attribute with only 1 pointer as its value.</sch:assert>
       </sch:rule>
     </constraint>
@@ -66762,7 +66751,7 @@ déclaration de même nom dans la définition courante.</desc>
       deprecated.
     </desc>
     <constraint>
-      <sch:report test="  parent::tei:model                         | parent::tei:modelGrp                         | parent::tei:modelSequence                         | parent::tei:paramSpec                         | parent::tei:schemaSpec" role="nonfatal">
+      <sch:report test="parent::tei:model | parent::tei:modelGrp | parent::tei:modelSequence | parent::tei:paramSpec | parent::tei:schemaSpec" role="nonfatal">
         Use of &lt;altIdent&gt; as a child of &lt;<sch:value-of select="name(..)"/>&gt; is
         deprecated, and will no longer be valid after 2022-07-14.
       </sch:report>
@@ -66870,7 +66859,7 @@ déclaration de même nom dans la définition courante.</desc>
     <constraint>
       <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ not( @predicate ) ]">
         <sch:let name="output" value="normalize-space( @output )"/>
-        <sch:report test="following-sibling::tei:model                             [ not( @predicate )]                             [ normalize-space( @output ) eq $output ]">
+        <sch:report test="following-sibling::tei:model [ not( @predicate )] [ normalize-space( @output ) eq $output ]">
           There are 2 (or more) 'model' elements in this '<sch:value-of select="local-name(..)"/>'
           that have no predicate, but are targeted to the same output
           ("<sch:value-of select="( $output, parent::modelGrp/@output, 'all')[1]"/>")</sch:report>
@@ -66885,7 +66874,7 @@ déclaration de même nom dans la définition courante.</desc>
       <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ @predicate ]">
         <sch:let name="predicate" value="normalize-space( @predicate )"/>
         <sch:let name="output" value="normalize-space( @output )"/>
-        <sch:report test="following-sibling::tei:model                             [ normalize-space( @predicate ) eq $predicate ]                             [ normalize-space( @output ) eq $output ]">
+        <sch:report test="following-sibling::tei:model [ normalize-space( @predicate ) eq $predicate ] [ normalize-space( @output ) eq $output ]">
           There are 2 (or more) 'model' elements in this
           '<sch:value-of select="local-name(..)"/>' that have
           the same predicate, and are targeted to the same output
@@ -67223,7 +67212,7 @@ déclaration de même nom dans la définition courante.</desc>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <elementSpec mode="change" ident="date">
         <model output="print" predicate="text()" behaviour="inline"/>
-        <model output="print" predicate="@when and  not(text())" behaviour="inline">
+        <model output="print" predicate="@when and not(text())" behaviour="inline">
           <param name="content" value="@when"/>
         </model>
         <model predicate="@when" output="web" behaviour="alternate">
@@ -67791,7 +67780,7 @@ déclaration de même nom dans la définition courante.</desc>
     <alternate>
       <elementRef key="valList" minOccurs="1" maxOccurs="1"/>
       <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
-      <anyElement minOccurs="1" maxOccurs="unbounded" require="http://relaxng.org/ns/compatibility/annotations/1.0                    http://relaxng.org/ns/structure/1.0"/>
+      <anyElement minOccurs="1" maxOccurs="unbounded" require="http://relaxng.org/ns/compatibility/annotations/1.0 http://relaxng.org/ns/structure/1.0"/>
     </alternate>
   </content>
   <attList>
@@ -67925,12 +67914,12 @@ déclaration de même nom dans la définition courante.</desc>
          <att>maxOccurs</att> is 1, when <att>maxOccurs</att> is not specified
          <att>minOccurs</att> must always be less than or equal to 1.</desc> -->
     <constraint>
-      <sch:rule context="*[ @minOccurs  and  @maxOccurs ]">
+      <sch:rule context="*[ @minOccurs and @maxOccurs ]">
         <sch:let name="min" value="@minOccurs cast as xs:integer"/>
-        <sch:let name="max" value="if ( normalize-space( @maxOccurs ) eq 'unbounded')                         then -1                         else @maxOccurs cast as xs:integer"/>
-        <sch:assert test="$max eq -1  or  $max ge $min">@maxOccurs should be greater than or equal to @minOccurs</sch:assert>
+        <sch:let name="max" value="if ( normalize-space( @maxOccurs ) eq 'unbounded') then -1 else @maxOccurs cast as xs:integer"/>
+        <sch:assert test="$max eq -1 or $max ge $min">@maxOccurs should be greater than or equal to @minOccurs</sch:assert>
       </sch:rule>
-      <sch:rule context="*[ @minOccurs  and  not( @maxOccurs ) ]">
+      <sch:rule context="*[ @minOccurs and not( @maxOccurs ) ]">
         <sch:assert test="@minOccurs cast as xs:integer lt 2">When @maxOccurs is not specified, @minOccurs must be 0 or 1</sch:assert>
       </sch:rule>
     </constraint>
@@ -68137,7 +68126,7 @@ déclaration de même nom dans la définition courante.</desc>
     <desc xml:lang="en" versionDate="2018-07-06">Relationship between scheme attribute and contents: Schematron 1.x</desc>
     <constraint>
       <sch:ns prefix="s" uri="http://www.ascc.net/xml/schematron"/>
-      <sch:report test="tei:constraint/s:*  and  @scheme = ('isoschematron','schematron')">Rules
+      <sch:report test="tei:constraint/s:* and @scheme = ('isoschematron','schematron')">Rules
         in the Schematron 1.* language must be inside a constraintSpec
         with a value other than 'schematron' or 'isoschematron' on the
         scheme attribute</sch:report>
@@ -68147,7 +68136,7 @@ déclaration de même nom dans la définition courante.</desc>
     <desc xml:lang="en" versionDate="2018-07-06">Relationship between scheme attribute and contents: ISO Schematron</desc>
     <constraint>
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
-      <sch:report test="tei:constraint/sch:*  and  not( @scheme eq 'schematron')">Rules
+      <sch:report test="tei:constraint/sch:* and not( @scheme eq 'schematron')">Rules
         in the ISO Schematron language must be inside a constraintSpec
         with the value 'schematron' on the scheme attribute</sch:report>
     </constraint>
@@ -68163,7 +68152,7 @@ déclaration de même nom dans la définition courante.</desc>
   </constraintSpec>
   <constraintSpec ident="unique-constraintSpec-ident" scheme="schematron">
     <constraint>
-      <sch:rule context="tei:constraintSpec[ @mode eq 'add'  or  not( @mode ) ]">
+      <sch:rule context="tei:constraintSpec[ @mode eq 'add' or not( @mode ) ]">
         <sch:let name="myIdent" value="normalize-space(@ident)"/>
         <sch:report test="preceding::tei:constraintSpec[ normalize-space(@ident) eq $myIdent ]">
         The @ident of 'constraintSpec' should be unique; this one (<sch:value-of select="$myIdent"/>) is the same as that of a previous 'constraintSpec'.
@@ -68439,8 +68428,8 @@ déclaration de même nom dans la définition courante.</desc>
   <!-- -Syd, 2015-03-29 -->
   <constraintSpec ident="defaultIsInClosedList-twoOrMore" scheme="schematron">
     <constraint>
-      <sch:rule context="tei:attDef[   tei:defaultVal   and   tei:valList[@type eq 'closed']   and   tei:datatype[    @maxOccurs &gt; 1    or    @minOccurs &gt; 1    or    @maxOccurs = 'unbounded'    ]   ]">
-        <sch:assert test="     tokenize(normalize-space(tei:defaultVal),' ')     =     tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
+      <sch:rule context="tei:attDef[ tei:defaultVal and tei:valList[@type eq 'closed'] and tei:datatype[ @maxOccurs &gt; 1 or @minOccurs &gt; 1 or @maxOccurs = 'unbounded' ] ]">
+        <sch:assert test="tokenize(normalize-space(tei:defaultVal),' ') = tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
         <sch:value-of select="ancestor::*[@ident][1]/@ident"/> the default value of the
         @<sch:value-of select="@ident"/> attribute is not among the closed list of possible
         values</sch:assert>
@@ -68449,8 +68438,8 @@ déclaration de même nom dans la définition courante.</desc>
   </constraintSpec>
   <constraintSpec ident="defaultIsInClosedList-one" scheme="schematron">
     <constraint>
-      <sch:rule context="tei:attDef[   tei:defaultVal   and   tei:valList[@type eq 'closed']   and   tei:datatype[    not(@maxOccurs)    or (    if ( @maxOccurs castable as xs:integer )     then ( @maxOccurs cast as xs:integer eq 1 )     else false()    )]   ]">
-        <sch:assert test="string(tei:defaultVal)      =      tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
+      <sch:rule context="tei:attDef[ tei:defaultVal and tei:valList[@type eq 'closed'] and tei:datatype[ not(@maxOccurs) or ( if ( @maxOccurs castable as xs:integer ) then ( @maxOccurs cast as xs:integer eq 1 ) else false() )] ]">
+        <sch:assert test="string(tei:defaultVal) = tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
         <sch:value-of select="ancestor::*[@ident][1]/@ident"/> the default value of the
         @<sch:value-of select="@ident"/> attribute is not among the closed list of possible
         values</sch:assert>
@@ -69551,7 +69540,7 @@ an attribute may take, additional to the information carried by the
   <constraintSpec ident="spec-in-module" scheme="schematron">
     <constraint>
       <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:elementSpec[@module]|tei:classSpec[@module]|tei:macroSpec[@module]">
-        <assert test="         (not(ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus)) or         (not(@module) or          (not(//tei:moduleSpec) and not(//tei:moduleRef))  or         (//tei:moduleSpec[@ident = current()/@module]) or          (//tei:moduleRef[@key = current()/@module]))         ">
+        <assert test="(not(ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus)) or (not(@module) or (not(//tei:moduleSpec) and not(//tei:moduleRef)) or (//tei:moduleSpec[@ident = current()/@module]) or (//tei:moduleRef[@key = current()/@module]))">
         Specification <value-of select="@ident"/>: the value of the module attribute ("<value-of select="@module"/>") 
 should correspond to an existing module, via a moduleSpec or
       moduleRef</assert>
@@ -69620,10 +69609,10 @@ should correspond to an existing module, via a moduleSpec or
         <constraint>
           <sch:rule context="tei:*[@validUntil]">
             <sch:let name="advance_warning_period" value="current-date() + xs:dayTimeDuration('P60D')"/>
-            <sch:let name="me_phrase" value="if (@ident)                                                then concat('The ', @ident )                                                else concat('This ',                                                            local-name(.),                                                            ' of ',                                                            ancestor::tei:*[@ident][1]/@ident )"/>
-            <sch:assert test="@validUntil cast as xs:date  ge  current-date()">
-              <sch:value-of select="                  concat( $me_phrase,                          ' construct is outdated (as of ',                          @validUntil,                          '); ODD processors may ignore it, and its use is no longer supported'                        )"/></sch:assert>
-              <sch:assert role="nonfatal" test="@validUntil cast as xs:date  ge  $advance_warning_period">
+            <sch:let name="me_phrase" value="if (@ident) then concat('The ', @ident ) else concat('This ', local-name(.), ' of ', ancestor::tei:*[@ident][1]/@ident )"/>
+            <sch:assert test="@validUntil cast as xs:date ge current-date()">
+              <sch:value-of select="concat( $me_phrase, ' construct is outdated (as of ', @validUntil, '); ODD processors may ignore it, and its use is no longer supported' )"/></sch:assert>
+              <sch:assert role="nonfatal" test="@validUntil cast as xs:date ge $advance_warning_period">
                 <sch:value-of select="concat( $me_phrase, ' construct becomes outdated on ', @validUntil )"/>
               </sch:assert>
           </sch:rule>

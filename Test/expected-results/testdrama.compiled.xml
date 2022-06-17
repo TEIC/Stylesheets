@@ -816,22 +816,7 @@ Elements</ref>
         <p> Pour la date, le format le plus courant est <code>yyyy-mm-dd</code>, mais on trouve aussi <code>yyyy</code>, <code>--mm</code>, <code>---dd</code>, <code>yyyy-mm</code>, ou <code>--mm-dd</code>. Pour l'heure, on utilise le format <code>hh:mm:ss</code>.</p>
         <p>Il faut noter qu'actuellement ce format ne permet pas d'utiliser la valeur <val>0000</val> pour représenter l'année précédant le début de l'ère chrétienne ; on doit utiliser la valeur <val>-0001</val>.</p>
       </remarks>
-      <remarks xml:lang="es" versionDate="2008-04-06">
-        <p>El valor del atributo <att>cuando</att> es una serie que representa una fecha o una hora, o ambas, en cualquiera de los siguientes formatos:
-	  <list><item>una fecha en los formatos estándares descritos por la <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, p.ej. en el formato más común <code>aaaa-mm-dd</code>, pero también
-	  <code>aaaa</code>, <code>--mm</code>, <code>---dd</code>,
-	  <code>aaaa-mm</code>, o <code>--mm-dd</code>
-                  </item><item>; una hora en el formato estándar descrito en 
-	  <title ref="#XSD2">XML Schema Part 2: Datatypes Second
-	  Edition</title>, es decir. <code>hh: mm: ss</code>
-                  </item><item>; o una fecha y una hora combinadas en los formatos estándares descritos en <title ref="#XSD2">XML Schema Part 2: Datatypes Second
-	  Edition</title>, es decir. <code>aaaa-mm-ddThh: mm: ss</code>
-                  </item></list>.</p>
-        <p>Obligatoriamente el valor de <att>cuando</att> aparecerá en un formato de fecha, tiempo, o ambos formatos combinados, de los reconocidos por W3C <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>. Esto se dará si el componente de la fecha (eventualmente) es una fecha gregoriana o proléptica gregoriana.</p>
-        <p>A la hora de esta escritura, W3C no permite el año <val>0000</val>, que sería utilizado normalmente para representar el año 1 antes de nuestra era. Usando el sistema actual de W3C, el año 1 a.C. se indica con <val>-0001</val>, el año 2 a.C. con <val>-0002</val>, etc. <quote>Es la intención del grupo de trabajo del esquema de XML permitir <val>0000</val> como la representación léxica de 1 a.C. (que es un año bisiesto),
-	  <val>-0001</val> se convertiria en la representación léxica de 2 a.C., <val>-0002</val> de 3 a.C., etc.</quote> Así en algunos casos puede ser ventajoso utilizar en su lugar el atributo <att>cuando-ISO</att>
-	  para indicar los años anteriores a nuestra era.</p>
-      </remarks>
+      <remarks versionDate="2018-09-08" xml:lang="es"><p>El valor del atributo <att>cuando</att> es una serie que representa una fecha o una hora, o ambas, en cualquiera de los siguientes formatos: <list><item>una fecha en los formatos estándares descritos por la <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, p.ej. en el formato más común <code>aaaa-mm-dd</code>, pero también <code>aaaa</code>, <code>--mm</code>, <code>---dd</code>, <code>aaaa-mm</code>, o <code>--mm-dd</code></item><item>; una hora en el formato estándar descrito en <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, es decir. <code>hh: mm: ss</code></item><item>; o una fecha y una hora combinadas en los formatos estándares descritos en <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, es decir. <code>aaaa-mm-ddThh: mm: ss</code></item></list>. Obligatoriamente el valor de <att>cuando</att> aparecerá en un formato de fecha, tiempo, o ambos formatos combinados, de los reconocidos por W3C <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>. Esto se dará si el componente de la fecha (eventualmente) es una fecha gregoriana o proléptica gregoriana. A la hora de esta escritura, W3C no permite el año <val>0000</val>, que sería utilizado normalmente para representar el año 1 antes de nuestra era. Usando el sistema actual de W3C, el año 1 a.C. se indica con <val>-0001</val>, el año 2 a.C. con <val>-0002</val>, etc. <quote>Es la intención del grupo de trabajo del esquema de XML permitir <val>0000</val> como la representación léxica de 1 a.C. (que es un año bisiesto), <val>-0001</val> se convertiria en la representación léxica de 2 a.C., <val>-0002</val> de 3 a.C., etc.</quote> Así en algunos casos puede ser ventajoso utilizar en su lugar el atributo <att>cuando-ISO</att> para indicar los años anteriores a nuestra era.</p></remarks>
       <remarks xml:lang="ja" versionDate="2019-03-28">
         <p>
           この属性の値は，グレゴリオ暦を用い、<title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>で定義されるいずれかの標準形式で正規化された日付や時刻，あるいはその組み合わせである。時間の属性としてもっともよく使われる形式は，<code>yyyy-mm-dd</code>だが，<code>yyyy</code>，<code>--mm</code>，<code>---dd</code>，<code>yyyy-mm</code>，<code>--mm-dd</code>も用いてもよい．時間については，<code>hh:mm:ss</code>が用いられる．この形式は，紀元前1年を表現するのに<val>0000</val>という値を用いることは現在のところ許容していないことには注意されたい．代わりに<val>-0001</val>という値を用いる必要がある．
@@ -1793,7 +1778,7 @@ the TEI header.</p>
         <constraint>
           <sch:rule context="tei:*/@source">
             <sch:let name="srcs" value="tokenize( normalize-space(.),' ')"/>
-            <sch:report test="( parent::tei:classRef                               | parent::tei:dataRef                               | parent::tei:elementRef                               | parent::tei:macroRef                               | parent::tei:moduleRef                               | parent::tei:schemaSpec )                               and                               $srcs[2]">
+            <sch:report test="( parent::tei:classRef | parent::tei:dataRef | parent::tei:elementRef | parent::tei:macroRef | parent::tei:moduleRef | parent::tei:schemaSpec ) and $srcs[2]">
               When used on a schema description element (like
               <sch:value-of select="name(..)"/>), the @source attribute
               should have only 1 value. (This one has <sch:value-of select="count($srcs)"/>.)
@@ -7098,14 +7083,14 @@ Elements</ref>
   </content>
   <constraintSpec ident="abstractModel-structure-p-in-ab-or-p" scheme="schematron">
     <constraint>
-      <sch:report test="    (ancestor::tei:ab or ancestor::tei:p)                          and not( ancestor::tei:floatingText                                 |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )">
+      <sch:report test="(ancestor::tei:ab or ancestor::tei:p) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )">
         Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
       </sch:report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-p-in-l-or-lg" scheme="schematron">
     <constraint>
-      <sch:report test="    (ancestor::tei:l or ancestor::tei:lg)                          and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )">
+      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
       </sch:report>
     </constraint>
@@ -16563,6 +16548,7 @@ by the stage direction.</p>
         <valItem ident="toc">
           <desc versionDate="2007-05-04" xml:lang="es">una tabla de contenidos.</desc>
           <desc versionDate="2007-06-27" xml:lang="en">a table of contents</desc>
+  <desc versionDate="2018-09-08" xml:lang="es">una tabla de contenidos.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">목차</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">目錄</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">目次．</desc>
@@ -21788,6 +21774,7 @@ elements of  <gi>profileDesc</gi> unless these are documenting multiple texts.</
 </elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="abstract">
   <desc versionDate="2012-12-27" xml:lang="en">contains a summary or formal
     abstract prefixed to an existing source document by the encoder.</desc>
+  <desc versionDate="2018-09-08" xml:lang="es">Contiene un resumen o abstract formal prefijado a una fuente documental por el codificador.</desc>
   <desc versionDate="2021-10-21" xml:lang="it">contiene un riepilogo o <foreign>abstract</foreign> formale aggiunto, in testa a un dato documento di origine, da chi codifica.   </desc>
   <desc versionDate="2021-10-20" xml:lang="de">enthält eine (formale) Zusammenfassung, die einem bestehenden Quelldokument vorangestellt wird.</desc>
   <desc versionDate="2018-12-18" xml:lang="ja">符号化する人によって既存の元文書の前に付加された要約または正式な要約を含む．</desc>
@@ -21824,6 +21811,7 @@ elements of  <gi>profileDesc</gi> unless these are documenting multiple texts.</
       should be encoded as a <gi>div</gi> within the <gi>front</gi>, as it
       should for a born-digital document. </p>
   </remarks>
+  <remarks versionDate="2018-09-08" xml:lang="es"><p>Este elemento debe utilizarse solo en casos en los que el abstract no se encuentra disponible en la fuente original. Cualquier abstract presente en el documento fuente debe ser codificado como un <gi>div</gi> dentro del <gi>front</gi>, como corresponde en los casos de documentos de origen digital.</p></remarks>
   <remarks versionDate="2018-12-18" xml:lang="ja"><p>この要素は，元資料で要約が利用できない場合にのみ使用されます． 元文書に既に存在する任意の要約は，ボーンデジタル文書の場合と同じように，<gi>front</gi>内の<gi>div</gi>として符号化する必要があります．</p></remarks>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD4ABS">2.4.4. Abstracts</ref>
@@ -23594,6 +23582,7 @@ during the evolution of the encoded representation of that text.</p>
     it, for example: <tag type="start">TEI version="4.4.0"
     xml:lang="it" xmlns="http://www.tei-c.org/ns/1.0"</tag>.</p>
   </remarks>
+  <remarks versionDate="2018-09-08" xml:lang="es"><p>Este elemento/campo es requerido/obligatorio. Se acostumbra especificar el espacio del nombre/namespace TEI <code>http://www.tei-c.org/ns/1.0</code> usando el atributo <att>xmlns</att>.</p></remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Cet élément est obligatoire.</p>
   </remarks>
@@ -24426,7 +24415,7 @@ during the evolution of the encoded representation of that text.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Hugo-Notre-Dame">
       <div1 n="1" type="livre">
         <head>livre premier</head>
-        <div2 n="I " type="chapitre">
+        <div2 n="I" type="chapitre">
           <head>La Grand'salle</head>
           <p>Il y a aujourd'hui trois cent quarante-huit ans six mois et dix-neuf jours que les
           parisiens s'éveillèrent au bruit de toutes les cloches sonnant à grande volée dans la
@@ -24435,7 +24424,7 @@ during the evolution of the encoded representation of that text.</p>
       </div1>
       <div1 n="2" type="livre">
         <head>livre deuxième</head>
-        <div2 n="I " type="chapitre">
+        <div2 n="I" type="chapitre">
           <head>De Charybde en Scylla </head>
           <p>La nuit arrive de bonne heure en janvier. Les rues étaient déjà sombres quand
           Gringoire sortit du Palais.</p>
@@ -27824,14 +27813,14 @@ the date of the entire document, not for any subset or part of it.</p>
   </content>
   <constraintSpec ident="abstractModel-structure-ab-in-ab-or-p" scheme="schematron">
     <constraint>
-      <sch:report test="    (ancestor::tei:p or ancestor::tei:ab)                          and not( ancestor::tei:floatingText                                  |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )">
+      <sch:report test="(ancestor::tei:p or ancestor::tei:ab) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )">
         Abstract model violation: ab may not occur inside paragraphs or other ab elements.
       </sch:report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-ab-in-l-or-lg" scheme="schematron">
     <constraint>
-      <sch:report test="    (ancestor::tei:l or ancestor::tei:lg)                         and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )">
+      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
         Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
       </sch:report>
     </constraint>
@@ -30519,6 +30508,7 @@ either a single role or a list of non-speaking roles.</desc>
     marking the components of names, and also of associating names with
     biographical information about a person. </p>
   </remarks>
+  <remarks versionDate="2018-09-08" xml:lang="es"><p>Este elemento debe ser usado solo para marcar el nombre del actor tal como aparece en la fuente. El capítulo <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#ND">13. Names, Dates, People, and Places</ref> comenta/discute formas de marcar los componentes de los nombres,  asi como también asociar nombre con información biográfica sobre una persona</p></remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Cet élément ne devrait être utilisé que pour encoder le nom de l'acteur tel qu'il est donné
                 dans la source. Le chapitre <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#ND">13. Names, Dates, People, and Places</ref>
