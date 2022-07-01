@@ -119,10 +119,10 @@ of this software, even if advised of the possibility of such damage.
 		   <get src="{$F}" dest="{$target}"/>
 		 </xsl:when>
 		 <xsl:when test="starts-with($F,'/')">
-		   <copy toFile="{$target}" file="{@url}"/>
+		   <copy file="{$F}" toFile="{$target}"/>
 		 </xsl:when>
 		 <xsl:otherwise>
-		   <copy toFile="{$target}" file="{$inputDir}/{$F}"/>
+		   <copy file="{$inputDir}/{$F}" toFile="{$target}"/>
 		 </xsl:otherwise>
 	       </xsl:choose>
 	     </xsl:otherwise>

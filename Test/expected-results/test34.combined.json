@@ -1102,8 +1102,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2011-11-17\" xml:lang=\"en\">supplies information about the availability of a text, for example any restrictions on its\n    use or distribution, its copyright status, any licence applying to it, etc.<\/desc>" ],
-        "shortDesc" : "(availability) supplies information about the availability of a text, for example any restrictions on its\n    use or distribution, its copyright status, any licence applying to it, etc.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2011-11-17\" xml:lang=\"en\">supplies information about the availability of a text, for example any restrictions on its\n  use or distribution, its copyright status, any licence applying to it, etc.<\/desc>" ],
+        "shortDesc" : "(availability) supplies information about the availability of a text, for example any restrictions on its\n  use or distribution, its copyright status, any licence applying to it, etc.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2007-06-12\">availability<\/gloss>" ],
         "altIdent" : 
@@ -1186,8 +1186,8 @@
         "type" : "elementSpec",
         "module" : "textstructure",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains any appendixes, etc. following the main part\n    of a text.<\/desc>" ],
-        "shortDesc" : "(back matter) contains any appendixes, etc. following the main part\n    of a text.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains any appendixes, etc. following the main part\n  of a text.<\/desc>" ],
+        "shortDesc" : "(back matter) contains any appendixes, etc. following the main part\n  of a text.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">back matter<\/gloss>" ],
         "altIdent" : 
@@ -1701,8 +1701,16 @@
                         "maxOccurs" : "unbounded",
                         "content" : 
                         [ 
-                          { "type" : "classRef",
-                            "key" : "model.common" },
+                          { "type" : "alternate",
+                            "minOccurs" : "1",
+                            "maxOccurs" : "1",
+                            "content" : 
+                            [ 
+                              { "type" : "elementRef",
+                                "key" : "schemaSpec" },
+                              
+                              { "type" : "classRef",
+                                "key" : "model.common" } ] },
                           
                           { "type" : "classRef",
                             "key" : "model.global" } ] },
@@ -2272,7 +2280,7 @@
             { "min" : "1",
               "max" : "1",
               "dataRef" : 
-              { "name" : "anyURI" } } } ],
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "empty" } ] },
@@ -3402,8 +3410,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -3518,8 +3534,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -3559,8 +3583,8 @@
         "type" : "elementSpec",
         "module" : "textstructure",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a second-level subdivision of the front, body, or back of a\n text.<\/desc>" ],
-        "shortDesc" : "(level-2 text division) contains a second-level subdivision of the front, body, or back of a\n text.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a second-level subdivision of the front, body, or back of a\n  text.<\/desc>" ],
+        "shortDesc" : "(level-2 text division) contains a second-level subdivision of the front, body, or back of a\n  text.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">level-2 text division<\/gloss>" ],
         "altIdent" : 
@@ -3634,8 +3658,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -3750,8 +3782,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -3866,8 +3906,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -3982,8 +4030,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -4098,8 +4154,16 @@
                             "maxOccurs" : "unbounded",
                             "content" : 
                             [ 
-                              { "type" : "classRef",
-                                "key" : "model.common" },
+                              { "type" : "alternate",
+                                "minOccurs" : "1",
+                                "maxOccurs" : "1",
+                                "content" : 
+                                [ 
+                                  { "type" : "elementRef",
+                                    "key" : "schemaSpec" },
+                                  
+                                  { "type" : "classRef",
+                                    "key" : "model.common" } ] },
                               
                               { "type" : "classRef",
                                 "key" : "model.global" } ] },
@@ -4185,8 +4249,16 @@
                     "maxOccurs" : "unbounded",
                     "content" : 
                     [ 
-                      { "type" : "classRef",
-                        "key" : "model.common" },
+                      { "type" : "alternate",
+                        "minOccurs" : "1",
+                        "maxOccurs" : "1",
+                        "content" : 
+                        [ 
+                          { "type" : "elementRef",
+                            "key" : "schemaSpec" },
+                          
+                          { "type" : "classRef",
+                            "key" : "model.common" } ] },
                       
                       { "type" : "classRef",
                         "key" : "model.global" } ] },
@@ -4964,8 +5036,8 @@
         "type" : "elementSpec",
         "module" : "textstructure",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains any prefatory matter\n    (headers, abstracts, title page, prefaces, dedications, etc.) found at the\n    start of a document, before the main body.<\/desc>" ],
-        "shortDesc" : "(front matter) contains any prefatory matter\n    (headers, abstracts, title page, prefaces, dedications, etc.) found at the\n    start of a document, before the main body.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains any prefatory matter\n  (headers, abstracts, title page, prefaces, dedications, etc.) found at the\n  start of a document, before the main body.<\/desc>" ],
+        "shortDesc" : "(front matter) contains any prefatory matter\n  (headers, abstracts, title page, prefaces, dedications, etc.) found at the\n  start of a document, before the main body.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">front matter<\/gloss>" ],
         "altIdent" : 
@@ -5435,7 +5507,8 @@
           [ "att.global",
             "att.media",
             "att.resourced",
-            "att.declaring" ],
+            "att.declaring",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5760,8 +5833,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-04-30\" xml:lang=\"en\">supplies any form of identifier used to identify some object,\n  such as a bibliographic item, a person, a title, an organization,\n  etc. in a standardized way.<\/desc>" ],
-        "shortDesc" : "(identifier) supplies any form of identifier used to identify some object,\n  such as a bibliographic item, a person, a title, an organization,\n  etc. in a standardized way.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-04-30\" xml:lang=\"en\">supplies any form of identifier used to identify some\n    object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized\n    way.<\/desc>" ],
+        "shortDesc" : "(identifier) supplies any form of identifier used to identify some\n    object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized\n    way.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-04-30\" xml:lang=\"en\">identifier<\/gloss>" ],
         "altIdent" : 
@@ -5785,8 +5858,8 @@
             "ns" : "",
             "usage" : "opt",
             "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-04-30\" xml:lang=\"en\">categorizes the identifier, for example as an ISBN, Social\n      Security number, etc.<\/desc>" ],
-            "shortDesc" : "categorizes the identifier, for example as an ISBN, Social\n      Security number, etc.",
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-04-30\" xml:lang=\"en\">categorizes the identifier, for example as an\n        ISBN, Social Security number, etc.<\/desc>" ],
+            "shortDesc" : "categorizes the identifier, for example as an\n        ISBN, Social Security number, etc.",
             "gloss" : 
             [  ],
             "altIdent" : 
@@ -5804,8 +5877,8 @@
               [ 
                 { "ident" : "ISBN",
                   "desc" : 
-                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">International Standard Book Number: a 13- or (if assigned prior to 2007) 10-digit identifying number assigned by the publishing industry to a published book or similar item, registered with the <ref target=\"https:\/\/www.isbn-international.org\"> International ISBN Agency.<\/ref>\n        <\/desc>" ],
-                  "shortDesc" : "International Standard Book Number: a 13- or (if assigned prior to 2007) 10-digit identifying number assigned by the publishing industry to a published book or similar item, registered with the  International ISBN Agency.\n        ",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">International Standard Book Number: a 13- or\n            (if assigned prior to 2007) 10-digit identifying number assigned by the publishing\n            industry to a published book or similar item, registered with the <ref target=\"https:\/\/www.isbn-international.org\"> International ISBN Agency.<\/ref>\n          <\/desc>" ],
+                  "shortDesc" : "International Standard Book Number: a 13- or\n            (if assigned prior to 2007) 10-digit identifying number assigned by the publishing\n            industry to a published book or similar item, registered with the  International ISBN Agency.\n          ",
                   "gloss" : 
                   [  ],
                   "altIdent" : 
@@ -5813,8 +5886,8 @@
                 
                 { "ident" : "ISSN",
                   "desc" : 
-                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">International Standard Serial Number: an eight-digit number to uniquely identify a serial publication.<\/desc>" ],
-                  "shortDesc" : "International Standard Serial Number: an eight-digit number to uniquely identify a serial publication.",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">International Standard Serial Number: an\n            eight-digit number to uniquely identify a serial publication.<\/desc>" ],
+                  "shortDesc" : "International Standard Serial Number: an\n            eight-digit number to uniquely identify a serial publication.",
                   "gloss" : 
                   [  ],
                   "altIdent" : 
@@ -5822,8 +5895,8 @@
                 
                 { "ident" : "DOI",
                   "desc" : 
-                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">Digital Object Identifier: a unique string of letters and numbers assigned to an electronic document.<\/desc>" ],
-                  "shortDesc" : "Digital Object Identifier: a unique string of letters and numbers assigned to an electronic document.",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">Digital Object Identifier: a unique string of\n            letters and numbers assigned to an electronic document.<\/desc>" ],
+                  "shortDesc" : "Digital Object Identifier: a unique string of\n            letters and numbers assigned to an electronic document.",
                   "gloss" : 
                   [  ],
                   "altIdent" : 
@@ -5831,8 +5904,8 @@
                 
                 { "ident" : "URI",
                   "desc" : 
-                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">Uniform Resource Identifier: a string of characters to uniquely identify a resource which usually contains indication of the means of accessing that resource, the name of its host, and its filepath.<\/desc>" ],
-                  "shortDesc" : "Uniform Resource Identifier: a string of characters to uniquely identify a resource which usually contains indication of the means of accessing that resource, the name of its host, and its filepath.",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-02-23\" xml:lang=\"en\">Uniform Resource Identifier: a string of\n            characters to uniquely identify a resource, following the syntax of <ref target=\"https:\/\/datatracker.ietf.org\/doc\/html\/rfc3986\">RFC 3986<\/ref>.<\/desc>" ],
+                  "shortDesc" : "Uniform Resource Identifier: a string of\n            characters to uniquely identify a resource, following the syntax of RFC 3986.",
                   "gloss" : 
                   [  ],
                   "altIdent" : 
@@ -5840,8 +5913,8 @@
                 
                 { "ident" : "VIAF",
                   "desc" : 
-                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">A data number in the Virtual Internet Authority File assigned to link different names in catalogs around the world for the same entity.<\/desc>" ],
-                  "shortDesc" : "A data number in the Virtual Internet Authority File assigned to link different names in catalogs around the world for the same entity.",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">A data number in the Virtual Internet\n            Authority File assigned to link different names in catalogs around the world for the\n            same entity.<\/desc>" ],
+                  "shortDesc" : "A data number in the Virtual Internet\n            Authority File assigned to link different names in catalogs around the world for the\n            same entity.",
                   "gloss" : 
                   [  ],
                   "altIdent" : 
@@ -5849,8 +5922,8 @@
                 
                 { "ident" : "ESTC",
                   "desc" : 
-                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">English Short-Title Catalogue number: an identifying number assigned to a document in English printed in the British Isles or North America before 1801.<\/desc>" ],
-                  "shortDesc" : "English Short-Title Catalogue number: an identifying number assigned to a document in English printed in the British Isles or North America before 1801.",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">English Short-Title Catalogue number: an\n            identifying number assigned to a document in English printed in the British Isles or\n            North America before 1801.<\/desc>" ],
+                  "shortDesc" : "English Short-Title Catalogue number: an\n            identifying number assigned to a document in English printed in the British Isles or\n            North America before 1801.",
                   "gloss" : 
                   [  ],
                   "altIdent" : 
@@ -5858,8 +5931,8 @@
                 
                 { "ident" : "OCLC",
                   "desc" : 
-                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">OCLC control number (record number) for the union catalog record in WorldCat, a union catalog for member libraries in the Online Computer Library Center global cooperative.<\/desc>" ],
-                  "shortDesc" : "OCLC control number (record number) for the union catalog record in WorldCat, a union catalog for member libraries in the Online Computer Library Center global cooperative.",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">OCLC control number (record number) for the\n            union catalog record in WorldCat, a union catalog for member libraries in the Online\n            Computer Library Center global cooperative.<\/desc>" ],
+                  "shortDesc" : "OCLC control number (record number) for the\n            union catalog record in WorldCat, a union catalog for member libraries in the Online\n            Computer Library Center global cooperative.",
                   "gloss" : 
                   [  ],
                   "altIdent" : 
@@ -5991,7 +6064,7 @@
             "ns" : "",
             "usage" : "opt",
             "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-10-10\" xml:lang=\"en\">a single word which follows the rules defining a\n        legal XML name (see <ptr target=\"http:\/\/www.w3.org\/TR\/REC-xml\/#dt-name\"\/>), supplying a name to specify which index (of several) the index entry belongs to.<\/desc>" ],
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-10-10\" xml:lang=\"en\">a single word which follows the rules defining a\n        legal XML name (see <ptr target=\"https:\/\/www.w3.org\/TR\/REC-xml\/#dt-name\"\/>), supplying a name to specify which index (of several) the index entry belongs to.<\/desc>" ],
             "shortDesc" : "a single word which follows the rules defining a\n        legal XML name (see ), supplying a name to specify which index (of several) the index entry belongs to.",
             "gloss" : 
             [  ],
@@ -9957,7 +10030,8 @@
           "atts" : 
           [ "att.ascribed.directed",
             "att.global",
-            "att.placement" ],
+            "att.placement",
+            "att.written" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -13878,9 +13952,9 @@
               "usage" : "opt",
               "desc" : 
               [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-10-10\" xml:lang=\"en\">identifies one or more <term>declarable elements<\/term> within the\nheader, which are understood to apply to the element bearing this\nattribute and its content.<\/desc>" ],
-              "shortDesc" : "identifies one or more declarable elements within the\nheader, which are understood to apply to the element bearing this\nattribute and its content.",
+              "shortDesc" : "(declarations) identifies one or more declarable elements within the\nheader, which are understood to apply to the element bearing this\nattribute and its content.",
               "gloss" : 
-              [  ],
+              [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-05-05\" xml:lang=\"en\">declarations<\/gloss>" ],
               "altIdent" : 
               [  ],
               "valDesc" : 
@@ -16641,8 +16715,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-10-10\" xml:lang=\"en\">indicates the end of a span initiated by the element\n\tbearing this attribute.<\/desc>" ],
-              "shortDesc" : "indicates the end of a span initiated by the element\n\tbearing this attribute.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-10-10\" xml:lang=\"en\">indicates the end of a span initiated by the element\n        bearing this attribute.<\/desc>" ],
+              "shortDesc" : "indicates the end of a span initiated by the element\n        bearing this attribute.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -17273,7 +17347,7 @@
         "type" : "dataSpec",
         "module" : "tei",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-10-14\" xml:lang=\"en\">defines the range of attribute values used to indicate XML namespaces as defined by the W3C\n    <ref target=\"http:\/\/www.w3.org\/TR\/1999\/REC-xml-names-19990114\/\">Namespaces in XML<\/ref>\n    Technical Recommendation.<\/desc>" ],
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-10-14\" xml:lang=\"en\">defines the range of attribute values used to indicate XML namespaces as defined by the W3C\n    <ref target=\"https:\/\/www.w3.org\/TR\/1999\/REC-xml-names-19990114\/\">Namespaces in XML<\/ref>\n    Technical Recommendation.<\/desc>" ],
         "shortDesc" : "defines the range of attribute values used to indicate XML namespaces as defined by the W3C\n    Namespaces in XML\n    Technical Recommendation.",
         "gloss" : 
         [  ],
@@ -17282,7 +17356,8 @@
         "content" : 
         [ 
           { "type" : "dataRef",
-            "name" : "anyURI" } ] },
+            "name" : "anyURI",
+            "restriction" : "\\S*" } ] },
       
       { "ident" : "teidata.numeric",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -17359,7 +17434,8 @@
         "content" : 
         [ 
           { "type" : "dataRef",
-            "name" : "anyURI" } ] },
+            "name" : "anyURI",
+            "restriction" : "\\S+" } ] },
       
       { "ident" : "teidata.prefix",
         "ns" : "http:\/\/foo.foo\/foo",
