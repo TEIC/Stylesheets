@@ -72,7 +72,7 @@
     <echo level="info">unzip ODT template</echo>
     <unzip src="${xslDir}/template.odt" dest="${outputTempDir}"/>
     <echo level="info">Get names of graphics files and write an ant task</echo>
-    <xslt force="yes" style="${listgraphics}" in="@{in}" out="${outputTempDir}/copy.xml">
+      <xslt force="yes" style="${listgraphics}" in="@{in}" out="${outputTempDir}/copy.xml" classpathref="classpath">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="$catalogfile"/>
@@ -89,7 +89,7 @@
       <fileset dir="${outputTempDir}" includes="Pictures/*.*"/>
     </images>
     <echo level="info">XSLT generate files for oo </echo>
-    <xslt force="yes" style="@{xsl}" in="@{in}" out="${outputTempDir}/newdocument.xml">
+      <xslt force="yes" style="@{xsl}" in="@{in}" out="${outputTempDir}/newdocument.xml" classpathref="classpath">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="$catalogfile"/>
@@ -144,19 +144,19 @@
       <delete dir="${outputTempDir}/customXml"/>
       <delete dir="${outputTempDir}/word/printerSettings"/>
       <echo level="info">fix Word .rels file</echo>
-      <xslt style="tools/fixdotrels.xsl" in="${outputTempDir}/_rels/.rels" out="${outputTempDir}/_rels/.rels_">
+      <xslt style="tools/fixdotrels.xsl" in="${outputTempDir}/_rels/.rels" out="${outputTempDir}/_rels/.rels_" classpathref="classpath">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <classpath location="${saxon.jar}"/>
       </xslt>
       <move file="${outputTempDir}/_rels/.rels_" tofile="${outputTempDir}/_rels/.rels" verbose="true"/>
       <echo level="info">Fix Word styles file</echo>
-      <xslt style="tools/fixstyle.xsl" in="${outputTempDir}/word/styles.xml" out="${outputTempDir}/word/_styles.xml">
+      <xslt style="tools/fixstyle.xsl" in="${outputTempDir}/word/styles.xml" out="${outputTempDir}/word/_styles.xml" classpathref="classpath">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <classpath location="${saxon.jar}"/>
       </xslt>
       <move file="${outputTempDir}/word/_styles.xml" tofile="${outputTempDir}/word/styles.xml" verbose="true"/>
       <echo level="info">Get names of graphics files and write an ant task</echo>
-      <xslt force="yes" style="${listgraphics}" in="@{in}" out="${outputTempDir}/copy.xml">
+      <xslt force="yes" style="${listgraphics}" in="@{in}" out="${outputTempDir}/copy.xml" classpathref="classpath">
         <xmlcatalog>
           <catalogpath>
             <pathelement location="$catalogfile"/>
@@ -174,7 +174,7 @@
         <fileset dir="${outputTempDir}/word" includes="media/*.*"/>
       </images>
       <echo level="info">Generate new files for docx using XSL @{xsl}</echo>
-      <xslt force="yes" style="@{xsl}" in="@{in}" out="${outputTempDir}/newdocument.xml">
+      <xslt force="yes" style="@{xsl}" in="@{in}" out="${outputTempDir}/newdocument.xml" classpathref="classpath">
         <xmlcatalog>
           <catalogpath>
             <pathelement location="$catalogfile"/>
@@ -237,7 +237,7 @@
       <!-- The transformation for EPUB output. -->
       <basename property="coverfile" file="${coverimage}"/>
       <echo level="info">XSLT generate ePub files in  ${outputTempDir}</echo>
-      <xslt force="yes" style="${teitoepub}" in="@{in}" out="${outputTempDir}/OPS/index.html">
+      <xslt force="yes" style="${teitoepub}" in="@{in}" out="${outputTempDir}/OPS/index.html" classpathref="classpath">
         <factory name="net.sf.saxon.TransformerFactoryImpl">
           <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
         </factory>
@@ -296,7 +296,7 @@
     <sequential>
       <mkdir dir="${outputTempDir}"/>
       <echo level="info">XSLT generate ePub files in ${outputTempDir}</echo>
-      <xslt force="yes" style="${teitoepub}" in="@{in}" out="${outputTempDir}/OPS/index.html">
+      <xslt force="yes" style="${teitoepub}" in="@{in}" out="${outputTempDir}/OPS/index.html" classpathref="classpath">
         <factory name="net.sf.saxon.TransformerFactoryImpl">
           <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
 	</factory>
@@ -314,7 +314,7 @@
     <attribute name="out"/>
     <sequential>
       <echo>XSLT generate HTML files (language ${lang}, style ${teitohtml}, in @{in}, out @{out})</echo>
-      <xslt force="yes" style="${teitohtml}" in="@{in}" out="@{out}">
+      <xslt force="yes" style="${teitohtml}" in="@{in}" out="@{out}" classpathref="classpath">
         <xmlcatalog>
           <catalogpath>
             <pathelement location="$catalogfile"/>
@@ -352,7 +352,7 @@
     <attribute name="type"/>
     <sequential>
       <echo level="info">XSLT generate @{type} files</echo>
-      <xslt force="yes" style="@{xsl}" in="@{in}" out="@{out}">
+      <xslt force="yes" style="@{xsl}" in="@{in}" out="@{out}" classpathref="classpath">
         <xmlcatalog>
           <catalogpath>
             <pathelement location="$catalogfile"/>
@@ -385,7 +385,7 @@
     <attribute name="out"/>
     <sequential>
       <echo>Do ODD expand processing (schema ${selectedSchema}) </echo>
-      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{out}">
+      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{out}" classpathref="classpath">
         <factory name="net.sf.saxon.TransformerFactoryImpl">
           <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
         </factory>
@@ -402,7 +402,7 @@
     <attribute name="in"/>
     <attribute name="out"/>
     <sequential>
-      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{out}">
+      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{out}" classpathref="classpath">
         <xmlcatalog>
           <catalogpath>
             <pathelement location="$catalogfile"/>
@@ -424,7 +424,7 @@
     <attribute name="out"/>
     <sequential>
       <echo>Do ODD expand processing and conversion to TEI Lite (schema ${selectedSchema})</echo>
-      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{in}.tmpodd">
+      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{in}.tmpodd" classpathref="classpath">
         <xmlcatalog>
           <catalogpath>
             <pathelement location="$catalogfile"/>
@@ -438,7 +438,7 @@
         <param name="verbose" expression="${verbose}" if="verbose"/>
         <param name="selectedSchema" expression="${selectedSchema}" if="selectedSchema"/>
       </xslt>
-      <xslt force="yes" style="${odd2litexsl}" in="@{in}.tmpodd" out="@{out}">
+      <xslt force="yes" style="${odd2litexsl}" in="@{in}.tmpodd" out="@{out}" classpathref="classpath">
         <xmlcatalog>
           <catalogpath>
             <pathelement location="$catalogfile"/>

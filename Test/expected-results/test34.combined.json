@@ -1102,8 +1102,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2011-11-17\" xml:lang=\"en\">supplies information about the availability of a text, for example any restrictions on its\n    use or distribution, its copyright status, any licence applying to it, etc.<\/desc>" ],
-        "shortDesc" : "(availability) supplies information about the availability of a text, for example any restrictions on its\n    use or distribution, its copyright status, any licence applying to it, etc.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2011-11-17\" xml:lang=\"en\">supplies information about the availability of a text, for example any restrictions on its\n  use or distribution, its copyright status, any licence applying to it, etc.<\/desc>" ],
+        "shortDesc" : "(availability) supplies information about the availability of a text, for example any restrictions on its\n  use or distribution, its copyright status, any licence applying to it, etc.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2007-06-12\">availability<\/gloss>" ],
         "altIdent" : 
@@ -2280,7 +2280,7 @@
             { "min" : "1",
               "max" : "1",
               "dataRef" : 
-              { "name" : "anyURI" } } } ],
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "empty" } ] },
@@ -5507,7 +5507,8 @@
           [ "att.global",
             "att.media",
             "att.resourced",
-            "att.declaring" ],
+            "att.declaring",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10029,7 +10030,8 @@
           "atts" : 
           [ "att.ascribed.directed",
             "att.global",
-            "att.placement" ],
+            "att.placement",
+            "att.written" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -13950,9 +13952,9 @@
               "usage" : "opt",
               "desc" : 
               [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-10-10\" xml:lang=\"en\">identifies one or more <term>declarable elements<\/term> within the\nheader, which are understood to apply to the element bearing this\nattribute and its content.<\/desc>" ],
-              "shortDesc" : "identifies one or more declarable elements within the\nheader, which are understood to apply to the element bearing this\nattribute and its content.",
+              "shortDesc" : "(declarations) identifies one or more declarable elements within the\nheader, which are understood to apply to the element bearing this\nattribute and its content.",
               "gloss" : 
-              [  ],
+              [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-05-05\" xml:lang=\"en\">declarations<\/gloss>" ],
               "altIdent" : 
               [  ],
               "valDesc" : 
@@ -17354,7 +17356,8 @@
         "content" : 
         [ 
           { "type" : "dataRef",
-            "name" : "anyURI" } ] },
+            "name" : "anyURI",
+            "restriction" : "\\S*" } ] },
       
       { "ident" : "teidata.numeric",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -17431,7 +17434,8 @@
         "content" : 
         [ 
           { "type" : "dataRef",
-            "name" : "anyURI" } ] },
+            "name" : "anyURI",
+            "restriction" : "\\S+" } ] },
       
       { "ident" : "teidata.prefix",
         "ns" : "http:\/\/foo.foo\/foo",

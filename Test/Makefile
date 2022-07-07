@@ -581,15 +581,15 @@ test-oddity: actual css
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test21.odd.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test21.odd.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test21.odd.rnc $(ER)/test21.odd.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test21.odd.rnc $(ER)/test21.odd.rnc \`"; fi
+		then diff -bBw $(AR)/test21.odd.rnc $(ER)/test21.odd.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test21.odd.rnc $(ER)/test21.odd.rnc \`"; fi
 
 	$(BINDIR)/teitornc  $(FLAGS) test15.odd $(AR)/test15.odd.rnc
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test15.odd.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test15.odd.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test15.odd.rnc $(ER)/test15.odd.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test15.odd.rnc $(ER)/test15.odd.rnc \`"; fi
+		then diff -bBw $(AR)/test15.odd.rnc $(ER)/test15.odd.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test15.odd.rnc $(ER)/test15.odd.rnc \`"; fi
 
 	$(BINDIR)/teitohtml5 $(FLAGS) --summaryDoc --lang=es --profile=tei --odd test15.odd $(AR)/test15.odd.html
 	tidy -config config_tidy.txt $(AR)/test15.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test15.odd.html
@@ -628,8 +628,8 @@ test-oddity: actual css
 	$(JING) -c $(AR)/test30.rnc test36.xml
 	xmllint --noout --dtdvalid $(AR)/test30.dtd test36.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test30.rnc $(ER)/test30.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test30.rnc $(ER)/test30.rnc \`"; fi
+		then diff -bBw $(AR)/test30.rnc $(ER)/test30.rnc; \
+		else echo "==deferring: -bBw \` diff  $(AR)/test30.rnc $(ER)/test30.rnc \`"; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test30.dtd $(ER)/test30.dtd; \
 		else echo "==deferring: \` diff  $(AR)/test30.dtd $(ER)/test30.dtd \`"; fi
@@ -660,8 +660,8 @@ test-oddity: actual css
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test-pure.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test-pure.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-pure.rnc $(ER)/test-pure.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test-pure.rnc $(ER)/test-pure.rnc \`"; fi
+		then diff -bBw $(AR)/test-pure.rnc $(ER)/test-pure.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test-pure.rnc $(ER)/test-pure.rnc \`"; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test-pure.dtd $(ER)/test-pure.dtd; \
 		else echo "==deferring: \` diff  $(AR)/test-pure.dtd $(ER)/test-pure.dtd \`"; fi
@@ -681,8 +681,8 @@ test-oddity: actual css
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test-pure2.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test-pure2.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-pure2.rnc $(ER)/test-pure2.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test-pure2.rnc $(ER)/test-pure2.rnc \`"; fi
+		then diff -bBw $(AR)/test-pure2.rnc $(ER)/test-pure2.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test-pure2.rnc $(ER)/test-pure2.rnc \`"; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test-pure2.dtd $(ER)/test-pure2.dtd; \
 		else echo "==deferring: \` diff  $(AR)/test-pure2.dtd $(ER)/test-pure2.dtd \`"; fi
@@ -718,8 +718,8 @@ test-namespaces: actual
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test33.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test33.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test33.rnc $(ER)/test33.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test33.rnc $(ER)/test33.rnc \`"; fi
+		then diff -bBw $(AR)/test33.rnc $(ER)/test33.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test33.rnc $(ER)/test33.rnc \`"; fi
 	$(SAXON) test33.odd ../odds/odd2json.xsl > $(AR)/test33.json
 	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' $(AR)/test33.json
 	if [ $(DIFFNOW) -eq 1 ]; \
@@ -730,8 +730,8 @@ test-namespaces: actual
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test34.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test34.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test34.rnc $(ER)/test34.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test34.rnc $(ER)/test34.rnc \`"; fi
+		then diff -bBw $(AR)/test34.rnc $(ER)/test34.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test34.rnc $(ER)/test34.rnc \`"; fi
 	$(SAXON) test34.odd ../odds/odd2json.xsl > $(AR)/test34.json
 	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' $(AR)/test34.json
 	if [ $(DIFFNOW) -eq 1 ]; \
@@ -753,8 +753,8 @@ test-namespaces: actual
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test35.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test35.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test35.rnc $(ER)/test35.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test35.rnc $(ER)/test35.rnc \`"; fi
+		then diff -bBw $(AR)/test35.rnc $(ER)/test35.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test35.rnc $(ER)/test35.rnc \`"; fi
 
 test-scripts:
 	for i in $(SCRIPTS); do $(BINDIR)/$$i $(FLAGS) maria.xml $$i.result && rm $$i.result; done
