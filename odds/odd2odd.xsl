@@ -1388,6 +1388,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="minOmaxO" select="tei:minOmaxO( @minOccurs, @maxOccurs )"/>
     <xsl:variable name="min" select="$minOmaxO[1]"/>
     <xsl:variable name="max" select="$minOmaxO[2]"/>
+    <xsl:variable name="otherAtts" select="@* except ( @minOccurs, @maxOccurs )"/>
     <!-- 
       for each Pure ODD content model,
       remove reference to any elements which have been
@@ -1496,6 +1497,11 @@ of this software, even if advised of the possibility of such damage.
           <xsl:element namespace="http://www.tei-c.org/ns/1.0" name="{$element}">
             <xsl:attribute name="minOccurs" select="$min"/>
             <xsl:attribute name="maxOccurs" select="if ($max eq -1) then 'unbounded' else $max"/>
+            <!-- Copy the attributes declared on the source element -->
+            <xsl:copy-of select="$otherAtts"/>
+            <!--joeytakeda iss241: I'm not sure if the @* below is necessary -->
+            <!-- given that it would be copying the attributes on the temporary -->
+            <!-- WHAT element, which won't have attributes AFAICT -->
             <xsl:copy-of select="@*|*|text()|processing-instruction()"/>
           </xsl:element>
         </xsl:when>

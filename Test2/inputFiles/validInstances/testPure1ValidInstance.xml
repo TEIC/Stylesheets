@@ -100,6 +100,17 @@
         <p>The email address for <email>thevenerablebede@gmail.com</email>
         should be valid.</p>
       </div>
+      
+      <!-- Test adding by @joeytakeda to test @preserveOrder (# <expan> and <abbr> can occur in any order. -->
+      <div>
+        <head>Testing <att>preserveOrder</att> on <gi>sequence</gi></head>
+        <p>This is a test that <gi>abbr</gi> and <gi>expan</gi> can go in any order in the test
+          <choice><abbr>ODD</abbr><expan>One Document Does it All</expan></choice> for the 
+          <choice><expan>Text Encoding Initiative</expan><abbr>TEI</abbr></choice>.</p>
+        <p>However, <gi>choice</gi> can only contain a <gi>corr</gi> and <gi>sic</gi> or a <gi>orig</gi> and <gi>reg</gi> in
+          that <choice><orig>especial</orig><reg>special</reg></choice>
+          <choice><corr>order</corr><sic>oder</sic></choice>.</p>
+      </div>
     </body>
   </text>
 </TEI>
