@@ -1545,7 +1545,7 @@ target CDATA  #IMPLIED >
 <!ATTLIST citeData
  %Tatt.global.attributes;
  %Tatt.citeStructurePart.attributes;
-property CDATA #REQUIRED >
+property %teidata.pointer;  #REQUIRED >
 <!--doc:(citation structure) declares a structure and method for citing the current document. [3.11.4. Declaring Reference Systems 16.2.5.4. Citation Structures] -->
 <!ELEMENT citeStructure (((citeData)*,(citeStructure)*,(%model.descLike;)*))>
 <!ATTLIST citeStructure xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2036,7 +2036,8 @@ datum %teidata.enumerated;  "WGS84"  >
  %Tatt.global.attributes;
  %Tatt.media.attributes;
  %Tatt.resourced.attributes;
- %Tatt.declaring.attributes; >
+ %Tatt.declaring.attributes;
+ %Tatt.typed.attributes; >
 <!--doc:(group) contains the body of a composite text, grouping together a sequence of distinct texts (or groups of such texts) which are regarded as a unit for some purpose, for example the collected works of an author, a sequence of prose essays, etc. [4. Default Text Structure 4.3.1. Grouped Texts 15.1. Varieties of Composite Text] -->
 <!ELEMENT group (((%model.divTop;|%model.global;)*,((text|group),(text|group|%model.global;)*),(%model.divBottom;)*))>
 <!ATTLIST group xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2524,7 +2525,7 @@ parts CDATA  #IMPLIED >
  %Tatt.docStatus.attributes;
  %Tatt.canonical.attributes; >
 <!--doc:(object identifier) groups one or more identifiers or pieces of locating information concerning a single object. [13.3.5. Objects] -->
-<!ELEMENT objectIdentifier (%model.placeNamePart;|institution|repository|collection|idno|msName|objectName|altIdentifier|address)*>
+<!ELEMENT objectIdentifier (%model.placeNamePart;|institution|repository|collection|idno|msName|objectName|altIdentifier|address)+>
 <!ATTLIST objectIdentifier xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST objectIdentifier
  %Tatt.global.attributes; >
@@ -3147,6 +3148,7 @@ dim (horizontal|vertical) #IMPLIED >
  %Tatt.ascribed.directed.attributes;
  %Tatt.global.attributes;
  %Tatt.placement.attributes;
+ %Tatt.written.attributes;
 type NMTOKENS  #IMPLIED >
 <!--doc:Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [16.10. The standOff Container] -->
 <!ELEMENT standOff (%model.standOffPart;)+>
