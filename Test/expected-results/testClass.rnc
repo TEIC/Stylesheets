@@ -27,13 +27,17 @@ att.written.attribute.hand =
       " element describing the hand considered responsible for the content of the element concerned."
     ]
   ]
-  attribute hand { xsd:anyURI }?
+  attribute hand {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 att.declaring.attributes = att.declaring.attribute.decls
 att.declaring.attribute.decls =
   
-  ## identifies one or more declarable elements within the header, which are understood to apply to the element bearing this attribute and its content.
+  ## (declarations) identifies one or more declarable elements within the header, which are understood to apply to the element bearing this attribute and its content.
   attribute decls {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 att.fragmentable.attributes = att.fragmentable.attribute.part
 att.fragmentable.attribute.part =
@@ -119,7 +123,9 @@ att.global.responsibility.attribute.resp =
   
   ## (responsible party) indicates the agency responsible for the intervention or interpretation, for example an editor or transcriber.
   attribute resp {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 att.global.rendition.attributes =
   att.global.rendition.attribute.rend,
@@ -141,15 +147,53 @@ att.global.rendition.attribute.rendition =
   
   ## points to a description of the rendering or presentation used for this element in the source text.
   attribute rendition {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
 att.global.source.attributes = att.global.source.attribute.source
 att.global.source.attribute.source =
   
   ## specifies the source from which some aspect of this element is drawn.
   attribute source {
-    list { xsd:anyURI+ }
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
   }?
+sch:pattern [
+  id =
+    "testClassRef-att.global.source-source-only_1_ODD_source-constraint-rule-1"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "tei:*/@source"
+    "\x{a}" ~
+    "         "
+    sch:let [
+      name = "srcs"
+      value = "tokenize( normalize-space(.),' ')"
+    ]
+    "\x{a}" ~
+    "         "
+    sch:report [
+      test =
+        "( parent::tei:classRef | parent::tei:dataRef | parent::tei:elementRef | parent::tei:macroRef | parent::tei:moduleRef | parent::tei:schemaSpec ) and $srcs[2]"
+      "\x{a}" ~
+      "              When used on a schema description element (like\x{a}" ~
+      "              "
+      sch:value-of [ select = "name(..)" ]
+      "), the @source attribute\x{a}" ~
+      "              should have only 1 value. (This one has "
+      sch:value-of [ select = "count($srcs)" ]
+      ".)\x{a}" ~
+      "            "
+    ]
+    "\x{a}" ~
+    "      "
+  ]
+  "\x{a}" ~
+  "   "
+]
 att.global.attributes =
   att.global.rendition.attributes,
   att.global.responsibility.attributes,
@@ -187,7 +231,9 @@ att.global.attribute.xmllang =
 att.global.attribute.xmlbase =
   
   ## provides a base URI reference with which applications can resolve relative URI references into absolute URI references.
-  attribute xml:base { xsd:anyURI }?
+  attribute xml:base {
+    xsd:anyURI { pattern = "\S+" }
+  }?
 att.global.attribute.xmlspace =
   
   ## signals an intention about how white space should be managed by applications.
@@ -214,7 +260,7 @@ att.typed.attribute.subtype =
     xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 sch:pattern [
-  id = "testClassRef-att.typed-subtypeTyped-constraint-rule-1"
+  id = "testClassRef-att.typed-subtypeTyped-constraint-rule-2"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -470,7 +516,7 @@ model.divGenLike = notAllowed
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
          id =
-           "testClassRef-div-abstractModel-structure-div-in-l-or-lg-constraint-report-1"
+           "testClassRef-div-abstractModel-structure-div-in-l-or-lg-constraint-report-2"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -492,7 +538,7 @@ model.divGenLike = notAllowed
        ]
     >> sch:pattern [
          id =
-           "testClassRef-div-abstractModel-structure-div-in-ab-or-p-constraint-report-2"
+           "testClassRef-div-abstractModel-structure-div-in-ab-or-p-constraint-report-3"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -526,7 +572,7 @@ p =
     macro.paraContent
     >> sch:pattern [
          id =
-           "testClassRef-p-abstractModel-structure-p-in-ab-or-p-constraint-report-3"
+           "testClassRef-p-abstractModel-structure-p-in-ab-or-p-constraint-report-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -535,7 +581,7 @@ p =
            "               "
            sch:report [
              test =
-               "    (ancestor::tei:ab or ancestor::tei:p)                          and not( ancestor::tei:floatingText                                 |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )"
+               "(ancestor::tei:ab or ancestor::tei:p) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"
              "\x{a}" ~
              "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
              "      "
@@ -548,7 +594,7 @@ p =
        ]
     >> sch:pattern [
          id =
-           "testClassRef-p-abstractModel-structure-p-in-l-or-lg-constraint-report-4"
+           "testClassRef-p-abstractModel-structure-p-in-l-or-lg-constraint-report-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -557,7 +603,7 @@ p =
            "               "
            sch:report [
              test =
-               "    (ancestor::tei:l or ancestor::tei:lg)                          and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )"
+               "(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )"
              "\x{a}" ~
              "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "
