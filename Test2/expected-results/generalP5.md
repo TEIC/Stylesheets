@@ -9,7 +9,7 @@ I have endeavoured in this Ghostly little book, to raise the Ghost of an Idea, w
 Their faithful Friend and Servant, C.D. December, 1843.
 # Contents.
 Stave I
-* Marley's ghost 1
+* Marley's ghost [1](#S1)
 Stave II
 * The first of the three spirits 
 Stave III 
@@ -18,23 +18,33 @@ Stave IV
 * The last of the spirits 
 Stave V
 * The end of it 
- 
+
 *(Bits of) A CHRISTMAS CAROL, and other things
 # Simple rendition tests
 
 Who-e debel you? — he at last said — you no speak-e, damme, I kill-e. And so saying, the lighted tomahawk began flourishing about me in the dark.
 
 Who-e debel you? — he at last said — you no speak-e, damme, I kill-e. And so saying, the lighted tomahawk began flourishing about me in the dark.
-EffectExamplehiThis is hi rend="special" tagemphThis is emph taghiThis is hi tagtypewriterThis is typewriter effectboldThis is bold effectnormalweightThis is normalweight effectsmallcapsThis is smallcaps effectallcapsThis is allcaps effectstrikethroughThis is strikethrough effectdoublestrikethroughThis is doublestrikethrough effectcolor(red)This is color(red) effectunderlineThis is underline effectwavyunderlineThis is wavyunderline effectdoubleunderlineThis is doubleunderline effectsubscriptThis is subscript effectsuperscriptThis is superscript effectbold italic red, done separatelyrend test 1bold italic smallcapsrend test 1 Cairns 2003: 11. My work is Muellner 1996.
+EffectExamplehiThis is hi rend="special" tagemphThis is emph taghiThis is hi tagtypewriterThis is typewriter effectboldThis is **bold** effectnormalweightThis is normalweight effectsmallcapsThis is smallcaps effectallcapsThis is allcaps effectstrikethroughThis is strikethrough effectdoublestrikethroughThis is doublestrikethrough effectcolor(red)This is color(red) effectunderlineThis is underline effectwavyunderlineThis is wavyunderline effectdoubleunderlineThis is doubleunderline effectsubscriptThis is subscript effectsuperscriptThis is superscript effectbold italic red, done separately**rend test 1**bold italic smallcapsrend test 1 
+\[Cairns 2003: 11. My work is Muellner 1996.\]
+
 # Quotations
 
-A paragraph with a footnote containing a block-level objectWe start with a quotation:This is the way the world endsThis is the way the world endsThis is the way the world endsNot with a bang but a whimper. which is from TS Eliot's Hollow men
+A paragraph with a footnote containing a block-level object
+\[We start with a quotation:
+This is the way the world ends  
+This is the way the world ends  
+This is the way the world ends  
+Not with a bang but a whimper.  
+
+ which is from TS Eliot's Hollow men\]
+
 
 Consider quotations: This is a quote which is run on within the text and will have quote marks of some kind around it.
 
 Another quotation: This is a block quote set off as such from the rest of the text
 
-Here, by contrast is an inline quotation. Another strange thing about quotes is this: You can put line breaksto determine where the line breaksInside a block!
+Here, by contrast is an “inline quotation”. Another strange thing about quotes is this: You can put line breaksto determine where the line breaksInside a block!
 
 # Use of xml:lang
 
@@ -64,11 +74,19 @@ I am changed: I'll go sell all my land.
 
 # Footnotes and endnotes
 
-## 1 Zur Entstehung der Philosophischen UntersuchungenZu Textauszeichnungen und Siglen siehe die Legende.
+## 1 Zur Entstehung der Philosophischen Untersuchungen
+\[Zu Textauszeichnungen und Siglen siehe die Legende.\]
 
-Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismodIt is time to begin the beguine. Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
 
-Iriure dolor in hendrerit in vulputateNot Vulture velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blanditNot Blandings praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+\[It is time to begin the beguine.\]
+ Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+
+Iriure dolor in hendrerit in vulputate
+\[Not Vulture\]
+ velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
+\[Not Blandings\]
+ praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
 
 # Assorted elements and links
 
@@ -76,24 +94,24 @@ Fit the first The emph element is used for linguistic emphasis. highlighting (so
 
 Now for some links! We will start by cross-referring to a later section.
 
-Here is a simple ptr to it: . Here is a simple ref, a reference to it.
+Here is a simple ptr to it: . Here is a simple ref, a [reference to it](#P1).
 
-An external link as ref and as ptr: .
+An [external link](http://www.bbc.co.uk) as ref and as ptr: .
 
 # Tables
 
 Tables may have cells that span multiple columns and rows.
-ImageDescriptionCamera directionSVG, JPEG, GIF or PNG formatAll pictures were taken on Jun 27, 2007 ![graphic](./../Images/nature1.jpg "graphic")Mountain flowers. north![graphic](./../Images/nature2.jpg "graphic")Sunset over a secondary ridge.north-east![graphic](./../Images/nature3.jpg "graphic")Glacier lake at 2100m altitude.eastSpans HorizontallyHeader 3Spans HorizontallySpans VerticallyabcdeSpans bothfggijSpans Horizontallyklmno
+ImageDescriptionCamera directionSVG, JPEG, GIF or PNG formatAll pictures were taken on Jun 27, 2007 ![graphic](./../Images/nature1.jpg "graphic")Mountain flowers. north![graphic](./../Images/nature2.jpg "graphic")Sunset over a secondary ridge.north-east![graphic](./../Images/nature3.jpg "graphic")Glacier lake at 2100m altitude.eastSpans **Horizontally**Header 3Spans **Horizontally**Spans **Vertically**abcdeSpans **both**fggijSpans **Horizontally**klmno
 # Lists
 
-Various sorts of list are legal within paragraphs, and you can reference items in lists... 
-1. Dogs
+Various sorts of list are legal within paragraphs, and you can reference [items in lists](#birds)... 
+1.Dogs
 
-1. Zebras
+1.Zebras
 
-1. Birds
+1.Birds
 
-1. Cats
+1.Cats
 
 100
 * first item 
@@ -276,7 +294,11 @@ It's not my business, Scrooge returned. It's enough for a man to understand his 
 
 Seeing clearly that it would be useless to pursue their point, the gentlemen withdrew. Scrooge resumed his labours with an improved opinion of himself, and in a more facetious temper than was usual with him. 
 
-Foggier yet, and colder! Piercing, searching, biting cold. If the good Saint Dunstan had but nipped the Evil Spirit's nose with a touch of such weather as that, test of a note instead of using his familiar weapons, then indeed he would have roared to lusty purpose. The owner of one scant young nose, gnawed and mumbled by the hungry cold as bones are gnawed by dogs, stooped down at Scrooge's keyhole to regale him with a Christmas carol: but at the first sound of God bless you, merry gentleman! May nothing you dismay!  Scrooge seized the ruler with such energy of action that the singer fled in terror, leaving the keyhole to the fog and even more congenial frost.
+Foggier yet, and colder! Piercing, searching, biting cold. If the good Saint Dunstan had but nipped the Evil Spirit's nose with a touch of such weather as that, 
+\[test of a note\]
+ instead of using his familiar weapons, then indeed he would have roared to lusty purpose. The owner of one scant young nose, gnawed and mumbled by the hungry cold as bones are gnawed by dogs, stooped down at Scrooge's keyhole to regale him with a Christmas carol: but at the first sound of “God bless you, merry gentleman!   
+May nothing you dismay!   
+” Scrooge seized the ruler with such energy of action that the singer fled in terror, leaving the keyhole to the fog and even more congenial frost.
 
 # Linking
 
@@ -286,24 +308,24 @@ Foggier yet, and colder! Piercing, searching, biting cold. If the good Saint Dun
 
 
 
-Fred
+[Fred](psn:fred)
 
-Jones 76
+[Jones 76](bibl:Jones76)
 
 # Testing preservation of ID
 
 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. With references to 
-* Quotation
+* [Quotation](#thisQuotation)
 
-* Citation
+* [Citation](#thisCitation)
 
-* Paragraph
+* [Paragraph](#thisParagraph)
 
-* Reference
+* [Reference](#thisReference)
 
-* Anchor
+* [Anchor](#movingAnchor)
 
-* Title
+* [Title](#thisTitle)
 
 
 I wonder what are the xml-ids preserved in a transformation to XHTML, in particular in the case of quotations. So, let’s try :
@@ -324,6 +346,6 @@ an egXML in a list:
 
 # divs with no heads
 
-Ampersands: Fit the first& Fit the first& more Fit the first&amp; more Fit the first&& Fit the first&quot; Fit the first @ http://www.example.com/?foo=bar&bar=foo&#3.
+Ampersands: Fit the first& Fit the first& more Fit the first&amp; more Fit the first&& Fit the first&quot; Fit the first @ [http://www.example.com/?foo=bar&bar=foo&#3](http://www.example.com/?foo=bar&bar=foo&#3).
 Ampersands: Fit the first& Fit the first& more Fit the first&amp; more Fit the first&& Fit the first&quot; (as opposed to &quot;) Fit the first @ http://www.example.com/?foo=bar&bar=foo&#3.
 Fit the second
