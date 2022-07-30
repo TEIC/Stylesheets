@@ -2737,7 +2737,7 @@ note =
   }
 noteGrp =
   
-  ## contains a group of notes [3.9.1.1. Encoding Grouped Notes]
+  ## (note group) contains a group of notes [3.9.1.1. Encoding Grouped Notes]
   element noteGrp {
     (desc*, (note | noteGrp)+),
     att.global.attributes,
@@ -4408,8 +4408,7 @@ calendar =
   }
 correspDesc =
   
-  ## (correspondence
-  ##     description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
+  ## (correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
   element correspDesc {
     (model.correspDescPart+ | model.pLike+),
     att.declarable.attributes,

@@ -3177,7 +3177,7 @@ note =
   }
 noteGrp =
   
-  ## contains a group of notes [3.9.1.1. Encoding Grouped Notes]
+  ## (note group) contains a group of notes [3.9.1.1. Encoding Grouped Notes]
   element noteGrp {
     (desc*, (note | noteGrp)+),
     att.global.attributes,
@@ -6099,8 +6099,7 @@ calendar =
   }
 correspDesc =
   
-  ## (correspondence
-  ##     description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
+  ## (correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
   element correspDesc {
     (model.correspDescPart+ | model.pLike+),
     att.declarable.attributes,
@@ -7501,7 +7500,7 @@ typeNote =
   }
 scriptDesc =
   
-  ## contains a description of the scripts used in a manuscript or other object. [10.7.2.1. Writing]
+  ## (script description) contains a description of the scripts used in a manuscript or other object. [10.7.2.1. Writing]
   element scriptDesc {
     (model.pLike+ | (summary?, scriptNote+)),
     att.global.attributes,
@@ -7859,7 +7858,7 @@ surface =
   }
 surfaceGrp =
   
-  ## defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. Digital Facsimiles]
+  ## (surface group) defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. Digital Facsimiles]
   element surfaceGrp {
     (model.global | surface | surfaceGrp)+,
     att.global.attributes,

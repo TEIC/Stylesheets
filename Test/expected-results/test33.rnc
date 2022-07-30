@@ -2869,7 +2869,7 @@ tei_note =
   }
 tei_noteGrp =
   
-  ## contains a group of notes [3.9.1.1. Encoding Grouped Notes]
+  ## (note group) contains a group of notes [3.9.1.1. Encoding Grouped Notes]
   element tei:noteGrp {
     (tei_desc*, (tei_note | tei_noteGrp)+),
     tei_att.global.attributes,
@@ -4601,8 +4601,7 @@ tei_calendar =
   }
 tei_correspDesc =
   
-  ## (correspondence
-  ##     description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
+  ## (correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
   element tei:correspDesc {
     (tei_model.correspDescPart+ | tei_model.pLike+),
     tei_att.declarable.attributes,

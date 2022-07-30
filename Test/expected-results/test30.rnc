@@ -690,7 +690,7 @@ sch:pattern [
     "         "
     sch:report [
       test =
-        "( parent::tei:classRef                               | parent::tei:dataRef                               | parent::tei:elementRef                               | parent::tei:macroRef                               | parent::tei:moduleRef                               | parent::tei:schemaSpec )                               and                               $srcs[2]"
+        "( parent::tei:classRef | parent::tei:dataRef | parent::tei:elementRef | parent::tei:macroRef | parent::tei:moduleRef | parent::tei:schemaSpec ) and $srcs[2]"
       "\x{a}" ~
       "              When used on a schema description element (like\x{a}" ~
       "              "
@@ -2237,7 +2237,7 @@ Tp =
            "               "
            sch:report [
              test =
-               "    (ancestor::tei:ab or ancestor::tei:p)                          and not( ancestor::tei:floatingText                                 |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )"
+               "(ancestor::tei:ab or ancestor::tei:p) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"
              "\x{a}" ~
              "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
              "      "
@@ -2259,7 +2259,7 @@ Tp =
            "               "
            sch:report [
              test =
-               "    (ancestor::tei:l or ancestor::tei:lg)                          and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )"
+               "(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )"
              "\x{a}" ~
              "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "
@@ -3108,7 +3108,7 @@ Tnote =
   }
 TnoteGrp =
   
-  ## contains a group of notes [3.9.1.1. Encoding Grouped Notes]
+  ## (note group) contains a group of notes [3.9.1.1. Encoding Grouped Notes]
   element noteGrp {
     (Tdesc*, (Tnote | TnoteGrp)+),
     Tatt.global.attributes,
@@ -4824,8 +4824,7 @@ Tcalendar =
   }
 TcorrespDesc =
   
-  ## (correspondence
-  ##     description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
+  ## (correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
   element correspDesc {
     (Tmodel.correspDescPart+ | Tmodel.pLike+),
     Tatt.declarable.attributes,
@@ -6292,7 +6291,7 @@ Tsurface =
   }
 TsurfaceGrp =
   
-  ## defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. Digital Facsimiles]
+  ## (surface group) defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. Digital Facsimiles]
   element surfaceGrp {
     (Tmodel.global | Tsurface | TsurfaceGrp)+,
     Tatt.global.attributes,
@@ -6390,7 +6389,7 @@ Tpath =
            "\x{a}" ~
            "               "
            sch:report [
-             test = "$firstX eq $lastX  and  $firstY eq $lastY"
+             test = "$firstX eq $lastX and $firstY eq $lastY"
              "The first and\x{a}" ~
              "          last elements of this path are the same. To specify a closed polygon, use\x{a}" ~
              "          the zone element rather than the path element. "
@@ -7066,7 +7065,7 @@ Tab =
            "               "
            sch:report [
              test =
-               "    (ancestor::tei:p or ancestor::tei:ab)                          and not( ancestor::tei:floatingText                                  |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )"
+               "(ancestor::tei:p or ancestor::tei:ab) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"
              "\x{a}" ~
              "        Abstract model violation: ab may not occur inside paragraphs or other ab elements.\x{a}" ~
              "      "
@@ -7088,7 +7087,7 @@ Tab =
            "               "
            sch:report [
              test =
-               "    (ancestor::tei:l or ancestor::tei:lg)                         and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )"
+               "(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )"
              "\x{a}" ~
              "        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "

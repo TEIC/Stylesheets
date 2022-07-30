@@ -4234,7 +4234,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
    </define>
    <define name="t_noteGrp">
       <element name="noteGrp">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a group of notes [3.9.1.1. Encoding Grouped Notes]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(note group) contains a group of notes [3.9.1.1. Encoding Grouped Notes]</a:documentation>
          <group>
             <zeroOrMore>
                <ref name="t_desc"/>
@@ -6264,8 +6264,7 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
    </define>
    <define name="t_correspDesc">
       <element name="correspDesc">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(correspondence
-    description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]</a:documentation>
          <choice>
             <oneOrMore>
                <ref name="t_model.correspDescPart"/>

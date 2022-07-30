@@ -1626,8 +1626,7 @@ type %teidata.enumerated;  #IMPLIED >
 <!ATTLIST correspContext xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST correspContext
  %Tatt.global.attributes; >
-<!--doc:(correspondence
-    description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description] -->
+<!--doc:(correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description] -->
 <!ELEMENT correspDesc ((%model.correspDescPart;)+|(%model.pLike;)+)>
 <!ATTLIST correspDesc xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST correspDesc
@@ -2481,7 +2480,7 @@ method (silent|markup) "silent"  >
  %Tatt.typed.attributes;
  %Tatt.written.attributes;
  %Tatt.anchoring.attributes; >
-<!--doc:contains a group of notes [3.9.1.1. Encoding Grouped Notes] -->
+<!--doc:(note group) contains a group of notes [3.9.1.1. Encoding Grouped Notes] -->
 <!ELEMENT noteGrp (((desc)*,(note|noteGrp)+))>
 <!ATTLIST noteGrp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST noteGrp
@@ -3218,7 +3217,7 @@ reason CDATA  #IMPLIED >
  %Tatt.typed.attributes;
 attachment %teidata.enumerated;  #IMPLIED
 flipping %teidata.truthValue;  #IMPLIED >
-<!--doc:defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. Digital Facsimiles] -->
+<!--doc:(surface group) defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. Digital Facsimiles] -->
 <!ELEMENT surfaceGrp (%model.global;|surface|surfaceGrp)+>
 <!ATTLIST surfaceGrp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST surfaceGrp

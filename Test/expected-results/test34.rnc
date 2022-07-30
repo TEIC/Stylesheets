@@ -634,7 +634,7 @@ sch:pattern [
     "         "
     sch:report [
       test =
-        "( parent::tei:classRef                               | parent::tei:dataRef                               | parent::tei:elementRef                               | parent::tei:macroRef                               | parent::tei:moduleRef                               | parent::tei:schemaSpec )                               and                               $srcs[2]"
+        "( parent::tei:classRef | parent::tei:dataRef | parent::tei:elementRef | parent::tei:macroRef | parent::tei:moduleRef | parent::tei:schemaSpec ) and $srcs[2]"
       "\x{a}" ~
       "              When used on a schema description element (like\x{a}" ~
       "              "
@@ -1975,7 +1975,7 @@ tei_p =
            "               "
            sch:report [
              test =
-               "    (ancestor::tei:ab or ancestor::tei:p)                          and not( ancestor::tei:floatingText                                 |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )"
+               "(ancestor::tei:ab or ancestor::tei:p) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"
              "\x{a}" ~
              "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
              "      "
@@ -1997,7 +1997,7 @@ tei_p =
            "               "
            sch:report [
              test =
-               "    (ancestor::tei:l or ancestor::tei:lg)                          and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )"
+               "(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )"
              "\x{a}" ~
              "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "
@@ -2874,7 +2874,7 @@ tei_note =
   }
 tei_noteGrp =
   
-  ## contains a group of notes [3.9.1.1. Encoding Grouped Notes]
+  ## (note group) contains a group of notes [3.9.1.1. Encoding Grouped Notes]
   element noteGrp {
     (tei_desc*, (tei_note | tei_noteGrp)+),
     tei_att.global.attributes,
@@ -4604,8 +4604,7 @@ tei_calendar =
   }
 tei_correspDesc =
   
-  ## (correspondence
-  ##     description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
+  ## (correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
   element correspDesc {
     (tei_model.correspDescPart+ | tei_model.pLike+),
     tei_att.declarable.attributes,
@@ -5365,7 +5364,7 @@ tei_ab =
            "               "
            sch:report [
              test =
-               "    (ancestor::tei:p or ancestor::tei:ab)                          and not( ancestor::tei:floatingText                                  |parent::tei:exemplum                                 |parent::tei:item                                 |parent::tei:note                                 |parent::tei:q                                 |parent::tei:quote                                 |parent::tei:remarks                                 |parent::tei:said                                 |parent::tei:sp                                 |parent::tei:stage                                 |parent::tei:cell                                 |parent::tei:figure                                )"
+               "(ancestor::tei:p or ancestor::tei:ab) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"
              "\x{a}" ~
              "        Abstract model violation: ab may not occur inside paragraphs or other ab elements.\x{a}" ~
              "      "
@@ -5387,7 +5386,7 @@ tei_ab =
            "               "
            sch:report [
              test =
-               "    (ancestor::tei:l or ancestor::tei:lg)                         and not( ancestor::tei:floatingText                                 |parent::tei:figure                                 |parent::tei:note                                )"
+               "(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )"
              "\x{a}" ~
              "        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
              "      "

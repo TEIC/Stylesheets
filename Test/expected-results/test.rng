@@ -4438,7 +4438,7 @@ Suggested values include: 1] gloss (gloss); 2] index (index); 3] instructions (i
   </define>
   <define name="noteGrp">
     <element name="noteGrp">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a group of notes [3.9.1.1. Encoding Grouped Notes]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(note group) contains a group of notes [3.9.1.1. Encoding Grouped Notes]</a:documentation>
       <group>
         <zeroOrMore>
           <ref name="desc"/>
@@ -6558,8 +6558,7 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
   </define>
   <define name="correspDesc">
     <element name="correspDesc">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(correspondence
-    description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]</a:documentation>
       <choice>
         <oneOrMore>
           <ref name="model.correspDescPart"/>
@@ -6921,7 +6920,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
   </define>
   <define name="surfaceGrp">
     <element name="surfaceGrp">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. Digital Facsimiles]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(surface group) defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. Digital Facsimiles]</a:documentation>
       <oneOrMore>
         <choice>
           <ref name="model.global"/>

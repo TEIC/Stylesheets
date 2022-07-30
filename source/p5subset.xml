@@ -7,7 +7,7 @@
       </titleStmt>
       <editionStmt>
         <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.5.0.html">4.5.0a</ref>. Last updated on
-        <date when="2022-06-16">16th June 2022</date>, revision <ref target="https://github.com/TEIC/TEI/commit/9c0e52181">9c0e52181</ref></edition>
+        <date when="2022-07-29">29th July 2022</date>, revision <ref target="https://github.com/TEIC/TEI/commit/50a1ab835">50a1ab835</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -14546,6 +14546,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
   <gloss xml:lang="es" versionDate="2008-04-06">calendario</gloss>
   <gloss xml:lang="it" versionDate="2007-01-21">calendario</gloss>
   <desc versionDate="2011-04-13" xml:lang="en">describes a calendar or dating system used in a dating formula in the text.</desc>
+  <desc versionDate="2022-02-23" xml:lang="es">describe un calendario o sistema de datación usado en una fórmula de datación en el texto.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.pointing"/>
@@ -14571,14 +14572,31 @@ should be supplied for the <att>scheme</att> attribute.</p>
       </calendarDesc>
     </egXML>
   </exemplum>
+  <exemplum xml:lang="es">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <calendarDesc>
+        <calendar xml:id="juliano">
+          <p>Calendario juliano (incluido el proléptico)</p>
+        </calendar>
+      </calendarDesc>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="es">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <calendarDesc>
+        <calendar xml:id="egipcio" target="http://en.wikipedia.org/wiki/Egyptian_calendar">
+          <p>Calendario egipcio (tal como lo define Wikipedia)</p>
+        </calendar>
+      </calendarDesc>
+    </egXML>
+  </exemplum>
   <listRef>
     <ptr target="#HD44"/>
   </listRef>
 </elementSpec></div>
 <div type="div3" xml:id="HD44CD"><head>Correspondence Description</head>
 <elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="correspDesc">
-  <gloss versionDate="2014-01-13" xml:lang="en">correspondence
-    description</gloss>
+  <gloss versionDate="2014-01-13" xml:lang="en">correspondence description</gloss>
   <gloss versionDate="2021-02-02" xml:lang="it">descrizione di corrispondenza epistolare</gloss>
   <desc versionDate="2015-01-29" xml:lang="en">contains a description
     of the actions related to one act of correspondence.</desc>
@@ -18021,6 +18039,7 @@ Normalization</head>
 </elementSpec>
 <elementSpec module="core" ident="unclear">
   <gloss xml:lang="en" versionDate="2009-01-06">unclear</gloss>
+  <gloss xml:lang="es" versionDate="2022-02-20">poco claro</gloss>
   <gloss versionDate="2009-01-06" xml:lang="fr">incertain</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains a word, phrase, or passage which cannot be transcribed with certainty because it
         is illegible or inaudible in the source.</desc>
@@ -18029,8 +18048,7 @@ Normalization</head>
   <desc versionDate="2008-04-05" xml:lang="ja">元資料からは判読できないまたは聞こえないという理由で，確実に転記でき ない語句や一節を示す．</desc>
   <desc versionDate="2009-01-06" xml:lang="fr">contient un mot, une expression ou bien un passage qui
         ne peut être transcrit avec certitude parce qu'il est illisible ou inaudible dans la source.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene una palabra, frase o pasaje que no puede ser
-        transcita con certeza, ya que en la fuente es ilegible o incomprensible.</desc>
+  <desc versionDate="2022-02-20" xml:lang="es">contiene una palabra, frase o pasaje que no puede ser transcrito con certeza porque en la fuente es ilegible o inaudible. </desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una parola, una frase o un brano che non può
         essere trascritto con certezza perché è parzialmente illeggibile o incomprensibile
         nell'originale.</desc>
@@ -18056,8 +18074,7 @@ Normalization</head>
       <desc versionDate="2008-04-05" xml:lang="ja">当該資料から転記が困難である理由を示す．</desc>
       <desc versionDate="2009-01-06" xml:lang="fr">indique pourquoi il est difficile de transcrire
                 le document</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica por qué el material es difícl de
-                transcribir.</desc>
+      <desc versionDate="2022-02-20" xml:lang="es">Cuando la dificultad de transcripción se debe a un daño, se categoriza, si se puede, la causa de ese daño.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la ragione per la quale è difficile
                 trascrivere il brano.</desc>
       <desc versionDate="2016-11-24" xml:lang="de">gibt den Grund an, warum das Material schwer zu transkribieren ist.</desc>
@@ -18081,20 +18098,24 @@ Normalization</head>
         </valItem>
         <valItem ident="faded">
           <gloss xml:lang="en" versionDate="2018-01-17">faded</gloss>
+          <gloss xml:lang="es" versionDate="2022-02-20">desvanecido</gloss>
           <gloss versionDate="2018-01-17" xml:lang="de">ausgebleicht</gloss>
         </valItem>
         <valItem ident="background_noise">
           <gloss xml:lang="en" versionDate="2018-01-17">background_noise</gloss>
+          <gloss xml:lang="es" versionDate="2022-02-20">ruido de fondo</gloss>
           <gloss versionDate="2018-01-17" xml:lang="de">Hintergrundlärm</gloss>
         </valItem>
         <valItem ident="eccentric_ductus">
           <gloss xml:lang="en" versionDate="2018-01-17">eccentric_ductus</gloss>
+          <gloss xml:lang="es" versionDate="2022-06-03">ductus excéntrico</gloss>
           <gloss versionDate="2018-01-17" xml:lang="de">exzentrischer Duktus</gloss>
           <desc xml:lang="en" versionDate="2021-02-01">
             indicates illegibility due to an unusual, awkward, or
             incompetent execution of a glyph or glyphs
             <!-- adapted from https://halshs.archives-ouvertes.fr/halshs-02888186/document -->
           </desc>
+          <desc xml:lang="es" versionDate="2022-02-20">indica ilegibilidad por una ejecución inusual, torpe o incompetente de un glifo o glifos. </desc>
         </valItem>
       </valList>
       <exemplum xml:lang="mul">
@@ -18109,6 +18130,7 @@ Normalization</head>
 <remarks xml:lang="en" versionDate="2013-11-20"><p>One or more words may be used to describe the reason;
 usually each word will refer to a single cause.</p>
 </remarks>
+<remarks xml:lang="es" versionDate="2022-02-20"><p> Una o más palabras se pueden usar para describir la razón. Normalmente cada palabra se referirá a una causa concreta </p></remarks>
 <remarks xml:lang="de" versionDate="2016-11-24"><p>Ein oder mehrere Wörter können verwendet werden, um den Grund zu beschreiben. In der Regel wird jedes Wort auf eine einzige Ursache verweisen.</p>
 </remarks>
     </attDef>
@@ -18132,8 +18154,7 @@ usually each word will refer to a single cause.</p>
           <desc versionDate="2007-06-27" xml:lang="en">damage results from rubbing of the leaf edges</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">책장 모서리의 마모로 인한 훼손</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">損毀起因於書頁邊緣摩擦受損</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">daños resultantes del frotamiento de
-                        los bordes de la hoja</desc>
+          <desc versionDate="2022-02-20" xml:lang="es">Daños resultantes del frotamiento de los bordes de la hoja. </desc>
           <desc versionDate="2008-04-05" xml:lang="ja">葉の端がこすれたことによる損傷．</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">des dommages résultent du frottement
                         des bords de la feuille</desc>
@@ -18145,8 +18166,7 @@ usually each word will refer to a single cause.</p>
           <desc versionDate="2007-06-27" xml:lang="en">damage results from mildew on the leaf surface</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">곰팡이로 인한 책장의 훼손</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">損毀起因於書頁表面發霉</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">daños provocados por el moho existente
-                        en la superficie de la hoja</desc>
+          <desc versionDate="2022-02-20" xml:lang="es">Daños resultantes por moho en la superficie de la hoja</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">葉の表面に白カビがあることによる損傷．</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">des dégâts résultent de la moisissure
                         sur la surface de la feuille</desc>
@@ -18158,7 +18178,7 @@ usually each word will refer to a single cause.</p>
           <desc versionDate="2007-06-27" xml:lang="en">damage results from smoke</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">연기로 그을린 훼손</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">損毀起因於煙燻</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">daños provocados por el humo</desc>
+          <desc versionDate="2022-02-20" xml:lang="es">Daños provocados por el humo</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">煙による損傷．</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">des dégâts résultent de la fumée</desc>
           <desc versionDate="2007-01-21" xml:lang="it">il danno è causato dal fumo</desc>
@@ -18197,6 +18217,9 @@ his att<unclear>ention</unclear>
 concerned, as further discussed in section <ptr target="#PHDH"/>.</p>
 
   </remarks>
+  <remarks versionDate="2022-02-20" xml:lang="es"><p>El mismo elemento se usa para todos los casos de incertidubre en la transcripción del contenido de un elemento, para material tanto escrito como hablado. Para otros aspectos relacionados con la certeza, incertidumbre y fiablilidad del etiquetado y transcripción, consultar el capítulo <ptr target="#CE"/>.</p>
+    <p>Los elementos <gi>damage</gi>, <gi>gap</gi>, <gi>del</gi>, <gi>unclear</gi> y <gi>supplied</gi> pueden estar estrechamente relacionados en su uso. Consulta la sección <ptr target="#PHCOMB"/> para ver una discusión sobre qué elemento es apropiado en qué circunstancias.</p>
+    <p>El atributo <att>hand</att> dirige a una descripción de la mano implicada; se discute de manera más detallada en la sección <ptr target="#PHDH"/>.</p></remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Le même élément est utilisé pour tous les cas d'incertitude portant sur la transcription
             du contenu d'éléments, qu'il s'agisse de documents écrits ou oraux. Pour les autres
@@ -21257,6 +21280,7 @@ psychological significance.
   </listRef>
 </elementSpec>
 <elementSpec module="core" ident="noteGrp">
+  <gloss versionDate="2022-06-09" xml:lang="en">note group</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains a group of notes</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -22417,6 +22441,7 @@ soi-<lb break="no"/>xante &amp; dixhuytiesme livre.
 <div type="div4" xml:id="COBICOR"><head>Titles, Authors, and Editors</head>
 <elementSpec module="core" ident="author">
   <gloss xml:lang="en" versionDate="2011-11-26">author</gloss>
+  <gloss xml:lang="es" versionDate="2022-02-24">autor/a</gloss>
   <gloss versionDate="2011-11-26" xml:lang="fr">auteur</gloss>
   <gloss versionDate="2017-06-04" xml:lang="de">Autor</gloss>
   <desc versionDate="2011-11-26" xml:lang="en">in a bibliographic reference, contains the name(s) of an
@@ -22427,9 +22452,8 @@ soi-<lb break="no"/>xante &amp; dixhuytiesme livre.
   <desc versionDate="2008-04-05" xml:lang="ja">書誌情報における，著作者(個人・団体)の名前を示す．書誌項目における歴 任者を示す第一位の記述を示す．</desc>
   <desc versionDate="2009-01-06" xml:lang="fr">dans une référence bibliographique contient le nom de la
     (des) personne(s) physique(s) ou du collectif, auteur(s) d'une oeuvre ; par exemple dans la même forme que celle utilisée par une référence bibliographique reconnue.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">en una referencia bibliográfica, contiene el nombre del
-    autor/es, personal o empresa de una obra; la declaración esencial de responsabilidad para
-    cualquier ítem bibliográfico.</desc>
+  <desc versionDate="2022-02-24" xml:lang="es">en una referencia bibliográfica, contiene el nombre del
+autor/a/es, ya sea una persona o una institución, de una obra; por ejemplo, en la misma forma que la proporcionada por una autoridad bibliográfica reconocida.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">in un riferimento bibliografico contiene il nome
     dell'autore (o degli autori), personale o collettivo, di un'opera; è la dichiarazione di
     responsabilità primaria di ciascuna unità bibliografica.</desc>
@@ -22489,6 +22513,19 @@ text such as <mentioned>Unknown</mentioned> or
 <mentioned>Anonymous</mentioned>. When the appropriate TEI modules are
 in use, it may also contain detailed tagging of the names used for people, organizations or
 places, in particular where  multiple names are given.</p>
+  </remarks>
+  <remarks versionDate="2022-04-10" xml:lang="es">
+    <p>En particular, cuando es probable que la catalogación se base en el contenido del encabezado, 
+      se recomienda utilizar una autoridad bibliográfica de nombres generalmente reconocida para 
+      proporcionar el contenido de este elemento. Los atributos <att>key</att> o <att>ref</att> 
+      también se pueden usar para hacer referencia a información canónica sobre el/la autor/a o 
+      autores procedente de cualquier autoridad apropiada, como un catálogo de biblioteca o un 
+      recurso en línea. En el caso de una retransmisión, este elemento debe usarse para el nombre 
+      de la empresa o cadena responsable de realizar dicha retransmisión. Cuando se desconoce o no 
+      se especifica un/a autor/a, este elemento puede contener texto como <mentioned>Desconocido/a</mentioned> 
+      o <mentioned>Anónimo</mentioned>. Cuando se utilizan los módulos TEI apropiados, también puede contener 
+      etiquetas detalladas de los nombres utilizados para personas, organizaciones o lugares, en particular 
+      cuando se proporcionan varios nombres.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Il est conseillé d'utiliser des listes d'autorité reconnues
@@ -24789,7 +24826,8 @@ by the stage direction.</p>
   <desc versionDate="2017-06-13" xml:lang="de">enthält ein einzelnes TEI-konformes Dokument, das aus einem einzigen TEI-Header und einem oder
     mehreren Mitgliedern der <ident type="class">model.resource</ident>-Klasse besteht. Mehrere
     <gi>TEI</gi>-Elemente können in einem <gi>teiCorpus</gi>-Element zusammengefasst werden.</desc>
-  <desc versionDate="2022-05-02" xml:lang="es">contiene un solo documento conforme a la norma TEI, combinando una sola cabecera TEI (teiHeader) con uno o más miembros de la clase <ident type="class">model.resource</ident>. Múltiples elementos TEI se pueden combinar para formar un elemento <gi>TEI</gi> o <gi>teiCorpus</gi>.</desc>
+  <desc versionDate="2022-06-02" xml:lang="es">contiene un solo documento conforme a la norma TEI, combinando un solo encabezado TEI (teiHeader) con uno o más miembros de la clase <ident type="class">model.resource</ident>. Múltiples elementos TEI se pueden combinar al interno de un elemento <gi>TEI</gi> o <gi>teiCorpus</gi>.
+</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene un documento TEI-conforme, comprendente un'intestazione e un testo, sia esso isolato o parte di un elemento <gi>teiCorpus</gi>
    </desc>
   <classes>
@@ -24959,7 +24997,7 @@ by the stage direction.</p>
     it, for example: <tag type="start">TEI version="4.4.0"
     xml:lang="it" xmlns="http://www.tei-c.org/ns/1.0"</tag>.</p>
   </remarks>
-  <remarks versionDate="2018-09-08" xml:lang="es"><p>Este elemento/campo es requerido/obligatorio. Se acostumbra especificar el espacio del nombre/namespace TEI <code>http://www.tei-c.org/ns/1.0</code> usando el atributo <att>xmlns</att>.</p></remarks>
+  <remarks versionDate="2022-02-20" xml:lang="es"><p>El elemento es obligatorio. Normalmente se especifica el espacio de nombres (namespace) de TEI en su interior <code>http://www.tei-c.org/ns/1.0</code>, utilizando el atributo <att>xmlns</att></p></remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Cet élément est obligatoire.</p>
   </remarks>
@@ -26916,9 +26954,8 @@ by the stage direction.</p>
           <desc versionDate="2007-01-21" xml:lang="it">un indice sarà generato e inserito in questo punto.</desc>
         </valItem>
         <valItem ident="toc">
-          <desc versionDate="2007-05-04" xml:lang="es">una tabla de contenidos.</desc>
           <desc versionDate="2007-06-27" xml:lang="en">a table of contents</desc>
-  <desc versionDate="2018-09-08" xml:lang="es">una tabla de contenidos.</desc>
+          <desc versionDate="2018-09-08" xml:lang="es">una tabla de contenidos.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">목차</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">目錄</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">目次．</desc>
@@ -27649,6 +27686,7 @@ Tubes formed by Lightning — House struck</p>
 </elementSpec>
 <elementSpec module="textstructure" ident="closer">
   <gloss xml:lang="en" versionDate="2007-06-12">closer</gloss>
+  <gloss xml:lang="es" versionDate="2022-06-16">cierre</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">formule finale</gloss>
   <desc versionDate="2007-04-06" xml:lang="en">groups together salutations, datelines, and similar phrases appearing as a final group at
     the end of a division, especially of a letter.</desc>
@@ -27661,8 +27699,8 @@ Tubes formed by Lightning — House struck</p>
     particulier à la fin d’une lettre.</desc>
   <desc versionDate="2017-06-19" xml:lang="de">fasst Grußformeln, Datumszeilen und ähnliche Phrasen zusammen, die am Ende eines Abschnitts
     stehen, vor allem bei einem Brief.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">agrupa saludos, fechas, y expresiones similares que
-    aparecen al final de una división textual, especialmente en una letra.</desc>
+  <desc versionDate="2022-06-16" xml:lang="es">agrupa saludos, fechas, y expresiones similares que
+aparecen en la última sección al final de una división, especialmente en una carta.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">raggruppa dateline, byline, formule conclusive o di
     saluto ed espressioni simili utilizzate alla fine di una partizione, soprattutto in una lettera</desc>
   <classes>
@@ -31626,7 +31664,7 @@ enjambement is not of particular interest.</p>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">標記韻律詩行的押韻部分。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">韻文行の押韻部分を示す．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">Marque la partie rimante d'une ligne métrique.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">señala una parte del esquema rítmico de un verso</desc>
+  <desc versionDate="2022-06-30" xml:lang="es">marca una parte del esquema métrico de un verso</desc>
   <desc versionDate="2007-01-21" xml:lang="it">segnala la stringa in rima all'interno di un verso</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -31646,8 +31684,8 @@ enjambement is not of particular interest.</p>
       <desc versionDate="2008-04-05" xml:lang="ja">当該押韻が起こる韻スキーム部分を特定するラベルを示す．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">Donne une étiquette pour identifier à quelle shéma
         métrique correspond cette alternance de rimes.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">proporciona una etiqueta que identifica que parte del
-        esquema rítmico representa la serie de caracteres en cuestión.</desc>
+      <desc versionDate="2022-06-30" xml:lang="es">proporciona una etiqueta (normalmente una sola letra) que identifica qué parte del esquema métrico ejemplifica esta cadena de caracteres en cuestión.
+</desc>
       <desc versionDate="2007-01-21" xml:lang="it">fornisce un'etichetta che identifica quale parte
         dello schema rimico è rappresentata dalla stringa in questione</desc>
       <datatype><dataRef key="teidata.word"/></datatype>
@@ -34336,6 +34374,7 @@ an audio or video recording used as the source for a spoken text.</desc>
   </listRef>
 </elementSpec>
 <elementSpec ident="transcriptionDesc" module="spoken">
+    <gloss versionDate="2022-06-16" xml:lang="en">transcription description</gloss>
     <desc xml:lang="en" versionDate="2016-02-27">describes the set of transcription conventions used, particularly for spoken material.</desc>
     <classes>
         <memberOf key="att.global"/>
@@ -35205,7 +35244,7 @@ very loudly.</p>
           <gloss versionDate="2007-12-20" xml:lang="ko">동형이의어</gloss>
           <gloss versionDate="2009-05-25" xml:lang="fr">homographe.</gloss>
           <gloss versionDate="2007-11-06" xml:lang="it">omografo</gloss>
-          <gloss versionDate="2018-09-08" xml:lang="es">homógrafo </gloss>
+          <gloss versionDate="2018-09-08" xml:lang="es">homógrafo</gloss>
           <gloss xml:lang="ja" versionDate="2019-06-16">同形異義語</gloss>
           <desc versionDate="2008-02-01" xml:lang="en">groups information relating to one homograph within an entry.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">표제 항목 내에 하나의 동형이의어와 관련된 정보를 모아 놓는다.</desc>
@@ -35222,7 +35261,7 @@ very loudly.</p>
           <gloss versionDate="2007-12-20" xml:lang="ko">교차 참조</gloss>
           <gloss versionDate="2009-05-25" xml:lang="fr">référence croisée</gloss>
           <gloss versionDate="2007-11-06" xml:lang="it">riferimento incrociato</gloss>
-          <gloss versionDate="2018-09-08" xml:lang="es">referencia  cruzada</gloss>
+          <gloss versionDate="2018-09-08" xml:lang="es">referencia cruzada</gloss>
           <gloss xml:lang="ja" versionDate="2019-06-08">相互参照</gloss>
           <desc versionDate="2007-06-27" xml:lang="en">a reduced entry whose only function is to point to another main
             entry (e.g. for forms of an irregular verb or for variant spellings:
@@ -43128,6 +43167,7 @@ on f. 24, but the evidence for this is insubstantial.</p>
   </listRef>
 </elementSpec>
 <elementSpec module="msdescription" ident="scriptDesc">
+  <gloss versionDate="2022-06-16" xml:lang="en">script description</gloss>
   <desc versionDate="2019-01-17" xml:lang="en">contains a description of the scripts used in a manuscript or other object.</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -44090,6 +44130,7 @@ concerning a single identifiable episode during the history of a manuscript, man
 </elementSpec>
 <elementSpec module="msdescription" xml:id="ACQUISITION" ident="acquisition">
   <gloss xml:lang="en" versionDate="2007-06-12">acquisition</gloss>
+  <gloss xml:lang="es" versionDate="2022-06-16">adquisición</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">acquisition</gloss>
   <desc versionDate="2019-01-17" xml:lang="en" xml:id="acquisn.desc">contains any descriptive or other information
 concerning the process by which a manuscript or manuscript part or other object entered the holding
@@ -44100,7 +44141,7 @@ institution.</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient des informations sur les modalités et
       circonstances de l'entrée du manuscrit ou de la partie du manuscrit dans l'institution qui le
       détient</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene cualquier descripción u otra información concerniente al proceso de adquisición del manuscrito o de una de sus partes.</desc>
+  <desc versionDate="2022-06-16" xml:lang="es">contiene cualquier descripción u otra información concerniente al proceso de adquisición del manuscrito o de una de sus partes o cualquier otro objeto que haya ingresado en la institución </desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene informazioni relative al processo di acquisizione di un manoscritto o di una sua parte</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -44124,7 +44165,7 @@ institution.</desc>
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
-      <acquisition>1998年9 月30 日，<name type="institution">CBETA</name> 與<name type="institution">日本大藏出版株式會社</name>簽約授權使用。</acquisition>
+      <acquisition>1998年9 月30 日，<name type="institution">CBETA</name> 與<name type="institution">日本大藏出版株式會社</name>簽約授權使用。</acquisition>
     </egXML>
   </exemplum>
   <listRef>
@@ -45173,6 +45214,7 @@ are also understood with reference to this same coordinate system.--> </p>
   </listRef>
 </elementSpec>
 <elementSpec ident="surfaceGrp" module="transcr">
+  <gloss versionDate="2022-06-09" xml:lang="en">surface group</gloss>
   <desc versionDate="2011-11-11" xml:lang="en">defines any kind of useful grouping of written surfaces, for
   example the recto and verso of a single leaf, which the encoder
   wishes to treat as a single unit.</desc>
@@ -55895,6 +55937,7 @@ place concerned, for example: a room, a restaurant, a park bench, etc.</desc>
 </elementSpec>
 <elementSpec module="corpus" ident="activity">
   <gloss xml:lang="en" versionDate="2009-04-17">activity</gloss>
+  <gloss xml:lang="es" versionDate="2022-06-16">actividad</gloss>
   <gloss xml:lang="fr" versionDate="2009-04-17">activité</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains a brief informal description of what a participant in a
 language interaction is doing other than speaking, if anything.</desc>
@@ -55932,7 +55975,7 @@ language interaction is doing other than speaking, if anything.</desc>
 activities during a spoken text, the <gi>event</gi> element should
 be used.</p>
   </remarks>
-  <remarks versionDate="2018-09-08" xml:lang="es"><p>Para una descripción más detallada de las acciones de los partiipantes durante los parlamentos, debe utilizarse el elemento  <gi>event</gi></p></remarks>
+  <remarks versionDate="2022-06-16" xml:lang="es"><p>Para una descripción más detallada de las acciones de los participantes durante los parlamentos, debe utilizarse el elemento  <gi>event</gi></p></remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12" source="#UND">
     <p>Pour une description plus fine de toute activité survenant lors d'une communication
                 orale transcrite, utilisez l'élément <gi>event</gi>. </p>
@@ -65685,19 +65728,7 @@ contains specifications for the elements
       <desc versionDate="2010-06-23" xml:lang="en">specifies a default prefix which will be
       prepended to all patterns relating to the element, unless otherwise stated.</desc>
       <datatype minOccurs="0"><dataRef key="teidata.xmlName"/></datatype>
-      <remarks versionDate="2010-06-23" xml:lang="en">
-        <p>Colons, although permitted inside the value, will cause an invalid schema to be
-        generated.</p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>Les deux-points, bien qu'ils soient permis à l'intérieur de la valeur, provoqueront la
-        génération d'un schéma invalide. </p>
-      </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> コロンは，値としては認められるが，スキーマ中では使用できない． </p>
-      </remarks>
     </attDef>
-    <!-- removed @usage -->
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -67339,6 +67370,7 @@ déclaration de même nom dans la définition courante.</desc>
   </listRef>
 </elementSpec>
 <elementSpec ident="modelGrp" module="tagdocs">
+  <gloss versionDate="2022-06-09" xml:lang="en">model group</gloss>
   <desc versionDate="2017-02-07" xml:lang="en">any grouping of <gi>model</gi> or <gi>modelSequence</gi> elements with
     a common output method</desc>
   <classes>
@@ -67819,8 +67851,8 @@ déclaration de même nom dans la définition courante.</desc>
   <exemplum xml:lang="en">
     <p>This <gi>content</gi> element defines a content model,
     expressed directly in the TEI ODD language, that allows either a
-    sequence of paragraphs or a series of msItem elements optionally
-    preceded by a summary: </p>
+    sequence of paragraphs or a series of <gi>msItem</gi> elements optionally
+    preceded by a <gi>summary</gi>: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <content>
         <alternate>
@@ -67836,8 +67868,8 @@ déclaration de même nom dans la définition courante.</desc>
   <exemplum xml:lang="en">
     <p>This sample <gi>content</gi> element defines a content model,
     expressed in the RELAX NG schema language, that allows either a
-    sequence of paragraphs or a series of msItem elements optionally
-    preceded by a summary: </p>
+    sequence of paragraphs or a series of <gi>msItem</gi> elements optionally
+    preceded by a <gi>summary</gi>: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <content>
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
