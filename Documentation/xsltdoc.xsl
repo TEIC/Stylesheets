@@ -26,7 +26,8 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2004, P&amp;P Software GmbH</xd:copyright>
   </xd:doc>
-  <xsl:output name="xhtml" omit-xml-declaration="yes" method="xml" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" indent="no" encoding="iso-8859-1"/>
+  <xsl:output name="xhtml" omit-xml-declaration="yes" method="xhtml" indent="no" encoding="UTF-8" 
+    html-version="5.0" normalization-form="NFC"/>
   <xsl:template match="/">
     <xsl:apply-templates>
       <xsl:with-param name="config" tunnel="yes" as="element()">

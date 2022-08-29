@@ -20,6 +20,12 @@
   </teiHeader>
   <text>
       <body>
+	<p>Here is the TEI badge:
+	<graphic url="http://www.tei-c.org/wp-content/uploads/2016/11/I-use-TEI.png">
+	  <desc>The TEI Badge</desc>
+	</graphic>. It is here to test <gi>desc</gi> in <gi>graphic</gi> in an ODD per
+	<ptr target="https://github.com/TEIC/Stylesheets/issues/444"/>.
+	</p>
          <schemaSpec start="TEI div" ident="testPure1" prefix="t_">
             <desc>This file is intended as input for a conversion to
         RNG and Schematron (and possibly other outputs) as part 
@@ -196,6 +202,45 @@
 	                 </constraint>
 	              </constraintSpec>
 	           </elementSpec>
+            
+            <!--elementSpec added by @joeytakeda for #241: Modify choice such that it can have:
+               
+               * An abbr and expan (in any order, explicitly set by @preserveOrder="false")
+               * A corr and sic (in that specific order, explicitly set by @preserveOrder="true")
+               * An orig and reg (in that specific order, implicitly set by omitting @preserveOrder) 
+               
+               Inspired by the example in TD for sequence and alternate:
+               https://www.tei-c.org/Vault/P5/4.2.2/doc/tei-p5-doc/en/html/TD.html#index-egXML-d53e153603
+            -->
+            
+            <elementSpec ident="choice" module="core" mode="change">
+               <content>
+                  <alternate>
+                     <sequence preserveOrder="false">
+                        <elementRef key="abbr"/>
+                        <elementRef key="expan"/>
+                     </sequence>
+                     <sequence preserveOrder="true">
+                        <elementRef key="corr"/>
+                        <elementRef key="sic"/>
+                     </sequence>
+                     <sequence>
+                        <elementRef key="orig"/>
+                        <elementRef key="reg"/>
+                     </sequence>
+                  </alternate>
+               </content>
+               <remarks>
+                  <p>Our <gi>choice</gi> element is allowed to contain one of the following combinations:
+                  <list>
+                     <item><gi>abbr</gi> and <gi>expan</gi></item>
+                     <item><gi>expan</gi> and <gi>abbr</gi></item>
+                     <item><gi>corr</gi> and <gi>sic</gi></item>
+                     <item><gi>orig</gi> and <gi>reg</gi></item>
+                  </list>
+                  </p>
+               </remarks>
+            </elementSpec>
 
          </schemaSpec>
       </body>

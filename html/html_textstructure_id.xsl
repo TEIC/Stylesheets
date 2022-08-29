@@ -7,7 +7,7 @@
 
   <xsl:template match="front|body|back">
     <div class="tei_{local-name()}">
-      <xsl:apply-templates/>
+      <xsl:apply-templates select="@xml:id | node()"/>
     </div>
   </xsl:template>
 

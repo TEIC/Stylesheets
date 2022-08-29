@@ -468,6 +468,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="refdoc"/>
   <xsl:template name="typewriter">
       <xsl:param name="text"/>
+      <xsl:sequence select="'`' || $text || '`'"/>
   </xsl:template>
 
   <xsl:template match="processing-instruction()" mode="tangle">

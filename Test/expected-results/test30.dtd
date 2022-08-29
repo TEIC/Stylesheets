@@ -121,6 +121,10 @@ subtype %teidata.enumerated;  #IMPLIED'>
 <!ENTITY % model.orgPart_sequenceOptional "%model.eventLike;?, listOrg?, listPerson?, listPlace?"> 
 <!ENTITY % model.orgPart_sequenceOptionalRepeatable "%model.eventLike;*, listOrg*, listPerson*, listPlace*"> 
 <!ENTITY % model.orgPart_sequenceRepeatable "%model.eventLike;+, listOrg+, listPerson+, listPlace+"> 
+<!ENTITY % Tatt.locatable.attribute.where '
+where CDATA  #IMPLIED'>
+<!ENTITY % Tatt.locatable.attributes '
+ %Tatt.locatable.attribute.where;'> 
 <!ENTITY % model.resource "facsimile |sourceDoc |standOff |text"> 
 <!ENTITY % model.resource_sequence "facsimile, sourceDoc, standOff, text"> 
 <!ENTITY % model.resource_sequenceOptional "facsimile?, sourceDoc?, standOff?, text?"> 
@@ -724,11 +728,11 @@ to %teidata.word;  #IMPLIED'>
 <!ENTITY % model.eventLike_sequenceOptional "event?, listEvent?"> 
 <!ENTITY % model.eventLike_sequenceOptionalRepeatable "event*, listEvent*"> 
 <!ENTITY % model.eventLike_sequenceRepeatable "event+, listEvent+"> 
-<!ENTITY % model.global.edit "gap |addSpan |damageSpan |delSpan |space"> 
-<!ENTITY % model.global.edit_sequence "gap, addSpan, damageSpan, delSpan, space"> 
-<!ENTITY % model.global.edit_sequenceOptional "gap?, addSpan?, damageSpan?, delSpan?, space?"> 
-<!ENTITY % model.global.edit_sequenceOptionalRepeatable "gap*, addSpan*, damageSpan*, delSpan*, space*"> 
-<!ENTITY % model.global.edit_sequenceRepeatable "gap+, addSpan+, damageSpan+, delSpan+, space+"> 
+<!ENTITY % model.global.edit "gap |ellipsis |addSpan |damageSpan |delSpan |space"> 
+<!ENTITY % model.global.edit_sequence "gap, ellipsis, addSpan, damageSpan, delSpan, space"> 
+<!ENTITY % model.global.edit_sequenceOptional "gap?, ellipsis?, addSpan?, damageSpan?, delSpan?, space?"> 
+<!ENTITY % model.global.edit_sequenceOptionalRepeatable "gap*, ellipsis*, addSpan*, damageSpan*, delSpan*, space*"> 
+<!ENTITY % model.global.edit_sequenceRepeatable "gap+, ellipsis+, addSpan+, damageSpan+, delSpan+, space+"> 
 <!ENTITY % model.divPart "%model.lLike; |%model.pLike; |lg |sp"> 
 <!ENTITY % model.divPart_sequence "%model.lLike;, %model.pLike;, lg, sp"> 
 <!ENTITY % model.divPart_sequenceOptional "%model.lLike;?, %model.pLike;?, lg?, sp?"> 
@@ -979,14 +983,14 @@ to %teidata.word;  #IMPLIED'>
 <!ENTITY % model.standOffPart_sequenceOptional "%model.global.meta;?, %model.biblLike;?, %model.listLike;?, %model.annotationLike;?, listChange?, zone?, seg?, listAnnotation?"> 
 <!ENTITY % model.standOffPart_sequenceOptionalRepeatable "%model.global.meta;*, %model.biblLike;*, %model.listLike;*, %model.annotationLike;*, listChange*, zone*, seg*, listAnnotation*"> 
 <!ENTITY % model.standOffPart_sequenceRepeatable "%model.global.meta;+, %model.biblLike;+, %model.listLike;+, %model.annotationLike;+, listChange+, zone+, seg+, listAnnotation+"> 
-<!ENTITY % Tatt.citeStructurePart.attribute.use '
-use %teidata.xpath;  #REQUIRED'>
-<!ENTITY % Tatt.citeStructurePart.attributes '
- %Tatt.citeStructurePart.attribute.use;'> 
 <!ENTITY % Tatt.formula.attribute.formula '
 formula %teidata.xpath;  #IMPLIED'>
 <!ENTITY % Tatt.formula.attributes '
  %Tatt.formula.attribute.formula;'> 
+<!ENTITY % Tatt.locatable.attribute.where '
+where CDATA  #IMPLIED'>
+<!ENTITY % Tatt.locatable.attributes '
+ %Tatt.locatable.attribute.where;'> 
 <!ENTITY % model.correspActionPart "%model.dateLike; |%model.addressLike; |%model.nameLike; |note |noteGrp"> 
 <!ENTITY % model.correspActionPart_sequence "%model.dateLike;, %model.addressLike;, %model.nameLike;, note, noteGrp"> 
 <!ENTITY % model.correspActionPart_sequenceOptional "%model.dateLike;?, %model.addressLike;?, %model.nameLike;?, note?, noteGrp?"> 
@@ -1034,6 +1038,10 @@ sort %teidata.count;  #IMPLIED'>
 unit %teidata.enumerated;  #REQUIRED'>
 <!ENTITY % Tatt.milestoneUnit.attributes '
  %Tatt.milestoneUnit.attribute.unit;'> 
+<!ENTITY % Tatt.citeStructurePart.attribute.use '
+use %teidata.xpath;  #REQUIRED'>
+<!ENTITY % Tatt.citeStructurePart.attributes '
+ %Tatt.citeStructurePart.attribute.use;'> 
 <!ENTITY % Tatt.patternReplacement.attribute.matchPattern '
 matchPattern %teidata.pattern;  #REQUIRED'>
 
@@ -1449,7 +1457,7 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.typed.attributes;
  %Tatt.datable.attributes; >
 <!--doc:(text body) contains the whole body of a single unitary text, excluding any front or back matter. [4. Default Text Structure] -->
-<!ELEMENT body (((%model.global;)*,((%model.divTop;),(%model.global;|%model.divTop;)*)?,((%model.divGenLike;),(%model.global;|%model.divGenLike;)*)?,(((%model.divLike;),(%model.global;|%model.divGenLike;)*)+|((_DUMMY_model.div1Like),(%model.global;|%model.divGenLike;)*)+|(((%model.common;),(%model.global;)*)+,(((%model.divLike;),(%model.global;|%model.divGenLike;)*)+|((_DUMMY_model.div1Like),(%model.global;|%model.divGenLike;)*)+)?)),((%model.divBottom;),(%model.global;)*)*))>
+<!ELEMENT body (((%model.global;)*,((%model.divTop;),(%model.global;|%model.divTop;)*)?,((%model.divGenLike;),(%model.global;|%model.divGenLike;)*)?,(((%model.divLike;),(%model.global;|%model.divGenLike;)*)+|((_DUMMY_model.div1Like),(%model.global;|%model.divGenLike;)*)+|(((schemaSpec|%model.common;),(%model.global;)*)+,(((%model.divLike;),(%model.global;|%model.divGenLike;)*)+|((_DUMMY_model.div1Like),(%model.global;|%model.divGenLike;)*)+)?)),((%model.divBottom;),(%model.global;)*)*))>
 <!ATTLIST body xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST body
  %Tatt.global.attributes;
@@ -1537,7 +1545,7 @@ target CDATA  #IMPLIED >
 <!ATTLIST citeData
  %Tatt.global.attributes;
  %Tatt.citeStructurePart.attributes;
-property CDATA #REQUIRED >
+property %teidata.pointer;  #REQUIRED >
 <!--doc:(citation structure) declares a structure and method for citing the current document. [3.11.4. Declaring Reference Systems 16.2.5.4. Citation Structures] -->
 <!ELEMENT citeStructure (((citeData)*,(citeStructure)*,(%model.descLike;)*))>
 <!ATTLIST citeStructure xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -1587,6 +1595,7 @@ scheme %teidata.pointer;  #REQUIRED >
  %Tatt.global.attributes;
  %Tatt.datable.attributes;
  %Tatt.formula.attributes;
+ %Tatt.locatable.attributes;
 fromUnit %teidata.pointer;  #REQUIRED
 toUnit %teidata.pointer;  #REQUIRED >
 <!--doc:(correction) contains the correct form of a passage apparently erroneous in the copy text. [3.5.1. Apparent Errors] -->
@@ -1617,8 +1626,7 @@ type %teidata.enumerated;  #IMPLIED >
 <!ATTLIST correspContext xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST correspContext
  %Tatt.global.attributes; >
-<!--doc:(correspondence
-    description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description] -->
+<!--doc:(correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description] -->
 <!ELEMENT correspDesc ((%model.correspDescPart;)+|(%model.pLike;)+)>
 <!ATTLIST correspDesc xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST correspDesc
@@ -1730,7 +1738,7 @@ social %teidata.text;  #IMPLIED >
  %Tatt.typed.attributes;
  %Tatt.datable.attributes; >
 <!--doc:(text division) contains a subdivision of the front, body, or back of a text. [4.1. Divisions of the Body] -->
-<!ELEMENT div (((%model.divTop;|%model.global;)*,((((%model.divLike;|%model.divGenLike;),(%model.global;)*)+|(((%model.common;),(%model.global;)*)+,((%model.divLike;|%model.divGenLike;),(%model.global;)*)*)),((%model.divBottom;),(%model.global;)*)*)?))>
+<!ELEMENT div (((%model.divTop;|%model.global;)*,((((%model.divLike;|%model.divGenLike;),(%model.global;)*)+|(((schemaSpec|%model.common;),(%model.global;)*)+,((%model.divLike;|%model.divGenLike;),(%model.global;)*)*)),((%model.divBottom;),(%model.global;)*)*)?))>
 <!ATTLIST div xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST div
  %Tatt.global.attributes;
@@ -1807,6 +1815,13 @@ when %teidata.temporal.w3c;  #IMPLIED >
  %Tatt.naming.attributes;
  %Tatt.typed.attribute.subtype;
 type %teidata.enumerated;  #IMPLIED >
+<!--doc:(deliberately marked omission) indicates a purposeful marking in the source document signalling that content has been omitted, and may also supply or describe the omitted content. [3.5.3. Additions, Deletions, and Omissions] -->
+<!ELEMENT ellipsis ((metamark,((%model.descLike;)?),(supplied)?))>
+<!ATTLIST ellipsis xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST ellipsis
+ %Tatt.global.attributes;
+ %Tatt.dimensions.attributes;
+ %Tatt.timed.attributes; >
 <!--doc:(electronic mail address) contains an email address identifying a location to which email messages can be delivered. [3.6.2. Addresses] -->
 <!ELEMENT email %macro.phraseSeq;>
 <!ATTLIST email xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -1837,7 +1852,7 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.typed.attributes;
  %Tatt.naming.attributes;
  %Tatt.sortable.attributes;
-where %teidata.pointer;  #IMPLIED >
+ %Tatt.locatable.attributes; >
 <!--doc:(editorial expansion) contains a sequence of letters added by an editor or transcriber when expanding an abbreviation. [11.3.1.2. Abbreviation and Expansion] -->
 <!ELEMENT ex %macro.xtext;>
 <!ATTLIST ex xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2020,7 +2035,8 @@ datum %teidata.enumerated;  "WGS84"  >
  %Tatt.global.attributes;
  %Tatt.media.attributes;
  %Tatt.resourced.attributes;
- %Tatt.declaring.attributes; >
+ %Tatt.declaring.attributes;
+ %Tatt.typed.attributes; >
 <!--doc:(group) contains the body of a composite text, grouping together a sequence of distinct texts (or groups of such texts) which are regarded as a unit for some purpose, for example the collected works of an author, a sequence of prose essays, etc. [4. Default Text Structure 4.3.1. Grouped Texts 15.1. Varieties of Composite Text] -->
 <!ELEMENT group (((%model.divTop;|%model.global;)*,((text|group),(text|group|%model.global;)*),(%model.divBottom;)*))>
 <!ATTLIST group xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2464,7 +2480,7 @@ method (silent|markup) "silent"  >
  %Tatt.typed.attributes;
  %Tatt.written.attributes;
  %Tatt.anchoring.attributes; >
-<!--doc:contains a group of notes [3.9.1.1. Encoding Grouped Notes] -->
+<!--doc:(note group) contains a group of notes [3.9.1.1. Encoding Grouped Notes] -->
 <!ELEMENT noteGrp (((desc)*,(note|noteGrp)+))>
 <!ATTLIST noteGrp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST noteGrp
@@ -2498,7 +2514,7 @@ value %teidata.numeric;  #IMPLIED >
  %Tatt.sortable.attributes;
 parts CDATA  #IMPLIED >
 <!--doc:contains a description of a single identifiable physical object. [13.3.5. Objects] -->
-<!ELEMENT object (((objectIdentifier)+,(%model.headLike;)*,((%model.pLike;)*|((msContents)?,(physDesc)?,(history)?,(additional)?)),(%model.noteLike;|%model.biblLike;|linkGrp|link)*,(object)?))>
+<!ELEMENT object (((objectIdentifier)+,(%model.headLike;)*,((%model.pLike;)*|((msContents)?,(physDesc)?,(history)?,(additional)?)),(%model.noteLike;|%model.biblLike;|linkGrp|link)*,(object)*))>
 <!ATTLIST object xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST object
  %Tatt.global.attributes;
@@ -2508,7 +2524,7 @@ parts CDATA  #IMPLIED >
  %Tatt.docStatus.attributes;
  %Tatt.canonical.attributes; >
 <!--doc:(object identifier) groups one or more identifiers or pieces of locating information concerning a single object. [13.3.5. Objects] -->
-<!ELEMENT objectIdentifier (%model.placeNamePart;|institution|repository|collection|idno|msName|objectName|altIdentifier|address)*>
+<!ELEMENT objectIdentifier (%model.placeNamePart;|institution|repository|collection|idno|msName|objectName|altIdentifier|address)+>
 <!ATTLIST objectIdentifier xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST objectIdentifier
  %Tatt.global.attributes; >
@@ -3131,6 +3147,7 @@ dim (horizontal|vertical) #IMPLIED >
  %Tatt.ascribed.directed.attributes;
  %Tatt.global.attributes;
  %Tatt.placement.attributes;
+ %Tatt.written.attributes;
 type NMTOKENS  #IMPLIED >
 <!--doc:Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [16.10. The standOff Container] -->
 <!ELEMENT standOff (%model.standOffPart;)+>
@@ -3200,7 +3217,7 @@ reason CDATA  #IMPLIED >
  %Tatt.typed.attributes;
 attachment %teidata.enumerated;  #IMPLIED
 flipping %teidata.truthValue;  #IMPLIED >
-<!--doc:defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. Digital Facsimiles] -->
+<!--doc:(surface group) defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. Digital Facsimiles] -->
 <!ELEMENT surfaceGrp (%model.global;|surface|surfaceGrp)+>
 <!ATTLIST surfaceGrp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST surfaceGrp

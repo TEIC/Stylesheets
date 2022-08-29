@@ -125,12 +125,12 @@ of this software, even if advised of the possibility of such damage.
         <xsl:variable name="style">
             <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
         </xsl:variable>
-        <xsl:variable name="type" select="tei:get-listtype($style)"/>
+        <xsl:variable name="style.type" select="tei:get-listtype($style)"/>
         
-        <xsl:attribute name="type">
+        <xsl:variable name="type">
             <xsl:choose>
-                <xsl:when test="string-length($type) &gt; 0">
-                    <xsl:value-of select="$type"/>
+                <xsl:when test="string-length($style.type) &gt; 0">
+                    <xsl:value-of select="$style.type"/>
                 </xsl:when>
                 
                 <!-- try to figure it out by looking at the corresponding numbering file -->
@@ -173,13 +173,16 @@ of this software, even if advised of the possibility of such damage.
                     <!-- figure out what numbering scheme to use -->
                     <xsl:choose>
 		        <xsl:when test="$style='dl'">gloss</xsl:when>
-                        <xsl:when test="string-length($numfmt)=0">unordered</xsl:when>
-                        <xsl:when test="$numfmt='bullet'">unordered</xsl:when>
-                        <xsl:otherwise>ordered</xsl:otherwise>
+                        <xsl:when test="string-length($numfmt)=0">simple</xsl:when>
+                        <xsl:when test="$numfmt='bullet'">bulleted</xsl:when>
+                        <xsl:otherwise>numbered</xsl:otherwise>
                     </xsl:choose>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:attribute>
+        </xsl:variable>
+      <xsl:attribute name="{if ($type = 'gloss') then 'type' else 'rend'}">
+        <xsl:value-of select="$type"/>
+      </xsl:attribute>
     </xsl:template>
     
     

@@ -71,12 +71,14 @@ of this software, even if advised of the possibility of such damage.
        whereas <exemplum> elements in ODD customization file are
        copied through. -->
   <xsl:param name="suppressTEIexamples">false</xsl:param>
+  <!-- 2022-02-15: values of constraintSpec/@ident are unique (see TEI issue 2223) thus constraintSpec keys
+    can just contain the value of @ident-->
   <xsl:key name="odd2odd-CHANGEATT" match="tei:attDef[@mode eq 'change']" use="concat(../../@ident,'_',@ident)"/>
-  <xsl:key name="odd2odd-CHANGECONSTRAINT" match="tei:constraintSpec[@mode eq 'change']" use="concat(../@ident,'_',@ident)"/>
+  <xsl:key name="odd2odd-CHANGECONSTRAINT" match="tei:constraintSpec[@mode eq 'change']" use="@ident"/>
   <xsl:key name="odd2odd-CLASS_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:classSpec"/>
   <xsl:key name="odd2odd-DELETEATT" match="tei:attDef[@mode eq 'delete']" use="concat(ancestor::tei:classSpec/@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-DELETEATT" match="tei:attDef[@mode eq 'delete']" use="concat(ancestor::tei:elementSpec/@ident,'_',@ident)"/>
-  <xsl:key name="odd2odd-DELETECONSTRAINT" match="tei:constraintSpec[@mode eq 'delete']" use="concat(../@ident,'_',@ident)"/>
+  <xsl:key name="odd2odd-DELETECONSTRAINT" match="tei:constraintSpec[@mode eq 'delete']" use="@ident"/>
   <xsl:key name="odd2odd-ELEMENT_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:elementSpec"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:dataSpec" use="@ident"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:macroSpec" use="@ident"/>
@@ -104,7 +106,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-REFOBJECTS" use="@key" match="tei:schemaSpec/tei:macroRef[not(ancestor::tei:content)]"/>
   <xsl:key name="odd2odd-REFOBJECTS" use="@key" match="tei:schemaSpec/tei:classRef[not(ancestor::tei:content)]"/>
   <xsl:key name="odd2odd-REFOBJECTS" use="@key" match="tei:schemaSpec/tei:elementRef[not(ancestor::tei:content)]"/>
-  <xsl:key name="odd2odd-REPLACECONSTRAINT" match="tei:constraintSpec[@mode eq 'replace']" use="concat(../@ident,'_',@ident)"/>
+  <xsl:key name="odd2odd-REPLACECONSTRAINT" match="tei:constraintSpec[@mode eq 'replace']" use="@ident"/>
   <xsl:key name="odd2odd-SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
   <xsl:key match="tei:moduleSpec" name="odd2odd-MODULES" use="@ident"/>
 
@@ -252,11 +254,17 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="not(doc-available($source))">
         <xsl:call-template name="die">
-          <xsl:with-param name="message">
-            <xsl:text>Source </xsl:text>
-            <xsl:value-of select='($source,$loc,name($top),base-uri($top))' separator=" + "/>
-            <xsl:text> not readable</xsl:text>
-          </xsl:with-param>
+          <xsl:with-param name="message" as="xs:string"
+                          select="concat(
+                                  'Source document ',
+                                  $source,
+                                  ' is not readable; from ',
+                                  base-uri($top),
+                                  ' (which has an outermost element of ',
+                                  name($top/*),
+                                  '), with loc=',
+                                  $loc
+                                  )"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
@@ -1382,6 +1390,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="minOmaxO" select="tei:minOmaxO( @minOccurs, @maxOccurs )"/>
     <xsl:variable name="min" select="$minOmaxO[1]"/>
     <xsl:variable name="max" select="$minOmaxO[2]"/>
+    <xsl:variable name="otherAtts" select="@* except ( @minOccurs, @maxOccurs )"/>
     <!-- 
       for each Pure ODD content model,
       remove reference to any elements which have been
@@ -1490,6 +1499,11 @@ of this software, even if advised of the possibility of such damage.
           <xsl:element namespace="http://www.tei-c.org/ns/1.0" name="{$element}">
             <xsl:attribute name="minOccurs" select="$min"/>
             <xsl:attribute name="maxOccurs" select="if ($max eq -1) then 'unbounded' else $max"/>
+            <!-- Copy the attributes declared on the source element -->
+            <xsl:copy-of select="$otherAtts"/>
+            <!--joeytakeda iss241: I'm not sure if the @* below is necessary -->
+            <!-- given that it would be copying the attributes on the temporary -->
+            <!-- WHAT element, which won't have attributes AFAICT -->
             <xsl:copy-of select="@*|*|text()|processing-instruction()"/>
           </xsl:element>
         </xsl:when>
@@ -2009,16 +2023,18 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates mode="justcopy" select="tei:constraintSpec[@mode eq 'change']"/>
     <xsl:for-each select="$ORIGINAL">
       <!-- original source  context -->
-      <xsl:for-each select="tei:constraintSpec">
+      <xsl:for-each select="descendant::tei:constraintSpec">
+        <!-- 2022-01-28: added descendant axis to process all descendant <constraintSpec> elements
+          (e.g. elementSpec/attList/constraintSpec) -->
         <xsl:variable name="CONSTRAINT" select="."/>
         <xsl:variable name="lookingAt">
-          <xsl:value-of select="concat(../@ident,'_',@ident)"/>
+          <xsl:value-of select="@ident"/>
         </xsl:variable>
         <xsl:for-each select="$ODD">
           <xsl:choose>
-            <xsl:when test="key('odd2odd-DELETECONSTRAINT',$lookingAt)"/>
-            <xsl:when test="key('odd2odd-REPLACECONSTRAINT',$lookingAt)"/>
-            <xsl:when test="key('odd2odd-CHANGECONSTRAINT',$lookingAt)"/>
+            <xsl:when test="key('odd2odd-DELETECONSTRAINT',$lookingAt)"/>            
+            <xsl:when test="key('odd2odd-REPLACECONSTRAINT',$lookingAt)"/>            
+            <xsl:when test="key('odd2odd-CHANGECONSTRAINT',$lookingAt)"/>            
             <xsl:otherwise>
               <xsl:copy-of select="$CONSTRAINT"/>
             </xsl:otherwise>

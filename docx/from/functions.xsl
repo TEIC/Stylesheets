@@ -188,23 +188,22 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:text>gloss</xsl:text>
             </xsl:when>
             <xsl:when test="starts-with($style,$ListBullet)">
-                <xsl:text>unordered</xsl:text>
+                <xsl:text>bulleted</xsl:text>
             </xsl:when>
             <xsl:when test="starts-with($style,$ListContinue)">
-                <xsl:text>unordered</xsl:text>
+                <xsl:text>bulleted</xsl:text>
             </xsl:when>
             <xsl:when test="starts-with($style,$ListNumber)">
-                <xsl:text>ordered</xsl:text>
+                <xsl:text>numbered</xsl:text>
             </xsl:when>
             <xsl:when test="$style=$List">
-                <xsl:text>ordered</xsl:text>
+                <xsl:text>numbered</xsl:text>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:function>
-
 
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>insert a note that a docx conversion cannot proceed</desc></doc>
@@ -221,32 +220,46 @@ of this software, even if advised of the possibility of such damage.
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>process a Word w:instrText</desc></doc>
 
-  <xsl:function name="tei:processInstruction"  as="xs:string">
+  <xsl:function name="tei:processInstruction" as="xs:string">
     <xsl:param name="instr"/>
     <xsl:variable name="instr">
-      <xsl:value-of select="replace($instr, '^\s+|\s+$', '')"></xsl:value-of>
+      <xsl:value-of select="replace($instr, '^\s+|\s+$', '')"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="matches($instr,'REF _')"> <!-- this will also catch NOTEREF _ -->
-	  <xsl:value-of select="concat('#',substring-before(substring-after($instr,'_'),'&#32;'))"/>
+      <xsl:when test="matches($instr, 'REF _')">
+        <!-- this will also catch NOTEREF _ -->
+        <xsl:value-of select="concat('#', substring-before(substring-after($instr, '_'), '&#32;'))"
+        />
       </xsl:when>
-      <xsl:when test="matches($instr,'HYPERLINK \\l ')">
-	<xsl:variable name="target">
-	  <xsl:value-of   select="translate(tokenize($instr,' ')[3],$dq,'')"/>
-	</xsl:variable>
-	<xsl:value-of select="if (matches($target,'^_')) then  concat('#',substring($target,2)) else $target"/>
+      <xsl:when test="matches($instr, 'HYPERLINK \\l ')">
+        <xsl:variable name="target">
+          <xsl:value-of select="translate(tokenize($instr, ' ')[3], $dq, '')"/>
+        </xsl:variable>
+        <xsl:value-of select="
+            if (matches($target, '^_')) then
+              concat('#', substring($target, 2))
+            else
+              $target"/>
       </xsl:when>
-      <xsl:when test="matches($instr,'HYPERLINK')">
-	<xsl:variable name="target">
-	  <xsl:value-of   select="translate(tokenize($instr,' ')[1],$dq,'')"/>
-	</xsl:variable>
-	<xsl:value-of select="if (matches($target,'^_')) then  concat('#',substring($target,2)) else $target"/>
+      <xsl:when test="matches($instr, 'HYPERLINK')">
+        <xsl:variable name="target">
+          <xsl:value-of select="translate(tokenize($instr, ' ')[2], $dq, '')"/>
+        </xsl:variable>
+        <xsl:value-of select="
+            if (matches($target, '^_')) then
+              concat('#', substring($target, 2))
+            else
+              $target"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="if (matches($instr,'(^|#)_')) then replace($instr, '(^|#)_', '#') else $instr"/>
+        <xsl:value-of select="
+            if (matches($instr, '(^|#)_')) then
+              replace($instr, '(^|#)_', '#')
+            else
+              $instr"/>
       </xsl:otherwise>
     </xsl:choose>
-</xsl:function>
+  </xsl:function>
   
 
  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

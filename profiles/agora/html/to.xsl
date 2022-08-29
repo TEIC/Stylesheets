@@ -9,6 +9,7 @@
     <!-- import base conversion style -->
 
     <xsl:import href="../../../html/html.xsl"/>
+    <xsl:import href="../../../html/microdata.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

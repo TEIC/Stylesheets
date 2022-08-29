@@ -1,12 +1,13 @@
-<xsl:stylesheet 
-    version="2.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xpath-default-namespace="http://www.tei-c.org/ns/1.0">
+<xsl:stylesheet
+        version="2.0"
+        xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+        xmlns:tei="http://www.tei-c.org/ns/1.0"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xpath-default-namespace="http://www.tei-c.org/ns/1.0">
 
-  <xsl:import href="../common/common.xsl"/>
+    <xsl:import href="../common/common.xsl"/>
 
- <xsl:strip-space elements="additional address adminInfo
+    <xsl:strip-space elements="additional address adminInfo
 			    altGrp altIdentifier analytic
 			    app appInfo application
 			    arc argument attDef
@@ -83,161 +84,238 @@
 			    vMerge vNot vRange valItem
 			    valList vocal"/>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
-      <desc>
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+        <desc>
 
-         <p>This software is dual-licensed:
+            <p>This software is dual-licensed:
 
-1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
-Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
+                1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
+                Unported License http://creativecommons.org/licenses/by-sa/3.0/
 
-2. http://www.opensource.org/licenses/BSD-2-Clause
-		
+                2. http://www.opensource.org/licenses/BSD-2-Clause
 
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
+                Redistribution and use in source and binary forms, with or without
+                modification, are permitted provided that the following conditions are
+                met:
 
-* Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
+                * Redistributions of source code must retain the above copyright
+                notice, this list of conditions and the following disclaimer.
 
-* Redistributions in binary form must reproduce the above copyright
-notice, this list of conditions and the following disclaimer in the
-documentation and/or other materials provided with the distribution.
+                * Redistributions in binary form must reproduce the above copyright
+                notice, this list of conditions and the following disclaimer in the
+                documentation and/or other materials provided with the distribution.
 
-This software is provided by the copyright holders and contributors
-"as is" and any express or implied warranties, including, but not
-limited to, the implied warranties of merchantability and fitness for
-a particular purpose are disclaimed. In no event shall the copyright
-holder or contributors be liable for any direct, indirect, incidental,
-special, exemplary, or consequential damages (including, but not
-limited to, procurement of substitute goods or services; loss of use,
-data, or profits; or business interruption) however caused and on any
-theory of liability, whether in contract, strict liability, or tort
-(including negligence or otherwise) arising in any way out of the use
-of this software, even if advised of the possibility of such damage.
-</p>
-         <p>Author: See AUTHORS</p>
-         
-         <p>Copyright: 2013, TEI Consortium</p>
-      </desc>
-   </doc>
+                This software is provided by the copyright holders and contributors
+                "as is" and any express or implied warranties, including, but not
+                limited to, the implied warranties of merchantability and fitness for
+                a particular purpose are disclaimed. In no event shall the copyright
+                holder or contributors be liable for any direct, indirect, incidental,
+                special, exemplary, or consequential damages (including, but not
+                limited to, procurement of substitute goods or services; loss of use,
+                data, or profits; or business interruption) however caused and on any
+                theory of liability, whether in contract, strict liability, or tort
+                (including negligence or otherwise) arising in any way out of the use
+                of this software, even if advised of the possibility of such damage.
+            </p>
+            <p>Author: See AUTHORS</p>
 
- <xsl:output method="text"/>
+            <p>Copyright: 2013, TEI Consortium</p>
+        </desc>
+    </doc>
 
- <xsl:template match="teiHeader"/>
- <xsl:template match="figDesc"/>
- <xsl:template match="gap/desc"/>
- <xsl:template match="choice">
-     <xsl:apply-templates select="*[1]"/>
- </xsl:template>
- <xsl:template match="speaker"/>
- <xsl:template match="facsimile"/>
+    <xsl:output method="text"/>
 
-<xsl:template name="appReading">
-     <xsl:param name="lemma"/>
-     <xsl:param name="lemmawitness"/>
-     <xsl:param name="readings"/>
-</xsl:template>
+    <xsl:template match="teiHeader"/>
+    <xsl:template match="figDesc"/>
+    <xsl:template match="gap/desc"/>
+    <xsl:template match="choice">
+        <xsl:apply-templates select="*[1]"/>
+    </xsl:template>
+    <xsl:template match="speaker"/>
+    <xsl:template match="facsimile"/>
 
-<xsl:template name="emphasize">
-      <xsl:param name="class"/>
-      <xsl:param name="content"/>
-      <xsl:choose>
-        <xsl:when test="$class='titlem'">
-          <xsl:text>_</xsl:text>
-            <xsl:copy-of select="$content"/>
-            <xsl:text>_</xsl:text>
-        </xsl:when>
-        <xsl:when test="$class='titlej'">
-          <xsl:text>_</xsl:text>
-          <xsl:copy-of select="$content"/>
-          <xsl:text>_</xsl:text>
-        </xsl:when>
-        <xsl:when test="$class='titlea'">
-          <xsl:text>‘</xsl:text>
-	  <xsl:copy-of select="$content"/>
-          <xsl:text>’</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:copy-of select="$content"/>
-        </xsl:otherwise>
-      </xsl:choose>      
-</xsl:template>
-
-<xsl:template name="generateEndLink">
-  <xsl:param name="where"/>
-</xsl:template>
-
-<xsl:template name="horizontalRule">
-  <xsl:text>&#10;---&#10;</xsl:text>
-</xsl:template>
-
-<xsl:template name="makeBlock">
-		<xsl:param name="style"/>
-		<xsl:apply-templates/>
-		<xsl:call-template name="newline"/>
-</xsl:template>
-
-<xsl:template name="makeInline">
-      <xsl:param name="before"/>
-      <xsl:param name="style"/>
-      <xsl:param name="after"/>
-</xsl:template>
-
-<xsl:template name="makeSpan">
-  <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="p">
-  <xsl:call-template name="newline"/>
-  <xsl:apply-templates/>
-  <xsl:call-template name="newline"/>
-</xsl:template>
-
-  <xsl:template match="head">
-      <xsl:choose>
-         <xsl:when test="parent::castList"/>
-         <xsl:when test="parent::figure"/>
-         <xsl:when test="parent::list"/>
-         <xsl:when test="parent::front or parent::body or
-			 parent::back or parent::lg"> &#10;*<xsl:apply-templates/>&#10; </xsl:when>
-         <xsl:when test="parent::table"/>
-         <xsl:otherwise>
-            <xsl:variable name="depth">
-               <xsl:apply-templates mode="depth" select=".."/>
-            </xsl:variable>
-            <xsl:call-template name="newline"/>
-	    <xsl:choose>
-	      <xsl:when test="$depth=0">#</xsl:when>
-	      <xsl:when test="$depth=1">##</xsl:when>
-	      <xsl:when test="$depth=2">###</xsl:when>
-	      <xsl:when test="$depth=3">####</xsl:when>
-	      <xsl:when test="$depth=4">#####</xsl:when>
-		  <xsl:otherwise>#</xsl:otherwise>
-		</xsl:choose>
-		<xsl:text> </xsl:text>
-	    <xsl:apply-templates/>
-	    <xsl:call-template name="newline"/>
-	 </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
-
-  <xsl:template match="tei:item|tei:biblStruct">
-    <xsl:call-template name="newline"/>
-    <xsl:choose>
-      <xsl:when test="tei:isOrderedList(..)">1. </xsl:when>
-      <xsl:otherwise>* </xsl:otherwise>
-    </xsl:choose>
-    <xsl:apply-templates/>
-    <xsl:call-template name="newline"/>
-  </xsl:template>
-
-    <xsl:template name="newline">
-      <xsl:text>&#10;</xsl:text>
+    <xsl:template name="appReading">
+        <xsl:param name="lemma"/>
+        <xsl:param name="lemmawitness"/>
+        <xsl:param name="readings"/>
     </xsl:template>
 
-	<xsl:template match="*"><xsl:apply-templates/></xsl:template>
-	
+    <xsl:template name="emphasize">
+        <xsl:param name="class"/>
+        <xsl:param name="content"/>
+        <xsl:choose>
+            <xsl:when test="$class='titlem'">
+                <xsl:text>_</xsl:text>
+                <xsl:copy-of select="$content"/>
+                <xsl:text>_</xsl:text>
+            </xsl:when>
+            <xsl:when test="$class='titlej'">
+                <xsl:text>_</xsl:text>
+                <xsl:copy-of select="$content"/>
+                <xsl:text>_</xsl:text>
+            </xsl:when>
+            <xsl:when test="$class='titlea'">
+                <xsl:text>‘</xsl:text>
+                <xsl:copy-of select="$content"/>
+                <xsl:text>’</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy-of select="$content"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="generateEndLink">
+        <xsl:param name="where"/>
+    </xsl:template>
+
+    <xsl:template name="horizontalRule">
+        <xsl:text>&#10;---&#10;</xsl:text>
+    </xsl:template>
+
+    <xsl:template name="makeBlock">
+        <xsl:param name="style"/>
+        <xsl:apply-templates/>
+        <xsl:call-template name="newline"/>
+    </xsl:template>
+
+    <xsl:template name="makeInline">
+        <xsl:param name="before"/>
+        <xsl:param name="style"/>
+        <xsl:param name="after"/>
+    </xsl:template>
+
+    <xsl:template name="makeSpan">
+        <xsl:apply-templates/>
+    </xsl:template>
+
+    <xsl:template match="q">
+        <xsl:text>“</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text>”</xsl:text>
+    </xsl:template>
+
+    <xsl:template match="hi[@rend = 'bold']">
+        <xsl:text>**</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text>**</xsl:text>
+    </xsl:template>
+
+    <xsl:template match="l">
+        <xsl:apply-templates/>
+        <xsl:text xml:space="preserve">  </xsl:text>
+        <xsl:call-template name="newline"/>
+    </xsl:template>
+
+    <xsl:template match="p|trailer|lg">
+        <xsl:call-template name="newline"/>
+        <xsl:apply-templates/>
+        <xsl:call-template name="newline"/>
+    </xsl:template>
+
+    <xsl:template match="note">
+        <xsl:call-template name="newline"/>
+        <xsl:text xml:space="preserve">\[</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text xml:space="preserve">\]</xsl:text>
+        <xsl:call-template name="newline"/>
+    </xsl:template>
+
+    <xsl:template match="ref[@target]">
+        <xsl:text xml:space="preserve">[</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text xml:space="preserve">](</xsl:text>
+        <xsl:value-of select="@target" />
+        <xsl:text xml:space="preserve">)</xsl:text>
+    </xsl:template>
+
+    <xsl:template match="head">
+        <xsl:choose>
+            <xsl:when test="parent::castList"/>
+            <xsl:when test="parent::figure"/>
+            <xsl:when test="parent::list"/>
+            <xsl:when test="parent::front or parent::body or
+         parent::back or parent::lg">&#10;*<xsl:apply-templates/>&#10;
+            </xsl:when>
+            <xsl:when test="parent::table"/>
+            <xsl:otherwise>
+                <xsl:variable name="depth">
+                    <xsl:apply-templates mode="depth" select=".."/>
+                </xsl:variable>
+                <xsl:call-template name="newline"/>
+                <xsl:choose>
+                    <xsl:when test="$depth=0">#</xsl:when>
+                    <xsl:when test="$depth=1">##</xsl:when>
+                    <xsl:when test="$depth=2">###</xsl:when>
+                    <xsl:when test="$depth=3">####</xsl:when>
+                    <xsl:when test="$depth=4">#####</xsl:when>
+                    <xsl:otherwise>#</xsl:otherwise>
+                </xsl:choose>
+                <xsl:text xml:space="preserve"> </xsl:text>
+                <xsl:apply-templates/>
+                <xsl:call-template name="newline"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <!-- TEI graphic elements convert to a simple structure, but it's
+            complicated figuring out where best to get the alt and title 
+            text from. Thanks @sydb for more elegant XPath. -->
+    <xsl:template match="tei:graphic[@url]">
+        <xsl:variable name="altText" as="xs:string" select="xs:string((
+      parent::tei:figure/tei:figDesc[1],
+      parent::tei:figure/tei:head[1],
+      child::tei:desc[1],
+      'graphic'
+      )[1])"/>
+        <xsl:variable name="titleText" as="xs:string" select="xs:string((
+      parent::tei:figure/tei:head[1],
+      parent::tei:figure/figDesc[1],
+      child::tei:desc[1],
+      'graphic'
+      )[1])"/>
+        <xsl:variable name="dim" as="xs:string*">
+            <xsl:if test="@width or @height">
+                <xsl:text>{:</xsl:text>
+                <xsl:for-each select="@width | @height">
+                    <xsl:value-of select="' ' || local-name(.) || '=&quot;' || . || '&quot;'"/>
+                </xsl:for-each>
+                <xsl:text>}</xsl:text>
+            </xsl:if>
+        </xsl:variable>
+        <xsl:sequence select="
+      '!['
+      ||$altText
+      ||']('
+      ||@url
+      ||' &quot;'
+      ||$titleText
+      ||'&quot;)'
+      ||string-join( $dim, '')
+      "/>
+    </xsl:template>
+
+    <!-- Suppress all attributes on graphic element. -->
+    <xsl:template match="tei:graphic/@*"/>
+
+
+    <xsl:template match="tei:item|tei:biblStruct">
+        <xsl:call-template name="newline"/>
+        <xsl:choose>
+            <xsl:when test="tei:isOrderedList(..)">1.</xsl:when>
+            <xsl:otherwise xml:space="preserve">* </xsl:otherwise>
+        </xsl:choose>
+        <xsl:apply-templates/>
+        <xsl:call-template name="newline"/>
+    </xsl:template>
+
+    <xsl:template name="newline">
+        <xsl:text>&#10;</xsl:text>
+    </xsl:template>
+
+    <xsl:template match="*">
+        <xsl:apply-templates/>
+    </xsl:template>
+
 </xsl:stylesheet>

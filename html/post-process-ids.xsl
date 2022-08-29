@@ -22,7 +22,8 @@
   </xd:doc>
   
 <!--  <xsl:output method="xhtml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>-->
-  <xsl:output method="html" />
+  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
+    exclude-result-prefixes="#all" omit-xml-declaration="yes"/>
   
 <!-- List of static ids referenced in CSS files, which we're leaving unchanged for now. -->
   <xsl:variable name="staticIds" select="('banner', 'onecol', 'udm', 'container', 'accessibility', 'hdr2', 'hdr3', 'azindex', 'byMod')"/>

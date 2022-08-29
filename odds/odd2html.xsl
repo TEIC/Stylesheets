@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dbk="http://docbook.org/ns/docbook" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" exclude-result-prefixes="xlink dbk rng tei teix xhtml sch a html xs xsl">
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="classatts.xsl"/>
-  <xsl:import href="../html5/html5.xsl"/>
+  <xsl:import href="../html/html.xsl"/>
   <xsl:import href="../html/html_oddprocessing.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -80,11 +80,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="useHeaderFrontMatter">true</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
   
-  <xsl:output method="xml" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
-  <xsl:param name="outputTarget">html5</xsl:param>
-  <xsl:param name="doctypeSystem">about:legacy-compat</xsl:param>
-  <xsl:param name="doctypePublic"/>
-  <xsl:param name="langAttributeName">lang</xsl:param>
+  <xsl:output method="xhtml" encoding="UTF-8" omit-xml-declaration="yes"  html-version="5.0" normalization-form="NFC" />
+  <xsl:param name="outputTarget">html</xsl:param>
 
   <!-- these are ones to override -->
   <xsl:param name="feedbackURL">#</xsl:param>

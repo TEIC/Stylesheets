@@ -287,22 +287,33 @@ of this software, even if advised of the possibility of such damage.
 \end{sansreflist}
 </xsl:template>
 
+   <!-- 
+      dedicated processing of links in specLists
+      which become the custom label of a LaTeX list item
+      (https://github.com/TEIC/Stylesheets/issues/537).
+   -->
    <xsl:template match="tei:hi[tei:match(@rend,'specList-elementSpec')]">
-      <xsl:text>[\textbf{&lt;</xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>&gt;}]</xsl:text>
+      <xsl:text>[{\hyperref[</xsl:text>
+      <xsl:value-of select="substring(tei:ref/@target, 2)"/>
+      <xsl:text>]{&lt;</xsl:text>
+      <xsl:value-of select="tei:ref"/>
+      <xsl:text>&gt;}}]</xsl:text>
    </xsl:template>
 
    <xsl:template match="tei:hi[tei:match(@rend,'specList-macroSpec')]">
-      <xsl:text>[\textbf{</xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>}]</xsl:text>
+      <xsl:text>[{\hyperref[</xsl:text>
+      <xsl:value-of select="substring(tei:ref/@target, 2)"/>
+      <xsl:text>]{</xsl:text>
+      <xsl:value-of select="tei:ref"/>
+      <xsl:text>}}]</xsl:text>
    </xsl:template>
 
    <xsl:template match="tei:hi[tei:match(@rend,'specList-classSpec')]">
-      <xsl:text>[\textbf{</xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>}]</xsl:text>
+      <xsl:text>[{\hyperref[</xsl:text>
+      <xsl:value-of select="substring(tei:ref/@target, 2)"/>
+      <xsl:text>]{</xsl:text>
+      <xsl:value-of select="tei:ref"/>
+      <xsl:text>}}]</xsl:text>
    </xsl:template>
 
    <xsl:template match="tei:hi[tei:match(@rend,'label')  or tei:match(@rend,'defaultVal')]">
