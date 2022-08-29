@@ -119,9 +119,8 @@
 <!--  TEI files which are converted to XSL:FO.  testMathML.xml has been removed because 
   the JEuclid jar no longer works with recent FOP versions. -->
     <fileset id="foFiles" dir="${inputDir}" includes="generalP5.xml, testStructure1.xml, testCorpus1.xml,
-        testBibliography1.xml, testNotes1.xml,
-	tei_simplePrint.doc.xml, testQuotations1.xml,
-	testBinaryObjects1.xml, testPhrase.xml"/>
+        testBibliography1.xml, testNotes1.xml, tei_simplePrint.doc.xml, testQuotations1.xml, testBinaryObjects1.xml"/>
+    <!-- Note: testPhrase.xml should probably be in above fileset, too —Syd, 2022-08-29 -->
     
 <!--  Files for conversion to RDF.  -->
     <fileset id="rdfFiles" dir="${inputDir}" includes="testToRdf1.xml"/>
