@@ -37,23 +37,18 @@ echo "  --lang=$lang    # which language to use "
 echo "  --oxygenlib=$oxygenlib    # where is oxygenlib"
 echo "  --splitLevel=$splitLevel        # splitting level "
 case $format in
-      teitorelaxng) ;;
-      teitornc) ;;
-      teitodtd) ;;
-      teitoxsd) ;;
-    *) 
-	echo "  --odd                # perform processing of ODD (if appropriate)"
+    rng|rnc|dtd|xsd)
+	if [ $from != odd ]; then echo "  --odd                # perform processing of ODD (if appropriate)"; fi
 	echo "  --localsource=DIR    # where is local copy of source of TEI Guidelines"
 	echo "  --summaryDoc         # only make summary, when doing ODD processing"
 	echo "  --schema=NAME        # process the schemaSpec called NAME"
 	;;
 esac
-
 case "$script" in
     teitoepub*) # could be teitoepub or teitoepub3
-echo "  --fileperpage        # create output files one per page "
-echo "  --nocompress	     # disable compression of epub output file"
-    ;;
+	echo "  --fileperpage        # create output files one per page "
+	echo "  --nocompress	     # disable compression of epub output file"
+	;;
 esac
 
 echo 
@@ -121,6 +116,12 @@ else
    outsuffix=.$to
 fi
 
+case $to in
+    rnc|rng|dtd|xsd)
+	if [ $from = odd ]; then odd=true; fi
+	;;
+    *)  ;;
+esac
 
 while test $# -gt 0; do
   case $1 in
@@ -209,7 +210,11 @@ D=`dirname "$in"`
 indir=`(cd $D; pwd)`
 if [ $# -eq 1 ]
 then
-   outfile=`basename "$1" .$from`$outsuffix
+   inputfilename=$1
+   inputfilename=${inputfilename%.odd}
+   inputfilename=${inputfilename%.tei}
+   inputfilename=${inputfilename%.xml}
+   outfile=`basename "$inputfilename"`$outsuffix
    outdir=$indir
 else
    outfile=`basename $2`
@@ -237,9 +242,11 @@ case $format in
 	 fi
 	  ;;
 esac
+if [ $infile = $outfile ]; then die "Generated output filename same as input filename ($outfile)."; fi
+
 
 echo Convert $infile to $outdir/$outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
-ant $antflag -f "$APPHOME/$format/build-$direction.xml" \
+echo ant $antflag -f "$APPHOME/$format/build-$direction.xml" \
 	-lib "${SAXONJAR}" $debug \
     $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress \
         -Dodd=$odd \
