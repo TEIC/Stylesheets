@@ -1948,8 +1948,8 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="odd2odd-createCopy">
     <xsl:if test="$verbose='true'">
-      <xsl:message>Create <xsl:value-of select="local-name()"/> named   <xsl:value-of select="@ident"/>   <xsl:sequence select="if
-      (@module) then concat(' module: ',@module) else ''"/>         </xsl:message>
+      <xsl:message>Create <xsl:value-of select="local-name()"/> named <xsl:value-of select="@ident"/> <xsl:sequence select="if
+      (@module) then concat(' module: ',@module) else ''"/></xsl:message>
     </xsl:if>
     <xsl:element namespace="http://www.tei-c.org/ns/1.0"
                  name="{local-name()}">
