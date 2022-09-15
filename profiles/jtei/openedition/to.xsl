@@ -577,6 +577,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each-group>
+    <p rend="quotation"><xsl:apply-templates select="../*[not(self::tei:quote)]"/></p>
   </xsl:template>
   
   <!-- serialize abstract content of "blockquote" template to OpenEdition -->
