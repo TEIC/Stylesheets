@@ -586,7 +586,7 @@
       <xsl:copy-of select="@rend|node()" copy-namespaces="no"/>
     </q>
   </xsl:template>
-  
+    
   <!-- untag <cit> in paragraph: just process contents -->
   <xsl:template match="tei:cit[ancestor::tei:note]">
     <xsl:apply-templates/>
@@ -781,7 +781,7 @@
       <!--</seg>-->
     </hi>
   </xsl:template>
-  
+    
   <xsl:template match="tei:num[@type='ordinal']">
     <xsl:variable name="current" select="."/>
     <xsl:analyze-string regex="^\d+" select="text()">
@@ -1027,6 +1027,16 @@
     </xsl:copy>
   </xsl:template>
   
+  <!-- workaround for a Lodel bug that distorts the string '&lt;/?object': inject a zero width no-break space replace before 'object' -->
+  <xsl:template match="tei:tag//text()[matches(., '(^|&lt;/?)object')]">
+    <xsl:value-of select="replace(., '(^|&lt;/?)(object)', '$1&#65279;$2')"/>
+  </xsl:template>
+  
+  <!-- workaround for a Lodel bug that distorts the string '&lt;/?object': inject a zero width no-break space replace before 'object' -->
+  <xsl:template match="tei:seg[@type='abstract.egXML.tag'][matches(., '&lt;/?object')]" mode="serialize">
+    <xsl:value-of select="replace(., '(&lt;/?)(object)', '$1&#65279;$2')"/>
+  </xsl:template>
+
   <!-- ================== -->
   <!-- default processing -->
   <!-- ================== -->  
