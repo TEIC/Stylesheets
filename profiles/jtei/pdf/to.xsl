@@ -832,7 +832,7 @@
           <xsl:choose>
             <xsl:when test="tokenize(parent::tei:list/@rend, '\s+') = 'simple'"/>
             <xsl:when test="tokenize(parent::tei:list/@rend, '\s+') = 'ordered'">
-              <xsl:variable name="nr"><xsl:number level="multiple" format="1.1.1.1.1"/></xsl:variable>
+              <xsl:variable name="nr"><xsl:number level="multiple" format="1.1.1.1.1" from="tei:list[not(parent::tei:item/parent::tei:list[tokenize(@rend, '\s+') = 'ordered'])]"/></xsl:variable>
               <xsl:value-of select="$nr"/>
               <xsl:if test="string-length($nr) = 1">
                 <xsl:text>.</xsl:text>
