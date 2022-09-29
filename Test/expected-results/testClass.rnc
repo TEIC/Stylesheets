@@ -639,7 +639,7 @@ testP1a =
   element testP1a { testClass }
 testP1b =
   
-  ## Alternate: should generate x | y | z
+  ## Alternation: should generate x | y | z
   element testP1b { x | y | z }
 testP2 =
   
@@ -647,45 +647,45 @@ testP2 =
   element testP2 { x, y, z }
 testP3 =
   
-  ## Should generate x|y but no z
+  ## Except: should generate x|y but no z
   element testP3 { x | y }
 testP4a =
   
-  ## Should also generate x|y but no z; doesnt work because wrong default value for @expand is used
+  ## Include (fail): should also generate x|y but no z; it doesn’t work because the wrong default value for @expand is used
   element testP4a { x, y }
 testP4b =
   
-  ## Should generate x|y but no z; works because right value for @expand is supplied
+  ## Include: should generate x|y but no z; it works because the right value for @expand is supplied
   element testP4b { x | y }
 testP5 =
   
-  ## Should generate (y|z)* 
+  ## Except with occurence constraints: should generate (y|z)* 
   element testP5 { (y | z)* }
 testP6 =
   
-  ## Should generate (y|z)+ 
+  ## Except with occurence constraints: should generate (y|z)+ 
   element testP6 { (y | z)+ }
 testP7 =
   
-  ## Should generate (y | z), ((y | z), (y | z)?)? 
+  ## Except with occurence constraints: should generate (y | z), ((y | z), (y | z)?)? 
   element testP7 {
     (y | z),
     ((y | z), (y | z)?)?
   }
 testP8 =
   
-  ## Should generate (x+,y+) 
+  ## Include with sequenceRepeatable: should generate (x+,y+) 
   element testP8 { x+, y+ }
 testP9 =
   
-  ## Generates (y?, z?) and not (z?,y?) because order is always order of declaration
+  ## Include with sequenceOptional: generates (y?, z?) and not (z?,y?) because order is always order of declaration
   element testP9 { y?, z? }
 testPA =
   
-  ## Should generate (x*,y*) 
+  ## Include with sequenceOptionalRepeatable: should generate (x*,y*) 
   element testPA { x*, y* }
 testPB =
   
-  ## Should generate ((x*,y*)+) whatever that means 
+  ## Include with sequenceOptionalRepeatable and occurence constraints: should generate ((x*,y*)+) whatever that means 
   element testPB { (x*, y*)+ }
 start = \div
