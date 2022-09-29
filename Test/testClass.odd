@@ -9,11 +9,12 @@
             <p>Unpublished TEI test file</p>
          </publicationStmt>
          <sourceDesc>
-            <p>All my own work</p>
+            <p>Born digital</p>
          </sourceDesc>
          
       </fileDesc>
-      <revisionDesc><change when="2016-02-14">LB drafted</change></revisionDesc>
+      <revisionDesc><change when="2016-02-14">LB drafted</change>
+         <change when="2022-09-29">Reviewed by Council for its inclusion in the test suite</change></revisionDesc>
    </teiHeader>
    <text>
       <body>
@@ -56,7 +57,7 @@
             </elementSpec>
             
             <elementSpec ident="testP1b">
-               <desc>Alternate: should generate x | y | z</desc>
+               <desc>Alternation: should generate x | y | z</desc>
                <classes>
                   <memberOf key="model.divPart"/>
                </classes>
@@ -76,7 +77,7 @@
             </elementSpec>
 
             <elementSpec ident="testP3">
-               <desc>Should generate x|y but no z</desc>
+               <desc>Except: should generate x|y but no z</desc>
                <classes>
                   <memberOf key="model.divPart"/>
                </classes>
@@ -86,7 +87,7 @@
             </elementSpec>
 
             <elementSpec ident="testP4a">
-               <desc>Should also generate x|y but no z; doesnt work because wrong default value for
+               <desc>Include (fail): should also generate x|y but no z; it doesn’t work because the wrong default value for
                   @expand is used</desc>
                <classes>
                   <memberOf key="model.divPart"/>
@@ -97,7 +98,7 @@
             </elementSpec>
 
             <elementSpec ident="testP4b">
-               <desc>Should generate x|y but no z; works because right value for @expand is
+               <desc>Include: should generate x|y but no z; it works because the right value for @expand is
                   supplied</desc>
                <classes>
                   <memberOf key="model.divPart"/>
@@ -108,7 +109,7 @@
             </elementSpec>
 
             <elementSpec ident="testP5">
-               <desc>Should generate (y|z)* </desc>
+               <desc>Except with occurence constraints: should generate (y|z)* </desc>
                <classes>
                   <memberOf key="model.divPart"/>
                </classes>
@@ -119,7 +120,7 @@
             </elementSpec>
 
             <elementSpec ident="testP6">
-               <desc>Should generate (y|z)+ </desc>
+               <desc>Except with occurence constraints: should generate (y|z)+ </desc>
                <classes>
                   <memberOf key="model.divPart"/>
                </classes>
@@ -129,7 +130,7 @@
             </elementSpec>
 
             <elementSpec ident="testP7">
-               <desc>Should generate  (y | z), ((y | z), (y | z)?)? </desc>
+               <desc>Except with occurence constraints: should generate  (y | z), ((y | z), (y | z)?)? </desc>
                <classes>
                   <memberOf key="model.divPart"/>
                </classes>
@@ -139,7 +140,7 @@
             </elementSpec>
 
             <elementSpec ident="testP8">
-               <desc>Should generate (x+,y+) </desc>
+               <desc>Include with sequenceRepeatable: should generate (x+,y+) </desc>
                <classes>
                   <memberOf key="model.divPart"/>
                </classes>
@@ -149,7 +150,7 @@
             </elementSpec>
 
             <elementSpec ident="testP9">
-               <desc>Generates  (y?, z?) and not (z?,y?) because order is always order of declaration</desc>
+               <desc>Include with sequenceOptional: generates (y?, z?) and not (z?,y?) because order is always order of declaration</desc>
                <classes>
                   <memberOf key="model.divPart"/>
                </classes>
@@ -160,7 +161,7 @@
           
             
             <elementSpec ident="testPA">
-               <desc>Should generate (x*,y*) </desc>
+               <desc>Include with sequenceOptionalRepeatable: should generate (x*,y*) </desc>
                <classes>
                   <memberOf key="model.divPart"/>
                </classes>
@@ -170,7 +171,7 @@
             </elementSpec>
             
             <elementSpec ident="testPB">
-               <desc>Should generate ((x*,y*)+) whatever that means </desc>
+               <desc>Include with sequenceOptionalRepeatable and occurence constraints: should generate ((x*,y*)+) whatever that means </desc>
                <classes>
                   <memberOf key="model.divPart"/>
                </classes>

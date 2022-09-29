@@ -753,8 +753,8 @@ test-namespaces: actual
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test35.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test35.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-	then diff -bBw $(AR)/test35.rnc $(ER)/test35.rnc; \
-	else echo "==deferring: \` diff -bBw $(AR)/test35.rnc $(ER)/test35.rnc \`"; fi
+	   then diff -bBw $(AR)/test35.rnc $(ER)/test35.rnc; \
+	   else echo "==deferring: \` diff -bBw $(AR)/test35.rnc $(ER)/test35.rnc \`"; fi
 	
 #HBS 2022-04-30 tests attributes @include and @except
 	$(BINDIR)/teitornc $(FLAGS) testClass.odd $(AR)/testClass.rnc
