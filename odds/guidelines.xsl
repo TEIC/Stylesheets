@@ -4,6 +4,13 @@
      omit-xml-declaration="yes"/>
   <xsl:param name="directory">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
+  <!-- 
+       The following is the character used for “link to this spot” icon.
+       The U+FE0E character added 2022-09-29 by Stylesheets
+       group to address Stylesheets issue 479:
+       https://github.com/TEIC/Stylesheets/issues/479
+  -->  
+  <xsl:variable name="anchorChar" as="xs:string" select="'&#x2693;&#xFE0E;'"/>
   <xsl:key name="EXAMPLES" match="teix:*[ancestor::teix:egXML]" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
   <xsl:key name="HEADS" match="tei:head" use="concat(@xml:lang,@corresp)"/>
   <xsl:key name="BACKLINKS" match="teix:egXML[@corresp]" use="substring(@corresp,2)"/>
@@ -682,7 +689,7 @@
             <xsl:text>TEI: </xsl:text>
             <xsl:value-of select="tei:head[1]"/>
           </span>
-          <xsl:text>&#x2693;</xsl:text>
+	  <xsl:sequence select="$anchorChar"/>
         </a>
       </span>
     </xsl:if>
@@ -777,7 +784,7 @@
 	  <!-- Our current context node is an <egXML>, so find its ID: -->
 	  <xsl:apply-templates mode="ident" select="."/>
 	</xsl:attribute>
-	<xsl:text>&#x2693;</xsl:text>
+	<xsl:sequence select="$anchorChar"/>
       </a>
     </xsl:variable>
     <div style="float: right;">
@@ -1006,7 +1013,6 @@
   </xsl:template>
 
 
-
   <!-- Addition by Martin Holmes 2012-07-15 for ticket http://purl.org/tei/fr/3511134    -->
   <xsl:template name="attDefHook">
     <xsl:param name="attName"/>
@@ -1022,7 +1028,7 @@
               <xsl:text> </xsl:text>
               <xsl:value-of select="$attName"/>
             </span>
-            <xsl:text>&#x2693;</xsl:text>
+	    <xsl:sequence select="$anchorChar"/>
           </a>
         </span>
       </xsl:when>
