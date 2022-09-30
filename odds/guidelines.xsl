@@ -307,23 +307,11 @@
 	  <xsl:sequence select="tei:htmlHead($pagetitle,10)"/>
           <body id="TOP">
             <xsl:call-template name="guidelinesTop">
-              <xsl:with-param name="name">
-                <xsl:sequence select="tei:i18n('Example')"/>
-                <xsl:text>: &lt;</xsl:text>
-                <xsl:value-of select="$me"/>
-                <xsl:text>&gt; </xsl:text>
-                <xsl:sequence select="tei:makeGloss(.,$langs)"/>
-              </xsl:with-param>
+              <xsl:with-param name="name" select="$pagetitle"/>
             </xsl:call-template>
             <div class="main-content">
               <xsl:call-template name="startDivHook"/>
-              <h3>
-                <xsl:sequence select="tei:i18n('Example')"/>
-                <xsl:text>: &lt;</xsl:text>
-                <xsl:value-of select="$me"/>
-                <xsl:text>&gt; </xsl:text>
-                <xsl:sequence select="tei:makeGloss(.,$langs)"/>
-              </h3>
+              <h3><xsl:sequence select="$pagetitle"/></h3>
               <p>These search results reproduce every example of the
 	      use of <xsl:text>&lt;</xsl:text>
 	      <xsl:value-of select="$me"/>
