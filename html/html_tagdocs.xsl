@@ -62,16 +62,43 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element gi</desc>
+    <desc>Process elements gi, att, val, and tag </desc>
   </doc>
-  <xsl:template match="tei:gi">
-    <span class="gi">
-      <xsl:text>&lt;</xsl:text>
+  <xsl:template match="tei:gi | tei:att | tei:val | tei:tag">
+    <span class="{local-name(.)}">
+      <xsl:variable name="start_delimiter">
+        <xsl:choose>
+          <xsl:when test="self::tei:gi">&lt;</xsl:when>
+          <xsl:when test="self::tei:att">@</xsl:when>
+          <xsl:when test="self::tei:val">"</xsl:when>
+          <xsl:when test="self::tei:tag[@type eq 'start']">&lt;</xsl:when>
+          <xsl:when test="self::tei:tag[@type eq 'end']">&lt;/</xsl:when>
+          <xsl:when test="self::tei:tag[@type eq 'empty']">&lt;</xsl:when>
+          <xsl:when test="self::tei:tag[@type eq 'pi']">&lt;?</xsl:when>
+          <xsl:when test="self::tei:tag[@type eq 'comment']">&lt;!--</xsl:when>
+          <xsl:when test="self::tei:tag[@type eq 'ms']">&lt;[CDATA[</xsl:when>
+          <xsl:when test="self::tei:tag[ not( @type ) ]">&lt;</xsl:when>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="end_delimiter">
+        <xsl:choose>
+          <xsl:when test="self::tei:gi">&gt;</xsl:when>
+          <xsl:when test="self::tei:att"></xsl:when>
+          <xsl:when test="self::tei:val">"</xsl:when>
+          <xsl:when test="self::tei:tag[@type eq 'start']">&gt;</xsl:when>
+          <xsl:when test="self::tei:tag[@type eq 'end']">&gt;</xsl:when>
+          <xsl:when test="self::tei:tag[@type eq 'empty']">/&gt;</xsl:when>
+          <xsl:when test="self::tei:tag[@type eq 'pi']">?&gt;</xsl:when>
+          <xsl:when test="self::tei:tag[@type eq 'comment']">--&gt;</xsl:when>
+          <xsl:when test="self::tei:tag[@type eq 'ms']">]]&gt;</xsl:when>
+          <xsl:when test="self::tei:tag[ not( @type ) ]">&gt;</xsl:when>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:sequence select="$start_delimiter"/>
       <xsl:apply-templates/>
-      <xsl:text>&gt;</xsl:text>
+      <xsl:sequence select="$end_delimiter"/>
     </span>
   </xsl:template>
-
 
 <xsl:template match="tei:specGrp">
   <p><b>Specification group [<xsl:value-of select="@xml:id"/>]</b></p>

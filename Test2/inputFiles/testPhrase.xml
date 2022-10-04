@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title type="main">Tests for phrase-level encoding</title>
+        <author>Syd Bauman</author>
+	<author>Elli Bleeker</author>
+      </titleStmt>
+      <publicationStmt><p>Stylesheets test file</p></publicationStmt>
+      <sourceDesc>
+        <p>Born digital</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div>
+	<head>Tests of tagdoc phrase level elements</head>
+	<lg>
+	  <l>This is an <gi>element</gi>, all bright and blue</l>
+	  <l>this is an <att>attribute</att>, information for you</l>
+	  <l><emph>this</emph> is a <val>value</val>, worthless to me</l>
+	  <l>And this is an <tag type="end">end-tag</tag> as you can see</l>
+	</lg>
+	<p>However, it is more important to test <tag type="ms">a
+	&lt;&lt;marked section>></tag>, don’t you agree?</p>
+	<p>Not to mention a <tag type="pi">tei processing
+	instruction</tag> and a simple
+	<tag type="comment"> comment! </tag>.</p>
+      </div>
+    </body>
+  </text>
+</TEI>

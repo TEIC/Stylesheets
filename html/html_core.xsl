@@ -325,20 +325,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:element>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-      <p>Process element att</p>
-      <p>
-        <p xmlns="http://www.w3.org/1999/xhtml"> special purpose </p>
-      </p>
-    </desc>
-  </doc>
-  <xsl:template match="tei:att">
-    <span>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:apply-templates/>
-    </span>
-  </xsl:template>
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process gloss element</desc>
   </doc>
