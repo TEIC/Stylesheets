@@ -101,8 +101,7 @@
     <xsl:variable name="doc"
       select="concat($workDir,'/',/rels:Relationships/rels:Relationship[@Type='http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument']/@Target)"/>
     <xsl:variable name="office-document" select="document($doc)"/>
-    <xsl:variable name="core-properties"
-      select="document(concat($workDir,'/',/rels:Relationships/rels:Relationship[@Type='http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties']/@Target))/cp:coreProperties"/>
+    <xsl:variable name="core-properties"><xsl:if test="fn:doc-available(concat($workDir,'/',/rels:Relationships/rels:Relationship[@Type='http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties']/@Target))"><xsl:sequence select="document(concat($workDir,'/',/rels:Relationships/rels:Relationship[@Type='http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties']/@Target))/cp:coreProperties"></xsl:sequence></xsl:if></xsl:variable>
     <!-- Let's make sure this looks like a spreadsheet -->
     <xsl:if test="not($office-document/sml:workbook)">
       <xsl:message terminate="yes">This does not look like an Office OpenXML workbook. The root
