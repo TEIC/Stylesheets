@@ -10,14 +10,8 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 
 
 #
-macro.paraContent =
-  (text
-   | model.gLike
-   | model.phrase
-   | model.inter
-   | model.global
-   | lg
-   | model.lLike)*
+macro.abContent = (text | model.paraPart | ab)*
+macro.paraContent = (text | model.paraPart)*
 macro.limitedContent = (text | model.limitedPhrase | model.inter)*
 macro.phraseSeq =
   (text
@@ -417,10 +411,10 @@ sch:pattern [
     "\x{a}" ~
     "         "
     sch:assert [
-      test = "string-length(.) gt 0"
-      " @calendar indicates one or more systems or calendars to\x{a}" ~
-      "              which the date represented by the content of this element belongs, but this\x{a}" ~
-      "              "
+      test = "string-length( normalize-space(.) ) gt 0"
+      " @calendar indicates one or more\x{a}" ~
+      "            systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+      "            but this "
       sch:name [ ]
       " element has no textual content."
     ]
@@ -647,22 +641,22 @@ sch:pattern [
   "\x{a}" ~
   "      "
   sch:rule [
-    context = "tei:*/@source"
+    context = "tei:*[@source]"
     "\x{a}" ~
     "         "
     sch:let [
       name = "srcs"
-      value = "tokenize( normalize-space(.),' ')"
+      value = "tokenize( normalize-space(@source),' ')"
     ]
     "\x{a}" ~
     "         "
     sch:report [
       test =
-        "( parent::tei:classRef | parent::tei:dataRef | parent::tei:elementRef | parent::tei:macroRef | parent::tei:moduleRef | parent::tei:schemaSpec ) and $srcs[2]"
+        "( self::tei:classRef               | self::tei:dataRef               | self::tei:elementRef               | self::tei:macroRef               | self::tei:moduleRef               | self::tei:schemaSpec )               and               $srcs[2]"
       "\x{a}" ~
       "              When used on a schema description element (like\x{a}" ~
       "              "
-      sch:value-of [ select = "name(..)" ]
+      sch:value-of [ select = "name(.)" ]
       "), the @source attribute\x{a}" ~
       "              should have only 1 value. (This one has "
       sch:value-of [ select = "count($srcs)" ]
@@ -807,7 +801,7 @@ att.media.attribute.width =
   attribute width {
     xsd:token {
       pattern =
-        "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|gd|rem|vw|vh|vm)"
+        "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|ch|rem|vw|vh|vmin|vmax)"
     }
   }?
 att.media.attribute.height =
@@ -816,7 +810,7 @@ att.media.attribute.height =
   attribute height {
     xsd:token {
       pattern =
-        "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|gd|rem|vw|vh|vm)"
+        "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|ch|rem|vw|vh|vmin|vmax)"
     }
   }?
 att.media.attribute.scale =
@@ -1392,6 +1386,11 @@ model.nameLike.agent_sequenceOptionalRepeatable =
   name*, orgName*, persName*
 model.nameLike.agent_sequenceRepeatable = name+, orgName+, persName+
 model.segLike = seg
+model.segLike_alternation = seg
+model.segLike_sequence = seg
+model.segLike_sequenceOptional = seg?
+model.segLike_sequenceOptionalRepeatable = seg*
+model.segLike_sequenceRepeatable = seg+
 model.hiLike = hi | q
 model.hiLike_alternation = hi | q
 model.hiLike_sequence = hi, q
@@ -1446,6 +1445,17 @@ model.emphLike_sequenceRepeatable =
   term+,
   title+
 model.highlighted = model.hiLike | model.emphLike
+model.highlighted_alternation =
+  model.hiLike_alternation | model.emphLike_alternation
+model.highlighted_sequence =
+  model.hiLike_sequence, model.emphLike_sequence
+model.highlighted_sequenceOptional =
+  model.hiLike_sequenceOptional?, model.emphLike_sequenceOptional?
+model.highlighted_sequenceOptionalRepeatable =
+  model.hiLike_sequenceOptionalRepeatable*,
+  model.emphLike_sequenceOptionalRepeatable*
+model.highlighted_sequenceRepeatable =
+  model.hiLike_sequenceRepeatable+, model.emphLike_sequenceRepeatable+
 model.dateLike = date | time
 model.dateLike_alternation = date | time
 model.dateLike_sequence = date, time
@@ -1496,6 +1506,12 @@ model.egLike_sequenceOptional = empty
 model.egLike_sequenceOptionalRepeatable = empty
 model.egLike_sequenceRepeatable = notAllowed
 model.graphicLike = media | graphic | binaryObject
+model.graphicLike_alternation = media | graphic | binaryObject
+model.graphicLike_sequence = media, graphic, binaryObject
+model.graphicLike_sequenceOptional = media?, graphic?, binaryObject?
+model.graphicLike_sequenceOptionalRepeatable =
+  media*, graphic*, binaryObject*
+model.graphicLike_sequenceRepeatable = media+, graphic+, binaryObject+
 model.offsetLike = offset | geogFeat
 model.offsetLike_alternation = offset | geogFeat
 model.offsetLike_sequence = offset, geogFeat
@@ -1516,6 +1532,76 @@ model.pPart.msdesc =
   | signatures
   | stamp
   | watermark
+model.pPart.msdesc_alternation =
+  catchwords
+  | dimensions
+  | heraldry
+  | locus
+  | locusGrp
+  | material
+  | objectType
+  | origDate
+  | origPlace
+  | secFol
+  | signatures
+  | stamp
+  | watermark
+model.pPart.msdesc_sequence =
+  catchwords,
+  dimensions,
+  heraldry,
+  locus,
+  locusGrp,
+  material,
+  objectType,
+  origDate,
+  origPlace,
+  secFol,
+  signatures,
+  stamp,
+  watermark
+model.pPart.msdesc_sequenceOptional =
+  catchwords?,
+  dimensions?,
+  heraldry?,
+  locus?,
+  locusGrp?,
+  material?,
+  objectType?,
+  origDate?,
+  origPlace?,
+  secFol?,
+  signatures?,
+  stamp?,
+  watermark?
+model.pPart.msdesc_sequenceOptionalRepeatable =
+  catchwords*,
+  dimensions*,
+  heraldry*,
+  locus*,
+  locusGrp*,
+  material*,
+  objectType*,
+  origDate*,
+  origPlace*,
+  secFol*,
+  signatures*,
+  stamp*,
+  watermark*
+model.pPart.msdesc_sequenceRepeatable =
+  catchwords+,
+  dimensions+,
+  heraldry+,
+  locus+,
+  locusGrp+,
+  material+,
+  objectType+,
+  origDate+,
+  origPlace+,
+  secFol+,
+  signatures+,
+  stamp+,
+  watermark+
 model.pPart.editorial = choice | abbr | expan | ex | am | subst
 model.pPart.editorial_alternation =
   choice | abbr | expan | ex | am | subst
@@ -1635,6 +1721,20 @@ model.pPart.transcriptional_sequenceRepeatable =
   retrace+,
   undo+
 model.pPart.edit = model.pPart.editorial | model.pPart.transcriptional
+model.pPart.edit_alternation =
+  model.pPart.editorial_alternation
+  | model.pPart.transcriptional_alternation
+model.pPart.edit_sequence =
+  model.pPart.editorial_sequence, model.pPart.transcriptional_sequence
+model.pPart.edit_sequenceOptional =
+  model.pPart.editorial_sequenceOptional?,
+  model.pPart.transcriptional_sequenceOptional?
+model.pPart.edit_sequenceOptionalRepeatable =
+  model.pPart.editorial_sequenceOptionalRepeatable*,
+  model.pPart.transcriptional_sequenceOptionalRepeatable*
+model.pPart.edit_sequenceRepeatable =
+  model.pPart.editorial_sequenceRepeatable+,
+  model.pPart.transcriptional_sequenceRepeatable+
 model.linePart =
   model.hiLike
   | choice
@@ -1653,7 +1753,17 @@ model.linePart =
   | retrace
   | undo
 model.ptrLike = ptr | ref
+model.ptrLike_alternation = ptr | ref
+model.ptrLike_sequence = ptr, ref
+model.ptrLike_sequenceOptional = ptr?, ref?
+model.ptrLike_sequenceOptionalRepeatable = ptr*, ref*
+model.ptrLike_sequenceRepeatable = ptr+, ref+
 model.lPart = notAllowed
+model.lPart_alternation = notAllowed
+model.lPart_sequence = empty
+model.lPart_sequenceOptional = empty
+model.lPart_sequenceOptionalRepeatable = empty
+model.lPart_sequenceRepeatable = notAllowed
 model.global.meta =
   index
   | link
@@ -1665,7 +1775,71 @@ model.global.meta =
   | altGrp
   | substJoin
   | listTranspose
+model.global.meta_alternation =
+  index
+  | link
+  | linkGrp
+  | timeline
+  | join
+  | joinGrp
+  | alt
+  | altGrp
+  | substJoin
+  | listTranspose
+model.global.meta_sequence =
+  index,
+  link,
+  linkGrp,
+  timeline,
+  join,
+  joinGrp,
+  alt,
+  altGrp,
+  substJoin,
+  listTranspose
+model.global.meta_sequenceOptional =
+  index?,
+  link?,
+  linkGrp?,
+  timeline?,
+  join?,
+  joinGrp?,
+  alt?,
+  altGrp?,
+  substJoin?,
+  listTranspose?
+model.global.meta_sequenceOptionalRepeatable =
+  index*,
+  link*,
+  linkGrp*,
+  timeline*,
+  join*,
+  joinGrp*,
+  alt*,
+  altGrp*,
+  substJoin*,
+  listTranspose*
+model.global.meta_sequenceRepeatable =
+  index+,
+  link+,
+  linkGrp+,
+  timeline+,
+  join+,
+  joinGrp+,
+  alt+,
+  altGrp+,
+  substJoin+,
+  listTranspose+
 model.milestoneLike = milestone | gb | pb | lb | cb | anchor | fw
+model.milestoneLike_alternation =
+  milestone | gb | pb | lb | cb | anchor | fw
+model.milestoneLike_sequence = milestone, gb, pb, lb, cb, anchor, fw
+model.milestoneLike_sequenceOptional =
+  milestone?, gb?, pb?, lb?, cb?, anchor?, fw?
+model.milestoneLike_sequenceOptionalRepeatable =
+  milestone*, gb*, pb*, lb*, cb*, anchor*, fw*
+model.milestoneLike_sequenceRepeatable =
+  milestone+, gb+, pb+, lb+, cb+, anchor+, fw+
 model.gLike = notAllowed
 model.oddDecl = notAllowed
 model.oddDecl_alternation = notAllowed
@@ -1674,7 +1848,17 @@ model.oddDecl_sequenceOptional = empty
 model.oddDecl_sequenceOptionalRepeatable = empty
 model.oddDecl_sequenceRepeatable = notAllowed
 model.phrase.xml = notAllowed
+model.phrase.xml_alternation = notAllowed
+model.phrase.xml_sequence = empty
+model.phrase.xml_sequenceOptional = empty
+model.phrase.xml_sequenceOptionalRepeatable = empty
+model.phrase.xml_sequenceRepeatable = notAllowed
 model.specDescLike = notAllowed
+model.specDescLike_alternation = notAllowed
+model.specDescLike_sequence = empty
+model.specDescLike_sequenceOptional = empty
+model.specDescLike_sequenceOptionalRepeatable = empty
+model.specDescLike_sequenceRepeatable = notAllowed
 model.biblLike = bibl | biblStruct | listBibl | biblFull | msDesc
 model.biblLike_alternation =
   bibl | biblStruct | listBibl | biblFull | msDesc
@@ -1752,6 +1936,11 @@ model.listLike_sequenceRepeatable =
   listObject+,
   listNym+
 model.noteLike = note | noteGrp
+model.noteLike_alternation = note | noteGrp
+model.noteLike_sequence = note, noteGrp
+model.noteLike_sequenceOptional = note?, noteGrp?
+model.noteLike_sequenceOptionalRepeatable = note*, noteGrp*
+model.noteLike_sequenceRepeatable = note+, noteGrp+
 model.lLike = l
 model.lLike_alternation = l
 model.lLike_sequence = l
@@ -1774,6 +1963,16 @@ model.entryPart = notAllowed
 model.eventLike = event | listEvent
 model.global.edit =
   gap | ellipsis | addSpan | damageSpan | delSpan | space
+model.global.edit_alternation =
+  gap | ellipsis | addSpan | damageSpan | delSpan | space
+model.global.edit_sequence =
+  gap, ellipsis, addSpan, damageSpan, delSpan, space
+model.global.edit_sequenceOptional =
+  gap?, ellipsis?, addSpan?, damageSpan?, delSpan?, space?
+model.global.edit_sequenceOptionalRepeatable =
+  gap*, ellipsis*, addSpan*, damageSpan*, delSpan*, space*
+model.global.edit_sequenceRepeatable =
+  gap+, ellipsis+, addSpan+, damageSpan+, delSpan+, space+
 model.divPart = model.lLike | model.pLike | lg | sp
 model.persStateLike =
   persName
@@ -1782,6 +1981,7 @@ model.persStateLike =
   | education
   | faith
   | floruit
+  | gender
   | langKnowledge
   | nationality
   | occupation
@@ -2052,6 +2252,31 @@ model.pPart.data =
   | model.measureLike
   | model.addressLike
   | model.nameLike
+model.pPart.data_alternation =
+  model.dateLike_alternation
+  | model.measureLike_alternation
+  | model.addressLike_alternation
+  | model.nameLike_alternation
+model.pPart.data_sequence =
+  model.dateLike_sequence,
+  model.measureLike_sequence,
+  model.addressLike_sequence,
+  model.nameLike_sequence
+model.pPart.data_sequenceOptional =
+  model.dateLike_sequenceOptional?,
+  model.measureLike_sequenceOptional?,
+  model.addressLike_sequenceOptional?,
+  model.nameLike_sequenceOptional?
+model.pPart.data_sequenceOptionalRepeatable =
+  model.dateLike_sequenceOptionalRepeatable*,
+  model.measureLike_sequenceOptionalRepeatable*,
+  model.addressLike_sequenceOptionalRepeatable*,
+  model.nameLike_sequenceOptionalRepeatable*
+model.pPart.data_sequenceRepeatable =
+  model.dateLike_sequenceRepeatable+,
+  model.measureLike_sequenceRepeatable+,
+  model.addressLike_sequenceRepeatable+,
+  model.nameLike_sequenceRepeatable+
 model.inter =
   model.egLike
   | model.oddDecl
@@ -2073,6 +2298,13 @@ model.phrase =
   | model.specDescLike
   | model.pPart.data
   | ruby
+model.paraPart =
+  model.gLike
+  | model.lLike
+  | model.global
+  | model.inter
+  | model.phrase
+  | lg
 model.limitedPhrase =
   model.hiLike
   | model.emphLike
@@ -3286,7 +3518,7 @@ gb =
   }
 pb =
   
-  ## (saut de page) marque le début d'une page de texte dans un document paginé. [3.11.3. Milestone
+  ## (début de page) marque le début d'une page de texte dans un document paginé. [3.11.3. Milestone
   ## Elements]
   element pb {
     empty,
@@ -3299,7 +3531,7 @@ pb =
   }
 lb =
   
-  ## (saut de ligne) marque le début d'une nouvelle ligne (typographique) dans une édition ou dans une version d'un texte. [3.11.3. Milestone
+  ## (début de ligne) marque le début d'une nouvelle ligne (typographique) dans une édition ou dans une version d'un texte. [3.11.3. Milestone
   ## Elements 7.2.5. Speech Contents]
   element lb {
     empty,
@@ -3312,7 +3544,7 @@ lb =
   }
 cb =
   
-  ## (saut de colonne) marque le début d'une nouvelle colonne de texte sur une page multi-colonne. [3.11.3. Milestone
+  ## (début de colonne) marque le début d'une nouvelle colonne de texte sur une page multi-colonne. [3.11.3. Milestone
   ## Elements]
   element cb {
     empty,
@@ -3830,7 +4062,7 @@ textLang =
     ]
   ]
   element textLang {
-    macro.phraseSeq,
+    macro.specialPara,
     att.global.attributes,
     
     ## (langue principale) contient un code identifiant la langue principale du manuscrit.
@@ -4380,6 +4612,24 @@ floruit =
     att.editLike.attributes,
     empty
   }
+gender =
+  
+  ## (gender) specifies the gender identity of a person, persona, or character. [13.3.2.1. Personal Characteristics]
+  element gender {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.editLike.attributes,
+    att.datable.attributes,
+    att.typed.attributes,
+    
+    ## supplies a coded value for gender identity
+    attribute value {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    empty
+  }
 geo =
   
   ## (coordonnées géographiques) contient toute expression, dans un système de notation, d'un ensemble de coordonnées géographiques représentant un point, une ligne ou une zone sur la surface de la Terre. [13.3.4.1. Varieties of Location]
@@ -4636,6 +4886,13 @@ person =
       }
     }?,
     
+    ## specifies the gender of the person.
+    attribute gender {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
     ## précise une tranche d'âge pour la personne.
     attribute age {
       xsd:token { pattern = "[^\p{C}\p{Z}]+" }
@@ -4665,6 +4922,13 @@ persona =
       }
     }?,
     
+    ## specifies the gender of the persona.
+    attribute gender {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
     ## précise une tranche d'âge pour la personne.
     attribute age {
       xsd:token { pattern = "[^\p{C}\p{Z}]+" }
@@ -4686,6 +4950,13 @@ personGrp =
     
     ## précise le sexe du groupe participant.
     attribute sex {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
+    ## specifies the gender of the participant group.
+    attribute gender {
       list {
         xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
@@ -4884,19 +5155,13 @@ residence =
   }
 sex =
   
-  ## (sexe) précise le sexe d'une personne. [13.3.2.1. Personal Characteristics]
+  ## (sexe) précise le sexe d'un organisme. [13.3.2.1. Personal Characteristics]
   element sex {
     macro.phraseSeq,
     att.global.attributes,
     att.editLike.attributes,
     att.datable.attributes,
-    att.typed.attribute.subtype,
-    
-    ## caractérise l'élément en utilisant n'importe quel système ou typologie de classification approprié.
-    ## Sample values include: 1] explicit; 2] implicit
-    attribute type {
-      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
-    }?,
+    att.typed.attributes,
     
     ## supplies a coded value for sex
     attribute value {
@@ -5664,34 +5929,11 @@ citeStructure =
     (citeData*, citeStructure*, model.descLike*),
     att.global.attributes,
     att.citeStructurePart.attributes,
-    (
-     ## (delimiter) supplies a delimiting string preceding the structural component.
-     attribute delim {
-       xsd:string { pattern = ".+" }
-     }?)
-    >> sch:pattern [
-         id =
-           "test21-citeStructure-delim-citestructure-inner-delim-constraint-rule-13"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:citeStructure[parent::tei:citeStructure]"
-           "\x{a}" ~
-           "               "
-           sch:assert [
-             test = "@delim"
-             "A "
-             sch:name [ ]
-             " with a parent "
-             sch:name [ ]
-             " must have a @delim attribute."
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ],
+    
+    ## (delimiter) supplies a delimiting string preceding the structural component.
+    attribute delim {
+      xsd:string { pattern = ".+" }
+    }?,
     [
       a:documentation [
         "(match) supplies an XPath selection pattern using the syntax defined in  which identifies a set of nodes which are citable structural components. The expression may be absolute (beginning with `/`) or relative. "
@@ -5710,7 +5952,7 @@ citeStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "test21-citeStructure-match-citestructure-outer-match-constraint-rule-14"
+           "test21-citeStructure-match-citestructure-outer-match-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5731,7 +5973,7 @@ citeStructure =
        ]
     >> sch:pattern [
          id =
-           "test21-citeStructure-match-citestructure-inner-match-constraint-rule-15"
+           "test21-citeStructure-match-citestructure-inner-match-constraint-rule-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5992,7 +6234,9 @@ abstract =
   
   ## contains a summary or formal abstract prefixed to an existing source document by the encoder. [2.4.4. Abstracts]
   element abstract {
-    (model.pLike | model.listLike)+, att.global.attributes, empty
+    (model.pLike | model.listLike | listBibl)+,
+    att.global.attributes,
+    empty
   }
 creation =
   
@@ -6282,7 +6526,7 @@ link =
   element link {
     empty
     >> sch:pattern [
-         id = "test21-link-linkTargets3-constraint-assert-16"
+         id = "test21-link-linkTargets3-constraint-assert-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6320,32 +6564,10 @@ ab =
   
   ## (bloc anonyme) contient une unité de texte quelconque, de niveau "composant", faisant office de contenant anonyme pour une expression ou des éléments de niveau intermédiaire, analogue à un paragraphe mais sans sa portée sémantique. [16.3. Blocks, Segments, and Anchors]
   element ab {
-    macro.paraContent
+    macro.abContent
     >> sch:pattern [
          id =
-           "test21-ab-abstractModel-structure-ab-in-ab-or-p-constraint-report-17"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:ab"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test =
-               "(ancestor::tei:p or ancestor::tei:ab) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"
-             "\x{a}" ~
-             "        Abstract model violation: ab may not occur inside paragraphs or other ab elements.\x{a}" ~
-             "      "
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ]
-    >> sch:pattern [
-         id =
-           "test21-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-18"
+           "test21-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6547,7 +6769,7 @@ join =
   element join {
     ((model.descLike | model.certLike)*)
     >> sch:pattern [
-         id = "test21-join-joinTargets3-constraint-assert-17"
+         id = "test21-join-joinTargets3-constraint-assert-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6697,7 +6919,7 @@ standOff =
     (model.standOffPart+)
     >> sch:pattern [
          id =
-           "test21-standOff-nested_standOff_should_be_typed-constraint-assert-18"
+           "test21-standOff-nested_standOff_should_be_typed-constraint-assert-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6890,7 +7112,7 @@ catchwords =
     macro.phraseSeq
     >> sch:pattern [
          id =
-           "test21-catchwords-catchword_in_msDesc-constraint-assert-19"
+           "test21-catchwords-catchword_in_msDesc-constraint-assert-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6918,7 +7140,7 @@ dimensions =
   element dimensions {
     ((dim | model.dimLike)*)
     >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint-report-19"
+         id = "test21-dimensions-duplicateDim-constraint-report-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7102,7 +7324,7 @@ secFol =
   element secFol {
     macro.phraseSeq
     >> sch:pattern [
-         id = "test21-secFol-secFol_in_msDesc-constraint-assert-20"
+         id = "test21-secFol-secFol_in_msDesc-constraint-assert-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7131,7 +7353,7 @@ signatures =
     macro.specialPara
     >> sch:pattern [
          id =
-           "test21-signatures-signatures_in_msDesc-constraint-assert-21"
+           "test21-signatures-signatures_in_msDesc-constraint-assert-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7184,7 +7406,7 @@ msIdentifier =
       idno*),
      (msName | objectName | altIdentifier)*)
     >> sch:pattern [
-         id = "test21-msIdentifier-msId_minimal-constraint-report-22"
+         id = "test21-msIdentifier-msId_minimal-constraint-report-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7821,7 +8043,29 @@ facsimile =
   
   ## contient une représentation d'une source écrite quelconque sous la forme d'un ensemble d'images plutôt que sous la forme d'un texte transcrit ou encodé. [11.1. Digital Facsimiles]
   element facsimile {
-    (front?, (model.graphicLike | surface | surfaceGrp)+, back?),
+    (front?, (model.graphicLike | surface | surfaceGrp)+, back?)
+    >> sch:pattern [
+         id =
+           "test21-facsimile-no_facsimile_text_nodes-constraint-rule-15"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:facsimile//tei:line | tei:facsimile//tei:zone"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test = "child::text()[ normalize-space(.) ne '']"
+             "\x{a}" ~
+             "  	  A facsimile element represents a text with images, thus\x{a}" ~
+             "	  transcribed text should not be present within it.\x{a}" ~
+             "	"
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     att.global.attributes,
     att.declaring.attributes,
     empty
@@ -8004,7 +8248,7 @@ addSpan =
     empty
     >> sch:pattern [
          id =
-           "test21-addSpan-addSpan-requires-spanTo-constraint-assert-22"
+           "test21-addSpan-addSpan-requires-spanTo-constraint-assert-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8025,7 +8269,7 @@ addSpan =
        ]
     >> sch:pattern [
          id =
-           "test21-addSpan-addSpan-requires-spanTo-fr-constraint-assert-23"
+           "test21-addSpan-addSpan-requires-spanTo-fr-constraint-assert-22"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8097,7 +8341,7 @@ damageSpan =
     empty
     >> sch:pattern [
          id =
-           "test21-damageSpan-damageSpan-requires-spanTo-constraint-assert-25"
+           "test21-damageSpan-damageSpan-requires-spanTo-constraint-assert-24"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8118,7 +8362,7 @@ damageSpan =
        ]
     >> sch:pattern [
          id =
-           "test21-damageSpan-damageSpan-requires-spanTo-fr-constraint-assert-26"
+           "test21-damageSpan-damageSpan-requires-spanTo-fr-constraint-assert-25"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8148,7 +8392,7 @@ delSpan =
     empty
     >> sch:pattern [
          id =
-           "test21-delSpan-delSpan-requires-spanTo-constraint-assert-27"
+           "test21-delSpan-delSpan-requires-spanTo-constraint-assert-26"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8169,7 +8413,7 @@ delSpan =
        ]
     >> sch:pattern [
          id =
-           "test21-delSpan-delSpan-requires-spanTo-fr-constraint-assert-28"
+           "test21-delSpan-delSpan-requires-spanTo-fr-constraint-assert-27"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8315,7 +8559,7 @@ subst =
   element subst {
     ((add | surplus | del | model.milestoneLike)+)
     >> sch:pattern [
-         id = "test21-subst-substContents1-constraint-assert-29"
+         id = "test21-subst-substContents1-constraint-assert-28"
          "\x{a}" ~
          "            "
          sch:rule [

@@ -132,8 +132,8 @@
         "type" : "elementSpec",
         "module" : "linking",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph.<\/desc>" ],
-        "shortDesc" : "(anonymous block) contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-08-11\" xml:lang=\"en\">contains any component-level unit of text, acting as a container for phrase or inter level elements analogous to, but without the same constraints as, a paragraph.<\/desc>" ],
+        "shortDesc" : "(anonymous block) contains any component-level unit of text, acting as a container for phrase or inter level elements analogous to, but without the same constraints as, a paragraph.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">anonymous block<\/gloss>" ],
         "altIdent" : 
@@ -154,7 +154,7 @@
         "content" : 
         [ 
           { "type" : "macroRef",
-            "key" : "macro.paraContent" } ] },
+            "key" : "macro.abContent" } ] },
       
       { "ident" : "abbr",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -308,7 +308,10 @@
                 "key" : "model.pLike" },
               
               { "type" : "classRef",
-                "key" : "model.listLike" } ] } ] },
+                "key" : "model.listLike" },
+              
+              { "type" : "elementRef",
+                "key" : "listBibl" } ] } ] },
       
       { "ident" : "add",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -6570,7 +6573,8 @@
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.divPart" ],
+          [ "model.divPart",
+            "model.paraPart" ],
           "atts" : 
           [ "att.global",
             "att.divLike",
@@ -10768,7 +10772,7 @@
         "content" : 
         [ 
           { "type" : "macroRef",
-            "key" : "macro.phraseSeq" } ] },
+            "key" : "macro.specialPara" } ] },
       
       { "ident" : "time",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -12383,7 +12387,14 @@
           "gloss" : 
           [  ],
           "altIdent" : 
-          [  ] },
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.paraPart" ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
         
         { "ident" : "model.global",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12395,7 +12406,14 @@
           "gloss" : 
           [  ],
           "altIdent" : 
-          [  ] },
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.paraPart" ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
         
         { "ident" : "model.global.edit",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12545,7 +12563,8 @@
           [  ],
           "classes" : 
           { "model" : 
-            [ "model.common" ],
+            [ "model.paraPart",
+              "model.common" ],
             "atts" : 
             [  ],
             "unknown" : 
@@ -12564,7 +12583,8 @@
           [  ],
           "classes" : 
           { "model" : 
-            [ "model.divPart" ],
+            [ "model.divPart",
+              "model.paraPart" ],
             "atts" : 
             [  ],
             "unknown" : 
@@ -12905,6 +12925,18 @@
             "unknown" : 
             [  ] } },
         
+        { "ident" : "model.paraPart",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-05-21\" xml:lang=\"en\">groups elements that may appear in paragraphs and similar elements<\/desc>" ],
+          "shortDesc" : "groups elements that may appear in paragraphs and similar elements",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ] },
+        
         { "ident" : "model.phrase",
           "ns" : "http:\/\/foo.foo\/foo",
           "type" : "classSpec",
@@ -12915,7 +12947,14 @@
           "gloss" : 
           [  ],
           "altIdent" : 
-          [  ] },
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.paraPart" ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
         
         { "ident" : "model.phrase.xml",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -17135,6 +17174,15 @@
     [  ],
     "macros" : 
     [ 
+      { "ident" : "macro.abContent",
+        "module" : "tei",
+        "type" : "",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-10-14\" xml:lang=\"en\">defines the content of anonymous block elements.<\/desc>" ],
+        "shortDesc" : "(anonymous block content) defines the content of anonymous block elements.",
+        "gloss" : 
+        [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-05-21\" xml:lang=\"en\">anonymous block content<\/gloss>" ] },
+      
       { "ident" : "macro.limitedContent",
         "module" : "tei",
         "type" : "",
@@ -17402,7 +17450,7 @@
         [ 
           { "type" : "dataRef",
             "name" : "token",
-            "restriction" : "[\\-+]?\\d+(\\.\\d+)?(%|cm|mm|in|pt|pc|px|em|ex|gd|rem|vw|vh|vm)" } ] },
+            "restriction" : "[\\-+]?\\d+(\\.\\d+)?(%|cm|mm|in|pt|pc|px|em|ex|ch|rem|vw|vh|vmin|vmax)" } ] },
       
       { "ident" : "teidata.pattern",
         "ns" : "http:\/\/foo.foo\/foo",
