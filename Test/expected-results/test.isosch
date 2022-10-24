@@ -32,17 +32,17 @@
    </pattern>
    <pattern id="schematron-constraint-test-att.datable-calendar-calendar-4">
       <rule context="tei:*[@calendar]">
-         <assert test="string-length(.) gt 0"> @calendar indicates one or more systems or calendars to
-              which the date represented by the content of this element belongs, but this
-              <name/> element has no textual content.</assert>
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+            systems or calendars to which the date represented by the content of this element belongs,
+            but this <name/> element has no textual content.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-test-att.global.source-source-only_1_ODD_source-5">
-      <rule context="tei:*/@source">
-         <let name="srcs" value="tokenize( normalize-space(.),' ')"/>
-         <report test="( parent::tei:classRef | parent::tei:dataRef | parent::tei:elementRef | parent::tei:macroRef | parent::tei:moduleRef | parent::tei:schemaSpec ) and $srcs[2]">
+      <rule context="tei:*[@source]">
+         <let name="srcs" value="tokenize( normalize-space(@source),' ')"/>
+         <report test="( self::tei:classRef               | self::tei:dataRef               | self::tei:elementRef               | self::tei:macroRef               | self::tei:moduleRef               | self::tei:schemaSpec )               and               $srcs[2]">
               When used on a schema description element (like
-              <value-of select="name(..)"/>), the @source attribute
+              <value-of select="name(.)"/>), the @source attribute
               should have only 1 value. (This one has <value-of select="count($srcs)"/>.)
             </report>
       </rule>
@@ -170,19 +170,22 @@ relatedItem element must be empty</report>
 On <name/>, either the @marks attribute should be used, or a paragraph of description provided</report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-citeStructure-delim-citestructure-inner-delim-25">
-      <rule context="tei:citeStructure[parent::tei:citeStructure]">
-         <assert test="@delim">A <name/> with a parent <name/> must have a @delim attribute.</assert>
-      </rule>
-   </pattern>
-   <pattern id="schematron-constraint-test-citeStructure-match-citestructure-outer-match-26">
+   <pattern id="schematron-constraint-test-citeStructure-match-citestructure-outer-match-25">
       <rule context="tei:citeStructure[not(parent::tei:citeStructure)]">
          <assert test="starts-with(@match,'/')">An XPath in @match on the outer <name/> must start with '/'.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-citeStructure-match-citestructure-inner-match-27">
+   <pattern id="schematron-constraint-test-citeStructure-match-citestructure-inner-match-26">
       <rule context="tei:citeStructure[parent::tei:citeStructure]">
          <assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <name/>.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-facsimile-no_facsimile_text_nodes-27">
+      <rule context="tei:facsimile//tei:line | tei:facsimile//tei:zone">
+         <report test="child::text()[ normalize-space(.) ne '']">
+  	  A facsimile element represents a text with images, thus
+	  transcribed text should not be present within it.
+	</report>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-test-path-pathmustnotbeclosed-28">
@@ -240,28 +243,21 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
          </assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-ab-abstractModel-structure-ab-in-ab-or-p-41">
-      <rule context="tei:ab">
-         <report test="(ancestor::tei:p or ancestor::tei:ab) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )">
-        Abstract model violation: ab may not occur inside paragraphs or other ab elements.
-      </report>
-      </rule>
-   </pattern>
-   <pattern id="schematron-constraint-test-ab-abstractModel-structure-ab-in-l-or-lg-42">
+   <pattern id="schematron-constraint-test-ab-abstractModel-structure-ab-in-l-or-lg-41">
       <rule context="tei:ab">
          <report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
         Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
       </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-join-joinTargets3-43">
+   <pattern id="schematron-constraint-test-join-joinTargets3-42">
       <rule context="tei:join">
          <assert test="contains(@target,' ')">
 You must supply at least two values for @target on <name/>
          </assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-standOff-nested_standOff_should_be_typed-44">
+   <pattern id="schematron-constraint-test-standOff-nested_standOff_should_be_typed-43">
       <rule context="tei:standOff">
          <assert test="@type or not(ancestor::tei:standOff)">This
       <name/> element must have a @type attribute, since it is
