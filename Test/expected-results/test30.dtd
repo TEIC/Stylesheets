@@ -42,8 +42,6 @@
 
 <!ENTITY % teidata.word ' CDATA ' >
 
-<!ENTITY % teidata.sex '%teidata.word;' >
-
 <!ENTITY % teidata.text ' CDATA ' >
 
 <!ENTITY % teidata.name ' CDATA ' >
@@ -53,6 +51,10 @@
 <!ENTITY % teidata.prefix ' CDATA ' >
 
 <!ENTITY % teidata.enumerated '%teidata.word;' >
+
+<!ENTITY % teidata.gender '%teidata.enumerated;' >
+
+<!ENTITY % teidata.sex '%teidata.enumerated;' >
 
 <!ENTITY % teidata.probCert ' CDATA ' >
 
@@ -340,9 +342,13 @@ datcat CDATA  #IMPLIED'>
 
 <!ENTITY % Tatt.datcat.attribute.valueDatcat '
 valueDatcat CDATA  #IMPLIED'>
+
+<!ENTITY % Tatt.datcat.attribute.targetDatcat '
+targetDatcat CDATA  #IMPLIED'>
 <!ENTITY % Tatt.datcat.attributes '
  %Tatt.datcat.attribute.datcat;
- %Tatt.datcat.attribute.valueDatcat;'> 
+ %Tatt.datcat.attribute.valueDatcat;
+ %Tatt.datcat.attribute.targetDatcat;'> 
 <!ENTITY % Tatt.declarable.attribute.default '
 default (true|false) "false" '>
 <!ENTITY % Tatt.declarable.attributes '
@@ -738,11 +744,11 @@ to %teidata.word;  #IMPLIED'>
 <!ENTITY % model.divPart_sequenceOptional "%model.lLike;?, %model.pLike;?, lg?, sp?"> 
 <!ENTITY % model.divPart_sequenceOptionalRepeatable "%model.lLike;*, %model.pLike;*, lg*, sp*"> 
 <!ENTITY % model.divPart_sequenceRepeatable "%model.lLike;+, %model.pLike;+, lg+, sp+"> 
-<!ENTITY % model.persStateLike "persName |affiliation |age |education |faith |floruit |langKnowledge |nationality |occupation |persona |persPronouns |residence |sex |socecStatus |state |trait"> 
-<!ENTITY % model.persStateLike_sequence "persName, affiliation, age, education, faith, floruit, langKnowledge, nationality, occupation, persona, persPronouns, residence, sex, socecStatus, state, trait"> 
-<!ENTITY % model.persStateLike_sequenceOptional "persName?, affiliation?, age?, education?, faith?, floruit?, langKnowledge?, nationality?, occupation?, persona?, persPronouns?, residence?, sex?, socecStatus?, state?, trait?"> 
-<!ENTITY % model.persStateLike_sequenceOptionalRepeatable "persName*, affiliation*, age*, education*, faith*, floruit*, langKnowledge*, nationality*, occupation*, persona*, persPronouns*, residence*, sex*, socecStatus*, state*, trait*"> 
-<!ENTITY % model.persStateLike_sequenceRepeatable "persName+, affiliation+, age+, education+, faith+, floruit+, langKnowledge+, nationality+, occupation+, persona+, persPronouns+, residence+, sex+, socecStatus+, state+, trait+"> 
+<!ENTITY % model.persStateLike "persName |affiliation |age |education |faith |floruit |gender |langKnowledge |nationality |occupation |persona |persPronouns |residence |sex |socecStatus |state |trait"> 
+<!ENTITY % model.persStateLike_sequence "persName, affiliation, age, education, faith, floruit, gender, langKnowledge, nationality, occupation, persona, persPronouns, residence, sex, socecStatus, state, trait"> 
+<!ENTITY % model.persStateLike_sequenceOptional "persName?, affiliation?, age?, education?, faith?, floruit?, gender?, langKnowledge?, nationality?, occupation?, persona?, persPronouns?, residence?, sex?, socecStatus?, state?, trait?"> 
+<!ENTITY % model.persStateLike_sequenceOptionalRepeatable "persName*, affiliation*, age*, education*, faith*, floruit*, gender*, langKnowledge*, nationality*, occupation*, persona*, persPronouns*, residence*, sex*, socecStatus*, state*, trait*"> 
+<!ENTITY % model.persStateLike_sequenceRepeatable "persName+, affiliation+, age+, education+, faith+, floruit+, gender+, langKnowledge+, nationality+, occupation+, persona+, persPronouns+, residence+, sex+, socecStatus+, state+, trait+"> 
 <!ENTITY % model.personLike "org |person |personGrp"> 
 <!ENTITY % model.personLike_sequence "org, person, personGrp"> 
 <!ENTITY % model.personLike_sequenceOptional "org?, person?, personGrp?"> 
@@ -918,6 +924,11 @@ to %teidata.word;  #IMPLIED'>
 <!ENTITY % model.phrase_sequenceOptional "%model.segLike;?, %model.highlighted;?, %model.graphicLike;?, %model.pPart.edit;?, %model.ptrLike;?, %model.pPart.data;?, ruby?"> 
 <!ENTITY % model.phrase_sequenceOptionalRepeatable "%model.segLike;*, %model.highlighted;*, %model.graphicLike;*, %model.pPart.edit;*, %model.ptrLike;*, %model.pPart.data;*, ruby*"> 
 <!ENTITY % model.phrase_sequenceRepeatable "%model.segLike;+, %model.highlighted;+, %model.graphicLike;+, %model.pPart.edit;+, %model.ptrLike;+, %model.pPart.data;+, ruby+"> 
+<!ENTITY % model.paraPart "%model.lLike; |%model.global; |%model.inter; |%model.phrase; |lg"> 
+<!ENTITY % model.paraPart_sequence "%model.lLike;, %model.global;, %model.inter;, %model.phrase;, lg"> 
+<!ENTITY % model.paraPart_sequenceOptional "%model.lLike;?, %model.global;?, %model.inter;?, %model.phrase;?, lg?"> 
+<!ENTITY % model.paraPart_sequenceOptionalRepeatable "%model.lLike;*, %model.global;*, %model.inter;*, %model.phrase;*, lg*"> 
+<!ENTITY % model.paraPart_sequenceRepeatable "%model.lLike;+, %model.global;+, %model.inter;+, %model.phrase;+, lg+"> 
 <!ENTITY % model.limitedPhrase "%model.hiLike; |%model.emphLike; |%model.pPart.editorial; |%model.ptrLike; |%model.pPart.data;"> 
 <!ENTITY % model.limitedPhrase_sequence "%model.hiLike;, %model.emphLike;, %model.pPart.editorial;, %model.ptrLike;, %model.pPart.data;"> 
 <!ENTITY % model.limitedPhrase_sequenceOptional "%model.hiLike;?, %model.emphLike;?, %model.pPart.editorial;?, %model.ptrLike;?, %model.pPart.data;?"> 
@@ -1181,7 +1192,9 @@ xml:space (default|preserve) #IMPLIED'>
  %Tatt.global.attribute.xmlspace;'> 
 <!-- start rest of patterns -->
 
-<!ENTITY % macro.paraContent '(#PCDATA|_DUMMY_model.gLike|%model.phrase;|%model.inter;|%model.global;|lg|%model.lLike;)*' >
+<!ENTITY % macro.abContent '(#PCDATA|%model.paraPart;|ab)*' >
+
+<!ENTITY % macro.paraContent '(#PCDATA|%model.paraPart;)*' >
 
 <!ENTITY % macro.limitedContent '(#PCDATA|%model.limitedPhrase;|%model.inter;)*' >
 
@@ -1213,8 +1226,8 @@ version %teidata.version;  #IMPLIED >
 <!ATTLIST TEI xsi:schemaLocation CDATA #IMPLIED
  xmlns:xsi CDATA #FIXED 'http://www.w3.org/2001/XMLSchema-instance'
  >
-<!--doc:(anonymous block) contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph. [16.3. Blocks, Segments, and Anchors] -->
-<!ELEMENT ab %macro.paraContent;>
+<!--doc:(anonymous block) contains any component-level unit of text, acting as a container for phrase or inter level elements analogous to, but without the same constraints as, a paragraph. [16.3. Blocks, Segments, and Anchors] -->
+<!ELEMENT ab %macro.abContent;>
 <!ATTLIST ab xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST ab
  %Tatt.global.attributes;
@@ -1230,7 +1243,7 @@ version %teidata.version;  #IMPLIED >
  %Tatt.typed.attribute.subtype;
 type %teidata.enumerated;  #IMPLIED >
 <!--doc:contains a summary or formal abstract prefixed to an existing source document by the encoder. [2.4.4. Abstracts] -->
-<!ELEMENT abstract (%model.pLike;|%model.listLike;)+>
+<!ELEMENT abstract (%model.pLike;|%model.listLike;|listBibl)+>
 <!ATTLIST abstract xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST abstract
  %Tatt.global.attributes; >
@@ -1626,8 +1639,7 @@ type %teidata.enumerated;  #IMPLIED >
 <!ATTLIST correspContext xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST correspContext
  %Tatt.global.attributes; >
-<!--doc:(correspondence
-    description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description] -->
+<!--doc:(correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description] -->
 <!ELEMENT correspDesc ((%model.correspDescPart;)+|(%model.pLike;)+)>
 <!ATTLIST correspDesc xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST correspDesc
@@ -1988,6 +2000,15 @@ Elements] -->
  %Tatt.global.attributes;
  %Tatt.personal.attributes;
  %Tatt.typed.attributes; >
+<!--doc:(gender) specifies the gender identity of a person, persona, or character. [13.3.2.1. Personal Characteristics] -->
+<!ELEMENT gender %macro.phraseSeq;>
+<!ATTLIST gender xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST gender
+ %Tatt.global.attributes;
+ %Tatt.editLike.attributes;
+ %Tatt.datable.attributes;
+ %Tatt.typed.attributes;
+value CDATA  #IMPLIED >
 <!--doc:(geographical coordinates) contains any expression of a set of geographic coordinates, representing a point, line, or area on the surface of the earth in some notation. [13.3.4.1. Varieties of Location] -->
 <!ELEMENT geo (#PCDATA)>
 <!ATTLIST geo xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2359,6 +2380,7 @@ Measures] -->
  %Tatt.global.attributes;
  %Tatt.typed.attribute.subtype;
  %Tatt.measurement.attributes;
+ %Tatt.ranging.attributes;
 type %teidata.enumerated;  #IMPLIED >
 <!--doc:(measure group) contains a group of dimensional specifications which relate to the same object, for example the height and width of a manuscript page. [10.3.4. Dimensions] -->
 <!ELEMENT measureGrp (#PCDATA|_DUMMY_model.gLike|%model.measureLike;)*>
@@ -2481,7 +2503,7 @@ method (silent|markup) "silent"  >
  %Tatt.typed.attributes;
  %Tatt.written.attributes;
  %Tatt.anchoring.attributes; >
-<!--doc:contains a group of notes [3.9.1.1. Encoding Grouped Notes] -->
+<!--doc:(note group) contains a group of notes [3.9.1.1. Encoding Grouped Notes] -->
 <!ELEMENT noteGrp (((desc)*,(note|noteGrp)+))>
 <!ATTLIST noteGrp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST noteGrp
@@ -2645,6 +2667,7 @@ value NMTOKENS  #IMPLIED >
  %Tatt.sortable.attributes;
 role NMTOKENS  #IMPLIED
 sex CDATA  #IMPLIED
+gender CDATA  #IMPLIED
 age %teidata.enumerated;  #IMPLIED >
 <!--doc:(personal group) describes a group of individuals treated as a single person for analytic purposes. [15.2.2. The Participant Description] -->
 <!ELEMENT personGrp ((%model.pLike;)+|(%model.personPart;|%model.global;)*)>
@@ -2654,6 +2677,7 @@ age %teidata.enumerated;  #IMPLIED >
  %Tatt.sortable.attributes;
 role %teidata.enumerated;  #IMPLIED
 sex CDATA  #IMPLIED
+gender CDATA  #IMPLIED
 age %teidata.enumerated;  #IMPLIED
 size CDATA  #IMPLIED >
 <!--doc:provides information about one of the personalities identified for a given individual, where an individual has multiple personalities. [13.3.2. The Person Element] -->
@@ -2665,6 +2689,7 @@ size CDATA  #IMPLIED >
  %Tatt.sortable.attributes;
 role NMTOKENS  #IMPLIED
 sex CDATA  #IMPLIED
+gender CDATA  #IMPLIED
 age %teidata.enumerated;  #IMPLIED >
 <!--doc:(place) contains data about a geographic location [13.3.4. Places] -->
 <!ELEMENT place (((%model.headLike;)*,((%model.pLike;)*|(%model.labelLike;|%model.placeStateLike;|%model.eventLike;|name)*),(%model.noteLike;|%model.biblLike;|idno|ptr|linkGrp|link)*,(%model.placeLike;|listPlace)*))>
@@ -3050,15 +3075,14 @@ reason CDATA  #IMPLIED >
  %Tatt.naming.attributes;
  %Tatt.typed.attributes;
  %Tatt.datable.attributes; >
-<!--doc:(sex) specifies the sex of a person. [13.3.2.1. Personal Characteristics] -->
+<!--doc:(sex) specifies the sex of an organism. [13.3.2.1. Personal Characteristics] -->
 <!ELEMENT sex %macro.phraseSeq;>
 <!ATTLIST sex xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST sex
  %Tatt.global.attributes;
  %Tatt.editLike.attributes;
  %Tatt.datable.attributes;
- %Tatt.typed.attribute.subtype;
-type %teidata.enumerated;  #IMPLIED
+ %Tatt.typed.attributes;
 value CDATA  #IMPLIED >
 <!--doc:(Latin for thus or so) contains text reproduced although apparently incorrect or inaccurate. [3.5.1. Apparent Errors] -->
 <!ELEMENT sic %macro.paraContent;>
@@ -3218,7 +3242,7 @@ reason CDATA  #IMPLIED >
  %Tatt.typed.attributes;
 attachment %teidata.enumerated;  #IMPLIED
 flipping %teidata.truthValue;  #IMPLIED >
-<!--doc:defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. Digital Facsimiles] -->
+<!--doc:(surface group) defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [11.1. Digital Facsimiles] -->
 <!ELEMENT surfaceGrp (%model.global;|surface|surfaceGrp)+>
 <!ATTLIST surfaceGrp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST surfaceGrp
@@ -3253,6 +3277,7 @@ cols %teidata.count;  #IMPLIED >
 <!ATTLIST tagUsage xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST tagUsage
  %Tatt.global.attributes;
+ %Tatt.datcat.attributes;
 gi %teidata.name;  #REQUIRED
 occurs %teidata.count;  #IMPLIED
 withId %teidata.count;  #IMPLIED >
@@ -3317,7 +3342,7 @@ version %teidata.version;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.declarable.attributes; >
 <!--doc:(text language) describes the languages and writing systems identified within the bibliographic work being described, rather than its description. [3.12.2.4. Imprint, Size of a Document, and Reprint Information 10.6.6. Languages and Writing Systems] -->
-<!ELEMENT textLang %macro.phraseSeq;>
+<!ELEMENT textLang %macro.specialPara;>
 <!ATTLIST textLang xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST textLang
  %Tatt.global.attributes;
