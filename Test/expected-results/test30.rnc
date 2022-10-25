@@ -1,7 +1,6 @@
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 namespace ns1 = "http://www.w3.org/1999/xhtml"
-namespace ns2 = "http://www.isocat.org/ns/dcr"
-namespace ns3 = "http://www.oucs.ox.ac.uk/ns"
+namespace ns2 = "http://www.oucs.ox.ac.uk/ns"
 namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 default namespace tei = "http://www.tei-c.org/ns/1.0"
@@ -31,7 +30,7 @@ Tmacro.specialPara =
    | Tmodel.global)*
 Tmacro.xtext = (text | Tmodel.gLike)*
 anyElement-xenoData =
-  element * - (tei:* | ns3:* | teix:egXML) {
+  element * - (tei:* | ns2:* | teix:egXML) {
     attribute * { text }*,
     (text | anyElement-xenoData)*
   }
@@ -451,19 +450,46 @@ Tatt.datable.attribute.period =
     }
   }?
 Tatt.datcat.attributes =
-  Tatt.datcat.attribute.datcat, Tatt.datcat.attribute.valueDatcat
+  Tatt.datcat.attribute.datcat,
+  Tatt.datcat.attribute.valueDatcat,
+  Tatt.datcat.attribute.targetDatcat
 Tatt.datcat.attribute.datcat =
-  
-  ## contains a PID (persistent identifier) that aligns the given element with the appropriate Data Category (or categories) in ISOcat.
-  attribute ns2:datcat {
+  [
+    a:documentation [
+      "provides a pointer to a definition of, and/or general information about, (a) an information container (element or attribute) or (b) a value of an information container (element content or attribute value), by referencing an external taxonomy or ontology. If "
+      ns1:code [ "@valueDatcat" ]
+      " is present in the immediate context, this attribute takes on role (a), while "
+      ns1:code [ "@valueDatcat" ]
+      " performs role (b)."
+    ]
+  ]
+  attribute datcat {
     list {
       xsd:anyURI { pattern = "\S+" }+
     }
   }?
 Tatt.datcat.attribute.valueDatcat =
-  
-  ## contains a PID (persistent identifier) that aligns the content of the given element or the value of the given attribute with the appropriate simple Data Category (or categories) in ISOcat.
-  attribute ns2:valueDatcat {
+  [
+    a:documentation [
+      "provides a definition of, and/or general information about a value of an information container (element content or attribute value), by reference to an external taxonomy or ontology. Used especially where a contrast with "
+      ns1:code [ "@datcat" ]
+      " is needed."
+    ]
+  ]
+  attribute valueDatcat {
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
+  }?
+Tatt.datcat.attribute.targetDatcat =
+  [
+    a:documentation [
+      "provides a definition of, and/or general information about, information structure of an object referenced or modeled by the containing element, by reference to an external taxonomy or ontology. This attribute has the characteristics of the "
+      ns1:code [ "@datcat" ]
+      " attribute, except that it addresses not its containing element, but an object that is being referenced or modeled by its containing element."
+    ]
+  ]
+  attribute targetDatcat {
     list {
       xsd:anyURI { pattern = "\S+" }+
     }
@@ -4466,6 +4492,7 @@ TtagUsage =
   element tagUsage {
     Tmacro.limitedContent,
     Tatt.global.attributes,
+    Tatt.datcat.attributes,
     [
       a:documentation [
         "(generic identifier) specifies the name (generic identifier) of the element indicated by the tag, within the namespace indicated by the parent "
@@ -8291,7 +8318,7 @@ Tplatypus =
 TMenu =
   
   ##
-  element ns3:Menu {
+  element ns2:Menu {
     text,
     Tatt.global.attribute.xmlid,
     Tatt.global.rendition.attribute.rend,
