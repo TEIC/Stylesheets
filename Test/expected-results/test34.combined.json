@@ -10269,7 +10269,8 @@
         { "model" : 
           [  ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.datcat" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -13870,8 +13871,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-08-22\" xml:lang=\"en\">provides attributes that are used to \n    align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 \n    standard and stored in the Web repository called ISOCat at <ptr target=\"http:\/\/www.isocat.org\/\"\/>.<\/desc>" ],
-          "shortDesc" : "provides attributes that are used to \n    align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 \n    standard and stored in the Web repository called ISOCat at .",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-09-17\" xml:lang=\"en\">provides attributes that are used to align XML\n    elements or attributes with the appropriate Data Categories (DCs) defined by an external \n    taxonomy, in this way establishing the identity of information containers and values, \n    and providing means of interpreting them.<\/desc>" ],
+          "shortDesc" : "provides attributes that are used to align XML\n    elements or attributes with the appropriate Data Categories (DCs) defined by an external \n    taxonomy, in this way establishing the identity of information containers and values, \n    and providing means of interpreting them.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -13881,11 +13882,11 @@
             { "onElement" : false,
               "ident" : "datcat",
               "mode" : "add",
-              "ns" : "http:\/\/www.isocat.org\/ns\/dcr",
+              "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-04-15\" xml:lang=\"en\">contains a PID (persistent identifier) that aligns the given element with the appropriate \n        Data Category (or categories) in ISOcat.<\/desc>" ],
-              "shortDesc" : "contains a PID (persistent identifier) that aligns the given element with the appropriate \n        Data Category (or categories) in ISOcat.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-09-17\" xml:lang=\"en\">provides a pointer to a definition of, and\/or general\n        information about, (a) an information container (element or attribute) or (b) a value of an\n        information container (element content or attribute value), by referencing an external\n        taxonomy or ontology. If <att>valueDatcat<\/att> is present in the immediate context, this attribute\n        takes on role (a), while <att>valueDatcat<\/att> performs role (b).<\/desc>" ],
+              "shortDesc" : "provides a pointer to a definition of, and\/or general\n        information about, (a) an information container (element or attribute) or (b) a value of an\n        information container (element content or attribute value), by referencing an external\n        taxonomy or ontology. If valueDatcat is present in the immediate context, this attribute\n        takes on role (a), while valueDatcat performs role (b).",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -13901,11 +13902,31 @@
             { "onElement" : false,
               "ident" : "valueDatcat",
               "mode" : "add",
-              "ns" : "http:\/\/www.isocat.org\/ns\/dcr",
+              "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-04-15\" xml:lang=\"en\">contains a PID (persistent identifier) that aligns the content of the given\n        element or the value of the given attribute with the appropriate simple Data\n        Category (or categories) in ISOcat.<\/desc>" ],
-              "shortDesc" : "contains a PID (persistent identifier) that aligns the content of the given\n        element or the value of the given attribute with the appropriate simple Data\n        Category (or categories) in ISOcat.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-09-17\" xml:lang=\"en\">provides a definition of, and\/or general\n        information about a value of an information container (element content or attribute value),\n        by reference to an external taxonomy or ontology. Used especially where a contrast with\n        <att>datcat<\/att> is needed.<\/desc>" ],
+              "shortDesc" : "provides a definition of, and\/or general\n        information about a value of an information container (element content or attribute value),\n        by reference to an external taxonomy or ontology. Used especially where a contrast with\n        datcat is needed.",
+              "gloss" : 
+              [  ],
+              "altIdent" : 
+              [  ],
+              "valDesc" : 
+              [  ],
+              "datatype" : 
+              { "min" : "1",
+                "max" : "unbounded",
+                "dataRef" : 
+                { "key" : "teidata.pointer" } } },
+            
+            { "onElement" : false,
+              "ident" : "targetDatcat",
+              "mode" : "add",
+              "ns" : "",
+              "usage" : "opt",
+              "desc" : 
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-09-17\" xml:lang=\"en\">provides a definition of, and\/or general\n        information about, information structure of an object referenced or modeled by the\n        containing element, by reference to an external taxonomy or ontology. This attribute has the\n        characteristics of the <att>datcat<\/att> attribute, except that it addresses not its containing\n        element, but an object that is being referenced or modeled by its containing element.<\/desc>" ],
+              "shortDesc" : "provides a definition of, and\/or general\n        information about, information structure of an object referenced or modeled by the\n        containing element, by reference to an external taxonomy or ontology. This attribute has the\n        characteristics of the datcat attribute, except that it addresses not its containing\n        element, but an object that is being referenced or modeled by its containing element.",
               "gloss" : 
               [  ],
               "altIdent" : 

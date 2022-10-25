@@ -342,9 +342,13 @@ datcat CDATA  #IMPLIED'>
 
 <!ENTITY % Tatt.datcat.attribute.valueDatcat '
 valueDatcat CDATA  #IMPLIED'>
+
+<!ENTITY % Tatt.datcat.attribute.targetDatcat '
+targetDatcat CDATA  #IMPLIED'>
 <!ENTITY % Tatt.datcat.attributes '
  %Tatt.datcat.attribute.datcat;
- %Tatt.datcat.attribute.valueDatcat;'> 
+ %Tatt.datcat.attribute.valueDatcat;
+ %Tatt.datcat.attribute.targetDatcat;'> 
 <!ENTITY % Tatt.declarable.attribute.default '
 default (true|false) "false" '>
 <!ENTITY % Tatt.declarable.attributes '
@@ -3273,6 +3277,7 @@ cols %teidata.count;  #IMPLIED >
 <!ATTLIST tagUsage xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST tagUsage
  %Tatt.global.attributes;
+ %Tatt.datcat.attributes;
 gi %teidata.name;  #REQUIRED
 occurs %teidata.count;  #IMPLIED
 withId %teidata.count;  #IMPLIED >
