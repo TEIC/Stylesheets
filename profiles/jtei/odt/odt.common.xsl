@@ -670,35 +670,15 @@
         <xsl:apply-templates/>
     </xsl:template>
     
-    <xsl:template match="listBibl/bibl">
-        <text:p text:style-name="teiBiblioEntry">
-<!--          Let's see whether this bibl has the same 
-              authors as the previous one. -->
-            <xsl:variable name="authorOrEditor" select="child::*[1]/local-name()"/>
-            <xsl:choose>
-              <xsl:when test="$authorOrEditor = ('author', 'editor', 'orgName') and preceding-sibling::bibl">
-                <!--<xsl:comment><xsl:value-of select="local:getAuthorsOrEditors(., $authorOrEditor)"/></xsl:comment>-->
-                <xsl:choose>
-                  <xsl:when test="local:getAuthorsOrEditors(., $authorOrEditor) = local:getAuthorsOrEditors(preceding-sibling::bibl[1], $authorOrEditor)">
-<!--           The authors or editors for this bibl match those from the 
-               preceding one, so they should be rendered as a dash. -->
-                    <xsl:text>———</xsl:text>
-                    <xsl:apply-templates select="child::node()[not(local-name() = $authorOrEditor) or preceding-sibling::*[not(local-name() = $authorOrEditor)]]"/>
-                  </xsl:when>
-                  <xsl:otherwise><xsl:apply-templates/></xsl:otherwise>
-                </xsl:choose>
-              </xsl:when>
-              <xsl:otherwise><xsl:apply-templates/></xsl:otherwise>
-            </xsl:choose>
-        </text:p>
-    </xsl:template>
-  
-  <xsl:function name="local:getAuthorsOrEditors" as="xs:string?">
-    <xsl:param name="bibl" as="element(bibl)"/>
-    <xsl:param name="tagName"/>
-    <xsl:variable name="personList" select="for $e in $bibl/child::*[local-name() = $tagName][not(preceding-sibling::*) or not(preceding-sibling::*[local-name() != $tagName])] return $e"/>
-    <xsl:value-of select="normalize-space(string-join($personList, ' '))"/>
-  </xsl:function>
+  <xsl:template match="listBibl/bibl">
+    <xsl:variable name="dateOrTitle" select="(date|title)[1]"/>
+    <text:p text:style-name="teiBiblioEntry">
+      <xsl:call-template name="get.author.instance">
+        <xsl:with-param name="dateOrTitle" select="$dateOrTitle"/>
+      </xsl:call-template>
+      <xsl:apply-templates select="$dateOrTitle|node()[. >> ($dateOrTitle,current())[1]]"/>
+    </text:p>
+  </xsl:template>  
   
 <!--  Figures with egXML or eg. -->
   <xsl:template match="figure[teix:egXML or eg]">
