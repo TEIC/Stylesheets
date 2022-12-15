@@ -2806,7 +2806,7 @@
                 <xsl:call-template name="showAttRefs">
                   <xsl:with-param name="endspace" select="false()"/>
                 </xsl:call-template>
-                <xsl:text>)</xsl:text>
+                <xsl:text>) </xsl:text>
               </xsl:if>
               <xsl:call-template name="attClassDetails">
                 <xsl:with-param name="depth">
