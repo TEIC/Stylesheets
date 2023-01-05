@@ -843,7 +843,7 @@
           <xsl:otherwise>
             <xsl:copy-of select="$remarks"/>
           </xsl:otherwise>
-        </xsl:choose>        
+        </xsl:choose>
         <xsl:apply-templates mode="weave" select="tei:exemplum"/>
         <xsl:apply-templates mode="weave" select="tei:constraintSpec"/>
         <xsl:apply-templates mode="weave" select="tei:content"/>
@@ -2072,13 +2072,13 @@
       </xsl:element>
     </xsl:if>
   </xsl:template>
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[odds] display attribute list </desc>
+    <desc>[odds] display list of referenced attributes</desc>
   </doc>
-  <xsl:template name="displayAttList">
-    <xsl:param name="mode"/>
-    <xsl:call-template name="showAttClasses"/>
-    <xsl:for-each-group select="tei:attRef[not(tei:match(@rend, 'none'))]"
+  <xsl:template name="showAttRefs">
+    <xsl:param name="endspace" select="true()"/>
+    <xsl:for-each-group select=".//tei:attRef[not(tei:match(@rend, 'none'))]"
       group-by="@class">
       <xsl:call-template name="linkTogether">
         <xsl:with-param name="name" select="current-grouping-key()"/>
@@ -2103,8 +2103,22 @@
         <xsl:value-of select="@name"/>
         <xsl:if test="position() != last()">, </xsl:if>
       </xsl:for-each>
-      <xsl:text>) </xsl:text>
+      <xsl:text>)</xsl:text>
+      <xsl:if test="$endspace">
+        <xsl:text> </xsl:text>
+      </xsl:if>
     </xsl:for-each-group>
+  </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[odds] display attribute list </desc>
+  </doc>
+  <xsl:template name="displayAttList">
+    <xsl:param name="mode"/>
+    <xsl:call-template name="showAttClasses"/>
+    <xsl:if test=".//tei:attRef">
+      <xsl:call-template name="showAttRefs"/>
+    </xsl:if>
     <xsl:if test=".//tei:attDef">
       <xsl:element namespace="{$outputNS}" name="{$tableName}">
         <xsl:attribute name="{$rendName}">
@@ -2786,6 +2800,13 @@
                 <xsl:if test="$depth = 1">
                   <xsl:call-template name="showSpace"/>
                 </xsl:if>
+              </xsl:if>
+              <xsl:if test=".//tei:attRef">
+                <xsl:text> (</xsl:text>
+                <xsl:call-template name="showAttRefs">
+                  <xsl:with-param name="endspace" select="false()"/>
+                </xsl:call-template>
+                <xsl:text>) </xsl:text>
               </xsl:if>
               <xsl:call-template name="attClassDetails">
                 <xsl:with-param name="depth">
