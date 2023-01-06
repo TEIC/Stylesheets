@@ -6,8 +6,8 @@
         <title>The TEI Guidelines</title>
       </titleStmt>
       <editionStmt>
-        <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.5.0.html">4.5.0a</ref>. Last updated on
-        <date when="2022-10-25">25th October 2022</date>, revision <ref target="https://github.com/TEIC/TEI/commit/5406e8d10">5406e8d10</ref></edition>
+        <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.6.0.html">4.6.0a</ref>. Last updated on
+        <date when="2023-01-05">5th January 2023</date>, revision <ref target="https://github.com/TEIC/TEI/commit/9074b9038">9074b9038</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -16,7 +16,7 @@
             Distributed under a Creative Commons Attribution 3.0 Unported License.
           </licence>
           <licence target="http://www.opensource.org/licenses/BSD-2-Clause">
-            <p>Copyright 2022 TEI Consortium.</p>
+            <p>Copyright 2023 TEI Consortium.</p>
             <p>All rights reserved.</p>     
             <p>Redistribution and use in source and binary forms, with
             or without modification, are permitted provided that the
@@ -2823,30 +2823,21 @@ the TEI header.</p>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <div type="bibl">
-            <head>Bibliography</head>
-            <listBibl xml:base="http://www.lib.ucdavis.edu/BWRP/Works/">
+            <head>Selections from <title level="m">The Collected Letters of Robert Southey. Part 1: 1791-1797</title></head>
+            <listBibl xml:base="https://romantic-circles.org/sites/default/files/imported/editions/southey_letters/XML/">
               <bibl>
-                <author>
-                  <name>Landon, Letitia Elizabeth</name>
-                </author>
-                <ref target="LandLVowOf.sgm">
-                  <title>The Vow of the Peacock</title>
+                <ref target="letterEEd.26.3.xml">
+                  <title>Robert Southey to Grosvenor Charles Bedford</title>, <date when="1792-04-03">3 April 1792</date>.
                 </ref>
               </bibl>
               <bibl>
-                <author>
-                  <name>Compton, Margaret Clephane</name>
-                </author>
-                <ref target="NortMIrene.sgm">
-                  <title>Irene, a Poem in Six Cantos</title>
+                <ref target="letterEEd.26.57.xml">
+                  <title>Robert Southey to Anna Seward</title>, <date when="1793-09-18">18 September 1793</date>.
                 </ref>
               </bibl>
               <bibl>
-                <author>
-                  <name>Taylor, Jane</name>
-                </author>
-                <ref target="TaylJEssay.sgm">
-                  <title>Essays in Rhyme on Morals and Manners</title>
+                <ref target="letterEEd.26.85.xml">
+                  <title>Robert Southey to Robert Lovell</title>, <date from="1794-04-05" to="1794-04-06">5-6 April, 1794</date>.
                 </ref>
               </bibl>
             </listBibl>
@@ -6389,20 +6380,23 @@ généralement dans des textes oraux</desc>
 <classSpec module="tei" type="model" ident="model.certLike">
   <desc versionDate="2011-11-10" xml:lang="en">groups elements which are used to indicate uncertainty or
   precision of other elements.</desc>
-  <classes>
-    <!--memberOf key="model.glossLike"/-->
-  </classes>
 </classSpec>
 <classSpec module="tei" type="model" ident="model.descLike">
   <desc versionDate="2012-10-07" xml:lang="en">groups elements which contain a description of their function.</desc>
   <desc xml:lang="fr" versionDate="2007-06-12">regroupe des éléments qui contiennent une description de la fonction d'un élément.</desc>
 </classSpec>
-<classSpec module="tei" xml:id="GLOSSLIKE" type="model" ident="model.glossLike">
-  <desc versionDate="2005-11-06" xml:lang="en">groups elements which provide an alternative name, explanation, or description for any
-    markup construct.</desc>
+<classSpec module="tei" xml:id="IDENTEQUIV" type="model" ident="model.identEquiv">
+  <desc versionDate="2022-09-24" xml:lang="en">groups elements which provide an equivalent value to the identity of their parent element, either as a formal construct or in natural language.</desc>
+  <!-- <desc versionDate="2022-09-09" xml:lang="en">groups elements which provide an explanation or an equivalency for a markup construct.</desc> -->
+  <classes>
+    <memberOf key="model.identSynonyms"/>
+  </classes>
+</classSpec>
+<classSpec module="tei" xml:id="IDENTSYNONYMS" type="model" ident="model.identSynonyms">
+  <desc versionDate="2022-12-07" xml:lang="en">groups elements which provide an explanation, equivalency, or alternative name for a markup construct.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">마크업 구성에 대한 대체명, 설명 또는 기술을 제시하는 요소를 모아 놓는다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集的元素提供某一標籤的替代名稱、解釋或描述。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">代替名またはマークアップ構造を示す要素をまとめる。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">代替名またはマークアップ構造を示す要素をまとめる．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">regroupe des éléments qui proposent un nom alternatif,
     une explication, ou une description pour n'importe quelle structure de codage</desc>
   <desc versionDate="2007-05-04" xml:lang="es">agrupa los elementos que proporcionan un nombre,
@@ -7906,7 +7900,7 @@ value.</desc>
           former consist of 2 letters, and it is recommended they be written in upper case; the list
           of codes can be searched or browsed at <ptr target="https://www.iso.org/obp/ui/#search/code/"/>. The latter consist of 3 digits; the list of codes can be found at <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>.</item>
             <label>variant</label>
-            <item>An IANA-registered variation. These codes <quote rend="quoted">are used to indicate
+            <item>An IANA-registered variation. These codes <quote>are used to indicate
             additional, well-recognized variations that define a language or its dialects that are
             not covered by other available subtags</quote>.<!-- RFC 4646, sect
       2.2.5 --></item>
@@ -7984,7 +7978,7 @@ value.</desc>
             <item> ISO 3166またはUN M.49による国または地域コード。このコードはIANAに 登録されている(但し全てではない。例えば、UNコードには経済圏や、 ISO
           3166の2文字コードで既に登録されているところは含まれていない)。 ISOコードは、2文字から構成され、大文字で書かれることが推奨されてい る。このコードは、 <ptr target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>にある。 またUNコードは、3文字から構成されている。このコードは、 <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>にあ る。 </item>
             <label>variant</label>
-            <item> IANAにある登録値。このコードは、<quote rend="quoted"> 他の下位タグでは対応できない、追加的であるがよく知られている、ある言語
+            <item> IANAにある登録値。このコードは、<quote> 他の下位タグでは対応できない、追加的であるがよく知られている、ある言語
             や方言の種類を示すために使用される</quote>。 <!-- RFC 4646, sect  2.2.5 -->
         </item>
             <label>extension</label>
@@ -8066,7 +8060,7 @@ value.</desc>
           2 lettres, et il est recommandé de l'écrire en majuscules. La liste des codes est
           disponible à : <ptr target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>. Le second est constitué de 3 chiffres ; la liste des codes est disponible à : <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>.</item>
             <label>variante</label>
-            <item>Variante enregistrée par l'IANA. Ces codes <quote rend="quoted">sont utilisés
+            <item>Variante enregistrée par l'IANA. Ces codes <quote>sont utilisés
             pour indiquer des variantes additionnelles et bien établies, qui définissent une langue
             ou ses dialectes et qui ne sont pas couverts par d'autres sous-étiquettes
           existantes</quote>.<!-- RFC 4646, sect
@@ -16774,7 +16768,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
     <memberOf key="att.typed"/>
     <memberOf key="att.pointing"/>
     <memberOf key="att.cReferencing"/>
-    <memberOf key="model.glossLike"/>
+    <memberOf key="model.identEquiv"/>
   </classes>
   <content>
     <macroRef key="macro.phraseSeq"/>
@@ -45003,7 +44997,7 @@ may exist in the holding institution or elsewhere.</desc>
           <msName>Maurdramnus Bible</msName>
         </msIdentifier>
         <msContents><summary xml:lang="la">Miscellany of various texts; Prudentius, Psychomachia; Physiologus de natura animantium</summary>
-          <textLang mainLang="lat">Latin</textLang>
+          <textLang mainLang="la">Latin</textLang>
         </msContents>
         <physDesc>
           <objectDesc form="composite_manuscript"/>
@@ -45012,7 +45006,7 @@ may exist in the holding institution or elsewhere.</desc>
           <msIdentifier><idno>ms. 10066-77 ff. 140r-156v</idno>
           </msIdentifier>
           <msContents><summary xml:lang="la">Physiologus</summary>
-            <textLang mainLang="lat">Latin</textLang>
+            <textLang mainLang="la">Latin</textLang>
           </msContents>
         </msPart>        
         <msPart>
@@ -65458,7 +65452,7 @@ module, i.e. a named and externally visible group of declarations.</desc>
   <content>
     <sequence>      
         <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.glossLike"/>
+          <classRef key="model.identEquiv"/>
           <elementRef key="idno"/>
           <classRef key="model.descLike"/>
         </alternate>
@@ -65505,7 +65499,7 @@ module, i.e. a named and externally visible group of declarations.</desc>
   <content>
     <sequence>
       <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.glossLike"/>
+        <classRef key="model.identEquiv"/>
         <classRef key="model.descLike"/>
       </alternate>
       <alternate minOccurs="0" maxOccurs="unbounded">
@@ -65959,7 +65953,7 @@ contains specifications for the elements
   <content>
     <sequence>
       <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.glossLike"/>
+        <classRef key="model.identSynonyms"/>
         <classRef key="model.descLike"/>
       </alternate>
       <elementRef key="classes" minOccurs="0"/>
@@ -66099,7 +66093,7 @@ that is a group of
   <content>
     <sequence>
         <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.glossLike"/>
+          <classRef key="model.identSynonyms"/>
           <classRef key="model.descLike"/>
         </alternate>
         <elementRef key="classes" minOccurs="0"/>
@@ -66293,7 +66287,7 @@ the associated TEI header.</p>
   <content>
     <sequence>
       <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.glossLike"/>
+        <classRef key="model.identSynonyms"/>
         <classRef key="model.descLike"/>
       </alternate> 
       <alternate minOccurs="0" maxOccurs="1">
@@ -66346,7 +66340,7 @@ the associated TEI header.</p>
   <content>
     <sequence>
       <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.glossLike"/>
+        <classRef key="model.identSynonyms"/>
         <classRef key="model.descLike"/>
       </alternate>
       <alternate minOccurs="0" maxOccurs="1">
@@ -66883,7 +66877,7 @@ déclaration de même nom dans la définition courante.</desc>
     <memberOf key="att.global"/>
     <memberOf key="att.internetMedia"/>
     <memberOf key="att.predicate"/>
-    <memberOf key="model.glossLike"/>
+    <memberOf key="model.identEquiv"/>
   </classes>
   <content><empty/></content>
   <attList>
@@ -67035,47 +67029,11 @@ déclaration de même nom dans la définition courante.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
-    <memberOf key="model.glossLike"/>
+    <memberOf key="model.identSynonyms"/>
   </classes>
   <content>
-    <textNode/>
-    <!--ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/-->
+    <dataRef name="NCName"/>  <!-- key=teidata.xmlName creates bad DTD, see https://github.com/TEIC/Stylesheets/issues/569  —Syd, 2022-12-07 -->
   </content>
-  <constraintSpec scheme="schematron" ident="deprecate_altIdent_in_non-ODD_places">
-    <desc>
-      The <gi>altIdent</gi> element should only be a child of
-      <gi>attDef</gi>, <gi>classSpec</gi>, <gi>constraintSpec</gi>,
-      <gi>dataSpec</gi>, <gi>elementSpec</gi>, <gi>macroSpec</gi>, or
-      <gi>valItem</gi>. Thus its use in other places is being
-      deprecated.
-    </desc>
-    <constraint>
-      <sch:report test="parent::tei:model | parent::tei:modelGrp | parent::tei:modelSequence | parent::tei:paramSpec | parent::tei:schemaSpec" role="nonfatal">
-        Use of &lt;altIdent&gt; as a child of &lt;<sch:value-of select="name(..)"/>&gt; is
-        deprecated, and will no longer be valid after 2022-07-14.
-      </sch:report>
-      <sch:report test="parent::tei:moduleSpec" role="nonfatal">
-        Use of &lt;altIdent&gt; to declare the FPI of a module is
-        deprecated, and will no longer be valid after 2022-07-14;
-        please use &lt;idno type="FPI"&gt; instead.
-      </sch:report>
-    </constraint>
-  </constraintSpec>
-  <constraintSpec scheme="schematron" ident="altIdent_usually_an_NCName">
-    <desc>
-      Other than when used to indicate the formal public identifier of
-      a module (which is a deprecated usage), the content of
-      <gi>altIdent</gi> should be a single <ident type="datatype">teidata.xmlName</ident>.
-      </desc>
-    <constraint>
-      <sch:rule context="tei:altIdent[ not( parent::tei:moduleSpec or @type eq 'FPI' ) ]">
-        <sch:assert test=". castable as xs:NCName">
-          The content of this 'altIdent' element (<sch:value-of select="normalize-space(.)"/>)
-          should conform to teidata.xmlName.
-        </sch:assert>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
       <altIdent xml:lang="fr">balisageDoc</altIdent>
@@ -67139,7 +67097,7 @@ déclaration de même nom dans la définition courante.</desc>
   <content>
     <sequence>
       <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.glossLike"/>
+        <classRef key="model.identEquiv"/>
         <classRef key="model.descLike"/>
       </alternate>
       <elementRef key="param" minOccurs="0" maxOccurs="unbounded"/>
@@ -67563,7 +67521,7 @@ déclaration de même nom dans la définition courante.</desc>
   <content>
     <sequence>
       <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.glossLike"/>
+        <classRef key="model.identEquiv"/>
         <classRef key="model.descLike"/>
       </alternate>
       <elementRef key="model" minOccurs="2" maxOccurs="unbounded"/>
@@ -67647,7 +67605,7 @@ déclaration de même nom dans la définition courante.</desc>
   <content>
     <sequence>
       <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.glossLike"/>
+        <classRef key="model.identEquiv"/>
         <classRef key="model.descLike"/>
       </alternate>
       <elementRef key="outputRendition" minOccurs="0"/>
@@ -67848,7 +67806,7 @@ déclaration de même nom dans la définition courante.</desc>
   </classes>
   <content>
     <alternate minOccurs="0" maxOccurs="unbounded">
-      <classRef key="model.glossLike"/>
+      <classRef key="model.identEquiv"/>
       <classRef key="model.descLike"/>
     </alternate>
   </content>
@@ -68397,7 +68355,7 @@ déclaration de même nom dans la définition courante.</desc>
   <content>
     <sequence>
       <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.glossLike"/>
+        <classRef key="model.identSynonyms"/>
         <classRef key="model.descLike"/>
       </alternate>
       <elementRef key="constraint" minOccurs="0" maxOccurs="1"/>
@@ -68691,7 +68649,7 @@ déclaration de même nom dans la définition courante.</desc>
   <content>
     <sequence>      
         <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.glossLike"/>
+          <classRef key="model.identSynonyms"/>
           <classRef key="model.descLike"/>
         </alternate>
         <elementRef key="datatype" minOccurs="0"/>
@@ -69278,11 +69236,11 @@ an attribute may take, additional to the information carried by the
   <!-- ( gloss*, ( desc+, ( gloss, desc* )*, remarks* )?, paramList? ) -->
   <content>
     <sequence>
-      <classRef key="model.glossLike" minOccurs="0" maxOccurs="unbounded"/>
+      <classRef key="model.identSynonyms" minOccurs="0" maxOccurs="unbounded"/>
       <sequence minOccurs="0">
 	<classRef key="model.descLike" minOccurs="1" maxOccurs="unbounded"/>
 	<sequence minOccurs="0" maxOccurs="unbounded">
-	  <classRef key="model.glossLike" minOccurs="1" maxOccurs="1"/>
+	  <classRef key="model.identSynonyms" minOccurs="1" maxOccurs="1"/>
 	  <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
 	</sequence>
 	<elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
@@ -70071,6 +70029,7 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="fr-ex-Becque-ee"/>
 <bibl xml:id="PH-eg-05"/>
 <bibl xml:id="DRPRO-eg-10"/>
+<bibl xml:id="divEGs"/>
 <bibl xml:id="fr-ex-Belloc_Kepas"/>
 <bibl xml:id="fr-ex-Belloc_Neons"/>
 <bibl xml:id="bentham"/>
@@ -70350,7 +70309,7 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="PH-eg-09"/>
 <bibl xml:id="CO-eg-04"/>
 <bibl xml:id="COBICOR-eg-251"/>
-<bibl xml:id="divEGs"/>
+<bibl xml:id="msph1sup-wtrmrk"/>
 <bibl xml:id="fr-ex-Mrejen_Eau"/>
 <bibl xml:id="SA-eg-04"/>
 <bibl xml:id="fr-ex-Hydraul"/>
