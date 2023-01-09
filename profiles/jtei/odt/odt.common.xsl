@@ -866,17 +866,21 @@
       embed them in the output file. This is done before processing anything
       else.
    -->
+  <!--   Reference to this (extension) function has been commented out in the 
+         figure[graphic] matching template, so this function can be omitted 
+         as well. -->
+  <!--
   <xsl:function name="local:getGraphicAsBase64" as="xs:string">
     <xsl:param name="graphicUrl" as="xs:string"/>
       <xsl:message>Processing image <xsl:value-of select="$graphicUrl"/>...</xsl:message>
-<!--      Let's see if we can find the actual file. 
+<!-\-      Let's see if we can find the actual file. 
          This is quite messy and not expected to
-         work on non-*nix file systems. -->
+         work on non-*nix file systems. -\->
       <xsl:variable name="filePath" select="replace(replace(resolve-uri($graphicUrl), '%20', ' '), 'file:', '')"/>
       <xsl:message>File is deemed to be at: <xsl:value-of select="$filePath"/></xsl:message>
       <xsl:value-of select="expath-file:read-binary($filePath)"/>
   </xsl:function>
-  
+  -->  
 </xsl:stylesheet>
 
     
