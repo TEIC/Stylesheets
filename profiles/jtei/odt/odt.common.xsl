@@ -748,21 +748,6 @@
           </xsl:for-each>
         </xsl:variable>
         <draw:image xlink:href="{$href}" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad"/>
-<!--        We are abandoning FODT for simplicity's sake. -->
-        
-       <!-- 
-          <xsl:choose>
-              <xsl:when test="$outputFormat = 'fodt'">
-                  <draw:image>
-                      <office:binary-data><xsl:value-of select="local:getGraphicAsBase64(resolve-uri(graphic/@url, base-uri(//TEI[1])))"/></office:binary-data>
-                  </draw:image>
-              </xsl:when>
-              <xsl:when test="$outputFormat = 'odt'">
-                  <draw:image xlink:href="Pictures/{tokenize($graphic/@url, '/')[last()]}" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad"/>
-              </xsl:when>
-          </xsl:choose>
-        -->
-        
     </draw:frame>
     </text:p>
     <!--        We have to deal with a figure captions manually and put them after the graphic. -->
@@ -860,27 +845,6 @@
         <xsl:sequence select="$tagName = ('lb', 'pb', 'cb') or xs:string($el) = ''"/>
     </xsl:function>
     
-    
-<!--   Processing of images. 
-      We have to pre-process images into base64 format so that we can 
-      embed them in the output file. This is done before processing anything
-      else.
-   -->
-  <!--   Reference to this (extension) function has been commented out in the 
-         figure[graphic] matching template, so this function can be omitted 
-         as well. -->
-  <!--
-  <xsl:function name="local:getGraphicAsBase64" as="xs:string">
-    <xsl:param name="graphicUrl" as="xs:string"/>
-      <xsl:message>Processing image <xsl:value-of select="$graphicUrl"/>...</xsl:message>
-<!-\-      Let's see if we can find the actual file. 
-         This is quite messy and not expected to
-         work on non-*nix file systems. -\->
-      <xsl:variable name="filePath" select="replace(replace(resolve-uri($graphicUrl), '%20', ' '), 'file:', '')"/>
-      <xsl:message>File is deemed to be at: <xsl:value-of select="$filePath"/></xsl:message>
-      <xsl:value-of select="expath-file:read-binary($filePath)"/>
-  </xsl:function>
-  -->  
 </xsl:stylesheet>
 
     
