@@ -4,16 +4,20 @@
          xmlns:xlink="http://www.w3.org/1999/xlink"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0">
+   <define name="t_macro.abContent">
+      <zeroOrMore>
+         <choice>
+            <text/>
+            <ref name="t_model.paraPart"/>
+            <ref name="t_ab"/>
+         </choice>
+      </zeroOrMore>
+   </define>
    <define name="t_macro.paraContent">
       <zeroOrMore>
          <choice>
             <text/>
-            <ref name="t_model.gLike"/>
-            <ref name="t_model.phrase"/>
-            <ref name="t_model.inter"/>
-            <ref name="t_model.global"/>
-            <ref name="t_lg"/>
-            <ref name="t_model.lLike"/>
+            <ref name="t_model.paraPart"/>
          </choice>
       </zeroOrMore>
    </define>
@@ -513,9 +517,9 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xi="http://www.w3.org/2001/XInclude"
                 context="tei:*[@calendar]">
-         <sch:assert test="string-length(.) gt 0"> @calendar indicates one or more systems or calendars to
-              which the date represented by the content of this element belongs, but this
-              <sch:name/> element has no textual content.</sch:assert>
+         <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+            systems or calendars to which the date represented by the content of this element belongs,
+            but this <sch:name/> element has no textual content.</sch:assert>
       </sch:rule>
    </pattern>
    <define name="t_att.datable.attribute.period">
@@ -535,11 +539,12 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
    <define name="t_att.datcat.attributes">
       <ref name="t_att.datcat.attribute.datcat"/>
       <ref name="t_att.datcat.attribute.valueDatcat"/>
+      <ref name="t_att.datcat.attribute.targetDatcat"/>
    </define>
    <define name="t_att.datcat.attribute.datcat">
       <optional>
-         <attribute name="datcat" ns="http://www.isocat.org/ns/dcr">
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a PID (persistent identifier) that aligns the given element with the appropriate Data Category (or categories) in ISOcat.</a:documentation>
+         <attribute name="datcat">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a pointer to a definition of, and/or general information about, (a) an information container (element or attribute) or (b) a value of an information container (element content or attribute value), by referencing an external taxonomy or ontology. If <code xmlns="http://www.w3.org/1999/xhtml">@valueDatcat</code> is present in the immediate context, this attribute takes on role (a), while <code xmlns="http://www.w3.org/1999/xhtml">@valueDatcat</code> performs role (b).</a:documentation>
             <list>
                <oneOrMore>
                   <data type="anyURI">
@@ -552,8 +557,22 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
    </define>
    <define name="t_att.datcat.attribute.valueDatcat">
       <optional>
-         <attribute name="valueDatcat" ns="http://www.isocat.org/ns/dcr">
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a PID (persistent identifier) that aligns the content of the given element or the value of the given attribute with the appropriate simple Data Category (or categories) in ISOcat.</a:documentation>
+         <attribute name="valueDatcat">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a definition of, and/or general information about a value of an information container (element content or attribute value), by reference to an external taxonomy or ontology. Used especially where a contrast with <code xmlns="http://www.w3.org/1999/xhtml">@datcat</code> is needed.</a:documentation>
+            <list>
+               <oneOrMore>
+                  <data type="anyURI">
+                     <param name="pattern">\S+</param>
+                  </data>
+               </oneOrMore>
+            </list>
+         </attribute>
+      </optional>
+   </define>
+   <define name="t_att.datcat.attribute.targetDatcat">
+      <optional>
+         <attribute name="targetDatcat">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a definition of, and/or general information about, information structure of an object referenced or modeled by the containing element, by reference to an external taxonomy or ontology. This attribute has the characteristics of the <code xmlns="http://www.w3.org/1999/xhtml">@datcat</code> attribute, except that it addresses not its containing element, but an object that is being referenced or modeled by its containing element.</a:documentation>
             <list>
                <oneOrMore>
                   <data type="anyURI">
@@ -827,11 +846,11 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xi="http://www.w3.org/2001/XInclude"
-                context="tei:*/@source">
-         <sch:let name="srcs" value="tokenize( normalize-space(.),' ')"/>
-         <sch:report test="( parent::tei:classRef | parent::tei:dataRef | parent::tei:elementRef | parent::tei:macroRef | parent::tei:moduleRef | parent::tei:schemaSpec ) and $srcs[2]">
+                context="tei:*[@source]">
+         <sch:let name="srcs" value="tokenize( normalize-space(@source),' ')"/>
+         <sch:report test="( self::tei:classRef               | self::tei:dataRef               | self::tei:elementRef               | self::tei:macroRef               | self::tei:moduleRef               | self::tei:schemaSpec )               and               $srcs[2]">
               When used on a schema description element (like
-              <sch:value-of select="name(..)"/>), the @source attribute
+              <sch:value-of select="name(.)"/>), the @source attribute
               should have only 1 value. (This one has <sch:value-of select="count($srcs)"/>.)
             </sch:report>
       </sch:rule>
@@ -1007,7 +1026,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
          <attribute name="width">
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Where the media are displayed, indicates the display width</a:documentation>
             <data type="token">
-               <param name="pattern">[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|gd|rem|vw|vh|vm)</param>
+               <param name="pattern">[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|ch|rem|vw|vh|vmin|vmax)</param>
             </data>
          </attribute>
       </optional>
@@ -1017,7 +1036,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
          <attribute name="height">
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Where the media are displayed, indicates the display height</a:documentation>
             <data type="token">
-               <param name="pattern">[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|gd|rem|vw|vh|vm)</param>
+               <param name="pattern">[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|ch|rem|vw|vh|vmin|vmax)</param>
             </data>
          </attribute>
       </optional>
@@ -1718,6 +1737,106 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_seg"/>
       </choice>
    </define>
+   <define name="t_model.segLike_alternation">
+      <choice>
+         <ref name="t_s"/>
+         <ref name="t_cl"/>
+         <ref name="t_phr"/>
+         <ref name="t_w"/>
+         <ref name="t_m"/>
+         <ref name="t_c"/>
+         <ref name="t_pc"/>
+         <ref name="t_seg"/>
+      </choice>
+   </define>
+   <define name="t_model.segLike_sequence">
+      <ref name="t_s"/>
+      <ref name="t_cl"/>
+      <ref name="t_phr"/>
+      <ref name="t_w"/>
+      <ref name="t_m"/>
+      <ref name="t_c"/>
+      <ref name="t_pc"/>
+      <ref name="t_seg"/>
+   </define>
+   <define name="t_model.segLike_sequenceOptional">
+      <optional>
+         <ref name="t_s"/>
+      </optional>
+      <optional>
+         <ref name="t_cl"/>
+      </optional>
+      <optional>
+         <ref name="t_phr"/>
+      </optional>
+      <optional>
+         <ref name="t_w"/>
+      </optional>
+      <optional>
+         <ref name="t_m"/>
+      </optional>
+      <optional>
+         <ref name="t_c"/>
+      </optional>
+      <optional>
+         <ref name="t_pc"/>
+      </optional>
+      <optional>
+         <ref name="t_seg"/>
+      </optional>
+   </define>
+   <define name="t_model.segLike_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="t_s"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_cl"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_phr"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_w"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_m"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_c"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_pc"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_seg"/>
+      </zeroOrMore>
+   </define>
+   <define name="t_model.segLike_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="t_s"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_cl"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_phr"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_w"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_m"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_c"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_pc"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_seg"/>
+      </oneOrMore>
+   </define>
    <define name="t_model.hiLike">
       <choice>
          <ref name="t_hi"/>
@@ -1876,6 +1995,40 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_model.emphLike"/>
       </choice>
    </define>
+   <define name="t_model.highlighted_alternation">
+      <choice>
+         <ref name="t_model.hiLike_alternation"/>
+         <ref name="t_model.emphLike_alternation"/>
+      </choice>
+   </define>
+   <define name="t_model.highlighted_sequence">
+      <ref name="t_model.hiLike_sequence"/>
+      <ref name="t_model.emphLike_sequence"/>
+   </define>
+   <define name="t_model.highlighted_sequenceOptional">
+      <optional>
+         <ref name="t_model.hiLike_sequenceOptional"/>
+      </optional>
+      <optional>
+         <ref name="t_model.emphLike_sequenceOptional"/>
+      </optional>
+   </define>
+   <define name="t_model.highlighted_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="t_model.hiLike_sequenceOptionalRepeatable"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_model.emphLike_sequenceOptionalRepeatable"/>
+      </zeroOrMore>
+   </define>
+   <define name="t_model.highlighted_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="t_model.hiLike_sequenceRepeatable"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_model.emphLike_sequenceRepeatable"/>
+      </oneOrMore>
+   </define>
    <define name="t_model.dateLike">
       <choice>
          <ref name="t_date"/>
@@ -2005,6 +2158,51 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_binaryObject"/>
       </choice>
    </define>
+   <define name="t_model.graphicLike_alternation">
+      <choice>
+         <ref name="t_media"/>
+         <ref name="t_graphic"/>
+         <ref name="t_binaryObject"/>
+      </choice>
+   </define>
+   <define name="t_model.graphicLike_sequence">
+      <ref name="t_media"/>
+      <ref name="t_graphic"/>
+      <ref name="t_binaryObject"/>
+   </define>
+   <define name="t_model.graphicLike_sequenceOptional">
+      <optional>
+         <ref name="t_media"/>
+      </optional>
+      <optional>
+         <ref name="t_graphic"/>
+      </optional>
+      <optional>
+         <ref name="t_binaryObject"/>
+      </optional>
+   </define>
+   <define name="t_model.graphicLike_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="t_media"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_graphic"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_binaryObject"/>
+      </zeroOrMore>
+   </define>
+   <define name="t_model.graphicLike_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="t_media"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_graphic"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_binaryObject"/>
+      </oneOrMore>
+   </define>
    <define name="t_model.offsetLike">
       <notAllowed/>
    </define>
@@ -2024,6 +2222,21 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <notAllowed/>
    </define>
    <define name="t_model.pPart.msdesc">
+      <notAllowed/>
+   </define>
+   <define name="t_model.pPart.msdesc_alternation">
+      <notAllowed/>
+   </define>
+   <define name="t_model.pPart.msdesc_sequence">
+      <empty/>
+   </define>
+   <define name="t_model.pPart.msdesc_sequenceOptional">
+      <empty/>
+   </define>
+   <define name="t_model.pPart.msdesc_sequenceOptionalRepeatable">
+      <empty/>
+   </define>
+   <define name="t_model.pPart.msdesc_sequenceRepeatable">
       <notAllowed/>
    </define>
    <define name="t_model.pPart.editorial">
@@ -2184,13 +2397,96 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_model.pPart.transcriptional"/>
       </choice>
    </define>
+   <define name="t_model.pPart.edit_alternation">
+      <choice>
+         <ref name="t_model.pPart.editorial_alternation"/>
+         <ref name="t_model.pPart.transcriptional_alternation"/>
+      </choice>
+   </define>
+   <define name="t_model.pPart.edit_sequence">
+      <ref name="t_model.pPart.editorial_sequence"/>
+      <ref name="t_model.pPart.transcriptional_sequence"/>
+   </define>
+   <define name="t_model.pPart.edit_sequenceOptional">
+      <optional>
+         <ref name="t_model.pPart.editorial_sequenceOptional"/>
+      </optional>
+      <optional>
+         <ref name="t_model.pPart.transcriptional_sequenceOptional"/>
+      </optional>
+   </define>
+   <define name="t_model.pPart.edit_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="t_model.pPart.editorial_sequenceOptionalRepeatable"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_model.pPart.transcriptional_sequenceOptionalRepeatable"/>
+      </zeroOrMore>
+   </define>
+   <define name="t_model.pPart.edit_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="t_model.pPart.editorial_sequenceRepeatable"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_model.pPart.transcriptional_sequenceRepeatable"/>
+      </oneOrMore>
+   </define>
    <define name="t_model.ptrLike">
       <choice>
          <ref name="t_ptr"/>
          <ref name="t_ref"/>
       </choice>
    </define>
+   <define name="t_model.ptrLike_alternation">
+      <choice>
+         <ref name="t_ptr"/>
+         <ref name="t_ref"/>
+      </choice>
+   </define>
+   <define name="t_model.ptrLike_sequence">
+      <ref name="t_ptr"/>
+      <ref name="t_ref"/>
+   </define>
+   <define name="t_model.ptrLike_sequenceOptional">
+      <optional>
+         <ref name="t_ptr"/>
+      </optional>
+      <optional>
+         <ref name="t_ref"/>
+      </optional>
+   </define>
+   <define name="t_model.ptrLike_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="t_ptr"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_ref"/>
+      </zeroOrMore>
+   </define>
+   <define name="t_model.ptrLike_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="t_ptr"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_ref"/>
+      </oneOrMore>
+   </define>
    <define name="t_model.lPart">
+      <notAllowed/>
+   </define>
+   <define name="t_model.lPart_alternation">
+      <notAllowed/>
+   </define>
+   <define name="t_model.lPart_sequence">
+      <empty/>
+   </define>
+   <define name="t_model.lPart_sequenceOptional">
+      <empty/>
+   </define>
+   <define name="t_model.lPart_sequenceOptionalRepeatable">
+      <empty/>
+   </define>
+   <define name="t_model.lPart_sequenceRepeatable">
       <notAllowed/>
    </define>
    <define name="t_model.global.meta">
@@ -2207,6 +2503,128 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_altGrp"/>
       </choice>
    </define>
+   <define name="t_model.global.meta_alternation">
+      <choice>
+         <ref name="t_index"/>
+         <ref name="t_span"/>
+         <ref name="t_spanGrp"/>
+         <ref name="t_interp"/>
+         <ref name="t_interpGrp"/>
+         <ref name="t_link"/>
+         <ref name="t_linkGrp"/>
+         <ref name="t_timeline"/>
+         <ref name="t_alt"/>
+         <ref name="t_altGrp"/>
+      </choice>
+   </define>
+   <define name="t_model.global.meta_sequence">
+      <ref name="t_index"/>
+      <ref name="t_span"/>
+      <ref name="t_spanGrp"/>
+      <ref name="t_interp"/>
+      <ref name="t_interpGrp"/>
+      <ref name="t_link"/>
+      <ref name="t_linkGrp"/>
+      <ref name="t_timeline"/>
+      <ref name="t_alt"/>
+      <ref name="t_altGrp"/>
+   </define>
+   <define name="t_model.global.meta_sequenceOptional">
+      <optional>
+         <ref name="t_index"/>
+      </optional>
+      <optional>
+         <ref name="t_span"/>
+      </optional>
+      <optional>
+         <ref name="t_spanGrp"/>
+      </optional>
+      <optional>
+         <ref name="t_interp"/>
+      </optional>
+      <optional>
+         <ref name="t_interpGrp"/>
+      </optional>
+      <optional>
+         <ref name="t_link"/>
+      </optional>
+      <optional>
+         <ref name="t_linkGrp"/>
+      </optional>
+      <optional>
+         <ref name="t_timeline"/>
+      </optional>
+      <optional>
+         <ref name="t_alt"/>
+      </optional>
+      <optional>
+         <ref name="t_altGrp"/>
+      </optional>
+   </define>
+   <define name="t_model.global.meta_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="t_index"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_span"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_spanGrp"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_interp"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_interpGrp"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_link"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_linkGrp"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_timeline"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_alt"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_altGrp"/>
+      </zeroOrMore>
+   </define>
+   <define name="t_model.global.meta_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="t_index"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_span"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_spanGrp"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_interp"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_interpGrp"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_link"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_linkGrp"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_timeline"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_alt"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_altGrp"/>
+      </oneOrMore>
+   </define>
    <define name="t_model.milestoneLike">
       <choice>
          <ref name="t_milestone"/>
@@ -2216,6 +2634,84 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_cb"/>
          <ref name="t_anchor"/>
       </choice>
+   </define>
+   <define name="t_model.milestoneLike_alternation">
+      <choice>
+         <ref name="t_milestone"/>
+         <ref name="t_gb"/>
+         <ref name="t_pb"/>
+         <ref name="t_lb"/>
+         <ref name="t_cb"/>
+         <ref name="t_anchor"/>
+      </choice>
+   </define>
+   <define name="t_model.milestoneLike_sequence">
+      <ref name="t_milestone"/>
+      <ref name="t_gb"/>
+      <ref name="t_pb"/>
+      <ref name="t_lb"/>
+      <ref name="t_cb"/>
+      <ref name="t_anchor"/>
+   </define>
+   <define name="t_model.milestoneLike_sequenceOptional">
+      <optional>
+         <ref name="t_milestone"/>
+      </optional>
+      <optional>
+         <ref name="t_gb"/>
+      </optional>
+      <optional>
+         <ref name="t_pb"/>
+      </optional>
+      <optional>
+         <ref name="t_lb"/>
+      </optional>
+      <optional>
+         <ref name="t_cb"/>
+      </optional>
+      <optional>
+         <ref name="t_anchor"/>
+      </optional>
+   </define>
+   <define name="t_model.milestoneLike_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="t_milestone"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_gb"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_pb"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_lb"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_cb"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_anchor"/>
+      </zeroOrMore>
+   </define>
+   <define name="t_model.milestoneLike_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="t_milestone"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_gb"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_pb"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_lb"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_cb"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_anchor"/>
+      </oneOrMore>
    </define>
    <define name="t_model.gLike">
       <notAllowed/>
@@ -2245,7 +2741,67 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_val"/>
       </choice>
    </define>
+   <define name="t_model.phrase.xml_alternation">
+      <choice>
+         <ref name="t_gi"/>
+         <ref name="t_att"/>
+         <ref name="t_val"/>
+      </choice>
+   </define>
+   <define name="t_model.phrase.xml_sequence">
+      <ref name="t_gi"/>
+      <ref name="t_att"/>
+      <ref name="t_val"/>
+   </define>
+   <define name="t_model.phrase.xml_sequenceOptional">
+      <optional>
+         <ref name="t_gi"/>
+      </optional>
+      <optional>
+         <ref name="t_att"/>
+      </optional>
+      <optional>
+         <ref name="t_val"/>
+      </optional>
+   </define>
+   <define name="t_model.phrase.xml_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="t_gi"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_att"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_val"/>
+      </zeroOrMore>
+   </define>
+   <define name="t_model.phrase.xml_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="t_gi"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_att"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_val"/>
+      </oneOrMore>
+   </define>
    <define name="t_model.specDescLike">
+      <notAllowed/>
+   </define>
+   <define name="t_model.specDescLike_alternation">
+      <notAllowed/>
+   </define>
+   <define name="t_model.specDescLike_sequence">
+      <empty/>
+   </define>
+   <define name="t_model.specDescLike_sequenceOptional">
+      <empty/>
+   </define>
+   <define name="t_model.specDescLike_sequenceOptionalRepeatable">
+      <empty/>
+   </define>
+   <define name="t_model.specDescLike_sequenceRepeatable">
       <notAllowed/>
    </define>
    <define name="t_model.biblLike">
@@ -2402,6 +2958,40 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_noteGrp"/>
       </choice>
    </define>
+   <define name="t_model.noteLike_alternation">
+      <choice>
+         <ref name="t_note"/>
+         <ref name="t_noteGrp"/>
+      </choice>
+   </define>
+   <define name="t_model.noteLike_sequence">
+      <ref name="t_note"/>
+      <ref name="t_noteGrp"/>
+   </define>
+   <define name="t_model.noteLike_sequenceOptional">
+      <optional>
+         <ref name="t_note"/>
+      </optional>
+      <optional>
+         <ref name="t_noteGrp"/>
+      </optional>
+   </define>
+   <define name="t_model.noteLike_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="t_note"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_noteGrp"/>
+      </zeroOrMore>
+   </define>
+   <define name="t_model.noteLike_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="t_note"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_noteGrp"/>
+      </oneOrMore>
+   </define>
    <define name="t_model.lLike">
       <choice>
          <ref name="t_l"/>
@@ -2506,6 +3096,40 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_gap"/>
          <ref name="t_ellipsis"/>
       </choice>
+   </define>
+   <define name="t_model.global.edit_alternation">
+      <choice>
+         <ref name="t_gap"/>
+         <ref name="t_ellipsis"/>
+      </choice>
+   </define>
+   <define name="t_model.global.edit_sequence">
+      <ref name="t_gap"/>
+      <ref name="t_ellipsis"/>
+   </define>
+   <define name="t_model.global.edit_sequenceOptional">
+      <optional>
+         <ref name="t_gap"/>
+      </optional>
+      <optional>
+         <ref name="t_ellipsis"/>
+      </optional>
+   </define>
+   <define name="t_model.global.edit_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="t_gap"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_ellipsis"/>
+      </zeroOrMore>
+   </define>
+   <define name="t_model.global.edit_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="t_gap"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_ellipsis"/>
+      </oneOrMore>
    </define>
    <define name="t_model.divPart">
       <choice>
@@ -2949,6 +3573,62 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_model.nameLike"/>
       </choice>
    </define>
+   <define name="t_model.pPart.data_alternation">
+      <choice>
+         <ref name="t_model.dateLike_alternation"/>
+         <ref name="t_model.measureLike_alternation"/>
+         <ref name="t_model.addressLike_alternation"/>
+         <ref name="t_model.nameLike_alternation"/>
+      </choice>
+   </define>
+   <define name="t_model.pPart.data_sequence">
+      <ref name="t_model.dateLike_sequence"/>
+      <ref name="t_model.measureLike_sequence"/>
+      <ref name="t_model.addressLike_sequence"/>
+      <ref name="t_model.nameLike_sequence"/>
+   </define>
+   <define name="t_model.pPart.data_sequenceOptional">
+      <optional>
+         <ref name="t_model.dateLike_sequenceOptional"/>
+      </optional>
+      <optional>
+         <ref name="t_model.measureLike_sequenceOptional"/>
+      </optional>
+      <optional>
+         <ref name="t_model.addressLike_sequenceOptional"/>
+      </optional>
+      <optional>
+         <ref name="t_model.nameLike_sequenceOptional"/>
+      </optional>
+   </define>
+   <define name="t_model.pPart.data_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="t_model.dateLike_sequenceOptionalRepeatable"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_model.measureLike_sequenceOptionalRepeatable"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_model.addressLike_sequenceOptionalRepeatable"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_model.nameLike_sequenceOptionalRepeatable"/>
+      </zeroOrMore>
+   </define>
+   <define name="t_model.pPart.data_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="t_model.dateLike_sequenceRepeatable"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_model.measureLike_sequenceRepeatable"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_model.addressLike_sequenceRepeatable"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_model.nameLike_sequenceRepeatable"/>
+      </oneOrMore>
+   </define>
    <define name="t_model.inter">
       <choice>
          <ref name="t_model.egLike"/>
@@ -2980,6 +3660,16 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_model.specDescLike"/>
          <ref name="t_model.pPart.data"/>
          <ref name="t_ruby"/>
+      </choice>
+   </define>
+   <define name="t_model.paraPart">
+      <choice>
+         <ref name="t_model.gLike"/>
+         <ref name="t_model.lLike"/>
+         <ref name="t_model.global"/>
+         <ref name="t_model.inter"/>
+         <ref name="t_model.phrase"/>
+         <ref name="t_lg"/>
       </choice>
    </define>
    <define name="t_model.limitedPhrase">
@@ -3912,6 +4602,7 @@ Measures]</a:documentation>
          <ref name="t_macro.phraseSeq"/>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.measurement.attributes"/>
+         <ref name="t_att.ranging.attributes"/>
          <optional>
             <attribute name="type">
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the type of measurement in any convenient typology.</a:documentation>
@@ -4947,7 +5638,7 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
    <define name="t_textLang">
       <element name="textLang">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(text language) describes the languages and writing systems identified within the bibliographic work being described, rather than its description. [3.12.2.4. Imprint, Size of a Document, and Reprint Information 10.6.6. Languages and Writing Systems]</a:documentation>
-         <ref name="t_macro.phraseSeq"/>
+         <ref name="t_macro.specialPara"/>
          <ref name="t_att.global.attributes"/>
          <optional>
             <attribute name="mainLang">
@@ -5633,6 +6324,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(element usage) documents the usage of a specific element within a specified document. [2.3.4. The Tagging Declaration]</a:documentation>
          <ref name="t_macro.limitedContent"/>
          <ref name="t_att.global.attributes"/>
+         <ref name="t_att.datcat.attributes"/>
          <attribute name="gi">
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(generic identifier) specifies the name (generic identifier) of the element indicated by the tag, within the namespace indicated by the parent <code xmlns="http://www.w3.org/1999/xhtml">&lt;namespace&gt;</code> element.</a:documentation>
             <data type="Name"/>
@@ -5750,21 +6442,12 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
                </data>
             </attribute>
          </optional>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-citeStructure-delim-citestructure-inner-delim-constraint-rule-13">
-            <rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                  xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                  xmlns:xi="http://www.w3.org/2001/XInclude"
-                  context="tei:citeStructure[parent::tei:citeStructure]">
-               <assert test="@delim">A <name/> with a parent <name/> must have a @delim attribute.</assert>
-            </rule>
-         </pattern>
          <attribute name="match">
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(match) supplies an XPath selection pattern using the syntax defined in  which identifies a set of nodes which are citable structural components. The expression may be absolute (beginning with `/`) or relative. <code xmlns="http://www.w3.org/1999/xhtml">@match</code> on a <code xmlns="http://www.w3.org/1999/xhtml">&lt;citeStructure&gt;</code> without a <code xmlns="http://www.w3.org/1999/xhtml">&lt;citeStructure&gt;</code> parent must be an absolute XPath. If it is relative, its context is set by the <code xmlns="http://www.w3.org/1999/xhtml">@match</code> of the parent <code xmlns="http://www.w3.org/1999/xhtml">&lt;citeStructure&gt;</code>.</a:documentation>
             <text/>
          </attribute>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-citeStructure-match-citestructure-outer-match-constraint-rule-14">
+                  id="testPure1-citeStructure-match-citestructure-outer-match-constraint-rule-13">
             <rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                   xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                   xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -5773,7 +6456,7 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-citeStructure-match-citestructure-inner-match-constraint-rule-15">
+                  id="testPure1-citeStructure-match-citestructure-inner-match-constraint-rule-14">
             <rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                   xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                   xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -6112,6 +6795,7 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
             <choice>
                <ref name="t_model.pLike"/>
                <ref name="t_model.listLike"/>
+               <ref name="t_listBibl"/>
             </choice>
          </oneOrMore>
          <ref name="t_att.global.attributes"/>
@@ -6474,7 +7158,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
    <define name="t_att.linguistic.attribute.join">
       <optional>
          <attribute name="join">
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">when present, it provides information on whether the token in question is adjacent to another, and if so, on which side. The definition of this attribute is adapted from ISO MAF (Morpho-syntactic Annotation Framework), ISO 24611:2012.</a:documentation>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">when present, provides information on whether the token in question is adjacent to another, and if so, on which side.</a:documentation>
             <choice>
                <value>no</value>
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(the token is not adjacent to another) </a:documentation>
@@ -6899,7 +7583,7 @@ The attributes @to and @from on <name/> may each contain only a single value</re
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(link) defines an association or hypertextual link among elements or passages, of some type not more precisely specifiable by other elements. [16.1. Links]</a:documentation>
          <empty/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-link-linkTargets3-constraint-assert-15">
+                  id="testPure1-link-linkTargets3-constraint-assert-14">
             <rule context="tei:link">
                <sch:assert xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -6946,22 +7630,10 @@ The attributes @to and @from on <name/> may each contain only a single value</re
    </define>
    <define name="t_ab">
       <element name="ab">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(anonymous block) contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph. [16.3. Blocks, Segments, and Anchors]</a:documentation>
-         <ref name="t_macro.paraContent"/>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(anonymous block) contains any component-level unit of text, acting as a container for phrase or inter level elements analogous to, but without the same constraints as, a paragraph. [16.3. Blocks, Segments, and Anchors]</a:documentation>
+         <ref name="t_macro.abContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-ab-abstractModel-structure-ab-in-ab-or-p-constraint-report-21">
-            <rule context="tei:ab">
-               <sch:report xmlns="http://www.tei-c.org/ns/1.0"
-                           xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                           xmlns:xi="http://www.w3.org/2001/XInclude"
-                           test="(ancestor::tei:p or ancestor::tei:ab) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )">
-        Abstract model violation: ab may not occur inside paragraphs or other ab elements.
-      </sch:report>
-            </rule>
-         </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-22">
+                  id="testPure1-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-21">
             <rule context="tei:ab">
                <sch:report xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -7215,7 +7887,7 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
             <ref name="t_model.standOffPart"/>
          </oneOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-standOff-nested_standOff_should_be_typed-constraint-assert-16">
+                  id="testPure1-standOff-nested_standOff_should_be_typed-constraint-assert-15">
             <rule context="tei:standOff">
                <sch:assert xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -7669,7 +8341,7 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
             </optional>
          </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-div-abstractModel-structure-div-in-l-or-lg-constraint-report-23">
+                  id="testPure1-div-abstractModel-structure-div-in-l-or-lg-constraint-report-22">
             <rule context="tei:div">
                <sch:report xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -7680,7 +8352,7 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="testPure1-div-abstractModel-structure-div-in-ab-or-p-constraint-report-24">
+                  id="testPure1-div-abstractModel-structure-div-in-ab-or-p-constraint-report-23">
             <rule context="tei:div">
                <sch:report xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"

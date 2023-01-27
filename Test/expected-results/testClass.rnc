@@ -1,0 +1,792 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace ns1 = "http://www.w3.org/1999/xhtml"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace sch = "http://purl.oclc.org/dsdl/schematron"
+default namespace tei = "http://www.tei-c.org/ns/1.0"
+namespace teix = "http://www.tei-c.org/ns/Examples"
+namespace xi = "http://www.w3.org/2001/XInclude"
+namespace xlink = "http://www.w3.org/1999/xlink"
+
+
+#
+
+sch:ns [ prefix = "tei" uri = "http://www.tei-c.org/ns/1.0" ]
+macro.paraContent = (text | model.paraPart)*
+att.written.attributes = att.written.attribute.hand
+att.written.attribute.hand =
+  [
+    a:documentation [
+      "points to a "
+      ns1:code [ "<handNote>" ]
+      " element describing the hand considered responsible for the content of the element concerned."
+    ]
+  ]
+  attribute hand {
+    xsd:anyURI { pattern = "\S+" }
+  }?
+att.declaring.attributes = att.declaring.attribute.decls
+att.declaring.attribute.decls =
+  
+  ## (declarations) identifies one or more declarable elements within the header, which are understood to apply to the element bearing this attribute and its content.
+  attribute decls {
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
+  }?
+att.fragmentable.attributes = att.fragmentable.attribute.part
+att.fragmentable.attribute.part =
+  
+  ## specifies whether or not its parent element is fragmented in some way, typically by some other overlapping structure: for example a speech which is divided between two or more verse stanzas, a paragraph which is split across a page division, a verse line which is divided between two speakers.
+  [ a:defaultValue = "N" ]
+  attribute part {
+    
+    ## (yes) the element is fragmented in some (unspecified) respect
+    "Y"
+    | 
+      ## (no) the element is not fragmented, or no claim is made as to its completeness
+      "N"
+    | 
+      ## (initial) this is the initial part of a fragmented element
+      "I"
+    | 
+      ## (medial) this is a medial part of a fragmented element
+      "M"
+    | 
+      ## (final) this is the final part of a fragmented element
+      "F"
+  }?
+att.divLike.attributes =
+  att.fragmentable.attributes,
+  att.divLike.attribute.org,
+  att.divLike.attribute.sample
+att.divLike.attribute.org =
+  
+  ## (organization) specifies how the content of the division is organized.
+  [ a:defaultValue = "uniform" ]
+  attribute org {
+    
+    ## no claim is made about the sequence in which the immediate contents of this division are to be processed, or their inter-relationships.
+    "composite"
+    | 
+      ## the immediate contents of this element are regarded as forming a logical unit, to be processed in sequence.
+      "uniform"
+  }?
+att.divLike.attribute.sample =
+  
+  ## indicates whether this division is a sample of the original source and if so, from which part.
+  [ a:defaultValue = "complete" ]
+  attribute sample {
+    
+    ## division lacks material present at end in source.
+    "initial"
+    | 
+      ## division lacks material at start and end.
+      "medial"
+    | 
+      ## division lacks material at start.
+      "final"
+    | 
+      ## position of sampled material within original unknown.
+      "unknown"
+    | 
+      ## division is not a sample.
+      "complete"
+  }?
+att.global.responsibility.attributes =
+  att.global.responsibility.attribute.cert,
+  att.global.responsibility.attribute.resp
+att.global.responsibility.attribute.cert =
+  
+  ## (certainty) signifies the degree of certainty associated with the intervention or interpretation.
+  attribute cert {
+    xsd:double
+    | (
+       ##
+       "high"
+       | 
+         ##
+         "medium"
+       | 
+         ##
+         "low"
+       | 
+         ##
+         "unknown")
+  }?
+att.global.responsibility.attribute.resp =
+  
+  ## (responsible party) indicates the agency responsible for the intervention or interpretation, for example an editor or transcriber.
+  attribute resp {
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
+  }?
+att.global.rendition.attributes =
+  att.global.rendition.attribute.rend,
+  att.global.rendition.attribute.style,
+  att.global.rendition.attribute.rendition
+att.global.rendition.attribute.rend =
+  
+  ## (rendition) indicates how the element in question was rendered or presented in the source text.
+  attribute rend {
+    list {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+    }
+  }?
+att.global.rendition.attribute.style =
+  
+  ## contains an expression in some formal style definition language which defines the rendering or presentation used for this element in the source text
+  attribute style { xsd:string }?
+att.global.rendition.attribute.rendition =
+  
+  ## points to a description of the rendering or presentation used for this element in the source text.
+  attribute rendition {
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
+  }?
+att.global.source.attributes = att.global.source.attribute.source
+att.global.source.attribute.source =
+  
+  ## specifies the source from which some aspect of this element is drawn.
+  attribute source {
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
+  }?
+sch:pattern [
+  id =
+    "testClassRef-att.global.source-source-only_1_ODD_source-constraint-rule-1"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "tei:*[@source]"
+    "\x{a}" ~
+    "         "
+    sch:let [
+      name = "srcs"
+      value = "tokenize( normalize-space(@source),' ')"
+    ]
+    "\x{a}" ~
+    "         "
+    sch:report [
+      test =
+        "( self::tei:classRef               | self::tei:dataRef               | self::tei:elementRef               | self::tei:macroRef               | self::tei:moduleRef               | self::tei:schemaSpec )               and               $srcs[2]"
+      "\x{a}" ~
+      "              When used on a schema description element (like\x{a}" ~
+      "              "
+      sch:value-of [ select = "name(.)" ]
+      "), the @source attribute\x{a}" ~
+      "              should have only 1 value. (This one has "
+      sch:value-of [ select = "count($srcs)" ]
+      ".)\x{a}" ~
+      "            "
+    ]
+    "\x{a}" ~
+    "      "
+  ]
+  "\x{a}" ~
+  "   "
+]
+att.global.attributes =
+  att.global.rendition.attributes,
+  att.global.responsibility.attributes,
+  att.global.source.attributes,
+  att.global.attribute.xmlid,
+  att.global.attribute.n,
+  att.global.attribute.xmllang,
+  att.global.attribute.xmlbase,
+  att.global.attribute.xmlspace
+att.global.attribute.xmlid =
+  
+  ## (identifier) provides a unique identifier for the element bearing the attribute.
+  attribute xml:id { xsd:ID }?
+att.global.attribute.n =
+  
+  ## (number) gives a number (or other label) for an element, which is not necessarily unique within the document.
+  attribute n { xsd:string }?
+att.global.attribute.xmllang =
+  [
+    a:documentation [
+      "(language) indicates the language of the element content using a tag generated according to "
+      ns1:a [
+        href = "http://www.rfc-editor.org/rfc/bcp/bcp47.txt"
+        "BCP 47"
+      ]
+      "."
+    ]
+  ]
+  attribute xml:lang {
+    xsd:language
+    | (
+       ##
+       "")
+  }?
+att.global.attribute.xmlbase =
+  
+  ## provides a base URI reference with which applications can resolve relative URI references into absolute URI references.
+  attribute xml:base {
+    xsd:anyURI { pattern = "\S+" }
+  }?
+att.global.attribute.xmlspace =
+  
+  ## signals an intention about how white space should be managed by applications.
+  attribute xml:space {
+    
+    ## signals that the application's default white-space processing modes are acceptable
+    "default"
+    | 
+      ## indicates the intent that applications preserve all white space
+      "preserve"
+  }?
+att.typed.attributes =
+  att.typed.attribute.type, att.typed.attribute.subtype
+att.typed.attribute.type =
+  
+  ## characterizes the element in some sense, using any convenient classification scheme or typology.
+  attribute type {
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+  }?
+att.typed.attribute.subtype =
+  
+  ## (subtype) provides a sub-categorization of the element, if needed
+  attribute subtype {
+    xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+  }?
+sch:pattern [
+  id = "testClassRef-att.typed-subtypeTyped-constraint-rule-2"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "tei:*[@subtype]"
+    "\x{a}" ~
+    "         "
+    sch:assert [
+      test = "@type"
+      "The "
+      sch:name [ ]
+      " element should not be categorized in detail with @subtype unless also categorized in general with @type"
+    ]
+    "\x{a}" ~
+    "      "
+  ]
+  "\x{a}" ~
+  "   "
+]
+model.nameLike.agent = notAllowed
+model.nameLike.agent_alternation = notAllowed
+model.nameLike.agent_sequence = empty
+model.nameLike.agent_sequenceOptional = empty
+model.nameLike.agent_sequenceOptionalRepeatable = empty
+model.nameLike.agent_sequenceRepeatable = notAllowed
+model.segLike = notAllowed
+model.segLike_alternation = notAllowed
+model.segLike_sequence = empty
+model.segLike_sequenceOptional = empty
+model.segLike_sequenceOptionalRepeatable = empty
+model.segLike_sequenceRepeatable = notAllowed
+model.hiLike = notAllowed
+model.hiLike_alternation = notAllowed
+model.hiLike_sequence = empty
+model.hiLike_sequenceOptional = empty
+model.hiLike_sequenceOptionalRepeatable = empty
+model.hiLike_sequenceRepeatable = notAllowed
+model.emphLike = notAllowed
+model.emphLike_alternation = notAllowed
+model.emphLike_sequence = empty
+model.emphLike_sequenceOptional = empty
+model.emphLike_sequenceOptionalRepeatable = empty
+model.emphLike_sequenceRepeatable = notAllowed
+model.highlighted = model.hiLike | model.emphLike
+model.highlighted_alternation =
+  model.hiLike_alternation | model.emphLike_alternation
+model.highlighted_sequence =
+  model.hiLike_sequence, model.emphLike_sequence
+model.highlighted_sequenceOptional =
+  model.hiLike_sequenceOptional?, model.emphLike_sequenceOptional?
+model.highlighted_sequenceOptionalRepeatable =
+  model.hiLike_sequenceOptionalRepeatable*,
+  model.emphLike_sequenceOptionalRepeatable*
+model.highlighted_sequenceRepeatable =
+  model.hiLike_sequenceRepeatable+, model.emphLike_sequenceRepeatable+
+model.dateLike = notAllowed
+model.dateLike_alternation = notAllowed
+model.dateLike_sequence = empty
+model.dateLike_sequenceOptional = empty
+model.dateLike_sequenceOptionalRepeatable = empty
+model.dateLike_sequenceRepeatable = notAllowed
+model.measureLike = notAllowed
+model.measureLike_alternation = notAllowed
+model.measureLike_sequence = empty
+model.measureLike_sequenceOptional = empty
+model.measureLike_sequenceOptionalRepeatable = empty
+model.measureLike_sequenceRepeatable = notAllowed
+model.egLike = notAllowed
+model.egLike_alternation = notAllowed
+model.egLike_sequence = empty
+model.egLike_sequenceOptional = empty
+model.egLike_sequenceOptionalRepeatable = empty
+model.egLike_sequenceRepeatable = notAllowed
+model.graphicLike = notAllowed
+model.graphicLike_alternation = notAllowed
+model.graphicLike_sequence = empty
+model.graphicLike_sequenceOptional = empty
+model.graphicLike_sequenceOptionalRepeatable = empty
+model.graphicLike_sequenceRepeatable = notAllowed
+model.offsetLike = notAllowed
+model.offsetLike_alternation = notAllowed
+model.offsetLike_sequence = empty
+model.offsetLike_sequenceOptional = empty
+model.offsetLike_sequenceOptionalRepeatable = empty
+model.offsetLike_sequenceRepeatable = notAllowed
+model.pPart.msdesc = notAllowed
+model.pPart.msdesc_alternation = notAllowed
+model.pPart.msdesc_sequence = empty
+model.pPart.msdesc_sequenceOptional = empty
+model.pPart.msdesc_sequenceOptionalRepeatable = empty
+model.pPart.msdesc_sequenceRepeatable = notAllowed
+model.pPart.editorial = notAllowed
+model.pPart.editorial_alternation = notAllowed
+model.pPart.editorial_sequence = empty
+model.pPart.editorial_sequenceOptional = empty
+model.pPart.editorial_sequenceOptionalRepeatable = empty
+model.pPart.editorial_sequenceRepeatable = notAllowed
+model.pPart.transcriptional = notAllowed
+model.pPart.transcriptional_alternation = notAllowed
+model.pPart.transcriptional_sequence = empty
+model.pPart.transcriptional_sequenceOptional = empty
+model.pPart.transcriptional_sequenceOptionalRepeatable = empty
+model.pPart.transcriptional_sequenceRepeatable = notAllowed
+model.pPart.edit = model.pPart.editorial | model.pPart.transcriptional
+model.pPart.edit_alternation =
+  model.pPart.editorial_alternation
+  | model.pPart.transcriptional_alternation
+model.pPart.edit_sequence =
+  model.pPart.editorial_sequence, model.pPart.transcriptional_sequence
+model.pPart.edit_sequenceOptional =
+  model.pPart.editorial_sequenceOptional?,
+  model.pPart.transcriptional_sequenceOptional?
+model.pPart.edit_sequenceOptionalRepeatable =
+  model.pPart.editorial_sequenceOptionalRepeatable*,
+  model.pPart.transcriptional_sequenceOptionalRepeatable*
+model.pPart.edit_sequenceRepeatable =
+  model.pPart.editorial_sequenceRepeatable+,
+  model.pPart.transcriptional_sequenceRepeatable+
+model.ptrLike = notAllowed
+model.ptrLike_alternation = notAllowed
+model.ptrLike_sequence = empty
+model.ptrLike_sequenceOptional = empty
+model.ptrLike_sequenceOptionalRepeatable = empty
+model.ptrLike_sequenceRepeatable = notAllowed
+model.lPart = notAllowed
+model.lPart_alternation = notAllowed
+model.lPart_sequence = empty
+model.lPart_sequenceOptional = empty
+model.lPart_sequenceOptionalRepeatable = empty
+model.lPart_sequenceRepeatable = notAllowed
+model.global.meta = notAllowed
+model.global.meta_alternation = notAllowed
+model.global.meta_sequence = empty
+model.global.meta_sequenceOptional = empty
+model.global.meta_sequenceOptionalRepeatable = empty
+model.global.meta_sequenceRepeatable = notAllowed
+model.milestoneLike = notAllowed
+model.milestoneLike_alternation = notAllowed
+model.milestoneLike_sequence = empty
+model.milestoneLike_sequenceOptional = empty
+model.milestoneLike_sequenceOptionalRepeatable = empty
+model.milestoneLike_sequenceRepeatable = notAllowed
+model.gLike = notAllowed
+model.oddDecl = notAllowed
+model.oddDecl_alternation = notAllowed
+model.oddDecl_sequence = empty
+model.oddDecl_sequenceOptional = empty
+model.oddDecl_sequenceOptionalRepeatable = empty
+model.oddDecl_sequenceRepeatable = notAllowed
+model.phrase.xml = notAllowed
+model.phrase.xml_alternation = notAllowed
+model.phrase.xml_sequence = empty
+model.phrase.xml_sequenceOptional = empty
+model.phrase.xml_sequenceOptionalRepeatable = empty
+model.phrase.xml_sequenceRepeatable = notAllowed
+model.specDescLike = notAllowed
+model.specDescLike_alternation = notAllowed
+model.specDescLike_sequence = empty
+model.specDescLike_sequenceOptional = empty
+model.specDescLike_sequenceOptionalRepeatable = empty
+model.specDescLike_sequenceRepeatable = notAllowed
+model.biblLike = notAllowed
+model.biblLike_alternation = notAllowed
+model.biblLike_sequence = empty
+model.biblLike_sequenceOptional = empty
+model.biblLike_sequenceOptionalRepeatable = empty
+model.biblLike_sequenceRepeatable = notAllowed
+model.headLike = notAllowed
+model.headLike_alternation = notAllowed
+model.headLike_sequence = empty
+model.headLike_sequenceOptional = empty
+model.headLike_sequenceOptionalRepeatable = empty
+model.headLike_sequenceRepeatable = notAllowed
+model.labelLike = notAllowed
+model.labelLike_alternation = notAllowed
+model.labelLike_sequence = empty
+model.labelLike_sequenceOptional = empty
+model.labelLike_sequenceOptionalRepeatable = empty
+model.labelLike_sequenceRepeatable = notAllowed
+model.listLike = notAllowed
+model.listLike_alternation = notAllowed
+model.listLike_sequence = empty
+model.listLike_sequenceOptional = empty
+model.listLike_sequenceOptionalRepeatable = empty
+model.listLike_sequenceRepeatable = notAllowed
+model.noteLike = notAllowed
+model.noteLike_alternation = notAllowed
+model.noteLike_sequence = empty
+model.noteLike_sequenceOptional = empty
+model.noteLike_sequenceOptionalRepeatable = empty
+model.noteLike_sequenceRepeatable = notAllowed
+model.lLike = notAllowed
+model.lLike_alternation = notAllowed
+model.lLike_sequence = empty
+model.lLike_sequenceOptional = empty
+model.lLike_sequenceOptionalRepeatable = empty
+model.lLike_sequenceRepeatable = notAllowed
+model.pLike = p
+model.pLike_alternation = p
+model.pLike_sequence = p
+model.pLike_sequenceOptional = p?
+model.pLike_sequenceOptionalRepeatable = p*
+model.pLike_sequenceRepeatable = p+
+model.stageLike = notAllowed
+model.stageLike_alternation = notAllowed
+model.stageLike_sequence = empty
+model.stageLike_sequenceOptional = empty
+model.stageLike_sequenceOptionalRepeatable = empty
+model.stageLike_sequenceRepeatable = notAllowed
+model.global.edit = notAllowed
+model.global.edit_alternation = notAllowed
+model.global.edit_sequence = empty
+model.global.edit_sequenceOptional = empty
+model.global.edit_sequenceOptionalRepeatable = empty
+model.global.edit_sequenceRepeatable = notAllowed
+model.divPart =
+  model.lLike
+  | model.pLike
+  | testP1a
+  | testP1b
+  | testP2
+  | testP3
+  | testP4a
+  | testP4b
+  | testP5
+  | testP6
+  | testP7
+  | testP8
+  | testP9
+  | testPA
+  | testPB
+model.placeNamePart = notAllowed
+model.placeNamePart_alternation = notAllowed
+model.placeNamePart_sequence = empty
+model.placeNamePart_sequenceOptional = empty
+model.placeNamePart_sequenceOptionalRepeatable = empty
+model.placeNamePart_sequenceRepeatable = notAllowed
+model.placeStateLike = model.placeNamePart
+model.placeStateLike_alternation = model.placeNamePart_alternation
+model.placeStateLike_sequence = model.placeNamePart_sequence
+model.placeStateLike_sequenceOptional =
+  model.placeNamePart_sequenceOptional?
+model.placeStateLike_sequenceOptionalRepeatable =
+  model.placeNamePart_sequenceOptionalRepeatable*
+model.placeStateLike_sequenceRepeatable =
+  model.placeNamePart_sequenceRepeatable+
+model.quoteLike = notAllowed
+model.quoteLike_alternation = notAllowed
+model.quoteLike_sequence = empty
+model.quoteLike_sequenceOptional = empty
+model.quoteLike_sequenceOptionalRepeatable = empty
+model.quoteLike_sequenceRepeatable = notAllowed
+model.attributable = model.quoteLike
+model.attributable_alternation = model.quoteLike_alternation
+model.attributable_sequence = model.quoteLike_sequence
+model.attributable_sequenceOptional = model.quoteLike_sequenceOptional?
+model.attributable_sequenceOptionalRepeatable =
+  model.quoteLike_sequenceOptionalRepeatable*
+model.attributable_sequenceRepeatable =
+  model.quoteLike_sequenceRepeatable+
+model.divWrapper = notAllowed
+model.divTopPart = model.headLike
+model.divTop = model.divWrapper | model.divTopPart
+model.divBottomPart = notAllowed
+model.divBottom = model.divWrapper | model.divBottomPart
+model.addressLike = notAllowed
+model.addressLike_alternation = notAllowed
+model.addressLike_sequence = empty
+model.addressLike_sequenceOptional = empty
+model.addressLike_sequenceOptionalRepeatable = empty
+model.addressLike_sequenceRepeatable = notAllowed
+model.nameLike =
+  model.nameLike.agent | model.offsetLike | model.placeStateLike
+model.nameLike_alternation =
+  model.nameLike.agent_alternation
+  | model.offsetLike_alternation
+  | model.placeStateLike_alternation
+model.nameLike_sequence =
+  model.nameLike.agent_sequence,
+  model.offsetLike_sequence,
+  model.placeStateLike_sequence
+model.nameLike_sequenceOptional =
+  model.nameLike.agent_sequenceOptional?,
+  model.offsetLike_sequenceOptional?,
+  model.placeStateLike_sequenceOptional?
+model.nameLike_sequenceOptionalRepeatable =
+  model.nameLike.agent_sequenceOptionalRepeatable*,
+  model.offsetLike_sequenceOptionalRepeatable*,
+  model.placeStateLike_sequenceOptionalRepeatable*
+model.nameLike_sequenceRepeatable =
+  model.nameLike.agent_sequenceRepeatable+,
+  model.offsetLike_sequenceRepeatable+,
+  model.placeStateLike_sequenceRepeatable+
+model.global =
+  model.global.meta
+  | model.milestoneLike
+  | model.noteLike
+  | model.global.edit
+model.pPart.data =
+  model.dateLike
+  | model.measureLike
+  | model.addressLike
+  | model.nameLike
+model.pPart.data_alternation =
+  model.dateLike_alternation
+  | model.measureLike_alternation
+  | model.addressLike_alternation
+  | model.nameLike_alternation
+model.pPart.data_sequence =
+  model.dateLike_sequence,
+  model.measureLike_sequence,
+  model.addressLike_sequence,
+  model.nameLike_sequence
+model.pPart.data_sequenceOptional =
+  model.dateLike_sequenceOptional?,
+  model.measureLike_sequenceOptional?,
+  model.addressLike_sequenceOptional?,
+  model.nameLike_sequenceOptional?
+model.pPart.data_sequenceOptionalRepeatable =
+  model.dateLike_sequenceOptionalRepeatable*,
+  model.measureLike_sequenceOptionalRepeatable*,
+  model.addressLike_sequenceOptionalRepeatable*,
+  model.nameLike_sequenceOptionalRepeatable*
+model.pPart.data_sequenceRepeatable =
+  model.dateLike_sequenceRepeatable+,
+  model.measureLike_sequenceRepeatable+,
+  model.addressLike_sequenceRepeatable+,
+  model.nameLike_sequenceRepeatable+
+model.inter =
+  model.egLike
+  | model.oddDecl
+  | model.biblLike
+  | model.labelLike
+  | model.listLike
+  | model.stageLike
+  | model.attributable
+model.common = model.divPart | model.inter
+model.phrase =
+  model.segLike
+  | model.highlighted
+  | model.graphicLike
+  | model.pPart.msdesc
+  | model.pPart.edit
+  | model.ptrLike
+  | model.lPart
+  | model.phrase.xml
+  | model.specDescLike
+  | model.pPart.data
+model.paraPart =
+  model.gLike | model.lLike | model.global | model.inter | model.phrase
+model.divLike = \div
+model.divGenLike = notAllowed
+\div =
+  
+  ## (text division) contains a subdivision of the front, body, or back of a text. [4.1. Divisions of the Body]
+  element div {
+    ((model.divTop | model.global)*,
+     ((((model.divLike | model.divGenLike), model.global*)+
+       | (((model.common), model.global*)+,
+          ((model.divLike | model.divGenLike), model.global*)*)),
+      (model.divBottom, model.global*)*)?)
+    >> sch:pattern [
+         id =
+           "testClassRef-div-abstractModel-structure-div-in-l-or-lg-constraint-report-2"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:div"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test =
+               "(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)"
+             "\x{a}" ~
+             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "      "
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+    >> sch:pattern [
+         id =
+           "testClassRef-div-abstractModel-structure-div-in-ab-or-p-constraint-report-3"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:div"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test =
+               "(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"
+             "\x{a}" ~
+             "        Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "      "
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
+    att.global.attributes,
+    att.divLike.attributes,
+    att.typed.attributes,
+    att.declaring.attributes,
+    att.written.attributes,
+    empty
+  }
+p =
+  
+  ## (paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.5. Speech Contents]
+  element p {
+    macro.paraContent
+    >> sch:pattern [
+         id =
+           "testClassRef-p-abstractModel-structure-p-in-ab-or-p-constraint-report-4"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:p"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test =
+               "(ancestor::tei:ab or ancestor::tei:p) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"
+             "\x{a}" ~
+             "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
+             "      "
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+    >> sch:pattern [
+         id =
+           "testClassRef-p-abstractModel-structure-p-in-l-or-lg-constraint-report-5"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:p"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test =
+               "(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )"
+             "\x{a}" ~
+             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
+             "      "
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
+    att.global.attributes,
+    att.declaring.attributes,
+    att.fragmentable.attributes,
+    att.written.attributes,
+    empty
+  }
+testClass = x | y | z
+x =
+  
+  ## a test element
+  element x { empty }
+y =
+  
+  ## a test element
+  element y { empty }
+z =
+  
+  ## a test element
+  element z { empty }
+testP1a =
+  
+  ## Default: should generate x | y | z (if default value for @expand was alternation)
+  element testP1a { testClass }
+testP1b =
+  
+  ## Alternation: should generate x | y | z
+  element testP1b { x | y | z }
+testP2 =
+  
+  ## Sequence: should generate x,y,z
+  element testP2 { x, y, z }
+testP3 =
+  
+  ## Except: should generate x|y but no z
+  element testP3 { x | y }
+testP4a =
+  
+  ## Include (fail): should also generate x|y but no z; it doesn’t work because the wrong default value for @expand is used
+  element testP4a { x, y }
+testP4b =
+  
+  ## Include: should generate x|y but no z; it works because the right value for @expand is supplied
+  element testP4b { x | y }
+testP5 =
+  
+  ## Except with occurence constraints: should generate (y|z)* 
+  element testP5 { (y | z)* }
+testP6 =
+  
+  ## Except with occurence constraints: should generate (y|z)+ 
+  element testP6 { (y | z)+ }
+testP7 =
+  
+  ## Except with occurence constraints: should generate (y | z), ((y | z), (y | z)?)? 
+  element testP7 {
+    (y | z),
+    ((y | z), (y | z)?)?
+  }
+testP8 =
+  
+  ## Include with sequenceRepeatable: should generate (x+,y+) 
+  element testP8 { x+, y+ }
+testP9 =
+  
+  ## Include with sequenceOptional: generates (y?, z?) and not (z?,y?) because order is always order of declaration
+  element testP9 { y?, z? }
+testPA =
+  
+  ## Include with sequenceOptionalRepeatable: should generate (x*,y*) 
+  element testPA { x*, y* }
+testPB =
+  
+  ## Include with sequenceOptionalRepeatable and occurence constraints: should generate ((x*,y*)+) whatever that means 
+  element testPB { (x*, y*)+ }
+start = \div

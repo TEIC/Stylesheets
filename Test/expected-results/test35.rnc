@@ -1,7 +1,6 @@
 default namespace = "http://foo.foo/foo"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 namespace ns1 = "http://www.w3.org/1999/xhtml"
-namespace ns2 = "http://www.isocat.org/ns/dcr"
 namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 namespace tei = "http://www.tei-c.org/ns/1.0"
@@ -11,14 +10,8 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 
 
 # This template file is freely available and you are hereby authorised to copy, modify, and redistribute it in any way without further reference or permissions. When making such modifications, you are strongly recommended to change the present text to include an accurate statement of the licencing conditions applicable to your modified text.
-tei_macro.paraContent =
-  (text
-   | tei_model.gLike
-   | tei_model.phrase
-   | tei_model.inter
-   | tei_model.global
-   | tei_lg
-   | tei_model.lLike)*
+tei_macro.abContent = (text | tei_model.paraPart | tei_ab)*
+tei_macro.paraContent = (text | tei_model.paraPart)*
 tei_macro.limitedContent =
   (text | tei_model.limitedPhrase | tei_model.inter)*
 tei_macro.phraseSeq =
@@ -382,10 +375,10 @@ sch:pattern [
     "\x{a}" ~
     "         "
     sch:assert [
-      test = "string-length(.) gt 0"
-      " @calendar indicates one or more systems or calendars to\x{a}" ~
-      "              which the date represented by the content of this element belongs, but this\x{a}" ~
-      "              "
+      test = "string-length( normalize-space(.) ) gt 0"
+      " @calendar indicates one or more\x{a}" ~
+      "            systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+      "            but this "
       sch:name [ ]
       " element has no textual content."
     ]
@@ -411,19 +404,46 @@ tei_att.datable.attribute.period =
     }
   }?
 tei_att.datcat.attributes =
-  tei_att.datcat.attribute.datcat, tei_att.datcat.attribute.valueDatcat
+  tei_att.datcat.attribute.datcat,
+  tei_att.datcat.attribute.valueDatcat,
+  tei_att.datcat.attribute.targetDatcat
 tei_att.datcat.attribute.datcat =
-  
-  ## contains a PID (persistent identifier) that aligns the given element with the appropriate Data Category (or categories) in ISOcat.
-  attribute ns2:datcat {
+  [
+    a:documentation [
+      "provides a pointer to a definition of, and/or general information about, (a) an information container (element or attribute) or (b) a value of an information container (element content or attribute value), by referencing an external taxonomy or ontology. If "
+      ns1:code [ "@valueDatcat" ]
+      " is present in the immediate context, this attribute takes on role (a), while "
+      ns1:code [ "@valueDatcat" ]
+      " performs role (b)."
+    ]
+  ]
+  attribute datcat {
     list {
       xsd:anyURI { pattern = "\S+" }+
     }
   }?
 tei_att.datcat.attribute.valueDatcat =
-  
-  ## contains a PID (persistent identifier) that aligns the content of the given element or the value of the given attribute with the appropriate simple Data Category (or categories) in ISOcat.
-  attribute ns2:valueDatcat {
+  [
+    a:documentation [
+      "provides a definition of, and/or general information about a value of an information container (element content or attribute value), by reference to an external taxonomy or ontology. Used especially where a contrast with "
+      ns1:code [ "@datcat" ]
+      " is needed."
+    ]
+  ]
+  attribute valueDatcat {
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
+  }?
+tei_att.datcat.attribute.targetDatcat =
+  [
+    a:documentation [
+      "provides a definition of, and/or general information about, information structure of an object referenced or modeled by the containing element, by reference to an external taxonomy or ontology. This attribute has the characteristics of the "
+      ns1:code [ "@datcat" ]
+      " attribute, except that it addresses not its containing element, but an object that is being referenced or modeled by its containing element."
+    ]
+  ]
+  attribute targetDatcat {
     list {
       xsd:anyURI { pattern = "\S+" }+
     }
@@ -621,22 +641,22 @@ sch:pattern [
   "\x{a}" ~
   "      "
   sch:rule [
-    context = "tei:*/@source"
+    context = "tei:*[@source]"
     "\x{a}" ~
     "         "
     sch:let [
       name = "srcs"
-      value = "tokenize( normalize-space(.),' ')"
+      value = "tokenize( normalize-space(@source),' ')"
     ]
     "\x{a}" ~
     "         "
     sch:report [
       test =
-        "( parent::tei:classRef | parent::tei:dataRef | parent::tei:elementRef | parent::tei:macroRef | parent::tei:moduleRef | parent::tei:schemaSpec ) and $srcs[2]"
+        "( self::tei:classRef               | self::tei:dataRef               | self::tei:elementRef               | self::tei:macroRef               | self::tei:moduleRef               | self::tei:schemaSpec )               and               $srcs[2]"
       "\x{a}" ~
       "              When used on a schema description element (like\x{a}" ~
       "              "
-      sch:value-of [ select = "name(..)" ]
+      sch:value-of [ select = "name(.)" ]
       "), the @source attribute\x{a}" ~
       "              should have only 1 value. (This one has "
       sch:value-of [ select = "count($srcs)" ]
@@ -780,7 +800,7 @@ tei_att.media.attribute.width =
   attribute width {
     xsd:token {
       pattern =
-        "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|gd|rem|vw|vh|vm)"
+        "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|ch|rem|vw|vh|vmin|vmax)"
     }
   }?
 tei_att.media.attribute.height =
@@ -789,7 +809,7 @@ tei_att.media.attribute.height =
   attribute height {
     xsd:token {
       pattern =
-        "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|gd|rem|vw|vh|vm)"
+        "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|ch|rem|vw|vh|vmin|vmax)"
     }
   }?
 tei_att.media.attribute.scale =
@@ -1354,6 +1374,11 @@ tei_model.nameLike.agent_sequenceOptional = tei_name?
 tei_model.nameLike.agent_sequenceOptionalRepeatable = tei_name*
 tei_model.nameLike.agent_sequenceRepeatable = tei_name+
 tei_model.segLike = tei_seg
+tei_model.segLike_alternation = tei_seg
+tei_model.segLike_sequence = tei_seg
+tei_model.segLike_sequenceOptional = tei_seg?
+tei_model.segLike_sequenceOptionalRepeatable = tei_seg*
+tei_model.segLike_sequenceRepeatable = tei_seg+
 tei_model.hiLike = tei_hi | tei_q
 tei_model.hiLike_alternation = tei_hi | tei_q
 tei_model.hiLike_sequence = tei_hi, tei_q
@@ -1415,6 +1440,19 @@ tei_model.emphLike_sequenceRepeatable =
   tei_term+,
   tei_title+
 tei_model.highlighted = tei_model.hiLike | tei_model.emphLike
+tei_model.highlighted_alternation =
+  tei_model.hiLike_alternation | tei_model.emphLike_alternation
+tei_model.highlighted_sequence =
+  tei_model.hiLike_sequence, tei_model.emphLike_sequence
+tei_model.highlighted_sequenceOptional =
+  tei_model.hiLike_sequenceOptional?,
+  tei_model.emphLike_sequenceOptional?
+tei_model.highlighted_sequenceOptionalRepeatable =
+  tei_model.hiLike_sequenceOptionalRepeatable*,
+  tei_model.emphLike_sequenceOptionalRepeatable*
+tei_model.highlighted_sequenceRepeatable =
+  tei_model.hiLike_sequenceRepeatable+,
+  tei_model.emphLike_sequenceRepeatable+
 tei_model.dateLike = tei_date | tei_time
 tei_model.dateLike_alternation = tei_date | tei_time
 tei_model.dateLike_sequence = tei_date, tei_time
@@ -1440,6 +1478,16 @@ tei_model.egLike_sequenceOptional = empty
 tei_model.egLike_sequenceOptionalRepeatable = empty
 tei_model.egLike_sequenceRepeatable = notAllowed
 tei_model.graphicLike = tei_media | tei_graphic | tei_binaryObject
+tei_model.graphicLike_alternation =
+  tei_media | tei_graphic | tei_binaryObject
+tei_model.graphicLike_sequence =
+  tei_media, tei_graphic, tei_binaryObject
+tei_model.graphicLike_sequenceOptional =
+  tei_media?, tei_graphic?, tei_binaryObject?
+tei_model.graphicLike_sequenceOptionalRepeatable =
+  tei_media*, tei_graphic*, tei_binaryObject*
+tei_model.graphicLike_sequenceRepeatable =
+  tei_media+, tei_graphic+, tei_binaryObject+
 tei_model.offsetLike = notAllowed
 tei_model.offsetLike_alternation = notAllowed
 tei_model.offsetLike_sequence = empty
@@ -1447,6 +1495,11 @@ tei_model.offsetLike_sequenceOptional = empty
 tei_model.offsetLike_sequenceOptionalRepeatable = empty
 tei_model.offsetLike_sequenceRepeatable = notAllowed
 tei_model.pPart.msdesc = notAllowed
+tei_model.pPart.msdesc_alternation = notAllowed
+tei_model.pPart.msdesc_sequence = empty
+tei_model.pPart.msdesc_sequenceOptional = empty
+tei_model.pPart.msdesc_sequenceOptionalRepeatable = empty
+tei_model.pPart.msdesc_sequenceRepeatable = notAllowed
 tei_model.pPart.editorial = tei_choice | tei_abbr | tei_expan
 tei_model.pPart.editorial_alternation =
   tei_choice | tei_abbr | tei_expan
@@ -1501,8 +1554,33 @@ tei_model.pPart.transcriptional_sequenceRepeatable =
   tei_unclear+
 tei_model.pPart.edit =
   tei_model.pPart.editorial | tei_model.pPart.transcriptional
+tei_model.pPart.edit_alternation =
+  tei_model.pPart.editorial_alternation
+  | tei_model.pPart.transcriptional_alternation
+tei_model.pPart.edit_sequence =
+  tei_model.pPart.editorial_sequence,
+  tei_model.pPart.transcriptional_sequence
+tei_model.pPart.edit_sequenceOptional =
+  tei_model.pPart.editorial_sequenceOptional?,
+  tei_model.pPart.transcriptional_sequenceOptional?
+tei_model.pPart.edit_sequenceOptionalRepeatable =
+  tei_model.pPart.editorial_sequenceOptionalRepeatable*,
+  tei_model.pPart.transcriptional_sequenceOptionalRepeatable*
+tei_model.pPart.edit_sequenceRepeatable =
+  tei_model.pPart.editorial_sequenceRepeatable+,
+  tei_model.pPart.transcriptional_sequenceRepeatable+
 tei_model.ptrLike = tei_ptr | tei_ref
+tei_model.ptrLike_alternation = tei_ptr | tei_ref
+tei_model.ptrLike_sequence = tei_ptr, tei_ref
+tei_model.ptrLike_sequenceOptional = tei_ptr?, tei_ref?
+tei_model.ptrLike_sequenceOptionalRepeatable = tei_ptr*, tei_ref*
+tei_model.ptrLike_sequenceRepeatable = tei_ptr+, tei_ref+
 tei_model.lPart = notAllowed
+tei_model.lPart_alternation = notAllowed
+tei_model.lPart_sequence = empty
+tei_model.lPart_sequenceOptional = empty
+tei_model.lPart_sequenceOptionalRepeatable = empty
+tei_model.lPart_sequenceRepeatable = notAllowed
 tei_model.global.meta =
   tei_index
   | tei_link
@@ -1512,8 +1590,63 @@ tei_model.global.meta =
   | tei_joinGrp
   | tei_alt
   | tei_altGrp
+tei_model.global.meta_alternation =
+  tei_index
+  | tei_link
+  | tei_linkGrp
+  | tei_timeline
+  | tei_join
+  | tei_joinGrp
+  | tei_alt
+  | tei_altGrp
+tei_model.global.meta_sequence =
+  tei_index,
+  tei_link,
+  tei_linkGrp,
+  tei_timeline,
+  tei_join,
+  tei_joinGrp,
+  tei_alt,
+  tei_altGrp
+tei_model.global.meta_sequenceOptional =
+  tei_index?,
+  tei_link?,
+  tei_linkGrp?,
+  tei_timeline?,
+  tei_join?,
+  tei_joinGrp?,
+  tei_alt?,
+  tei_altGrp?
+tei_model.global.meta_sequenceOptionalRepeatable =
+  tei_index*,
+  tei_link*,
+  tei_linkGrp*,
+  tei_timeline*,
+  tei_join*,
+  tei_joinGrp*,
+  tei_alt*,
+  tei_altGrp*
+tei_model.global.meta_sequenceRepeatable =
+  tei_index+,
+  tei_link+,
+  tei_linkGrp+,
+  tei_timeline+,
+  tei_join+,
+  tei_joinGrp+,
+  tei_alt+,
+  tei_altGrp+
 tei_model.milestoneLike =
   tei_milestone | tei_gb | tei_pb | tei_lb | tei_cb | tei_anchor
+tei_model.milestoneLike_alternation =
+  tei_milestone | tei_gb | tei_pb | tei_lb | tei_cb | tei_anchor
+tei_model.milestoneLike_sequence =
+  tei_milestone, tei_gb, tei_pb, tei_lb, tei_cb, tei_anchor
+tei_model.milestoneLike_sequenceOptional =
+  tei_milestone?, tei_gb?, tei_pb?, tei_lb?, tei_cb?, tei_anchor?
+tei_model.milestoneLike_sequenceOptionalRepeatable =
+  tei_milestone*, tei_gb*, tei_pb*, tei_lb*, tei_cb*, tei_anchor*
+tei_model.milestoneLike_sequenceRepeatable =
+  tei_milestone+, tei_gb+, tei_pb+, tei_lb+, tei_cb+, tei_anchor+
 tei_model.gLike = notAllowed
 tei_model.oddDecl = notAllowed
 tei_model.oddDecl_alternation = notAllowed
@@ -1522,7 +1655,17 @@ tei_model.oddDecl_sequenceOptional = empty
 tei_model.oddDecl_sequenceOptionalRepeatable = empty
 tei_model.oddDecl_sequenceRepeatable = notAllowed
 tei_model.phrase.xml = notAllowed
+tei_model.phrase.xml_alternation = notAllowed
+tei_model.phrase.xml_sequence = empty
+tei_model.phrase.xml_sequenceOptional = empty
+tei_model.phrase.xml_sequenceOptionalRepeatable = empty
+tei_model.phrase.xml_sequenceRepeatable = notAllowed
 tei_model.specDescLike = notAllowed
+tei_model.specDescLike_alternation = notAllowed
+tei_model.specDescLike_sequence = empty
+tei_model.specDescLike_sequenceOptional = empty
+tei_model.specDescLike_sequenceOptionalRepeatable = empty
+tei_model.specDescLike_sequenceRepeatable = notAllowed
 tei_model.biblLike =
   tei_bibl | tei_biblStruct | tei_listBibl | tei_biblFull
 tei_model.biblLike_alternation =
@@ -1554,6 +1697,11 @@ tei_model.listLike_sequenceOptional = tei_list?
 tei_model.listLike_sequenceOptionalRepeatable = tei_list*
 tei_model.listLike_sequenceRepeatable = tei_list+
 tei_model.noteLike = tei_note | tei_noteGrp
+tei_model.noteLike_alternation = tei_note | tei_noteGrp
+tei_model.noteLike_sequence = tei_note, tei_noteGrp
+tei_model.noteLike_sequenceOptional = tei_note?, tei_noteGrp?
+tei_model.noteLike_sequenceOptionalRepeatable = tei_note*, tei_noteGrp*
+tei_model.noteLike_sequenceRepeatable = tei_note+, tei_noteGrp+
 tei_model.lLike = tei_l
 tei_model.lLike_alternation = tei_l
 tei_model.lLike_sequence = tei_l
@@ -1574,6 +1722,12 @@ tei_model.stageLike_sequenceOptionalRepeatable = tei_stage*
 tei_model.stageLike_sequenceRepeatable = tei_stage+
 tei_model.entryPart = notAllowed
 tei_model.global.edit = tei_gap | tei_ellipsis
+tei_model.global.edit_alternation = tei_gap | tei_ellipsis
+tei_model.global.edit_sequence = tei_gap, tei_ellipsis
+tei_model.global.edit_sequenceOptional = tei_gap?, tei_ellipsis?
+tei_model.global.edit_sequenceOptionalRepeatable =
+  tei_gap*, tei_ellipsis*
+tei_model.global.edit_sequenceRepeatable = tei_gap+, tei_ellipsis+
 tei_model.divPart = tei_model.lLike | tei_model.pLike | tei_lg | tei_sp
 tei_model.placeNamePart = notAllowed
 tei_model.placeNamePart_alternation = notAllowed
@@ -1756,6 +1910,31 @@ tei_model.pPart.data =
   | tei_model.measureLike
   | tei_model.addressLike
   | tei_model.nameLike
+tei_model.pPart.data_alternation =
+  tei_model.dateLike_alternation
+  | tei_model.measureLike_alternation
+  | tei_model.addressLike_alternation
+  | tei_model.nameLike_alternation
+tei_model.pPart.data_sequence =
+  tei_model.dateLike_sequence,
+  tei_model.measureLike_sequence,
+  tei_model.addressLike_sequence,
+  tei_model.nameLike_sequence
+tei_model.pPart.data_sequenceOptional =
+  tei_model.dateLike_sequenceOptional?,
+  tei_model.measureLike_sequenceOptional?,
+  tei_model.addressLike_sequenceOptional?,
+  tei_model.nameLike_sequenceOptional?
+tei_model.pPart.data_sequenceOptionalRepeatable =
+  tei_model.dateLike_sequenceOptionalRepeatable*,
+  tei_model.measureLike_sequenceOptionalRepeatable*,
+  tei_model.addressLike_sequenceOptionalRepeatable*,
+  tei_model.nameLike_sequenceOptionalRepeatable*
+tei_model.pPart.data_sequenceRepeatable =
+  tei_model.dateLike_sequenceRepeatable+,
+  tei_model.measureLike_sequenceRepeatable+,
+  tei_model.addressLike_sequenceRepeatable+,
+  tei_model.nameLike_sequenceRepeatable+
 tei_model.inter =
   tei_model.egLike
   | tei_model.oddDecl
@@ -1777,6 +1956,13 @@ tei_model.phrase =
   | tei_model.specDescLike
   | tei_model.pPart.data
   | tei_ruby
+tei_model.paraPart =
+  tei_model.gLike
+  | tei_model.lLike
+  | tei_model.global
+  | tei_model.inter
+  | tei_model.phrase
+  | tei_lg
 tei_model.limitedPhrase =
   tei_model.hiLike
   | tei_model.emphLike
@@ -2597,6 +2783,7 @@ tei_measure =
     tei_att.global.attributes,
     tei_att.typed.attribute.subtype,
     tei_att.measurement.attributes,
+    tei_att.ranging.attributes,
     
     ## specifies the type of measurement in any convenient typology.
     attribute type {
@@ -3495,7 +3682,7 @@ tei_textLang =
   
   ## (text language) describes the languages and writing systems identified within the bibliographic work being described, rather than its description. [3.12.2.4. Imprint, Size of a Document, and Reprint Information 10.6.6. Languages and Writing Systems]
   element tei:textLang {
-    tei_macro.phraseSeq,
+    tei_macro.specialPara,
     tei_att.global.attributes,
     
     ## (main language) supplies a code which identifies the chief language used in the bibliographic work.
@@ -4041,6 +4228,7 @@ tei_tagUsage =
   element tei:tagUsage {
     tei_macro.limitedContent,
     tei_att.global.attributes,
+    tei_att.datcat.attributes,
     [
       a:documentation [
         "(generic identifier) specifies the name (generic identifier) of the element indicated by the tag, within the namespace indicated by the parent "
@@ -4127,34 +4315,11 @@ tei_citeStructure =
     (tei_citeData*, tei_citeStructure*, tei_model.descLike*),
     tei_att.global.attributes,
     tei_att.citeStructurePart.attributes,
-    (
-     ## (delimiter) supplies a delimiting string preceding the structural component.
-     attribute delim {
-       xsd:string { pattern = ".+" }
-     }?)
-    >> sch:pattern [
-         id =
-           "foo-citeStructure-delim-citestructure-inner-delim-constraint-rule-13"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:citeStructure[parent::tei:citeStructure]"
-           "\x{a}" ~
-           "               "
-           sch:assert [
-             test = "@delim"
-             "A "
-             sch:name [ ]
-             " with a parent "
-             sch:name [ ]
-             " must have a @delim attribute."
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ],
+    
+    ## (delimiter) supplies a delimiting string preceding the structural component.
+    attribute delim {
+      xsd:string { pattern = ".+" }
+    }?,
     [
       a:documentation [
         "(match) supplies an XPath selection pattern using the syntax defined in  which identifies a set of nodes which are citable structural components. The expression may be absolute (beginning with `/`) or relative. "
@@ -4173,7 +4338,7 @@ tei_citeStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "foo-citeStructure-match-citestructure-outer-match-constraint-rule-14"
+           "foo-citeStructure-match-citestructure-outer-match-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4194,7 +4359,7 @@ tei_citeStructure =
        ]
     >> sch:pattern [
          id =
-           "foo-citeStructure-match-citestructure-inner-match-constraint-rule-15"
+           "foo-citeStructure-match-citestructure-inner-match-constraint-rule-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4451,7 +4616,7 @@ tei_abstract =
   
   ## contains a summary or formal abstract prefixed to an existing source document by the encoder. [2.4.4. Abstracts]
   element tei:abstract {
-    (tei_model.pLike | tei_model.listLike)+,
+    (tei_model.pLike | tei_model.listLike | tei_listBibl)+,
     tei_att.global.attributes,
     empty
   }
@@ -5290,7 +5455,7 @@ tei_link =
   element tei:link {
     empty
     >> sch:pattern [
-         id = "foo-link-linkTargets3-constraint-assert-15"
+         id = "foo-link-linkTargets3-constraint-assert-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5326,34 +5491,12 @@ tei_linkGrp =
   }
 tei_ab =
   
-  ## (anonymous block) contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph. [16.3. Blocks, Segments, and Anchors]
+  ## (anonymous block) contains any component-level unit of text, acting as a container for phrase or inter level elements analogous to, but without the same constraints as, a paragraph. [16.3. Blocks, Segments, and Anchors]
   element tei:ab {
-    tei_macro.paraContent
+    tei_macro.abContent
     >> sch:pattern [
          id =
-           "foo-ab-abstractModel-structure-ab-in-ab-or-p-constraint-report-17"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:ab"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test =
-               "(ancestor::tei:p or ancestor::tei:ab) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"
-             "\x{a}" ~
-             "        Abstract model violation: ab may not occur inside paragraphs or other ab elements.\x{a}" ~
-             "      "
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ]
-    >> sch:pattern [
-         id =
-           "foo-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-18"
+           "foo-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5529,7 +5672,7 @@ tei_join =
   element tei:join {
     ((tei_model.descLike | tei_model.certLike)*)
     >> sch:pattern [
-         id = "foo-join-joinTargets3-constraint-assert-16"
+         id = "foo-join-joinTargets3-constraint-assert-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5677,7 +5820,7 @@ tei_standOff =
     (tei_model.standOffPart+)
     >> sch:pattern [
          id =
-           "foo-standOff-nested_standOff_should_be_typed-constraint-assert-17"
+           "foo-standOff-nested_standOff_should_be_typed-constraint-assert-16"
          "\x{a}" ~
          "            "
          sch:rule [

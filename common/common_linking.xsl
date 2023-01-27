@@ -703,7 +703,10 @@ of this software, even if advised of the possibility of such damage.
 		       </xsl:when>
 		       <xsl:when
 			   test="starts-with(local-name(.),'div') and tei:head">
-			 <xsl:value-of select="tei:sanitize(tei:head)"/>
+                         <xsl:variable name="plain-head" as="xs:string*">
+                           <xsl:apply-templates mode="plain" select="tei:head"/>
+                         </xsl:variable>
+			 <xsl:value-of select="tei:sanitize($plain-head)"/>
 		       </xsl:when>
 		       <xsl:otherwise>
 			 <xsl:value-of select="tei:sanitize(./string())"/>
