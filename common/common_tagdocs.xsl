@@ -2078,64 +2078,79 @@
   </doc>
   <xsl:template name="showAttRefs">
     <xsl:param name="endspace" select="true()"/>
-    <xsl:for-each-group select=".//tei:attRef[not(tei:match(@rend, 'none'))]"
-      group-by="@class">
-      <xsl:call-template name="linkTogether">
-        <xsl:with-param name="name" select="current-grouping-key()"/>
-        <xsl:with-param name="reftext">
-          <xsl:value-of select="current-grouping-key()"/>
-        </xsl:with-param>
-      </xsl:call-template>
-      <xsl:text> (</xsl:text>
-      <xsl:for-each
-        select="$Original//tei:classSpec[@ident = current-grouping-key()]/tei:attList/tei:attDef">
-        <xsl:variable name="me" select="@ident"/>
-        <xsl:if test="not(current-group()[@name = $me])">
-          <xsl:element namespace="{$outputNS}" name="{$segName}">
-            <xsl:attribute name="{$rendName}">unusedattribute</xsl:attribute>
-            <xsl:value-of select="$me"/>
-          </xsl:element>
-          <xsl:text>, </xsl:text>
+    <xsl:for-each-group select=".//tei:attRef[not(tei:match(@rend, 'none'))]" group-by="@class">
+      <item>
+        <xsl:call-template name="linkTogether">
+          <xsl:with-param name="name" select="current-grouping-key()"/>
+          <xsl:with-param name="reftext">
+            <xsl:value-of select="current-grouping-key()"/>
+          </xsl:with-param>
+        </xsl:call-template>
+        <!-- set a variable that contains all the <attDef> elements from Original that are children of the referenced <classSpec> -->
+        <xsl:variable name="theseAttDefs" select="$Original//tei:classSpec[@ident = current-grouping-key()]/tei:attList/tei:attDef" as="element(tei:attDef)*"/>
+        <!-- subset of those that have been deleted or over-ridden -->
+        <xsl:variable name="theUnusedAttDefs" select="$theseAttDefs[ not( @ident = current-group()/@name ) ]" as="element(tei:attDef)*"/>
+        <xsl:if test="$theseAttDefs">
+          <list type="debug:unuseds">
+            <!-- display unused attrs with a special class so they can be displayed as unavailable -->
+            <xsl:for-each select="$theUnusedAttDefs">
+              <item type="debug:unused">
+                <xsl:element namespace="{$outputNS}" name="{$segName}">
+                  <xsl:attribute name="{$rendName}">unusedattribute</xsl:attribute>
+                  <xsl:value-of select="@ident"/>
+                </xsl:element>
+              </item>
+            </xsl:for-each>
+          </list>
         </xsl:if>
-      </xsl:for-each>
-      <xsl:for-each select="current-group()">
-        <xsl:text>@</xsl:text>
-        <xsl:value-of select="@name"/>
-        <xsl:if test="position() != last()">, </xsl:if>
-      </xsl:for-each>
-      <xsl:text>)</xsl:text>
-      <xsl:if test="$endspace">
-        <xsl:text> </xsl:text>
-      </xsl:if>
+        <list type="debug:useds">
+          <xsl:for-each select="current-group()">
+            <item type="debug:used">
+              <xsl:sequence select="concat('@', @name )"/>
+            </item>
+          </xsl:for-each>
+        </list>     
+      </item>
     </xsl:for-each-group>
   </xsl:template>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[odds] display attribute list </desc>
   </doc>
+  <!-- Note: As far as I can tell, this is called when an <attList> is
+       the context node. —Syd, 2023-03-02. -->
   <xsl:template name="displayAttList">
     <xsl:param name="mode"/>
-    <xsl:call-template name="showAttClasses"/>
-    <xsl:if test=".//tei:attRef">
-      <xsl:call-template name="showAttRefs"/>
+    <xsl:variable name="store_for_debugging">
+      <xsl:call-template name="showAttClasses"/>
+      <xsl:if test=".//tei:attRef">
+	<xsl:call-template name="showAttRefs"/>
+      </xsl:if>
+      <xsl:if test=".//tei:attDef">
+	<xsl:element namespace="{$outputNS}" name="{$tableName}">
+          <xsl:attribute name="{$rendName}">
+            <xsl:text>attList</xsl:text>
+          </xsl:attribute>
+          <xsl:choose>
+            <xsl:when test="$mode = 'all'">
+              <!--ISSUE 328 (martindholmes and joeytakeda): Added predicate
+		  to suppress copying tei:attRef, which were invalid in TEI lite-->
+              <xsl:apply-templates select="node()[not(self::tei:attRef)]"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="summary"/>
+            </xsl:otherwise>
+          </xsl:choose>
+	</xsl:element>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:if test="ancestor::tei:elementSpec[@ident eq 'titlePage']">
+      <xsl:message>
+	<xsl:text>DEBUG::output&#x0A;</xsl:text>
+	<xsl:sequence select="$store_for_debugging"/>
+      </xsl:message>
     </xsl:if>
-    <xsl:if test=".//tei:attDef">
-      <xsl:element namespace="{$outputNS}" name="{$tableName}">
-        <xsl:attribute name="{$rendName}">
-          <xsl:text>attList</xsl:text>
-        </xsl:attribute>
-        <xsl:choose>
-          <xsl:when test="$mode = 'all'">
-            <!--ISSUE 328 (martindholmes and joeytakeda): Added predicate
-              to suppress copying tei:attRef, which were invalid in TEI lite-->
-            <xsl:apply-templates select="node()[not(self::tei:attRef)]"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:apply-templates mode="summary"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:element>
-    </xsl:if>
+    <xsl:sequence select="$store_for_debugging"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[odds] display list of model parents </desc>
@@ -2771,60 +2786,52 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="attClassDetails">
-    <xsl:param name="depth">1</xsl:param>
-    <xsl:for-each select="tei:classes/tei:memberOf">
-      <xsl:choose>
-        <xsl:when test="key('CLASSES', @key)">
-          <xsl:for-each select="key('CLASSES', @key)">
-            <xsl:if test="@type = 'atts'">
-              <xsl:if test="$depth > 1"> (</xsl:if>
-              <xsl:call-template name="linkTogether">
-                <xsl:with-param name="name" select="@ident"/>
-              </xsl:call-template>
-              <xsl:if test=".//tei:attDef">
-                <xsl:text> (</xsl:text>
-                <xsl:for-each select=".//tei:attDef">
-                  <xsl:call-template name="emphasize">
-                    <xsl:with-param name="class">attribute</xsl:with-param>
-                    <xsl:with-param name="content">
-                      <xsl:text>@</xsl:text>
-                      <xsl:value-of select="tei:createSpecName(.)"/>
-                    </xsl:with-param>
-                  </xsl:call-template>
-                  <xsl:if test="following-sibling::tei:attDef">
-                    <xsl:text>, </xsl:text>
-                  </xsl:if>
-                </xsl:for-each>
-                <xsl:text>)</xsl:text>
-                <xsl:if test="$depth = 1">
-                  <xsl:call-template name="showSpace"/>
-                </xsl:if>
-              </xsl:if>
-              <xsl:if test=".//tei:attRef">
-                <xsl:text> (</xsl:text>
-                <xsl:call-template name="showAttRefs">
-                  <xsl:with-param name="endspace" select="false()"/>
+    <list type="gen_by_stylesheet">
+      <xsl:for-each select="tei:classes/tei:memberOf">
+        <xsl:variable name="thisClassSpec" select="key('CLASSES', @key)" as="element(tei:classSpec)?"/>
+        <xsl:choose>
+          <xsl:when test="$thisClassSpec">
+            <item type="debug:thisClassSpec">
+              <!-- Set the context node to be the <classSpec> this <memberOf> points to -->
+              <xsl:for-each select="$thisClassSpec[@type eq 'atts']">
+                <xsl:call-template name="linkTogether">
+                  <xsl:with-param name="name" select="@ident"/>
                 </xsl:call-template>
-                <xsl:text>) </xsl:text>
-              </xsl:if>
-              <xsl:call-template name="attClassDetails">
-                <xsl:with-param name="depth">
-                  <xsl:value-of select="$depth + 1"/>
-                </xsl:with-param>
-              </xsl:call-template>
-              <xsl:if test="$depth > 1">) </xsl:if>
-            </xsl:if>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:when test="ancestor::tei:schemaSpec"> </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@key"/>
-          <xsl:call-template name="showSpace"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+                <xsl:if test=".//tei:attDef">
+                  <list type="debug:attDefs">
+                    <xsl:for-each select=".//tei:attDef">
+                      <item type="debug:attDef">
+                        <xsl:call-template name="emphasize">
+                          <xsl:with-param name="class">attribute</xsl:with-param>
+                          <xsl:with-param name="content">
+                            <xsl:value-of select="'@'||tei:createSpecName(.)"/>
+                          </xsl:with-param>
+                        </xsl:call-template>
+                      </item>
+                    </xsl:for-each>
+                  </list>
+                </xsl:if>
+                <xsl:if test=".//tei:attRef">
+                  <list type="debug:attRefs">
+                    <xsl:call-template name="showAttRefs"/>
+                  </list>
+                </xsl:if>
+                <xsl:call-template name="attClassDetails"/>
+              </xsl:for-each>
+            </item>
+          </xsl:when>
+          <xsl:otherwise>
+            <item type="debug:otherwise" debug="{ancestor::tei:schemaSpec}">
+              <xsl:value-of select="@key"/>
+            </item>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
+    </list>
   </xsl:template>
+
   <xsl:template name="showElement">
     <xsl:param name="name"/>
     <xsl:variable name="linkname"
