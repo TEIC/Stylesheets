@@ -7597,6 +7597,70 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
                </optional>
             </attribute>
          </optional>
+         <attribute name="req_03">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+            <list>
+               <optional>
+                  <data type="token">
+                     <param name="pattern">[^\p{C}\p{Z}]+</param>
+                  </data>
+               </optional>
+               <optional>
+                  <data type="token">
+                     <param name="pattern">[^\p{C}\p{Z}]+</param>
+                  </data>
+               </optional>
+               <optional>
+                  <data type="token">
+                     <param name="pattern">[^\p{C}\p{Z}]+</param>
+                  </data>
+               </optional>
+            </list>
+         </attribute>
+         <optional>
+            <attribute name="opt_03">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <list>
+                  <optional>
+                     <data type="token">
+                        <param name="pattern">[^\p{C}\p{Z}]+</param>
+                     </data>
+                  </optional>
+                  <optional>
+                     <data type="token">
+                        <param name="pattern">[^\p{C}\p{Z}]+</param>
+                     </data>
+                  </optional>
+                  <optional>
+                     <data type="token">
+                        <param name="pattern">[^\p{C}\p{Z}]+</param>
+                     </data>
+                  </optional>
+               </list>
+            </attribute>
+         </optional>
+         <attribute name="req_0Ǖ">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+            <list>
+               <zeroOrMore>
+                  <data type="token">
+                     <param name="pattern">[^\p{C}\p{Z}]+</param>
+                  </data>
+               </zeroOrMore>
+            </list>
+         </attribute>
+         <optional>
+            <attribute name="opt_0Ǖ">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <list>
+                  <zeroOrMore>
+                     <data type="token">
+                        <param name="pattern">[^\p{C}\p{Z}]+</param>
+                     </data>
+                  </zeroOrMore>
+               </list>
+            </attribute>
+         </optional>
          <attribute name="req_11">
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
             <data type="token">
@@ -7636,6 +7700,28 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
                         <param name="pattern">[^\p{C}\p{Z}]+</param>
                      </data>
                   </optional>
+               </list>
+            </attribute>
+         </optional>
+         <attribute name="req_1Ǖ">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+            <list>
+               <oneOrMore>
+                  <data type="token">
+                     <param name="pattern">[^\p{C}\p{Z}]+</param>
+                  </data>
+               </oneOrMore>
+            </list>
+         </attribute>
+         <optional>
+            <attribute name="opt_1Ǖ">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <list>
+                  <oneOrMore>
+                     <data type="token">
+                        <param name="pattern">[^\p{C}\p{Z}]+</param>
+                     </data>
+                  </oneOrMore>
                </list>
             </attribute>
          </optional>
