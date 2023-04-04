@@ -7,7 +7,7 @@
       </titleStmt>
       <editionStmt>
         <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.6.0.html">4.6.0a</ref>. Last updated on
-        <date when="2023-01-18">18th January 2023</date>, revision <ref target="https://github.com/TEIC/TEI/commit/ee2916b07">ee2916b07</ref></edition>
+        <date when="2023-04-04">4th April 2023</date>, revision <ref target="https://github.com/TEIC/TEI/commit/2c79128d9">2c79128d9</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -14760,6 +14760,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.pointing"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>    
       <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
@@ -18326,12 +18327,12 @@ Normalization</head>
           <gloss versionDate="2018-01-17" xml:lang="de">ausgebleicht</gloss>
         </valItem>
         <valItem ident="background_noise">
-          <gloss xml:lang="en" versionDate="2018-01-17">background_noise</gloss>
+          <gloss xml:lang="en" versionDate="2018-01-17">background noise</gloss>
           <gloss xml:lang="es" versionDate="2022-02-20">ruido de fondo</gloss>
           <gloss versionDate="2018-01-17" xml:lang="de">Hintergrundlärm</gloss>
         </valItem>
         <valItem ident="eccentric_ductus">
-          <gloss xml:lang="en" versionDate="2018-01-17">eccentric_ductus</gloss>
+          <gloss xml:lang="en" versionDate="2018-01-17">eccentric ductus</gloss>
           <gloss xml:lang="es" versionDate="2022-06-03">ductus excéntrico</gloss>
           <gloss versionDate="2018-01-17" xml:lang="de">exzentrischer Duktus</gloss>
           <desc xml:lang="en" versionDate="2021-02-01">
@@ -24133,6 +24134,39 @@ epistemology, methodology and history of
       </biblStruct>
     </egXML>
   </exemplum>
+  <exemplum versionDate="2023-02-20" xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <biblStruct type="newspaper">
+        <analytic>
+          <author>
+            <forename>David</forename>
+            <surname>Barstow</surname>
+          </author>
+          <author>
+            <forename>Susanne</forename>
+            <surname>Craig</surname>
+          </author>
+          <author>
+            <forename>Russ</forename>
+            <surname>Buettner</surname>
+          </author>
+          <title type="main">Trump Took Part in Suspect Schemes to Evade Tax Bills</title>
+          <title type="sub">Behind the Myth of a Self-Made Billionaire, a Vast Inheritance From His Father</title>
+        </analytic>
+        <monogr>
+          <title level="j">The New York Times</title>
+          <imprint>
+            <pubPlace>New York</pubPlace>
+            <publisher>A. G. Sulzberger</publisher>
+            <date when="2018-10-03">Wednesday, October 3, 2018</date>
+          </imprint>
+          <biblScope unit="volume">CLXVIII</biblScope>
+          <biblScope unit="issue">58,104</biblScope>
+          <biblScope unit="page">1</biblScope>
+        </monogr>
+      </biblStruct>
+    </egXML>
+  </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <biblStruct>
@@ -24489,12 +24523,14 @@ relatedItem element must be empty</sch:report>
         <classRef key="model.lLike"/>
         <classRef key="model.stageLike"/>
         <classRef key="model.labelLike"/>
+        <classRef key="model.pPart.transcriptional"/>
         <elementRef key="lg"/>
       </alternate>
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.lLike"/>
         <classRef key="model.stageLike"/>
         <classRef key="model.labelLike"/>
+        <classRef key="model.pPart.transcriptional"/>
         <classRef key="model.global"/>
         <elementRef key="lg"/>
       </alternate>
@@ -24625,14 +24661,10 @@ relatedItem element must be empty</sch:report>
   </classes>
   <content>
     <sequence>
-      
-        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      
+      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       <sequence minOccurs="0">
         <elementRef key="speaker"/>
-        
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
       <sequence minOccurs="1" maxOccurs="unbounded">
         <alternate>
@@ -25094,6 +25126,7 @@ by the stage direction.</p>
   <constraintSpec ident="c2" scheme="schematron">
     <constraint>
       <sch:ns prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
+      <sch:ns prefix="rna" uri="http://relaxng.org/ns/compatibility/annotations/1.0"/>
     </constraint>
   </constraintSpec>
   <attList>
@@ -33164,6 +33197,15 @@ either a single role or a list of non-speaking roles.</desc>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
+  <attList>
+    <attDef ident="gender" usage="opt">
+      <desc versionDate="2023-03-11" xml:lang="en">specifies the gender of the role.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.gender"/></datatype>
+      <remarks versionDate="2023-03-11" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project, or they may refer to an external standard.</p>
+      </remarks>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#JonsBart">
       <role xml:id="jt">Joan Trash</role>
@@ -33258,6 +33300,22 @@ either a single role or a list of non-speaking roles.</desc>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
+  <attList>
+    <attDef ident="sex" usage="opt">
+      <desc versionDate="2023-03-11" xml:lang="en">specifies the sex of the actor.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.sex"/></datatype>
+      <remarks versionDate="2023-03-11" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project, or may refer to an external standard.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="gender" usage="opt">
+      <desc versionDate="2023-03-11" xml:lang="en">specifies the gender of the actor.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.gender"/></datatype>
+      <remarks versionDate="2023-03-11" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project, or they may refer to an external standard.</p>
+      </remarks>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#DRCAST-eg-21">
       <castItem>
@@ -44996,16 +45054,23 @@ may exist in the holding institution or elsewhere.</desc>
           <idno>MS 3</idno>
           <msName>Maurdramnus Bible</msName>
         </msIdentifier>
-        <msContents><summary xml:lang="la">Miscellany of various texts; Prudentius, Psychomachia; Physiologus de natura animantium</summary>
+        <msContents>
+          <summary>
+            <list>
+              <item xml:lang="en">Miscellany of various texts;</item>
+              <item xml:lang="la">Prudentius, Psychomachia;</item>
+              <item xml:lang="la">Physiologus de natura animantium</item>
+            </list>
+          </summary>
           <textLang mainLang="la">Latin</textLang>
         </msContents>
         <physDesc>
           <objectDesc form="composite_manuscript"/>
         </physDesc>
         <msPart>
-          <msIdentifier><idno>ms. 10066-77 ff. 140r-156v</idno>
-          </msIdentifier>
-          <msContents><summary xml:lang="la">Physiologus</summary>
+          <msIdentifier><idno>ms. 10066-77 ff. 140r-156v</idno></msIdentifier>
+          <msContents>
+            <summary xml:lang="la">Physiologus</summary>
             <textLang mainLang="la">Latin</textLang>
           </msContents>
         </msPart>        
@@ -55357,8 +55422,7 @@ education, religion, etc.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">예술과 연예</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">藝術和娛樂</desc>
           <desc versionDate="2008-04-06" xml:lang="es">arte y entretenimiento</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">芸術、娯楽。
-	</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">芸術、娯楽。</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">art et loisirs</desc>
           <desc versionDate="2007-01-21" xml:lang="it">arte e intrattenimento</desc>
         </valItem>
@@ -55367,8 +55431,7 @@ education, religion, etc.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">가정과 개인</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">家庭和私人</desc>
           <desc versionDate="2008-04-06" xml:lang="es">doméstico y privado</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">家庭内、私的。
-	</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">家庭内、私的。</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">domestique et privé</desc>
           <desc versionDate="2007-01-21" xml:lang="it">domestico e privato</desc>
         </valItem>
@@ -55377,8 +55440,7 @@ education, religion, etc.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">종교와 의식</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">宗教和儀式</desc>
           <desc versionDate="2008-04-06" xml:lang="es">religioso y ceremonial</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">宗教、儀式。
-	</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">宗教、儀式。</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">religieux et rituel</desc>
           <desc versionDate="2007-01-21" xml:lang="it">religioso e cerimoniale</desc>
         </valItem>
@@ -55387,20 +55449,18 @@ education, religion, etc.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">사업과 사무 공간</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">商業和工作場所</desc>
           <desc versionDate="2008-04-06" xml:lang="es">negocio y lugar de trabajo</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">仕事、職場。
-	</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">仕事、職場。</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">entreprise et lieu de travail</desc>
           <desc versionDate="2007-01-21" xml:lang="it">lavorativo e di affari</desc>
         </valItem>
         <valItem ident="education">
-          <desc versionDate="2007-06-27" xml:lang="en">education</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">교육</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">教育</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">educación</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">教育。
-	</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">éducation</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">scolastico</desc>
+          <gloss versionDate="2007-06-27" xml:lang="en">education</gloss>
+          <gloss versionDate="2007-12-20" xml:lang="ko">교육</gloss>
+          <gloss versionDate="2007-05-02" xml:lang="zh-TW">教育</gloss>
+          <gloss versionDate="2008-04-06" xml:lang="es">educación</gloss>
+          <gloss versionDate="2008-04-05" xml:lang="ja">教育。</gloss>
+          <gloss versionDate="2008-03-30" xml:lang="fr">éducation</gloss>
+          <gloss versionDate="2007-01-21" xml:lang="it">scolastico</gloss>
         </valItem>
         <valItem ident="govt">
           <gloss versionDate="2007-07-04" xml:lang="en">government</gloss>
@@ -55412,8 +55472,7 @@ education, religion, etc.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">정부와 법률</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">政府和法律</desc>
           <desc versionDate="2008-04-06" xml:lang="es">gobierno y ley</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">政府、法律。
-	</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">政府、法律。</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">gouvernement et loi</desc>
           <desc versionDate="2007-01-21" xml:lang="it">governativo e legislativo</desc>
         </valItem>
@@ -55422,8 +55481,7 @@ education, religion, etc.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">공적 맥락의 기타 형식</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">其他公共領域</desc>
           <desc versionDate="2008-04-06" xml:lang="es">otras formas de contexto público</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">その他の公的なもの。
-	</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">その他の公的なもの。</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">autres formes de contexte public</desc>
           <desc versionDate="2007-01-21" xml:lang="it">altre forme di contesto pubblico</desc>
         </valItem>
@@ -58976,19 +59034,19 @@ etc. as appropriate.</p>
       <datatype><dataRef key="teidata.text"/></datatype>
       <valList type="closed">
         <valItem ident="no">
-          <gloss xml:lang="en" versionDate="2017-07-07">the token is not adjacent to another</gloss>
+          <desc xml:lang="en" versionDate="2017-07-07">the token is not adjacent to another</desc>
         </valItem>
         <valItem ident="left">
-          <gloss xml:lang="en" versionDate="2017-07-07">there is no whitespace on the left side of the token</gloss>
+          <desc xml:lang="en" versionDate="2017-07-07">there is no whitespace on the left side of the token</desc>
         </valItem>
         <valItem ident="right">
-          <gloss xml:lang="en" versionDate="2017-07-07">there is no whitespace on the right side of the token</gloss>
+          <desc xml:lang="en" versionDate="2017-07-07">there is no whitespace on the right side of the token</desc>
         </valItem>
         <valItem ident="both">
-          <gloss xml:lang="en" versionDate="2017-07-07">there is no whitespace on either side of the token</gloss>
+          <desc xml:lang="en" versionDate="2017-07-07">there is no whitespace on either side of the token</desc>
         </valItem>
         <valItem ident="overlap">
-          <gloss xml:lang="en" versionDate="2017-07-07">the token overlaps with another; other devices (specifying the extent and the area of overlap) are needed to more precisely locate this token in the character stream</gloss>
+          <desc xml:lang="en" versionDate="2017-07-07">the token overlaps with another; other devices (specifying the extent and the area of overlap) are needed to more precisely locate this token in the character stream</desc>
         </valItem>
       </valList>
       <exemplum xml:lang="en">
@@ -61112,6 +61170,7 @@ in the absence of a value for the <att>value</att> attribute.</p>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.featureVal.complex"/>
+    <!--<memberOf key="model.featureVal.single"/>-->
   </classes>
   <content>
     
@@ -61119,6 +61178,7 @@ in the absence of a value for the <att>value</att> attribute.</p>
         <alternate minOccurs="0" maxOccurs="unbounded">
           <elementRef key="fs"/>
           <classRef key="model.featureVal.single"/>
+          <elementRef key="vColl"/>
         </alternate>
       
     
@@ -68042,6 +68102,39 @@ déclaration de même nom dans la définition courante.</desc>
       <anyElement minOccurs="1" maxOccurs="unbounded" require="http://relaxng.org/ns/compatibility/annotations/1.0 http://relaxng.org/ns/structure/1.0"/>
     </alternate>
   </content>
+  <constraintSpec ident="only_1_child_of_content" scheme="schematron">
+    <desc>A temporary constraint to give users a warning that in the
+    future the content of <gi>content</gi> will be restricted to 1 and
+    only 1 child element.</desc>
+    <constraint>
+    <sch:rule context="tei:content[ *[2] ]">
+      <sch:let name="tot_kids" value="count( * )"/>
+      <sch:let name="tei_kids" value="count( tei:* )"/>
+      <sch:let name="rng_kids" value="count( rng:* | rna:* )"/>
+      <sch:let name="msg_part01" value="'In the near future the &lt;content&gt; element will be limited to 1 and only 1 child element. '"/>
+      <sch:let name="msg_part02" value="'This &lt;content&gt; element is in '"/>
+      <sch:let name="msg_part03" value="if ( local-name(..) eq 'elementSpec' ) then 'an ' else 'a '"/>
+      <sch:let name="msg_part04" value="concat( local-name(..), ' with ' )"/>
+      <sch:let name="msg_part05" value="if ( parent::tei:moduleRef/@key ) then 'a @key'    else ''"/>
+      <sch:let name="msg_part06" value="if ( parent::tei:moduleRef/@url ) then 'a @url'    else ''"/>
+      <sch:let name="msg_part07" value="if ( parent::tei:*/@ident )       then 'an @ident' else ''"/>
+      <sch:let name="msg_part08" value="' of &#34;'"/>
+      <sch:let name="msg_part09" value="../@ident | ../@key | ../@url"/>
+      <sch:let name="msg_part10" value="concat('&#34; and has ', $tot_kids, ' children,')"/>
+      <sch:let name="msgs_1to10" value="concat( $msg_part01, $msg_part02, $msg_part03, $msg_part04, $msg_part05, $msg_part06, $msg_part07, $msg_part08, $msg_part09, $msg_part10 )"/>
+      <sch:report test="$tei_kids eq $tot_kids" role="warning">
+        <sch:value-of select="$msgs_1to10"/> which could be wrapped in a &lt;sequence&gt; element.
+      </sch:report>
+      <sch:report test="$rng_kids eq $tot_kids" role="warning">
+        <sch:value-of select="$msgs_1to10"/> which could be wrapped in an &lt;rng:div&gt; element.
+      </sch:report>
+      <sch:assert test="$tei_kids eq $tot_kids  or  $rng_kids eq $tot_kids" role="warning">
+        <sch:value-of select="$msgs_1to10"/> but those children are neither all TEI elements nor
+        all RELAX NG elements, and thus this &lt;content&gt; is invalid and can not be easily rectified.
+      </sch:assert>
+    </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="autoPrefix">
       <desc versionDate="2010-05-13" xml:lang="en">controls whether or
@@ -68247,10 +68340,8 @@ déclaration de même nom dans la définition courante.</desc>
   </constraintSpec>
   <attList>
     <attDef ident="preserveOrder">
-      <desc versionDate="2013-11-21" xml:lang="en">if true, indicates that
-      the order in which component elements of a sequence
-      appear in a document must correspond to the order in
-      which they are given in the content model.</desc>
+      <desc versionDate="2023-03-21" xml:lang="en">if false, indicates that
+      component elements of a sequence may occur in any order.</desc>
       <datatype><dataRef key="teidata.truthValue"/></datatype>
     </attDef>
   </attList>
@@ -68536,8 +68627,7 @@ déclaration de même nom dans la définition courante.</desc>
       <gloss versionDate="2008-04-06" xml:lang="es">organización</gloss>
       <gloss versionDate="2007-06-12" xml:lang="fr">conditions d'utilisation</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">organizzazione</gloss>
-      <desc versionDate="2005-01-14" xml:lang="en">specifies whether all the attributes in the list are available (org="group") or only one
-        of them (org="choice")</desc>
+      <desc versionDate="2023-02-07" xml:lang="en">specifies whether only one (<val>choice</val>) or all (<val>group</val>) of the attributes in the list are available</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">목록의 모든 속성이 이용가능하거나(org="group") 그 중 하나만 이용가능한지를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">標明是否列表中的全部屬性皆可使用 (org="group") 、或是僅可使用其中一個
         (org="choice")。</desc>
@@ -68545,10 +68635,9 @@ déclaration de même nom dans la définition courante.</desc>
         が使用できるか(org="choice")を示す。</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">précise si les attributs dans la liste sont tous
         disponibles (org="group") ou seulement l'un d'entre eux (org="choice").</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica si los atributos contenidos en la lista son
-        todos disponibles (org="grupo") o si es disponible sólo uno (org="elección")</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica se gli attributi contenuti nella lista sono
-        tutti disponibili (org="gruppo") o se ne è disponibile solo uno (org="scelta")</desc>
+      <desc versionDate="2023-03-20" xml:lang="es">indica si solo uno (<val>choice</val>) o todos (<val>group</val>) los atributos de la lista están disponibles</desc>
+      <desc versionDate="2023-03-21" xml:lang="it">indica se gli attributi contenuti nella lista sono
+        tutti disponibili (<val>group</val>) o se ne è disponibile solo uno (<val>choice</val>)</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>group</defaultVal>
       <valList type="closed">
@@ -69904,8 +69993,7 @@ should correspond to an existing module, via a moduleSpec or
   </attList>
 </classSpec>
 <classSpec module="tagdocs" type="atts" ident="att.namespaceable">
-  <desc versionDate="2021-08-22" xml:lang="en">provides attributes indicating the target namespace for an
-  object being created</desc>
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes indicating the target namespace for an object being created.</desc>
   <desc versionDate="2022-08-26" xml:lang="ja">作成されているオブジェクトが対象とする名前空間を示す属性を提供する。</desc>
   <attList>
     <attDef ident="ns" usage="opt">
@@ -69916,18 +70004,29 @@ should correspond to an existing module, via a moduleSpec or
       <gloss versionDate="2007-05-04" xml:lang="es">espacio de nombre</gloss>
       <gloss versionDate="2007-01-21" xml:lang="it">spazio del nome</gloss>
       <gloss versionDate="2022-08-26" xml:lang="ja">名前空間</gloss>
-      <desc versionDate="2012-10-21" xml:lang="en">specifies the namespace to which this element belongs</desc>
+      <desc versionDate="2023-02-07" xml:lang="en">specifies the namespace to which the element(s) being specified belongs.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이 요소가 소속된 이름 공간을 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該元素所屬的名稱空間。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該要素が属する名前空間を示す。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">précise l'espace de noms auquel appartient cet
-        élément.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica el espacio de nombre al que pertenece tal
-        elemento.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene tale
-        elemento</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">précise l'espace de noms auquel appartient cet élément.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">especifica el espacio de nombre al que pertenece tal elemento.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene tale elemento</desc>
       <datatype><dataRef key="teidata.namespace"/></datatype>
       <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
+      <remarks xml:lang="en" versionDate="2023-02-07">
+        <p>When specified on an <gi>elementSpec</gi>, this attribute
+        specifies the namespace of the element being added, deleted,
+        replaced, or changed. When specified on a <gi>schemaSpec</gi>,
+        this attribute specifies the namespace of every element that
+        is added, deleted, replaced, or changed by
+        <gi>elementSpec</gi> children of the <gi>schemaSpec</gi>, or
+        by <gi>elementSpec</gi>s referred to by <gi>specGrpRef</gi>
+        children of the <gi>schemSpec</gi>, <emph>unless</emph>
+        overridden by an <att>ns</att> attribute on the
+        <gi>elementSpec</gi>.</p>
+        <p>Note that the value of <att>ns</att> of <gi>attDef</gi> is
+        <emph>not</emph> inherited from its ancestors.</p>
+      </remarks>
     </attDef>
   </attList>
 </classSpec>

@@ -6794,6 +6794,39 @@ which contain an XPath expression.</desc>
       de valeurs dans la spécification de l'attribut associé, exprimée par un élément
       <gi>valList</gi>.</p>
   </remarks>
+</dataSpec><dataSpec module="tei" ident="teidata.gender">
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-17" xml:lang="en">defines the range of attribute values used to
+    represent the gender of a person, persona, or character.</desc>
+  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <dataRef key="teidata.enumerated"/>
+  </content>
+  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-08-27" xml:lang="en">
+    <p>Values for attributes using this datatype may be defined locally by a project, or they may refer to an external standard.</p>
+    <p>Values for this datatype should not be used to encode morphological gender (cf. <gi>gen</gi>,
+        <att>msd</att> as defined in <ident type="class">att.linguistic</ident>, and <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/DI.html#DITPFO">9.3.1. Information on Written and Spoken Forms</ref>).</p>
+  </remarks>
+</dataSpec><dataSpec module="tei" ident="teidata.sex">
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="en">defines the range of attribute values used to identify
+    the sex of an organism.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">인간 또는 동물의 성을 식별하는 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍用以識別人類或動物的性別</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">人間または動物の性を示す属性値の範囲を定義する。 </desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="fr">définit la gamme des valeurs d'attributs employés
+    pour identifier le sexe d’un organisme.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="es">define la gama de valores de atributos usados para
+    identificar el sexo de un organismo.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="it">definisce una gamma di valori di attributi usati per
+    identificare il sesso di un organismo.</desc>
+  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <dataRef key="teidata.enumerated"/>
+  </content>
+  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-08-27" xml:lang="en">
+    <p>Values for attributes using this datatype may be defined locally by a project, or they may refer to an external standard.</p>
+  </remarks>
+  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-03" xml:lang="fr">
+    <p>Les valeurs de cet attribut peuvent être définies localement par un projet ou peuvent faire
+      référence à un standard externe.</p>
+  </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.probCert">
   <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines a range of attribute values which can be expressed either as a numeric probability or as a coded certainty value.</desc>
 <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">  
@@ -10018,12 +10051,12 @@ Normalization</ref>
           <gloss versionDate="2018-01-17" xml:lang="de">ausgebleicht</gloss>
         </valItem>
         <valItem ident="background_noise">
-          <gloss xml:lang="en" versionDate="2018-01-17">background_noise</gloss>
+          <gloss xml:lang="en" versionDate="2018-01-17">background noise</gloss>
           <gloss xml:lang="es" versionDate="2022-02-20">ruido de fondo</gloss>
           <gloss versionDate="2018-01-17" xml:lang="de">Hintergrundlärm</gloss>
         </valItem>
         <valItem ident="eccentric_ductus">
-          <gloss xml:lang="en" versionDate="2018-01-17">eccentric_ductus</gloss>
+          <gloss xml:lang="en" versionDate="2018-01-17">eccentric ductus</gloss>
           <gloss xml:lang="es" versionDate="2022-06-03">ductus excéntrico</gloss>
           <gloss versionDate="2018-01-17" xml:lang="de">exzentrischer Duktus</gloss>
           <desc xml:lang="en" versionDate="2021-02-01">
@@ -15689,6 +15722,39 @@ epistemology, methodology and history of
       </biblStruct>
     </egXML>
   </exemplum>
+  <exemplum versionDate="2023-02-20" xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <biblStruct type="newspaper">
+        <analytic>
+          <author>
+            <forename>David</forename>
+            <surname>Barstow</surname>
+          </author>
+          <author>
+            <forename>Susanne</forename>
+            <surname>Craig</surname>
+          </author>
+          <author>
+            <forename>Russ</forename>
+            <surname>Buettner</surname>
+          </author>
+          <title type="main">Trump Took Part in Suspect Schemes to Evade Tax Bills</title>
+          <title type="sub">Behind the Myth of a Self-Made Billionaire, a Vast Inheritance From His Father</title>
+        </analytic>
+        <monogr>
+          <title level="j">The New York Times</title>
+          <imprint>
+            <pubPlace>New York</pubPlace>
+            <publisher>A. G. Sulzberger</publisher>
+            <date when="2018-10-03">Wednesday, October 3, 2018</date>
+          </imprint>
+          <biblScope unit="volume">CLXVIII</biblScope>
+          <biblScope unit="issue">58,104</biblScope>
+          <biblScope unit="page">1</biblScope>
+        </monogr>
+      </biblStruct>
+    </egXML>
+  </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <biblStruct>
@@ -16035,12 +16101,14 @@ relatedItem element must be empty</sch:report>
         <classRef key="model.lLike"/>
         <classRef key="model.stageLike"/>
         <classRef key="model.labelLike"/>
+        <classRef key="model.pPart.transcriptional"/>
         <elementRef key="lg"/>
       </alternate>
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.lLike"/>
         <classRef key="model.stageLike"/>
         <classRef key="model.labelLike"/>
+        <classRef key="model.pPart.transcriptional"/>
         <classRef key="model.global"/>
         <elementRef key="lg"/>
       </alternate>
@@ -16169,14 +16237,10 @@ relatedItem element must be empty</sch:report>
   </classes>
   <content>
     <sequence>
-      
-        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      
+      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       <sequence minOccurs="0">
         <elementRef key="speaker"/>
-        
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
       <sequence minOccurs="1" maxOccurs="unbounded">
         <alternate>
@@ -22893,6 +22957,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.pointing"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>    
       <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
@@ -23715,6 +23780,7 @@ during the evolution of the encoded representation of that text.</p>
   <constraintSpec ident="c2" scheme="schematron">
     <constraint>
       <sch:ns prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
+      <sch:ns prefix="rna" uri="http://relaxng.org/ns/compatibility/annotations/1.0"/>
     </constraint>
   </constraintSpec>
   <attList>
@@ -30642,6 +30708,15 @@ either a single role or a list of non-speaking roles.</desc>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
+  <attList>
+    <attDef ident="gender" usage="opt">
+      <desc versionDate="2023-03-11" xml:lang="en">specifies the gender of the role.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.gender"/></datatype>
+      <remarks versionDate="2023-03-11" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project, or they may refer to an external standard.</p>
+      </remarks>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#JonsBart">
       <role xml:id="jt">Joan Trash</role>
@@ -30734,6 +30809,22 @@ either a single role or a list of non-speaking roles.</desc>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
+  <attList>
+    <attDef ident="sex" usage="opt">
+      <desc versionDate="2023-03-11" xml:lang="en">specifies the sex of the actor.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.sex"/></datatype>
+      <remarks versionDate="2023-03-11" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project, or may refer to an external standard.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="gender" usage="opt">
+      <desc versionDate="2023-03-11" xml:lang="en">specifies the gender of the actor.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.gender"/></datatype>
+      <remarks versionDate="2023-03-11" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project, or they may refer to an external standard.</p>
+      </remarks>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#DRCAST-eg-21">
       <castItem>

@@ -2655,7 +2655,7 @@ tei_unclear =
     tei_att.dimensions.attributes,
     
     ## indicates why the material is hard to transcribe.
-    ## Suggested values include: 1] illegible (illegible); 2] inaudible (inaudible); 3] faded (faded); 4] background_noise (background_noise); 5] eccentric_ductus (eccentric_ductus)
+    ## Suggested values include: 1] illegible (illegible); 2] inaudible (inaudible); 3] faded (faded); 4] background_noise (background noise); 5] eccentric_ductus (eccentric ductus)
     attribute reason {
       list {
         (
@@ -2668,10 +2668,10 @@ tei_unclear =
            ## (faded) 
            "faded"
          | 
-           ## (background_noise) 
+           ## (background noise) 
            "background_noise"
          | 
-           ## (eccentric_ductus) indicates illegibility due to an unusual, awkward, or incompetent execution of a glyph or glyphs 
+           ## (eccentric ductus) indicates illegibility due to an unusual, awkward, or incompetent execution of a glyph or glyphs 
            "eccentric_ductus"
          | xsd:token { pattern = "[^\p{C}\p{Z}]+" })+
       }
@@ -3541,10 +3541,12 @@ tei_lg =
      (tei_model.lLike
       | tei_model.stageLike
       | tei_model.labelLike
+      | tei_model.pPart.transcriptional
       | tei_lg),
      (tei_model.lLike
       | tei_model.stageLike
       | tei_model.labelLike
+      | tei_model.pPart.transcriptional
       | tei_model.global
       | tei_lg)*,
      (tei_model.divBottom, tei_model.global*)*)
@@ -4762,6 +4764,7 @@ tei_calendar =
     tei_model.pLike+,
     tei_att.global.attributes,
     tei_att.pointing.attributes,
+    tei_att.typed.attributes,
     empty
   }
 tei_correspDesc =
@@ -4889,6 +4892,10 @@ tei_TEI =
     >> sch:ns [
          prefix = "rng"
          uri = "http://relaxng.org/ns/structure/1.0"
+       ]
+    >> sch:ns [
+         prefix = "rna"
+         uri = "http://relaxng.org/ns/compatibility/annotations/1.0"
        ],
     tei_att.global.attributes,
     tei_att.typed.attributes,

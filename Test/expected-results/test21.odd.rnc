@@ -3025,7 +3025,7 @@ unclear =
     att.dimensions.attributes,
     
     ## indique pourquoi il est difficile de transcrire le document
-    ## Suggested values include: 1] illegible (illegible); 2] inaudible (inaudible); 3] faded (faded); 4] background_noise (background_noise); 5] eccentric_ductus (eccentric_ductus)
+    ## Suggested values include: 1] illegible (illegible); 2] inaudible (inaudible); 3] faded (faded); 4] background_noise (background noise); 5] eccentric_ductus (eccentric ductus)
     attribute reason {
       list {
         (
@@ -3038,10 +3038,10 @@ unclear =
            ## (faded) 
            "faded"
          | 
-           ## (background_noise) 
+           ## (background noise) 
            "background_noise"
          | 
-           ## (eccentric_ductus) indicates illegibility due to an unusual, awkward, or incompetent execution of a glyph or glyphs 
+           ## (eccentric ductus) indicates illegibility due to an unusual, awkward, or incompetent execution of a glyph or glyphs 
            "eccentric_ductus"
          | xsd:token { pattern = "[^\p{C}\p{Z}]+" })+
       }
@@ -3902,10 +3902,15 @@ lg =
   ## (groupe de vers) contient un groupe de vers fonctionnant comme une unité formelle, par exemple une strophe, un refrain, un paragraphe en vers, etc. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.5. Speech Contents]
   element lg {
     ((model.divTop | model.global)*,
-     (model.lLike | model.stageLike | model.labelLike | lg),
      (model.lLike
       | model.stageLike
       | model.labelLike
+      | model.pPart.transcriptional
+      | lg),
+     (model.lLike
+      | model.stageLike
+      | model.labelLike
+      | model.pPart.transcriptional
       | model.global
       | lg)*,
      (model.divBottom, model.global*)*)
@@ -6367,7 +6372,11 @@ calendar =
   
   ## (calendrier) describes a calendar or dating system used in a dating formula in the text. [2.4.5. Calendar Description]
   element calendar {
-    model.pLike+, att.global.attributes, att.pointing.attributes, empty
+    model.pLike+,
+    att.global.attributes,
+    att.pointing.attributes,
+    att.typed.attributes,
+    empty
   }
 correspDesc =
   
@@ -8780,6 +8789,10 @@ TEI =
     >> sch:ns [
          prefix = "rng"
          uri = "http://relaxng.org/ns/structure/1.0"
+       ]
+    >> sch:ns [
+         prefix = "rna"
+         uri = "http://relaxng.org/ns/compatibility/annotations/1.0"
        ],
     att.global.attributes,
     att.typed.attributes,
