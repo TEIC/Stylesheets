@@ -339,6 +339,7 @@
 <!--   Run jing to create the error output file. -->
     <property name="expectedMessageFile" value="${expectedResultsDir}/${plainFileName}InvalidInstanceRngMessages.txt"/>
     <java fork="true" failonerror="false" jar="${jingJar}" output="${outputMessageFile}">
+      <arg value="-i"/>
       <arg value="${rngFile}"/>
       <arg value="${invalidInstance}"/>
     </java>

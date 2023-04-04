@@ -1857,7 +1857,8 @@
           [  ],
           "atts" : 
           [ "att.global",
-            "att.pointing" ],
+            "att.pointing",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6616,6 +6617,9 @@
                   { "type" : "classRef",
                     "key" : "model.labelLike" },
                   
+                  { "type" : "classRef",
+                    "key" : "model.pPart.transcriptional" },
+                  
                   { "type" : "elementRef",
                     "key" : "lg" } ] },
               
@@ -6632,6 +6636,9 @@
                   
                   { "type" : "classRef",
                     "key" : "model.labelLike" },
+                  
+                  { "type" : "classRef",
+                    "key" : "model.pPart.transcriptional" },
                   
                   { "type" : "classRef",
                     "key" : "model.global" },
@@ -11431,18 +11438,18 @@
                 { "ident" : "background_noise",
                   "desc" : 
                   [  ],
-                  "shortDesc" : "(background_noise) ",
+                  "shortDesc" : "(background noise) ",
                   "gloss" : 
-                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-01-17\">background_noise<\/gloss>" ],
+                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-01-17\">background noise<\/gloss>" ],
                   "altIdent" : 
                   [  ] },
                 
                 { "ident" : "eccentric_ductus",
                   "desc" : 
                   [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-02-01\">\n            indicates illegibility due to an unusual, awkward, or\n            incompetent execution of a glyph or glyphs\n            \n          <\/desc>" ],
-                  "shortDesc" : "(eccentric_ductus) \n            indicates illegibility due to an unusual, awkward, or\n            incompetent execution of a glyph or glyphs\n            \n          ",
+                  "shortDesc" : "(eccentric ductus) \n            indicates illegibility due to an unusual, awkward, or\n            incompetent execution of a glyph or glyphs\n            \n          ",
                   "gloss" : 
-                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-01-17\">eccentric_ductus<\/gloss>" ],
+                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-01-17\">eccentric ductus<\/gloss>" ],
                   "altIdent" : 
                   [  ] } ] } },
           
@@ -11944,14 +11951,7 @@
           "gloss" : 
           [  ],
           "altIdent" : 
-          [  ],
-          "classes" : 
-          { "model" : 
-            [  ],
-            "atts" : 
-            [  ],
-            "unknown" : 
-            [  ] } },
+          [  ] },
         
         { "ident" : "model.choicePart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -13758,8 +13758,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-22\" xml:lang=\"en\">provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n  <title ref=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/title>.<\/desc>" ],
-          "shortDesc" : "provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n  XML Schema Part 2: Datatypes Second Edition.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-22\" xml:lang=\"en\">provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n    <ref target=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/ref>.<\/desc>" ],
+          "shortDesc" : "provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n    XML Schema Part 2: Datatypes Second Edition.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -17584,7 +17584,7 @@
         "type" : "dataSpec",
         "module" : "tei",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-04-08\" xml:lang=\"en\">defines the range of attribute values expressing a temporal\n  expression such as a date, a time, or a combination of them, that\n  conform to the W3C <title ref=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/title>\n  specification.<\/desc>" ],
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-04-08\" xml:lang=\"en\">defines the range of attribute values expressing a temporal\n  expression such as a date, a time, or a combination of them, that\n  conform to the W3C <ref target=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/ref>\n  specification.<\/desc>" ],
         "shortDesc" : "defines the range of attribute values expressing a temporal\n  expression such as a date, a time, or a combination of them, that\n  conform to the W3C XML Schema Part 2: Datatypes Second Edition\n  specification.",
         "gloss" : 
         [  ],

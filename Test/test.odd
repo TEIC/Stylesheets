@@ -1,54 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
- xmlns:rng="http://relaxng.org/ns/structure/1.0" n="testdrama">
-   <teiHeader>
-      <fileDesc>
-         <titleStmt>
-            <title>TEI test customization</title>
-            <author>Sebastian Rahtz</author>
-         </titleStmt>
-         <publicationStmt>
-	   <p> </p>
-	 </publicationStmt>
-         <sourceDesc>
-            <p>authored from scratch</p>
-         </sourceDesc>
-      </fileDesc>
-   </teiHeader>
-<text>
-<body>
-  <p>Testing specList:
-  <specList>
-    <specDesc key="p"/>
-    <specDesc key="p" atts="xml:id type"/>
-    <specDesc key="eTree"/>
-    <specDesc key="eTree" atts="-"/>
-    <specDesc key="eTree" atts="value"/>
-    <specDesc key="eTree" atts="+"/>
-    <specDesc key="eTree" atts="value"/>
-    <specDesc key="eTree" atts="value +"/>
-    <specDesc key="eTree" atts="value rend xml:base prev next"/>
-    <specDesc key="valList"/>
-    <specDesc key="valList" atts="type"/>
-  </specList>
-  </p>
-  <schemaSpec ident="test" start="TEI">
-      <moduleRef key="header"/>
-      <moduleRef key="core"/>
-      <moduleRef key="tei"/>
-    <!-- MDH 2020-03-18: removing <transpose> because it has changed
-          its content model in the dev tree, so tests fail; without it, tests can
-          (I hope) be successfully run against both the dev tree and the current
-          P5 release. -->
-      <moduleRef key="transcr" except="transpose"/>
-      <moduleRef key="nets"/>
-      <moduleRef key="textstructure"/>
-      <moduleRef key="linking"/>
-      <moduleRef key="dictionaries"/>
-      <moduleRef key="figures"/>
-    </schemaSpec>
-</body>
-</text>
+     xmlns:rng="http://relaxng.org/ns/structure/1.0" n="testdrama">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI test customization</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
+        <p> </p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>authored from scratch</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>Testing specList:
+      <specList>
+        <!-- 
+             Entries with ‘-’ or ‘+’ in the value of @atts removed
+             2022-12-01 per Stylesheets group discussion of
+             https://github.com/TEIC/Stylesheets/issues/329.
+        -->
+        <specDesc key="p"/>
+        <specDesc key="p" atts="xml:id type"/>
+        <specDesc key="eTree"/>
+        <!-- specDesc key="eTree" atts="-"/ -->
+        <specDesc key="eTree" atts="value"/>
+        <!-- specDesc key="eTree" atts="+"/ -->
+        <specDesc key="eTree" atts="value"/>
+        <!-- specDesc key="eTree" atts="value +"/ -->
+        <specDesc key="eTree" atts="value rend xml:base prev next"/>
+        <specDesc key="valList"/>
+        <specDesc key="valList" atts="type"/>
+      </specList>
+      </p>
+      <schemaSpec ident="test" start="TEI">
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="transcr"/>
+        <moduleRef key="nets"/>
+        <moduleRef key="textstructure"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="dictionaries"/>
+        <moduleRef key="figures"/>
+      </schemaSpec>
+    </body>
+  </text>
 </TEI>
 
 

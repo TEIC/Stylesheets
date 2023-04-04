@@ -649,10 +649,10 @@ Elements</ref>
 </classSpec><classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="atts" ident="att.datable.w3c" xml:id="DATABLEW3C">
   <desc versionDate="2013-11-22" xml:lang="en">provides attributes for normalization of elements that contain
   datable events  conforming to the W3C
-  <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>.</desc>
+    <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">W3C 데이터 유형을 사용하여 날짜가 명기된 사건을 포함하는 요소의 규격화를 위한 속성을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供用於元素規格化的屬性，這些元素包含以W3C datatypes所定義的日期明確之事件。</desc>
-  <desc versionDate="2019-02-13" xml:lang="ja">W3Cの<title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>に準拠した年代測定可能なイベントを含む要素の正規化に関する属性を提供する。</desc>
+  <desc versionDate="2019-02-13" xml:lang="ja">W3Cの<ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>に準拠した年代測定可能なイベントを含む要素の正規化に関する属性を提供する。</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">fournit des attributs
   pour la normalisation d'éléments qui contiennent des mentions
   d'événements datés ou susceptibles de l'être</desc>
@@ -805,8 +805,8 @@ Elements</ref>
       <remarks versionDate="2008-07-23" xml:lang="en">
         <p>The value of these attributes should be a normalized
         representation of the date, time, or combined date &amp; time
-        intended, in any of the standard formats specified by <title ref="#XSD2">XML Schema Part 2: Datatypes Second
-        Edition</title>, using the Gregorian calendar.</p>
+        intended, in any of the standard formats specified by <ref target="#XSD2">XML Schema Part 2: Datatypes Second
+        Edition</ref>, using the Gregorian calendar.</p>
         <p>The most commonly-encountered format for the date portion of
         a temporal attribute is <code>yyyy-mm-dd</code>, but
         <code>yyyy</code>, <code>--mm</code>, <code>---dd</code>,
@@ -818,18 +818,18 @@ Elements</ref>
         value <val>-0001</val> should be used. </p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>La valeur de l'attribut <att>when</att> doit être une représentation normalisée de la date ou de l'heure, ou des deux, dans l'un des formats spécifiés par le <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, selon le calendrier grégorien.</p>
+        <p>La valeur de l'attribut <att>when</att> doit être une représentation normalisée de la date ou de l'heure, ou des deux, dans l'un des formats spécifiés par le <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>, selon le calendrier grégorien.</p>
         <p> Pour la date, le format le plus courant est <code>yyyy-mm-dd</code>, mais on trouve aussi <code>yyyy</code>, <code>--mm</code>, <code>---dd</code>, <code>yyyy-mm</code>, ou <code>--mm-dd</code>. Pour l'heure, on utilise le format <code>hh:mm:ss</code>.</p>
         <p>Il faut noter qu'actuellement ce format ne permet pas d'utiliser la valeur <val>0000</val> pour représenter l'année précédant le début de l'ère chrétienne ; on doit utiliser la valeur <val>-0001</val>.</p>
       </remarks>
-      <remarks versionDate="2018-09-08" xml:lang="es"><p>El valor del atributo <att>cuando</att> es una serie que representa una fecha o una hora, o ambas, en cualquiera de los siguientes formatos: <list><item>una fecha en los formatos estándares descritos por la <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, p.ej. en el formato más común <code>aaaa-mm-dd</code>, pero también <code>aaaa</code>, <code>--mm</code>, <code>---dd</code>, <code>aaaa-mm</code>, o <code>--mm-dd</code></item><item>; una hora en el formato estándar descrito en <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, es decir. <code>hh: mm: ss</code></item><item>; o una fecha y una hora combinadas en los formatos estándares descritos en <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, es decir. <code>aaaa-mm-ddThh: mm: ss</code></item></list>. Obligatoriamente el valor de <att>cuando</att> aparecerá en un formato de fecha, tiempo, o ambos formatos combinados, de los reconocidos por W3C <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>. Esto se dará si el componente de la fecha (eventualmente) es una fecha gregoriana o proléptica gregoriana. A la hora de esta escritura, W3C no permite el año <val>0000</val>, que sería utilizado normalmente para representar el año 1 antes de nuestra era. Usando el sistema actual de W3C, el año 1 a.C. se indica con <val>-0001</val>, el año 2 a.C. con <val>-0002</val>, etc. <quote>Es la intención del grupo de trabajo del esquema de XML permitir <val>0000</val> como la representación léxica de 1 a.C. (que es un año bisiesto), <val>-0001</val> se convertiria en la representación léxica de 2 a.C., <val>-0002</val> de 3 a.C., etc.</quote> Así en algunos casos puede ser ventajoso utilizar en su lugar el atributo <att>cuando-ISO</att> para indicar los años anteriores a nuestra era.</p></remarks>
+  <remarks versionDate="2018-09-08" xml:lang="es"><p>El valor del atributo <att>cuando</att> es una serie que representa una fecha o una hora, o ambas, en cualquiera de los siguientes formatos: <list><item>una fecha en los formatos estándares descritos por la <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>, p.ej. en el formato más común <code>aaaa-mm-dd</code>, pero también <code>aaaa</code>, <code>--mm</code>, <code>---dd</code>, <code>aaaa-mm</code>, o <code>--mm-dd</code></item><item>; una hora en el formato estándar descrito en <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>, es decir. <code>hh: mm: ss</code></item><item>; o una fecha y una hora combinadas en los formatos estándares descritos en <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>, es decir. <code>aaaa-mm-ddThh: mm: ss</code></item></list>. Obligatoriamente el valor de <att>cuando</att> aparecerá en un formato de fecha, tiempo, o ambos formatos combinados, de los reconocidos por W3C <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>. Esto se dará si el componente de la fecha (eventualmente) es una fecha gregoriana o proléptica gregoriana. A la hora de esta escritura, W3C no permite el año <val>0000</val>, que sería utilizado normalmente para representar el año 1 antes de nuestra era. Usando el sistema actual de W3C, el año 1 a.C. se indica con <val>-0001</val>, el año 2 a.C. con <val>-0002</val>, etc. <quote>Es la intención del grupo de trabajo del esquema de XML permitir <val>0000</val> como la representación léxica de 1 a.C. (que es un año bisiesto), <val>-0001</val> se convertiria en la representación léxica de 2 a.C., <val>-0002</val> de 3 a.C., etc.</quote> Así en algunos casos puede ser ventajoso utilizar en su lugar el atributo <att>cuando-ISO</att> para indicar los años anteriores a nuestra era.</p></remarks>
       <remarks xml:lang="ja" versionDate="2019-03-28">
         <p>
-          この属性の値は、グレゴリオ暦を用い、<title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>で定義されるいずれかの標準形式で正規化された日付や時刻、あるいはその組み合わせである。時間の属性としてもっともよく使われる形式は、<code>yyyy-mm-dd</code>だが、<code>yyyy</code>、<code>--mm</code>、<code>---dd</code>、<code>yyyy-mm</code>、<code>--mm-dd</code>も用いてもよい。時間については、<code>hh:mm:ss</code>が用いられる。この形式は、紀元前1年を表現するのに<val>0000</val>という値を用いることは現在のところ許容していないことには注意されたい。代わりに<val>-0001</val>という値を用いる必要がある。
+          この属性の値は、グレゴリオ暦を用い、<ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>で定義されるいずれかの標準形式で正規化された日付や時刻、あるいはその組み合わせである。時間の属性としてもっともよく使われる形式は、<code>yyyy-mm-dd</code>だが、<code>yyyy</code>、<code>--mm</code>、<code>---dd</code>、<code>yyyy-mm</code>、<code>--mm-dd</code>も用いてもよい。時間については、<code>hh:mm:ss</code>が用いられる。この形式は、紀元前1年を表現するのに<val>0000</val>という値を用いることは現在のところ許容していないことには注意されたい。代わりに<val>-0001</val>という値を用いる必要がある。
 	           </p>
         <p>
 	属性<att>when</att>の値は、日付や時間またはその組み合わを、
-	<title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>に従って示される。
+          <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>に従って示される。
 	当該日付の値が、グレゴリオ暦またはそれ以前の前グレゴリオ暦シス
         テムの場合に真となる。
 	</p>
@@ -2253,30 +2253,21 @@ the TEI header.</p>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <div type="bibl">
-            <head>Bibliography</head>
-            <listBibl xml:base="http://www.lib.ucdavis.edu/BWRP/Works/">
+            <head>Selections from <title level="m">The Collected Letters of Robert Southey. Part 1: 1791-1797</title></head>
+            <listBibl xml:base="https://romantic-circles.org/sites/default/files/imported/editions/southey_letters/XML/">
               <bibl>
-                <author>
-                  <name>Landon, Letitia Elizabeth</name>
-                </author>
-                <ref target="LandLVowOf.sgm">
-                  <title>The Vow of the Peacock</title>
+                <ref target="letterEEd.26.3.xml">
+                  <title>Robert Southey to Grosvenor Charles Bedford</title>, <date when="1792-04-03">3 April 1792</date>.
                 </ref>
               </bibl>
               <bibl>
-                <author>
-                  <name>Compton, Margaret Clephane</name>
-                </author>
-                <ref target="NortMIrene.sgm">
-                  <title>Irene, a Poem in Six Cantos</title>
+                <ref target="letterEEd.26.57.xml">
+                  <title>Robert Southey to Anna Seward</title>, <date when="1793-09-18">18 September 1793</date>.
                 </ref>
               </bibl>
               <bibl>
-                <author>
-                  <name>Taylor, Jane</name>
-                </author>
-                <ref target="TaylJEssay.sgm">
-                  <title>Essays in Rhyme on Morals and Manners</title>
+                <ref target="letterEEd.26.85.xml">
+                  <title>Robert Southey to Robert Lovell</title>, <date from="1794-04-05" to="1794-04-06">5-6 April, 1794</date>.
                 </ref>
               </bibl>
             </listBibl>
@@ -4956,9 +4947,6 @@ niveau dans une entrée de dictionnaire.</desc>
 </classSpec><classSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="model" ident="model.certLike">
   <desc versionDate="2011-11-10" xml:lang="en">groups elements which are used to indicate uncertainty or
   precision of other elements.</desc>
-  <classes>
-    
-  </classes>
 </classSpec><classSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="model" ident="model.descLike">
   <desc versionDate="2012-10-07" xml:lang="en">groups elements which contain a description of their function.</desc>
   <desc xml:lang="fr" versionDate="2007-06-12">regroupe des éléments qui contiennent une description de la fonction d'un élément.</desc>
@@ -5927,17 +5915,17 @@ integer value used as a count.</desc>
 </dataSpec><dataSpec module="tei" ident="teidata.temporal.w3c">
   <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-04-08" xml:lang="en">defines the range of attribute values expressing a temporal
   expression such as a date, a time, or a combination of them, that
-  conform to the W3C <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>
+  conform to the W3C <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>
   specification.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">날짜, 시간 또는 이들의 조합과 같은 시간 표현을 나타내는 속성 값 범위를 정의하며, 이는 W3C <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title> 명시를 따른다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義表示時間的屬性值範圍，如日期、時間或兩者的結合，依照W3C<title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>specification標準所定義。</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">날짜, 시간 또는 이들의 조합과 같은 시간 표현을 나타내는 속성 값 범위를 정의하며, 이는 W3C <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref> 명시를 따른다.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義表示時間的屬性值範圍，如日期、時間或兩者的結合，依照W3C<ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>specification標準所定義。</desc>
   <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">日付や時間などの時間表現をとる属性値の範囲を定義する。これは、W3Cの
-  <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>に従ったものになる。</desc>
+    <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>に従ったものになる。</desc>
   <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attributs propre à
       exprimer une valeur temporelle comme une date, une période, ou une combinaison des deux
-      conformément aux spécifications <title ref="#XSD2">XML Schema Part 2:
-  Datatypes Second Edition</title> du W3C.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos que expresan un valor temporal del tipo fecha, hora, o combinación de ambas, de acuerdo con la especificación de W3C <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>.</desc>
+      conformément aux spécifications <ref target="#XSD2">XML Schema Part 2:
+  Datatypes Second Edition</ref> du W3C.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos que expresan un valor temporal del tipo fecha, hora, o combinación de ambas, de acuerdo con la especificación de W3C <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>.</desc>
   <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
       <alternate>
          <dataRef name="date"/>
@@ -6175,7 +6163,7 @@ value.</desc>
           former consist of 2 letters, and it is recommended they be written in upper case; the list
           of codes can be searched or browsed at <ptr target="https://www.iso.org/obp/ui/#search/code/"/>. The latter consist of 3 digits; the list of codes can be found at <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>.</item>
             <label>variant</label>
-            <item>An IANA-registered variation. These codes <quote rend="quoted">are used to indicate
+            <item>An IANA-registered variation. These codes <quote>are used to indicate
             additional, well-recognized variations that define a language or its dialects that are
             not covered by other available subtags</quote>.</item>
             <label>extension</label>
@@ -6252,7 +6240,7 @@ value.</desc>
             <item> ISO 3166またはUN M.49による国または地域コード。このコードはIANAに 登録されている(但し全てではない。例えば、UNコードには経済圏や、 ISO
           3166の2文字コードで既に登録されているところは含まれていない)。 ISOコードは、2文字から構成され、大文字で書かれることが推奨されてい る。このコードは、 <ptr target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>にある。 またUNコードは、3文字から構成されている。このコードは、 <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>にあ る。 </item>
             <label>variant</label>
-            <item> IANAにある登録値。このコードは、<quote rend="quoted"> 他の下位タグでは対応できない、追加的であるがよく知られている、ある言語
+            <item> IANAにある登録値。このコードは、<quote> 他の下位タグでは対応できない、追加的であるがよく知られている、ある言語
             や方言の種類を示すために使用される</quote>。 
         </item>
             <label>extension</label>
@@ -6334,7 +6322,7 @@ value.</desc>
           2 lettres, et il est recommandé de l'écrire en majuscules. La liste des codes est
           disponible à : <ptr target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>. Le second est constitué de 3 chiffres ; la liste des codes est disponible à : <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>.</item>
             <label>variante</label>
-            <item>Variante enregistrée par l'IANA. Ces codes <quote rend="quoted">sont utilisés
+            <item>Variante enregistrée par l'IANA. Ces codes <quote>sont utilisés
             pour indiquer des variantes additionnelles et bien établies, qui définissent une langue
             ou ses dialectes et qui ne sont pas couverts par d'autres sous-étiquettes
           existantes</quote>.</item>
@@ -6805,6 +6793,39 @@ which contain an XPath expression.</desc>
       <p>Normalement, la liste des possibilités documentées est fournie (ou exemplifiée) par une liste
       de valeurs dans la spécification de l'attribut associé, exprimée par un élément
       <gi>valList</gi>.</p>
+  </remarks>
+</dataSpec><dataSpec module="tei" ident="teidata.gender">
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-17" xml:lang="en">defines the range of attribute values used to
+    represent the gender of a person, persona, or character.</desc>
+  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <dataRef key="teidata.enumerated"/>
+  </content>
+  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-08-27" xml:lang="en">
+    <p>Values for attributes using this datatype may be defined locally by a project, or they may refer to an external standard.</p>
+    <p>Values for this datatype should not be used to encode morphological gender (cf. <gi>gen</gi>,
+        <att>msd</att> as defined in <ident type="class">att.linguistic</ident>, and <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/DI.html#DITPFO">9.3.1. Information on Written and Spoken Forms</ref>).</p>
+  </remarks>
+</dataSpec><dataSpec module="tei" ident="teidata.sex">
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="en">defines the range of attribute values used to identify
+    the sex of an organism.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">인간 또는 동물의 성을 식별하는 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍用以識別人類或動物的性別</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">人間または動物の性を示す属性値の範囲を定義する。 </desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="fr">définit la gamme des valeurs d'attributs employés
+    pour identifier le sexe d’un organisme.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="es">define la gama de valores de atributos usados para
+    identificar el sexo de un organismo.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="it">definisce una gamma di valori di attributi usati per
+    identificare il sesso di un organismo.</desc>
+  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <dataRef key="teidata.enumerated"/>
+  </content>
+  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-08-27" xml:lang="en">
+    <p>Values for attributes using this datatype may be defined locally by a project, or they may refer to an external standard.</p>
+  </remarks>
+  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-03" xml:lang="fr">
+    <p>Les valeurs de cet attribut peuvent être définies localement par un projet ou peuvent faire
+      référence à un standard externe.</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.probCert">
   <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines a range of attribute values which can be expressed either as a numeric probability or as a coded certainty value.</desc>
@@ -10030,12 +10051,12 @@ Normalization</ref>
           <gloss versionDate="2018-01-17" xml:lang="de">ausgebleicht</gloss>
         </valItem>
         <valItem ident="background_noise">
-          <gloss xml:lang="en" versionDate="2018-01-17">background_noise</gloss>
+          <gloss xml:lang="en" versionDate="2018-01-17">background noise</gloss>
           <gloss xml:lang="es" versionDate="2022-02-20">ruido de fondo</gloss>
           <gloss versionDate="2018-01-17" xml:lang="de">Hintergrundlärm</gloss>
         </valItem>
         <valItem ident="eccentric_ductus">
-          <gloss xml:lang="en" versionDate="2018-01-17">eccentric_ductus</gloss>
+          <gloss xml:lang="en" versionDate="2018-01-17">eccentric ductus</gloss>
           <gloss xml:lang="es" versionDate="2022-06-03">ductus excéntrico</gloss>
           <gloss versionDate="2018-01-17" xml:lang="de">exzentrischer Duktus</gloss>
           <desc xml:lang="en" versionDate="2021-02-01">
@@ -15701,6 +15722,39 @@ epistemology, methodology and history of
       </biblStruct>
     </egXML>
   </exemplum>
+  <exemplum versionDate="2023-02-20" xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <biblStruct type="newspaper">
+        <analytic>
+          <author>
+            <forename>David</forename>
+            <surname>Barstow</surname>
+          </author>
+          <author>
+            <forename>Susanne</forename>
+            <surname>Craig</surname>
+          </author>
+          <author>
+            <forename>Russ</forename>
+            <surname>Buettner</surname>
+          </author>
+          <title type="main">Trump Took Part in Suspect Schemes to Evade Tax Bills</title>
+          <title type="sub">Behind the Myth of a Self-Made Billionaire, a Vast Inheritance From His Father</title>
+        </analytic>
+        <monogr>
+          <title level="j">The New York Times</title>
+          <imprint>
+            <pubPlace>New York</pubPlace>
+            <publisher>A. G. Sulzberger</publisher>
+            <date when="2018-10-03">Wednesday, October 3, 2018</date>
+          </imprint>
+          <biblScope unit="volume">CLXVIII</biblScope>
+          <biblScope unit="issue">58,104</biblScope>
+          <biblScope unit="page">1</biblScope>
+        </monogr>
+      </biblStruct>
+    </egXML>
+  </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <biblStruct>
@@ -16047,12 +16101,14 @@ relatedItem element must be empty</sch:report>
         <classRef key="model.lLike"/>
         <classRef key="model.stageLike"/>
         <classRef key="model.labelLike"/>
+        <classRef key="model.pPart.transcriptional"/>
         <elementRef key="lg"/>
       </alternate>
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.lLike"/>
         <classRef key="model.stageLike"/>
         <classRef key="model.labelLike"/>
+        <classRef key="model.pPart.transcriptional"/>
         <classRef key="model.global"/>
         <elementRef key="lg"/>
       </alternate>
@@ -16181,14 +16237,10 @@ relatedItem element must be empty</sch:report>
   </classes>
   <content>
     <sequence>
-      
-        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      
+      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       <sequence minOccurs="0">
         <elementRef key="speaker"/>
-        
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
       <sequence minOccurs="1" maxOccurs="unbounded">
         <alternate>
@@ -22905,6 +22957,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.pointing"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>    
       <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
@@ -23727,6 +23780,7 @@ during the evolution of the encoded representation of that text.</p>
   <constraintSpec ident="c2" scheme="schematron">
     <constraint>
       <sch:ns prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
+      <sch:ns prefix="rna" uri="http://relaxng.org/ns/compatibility/annotations/1.0"/>
     </constraint>
   </constraintSpec>
   <attList>
@@ -27174,8 +27228,8 @@ c'est-à-dire. YYYY-MM-DD.</desc>
       <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
       <remarks versionDate="2013-12-21" xml:lang="en">
         <p>For simple dates, the <att>when</att> attribute should give
-        the Gregorian or proleptic Gregorian date in one of the formats specified in <title ref="#XSD2">XML
-      Schema Part 2: Datatypes Second Edition</title>. </p>
+          the Gregorian or proleptic Gregorian date in one of the formats specified in <ref target="#XSD2">XML
+      Schema Part 2: Datatypes Second Edition</ref>. </p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>Pour les dates dont la forme est simple, il est recommandé que l'attribut
@@ -27192,8 +27246,8 @@ c'est-à-dire. YYYY-MM-DD.</desc>
       </remarks>
       <remarks versionDate="2017-06-19" xml:lang="de">
         <p>Für einfache Datierungen sollte das <att>when</att>-Attribut ein gregorianisches oder
-          proleptisches gregorianisches Datum in dem spezifizierten Format <title ref="#XSD2">XML Schema
-            Part 2: Datatypes Second Edition</title> enthalten.</p>
+          proleptisches gregorianisches Datum in dem spezifizierten Format <ref target="#XSD2">XML Schema
+            Part 2: Datatypes Second Edition</ref> enthalten.</p>
       </remarks>
     </attDef>
   </attList>
@@ -30654,6 +30708,15 @@ either a single role or a list of non-speaking roles.</desc>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
+  <attList>
+    <attDef ident="gender" usage="opt">
+      <desc versionDate="2023-03-11" xml:lang="en">specifies the gender of the role.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.gender"/></datatype>
+      <remarks versionDate="2023-03-11" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project, or they may refer to an external standard.</p>
+      </remarks>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#JonsBart">
       <role xml:id="jt">Joan Trash</role>
@@ -30746,6 +30809,22 @@ either a single role or a list of non-speaking roles.</desc>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
+  <attList>
+    <attDef ident="sex" usage="opt">
+      <desc versionDate="2023-03-11" xml:lang="en">specifies the sex of the actor.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.sex"/></datatype>
+      <remarks versionDate="2023-03-11" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project, or may refer to an external standard.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="gender" usage="opt">
+      <desc versionDate="2023-03-11" xml:lang="en">specifies the gender of the actor.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.gender"/></datatype>
+      <remarks versionDate="2023-03-11" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project, or they may refer to an external standard.</p>
+      </remarks>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#DRCAST-eg-21">
       <castItem>
