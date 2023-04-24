@@ -6,8 +6,8 @@
         <title>The TEI Guidelines</title>
       </titleStmt>
       <editionStmt>
-        <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.6.0.html">4.6.0</ref>. Last updated on
-        <date when="2023-04-04">4th April 2023</date>, revision <ref target="https://github.com/TEIC/TEI/commit/2129d5947">2129d5947</ref></edition>
+        <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.7.0.html">4.7.0a</ref>. Last updated on
+        <date when="2023-04-11">11th April 2023</date>, revision <ref target="https://github.com/TEIC/TEI/commit/bec660a72">bec660a72</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -45266,23 +45266,24 @@ ou encodé.</desc>
     <constraint>
       <sch:rule context="tei:facsimile//tei:line | tei:facsimile//tei:zone">
         <sch:report test="child::text()[ normalize-space(.) ne '']">
-  	  A facsimile element represents a text with images, thus
-	  transcribed text should not be present within it.
-	</sch:report>
-        <!-- 
-             What about:
-             * ellipses/supplied/text()
-             * writing
-             * label, formula, app, witDetail, metamark?
-             * notatedMusic?
-             * figure/[all-sorts-of-crazy-stuff-e.g.-entry]
-             * addSpan, damageSpan, delSpan
-             Or the fact that <front> and <back> (but not <body>) are
-             permitted inside <facsimile>, and thus *anything* can be
-             inside ther?
-        -->
+          A facsimile element represents a text with images, thus
+          transcribed text should not be present within it.
+        </sch:report>
       </sch:rule>
     </constraint>
+    <!-- 
+         What about:
+         * ellipses/supplied/text()
+         * writing
+         * label, formula, app, witDetail, metamark?
+         * notatedMusic?
+         * figure/[all-sorts-of-crazy-stuff-e.g.-entry]
+         * addSpan, damageSpan, delSpan
+         Or the fact that <front> and <back> (but not <body>) are
+         permitted inside <facsimile>, and thus *anything* can be
+         inside ther?
+         See https://github.com/TEIC/TEI/issues/2363
+    -->
   </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
@@ -45767,15 +45768,14 @@ element.</desc>
     <empty/>
   </content>
   
-<!-- Thanks to Syd B for this approach -->
   <constraintSpec ident="pathmustnotbeclosed" scheme="schematron">
+    <desc versionDate="2023-04-11" xml:lang="en">
+      Since a <gi>path</gi>&gt; represents a line with distinct start and
+      end points, the last coordinate should not be the same as the
+      first coordinate.
+    </desc>
     <constraint>
       <sch:rule context="tei:path[@points]">
-        <!--
-        For a <path> element, we should ensure that the last coordinate does not
-        repeat the first coordinate, otherwise we have a closed polygon, not a
-        path.
-      -->
         <sch:let name="firstPair" value="tokenize( normalize-space( @points ), ' ')[1]"/>
         <sch:let name="lastPair" value="tokenize( normalize-space( @points ), ' ')[last()]"/>
         <sch:let name="firstX" value="xs:float( substring-before( $firstPair, ',') )"/>
@@ -68118,9 +68118,9 @@ déclaration de même nom dans la définition courante.</desc>
       <sch:let name="msg_part05" value="if ( parent::tei:moduleRef/@key ) then 'a @key'    else ''"/>
       <sch:let name="msg_part06" value="if ( parent::tei:moduleRef/@url ) then 'a @url'    else ''"/>
       <sch:let name="msg_part07" value="if ( parent::tei:*/@ident )       then 'an @ident' else ''"/>
-      <sch:let name="msg_part08" value="' of &#34;'"/>
+      <sch:let name="msg_part08" value="' of &quot;'"/>
       <sch:let name="msg_part09" value="../@ident | ../@key | ../@url"/>
-      <sch:let name="msg_part10" value="concat('&#34; and has ', $tot_kids, ' children,')"/>
+      <sch:let name="msg_part10" value="concat('&quot; and has ', $tot_kids, ' children,')"/>
       <sch:let name="msgs_1to10" value="concat( $msg_part01, $msg_part02, $msg_part03, $msg_part04, $msg_part05, $msg_part06, $msg_part07, $msg_part08, $msg_part09, $msg_part10 )"/>
       <sch:report test="$tei_kids eq $tot_kids" role="warning">
         <sch:value-of select="$msgs_1to10"/> which could be wrapped in a &lt;sequence&gt; element.
