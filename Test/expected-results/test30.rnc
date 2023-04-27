@@ -1,7 +1,6 @@
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 namespace ns1 = "http://www.w3.org/1999/xhtml"
-namespace ns2 = "http://www.isocat.org/ns/dcr"
-namespace ns3 = "http://www.oucs.ox.ac.uk/ns"
+namespace ns2 = "http://www.oucs.ox.ac.uk/ns"
 namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 default namespace tei = "http://www.tei-c.org/ns/1.0"
@@ -11,14 +10,8 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 
 
 #
-Tmacro.paraContent =
-  (text
-   | Tmodel.gLike
-   | Tmodel.phrase
-   | Tmodel.inter
-   | Tmodel.global
-   | Tlg
-   | Tmodel.lLike)*
+Tmacro.abContent = (text | Tmodel.paraPart | Tab)*
+Tmacro.paraContent = (text | Tmodel.paraPart)*
 Tmacro.limitedContent = (text | Tmodel.limitedPhrase | Tmodel.inter)*
 Tmacro.phraseSeq =
   (text
@@ -37,7 +30,7 @@ Tmacro.specialPara =
    | Tmodel.global)*
 Tmacro.xtext = (text | Tmodel.gLike)*
 anyElement-xenoData =
-  element * - (tei:* | ns3:* | teix:egXML) {
+  element * - (tei:* | ns2:* | teix:egXML) {
     attribute * { text }*,
     (text | anyElement-xenoData)*
   }
@@ -428,10 +421,10 @@ sch:pattern [
     "\x{a}" ~
     "         "
     sch:assert [
-      test = "string-length(.) gt 0"
-      " @calendar indicates one or more systems or calendars to\x{a}" ~
-      "              which the date represented by the content of this element belongs, but this\x{a}" ~
-      "              "
+      test = "string-length( normalize-space(.) ) gt 0"
+      " @calendar indicates one or more\x{a}" ~
+      "            systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+      "            but this "
       sch:name [ ]
       " element has no textual content."
     ]
@@ -457,19 +450,46 @@ Tatt.datable.attribute.period =
     }
   }?
 Tatt.datcat.attributes =
-  Tatt.datcat.attribute.datcat, Tatt.datcat.attribute.valueDatcat
+  Tatt.datcat.attribute.datcat,
+  Tatt.datcat.attribute.valueDatcat,
+  Tatt.datcat.attribute.targetDatcat
 Tatt.datcat.attribute.datcat =
-  
-  ## contains a PID (persistent identifier) that aligns the given element with the appropriate Data Category (or categories) in ISOcat.
-  attribute ns2:datcat {
+  [
+    a:documentation [
+      "provides a pointer to a definition of, and/or general information about, (a) an information container (element or attribute) or (b) a value of an information container (element content or attribute value), by referencing an external taxonomy or ontology. If "
+      ns1:code [ "@valueDatcat" ]
+      " is present in the immediate context, this attribute takes on role (a), while "
+      ns1:code [ "@valueDatcat" ]
+      " performs role (b)."
+    ]
+  ]
+  attribute datcat {
     list {
       xsd:anyURI { pattern = "\S+" }+
     }
   }?
 Tatt.datcat.attribute.valueDatcat =
-  
-  ## contains a PID (persistent identifier) that aligns the content of the given element or the value of the given attribute with the appropriate simple Data Category (or categories) in ISOcat.
-  attribute ns2:valueDatcat {
+  [
+    a:documentation [
+      "provides a definition of, and/or general information about a value of an information container (element content or attribute value), by reference to an external taxonomy or ontology. Used especially where a contrast with "
+      ns1:code [ "@datcat" ]
+      " is needed."
+    ]
+  ]
+  attribute valueDatcat {
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
+  }?
+Tatt.datcat.attribute.targetDatcat =
+  [
+    a:documentation [
+      "provides a definition of, and/or general information about, information structure of an object referenced or modeled by the containing element, by reference to an external taxonomy or ontology. This attribute has the characteristics of the "
+      ns1:code [ "@datcat" ]
+      " attribute, except that it addresses not its containing element, but an object that is being referenced or modeled by its containing element."
+    ]
+  ]
+  attribute targetDatcat {
     list {
       xsd:anyURI { pattern = "\S+" }+
     }
@@ -679,22 +699,22 @@ sch:pattern [
   "\x{a}" ~
   "      "
   sch:rule [
-    context = "tei:*/@source"
+    context = "tei:*[@source]"
     "\x{a}" ~
     "         "
     sch:let [
       name = "srcs"
-      value = "tokenize( normalize-space(.),' ')"
+      value = "tokenize( normalize-space(@source),' ')"
     ]
     "\x{a}" ~
     "         "
     sch:report [
       test =
-        "( parent::tei:classRef | parent::tei:dataRef | parent::tei:elementRef | parent::tei:macroRef | parent::tei:moduleRef | parent::tei:schemaSpec ) and $srcs[2]"
+        "( self::tei:classRef               | self::tei:dataRef               | self::tei:elementRef               | self::tei:macroRef               | self::tei:moduleRef               | self::tei:schemaSpec )               and               $srcs[2]"
       "\x{a}" ~
       "              When used on a schema description element (like\x{a}" ~
       "              "
-      sch:value-of [ select = "name(..)" ]
+      sch:value-of [ select = "name(.)" ]
       "), the @source attribute\x{a}" ~
       "              should have only 1 value. (This one has "
       sch:value-of [ select = "count($srcs)" ]
@@ -792,7 +812,7 @@ Tatt.media.attribute.width =
   attribute width {
     xsd:token {
       pattern =
-        "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|gd|rem|vw|vh|vm)"
+        "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|ch|rem|vw|vh|vmin|vmax)"
     }
   }?
 Tatt.media.attribute.height =
@@ -801,7 +821,7 @@ Tatt.media.attribute.height =
   attribute height {
     xsd:token {
       pattern =
-        "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|gd|rem|vw|vh|vm)"
+        "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|ch|rem|vw|vh|vmin|vmax)"
     }
   }?
 Tatt.media.attribute.scale =
@@ -1370,6 +1390,11 @@ Tmodel.nameLike.agent_sequenceOptionalRepeatable =
 Tmodel.nameLike.agent_sequenceRepeatable =
   Tname+, TorgName+, TpersName+, Tplatypus+
 Tmodel.segLike = Tseg
+Tmodel.segLike_alternation = Tseg
+Tmodel.segLike_sequence = Tseg
+Tmodel.segLike_sequenceOptional = Tseg?
+Tmodel.segLike_sequenceOptionalRepeatable = Tseg*
+Tmodel.segLike_sequenceRepeatable = Tseg+
 Tmodel.hiLike = Thi | Tq
 Tmodel.hiLike_alternation = Thi | Tq
 Tmodel.hiLike_sequence = Thi, Tq
@@ -1431,6 +1456,17 @@ Tmodel.emphLike_sequenceRepeatable =
   Tterm+,
   Ttitle+
 Tmodel.highlighted = Tmodel.hiLike | Tmodel.emphLike
+Tmodel.highlighted_alternation =
+  Tmodel.hiLike_alternation | Tmodel.emphLike_alternation
+Tmodel.highlighted_sequence =
+  Tmodel.hiLike_sequence, Tmodel.emphLike_sequence
+Tmodel.highlighted_sequenceOptional =
+  Tmodel.hiLike_sequenceOptional?, Tmodel.emphLike_sequenceOptional?
+Tmodel.highlighted_sequenceOptionalRepeatable =
+  Tmodel.hiLike_sequenceOptionalRepeatable*,
+  Tmodel.emphLike_sequenceOptionalRepeatable*
+Tmodel.highlighted_sequenceRepeatable =
+  Tmodel.hiLike_sequenceRepeatable+, Tmodel.emphLike_sequenceRepeatable+
 Tmodel.dateLike = Tdate | Ttime
 Tmodel.dateLike_alternation = Tdate | Ttime
 Tmodel.dateLike_sequence = Tdate, Ttime
@@ -1454,6 +1490,15 @@ Tmodel.egLike_sequenceOptional = empty
 Tmodel.egLike_sequenceOptionalRepeatable = empty
 Tmodel.egLike_sequenceRepeatable = notAllowed
 Tmodel.graphicLike = Tmedia | Tgraphic | TbinaryObject | Tformula
+Tmodel.graphicLike_alternation =
+  Tmedia | Tgraphic | TbinaryObject | Tformula
+Tmodel.graphicLike_sequence = Tmedia, Tgraphic, TbinaryObject, Tformula
+Tmodel.graphicLike_sequenceOptional =
+  Tmedia?, Tgraphic?, TbinaryObject?, Tformula?
+Tmodel.graphicLike_sequenceOptionalRepeatable =
+  Tmedia*, Tgraphic*, TbinaryObject*, Tformula*
+Tmodel.graphicLike_sequenceRepeatable =
+  Tmedia+, Tgraphic+, TbinaryObject+, Tformula+
 Tmodel.offsetLike = Toffset | TgeogFeat
 Tmodel.offsetLike_alternation = Toffset | TgeogFeat
 Tmodel.offsetLike_sequence = Toffset, TgeogFeat
@@ -1461,6 +1506,11 @@ Tmodel.offsetLike_sequenceOptional = Toffset?, TgeogFeat?
 Tmodel.offsetLike_sequenceOptionalRepeatable = Toffset*, TgeogFeat*
 Tmodel.offsetLike_sequenceRepeatable = Toffset+, TgeogFeat+
 Tmodel.pPart.msdesc = notAllowed
+Tmodel.pPart.msdesc_alternation = notAllowed
+Tmodel.pPart.msdesc_sequence = empty
+Tmodel.pPart.msdesc_sequenceOptional = empty
+Tmodel.pPart.msdesc_sequenceOptionalRepeatable = empty
+Tmodel.pPart.msdesc_sequenceRepeatable = notAllowed
 Tmodel.pPart.editorial = Tchoice | Tabbr | Texpan | Tex | Tam | Tsubst
 Tmodel.pPart.editorial_alternation =
   Tchoice | Tabbr | Texpan | Tex | Tam | Tsubst
@@ -1582,6 +1632,20 @@ Tmodel.pPart.transcriptional_sequenceRepeatable =
   Tundo+
 Tmodel.pPart.edit =
   Tmodel.pPart.editorial | Tmodel.pPart.transcriptional
+Tmodel.pPart.edit_alternation =
+  Tmodel.pPart.editorial_alternation
+  | Tmodel.pPart.transcriptional_alternation
+Tmodel.pPart.edit_sequence =
+  Tmodel.pPart.editorial_sequence, Tmodel.pPart.transcriptional_sequence
+Tmodel.pPart.edit_sequenceOptional =
+  Tmodel.pPart.editorial_sequenceOptional?,
+  Tmodel.pPart.transcriptional_sequenceOptional?
+Tmodel.pPart.edit_sequenceOptionalRepeatable =
+  Tmodel.pPart.editorial_sequenceOptionalRepeatable*,
+  Tmodel.pPart.transcriptional_sequenceOptionalRepeatable*
+Tmodel.pPart.edit_sequenceRepeatable =
+  Tmodel.pPart.editorial_sequenceRepeatable+,
+  Tmodel.pPart.transcriptional_sequenceRepeatable+
 Tmodel.linePart =
   Tmodel.hiLike
   | Tchoice
@@ -1600,7 +1664,17 @@ Tmodel.linePart =
   | Tundo
   | Tseg
 Tmodel.ptrLike = Tptr | Tref
+Tmodel.ptrLike_alternation = Tptr | Tref
+Tmodel.ptrLike_sequence = Tptr, Tref
+Tmodel.ptrLike_sequenceOptional = Tptr?, Tref?
+Tmodel.ptrLike_sequenceOptionalRepeatable = Tptr*, Tref*
+Tmodel.ptrLike_sequenceRepeatable = Tptr+, Tref+
 Tmodel.lPart = notAllowed
+Tmodel.lPart_alternation = notAllowed
+Tmodel.lPart_sequence = empty
+Tmodel.lPart_sequenceOptional = empty
+Tmodel.lPart_sequenceOptionalRepeatable = empty
+Tmodel.lPart_sequenceRepeatable = notAllowed
 Tmodel.global.meta =
   Tindex
   | TsubstJoin
@@ -1612,8 +1686,73 @@ Tmodel.global.meta =
   | TjoinGrp
   | Talt
   | TaltGrp
+Tmodel.global.meta_alternation =
+  Tindex
+  | TsubstJoin
+  | TlistTranspose
+  | Tlink
+  | TlinkGrp
+  | Ttimeline
+  | Tjoin
+  | TjoinGrp
+  | Talt
+  | TaltGrp
+Tmodel.global.meta_sequence =
+  Tindex,
+  TsubstJoin,
+  TlistTranspose,
+  Tlink,
+  TlinkGrp,
+  Ttimeline,
+  Tjoin,
+  TjoinGrp,
+  Talt,
+  TaltGrp
+Tmodel.global.meta_sequenceOptional =
+  Tindex?,
+  TsubstJoin?,
+  TlistTranspose?,
+  Tlink?,
+  TlinkGrp?,
+  Ttimeline?,
+  Tjoin?,
+  TjoinGrp?,
+  Talt?,
+  TaltGrp?
+Tmodel.global.meta_sequenceOptionalRepeatable =
+  Tindex*,
+  TsubstJoin*,
+  TlistTranspose*,
+  Tlink*,
+  TlinkGrp*,
+  Ttimeline*,
+  Tjoin*,
+  TjoinGrp*,
+  Talt*,
+  TaltGrp*
+Tmodel.global.meta_sequenceRepeatable =
+  Tindex+,
+  TsubstJoin+,
+  TlistTranspose+,
+  Tlink+,
+  TlinkGrp+,
+  Ttimeline+,
+  Tjoin+,
+  TjoinGrp+,
+  Talt+,
+  TaltGrp+
 Tmodel.milestoneLike =
   Tmilestone | Tgb | Tpb | Tlb | Tcb | Tfw | Tanchor
+Tmodel.milestoneLike_alternation =
+  Tmilestone | Tgb | Tpb | Tlb | Tcb | Tfw | Tanchor
+Tmodel.milestoneLike_sequence =
+  Tmilestone, Tgb, Tpb, Tlb, Tcb, Tfw, Tanchor
+Tmodel.milestoneLike_sequenceOptional =
+  Tmilestone?, Tgb?, Tpb?, Tlb?, Tcb?, Tfw?, Tanchor?
+Tmodel.milestoneLike_sequenceOptionalRepeatable =
+  Tmilestone*, Tgb*, Tpb*, Tlb*, Tcb*, Tfw*, Tanchor*
+Tmodel.milestoneLike_sequenceRepeatable =
+  Tmilestone+, Tgb+, Tpb+, Tlb+, Tcb+, Tfw+, Tanchor+
 Tmodel.gLike = notAllowed
 Tmodel.oddDecl = notAllowed
 Tmodel.oddDecl_alternation = notAllowed
@@ -1622,7 +1761,17 @@ Tmodel.oddDecl_sequenceOptional = empty
 Tmodel.oddDecl_sequenceOptionalRepeatable = empty
 Tmodel.oddDecl_sequenceRepeatable = notAllowed
 Tmodel.phrase.xml = notAllowed
+Tmodel.phrase.xml_alternation = notAllowed
+Tmodel.phrase.xml_sequence = empty
+Tmodel.phrase.xml_sequenceOptional = empty
+Tmodel.phrase.xml_sequenceOptionalRepeatable = empty
+Tmodel.phrase.xml_sequenceRepeatable = notAllowed
 Tmodel.specDescLike = notAllowed
+Tmodel.specDescLike_alternation = notAllowed
+Tmodel.specDescLike_sequence = empty
+Tmodel.specDescLike_sequenceOptional = empty
+Tmodel.specDescLike_sequenceOptionalRepeatable = empty
+Tmodel.specDescLike_sequenceRepeatable = notAllowed
 Tmodel.biblLike = Tbibl | TbiblStruct | TlistBibl | TbiblFull
 Tmodel.biblLike_alternation =
   Tbibl | TbiblStruct | TlistBibl | TbiblFull
@@ -1706,6 +1855,11 @@ Tmodel.listLike_sequenceRepeatable =
   TlistNym+,
   Ttable+
 Tmodel.noteLike = Tnote | TnoteGrp
+Tmodel.noteLike_alternation = Tnote | TnoteGrp
+Tmodel.noteLike_sequence = Tnote, TnoteGrp
+Tmodel.noteLike_sequenceOptional = Tnote?, TnoteGrp?
+Tmodel.noteLike_sequenceOptionalRepeatable = Tnote*, TnoteGrp*
+Tmodel.noteLike_sequenceRepeatable = Tnote+, TnoteGrp+
 Tmodel.lLike = Tl
 Tmodel.lLike_alternation = Tl
 Tmodel.lLike_sequence = Tl
@@ -1728,6 +1882,16 @@ Tmodel.entryPart = notAllowed
 Tmodel.eventLike = Tevent | TlistEvent
 Tmodel.global.edit =
   Tgap | Tellipsis | TaddSpan | TdamageSpan | TdelSpan | Tspace
+Tmodel.global.edit_alternation =
+  Tgap | Tellipsis | TaddSpan | TdamageSpan | TdelSpan | Tspace
+Tmodel.global.edit_sequence =
+  Tgap, Tellipsis, TaddSpan, TdamageSpan, TdelSpan, Tspace
+Tmodel.global.edit_sequenceOptional =
+  Tgap?, Tellipsis?, TaddSpan?, TdamageSpan?, TdelSpan?, Tspace?
+Tmodel.global.edit_sequenceOptionalRepeatable =
+  Tgap*, Tellipsis*, TaddSpan*, TdamageSpan*, TdelSpan*, Tspace*
+Tmodel.global.edit_sequenceRepeatable =
+  Tgap+, Tellipsis+, TaddSpan+, TdamageSpan+, TdelSpan+, Tspace+
 Tmodel.divPart = Tmodel.lLike | Tmodel.pLike | Tlg | Tsp
 Tmodel.persStateLike =
   TpersName
@@ -1736,6 +1900,7 @@ Tmodel.persStateLike =
   | Teducation
   | Tfaith
   | Tfloruit
+  | Tgender
   | TlangKnowledge
   | Tnationality
   | Toccupation
@@ -2025,6 +2190,36 @@ Tmodel.pPart.data =
   | Tmodel.addressLike
   | Tmodel.nameLike
   | TMenu
+Tmodel.pPart.data_alternation =
+  Tmodel.dateLike_alternation
+  | Tmodel.measureLike_alternation
+  | Tmodel.addressLike_alternation
+  | Tmodel.nameLike_alternation
+  | TMenu
+Tmodel.pPart.data_sequence =
+  Tmodel.dateLike_sequence,
+  Tmodel.measureLike_sequence,
+  Tmodel.addressLike_sequence,
+  Tmodel.nameLike_sequence,
+  TMenu
+Tmodel.pPart.data_sequenceOptional =
+  Tmodel.dateLike_sequenceOptional?,
+  Tmodel.measureLike_sequenceOptional?,
+  Tmodel.addressLike_sequenceOptional?,
+  Tmodel.nameLike_sequenceOptional?,
+  TMenu?
+Tmodel.pPart.data_sequenceOptionalRepeatable =
+  Tmodel.dateLike_sequenceOptionalRepeatable*,
+  Tmodel.measureLike_sequenceOptionalRepeatable*,
+  Tmodel.addressLike_sequenceOptionalRepeatable*,
+  Tmodel.nameLike_sequenceOptionalRepeatable*,
+  TMenu*
+Tmodel.pPart.data_sequenceRepeatable =
+  Tmodel.dateLike_sequenceRepeatable+,
+  Tmodel.measureLike_sequenceRepeatable+,
+  Tmodel.addressLike_sequenceRepeatable+,
+  Tmodel.nameLike_sequenceRepeatable+,
+  TMenu+
 Tmodel.inter =
   Tmodel.egLike
   | Tmodel.oddDecl
@@ -2046,6 +2241,13 @@ Tmodel.phrase =
   | Tmodel.specDescLike
   | Tmodel.pPart.data
   | Truby
+Tmodel.paraPart =
+  Tmodel.gLike
+  | Tmodel.lLike
+  | Tmodel.global
+  | Tmodel.inter
+  | Tmodel.phrase
+  | Tlg
 Tmodel.limitedPhrase =
   Tmodel.hiLike
   | Tmodel.emphLike
@@ -2717,7 +2919,7 @@ Tunclear =
     Tatt.dimensions.attributes,
     
     ## indicates why the material is hard to transcribe.
-    ## Suggested values include: 1] illegible (illegible); 2] inaudible (inaudible); 3] faded (faded); 4] background_noise (background_noise); 5] eccentric_ductus (eccentric_ductus)
+    ## Suggested values include: 1] illegible (illegible); 2] inaudible (inaudible); 3] faded (faded); 4] background_noise (background noise); 5] eccentric_ductus (eccentric ductus)
     attribute reason {
       list {
         (
@@ -2730,10 +2932,10 @@ Tunclear =
            ## (faded) 
            "faded"
          | 
-           ## (background_noise) 
+           ## (background noise) 
            "background_noise"
          | 
-           ## (eccentric_ductus) indicates illegibility due to an unusual, awkward, or incompetent execution of a glyph or glyphs 
+           ## (eccentric ductus) indicates illegibility due to an unusual, awkward, or incompetent execution of a glyph or glyphs 
            "eccentric_ductus"
          | xsd:token { pattern = "[^\p{C}\p{Z}]+" })+
       }
@@ -2841,6 +3043,7 @@ Tmeasure =
     Tatt.global.attributes,
     Tatt.typed.attribute.subtype,
     Tatt.measurement.attributes,
+    Tatt.ranging.attributes,
     
     ## specifies the type of measurement in any convenient typology.
     attribute type {
@@ -3593,10 +3796,15 @@ Tlg =
   ## (line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.5. Speech Contents]
   element lg {
     ((Tmodel.divTop | Tmodel.global)*,
-     (Tmodel.lLike | Tmodel.stageLike | Tmodel.labelLike | Tlg),
      (Tmodel.lLike
       | Tmodel.stageLike
       | Tmodel.labelLike
+      | Tmodel.pPart.transcriptional
+      | Tlg),
+     (Tmodel.lLike
+      | Tmodel.stageLike
+      | Tmodel.labelLike
+      | Tmodel.pPart.transcriptional
       | Tmodel.global
       | Tlg)*,
      (Tmodel.divBottom, Tmodel.global*)*)
@@ -3753,7 +3961,7 @@ TtextLang =
   
   ## (text language) describes the languages and writing systems identified within the bibliographic work being described, rather than its description. [3.12.2.4. Imprint, Size of a Document, and Reprint Information 10.6.6. Languages and Writing Systems]
   element textLang {
-    Tmacro.phraseSeq,
+    Tmacro.specialPara,
     Tatt.global.attributes,
     
     ## (main language) supplies a code which identifies the chief language used in the bibliographic work.
@@ -4289,6 +4497,7 @@ TtagUsage =
   element tagUsage {
     Tmacro.limitedContent,
     Tatt.global.attributes,
+    Tatt.datcat.attributes,
     [
       a:documentation [
         "(generic identifier) specifies the name (generic identifier) of the element indicated by the tag, within the namespace indicated by the parent "
@@ -4372,34 +4581,11 @@ TciteStructure =
     (TciteData*, TciteStructure*, Tmodel.descLike*),
     Tatt.global.attributes,
     Tatt.citeStructurePart.attributes,
-    (
-     ## (delimiter) supplies a delimiting string preceding the structural component.
-     attribute delim {
-       xsd:string { pattern = ".+" }
-     }?)
-    >> sch:pattern [
-         id =
-           "testbasic-citeStructure-delim-citestructure-inner-delim-constraint-rule-13"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:citeStructure[parent::tei:citeStructure]"
-           "\x{a}" ~
-           "               "
-           sch:assert [
-             test = "@delim"
-             "A "
-             sch:name [ ]
-             " with a parent "
-             sch:name [ ]
-             " must have a @delim attribute."
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ],
+    
+    ## (delimiter) supplies a delimiting string preceding the structural component.
+    attribute delim {
+      xsd:string { pattern = ".+" }
+    }?,
     [
       a:documentation [
         "(match) supplies an XPath selection pattern using the syntax defined in  which identifies a set of nodes which are citable structural components. The expression may be absolute (beginning with `/`) or relative. "
@@ -4418,7 +4604,7 @@ TciteStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "testbasic-citeStructure-match-citestructure-outer-match-constraint-rule-14"
+           "testbasic-citeStructure-match-citestructure-outer-match-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4439,7 +4625,7 @@ TciteStructure =
        ]
     >> sch:pattern [
          id =
-           "testbasic-citeStructure-match-citestructure-inner-match-constraint-rule-15"
+           "testbasic-citeStructure-match-citestructure-inner-match-constraint-rule-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4699,7 +4885,9 @@ Tabstract =
   
   ## contains a summary or formal abstract prefixed to an existing source document by the encoder. [2.4.4. Abstracts]
   element abstract {
-    (Tmodel.pLike | Tmodel.listLike)+, Tatt.global.attributes, empty
+    (Tmodel.pLike | Tmodel.listLike | TlistBibl)+,
+    Tatt.global.attributes,
+    empty
   }
 Tcreation =
   
@@ -4820,6 +5008,7 @@ Tcalendar =
     Tmodel.pLike+,
     Tatt.global.attributes,
     Tatt.pointing.attributes,
+    Tatt.typed.attributes,
     empty
   }
 TcorrespDesc =
@@ -5466,6 +5655,24 @@ Tfloruit =
     Tatt.editLike.attributes,
     empty
   }
+Tgender =
+  
+  ## (gender) specifies the gender identity of a person, persona, or character. [13.3.2.1. Personal Characteristics]
+  element gender {
+    Tmacro.phraseSeq,
+    Tatt.global.attributes,
+    Tatt.editLike.attributes,
+    Tatt.datable.attributes,
+    Tatt.typed.attributes,
+    
+    ## supplies a coded value for gender identity
+    attribute value {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    empty
+  }
 Tgeo =
   
   ## (geographical coordinates) contains any expression of a set of geographic coordinates, representing a point, line, or area on the surface of the earth in some notation. [13.3.4.1. Varieties of Location]
@@ -5718,6 +5925,13 @@ Tperson =
       }
     }?,
     
+    ## specifies the gender of the person.
+    attribute gender {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
     ## specifies an age group for the person.
     attribute age {
       xsd:token { pattern = "[^\p{C}\p{Z}]+" }
@@ -5747,6 +5961,13 @@ Tpersona =
       }
     }?,
     
+    ## specifies the gender of the persona.
+    attribute gender {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
     ## specifies an age group for the persona.
     attribute age {
       xsd:token { pattern = "[^\p{C}\p{Z}]+" }
@@ -5768,6 +5989,13 @@ TpersonGrp =
     
     ## specifies the sex of the participant group.
     attribute sex {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
+    ## specifies the gender of the participant group.
+    attribute gender {
       list {
         xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
       }
@@ -5864,7 +6092,7 @@ Trelation =
   element relation {
     (Tdesc?)
     >> sch:pattern [
-         id = "testbasic-relation-reforkeyorname-constraint-assert-15"
+         id = "testbasic-relation-reforkeyorname-constraint-assert-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5971,19 +6199,13 @@ Tresidence =
   }
 Tsex =
   
-  ## (sex) specifies the sex of a person. [13.3.2.1. Personal Characteristics]
+  ## (sex) specifies the sex of an organism. [13.3.2.1. Personal Characteristics]
   element sex {
     Tmacro.phraseSeq,
     Tatt.global.attributes,
     Tatt.editLike.attributes,
     Tatt.datable.attributes,
-    Tatt.typed.attribute.subtype,
-    
-    ## characterizes the element in some sense, using any convenient classification scheme or typology.
-    ## Sample values include: 1] explicit; 2] implicit
-    attribute type {
-      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
-    }?,
+    Tatt.typed.attributes,
     
     ## supplies a coded value for sex
     attribute value {
@@ -6253,7 +6475,29 @@ Tfacsimile =
   
   ## contains a representation of some written source in the form of a set of images rather than as transcribed or encoded text. [11.1. Digital Facsimiles]
   element facsimile {
-    (Tfront?, (Tmodel.graphicLike | Tsurface | TsurfaceGrp)+, Tback?),
+    (Tfront?, (Tmodel.graphicLike | Tsurface | TsurfaceGrp)+, Tback?)
+    >> sch:pattern [
+         id =
+           "testbasic-facsimile-no_facsimile_text_nodes-constraint-rule-15"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:facsimile//tei:line | tei:facsimile//tei:zone"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test = "child::text()[ normalize-space(.) ne '']"
+             "\x{a}" ~
+             "  	  A facsimile element represents a text with images, thus\x{a}" ~
+             "	  transcribed text should not be present within it.\x{a}" ~
+             "	"
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     Tatt.global.attributes,
     Tatt.declaring.attributes,
     empty
@@ -6437,7 +6681,7 @@ TaddSpan =
     empty
     >> sch:pattern [
          id =
-           "testbasic-addSpan-addSpan-requires-spanTo-constraint-assert-16"
+           "testbasic-addSpan-addSpan-requires-spanTo-constraint-assert-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6458,7 +6702,7 @@ TaddSpan =
        ]
     >> sch:pattern [
          id =
-           "testbasic-addSpan-addSpan-requires-spanTo-fr-constraint-assert-17"
+           "testbasic-addSpan-addSpan-requires-spanTo-fr-constraint-assert-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6500,7 +6744,7 @@ TdamageSpan =
     empty
     >> sch:pattern [
          id =
-           "testbasic-damageSpan-damageSpan-requires-spanTo-constraint-assert-18"
+           "testbasic-damageSpan-damageSpan-requires-spanTo-constraint-assert-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6521,7 +6765,7 @@ TdamageSpan =
        ]
     >> sch:pattern [
          id =
-           "testbasic-damageSpan-damageSpan-requires-spanTo-fr-constraint-assert-19"
+           "testbasic-damageSpan-damageSpan-requires-spanTo-fr-constraint-assert-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6551,7 +6795,7 @@ TdelSpan =
     empty
     >> sch:pattern [
          id =
-           "testbasic-delSpan-delSpan-requires-spanTo-constraint-assert-20"
+           "testbasic-delSpan-delSpan-requires-spanTo-constraint-assert-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6572,7 +6816,7 @@ TdelSpan =
        ]
     >> sch:pattern [
          id =
-           "testbasic-delSpan-delSpan-requires-spanTo-fr-constraint-assert-21"
+           "testbasic-delSpan-delSpan-requires-spanTo-fr-constraint-assert-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6719,7 +6963,7 @@ Tsubst =
   element subst {
     ((Tadd | Tsurplus | Tdel | Tmodel.milestoneLike)+)
     >> sch:pattern [
-         id = "testbasic-subst-substContents1-constraint-assert-22"
+         id = "testbasic-subst-substContents1-constraint-assert-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7015,7 +7259,7 @@ Tlink =
   element link {
     empty
     >> sch:pattern [
-         id = "testbasic-link-linkTargets3-constraint-assert-23"
+         id = "testbasic-link-linkTargets3-constraint-assert-22"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7051,31 +7295,9 @@ TlinkGrp =
   }
 Tab =
   
-  ## (anonymous block) contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph. [16.3. Blocks, Segments, and Anchors]
+  ## (anonymous block) contains any component-level unit of text, acting as a container for phrase or inter level elements analogous to, but without the same constraints as, a paragraph. [16.3. Blocks, Segments, and Anchors]
   element ab {
-    Tmacro.paraContent
-    >> sch:pattern [
-         id =
-           "testbasic-ab-abstractModel-structure-ab-in-ab-or-p-constraint-report-18"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:ab"
-           "\x{a}" ~
-           "               "
-           sch:report [
-             test =
-               "(ancestor::tei:p or ancestor::tei:ab) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"
-             "\x{a}" ~
-             "        Abstract model violation: ab may not occur inside paragraphs or other ab elements.\x{a}" ~
-             "      "
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ]
+    Tmacro.abContent
     >> sch:pattern [
          id =
            "testbasic-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-19"
@@ -7254,7 +7476,7 @@ Tjoin =
   element join {
     ((Tmodel.descLike | Tmodel.certLike)*)
     >> sch:pattern [
-         id = "testbasic-join-joinTargets3-constraint-assert-24"
+         id = "testbasic-join-joinTargets3-constraint-assert-23"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7402,7 +7624,7 @@ TstandOff =
     (Tmodel.standOffPart+)
     >> sch:pattern [
          id =
-           "testbasic-standOff-nested_standOff_should_be_typed-constraint-assert-25"
+           "testbasic-standOff-nested_standOff_should_be_typed-constraint-assert-24"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7566,6 +7788,10 @@ TTEI =
     >> sch:ns [
          prefix = "rng"
          uri = "http://relaxng.org/ns/structure/1.0"
+       ]
+    >> sch:ns [
+         prefix = "rna"
+         uri = "http://relaxng.org/ns/compatibility/annotations/1.0"
        ],
     Tatt.global.attributes,
     Tatt.typed.attributes,
@@ -8102,7 +8328,7 @@ Tplatypus =
 TMenu =
   
   ##
-  element ns3:Menu {
+  element ns2:Menu {
     text,
     Tatt.global.attribute.xmlid,
     Tatt.global.rendition.attribute.rend,

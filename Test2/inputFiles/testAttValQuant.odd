@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0" ?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" n="testAttValQuant">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Test Attribute Value Quantification</title>
+        <author xml:id="sb">
+          <name type="person">Syd Bauman</name>
+        </author>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>TEI-C</publisher>
+        <availability>
+          <licence>BSD or CC or some such. Feel free to copy, modify,
+          use, etc., just give credit where credit is due.</licence>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Born digital for purpose of testing the TEI Stylesheets.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>No documentary content yet. The <gi>schemaSpec</gi> is in the <gi>back</gi>. </p>
+    </body>
+    <back>
+
+      <schemaSpec ident="tavq" start="TEI div">
+
+        <gloss>test attribute value quantification</gloss>
+        <desc>Test of declaring a minimum and maximum number occurences of a
+        datatype in an attribute value.</desc>
+
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="textstructure" except="div1 div2 div3 div4 div5 div6 div7"/>
+
+        <elementSpec ident="test" mode="add" ns="http://www.wwp.neu.edu/temp/ns">
+          <desc>global empty <gi>test</gi> element for (you guessed it) testing</desc>
+          <classes>
+            <memberOf key="att.global"/>
+            <memberOf key="model.divPart"/>
+          </classes>
+          <content><textNode/></content>
+          <attList>
+
+            <attDef ident="req_01" usage="req">
+              <datatype minOccurs="0" maxOccurs="1">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="opt_01" usage="opt">
+              <datatype minOccurs="0" maxOccurs="1">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="req_03" usage="req">
+              <datatype minOccurs="0" maxOccurs="3">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="opt_03" usage="opt">
+              <datatype minOccurs="0" maxOccurs="3">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="req_0Ǖ" usage="req">
+              <datatype minOccurs="0" maxOccurs="unbounded">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="opt_0Ǖ" usage="opt">
+              <datatype minOccurs="0" maxOccurs="unbounded">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="req_11" usage="req">
+              <datatype minOccurs="1" maxOccurs="1">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="opt_11" usage="opt">
+              <datatype minOccurs="1" maxOccurs="1">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="req_12" usage="req">
+              <datatype minOccurs="1" maxOccurs="2">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="opt_12" usage="opt">
+              <datatype minOccurs="1" maxOccurs="2">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="req_1Ǖ" usage="req">
+              <datatype minOccurs="1" maxOccurs="unbounded">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="opt_1Ǖ" usage="opt">
+              <datatype minOccurs="1" maxOccurs="unbounded">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="req_22" usage="req">
+              <datatype minOccurs="2" maxOccurs="2">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="opt_22" usage="opt">
+              <datatype minOccurs="2" maxOccurs="2">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="req_23" usage="req">
+              <datatype minOccurs="2" maxOccurs="3">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="opt_23" usage="opt">
+              <datatype minOccurs="2" maxOccurs="3">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="req_2Ǖ" usage="req">
+              <datatype minOccurs="2" maxOccurs="unbounded">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+            <attDef ident="opt_2Ǖ" usage="opt">
+              <datatype minOccurs="2" maxOccurs="unbounded">
+                <dataRef key="teidata.word"/>
+              </datatype>
+            </attDef>
+
+          </attList>
+        </elementSpec>
+      </schemaSpec>
+    </back>
+  </text>
+</TEI>

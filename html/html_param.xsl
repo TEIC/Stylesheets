@@ -121,7 +121,9 @@ so that it does not affect printing. It should be used for screen layout.</desc>
    </doc>
     <xsl:param name="cssSecondaryFile"  as="xs:string" select="''"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
-      <desc>CSS file to include in the output file directly</desc>
+      <desc>CSS file to include in the output file directly; if
+      expressed as a relative URI, is relative to the directory from
+      which this parameter is defined (Stylesheets/html/).</desc>
    </doc>
     <xsl:param name="cssInlineFiles"  as="xs:string" select="''"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="figures" type="integer">

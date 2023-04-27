@@ -1790,7 +1790,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="microdata"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] processing analytic element as needed for MLA style (from Laura Mandell> </desc>
+    <desc>[html] processing analytic element as needed for MLA style (from Laura Mandell) </desc>
   </doc>
   <xsl:template match="tei:analytic" mode="mla">
     <xsl:variable name="refIdwHash">
@@ -1847,7 +1847,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] processing monogr element as needed for MLA style (from Laura Mandell> </desc>
+    <desc>[html] processing monogr element as needed for MLA style (from Laura Mandell) </desc>
   </doc>
   <xsl:template match="tei:monogr" mode="mla">
     <xsl:choose>
@@ -1927,7 +1927,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] processing relatedItem element as needed for MLA style (from Laura Mandell> </desc>
+    <desc>[html] processing relatedItem element as needed for MLA style (from Laura Mandell) </desc>
   </doc>
   
   <xsl:template match="tei:relatedItem" mode="mla">

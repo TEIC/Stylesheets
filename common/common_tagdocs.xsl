@@ -843,7 +843,7 @@
           <xsl:otherwise>
             <xsl:copy-of select="$remarks"/>
           </xsl:otherwise>
-        </xsl:choose>        
+        </xsl:choose>
         <xsl:apply-templates mode="weave" select="tei:exemplum"/>
         <xsl:apply-templates mode="weave" select="tei:constraintSpec"/>
         <xsl:apply-templates mode="weave" select="tei:content"/>
@@ -1118,6 +1118,17 @@
           </xsl:element>
         </xsl:if>
       </xsl:when>
+      <!-- 
+           Note: the '-' in the following @test and the <xsl:when>
+           clause for '+' (which is ~15 lines further down) are not
+           supported features of the ODD language, and are in fact
+           invalid values of the @atts attribute which is currently
+           being processed. See
+           https://github.com/TEIC/Stylesheets/issues/329. Per the
+           Stylesheet groups discussion of that ticket earlier today,
+           we are leaving the code here in case this is a feature we
+           decide to add to ODD someday.
+      -->
       <xsl:when test="$atts = '-' or $atts = ''"/>
       <xsl:when test="string-length($atts) > 0">
         <xsl:element namespace="{$outputNS}" name="{$tableName}">
@@ -1128,11 +1139,12 @@
           <xsl:for-each select="tokenize($atts, ' ')">
             <xsl:variable name="TOKEN" select="."/>
             <!-- Show a selected attribute where "$HERE" is the
-            starting node 
-            and $TOKEN is attribute we have been asked to display-->
+                 starting node 
+                 and $TOKEN is attribute we have been asked to display-->
             <xsl:for-each select="$HERE">
               <xsl:choose>
                 <xsl:when test="$TOKEN = '+'">
+                  <!-- See above note (~15 lines up) about this clause for '+'. -->
                   <xsl:element namespace="{$outputNS}" name="{$rowName}">
                     <xsl:element namespace="{$outputNS}" name="{$cellName}">
                       <xsl:attribute name="{$rendName}">
@@ -2060,13 +2072,13 @@
       </xsl:element>
     </xsl:if>
   </xsl:template>
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[odds] display attribute list </desc>
+    <desc>[odds] display list of referenced attributes</desc>
   </doc>
-  <xsl:template name="displayAttList">
-    <xsl:param name="mode"/>
-    <xsl:call-template name="showAttClasses"/>
-    <xsl:for-each-group select="tei:attRef[not(tei:match(@rend, 'none'))]"
+  <xsl:template name="showAttRefs">
+    <xsl:param name="endspace" select="true()"/>
+    <xsl:for-each-group select=".//tei:attRef[not(tei:match(@rend, 'none'))]"
       group-by="@class">
       <xsl:call-template name="linkTogether">
         <xsl:with-param name="name" select="current-grouping-key()"/>
@@ -2091,8 +2103,22 @@
         <xsl:value-of select="@name"/>
         <xsl:if test="position() != last()">, </xsl:if>
       </xsl:for-each>
-      <xsl:text>) </xsl:text>
+      <xsl:text>)</xsl:text>
+      <xsl:if test="$endspace">
+        <xsl:text> </xsl:text>
+      </xsl:if>
     </xsl:for-each-group>
+  </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[odds] display attribute list </desc>
+  </doc>
+  <xsl:template name="displayAttList">
+    <xsl:param name="mode"/>
+    <xsl:call-template name="showAttClasses"/>
+    <xsl:if test=".//tei:attRef">
+      <xsl:call-template name="showAttRefs"/>
+    </xsl:if>
     <xsl:if test=".//tei:attDef">
       <xsl:element namespace="{$outputNS}" name="{$tableName}">
         <xsl:attribute name="{$rendName}">
@@ -2774,6 +2800,13 @@
                 <xsl:if test="$depth = 1">
                   <xsl:call-template name="showSpace"/>
                 </xsl:if>
+              </xsl:if>
+              <xsl:if test=".//tei:attRef">
+                <xsl:text> (</xsl:text>
+                <xsl:call-template name="showAttRefs">
+                  <xsl:with-param name="endspace" select="false()"/>
+                </xsl:call-template>
+                <xsl:text>) </xsl:text>
               </xsl:if>
               <xsl:call-template name="attClassDetails">
                 <xsl:with-param name="depth">

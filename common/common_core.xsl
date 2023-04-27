@@ -1171,6 +1171,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:*" mode="plain">
       <xsl:apply-templates mode="plain"/>
   </xsl:template>
+  <xsl:template match="tei:index" mode="plain"/>
   <xsl:template match="tei:note" mode="plain"/>
   <xsl:template match="tei:app" mode="plain"/>
   <xsl:template match="tei:pb" mode="plain"/>
