@@ -1869,13 +1869,13 @@ select="$makeDecls"/></xsl:message>
         <!-- SB modified 2023-05-01 —
           * Simplify code
           * Correctly extract only the version number itself per ticket #607
-            - But note that it is quite fragile, in that it is searching for a very particular string
+            - Note that we need to be prepared for both "P5 Version&#xA0;…" and just "Version&#xA0;…"
           * Normalize space of “TEI Edition” output so it is all on one line
         -->
         <xsl:variable name="TEIVersion" select="ancestor-or-self::tei:TEI/processing-instruction()[name() eq 'TEIVERSION'][1]"/>
         <xsl:variable name="TEIVersion-edition" select="substring-before( $TEIVersion, ' Last')"/>
         <xsl:variable name="TEIVersion-datestring" select="concat(' Last', substring-after( $TEIVersion, ' Last') )"/>
-        <xsl:variable name="TEIVersion-only" select="replace( $TEIVersion-edition, '^P5 Version&#xA0;(\d+\.\d+\.\d+[abABɑΑΒβ]?)\.$', '$1')"/>
+        <xsl:variable name="TEIVersion-only" select="replace( $TEIVersion-edition, '^(P5 )?Version&#xA0;(\d+\.\d+\.\d+[abABɑΑΒβ]?)\.$', '$2')"/>
         <xsl:variable name="versionURL" select="concat( $defaultTEIServer, $TEIVersion-only, '/')"/>
         <xsl:sequence select="'&#x0A;TEI Edition: '||normalize-space($TEIVersion)"/>
         <xsl:sequence select="'&#x0A;TEI Edition Location: '||$versionURL"/>

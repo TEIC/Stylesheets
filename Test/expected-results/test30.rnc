@@ -8,8 +8,6 @@ namespace teix = "http://www.tei-c.org/ns/Examples"
 namespace xi = "http://www.w3.org/2001/XInclude"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-
-#
 Tmacro.abContent = (text | Tmodel.paraPart | Tab)*
 Tmacro.paraContent = (text | Tmodel.paraPart)*
 Tmacro.limitedContent = (text | Tmodel.limitedPhrase | Tmodel.inter)*
@@ -6488,9 +6486,9 @@ Tfacsimile =
            sch:report [
              test = "child::text()[ normalize-space(.) ne '']"
              "\x{a}" ~
-             "  	  A facsimile element represents a text with images, thus\x{a}" ~
-             "	  transcribed text should not be present within it.\x{a}" ~
-             "	"
+             "          A facsimile element represents a text with images, thus\x{a}" ~
+             "          transcribed text should not be present within it.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
