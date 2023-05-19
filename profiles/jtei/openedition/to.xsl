@@ -162,18 +162,6 @@
     </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="tei:titleStmt/tei:title[@type='main']">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()"/>
-      <xsl:for-each select="parent::tei:titleStmt/tei:title[not(@type='main')]">
-        <xsl:text>: </xsl:text>
-        <xsl:apply-templates/>
-      </xsl:for-each>
-    </xsl:copy>
-  </xsl:template>
-  
-  <xsl:template match="tei:titleStmt/tei:title[not(@type='main')]"/>
-  
   <!-- wrap other <author>|<editor> children in <s> -->
   <xsl:template match="tei:titleStmt/tei:author/*|tei:titleStmt/tei:editor/*" priority="-0.5">
     <xsl:copy-of select="local:wrap(., 's')"/>
