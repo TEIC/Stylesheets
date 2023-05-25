@@ -2079,7 +2079,7 @@
   <xsl:template name="showAttRefs">
     <xsl:param name="endspace" select="true()"/>
     <xsl:for-each-group select=".//tei:attRef[not(tei:match(@rend, 'none'))]" group-by="@class">
-      <item>
+       <xsl:element namespace="{$outputNS}" name="{$itemName}">
         <xsl:call-template name="linkTogether">
           <xsl:with-param name="name" select="current-grouping-key()"/>
           <xsl:with-param name="reftext">
@@ -2091,26 +2091,30 @@
         <!-- subset of those that have been deleted or over-ridden -->
         <xsl:variable name="theUnusedAttDefs" select="$theseAttDefs[ not( @ident = current-group()/@name ) ]" as="element(tei:attDef)*"/>
         <xsl:if test="$theseAttDefs">
-          <list type="debug:unuseds">
+	  <xsl:element namespace="{$outputNS}" name="{$ulName}">
+	    <xsl:attribute name="type" select="'debug:unuseds'"/>
             <!-- display unused attrs with a special class so they can be displayed as unavailable -->
             <xsl:for-each select="$theUnusedAttDefs">
-              <item type="debug:unused">
+	      <xsl:element namespace="{$outputNS}" name="{$itemName}">
+		<xsl:attribute name="type" select="'debug:unused'"/>
                 <xsl:element namespace="{$outputNS}" name="{$segName}">
                   <xsl:attribute name="{$rendName}">unusedattribute</xsl:attribute>
                   <xsl:value-of select="@ident"/>
                 </xsl:element>
-              </item>
+              </xsl:element>
             </xsl:for-each>
-          </list>
+	  </xsl:element>
         </xsl:if>
-        <list type="debug:useds">
+	<xsl:element namespace="{$outputNS}" name="{$ulName}">
+	  <xsl:attribute name="type" select="'debug:useds'"/>
           <xsl:for-each select="current-group()">
-            <item type="debug:used">
+	    <xsl:element namespace="{$outputNS}" name="{$itemName}">
+              <xsl:attribute name="type" select="'debug:used'"/>
               <xsl:sequence select="concat('@', @name )"/>
-            </item>
+            </xsl:element>
           </xsl:for-each>
-        </list>     
-      </item>
+        </xsl:element>
+      </xsl:element>
     </xsl:for-each-group>
   </xsl:template>
   
@@ -2144,12 +2148,12 @@
 	</xsl:element>
       </xsl:if>
     </xsl:variable>
-    <xsl:if test="ancestor::tei:elementSpec[@ident eq 'titlePage']">
-      <xsl:message>
-	<xsl:text>DEBUG::output&#x0A;</xsl:text>
-	<xsl:sequence select="$store_for_debugging"/>
-      </xsl:message>
-    </xsl:if>
+    <xsl:if test="ancestor::tei:elementSpec[@ident eq 'titlePage']"> <!--debug-->
+      <xsl:message>	                                             <!--debug-->
+	<xsl:text>DEBUG::output&#x0A;</xsl:text>                     <!--debug-->
+	<xsl:sequence select="$store_for_debugging"/>                <!--debug-->
+      </xsl:message>                                                 <!--debug-->
+    </xsl:if>                                                        <!--debug-->
     <xsl:sequence select="$store_for_debugging"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2788,48 +2792,50 @@
   </xsl:template>
 
   <xsl:template name="attClassDetails">
-    <list type="gen_by_stylesheet">
+    <xsl:element namespace="{$outputNS}" name="{$ulName}">
+      <xsl:attribute name="type" select="'gen_by_stylesheet'"/>
       <xsl:for-each select="tei:classes/tei:memberOf">
-        <xsl:variable name="thisClassSpec" select="key('CLASSES', @key)" as="element(tei:classSpec)?"/>
+        <xsl:variable name="thisClassSpec" select="key('ATTCLASSES', @key)" as="element(tei:classSpec)?"/>
         <xsl:choose>
           <xsl:when test="$thisClassSpec">
-            <item type="debug:thisClassSpec">
+	    <xsl:element namespace="{$outputNS}" name="{$itemName}">
+	      <xsl:attribute name="type" select="'debug:thisClassSpec'"/>
               <!-- Set the context node to be the <classSpec> this <memberOf> points to -->
               <xsl:for-each select="$thisClassSpec[@type eq 'atts']">
                 <xsl:call-template name="linkTogether">
                   <xsl:with-param name="name" select="@ident"/>
                 </xsl:call-template>
                 <xsl:if test=".//tei:attDef">
-                  <list type="debug:attDefs">
+		  <xsl:element namespace="{$outputNS}" name="{$ulName}">
+		    <xsl:attribute name="type" select="'debug:attDefs'"/>
                     <xsl:for-each select=".//tei:attDef">
-                      <item type="debug:attDef">
+		      <xsl:element namespace="{$outputNS}" name="{$itemName}">
+			<xsl:attribute name="type" select="'debug:attDef'"/>
                         <xsl:call-template name="emphasize">
                           <xsl:with-param name="class">attribute</xsl:with-param>
                           <xsl:with-param name="content">
                             <xsl:value-of select="'@'||tei:createSpecName(.)"/>
                           </xsl:with-param>
                         </xsl:call-template>
-                      </item>
+                      </xsl:element>
                     </xsl:for-each>
-                  </list>
+                  </xsl:element>
                 </xsl:if>
                 <xsl:if test=".//tei:attRef">
-                  <list type="debug:attRefs">
+		  <xsl:element namespace="{$outputNS}" name="{$ulName}">
+		    <xsl:attribute name="type" select="'debug:attRefs'"/>
                     <xsl:call-template name="showAttRefs"/>
-                  </list>
+                  </xsl:element>
                 </xsl:if>
-                <xsl:call-template name="attClassDetails"/>
+		<xsl:if test="tei:classes/tei:memberOf">
+                  <xsl:call-template name="attClassDetails"/>
+		</xsl:if>
               </xsl:for-each>
-            </item>
+            </xsl:element>
           </xsl:when>
-          <xsl:otherwise>
-            <item type="debug:otherwise" debug="{ancestor::tei:schemaSpec}">
-              <xsl:value-of select="@key"/>
-            </item>
-          </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
-    </list>
+    </xsl:element>
   </xsl:template>
 
   <xsl:template name="showElement">
