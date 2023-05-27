@@ -2490,25 +2490,24 @@ function click(d) {
             <xsl:call-template name="copyrightStatement"/>
             <xsl:if test="$generationComment = 'true'">
                <xsl:comment>
-               <xsl:text>
-	  Generated </xsl:text>
-               <xsl:if test="not($masterFile = 'index')">
-                  <xsl:text>from </xsl:text>
-                  <xsl:value-of select="$masterFile"/>
-               </xsl:if>
-               <xsl:text> using XSLT stylesheets version </xsl:text>
-	       <xsl:value-of select="tei:stylesheetVersion(/)"/>
-	       based on <xsl:value-of select="$teixslHome"/>
-	       on <xsl:sequence select="tei:whatsTheDate()"/>.
-	       <xsl:choose>
-		 <xsl:when test="$useFixedDate = 'true'">
-		   <xsl:value-of select="system-property('xsl:product-name')"/>.
-		 </xsl:when>
-		 <xsl:otherwise>
-		   <xsl:value-of select="(system-property('xsl:product-name'), system-property('xsl:product-version'))" separator=" "/>.
-		 </xsl:otherwise>
-	       </xsl:choose>
-            </xsl:comment>
+		 <xsl:text>&#x0A; Generated </xsl:text>
+		 <xsl:if test="not($masterFile = 'index')">
+                   <xsl:text>from </xsl:text>
+                   <xsl:value-of select="$masterFile"/>
+		 </xsl:if>
+		 <xsl:text> using XSLT stylesheets version </xsl:text>
+		 <xsl:value-of select="tei:stylesheetVersion()"/>
+		 based on <xsl:value-of select="$teixslHome"/>
+		 on <xsl:sequence select="tei:whatsTheDate()"/>.
+		 <xsl:choose>
+		   <xsl:when test="$useFixedDate = 'true'">
+		     <xsl:value-of select="system-property('xsl:product-name')"/>.
+		   </xsl:when>
+		   <xsl:otherwise>
+		     <xsl:value-of select="(system-property('xsl:product-name'), system-property('xsl:product-version'))" separator=" "/>.
+		   </xsl:otherwise>
+		 </xsl:choose>
+               </xsl:comment>
             </xsl:if>
          </address>
       </div>

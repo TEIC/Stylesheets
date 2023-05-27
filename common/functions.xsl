@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
     xmlns:ann="http://relaxng.org/ns/compatibility/annotations/1.0"
- xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-xmlns:cals="http://www.oasis-open.org/specs/tm9901"
-xmlns:tei="http://www.tei-c.org/ns/1.0"
-xmlns:iso="http://www.iso.org/ns/1.0"
-xmlns:xs="http://www.w3.org/2001/XMLSchema"
-xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
-xmlns:o="urn:schemas-microsoft-com:office:office"
-xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-xmlns:v="urn:schemas-microsoft-com:vml"
-xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
-xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
-xmlns:w10="urn:schemas-microsoft-com:office:word"
-xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
-xmlns:mml="http://www.w3.org/1998/Math/MathML"
-xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
-xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
-xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" version="2.0"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:cals="http://www.oasis-open.org/specs/tm9901"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:iso="http://www.iso.org/ns/1.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:o="urn:schemas-microsoft-com:office:office"
+    xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+    xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+    xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
+    xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+    xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+    xmlns:w10="urn:schemas-microsoft-com:office:word"
+    xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+    xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+    xmlns:mml="http://www.w3.org/1998/Math/MathML"
+    xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
+    xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
+    xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" version="2.0"
     exclude-result-prefixes="#all"
->
+    >
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
-      <p> TEI Utility stylesheet defining functions for use in all
-         output formats.</p>
+      <p>TEI Utility stylesheet defining functions for use in all output formats.</p>
       <p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
@@ -1372,12 +1371,16 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>find version of stylesheets</desc>
   </doc>
-
   <xsl:function name="tei:stylesheetVersion" as="xs:string">
-    <xsl:param name="context"/>
     <xsl:choose>
       <xsl:when test="$useFixedDate='true'">0</xsl:when>
-      <xsl:otherwise><xsl:value-of select="normalize-space(unparsed-text('../VERSION'))"/></xsl:otherwise>
+      <xsl:when test="unparsed-text-available('../VERSION')">
+        <xsl:value-of select="normalize-space( unparsed-text('../VERSION') )"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message>WARNING: Unable to determine Stylesheet’s version number because the file ../VERSION was not found; using “0.0.0”.</xsl:message>
+        <xsl:value-of select="'0.0.0'"/>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
 
