@@ -2080,6 +2080,7 @@
     <xsl:param name="endspace" select="true()"/>
     <xsl:for-each-group select=".//tei:attRef[not(tei:match(@rend, 'none'))]" group-by="@class">
       <xsl:element namespace="{$outputNS}" name="{$itemName}">
+        <xsl:attribute name="{$rendName}" select="'attRefItem'"/>
         <xsl:call-template name="linkTogether">
           <xsl:with-param name="name" select="current-grouping-key()"/>
           <xsl:with-param name="reftext">
@@ -2090,23 +2091,25 @@
         <xsl:variable name="theseAttDefs" select="$Original//tei:classSpec[@ident = current-grouping-key()]/tei:attList/tei:attDef" as="element(tei:attDef)*"/>
         <!-- subset of those that have been deleted or over-ridden -->
         <xsl:variable name="theUnusedAttDefs" select="$theseAttDefs[ not( @ident = current-group()/@name ) ]" as="element(tei:attDef)*"/>
-        <xsl:if test="$theseAttDefs">
-          <xsl:element namespace="{$outputNS}" name="{$ulName}">
-            <!-- display unused attrs with a special class so they can be displayed as unavailable -->
-            <xsl:for-each select="$theUnusedAttDefs">
-              <xsl:element namespace="{$outputNS}" name="{$itemName}">
-                <xsl:element namespace="{$outputNS}" name="{$segName}">
-                  <xsl:attribute name="{$rendName}">unusedattribute</xsl:attribute>
-                  <xsl:value-of select="@ident"/>
-                </xsl:element>
-              </xsl:element>
-            </xsl:for-each>
-          </xsl:element>
-        </xsl:if>
+       
         <xsl:element namespace="{$outputNS}" name="{$ulName}">
+          <xsl:attribute name="{$rendName}" select="'classSpecAttDefs'"/>
+          <!-- display unused attrs with a special class
+                so they can be displayed as unavailable -->
+          <xsl:for-each select="$theUnusedAttDefs">
+            <xsl:element namespace="{$outputNS}" name="{$itemName}">
+              <xsl:element namespace="{$outputNS}" name="{$segName}">
+                <xsl:attribute name="{$rendName}">unusedattribute</xsl:attribute>
+                <xsl:value-of select="@ident"/>
+              </xsl:element>
+            </xsl:element>
+          </xsl:for-each>
           <xsl:for-each select="current-group()">
             <xsl:element namespace="{$outputNS}" name="{$itemName}">
-              <xsl:sequence select="concat('@', @name )"/>
+              <xsl:element namespace="{$outputNS}" name="{$segName}">
+                <xsl:attribute name="{$rendName}">attribute</xsl:attribute>
+                <xsl:sequence select="concat('@', @name )"/>
+              </xsl:element>
             </xsl:element>
           </xsl:for-each>
         </xsl:element>
