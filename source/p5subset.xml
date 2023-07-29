@@ -6,8 +6,8 @@
         <title>The TEI Guidelines</title>
       </titleStmt>
       <editionStmt>
-        <edition><ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.7.0.html">4.7.0a</ref>. Last updated on
-        <date when="2023-04-11">11th April 2023</date>, revision <ref target="https://github.com/TEIC/TEI/commit/bec660a72">bec660a72</ref></edition>
+        <edition>P5 <ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.7.0.html">4.7.0a</ref>. Last updated on
+        <date when="2023-07-16">16th July 2023</date>, revision <ref target="https://github.com/TEIC/TEI/commit/df882688d">df882688d</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -385,29 +385,17 @@ Instance</head></div>
       <desc xml:lang="ja" versionDate="2018-12-31">何らかのコード化された値を用いて、名付けられたエンティティを識別する外部的に定義された手段を提供する。</desc>
       <datatype><dataRef key="teidata.text"/></datatype>
       <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
-          <author>
-            <name key="name 427308" type="organisation">[New Zealand Parliament, Legislative Council]</name>
-          </author>
-        </egXML>
-      </exemplum>
-      <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr" source="#NONE">
           <author>
             <name key="Hugo, Victor (1802-1885)" ref="http://www.idref.fr/026927608">Victor Hugo</name>
           </author>
         </egXML>
       </exemplum>
-      <remarks versionDate="2013-06-20" xml:lang="en">
+      <remarks versionDate="2022-12-21" xml:lang="en">
         <p>The value may be a unique identifier from a database, or any other externally-defined
-          string identifying the referent. </p>
-        <p>No particular syntax is proposed for the values of the <att>key</att> attribute, since 
-          its form will depend entirely on practice within a given project. For the same reason, this 
-          attribute is not recommended in data interchange, since there is no way of ensuring 
-          that the values used by one project are distinct from those used by another. In such
-          a situation, a preferable approach for magic tokens which follows standard practice 
-          on the Web is to use a <att>ref</att> attribute whose value is a tag URI as defined in 
-          <ref target="#RFC4151">RFC 4151</ref>.</p>
+          string identifying the referent. 
+          No particular syntax is proposed for the values of the <att>key</att> attribute, since 
+          its form will depend entirely on practice within a given project.</p>
       </remarks>
       <remarks versionDate="2009-05-25" xml:lang="fr">
         <p>La valeur peut être un identifiant unique dans une base de données, ou toute autre chaîne
@@ -425,11 +413,11 @@ Instance</head></div>
         définition complète de l'entité nommée au moyen d'un ou plusieurs URIs.</desc>
       <desc xml:lang="ja" versionDate="2018-12-31">一つ以上のURIを用いて、名付けられたエンティティの完全な定義かIDを参照するための明確な手段を提供する。</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
-        <exemplum xml:lang="en">
-          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
-            <name ref="http://viaf.org/viaf/109557338" type="person">Seamus Heaney</name>
-            </egXML>
-        </exemplum>         
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
+          <name ref="http://viaf.org/viaf/109557338" type="person">Seamus Heaney</name>
+        </egXML>
+      </exemplum>   
       <remarks versionDate="2014-01-09" xml:lang="en">
 <p>The value must point directly to one or more XML elements or other resources by means of one or more URIs, separated by whitespace. If more than one is supplied the implication is that the name identifies several distinct entities.</p>
       </remarks>
@@ -439,6 +427,56 @@ Instance</head></div>
       <remarks xml:lang="ja" versionDate="2018-12-31"><p>値は1つまたは複数のXML要素あるいは、空白によって区切られた1つまたは複数のURIを指し示すものでなければならない。1つ以上の値が与えられているときは、その名前が複数の異るエンティティに対応することを示唆する。</p></remarks>
     </attDef>
   </attList>
+  <exemplum xml:lang="en">
+    <p>In this contrived example, a canonical reference to the same
+    organisation is provided in four different ways.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NZPaV01NgaK">
+      <author n="1">
+        <name ref="http://nzetc.victoria.ac.nz/tm/scholarly/name-427308.html" type="organisation">New Zealand Parliament, Legislative Council</name>
+      </author>
+       
+      <author n="2">
+        <name ref="nzvn:427308" type="organisation">New Zealand Parliament, Legislative Council</name>
+      </author>
+          
+      <author n="3">
+        <name ref="./named_entities.xml#o427308" type="organisation">New Zealand Parliament, Legislative Council</name>
+      </author>
+       
+      <author n="4">
+        <name key="name-427308" type="organisation">New Zealand Parliament, Legislative Council</name>
+      </author>
+    </egXML>
+    <p>The first presumes the availability of an internet connection
+    and a processor that can resolve a URI (most can). The second
+    requires, in addition, a <gi>prefixDef</gi> that declares how the
+    <code>nzvm</code> prefix should be interpreted. The third does not
+    require an internet connection, but does require that a file named
+    <name type="file">named_entities.xml</name> be in the same
+    directory as the TEI document. The fourth requires that an entire
+    external system for key resolution be available.</p>
+  </exemplum>
+  <remarks xml:lang="en" versionDate="2022-12-21">
+    <!-- For the same reason, this attribute is not recommended in
+         data interchange, since there is no way of ensuring that the
+         values used by one project are distinct from those used by
+         another. In such a situation, a preferable approach for magic
+         tokens which follows standard practice on the Web is to use a
+         <att>ref</att> attribute whose value is a tag URI as defined
+         in <ref target="#RFC4151">RFC 4151</ref>. -->
+    <p>The <att>key</att> attribute is more flexible and
+    general-purpose, but its use in interchange requires that
+    documentation about how the key is to be resolved be sent to the
+    recipient of the TEI document. In contrast values of the
+    <att>ref</att> attribute are resolved using the widely accepted
+    protocols for a URI, and thus less documentation, if any, is
+    likely required by the recipient in data interchange.</p>
+    <p>These guidelines provide no semantic basis or suggested
+    precedence when both <att>key</att> and <att>ref</att> are
+    provided. For this reason simultaneous use of both is not
+    recommended unless documentation explaining the use is provided,
+    probably in an ODD customizaiton, for interchange.</p>
+  </remarks>
   <listRef>
     <ptr target="#NDATTSnr"/>
   </listRef>
@@ -5321,9 +5359,9 @@ dans lequel les traits encodés portant cet attribut sont supposés être apparu
   <classes/>
   <attList>
     <attDef ident="unit" usage="opt">
+      <desc versionDate="2012-12-17" xml:lang="en">identifies the unit of information conveyed by the element, e.g. <val>columns</val>, <val>pages</val>, <val>volume</val>, <val>entry</val>.</desc>
       <desc versionDate="2017-06-24" xml:lang="fr">identifie le type d'information
       que transmet l'élément, par exemple <val>colonnes</val>, <val>pages</val>, <val>volume</val>, <val>inscription</val>, etc.</desc>
-      <desc versionDate="2012-12-17" xml:lang="en">identifies the unit of information conveyed by the element, e.g. <val>columns</val>, <val>pages</val>, <val>volume</val>, <val>entry</val>.</desc>
       <desc xml:lang="ja" versionDate="2019-01-04">当該要素が伝える情報の単位を特定する。たとえば、カラム (<val>columns</val>)、頁 (<val>pages</val>)、巻 (<val>volume</val>)、エントリ (<val>entry</val>) 等。</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="semi">
@@ -9485,6 +9523,16 @@ material</measure>
       <extent>ungefähr 10MB</extent>
     </egXML>
   </exemplum>
+  <exemplum versionDate="2023-02-03" xml:lang="de">
+    <p>Das <gi>measure</gi>-Element kann dazu verwendet werden, um normalisierte oder 
+      maschinenlesbare Versionen der Größen-Angaben bereitzustellen.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <extent>
+        <measure unit="MiB" quantity="4.2">Ungefähr vier Megabyte</measure>
+        <measure unit="pages" quantity="245">Textumfang 245 Seiten</measure>
+      </extent>
+    </egXML>
+  </exemplum>
   <exemplum versionDate="2010-02-26" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <extent>198 pages</extent>
@@ -9499,9 +9547,6 @@ material</measure>
       <extent>10片3.5吋磁碟片</extent>
     </egXML>
   </exemplum>
-  <remarks xml:lang="de" versionDate="2016-11-25">
-    <p>Das <gi>measure</gi>-Element kann dazu verwendet werden, um normalisierte oder maschinenlesbare Versionen der Größen-Angaben bereitzustellen.</p>
-  </remarks>
   <listRef>
     <ptr target="#HD23"/>
     <ptr target="#HD2"/>
@@ -10519,7 +10564,7 @@ définissant les droits d'utilisation.</desc>
     <ptr target="#CCAS2"/>
   </listRef>
 </elementSpec></div>
-<div type="div3" xml:id="HD31"><head>Computer Files Derived from Other Computer Files</head></div></div>
+<div type="div3" xml:id="HD31"><head>TEI documents derived from other TEI documents</head></div></div>
 <div type="div2" xml:id="HD5"><head>The Encoding Description</head>
 <elementSpec module="header" ident="encodingDesc">
   <gloss versionDate="2007-07-04" xml:lang="en">encoding description</gloss>
@@ -16268,6 +16313,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
         <valItem ident="foreign">
           <gloss xml:lang="en" versionDate="2016-11-25">foreign</gloss>
           <gloss versionDate="2016-11-25" xml:lang="de">fremdartig</gloss>
+          <desc versionDate="2023-01-13" xml:lang="en">foreign words</desc>
           <desc versionDate="2008-04-06" xml:lang="es">palabras extranjeras</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">mots étrangers</desc>
           <desc versionDate="2007-11-06" xml:lang="it">parole straniere</desc>
@@ -23714,6 +23760,7 @@ epistemology, methodology and history of
 </elementSpec>
 <elementSpec module="core" ident="publisher">
   <gloss xml:lang="en" versionDate="2009-01-06">publisher</gloss>
+  <gloss xml:lang="es" versionDate="2023-05-08">editorial</gloss>
   <gloss versionDate="2009-01-06" xml:lang="fr">éditeur</gloss>
   <gloss versionDate="2017-06-13" xml:lang="de">Verlag</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">provides the name of the organization responsible for the publication or distribution of a
@@ -24837,9 +24884,17 @@ relatedItem element must be empty</sch:report>
       </list>
     </egXML>
   </exemplum>
+  <remarks xml:lang="en" versionDate="2023-01-13">
+    <p>This element may be used to transcribe which character is
+    speaking in a dramatic text as indicated by the source text; the
+    <att>who</att> attribute of an <gi>sp</gi> element may be used to
+    point to another element (typically a <gi>role</gi>) which
+    provides information about the character speaking. Either or both
+    may be used.</p>
+  </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Cet élément est utilisé pour indiquer quel personnage prend la parole dans une pièce de
-            théâtre ; l'attribut who est utilisé pour pointer vers un autre élément qui fournit des
+            théâtre ; l'attribut <att>who</att> est utilisé pour pointer vers un autre élément qui fournit des
             informations sur ce personnage. L'un et ou l'autre peuvent être utilisés.</p>
   </remarks>
   <listRef>
@@ -29887,7 +29942,7 @@ otherwise available in the document character set-->.</desc>
 for uppercase equivalences, <val>lowercase</val>   for lowercase equivalences,
 and <val>simplified</val>  for simplified characters. The
 	 <gi>g</gi> elements contained by this element can  point to either another
-	 <gi>char</gi> or <gi>glyph</gi>element or contain a character
+	 <gi>char</gi> or <gi>glyph</gi> element or contain a character
 	 that is intended to be the target of this mapping.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
@@ -31239,6 +31294,9 @@ and <val>simplified</val>  for simplified characters. The
                 <valItem ident="11.0"/>
                 <valItem ident="12.0"/>
                 <valItem ident="12.1"/>
+                <valItem ident="13.0"/>
+                <valItem ident="14.0"/>
+                <valItem ident="15.0"/>
                 <valItem ident="unassigned"/>
             </valList>
         </attDef>
@@ -39545,9 +39603,9 @@ headword  such as noun, verb, or adjective.</desc>
           <gloss versionDate="2008-04-06" xml:lang="es">ningún guión</gloss>
           <gloss versionDate="2009-04-08" xml:lang="fr">pas de trait d'union</gloss>
           <gloss versionDate="2007-11-06" xml:lang="it">nessun trattino</gloss>
+          <desc versionDate="2007-07-04" xml:lang="en">indicates that the headword, though a prefix or suffix, loses its hyphen</desc>
           <desc versionDate="2007-11-06" xml:lang="it">indica che il lemma, sebbene prefisso o suffisso,
             perde il trattino</desc>
-          <desc versionDate="2007-07-04" xml:lang="en">indicates that the headword, though a prefix or suffix, loses its hyphen</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">접두사 또는 접미사일지라도 표제어의 하이픈이 소실되었음을 표시한다.</desc>
           <desc versionDate="2008-04-06" xml:lang="es">indica que el lema, aunque sea un prefijo o un
             sufijo, no contiene su guión</desc>
@@ -41294,20 +41352,12 @@ manuscripts or other objects, not necessarily located within a single repository
 
   <content>
     <sequence>
-     <classRef key="model.placeNamePart" expand="sequenceOptional"/>
-     
-       <elementRef key="institution" minOccurs="0"/>
-     
-     
-       <elementRef key="repository" minOccurs="0"/>
-     
-     
-       <elementRef key="collection" minOccurs="0"/>
-     
-     <elementRef key="idno"/>
-     
-       <elementRef key="note" minOccurs="0"/>
-     
+      <classRef key="model.placeNamePart" expand="sequenceOptional"/>    
+      <elementRef key="institution" minOccurs="0"/>
+      <elementRef key="repository" minOccurs="0"/>
+      <elementRef key="collection" minOccurs="0"/>
+      <elementRef key="idno"/>
+      <elementRef key="note" minOccurs="0"/>
     </sequence>
   </content>
   <exemplum xml:lang="en">
@@ -41322,20 +41372,24 @@ manuscripts or other objects, not necessarily located within a single repository
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-BnF-Reliures">
       <altIdentifier>
-	<idno>B 106</idno>
-	<note>Cote de la Bibliothèque royale au XVIIIe siècle.</note>
+        <idno>B 106</idno>
+        <note>Cote de la Bibliothèque royale au XVIIIe siècle.</note>
       </altIdentifier>
     </egXML>
   </exemplum>
   <exemplum versionDate="2007-05-02" xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <altIdentifier>
-	<settlement>台北市中正區</settlement>
-	<repository>國立歷史博物館</repository>
-	<idno>MS.El.26.C.9</idno>
+        <settlement>台北市中正區</settlement>
+        <repository>國立歷史博物館</repository>
+        <idno>MS.El.26.C.9</idno>
       </altIdentifier>
     </egXML>
   </exemplum>
+  <remarks versionDate="2005-03-01" xml:lang="en">
+    <p>An identifying number of some kind must be supplied if
+    known; if it is not known, this should be stated. </p>
+  </remarks>
   <remarks versionDate="2008-04-06" xml:lang="fr">
     <p>Un numéro identifiant quelconque doit être fourni s'il est connu ; si on ne le
     connaît pas, cela devrait être signalé.</p>
@@ -41344,10 +41398,6 @@ manuscripts or other objects, not necessarily located within a single repository
     識別番号が判る場合は、示す必要がある。判らない場合は、そのことを示
     すべきである。
   </p>
-  </remarks>
-  <remarks versionDate="2005-03-01" xml:lang="en">
-    <p>An identifying number of some kind must be supplied if
-    known; if it is not known, this should be stated. </p>
   </remarks>
   <listRef>
     <ptr target="#msid"/>
@@ -50945,6 +50995,18 @@ different witnesses.
       <langKnown tag="fr" level="M">French</langKnown>
     </egXML>
   </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#github-mix-mix">
+      <person sex="m" role="speaker collaborator">
+        <!-- other details omitted -->
+        <langKnowledge> 
+          <langKnown tag="mix">Mixtepec-Mixtec</langKnown>
+          <langKnown tag="en">English</langKnown>
+          <langKnown tag="es">Spanish</langKnown>
+        </langKnowledge>
+      </person>
+    </egXML>
+  </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <langKnown tag="en-GB" level="H">Anglais britannique</langKnown>
@@ -51280,11 +51342,11 @@ raiders and saved the town from capture.</desc>
   </listRef>
 </elementSpec>
 <elementSpec module="namesdates" ident="listRelation">
+  <desc versionDate="2011-12-02" xml:lang="en">provides information about relationships identified amongst people, places, and
+    organizations, either informally as prose or as formally expressed relation links.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">donne des informations sur les relations qui existent
     entre des personnes, des lieux, ou des organisations, soit de manière informelle en prose, soit
     de manière formelle.</desc>
-  <desc versionDate="2011-12-02" xml:lang="en">provides information about relationships identified amongst people, places, and
-    organizations, either informally as prose or as formally expressed relation links.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">비공식적으로 산문체 또는 공식적으로 표현된 관계 연결을 통하여 사람, 장소, 그리고 조직 사이에
     식별되는 관련성에 관한 정보를 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">描述一項語言互動中參與者之間的關係或社交關聯。</desc>
@@ -53485,8 +53547,8 @@ specification.</p></remarks>
   <gloss versionDate="2008-04-06" xml:lang="es">nombre canónico</gloss>
   <gloss versionDate="2007-11-06" xml:lang="it">nome canonico</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">nom canonique</gloss>
-  <desc versionDate="2009-03-19" xml:lang="fr">contient la définition de tout nom ou partie de nom dans leur forme canonique.</desc>
   <desc versionDate="2012-03-05" xml:lang="en">contains the definition for a canonical name or name component of any kind.</desc>
+  <desc versionDate="2009-03-19" xml:lang="fr">contient la définition de tout nom ou partie de nom dans leur forme canonique.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">표준 이름 또는 어떤 종류의 이름부 정의를 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一標準名稱或任何部分名稱的定義。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">各種名前の、標準的な名前または名前の部分の定義を示す。</desc>
@@ -56586,7 +56648,7 @@ Information with a Text</head>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">在文件中某一位置附上識別符碼，無論該位置是否符合一個文字性元素。</desc>
   <desc versionDate="2022-05-09" xml:lang="ja">テキスト中のある地点に対して識別子を付与する。テキスト要素と対応するかは問われない。</desc>
   <desc versionDate="2009-10-06" xml:lang="fr">attache un identifiant à un point du texte, que ce point corresponde ou non à un élément textuel.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">enlanza un indentificador con una posición al interno del texto, independientemente del hecho que esta sea o no a un elemento textual.</desc>
+  <desc versionDate="2022-06-30" xml:lang="es">enlanza un indentificador con una posición al interno del texto, independientemente del hecho que esta corresponda o no a un elemento textual.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">aggancia un indentificatore a una posizione all'interno del testo indipendentemente dal fatto che questa corrisponda o meno a un elemento testuale</desc>
   <desc versionDate="2017-06-19" xml:lang="de">fügt an einer Stelle im Text eine Kennung ein, unabhängig von der Textstruktur.</desc>
   <classes>
@@ -68118,9 +68180,9 @@ déclaration de même nom dans la définition courante.</desc>
       <sch:let name="msg_part05" value="if ( parent::tei:moduleRef/@key ) then 'a @key'    else ''"/>
       <sch:let name="msg_part06" value="if ( parent::tei:moduleRef/@url ) then 'a @url'    else ''"/>
       <sch:let name="msg_part07" value="if ( parent::tei:*/@ident )       then 'an @ident' else ''"/>
-      <sch:let name="msg_part08" value="' of &quot;'"/>
+      <sch:let name="msg_part08" value="' of &#34;'"/>
       <sch:let name="msg_part09" value="../@ident | ../@key | ../@url"/>
-      <sch:let name="msg_part10" value="concat('&quot; and has ', $tot_kids, ' children,')"/>
+      <sch:let name="msg_part10" value="concat('&#34; and has ', $tot_kids, ' children,')"/>
       <sch:let name="msgs_1to10" value="concat( $msg_part01, $msg_part02, $msg_part03, $msg_part04, $msg_part05, $msg_part06, $msg_part07, $msg_part08, $msg_part09, $msg_part10 )"/>
       <sch:report test="$tei_kids eq $tot_kids" role="warning">
         <sch:value-of select="$msgs_1to10"/> which could be wrapped in a &lt;sequence&gt; element.
@@ -70127,6 +70189,7 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="DRCAST-eg-16"/>
 <bibl xml:id="CO-eg-02"/>
 <bibl xml:id="fr-ex-Becque-ee"/>
+<bibl xml:id="github-mix-mix"/>
 <bibl xml:id="PH-eg-05"/>
 <bibl xml:id="DRPRO-eg-10"/>
 <bibl xml:id="divEGs"/>
@@ -70416,6 +70479,7 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="fr-ex-Tunis"/>
 <bibl xml:id="PNIN1"/>
 <bibl xml:id="DIC-NPEG"/>
+<bibl xml:id="NZPaV01NgaK"/>
 <bibl xml:id="NJAL"/>
 <bibl xml:id="DR-eg-07"/>
 <bibl xml:id="fr-ex-Ollagnier_Main"/>
