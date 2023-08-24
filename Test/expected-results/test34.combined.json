@@ -132,8 +132,8 @@
         "type" : "elementSpec",
         "module" : "linking",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph.<\/desc>" ],
-        "shortDesc" : "(anonymous block) contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-08-11\" xml:lang=\"en\">contains any component-level unit of text, acting as a container for phrase or inter level elements analogous to, but without the same constraints as, a paragraph.<\/desc>" ],
+        "shortDesc" : "(anonymous block) contains any component-level unit of text, acting as a container for phrase or inter level elements analogous to, but without the same constraints as, a paragraph.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">anonymous block<\/gloss>" ],
         "altIdent" : 
@@ -154,7 +154,7 @@
         "content" : 
         [ 
           { "type" : "macroRef",
-            "key" : "macro.paraContent" } ] },
+            "key" : "macro.abContent" } ] },
       
       { "ident" : "abbr",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -308,7 +308,10 @@
                 "key" : "model.pLike" },
               
               { "type" : "classRef",
-                "key" : "model.listLike" } ] } ] },
+                "key" : "model.listLike" },
+              
+              { "type" : "elementRef",
+                "key" : "listBibl" } ] } ] },
       
       { "ident" : "add",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -1854,7 +1857,8 @@
           [  ],
           "atts" : 
           [ "att.global",
-            "att.pointing" ],
+            "att.pointing",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -2962,9 +2966,9 @@
         "module" : "header",
         "desc" : 
         [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2015-01-29\" xml:lang=\"en\">contains a description\n    of the actions related to one act of correspondence.<\/desc>" ],
-        "shortDesc" : "(correspondence\n    description) contains a description\n    of the actions related to one act of correspondence.",
+        "shortDesc" : "(correspondence description) contains a description\n    of the actions related to one act of correspondence.",
         "gloss" : 
-        [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2014-01-13\" xml:lang=\"en\">correspondence\n    description<\/gloss>" ],
+        [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2014-01-13\" xml:lang=\"en\">correspondence description<\/gloss>" ],
         "altIdent" : 
         [  ],
         "classes" : 
@@ -6570,7 +6574,8 @@
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.divPart" ],
+          [ "model.divPart",
+            "model.paraPart" ],
           "atts" : 
           [ "att.global",
             "att.divLike",
@@ -6612,6 +6617,9 @@
                   { "type" : "classRef",
                     "key" : "model.labelLike" },
                   
+                  { "type" : "classRef",
+                    "key" : "model.pPart.transcriptional" },
+                  
                   { "type" : "elementRef",
                     "key" : "lg" } ] },
               
@@ -6628,6 +6636,9 @@
                   
                   { "type" : "classRef",
                     "key" : "model.labelLike" },
+                  
+                  { "type" : "classRef",
+                    "key" : "model.pPart.transcriptional" },
                   
                   { "type" : "classRef",
                     "key" : "model.global" },
@@ -7134,8 +7145,8 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a word or phrase referring to some quantity of an object or commodity, usually\n        comprising a number, a unit, and a commodity name.<\/desc>" ],
-        "shortDesc" : "(measure) contains a word or phrase referring to some quantity of an object or commodity, usually\n        comprising a number, a unit, and a commodity name.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a word or phrase referring to some quantity\n    of an object or commodity, usually comprising a number, a unit, and a commodity name.<\/desc>" ],
+        "shortDesc" : "(measure) contains a word or phrase referring to some quantity\n    of an object or commodity, usually comprising a number, a unit, and a commodity name.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2009-01-06\">measure<\/gloss>" ],
         "altIdent" : 
@@ -7146,7 +7157,8 @@
           "atts" : 
           [ "att.global",
             "att.typed",
-            "att.measurement" ],
+            "att.measurement",
+            "att.ranging" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7157,8 +7169,8 @@
             "ns" : "",
             "usage" : "opt",
             "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-11-18\" xml:lang=\"en\">specifies the type of measurement in any convenient typology.<\/desc>" ],
-            "shortDesc" : "specifies the type of measurement in any convenient typology.",
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-11-18\" xml:lang=\"en\">specifies the type of measurement in any\n        convenient typology.<\/desc>" ],
+            "shortDesc" : "specifies the type of measurement in any\n        convenient typology.",
             "gloss" : 
             [  ],
             "altIdent" : 
@@ -7718,9 +7730,9 @@
         "module" : "core",
         "desc" : 
         [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a group of notes<\/desc>" ],
-        "shortDesc" : "contains a group of notes",
+        "shortDesc" : "(note group) contains a group of notes",
         "gloss" : 
-        [  ],
+        [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-06-09\" xml:lang=\"en\">note group<\/gloss>" ],
         "altIdent" : 
         [  ],
         "classes" : 
@@ -8597,8 +8609,8 @@
                 
                 { "ident" : "foreign",
                   "desc" : 
-                  [  ],
-                  "shortDesc" : "(foreign) ",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2023-01-13\" xml:lang=\"en\">foreign words<\/desc>" ],
+                  "shortDesc" : "(foreign) foreign words",
                   "gloss" : 
                   [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2016-11-25\">foreign<\/gloss>" ],
                   "altIdent" : 
@@ -10264,7 +10276,8 @@
         { "model" : 
           [  ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.datcat" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10768,7 +10781,7 @@
         "content" : 
         [ 
           { "type" : "macroRef",
-            "key" : "macro.phraseSeq" } ] },
+            "key" : "macro.specialPara" } ] },
       
       { "ident" : "time",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -11425,18 +11438,18 @@
                 { "ident" : "background_noise",
                   "desc" : 
                   [  ],
-                  "shortDesc" : "(background_noise) ",
+                  "shortDesc" : "(background noise) ",
                   "gloss" : 
-                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-01-17\">background_noise<\/gloss>" ],
+                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-01-17\">background noise<\/gloss>" ],
                   "altIdent" : 
                   [  ] },
                 
                 { "ident" : "eccentric_ductus",
                   "desc" : 
                   [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-02-01\">\n            indicates illegibility due to an unusual, awkward, or\n            incompetent execution of a glyph or glyphs\n            \n          <\/desc>" ],
-                  "shortDesc" : "(eccentric_ductus) \n            indicates illegibility due to an unusual, awkward, or\n            incompetent execution of a glyph or glyphs\n            \n          ",
+                  "shortDesc" : "(eccentric ductus) \n            indicates illegibility due to an unusual, awkward, or\n            incompetent execution of a glyph or glyphs\n            \n          ",
                   "gloss" : 
-                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-01-17\">eccentric_ductus<\/gloss>" ],
+                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-01-17\">eccentric ductus<\/gloss>" ],
                   "altIdent" : 
                   [  ] } ] } },
           
@@ -11938,14 +11951,7 @@
           "gloss" : 
           [  ],
           "altIdent" : 
-          [  ],
-          "classes" : 
-          { "model" : 
-            [  ],
-            "atts" : 
-            [  ],
-            "unknown" : 
-            [  ] } },
+          [  ] },
         
         { "ident" : "model.choicePart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12383,7 +12389,14 @@
           "gloss" : 
           [  ],
           "altIdent" : 
-          [  ] },
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.paraPart" ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
         
         { "ident" : "model.global",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12395,7 +12408,14 @@
           "gloss" : 
           [  ],
           "altIdent" : 
-          [  ] },
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.paraPart" ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
         
         { "ident" : "model.global.edit",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12545,7 +12565,8 @@
           [  ],
           "classes" : 
           { "model" : 
-            [ "model.common" ],
+            [ "model.paraPart",
+              "model.common" ],
             "atts" : 
             [  ],
             "unknown" : 
@@ -12564,7 +12585,8 @@
           [  ],
           "classes" : 
           { "model" : 
-            [ "model.divPart" ],
+            [ "model.divPart",
+              "model.paraPart" ],
             "atts" : 
             [  ],
             "unknown" : 
@@ -12905,6 +12927,18 @@
             "unknown" : 
             [  ] } },
         
+        { "ident" : "model.paraPart",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-05-21\" xml:lang=\"en\">groups elements that may appear in paragraphs and similar elements<\/desc>" ],
+          "shortDesc" : "groups elements that may appear in paragraphs and similar elements",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ] },
+        
         { "ident" : "model.phrase",
           "ns" : "http:\/\/foo.foo\/foo",
           "type" : "classSpec",
@@ -12915,7 +12949,14 @@
           "gloss" : 
           [  ],
           "altIdent" : 
-          [  ] },
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.paraPart" ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
         
         { "ident" : "model.phrase.xml",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -13717,8 +13758,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-22\" xml:lang=\"en\">provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n  <title ref=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/title>.<\/desc>" ],
-          "shortDesc" : "provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n  XML Schema Part 2: Datatypes Second Edition.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-22\" xml:lang=\"en\">provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n    <ref target=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/ref>.<\/desc>" ],
+          "shortDesc" : "provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n    XML Schema Part 2: Datatypes Second Edition.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -13830,8 +13871,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-08-22\" xml:lang=\"en\">provides attributes that are used to \n    align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 \n    standard and stored in the Web repository called ISOCat at <ptr target=\"http:\/\/www.isocat.org\/\"\/>.<\/desc>" ],
-          "shortDesc" : "provides attributes that are used to \n    align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 \n    standard and stored in the Web repository called ISOCat at .",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-09-17\" xml:lang=\"en\">provides attributes that are used to align XML\n    elements or attributes with the appropriate Data Categories (DCs) defined by an external \n    taxonomy, in this way establishing the identity of information containers and values, \n    and providing means of interpreting them.<\/desc>" ],
+          "shortDesc" : "provides attributes that are used to align XML\n    elements or attributes with the appropriate Data Categories (DCs) defined by an external \n    taxonomy, in this way establishing the identity of information containers and values, \n    and providing means of interpreting them.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -13841,11 +13882,11 @@
             { "onElement" : false,
               "ident" : "datcat",
               "mode" : "add",
-              "ns" : "http:\/\/www.isocat.org\/ns\/dcr",
+              "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-04-15\" xml:lang=\"en\">contains a PID (persistent identifier) that aligns the given element with the appropriate \n        Data Category (or categories) in ISOcat.<\/desc>" ],
-              "shortDesc" : "contains a PID (persistent identifier) that aligns the given element with the appropriate \n        Data Category (or categories) in ISOcat.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-09-17\" xml:lang=\"en\">provides a pointer to a definition of, and\/or general\n        information about, (a) an information container (element or attribute) or (b) a value of an\n        information container (element content or attribute value), by referencing an external\n        taxonomy or ontology. If <att>valueDatcat<\/att> is present in the immediate context, this attribute\n        takes on role (a), while <att>valueDatcat<\/att> performs role (b).<\/desc>" ],
+              "shortDesc" : "provides a pointer to a definition of, and\/or general\n        information about, (a) an information container (element or attribute) or (b) a value of an\n        information container (element content or attribute value), by referencing an external\n        taxonomy or ontology. If valueDatcat is present in the immediate context, this attribute\n        takes on role (a), while valueDatcat performs role (b).",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -13861,11 +13902,31 @@
             { "onElement" : false,
               "ident" : "valueDatcat",
               "mode" : "add",
-              "ns" : "http:\/\/www.isocat.org\/ns\/dcr",
+              "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-04-15\" xml:lang=\"en\">contains a PID (persistent identifier) that aligns the content of the given\n        element or the value of the given attribute with the appropriate simple Data\n        Category (or categories) in ISOcat.<\/desc>" ],
-              "shortDesc" : "contains a PID (persistent identifier) that aligns the content of the given\n        element or the value of the given attribute with the appropriate simple Data\n        Category (or categories) in ISOcat.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-09-17\" xml:lang=\"en\">provides a definition of, and\/or general\n        information about a value of an information container (element content or attribute value),\n        by reference to an external taxonomy or ontology. Used especially where a contrast with\n        <att>datcat<\/att> is needed.<\/desc>" ],
+              "shortDesc" : "provides a definition of, and\/or general\n        information about a value of an information container (element content or attribute value),\n        by reference to an external taxonomy or ontology. Used especially where a contrast with\n        datcat is needed.",
+              "gloss" : 
+              [  ],
+              "altIdent" : 
+              [  ],
+              "valDesc" : 
+              [  ],
+              "datatype" : 
+              { "min" : "1",
+                "max" : "unbounded",
+                "dataRef" : 
+                { "key" : "teidata.pointer" } } },
+            
+            { "onElement" : false,
+              "ident" : "targetDatcat",
+              "mode" : "add",
+              "ns" : "",
+              "usage" : "opt",
+              "desc" : 
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-09-17\" xml:lang=\"en\">provides a definition of, and\/or general\n        information about, information structure of an object referenced or modeled by the\n        containing element, by reference to an external taxonomy or ontology. This attribute has the\n        characteristics of the <att>datcat<\/att> attribute, except that it addresses not its containing\n        element, but an object that is being referenced or modeled by its containing element.<\/desc>" ],
+              "shortDesc" : "provides a definition of, and\/or general\n        information about, information structure of an object referenced or modeled by the\n        containing element, by reference to an external taxonomy or ontology. This attribute has the\n        characteristics of the datcat attribute, except that it addresses not its containing\n        element, but an object that is being referenced or modeled by its containing element.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -17135,6 +17196,15 @@
     [  ],
     "macros" : 
     [ 
+      { "ident" : "macro.abContent",
+        "module" : "tei",
+        "type" : "",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-10-14\" xml:lang=\"en\">defines the content of anonymous block elements.<\/desc>" ],
+        "shortDesc" : "(anonymous block content) defines the content of anonymous block elements.",
+        "gloss" : 
+        [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-05-21\" xml:lang=\"en\">anonymous block content<\/gloss>" ] },
+      
       { "ident" : "macro.limitedContent",
         "module" : "tei",
         "type" : "",
@@ -17402,7 +17472,7 @@
         [ 
           { "type" : "dataRef",
             "name" : "token",
-            "restriction" : "[\\-+]?\\d+(\\.\\d+)?(%|cm|mm|in|pt|pc|px|em|ex|gd|rem|vw|vh|vm)" } ] },
+            "restriction" : "[\\-+]?\\d+(\\.\\d+)?(%|cm|mm|in|pt|pc|px|em|ex|ch|rem|vw|vh|vmin|vmax)" } ] },
       
       { "ident" : "teidata.pattern",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -17514,7 +17584,7 @@
         "type" : "dataSpec",
         "module" : "tei",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-04-08\" xml:lang=\"en\">defines the range of attribute values expressing a temporal\n  expression such as a date, a time, or a combination of them, that\n  conform to the W3C <title ref=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/title>\n  specification.<\/desc>" ],
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-04-08\" xml:lang=\"en\">defines the range of attribute values expressing a temporal\n  expression such as a date, a time, or a combination of them, that\n  conform to the W3C <ref target=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/ref>\n  specification.<\/desc>" ],
         "shortDesc" : "defines the range of attribute values expressing a temporal\n  expression such as a date, a time, or a combination of them, that\n  conform to the W3C XML Schema Part 2: Datatypes Second Edition\n  specification.",
         "gloss" : 
         [  ],

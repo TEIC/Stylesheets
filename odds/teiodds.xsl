@@ -1493,7 +1493,13 @@ select="$makeDecls"/></xsl:message>
       <xsl:variable name="min" select="$minmax[1]"/>
       <xsl:variable name="max" select="$minmax[2]"/>
       <xsl:choose>
-        <xsl:when test="tei:datatype/rng:text  or  not( tei:datatype )	or  $max eq 1">
+        <xsl:when test="$min eq 0 and $max eq 1">
+          <optional xmlns="http://relaxng.org/ns/structure/1.0">
+            <xsl:call-template name="attributeData"/>
+          </optional>
+        </xsl:when>
+        <xsl:when test="tei:datatype/rng:text  or  not( tei:datatype ) or $max eq 1">
+          
           <!-- If there is only going to be one output RELAX NG node   --> 
           <!-- in the attribute definition, then we don't need to      -->
           <!-- bother with the complex min & max code below (in the    -->
