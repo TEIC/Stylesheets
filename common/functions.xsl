@@ -1237,8 +1237,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:variable name="lang" select="tei:generateDocumentationLang(.)[1]"/>
-      <xsl:sequence select="tei:desc[@xml:lang='en']/@versionDate gt tei:desc[@xml:lang=$lang]/@versionDate
-                         or tei:gloss[@xml:lang='en']/@versionDate gt tei:gloss[@xml:lang=$lang]/@versionDate"></xsl:sequence>
+      <xsl:sequence select="tei:desc[@xml:lang='en'][not(@type)]/@versionDate gt tei:desc[@xml:lang=$lang][not(@type)]/@versionDate
+        or tei:gloss[@xml:lang='en'][not(@type)]/@versionDate gt tei:gloss[@xml:lang=$lang][not(@type)]/@versionDate"></xsl:sequence>
     </xsl:for-each>
   </xsl:function>
 
