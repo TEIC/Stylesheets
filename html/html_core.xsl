@@ -325,95 +325,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:element>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-      <p>Process element att</p>
-      <p>
-        <p xmlns="http://www.w3.org/1999/xhtml"> special purpose </p>
-      </p>
-    </desc>
-  </doc>
-  <xsl:template match="tei:att">
-    <span>
-      <xsl:call-template name="makeRendition"/>
-<!--      <xsl:call-template name="makeDelimiter">
-        <xsl:with-param name="string" as="xs:string">@</xsl:with-param>
-      </xsl:call-template>-->
-      <xsl:apply-templates/>
-    </span>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-      <p>Process element val</p>
-      <p>
-        <p xmlns="http://www.w3.org/1999/xhtml"> special purpose </p>
-      </p>
-    </desc>
-  </doc>
-  <xsl:template match="tei:val">
-    <span>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:call-template name="makeDelimiter">
-        <xsl:with-param name="string" as="xs:string">"</xsl:with-param>
-        <xsl:with-param name="classes" select="'start'"/>
-      </xsl:call-template>
-      <xsl:apply-templates/>
-      <xsl:call-template name="makeDelimiter">
-        <xsl:with-param name="string" as="xs:string">"</xsl:with-param>
-        <xsl:with-param name="classes" select="'end'"/>
-      </xsl:call-template>
-    </span>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-      <p>Process element tag</p>
-      <p>
-        <p xmlns="http://www.w3.org/1999/xhtml"> special purpose </p>
-      </p>
-    </desc>
-  </doc>
-  <xsl:template match="tei:tag">
-    <xsl:variable name="delims" as="xs:string+">
-      <xsl:choose>
-        <xsl:when test="empty(@type)">
-          <xsl:sequence select="( '&lt;', '&gt;' )"/>
-        </xsl:when>
-        <xsl:when test="@type = 'start'">
-          <xsl:sequence select="( '&lt;', '&gt;' )"/>
-        </xsl:when>
-        <xsl:when test="@type = 'end'">
-          <xsl:sequence select="( '&lt;/', '&gt;' )"/>
-        </xsl:when>
-        <xsl:when test="@type eq 'empty'">
-          <xsl:sequence select="( '&lt;', '/&gt;' )"/>
-        </xsl:when>
-        <xsl:when test="@type eq 'pi'">
-          <xsl:sequence select="( '&lt;?', '?/&gt;' )"/>
-        </xsl:when>
-        <xsl:when test="@type eq 'comment'">
-          <xsl:sequence select="( '&lt;!--', '--&gt;' )"/>
-        </xsl:when>
-        <xsl:when test="@type eq 'ms'">
-          <xsl:sequence select="( '&lt;[CDATA[', ']]&gt;' )"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:variable>
-    <span>
-      <xsl:attribute name="class" select="string-join( ( local-name(), @type, @scheme ),' ' )"/>
-      <xsl:call-template name="makeRendition">
-        <xsl:with-param name="default" select="'false'"/>
-      </xsl:call-template>
-      <xsl:call-template name="makeDelimiter">
-        <xsl:with-param name="string" select="$delims[1]" as="xs:string"/>
-        <xsl:with-param name="classes" select="'start'"/>
-      </xsl:call-template>
-      <xsl:apply-templates/>
-      <xsl:call-template name="makeDelimiter">
-        <xsl:with-param name="string" select="$delims[2]" as="xs:string"/>
-        <xsl:with-param name="classes" select="'end'"/>
-      </xsl:call-template>
-    </span>
-  </xsl:template>
   
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1864,27 +1775,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </xsl:element>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] creates a span with a class of delim (and optionally others) to wrap
-    delimiting text to allow users to remove/hide delimiters for whatever reason
-    (e.g. to use CSS pseudo elements instead).</desc>
-    <param name="string">The text content of the delimiter (e.g. &lt;)</param>
-    <param name="classes">A sequence of additional class names to be added to
-    the produced span. (e.g. "start")</param>
-    <return>A span element containing a delimiter:
-    <pre>
-      &lt;span class="delim start"&gt;{{{{&lt;/span&gt;
-    </pre>
-    </return>
-  </doc>
-  <xsl:template name="makeDelimiter">
-    <xsl:param name="string" as="xs:string"/>
-    <xsl:param name="classes" as="xs:string*"/>
-    <xsl:element name="span">
-      <xsl:attribute name="class" select="string-join(('delim', $classes),' ')"/>
-      <xsl:sequence select="$string"/>
-    </xsl:element>
-  </xsl:template>
+
+
   <xsl:template name="microdata"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

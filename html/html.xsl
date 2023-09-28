@@ -225,6 +225,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="microdata"/>
     </xsl:if>
   </xsl:template>
+  
+  
 
 
 
@@ -426,6 +428,29 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="$after"/>
     </xsl:element>
   </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] creates a span with a class of delim (and optionally others) to wrap
+      delimiting text to allow users to remove/hide delimiters for whatever reason
+      (e.g. to use CSS pseudo elements instead).</desc>
+    <param name="string">The text content of the delimiter (e.g. &lt;)</param>
+    <param name="classes">A sequence of additional class names to be added to
+      the produced span. (e.g. "start")</param>
+    <return>A span element containing a delimiter:
+      <pre>
+      &lt;span class="delim start"&gt;{{{{&lt;/span&gt;
+    </pre>
+    </return>
+  </doc>
+  <xsl:template name="makeDelimiter">
+    <xsl:param name="string" as="xs:string"/>
+    <xsl:param name="classes" as="xs:string*"/>
+    <xsl:element name="span">
+      <xsl:attribute name="class" select="string-join(('delim', $classes),' ')"/>
+      <xsl:sequence select="$string"/>
+    </xsl:element>
+  </xsl:template>
+  
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>how to make a horizontal rule</desc>
