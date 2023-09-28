@@ -38,7 +38,6 @@
 	  <xsl:import href="omml2mml.xsl"/>
 	  <xsl:import href="pass0.xsl"/>
 	  <xsl:import href="pass2.xsl"/>
-	
 	  
 	  <xsl:param name="convertGraphics">true</xsl:param>	  
 	  <xsl:param name="mathMethod">mml</xsl:param>	  
@@ -54,8 +53,7 @@
 	  <xsl:param name="verbose">false</xsl:param>	  
 	  <xsl:param name="processChangeInformation">false</xsl:param>
 	  <xsl:param name="pageHeight">890</xsl:param>
-	  <xsl:param name="pageWidth">576</xsl:param>
-
+      <xsl:param name="pageWidth">576</xsl:param>
 
 	  <xsl:include href="fields.xsl"/>
 	  <xsl:include href="toc.xsl"/>
@@ -67,8 +65,8 @@
 	  <xsl:include href="tables.xsl"/>
 	  <xsl:include href="textruns.xsl"/>
 	  <xsl:include href="wordsections.xsl"/>
-	
-	
+
+
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for converting Word docx files to TEI </p>
