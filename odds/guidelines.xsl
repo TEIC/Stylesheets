@@ -785,7 +785,7 @@
   <xsl:template name="egXMLEndHook">
     <xsl:variable name="selfAnchor">
       <!-- Generate a link to myself so users can easily copy-and-paste a pointer to me -->
-      <a class="bookmarklink">
+      <a class="bookmarklink" title="link to this example">
         <xsl:attribute name="href">
           <xsl:text>#</xsl:text>
           <!-- Our current context node is an <egXML>, so find its ID: -->
