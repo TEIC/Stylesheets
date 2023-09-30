@@ -362,9 +362,6 @@ test-latex: actual
 test-fo: actual
 	@echo "--------- Test/Makefile target=$@"
 	$(SAXON) -o:$(AR)/test.fo test.xml ../fo/fo.xsl  $(SAXONOPT)
-	@echo "Debug:"
-	find . -name 'oddbyexample.*'
-	@echo ":gudeD"
 	$(JING) fo.xsd $(AR)/test.fo
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test.fo $(ER)/test.fo; \
@@ -466,7 +463,6 @@ test-odt:   test.rng
 
 test-from-docx: test.rng
 	@echo "--------- Test/Makefile target=$@"
-
 	$(BINDIR)/docxtotei $(FLAGS) test-indexes.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > $(AR)/test-indexes.xml  && rm temp.xml
 	$(JING) $(AR)/test.rng $(AR)/test-indexes.xml
@@ -815,7 +811,7 @@ profile:
 clean:
 	@echo "--------- Test/Makefile target=$@"
 	(cd ..; for i in css/*; do rm -f `basename $$i`;done)
-	rm -f teitopdf.result.* test*.docx *~
+	rm -f teitopdf.result.* *~
 	rm -f dcr.tmp xml.tmp
 	rm -fr $(AR)/ charts/ embeddings/ media/ Pictures/
 
