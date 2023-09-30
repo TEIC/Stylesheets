@@ -106,59 +106,6 @@ TRANGJAR=$APPHOME/lib/trang.jar
 from=`echo $script | sed 's/to.*//'`
 to=`echo $script | sed 's/.*to//'`
 
-if [ $to = tei ]; then
-    direction=from
-    format=$from
-    outsuffix=.xml
-else
-    direction=to
-    format=$to
-    outsuffix=.$to
-fi
-if [ $from = odd ] ; then odd=true; fi
-
-if [ $# -gt 2 ]; then
-    echo "Error: only one parameter (input file) or two parameters (input file and output file) allowed: $*"
-    exit 1
-fi
-
-infile=${1}
-indir=$(dirname ${1})
-infilename=$(basename ${1})
-if [ $# -eq 1 ]; then           # only 1 argument, output file is input with new extension
-    # strip off expected suffixes from input filename
-    infilebase=${infilename}
-    infilebase=${infilebase%.odd}
-    infilebase=${infilebase%.tei}
-    infilebase=${infilebase%.xml}
-    infilebase=${infilebase%.csv}
-    infilebase=${infilebase%.dbk}
-    infilebase=${infilebase%.docx}
-    infilebase=${infilebase%.html}
-    infilebase=${infilebase%.xhtml}
-    infilebase=${infilebase%.htm}
-    infilebase=${infilebase%.odt}
-    infilebase=${infilebase%.md}
-    infilebase=${infilebase%.wp}
-    infilebase=${infilebase%.xlsx}
-    # output goes in same dir as input
-    outdir=${indir}
-    # output filename is like input but with common prefix replaced with new one
-    outfilename=${infilebase}$outsuffix
-else                            # 2 arguments (if there were more then 2 we would have already aborted)
-    outfile=${2}
-    # output directory is the directory specified
-    outdir=`dirname "${outfile}"`
-    # Following line tries to create the output directory if it does not exist yet
-    outdir=`(mkdir -p ${outdir}; cd ${outdir}; pwd)`
-    # output filename is as specified
-    outfilename=`basename ${outfile}`
-fi
-
-if [ ${indir}/${infilename} = ${outdir}/${outfilename} ] ; then die "input and output files are the same"; fi
-
-if [ ! -f "${indir}/${infilename}" ] ; then die "Input file $infile does not exist"; fi
-
 if [ ! -f "$SAXONJAR" ] ; then die "Saxon jar file $SAXONJAR does not exist"; fi
 
 while test $# -gt 0; do
@@ -196,6 +143,59 @@ while test $# -gt 0; do
   esac
   shift
 done
+
+if [ $# -gt 2 ]; then
+    echo "Error: only one parameter (input file) or two parameters (input file and output file) allowed: $*"
+    exit 1
+fi
+
+if [ $to = tei ]; then
+    direction=from
+    format=$from
+    outsuffix=.xml
+else
+    direction=to
+    format=$to
+    outsuffix=.$to
+fi
+if [ $from = odd ] ; then odd=true; fi
+
+infile=${1}
+indir=$(cd $(dirname ${1}); pwd) # This returns a full path where just $(dirname) might return just ‘.’
+infilename=$(basename ${1})
+if [ $# -eq 1 ]; then           # only 1 argument, output file is input with new extension
+    # strip off expected suffixes from input filename
+    infilebase=${infilename}
+    infilebase=${infilebase%.odd}
+    infilebase=${infilebase%.tei}
+    infilebase=${infilebase%.xml}
+    infilebase=${infilebase%.csv}
+    infilebase=${infilebase%.dbk}
+    infilebase=${infilebase%.docx}
+    infilebase=${infilebase%.html}
+    infilebase=${infilebase%.xhtml}
+    infilebase=${infilebase%.htm}
+    infilebase=${infilebase%.odt}
+    infilebase=${infilebase%.md}
+    infilebase=${infilebase%.wp}
+    infilebase=${infilebase%.xlsx}
+    # output goes in same dir as input
+    outdir=${indir}
+    # output filename is like input but with common prefix replaced with new one
+    outfilename=${infilebase}$outsuffix
+else                            # 2 arguments (if there were more then 2 we would have already aborted)
+    outfile=${2}
+    # output directory is the directory specified
+    outdir=`dirname "${outfile}"`
+    # Following line tries to create the output directory if it does not exist yet
+    outdir=`(mkdir -p ${outdir}; cd ${outdir}; pwd)`
+    # output filename is as specified
+    outfilename=`basename ${outfile}`
+fi
+
+if [ ${indir}/${infilename} = ${outdir}/${outfilename} ] ; then die "input and output files are the same"; fi
+
+if [ ! -f "${indir}/${infilename}" ] ; then die "Input file $infile does not exist"; fi
 
 if test "$defaultAPPHOME" != "$APPHOME" ; then
     if test "$profiledir" = "$defaultprofiledir" ; then
@@ -248,7 +248,7 @@ case $format in
           ;;
 esac
 
-echo Convert $infile to ${outdir}/${outfilename} \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
+echo Convert ${indir}/${infilename} to ${outdir}/${outfilename} \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
 ant $antflag -f "$APPHOME/$format/build-$direction.xml" \
         -lib "${SAXONJAR}" $debug \
     $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress \
