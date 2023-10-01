@@ -1643,7 +1643,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:with-param name="sep">,</xsl:with-param>
             </xsl:call-template>
             <xsl:text>)</xsl:text>
-            <xsl:value-of select="tei:generateIndicators(., @minOccurs, @maxOccurs)"/>
+            <xsl:value-of select="tei:norMinMax(.)[4]"/>
           </xsl:otherwise>
         </xsl:choose>
       </token>
@@ -1654,7 +1654,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:text>(</xsl:text>
         <xsl:value-of select="$innards/*" separator=","/>
         <xsl:text>)</xsl:text>
-        <xsl:value-of select="tei:generateIndicators(., @minOccurs, @maxOccurs)"/>
+        <xsl:value-of select="tei:norMinMax(.)[4]"/>
       </xsl:when>
       <xsl:otherwise>
         <token>
@@ -1666,7 +1666,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:alternate">
     <token>
-      <xsl:variable name="suffix" select="tei:generateIndicators(.,@minOccurs,@maxOccurs)"/>
+      <xsl:variable name="suffix" select="tei:norMinMax(.)[4]"/>
       <xsl:text>(</xsl:text>
       <xsl:call-template name="innards"/>
       <xsl:text>)</xsl:text>
@@ -1693,8 +1693,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:with-param name="id" select="@key"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:variable name="suffix"
-		  select="tei:generateIndicators(.,@minOccurs,@maxOccurs)"/>
+    <xsl:variable name="suffix" select="tei:norMinMax(.)[4]"/>
     <xsl:variable name="ename">
       <xsl:choose>
         <xsl:when test="self::tei:classRef and $exists=''">
