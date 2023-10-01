@@ -329,7 +329,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:anyElement" mode="tangle">
     <xsl:variable name="spec" select="ancestor::tei:elementSpec|ancestor::tei:macroSpec"/>
     <!-- "owe" = occurence wrapper element -->
-    <xsl:variable name="owe" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <xsl:variable name="owe" select="tei:norMinMax(.)[3]"/>
+    <?tei winita UPDATE for #627 needed here — Syd, 2023-10-01 ?>
     <xsl:choose>
       <xsl:when test="string-length($owe) eq 0">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{concat('anyElement-',$spec/@ident)}"/>
@@ -1489,9 +1490,9 @@ select="$makeDecls"/></xsl:message>
           <xsl:sequence select="tei:makeDescription(., true(), true())"/>
         </a:documentation>
       </xsl:if>
-      <xsl:variable name="minmax" select="tei:minOmaxO( tei:datatype/@minOccurs, tei:datatype/@maxOccurs )"/>
-      <xsl:variable name="min" select="$minmax[1]"/>
-      <xsl:variable name="max" select="$minmax[2]"/>
+      <xsl:variable name="norMinMax" as="item()+" select="if (tei:datatype) then tei:norMinMax(tei:datatype) else ( 1, 1, '', '' )"/>
+      <xsl:variable name="min" select="$norMinMax[1]"/>
+      <xsl:variable name="max" select="$norMinMax[2]"/>
       <xsl:choose>
         <xsl:when test="$min eq 0 and $max eq 1">
           <optional xmlns="http://relaxng.org/ns/structure/1.0">
@@ -2067,7 +2068,8 @@ select="$makeDecls"/></xsl:message>
    <!-- for Pure ODD -->
   <xsl:template match="tei:sequence" mode="#default tangle">
     <!-- "owe" = occurence wrapper element -->
-    <xsl:variable name="owe" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <xsl:variable name="owe" select="tei:norMinMax(.)[3]"/>
+    <?tei winita UPDATE for #627 needed here — Syd, 2023-10-01 ?>
     <!-- sequences of <dataRef> need use <list>, not <group> -->
     <xsl:variable name="group_or_list" select="if ( *[ not( self::tei:dataRef ) ] ) then 'group' else 'list'"/>
     <xsl:choose>
@@ -2099,7 +2101,8 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template match="tei:alternate"  mode="#default tangle">
     <!-- "owe" = occurence wrapper element -->
-    <xsl:variable name="owe" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <xsl:variable name="owe" select="tei:norMinMax(.)[3]"/>
+    <?tei winita UPDATE for #627 needed here — Syd, 2023-10-01 ?>
     <xsl:choose>
       <xsl:when test="string-length($owe) eq 0">
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
@@ -2122,8 +2125,12 @@ select="$makeDecls"/></xsl:message>
   
   <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef"   mode="#default tangle">
     <xsl:variable name="prefixedName" select="tei:generateRefPrefix(.)"/>
+    <xsl:variable name="norMinMax" select="tei:norMinMax(.)"/>
+    <xsl:variable name="min" select="$norMinMax[1]"/>
+    <xsl:variable name="max" select="$norMinMax[2]"/>
     <!-- "owe" = occurence wrapper element -->
-    <xsl:variable name="owe" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <xsl:variable name="owe" select="$norMinMax[3]"/>
+    <?tei winita UPDATE for #627 needed here — Syd, 2023-10-01 ?>
     <xsl:variable name="this" select="@key"/>
     <xsl:variable name="except" select="@except"/>
     <xsl:variable name="include" select="@include"/>
@@ -2203,9 +2210,6 @@ select="$makeDecls"/></xsl:message>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:variable name="minOmaxO" select="tei:minOmaxO( @minOccurs, @maxOccurs )"/>
-    <xsl:variable name="min" select="$minOmaxO[1]"/>
-    <xsl:variable name="max" select="$minOmaxO[2]"/>
     <xsl:choose>
       <xsl:when test="$min eq 1  and  $max eq 1">
         <xsl:copy-of select="$c"/>
@@ -2258,27 +2262,46 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
-  <xsl:function name="tei:minOmaxO" as="xs:integer+">
-    <!-- Input: the string values of the attributes @minOccurs and -->
-    <!--        @maxOccurs  -->
-    <!-- Oputput: a sequence of 2 integers representing the integer -->
-    <!--          values thereof with -1 used to indicate "unbounded" -->
-    <xsl:param name="minOccurs"/>
-    <xsl:param name="maxOccurs"/>
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>“normalized minimum and maximum occurences”, pronounced almost as “Norman Max”</p>
+      <p>Input: an element node, theoretically a member of att.repeatable</p>
+      <p>Output: a sequence of 4 items:
+        <ul>
+          <li>1) minOccurs as an integer</li>
+          <li>2) maxOccurs as an integer, with -1 for "unbounded"</li>
+          <li>3) a string that conforms to xs:NCName, the name of the RELAX NG element that
+          should be used to generate this number of occurences, if any; one of "optional",
+          "oneOrMore", "zeroOrMore", or '' (the empty string)</li>
+	  <li>4) a 0- or 1-character long string, the occurence
+	  indicator that should be used to generate this number of
+	  occurences in a DTD, if any; one of '?', '+', '*', or ''
+	  (the empty string)</li>
+        </ul>
+      </p>
+    </desc>
+  </doc>
+  <xsl:function name="tei:norMinMax" as="item()+">
+    <xsl:param name="me" as="element()"/>
     <!-- get the value of @minOccurs, defaulting to "1" -->
-    <xsl:variable name="minOccurs" select="( $minOccurs, '1')[1]"/>
+    <xsl:variable name="minOccurs" select="( $me/@minOccurs, '1')[1]"/>
     <!-- get the value of @maxOccurs, defaulting to "1" -->
-    <xsl:variable name="maxOccurs" select="( $maxOccurs, '1')[1]"/>
+    <xsl:variable name="maxOccurs" select="( $me/@maxOccurs, '1')[1]"/>
     <!-- We now have two _string_ representations of the attrs, but -->
     <!-- we need integers. So cast them, converting "unbounded" to  -->
     <!-- a special flag value (-1): -->
-    <xsl:variable name="min" select="xs:integer( $minOccurs )"/>
-    <xsl:variable name="max">
+    <xsl:variable name="min" select="xs:integer( $minOccurs )" as="xs:integer"/>
+    <xsl:variable name="max" as="xs:integer">
       <xsl:choose>
         <xsl:when test="$maxOccurs castable as xs:integer">
+          <!-- It's an integer, but abort if it cannot be used (i.e., min > max) -->
           <xsl:choose>
-            <xsl:when test="xs:integer( $maxOccurs ) lt $min"><xsl:message terminate="yes">The default value of @maxOccurs is 1. You cannot have a @minOccurs greater than the @maxOccurs.</xsl:message></xsl:when>
-            <xsl:otherwise><xsl:value-of select="xs:integer( $maxOccurs )"/></xsl:otherwise>
+            <xsl:when test="xs:integer( $maxOccurs ) lt $min">
+              <xsl:message terminate="yes">The default value of @maxOccurs is 1. You cannot have a @minOccurs greater than the @maxOccurs.</xsl:message>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="xs:integer( $maxOccurs )"/>
+            </xsl:otherwise>
           </xsl:choose>
         </xsl:when>
         <xsl:otherwise>
@@ -2287,27 +2310,33 @@ select="$makeDecls"/></xsl:message>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:sequence select="( $min, $max )"/>
-  </xsl:function>
-
-  <xsl:function name="tei:generateIndicators" as="xs:string">
-    <xsl:param name="minstr"/>
-    <xsl:param name="maxstr"/>
-    <!-- Discussion 2016-08-30 by Syd (modified 2016-11-25, 2016-12-01): -->
-    <!-- I found this stylesheet testing strings. That's not OK, as the attrs -->
-    <!-- @minOccurs and @maxOccurs are defined as counts: a user should be -->
-    <!-- able to enter minOccurs="02" and get the same result as if she had -->
-    <!-- entered minOccurs='2'. So I've changed this to test for integers -->
-    <!-- instead. -->
-    <xsl:variable name="minmax" select="tei:minOmaxO( $minstr, $maxstr )"/>
-    <xsl:variable name="min" select="$minmax[1]"/>
-    <xsl:variable name="max" select="$minmax[2]"/>
-    <xsl:choose>
-      <xsl:when test="$min eq 0  and  $max eq  1">optional</xsl:when>
-      <xsl:when test="$min ge 1  and  $max eq -1">oneOrMore</xsl:when>
-      <xsl:when test="$min eq 0  and  $max eq -1">zeroOrMore</xsl:when>
-      <xsl:otherwise><xsl:text/></xsl:otherwise>
-    </xsl:choose>
+    <!--
+      Generate the local name of the RELAX NG element used to create
+      the requested range of occurences, iff it is one of the
+      available possiblities. If not, use an empty text node (as a
+      flag).
+    -->
+    <xsl:variable name="RelaxOccurenceWrapperElementName" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="$min eq 0  and  $max eq  1">optional</xsl:when>
+        <xsl:when test="$min ge 1  and  $max eq -1">oneOrMore</xsl:when>
+        <xsl:when test="$min eq 0  and  $max eq -1">zeroOrMore</xsl:when>
+        <xsl:otherwise><xsl:text/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <!--
+      Generate the occurence indicator for DTDs, too
+    -->
+    <xsl:variable name="DTD_occurence_indicator" as="xs:string?">
+      <xsl:choose>
+	<xsl:when test="$me/tei:textNode | $me/rng:text">*</xsl:when>
+	<xsl:when test="$min eq 0  and  $max eq  1">?</xsl:when>
+	<xsl:when test="$min eq 0  and  $max eq -1">*</xsl:when>
+	<xsl:when test="$min ge 1  and  $max eq -1">+</xsl:when>
+	<xsl:otherwise></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:sequence select="( $min, $max, $RelaxOccurenceWrapperElementName, $DTD_occurence_indicator )"/>
   </xsl:function>
 
   <xsl:function name="tei:generateAttRef" as="xs:string">
