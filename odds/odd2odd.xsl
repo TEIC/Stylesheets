@@ -969,13 +969,15 @@ of this software, even if advised of the possibility of such damage.
             <xsl:with-param name="elementName" select="$elementName"/>
           </xsl:call-template>
           <!-- attList -->
-          <attList xmlns="http://www.tei-c.org/ns/1.0">
-            <xsl:apply-templates mode="justcopy" select="tei:attList/@org"/>
-            <xsl:call-template name="odd2odd-processAttributes">
-              <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
-              <xsl:with-param name="objectName" select="$elementName"/>
-            </xsl:call-template>
-          </attList>
+          <xsl:if test="tei:attList or $ORIGINAL/tei:attList">
+              <attList xmlns="http://www.tei-c.org/ns/1.0">
+                <xsl:apply-templates mode="justcopy" select="tei:attList/@org"/>
+                <xsl:call-template name="odd2odd-processAttributes">
+                  <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
+                  <xsl:with-param name="objectName" select="$elementName"/>
+                </xsl:call-template>
+              </attList>
+          </xsl:if>
           
 
           <!-- models -->
