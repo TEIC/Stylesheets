@@ -541,22 +541,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template match="rng:ref" mode="pass2">
-    <xsl:if test="$verbose eq 'true'  and  contains(@name,'anyElement')">
-      <!-- This entire <if> (defined by line above) is DEBUGging for 631, should not be pushed -->
-      <xsl:if test="@n">
-        <xsl:message select="'DEBUG: pass2 is checking ref name='||@name||' n='||@n"/>
-      </xsl:if>
-      <xsl:if test="not(@n)">
-        <xsl:message select="'DEBUG: where did this ref name='||@name||' come from?'"/>
-        <xsl:message>
-          <xsl:copy-of select="../.."/>
-        </xsl:message>
-      </xsl:if>
-      <xsl:message>debug: pass2 has: </xsl:message>
-      <xsl:for-each select="//rng:define/@name">
-        <xsl:message select="'   '||.||' has '||count( key('DEFED',.))"/>
-      </xsl:for-each>
-    </xsl:if>
     <xsl:choose>
       <xsl:when test="parent::rng:choice/parent::rng:start">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
