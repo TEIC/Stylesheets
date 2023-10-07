@@ -111,6 +111,144 @@
           that <choice><orig>especial</orig><reg>special</reg></choice>
           <choice><corr>order</corr><sic>oder</sic></choice>.</p>
       </div>
+
+      <div>
+	<head>Testing <att>minOccurs</att> and <att>maxOccurs</att> on <gi>anyElement</gi></head>
+	<ab xmlns:tst1="http://www.tei-c.org/ns/testMin" xmlns:tst2="http://www.tei-c.org/ns/test_min" n="mins">
+	  <!-- plain, just for reference -->
+	  <tst1:plain/>
+	  <gb n="above matches 1 to 1"/>
+	  <!-- min=0, max=various -->
+	  <gb n="above matches 0 to 1"/>
+	  <gb n="above matches 0 to 2"/>
+	  <gb n="above matches 0 to 6"/>
+	  <gb n="above matches 0 to ∞"/>
+	  <!-- min=1, max=various -->
+	  <tst2:one_to_one/>
+	  <gb n="above matches 1 to 1"/>
+	  <tst1:one_to_two/>
+	  <gb n="above matches 1 to 2"/>
+	  <tst2:one_to_six/>
+	  <gb n="above matches 1 to 6"/>
+	  <tst1:one_to_inf/>
+	  <gb n="above matches 1 to ∞"/>
+	  <!-- min=2, max=various -->
+	  <tst2:two_to_two/> <tst1:two_to_two/>
+	  <gb n="above matches 2 to 2"/>
+	  <tst2:two_to_six/> <tst1:two_to_six/>
+	  <gb n="above matches 2 to 6"/>
+	  <tst2:two_to_inf/> <tst1:two_to_inf/>
+	  <gb n="above matches 2 to ∞"/>
+	  <!-- min=4, max=various -->
+	  <tst2:four_to_six/> <tst1:four_to_six/>
+	  <tst2:four_to_six/> <tst1:four_to_six/>
+	  <gb n="above matches 4 to 6"/>
+	  <tst2:four_to_inf/> <tst1:four_to_inf/>
+	  <tst2:four_to_inf/> <tst1:four_to_inf/>
+	  <gb n="above matches 4 to ∞"/>
+	</ab>
+
+	<ab xmlns:tst1="http://www.tei-c.org/ns/test_mid" xmlns:tst2="http://www.tei-c.org/ns/testMid" n="mids">
+	  <!-- plain, just for reference -->
+	  <tst2:plain/>
+	  <gb n="above matches 1 to 1"/>
+	  <!-- min=0, max=various -->
+	  <tst1:zero_to_one/>
+	  <gb n="above matches 0 to 1"/>
+	  <tst2:zero_to_two/>
+	  <gb n="above matches 0 to 2"/>
+	  <tst1:zero_to_six/>
+	  <tst2:zero_to_six/>
+	  <tst1:zero_to_six/>
+	  <gb n="above matches 0 to 6"/>
+	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+	  <gb n="above matches 0 to ∞"/>
+	  <!-- min=1, max=various -->
+	  <tst2:one_to_one/>
+	  <gb n="above matches 1 to 1"/>
+	  <tst1:one_to_two/>
+	  <gb n="above matches 1 to 2"/>
+	  <tst2:one_to_six/>
+	  <tst1:one_to_six/>
+	  <tst2:one_to_six/>
+	  <gb n="above matches 1 to 6"/>
+	  <tst1:one_to_inf/> <tst2:one_to_inf/>
+	  <tst1:one_to_inf/> <tst2:one_to_inf/>
+	  <gb n="above matches 1 to ∞"/>
+	  <!-- min=2, max=various -->
+	  <tst1:two_to_two/> <tst2:two_to_two/>
+	  <gb n="above matches 2 to 2"/>
+	  <tst1:two_to_six/> <tst2:two_to_six/>
+	  <tst1:two_to_six/> <tst2:two_to_six/>
+	  <gb n="above matches 2 to 6"/>
+	  <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/>
+	  <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/>
+	  <gb n="above matches 2 to ∞"/>
+	  <!-- min=4, max=various -->
+	  <tst1:four_to_six/> <tst2:four_to_six/> <tst1:four_to_six/>
+	  <tst2:four_to_six/> <tst1:four_to_six/>
+	  <gb n="above matches 4 to 6"/>
+	  <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
+	  <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
+	  <gb n="above matches 4 to ∞"/>
+	</ab>
+
+	<ab xmlns:tst1="http://www.tei-c.org/ns/test_max" xmlns:tst2="http://www.tei-c.org/ns/testMax" n="maxs">
+	  <!-- plain, just for reference -->
+	  <tst2:plain/>
+	  <gb n="above matches 1 to 1"/>
+	  <!-- min=0, max=various -->
+	  <tst1:zero_to_one/>
+	  <gb n="above matches 0 to 1"/>
+	  <tst2:zero_to_two/> <tst1:zero_to_two/>
+	  <gb n="above matches 0 to 2"/>
+	  <tst2:zero_to_six/> <tst1:zero_to_six/> <tst2:zero_to_six/>
+	  <tst1:zero_to_six/> <tst2:zero_to_six/> <tst1:zero_to_six/>
+	  <gb n="above matches 0 to 6"/>
+	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+	  <gb n="above matches 0 to ∞"/>
+	  <!-- min=1, max=various -->
+	  <tst2:one_to_one/>
+	  <gb n="above matches 1 to 1"/>
+	  <tst1:one_to_two/> <tst2:one_to_two/>
+	  <gb n="above matches 1 to 2"/>
+	  <tst1:one_to_six/> <tst2:one_to_six/> <tst1:one_to_six/>
+	  <tst2:one_to_six/> <tst1:one_to_six/> <tst2:one_to_six/>
+	  <gb n="above matches 1 to 6"/>
+	  <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/>
+	  <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/>
+	  <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/>
+	  <gb n="above matches 1 to ∞"/>
+	  <!-- min=2, max=various -->
+	  <tst2:two_to_two/> <tst1:two_to_two/>
+	  <gb n="above matches 2 to 2"/>
+	  <tst2:two_to_six/> <tst1:two_to_six/> <tst2:two_to_six/>
+	  <tst1:two_to_six/> <tst2:two_to_six/> <tst1:two_to_six/>
+	  <gb n="above matches 2 to 6"/>
+	  <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/>
+	  <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/>
+	  <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/>
+	  <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/>
+	  <gb n="above matches 2 to ∞"/>
+	  <!-- min=4, max=various -->
+	  <tst2:four_to_six/> <tst1:four_to_six/> <tst2:four_to_six/>
+	  <tst1:four_to_six/> <tst2:four_to_six/> <tst1:four_to_six/>
+	  <gb n="above matches 4 to 6"/>
+	  <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
+	  <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
+	  <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
+	  <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
+	  <gb n="above matches 4 to ∞"/>
+	</ab>
+
+      </div>
+
     </body>
   </text>
 </TEI>
