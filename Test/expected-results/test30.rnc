@@ -27,10 +27,10 @@ Tmacro.specialPara =
    | Tmodel.divPart
    | Tmodel.global)*
 Tmacro.xtext = (text | Tmodel.gLike)*
-anyElement-xenoData =
+anyElement_xenoData_1 =
   element * - (tei:* | ns2:* | teix:egXML) {
     attribute * { text }*,
-    (text | anyElement-xenoData)*
+    (text | anyElement_xenoData_1)*
   }
 Tatt.anchoring.attributes =
   Tatt.anchoring.attribute.anchored, Tatt.anchoring.attribute.targetEnd
@@ -5061,7 +5061,7 @@ TxenoData =
   
   ## (non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]
   element xenoData {
-    (text | anyElement-xenoData),
+    (text | anyElement_xenoData_1),
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     Tatt.typed.attributes,

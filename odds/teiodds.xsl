@@ -190,6 +190,13 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:variable>
 
+  <xsl:variable name="anyElement_disambiguator_format" as="xs:string">
+    <!-- A string used as the xsl:number/@format to append to pattern names for <anyElement>s (thus to disambiguate them) -->
+    <xsl:variable name="zeroes" as="xs:string+">
+      <xsl:for-each select="1 to ( count( //tei:anyElement ) => xs:string() => string-length() )">0</xsl:for-each>
+    </xsl:variable>
+    <xsl:value-of select="'_'||$zeroes"/>
+  </xsl:variable>
 
   <xsl:template match="processing-instruction()" mode="#default tangle">
     <xsl:choose>
@@ -328,15 +335,19 @@ of this software, even if advised of the possibility of such damage.
   
   <xsl:template match="tei:anyElement" mode="tangle">
     <xsl:variable name="spec" select="ancestor::tei:elementSpec|ancestor::tei:macroSpec"/>
+    <xsl:variable name="disambiguator" as="xs:string">
+      <xsl:number level="any" format="{$anyElement_disambiguator_format}"/>
+    </xsl:variable>
+    <xsl:variable name="id" select="concat('anyElement_', $spec/@ident, $disambiguator )"/>
     <!-- "owe" = occurence wrapper element -->
     <xsl:variable name="owe" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:choose>
       <xsl:when test="string-length($owe) eq 0">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{concat('anyElement-',$spec/@ident)}"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$id}"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="{$owe}" namespace="http://relaxng.org/ns/structure/1.0">
-          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{concat('anyElement-',$spec/@ident)}"/>
+          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$id}"/>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>

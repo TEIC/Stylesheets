@@ -29,10 +29,10 @@ tei_macro.specialPara =
    | tei_model.inter
    | tei_model.divPart
    | tei_model.global)*
-anyElement-xenoData =
+anyElement_xenoData_1 =
   element * - (tei:* | teix:egXML) {
     attribute * { text }*,
-    (text | anyElement-xenoData)*
+    (text | anyElement_xenoData_1)*
   }
 tei_att.anchoring.attributes =
   tei_att.anchoring.attribute.anchored,
@@ -4798,7 +4798,7 @@ tei_xenoData =
   
   ## (non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]
   element tei:xenoData {
-    (text | anyElement-xenoData),
+    (text | anyElement_xenoData_1),
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     tei_att.typed.attributes,
