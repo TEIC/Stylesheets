@@ -3577,6 +3577,9 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
    <define name="t_model.entryPart">
       <notAllowed/>
    </define>
+   <define name="t_model.eventLike">
+      <notAllowed/>
+   </define>
    <define name="t_model.global.edit">
       <choice>
          <ref name="t_gap"/>
@@ -3680,6 +3683,11 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <oneOrMore>
          <ref name="t_model.placeNamePart_sequenceRepeatable"/>
       </oneOrMore>
+   </define>
+   <define name="t_model.orgPart">
+      <choice>
+         <ref name="t_model.eventLike"/>
+      </choice>
    </define>
    <define name="t_model.publicationStmtPart.agency">
       <choice>
@@ -3898,6 +3906,9 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
    <define name="t_model.catDescPart">
       <notAllowed/>
    </define>
+   <define name="t_model.textDescPart">
+      <notAllowed/>
+   </define>
    <define name="t_model.addressLike">
       <choice>
          <ref name="t_email"/>
@@ -4032,6 +4043,20 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_model.milestoneLike"/>
          <ref name="t_model.noteLike"/>
          <ref name="t_model.global.edit"/>
+      </choice>
+   </define>
+   <define name="t_model.biblPart">
+      <choice>
+         <ref name="t_model.respLike"/>
+         <ref name="t_model.imprintPart"/>
+         <ref name="t_series"/>
+         <ref name="t_citedRange"/>
+         <ref name="t_bibl"/>
+         <ref name="t_relatedItem"/>
+         <ref name="t_textLang"/>
+         <ref name="t_edition"/>
+         <ref name="t_extent"/>
+         <ref name="t_availability"/>
       </choice>
    </define>
    <define name="t_model.frontPart">
@@ -4325,6 +4350,9 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_teiCorpus"/>
          <ref name="t_TEI"/>
       </choice>
+   </define>
+   <define name="t_model.objectLike">
+      <notAllowed/>
    </define>
    <define name="t_att.personal.attributes">
       <ref name="t_att.naming.attributes"/>
@@ -5588,6 +5616,28 @@ Elements]</a:documentation>
          <empty/>
       </element>
    </define>
+   <define name="t_series">
+      <element name="series">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(series information) contains information about the series in which a book or other bibliographic item has appeared. [3.12.2.1. Analytic, Monographic, and Series Levels]</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="t_model.gLike"/>
+               <ref name="t_title"/>
+               <ref name="t_model.ptrLike"/>
+               <ref name="t_editor"/>
+               <ref name="t_respStmt"/>
+               <ref name="t_biblScope"/>
+               <ref name="t_idno"/>
+               <ref name="t_textLang"/>
+               <ref name="t_model.global"/>
+               <ref name="t_availability"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="t_att.global.attributes"/>
+         <empty/>
+      </element>
+   </define>
    <define name="t_author">
       <element name="author">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(author) in a bibliographic reference, contains the name(s) of an author, personal or corporate, of a work; for example in the same form as that provided by a recognized bibliographic name authority. [3.12.2.2. Titles, Authors, and Editors 2.2.1. The Title Statement]</a:documentation>
@@ -5752,6 +5802,16 @@ Elements]</a:documentation>
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(scope of bibliographic reference) defines the scope of a bibliographic reference, for example as a list of page numbers, or a named subdivision of a larger work. [3.12.2.5. Scopes and Ranges in Bibliographic Citations]</a:documentation>
          <ref name="t_macro.phraseSeq"/>
          <ref name="t_att.global.attributes"/>
+         <ref name="t_att.citing.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="t_citedRange">
+      <element name="citedRange">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(cited range) defines the range of cited content, often represented by pages or other units [3.12.2.5. Scopes and Ranges in Bibliographic Citations]</a:documentation>
+         <ref name="t_macro.phraseSeq"/>
+         <ref name="t_att.global.attributes"/>
+         <ref name="t_att.pointing.attributes"/>
          <ref name="t_att.citing.attributes"/>
          <empty/>
       </element>
@@ -6435,28 +6495,194 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
    </define>
    <define name="t_seriesStmt">
       <element name="seriesStmt">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(series statement) groups information about the series, if any, to which a publication belongs. [2.2.5. The Series Statement 2.2. The File Description]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(series statement)  [2.2.5. The Series Statement 2.2. The File Description]</a:documentation>
          <choice>
+            <optional>
+               <group>
+                  <ref name="t_label"/>
+                  <ref name="t_said"/>
+                  <ref name="t_pc"/>
+               </group>
+            </optional>
+            <optional>
+               <group>
+                  <ref name="t_label"/>
+                  <optional>
+                     <ref name="t_model.biblPart"/>
+                  </optional>
+                  <ref name="t_pc"/>
+               </group>
+            </optional>
+            <optional>
+               <group>
+                  <ref name="t_label"/>
+                  <optional>
+                     <ref name="t_model.biblPart"/>
+                  </optional>
+                  <ref name="t_pc"/>
+               </group>
+            </optional>
+            <optional>
+               <group>
+                  <ref name="t_label"/>
+                  <optional>
+                     <ref name="t_model.biblPart"/>
+                  </optional>
+                  <ref name="t_pc"/>
+               </group>
+            </optional>
+            <optional>
+               <group>
+                  <ref name="t_label"/>
+                  <optional>
+                     <ref name="t_model.biblPart"/>
+                  </optional>
+                  <ref name="t_pc"/>
+               </group>
+            </optional>
+            <zeroOrMore>
+               <group>
+                  <ref name="t_label"/>
+                  <ref name="t_pc"/>
+               </group>
+            </zeroOrMore>
+            <group>
+               <ref name="t_label"/>
+               <ref name="t_orgName"/>
+               <ref name="t_pc"/>
+            </group>
+            <group>
+               <ref name="t_label"/>
+               <optional>
+                  <ref name="t_model.orgPart"/>
+               </optional>
+               <ref name="t_pc"/>
+            </group>
+            <optional>
+               <group>
+                  <ref name="t_label"/>
+                  <optional>
+                     <ref name="t_model.orgPart"/>
+                  </optional>
+                  <ref name="t_pc"/>
+               </group>
+            </optional>
+            <optional>
+               <group>
+                  <ref name="t_label"/>
+                  <optional>
+                     <ref name="t_model.orgPart"/>
+                  </optional>
+                  <ref name="t_pc"/>
+               </group>
+            </optional>
+            <optional>
+               <group>
+                  <ref name="t_label"/>
+                  <optional>
+                     <ref name="t_model.orgPart"/>
+                  </optional>
+                  <ref name="t_pc"/>
+               </group>
+            </optional>
             <oneOrMore>
-               <ref name="t_model.pLike"/>
+               <group>
+                  <ref name="t_label"/>
+                  <ref name="t_model.objectLike"/>
+                  <ref name="t_pc"/>
+               </group>
             </oneOrMore>
             <group>
-               <oneOrMore>
-                  <ref name="t_title"/>
-               </oneOrMore>
-               <zeroOrMore>
-                  <choice>
-                     <ref name="t_editor"/>
-                     <ref name="t_respStmt"/>
-                  </choice>
-               </zeroOrMore>
-               <zeroOrMore>
-                  <choice>
-                     <ref name="t_idno"/>
-                     <ref name="t_biblScope"/>
-                  </choice>
-               </zeroOrMore>
+               <ref name="t_label"/>
+               <ref name="t_term"/>
+               <ref name="t_pc"/>
             </group>
+            <group>
+               <ref name="t_label"/>
+               <ref name="t_term"/>
+               <ref name="t_pc"/>
+            </group>
+            <group>
+               <ref name="t_label"/>
+               <optional>
+                  <ref name="t_model.textDescPart"/>
+               </optional>
+               <ref name="t_pc"/>
+            </group>
+            <group>
+               <ref name="t_label"/>
+               <optional>
+                  <ref name="t_model.textDescPart"/>
+               </optional>
+               <ref name="t_pc"/>
+            </group>
+            <optional>
+               <group>
+                  <ref name="t_label"/>
+                  <optional>
+                     <ref name="t_model.textDescPart"/>
+                  </optional>
+                  <ref name="t_pc"/>
+               </group>
+            </optional>
+            <optional>
+               <group>
+                  <ref name="t_label"/>
+                  <optional>
+                     <ref name="t_model.textDescPart"/>
+                  </optional>
+                  <ref name="t_pc"/>
+               </group>
+            </optional>
+            <group>
+               <ref name="t_label"/>
+               <ref name="t_model.teiHeaderPart"/>
+               <ref name="t_pc"/>
+            </group>
+            <group>
+               <ref name="t_label"/>
+               <ref name="t_model.teiHeaderPart"/>
+               <ref name="t_pc"/>
+            </group>
+            <zeroOrMore>
+               <group>
+                  <ref name="t_label"/>
+                  <ref name="t_model.teiHeaderPart"/>
+                  <ref name="t_pc"/>
+               </group>
+            </zeroOrMore>
+            <interleave>
+               <ref name="t_label"/>
+               <zeroOrMore>
+                  <ref name="t_idno"/>
+               </zeroOrMore>
+               <ref name="t_pc"/>
+            </interleave>
+            <interleave>
+               <ref name="t_label"/>
+               <zeroOrMore>
+                  <ref name="t_idno"/>
+               </zeroOrMore>
+               <ref name="t_pc"/>
+            </interleave>
+            <optional>
+               <interleave>
+                  <ref name="t_label"/>
+                  <zeroOrMore>
+                     <ref name="t_idno"/>
+                  </zeroOrMore>
+                  <ref name="t_pc"/>
+               </interleave>
+            </optional>
+            <optional>
+               <interleave>
+                  <ref name="t_label"/>
+                  <zeroOrMore>
+                     <ref name="t_idno"/>
+                  </zeroOrMore>
+                  <ref name="t_pc"/>
+               </interleave>
+            </optional>
          </choice>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>

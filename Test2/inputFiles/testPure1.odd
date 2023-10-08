@@ -223,6 +223,70 @@
           </remarks>
         </elementSpec>
 
+	<!-- Test @minOccurs, @maxOccurs, and @preserveOrder=false on <sequence>  -->
+	<elementSpec ident="seriesStmt" mode="change" module="header">
+	  <desc/>
+	  <content>
+	    <alternate>
+	      <!-- min=0 -->
+	      <sequence minOccurs="0" maxOccurs="1">
+		<elementRef key="label"/>
+		<elementRef key="said"/>
+		<elementRef key="pc"/>
+	      </sequence>
+	      <sequence minOccurs="0" maxOccurs="4">
+		<elementRef key="label"/>
+		<classRef key="model.biblPart" minOccurs="0"/>
+		<elementRef key="pc"/>
+	      </sequence>
+	      <sequence minOccurs="0" maxOccurs="unbounded">
+		<elementRef key="label"/>
+		<elementRef key="zone"/>
+		<elementRef key="pc"/>
+	      </sequence>
+	      <!-- min=1 -->
+	      <sequence minOccurs="1" maxOccurs="1">
+		<elementRef key="label"/>
+		<elementRef key="orgName"/>
+		<elementRef key="pc"/>
+	      </sequence>
+	      <sequence minOccurs="1" maxOccurs="4">
+		<elementRef key="label"/>
+		<classRef key="model.orgPart" minOccurs="0"/>
+		<elementRef key="pc"/>
+	      </sequence>
+	      <sequence minOccurs="1" maxOccurs="unbounded">
+		<elementRef key="label"/>
+		<classRef key="model.objectLike"/>
+		<elementRef key="pc"/>
+	      </sequence>
+	      <!-- min=2 -->
+	      <sequence minOccurs="2" maxOccurs="2">
+		<elementRef key="label"/>
+		<elementRef key="term"/>
+		<elementRef key="pc"/>
+	      </sequence>
+	      <sequence minOccurs="2" maxOccurs="4">
+		<elementRef key="label"/>
+		<classRef key="model.textDescPart" minOccurs="0"/>
+		<elementRef key="pc"/>
+	      </sequence>
+	      <sequence minOccurs="2" maxOccurs="unbounded">
+		<elementRef key="label"/>
+		<classRef key="model.teiHeaderPart"/>
+		<elementRef key="pc"/>
+	      </sequence>
+	      <!-- preserveOrder false -->
+	      <sequence preserveOrder="false" minOccurs="2" maxOccurs="4">
+		<elementRef key="label"/>
+		<elementRef key="idno" minOccurs="0" maxOccurs="unbounded"/>
+		<elementRef key="pc"/>
+	      </sequence>
+
+	    </alternate>
+	  </content>
+	</elementSpec>
+
         <!--
             I wanted to change the content of <ab> just to test
             <anyElement> with @minOccurs and @maxOccurs, using the

@@ -323,24 +323,27 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates mode="decomposed"/>
   </xsl:template>
 
-
+  <!-- In "tangle" mode we ignore TEI elements unless specifically
+       matched, below. -->
   <xsl:template match="tei:*" mode="tangle"/>
   
   <xsl:template match="tei:anyElement" mode="tangle">
     <xsl:variable name="spec" select="ancestor::tei:elementSpec|ancestor::tei:macroSpec"/>
-    <!-- "owe" = occurence wrapper element -->
-    <xsl:variable name="owe" select="tei:norMinMax(.)[3]"/>
-    <?tei winita UPDATING for #627 here — Syd, 2023-10-01 ?>
-    <xsl:variable name="repeatMe" as="element()+">
+    <xsl:variable name="repeatMe" as="element()">
       <rng:ref name="{concat('anyElement-',$spec/@ident)}"/>
     </xsl:variable>
     <xsl:call-template name="repeat_as_needed">
-      <xsl:with-param name="repeatMe" select="$repeatMe" as="element()+"/>
+      <xsl:with-param name="repeatMe" select="$repeatMe" as="element()"/>
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template name="repeat_as_needed">
-    <xsl:param name="repeatMe" as="element()+"/>
+  <!-- Given an element (presumably a RELAX NG element), generate the
+       correct RELAX NG code around that element to match it the right
+       number of times based on the @minOccurs and @maxOccurs of the
+       current context node (which is presumably a member of
+       att.repeatable). -->
+  <xsl:template name="repeat_as_needed" as="element()+">
+    <xsl:param name="repeatMe" as="element()"/>
     <xsl:variable name="norMinMax" select="tei:norMinMax(.)" as="item()+"/>
     <xsl:variable name="min" select="$norMinMax[1]"/>
     <xsl:variable name="max" select="$norMinMax[2]"/>
@@ -665,13 +668,6 @@ of this software, even if advised of the possibility of such damage.
             <xsl:with-param name="class" select="$thisClass"/>
           </xsl:call-template>
         </xsl:variable>
-
-        <!--<xsl:message>
-
-DEBUG <xsl:value-of select="$thisClass"/><xsl:value-of
-select="$suffix"/> generated <xsl:value-of
-select="$makeDecls"/></xsl:message>
--->
         <xsl:choose>
           <!--
                <xsl:when test="$makeDecls=''">
@@ -831,14 +827,13 @@ select="$makeDecls"/></xsl:message>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-
+    <!--  -->
     <xsl:choose>
       <xsl:when test="$suffix='' or $suffix='NULL'">
         <rng:ref name="{$localprefix}{@ident}"/>
       </xsl:when>
       <xsl:otherwise>
-        <rng:ref
-             name="{$localprefix}{@ident}_{$suffix}"/>
+        <rng:ref name="{$localprefix}{@ident}_{$suffix}"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -2100,61 +2095,47 @@ select="$makeDecls"/></xsl:message>
    </xsl:template>
 
    <!-- for Pure ODD -->
-  <xsl:template match="tei:sequence" mode="#default tangle">
-    <!-- "owe" = occurence wrapper element -->
-    <xsl:variable name="owe" select="tei:norMinMax(.)[3]"/>
-    <?tei winita UPDATE for #627 needed here — Syd, 2023-10-01 ?>
-    <!-- sequences of <dataRef> need use <list>, not <group> -->
-    <xsl:variable name="group_or_list" select="if ( *[ not( self::tei:dataRef ) ] ) then 'group' else 'list'"/>
-    <xsl:choose>
-      <xsl:when test="@preserveOrder eq 'false'  and  string-length($owe) eq 0">
-        <xsl:element name="{$group_or_list}" namespace="http://relaxng.org/ns/structure/1.0">
-          <rng:interleave>
-            <xsl:apply-templates mode="tangle"/>
-          </rng:interleave>
-        </xsl:element>
-      </xsl:when>
-      <xsl:when test="string-length($owe) eq 0">
-        <xsl:element name="{$group_or_list}" namespace="http://relaxng.org/ns/structure/1.0">
-          <xsl:apply-templates mode="tangle"/>
-        </xsl:element>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:element name="{$owe}" namespace="http://relaxng.org/ns/structure/1.0">
-          <xsl:element name="{$group_or_list}" namespace="http://relaxng.org/ns/structure/1.0">
-            <xsl:apply-templates mode="tangle"/>
-          </xsl:element>
-        </xsl:element>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+   <xsl:template match="tei:sequence | tei:interleave" mode="#default tangle">
+     <!-- sequences of <dataRef> need use <list>, not <group> -->
+     <xsl:variable name="group_or_list" select="if ( *[ not( self::tei:dataRef ) ] ) then 'group' else 'list'"/>
+     <xsl:variable name="to_be_sequenced" as="element()+">
+       <xsl:apply-templates mode="tangle" select="*"/>
+     </xsl:variable>
+     <xsl:variable name="group_or_list_content" as="element()+">
+       <xsl:choose>
+         <xsl:when test="@preserveOrder eq 'false'  or  self::tei:interleave">
+           <rng:interleave>
+             <xsl:sequence select="$to_be_sequenced[self::element()]"/>
+           </rng:interleave>
+         </xsl:when>
+         <xsl:otherwise>
+           <xsl:sequence select="$to_be_sequenced[self::element()]"/>
+         </xsl:otherwise>
+       </xsl:choose>
+     </xsl:variable>
+     <xsl:variable name="repeatMe" as="element()">
+       <xsl:element name="{$group_or_list}" namespace="http://relaxng.org/ns/structure/1.0">
+         <xsl:sequence select="$group_or_list_content"/>
+       </xsl:element>
+     </xsl:variable>
+     <xsl:call-template name="repeat_as_needed">
+       <xsl:with-param name="repeatMe" select="$repeatMe" as="element()"/>
+     </xsl:call-template>
+   </xsl:template>
 
   <xsl:template match="tei:textNode"   mode="#default tangle">
     <rng:text/>
   </xsl:template>
 
   <xsl:template match="tei:alternate"  mode="#default tangle">
-    <!-- "owe" = occurence wrapper element -->
-    <xsl:variable name="owe" select="tei:norMinMax(.)[3]"/>
-    <?tei winita UPDATE for #627 needed here — Syd, 2023-10-01 ?>
-    <xsl:choose>
-      <xsl:when test="string-length($owe) eq 0">
-        <rng:choice>
-          <xsl:apply-templates mode="tangle"/>
-        </rng:choice>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:element name="{$owe}" namespace="http://relaxng.org/ns/structure/1.0">
-          <rng:choice>
-            <xsl:apply-templates mode="tangle"/>
-          </rng:choice>
-        </xsl:element>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
-  <xsl:template match="tei:interleave" mode="#default tangle">
-    <xsl:message>met an interleave</xsl:message>
+    <xsl:variable name="repeatMe" as="element()">
+      <rng:choice>
+        <xsl:apply-templates mode="tangle"/>
+      </rng:choice>
+    </xsl:variable>
+     <xsl:call-template name="repeat_as_needed">
+       <xsl:with-param name="repeatMe" select="$repeatMe" as="element()"/>
+     </xsl:call-template>
   </xsl:template>
   
   <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef"   mode="#default tangle">
@@ -2168,7 +2149,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="this" select="@key"/>
     <xsl:variable name="except" select="@except"/>
     <xsl:variable name="include" select="@include"/>
-    <xsl:variable name="c">
+    <xsl:variable name="c" as="element()+">
       <xsl:choose>
         <xsl:when test="not(@expand) and (@include or @except)">
           <xsl:variable name="context" select="."/>
