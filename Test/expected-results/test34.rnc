@@ -2547,7 +2547,7 @@ tei_choice =
   
   ## (choice) groups a number of alternative encodings for the same point in a text. [3.5. Simple Editorial Changes]
   element choice {
-    (tei_model.choicePart | tei_choice)+,
+    (tei_model.choicePart | tei_choice),
     tei_att.global.attributes,
     empty
   }

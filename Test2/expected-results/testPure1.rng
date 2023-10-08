@@ -4,6 +4,15 @@
          xmlns:xlink="http://www.w3.org/1999/xlink"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0">
+   <define name="t_macro.abContent">
+      <zeroOrMore>
+         <choice>
+            <text/>
+            <ref name="t_model.paraPart"/>
+            <ref name="t_ab"/>
+         </choice>
+      </zeroOrMore>
+   </define>
    <define name="t_macro.paraContent">
       <zeroOrMore>
          <choice>
@@ -78,6 +87,300 @@
             <choice>
                <text/>
                <ref name="anyElement-xenoData"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_plain">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_plain"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_0_1">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_0_1"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_0_2">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_0_2"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_0_6">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_0_6"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_0_unbounded">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_0_unbounded"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_1_1">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_1_1"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_1_2">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_1_2"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_1_6">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_1_6"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_1_unbounded">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_1_unbounded"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_2_2">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_2_2"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_2_6">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_2_6"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_2_unbounded">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_2_unbounded"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_4_6">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_4_6"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement-openPara_4_unbounded">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement-openPara_4_unbounded"/>
             </choice>
          </zeroOrMore>
       </element>
@@ -3039,17 +3342,59 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <choice>
          <ref name="t_p"/>
          <ref name="t_ab"/>
+         <ref name="t_openPara_plain"/>
+         <ref name="t_openPara_0_1"/>
+         <ref name="t_openPara_0_2"/>
+         <ref name="t_openPara_0_6"/>
+         <ref name="t_openPara_0_unbounded"/>
+         <ref name="t_openPara_1_1"/>
+         <ref name="t_openPara_1_2"/>
+         <ref name="t_openPara_1_6"/>
+         <ref name="t_openPara_1_unbounded"/>
+         <ref name="t_openPara_2_2"/>
+         <ref name="t_openPara_2_6"/>
+         <ref name="t_openPara_2_unbounded"/>
+         <ref name="t_openPara_4_6"/>
+         <ref name="t_openPara_4_unbounded"/>
       </choice>
    </define>
    <define name="t_model.pLike_alternation">
       <choice>
          <ref name="t_p"/>
          <ref name="t_ab"/>
+         <ref name="t_openPara_plain"/>
+         <ref name="t_openPara_0_1"/>
+         <ref name="t_openPara_0_2"/>
+         <ref name="t_openPara_0_6"/>
+         <ref name="t_openPara_0_unbounded"/>
+         <ref name="t_openPara_1_1"/>
+         <ref name="t_openPara_1_2"/>
+         <ref name="t_openPara_1_6"/>
+         <ref name="t_openPara_1_unbounded"/>
+         <ref name="t_openPara_2_2"/>
+         <ref name="t_openPara_2_6"/>
+         <ref name="t_openPara_2_unbounded"/>
+         <ref name="t_openPara_4_6"/>
+         <ref name="t_openPara_4_unbounded"/>
       </choice>
    </define>
    <define name="t_model.pLike_sequence">
       <ref name="t_p"/>
       <ref name="t_ab"/>
+      <ref name="t_openPara_plain"/>
+      <ref name="t_openPara_0_1"/>
+      <ref name="t_openPara_0_2"/>
+      <ref name="t_openPara_0_6"/>
+      <ref name="t_openPara_0_unbounded"/>
+      <ref name="t_openPara_1_1"/>
+      <ref name="t_openPara_1_2"/>
+      <ref name="t_openPara_1_6"/>
+      <ref name="t_openPara_1_unbounded"/>
+      <ref name="t_openPara_2_2"/>
+      <ref name="t_openPara_2_6"/>
+      <ref name="t_openPara_2_unbounded"/>
+      <ref name="t_openPara_4_6"/>
+      <ref name="t_openPara_4_unbounded"/>
    </define>
    <define name="t_model.pLike_sequenceOptional">
       <optional>
@@ -3057,6 +3402,48 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       </optional>
       <optional>
          <ref name="t_ab"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_plain"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_0_1"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_0_2"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_0_6"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_0_unbounded"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_1_1"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_1_2"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_1_6"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_1_unbounded"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_2_2"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_2_6"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_2_unbounded"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_4_6"/>
+      </optional>
+      <optional>
+         <ref name="t_openPara_4_unbounded"/>
       </optional>
    </define>
    <define name="t_model.pLike_sequenceOptionalRepeatable">
@@ -3066,6 +3453,48 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <zeroOrMore>
          <ref name="t_ab"/>
       </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_plain"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_0_1"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_0_2"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_0_6"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_0_unbounded"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_1_1"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_1_2"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_1_6"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_1_unbounded"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_2_2"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_2_6"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_2_unbounded"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_4_6"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="t_openPara_4_unbounded"/>
+      </zeroOrMore>
    </define>
    <define name="t_model.pLike_sequenceRepeatable">
       <oneOrMore>
@@ -3073,6 +3502,48 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       </oneOrMore>
       <oneOrMore>
          <ref name="t_ab"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_plain"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_0_1"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_0_2"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_0_6"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_0_unbounded"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_1_1"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_1_2"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_1_6"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_1_unbounded"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_2_2"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_2_6"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_2_unbounded"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_4_6"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="t_openPara_4_unbounded"/>
       </oneOrMore>
    </define>
    <define name="t_model.stageLike">
@@ -7680,112 +8151,7 @@ The attributes @to and @from on <name/> may each contain only a single value</re
    <define name="t_ab">
       <element name="ab">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(anonymous block) contains any component-level unit of text, acting as a container for phrase or inter level elements analogous to, but without the same constraints as, a paragraph. [16.3. Blocks, Segments, and Anchors]</a:documentation>
-         <ref name="anyElement-ab"/>
-         <ref name="t_gb"/>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <ref name="t_gb"/>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <ref name="t_gb"/>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <ref name="t_gb"/>
-         <zeroOrMore>
-            <ref name="anyElement-ab"/>
-         </zeroOrMore>
-         <ref name="t_gb"/>
-         <ref name="anyElement-ab"/>
-         <ref name="t_gb"/>
-         <ref name="anyElement-ab"/>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <ref name="t_gb"/>
-         <ref name="anyElement-ab"/>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <ref name="t_gb"/>
-         <oneOrMore>
-            <ref name="anyElement-ab"/>
-         </oneOrMore>
-         <ref name="t_gb"/>
-         <ref name="anyElement-ab"/>
-         <ref name="anyElement-ab"/>
-         <ref name="t_gb"/>
-         <ref name="anyElement-ab"/>
-         <ref name="anyElement-ab"/>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <ref name="t_gb"/>
-         <ref name="anyElement-ab"/>
-         <ref name="anyElement-ab"/>
-         <zeroOrMore>
-            <ref name="anyElement-ab"/>
-         </zeroOrMore>
-         <ref name="t_gb"/>
-         <ref name="anyElement-ab"/>
-         <ref name="anyElement-ab"/>
-         <ref name="anyElement-ab"/>
-         <ref name="anyElement-ab"/>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <optional>
-            <ref name="anyElement-ab"/>
-         </optional>
-         <ref name="t_gb"/>
-         <ref name="anyElement-ab"/>
-         <ref name="anyElement-ab"/>
-         <ref name="anyElement-ab"/>
-         <ref name="anyElement-ab"/>
-         <zeroOrMore>
-            <ref name="anyElement-ab"/>
-         </zeroOrMore>
+         <ref name="t_macro.abContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0"
                   id="testPure1-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-21">
@@ -9076,6 +9442,211 @@ Sample values include: 1] TEI (Text Encoding Initiative); 2] DBK (Docbook); 3] X
          <text/>
          <ref name="t_att.global.attributes"/>
          <empty/>
+      </element>
+   </define>
+   <define name="t_openPara_plain">
+      <element name="openPara_plain">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">no <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> nor <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code>
+         </a:documentation>
+         <ref name="anyElement-openPara_plain"/>
+      </element>
+   </define>
+   <define name="t_openPara_0_1">
+      <element name="openPara_0_1">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 0, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 1</a:documentation>
+         <optional>
+            <ref name="anyElement-openPara_0_1"/>
+         </optional>
+      </element>
+   </define>
+   <define name="t_openPara_0_2">
+      <element name="openPara_0_2">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 0, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 2</a:documentation>
+         <optional>
+            <ref name="anyElement-openPara_0_2"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_0_2"/>
+         </optional>
+      </element>
+   </define>
+   <define name="t_openPara_0_6">
+      <element name="openPara_0_6">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 0, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 6</a:documentation>
+         <optional>
+            <ref name="anyElement-openPara_0_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_0_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_0_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_0_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_0_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_0_6"/>
+         </optional>
+      </element>
+   </define>
+   <define name="t_openPara_0_unbounded">
+      <element name="openPara_0_unbounded">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 0, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> unbounded</a:documentation>
+         <zeroOrMore>
+            <ref name="anyElement-openPara_0_unbounded"/>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="t_openPara_1_1">
+      <element name="openPara_1_1">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 1, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 1</a:documentation>
+         <ref name="anyElement-openPara_1_1"/>
+      </element>
+   </define>
+   <define name="t_openPara_1_2">
+      <element name="openPara_1_2">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 1, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 2</a:documentation>
+         <ref name="anyElement-openPara_1_2"/>
+         <optional>
+            <ref name="anyElement-openPara_1_2"/>
+         </optional>
+      </element>
+   </define>
+   <define name="t_openPara_1_6">
+      <element name="openPara_1_6">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 1, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 6</a:documentation>
+         <ref name="anyElement-openPara_1_6"/>
+         <optional>
+            <ref name="anyElement-openPara_1_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_1_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_1_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_1_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_1_6"/>
+         </optional>
+      </element>
+   </define>
+   <define name="t_openPara_1_unbounded">
+      <element name="openPara_1_unbounded">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 1, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> unbounded</a:documentation>
+         <oneOrMore>
+            <ref name="anyElement-openPara_1_unbounded"/>
+         </oneOrMore>
+      </element>
+   </define>
+   <define name="t_openPara_2_2">
+      <element name="openPara_2_2">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 2, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 2</a:documentation>
+         <ref name="anyElement-openPara_2_2"/>
+         <ref name="anyElement-openPara_2_2"/>
+      </element>
+   </define>
+   <define name="t_openPara_2_6">
+      <element name="openPara_2_6">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 2, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 6</a:documentation>
+         <ref name="anyElement-openPara_2_6"/>
+         <ref name="anyElement-openPara_2_6"/>
+         <optional>
+            <ref name="anyElement-openPara_2_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_2_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_2_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_2_6"/>
+         </optional>
+      </element>
+   </define>
+   <define name="t_openPara_2_unbounded">
+      <element name="openPara_2_unbounded">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 2, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> unbounded</a:documentation>
+         <ref name="anyElement-openPara_2_unbounded"/>
+         <ref name="anyElement-openPara_2_unbounded"/>
+         <zeroOrMore>
+            <ref name="anyElement-openPara_2_unbounded"/>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="t_openPara_4_6">
+      <element name="openPara_4_6">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 4, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 6</a:documentation>
+         <ref name="anyElement-openPara_4_6"/>
+         <ref name="anyElement-openPara_4_6"/>
+         <ref name="anyElement-openPara_4_6"/>
+         <ref name="anyElement-openPara_4_6"/>
+         <optional>
+            <ref name="anyElement-openPara_4_6"/>
+         </optional>
+         <optional>
+            <ref name="anyElement-openPara_4_6"/>
+         </optional>
+      </element>
+   </define>
+   <define name="t_openPara_4_unbounded">
+      <element name="openPara_4_unbounded">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+            <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 4, <code xmlns="http://www.w3.org/1999/xhtml"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> unbounded</a:documentation>
+         <ref name="anyElement-openPara_4_unbounded"/>
+         <ref name="anyElement-openPara_4_unbounded"/>
+         <ref name="anyElement-openPara_4_unbounded"/>
+         <ref name="anyElement-openPara_4_unbounded"/>
+         <zeroOrMore>
+            <ref name="anyElement-openPara_4_unbounded"/>
+         </zeroOrMore>
       </element>
    </define>
    <start>

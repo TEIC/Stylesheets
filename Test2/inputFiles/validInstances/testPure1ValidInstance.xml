@@ -39,53 +39,53 @@
       </div>
 
       <div>
-	<head>Test of <gi>dataRef</gi></head>
-	<p>I'm not about to try to work <gi>measureGrp</gi> into four
-	clever sentences, so:
-	<list>
-	  <label><att>corresp</att>: <gi>dataRef</gi> w/ <att>key</att></label>
-	  <item><measureGrp corresp="0"/> Should be
-	  valid, as <val>0</val> is a teidata.count
-	  (i.e., non-negative integer.)</item>
+        <head>Test of <gi>dataRef</gi></head>
+        <p>I'm not about to try to work <gi>measureGrp</gi> into four
+        clever sentences, so:
+        <list>
+          <label><att>corresp</att>: <gi>dataRef</gi> w/ <att>key</att></label>
+          <item><measureGrp corresp="0"/> Should be
+          valid, as <val>0</val> is a teidata.count
+          (i.e., non-negative integer.)</item>
 
-	  <label><att>select</att>: <gi>dataRef</gi> w/ <att>name</att></label>
-	  <item><measureGrp select="1"/> Should be valid, as
-	  <val>1</val> is a non-negative integer.</item>
+          <label><att>select</att>: <gi>dataRef</gi> w/ <att>name</att></label>
+          <item><measureGrp select="1"/> Should be valid, as
+          <val>1</val> is a non-negative integer.</item>
 
-	  <label><att>sameAs</att>: <gi>dataRef</gi> w/ <att>key</att> &amp; <att>restriction</att></label>
-	  <item><measureGrp sameAs="2"/> Should be
-	  valid, as <val>2</val> is a 1- or
-	  2-digit teidata.count (i.e., non-negative
-	  integer).</item>
+          <label><att>sameAs</att>: <gi>dataRef</gi> w/ <att>key</att> &amp; <att>restriction</att></label>
+          <item><measureGrp sameAs="2"/> Should be
+          valid, as <val>2</val> is a 1- or
+          2-digit teidata.count (i.e., non-negative
+          integer).</item>
 
-	  <label><att>copyOf</att>: <gi>dataRef</gi> w/ <att>name</att> &amp; <att>restriction</att></label>
-	  <item><measureGrp copyOf="34"/> Should be valid, as
-	  <val>34</val> is a 1- or 2-digit non-negative
-	  integer.</item>
-	</list>
-	</p>
+          <label><att>copyOf</att>: <gi>dataRef</gi> w/ <att>name</att> &amp; <att>restriction</att></label>
+          <item><measureGrp copyOf="34"/> Should be valid, as
+          <val>34</val> is a 1- or 2-digit non-negative
+          integer.</item>
+        </list>
+        </p>
       </div>
 
       <div>
-	<head>Testing content model and occurences of element refs</head>
-	<p>The following <gi>bibl</gi> should be valid. It
-	<emph>should</emph> be invalid if you add 2 more
-	<gi>publisher</gi> elements (for a total of 4), but is not.
-	See <ref
-	target="https://github.com/TEIC/Stylesheets/issues/354">354</ref>.
-	<bibl>
-	  <author>one</author>
-	  <author>two</author>
-	  <title xml:lang="es">uno</title>
-	  <title xml:lang="es">dos</title>
-	  <title xml:lang="es">tres</title>
-	  <title xml:lang="es">quatro</title>
-	  <title xml:lang="es">cinco</title>
-	  <publisher xml:lang="ja">ich</publisher>
-	  <publisher xml:lang="ja">ni</publisher>
-	  <date when="2019-01-05"/>
-	</bibl>
-	</p>
+        <head>Testing content model and occurences of element refs</head>
+        <p>The following <gi>bibl</gi> should be valid. It
+        <emph>should</emph> be invalid if you add 2 more
+        <gi>publisher</gi> elements (for a total of 4), but is not.
+        See <ref
+        target="https://github.com/TEIC/Stylesheets/issues/354">354</ref>.
+        <bibl>
+          <author>one</author>
+          <author>two</author>
+          <title xml:lang="es">uno</title>
+          <title xml:lang="es">dos</title>
+          <title xml:lang="es">tres</title>
+          <title xml:lang="es">quatro</title>
+          <title xml:lang="es">cinco</title>
+          <publisher xml:lang="ja">ich</publisher>
+          <publisher xml:lang="ja">ni</publisher>
+          <date when="2019-01-05"/>
+        </bibl>
+        </p>
       </div>
       
       <div>
@@ -112,142 +112,294 @@
           <choice><corr>order</corr><sic>oder</sic></choice>.</p>
       </div>
 
-      <div>
-	<head>Testing <att>minOccurs</att> and <att>maxOccurs</att> on <gi>anyElement</gi></head>
-	<ab xmlns:tst1="http://www.tei-c.org/ns/testMin" xmlns:tst2="http://www.tei-c.org/ns/test_min" n="mins">
-	  <!-- plain, just for reference -->
-	  <tst1:plain/>
-	  <gb n="above matches 1 to 1"/>
-	  <!-- min=0, max=various -->
-	  <gb n="above matches 0 to 1"/>
-	  <gb n="above matches 0 to 2"/>
-	  <gb n="above matches 0 to 6"/>
-	  <gb n="above matches 0 to ∞"/>
-	  <!-- min=1, max=various -->
-	  <tst2:one_to_one/>
-	  <gb n="above matches 1 to 1"/>
-	  <tst1:one_to_two/>
-	  <gb n="above matches 1 to 2"/>
-	  <tst2:one_to_six/>
-	  <gb n="above matches 1 to 6"/>
-	  <tst1:one_to_inf/>
-	  <gb n="above matches 1 to ∞"/>
-	  <!-- min=2, max=various -->
-	  <tst2:two_to_two/> <tst1:two_to_two/>
-	  <gb n="above matches 2 to 2"/>
-	  <tst2:two_to_six/> <tst1:two_to_six/>
-	  <gb n="above matches 2 to 6"/>
-	  <tst2:two_to_inf/> <tst1:two_to_inf/>
-	  <gb n="above matches 2 to ∞"/>
-	  <!-- min=4, max=various -->
-	  <tst2:four_to_six/> <tst1:four_to_six/>
-	  <tst2:four_to_six/> <tst1:four_to_six/>
-	  <gb n="above matches 4 to 6"/>
-	  <tst2:four_to_inf/> <tst1:four_to_inf/>
-	  <tst2:four_to_inf/> <tst1:four_to_inf/>
-	  <gb n="above matches 4 to ∞"/>
-	</ab>
+      <!-- Temporary test of @minOccurs and @maxOccurs on
+           <anyElement>, until testPure1.odd can use intended test
+           (i.e., until #631 is fixed). -->
+      <div xmlns:s="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:y="http://www.w3.org/2008/SMIL30/Structure" xmlns:d="http://www.io-link.com/IODD/2010/10">
+        <head>Testing <att>minOccurs</att> and <att>maxOccurs</att> on <gi>anyElement</gi></head>
+        <openPara_plain>
+          <s:whatever1/>
+        </openPara_plain>
+        <!--  -->
+        <openPara_0_1/>
+        <openPara_0_1>
+          <y:blort/>
+        </openPara_0_1>
 
-	<ab xmlns:tst1="http://www.tei-c.org/ns/test_mid" xmlns:tst2="http://www.tei-c.org/ns/testMid" n="mids">
-	  <!-- plain, just for reference -->
-	  <tst2:plain/>
-	  <gb n="above matches 1 to 1"/>
-	  <!-- min=0, max=various -->
-	  <tst1:zero_to_one/>
-	  <gb n="above matches 0 to 1"/>
-	  <tst2:zero_to_two/>
-	  <gb n="above matches 0 to 2"/>
-	  <tst1:zero_to_six/>
-	  <tst2:zero_to_six/>
-	  <tst1:zero_to_six/>
-	  <gb n="above matches 0 to 6"/>
-	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
-	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
-	  <gb n="above matches 0 to ∞"/>
-	  <!-- min=1, max=various -->
-	  <tst2:one_to_one/>
-	  <gb n="above matches 1 to 1"/>
-	  <tst1:one_to_two/>
-	  <gb n="above matches 1 to 2"/>
-	  <tst2:one_to_six/>
-	  <tst1:one_to_six/>
-	  <tst2:one_to_six/>
-	  <gb n="above matches 1 to 6"/>
-	  <tst1:one_to_inf/> <tst2:one_to_inf/>
-	  <tst1:one_to_inf/> <tst2:one_to_inf/>
-	  <gb n="above matches 1 to ∞"/>
-	  <!-- min=2, max=various -->
-	  <tst1:two_to_two/> <tst2:two_to_two/>
-	  <gb n="above matches 2 to 2"/>
-	  <tst1:two_to_six/> <tst2:two_to_six/>
-	  <tst1:two_to_six/> <tst2:two_to_six/>
-	  <gb n="above matches 2 to 6"/>
-	  <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/>
-	  <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/>
-	  <gb n="above matches 2 to ∞"/>
-	  <!-- min=4, max=various -->
-	  <tst1:four_to_six/> <tst2:four_to_six/> <tst1:four_to_six/>
-	  <tst2:four_to_six/> <tst1:four_to_six/>
-	  <gb n="above matches 4 to 6"/>
-	  <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
-	  <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
-	  <gb n="above matches 4 to ∞"/>
-	</ab>
+        <openPara_0_2/>
+        <openPara_0_2>
+          <d:widget/>
+        </openPara_0_2>
+        <openPara_0_2>
+          <d:widget/>
+          <d:widget/>
+        </openPara_0_2>
 
-	<ab xmlns:tst1="http://www.tei-c.org/ns/test_max" xmlns:tst2="http://www.tei-c.org/ns/testMax" n="maxs">
-	  <!-- plain, just for reference -->
-	  <tst2:plain/>
-	  <gb n="above matches 1 to 1"/>
-	  <!-- min=0, max=various -->
-	  <tst1:zero_to_one/>
-	  <gb n="above matches 0 to 1"/>
-	  <tst2:zero_to_two/> <tst1:zero_to_two/>
-	  <gb n="above matches 0 to 2"/>
-	  <tst2:zero_to_six/> <tst1:zero_to_six/> <tst2:zero_to_six/>
-	  <tst1:zero_to_six/> <tst2:zero_to_six/> <tst1:zero_to_six/>
-	  <gb n="above matches 0 to 6"/>
-	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
-	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
-	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
-	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
-	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
-	  <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
-	  <gb n="above matches 0 to ∞"/>
-	  <!-- min=1, max=various -->
-	  <tst2:one_to_one/>
-	  <gb n="above matches 1 to 1"/>
-	  <tst1:one_to_two/> <tst2:one_to_two/>
-	  <gb n="above matches 1 to 2"/>
-	  <tst1:one_to_six/> <tst2:one_to_six/> <tst1:one_to_six/>
-	  <tst2:one_to_six/> <tst1:one_to_six/> <tst2:one_to_six/>
-	  <gb n="above matches 1 to 6"/>
-	  <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/>
-	  <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/>
-	  <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/>
-	  <gb n="above matches 1 to ∞"/>
-	  <!-- min=2, max=various -->
-	  <tst2:two_to_two/> <tst1:two_to_two/>
-	  <gb n="above matches 2 to 2"/>
-	  <tst2:two_to_six/> <tst1:two_to_six/> <tst2:two_to_six/>
-	  <tst1:two_to_six/> <tst2:two_to_six/> <tst1:two_to_six/>
-	  <gb n="above matches 2 to 6"/>
-	  <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/>
-	  <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/>
-	  <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/>
-	  <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/>
-	  <gb n="above matches 2 to ∞"/>
-	  <!-- min=4, max=various -->
-	  <tst2:four_to_six/> <tst1:four_to_six/> <tst2:four_to_six/>
-	  <tst1:four_to_six/> <tst2:four_to_six/> <tst1:four_to_six/>
-	  <gb n="above matches 4 to 6"/>
-	  <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
-	  <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
-	  <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
-	  <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
-	  <gb n="above matches 4 to ∞"/>
-	</ab>
+        <openPara_0_6/>
+        <openPara_0_6>
+          <s:one/>
+        </openPara_0_6>
+        <openPara_0_6>
+          <s:one/><s:two/>
+        </openPara_0_6>
+        <openPara_0_6>
+          <s:one/><s:two/><s:three/>
+        </openPara_0_6>
+        <openPara_0_6>
+          <s:one/><s:two/><s:three/>
+          <s:four/>
+        </openPara_0_6>
+        <openPara_0_6>
+          <s:one/><s:two/><s:three/>
+          <s:four/><s:five/>
+        </openPara_0_6>
+        <openPara_0_6>
+          <s:one/><s:two/><s:three/>
+          <s:four/><s:five/><s:six/>
+        </openPara_0_6>
+        <openPara_0_unbounded>
+          <s:one/><s:two/><s:three/>
+          <s:four/><s:five/><s:six/>
+          <s:seven/><s:eight/><s:nine/>
+        </openPara_0_unbounded>
+        <!--  -->
+        <openPara_1_1>
+          <y:blort/>
+        </openPara_1_1>
 
+        <openPara_1_2>
+          <d:widget/>
+        </openPara_1_2>
+        <openPara_1_2>
+          <d:widget/>
+          <d:widget/>
+        </openPara_1_2>
+
+        <openPara_1_6>
+          <s:one/>
+        </openPara_1_6>
+        <openPara_1_6>
+          <s:one/><s:two/>
+        </openPara_1_6>
+        <openPara_1_6>
+          <s:one/><s:two/><s:three/>
+        </openPara_1_6>
+        <openPara_1_6>
+          <s:one/><s:two/><s:three/>
+          <s:four/>
+        </openPara_1_6>
+        <openPara_1_6>
+          <s:one/><s:two/><s:three/>
+          <s:four/><s:five/>
+        </openPara_1_6>
+        <openPara_1_6>
+          <s:one/><s:two/><s:three/>
+          <s:four/><s:five/><s:six/>
+        </openPara_1_6>
+
+        <openPara_1_unbounded>
+          <s:one/>
+        </openPara_1_unbounded>
+        <openPara_1_unbounded>
+          <s:one/><s:two/><s:three/>
+          <s:four/><s:five/><s:six/>
+          <s:seven/><s:eight/><s:nine/>
+        </openPara_1_unbounded>
+        <!--  -->
+        <openPara_2_2>
+          <d:widget/>
+          <d:widget/>
+        </openPara_2_2>
+
+        <openPara_2_6>
+          <s:one/><s:two/>
+        </openPara_2_6>
+        <openPara_2_6>
+          <s:one/><s:two/><s:three/>
+        </openPara_2_6>
+        <openPara_2_6>
+          <s:one/><s:two/><s:three/>
+          <s:four/>
+        </openPara_2_6>
+        <openPara_2_6>
+          <s:one/><s:two/><s:three/>
+          <s:four/><s:five/>
+        </openPara_2_6>
+        <openPara_2_6>
+          <s:one/><s:two/><s:three/>
+          <s:four/><s:five/><s:six/>
+        </openPara_2_6>
+
+        <openPara_2_unbounded>
+          <s:one/><s:two/>
+        </openPara_2_unbounded>
+        <openPara_2_unbounded>
+          <s:one/><s:two/><s:three/>
+          <s:four/><s:five/><s:six/>
+          <s:seven/><s:eight/><s:nine/>
+        </openPara_2_unbounded>
+        <!--  -->
+        <openPara_4_6>
+          <s:one/><s:two/><s:three/>
+          <s:four/>
+        </openPara_4_6>
+        <openPara_4_6>
+          <s:one/><s:two/><s:three/>
+          <s:four/><s:five/>
+        </openPara_4_6>
+        <openPara_4_6>
+          <s:one/><s:two/><s:three/>
+          <s:four/><s:five/><s:six/>
+        </openPara_4_6>
+
+        <openPara_4_unbounded>
+          <s:one/><y:two/><d:three/><s:four/>
+        </openPara_4_unbounded>
+        <openPara_4_unbounded>
+          <s:one/><s:two/><s:three/>
+          <s:four/><s:five/><s:six/>
+          <s:seven/><s:eight/><s:nine/>
+        </openPara_4_unbounded>
+        
       </div>
+        
+      <!-- See corresponding comment in testPure1.odd (search for "#631"). -->
+      <!-- <div> -->
+      <!--      <head>Testing <att>minOccurs</att> and <att>maxOccurs</att> on <gi>anyElement</gi></head> -->
+      <!--      <ab xmlns:tst1="http://www.tei-c.org/ns/testMin" xmlns:tst2="http://www.tei-c.org/ns/test_min" n="mins"> -->
+      <!--        <!-\- plain, just for reference -\-> -->
+      <!--        <tst1:plain/> -->
+      <!--        <gb n="above matches 1 to 1"/> -->
+      <!--        <!-\- min=0, max=various -\-> -->
+      <!--        <gb n="above matches 0 to 1"/> -->
+      <!--        <gb n="above matches 0 to 2"/> -->
+      <!--        <gb n="above matches 0 to 6"/> -->
+      <!--        <gb n="above matches 0 to ∞"/> -->
+      <!--        <!-\- min=1, max=various -\-> -->
+      <!--        <tst2:one_to_one/> -->
+      <!--        <gb n="above matches 1 to 1"/> -->
+      <!--        <tst1:one_to_two/> -->
+      <!--        <gb n="above matches 1 to 2"/> -->
+      <!--        <tst2:one_to_six/> -->
+      <!--        <gb n="above matches 1 to 6"/> -->
+      <!--        <tst1:one_to_inf/> -->
+      <!--        <gb n="above matches 1 to ∞"/> -->
+      <!--        <!-\- min=2, max=various -\-> -->
+      <!--        <tst2:two_to_two/> <tst1:two_to_two/> -->
+      <!--        <gb n="above matches 2 to 2"/> -->
+      <!--        <tst2:two_to_six/> <tst1:two_to_six/> -->
+      <!--        <gb n="above matches 2 to 6"/> -->
+      <!--        <tst2:two_to_inf/> <tst1:two_to_inf/> -->
+      <!--        <gb n="above matches 2 to ∞"/> -->
+      <!--        <!-\- min=4, max=various -\-> -->
+      <!--        <tst2:four_to_six/> <tst1:four_to_six/> -->
+      <!--        <tst2:four_to_six/> <tst1:four_to_six/> -->
+      <!--        <gb n="above matches 4 to 6"/> -->
+      <!--        <tst2:four_to_inf/> <tst1:four_to_inf/> -->
+      <!--        <tst2:four_to_inf/> <tst1:four_to_inf/> -->
+      <!--        <gb n="above matches 4 to ∞"/> -->
+      <!--      </ab> -->
+
+      <!--      <ab xmlns:tst1="http://www.tei-c.org/ns/test_mid" xmlns:tst2="http://www.tei-c.org/ns/testMid" n="mids"> -->
+      <!--        <!-\- plain, just for reference -\-> -->
+      <!--        <tst2:plain/> -->
+      <!--        <gb n="above matches 1 to 1"/> -->
+      <!--        <!-\- min=0, max=various -\-> -->
+      <!--        <tst1:zero_to_one/> -->
+      <!--        <gb n="above matches 0 to 1"/> -->
+      <!--        <tst2:zero_to_two/> -->
+      <!--        <gb n="above matches 0 to 2"/> -->
+      <!--        <tst1:zero_to_six/> -->
+      <!--        <tst2:zero_to_six/> -->
+      <!--        <tst1:zero_to_six/> -->
+      <!--        <gb n="above matches 0 to 6"/> -->
+      <!--        <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/> -->
+      <!--        <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/> -->
+      <!--        <gb n="above matches 0 to ∞"/> -->
+      <!--        <!-\- min=1, max=various -\-> -->
+      <!--        <tst2:one_to_one/> -->
+      <!--        <gb n="above matches 1 to 1"/> -->
+      <!--        <tst1:one_to_two/> -->
+      <!--        <gb n="above matches 1 to 2"/> -->
+      <!--        <tst2:one_to_six/> -->
+      <!--        <tst1:one_to_six/> -->
+      <!--        <tst2:one_to_six/> -->
+      <!--        <gb n="above matches 1 to 6"/> -->
+      <!--        <tst1:one_to_inf/> <tst2:one_to_inf/> -->
+      <!--        <tst1:one_to_inf/> <tst2:one_to_inf/> -->
+      <!--        <gb n="above matches 1 to ∞"/> -->
+      <!--        <!-\- min=2, max=various -\-> -->
+      <!--        <tst1:two_to_two/> <tst2:two_to_two/> -->
+      <!--        <gb n="above matches 2 to 2"/> -->
+      <!--        <tst1:two_to_six/> <tst2:two_to_six/> -->
+      <!--        <tst1:two_to_six/> <tst2:two_to_six/> -->
+      <!--        <gb n="above matches 2 to 6"/> -->
+      <!--        <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> -->
+      <!--        <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> -->
+      <!--        <gb n="above matches 2 to ∞"/> -->
+      <!--        <!-\- min=4, max=various -\-> -->
+      <!--        <tst1:four_to_six/> <tst2:four_to_six/> <tst1:four_to_six/> -->
+      <!--        <tst2:four_to_six/> <tst1:four_to_six/> -->
+      <!--        <gb n="above matches 4 to 6"/> -->
+      <!--        <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> -->
+      <!--        <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> -->
+      <!--        <gb n="above matches 4 to ∞"/> -->
+      <!--      </ab> -->
+
+      <!--      <ab xmlns:tst1="http://www.tei-c.org/ns/test_max" xmlns:tst2="http://www.tei-c.org/ns/testMax" n="maxs"> -->
+      <!--        <!-\- plain, just for reference -\-> -->
+      <!--        <tst2:plain/> -->
+      <!--        <gb n="above matches 1 to 1"/> -->
+      <!--        <!-\- min=0, max=various -\-> -->
+      <!--        <tst1:zero_to_one/> -->
+      <!--        <gb n="above matches 0 to 1"/> -->
+      <!--        <tst2:zero_to_two/> <tst1:zero_to_two/> -->
+      <!--        <gb n="above matches 0 to 2"/> -->
+      <!--        <tst2:zero_to_six/> <tst1:zero_to_six/> <tst2:zero_to_six/> -->
+      <!--        <tst1:zero_to_six/> <tst2:zero_to_six/> <tst1:zero_to_six/> -->
+      <!--        <gb n="above matches 0 to 6"/> -->
+      <!--        <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/> -->
+      <!--        <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/> -->
+      <!--        <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/> -->
+      <!--        <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/> -->
+      <!--        <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/> -->
+      <!--        <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/> -->
+      <!--        <gb n="above matches 0 to ∞"/> -->
+      <!--        <!-\- min=1, max=various -\-> -->
+      <!--        <tst2:one_to_one/> -->
+      <!--        <gb n="above matches 1 to 1"/> -->
+      <!--        <tst1:one_to_two/> <tst2:one_to_two/> -->
+      <!--        <gb n="above matches 1 to 2"/> -->
+      <!--        <tst1:one_to_six/> <tst2:one_to_six/> <tst1:one_to_six/> -->
+      <!--        <tst2:one_to_six/> <tst1:one_to_six/> <tst2:one_to_six/> -->
+      <!--        <gb n="above matches 1 to 6"/> -->
+      <!--        <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> -->
+      <!--        <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> -->
+      <!--        <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> -->
+      <!--        <gb n="above matches 1 to ∞"/> -->
+      <!--        <!-\- min=2, max=various -\-> -->
+      <!--        <tst2:two_to_two/> <tst1:two_to_two/> -->
+      <!--        <gb n="above matches 2 to 2"/> -->
+      <!--        <tst2:two_to_six/> <tst1:two_to_six/> <tst2:two_to_six/> -->
+      <!--        <tst1:two_to_six/> <tst2:two_to_six/> <tst1:two_to_six/> -->
+      <!--        <gb n="above matches 2 to 6"/> -->
+      <!--        <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/> -->
+      <!--        <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/> -->
+      <!--        <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/> -->
+      <!--        <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/> -->
+      <!--        <gb n="above matches 2 to ∞"/> -->
+      <!--        <!-\- min=4, max=various -\-> -->
+      <!--        <tst2:four_to_six/> <tst1:four_to_six/> <tst2:four_to_six/> -->
+      <!--        <tst1:four_to_six/> <tst2:four_to_six/> <tst1:four_to_six/> -->
+      <!--        <gb n="above matches 4 to 6"/> -->
+      <!--        <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> -->
+      <!--        <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> -->
+      <!--        <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> -->
+      <!--        <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> -->
+      <!--        <gb n="above matches 4 to ∞"/> -->
+      <!--      </ab> -->
+
+      <!-- </div> -->
 
     </body>
   </text>

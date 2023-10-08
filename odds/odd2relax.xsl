@@ -230,18 +230,18 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates mode="pass3"/>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:if test="$verbose eq 'true'">
-      <xsl:message select="'DEBUG: div it up from within schemaSpecBody template'"/>
-      <rng:div ns="http://www.tei-c.org/ns/DEBUG/odd2relax.xsl_pass1">
-        <xsl:copy-of select="$pass1"/>
-      </rng:div>      
-      <rng:div ns="http://www.tei-c.org/ns/DEBUG/odd2relax.xsl_pass2">
-        <xsl:copy-of select="$pass2"/>
-      </rng:div>      
-      <rng:div ns="http://www.tei-c.org/ns/DEBUG/odd2relax.xsl_pass3">
-        <xsl:copy-of select="$pass3"/>
-      </rng:div>
-    </xsl:if>
+    <!-- <xsl:if test="$verbose eq 'true'"> -->
+    <!--   <xsl:message select="'DEBUG: div it up from within schemaSpecBody template'"/> -->
+    <!--   <rng:div ns="http://www.tei-c.org/ns/DEBUG/odd2relax.xsl_pass1"> -->
+    <!--     <xsl:copy-of select="$pass1"/> -->
+    <!--   </rng:div>       -->
+    <!--   <rng:div ns="http://www.tei-c.org/ns/DEBUG/odd2relax.xsl_pass2"> -->
+    <!--     <xsl:copy-of select="$pass2"/> -->
+    <!--   </rng:div>       -->
+    <!--   <rng:div ns="http://www.tei-c.org/ns/DEBUG/odd2relax.xsl_pass3"> -->
+    <!--     <xsl:copy-of select="$pass3"/> -->
+    <!--   </rng:div> -->
+    <!-- </xsl:if> -->
     <xsl:sequence select="$pass3"/>
 </xsl:template>
 

@@ -224,33 +224,188 @@
         </elementSpec>
 
         <!--
-            Change the content of <ab> just to test <anyElement> with
-            @minOccurs and @maxOccurs. The <gb> elements are there to
-            “gather” the <anyElement>s into groups. — Syd, 2023-10-02
+            I wanted to change the content of <ab> just to test
+            <anyElement> with @minOccurs and @maxOccurs, using the
+            <gb> element to “gather” the <anyElement>s into
+            groups. (It is commented out below.) But it turns out
+            having > 1 <anyElement> in a content model causes a RELAX
+            NG schema failure; see issue #631 and pull reqeust #632.
+            Since I can’t do that I have here instead created a bunch
+            of new paragraph-level elements that each contain a single
+            <anyElement>.
+            Once #631 is fixed, this entire section can be replaced
+            with the stuff commented out below; same with the
+	    corresponding section of testPure1ValidInstance.xml.
+            Syd — 2023-10-07
         -->
-        <elementSpec ident="ab" module="linking" mode="change">
+        <elementSpec mode="add" ident="openPara_plain">
+          <desc>no <att>minOccurs</att> nor <att>maxOccurs</att></desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
           <content>
-	    <!-- plain, just for reference -->
-            <anyElement                            />         <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
-	    <!-- min=0, max=various -->
-            <anyElement minOccurs="0" maxOccurs="1"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
-            <anyElement minOccurs="0" maxOccurs="2"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
-            <anyElement minOccurs="0" maxOccurs="6"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
-            <anyElement minOccurs="0" maxOccurs="unbounded"/> <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
-	    <!-- min=1, max=various -->
-            <anyElement minOccurs="1" maxOccurs="1"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
-            <anyElement minOccurs="1" maxOccurs="2"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
-            <anyElement minOccurs="1" maxOccurs="6"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
-            <anyElement minOccurs="1" maxOccurs="unbounded"/> <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
-	    <!-- min=2, max=various -->
-            <anyElement minOccurs="2" maxOccurs="2"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
-            <anyElement minOccurs="2" maxOccurs="6"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
-            <anyElement minOccurs="2" maxOccurs="unbounded"/> <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
-	    <!-- min=4, max=various -->
-            <anyElement minOccurs="4" maxOccurs="6"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <anyElement/>
+          </content>
+        </elementSpec>
+
+        <elementSpec mode="add" ident="openPara_0_1">
+          <desc><att>minOccurs</att> 0, <att>maxOccurs</att> 1</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <anyElement minOccurs="0" maxOccurs="1"/>
+          </content>
+        </elementSpec>
+
+        <elementSpec mode="add" ident="openPara_0_2">
+          <desc><att>minOccurs</att> 0, <att>maxOccurs</att> 2</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <anyElement minOccurs="0" maxOccurs="2"/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec mode="add" ident="openPara_0_6">
+          <desc><att>minOccurs</att> 0, <att>maxOccurs</att> 6</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <anyElement minOccurs="0" maxOccurs="6"/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec mode="add" ident="openPara_0_unbounded">
+          <desc><att>minOccurs</att> 0, <att>maxOccurs</att> unbounded</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <anyElement minOccurs="0" maxOccurs="unbounded"/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec mode="add" ident="openPara_1_1">
+          <desc><att>minOccurs</att> 1, <att>maxOccurs</att> 1</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <anyElement minOccurs="1" maxOccurs="1"/>
+          </content>
+        </elementSpec>
+
+        <elementSpec mode="add" ident="openPara_1_2">
+          <desc><att>minOccurs</att> 1, <att>maxOccurs</att> 2</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <anyElement minOccurs="1" maxOccurs="2"/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec mode="add" ident="openPara_1_6">
+          <desc><att>minOccurs</att> 1, <att>maxOccurs</att> 6</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <anyElement minOccurs="1" maxOccurs="6"/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec mode="add" ident="openPara_1_unbounded">
+          <desc><att>minOccurs</att> 1, <att>maxOccurs</att> unbounded</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <anyElement minOccurs="1" maxOccurs="unbounded"/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec mode="add" ident="openPara_2_2">
+          <desc><att>minOccurs</att> 2, <att>maxOccurs</att> 2</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <anyElement minOccurs="2" maxOccurs="2"/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec mode="add" ident="openPara_2_6">
+          <desc><att>minOccurs</att> 2, <att>maxOccurs</att> 6</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <anyElement minOccurs="2" maxOccurs="6"/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec mode="add" ident="openPara_2_unbounded">
+          <desc><att>minOccurs</att> 2, <att>maxOccurs</att> unbounded</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <anyElement minOccurs="2" maxOccurs="unbounded"/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec mode="add" ident="openPara_4_6">
+          <desc><att>minOccurs</att> 4, <att>maxOccurs</att> 6</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <anyElement minOccurs="4" maxOccurs="6"/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec mode="add" ident="openPara_4_unbounded">
+          <desc><att>minOccurs</att> 4, <att>maxOccurs</att> unbounded</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
             <anyElement minOccurs="4" maxOccurs="unbounded"/>
           </content>
         </elementSpec>
+
+        <!-- <!-\- -->
+        <!--     Change the content of <ab> just to test <anyElement> with -->
+        <!--     @minOccurs and @maxOccurs. The <gb> elements are there to -->
+        <!--     “gather” the <anyElement>s into groups. — Syd, 2023-10-02 -->
+        <!-- -\-> -->
+        <!-- <elementSpec ident="ab" module="linking" mode="change"> -->
+        <!--   <content> -->
+        <!--     <!-\- plain, just for reference -\-> -->
+        <!--     <anyElement                            />         <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <!-\- min=0, max=various -\-> -->
+        <!--     <anyElement minOccurs="0" maxOccurs="1"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <anyElement minOccurs="0" maxOccurs="2"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <anyElement minOccurs="0" maxOccurs="6"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <anyElement minOccurs="0" maxOccurs="unbounded"/> <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <!-\- min=1, max=various -\-> -->
+        <!--     <anyElement minOccurs="1" maxOccurs="1"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <anyElement minOccurs="1" maxOccurs="2"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <anyElement minOccurs="1" maxOccurs="6"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <anyElement minOccurs="1" maxOccurs="unbounded"/> <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <!-\- min=2, max=various -\-> -->
+        <!--     <anyElement minOccurs="2" maxOccurs="2"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <anyElement minOccurs="2" maxOccurs="6"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <anyElement minOccurs="2" maxOccurs="unbounded"/> <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <!-\- min=4, max=various -\-> -->
+        <!--     <anyElement minOccurs="4" maxOccurs="6"/>         <elementRef key="gb" minOccurs="1" maxOccurs="1"/> -->
+        <!--     <anyElement minOccurs="4" maxOccurs="unbounded"/> -->
+        <!--   </content> -->
+        <!-- </elementSpec> -->
 
       </schemaSpec>
     </body>
