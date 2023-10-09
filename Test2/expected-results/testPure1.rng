@@ -8602,16 +8602,186 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
    </define>
    <define name="t_altGrp">
       <element name="altGrp">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(alternation group) groups a collection of <code xmlns="http://www.w3.org/1999/xhtml"
-                  xmlns:rng="http://relaxng.org/ns/structure/1.0">&lt;alt&gt;</code> elements and possibly pointers. [16.8. Alternation]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(alternation group)  [16.8. Alternation]</a:documentation>
          <group>
-            <zeroOrMore>
-               <ref name="t_model.descLike"/>
-            </zeroOrMore>
+            <optional>
+               <choice>
+                  <ref name="t_persName"/>
+                  <ref name="t_placeName"/>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+               </choice>
+            </optional>
+            <ref name="t_gb"/>
+            <optional>
+               <choice>
+                  <ref name="t_orgName"/>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+               </choice>
+            </optional>
+            <optional>
+               <choice>
+                  <ref name="t_orgName"/>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+               </choice>
+            </optional>
+            <optional>
+               <choice>
+                  <ref name="t_orgName"/>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+               </choice>
+            </optional>
+            <optional>
+               <choice>
+                  <ref name="t_orgName"/>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+               </choice>
+            </optional>
+            <ref name="t_gb"/>
             <zeroOrMore>
                <choice>
-                  <ref name="t_alt"/>
-                  <ref name="t_ptr"/>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+                  <ref name="t_rs"/>
+               </choice>
+            </zeroOrMore>
+            <ref name="t_gb"/>
+            <ref name="t_gb"/>
+            <choice>
+               <ref name="t_persName"/>
+               <ref name="t_placeName"/>
+               <ref name="t_model.publicationStmtPart.detail"/>
+            </choice>
+            <ref name="t_gb"/>
+            <choice>
+               <ref name="t_orgName"/>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+            </choice>
+            <optional>
+               <choice>
+                  <ref name="t_orgName"/>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+               </choice>
+            </optional>
+            <optional>
+               <choice>
+                  <ref name="t_orgName"/>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+               </choice>
+            </optional>
+            <optional>
+               <choice>
+                  <ref name="t_orgName"/>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+               </choice>
+            </optional>
+            <ref name="t_gb"/>
+            <oneOrMore>
+               <choice>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+                  <ref name="t_rs"/>
+               </choice>
+            </oneOrMore>
+            <ref name="t_gb"/>
+            <ref name="t_gb"/>
+            <choice>
+               <ref name="t_orgName"/>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+            </choice>
+            <choice>
+               <ref name="t_orgName"/>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+            </choice>
+            <optional>
+               <choice>
+                  <ref name="t_orgName"/>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+               </choice>
+            </optional>
+            <optional>
+               <choice>
+                  <ref name="t_orgName"/>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+               </choice>
+            </optional>
+            <ref name="t_gb"/>
+            <choice>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+               <ref name="t_rs"/>
+            </choice>
+            <choice>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+               <ref name="t_rs"/>
+            </choice>
+            <zeroOrMore>
+               <choice>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+                  <ref name="t_rs"/>
+               </choice>
+            </zeroOrMore>
+            <ref name="t_gb"/>
+            <ref name="t_gb"/>
+            <choice>
+               <ref name="t_orgName"/>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+            </choice>
+            <choice>
+               <ref name="t_orgName"/>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+            </choice>
+            <choice>
+               <ref name="t_orgName"/>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+            </choice>
+            <choice>
+               <ref name="t_orgName"/>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+            </choice>
+            <ref name="t_gb"/>
+            <choice>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+               <ref name="t_rs"/>
+            </choice>
+            <choice>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+               <ref name="t_rs"/>
+            </choice>
+            <choice>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+               <ref name="t_rs"/>
+            </choice>
+            <choice>
+               <ref name="t_model.publicationStmtPart.detail"/>
+               <ref name="t_name"/>
+               <ref name="t_rs"/>
+            </choice>
+            <zeroOrMore>
+               <choice>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+                  <ref name="t_name"/>
+                  <ref name="t_rs"/>
                </choice>
             </zeroOrMore>
          </group>

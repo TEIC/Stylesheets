@@ -2810,7 +2810,11 @@ Tchoice =
   
   ## (choice) groups a number of alternative encodings for the same point in a text. [3.5. Simple Editorial Changes]
   element choice {
-    (Tmodel.choicePart | Tchoice), Tatt.global.attributes, empty
+    (Tmodel.choicePart | Tchoice),
+    (Tmodel.choicePart | Tchoice),
+    (Tmodel.choicePart | Tchoice)*,
+    Tatt.global.attributes,
+    empty
   }
 Treg =
   

@@ -178,9 +178,6 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates mode="tangle" select="."/>
         </xsl:for-each>
         <xsl:for-each select=".//tei:anyElement">
-          <xsl:if test="$verbose eq 'true'">
-            <xsl:message select="'DEBUG: calling anyElement template for #'||position()||' from schemaSpecBody template'"/>
-          </xsl:if>
           <xsl:call-template name="anyElement"/>
         </xsl:for-each>
         <xsl:apply-templates mode="tangle" select="tei:elementSpec|tei:classSpec"/>
@@ -215,9 +212,6 @@ of this software, even if advised of the possibility of such damage.
     <!-- in 2nd and 3rd  passes, throw away any RNG <define> elements
       which do not have a <ref>, any <ref> which has no <define>
       to point to, and any empty <choice> -->
-    <xsl:if test="$verbose eq 'true'">
-      <xsl:message select="'DEBUG: multi-pass time from schemaSpecBody template!'"/>
-    </xsl:if>
     <xsl:variable name="pass2">
       <xsl:for-each select="$pass1/root">
         <root>
@@ -295,9 +289,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:if test="@type='core'">
       <xsl:call-template name="predeclare-classes"/>
       <xsl:for-each select="//tei:anyElement">
-        <xsl:if test="$verbose eq 'true'">
-          <xsl:message select="'DEBUG: calling anyElement template for #'||position()||' from moduleSpec-body template'"/>
-        </xsl:if>
         <xsl:call-template name="anyElement"/>
       </xsl:for-each>
     </xsl:if>
@@ -390,9 +381,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:otherwise>http://www.tei-c.org/ns/1.0 teix:egXML</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:if test="$verbose eq 'true'">
-      <xsl:message select="'DEBUG: in anyElement template, set id='||$id"/>
-    </xsl:if>
     <define name="{$id}" xmlns="http://relaxng.org/ns/structure/1.0">
       <element>
         <anyName>
@@ -688,12 +676,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="rng:define" mode="pass3">
-    <xsl:if test="$verbose eq 'true'">
-      <xsl:message select="'DEBUG: defining ---------'||@name||' with combine='||@combine"/>
-      <xsl:message select="'DEBUG: REFED('||@name||')='||exists(key('REFED',@name))"/>
-      <xsl:message select="'DEBUG: XPAT…('||@name||')='||exists(key('XPATTERNS',@name))"/>
-      <xsl:message select="'DEBUG: '||count(key('DEFED',@name))"></xsl:message>
-    </xsl:if>
     <xsl:choose>
       <xsl:when test="key('REFED',@name) or key('XPATTERNS',@name)">
         <xsl:choose>

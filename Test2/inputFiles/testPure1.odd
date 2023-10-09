@@ -287,6 +287,77 @@
 	  </content>
 	</elementSpec>
 
+	<!-- Test @minOccurs & @maxOccurs on <alternate>  -->
+	<elementSpec ident="altGrp" mode="change" module="header">
+	  <desc/>
+	  <content>
+	    <sequence minOccurs="1" maxOccurs="1">
+	      <alternate minOccurs="0" maxOccurs="1">
+		<elementRef key="persName"/>
+		<elementRef key="placeName"/>
+		<classRef key="model.publicationStmtPart.detail"/>
+	      </alternate>
+	      <elementRef key="gb"/>
+	      <alternate minOccurs="0" maxOccurs="4">
+		<elementRef key="orgName"/>
+		<classRef key="model.publicationStmtPart.detail"/>
+		<elementRef key="name"/>
+	      </alternate>
+	      <elementRef key="gb"/>
+	      <alternate minOccurs="0" maxOccurs="unbounded">
+		<classRef key="model.publicationStmtPart.detail"/>
+		<elementRef key="name"/>
+		<elementRef key="rs"/>
+	      </alternate>
+	      <elementRef key="gb"/>
+	      <elementRef key="gb"/>
+	      <alternate minOccurs="1" maxOccurs="1">
+		<elementRef key="persName"/>
+		<elementRef key="placeName"/>
+		<classRef key="model.publicationStmtPart.detail"/>
+	      </alternate>
+	      <elementRef key="gb"/>
+	      <alternate minOccurs="1" maxOccurs="4">
+		<elementRef key="orgName"/>
+		<classRef key="model.publicationStmtPart.detail"/>
+		<elementRef key="name"/>
+	      </alternate>
+	      <elementRef key="gb"/>
+	      <alternate minOccurs="1" maxOccurs="unbounded">
+		<classRef key="model.publicationStmtPart.detail"/>
+		<elementRef key="name"/>
+		<elementRef key="rs"/>
+	      </alternate>
+	      <elementRef key="gb"/>
+	      <elementRef key="gb"/>
+	      <alternate minOccurs="2" maxOccurs="4">
+		<elementRef key="orgName"/>
+		<classRef key="model.publicationStmtPart.detail"/>
+		<elementRef key="name"/>
+	      </alternate>
+	      <elementRef key="gb"/>
+	      <alternate minOccurs="2" maxOccurs="unbounded">
+		<classRef key="model.publicationStmtPart.detail"/>
+		<elementRef key="name"/>
+		<elementRef key="rs"/>
+	      </alternate>
+	      <elementRef key="gb"/>
+	      <elementRef key="gb"/>
+	      <alternate minOccurs="4" maxOccurs="4">
+		<elementRef key="orgName"/>
+		<classRef key="model.publicationStmtPart.detail"/>
+		<elementRef key="name"/>
+	      </alternate>
+	      <elementRef key="gb"/>
+	      <alternate minOccurs="4" maxOccurs="unbounded">
+		<classRef key="model.publicationStmtPart.detail"/>
+		<elementRef key="name"/>
+		<elementRef key="rs"/>
+	      </alternate>
+	    </sequence>
+	  </content>
+	</elementSpec>
+	
         <!--
             I wanted to change the content of <ab> just to test
             <anyElement> with @minOccurs and @maxOccurs, using the
