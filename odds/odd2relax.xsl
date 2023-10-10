@@ -224,18 +224,17 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates mode="pass3"/>
       </xsl:for-each>
     </xsl:variable>
-    <!-- <xsl:if test="$verbose eq 'true'"> -->
-    <!--   <xsl:message select="'DEBUG: div it up from within schemaSpecBody template'"/> -->
-    <!--   <rng:div ns="http://www.tei-c.org/ns/DEBUG/odd2relax.xsl_pass1"> -->
-    <!--     <xsl:copy-of select="$pass1"/> -->
-    <!--   </rng:div>       -->
-    <!--   <rng:div ns="http://www.tei-c.org/ns/DEBUG/odd2relax.xsl_pass2"> -->
-    <!--     <xsl:copy-of select="$pass2"/> -->
-    <!--   </rng:div>       -->
-    <!--   <rng:div ns="http://www.tei-c.org/ns/DEBUG/odd2relax.xsl_pass3"> -->
-    <!--     <xsl:copy-of select="$pass3"/> -->
-    <!--   </rng:div> -->
-    <!-- </xsl:if> -->
+    <!-- The variable $pass3 is not really needed, but is left here to
+         make it easier to write debugging code. Remember, though,
+         that if you want to see what the intermediate stages look
+         like you cannot use <result-document>, because this template
+         is called from within a variable defintion. You can get
+         around this by outputing each intermediate stage ($pass1 &
+         $pass2) into the output file in addition to the final stage
+         ($pass3). This makes for great debugging, but also for a
+         useless output RELAX NG schema, of course.
+         You can see a version of this in commit 522e84e from
+         2023-10-06. —Syd, 2023-10-09 -->
     <xsl:sequence select="$pass3"/>
 </xsl:template>
 
