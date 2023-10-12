@@ -1519,7 +1519,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
     </xsl:choose>
     <xsl:value-of select="tei:createSpecName(.)"/>
-    <xsl:variable name="datNorMinMax" select="tei:norMinMax( tei:datatype )"/>
+    <xsl:variable name="datNorMinMax" select="if ( tei:datatype )
+					      then tei:norMinMax( tei:datatype )
+					      else ( 1, 1 )"/>
     <xsl:variable name="datmin" select="$datNorMinMax[1]"/>
     <xsl:variable name="datmax" select="$datNorMinMax[2]"/>
     <xsl:choose>

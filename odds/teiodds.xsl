@@ -2149,7 +2149,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="this" select="@key"/>
     <xsl:variable name="except" select="@except"/>
     <xsl:variable name="include" select="@include"/>
-    <xsl:variable name="c" as="element()+">
+    <xsl:variable name="c" as="element()*">
       <xsl:choose>
         <xsl:when test="not(@expand) and (@include or @except)">
           <xsl:variable name="context" select="."/>
