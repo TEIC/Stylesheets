@@ -1233,12 +1233,14 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>whether there is an out-of-date desc or gloss in the translation language</desc>
   </doc>
-  <xsl:function name="tei:descOrGlossOutOfDate">
+  <xsl:function name="tei:descOrGlossOutOfDate" as="xs:boolean">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:variable name="lang" select="tei:generateDocumentationLang(.)[1]"/>
-      <xsl:sequence select="tei:desc[@xml:lang='en']/@versionDate gt tei:desc[@xml:lang=$lang]/@versionDate
-                         or tei:gloss[@xml:lang='en']/@versionDate gt tei:gloss[@xml:lang=$lang]/@versionDate"></xsl:sequence>
+      <xsl:sequence select="tei:gloss[@xml:lang eq 'en']/@versionDate gt  tei:gloss[ @xml:lang eq $lang]/@versionDate
+			 or tei:desc[@xml:lang='en' and  not( @type eq 'deprecationInfo' )]/@versionDate
+			    gt
+			    tei:desc[@xml:lang eq $lang and  not( @type eq 'deprecationInfo' )]/@versionDate" />
     </xsl:for-each>
   </xsl:function>
 

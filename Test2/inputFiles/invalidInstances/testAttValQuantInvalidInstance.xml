@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../outputFiles/testAttValQuant.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0" ?>
+<?xml-model href="../outputFiles/testAttValQuant.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:att_quant="http://www.wwp.neu.edu/temp/ns">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>testAttValQuantInvalidInstance: File designed to be
+        invalid against a schema created from
+        testAttValQuant.odd.</title>
+        <author xml:id="sb"><name type="person">Syd Bauman</name></author>
+      </titleStmt>
+      <publicationStmt>
+        <p>Free for all for anything for ever.</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Born digital</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <head>Test file for validation</head>
+      <p>Every &lt;att_quant:test> element should be invalid (see
+      below for details); every other element should be valid.</p>
+      <div>
+        <head>missing required attrs</head>
+        <p>Every &lt;att_quant:test> element herein should be missing
+        1 required attribute (everything else should be valid).</p>
+        <att_quant:test            opt_01=""  req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test            opt_01="⚀" req_03="⚀ ⚁ ⚂" opt_03="⚀ ⚁ ⚂" req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀" opt_11="⚀" req_12="⚀ ⚁" opt_12="⚀ ⚁" req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁ ⚂" opt_23="⚀ ⚁ ⚂" req_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01=""  opt_01=""                 opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test req_01="⚀" opt_01="⚀"                opt_03="⚀ ⚁ ⚂" req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀" opt_11="⚀" req_12="⚀ ⚁" opt_12="⚀ ⚁" req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁ ⚂" opt_23="⚀ ⚁ ⚂" req_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01=""  opt_01=""  req_03=""      opt_03=""                             opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test req_01="⚀" opt_01="⚀" req_03="⚀ ⚁ ⚂" opt_03="⚀ ⚁ ⚂"                        opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀" opt_11="⚀" req_12="⚀ ⚁" opt_12="⚀ ⚁" req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁ ⚂" opt_23="⚀ ⚁ ⚂" req_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01=""  opt_01=""  req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""                         opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test req_01="⚀" opt_01="⚀" req_03="⚀ ⚁ ⚂" opt_03="⚀ ⚁ ⚂" req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾"            opt_11="⚀" req_12="⚀ ⚁" opt_12="⚀ ⚁" req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁ ⚂" opt_23="⚀ ⚁ ⚂" req_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01=""  opt_01=""  req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀"              opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test req_01="⚀" opt_01="⚀" req_03="⚀ ⚁ ⚂" opt_03="⚀ ⚁ ⚂" req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀" opt_11="⚀"              opt_12="⚀ ⚁" req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁ ⚂" opt_23="⚀ ⚁ ⚂" req_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01=""  opt_01=""  req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"                          opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test req_01="⚀" opt_01="⚀" req_03="⚀ ⚁ ⚂" opt_03="⚀ ⚁ ⚂" req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀" opt_11="⚀" req_12="⚀ ⚁" opt_12="⚀ ⚁"                        opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁ ⚂" opt_23="⚀ ⚁ ⚂" req_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01=""  opt_01=""  req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"                          opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test req_01="⚀" opt_01="⚀" req_03="⚀ ⚁ ⚂" opt_03="⚀ ⚁ ⚂" req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀" opt_11="⚀" req_12="⚀ ⚁" opt_12="⚀ ⚁" req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾"              opt_22="⚀ ⚁" req_23="⚀ ⚁ ⚂" opt_23="⚀ ⚁ ⚂" req_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01=""  opt_01=""  req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁"                opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test req_01="⚀" opt_01="⚀" req_03="⚀ ⚁ ⚂" opt_03="⚀ ⚁ ⚂" req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀" opt_11="⚀" req_12="⚀ ⚁" opt_12="⚀ ⚁" req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁" opt_22="⚀ ⚁"                opt_23="⚀ ⚁ ⚂" req_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01=""  opt_01=""  req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"                          opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test req_01="⚀" opt_01="⚀" req_03="⚀ ⚁ ⚂" opt_03="⚀ ⚁ ⚂" req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀" opt_11="⚀" req_12="⚀ ⚁" opt_12="⚀ ⚁" req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁ ⚂" opt_23="⚀ ⚁ ⚂"                        opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+      </div>
+      <div>
+        <head>too few values (by 1)</head>
+        <p>Every &lt;att_quant:test> element herein should be missing
+        the @req_01 attribute and should have 1 other attribute that
+        has 1 too few tokens in its value.</p>
+        <att_quant:test                       req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11=""  opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test                       req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11=" " req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test                       req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12=""    opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test                       req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12=""    req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test                       req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ=""              opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test                       req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ=""              req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test                       req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀"   opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test                       req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀"   req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test                       req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀"     opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test                       req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀"     req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test                       req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀"             opt_2Ǖ="⚀ ⚁"           />
+        <att_quant:test                       req_03=""      opt_03=""      req_0Ǖ=""              opt_0Ǖ=""              req_11="⚀" opt_11="⚀" req_12="⚀"   opt_12="⚀"   req_1Ǖ="⚀"             opt_1Ǖ="⚀"             req_22="⚀ ⚁" opt_22="⚀ ⚁" req_23="⚀ ⚁"   opt_23="⚀ ⚁"   req_2Ǖ="⚀ ⚁"           opt_2Ǖ="⚀"             />
+      </div>
+      <div>
+        <head>too many values (by 1)</head>
+        <p>Every &lt;att_quant:test> element herein should be missing
+        the @req_2Ǖ attribute and should have 1 other attribute that
+        has 1 too many tokens in its value.</p>
+        <att_quant:test req_01="⚀ ⚁" opt_01="⚀"   req_03="⚀ ⚁ ⚂"   opt_03="⚀ ⚁ ⚂"   req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀"   opt_11="⚀"   req_12="⚀ ⚁"   opt_12="⚀ ⚁"   req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁"   opt_22="⚀ ⚁"   req_23="⚀ ⚁ ⚂"   opt_23="⚀ ⚁ ⚂"                          opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01="⚀"   opt_01="⚀ ⚁" req_03="⚀ ⚁ ⚂"   opt_03="⚀ ⚁ ⚂"   req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀"   opt_11="⚀"   req_12="⚀ ⚁"   opt_12="⚀ ⚁"   req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁"   opt_22="⚀ ⚁"   req_23="⚀ ⚁ ⚂"   opt_23="⚀ ⚁ ⚂"                          opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01="⚀"   opt_01="⚀"   req_03="⚀ ⚁ ⚂ ⚃" opt_03="⚀ ⚁ ⚂"   req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀"   opt_11="⚀"   req_12="⚀ ⚁"   opt_12="⚀ ⚁"   req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁"   opt_22="⚀ ⚁"   req_23="⚀ ⚁ ⚂"   opt_23="⚀ ⚁ ⚂"                          opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01="⚀"   opt_01="⚀"   req_03="⚀ ⚁ ⚂"   opt_03="⚀ ⚁ ⚂ ⚃" req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀"   opt_11="⚀"   req_12="⚀ ⚁"   opt_12="⚀ ⚁"   req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁"   opt_22="⚀ ⚁"   req_23="⚀ ⚁ ⚂"   opt_23="⚀ ⚁ ⚂"                          opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01="⚀"   opt_01="⚀"   req_03="⚀ ⚁ ⚂"   opt_03="⚀ ⚁ ⚂"   req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀ ⚁" opt_11="⚀"   req_12="⚀ ⚁"   opt_12="⚀ ⚁"   req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁"   opt_22="⚀ ⚁"   req_23="⚀ ⚁ ⚂"   opt_23="⚀ ⚁ ⚂"                          opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01="⚀"   opt_01="⚀"   req_03="⚀ ⚁ ⚂"   opt_03="⚀ ⚁ ⚂"   req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀"   opt_11="⚀ ⚁" req_12="⚀ ⚁"   opt_12="⚀ ⚁"   req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁"   opt_22="⚀ ⚁"   req_23="⚀ ⚁ ⚂"   opt_23="⚀ ⚁ ⚂"                          opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01="⚀"   opt_01="⚀"   req_03="⚀ ⚁ ⚂"   opt_03="⚀ ⚁ ⚂"   req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀"   opt_11="⚀"   req_12="⚀ ⚁ ⚂" opt_12="⚀ ⚁"   req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁"   opt_22="⚀ ⚁"   req_23="⚀ ⚁ ⚂"   opt_23="⚀ ⚁ ⚂"                          opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01="⚀"   opt_01="⚀"   req_03="⚀ ⚁ ⚂"   opt_03="⚀ ⚁ ⚂"   req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀"   opt_11="⚀"   req_12="⚀ ⚁"   opt_12="⚀ ⚁ ⚂" req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁"   opt_22="⚀ ⚁"   req_23="⚀ ⚁ ⚂"   opt_23="⚀ ⚁ ⚂"                          opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01="⚀"   opt_01="⚀"   req_03="⚀ ⚁ ⚂"   opt_03="⚀ ⚁ ⚂"   req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀"   opt_11="⚀"   req_12="⚀ ⚁"   opt_12="⚀ ⚁"   req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁ ⚂" opt_22="⚀ ⚁"   req_23="⚀ ⚁ ⚂"   opt_23="⚀ ⚁ ⚂"                          opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01="⚀"   opt_01="⚀"   req_03="⚀ ⚁ ⚂"   opt_03="⚀ ⚁ ⚂"   req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀"   opt_11="⚀"   req_12="⚀ ⚁"   opt_12="⚀ ⚁"   req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁"   opt_22="⚀ ⚁ ⚂" req_23="⚀ ⚁ ⚂"   opt_23="⚀ ⚁ ⚂"                          opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01="⚀"   opt_01="⚀"   req_03="⚀ ⚁ ⚂"   opt_03="⚀ ⚁ ⚂"   req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀"   opt_11="⚀"   req_12="⚀ ⚁"   opt_12="⚀ ⚁"   req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁"   opt_22="⚀ ⚁"   req_23="⚀ ⚁ ⚂ ⚃" opt_23="⚀ ⚁ ⚂"                          opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+        <att_quant:test req_01="⚀"   opt_01="⚀"   req_03="⚀ ⚁ ⚂"   opt_03="⚀ ⚁ ⚂"   req_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_0Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_11="⚀"   opt_11="⚀"   req_12="⚀ ⚁"   opt_12="⚀ ⚁"   req_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" opt_1Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" req_22="⚀ ⚁"   opt_22="⚀ ⚁"   req_23="⚀ ⚁ ⚂"   opt_23="⚀ ⚁ ⚂ ⚃"                        opt_2Ǖ="⚀ ⚁ ⚂ ⚃ ⚄ ⚅ ♾" />
+      </div>
+    </body>
+  </text>
+</TEI>
