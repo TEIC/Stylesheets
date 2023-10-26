@@ -7,7 +7,7 @@
       </titleStmt>
       <editionStmt>
         <edition>P5 <ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.7.0.html">4.7.0a</ref>. Last updated on
-        <date when="2023-07-16">16th July 2023</date>, revision <ref target="https://github.com/TEIC/TEI/commit/df882688d">df882688d</ref></edition>
+        <date when="2023-10-12">12th October 2023</date>, revision <ref target="https://github.com/TEIC/TEI/commit/c27b080d0">c27b080d0</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -286,7 +286,7 @@ Instance</head></div>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <exemplum xml:lang="en">
         <p>In the following example from Hamlet, speeches (<gi>sp</gi>) in the body of the play 
-        are linked to <gi>castItem</gi> elements in the <gi>castList</gi> using the <att>who</att>
+        are linked to <gi>role</gi> elements in the <gi>castList</gi> using the <att>who</att>
         attribute.</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" valid="feasible" source="#CODR-eg-293">
           <castItem type="role">
@@ -1337,6 +1337,15 @@ of any adjacent whitespace</desc>
     <memberOf key="att.datable.custom"/>
   </classes>
   <attList>
+    <!-- remove calendar after 2024-11-11 -->
+    <!--
+    <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
+        as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
+        (unlike <att>datingMethod</att> defined in
+        <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
+        in the original material defined by the parent element, <emph>not</emph> the calendar to
+        which the date is normalized.</desc>
+    -->
     <attDef ident="calendar" usage="opt">
       <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
         date represented by the content of this element belongs.</desc>
@@ -1352,12 +1361,25 @@ of any adjacent whitespace</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
-      <constraintSpec ident="calendar" scheme="schematron">
+      <constraintSpec ident="calendar-check-deprecated" scheme="schematron">
         <constraint>
           <sch:rule context="tei:*[@calendar]">
             <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
             systems or calendars to which the date represented by the content of this element belongs,
             but this <sch:name/> element has no textual content.</sch:assert>
+          </sch:rule>
+        </constraint>
+      </constraintSpec>
+      <constraintSpec scheme="schematron" ident="calendar-deprecated">
+        <constraint>
+          <sch:rule context="tei:*[@calendar][ not( self::tei:date | self::tei:time | self::tei:origDate ) ]">
+            <sch:let name="me_phrase" value="concat( 'Attribute calendar on ', local-name(.))"/>
+            <sch:assert test="'2024-11-11' cast as xs:date ge current-date()">
+              <sch:value-of select="concat( $me_phrase, ' construct is outdated (as of 2024-11-11); ODD processors may ignore it, and its use is no longer supported' )"/>
+            </sch:assert>
+            <sch:report role="nonfatal" test="@calendar">
+              <sch:value-of select="concat( $me_phrase, ' becomes outdated on 2024-11-11' )"/>
+            </sch:report>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -1396,7 +1418,7 @@ of any adjacent whitespace</desc>
     </attDef>
     <attDef ident="period" usage="opt">
       <desc versionDate="2021-04-19" xml:lang="en">supplies pointers to one or more definitions of 
-        named periods of time (typically <gi>category</gi>s or <gi>calendar</gi>s) within which the datable item is understood to have occurred.</desc>
+        named periods of time (typically <gi>category</gi>s, <gi>date</gi>s or <gi>event</gi>s) within which the datable item is understood to have occurred.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">시간을 명시할 수 있는 항목이 일어난 시간의 기간명을 정의하는 특정 위치로의 포인터를
         제공한다.</desc>
       <desc versionDate="2008-04-06" xml:lang="es">suministra un indicador a una localización
@@ -2775,17 +2797,17 @@ the TEI header.</p>
         according to <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko"><ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>에 따라 생성된
         <soCalled>tag</soCalled>를 사용하는 요소 내용의 언어를 나타낸다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">使用<ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC3066</ref>的代碼，指出該元素內容的使用語言</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">使用<ref target="https://www.ietf.org/rfc/rfc3066.txt">RFC3066</ref>的代碼，指出該元素內容的使用語言</desc>
       <desc xml:lang="ja" versionDate="2019-06-08"><ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>に従って生成された<soCalled>タグ</soCalled>を用いて要素の内容の言語を示す。</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">indique la langue du contenu de l'élément en
-        utilisant les codes du <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref>
+        utilisant les codes du <ref target="https://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref>
          </desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica la lengua del contenido del elemento
-        utilizando los códigos extraídos de <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC
+        utilizando los códigos extraídos de <ref target="https://www.ietf.org/rfc/rfc3066.txt">RFC
           3066</ref>
          </desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la lingua del contenuto dell'elemento
-        utilizzando i codici tratti da <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC
+        utilizzando i codici tratti da <ref target="https://www.ietf.org/rfc/rfc3066.txt">RFC
         3066</ref>
          </desc>
       <datatype><dataRef key="teidata.language"/></datatype>
@@ -2807,7 +2829,7 @@ the TEI header.</p>
           and that a single TEI document may contain texts in many languages.</p>
         <p>Only attributes with free text values (rare in these guidelines) will be in the scope of <att>xml:lang</att>.</p>
         <p>The authoritative list of registered language subtags is maintained by IANA and 
-          is available at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. 
+          is available at <ptr target="https://www.iana.org/assignments/language-subtag-registry"/>. 
           For a good general overview of the construction of language tags, see 
           <ptr target="https://www.w3.org/International/articles/language-tags/"/>, and for 
           a practical step-by-step guide, see 
@@ -2835,7 +2857,7 @@ the TEI header.</p>
         <p>Si no se especifica ningún valor para <att>xml:lang</att>, el valor de <att>xml:lang</att> para el elemento inmediatamente englobado, se hereda; por esta razón, un valor
           se debe especificar siempre en el elemento exterior (<gi>TEI</gi>).</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2019-06-16"><p>xml:lang の値は、直接の親要素、そのまた親要素からというように、文書の上位階層から継承されてくる。できるだけ高い適切な階層に xml:lang を指定するのが一般には望ましいが、teiHeader には関連するリソース要素と異なるデフォルト値が必要となったり、一つのTEI文書が多くの言語のテキストを含みうることには注意されたい。登録された言語タグの正式なリストはIANAが管理しており、<ptr target="http://www.iana.org/assignments/language-subtag-registry"/> から確認できる。言語タグの構造についての良い概説は <ptr target="https://www.w3.org/International/articles/language-tags/"/> を、手順を追った実用的なガイドは <ptr target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/> を参照されたい。利用する値は、BCP 47 に準拠しなければならない。もし値が私用コード（<val>x-</val> から始まったり <val>-x-</val> を含む）ならば、その <att>ident</att> 属性と一致する値を持つ <gi>language</gi> 要素をTEIヘッダ内に追加して内容を説明すべきである。この説明は私用コード以外にも任意で追加できるが、<choice><abbr>IETF</abbr><expan>Internet Engineering Task Force</expan></choice> による定義と整合していなければならない。</p></remarks>
+      <remarks xml:lang="ja" versionDate="2019-06-16"><p>xml:lang の値は、直接の親要素、そのまた親要素からというように、文書の上位階層から継承されてくる。できるだけ高い適切な階層に xml:lang を指定するのが一般には望ましいが、teiHeader には関連するリソース要素と異なるデフォルト値が必要となったり、一つのTEI文書が多くの言語のテキストを含みうることには注意されたい。登録された言語タグの正式なリストはIANAが管理しており、<ptr target="https://www.iana.org/assignments/language-subtag-registry"/> から確認できる。言語タグの構造についての良い概説は <ptr target="https://www.w3.org/International/articles/language-tags/"/> を、手順を追った実用的なガイドは <ptr target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/> を参照されたい。利用する値は、BCP 47 に準拠しなければならない。もし値が私用コード（<val>x-</val> から始まったり <val>-x-</val> を含む）ならば、その <att>ident</att> 属性と一致する値を持つ <gi>language</gi> 要素をTEIヘッダ内に追加して内容を説明すべきである。この説明は私用コード以外にも任意で追加できるが、<choice><abbr>IETF</abbr><expan>Internet Engineering Task Force</expan></choice> による定義と整合していなければならない。</p></remarks>
     </attDef>
     
     
@@ -3119,8 +3141,8 @@ ressource informatique selon une taxinomie normalisée.</desc>
     using a value taken from a standard taxonomy. At present only a single
     taxonomy is supported, the Multipurpose Internet Mail Extensions
     (MIME) Media Type system. This typology of media types is
-    defined by the Internet Engineering Task Force in <ref target="http://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>. The
-    <ref target="http://www.iana.org/assignments/media-types/">list of
+    defined by the Internet Engineering Task Force in <ref target="https://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>. The
+    <ref target="https://www.iana.org/assignments/media-types/">list of
     types</ref> is maintained by the Internet Assigned Numbers
     Authority (IANA). The <att>mimeType</att> attribute must have a value taken from this list.</p>
   </remarks>
@@ -3129,17 +3151,17 @@ ressource informatique selon une taxinomie normalisée.</desc>
                 informatique, en général disponible sur internet, selon les taxinomies normalisées.
                 Actuellement une seule taxinomie est reconnue : le système "Multipurpose Internet
                 Mail Extensions Media Type". Ce système de typologie des types de média est définie
-                par l'Internet Engineering Task Force dans<ref target="http://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>. La <ref target="http://www.iana.org/assignments/media-types/">liste des types</ref>
+                par l'Internet Engineering Task Force dans<ref target="https://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>. La <ref target="https://www.iana.org/assignments/media-types/">liste des types</ref>
                 est maintenue par l'Internet Assigned Numbers Authority. </p>
   </remarks>
   <remarks xml:lang="es" versionDate="2008-04-06">
     <p>Esta clase de atributo proporciona los atributos para describir un recurso del ordenador, típicamente disponibles en Internet, según las taxonomías estándar. Solamente una única taxonomía se utiliza actualmente, el sistema Multipurpose Internet Mail Extensions
-    Media Type. Este sistema de tipología de los tipos de media es definido por el Internet Engineering Task Force <ref target="http://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>. 
-    . La <ref target="http://www.iana.org/assignments/media-types/">lista de tipos</ref> es mantenida por el Internet Assigned Numbers Authority.</p>
+    Media Type. Este sistema de tipología de los tipos de media es definido por el Internet Engineering Task Force <ref target="https://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>. 
+    . La <ref target="https://www.iana.org/assignments/media-types/">lista de tipos</ref> es mantenida por el Internet Assigned Numbers Authority.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2022-05-09">
     <p>
-当該属性クラスは、コンピューターリソースを示すためのもので、通常、インターネット上にあるリソースを標準的な用語で示す。現時点では、MIME（Multipurpose Internet Mail Extensions）タイプのみが標準的な用語として使用可能である。このMIMEタイプについては、IETF（Internet Engineering Task Force）の<ref target="http://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>で規定されている。<ref target="http://www.iana.org/assignments/media-types/">使用できるタイプ名のリスト</ref>の管理は、IANA（Internet Assigned Numbers Authority）によって行われている。<att>mimeType</att>属性は上記のタイプ名リストにより定義された値を含んでいなくてはならない。
+当該属性クラスは、コンピューターリソースを示すためのもので、通常、インターネット上にあるリソースを標準的な用語で示す。現時点では、MIME（Multipurpose Internet Mail Extensions）タイプのみが標準的な用語として使用可能である。このMIMEタイプについては、IETF（Internet Engineering Task Force）の<ref target="https://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>で規定されている。<ref target="https://www.iana.org/assignments/media-types/">使用できるタイプ名のリスト</ref>の管理は、IANA（Internet Assigned Numbers Authority）によって行われている。<att>mimeType</att>属性は上記のタイプ名リストにより定義された値を含んでいなくてはならない。
     </p>
   </remarks>
 </classSpec>
@@ -7923,13 +7945,13 @@ value.</desc>
             <label>language</label>
             <item>The IANA-registered code for the language. This is almost always the same as the ISO
           639 2-letter language code if there is one. The list of available registered language
-          subtags can be found at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. It is recommended
+          subtags can be found at <ptr target="https://www.iana.org/assignments/language-subtag-registry"/>. It is recommended
           that this code be written in lower case.</item>
             <label>script</label>
             <item>The ISO 15924 code for the script. These codes consist of 4 letters, and it is
           recommended they be written with an initial capital, the other three letters in lower
           case. The canonical list of codes is maintained by the Unicode Consortium, and is
-          available at <ptr target="http://unicode.org/iso15924/iso15924-codes.html"/>. The IETF
+          available at <ptr target="https://unicode.org/iso15924/iso15924-codes.html"/>. The IETF
           recommends this code be omitted unless it is necessary to make a distinction you need.</item>
             <label>region</label>
             <item>Either an ISO 3166 country code or a UN M.49 region code that is registered with IANA
@@ -7955,7 +7977,7 @@ value.</desc>
             <gi>language</gi> element must be present in the TEI header.</item>
          </list>
       </p>
-      <p>There are two exceptions to the above format. First, there are language tags in the <ref target="http://www.iana.org/assignments/language-subtag-registry">IANA registry</ref> that
+      <p>There are two exceptions to the above format. First, there are language tags in the <ref target="https://www.iana.org/assignments/language-subtag-registry">IANA registry</ref> that
       do not match the above syntax, but are present because they have been
       <soCalled>grandfathered</soCalled> from previous specifications.</p>
       <p>Second, an entire language tag can consist of only a private use subtag. These tags start
@@ -8006,11 +8028,11 @@ value.</desc>
       variantとextensionは複数回、他は1回のみ出現出現する。この下位タグ のグループは繰り返し可能である。 <list type="gloss">
             <label>language</label>
             <item> IANAの言語コード。この殆どは、該当言語が既にあれば、ISO 639の2文字 (以下、この場合の文字はラテン文字)言語コードと同じである。利用可能
-          な言語下位タグのリストは <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>
+          な言語下位タグのリストは <ptr target="https://www.iana.org/assignments/language-subtag-registry"/>
           にある。言語コードは、小文字で書かれることが推奨されている。 </item>
             <label>script</label>
             <item> ISO 15924による文字を示すコード。4文字から構成され、冒頭文字は大文 字で、残り3文字は小文字で書かれることが推奨されている。このコード
-          は、ユニコードコンソーシアムで管理され、 <ptr target="http://unicode.org/iso15924/iso15924-codes.html"/>か
+          は、ユニコードコンソーシアムで管理され、 <ptr target="https://unicode.org/iso15924/iso15924-codes.html"/>か
           ら入手することができる。IETFでは、不要であれば当該コードを省略する ことを推奨している。 </item>
             <label>region</label>
             <item> ISO 3166またはUN M.49による国または地域コード。このコードはIANAに 登録されている(但し全てではない。例えば、UNコードには経済圏や、 ISO
@@ -8029,7 +8051,7 @@ value.</desc>
         </item>
          </list>
       </p>
-      <p> 上記記述形式には、2つの例外がある。ひとつは、ここにある言語タグは、 <ref target="http://www.iana.org/assignments/language-subtag-registry">
+      <p> 上記記述形式には、2つの例外がある。ひとつは、ここにある言語タグは、 <ref target="https://www.iana.org/assignments/language-subtag-registry">
       IANA</ref>にある統語規則に違反しているものがある。 これはIANAでは昔の規定を<soCalled>継承している</soCalled>からであ る。 </p>
       <p> ふたつめは、言語タグを、下位タグprivateだけで構成することができる ことである。<code>x-</code>で始まるタグの内容は、IETFにある規定に
       も当該TEIガイドラインにある規定にも従う必要はない。他の言語タグと 同様に、このタグを使用した場合には、TEIヘダーにある要素
@@ -8082,13 +8104,13 @@ value.</desc>
             <label>langue</label>
             <item>Code de langue enregistré par l'IANA. Il est presque toujours identique au code
           de langue alphabétique ISO 639-2, s'il y en a un. La liste des sous-étiquettes de langue
-          enregistrées est disponible à : <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. Il est recommandé
+          enregistrées est disponible à : <ptr target="https://www.iana.org/assignments/language-subtag-registry"/>. Il est recommandé
           d'écrire ce code en minuscules.</item>
             <label>écriture</label>
             <item>Code ISO 15924 pour l'écriture. Ces codes sont constitués de 4 lettres, et il est
           recommandé d'écrire la première lettre en majuscule, les trois autres en minuscules. La
           liste canonique des codes est maintenue par le Consortium Unicode, et elle est disponible
-          à : <ptr target="http://unicode.org/iso15924/iso15924-codes.html"/>. L'IETF recommande
+          à : <ptr target="https://unicode.org/iso15924/iso15924-codes.html"/>. L'IETF recommande
           d'omettre ce code, sauf s'il est nécessaire pour établir une distinction.</item>
             <label>région</label>
             <item>Soit un code de pays ISO 3166, soit un code de région UN M.49 enregistré par
@@ -8117,7 +8139,7 @@ value.</desc>
          </list>
       </p>
       <p>Il y a deux exceptions au format ci-dessus. Premièrement, il y a des codes de langue dans
-        le <ref target="http://www.iana.org/assignments/language-subtag-registry">registre de l'IANA</ref>
+        le <ref target="https://www.iana.org/assignments/language-subtag-registry">registre de l'IANA</ref>
       qui ne correspondent pas à la syntaxe ci-dessus, mais qui sont présents car ils ont été
         <soCalled>hérités</soCalled> de spécifications antérieures.</p>
       <p>En second lieu, une étiquette complète de langue peut consister seulement en une sous-étiquette d'usage privé. Ces étiquettes commencent par <code>x-</code> ; il n'est pas
@@ -8185,21 +8207,21 @@ value.</desc>
     indicare i nomi degli spazi in XML come stabilito dalle raccomandazioni tecniche del W3C per gli
     <ref target="https://www.w3.org/TR/1999/REC-xml-names-19990114/">spazi dei nomi in XML</ref>.</desc>
   <content>
-      <dataRef restriction="\S*" name="anyURI"/>
+      <dataRef restriction="\S+" name="anyURI"/>
    </content>
   <remarks versionDate="2008-02-08" xml:lang="en">
-      <p>The range of syntactically valid values is defined by <ref target="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986 <title>Uniform Resource Identifier
+      <p>The range of syntactically valid values is defined by <ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986 <title>Uniform Resource Identifier
           (URI): Generic Syntax</title>
          </ref>
       </p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
-      <p> 当該データ値は、<ref target="http://www.ietf.org/rfc/rfc2396.txt">RFC 2396 <title>Uniform Resource
+      <p> 当該データ値は、<ref target="https://www.ietf.org/rfc/rfc2396.txt">RFC 2396 <title>Uniform Resource
           Identifier (URI) Reference</title>
          </ref> に定義されている。 </p>
   </remarks>
   <remarks versionDate="2009-05-25" xml:lang="fr">
-      <p>La gamme des valeurs  syntaxiquement valides est définie par <ref target="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986 <title>Uniform Resource Identifier
+      <p>La gamme des valeurs  syntaxiquement valides est définie par <ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986 <title>Uniform Resource Identifier
           (URI): Generic Syntax</title>
          </ref>.</p>
       <!-- this ref should be in the TEI bibliog -->
@@ -8402,10 +8424,10 @@ resource, either within the current document or elsewhere.</desc>
    </content>
   <remarks versionDate="2011-12-12" xml:lang="en">
       <p>The range of syntactically valid values is defined by
-    <ref target="http://www.ietf.org/rfc/rfc3986.txt"> RFC 3986</ref>
+    <ref target="https://www.ietf.org/rfc/rfc3986.txt"> RFC 3986</ref>
          <title>Uniform Resource Identifier (URI): Generic
     Syntax</title>. Note that the values themselves are encoded using
-    <ref target="http://www.ietf.org/rfc/rfc3987.txt">RFC
+    <ref target="https://www.ietf.org/rfc/rfc3987.txt">RFC
     3987</ref> 
          <title>Internationalized Resource Identifiers</title> (IRIs) mapping
     to URIs. For example, <code>
@@ -8418,14 +8440,14 @@ resource, either within the current document or elsewhere.</desc>
   <remarks xml:lang="ja" versionDate="2008-04-05">
       <p>
     当該属性値は、
-    <ref target="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986
+    <ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986
     <title>Uniform Resource Identifier (URI) Reference</title>
          </ref>
     に定義されている。
     </p>
   </remarks>
   <remarks versionDate="2009-05-25" xml:lang="fr">
-      <p>La gamme des valeurs valides syntaxiquement est définie par<ref target="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986
+      <p>La gamme des valeurs valides syntaxiquement est définie par<ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986
       <title>Uniform Resource Identifier (URI): Generic
         Syntax</title>
          </ref>
@@ -8457,7 +8479,7 @@ resource, either within the current document or elsewhere.</desc>
    </content>
   <remarks versionDate="2012-06-17" xml:lang="en">
       <p>The value of this attribute follows the pattern specified by
-    the Unicode consortium for its version number (<ptr target="http://unicode.org/versions/"/>). A version number
+    the Unicode consortium for its version number (<ptr target="https://unicode.org/versions/"/>). A version number
     contains digits and fullstop characters only. The first number
     supplied identifies the major version number. A second and third
     number, for minor and sub-minor version numbers, may also be
@@ -8466,7 +8488,7 @@ resource, either within the current document or elsewhere.</desc>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
       <p>La valeur de cet attribut devrait suivre le format proposé par
-    le Consortium Unicode pour identifier les versions (<ptr target="http://unicode.org/versions/"/>). Un numéro de version
+    le Consortium Unicode pour identifier les versions (<ptr target="https://unicode.org/versions/"/>). Un numéro de version
     ne contient que des chiffres et des points. Le numéro
     initiale identifie le numéro majeur de la version. Un deuxième et
     un troisième numéro sont aussi disponibles pour la numérotation
@@ -8603,7 +8625,7 @@ which contain an XPath expression.</desc>
   </content>
   <remarks versionDate="2016-11-28" xml:lang="en">
     <p>This datatype is used to constrain a string of characters to
-    one that can be used as a URI scheme name according to <ref target="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986</ref>, <ref target="https://tools.ietf.org/html/rfc3986#section-3.1">section
+    one that can be used as a URI scheme name according to <ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986</ref>, <ref target="https://tools.ietf.org/html/rfc3986#section-3.1">section
     3.1</ref>. Thus only the 26 lowercase letters a–z, the 10
     digits 0–9, the plus sign, the period, and the hyphen are
     permitted, and the value must start with a letter.</p>
@@ -11956,9 +11978,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <memberOf key="att.global"/>
   </classes>
   <content>
-    
-      <elementRef key="tagUsage" minOccurs="1" maxOccurs="unbounded"/>
-    
+    <elementRef key="tagUsage" minOccurs="1" maxOccurs="unbounded"/>
   </content>
   <attList>
     <attDef ident="name" usage="req">
@@ -11971,7 +11991,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
         Namensraums an.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">el nombre formal completo del namespace concerniente.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">l'intero nome formale del namespace in questione.</desc>
-      <datatype><dataRef key="teidata.namespace"/></datatype>
+      <datatype minOccurs="0" maxOccurs="1"><dataRef key="teidata.namespace"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -15325,11 +15345,9 @@ should be supplied for the <att>scheme</att> attribute.</p>
   </classes>
   <content>
     <alternate>
-      <elementRef key="list"/>
-      <elementRef key="listChange"/>
-      
-        <elementRef key="change" minOccurs="1" maxOccurs="unbounded"/>
-      
+      <elementRef key="list" minOccurs="1" maxOccurs="unbounded"/>
+      <elementRef key="listChange" minOccurs="1" maxOccurs="unbounded"/>
+      <elementRef key="change" minOccurs="1" maxOccurs="unbounded"/>
     </alternate>
   </content>
   <exemplum xml:lang="en">
@@ -19643,6 +19661,7 @@ my <num type="ordinal" value="21">twenty-first</num> birthday</p>
     <memberOf key="model.publicationStmtPart.detail"/>
     <memberOf key="att.canonical"/>
     <memberOf key="att.datable"/>
+    <!--<memberOf key="att.calendarSystem"/>--> <!-- Uncomment  this after @calendar is deprecated on att.datable -->
     <memberOf key="att.duration"/>
     <memberOf key="att.editLike"/>
     <memberOf key="att.dimensions"/>
@@ -19658,7 +19677,7 @@ my <num type="ordinal" value="21">twenty-first</num> birthday</p>
       </alternate>
     
   </content>
-  <!-- attribute "calendar" moved to att.datable -->
+ 
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <date when="1980-02">early February 1980</date>
@@ -19741,6 +19760,7 @@ my <num type="ordinal" value="21">twenty-first</num> birthday</p>
     <memberOf key="att.global"/>
     <memberOf key="model.dateLike"/>
     <memberOf key="att.datable"/>
+    <!--<memberOf key="att.calendarSystem"/>--> <!-- Uncomment this after @calendar is deprecated on att.datable -->
     <memberOf key="att.canonical"/>
     <memberOf key="att.duration"/>
     <memberOf key="att.editLike"/>
@@ -29051,54 +29071,13 @@ on a title page or in a dateline.</desc>
     <memberOf key="model.titlepagePart"/>
     <memberOf key="model.divWrapper"/>
     <memberOf key="model.pLike.front"/>
+    <memberOf key="att.datable"/>
+    <!--<memberOf key="att.calendarSystem"/>--> <!-- Uncomment  this after @calendar is deprecated on att.datable -->
   </classes>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
-  <attList>
-    <attDef ident="when" usage="opt">
-      <gloss xml:lang="en" versionDate="2017-06-19">when</gloss>
-      <gloss versionDate="2017-06-19" xml:lang="de">wann</gloss>
-      <desc versionDate="2007-06-14" xml:lang="en">gives the value of the date in standard form, i.e. YYYY-MM-DD.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">표준형식으로 날짜의 값을 제시한다. 예, YYYY-MM-DD.</desc>
-      <desc versionDate="2008-04-06" xml:lang="es">proporciona el valor de una fecha en el formato estándar, es decir AAAA-MM-DD.</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該日付を標準形式、例えば、YYYY-MM-DDで示す。</desc>
-      <desc versionDate="2008-03-30" xml:lang="fr">donne la date dans une forme standard,
-c'est-à-dire. YYYY-MM-DD.</desc>
-      <desc versionDate="2007-11-06" xml:lang="it">assegna un valore alla data nel formato standard aaaa-mm-gg</desc>
-      <desc versionDate="2017-06-19" xml:lang="de">gibt den Wert des Datums in einer standardisierten Form an, z. B. YYYY-MM-DD.</desc>
-      <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
-      <remarks versionDate="2013-12-21" xml:lang="en">
-        <p>For simple dates, the <att>when</att> attribute should give
-          the Gregorian or proleptic Gregorian date in one of the formats specified in <ref target="#XSD2">XML
-      Schema Part 2: Datatypes Second Edition</ref>. <!-- More complicated dates or special applications
-        may require another calendar or another form; these should be
-        documented in the <gi>stdVals</gi> element in the TEI header.
-        --></p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>Pour les dates dont la forme est simple, il est recommandé que l'attribut
-                            <att>when</att> donne la date dans le calendrier grégorien ou grégorien
-                        proleptique au format AAAA-MM-JJ spécifié par le standard <title>XML Schema
-                            Part 2</title>.</p>
-      </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p>
-	簡単な例は、属性<att>when</att>の値として、グレゴリオ暦を
-	<title>XML Schema Part 2</title>で定義された形式
-	(YYYY-MM-DD)で示す。
-	 <!-- More complicated dates or special applications
-        may require another calendar or another form; these should be
-        documented in the <gi>stdVals</gi> element in the TEI header.
-        --></p>
-      </remarks>
-      <remarks versionDate="2017-06-19" xml:lang="de">
-        <p>Für einfache Datierungen sollte das <att>when</att>-Attribut ein gregorianisches oder
-          proleptisches gregorianisches Datum in dem spezifizierten Format <ref target="#XSD2">XML Schema
-            Part 2: Datatypes Second Edition</ref> enthalten.</p>
-      </remarks>
-    </attDef>
-  </attList>
+  
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <docImprint>Oxford, Clarendon Press, <docDate>1987</docDate>
@@ -40825,6 +40804,7 @@ externally.</p>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.datable"/>
+    <!--<memberOf key="att.calendarSystem"/>--> <!-- Uncomment this after @calendar is deprecated on att.datable -->
     <memberOf key="att.dimensions"/>
     <memberOf key="att.editLike"/>
     <memberOf key="att.typed"/>
@@ -66399,7 +66379,7 @@ the associated TEI header.</p>
     <ptr target="#TDCLA"/>
   </listRef>
 </elementSpec>
-<elementSpec module="tagdocs" ident="dataSpec">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="dataSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">datatype specification</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">documents a datatype.</desc>
   <classes>
@@ -66423,6 +66403,15 @@ the associated TEI header.</p>
       <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="no_elements_in_data_content">
+    <constraint>
+      <sch:rule role="warn" context="tei:dataSpec/tei:content">
+        <sch:report test=".//tei:anyElement | .//tei:classRef | .//tei:elementRef">
+          A datatype specification should not refer to an element or a class.
+        </sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <dataSpec ident="teidata.pointer">
@@ -68797,6 +68786,7 @@ déclaration de même nom dans la définition courante.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.identified"/>
+    <memberOf key="att.namespaceable"/>
   </classes>
   <content>
     <sequence>      
@@ -68896,25 +68886,6 @@ déclaration de même nom dans la définition courante.</desc>
           <gloss xml:lang="zh-TW" versionDate="2007-05-02">非必備的</gloss>
         </valItem>
       </valList>
-    </attDef>
-    <attDef ident="ns" usage="opt">
-      <gloss versionDate="2005-09-20" xml:lang="en">namespace</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">이름 공간</gloss>
-      <gloss versionDate="2007-05-02" xml:lang="zh-TW">名稱空間</gloss>
-      <gloss versionDate="2007-06-12" xml:lang="fr">espace de noms</gloss>
-      <gloss versionDate="2007-05-04" xml:lang="es">espacio de nombre</gloss>
-      <gloss versionDate="2007-01-21" xml:lang="it">spazio del nome</gloss>
-      <desc versionDate="2005-09-20" xml:lang="en">specifies the namespace to which this attribute belongs</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">이 속성이 소속된 이름 공간을 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該屬性所屬的名稱空間。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該属性が属する名前空間を示す。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">précise l'espace de noms auquel appartient cet
-      attribut.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica el espacio del nombre al que pertenece el
-      atributo.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene
-      l'attributo</desc>
-      <datatype><dataRef key="teidata.namespace"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -69134,7 +69105,7 @@ déclaration de même nom dans la définition courante.</desc>
     <constraint>
       <sch:rule context="tei:dataRef[tei:dataFacet]">
         <sch:assert test="@name" role="nonfatal">Data facets can only be specified for references to datatypes specified by
-          XML Schemas: Part 2: Datatypes — that is, for there to be a 'dataFacet' child there must be a @name attribute.</sch:assert>
+          XML Schema Part 2: Datatypes Second Edition — that is, for there to be a 'dataFacet' child there must be a @name attribute.</sch:assert>
         <sch:report test="@restriction" role="nonfatal">Data facets and restrictions cannot both be expressed on the same data reference — that is, the @restriction attribute cannot be used when a 'dataFacet' element is present.</sch:report>
       </sch:rule>
     </constraint>
@@ -69143,7 +69114,7 @@ déclaration de même nom dans la définition courante.</desc>
     <constraint>
       <sch:rule context="tei:dataRef[@restriction]">
         <sch:assert test="@name" role="nonfatal">Restrictions can only be specified for references to datatypes specified by
-          XML Schemas: Part 2: Datatypes — that is, for there to be a @restriction attribute there must be a @name attribute, too.</sch:assert>
+          XML Schema Part 2: Datatypes Second Edition — that is, for there to be a @restriction attribute there must be a @name attribute, too.</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -69155,7 +69126,7 @@ déclaration de même nom dans la définition courante.</desc>
       </attDef>
       <attDef ident="name">
         <desc versionDate="2010-05-14" xml:lang="en">the name of a datatype in the list provided by 
-        <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref> </desc>
+        <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref> </desc>
         <datatype><dataRef key="teidata.xmlName"/></datatype>
       </attDef>
       <attDef ident="ref">
@@ -69197,7 +69168,7 @@ déclaration de même nom dans la définition courante.</desc>
     
   <remarks versionDate="2010-05-14" xml:lang="en">
     <p>Only one of the attributes <att>key</att>, <att>name</att>, and <att>ref</att> may be used on any given instance of <gi>dataRef</gi>.</p>
-    <p>Neither a <att>restriction</att> attribute not a <gi>dataFacet</gi> child element may be used unless the <gi>dataRef</gi> refers to a datatype from the specification <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref> with a <att>name</att> attribute.</p>
+    <p>Neither a <att>restriction</att> attribute nor a <gi>dataFacet</gi> child element may be used unless the <gi>dataRef</gi> refers to a datatype from the specification <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref> with a <att>name</att> attribute.</p>
   </remarks>
   <listRef>
     <ptr target="#TD-datatypes"/>
@@ -69205,7 +69176,7 @@ déclaration de même nom dans la définition courante.</desc>
 </elementSpec>
 <elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="dataFacet">
   <desc versionDate="2016-11-21" xml:lang="en">Restricts the value of the strings used to represent values of a datatype, 
-    according to <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref>. 
+    according to <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>.
  </desc>
   <classes>
     <memberOf key="att.global"/>
@@ -69260,7 +69231,7 @@ déclaration de même nom dans la définition courante.</desc>
   </exemplum>
   <remarks versionDate="2016-11-21" xml:lang="en">
     <p>This element is only allowed when the parent <gi>dataRef</gi> refers with
-        <att>name</att> to a datatype from the specification <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref>. 
+        <att>name</att> to a datatype from the specification <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>. 
     </p>
   </remarks>
   <listRef>
@@ -70014,7 +69985,7 @@ should correspond to an existing module, via a moduleSpec or
             <sch:let name="me_phrase" value="if (@ident) then concat('The ', @ident ) else concat('This ', local-name(.), ' of ', ancestor::tei:*[@ident][1]/@ident )"/>
             <sch:assert test="@validUntil cast as xs:date ge current-date()">
               <sch:value-of select="concat( $me_phrase, ' construct is outdated (as of ', @validUntil, '); ODD processors may ignore it, and its use is no longer supported' )"/></sch:assert>
-              <sch:assert role="nonfatal" test="@validUntil cast as xs:date ge $advance_warning_period">
+              <sch:assert role="warning" test="@validUntil cast as xs:date ge $advance_warning_period">
                 <sch:value-of select="concat( $me_phrase, ' construct becomes outdated on ', @validUntil )"/>
               </sch:assert>
           </sch:rule>
@@ -70073,7 +70044,7 @@ should correspond to an existing module, via a moduleSpec or
       <desc versionDate="2007-06-12" xml:lang="fr">précise l'espace de noms auquel appartient cet élément.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el espacio de nombre al que pertenece tal elemento.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene tale elemento</desc>
-      <datatype><dataRef key="teidata.namespace"/></datatype>
+      <datatype minOccurs="0" maxOccurs="1"><dataRef key="teidata.namespace"/></datatype>
       <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
       <remarks xml:lang="en" versionDate="2023-02-07">
         <p>When specified on an <gi>elementSpec</gi>, this attribute
@@ -70083,7 +70054,7 @@ should correspond to an existing module, via a moduleSpec or
         is added, deleted, replaced, or changed by
         <gi>elementSpec</gi> children of the <gi>schemaSpec</gi>, or
         by <gi>elementSpec</gi>s referred to by <gi>specGrpRef</gi>
-        children of the <gi>schemSpec</gi>, <emph>unless</emph>
+        children of the <gi>schemaSpec</gi>, <emph>unless</emph>
         overridden by an <att>ns</att> attribute on the
         <gi>elementSpec</gi>.</p>
         <p>Note that the value of <att>ns</att> of <gi>attDef</gi> is
@@ -70174,6 +70145,7 @@ should correspond to an existing module, via a moduleSpec or
 <bibl xml:id="biblzh-tw_n25"/>
 <bibl xml:id="biblzh-tw_n26"/>
 <bibl xml:id="biblzh-tw_n59"/>
+<bibl xml:id="OTrim1.1"/>
 <bibl xml:id="NZETC01"/>
 <bibl xml:id="fr-ex-Balzac-Chouans"/>
 <bibl xml:id="fr-ex-Balzac_Goriot"/>
