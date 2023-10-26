@@ -1779,7 +1779,7 @@ type %teidata.enumerated;  #IMPLIED >
 <!ATTLIST docDate xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST docDate
  %Tatt.global.attributes;
-when %teidata.temporal.w3c;  #IMPLIED >
+ %Tatt.datable.attributes; >
 <!--doc:(document edition) contains an edition statement as presented on a title page of a document. [4.6. Title Pages] -->
 <!ELEMENT docEdition %macro.paraContent;>
 <!ATTLIST docEdition xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2469,7 +2469,7 @@ Elements] -->
 <!ATTLIST namespace xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST namespace
  %Tatt.global.attributes;
-name %teidata.namespace;  #REQUIRED >
+name CDATA  #REQUIRED >
 <!--doc:(nationality) contains an informal description of a person's present or past nationality or citizenship. [15.2.2. The Participant Description] -->
 <!ELEMENT nationality %macro.phraseSeq;>
 <!ATTLIST nationality xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2946,7 +2946,7 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.transcriptional.attributes;
  %Tatt.dimensions.attributes; >
 <!--doc:(revision description) summarizes the revision history for a file. [2.6. The Revision Description 2.1.1. The TEI Header and Its Components] -->
-<!ELEMENT revisionDesc (list|listChange|(change)+)>
+<!ELEMENT revisionDesc ((list)+|(listChange)+|(change)+)>
 <!ATTLIST revisionDesc xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST revisionDesc
  %Tatt.global.attributes;
