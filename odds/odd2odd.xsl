@@ -970,15 +970,14 @@ of this software, even if advised of the possibility of such damage.
           </xsl:call-template>
           <!-- attList -->
           <xsl:if test="tei:attList or $ORIGINAL/tei:attList">
-              <attList xmlns="http://www.tei-c.org/ns/1.0">
-                <xsl:apply-templates mode="justcopy" select="tei:attList/@org"/>
-                <xsl:call-template name="odd2odd-processAttributes">
-                  <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
-                  <xsl:with-param name="objectName" select="$elementName"/>
-                </xsl:call-template>
-              </attList>
+            <attList xmlns="http://www.tei-c.org/ns/1.0">
+              <xsl:apply-templates mode="justcopy" select="tei:attList/@org"/>
+              <xsl:call-template name="odd2odd-processAttributes">
+                <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
+                <xsl:with-param name="objectName" select="$elementName"/>
+              </xsl:call-template>
+            </attList>
           </xsl:if>
-          
 
           <!-- models -->
           <xsl:choose>
@@ -1256,12 +1255,14 @@ of this software, even if advised of the possibility of such damage.
             <xsl:with-param name="elementName" select="$className"/>
           </xsl:call-template>
           <!-- attList -->
-          <attList xmlns="http://www.tei-c.org/ns/1.0">
-            <xsl:call-template name="odd2odd-processAttributes">
-              <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
-              <xsl:with-param name="objectName" select="$className"/>
-            </xsl:call-template>
-          </attList>
+          <xsl:if test="$ORIGINAL/tei:attList">
+            <attList xmlns="http://www.tei-c.org/ns/1.0">
+              <xsl:call-template name="odd2odd-processAttributes">
+		<xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
+		<xsl:with-param name="objectName" select="$className"/>
+              </xsl:call-template>
+            </attList>
+          </xsl:if>
           <xsl:choose> <!-- maybe copy <exemplum>s from ODD or ORIGINAL -->
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:exemplum">
