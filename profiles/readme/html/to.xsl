@@ -115,7 +115,7 @@ of this software, even if advised of the possibility of such damage.</p>
         <xsl:variable name="tagdoc" select="concat( $tagdocStart, $content, '.html' )"/>
         <a class="{$class}" href="{$tagdoc}"><xsl:apply-templates/></a>
       </xsl:when>
-      <!-- else this is not a TEI scheme element or identifier, also no link, just highlight it -->
+      <!-- else this is not a TEI scheme element or name, also no link, just highlight it -->
       <xsl:otherwise>
         <span class="{$class}"><xsl:apply-templates/></span>
       </xsl:otherwise>
