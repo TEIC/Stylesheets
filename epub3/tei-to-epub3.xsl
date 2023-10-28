@@ -12,6 +12,7 @@
 		xpath-default-namespace="http://www.tei-c.org/ns/1.0"
 >
   <xsl:import href="../html/html.xsl"/>
+  <xsl:import href="../odds/classatts.xsl"/>
   <xsl:import href="../epub/epub-common.xsl"/>
   <xsl:import href="../epub/epub-preflight.xsl"/>
   <xsl:output method="xml" encoding="utf-8" doctype-system=""
