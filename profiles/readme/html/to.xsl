@@ -70,16 +70,8 @@ of this software, even if advised of the possibility of such damage.</p>
     But the Guidelines we are trying to point to always have it. So here if we find only major-
     dot-minor (rather than major-dot-minor-dot-patch), we append a ".0".
   -->
-  <xsl:variable name="version" as="xs:string">
-    <xsl:analyze-string select="$version_from_filename" regex="^([0-9]+\.[0-9]+)([aαbβ]?)$">
-      <xsl:matching-substring>
-        <xsl:sequence select="regex-group(1)||'.0'||regex-group(2)"/>
-      </xsl:matching-substring>
-      <xsl:non-matching-substring>
-        <xsl:sequence select="."/>
-      </xsl:non-matching-substring>
-    </xsl:analyze-string>
-  </xsl:variable>
+  <xsl:variable name="version" as="xs:string"
+                select="replace( $version_from_filename, '^([0-9]+\.[0-9]+)([aαbβ]?)$', '$1.0$2')"/>
   <!-- $versionZero is true() iff the major number is '0'. -->
   <xsl:variable name="versionZero" select="substring-before( $version, '.') eq '0'" as="xs:boolean"/>
   <xsl:variable name="testVersionedDocument" select="concat( $vault,'/',$version,'/VERSION')"/>
