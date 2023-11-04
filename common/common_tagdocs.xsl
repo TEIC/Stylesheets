@@ -594,11 +594,11 @@
               </xsl:attribute>
               <xsl:choose>
                 <xsl:when test="not(tei:attList)">
-		  <xsl:element namespace="{$outputNS}" name="{$ulName}">
-		    <xsl:attribute name="{$rendName}" select="'attList'"/>
-		    <xsl:processing-instruction name="DEBUG"> calling showAttClasses 01 </xsl:processing-instruction>
+                  <xsl:element namespace="{$outputNS}" name="{$ulName}">
+                    <xsl:attribute name="{$rendName}" select="'attList'"/>
+                    <xsl:processing-instruction name="DEBUG"> calling showAttClasses 01 </xsl:processing-instruction>
                     <xsl:call-template name="showAttClasses"/>
-		  </xsl:element>
+                  </xsl:element>
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:for-each select="tei:attList">
@@ -712,7 +712,7 @@
           <a>
             <xsl:choose>
               <xsl:when test="not(tei:attList)">
-		<xsl:processing-instruction name="DEBUG"> calling showAttClasses 02 </xsl:processing-instruction>
+                <xsl:processing-instruction name="DEBUG"> calling showAttClasses 02 </xsl:processing-instruction>
                 <xsl:call-template name="showAttClasses"/>
               </xsl:when>
               <xsl:otherwise>
@@ -747,11 +747,11 @@
               </xsl:attribute>
               <xsl:choose>
                 <xsl:when test="not(tei:attList)">
-		  <xsl:element namespace="{$outputNS}" name="{$ulName}">
-		    <xsl:attribute name="{$rendName}" select="'attList'"/>
-		    <xsl:processing-instruction name="DEBUG"> calling showAttClasses 03 </xsl:processing-instruction>
+                  <xsl:element namespace="{$outputNS}" name="{$ulName}">
+                    <xsl:attribute name="{$rendName}" select="'attList'"/>
+                    <xsl:processing-instruction name="DEBUG"> calling showAttClasses 03 </xsl:processing-instruction>
                     <xsl:call-template name="showAttClasses"/>
-		  </xsl:element>
+                  </xsl:element>
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:for-each select="tei:attList">
@@ -765,7 +765,7 @@
               <xsl:for-each select="$myatts/a">
                 <xsl:copy-of select="*|text()"/>
               </xsl:for-each>
-	      -->
+              -->
             </xsl:element>
           </xsl:element>
         </xsl:if>
@@ -1162,7 +1162,7 @@
                       <xsl:attribute name="{$colspan}">
                         <xsl:text>2</xsl:text>
                       </xsl:attribute>
-		      <xsl:processing-instruction name="DEBUG"> calling showAttClasses 04 </xsl:processing-instruction>
+                      <xsl:processing-instruction name="DEBUG"> calling showAttClasses 04 </xsl:processing-instruction>
                       <xsl:call-template name="showAttClasses">
                         <xsl:with-param name="minimal">true</xsl:with-param>
                       </xsl:call-template>
@@ -1196,7 +1196,7 @@
             />
           </xsl:element>
         </xsl:if>
-	<xsl:processing-instruction name="DEBUG"> calling showAttClasses 05 </xsl:processing-instruction>
+        <xsl:processing-instruction name="DEBUG"> calling showAttClasses 05 </xsl:processing-instruction>
         <xsl:call-template name="showAttClasses">
           <xsl:with-param name="minimal">true</xsl:with-param>
         </xsl:call-template>
@@ -2154,7 +2154,7 @@
         <xsl:choose>
           <xsl:when test="$mode = 'all'">
             <!--ISSUE 328 (martindholmes and joeytakeda): Added predicate
-            		  to suppress copying tei:attRef, which were invalid in TEI lite-->
+                          to suppress copying tei:attRef, which were invalid in TEI lite-->
             <xsl:apply-templates select="node()[not(self::tei:attRef)]"/>
           </xsl:when>
           <xsl:otherwise>
@@ -2797,7 +2797,16 @@
 
   <xsl:template name="attClassDetails">
     <xsl:for-each select="tei:classes/tei:memberOf">
-      <xsl:variable name="thisClassSpec" select="key('ATTCLASSES', @key)" as="element(tei:classSpec)?"/>
+      <xsl:variable name="key" select="@key"/>
+      <!--
+          Note: following line does not use "key('ATTCLASSES', @key)",
+          which would arguable be mildly faster, because ATTCLASSES is
+          not defined in this or any imported file, and importing the
+          file in which it is defined (odds/classatts.xsl) requires
+          importing other files, which in turn importing other files,
+          etc.  —Syd, 2023-11-03
+      -->
+      <xsl:variable name="thisClassSpec" select="//tei:classSpec[ @ident eq $key]" as="element(tei:classSpec)?"/>
       <xsl:choose>
         <xsl:when test="$thisClassSpec">
           <xsl:element namespace="{$outputNS}" name="{$itemName}">
