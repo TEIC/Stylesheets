@@ -236,6 +236,19 @@ of this software, even if advised of the possibility of such damage.
          You can see a version of this in commit 522e84e from
          2023-10-06. —Syd, 2023-10-09 -->
     <xsl:sequence select="$pass3"/>
+    <!-- debugging output: -->
+    <a:documentation> ========= above is pass3, next is pass2 ========= </a:documentation>
+    <rng:div xml:id="pass2">
+      <xsl:copy-of select="$pass2"/>
+    </rng:div>
+    <a:documentation> ========= above is pass2, next is pass1 ========= </a:documentation>
+    <rng:div xml:id="pass1">
+      <xsl:copy-of select="$pass1"/>
+    </rng:div>
+    <a:documentation> ========= above is pass1, next is input ========= </a:documentation>
+    <rng:div xml:id="pass0">
+      <xsl:copy-of select="/*"/>
+    </rng:div>
 </xsl:template>
 
   <xsl:template match="tei:moduleSpec">

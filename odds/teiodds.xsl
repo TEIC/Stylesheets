@@ -343,7 +343,7 @@ of this software, even if advised of the possibility of such damage.
        current context node (which is presumably a member of
        att.repeatable). -->
   <xsl:template name="repeat_as_needed" as="element()+">
-    <xsl:param name="repeatMe" as="element()"/>
+    <xsl:param name="repeatMe" as="element()+"/>
     <xsl:variable name="norMinMax" select="tei:norMinMax(.)" as="item()+"/>
     <xsl:variable name="min" select="$norMinMax[1]"/>
     <xsl:variable name="max" select="$norMinMax[2]"/>
@@ -2113,14 +2113,14 @@ of this software, even if advised of the possibility of such damage.
          </xsl:otherwise>
        </xsl:choose>
      </xsl:variable>
-     <xsl:variable name="repeatMe" as="element()">
-       <xsl:element name="{$group_or_list}" namespace="http://relaxng.org/ns/structure/1.0">
-         <xsl:sequence select="$group_or_list_content"/>
-       </xsl:element>
+     <xsl:variable name="repeatMe" as="element()+">
+       <xsl:sequence select="$group_or_list_content"/>
      </xsl:variable>
-     <xsl:call-template name="repeat_as_needed">
-       <xsl:with-param name="repeatMe" select="$repeatMe" as="element()"/>
-     </xsl:call-template>
+     <xsl:element name="{$group_or_list}" namespace="http://relaxng.org/ns/structure/1.0">
+       <xsl:call-template name="repeat_as_needed">
+	 <xsl:with-param name="repeatMe" select="$repeatMe" as="element()+"/>
+       </xsl:call-template>
+     </xsl:element>
    </xsl:template>
 
   <xsl:template match="tei:textNode"   mode="#default tangle">

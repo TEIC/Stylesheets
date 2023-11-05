@@ -328,14 +328,12 @@
       <element name="tr" ns="http://www.w3.org/1999/xhtml">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">A table row.</a:documentation>
          <oneOrMore>
-            <group>
-               <zeroOrMore>
-                  <ref name="th"/>
-               </zeroOrMore>
-               <zeroOrMore>
-                  <ref name="td"/>
-               </zeroOrMore>
-            </group>
+            <zeroOrMore>
+               <ref name="th"/>
+            </zeroOrMore>
+            <zeroOrMore>
+               <ref name="td"/>
+            </zeroOrMore>
          </oneOrMore>
       </element>
    </define>

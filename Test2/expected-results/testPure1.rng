@@ -112,7 +112,7 @@
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_0_1">
+   <define name="anyElement-openPara_0-1">
       <element>
          <anyName>
             <except>
@@ -128,12 +128,12 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_0_1"/>
+               <ref name="anyElement-openPara_0-1"/>
             </choice>
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_0_2">
+   <define name="anyElement-openPara_0-2">
       <element>
          <anyName>
             <except>
@@ -149,12 +149,12 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_0_2"/>
+               <ref name="anyElement-openPara_0-2"/>
             </choice>
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_0_6">
+   <define name="anyElement-openPara_0-6">
       <element>
          <anyName>
             <except>
@@ -170,12 +170,12 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_0_6"/>
+               <ref name="anyElement-openPara_0-6"/>
             </choice>
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_0_unbounded">
+   <define name="anyElement-openPara_0-unbounded">
       <element>
          <anyName>
             <except>
@@ -191,12 +191,12 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_0_unbounded"/>
+               <ref name="anyElement-openPara_0-unbounded"/>
             </choice>
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_1_1">
+   <define name="anyElement-openPara_1-1">
       <element>
          <anyName>
             <except>
@@ -212,12 +212,12 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_1_1"/>
+               <ref name="anyElement-openPara_1-1"/>
             </choice>
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_1_2">
+   <define name="anyElement-openPara_1-2">
       <element>
          <anyName>
             <except>
@@ -233,12 +233,12 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_1_2"/>
+               <ref name="anyElement-openPara_1-2"/>
             </choice>
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_1_6">
+   <define name="anyElement-openPara_1-6">
       <element>
          <anyName>
             <except>
@@ -254,12 +254,12 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_1_6"/>
+               <ref name="anyElement-openPara_1-6"/>
             </choice>
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_1_unbounded">
+   <define name="anyElement-openPara_1-unbounded">
       <element>
          <anyName>
             <except>
@@ -275,12 +275,12 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_1_unbounded"/>
+               <ref name="anyElement-openPara_1-unbounded"/>
             </choice>
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_2_2">
+   <define name="anyElement-openPara_2-2">
       <element>
          <anyName>
             <except>
@@ -296,12 +296,12 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_2_2"/>
+               <ref name="anyElement-openPara_2-2"/>
             </choice>
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_2_6">
+   <define name="anyElement-openPara_2-6">
       <element>
          <anyName>
             <except>
@@ -317,12 +317,12 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_2_6"/>
+               <ref name="anyElement-openPara_2-6"/>
             </choice>
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_2_unbounded">
+   <define name="anyElement-openPara_2-unbounded">
       <element>
          <anyName>
             <except>
@@ -338,12 +338,12 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_2_unbounded"/>
+               <ref name="anyElement-openPara_2-unbounded"/>
             </choice>
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_4_6">
+   <define name="anyElement-openPara_4-6">
       <element>
          <anyName>
             <except>
@@ -359,12 +359,12 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_4_6"/>
+               <ref name="anyElement-openPara_4-6"/>
             </choice>
          </zeroOrMore>
       </element>
    </define>
-   <define name="anyElement-openPara_4_unbounded">
+   <define name="anyElement-openPara_4-unbounded">
       <element>
          <anyName>
             <except>
@@ -380,7 +380,7 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-openPara_4_unbounded"/>
+               <ref name="anyElement-openPara_4-unbounded"/>
             </choice>
          </zeroOrMore>
       </element>
@@ -3342,59 +3342,62 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
       <choice>
          <ref name="t_p"/>
          <ref name="t_ab"/>
+         <ref name="t_alt_of_seq_3-4"/>
          <ref name="t_openPara_plain"/>
-         <ref name="t_openPara_0_1"/>
-         <ref name="t_openPara_0_2"/>
-         <ref name="t_openPara_0_6"/>
-         <ref name="t_openPara_0_unbounded"/>
-         <ref name="t_openPara_1_1"/>
-         <ref name="t_openPara_1_2"/>
-         <ref name="t_openPara_1_6"/>
-         <ref name="t_openPara_1_unbounded"/>
-         <ref name="t_openPara_2_2"/>
-         <ref name="t_openPara_2_6"/>
-         <ref name="t_openPara_2_unbounded"/>
-         <ref name="t_openPara_4_6"/>
-         <ref name="t_openPara_4_unbounded"/>
+         <ref name="t_openPara_0-1"/>
+         <ref name="t_openPara_0-2"/>
+         <ref name="t_openPara_0-6"/>
+         <ref name="t_openPara_0-unbounded"/>
+         <ref name="t_openPara_1-1"/>
+         <ref name="t_openPara_1-2"/>
+         <ref name="t_openPara_1-6"/>
+         <ref name="t_openPara_1-unbounded"/>
+         <ref name="t_openPara_2-2"/>
+         <ref name="t_openPara_2-6"/>
+         <ref name="t_openPara_2-unbounded"/>
+         <ref name="t_openPara_4-6"/>
+         <ref name="t_openPara_4-unbounded"/>
       </choice>
    </define>
    <define name="t_model.pLike_alternation">
       <choice>
          <ref name="t_p"/>
          <ref name="t_ab"/>
+         <ref name="t_alt_of_seq_3-4"/>
          <ref name="t_openPara_plain"/>
-         <ref name="t_openPara_0_1"/>
-         <ref name="t_openPara_0_2"/>
-         <ref name="t_openPara_0_6"/>
-         <ref name="t_openPara_0_unbounded"/>
-         <ref name="t_openPara_1_1"/>
-         <ref name="t_openPara_1_2"/>
-         <ref name="t_openPara_1_6"/>
-         <ref name="t_openPara_1_unbounded"/>
-         <ref name="t_openPara_2_2"/>
-         <ref name="t_openPara_2_6"/>
-         <ref name="t_openPara_2_unbounded"/>
-         <ref name="t_openPara_4_6"/>
-         <ref name="t_openPara_4_unbounded"/>
+         <ref name="t_openPara_0-1"/>
+         <ref name="t_openPara_0-2"/>
+         <ref name="t_openPara_0-6"/>
+         <ref name="t_openPara_0-unbounded"/>
+         <ref name="t_openPara_1-1"/>
+         <ref name="t_openPara_1-2"/>
+         <ref name="t_openPara_1-6"/>
+         <ref name="t_openPara_1-unbounded"/>
+         <ref name="t_openPara_2-2"/>
+         <ref name="t_openPara_2-6"/>
+         <ref name="t_openPara_2-unbounded"/>
+         <ref name="t_openPara_4-6"/>
+         <ref name="t_openPara_4-unbounded"/>
       </choice>
    </define>
    <define name="t_model.pLike_sequence">
       <ref name="t_p"/>
       <ref name="t_ab"/>
+      <ref name="t_alt_of_seq_3-4"/>
       <ref name="t_openPara_plain"/>
-      <ref name="t_openPara_0_1"/>
-      <ref name="t_openPara_0_2"/>
-      <ref name="t_openPara_0_6"/>
-      <ref name="t_openPara_0_unbounded"/>
-      <ref name="t_openPara_1_1"/>
-      <ref name="t_openPara_1_2"/>
-      <ref name="t_openPara_1_6"/>
-      <ref name="t_openPara_1_unbounded"/>
-      <ref name="t_openPara_2_2"/>
-      <ref name="t_openPara_2_6"/>
-      <ref name="t_openPara_2_unbounded"/>
-      <ref name="t_openPara_4_6"/>
-      <ref name="t_openPara_4_unbounded"/>
+      <ref name="t_openPara_0-1"/>
+      <ref name="t_openPara_0-2"/>
+      <ref name="t_openPara_0-6"/>
+      <ref name="t_openPara_0-unbounded"/>
+      <ref name="t_openPara_1-1"/>
+      <ref name="t_openPara_1-2"/>
+      <ref name="t_openPara_1-6"/>
+      <ref name="t_openPara_1-unbounded"/>
+      <ref name="t_openPara_2-2"/>
+      <ref name="t_openPara_2-6"/>
+      <ref name="t_openPara_2-unbounded"/>
+      <ref name="t_openPara_4-6"/>
+      <ref name="t_openPara_4-unbounded"/>
    </define>
    <define name="t_model.pLike_sequenceOptional">
       <optional>
@@ -3404,46 +3407,49 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_ab"/>
       </optional>
       <optional>
+         <ref name="t_alt_of_seq_3-4"/>
+      </optional>
+      <optional>
          <ref name="t_openPara_plain"/>
       </optional>
       <optional>
-         <ref name="t_openPara_0_1"/>
+         <ref name="t_openPara_0-1"/>
       </optional>
       <optional>
-         <ref name="t_openPara_0_2"/>
+         <ref name="t_openPara_0-2"/>
       </optional>
       <optional>
-         <ref name="t_openPara_0_6"/>
+         <ref name="t_openPara_0-6"/>
       </optional>
       <optional>
-         <ref name="t_openPara_0_unbounded"/>
+         <ref name="t_openPara_0-unbounded"/>
       </optional>
       <optional>
-         <ref name="t_openPara_1_1"/>
+         <ref name="t_openPara_1-1"/>
       </optional>
       <optional>
-         <ref name="t_openPara_1_2"/>
+         <ref name="t_openPara_1-2"/>
       </optional>
       <optional>
-         <ref name="t_openPara_1_6"/>
+         <ref name="t_openPara_1-6"/>
       </optional>
       <optional>
-         <ref name="t_openPara_1_unbounded"/>
+         <ref name="t_openPara_1-unbounded"/>
       </optional>
       <optional>
-         <ref name="t_openPara_2_2"/>
+         <ref name="t_openPara_2-2"/>
       </optional>
       <optional>
-         <ref name="t_openPara_2_6"/>
+         <ref name="t_openPara_2-6"/>
       </optional>
       <optional>
-         <ref name="t_openPara_2_unbounded"/>
+         <ref name="t_openPara_2-unbounded"/>
       </optional>
       <optional>
-         <ref name="t_openPara_4_6"/>
+         <ref name="t_openPara_4-6"/>
       </optional>
       <optional>
-         <ref name="t_openPara_4_unbounded"/>
+         <ref name="t_openPara_4-unbounded"/>
       </optional>
    </define>
    <define name="t_model.pLike_sequenceOptionalRepeatable">
@@ -3454,46 +3460,49 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_ab"/>
       </zeroOrMore>
       <zeroOrMore>
+         <ref name="t_alt_of_seq_3-4"/>
+      </zeroOrMore>
+      <zeroOrMore>
          <ref name="t_openPara_plain"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_0_1"/>
+         <ref name="t_openPara_0-1"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_0_2"/>
+         <ref name="t_openPara_0-2"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_0_6"/>
+         <ref name="t_openPara_0-6"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_0_unbounded"/>
+         <ref name="t_openPara_0-unbounded"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_1_1"/>
+         <ref name="t_openPara_1-1"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_1_2"/>
+         <ref name="t_openPara_1-2"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_1_6"/>
+         <ref name="t_openPara_1-6"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_1_unbounded"/>
+         <ref name="t_openPara_1-unbounded"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_2_2"/>
+         <ref name="t_openPara_2-2"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_2_6"/>
+         <ref name="t_openPara_2-6"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_2_unbounded"/>
+         <ref name="t_openPara_2-unbounded"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_4_6"/>
+         <ref name="t_openPara_4-6"/>
       </zeroOrMore>
       <zeroOrMore>
-         <ref name="t_openPara_4_unbounded"/>
+         <ref name="t_openPara_4-unbounded"/>
       </zeroOrMore>
    </define>
    <define name="t_model.pLike_sequenceRepeatable">
@@ -3504,46 +3513,49 @@ Suggested values include: 1] volume (volume); 2] issue; 3] page (page); 4] line;
          <ref name="t_ab"/>
       </oneOrMore>
       <oneOrMore>
+         <ref name="t_alt_of_seq_3-4"/>
+      </oneOrMore>
+      <oneOrMore>
          <ref name="t_openPara_plain"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_0_1"/>
+         <ref name="t_openPara_0-1"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_0_2"/>
+         <ref name="t_openPara_0-2"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_0_6"/>
+         <ref name="t_openPara_0-6"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_0_unbounded"/>
+         <ref name="t_openPara_0-unbounded"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_1_1"/>
+         <ref name="t_openPara_1-1"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_1_2"/>
+         <ref name="t_openPara_1-2"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_1_6"/>
+         <ref name="t_openPara_1-6"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_1_unbounded"/>
+         <ref name="t_openPara_1-unbounded"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_2_2"/>
+         <ref name="t_openPara_2-2"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_2_6"/>
+         <ref name="t_openPara_2-6"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_2_unbounded"/>
+         <ref name="t_openPara_2-unbounded"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_4_6"/>
+         <ref name="t_openPara_4-6"/>
       </oneOrMore>
       <oneOrMore>
-         <ref name="t_openPara_4_unbounded"/>
+         <ref name="t_openPara_4-unbounded"/>
       </oneOrMore>
    </define>
    <define name="t_model.stageLike">
@@ -5028,12 +5040,10 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
                <ref name="t_model.global"/>
             </zeroOrMore>
             <oneOrMore>
-               <group>
-                  <ref name="t_model.addrPart"/>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_model.addrPart"/>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
             </oneOrMore>
          </group>
          <ref name="t_att.global.attributes"/>
@@ -5318,12 +5328,10 @@ attributes @target and @cRef may be supplied on <name/>.</report>
             </zeroOrMore>
             <choice>
                <oneOrMore>
-                  <group>
-                     <ref name="t_item"/>
-                     <zeroOrMore>
-                        <ref name="t_model.global"/>
-                     </zeroOrMore>
-                  </group>
+                  <ref name="t_item"/>
+                  <zeroOrMore>
+                     <ref name="t_model.global"/>
+                  </zeroOrMore>
                </oneOrMore>
                <group>
                   <optional>
@@ -5333,26 +5341,22 @@ attributes @target and @cRef may be supplied on <name/>.</report>
                      <ref name="t_headItem"/>
                   </optional>
                   <oneOrMore>
-                     <group>
-                        <ref name="t_label"/>
-                        <zeroOrMore>
-                           <ref name="t_model.global"/>
-                        </zeroOrMore>
-                        <ref name="t_item"/>
-                        <zeroOrMore>
-                           <ref name="t_model.global"/>
-                        </zeroOrMore>
-                     </group>
+                     <ref name="t_label"/>
+                     <zeroOrMore>
+                        <ref name="t_model.global"/>
+                     </zeroOrMore>
+                     <ref name="t_item"/>
+                     <zeroOrMore>
+                        <ref name="t_model.global"/>
+                     </zeroOrMore>
                   </oneOrMore>
                </group>
             </choice>
             <zeroOrMore>
-               <group>
-                  <ref name="t_model.divBottom"/>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_model.divBottom"/>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
             </zeroOrMore>
          </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
@@ -5466,12 +5470,10 @@ attributes @target and @cRef may be supplied on <name/>.</report>
       <element name="index">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(index entry) marks a location to be indexed for whatever purpose. [3.9.2. Index Entries]</a:documentation>
          <zeroOrMore>
-            <group>
-               <ref name="t_term"/>
-               <optional>
-                  <ref name="t_index"/>
-               </optional>
-            </group>
+            <ref name="t_term"/>
+            <optional>
+               <ref name="t_index"/>
+            </optional>
          </zeroOrMore>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.spanning.attributes"/>
@@ -5770,18 +5772,16 @@ Elements]</a:documentation>
                </choice>
             </zeroOrMore>
             <oneOrMore>
-               <group>
-                  <choice>
-                     <ref name="t_model.imprintPart"/>
-                     <ref name="t_model.dateLike"/>
-                  </choice>
-                  <zeroOrMore>
-                     <ref name="t_respStmt"/>
-                  </zeroOrMore>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-               </group>
+               <choice>
+                  <ref name="t_model.imprintPart"/>
+                  <ref name="t_model.dateLike"/>
+               </choice>
+               <zeroOrMore>
+                  <ref name="t_respStmt"/>
+               </zeroOrMore>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
             </oneOrMore>
          </group>
          <ref name="t_att.global.attributes"/>
@@ -5902,16 +5902,14 @@ Elements]</a:documentation>
                </choice>
             </zeroOrMore>
             <oneOrMore>
-               <group>
-                  <oneOrMore>
-                     <ref name="t_model.biblLike"/>
-                  </oneOrMore>
-                  <zeroOrMore>
-                     <choice>
-                        <ref name="t_model.milestoneLike"/>
-                     </choice>
-                  </zeroOrMore>
-               </group>
+               <oneOrMore>
+                  <ref name="t_model.biblLike"/>
+               </oneOrMore>
+               <zeroOrMore>
+                  <choice>
+                     <ref name="t_model.milestoneLike"/>
+                  </choice>
+               </zeroOrMore>
             </oneOrMore>
          </group>
          <ref name="t_att.global.attributes"/>
@@ -6014,12 +6012,10 @@ relatedItem element must be empty</sch:report>
                </choice>
             </zeroOrMore>
             <zeroOrMore>
-               <group>
-                  <ref name="t_model.divBottom"/>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_model.divBottom"/>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
             </zeroOrMore>
          </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
@@ -6058,30 +6054,26 @@ relatedItem element must be empty</sch:report>
                <ref name="t_model.global"/>
             </zeroOrMore>
             <optional>
-               <group>
-                  <ref name="t_speaker"/>
+               <ref name="t_speaker"/>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
+            </optional>
+            <oneOrMore>
+               <choice>
+                  <ref name="t_lg"/>
+                  <ref name="t_model.lLike"/>
+                  <ref name="t_model.pLike"/>
+                  <ref name="t_model.listLike"/>
+                  <ref name="t_model.stageLike"/>
+                  <ref name="t_model.attributable"/>
+               </choice>
+               <choice>
                   <zeroOrMore>
                      <ref name="t_model.global"/>
                   </zeroOrMore>
-               </group>
-            </optional>
-            <oneOrMore>
-               <group>
-                  <choice>
-                     <ref name="t_lg"/>
-                     <ref name="t_model.lLike"/>
-                     <ref name="t_model.pLike"/>
-                     <ref name="t_model.listLike"/>
-                     <ref name="t_model.stageLike"/>
-                     <ref name="t_model.attributable"/>
-                  </choice>
-                  <choice>
-                     <zeroOrMore>
-                        <ref name="t_model.global"/>
-                     </zeroOrMore>
-                     <ref name="t_q"/>
-                  </choice>
-               </group>
+                  <ref name="t_q"/>
+               </choice>
             </oneOrMore>
          </group>
          <ref name="t_att.global.attributes"/>
@@ -6377,12 +6369,10 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(publication statement) groups information concerning the publication or distribution of an electronic or other text. [2.2.4. Publication, Distribution, Licensing, etc. 2.2. The File Description]</a:documentation>
          <choice>
             <oneOrMore>
-               <group>
-                  <ref name="t_model.publicationStmtPart.agency"/>
-                  <zeroOrMore>
-                     <ref name="t_model.publicationStmtPart.detail"/>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_model.publicationStmtPart.agency"/>
+               <zeroOrMore>
+                  <ref name="t_model.publicationStmtPart.detail"/>
+               </zeroOrMore>
             </oneOrMore>
             <oneOrMore>
                <ref name="t_model.pLike"/>
@@ -6498,53 +6488,43 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(series statement)  [2.2.5. The Series Statement 2.2. The File Description]</a:documentation>
          <choice>
             <optional>
-               <group>
-                  <ref name="t_label"/>
-                  <ref name="t_said"/>
-                  <ref name="t_pc"/>
-               </group>
+               <ref name="t_label"/>
+               <ref name="t_said"/>
+               <ref name="t_pc"/>
             </optional>
-            <optional>
-               <group>
+            <group>
+               <optional>
                   <ref name="t_label"/>
                   <optional>
                      <ref name="t_model.biblPart"/>
                   </optional>
                   <ref name="t_pc"/>
-               </group>
-            </optional>
-            <optional>
-               <group>
+               </optional>
+               <optional>
                   <ref name="t_label"/>
                   <optional>
                      <ref name="t_model.biblPart"/>
                   </optional>
                   <ref name="t_pc"/>
-               </group>
-            </optional>
-            <optional>
-               <group>
+               </optional>
+               <optional>
                   <ref name="t_label"/>
                   <optional>
                      <ref name="t_model.biblPart"/>
                   </optional>
                   <ref name="t_pc"/>
-               </group>
-            </optional>
-            <optional>
-               <group>
+               </optional>
+               <optional>
                   <ref name="t_label"/>
                   <optional>
                      <ref name="t_model.biblPart"/>
                   </optional>
                   <ref name="t_pc"/>
-               </group>
-            </optional>
+               </optional>
+            </group>
             <zeroOrMore>
-               <group>
-                  <ref name="t_label"/>
-                  <ref name="t_pc"/>
-               </group>
+               <ref name="t_label"/>
+               <ref name="t_pc"/>
             </zeroOrMore>
             <group>
                <ref name="t_label"/>
@@ -6557,47 +6537,37 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
                   <ref name="t_model.orgPart"/>
                </optional>
                <ref name="t_pc"/>
+               <optional>
+                  <ref name="t_label"/>
+                  <optional>
+                     <ref name="t_model.orgPart"/>
+                  </optional>
+                  <ref name="t_pc"/>
+               </optional>
+               <optional>
+                  <ref name="t_label"/>
+                  <optional>
+                     <ref name="t_model.orgPart"/>
+                  </optional>
+                  <ref name="t_pc"/>
+               </optional>
+               <optional>
+                  <ref name="t_label"/>
+                  <optional>
+                     <ref name="t_model.orgPart"/>
+                  </optional>
+                  <ref name="t_pc"/>
+               </optional>
             </group>
-            <optional>
-               <group>
-                  <ref name="t_label"/>
-                  <optional>
-                     <ref name="t_model.orgPart"/>
-                  </optional>
-                  <ref name="t_pc"/>
-               </group>
-            </optional>
-            <optional>
-               <group>
-                  <ref name="t_label"/>
-                  <optional>
-                     <ref name="t_model.orgPart"/>
-                  </optional>
-                  <ref name="t_pc"/>
-               </group>
-            </optional>
-            <optional>
-               <group>
-                  <ref name="t_label"/>
-                  <optional>
-                     <ref name="t_model.orgPart"/>
-                  </optional>
-                  <ref name="t_pc"/>
-               </group>
-            </optional>
             <oneOrMore>
-               <group>
-                  <ref name="t_label"/>
-                  <ref name="t_model.objectLike"/>
-                  <ref name="t_pc"/>
-               </group>
+               <ref name="t_label"/>
+               <ref name="t_model.objectLike"/>
+               <ref name="t_pc"/>
             </oneOrMore>
             <group>
                <ref name="t_label"/>
                <ref name="t_term"/>
                <ref name="t_pc"/>
-            </group>
-            <group>
                <ref name="t_label"/>
                <ref name="t_term"/>
                <ref name="t_pc"/>
@@ -6608,64 +6578,40 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
                   <ref name="t_model.textDescPart"/>
                </optional>
                <ref name="t_pc"/>
-            </group>
-            <group>
                <ref name="t_label"/>
                <optional>
                   <ref name="t_model.textDescPart"/>
                </optional>
                <ref name="t_pc"/>
-            </group>
-            <optional>
-               <group>
+               <optional>
                   <ref name="t_label"/>
                   <optional>
                      <ref name="t_model.textDescPart"/>
                   </optional>
                   <ref name="t_pc"/>
-               </group>
-            </optional>
-            <optional>
-               <group>
+               </optional>
+               <optional>
                   <ref name="t_label"/>
                   <optional>
                      <ref name="t_model.textDescPart"/>
                   </optional>
                   <ref name="t_pc"/>
-               </group>
-            </optional>
-            <group>
-               <ref name="t_label"/>
-               <ref name="t_model.teiHeaderPart"/>
-               <ref name="t_pc"/>
+               </optional>
             </group>
             <group>
                <ref name="t_label"/>
                <ref name="t_model.teiHeaderPart"/>
                <ref name="t_pc"/>
-            </group>
-            <zeroOrMore>
-               <group>
+               <ref name="t_label"/>
+               <ref name="t_model.teiHeaderPart"/>
+               <ref name="t_pc"/>
+               <zeroOrMore>
                   <ref name="t_label"/>
                   <ref name="t_model.teiHeaderPart"/>
                   <ref name="t_pc"/>
-               </group>
-            </zeroOrMore>
-            <interleave>
-               <ref name="t_label"/>
-               <zeroOrMore>
-                  <ref name="t_idno"/>
                </zeroOrMore>
-               <ref name="t_pc"/>
-            </interleave>
-            <interleave>
-               <ref name="t_label"/>
-               <zeroOrMore>
-                  <ref name="t_idno"/>
-               </zeroOrMore>
-               <ref name="t_pc"/>
-            </interleave>
-            <optional>
+            </group>
+            <group>
                <interleave>
                   <ref name="t_label"/>
                   <zeroOrMore>
@@ -6673,8 +6619,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
                   </zeroOrMore>
                   <ref name="t_pc"/>
                </interleave>
-            </optional>
-            <optional>
                <interleave>
                   <ref name="t_label"/>
                   <zeroOrMore>
@@ -6682,7 +6626,25 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
                   </zeroOrMore>
                   <ref name="t_pc"/>
                </interleave>
-            </optional>
+               <optional>
+                  <interleave>
+                     <ref name="t_label"/>
+                     <zeroOrMore>
+                        <ref name="t_idno"/>
+                     </zeroOrMore>
+                     <ref name="t_pc"/>
+                  </interleave>
+               </optional>
+               <optional>
+                  <interleave>
+                     <ref name="t_label"/>
+                     <zeroOrMore>
+                        <ref name="t_idno"/>
+                     </zeroOrMore>
+                     <ref name="t_pc"/>
+                  </interleave>
+               </optional>
+            </group>
          </choice>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
@@ -9013,12 +8975,10 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                <ref name="t_model.global"/>
             </zeroOrMore>
             <optional>
-               <group>
-                  <ref name="t_front"/>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_front"/>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
             </optional>
             <choice>
                <ref name="t_body"/>
@@ -9028,12 +8988,10 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                <ref name="t_model.global"/>
             </zeroOrMore>
             <optional>
-               <group>
-                  <ref name="t_back"/>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_back"/>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
             </optional>
          </group>
          <ref name="t_att.global.attributes"/>
@@ -9051,96 +9009,80 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                <ref name="t_model.global"/>
             </zeroOrMore>
             <optional>
-               <group>
-                  <ref name="t_model.divTop"/>
-                  <zeroOrMore>
-                     <choice>
-                        <ref name="t_model.global"/>
-                        <ref name="t_model.divTop"/>
-                     </choice>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_model.divTop"/>
+               <zeroOrMore>
+                  <choice>
+                     <ref name="t_model.global"/>
+                     <ref name="t_model.divTop"/>
+                  </choice>
+               </zeroOrMore>
             </optional>
             <optional>
-               <group>
-                  <ref name="t_model.divGenLike"/>
+               <ref name="t_model.divGenLike"/>
+               <zeroOrMore>
+                  <choice>
+                     <ref name="t_model.global"/>
+                     <ref name="t_model.divGenLike"/>
+                  </choice>
+               </zeroOrMore>
+            </optional>
+            <choice>
+               <oneOrMore>
+                  <ref name="t_model.divLike"/>
                   <zeroOrMore>
                      <choice>
                         <ref name="t_model.global"/>
                         <ref name="t_model.divGenLike"/>
                      </choice>
                   </zeroOrMore>
-               </group>
-            </optional>
-            <choice>
-               <oneOrMore>
-                  <group>
-                     <ref name="t_model.divLike"/>
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="t_model.global"/>
-                           <ref name="t_model.divGenLike"/>
-                        </choice>
-                     </zeroOrMore>
-                  </group>
                </oneOrMore>
                <oneOrMore>
-                  <group>
-                     <ref name="t_model.div1Like"/>
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="t_model.global"/>
-                           <ref name="t_model.divGenLike"/>
-                        </choice>
-                     </zeroOrMore>
-                  </group>
+                  <ref name="t_model.div1Like"/>
+                  <zeroOrMore>
+                     <choice>
+                        <ref name="t_model.global"/>
+                        <ref name="t_model.divGenLike"/>
+                     </choice>
+                  </zeroOrMore>
                </oneOrMore>
                <group>
                   <oneOrMore>
-                     <group>
-                        <choice>
-                           <ref name="t_model.common"/>
-                        </choice>
-                        <zeroOrMore>
-                           <ref name="t_model.global"/>
-                        </zeroOrMore>
-                     </group>
+                     <choice>
+                        <ref name="t_model.common"/>
+                     </choice>
+                     <zeroOrMore>
+                        <ref name="t_model.global"/>
+                     </zeroOrMore>
                   </oneOrMore>
                   <optional>
                      <choice>
                         <oneOrMore>
-                           <group>
-                              <ref name="t_model.divLike"/>
-                              <zeroOrMore>
-                                 <choice>
-                                    <ref name="t_model.global"/>
-                                    <ref name="t_model.divGenLike"/>
-                                 </choice>
-                              </zeroOrMore>
-                           </group>
+                           <ref name="t_model.divLike"/>
+                           <zeroOrMore>
+                              <choice>
+                                 <ref name="t_model.global"/>
+                                 <ref name="t_model.divGenLike"/>
+                              </choice>
+                           </zeroOrMore>
                         </oneOrMore>
                         <oneOrMore>
-                           <group>
-                              <ref name="t_model.div1Like"/>
-                              <zeroOrMore>
-                                 <choice>
-                                    <ref name="t_model.global"/>
-                                    <ref name="t_model.divGenLike"/>
-                                 </choice>
-                              </zeroOrMore>
-                           </group>
+                           <ref name="t_model.div1Like"/>
+                           <zeroOrMore>
+                              <choice>
+                                 <ref name="t_model.global"/>
+                                 <ref name="t_model.divGenLike"/>
+                              </choice>
+                           </zeroOrMore>
                         </oneOrMore>
                      </choice>
                   </optional>
                </group>
             </choice>
             <zeroOrMore>
-               <group>
-                  <ref name="t_model.divBottom"/>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_model.divBottom"/>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
             </zeroOrMore>
          </group>
          <ref name="t_att.global.attributes"/>
@@ -9189,12 +9131,10 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                <ref name="t_model.global"/>
             </zeroOrMore>
             <optional>
-               <group>
-                  <ref name="t_front"/>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_front"/>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
             </optional>
             <choice>
                <ref name="t_body"/>
@@ -9204,12 +9144,10 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                <ref name="t_model.global"/>
             </zeroOrMore>
             <optional>
-               <group>
-                  <ref name="t_back"/>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_back"/>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
             </optional>
          </group>
          <ref name="t_att.global.attributes"/>
@@ -9229,52 +9167,42 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                </choice>
             </zeroOrMore>
             <optional>
-               <group>
-                  <choice>
+               <choice>
+                  <oneOrMore>
+                     <choice>
+                        <ref name="t_model.divLike"/>
+                        <ref name="t_model.divGenLike"/>
+                     </choice>
+                     <zeroOrMore>
+                        <ref name="t_model.global"/>
+                     </zeroOrMore>
+                  </oneOrMore>
+                  <group>
                      <oneOrMore>
-                        <group>
-                           <choice>
-                              <ref name="t_model.divLike"/>
-                              <ref name="t_model.divGenLike"/>
-                           </choice>
-                           <zeroOrMore>
-                              <ref name="t_model.global"/>
-                           </zeroOrMore>
-                        </group>
-                     </oneOrMore>
-                     <group>
-                        <oneOrMore>
-                           <group>
-                              <choice>
-                                 <ref name="t_model.common"/>
-                              </choice>
-                              <zeroOrMore>
-                                 <ref name="t_model.global"/>
-                              </zeroOrMore>
-                           </group>
-                        </oneOrMore>
-                        <zeroOrMore>
-                           <group>
-                              <choice>
-                                 <ref name="t_model.divLike"/>
-                                 <ref name="t_model.divGenLike"/>
-                              </choice>
-                              <zeroOrMore>
-                                 <ref name="t_model.global"/>
-                              </zeroOrMore>
-                           </group>
-                        </zeroOrMore>
-                     </group>
-                  </choice>
-                  <zeroOrMore>
-                     <group>
-                        <ref name="t_model.divBottom"/>
+                        <choice>
+                           <ref name="t_model.common"/>
+                        </choice>
                         <zeroOrMore>
                            <ref name="t_model.global"/>
                         </zeroOrMore>
-                     </group>
+                     </oneOrMore>
+                     <zeroOrMore>
+                        <choice>
+                           <ref name="t_model.divLike"/>
+                           <ref name="t_model.divGenLike"/>
+                        </choice>
+                        <zeroOrMore>
+                           <ref name="t_model.global"/>
+                        </zeroOrMore>
+                     </zeroOrMore>
+                  </group>
+               </choice>
+               <zeroOrMore>
+                  <ref name="t_model.divBottom"/>
+                  <zeroOrMore>
+                     <ref name="t_model.global"/>
                   </zeroOrMore>
-               </group>
+               </zeroOrMore>
             </optional>
          </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
@@ -9371,12 +9299,10 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                </choice>
             </zeroOrMore>
             <oneOrMore>
-               <group>
-                  <ref name="t_model.common"/>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_model.common"/>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
             </oneOrMore>
          </group>
          <ref name="t_att.global.attributes"/>
@@ -9473,12 +9399,10 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                </choice>
             </zeroOrMore>
             <zeroOrMore>
-               <group>
-                  <ref name="t_model.divBottomPart"/>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_model.divBottomPart"/>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
             </zeroOrMore>
          </group>
          <ref name="t_att.global.attributes"/>
@@ -9521,12 +9445,10 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                <ref name="t_model.global"/>
             </zeroOrMore>
             <oneOrMore>
-               <group>
-                  <ref name="t_titlePart"/>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_titlePart"/>
+               <zeroOrMore>
+                  <ref name="t_model.global"/>
+               </zeroOrMore>
             </oneOrMore>
          </group>
          <ref name="t_att.global.attributes"/>
@@ -9644,41 +9566,37 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
                </choice>
             </zeroOrMore>
             <optional>
-               <group>
-                  <choice>
-                     <group>
-                        <ref name="t_model.div1Like"/>
-                        <zeroOrMore>
-                           <choice>
-                              <ref name="t_model.div1Like"/>
-                              <ref name="t_model.frontPart"/>
-                              <ref name="t_model.global"/>
-                           </choice>
-                        </zeroOrMore>
-                     </group>
-                     <group>
-                        <ref name="t_model.divLike"/>
-                        <zeroOrMore>
-                           <choice>
-                              <ref name="t_model.divLike"/>
-                              <ref name="t_model.frontPart"/>
-                              <ref name="t_model.global"/>
-                           </choice>
-                        </zeroOrMore>
-                     </group>
-                  </choice>
-                  <optional>
-                     <group>
+               <choice>
+                  <group>
+                     <ref name="t_model.div1Like"/>
+                     <zeroOrMore>
+                        <choice>
+                           <ref name="t_model.div1Like"/>
+                           <ref name="t_model.frontPart"/>
+                           <ref name="t_model.global"/>
+                        </choice>
+                     </zeroOrMore>
+                  </group>
+                  <group>
+                     <ref name="t_model.divLike"/>
+                     <zeroOrMore>
+                        <choice>
+                           <ref name="t_model.divLike"/>
+                           <ref name="t_model.frontPart"/>
+                           <ref name="t_model.global"/>
+                        </choice>
+                     </zeroOrMore>
+                  </group>
+               </choice>
+               <optional>
+                  <ref name="t_model.divBottom"/>
+                  <zeroOrMore>
+                     <choice>
                         <ref name="t_model.divBottom"/>
-                        <zeroOrMore>
-                           <choice>
-                              <ref name="t_model.divBottom"/>
-                              <ref name="t_model.global"/>
-                           </choice>
-                        </zeroOrMore>
-                     </group>
-                  </optional>
-               </group>
+                        <ref name="t_model.global"/>
+                     </choice>
+                  </zeroOrMore>
+               </optional>
             </optional>
          </group>
          <ref name="t_att.global.attributes"/>
@@ -9724,15 +9642,13 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
                </choice>
             </optional>
             <optional>
-               <group>
-                  <ref name="t_model.divBottomPart"/>
-                  <zeroOrMore>
-                     <choice>
-                        <ref name="t_model.divBottomPart"/>
-                        <ref name="t_model.global"/>
-                     </choice>
-                  </zeroOrMore>
-               </group>
+               <ref name="t_model.divBottomPart"/>
+               <zeroOrMore>
+                  <choice>
+                     <ref name="t_model.divBottomPart"/>
+                     <ref name="t_model.global"/>
+                  </choice>
+               </zeroOrMore>
             </optional>
          </group>
          <ref name="t_att.global.attributes"/>
@@ -9840,6 +9756,26 @@ Sample values include: 1] TEI (Text Encoding Initiative); 2] DBK (Docbook); 3] X
          <empty/>
       </element>
    </define>
+   <define name="t_alt_of_seq_3-4">
+      <element name="alt_of_seq_3-4">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">test developed by Raff Viglianti 2023-10-12</a:documentation>
+         <choice>
+            <group>
+               <ref name="t_emph"/>
+               <ref name="t_lb"/>
+               <ref name="t_emph"/>
+               <ref name="t_lb"/>
+               <ref name="t_emph"/>
+               <ref name="t_lb"/>
+               <optional>
+                  <ref name="t_emph"/>
+                  <ref name="t_lb"/>
+               </optional>
+            </group>
+            <ref name="t_orgName"/>
+         </choice>
+      </element>
+   </define>
    <define name="t_openPara_plain">
       <element name="openPara_plain">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">no <code xmlns="http://www.w3.org/1999/xhtml"
@@ -9849,199 +9785,199 @@ Sample values include: 1] TEI (Text Encoding Initiative); 2] DBK (Docbook); 3] X
          <ref name="anyElement-openPara_plain"/>
       </element>
    </define>
-   <define name="t_openPara_0_1">
-      <element name="openPara_0_1">
+   <define name="t_openPara_0-1">
+      <element name="openPara_0-1">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 0, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 1</a:documentation>
          <optional>
-            <ref name="anyElement-openPara_0_1"/>
+            <ref name="anyElement-openPara_0-1"/>
          </optional>
       </element>
    </define>
-   <define name="t_openPara_0_2">
-      <element name="openPara_0_2">
+   <define name="t_openPara_0-2">
+      <element name="openPara_0-2">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 0, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 2</a:documentation>
          <optional>
-            <ref name="anyElement-openPara_0_2"/>
+            <ref name="anyElement-openPara_0-2"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_0_2"/>
+            <ref name="anyElement-openPara_0-2"/>
          </optional>
       </element>
    </define>
-   <define name="t_openPara_0_6">
-      <element name="openPara_0_6">
+   <define name="t_openPara_0-6">
+      <element name="openPara_0-6">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 0, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 6</a:documentation>
          <optional>
-            <ref name="anyElement-openPara_0_6"/>
+            <ref name="anyElement-openPara_0-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_0_6"/>
+            <ref name="anyElement-openPara_0-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_0_6"/>
+            <ref name="anyElement-openPara_0-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_0_6"/>
+            <ref name="anyElement-openPara_0-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_0_6"/>
+            <ref name="anyElement-openPara_0-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_0_6"/>
+            <ref name="anyElement-openPara_0-6"/>
          </optional>
       </element>
    </define>
-   <define name="t_openPara_0_unbounded">
-      <element name="openPara_0_unbounded">
+   <define name="t_openPara_0-unbounded">
+      <element name="openPara_0-unbounded">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 0, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> unbounded</a:documentation>
          <zeroOrMore>
-            <ref name="anyElement-openPara_0_unbounded"/>
+            <ref name="anyElement-openPara_0-unbounded"/>
          </zeroOrMore>
       </element>
    </define>
-   <define name="t_openPara_1_1">
-      <element name="openPara_1_1">
+   <define name="t_openPara_1-1">
+      <element name="openPara_1-1">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 1, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 1</a:documentation>
-         <ref name="anyElement-openPara_1_1"/>
+         <ref name="anyElement-openPara_1-1"/>
       </element>
    </define>
-   <define name="t_openPara_1_2">
-      <element name="openPara_1_2">
+   <define name="t_openPara_1-2">
+      <element name="openPara_1-2">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 1, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 2</a:documentation>
-         <ref name="anyElement-openPara_1_2"/>
+         <ref name="anyElement-openPara_1-2"/>
          <optional>
-            <ref name="anyElement-openPara_1_2"/>
+            <ref name="anyElement-openPara_1-2"/>
          </optional>
       </element>
    </define>
-   <define name="t_openPara_1_6">
-      <element name="openPara_1_6">
+   <define name="t_openPara_1-6">
+      <element name="openPara_1-6">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 1, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 6</a:documentation>
-         <ref name="anyElement-openPara_1_6"/>
+         <ref name="anyElement-openPara_1-6"/>
          <optional>
-            <ref name="anyElement-openPara_1_6"/>
+            <ref name="anyElement-openPara_1-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_1_6"/>
+            <ref name="anyElement-openPara_1-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_1_6"/>
+            <ref name="anyElement-openPara_1-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_1_6"/>
+            <ref name="anyElement-openPara_1-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_1_6"/>
+            <ref name="anyElement-openPara_1-6"/>
          </optional>
       </element>
    </define>
-   <define name="t_openPara_1_unbounded">
-      <element name="openPara_1_unbounded">
+   <define name="t_openPara_1-unbounded">
+      <element name="openPara_1-unbounded">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 1, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> unbounded</a:documentation>
          <oneOrMore>
-            <ref name="anyElement-openPara_1_unbounded"/>
+            <ref name="anyElement-openPara_1-unbounded"/>
          </oneOrMore>
       </element>
    </define>
-   <define name="t_openPara_2_2">
-      <element name="openPara_2_2">
+   <define name="t_openPara_2-2">
+      <element name="openPara_2-2">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 2, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 2</a:documentation>
-         <ref name="anyElement-openPara_2_2"/>
-         <ref name="anyElement-openPara_2_2"/>
+         <ref name="anyElement-openPara_2-2"/>
+         <ref name="anyElement-openPara_2-2"/>
       </element>
    </define>
-   <define name="t_openPara_2_6">
-      <element name="openPara_2_6">
+   <define name="t_openPara_2-6">
+      <element name="openPara_2-6">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 2, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 6</a:documentation>
-         <ref name="anyElement-openPara_2_6"/>
-         <ref name="anyElement-openPara_2_6"/>
+         <ref name="anyElement-openPara_2-6"/>
+         <ref name="anyElement-openPara_2-6"/>
          <optional>
-            <ref name="anyElement-openPara_2_6"/>
+            <ref name="anyElement-openPara_2-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_2_6"/>
+            <ref name="anyElement-openPara_2-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_2_6"/>
+            <ref name="anyElement-openPara_2-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_2_6"/>
+            <ref name="anyElement-openPara_2-6"/>
          </optional>
       </element>
    </define>
-   <define name="t_openPara_2_unbounded">
-      <element name="openPara_2_unbounded">
+   <define name="t_openPara_2-unbounded">
+      <element name="openPara_2-unbounded">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 2, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> unbounded</a:documentation>
-         <ref name="anyElement-openPara_2_unbounded"/>
-         <ref name="anyElement-openPara_2_unbounded"/>
+         <ref name="anyElement-openPara_2-unbounded"/>
+         <ref name="anyElement-openPara_2-unbounded"/>
          <zeroOrMore>
-            <ref name="anyElement-openPara_2_unbounded"/>
+            <ref name="anyElement-openPara_2-unbounded"/>
          </zeroOrMore>
       </element>
    </define>
-   <define name="t_openPara_4_6">
-      <element name="openPara_4_6">
+   <define name="t_openPara_4-6">
+      <element name="openPara_4-6">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 4, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> 6</a:documentation>
-         <ref name="anyElement-openPara_4_6"/>
-         <ref name="anyElement-openPara_4_6"/>
-         <ref name="anyElement-openPara_4_6"/>
-         <ref name="anyElement-openPara_4_6"/>
+         <ref name="anyElement-openPara_4-6"/>
+         <ref name="anyElement-openPara_4-6"/>
+         <ref name="anyElement-openPara_4-6"/>
+         <ref name="anyElement-openPara_4-6"/>
          <optional>
-            <ref name="anyElement-openPara_4_6"/>
+            <ref name="anyElement-openPara_4-6"/>
          </optional>
          <optional>
-            <ref name="anyElement-openPara_4_6"/>
+            <ref name="anyElement-openPara_4-6"/>
          </optional>
       </element>
    </define>
-   <define name="t_openPara_4_unbounded">
-      <element name="openPara_4_unbounded">
+   <define name="t_openPara_4-unbounded">
+      <element name="openPara_4-unbounded">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
             <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@minOccurs</code> 4, <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">@maxOccurs</code> unbounded</a:documentation>
-         <ref name="anyElement-openPara_4_unbounded"/>
-         <ref name="anyElement-openPara_4_unbounded"/>
-         <ref name="anyElement-openPara_4_unbounded"/>
-         <ref name="anyElement-openPara_4_unbounded"/>
+         <ref name="anyElement-openPara_4-unbounded"/>
+         <ref name="anyElement-openPara_4-unbounded"/>
+         <ref name="anyElement-openPara_4-unbounded"/>
+         <ref name="anyElement-openPara_4-unbounded"/>
          <zeroOrMore>
-            <ref name="anyElement-openPara_4_unbounded"/>
+            <ref name="anyElement-openPara_4-unbounded"/>
          </zeroOrMore>
       </element>
    </define>
