@@ -827,7 +827,6 @@ of this software, even if advised of the possibility of such damage.
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <!--  -->
     <xsl:choose>
       <xsl:when test="$suffix='' or $suffix='NULL'">
         <rng:ref name="{$localprefix}{@ident}"/>

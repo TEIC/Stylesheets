@@ -5222,12 +5222,14 @@ relatedItem element must be empty</sch:report>
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-            <optional>
-               <ref name="speaker"/>
-               <zeroOrMore>
-                  <ref name="model.global"/>
-               </zeroOrMore>
-            </optional>
+            <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+               <rng:group>
+                  <rng:ref name="speaker"/>
+                  <rng:zeroOrMore>
+                     <rng:ref name="model.global"/>
+                  </rng:zeroOrMore>
+               </rng:group>
+            </rng:optional>
             <oneOrMore>
                <choice>
                   <ref name="lg"/>
@@ -6889,12 +6891,14 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-            <optional>
-               <ref name="front"/>
-               <zeroOrMore>
-                  <ref name="model.global"/>
-               </zeroOrMore>
-            </optional>
+            <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+               <rng:group>
+                  <rng:ref name="front"/>
+                  <rng:zeroOrMore>
+                     <rng:ref name="model.global"/>
+                  </rng:zeroOrMore>
+               </rng:group>
+            </rng:optional>
             <choice>
                <ref name="body"/>
                <ref name="group"/>
@@ -6902,12 +6906,14 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-            <optional>
-               <ref name="back"/>
-               <zeroOrMore>
-                  <ref name="model.global"/>
-               </zeroOrMore>
-            </optional>
+            <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+               <rng:group>
+                  <rng:ref name="back"/>
+                  <rng:zeroOrMore>
+                     <rng:ref name="model.global"/>
+                  </rng:zeroOrMore>
+               </rng:group>
+            </rng:optional>
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.declaring.attributes"/>
@@ -6923,24 +6929,28 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-            <optional>
-               <ref name="model.divTop"/>
-               <zeroOrMore>
-                  <choice>
-                     <ref name="model.global"/>
-                     <ref name="model.divTop"/>
-                  </choice>
-               </zeroOrMore>
-            </optional>
-            <optional>
-               <ref name="model.divGenLike"/>
-               <zeroOrMore>
-                  <choice>
-                     <ref name="model.global"/>
-                     <ref name="model.divGenLike"/>
-                  </choice>
-               </zeroOrMore>
-            </optional>
+            <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+               <rng:group>
+                  <rng:ref name="model.divTop"/>
+                  <rng:zeroOrMore>
+                     <rng:choice>
+                        <rng:ref name="model.global"/>
+                        <rng:ref name="model.divTop"/>
+                     </rng:choice>
+                  </rng:zeroOrMore>
+               </rng:group>
+            </rng:optional>
+            <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+               <rng:group>
+                  <rng:ref name="model.divGenLike"/>
+                  <rng:zeroOrMore>
+                     <rng:choice>
+                        <rng:ref name="model.global"/>
+                        <rng:ref name="model.divGenLike"/>
+                     </rng:choice>
+                  </rng:zeroOrMore>
+               </rng:group>
+            </rng:optional>
             <choice>
                <oneOrMore>
                   <ref name="model.divLike"/>
@@ -7045,12 +7055,14 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-            <optional>
-               <ref name="front"/>
-               <zeroOrMore>
-                  <ref name="model.global"/>
-               </zeroOrMore>
-            </optional>
+            <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+               <rng:group>
+                  <rng:ref name="front"/>
+                  <rng:zeroOrMore>
+                     <rng:ref name="model.global"/>
+                  </rng:zeroOrMore>
+               </rng:group>
+            </rng:optional>
             <choice>
                <ref name="body"/>
                <ref name="group"/>
@@ -7058,12 +7070,14 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-            <optional>
-               <ref name="back"/>
-               <zeroOrMore>
-                  <ref name="model.global"/>
-               </zeroOrMore>
-            </optional>
+            <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+               <rng:group>
+                  <rng:ref name="back"/>
+                  <rng:zeroOrMore>
+                     <rng:ref name="model.global"/>
+                  </rng:zeroOrMore>
+               </rng:group>
+            </rng:optional>
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.declaring.attributes"/>
@@ -7081,44 +7095,44 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-            <optional>
-               <choice>
-                  <oneOrMore>
-                     <choice>
-                        <ref name="model.divLike"/>
-                        <ref name="model.divGenLike"/>
-                     </choice>
-                     <zeroOrMore>
-                        <ref name="model.global"/>
-                     </zeroOrMore>
-                  </oneOrMore>
-                  <group>
+            <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+               <rng:group>
+                  <rng:choice>
                      <oneOrMore>
-                        <choice>
-                           <ref name="model.common"/>
-                        </choice>
-                        <zeroOrMore>
-                           <ref name="model.global"/>
-                        </zeroOrMore>
+                        <rng:choice>
+                           <rng:ref name="model.divLike"/>
+                           <rng:ref name="model.divGenLike"/>
+                        </rng:choice>
+                        <rng:zeroOrMore>
+                           <rng:ref name="model.global"/>
+                        </rng:zeroOrMore>
                      </oneOrMore>
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="model.divLike"/>
-                           <ref name="model.divGenLike"/>
-                        </choice>
-                        <zeroOrMore>
-                           <ref name="model.global"/>
-                        </zeroOrMore>
-                     </zeroOrMore>
-                  </group>
-               </choice>
-               <zeroOrMore>
-                  <ref name="model.divBottom"/>
-                  <zeroOrMore>
-                     <ref name="model.global"/>
-                  </zeroOrMore>
-               </zeroOrMore>
-            </optional>
+                     <group>
+                        <oneOrMore>
+                           <rng:ref name="model.common"/>
+                           <rng:zeroOrMore>
+                              <rng:ref name="model.global"/>
+                           </rng:zeroOrMore>
+                        </oneOrMore>
+                        <rng:zeroOrMore>
+                           <rng:choice>
+                              <rng:ref name="model.divLike"/>
+                              <rng:ref name="model.divGenLike"/>
+                           </rng:choice>
+                           <rng:zeroOrMore>
+                              <rng:ref name="model.global"/>
+                           </rng:zeroOrMore>
+                        </rng:zeroOrMore>
+                     </group>
+                  </rng:choice>
+                  <rng:zeroOrMore>
+                     <rng:ref name="model.divBottom"/>
+                     <rng:zeroOrMore>
+                        <rng:ref name="model.global"/>
+                     </rng:zeroOrMore>
+                  </rng:zeroOrMore>
+               </rng:group>
+            </rng:optional>
          </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -7482,39 +7496,41 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-            <optional>
-               <choice>
-                  <group>
-                     <ref name="model.div1Like"/>
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="model.div1Like"/>
-                           <ref name="model.frontPart"/>
-                           <ref name="model.global"/>
-                        </choice>
-                     </zeroOrMore>
-                  </group>
-                  <group>
-                     <ref name="model.divLike"/>
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="model.divLike"/>
-                           <ref name="model.frontPart"/>
-                           <ref name="model.global"/>
-                        </choice>
-                     </zeroOrMore>
-                  </group>
-               </choice>
-               <optional>
-                  <ref name="model.divBottom"/>
-                  <zeroOrMore>
-                     <choice>
-                        <ref name="model.divBottom"/>
-                        <ref name="model.global"/>
-                     </choice>
-                  </zeroOrMore>
-               </optional>
-            </optional>
+            <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+               <rng:group>
+                  <rng:choice>
+                     <group>
+                        <rng:ref name="model.div1Like"/>
+                        <rng:zeroOrMore>
+                           <rng:choice>
+                              <rng:ref name="model.div1Like"/>
+                              <rng:ref name="model.frontPart"/>
+                              <rng:ref name="model.global"/>
+                           </rng:choice>
+                        </rng:zeroOrMore>
+                     </group>
+                     <group>
+                        <rng:ref name="model.divLike"/>
+                        <rng:zeroOrMore>
+                           <rng:choice>
+                              <rng:ref name="model.divLike"/>
+                              <rng:ref name="model.frontPart"/>
+                              <rng:ref name="model.global"/>
+                           </rng:choice>
+                        </rng:zeroOrMore>
+                     </group>
+                  </rng:choice>
+                  <optional>
+                     <rng:ref name="model.divBottom"/>
+                     <rng:zeroOrMore>
+                        <rng:choice>
+                           <rng:ref name="model.divBottom"/>
+                           <rng:ref name="model.global"/>
+                        </rng:choice>
+                     </rng:zeroOrMore>
+                  </optional>
+               </rng:group>
+            </rng:optional>
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.declaring.attributes"/>
@@ -7558,15 +7574,17 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
                   </group>
                </choice>
             </optional>
-            <optional>
-               <ref name="model.divBottomPart"/>
-               <zeroOrMore>
-                  <choice>
-                     <ref name="model.divBottomPart"/>
-                     <ref name="model.global"/>
-                  </choice>
-               </zeroOrMore>
-            </optional>
+            <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+               <rng:group>
+                  <rng:ref name="model.divBottomPart"/>
+                  <rng:zeroOrMore>
+                     <rng:choice>
+                        <rng:ref name="model.divBottomPart"/>
+                        <rng:ref name="model.global"/>
+                     </rng:choice>
+                  </rng:zeroOrMore>
+               </rng:group>
+            </rng:optional>
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.declaring.attributes"/>

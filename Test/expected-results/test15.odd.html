@@ -688,24 +688,26 @@ element div
 <a class="link_ref" itemprop="ref" href="#TEI.model.global" title="model.global agrupa elementos vacíos que pueden aparecer en cualquier punto de un texto TEI [1.3. The TEI Class System]">model.global</a> )*,
       (
          (
-            ( ( 
+            (
+               ( ( ( 
 <a class="link_ref" itemprop="ref" href="#TEI.model.divLike" title="model.divLike agrupa los elementos usados para representar divisiones estructurales recursivamente.">model.divLike</a> | 
 <a class="link_ref" itemprop="ref" href="#TEI.model.divGenLike" title="model.divGenLike agrupa elementos usados para representar divisiones estructurales que se generan explícitamente porque estan p...">model.divGenLike</a> ), 
-<a class="link_ref" itemprop="ref" href="#TEI.model.global" title="model.global agrupa elementos vacíos que pueden aparecer en cualquier punto de un texto TEI [1.3. The TEI Class System]">model.global</a>* )+
-          | (
-               ( ( schemaSpec | 
+<a class="link_ref" itemprop="ref" href="#TEI.model.global" title="model.global agrupa elementos vacíos que pueden aparecer en cualquier punto de un texto TEI [1.3. The TEI Class System]">model.global</a>* )+ )
+             | (
+                  ( ( ( schemaSpec | 
 <a class="link_ref" itemprop="ref" href="#TEI.model.common" title="model.common agrupa elementos comunes a nivel de fragmentos de texto o internivel. [1.3. The TEI Class System]">model.common</a> ), 
-<a class="link_ref" itemprop="ref" href="#TEI.model.global" title="model.global agrupa elementos vacíos que pueden aparecer en cualquier punto de un texto TEI [1.3. The TEI Class System]">model.global</a>* )+,
-               ( ( 
+<a class="link_ref" itemprop="ref" href="#TEI.model.global" title="model.global agrupa elementos vacíos que pueden aparecer en cualquier punto de un texto TEI [1.3. The TEI Class System]">model.global</a>* )+ ),
+                  ( ( ( 
 <a class="link_ref" itemprop="ref" href="#TEI.model.divLike" title="model.divLike agrupa los elementos usados para representar divisiones estructurales recursivamente.">model.divLike</a> | 
 <a class="link_ref" itemprop="ref" href="#TEI.model.divGenLike" title="model.divGenLike agrupa elementos usados para representar divisiones estructurales que se generan explícitamente porque estan p...">model.divGenLike</a> ), 
-<a class="link_ref" itemprop="ref" href="#TEI.model.global" title="model.global agrupa elementos vacíos que pueden aparecer en cualquier punto de un texto TEI [1.3. The TEI Class System]">model.global</a>* )*
-            )
-         ),
-         ( 
+<a class="link_ref" itemprop="ref" href="#TEI.model.global" title="model.global agrupa elementos vacíos que pueden aparecer en cualquier punto de un texto TEI [1.3. The TEI Class System]">model.global</a>* )* )
+               )
+            ),
+            ( ( 
 <a class="link_ref" itemprop="ref" href="#TEI.model.divBottom" title="model.divBottom agrupa elementos que pueden aparecer sólo al final de una división textual p.ej. un tráiler. [4.2. Elements Com...">model.divBottom</a>, 
-<a class="link_ref" itemprop="ref" href="#TEI.model.global" title="model.global agrupa elementos vacíos que pueden aparecer en cualquier punto de un texto TEI [1.3. The TEI Class System]">model.global</a>* )*
-      )?
+<a class="link_ref" itemprop="ref" href="#TEI.model.global" title="model.global agrupa elementos vacíos que pueden aparecer en cualquier punto de un texto TEI [1.3. The TEI Class System]">model.global</a>* )* )
+         )?
+      )
    )
 }
 <a href="#index.xml-eg-d33e1077" class="anchorlink">⚓</a>

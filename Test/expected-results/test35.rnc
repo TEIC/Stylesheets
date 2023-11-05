@@ -4956,7 +4956,7 @@ tei_div =
   element tei:div {
     ((tei_model.divTop | tei_model.global)*,
      ((((tei_model.divLike | tei_model.divGenLike), tei_model.global*)+
-       | (((tei_model.common), tei_model.global*)+,
+       | ((tei_model.common, tei_model.global*)+,
           ((tei_model.divLike | tei_model.divGenLike),
            tei_model.global*)*)),
       (tei_model.divBottom, tei_model.global*)*)?)
@@ -5017,7 +5017,7 @@ tei_div1 =
   element tei:div1 {
     ((tei_model.divTop | tei_model.global)*,
      ((((tei_model.div2Like | tei_model.divGenLike), tei_model.global*)+
-       | (((tei_model.common), tei_model.global*)+,
+       | ((tei_model.common, tei_model.global*)+,
           ((tei_model.div2Like | tei_model.divGenLike),
            tei_model.global*)*)),
       (tei_model.divBottom, tei_model.global*)*)?),
@@ -5033,7 +5033,7 @@ tei_div2 =
   element tei:div2 {
     ((tei_model.divTop | tei_model.global)*,
      ((((tei_model.div3Like | tei_model.divGenLike), tei_model.global*)+
-       | (((tei_model.common), tei_model.global*)+,
+       | ((tei_model.common, tei_model.global*)+,
           ((tei_model.div3Like | tei_model.divGenLike),
            tei_model.global*)*)),
       (tei_model.divBottom, tei_model.global*)*)?),
@@ -5049,7 +5049,7 @@ tei_div3 =
   element tei:div3 {
     ((tei_model.divTop | tei_model.global)*,
      ((((tei_model.div4Like | tei_model.divGenLike), tei_model.global*)+
-       | (((tei_model.common), tei_model.global*)+,
+       | ((tei_model.common, tei_model.global*)+,
           ((tei_model.div4Like | tei_model.divGenLike),
            tei_model.global*)*)),
       (tei_model.divBottom, tei_model.global*)*)?),
@@ -5065,7 +5065,7 @@ tei_div4 =
   element tei:div4 {
     ((tei_model.divTop | tei_model.global)*,
      ((((tei_model.div5Like | tei_model.divGenLike), tei_model.global*)+
-       | (((tei_model.common), tei_model.global*)+,
+       | ((tei_model.common, tei_model.global*)+,
           ((tei_model.div5Like | tei_model.divGenLike),
            tei_model.global*)*)),
       (tei_model.divBottom, tei_model.global*)*)?),
@@ -5081,7 +5081,7 @@ tei_div5 =
   element tei:div5 {
     ((tei_model.divTop | tei_model.global)*,
      ((((tei_model.div6Like | tei_model.divGenLike), tei_model.global*)+
-       | (((tei_model.common), tei_model.global*)+,
+       | ((tei_model.common, tei_model.global*)+,
           ((tei_model.div6Like | tei_model.divGenLike),
            tei_model.global*)*)),
       (tei_model.divBottom, tei_model.global*)*)?),
@@ -5097,7 +5097,7 @@ tei_div6 =
   element tei:div6 {
     ((tei_model.divTop | tei_model.global)*,
      ((((tei_model.div7Like | tei_model.divGenLike), tei_model.global*)+
-       | (((tei_model.common), tei_model.global*)+,
+       | ((tei_model.common, tei_model.global*)+,
           ((tei_model.div7Like | tei_model.divGenLike),
            tei_model.global*)*)),
       (tei_model.divBottom, tei_model.global*)*)?),
@@ -5112,7 +5112,7 @@ tei_div7 =
   ## (level-7 text division) contains the smallest possible subdivision of the front, body or back of a text, larger than a paragraph. [4.1.2. Numbered Divisions]
   element tei:div7 {
     ((tei_model.divTop | tei_model.global)*,
-     (((tei_model.common), tei_model.global*)+,
+     ((tei_model.common, tei_model.global*)+,
       (tei_model.divBottom, tei_model.global*)*)?),
     tei_att.global.attributes,
     tei_att.divLike.attributes,

@@ -610,7 +610,7 @@ model.divGenLike = notAllowed
   element div {
     ((model.divTop | model.global)*,
      ((((model.divLike | model.divGenLike), model.global*)+
-       | (((model.common), model.global*)+,
+       | ((model.common, model.global*)+,
           ((model.divLike | model.divGenLike), model.global*)*)),
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [

@@ -7869,7 +7869,7 @@ Tdiv =
   element div {
     ((Tmodel.divTop | Tmodel.global)*,
      ((((Tmodel.divLike | Tmodel.divGenLike), Tmodel.global*)+
-       | (((Tmodel.common), Tmodel.global*)+,
+       | ((Tmodel.common, Tmodel.global*)+,
           ((Tmodel.divLike | Tmodel.divGenLike), Tmodel.global*)*)),
       (Tmodel.divBottom, Tmodel.global*)*)?)
     >> sch:pattern [
