@@ -2806,7 +2806,7 @@
           importing other files, which in turn importing other files,
           etc.  —Syd, 2023-11-03
       -->
-      <xsl:variable name="thisClassSpec" select="//tei:classSpec[ @ident eq $key]" as="element(tei:classSpec)?"/>
+      <xsl:variable name="thisClassSpec" select="//tei:classSpec[@type eq 'atts'][@ident eq $key]" as="element(tei:classSpec)?"/>
       <xsl:choose>
         <xsl:when test="$thisClassSpec">
           <xsl:element namespace="{$outputNS}" name="{$itemName}">
