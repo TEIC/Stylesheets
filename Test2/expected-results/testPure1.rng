@@ -70,7 +70,7 @@
          </choice>
       </zeroOrMore>
    </define>
-   <define name="anyElement-xenoData">
+   <define name="anyElement_address_1">
       <element>
          <anyName>
             <except>
@@ -86,7 +86,56 @@
          <zeroOrMore>
             <choice>
                <text/>
-               <ref name="anyElement-xenoData"/>
+               <ref name="anyElement_address_1"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="d9e22543-constraint">
+         <rule context="tei:address">
+            <report test="descendant::*[not(namespace-uri(.) =               ('https://docbook.org/ns/docbook', 'http://www.tei-c.org/ns/1.0'))]">address descendants must be in the
+              namespaces
+              'https://docbook.org/ns/docbook', 'http://www.tei-c.org/ns/1.0'</report>
+         </rule>
+      </pattern>
+   </define>
+   <define name="anyElement_address_2">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement_address_2"/>
+            </choice>
+         </zeroOrMore>
+      </element>
+   </define>
+   <define name="anyElement_xenoData_3">
+      <element>
+         <anyName>
+            <except>
+               <nsName ns="http://www.tei-c.org/ns/1.0"/>
+               <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+            </except>
+         </anyName>
+         <zeroOrMore>
+            <attribute>
+               <anyName/>
+            </attribute>
+         </zeroOrMore>
+         <zeroOrMore>
+            <choice>
+               <text/>
+               <ref name="anyElement_xenoData_3"/>
             </choice>
          </zeroOrMore>
       </element>
@@ -4523,15 +4572,11 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
       <element name="address">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(address) contains a postal address, for example of a publisher, an organization, or an individual. [3.6.2. Addresses 2.2.4. Publication, Distribution, Licensing, etc. 3.12.2.4. Imprint, Size of a Document, and Reprint Information]</a:documentation>
          <group>
-            <zeroOrMore>
-               <ref name="t_model.global"/>
-            </zeroOrMore>
+            <ref name="anyElement_address_1"/>
             <oneOrMore>
                <group>
                   <ref name="t_model.addrPart"/>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
+                  <ref name="anyElement_address_2"/>
                </group>
             </oneOrMore>
          </group>
@@ -7038,7 +7083,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]</a:documentation>
          <choice>
             <text/>
-            <ref name="anyElement-xenoData"/>
+            <ref name="anyElement_xenoData_3"/>
          </choice>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>

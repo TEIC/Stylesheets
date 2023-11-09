@@ -24,10 +24,10 @@ macro.specialPara =
    | model.inter
    | model.divPart
    | model.global)*
-anyElement-xenoData =
+anyElement_xenoData_1 =
   element * - (tei:* | teix:egXML) {
     attribute * { text }*,
-    (text | anyElement-xenoData)*
+    (text | anyElement_xenoData_1)*
   }
 att.anchoring.attributes =
   att.anchoring.attribute.anchored, att.anchoring.attribute.targetEnd
@@ -4807,7 +4807,7 @@ xenoData =
   
   ## (non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]
   element xenoData {
-    (text | anyElement-xenoData),
+    (text | anyElement_xenoData_1),
     att.global.attributes,
     att.declarable.attributes,
     att.typed.attributes,
