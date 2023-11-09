@@ -494,7 +494,7 @@ of this software, even if advised of the possibility of such damage.
       trim trailing space on the last text node in an element,
       trim both if a text node is both first and last, i.e., is the only text node in the element.</desc>
   </doc>
-  <xsl:template match="text()" mode="#default plain">
+  <xsl:template match="text()" mode="#default plain xref">
     <xsl:choose>
       <xsl:when test="ancestor::*[@xml:space][1]/@xml:space='preserve'">
         <xsl:value-of select="tei:escapeChars(.,parent::*)"/>
@@ -1228,6 +1228,20 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:variable>
   <xsl:copy-of select="$D"/>
+  </xsl:function>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>whether there is an out-of-date desc or gloss in the translation language</desc>
+  </doc>
+  <xsl:function name="tei:descOrGlossOutOfDate" as="xs:boolean">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:variable name="lang" select="tei:generateDocumentationLang(.)[1]"/>
+      <xsl:sequence select="tei:gloss[@xml:lang eq 'en']/@versionDate gt  tei:gloss[ @xml:lang eq $lang]/@versionDate
+			 or tei:desc[@xml:lang='en' and  not( @type eq 'deprecationInfo' )]/@versionDate
+			    gt
+			    tei:desc[@xml:lang eq $lang and  not( @type eq 'deprecationInfo' )]/@versionDate" />
+    </xsl:for-each>
   </xsl:function>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

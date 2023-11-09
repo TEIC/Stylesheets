@@ -25,6 +25,7 @@
 
   <target name="dist" depends="convert,mediadir.check,embeddingdir.check,chartdir.check,picturecopy,embeddingcopy,chartcopy,cleanup"/>
 
+  <!-- you can override templates imported via from.xsl and run ant with -DdocxtoTEI=yourxsl -->
   <property name="docxtoTEI" value="${profiledir}/${profile}/docx/from.xsl"/>
 
   <target name="convert">

@@ -20,7 +20,7 @@
     </fileDesc>
     <encodingDesc>
       <appInfo>
-        <application xml:id="docxtotei" ident="TEI_fromDOCX" version="2.15.0">
+        <application xml:id="docxtotei" ident="TEI_fromDOCX" version="7.56.0a">
           <label>DOCX to TEI</label>
         </application>
       </appInfo>
@@ -112,7 +112,7 @@
         <head><anchor xml:id="Toc357845414"/><pb type="soft"/>Introduction</head>
         <p>This document is meant as an exemplar and test .docx file for a docx2tei profile of the <ref target="http://www.tei-c.org/Tools/Stylesheets/">TEI Stylesheets</ref>. Its other function is as the source for a .dotx Word template than can serve for authoring new or editing existing Word files (primarily books) with the intention of converting them to TEI with, say, <ref target="http://www.tei-c.org/oxgarage/">OxGarage</ref>.</p>
         <p>This profile imports Stylesheets/profiles/default/docx/from.xsl and extends it a bit, but also requires a certain style while editing the Word document to be converted:</p>
-        <list type="unordered">
+        <list rend="bulleted">
           <item>The more is done with Word styles, the better; and formatting and esp. layout is not well preserved.</item>
           <item>The division before the first heading, with Title, Subtitle, Author and Date goes to the element tei:front, with the rest of the text in this division ignored; the first heading and the rest is tei:body.</item>
           <item>Styles starting with “tei:” are substituted by their TEI element, c.f. Section “TEI elements”;</item>
@@ -123,7 +123,7 @@
           <p>A test interface is at <ref target="http://nl.ijs.si/tei/convert/">http://nl.ijs.si/tei/convert/</ref></p>
           <div>
             <head><anchor xml:id="Toc357845416"/>Bugs and suggestions</head>
-            <list type="ordered">
+            <list rend="numbered">
               <item>
                 <hi style="font-size:10pt">Styles don’t work well in notes, as e.g. “tei:bibl” is there “teibibl”, c.f. footnote 3.</hi>
               </item>
@@ -175,7 +175,7 @@
         <figure>
           <p>
             <hi style="color:red; font-size: 14pt; font-weight:bold;" rend="ERROR">�</hi>
-            <note place="margin" type="conversion" resp="#teitodocx">
+            <note place="margin" type="conversion" resp="#docxtotei">
               <hi rend="docxError">unable to handle picture here, no embed or link</hi>
             </note>
           </p>

@@ -538,6 +538,9 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:variable name="F">
 	     <xsl:choose>
 	       <xsl:when test="starts-with(@facs,'#')">
+                 <xsl:if test="empty(id(substring(@facs, 2)))">
+                   <xsl:message>The target '<xsl:value-of select="@facs"/>' is not defined in this document</xsl:message>
+                 </xsl:if>
 		 <xsl:for-each
 		     select="id(substring(@facs,2))">
 		   <xsl:value-of select="tei:resolveURI(.,descendant-or-self::*[@url][1]/@url)"/>
@@ -558,6 +561,9 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:value-of select="tokenize($F,'\.')[last()]"/>
 	   </xsl:variable>
 	   <xsl:choose>
+             <xsl:when test="$F = ''">
+               <xsl:message>Unable to determine source file name of '<xsl:value-of select="@facs"/>'"</xsl:message>
+             </xsl:when>
 	     <xsl:when test="contains($F,':')">
 	       <get src="{$F}" dest="{$target}"/>
 	     </xsl:when>

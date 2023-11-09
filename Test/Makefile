@@ -44,7 +44,7 @@ UP1SAXON=$(JAVAPRE) ../../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
 UP2SAXON=$(JAVAPRE) ../../../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
 JING=$(JAVAPRE) ../lib/lib/jing-20120724.0.0.jar
 
-# flags used for the commands running from $(BINDIR), e.g. `bin/teitorelaxng` 
+# flags used for the commands running from $(BINDIR), e.g. `bin/teitorng` 
 FLAGS=--localsource=$(DEFAULTSOURCE)
 
 # Location of oXygen. Only used in the test-pureant target, which is not run
@@ -68,7 +68,7 @@ SCRIPTS=teitobibtex \
 	teitordf \
 	teitotxt
 SCHEMASCRIPTS=teitornc \
-	teitorelaxng \
+	teitorng \
 	teitoxsd \
 	teitodtd
 
@@ -131,7 +131,8 @@ actual:
 	mkdir -p $(AR)
 
 test.rng: actual
-	$(BINDIR)/teitorelaxng $(FLAGS) --odd test.odd test.rng
+	@echo "--------- Test/Makefile target=$@"
+	$(BINDIR)/teitorng $(FLAGS) --odd test.odd test.rng
 	xmllint --format test.rng > $(AR)/test.rng && rm test.rng
 	perl -i -pe 'BEGIN{undef $$/;} s/<!--\n ?Schema[^>]+>//smg' $(AR)/test.rng
 	if [ $(DIFFNOW) -eq 1 ]; \
@@ -146,7 +147,7 @@ css:
 	(cd ..; for i in css/*; do test -f `basename $$i` || ln -s $$i `basename $$i`;done)
 
 test-to-html: actual css
-	@echo BUILD: testing html
+	@echo "--------- Test/Makefile target=$@"
 	$(SAXON)  test.xml ../html/html.xsl cssFile=../tei.css $(SAXONOPT) | tidy -config config_tidy.txt - > $(AR)/test.html
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test.html $(ER)/test.html; \
@@ -272,13 +273,14 @@ test-to-html: actual css
 		else echo "==deferring: \` diff  $(AR)/test32.html $(ER)/test32.html \`"; fi
 
 test-from-html: actual
+	@echo "--------- Test/Makefile target=$@"
 	$(SAXON) test38.htm ../html/html2tei.xsl $(SAXONOPT)  | xmllint --format - > $(AR)/test38.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test38.xml $(ER)/test38.xml; \
 		else echo "==deferring: \` diff  $(AR)/test38.xml $(ER)/test38.xml \`"; fi
 
 test-markdown: actual
-	@echo BUILD: testing markdown
+	@echo "--------- Test/Makefile target=$@"
 
 	@echo BUILD: markdown to tei
 	$(BINDIR)/markdowntotei $(FLAGS) mdtest1.md $(AR)/mdtest1.xml
@@ -293,7 +295,7 @@ test-markdown: actual
 		else echo "==deferring: \` diff  $(AR)/mdtest2.md $(ER)/mdtest2.md \`"; fi
 
 test-cocoa: actual
-	@echo BUILD: testing cocoa to TEI
+	@echo "--------- Test/Makefile target=$@"
 	$(BINDIR)/cocoatotei $(FLAGS) cocoatest.txt $(AR)/cocoatest.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/cocoatest.xml $(ER)/cocoatest.xml; \
@@ -304,7 +306,7 @@ test-cocoa: actual
 		else echo "==deferring: \` diff  $(AR)/cocoatest2.xml $(ER)/cocoatest2.xml \`"; fi
 
 test-p4top5: actual
-	@echo BUILD: testing p4top5
+	@echo "--------- Test/Makefile target=$@"
 	$(SAXON) -o:$(AR)/test17.tei test17.xml ../profiles/default/p4/from.xsl
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test17.tei $(ER)/test17.tei; \
@@ -315,10 +317,11 @@ test-p4top5: actual
 		else echo "==deferring: \` diff  $(AR)/A54031.xml $(ER)/A54031.xml \`"; fi
 
 testsplit:
+	@echo "--------- Test/Makefile target=$@"
 	$(SAXON) test6.xml ../html/html.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
 
 test-latex: actual
-	@echo BUILD: testing latex
+	@echo "--------- Test/Makefile target=$@"
 	$(SAXON) -o:$(AR)/test.tex test.xml ../latex/latex.xsl  $(SAXONOPT)
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test.tex $(ER)/test.tex; \
@@ -357,11 +360,8 @@ test-latex: actual
 		else echo "==deferring: \` diff  $(AR)/test27.tex $(ER)/test27.tex \`"; fi
 
 test-fo: actual
-	@echo BUILD: testing fo
+	@echo "--------- Test/Makefile target=$@"
 	$(SAXON) -o:$(AR)/test.fo test.xml ../fo/fo.xsl  $(SAXONOPT)
-	@echo "Debug:"
-	find . -name 'oddbyexample.*'
-	@echo ":gudeD"
 	$(JING) fo.xsd $(AR)/test.fo
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test.fo $(ER)/test.fo; \
@@ -398,7 +398,7 @@ test-fo: actual
 		else echo "==deferring: \` diff  $(AR)/test27.fo $(ER)/test27.fo \`"; fi
 
 test-epub: actual css
-	@echo BUILD: testing epub
+	@echo "--------- Test/Makefile target=$@"
 	$(BINDIR)/teitoepub3 $(FLAGS) test.xml $(AR)/test_3.epub
 	$(JAVAPRE) ../lib/epubcheck3.jar $(AR)/test_3.epub
 
@@ -417,42 +417,43 @@ test-epub: actual css
 		else echo "==deferring: \` bash -c 'diff  <(sort $(AR)/test.epub.listing2) <(sort $(ER)/test.epub.listing2)' \`"; fi
 
 test-rdf: actual
-	@echo BUILD: testing rdf
+	@echo "--------- Test/Makefile target=$@"
 	$(SAXON) -o:$(AR)/test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test12.rdf $(ER)/test12.rdf; \
 		else echo "==deferring: \` diff  $(AR)/test12.rdf $(ER)/test12.rdf \`"; fi
 
 test-text: actual
-	@echo BUILD: testing text
+	@echo "--------- Test/Makefile target=$@"
 	$(BINDIR)/teitotxt $(FLAGS) test14.xml $(AR)/test.text
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test.text $(ER)/test.text; \
 		else echo "==deferring: \` diff  $(AR)/test.text $(ER)/test.text \`"; fi
 
 test-xlsx: actual
-	@echo BUILD: testing xlsx
+	@echo "--------- Test/Makefile target=$@"
 	$(BINDIR)/xlsxtotei $(FLAGS) test.xlsx $(AR)/test.xlsx.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test.xlsx.xml $(ER)/test.xlsx.xml; \
 		else echo "==deferring: \` diff  $(AR)/test.xlsx.xml $(ER)/test.xlsx.xml \`"; fi
 
 test-odt:   test.rng
+	@echo "--------- Test/Makefile target=$@"
 	(cd ..; $(MAKE) names)
 	@echo BUILD: testing odt
 
-	$(BINDIR)/teitoodt $(FLAGS) test.xml $(AR)/test.xml.odt
-	unzip -t $(AR)/test.xml.odt | sort > $(AR)/test.xml.odt.listing
+	$(BINDIR)/teitoodt $(FLAGS) test.xml $(AR)/test.odt
+	unzip -t $(AR)/test.odt | sort > $(AR)/test.odt.listing
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then bash -c 'diff  <(sort $(AR)/test.xml.odt.listing) <(sort $(ER)/test.xml.odt.listing)'; \
-		else echo "==deferring: \` bash -c 'diff  <(sort $(AR)/test.xml.odt.listing) <(sort $(ER)/test.xml.odt.listing)' \`"; fi
+		then bash -c 'diff  <(sort $(AR)/test.odt.listing) <(sort $(ER)/test.odt.listing)'; \
+		else echo "==deferring: \` bash -c 'diff  <(sort $(AR)/test.odt.listing) <(sort $(ER)/test.odt.listing)' \`"; fi
 
-	unzip -o -q $(AR)/test.xml.odt content.xml
-	xmllint --format content.xml > $(AR)/test.xml.odt_content.xml
+	unzip -o -q $(AR)/test.odt content.xml
+	xmllint --format content.xml > $(AR)/test.odt_content.xml
 	rm content.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.xml.odt_content.xml $(ER)/test.xml.odt_content.xml; \
-		else echo "==deferring: \` diff  $(AR)/test.xml.odt_content.xml $(ER)/test.xml.odt_content.xml \`"; fi
+		then diff  $(AR)/test.odt_content.xml $(ER)/test.odt_content.xml; \
+		else echo "==deferring: \` diff  $(AR)/test.odt_content.xml $(ER)/test.odt_content.xml \`"; fi
 
 	$(BINDIR)/odttotei $(FLAGS) test7.odt $(AR)/test7.xml
 	$(JING) $(AR)/test.rng $(AR)/test7.xml
@@ -461,8 +462,7 @@ test-odt:   test.rng
 		else echo "==deferring: \` diff  $(AR)/test7.xml $(ER)/test7.xml \`"; fi
 
 test-from-docx: test.rng
-	@echo BUILD: testing from-docx
-
+	@echo "--------- Test/Makefile target=$@"
 	$(BINDIR)/docxtotei $(FLAGS) test-indexes.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > $(AR)/test-indexes.xml  && rm temp.xml
 	$(JING) $(AR)/test.rng $(AR)/test-indexes.xml
@@ -534,35 +534,35 @@ test-from-docx: test.rng
 		else echo "==deferring: \` diff  $(AR)/test40.xml $(ER)/test40.xml \`"; fi
 
 test-to-docx:
-	@echo BUILD: testing to-docx
+	@echo "--------- Test/Makefile target=$@"
 
 	$(BINDIR)/teitodocx $(FLAGS) test.xml
-	unzip -p test.xml.docx word/document.xml | xmllint --format - > $(AR)/test.xml.docx_document.xml
-	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > $(AR)/test.xml.docx_core.xml
+	unzip -p test.docx word/document.xml | xmllint --format - > $(AR)/test.docx_document.xml
+	unzip -p test.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > $(AR)/test.docx_core.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.xml.docx_document.xml $(ER)/test.xml.docx_document.xml; \
-		else echo "==deferring: \` diff  $(AR)/test.xml.docx_document.xml $(ER)/test.xml.docx_document.xml \`"; fi
+		then diff  $(AR)/test.docx_document.xml $(ER)/test.docx_document.xml; \
+		else echo "==deferring: \` diff  $(AR)/test.docx_document.xml $(ER)/test.docx_document.xml \`"; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test.xml.docx_core.xml $(ER)/test.xml.docx_core.xml; \
-		else echo "==deferring: \` diff  $(AR)/test.xml.docx_core.xml $(ER)/test.xml.docx_core.xml \`"; fi
+		then diff  $(AR)/test.docx_core.xml $(ER)/test.docx_core.xml; \
+		else echo "==deferring: \` diff  $(AR)/test.docx_core.xml $(ER)/test.docx_core.xml \`"; fi
 
 	$(BINDIR)/teitodocx $(FLAGS) test6.xml
-	unzip -p test6.xml.docx word/document.xml | xmllint --format - > $(AR)/test6.xml.docx_document.xml
+	unzip -p test6.docx word/document.xml | xmllint --format - > $(AR)/test6.docx_document.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test6.xml.docx_document.xml $(ER)/test6.xml.docx_document.xml; \
-		else echo "==deferring: \` diff  $(AR)/test6.xml.docx_document.xml $(ER)/test6.xml.docx_document.xml \`"; fi
+		then diff  $(AR)/test6.docx_document.xml $(ER)/test6.docx_document.xml; \
+		else echo "==deferring: \` diff  $(AR)/test6.docx_document.xml $(ER)/test6.docx_document.xml \`"; fi
 
 	$(BINDIR)/teitodocx $(FLAGS) testnotes1.xml
-	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > $(AR)/testnotes1.xml.docx_document.xml
+	unzip -p testnotes1.docx word/document.xml | xmllint --format - > $(AR)/testnotes1.docx_document.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/testnotes1.xml.docx_document.xml $(ER)/testnotes1.xml.docx_document.xml; \
-		else echo "==deferring: \` diff  $(AR)/testnotes1.xml.docx_document.xml $(ER)/testnotes1.xml.docx_document.xml \`"; fi
+		then diff  $(AR)/testnotes1.docx_document.xml $(ER)/testnotes1.docx_document.xml; \
+		else echo "==deferring: \` diff  $(AR)/testnotes1.docx_document.xml $(ER)/testnotes1.docx_document.xml \`"; fi
 
 	$(SAXON) testoucscourses.xml ../profiles/default/p4/from.xsl > $(AR)/testoucscoursesp5.xml
-	$(BINDIR)/teitodocx $(FLAGS) --profile=oucscourses $(AR)/testoucscoursesp5.xml $(AR)/testoucscourses.xml.docx
+	$(BINDIR)/teitodocx $(FLAGS) --profile=oucscourses $(AR)/testoucscoursesp5.xml $(AR)/testoucscourses.docx
 
 test-oddity: actual css
-	@echo BUILD: testing oddity
+	@echo "--------- Test/Makefile target=$@"
 
 	$(BINDIR)/teitohtml5 $(FLAGS) --summaryDoc --odd test.odd $(AR)/test.odd.html
 	tidy -config config_tidy.txt $(AR)/test.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test.odd.html
@@ -581,15 +581,15 @@ test-oddity: actual css
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test21.odd.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test21.odd.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test21.odd.rnc $(ER)/test21.odd.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test21.odd.rnc $(ER)/test21.odd.rnc \`"; fi
+		then diff -bBw $(AR)/test21.odd.rnc $(ER)/test21.odd.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test21.odd.rnc $(ER)/test21.odd.rnc \`"; fi
 
 	$(BINDIR)/teitornc  $(FLAGS) test15.odd $(AR)/test15.odd.rnc
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test15.odd.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test15.odd.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test15.odd.rnc $(ER)/test15.odd.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test15.odd.rnc $(ER)/test15.odd.rnc \`"; fi
+		then diff -bBw $(AR)/test15.odd.rnc $(ER)/test15.odd.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test15.odd.rnc $(ER)/test15.odd.rnc \`"; fi
 
 	$(BINDIR)/teitohtml5 $(FLAGS) --summaryDoc --lang=es --profile=tei --odd test15.odd $(AR)/test15.odd.html
 	tidy -config config_tidy.txt $(AR)/test15.odd.html | perl cleanup.pl> test.temp ; mv test.temp $(AR)/test15.odd.html
@@ -628,8 +628,8 @@ test-oddity: actual css
 	$(JING) -c $(AR)/test30.rnc test36.xml
 	xmllint --noout --dtdvalid $(AR)/test30.dtd test36.xml
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test30.rnc $(ER)/test30.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test30.rnc $(ER)/test30.rnc \`"; fi
+		then diff -bBw $(AR)/test30.rnc $(ER)/test30.rnc; \
+		else echo "==deferring: -bBw \` diff  $(AR)/test30.rnc $(ER)/test30.rnc \`"; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test30.dtd $(ER)/test30.dtd; \
 		else echo "==deferring: \` diff  $(AR)/test30.dtd $(ER)/test30.dtd \`"; fi
@@ -660,8 +660,8 @@ test-oddity: actual css
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test-pure.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test-pure.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-pure.rnc $(ER)/test-pure.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test-pure.rnc $(ER)/test-pure.rnc \`"; fi
+		then diff -bBw $(AR)/test-pure.rnc $(ER)/test-pure.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test-pure.rnc $(ER)/test-pure.rnc \`"; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test-pure.dtd $(ER)/test-pure.dtd; \
 		else echo "==deferring: \` diff  $(AR)/test-pure.dtd $(ER)/test-pure.dtd \`"; fi
@@ -681,8 +681,8 @@ test-oddity: actual css
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test-pure2.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test-pure2.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test-pure2.rnc $(ER)/test-pure2.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test-pure2.rnc $(ER)/test-pure2.rnc \`"; fi
+		then diff -bBw $(AR)/test-pure2.rnc $(ER)/test-pure2.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test-pure2.rnc $(ER)/test-pure2.rnc \`"; fi
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/test-pure2.dtd $(ER)/test-pure2.dtd; \
 		else echo "==deferring: \` diff  $(AR)/test-pure2.dtd $(ER)/test-pure2.dtd \`"; fi
@@ -706,20 +706,21 @@ test-oddity: actual css
 	rm $(AR)/test.odd2xslstripspace
 
 moreoddity: actual
+	@echo "--------- Test/Makefile target=$@"
 	$(BINDIR)/teitoxsd $(FLAGS) test.odd $(AR)/test.xsd
 	$(BINDIR)/teitodtd $(FLAGS) test.odd $(AR)/test.dtd
 	$(BINDIR)/teitornc $(FLAGS) test.odd $(AR)/test.rnc
 
 test-namespaces: actual
-	@echo BUILD: testing namespaces
+	@echo "--------- Test/Makefile target=$@"
 # This test checks the rnc files so that to make sure we are testing
 # what we think we are testing.
 	$(BINDIR)/teitornc $(FLAGS) test33.odd $(AR)/test33.rnc
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test33.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test33.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test33.rnc $(ER)/test33.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test33.rnc $(ER)/test33.rnc \`"; fi
+		then diff -bBw $(AR)/test33.rnc $(ER)/test33.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test33.rnc $(ER)/test33.rnc \`"; fi
 	$(SAXON) test33.odd ../odds/odd2json.xsl > $(AR)/test33.json
 	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' $(AR)/test33.json
 	if [ $(DIFFNOW) -eq 1 ]; \
@@ -730,8 +731,8 @@ test-namespaces: actual
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test34.rnc
 	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test34.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test34.rnc $(ER)/test34.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test34.rnc $(ER)/test34.rnc \`"; fi
+		then diff -bBw $(AR)/test34.rnc $(ER)/test34.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/test34.rnc $(ER)/test34.rnc \`"; fi
 	$(SAXON) test34.odd ../odds/odd2json.xsl > $(AR)/test34.json
 	perl -p -i -e 's/"date" : "\d+-\d+\-\d+T\d+:\d+:\d+Z",//' $(AR)/test34.json
 	if [ $(DIFFNOW) -eq 1 ]; \
@@ -751,18 +752,28 @@ test-namespaces: actual
 
 	$(BINDIR)/teitornc $(FLAGS) test35.odd $(AR)/test35.rnc
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test35.rnc
-	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test35.rnc
+	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test35.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
-		then diff  $(AR)/test35.rnc $(ER)/test35.rnc; \
-		else echo "==deferring: \` diff  $(AR)/test35.rnc $(ER)/test35.rnc \`"; fi
+	   then diff -bBw $(AR)/test35.rnc $(ER)/test35.rnc; \
+	   else echo "==deferring: \` diff -bBw $(AR)/test35.rnc $(ER)/test35.rnc \`"; fi
+
+# HBS 2022-04-30 tests attributes @include and @except
+	$(BINDIR)/teitornc $(FLAGS) testClass.odd $(AR)/testClass.rnc
+	perl -p -i -e 's/generated from ODD source .*//' $(AR)/testClass.rnc
+	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/testClass.rnc
+	if [ $(DIFFNOW) -eq 1 ]; \
+		then diff  $(AR)/testClass.rnc $(ER)/testClass.rnc; \
+		else echo "==deferring: \` diff -bBw $(AR)/testClass.rnc $(ER)/testClass.rnc \`"; fi
 
 test-scripts:
+	@echo "--------- Test/Makefile target=$@"
 	for i in $(SCRIPTS); do $(BINDIR)/$$i $(FLAGS) maria.xml $$i.result && rm $$i.result; done
 	$(BINDIR)/teitoodd $(FLAGS) test16.odd temp.odd
 	for i in $(SCHEMASCRIPTS) ; do $(BINDIR)/$$i $(FLAGS) temp.odd $$i.result && rm $$i.result; done
 	rm temp.odd
 
 test-pureant:
+	@echo "--------- Test/Makefile target=$@"
 	java -Djava.awt.headless=true -Xmx256m \
 	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
 	-Dant.home=$(OXY)/tools/ant \
@@ -781,27 +792,30 @@ test-pureant:
 	-DinputFile=`pwd`/test29.docx -Dprofile=default
 
 test-oxgarage:
-	@echo BUILD: testing oxgarage
+	@echo "--------- Test/Makefile target=$@"
 	curl -s -F upload=@test.odd  -o test.rng http://oxgarage.tei-c.org/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/relaxng%3Aapplication%3Axml-relaxng
 	curl -s -F upload=@test.odd  -o test.zip http://oxgarage.tei-c.org/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/xsd%3Aapplication%3Axml-xsd/
 
 test-oxgarage-tei:
-	@echo BUILD: testing oxgarage-tei
+	@echo "--------- Test/Makefile target=$@"
 	curl -s  -F upload=@test.odd  -o test.rng http://www.tei-c.org/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/relaxng%3Aapplication%3Axml-relaxng
 	curl -s  -F upload=@test.odd  -o test.zip http://www.tei-c.org/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/xsd%3Aapplication%3Axml-xsd/
 
 profile:
+	@echo "--------- Test/Makefile target=$@"
 	$(SAXON) -o:/dev/null	-TP test.xml ../html/html.xsl >& profile1.html
 	$(SAXON) -o:/dev/null	-TP test.xml ../latex/latex.xsl >& profile2.html
 	$(SAXON) test.odd ../odds/odd2odd.xsl > test.odd2odd
 	$(SAXON) -o:/dev/null -TP test.odd2odd ../odds/odd2relax.xsl >& profile3.html
 
 clean:
+	@echo "--------- Test/Makefile target=$@"
 	(cd ..; for i in css/*; do rm -f `basename $$i`;done)
-	rm -f teitopdf.result.* test*.xml.docx *~
+	rm -f teitopdf.result.* *~
 	rm -f dcr.tmp xml.tmp
 	rm -fr $(AR)/ charts/ embeddings/ media/ Pictures/
 
 oddtree:
+	@echo "--------- Test/Makefile target=$@"
 	$(SAXON) -s:http://www.tei-c.org/release/xml/tei/odd/p5subset.xml -xsl:../tools/odd-to-tree.xsl -o:oddtree.xml
 	../bin/teitohtml --profile=oxford oddtree.xml oddtree.html

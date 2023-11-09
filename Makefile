@@ -4,7 +4,7 @@ SAXON=java -jar lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
 DOTSAXON=java -jar ../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
 DOTDOTSAXON=java -jar ../../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE) 
 SAXON_ARGS=-ext:on
-DIRS=bibtex cocoa common csv docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt p4 pdf profiles/default rdf relaxng rnc schematron simple slides tbx tcp lite tite tools txt html xsd xlsx pdf verbatimxml
+DIRS=bibtex cocoa common csv docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt p4 pdf profiles/default rdf rng rnc schematron simple slides tbx tcp lite tite tools txt html xsd xlsx pdf verbatimxml
 
 SCRIPTS=bin/*to*
 PREFIX=/usr
@@ -92,9 +92,9 @@ doc: oxygendoc linkcss
 	cp VERSION tei.css ChangeLog LEGAL/LICENCE release/xslcommon/doc/tei-xsl
 
 oxygendoc:
-	# when building Debian packages, the script runs under
-	# fakeroot, and the oxygen script then tries to look in /root/.com.oxygenxml, and fails.  
-	# The answer is to tweak the stylesheetDocumentation.sh script 
+        # when building Debian packages, the script runs under
+        # fakeroot, and the oxygen script then tries to look in /root/.com.oxygenxml, and fails.  
+        # The answer is to tweak the stylesheetDocumentation.sh script 
 	@echo test for existence of file $(OXY)/stylesheetDocumentation.sh and make stylesheet documentation if it exists
 	if test -f $(OXY)/stylesheetDocumentation.sh; then perl -pe "s+-Djava.awt+-Duser.home=/tmp/ -Djava.awt+; s+OXYGEN_HOME=.*+OXYGEN_HOME=/usr/share/oxygen+" < $(OXY)/stylesheetDocumentation.sh > ./runDoc.sh; chmod 755 runDoc.sh;  cp -f $(OXY)/licensekey.txt .;  $(MAKE) ${DOCTARGETS} ${PROFILEDOCTARGETS}; rm -f licensekey.txt runDoc.sh; fi
 
@@ -132,7 +132,7 @@ installxsl: build teioo.jar
 	(cd release/xsl; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
 	cp --preserve=timestamps bin/transformtei ${PREFIX}/bin
 	cp --preserve=timestamps source/p5subset.xml ${PREFIX}/source
-	# Shouldn't the "/usr" in the following line be ${PREFIX} ? —Syd & Martin, 2020-07-03
+        # Shouldn't the "/usr" in the following line be ${PREFIX} ? —Syd & Martin, 2020-07-03
 	perl -p -i -e 's+^APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/transformtei
 	chmod 755 ${PREFIX}/bin/transformtei
 	for i in $(SCRIPTS); do  (cd ${PREFIX}/bin; rm -f `basename $$i`;  ln -s transformtei `basename $$i`); done
