@@ -7,8 +7,6 @@ namespace teix = "http://www.tei-c.org/ns/Examples"
 namespace xi = "http://www.w3.org/2001/XInclude"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-
-#
 macro.abContent = (text | model.paraPart | ab)*
 macro.paraContent = (text | model.paraPart)*
 macro.limitedContent = (text | model.limitedPhrase | model.inter)*
@@ -351,6 +349,8 @@ sch:pattern [
 ]
 att.datable.attributes =
   att.datable.w3c.attributes,
+  att.datable.iso.attributes,
+  att.datable.custom.attributes,
   att.datable.attribute.calendar,
   att.datable.attribute.period
 att.datable.attribute.calendar =
@@ -362,7 +362,8 @@ att.datable.attribute.calendar =
     }
   }?
 sch:pattern [
-  id = "test15-att.datable-calendar-calendar-constraint-rule-4"
+  id =
+    "test15-att.datable-calendar-calendar-check-deprecated-constraint-rule-4"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -383,13 +384,62 @@ sch:pattern [
   "\x{a}" ~
   "   "
 ]
+sch:pattern [
+  id =
+    "test15-att.datable-calendar-calendar-deprecated-constraint-rule-5"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context =
+      "tei:*[@calendar][ not( self::tei:date | self::tei:time | self::tei:origDate ) ]"
+    "\x{a}" ~
+    "         "
+    sch:let [
+      name = "me_phrase"
+      value = "concat( 'Attribute calendar on ', local-name(.))"
+    ]
+    "\x{a}" ~
+    "         "
+    sch:assert [
+      test = "'2024-11-11' cast as xs:date ge current-date()"
+      "\x{a}" ~
+      "            "
+      sch:value-of [
+        select =
+          "concat( $me_phrase, ' construct is outdated (as of 2024-11-11); ODD processors may ignore it, and its use is no longer supported' )"
+      ]
+      "\x{a}" ~
+      "         "
+    ]
+    "\x{a}" ~
+    "         "
+    sch:report [
+      role = "nonfatal"
+      test = "@calendar"
+      "\x{a}" ~
+      "            "
+      sch:value-of [
+        select =
+          "concat( $me_phrase, ' becomes outdated on 2024-11-11' )"
+      ]
+      "\x{a}" ~
+      "         "
+    ]
+    "\x{a}" ~
+    "      "
+  ]
+  "\x{a}" ~
+  "   "
+]
 att.datable.attribute.period =
   [
     a:documentation [
       "supplies pointers to one or more definitions of named periods of time (typically "
       ns1:code [ "<category>" ]
+      "s, "
+      ns1:code [ "<date>" ]
       "s or "
-      ns1:code [ "<calendar>" ]
+      ns1:code [ "<event>" ]
       "s) within which the datable item is understood to have occurred."
     ]
   ]
@@ -630,7 +680,7 @@ att.global.source.attribute.source =
   }?
 sch:pattern [
   id =
-    "test15-att.global.source-source-only_1_ODD_source-constraint-rule-5"
+    "test15-att.global.source-source-only_1_ODD_source-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -919,7 +969,7 @@ att.measurement.attribute.commodity =
   }?
 sch:pattern [
   id =
-    "test15-att.measurement-att-measurement-unitRef-constraint-rule-6"
+    "test15-att.measurement-att-measurement-unitRef-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1025,7 +1075,7 @@ att.typed.attribute.subtype =
     xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 sch:pattern [
-  id = "test15-att.typed-subtypeTyped-constraint-rule-7"
+  id = "test15-att.typed-subtypeTyped-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1068,7 +1118,7 @@ att.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "test15-att.pointing-targetLang-targetLang-constraint-rule-8"
+  id = "test15-att.pointing-targetLang-targetLang-constraint-rule-9"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1189,7 +1239,7 @@ att.spanning.attribute.spanTo =
   }?
 sch:pattern [
   id =
-    "test15-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-9"
+    "test15-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-10"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1245,7 +1295,7 @@ att.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "test15-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-10"
+    "test15-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-11"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1359,12 +1409,13 @@ att.citing.attribute.to =
   attribute to {
     xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
-model.nameLike.agent = name
-model.nameLike.agent_alternation = name
-model.nameLike.agent_sequence = name
-model.nameLike.agent_sequenceOptional = name?
-model.nameLike.agent_sequenceOptionalRepeatable = name*
-model.nameLike.agent_sequenceRepeatable = name+
+model.nameLike.agent = name | orgName | persName
+model.nameLike.agent_alternation = name | orgName | persName
+model.nameLike.agent_sequence = name, orgName, persName
+model.nameLike.agent_sequenceOptional = name?, orgName?, persName?
+model.nameLike.agent_sequenceOptionalRepeatable =
+  name*, orgName*, persName*
+model.nameLike.agent_sequenceRepeatable = name+, orgName+, persName+
 model.segLike = seg
 model.segLike_alternation = seg
 model.segLike_sequence = seg
@@ -1442,14 +1493,15 @@ model.dateLike_sequence = date, time
 model.dateLike_sequenceOptional = date?, time?
 model.dateLike_sequenceOptionalRepeatable = date*, time*
 model.dateLike_sequenceRepeatable = date+, time+
-model.measureLike = num | measure | measureGrp | unit
-model.measureLike_alternation = num | measure | measureGrp | unit
-model.measureLike_sequence = num, measure, measureGrp, unit
-model.measureLike_sequenceOptional = num?, measure?, measureGrp?, unit?
+model.measureLike = num | measure | measureGrp | unit | geo
+model.measureLike_alternation = num | measure | measureGrp | unit | geo
+model.measureLike_sequence = num, measure, measureGrp, unit, geo
+model.measureLike_sequenceOptional =
+  num?, measure?, measureGrp?, unit?, geo?
 model.measureLike_sequenceOptionalRepeatable =
-  num*, measure*, measureGrp*, unit*
+  num*, measure*, measureGrp*, unit*, geo*
 model.measureLike_sequenceRepeatable =
-  num+, measure+, measureGrp+, unit+
+  num+, measure+, measureGrp+, unit+, geo+
 model.egLike = notAllowed
 model.egLike_alternation = notAllowed
 model.egLike_sequence = empty
@@ -1465,12 +1517,12 @@ model.graphicLike_sequenceOptionalRepeatable =
   media*, graphic*, binaryObject*, formula*
 model.graphicLike_sequenceRepeatable =
   media+, graphic+, binaryObject+, formula+
-model.offsetLike = notAllowed
-model.offsetLike_alternation = notAllowed
-model.offsetLike_sequence = empty
-model.offsetLike_sequenceOptional = empty
-model.offsetLike_sequenceOptionalRepeatable = empty
-model.offsetLike_sequenceRepeatable = notAllowed
+model.offsetLike = offset | geogFeat
+model.offsetLike_alternation = offset | geogFeat
+model.offsetLike_sequence = offset, geogFeat
+model.offsetLike_sequenceOptional = offset?, geogFeat?
+model.offsetLike_sequenceOptionalRepeatable = offset*, geogFeat*
+model.offsetLike_sequenceRepeatable = offset+, geogFeat+
 model.pPart.msdesc = notAllowed
 model.pPart.msdesc_alternation = notAllowed
 model.pPart.msdesc_sequence = empty
@@ -1584,12 +1636,66 @@ model.labelLike_sequence = desc, label
 model.labelLike_sequenceOptional = desc?, label?
 model.labelLike_sequenceOptionalRepeatable = desc*, label*
 model.labelLike_sequenceRepeatable = desc+, label+
-model.listLike = \list | table
-model.listLike_alternation = \list | table
-model.listLike_sequence = \list, table
-model.listLike_sequenceOptional = \list?, table?
-model.listLike_sequenceOptionalRepeatable = \list*, table*
-model.listLike_sequenceRepeatable = \list+, table+
+model.listLike =
+  \list
+  | table
+  | listOrg
+  | listEvent
+  | listPerson
+  | listPlace
+  | listRelation
+  | listObject
+  | listNym
+model.listLike_alternation =
+  \list
+  | table
+  | listOrg
+  | listEvent
+  | listPerson
+  | listPlace
+  | listRelation
+  | listObject
+  | listNym
+model.listLike_sequence =
+  \list,
+  table,
+  listOrg,
+  listEvent,
+  listPerson,
+  listPlace,
+  listRelation,
+  listObject,
+  listNym
+model.listLike_sequenceOptional =
+  \list?,
+  table?,
+  listOrg?,
+  listEvent?,
+  listPerson?,
+  listPlace?,
+  listRelation?,
+  listObject?,
+  listNym?
+model.listLike_sequenceOptionalRepeatable =
+  \list*,
+  table*,
+  listOrg*,
+  listEvent*,
+  listPerson*,
+  listPlace*,
+  listRelation*,
+  listObject*,
+  listNym*
+model.listLike_sequenceRepeatable =
+  \list+,
+  table+,
+  listOrg+,
+  listEvent+,
+  listPerson+,
+  listPlace+,
+  listRelation+,
+  listObject+,
+  listNym+
 model.noteLike = note | noteGrp
 model.noteLike_alternation = note | noteGrp
 model.noteLike_sequence = note, noteGrp
@@ -1615,6 +1721,7 @@ model.stageLike_sequenceOptional = stage?
 model.stageLike_sequenceOptionalRepeatable = stage*
 model.stageLike_sequenceRepeatable = stage+
 model.entryPart = notAllowed
+model.eventLike = event | listEvent
 model.global.edit = gap | ellipsis
 model.global.edit_alternation = gap | ellipsis
 model.global.edit_sequence = gap, ellipsis
@@ -1622,21 +1729,112 @@ model.global.edit_sequenceOptional = gap?, ellipsis?
 model.global.edit_sequenceOptionalRepeatable = gap*, ellipsis*
 model.global.edit_sequenceRepeatable = gap+, ellipsis+
 model.divPart = model.lLike | model.pLike | lg | sp
-model.placeNamePart = notAllowed
-model.placeNamePart_alternation = notAllowed
-model.placeNamePart_sequence = empty
-model.placeNamePart_sequenceOptional = empty
-model.placeNamePart_sequenceOptionalRepeatable = empty
-model.placeNamePart_sequenceRepeatable = notAllowed
-model.placeStateLike = model.placeNamePart
-model.placeStateLike_alternation = model.placeNamePart_alternation
-model.placeStateLike_sequence = model.placeNamePart_sequence
+model.persStateLike =
+  persName
+  | affiliation
+  | age
+  | education
+  | faith
+  | floruit
+  | gender
+  | langKnowledge
+  | nationality
+  | occupation
+  | persona
+  | persPronouns
+  | residence
+  | sex
+  | socecStatus
+  | state
+  | trait
+model.personLike = org | person | personGrp
+model.personPart =
+  model.biblLike
+  | model.eventLike
+  | model.persStateLike
+  | name
+  | idno
+  | birth
+  | death
+model.placeNamePart =
+  placeName | bloc | country | region | settlement | district | geogName
+model.placeNamePart_alternation =
+  placeName | bloc | country | region | settlement | district | geogName
+model.placeNamePart_sequence =
+  placeName, bloc, country, region, settlement, district, geogName
+model.placeNamePart_sequenceOptional =
+  placeName?,
+  bloc?,
+  country?,
+  region?,
+  settlement?,
+  district?,
+  geogName?
+model.placeNamePart_sequenceOptionalRepeatable =
+  placeName*,
+  bloc*,
+  country*,
+  region*,
+  settlement*,
+  district*,
+  geogName*
+model.placeNamePart_sequenceRepeatable =
+  placeName+,
+  bloc+,
+  country+,
+  region+,
+  settlement+,
+  district+,
+  geogName+
+model.placeStateLike =
+  model.placeNamePart
+  | climate
+  | location
+  | population
+  | state
+  | terrain
+  | trait
+model.placeStateLike_alternation =
+  model.placeNamePart_alternation
+  | climate
+  | location
+  | population
+  | state
+  | terrain
+  | trait
+model.placeStateLike_sequence =
+  model.placeNamePart_sequence,
+  climate,
+  location,
+  population,
+  state,
+  terrain,
+  trait
 model.placeStateLike_sequenceOptional =
-  model.placeNamePart_sequenceOptional?
+  model.placeNamePart_sequenceOptional?,
+  climate?,
+  location?,
+  population?,
+  state?,
+  terrain?,
+  trait?
 model.placeStateLike_sequenceOptionalRepeatable =
-  model.placeNamePart_sequenceOptionalRepeatable*
+  model.placeNamePart_sequenceOptionalRepeatable*,
+  climate*,
+  location*,
+  population*,
+  state*,
+  terrain*,
+  trait*
 model.placeStateLike_sequenceRepeatable =
-  model.placeNamePart_sequenceRepeatable+
+  model.placeNamePart_sequenceRepeatable+,
+  climate+,
+  location+,
+  population+,
+  state+,
+  terrain+,
+  trait+
+model.orgPart = model.eventLike | listOrg | listPerson | listPlace
 model.publicationStmtPart.agency = publisher | distributor | authority
 model.publicationStmtPart.detail =
   model.ptrLike | address | date | pubPlace | idno | availability
@@ -1705,48 +1903,61 @@ model.choicePart =
   sic | corr | reg | orig | unclear | abbr | expan | seg
 model.imprintPart = publisher | biblScope | pubPlace | distributor
 model.catDescPart = notAllowed
-model.addressLike = email | address
-model.addressLike_alternation = email | address
-model.addressLike_sequence = email, address
-model.addressLike_sequenceOptional = email?, address?
-model.addressLike_sequenceOptionalRepeatable = email*, address*
-model.addressLike_sequenceRepeatable = email+, address+
+model.addressLike = email | address | affiliation
+model.addressLike_alternation = email | address | affiliation
+model.addressLike_sequence = email, address, affiliation
+model.addressLike_sequenceOptional = email?, address?, affiliation?
+model.addressLike_sequenceOptionalRepeatable =
+  email*, address*, affiliation*
+model.addressLike_sequenceRepeatable = email+, address+, affiliation+
 model.nameLike =
   model.nameLike.agent
   | model.offsetLike
   | model.placeStateLike
   | rs
   | idno
+  | model.persNamePart
+  | objectName
 model.nameLike_alternation =
   model.nameLike.agent_alternation
   | model.offsetLike_alternation
   | model.placeStateLike_alternation
   | rs
   | idno
+  | model.persNamePart_alternation
+  | objectName
 model.nameLike_sequence =
   model.nameLike.agent_sequence,
   model.offsetLike_sequence,
   model.placeStateLike_sequence,
   rs,
-  idno
+  idno,
+  model.persNamePart_sequence,
+  objectName
 model.nameLike_sequenceOptional =
   model.nameLike.agent_sequenceOptional?,
   model.offsetLike_sequenceOptional?,
   model.placeStateLike_sequenceOptional?,
   rs?,
-  idno?
+  idno?,
+  model.persNamePart_sequenceOptional?,
+  objectName?
 model.nameLike_sequenceOptionalRepeatable =
   model.nameLike.agent_sequenceOptionalRepeatable*,
   model.offsetLike_sequenceOptionalRepeatable*,
   model.placeStateLike_sequenceOptionalRepeatable*,
   rs*,
-  idno*
+  idno*,
+  model.persNamePart_sequenceOptionalRepeatable*,
+  objectName*
 model.nameLike_sequenceRepeatable =
   model.nameLike.agent_sequenceRepeatable+,
   model.offsetLike_sequenceRepeatable+,
   model.placeStateLike_sequenceRepeatable+,
   rs+,
-  idno+
+  idno+,
+  model.persNamePart_sequenceRepeatable+,
+  objectName+
 model.global =
   model.global.meta
   | model.milestoneLike
@@ -1765,6 +1976,8 @@ model.biblPart =
   | edition
   | extent
   | availability
+  | listRelation
+  | objectIdentifier
 model.frontPart = model.frontPart.drama | listBibl | divGen | titlePage
 model.addrPart = model.nameLike | addrLine | street | postCode | postBox
 model.pPart.data =
@@ -1914,6 +2127,7 @@ model.correspContextPart = model.ptrLike | model.pLike | note | noteGrp
 model.correspDescPart = note | noteGrp | correspAction | correspContext
 model.resource = \text | standOff
 model.describedResource = teiCorpus | TEI
+model.objectLike = object | listObject
 att.personal.attributes =
   att.naming.attributes,
   att.personal.attribute.full,
@@ -1937,6 +2151,7 @@ att.personal.attribute.sort =
   
   ## (sort) specifies the sort order of the name component in relation to others within the name.
   attribute sort { xsd:nonNegativeInteger }?
+model.placeLike = place
 att.milestoneUnit.attributes = att.milestoneUnit.attribute.unit
 att.milestoneUnit.attribute.unit =
   
@@ -2001,7 +2216,7 @@ p =
     macro.paraContent
     >> sch:pattern [
          id =
-           "test15-p-abstractModel-structure-p-in-ab-or-p-constraint-report-6"
+           "test15-p-abstractModel-structure-p-in-ab-or-p-constraint-report-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2023,7 +2238,7 @@ p =
        ]
     >> sch:pattern [
          id =
-           "test15-p-abstractModel-structure-p-in-l-or-lg-constraint-report-7"
+           "test15-p-abstractModel-structure-p-in-l-or-lg-constraint-report-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2204,7 +2419,7 @@ desc =
     macro.limitedContent
     >> sch:pattern [
          id =
-           "test15-desc-deprecationInfo-only-in-deprecated-constraint-rule-11"
+           "test15-desc-deprecationInfo-only-in-deprecated-constraint-rule-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2292,7 +2507,7 @@ rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "test15-rt-target-rt-target-not-span-constraint-report-8"
+         id = "test15-rt-target-rt-target-not-span-constraint-report-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2316,7 +2531,7 @@ rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "test15-rt-from-rt-from-constraint-assert-7"
+         id = "test15-rt-from-rt-from-constraint-assert-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2342,7 +2557,7 @@ rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "test15-rt-to-rt-to-constraint-assert-8"
+         id = "test15-rt-to-rt-to-constraint-assert-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2698,7 +2913,7 @@ ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "test15-ptr-ptrAtts-constraint-report-9"
+         id = "test15-ptr-ptrAtts-constraint-report-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2732,7 +2947,7 @@ ref =
   element ref {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-ref-refAtts-constraint-report-10"
+         id = "test15-ref-refAtts-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2773,7 +2988,7 @@ ref =
      (model.divBottom, model.global*)*)
     >> sch:pattern [
          id =
-           "test15-list-gloss-list-must-have-labels-constraint-rule-12"
+           "test15-list-gloss-list-must-have-labels-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3247,8 +3462,9 @@ listBibl =
   element listBibl {
     (model.headLike*,
      desc*,
-     (model.milestoneLike)*,
-     (model.biblLike+, (model.milestoneLike)*)+),
+     (model.milestoneLike | relation | listRelation)*,
+     (model.biblLike+,
+      (model.milestoneLike | relation | listRelation)*)+),
     att.global.attributes,
     att.sortable.attributes,
     att.declarable.attributes,
@@ -3261,7 +3477,7 @@ relatedItem =
   element relatedItem {
     ((model.biblLike | model.ptrLike)?)
     >> sch:pattern [
-         id = "test15-relatedItem-targetorcontent1-constraint-report-11"
+         id = "test15-relatedItem-targetorcontent1-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3305,7 +3521,7 @@ l =
     ((text | model.gLike | model.phrase | model.inter | model.global)*)
     >> sch:pattern [
          id =
-           "test15-l-abstractModel-structure-l-in-l-constraint-report-12"
+           "test15-l-abstractModel-structure-l-in-l-constraint-report-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3347,7 +3563,7 @@ lg =
       | lg)*,
      (model.divBottom, model.global*)*)
     >> sch:pattern [
-         id = "test15-lg-atleast1oflggapl-constraint-assert-11"
+         id = "test15-lg-atleast1oflggapl-constraint-assert-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3368,7 +3584,7 @@ lg =
        ]
     >> sch:pattern [
          id =
-           "test15-lg-abstractModel-structure-lg-in-l-constraint-report-13"
+           "test15-lg-abstractModel-structure-lg-in-l-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3890,7 +4106,7 @@ quotation =
   element quotation {
     (model.pLike*)
     >> sch:pattern [
-         id = "test15-quotation-quotationContents-constraint-report-14"
+         id = "test15-quotation-quotationContents-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4065,7 +4281,7 @@ tagUsage =
     
     ## specifies the full formal name of the namespace concerned.
     attribute name {
-      xsd:anyURI { pattern = "\S*" }
+      xsd:anyURI { pattern = "\S+" }?
     },
     empty
   }
@@ -4141,7 +4357,7 @@ citeStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "test15-citeStructure-match-citestructure-outer-match-constraint-rule-13"
+           "test15-citeStructure-match-citestructure-outer-match-constraint-rule-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4162,7 +4378,7 @@ citeStructure =
        ]
     >> sch:pattern [
          id =
-           "test15-citeStructure-match-citestructure-inner-match-constraint-rule-14"
+           "test15-citeStructure-match-citestructure-inner-match-constraint-rule-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4601,7 +4817,7 @@ revisionDesc =
   
   ## (revision description) summarizes the revision history for a file. [2.6. The Revision Description 2.1.1. The TEI Header and Its Components]
   element revisionDesc {
-    (\list | listChange | change+),
+    (\list+ | listChange+ | change+),
     att.global.attributes,
     att.docStatus.attributes,
     empty
@@ -4747,7 +4963,7 @@ floatingText =
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
          id =
-           "test15-div-abstractModel-structure-div-in-l-or-lg-constraint-report-15"
+           "test15-div-abstractModel-structure-div-in-l-or-lg-constraint-report-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4769,7 +4985,7 @@ floatingText =
        ]
     >> sch:pattern [
          id =
-           "test15-div-abstractModel-structure-div-in-ab-or-p-constraint-report-16"
+           "test15-div-abstractModel-structure-div-in-ab-or-p-constraint-report-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5107,18 +5323,7 @@ docDate =
   element docDate {
     macro.phraseSeq,
     att.global.attributes,
-    
-    ## (when) gives the value of the date in standard form, i.e. YYYY-MM-DD.
-    attribute when {
-      xsd:date
-      | xsd:gYear
-      | xsd:gMonth
-      | xsd:gDay
-      | xsd:gYearMonth
-      | xsd:gMonthDay
-      | xsd:time
-      | xsd:dateTime
-    }?,
+    att.datable.attributes,
     empty
   }
 front =
@@ -5227,7 +5432,7 @@ link =
   element link {
     empty
     >> sch:pattern [
-         id = "test15-link-linkTargets3-constraint-assert-14"
+         id = "test15-link-linkTargets3-constraint-assert-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5268,7 +5473,7 @@ ab =
     macro.abContent
     >> sch:pattern [
          id =
-           "test15-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-17"
+           "test15-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5444,7 +5649,7 @@ join =
   element join {
     ((model.descLike | model.certLike)*)
     >> sch:pattern [
-         id = "test15-join-joinTargets3-constraint-assert-15"
+         id = "test15-join-joinTargets3-constraint-assert-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5592,7 +5797,7 @@ standOff =
     (model.standOffPart+)
     >> sch:pattern [
          id =
-           "test15-standOff-nested_standOff_should_be_typed-constraint-assert-16"
+           "test15-standOff-nested_standOff_should_be_typed-constraint-assert-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5833,4 +6038,1252 @@ figDesc =
   
   ## (description of figure) contains a brief prose description of the appearance or content of a graphic figure, for use when documenting an image without displaying it. [14.4. Specific Elements for Graphic Images]
   element figDesc { macro.limitedContent, att.global.attributes, empty }
+att.datable.custom.attributes =
+  att.datable.custom.attribute.when-custom,
+  att.datable.custom.attribute.notBefore-custom,
+  att.datable.custom.attribute.notAfter-custom,
+  att.datable.custom.attribute.from-custom,
+  att.datable.custom.attribute.to-custom,
+  att.datable.custom.attribute.datingPoint,
+  att.datable.custom.attribute.datingMethod
+att.datable.custom.attribute.when-custom =
+  
+  ## supplies the value of a date or time in some custom standard form.
+  attribute when-custom {
+    list {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+    }
+  }?
+att.datable.custom.attribute.notBefore-custom =
+  
+  ## specifies the earliest possible date for the event in some custom standard form.
+  attribute notBefore-custom {
+    list {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+    }
+  }?
+att.datable.custom.attribute.notAfter-custom =
+  
+  ## specifies the latest possible date for the event in some custom standard form.
+  attribute notAfter-custom {
+    list {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+    }
+  }?
+att.datable.custom.attribute.from-custom =
+  
+  ## indicates the starting point of the period in some custom standard form.
+  attribute from-custom {
+    list {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+    }
+  }?
+att.datable.custom.attribute.to-custom =
+  
+  ## indicates the ending point of the period in some custom standard form.
+  attribute to-custom {
+    list {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+    }
+  }?
+att.datable.custom.attribute.datingPoint =
+  
+  ## supplies a pointer to some location defining a named point in time with reference to which the datable item is understood to have occurred
+  attribute datingPoint {
+    xsd:anyURI { pattern = "\S+" }
+  }?
+att.datable.custom.attribute.datingMethod =
+  [
+    a:documentation [
+      "supplies a pointer to a "
+      ns1:code [ "<calendar>" ]
+      " element or other means of interpreting the values of the custom dating attributes."
+    ]
+  ]
+  attribute datingMethod {
+    xsd:anyURI { pattern = "\S+" }
+  }?
+model.persNamePart =
+  surname
+  | forename
+  | genName
+  | nameLink
+  | addName
+  | roleName
+  | persPronouns
+model.persNamePart_alternation =
+  surname
+  | forename
+  | genName
+  | nameLink
+  | addName
+  | roleName
+  | persPronouns
+model.persNamePart_sequence =
+  surname, forename, genName, nameLink, addName, roleName, persPronouns
+model.persNamePart_sequenceOptional =
+  surname?,
+  forename?,
+  genName?,
+  nameLink?,
+  addName?,
+  roleName?,
+  persPronouns?
+model.persNamePart_sequenceOptionalRepeatable =
+  surname*,
+  forename*,
+  genName*,
+  nameLink*,
+  addName*,
+  roleName*,
+  persPronouns*
+model.persNamePart_sequenceRepeatable =
+  surname+,
+  forename+,
+  genName+,
+  nameLink+,
+  addName+,
+  roleName+,
+  persPronouns+
+att.datable.iso.attributes =
+  att.datable.iso.attribute.when-iso,
+  att.datable.iso.attribute.notBefore-iso,
+  att.datable.iso.attribute.notAfter-iso,
+  att.datable.iso.attribute.from-iso,
+  att.datable.iso.attribute.to-iso
+att.datable.iso.attribute.when-iso =
+  
+  ## supplies the value of a date or time in a standard form.
+  attribute when-iso {
+    xsd:date
+    | xsd:gYear
+    | xsd:gMonth
+    | xsd:gDay
+    | xsd:gYearMonth
+    | xsd:gMonthDay
+    | xsd:time
+    | xsd:dateTime
+    | xsd:token { pattern = "[0-9.,DHMPRSTWYZ/:+\-]+" }
+  }?
+att.datable.iso.attribute.notBefore-iso =
+  
+  ## specifies the earliest possible date for the event in standard form, e.g. yyyy-mm-dd.
+  attribute notBefore-iso {
+    xsd:date
+    | xsd:gYear
+    | xsd:gMonth
+    | xsd:gDay
+    | xsd:gYearMonth
+    | xsd:gMonthDay
+    | xsd:time
+    | xsd:dateTime
+    | xsd:token { pattern = "[0-9.,DHMPRSTWYZ/:+\-]+" }
+  }?
+att.datable.iso.attribute.notAfter-iso =
+  
+  ## specifies the latest possible date for the event in standard form, e.g. yyyy-mm-dd.
+  attribute notAfter-iso {
+    xsd:date
+    | xsd:gYear
+    | xsd:gMonth
+    | xsd:gDay
+    | xsd:gYearMonth
+    | xsd:gMonthDay
+    | xsd:time
+    | xsd:dateTime
+    | xsd:token { pattern = "[0-9.,DHMPRSTWYZ/:+\-]+" }
+  }?
+att.datable.iso.attribute.from-iso =
+  
+  ## indicates the starting point of the period in standard form.
+  attribute from-iso {
+    xsd:date
+    | xsd:gYear
+    | xsd:gMonth
+    | xsd:gDay
+    | xsd:gYearMonth
+    | xsd:gMonthDay
+    | xsd:time
+    | xsd:dateTime
+    | xsd:token { pattern = "[0-9.,DHMPRSTWYZ/:+\-]+" }
+  }?
+att.datable.iso.attribute.to-iso =
+  
+  ## indicates the ending point of the period in standard form.
+  attribute to-iso {
+    xsd:date
+    | xsd:gYear
+    | xsd:gMonth
+    | xsd:gDay
+    | xsd:gYearMonth
+    | xsd:gMonthDay
+    | xsd:time
+    | xsd:dateTime
+    | xsd:token { pattern = "[0-9.,DHMPRSTWYZ/:+\-]+" }
+  }?
+orgName =
+  
+  ## (organization name) contains an organizational name. [13.2.2. Organizational Names]
+  element orgName {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.personal.attributes,
+    att.typed.attributes,
+    empty
+  }
+persName =
+  
+  ## (personal name) contains a proper noun or proper-noun phrase referring to a person, possibly including one or more of the person's forenames, surnames, honorifics, added names, etc. [13.2.1. Personal Names]
+  element persName {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.personal.attributes,
+    att.typed.attributes,
+    empty
+  }
+surname =
+  
+  ## (surname) contains a family (inherited) name, as opposed to a given, baptismal, or nick name. [13.2.1. Personal Names]
+  element surname {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.personal.attributes,
+    att.typed.attributes,
+    empty
+  }
+forename =
+  
+  ## (forename) contains a forename, given or baptismal name. [13.2.1. Personal Names]
+  element forename {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.personal.attributes,
+    att.typed.attributes,
+    empty
+  }
+genName =
+  
+  ## (generational name component) contains a name component used to distinguish otherwise similar names on the basis of the relative ages or generations of the persons named. [13.2.1. Personal Names]
+  element genName {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.personal.attributes,
+    att.typed.attributes,
+    empty
+  }
+nameLink =
+  
+  ## (name link) contains a connecting phrase or link used within a name but not regarded as part of it, such as van der or of. [13.2.1. Personal Names]
+  element nameLink {
+    macro.phraseSeq, att.global.attributes, att.typed.attributes, empty
+  }
+addName =
+  
+  ## (additional name) contains an additional name component, such as a nickname, epithet, or alias, or any other descriptive phrase used within a personal name. [13.2.1. Personal Names]
+  element addName {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.personal.attributes,
+    att.typed.attributes,
+    empty
+  }
+roleName =
+  
+  ## (role name) contains a name component which indicates that the referent has a particular role or position in society, such as an official title or rank. [13.2.1. Personal Names]
+  element roleName {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.personal.attributes,
+    att.typed.attributes,
+    empty
+  }
+placeName =
+  
+  ## (place name) contains an absolute or relative place name. [13.2.3. Place Names]
+  element placeName {
+    macro.phraseSeq,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.global.attributes,
+    att.personal.attributes,
+    att.typed.attributes,
+    empty
+  }
+bloc =
+  
+  ## (bloc) contains the name of a geo-political unit consisting of two or more nation states or countries. [13.2.3. Place Names]
+  element bloc {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    att.datable.attributes,
+    empty
+  }
+country =
+  
+  ## (country) contains the name of a geo-political unit, such as a nation, country, colony, or commonwealth, larger than or administratively superior to a region and smaller than a bloc. [13.2.3. Place Names]
+  element country {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    att.datable.attributes,
+    empty
+  }
+region =
+  
+  ## (region) contains the name of an administrative unit such as a state, province, or county, larger than a settlement, but smaller than a country. [13.2.3. Place Names]
+  element region {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    att.datable.attributes,
+    empty
+  }
+settlement =
+  
+  ## (settlement) contains the name of a settlement such as a city, town, or village identified as a single geo-political or administrative unit. [13.2.3. Place Names]
+  element settlement {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    att.datable.attributes,
+    empty
+  }
+district =
+  
+  ## (district) contains the name of any kind of subdivision of a settlement, such as a parish, ward, or other administrative or geographic unit. [13.2.3. Place Names]
+  element district {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    att.datable.attributes,
+    empty
+  }
+offset =
+  
+  ## (offset) marks that part of a relative temporal or spatial expression which indicates the direction of the offset between the two place names, dates, or times involved in the expression. [13.2.3. Place Names]
+  element offset {
+    macro.phraseSeq,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    att.dimensions.attributes,
+    empty
+  }
+geogName =
+  
+  ## (geographical name) identifies a name associated with some geographical feature such as Windrush Valley or Mount Sinai. [13.2.3. Place Names]
+  element geogName {
+    macro.phraseSeq,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    empty
+  }
+geogFeat =
+  
+  ## (geographical feature name) contains a common noun identifying some geographical feature contained within a geographic name, such as valley, mount, etc. [13.2.3. Place Names]
+  element geogFeat {
+    macro.phraseSeq,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    att.dimensions.attributes,
+    empty
+  }
+affiliation =
+  
+  ## (affiliation) contains an informal description of a person's present or past affiliation with some organization, for example an employer or sponsor. [15.2.2. The Participant Description]
+  element affiliation {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.editLike.attributes,
+    att.datable.attributes,
+    att.naming.attributes,
+    att.typed.attribute.subtype,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Sample values include: 1] sponsor; 2] recommend; 3] discredit; 4] pledged
+    attribute type {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    empty
+  }
+age =
+  
+  ## (age) specifies the age of a person. [13.3.2.1. Personal Characteristics]
+  element age {
+    macro.phraseSeq.limited,
+    att.global.attributes,
+    att.editLike.attributes,
+    att.datable.attributes,
+    att.typed.attribute.subtype,
+    att.dimensions.attributes,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Sample values include: 1] western; 2] sui; 3] subjective; 4] objective; 5] inWorld (in world); 6] chronological; 7] biological; 8] psychological; 9] functional
+    attribute type {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    
+    ## supplies a numeric code representing the age or age group
+    attribute value { xsd:nonNegativeInteger }?,
+    empty
+  }
+birth =
+  
+  ## (birth) contains information about a person's birth, such as its date and place. [15.2.2. The Participant Description]
+  element birth {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.editLike.attributes,
+    att.datable.attributes,
+    att.dimensions.attributes,
+    att.naming.attributes,
+    att.typed.attribute.subtype,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Sample values include: 1] caesarean (caesarean section); 2] vaginal (vaginal delivery); 3] exNihilo (ex nihilo); 4] incorporated; 5] founded; 6] established
+    attribute type {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    empty
+  }
+climate =
+  
+  ## (climate) contains information about the physical climate of a place. [13.3.4.3. States, Traits, and Events]
+  element climate {
+    (model.headLike*,
+     (model.pLike+ | model.labelLike+),
+     (model.noteLike | model.biblLike)*,
+     climate*),
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    empty
+  }
+death =
+  
+  ## (death) contains information about a person's death, such as its date and place. [15.2.2. The Participant Description]
+  element death {
+    macro.phraseSeq,
+    att.datable.attributes,
+    att.dimensions.attributes,
+    att.editLike.attributes,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attribute.subtype,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Sample values include: 1] proclaimed; 2] assumed; 3] verified; 4] clinical; 5] brain; 6] natural; 7] unnatural; 8] fragmentation; 9] dissolution
+    attribute type {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    empty
+  }
+education =
+  
+  ## (education) contains a description of the educational experience of a person. [15.2.2. The Participant Description]
+  element education {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.editLike.attributes,
+    att.datable.attributes,
+    att.naming.attributes,
+    att.typed.attribute.subtype,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Sample values include: 1] primary; 2] secondary; 3] undergraduate; 4] graduate; 5] residency; 6] apprenticeship
+    attribute type {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    empty
+  }
+event =
+  
+  ## (event) contains data relating to any kind of significant event associated with a person, place, or organization. [13.3.1. Basic Principles]
+  element event {
+    (idno*,
+     model.headLike*,
+     (model.pLike+ | model.labelLike+),
+     (model.noteLike | model.biblLike | linkGrp | link | idno | ptr)*,
+     event*),
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.typed.attributes,
+    att.naming.attributes,
+    att.sortable.attributes,
+    att.locatable.attributes,
+    empty
+  }
+faith =
+  
+  ## (faith) specifies the faith, religion, or belief set of a person. [13.3.2.1. Personal Characteristics]
+  element faith {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.editLike.attributes,
+    att.datable.attributes,
+    att.canonical.attributes,
+    att.typed.attribute.subtype,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Sample values include: 1] practicing; 2] clandestine; 3] patrilineal; 4] matrilineal; 5] convert
+    attribute type {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    empty
+  }
+floruit =
+  
+  ## (floruit) contains information about a person's period of activity. [13.3.2.1. Personal Characteristics]
+  element floruit {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.datable.attributes,
+    att.dimensions.attributes,
+    att.editLike.attributes,
+    empty
+  }
+gender =
+  
+  ## (gender) specifies the gender identity of a person, persona, or character. [13.3.2.1. Personal Characteristics]
+  element gender {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.editLike.attributes,
+    att.datable.attributes,
+    att.typed.attributes,
+    
+    ## supplies a coded value for gender identity
+    attribute value {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    empty
+  }
+geo =
+  
+  ## (geographical coordinates) contains any expression of a set of geographic coordinates, representing a point, line, or area on the surface of the earth in some notation. [13.3.4.1. Varieties of Location]
+  element geo {
+    text, att.global.attributes, att.declaring.attributes, empty
+  }
+langKnowledge =
+  [
+    a:documentation [
+      "(language knowledge) summarizes the state of a person's linguistic knowledge, either as prose or by a list of "
+      ns1:code [ "<langKnown>" ]
+      " elements. [13.3.2.1. Personal Characteristics]"
+    ]
+  ]
+  element langKnowledge {
+    (model.pLike | langKnown+),
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.typed.attribute.subtype,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Sample values include: 1] listening; 2] speaking; 3] reading; 4] writing
+    attribute type {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    
+    ## supplies one or more valid language tags for the languages specified
+    attribute tags {
+      list {
+        (xsd:language
+         | (
+            ##
+            ""))+
+      }
+    }?,
+    empty
+  }
+langKnown =
+  
+  ## (language known) summarizes the state of a person's linguistic competence, i.e., knowledge of a single language. [15.2.2. The Participant Description]
+  element langKnown {
+    macro.phraseSeq.limited,
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    
+    ## supplies a valid language tag for the language concerned.
+    attribute tag {
+      xsd:language
+      | (
+         ##
+         "")
+    },
+    
+    ## a code indicating the person's level of knowledge for this language
+    attribute level {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    empty
+  }
+listOrg =
+  
+  ## (list of organizations) contains a list of elements, each of which provides information about an identifiable organization. [13.2.2. Organizational Names]
+  element listOrg {
+    (model.headLike*,
+     desc*,
+     (relation | listRelation)*,
+     ((org | listOrg)+, (relation | listRelation)*)+),
+    att.global.attributes,
+    att.typed.attributes,
+    att.declarable.attributes,
+    att.sortable.attributes,
+    empty
+  }
+listEvent =
+  
+  ## (list of events) contains a list of descriptions, each of which provides information about an identifiable event. [13.3.1. Basic Principles]
+  element listEvent {
+    (model.headLike*,
+     desc*,
+     (relation | listRelation)*,
+     (model.eventLike+, (relation | listRelation)*)+),
+    att.global.attributes,
+    att.typed.attributes,
+    att.declarable.attributes,
+    att.sortable.attributes,
+    empty
+  }
+listPerson =
+  
+  ## (list of persons) contains a list of descriptions, each of which provides information about an identifiable person or a group of people, for example the participants in a language interaction, or the people referred to in a historical source. [13.3.2. The Person Element 15.2. Contextual Information 2.4. The Profile Description 15.3.2. Declarable Elements]
+  element listPerson {
+    (model.headLike*,
+     desc*,
+     (relation | listRelation)*,
+     ((model.personLike | listPerson)+, (relation | listRelation)*)+),
+    att.global.attributes,
+    att.typed.attributes,
+    att.declarable.attributes,
+    att.sortable.attributes,
+    empty
+  }
+listPlace =
+  
+  ## (list of places) contains a list of places, optionally followed by a list of relationships (other than containment) defined amongst them. [2.2.7. The Source Description 13.3.4. Places]
+  element listPlace {
+    (model.headLike*,
+     desc*,
+     (relation | listRelation)*,
+     ((model.placeLike | listPlace)+, (relation | listRelation)*)+),
+    att.global.attributes,
+    att.typed.attributes,
+    att.declarable.attributes,
+    att.sortable.attributes,
+    empty
+  }
+listRelation =
+  
+  ## provides information about relationships identified amongst people, places, and organizations, either informally as prose or as formally expressed relation links. [13.3.2.3. Personal Relationships]
+  element listRelation {
+    (model.headLike*,
+     desc*,
+     (model.pLike | (relation | listRelation)+)),
+    att.global.attributes,
+    att.typed.attributes,
+    att.sortable.attributes,
+    empty
+  }
+location =
+  
+  ## (location) defines the location of a place as a set of geographical coordinates, in terms of other named geo-political entities, or as an address. [13.3.4. Places]
+  element location {
+    (model.labelLike
+     | model.placeNamePart
+     | model.offsetLike
+     | model.measureLike
+     | model.addressLike
+     | model.noteLike
+     | model.biblLike)*,
+    att.global.attributes,
+    att.typed.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    empty
+  }
+nationality =
+  
+  ## (nationality) contains an informal description of a person's present or past nationality or citizenship. [15.2.2. The Participant Description]
+  element nationality {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.naming.attributes,
+    att.typed.attribute.subtype,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Sample values include: 1] birth; 2] naturalised; 3] self-assigned
+    attribute type {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    empty
+  }
+occupation =
+  
+  ## (occupation) contains an informal description of a person's trade, profession or occupation. [15.2.2. The Participant Description]
+  element occupation {
+    macro.specialPara,
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.naming.attributes,
+    att.typed.attribute.subtype,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid
+    attribute type {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    [
+      a:documentation [
+        "indicates the classification system or taxonomy in use, for example by supplying the identifier of a "
+        ns1:code [ "<taxonomy>" ]
+        " element, or pointing to some other resource."
+      ]
+    ]
+    attribute scheme {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
+    [
+      a:documentation [
+        "identifies an occupation code defined within the classification system or taxonomy defined by the "
+        ns1:code [ "@scheme" ]
+        " attribute."
+      ]
+    ]
+    attribute code {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
+    empty
+  }
+org =
+  
+  ## (organization) provides information about an identifiable organization such as a business, a tribe, or any other grouping of people. [13.3.3. Organizational Data]
+  element org {
+    (model.headLike*,
+     (model.pLike*
+      | (model.labelLike
+         | model.nameLike
+         | model.placeLike
+         | model.orgPart
+         | model.milestoneLike)*),
+     (model.noteLike | model.biblLike | linkGrp | link | ptr)*,
+     model.personLike*),
+    att.global.attributes,
+    att.typed.attributes,
+    att.editLike.attributes,
+    att.sortable.attributes,
+    
+    ## specifies a primary role or classification for the organization.
+    attribute role {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    empty
+  }
+person =
+  
+  ## (person) provides information about an identifiable individual, for example a participant in a language interaction, or a person referred to in a historical source. [13.3.2. The Person Element 15.2.2. The Participant Description]
+  element person {
+    (model.pLike+ | (model.personPart | model.global | ptr)*),
+    att.global.attributes,
+    att.editLike.attributes,
+    att.sortable.attributes,
+    
+    ## specifies a primary role or classification for the person.
+    attribute role {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
+    ## specifies the sex of the person.
+    attribute sex {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
+    ## specifies the gender of the person.
+    attribute gender {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
+    ## specifies an age group for the person.
+    attribute age {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    empty
+  }
+persona =
+  
+  ## provides information about one of the personalities identified for a given individual, where an individual has multiple personalities. [13.3.2. The Person Element]
+  element persona {
+    (model.pLike+ | (model.personPart | model.global)*),
+    att.global.attributes,
+    att.editLike.attributes,
+    att.sortable.attributes,
+    
+    ## specifies a primary role or classification for the persona.
+    attribute role {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
+    ## specifies the sex of the persona.
+    attribute sex {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
+    ## specifies the gender of the persona.
+    attribute gender {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
+    ## specifies an age group for the persona.
+    attribute age {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    empty
+  }
+personGrp =
+  
+  ## (personal group) describes a group of individuals treated as a single person for analytic purposes. [15.2.2. The Participant Description]
+  element personGrp {
+    (model.pLike+ | (model.personPart | model.global)*),
+    att.global.attributes,
+    att.sortable.attributes,
+    
+    ## specifies the role of this group of participants in the interaction.
+    attribute role {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    
+    ## specifies the sex of the participant group.
+    attribute sex {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
+    ## specifies the gender of the participant group.
+    attribute gender {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    
+    ## specifies the age group of the participants.
+    attribute age {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    
+    ## describes informally the size or approximate size of the group for example by means of a number and an indication of accuracy e.g. approx 200.
+    attribute size {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    empty
+  }
+persPronouns =
+  
+  ## (personal pronouns) indicates the personal pronouns used, or assumed to be used, by the individual being described. [13.3.2.1. Personal Characteristics]
+  element persPronouns {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.datable.attributes,
+    att.typed.attributes,
+    
+    ## (evidence) indicates support for the listed personal pronouns.
+    ## Suggested values include: 1] conjecture (conjecture); 2] selfIdentification (self identification); 3] trustedThirdParty (trusted third party)
+    attribute evidence {
+      
+      ## (conjecture) The given value was selected based on assumptions by someone besides the person to whom this pronoun applies. As a result, the value may be erroneous.
+      "conjecture"
+      | 
+        ## (self identification) The given value has been explicitly stated or confirmed by the person to whom this pronoun applies.
+        "selfIdentification"
+      | 
+        ## (trusted third party) The given value has been supplied by another individual trusted by the encoder to know the preferences of the person to whom this pronoun applies.
+        "trustedThirdParty"
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    
+    ## (value) supplies a regularized value for personal pronouns.
+    ## Sample values include: 1] e (e); 2] he (he); 3] she (she); 4] they (they)
+    attribute value {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    empty
+  }
+place =
+  
+  ## (place) contains data about a geographic location [13.3.4. Places]
+  element place {
+    (model.headLike*,
+     (model.pLike*
+      | (model.labelLike
+         | model.placeStateLike
+         | model.eventLike
+         | name)*),
+     (model.noteLike | model.biblLike | idno | ptr | linkGrp | link)*,
+     (model.placeLike | listPlace)*),
+    att.global.attributes,
+    att.typed.attributes,
+    att.editLike.attributes,
+    att.sortable.attributes,
+    empty
+  }
+population =
+  
+  ## (population) contains information about the population of a place. [13.3.4.3. States, Traits, and Events]
+  element population {
+    (model.headLike*,
+     ((model.pLike+ | model.labelLike+),
+      (model.noteLike | model.biblLike)*)?,
+     population*),
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    att.dimensions.attributes,
+    empty
+  }
+relation =
+  
+  ## (relationship) describes any kind of relationship or linkage amongst a specified group of places, events, persons, objects or other items. [13.3.2.3. Personal Relationships]
+  element relation {
+    (desc?)
+    >> sch:pattern [
+         id = "test15-relation-reforkeyorname-constraint-assert-18"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:relation"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "@ref or @key or @name"
+             "One of the attributes  'name', 'ref' or 'key' must be supplied"
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+    >> sch:pattern [
+         id = "test15-relation-activemutual-constraint-report-19"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:relation"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test = "@active and @mutual"
+             "Only one of the attributes @active and @mutual may be supplied"
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+    >> sch:pattern [
+         id = "test15-relation-activepassive-constraint-report-20"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:relation"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test = "@passive and not(@active)"
+             "the attribute 'passive' may be supplied only if the attribute 'active' is supplied"
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.canonical.attributes,
+    att.sortable.attributes,
+    att.typed.attributes,
+    
+    ## supplies a name for the kind of relationship of which this is an instance.
+    attribute name {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    (
+     ## identifies the active participants in a non-mutual relationship, or all the participants in a mutual one.
+     attribute active {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?
+     | 
+       ## supplies a list of participants amongst all of whom the relationship holds equally.
+       attribute mutual {
+         list {
+           xsd:anyURI { pattern = "\S+" }+
+         }
+       }?),
+    
+    ## identifies the passive participants in a non-mutual relationship.
+    attribute passive {
+      list {
+        xsd:anyURI { pattern = "\S+" }+
+      }
+    }?,
+    empty
+  }
+residence =
+  
+  ## (residence) describes a person's present or past places of residence. [15.2.2. The Participant Description]
+  element residence {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.naming.attributes,
+    att.typed.attribute.subtype,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Sample values include: 1] primary; 2] secondary; 3] temporary; 4] permanent
+    attribute type {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    empty
+  }
+sex =
+  
+  ## (sex) specifies the sex of an organism. [13.3.2.1. Personal Characteristics]
+  element sex {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.editLike.attributes,
+    att.datable.attributes,
+    att.typed.attributes,
+    
+    ## supplies a coded value for sex
+    attribute value {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
+    empty
+  }
+socecStatus =
+  
+  ## (socio-economic status) contains an informal description of a person's perceived social or economic status. [15.2.2. The Participant Description]
+  element socecStatus {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.naming.attributes,
+    att.typed.attribute.subtype,
+    
+    ## characterizes the element in some sense, using any convenient classification scheme or typology.
+    ## Sample values include: 1] atBirth; 2] atDeath; 3] dependent; 4] inherited; 5] independent
+    attribute type {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    [
+      a:documentation [
+        "identifies the classification system or taxonomy in use, for example by pointing to a locally-defined "
+        ns1:code [ "<taxonomy>" ]
+        " element or by supplying a URI for an externally-defined system."
+      ]
+    ]
+    attribute scheme {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
+    [
+      a:documentation [
+        "identifies a status code defined within the classification system or taxonomy defined by the "
+        ns1:code [ "@scheme" ]
+        " attribute."
+      ]
+    ]
+    attribute code {
+      xsd:anyURI { pattern = "\S+" }
+    }?,
+    empty
+  }
+state =
+  
+  ## (state) contains a description of some status or quality attributed to a person, place, or organization often at some specific time or for a specific date range. [13.3.1. Basic Principles 13.3.2.1. Personal Characteristics]
+  element state {
+    (state+
+     | (model.headLike*,
+        model.pLike+,
+        (model.noteLike | model.biblLike)*)
+     | (model.labelLike | model.noteLike | model.biblLike)*),
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.typed.attributes,
+    att.naming.attributes,
+    att.dimensions.attributes,
+    empty
+  }
+terrain =
+  
+  ## (terrain) contains information about the physical terrain of a place. [13.3.4.3. States, Traits, and Events]
+  element terrain {
+    (model.headLike*,
+     (model.pLike+ | model.labelLike+),
+     (model.noteLike | model.biblLike)*,
+     terrain*),
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    empty
+  }
+trait =
+  
+  ## (trait) contains a description of some status or quality attributed to a person, place, or organization typically, but not necessarily, independent of the volition or action of the holder and usually not at some specific time or for a specific date range. [13.3.1. Basic Principles 13.3.2.1. Personal Characteristics]
+  element trait {
+    (trait+
+     | (model.headLike*,
+        model.pLike+,
+        (model.noteLike | model.biblLike)*)
+     | (model.labelLike | model.noteLike | model.biblLike)*),
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    att.dimensions.attributes,
+    empty
+  }
+objectName =
+  
+  ## (name of an object) contains a proper noun or noun phrase used to refer to an object. [13.2.4. Object Names]
+  element objectName {
+    macro.phraseSeq,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.global.attributes,
+    att.personal.attributes,
+    att.typed.attributes,
+    empty
+  }
+object =
+  
+  ## contains a description of a single identifiable physical object. [13.3.5. Objects]
+  element object {
+    (objectIdentifier+,
+     model.headLike*,
+     (model.pLike* | empty),
+     (model.noteLike | model.biblLike | linkGrp | link)*,
+     object*),
+    att.global.attributes,
+    att.sortable.attributes,
+    att.typed.attributes,
+    att.declaring.attributes,
+    att.docStatus.attributes,
+    att.canonical.attributes,
+    empty
+  }
+listObject =
+  
+  ## (list of objects) contains a list of descriptions, each of which provides information about an identifiable physical object. [13.3.5. Objects]
+  element listObject {
+    (model.headLike*,
+     desc*,
+     (relation | listRelation)*,
+     (model.objectLike+, (relation | listRelation)*)+),
+    att.global.attributes,
+    att.typed.attributes,
+    att.declarable.attributes,
+    att.sortable.attributes,
+    empty
+  }
+objectIdentifier =
+  
+  ## (object identifier) groups one or more identifiers or pieces of locating information concerning a single object. [13.3.5. Objects]
+  element objectIdentifier {
+    (model.placeNamePart | idno | objectName | address)+,
+    att.global.attributes,
+    empty
+  }
+nym =
+  
+  ## (canonical name) contains the definition for a canonical name or name component of any kind. [13.3.6. Names and Nyms]
+  element nym {
+    (idno*, model.entryPart*, model.pLike*, nym*),
+    att.global.attributes,
+    att.typed.attributes,
+    att.sortable.attributes,
+    
+    ## points to constituent nyms
+    attribute parts {
+      list {
+        xsd:anyURI { pattern = "\S+" }+
+      }
+    }?,
+    empty
+  }
+listNym =
+  
+  ## (list of canonical names) contains a list of nyms, that is, standardized names for any thing. [13.3.6. Names and Nyms]
+  element listNym {
+    (model.headLike*,
+     desc*,
+     (relation | listRelation)*,
+     ((nym | listNym)+, (relation | listRelation)*)+),
+    att.global.attributes,
+    att.typed.attributes,
+    att.declarable.attributes,
+    att.sortable.attributes,
+    empty
+  }
 start = TEI

@@ -752,7 +752,7 @@ test-namespaces: actual
 
 	$(BINDIR)/teitornc $(FLAGS) test35.odd $(AR)/test35.rnc
 	perl -p -i -e 's/generated from ODD source .*//' $(AR)/test35.rnc
-	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test35.rnc
+	perl -i -pe 'BEGIN{undef $$/;} s/# ?Schema[^#]+#[^#]+#[^#]+#\n//smg' $(AR)/test35.rnc
 	if [ $(DIFFNOW) -eq 1 ]; \
 	   then diff -bBw $(AR)/test35.rnc $(ER)/test35.rnc; \
 	   else echo "==deferring: \` diff -bBw $(AR)/test35.rnc $(ER)/test35.rnc \`"; fi
