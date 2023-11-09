@@ -94,7 +94,7 @@
     <basename file="${inFile}" property="plainFileName" suffix=".odd"/>
     <property name="outFile" value="${outputDir}/${plainFileName}.rng"/>
     
-    <exec executable="${bin}/teitorelaxng" failonerror="true">
+    <exec executable="${bin}/teitorng" failonerror="true">
       <arg line="--localsource=${localsource}"/>
       <arg file="${inFile}"/>
       <arg file="${outFile}"/>
