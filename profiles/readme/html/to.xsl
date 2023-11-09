@@ -82,6 +82,15 @@ of this software, even if advised of the possibility of such damage.</p>
   <xsl:param name="docPath1" select="'doc/tei-p5-doc'"/>
   <xsl:param name="docPath2" select="'en/html'"/>
   <xsl:param name="docPath" select="concat( $docPath1, '/', $docPath2 )"/>
+  <!--
+    The version # we grabbed from the filename might not have the patch level ".0" at the end.
+    But the Guidelines we are trying to point to always have it. So here if we find only major-
+    dot-minor (rather than major-dot-minor-dot-patch), we append a ".0".
+  -->
+  <xsl:variable name="version" as="xs:string"
+                select="replace( $version_from_filename, '^([0-9]+\.[0-9]+)([aαbβ]?)$', '$1.0$2')"/>
+  <!-- $versionZero is true() iff the major number is '0'. -->
+  <xsl:variable name="versionZero" select="substring-before( $version, '.') eq '0'" as="xs:boolean"/>
   <xsl:variable name="testVersionedDocument" select="concat( $vault,'/',$version,'/',$docPath1,'/VERSION')"/>
   <xsl:variable name="tagdocStart" select="concat( $vault,'/',$version,'/',$docPath,'/ref-')"/>
   
@@ -90,10 +99,10 @@ of this software, even if advised of the possibility of such damage.</p>
     <!-- If this is the first one, check veresion number and warn iff needed -->
     <xsl:if test="not( preceding::tei:gi | preceding::tei:name[ @type eq 'class'] )">
       <xsl:choose>
-        <xsl:when test="$version eq ''">
+        <xsl:when test="$version_from_filename eq ''">
           <xsl:message>WARNING: unable to parse version # from filename, so links will not work</xsl:message>
         </xsl:when>
-        <xsl:when test="not( doc-available( $testVersionedDocument ) )">
+        <xsl:when test="not( unparsed-text-available( $testVersionedDocument ) )">
           <xsl:message>INFO: file <xsl:value-of select="$testVersionedDocument"/> could not be read</xsl:message>
         </xsl:when>
         <xsl:when test="normalize-space( unparsed-text( $testVersionedDocument ) ) ne normalize-space( $version )">
