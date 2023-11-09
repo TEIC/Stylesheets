@@ -28,7 +28,7 @@
   <!-- Obtain a Relax NG schema and afterward transform it to XSD using TRANG. -->
   <target name="go">
     <oddexpand in="${inputFile}" out="${inputFile}.processedodd"/>
-    <buildgeneric type="relaxng" xsl="${profiledir}/${profile}/relaxng/to.xsl" in="${inputFile}.processedodd" out="${outputFile}.rng"/>
+    <buildgeneric type="relaxng" xsl="${profiledir}/${profile}/rng/to.xsl" in="${inputFile}.processedodd" out="${outputFile}.rng"/>
     <echo level="info">TRANG generate XSD from RELAXNG files</echo>
     <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
       <classpath>

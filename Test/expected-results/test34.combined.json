@@ -4408,30 +4408,12 @@
             "model.divWrapper",
             "model.pLike.front" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.datable" ],
           "unknown" : 
           [  ] },
         "attributes" : 
-        [ 
-          { "onElement" : true,
-            "ident" : "when",
-            "mode" : "add",
-            "ns" : "",
-            "usage" : "opt",
-            "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-06-14\" xml:lang=\"en\">gives the value of the date in standard form, i.e. YYYY-MM-DD.<\/desc>" ],
-            "shortDesc" : "(when) gives the value of the date in standard form, i.e. YYYY-MM-DD.",
-            "gloss" : 
-            [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2017-06-19\">when<\/gloss>" ],
-            "altIdent" : 
-            [  ],
-            "valDesc" : 
-            [  ],
-            "datatype" : 
-            { "min" : "1",
-              "max" : "1",
-              "dataRef" : 
-              { "key" : "teidata.temporal.w3c" } } } ],
+        [  ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -7614,7 +7596,7 @@
             "valDesc" : 
             [  ],
             "datatype" : 
-            { "min" : "1",
+            { "min" : "0",
               "max" : "1",
               "dataRef" : 
               { "key" : "teidata.namespace" } } } ],
@@ -8609,8 +8591,8 @@
                 
                 { "ident" : "foreign",
                   "desc" : 
-                  [  ],
-                  "shortDesc" : "(foreign) ",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2023-01-13\" xml:lang=\"en\">foreign words<\/desc>" ],
+                  "shortDesc" : "(foreign) foreign words",
                   "gloss" : 
                   [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2016-11-25\">foreign<\/gloss>" ],
                   "altIdent" : 
@@ -13739,8 +13721,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-19\" xml:lang=\"en\">supplies pointers to one or more definitions of \n        named periods of time (typically <gi>category<\/gi>s or <gi>calendar<\/gi>s) within which the datable item is understood to have occurred.<\/desc>" ],
-              "shortDesc" : "supplies pointers to one or more definitions of \n        named periods of time (typically categorys or calendars) within which the datable item is understood to have occurred.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-19\" xml:lang=\"en\">supplies pointers to one or more definitions of \n        named periods of time (typically <gi>category<\/gi>s, <gi>date<\/gi>s or <gi>event<\/gi>s) within which the datable item is understood to have occurred.<\/desc>" ],
+              "shortDesc" : "supplies pointers to one or more definitions of \n        named periods of time (typically categorys, dates or events) within which the datable item is understood to have occurred.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -17427,7 +17409,7 @@
         [ 
           { "type" : "dataRef",
             "name" : "anyURI",
-            "restriction" : "\\S*" } ] },
+            "restriction" : "\\S+" } ] },
       
       { "ident" : "teidata.numeric",
         "ns" : "http:\/\/foo.foo\/foo",

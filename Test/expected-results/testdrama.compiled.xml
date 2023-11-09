@@ -146,7 +146,7 @@
       <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <exemplum xml:lang="en">
         <p>In the following example from Hamlet, speeches (<gi>sp</gi>) in the body of the play 
-        are linked to <gi>castItem</gi> elements in the <gi>castList</gi> using the <att>who</att>
+        are linked to <gi>role</gi> elements in the <gi>castList</gi> using the <att>who</att>
         attribute.</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" valid="feasible" source="#CODR-eg-293">
           <castItem type="role">
@@ -243,29 +243,17 @@
       <desc xml:lang="ja" versionDate="2018-12-31">何らかのコード化された値を用いて、名付けられたエンティティを識別する外部的に定義された手段を提供する。</desc>
       <datatype><dataRef key="teidata.text"/></datatype>
       <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
-          <author>
-            <name key="name 427308" type="organisation">[New Zealand Parliament, Legislative Council]</name>
-          </author>
-        </egXML>
-      </exemplum>
-      <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr" source="#NONE">
           <author>
             <name key="Hugo, Victor (1802-1885)" ref="http://www.idref.fr/026927608">Victor Hugo</name>
           </author>
         </egXML>
       </exemplum>
-      <remarks versionDate="2013-06-20" xml:lang="en">
+      <remarks versionDate="2022-12-21" xml:lang="en">
         <p>The value may be a unique identifier from a database, or any other externally-defined
-          string identifying the referent. </p>
-        <p>No particular syntax is proposed for the values of the <att>key</att> attribute, since 
-          its form will depend entirely on practice within a given project. For the same reason, this 
-          attribute is not recommended in data interchange, since there is no way of ensuring 
-          that the values used by one project are distinct from those used by another. In such
-          a situation, a preferable approach for magic tokens which follows standard practice 
-          on the Web is to use a <att>ref</att> attribute whose value is a tag URI as defined in 
-          <ref target="#RFC4151">RFC 4151</ref>.</p>
+          string identifying the referent. 
+          No particular syntax is proposed for the values of the <att>key</att> attribute, since 
+          its form will depend entirely on practice within a given project.</p>
       </remarks>
       <remarks versionDate="2009-05-25" xml:lang="fr">
         <p>La valeur peut être un identifiant unique dans une base de données, ou toute autre chaîne
@@ -283,11 +271,11 @@
         définition complète de l'entité nommée au moyen d'un ou plusieurs URIs.</desc>
       <desc xml:lang="ja" versionDate="2018-12-31">一つ以上のURIを用いて、名付けられたエンティティの完全な定義かIDを参照するための明確な手段を提供する。</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
-        <exemplum xml:lang="en">
-          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
-            <name ref="http://viaf.org/viaf/109557338" type="person">Seamus Heaney</name>
-            </egXML>
-        </exemplum>         
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
+          <name ref="http://viaf.org/viaf/109557338" type="person">Seamus Heaney</name>
+        </egXML>
+      </exemplum>   
       <remarks versionDate="2014-01-09" xml:lang="en">
 <p>The value must point directly to one or more XML elements or other resources by means of one or more URIs, separated by whitespace. If more than one is supplied the implication is that the name identifies several distinct entities.</p>
       </remarks>
@@ -297,6 +285,50 @@
       <remarks xml:lang="ja" versionDate="2018-12-31"><p>値は1つまたは複数のXML要素あるいは、空白によって区切られた1つまたは複数のURIを指し示すものでなければならない。1つ以上の値が与えられているときは、その名前が複数の異るエンティティに対応することを示唆する。</p></remarks>
     </attDef>
   </attList>
+  <exemplum xml:lang="en">
+    <p>In this contrived example, a canonical reference to the same
+    organisation is provided in four different ways.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NZPaV01NgaK">
+      <author n="1">
+        <name ref="http://nzetc.victoria.ac.nz/tm/scholarly/name-427308.html" type="organisation">New Zealand Parliament, Legislative Council</name>
+      </author>
+       
+      <author n="2">
+        <name ref="nzvn:427308" type="organisation">New Zealand Parliament, Legislative Council</name>
+      </author>
+          
+      <author n="3">
+        <name ref="./named_entities.xml#o427308" type="organisation">New Zealand Parliament, Legislative Council</name>
+      </author>
+       
+      <author n="4">
+        <name key="name-427308" type="organisation">New Zealand Parliament, Legislative Council</name>
+      </author>
+    </egXML>
+    <p>The first presumes the availability of an internet connection
+    and a processor that can resolve a URI (most can). The second
+    requires, in addition, a <gi>prefixDef</gi> that declares how the
+    <code>nzvm</code> prefix should be interpreted. The third does not
+    require an internet connection, but does require that a file named
+    <name type="file">named_entities.xml</name> be in the same
+    directory as the TEI document. The fourth requires that an entire
+    external system for key resolution be available.</p>
+  </exemplum>
+  <remarks xml:lang="en" versionDate="2022-12-21">
+    
+    <p>The <att>key</att> attribute is more flexible and
+    general-purpose, but its use in interchange requires that
+    documentation about how the key is to be resolved be sent to the
+    recipient of the TEI document. In contrast values of the
+    <att>ref</att> attribute are resolved using the widely accepted
+    protocols for a URI, and thus less documentation, if any, is
+    likely required by the recipient in data interchange.</p>
+    <p>These guidelines provide no semantic basis or suggested
+    precedence when both <att>key</att> and <att>ref</att> are
+    provided. For this reason simultaneous use of both is not
+    recommended unless documentation explaining the use is provided,
+    probably in an ODD customizaiton, for interchange.</p>
+  </remarks>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDATTSnr">13.1.1. Linking Names and Their Referents</ref>
   </listRef>
@@ -869,6 +901,8 @@ Elements</ref>
     
   </classes>
   <attList>
+    
+    
     <attDef ident="calendar" usage="opt">
       <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
         date represented by the content of this element belongs.</desc>
@@ -884,12 +918,25 @@ Elements</ref>
       <datatype minOccurs="1" maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
-      <constraintSpec ident="calendar" scheme="schematron">
+      <constraintSpec ident="calendar-check-deprecated" scheme="schematron">
         <constraint>
           <sch:rule context="tei:*[@calendar]">
             <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
             systems or calendars to which the date represented by the content of this element belongs,
             but this <sch:name/> element has no textual content.</sch:assert>
+          </sch:rule>
+        </constraint>
+      </constraintSpec>
+      <constraintSpec scheme="schematron" ident="calendar-deprecated">
+        <constraint>
+          <sch:rule context="tei:*[@calendar][ not( self::tei:date | self::tei:time | self::tei:origDate ) ]">
+            <sch:let name="me_phrase" value="concat( 'Attribute calendar on ', local-name(.))"/>
+            <sch:assert test="'2024-11-11' cast as xs:date ge current-date()">
+              <sch:value-of select="concat( $me_phrase, ' construct is outdated (as of 2024-11-11); ODD processors may ignore it, and its use is no longer supported' )"/>
+            </sch:assert>
+            <sch:report role="nonfatal" test="@calendar">
+              <sch:value-of select="concat( $me_phrase, ' becomes outdated on 2024-11-11' )"/>
+            </sch:report>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -928,7 +975,7 @@ Elements</ref>
     </attDef>
     <attDef ident="period" usage="opt">
       <desc versionDate="2021-04-19" xml:lang="en">supplies pointers to one or more definitions of 
-        named periods of time (typically <gi>category</gi>s or <gi>calendar</gi>s) within which the datable item is understood to have occurred.</desc>
+        named periods of time (typically <gi>category</gi>s, <gi>date</gi>s or <gi>event</gi>s) within which the datable item is understood to have occurred.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">시간을 명시할 수 있는 항목이 일어난 시간의 기간명을 정의하는 특정 위치로의 포인터를
         제공한다.</desc>
       <desc versionDate="2008-04-06" xml:lang="es">suministra un indicador a una localización
@@ -2167,17 +2214,17 @@ the TEI header.</p>
         according to <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko"><ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>에 따라 생성된
         <soCalled>tag</soCalled>를 사용하는 요소 내용의 언어를 나타낸다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">使用<ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC3066</ref>的代碼，指出該元素內容的使用語言</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">使用<ref target="https://www.ietf.org/rfc/rfc3066.txt">RFC3066</ref>的代碼，指出該元素內容的使用語言</desc>
       <desc xml:lang="ja" versionDate="2019-06-08"><ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>に従って生成された<soCalled>タグ</soCalled>を用いて要素の内容の言語を示す。</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">indique la langue du contenu de l'élément en
-        utilisant les codes du <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref>
+        utilisant les codes du <ref target="https://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref>
          </desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica la lengua del contenido del elemento
-        utilizando los códigos extraídos de <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC
+        utilizando los códigos extraídos de <ref target="https://www.ietf.org/rfc/rfc3066.txt">RFC
           3066</ref>
          </desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la lingua del contenuto dell'elemento
-        utilizzando i codici tratti da <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC
+        utilizzando i codici tratti da <ref target="https://www.ietf.org/rfc/rfc3066.txt">RFC
         3066</ref>
          </desc>
       <datatype><dataRef key="teidata.language"/></datatype>
@@ -2199,7 +2246,7 @@ the TEI header.</p>
           and that a single TEI document may contain texts in many languages.</p>
         <p>Only attributes with free text values (rare in these guidelines) will be in the scope of <att>xml:lang</att>.</p>
         <p>The authoritative list of registered language subtags is maintained by IANA and 
-          is available at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. 
+          is available at <ptr target="https://www.iana.org/assignments/language-subtag-registry"/>. 
           For a good general overview of the construction of language tags, see 
           <ptr target="https://www.w3.org/International/articles/language-tags/"/>, and for 
           a practical step-by-step guide, see 
@@ -2227,7 +2274,7 @@ the TEI header.</p>
         <p>Si no se especifica ningún valor para <att>xml:lang</att>, el valor de <att>xml:lang</att> para el elemento inmediatamente englobado, se hereda; por esta razón, un valor
           se debe especificar siempre en el elemento exterior (<gi>TEI</gi>).</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2019-06-16"><p>xml:lang の値は、直接の親要素、そのまた親要素からというように、文書の上位階層から継承されてくる。できるだけ高い適切な階層に xml:lang を指定するのが一般には望ましいが、teiHeader には関連するリソース要素と異なるデフォルト値が必要となったり、一つのTEI文書が多くの言語のテキストを含みうることには注意されたい。登録された言語タグの正式なリストはIANAが管理しており、<ptr target="http://www.iana.org/assignments/language-subtag-registry"/> から確認できる。言語タグの構造についての良い概説は <ptr target="https://www.w3.org/International/articles/language-tags/"/> を、手順を追った実用的なガイドは <ptr target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/> を参照されたい。利用する値は、BCP 47 に準拠しなければならない。もし値が私用コード（<val>x-</val> から始まったり <val>-x-</val> を含む）ならば、その <att>ident</att> 属性と一致する値を持つ <gi>language</gi> 要素をTEIヘッダ内に追加して内容を説明すべきである。この説明は私用コード以外にも任意で追加できるが、<choice><abbr>IETF</abbr><expan>Internet Engineering Task Force</expan></choice> による定義と整合していなければならない。</p></remarks>
+      <remarks xml:lang="ja" versionDate="2019-06-16"><p>xml:lang の値は、直接の親要素、そのまた親要素からというように、文書の上位階層から継承されてくる。できるだけ高い適切な階層に xml:lang を指定するのが一般には望ましいが、teiHeader には関連するリソース要素と異なるデフォルト値が必要となったり、一つのTEI文書が多くの言語のテキストを含みうることには注意されたい。登録された言語タグの正式なリストはIANAが管理しており、<ptr target="https://www.iana.org/assignments/language-subtag-registry"/> から確認できる。言語タグの構造についての良い概説は <ptr target="https://www.w3.org/International/articles/language-tags/"/> を、手順を追った実用的なガイドは <ptr target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/> を参照されたい。利用する値は、BCP 47 に準拠しなければならない。もし値が私用コード（<val>x-</val> から始まったり <val>-x-</val> を含む）ならば、その <att>ident</att> 属性と一致する値を持つ <gi>language</gi> 要素をTEIヘッダ内に追加して内容を説明すべきである。この説明は私用コード以外にも任意で追加できるが、<choice><abbr>IETF</abbr><expan>Internet Engineering Task Force</expan></choice> による定義と整合していなければならない。</p></remarks>
     </attDef>
     
     
@@ -2471,8 +2518,8 @@ ressource informatique selon une taxinomie normalisée.</desc>
     using a value taken from a standard taxonomy. At present only a single
     taxonomy is supported, the Multipurpose Internet Mail Extensions
     (MIME) Media Type system. This typology of media types is
-    defined by the Internet Engineering Task Force in <ref target="http://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>. The
-    <ref target="http://www.iana.org/assignments/media-types/">list of
+    defined by the Internet Engineering Task Force in <ref target="https://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>. The
+    <ref target="https://www.iana.org/assignments/media-types/">list of
     types</ref> is maintained by the Internet Assigned Numbers
     Authority (IANA). The <att>mimeType</att> attribute must have a value taken from this list.</p>
   </remarks>
@@ -2481,17 +2528,17 @@ ressource informatique selon une taxinomie normalisée.</desc>
                 informatique, en général disponible sur internet, selon les taxinomies normalisées.
                 Actuellement une seule taxinomie est reconnue : le système "Multipurpose Internet
                 Mail Extensions Media Type". Ce système de typologie des types de média est définie
-                par l'Internet Engineering Task Force dans<ref target="http://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>. La <ref target="http://www.iana.org/assignments/media-types/">liste des types</ref>
+                par l'Internet Engineering Task Force dans<ref target="https://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>. La <ref target="https://www.iana.org/assignments/media-types/">liste des types</ref>
                 est maintenue par l'Internet Assigned Numbers Authority. </p>
   </remarks>
   <remarks xml:lang="es" versionDate="2008-04-06">
     <p>Esta clase de atributo proporciona los atributos para describir un recurso del ordenador, típicamente disponibles en Internet, según las taxonomías estándar. Solamente una única taxonomía se utiliza actualmente, el sistema Multipurpose Internet Mail Extensions
-    Media Type. Este sistema de tipología de los tipos de media es definido por el Internet Engineering Task Force <ref target="http://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>. 
-    . La <ref target="http://www.iana.org/assignments/media-types/">lista de tipos</ref> es mantenida por el Internet Assigned Numbers Authority.</p>
+    Media Type. Este sistema de tipología de los tipos de media es definido por el Internet Engineering Task Force <ref target="https://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>. 
+    . La <ref target="https://www.iana.org/assignments/media-types/">lista de tipos</ref> es mantenida por el Internet Assigned Numbers Authority.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2022-05-09">
     <p>
-当該属性クラスは、コンピューターリソースを示すためのもので、通常、インターネット上にあるリソースを標準的な用語で示す。現時点では、MIME（Multipurpose Internet Mail Extensions）タイプのみが標準的な用語として使用可能である。このMIMEタイプについては、IETF（Internet Engineering Task Force）の<ref target="http://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>で規定されている。<ref target="http://www.iana.org/assignments/media-types/">使用できるタイプ名のリスト</ref>の管理は、IANA（Internet Assigned Numbers Authority）によって行われている。<att>mimeType</att>属性は上記のタイプ名リストにより定義された値を含んでいなくてはならない。
+当該属性クラスは、コンピューターリソースを示すためのもので、通常、インターネット上にあるリソースを標準的な用語で示す。現時点では、MIME（Multipurpose Internet Mail Extensions）タイプのみが標準的な用語として使用可能である。このMIMEタイプについては、IETF（Internet Engineering Task Force）の<ref target="https://www.ietf.org/rfc/rfc2046.txt">RFC 2046</ref>で規定されている。<ref target="https://www.iana.org/assignments/media-types/">使用できるタイプ名のリスト</ref>の管理は、IANA（Internet Assigned Numbers Authority）によって行われている。<att>mimeType</att>属性は上記のタイプ名リストにより定義された値を含んでいなくてはならない。
     </p>
   </remarks>
 </classSpec><classSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="atts" ident="att.media">
@@ -4125,9 +4172,9 @@ dans lequel les traits encodés portant cet attribut sont supposés être apparu
   <classes/>
   <attList>
     <attDef ident="unit" usage="opt">
+      <desc versionDate="2012-12-17" xml:lang="en">identifies the unit of information conveyed by the element, e.g. <val>columns</val>, <val>pages</val>, <val>volume</val>, <val>entry</val>.</desc>
       <desc versionDate="2017-06-24" xml:lang="fr">identifie le type d'information
       que transmet l'élément, par exemple <val>colonnes</val>, <val>pages</val>, <val>volume</val>, <val>inscription</val>, etc.</desc>
-      <desc versionDate="2012-12-17" xml:lang="en">identifies the unit of information conveyed by the element, e.g. <val>columns</val>, <val>pages</val>, <val>volume</val>, <val>entry</val>.</desc>
       <desc xml:lang="ja" versionDate="2019-01-04">当該要素が伝える情報の単位を特定する。たとえば、カラム (<val>columns</val>)、頁 (<val>pages</val>)、巻 (<val>volume</val>)、エントリ (<val>entry</val>) 等。</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="semi">
@@ -6148,13 +6195,13 @@ value.</desc>
             <label>language</label>
             <item>The IANA-registered code for the language. This is almost always the same as the ISO
           639 2-letter language code if there is one. The list of available registered language
-          subtags can be found at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. It is recommended
+          subtags can be found at <ptr target="https://www.iana.org/assignments/language-subtag-registry"/>. It is recommended
           that this code be written in lower case.</item>
             <label>script</label>
             <item>The ISO 15924 code for the script. These codes consist of 4 letters, and it is
           recommended they be written with an initial capital, the other three letters in lower
           case. The canonical list of codes is maintained by the Unicode Consortium, and is
-          available at <ptr target="http://unicode.org/iso15924/iso15924-codes.html"/>. The IETF
+          available at <ptr target="https://unicode.org/iso15924/iso15924-codes.html"/>. The IETF
           recommends this code be omitted unless it is necessary to make a distinction you need.</item>
             <label>region</label>
             <item>Either an ISO 3166 country code or a UN M.49 region code that is registered with IANA
@@ -6179,7 +6226,7 @@ value.</desc>
             <gi>language</gi> element must be present in the TEI header.</item>
          </list>
       </p>
-      <p>There are two exceptions to the above format. First, there are language tags in the <ref target="http://www.iana.org/assignments/language-subtag-registry">IANA registry</ref> that
+      <p>There are two exceptions to the above format. First, there are language tags in the <ref target="https://www.iana.org/assignments/language-subtag-registry">IANA registry</ref> that
       do not match the above syntax, but are present because they have been
       <soCalled>grandfathered</soCalled> from previous specifications.</p>
       <p>Second, an entire language tag can consist of only a private use subtag. These tags start
@@ -6230,11 +6277,11 @@ value.</desc>
       variantとextensionは複数回、他は1回のみ出現出現する。この下位タグ のグループは繰り返し可能である。 <list type="gloss">
             <label>language</label>
             <item> IANAの言語コード。この殆どは、該当言語が既にあれば、ISO 639の2文字 (以下、この場合の文字はラテン文字)言語コードと同じである。利用可能
-          な言語下位タグのリストは <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>
+          な言語下位タグのリストは <ptr target="https://www.iana.org/assignments/language-subtag-registry"/>
           にある。言語コードは、小文字で書かれることが推奨されている。 </item>
             <label>script</label>
             <item> ISO 15924による文字を示すコード。4文字から構成され、冒頭文字は大文 字で、残り3文字は小文字で書かれることが推奨されている。このコード
-          は、ユニコードコンソーシアムで管理され、 <ptr target="http://unicode.org/iso15924/iso15924-codes.html"/>か
+          は、ユニコードコンソーシアムで管理され、 <ptr target="https://unicode.org/iso15924/iso15924-codes.html"/>か
           ら入手することができる。IETFでは、不要であれば当該コードを省略する ことを推奨している。 </item>
             <label>region</label>
             <item> ISO 3166またはUN M.49による国または地域コード。このコードはIANAに 登録されている(但し全てではない。例えば、UNコードには経済圏や、 ISO
@@ -6253,7 +6300,7 @@ value.</desc>
         </item>
          </list>
       </p>
-      <p> 上記記述形式には、2つの例外がある。ひとつは、ここにある言語タグは、 <ref target="http://www.iana.org/assignments/language-subtag-registry">
+      <p> 上記記述形式には、2つの例外がある。ひとつは、ここにある言語タグは、 <ref target="https://www.iana.org/assignments/language-subtag-registry">
       IANA</ref>にある統語規則に違反しているものがある。 これはIANAでは昔の規定を<soCalled>継承している</soCalled>からであ る。 </p>
       <p> ふたつめは、言語タグを、下位タグprivateだけで構成することができる ことである。<code>x-</code>で始まるタグの内容は、IETFにある規定に
       も当該TEIガイドラインにある規定にも従う必要はない。他の言語タグと 同様に、このタグを使用した場合には、TEIヘダーにある要素
@@ -6306,13 +6353,13 @@ value.</desc>
             <label>langue</label>
             <item>Code de langue enregistré par l'IANA. Il est presque toujours identique au code
           de langue alphabétique ISO 639-2, s'il y en a un. La liste des sous-étiquettes de langue
-          enregistrées est disponible à : <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. Il est recommandé
+          enregistrées est disponible à : <ptr target="https://www.iana.org/assignments/language-subtag-registry"/>. Il est recommandé
           d'écrire ce code en minuscules.</item>
             <label>écriture</label>
             <item>Code ISO 15924 pour l'écriture. Ces codes sont constitués de 4 lettres, et il est
           recommandé d'écrire la première lettre en majuscule, les trois autres en minuscules. La
           liste canonique des codes est maintenue par le Consortium Unicode, et elle est disponible
-          à : <ptr target="http://unicode.org/iso15924/iso15924-codes.html"/>. L'IETF recommande
+          à : <ptr target="https://unicode.org/iso15924/iso15924-codes.html"/>. L'IETF recommande
           d'omettre ce code, sauf s'il est nécessaire pour établir une distinction.</item>
             <label>région</label>
             <item>Soit un code de pays ISO 3166, soit un code de région UN M.49 enregistré par
@@ -6340,7 +6387,7 @@ value.</desc>
          </list>
       </p>
       <p>Il y a deux exceptions au format ci-dessus. Premièrement, il y a des codes de langue dans
-        le <ref target="http://www.iana.org/assignments/language-subtag-registry">registre de l'IANA</ref>
+        le <ref target="https://www.iana.org/assignments/language-subtag-registry">registre de l'IANA</ref>
       qui ne correspondent pas à la syntaxe ci-dessus, mais qui sont présents car ils ont été
         <soCalled>hérités</soCalled> de spécifications antérieures.</p>
       <p>En second lieu, une étiquette complète de langue peut consister seulement en une sous-étiquette d'usage privé. Ces étiquettes commencent par <code>x-</code> ; il n'est pas
@@ -6407,21 +6454,21 @@ value.</desc>
     indicare i nomi degli spazi in XML come stabilito dalle raccomandazioni tecniche del W3C per gli
     <ref target="https://www.w3.org/TR/1999/REC-xml-names-19990114/">spazi dei nomi in XML</ref>.</desc>
   <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
-      <dataRef restriction="\S*" name="anyURI"/>
+      <dataRef restriction="\S+" name="anyURI"/>
    </content>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-02-08" xml:lang="en">
-      <p>The range of syntactically valid values is defined by <ref target="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986 <title>Uniform Resource Identifier
+      <p>The range of syntactically valid values is defined by <ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986 <title>Uniform Resource Identifier
           (URI): Generic Syntax</title>
          </ref>
       </p>
   </remarks>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
-      <p> 当該データ値は、<ref target="http://www.ietf.org/rfc/rfc2396.txt">RFC 2396 <title>Uniform Resource
+      <p> 当該データ値は、<ref target="https://www.ietf.org/rfc/rfc2396.txt">RFC 2396 <title>Uniform Resource
           Identifier (URI) Reference</title>
          </ref> に定義されている。 </p>
   </remarks>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
-      <p>La gamme des valeurs  syntaxiquement valides est définie par <ref target="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986 <title>Uniform Resource Identifier
+      <p>La gamme des valeurs  syntaxiquement valides est définie par <ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986 <title>Uniform Resource Identifier
           (URI): Generic Syntax</title>
          </ref>.</p>
       
@@ -6561,10 +6608,10 @@ resource, either within the current document or elsewhere.</desc>
    </content>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2011-12-12" xml:lang="en">
       <p>The range of syntactically valid values is defined by
-    <ref target="http://www.ietf.org/rfc/rfc3986.txt"> RFC 3986</ref>
+    <ref target="https://www.ietf.org/rfc/rfc3986.txt"> RFC 3986</ref>
          <title>Uniform Resource Identifier (URI): Generic
     Syntax</title>. Note that the values themselves are encoded using
-    <ref target="http://www.ietf.org/rfc/rfc3987.txt">RFC
+    <ref target="https://www.ietf.org/rfc/rfc3987.txt">RFC
     3987</ref> 
          <title>Internationalized Resource Identifiers</title> (IRIs) mapping
     to URIs. For example, <code>
@@ -6577,14 +6624,14 @@ resource, either within the current document or elsewhere.</desc>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p>
     当該属性値は、
-    <ref target="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986
+    <ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986
     <title>Uniform Resource Identifier (URI) Reference</title>
          </ref>
     に定義されている。
     </p>
   </remarks>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
-      <p>La gamme des valeurs valides syntaxiquement est définie par<ref target="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986
+      <p>La gamme des valeurs valides syntaxiquement est définie par<ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986
       <title>Uniform Resource Identifier (URI): Generic
         Syntax</title>
          </ref>
@@ -6614,7 +6661,7 @@ resource, either within the current document or elsewhere.</desc>
    </content>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2012-06-17" xml:lang="en">
       <p>The value of this attribute follows the pattern specified by
-    the Unicode consortium for its version number (<ptr target="http://unicode.org/versions/"/>). A version number
+    the Unicode consortium for its version number (<ptr target="https://unicode.org/versions/"/>). A version number
     contains digits and fullstop characters only. The first number
     supplied identifies the major version number. A second and third
     number, for minor and sub-minor version numbers, may also be
@@ -6623,7 +6670,7 @@ resource, either within the current document or elsewhere.</desc>
   </remarks>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">
       <p>La valeur de cet attribut devrait suivre le format proposé par
-    le Consortium Unicode pour identifier les versions (<ptr target="http://unicode.org/versions/"/>). Un numéro de version
+    le Consortium Unicode pour identifier les versions (<ptr target="https://unicode.org/versions/"/>). Un numéro de version
     ne contient que des chiffres et des points. Le numéro
     initiale identifie le numéro majeur de la version. Un deuxième et
     un troisième numéro sont aussi disponibles pour la numérotation
@@ -6752,7 +6799,7 @@ which contain an XPath expression.</desc>
   </content>
   <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2016-11-28" xml:lang="en">
     <p>This datatype is used to constrain a string of characters to
-    one that can be used as a URI scheme name according to <ref target="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986</ref>, <ref target="https://tools.ietf.org/html/rfc3986#section-3.1">section
+    one that can be used as a URI scheme name according to <ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986</ref>, <ref target="https://tools.ietf.org/html/rfc3986#section-3.1">section
     3.1</ref>. Thus only the 26 lowercase letters a–z, the 10
     digits 0–9, the plus sign, the period, and the hyphen are
     permitted, and the value must start with a letter.</p>
@@ -8058,6 +8105,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
         <valItem ident="foreign">
           <gloss xml:lang="en" versionDate="2016-11-25">foreign</gloss>
           <gloss versionDate="2016-11-25" xml:lang="de">fremdartig</gloss>
+          <desc versionDate="2023-01-13" xml:lang="en">foreign words</desc>
           <desc versionDate="2008-04-06" xml:lang="es">palabras extranjeras</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">mots étrangers</desc>
           <desc versionDate="2007-11-06" xml:lang="it">parole straniere</desc>
@@ -11262,6 +11310,7 @@ Measures</ref>
     <memberOf key="model.publicationStmtPart.detail"/>
     <memberOf key="att.canonical"/>
     <memberOf key="att.datable"/>
+     
     
     <memberOf key="att.editLike"/>
     <memberOf key="att.dimensions"/>
@@ -11277,7 +11326,7 @@ Measures</ref>
       </alternate>
     
   </content>
-  
+ 
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <date when="1980-02">early February 1980</date>
@@ -11359,6 +11408,7 @@ Measures</ref>
     <memberOf key="att.global"/>
     <memberOf key="model.dateLike"/>
     <memberOf key="att.datable"/>
+     
     <memberOf key="att.canonical"/>
     
     <memberOf key="att.editLike"/>
@@ -15309,6 +15359,7 @@ epistemology, methodology and history of
   </listRef>
 </elementSpec><elementSpec module="core" ident="publisher">
   <gloss xml:lang="en" versionDate="2009-01-06">publisher</gloss>
+  <gloss xml:lang="es" versionDate="2023-05-08">editorial</gloss>
   <gloss versionDate="2009-01-06" xml:lang="fr">éditeur</gloss>
   <gloss versionDate="2017-06-13" xml:lang="de">Verlag</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">provides the name of the organization responsible for the publication or distribution of a
@@ -16412,9 +16463,17 @@ relatedItem element must be empty</sch:report>
       </list>
     </egXML>
   </exemplum>
+  <remarks xml:lang="en" versionDate="2023-01-13">
+    <p>This element may be used to transcribe which character is
+    speaking in a dramatic text as indicated by the source text; the
+    <att>who</att> attribute of an <gi>sp</gi> element may be used to
+    point to another element (typically a <gi>role</gi>) which
+    provides information about the character speaking. Either or both
+    may be used.</p>
+  </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Cet élément est utilisé pour indiquer quel personnage prend la parole dans une pièce de
-            théâtre ; l'attribut who est utilisé pour pointer vers un autre élément qui fournit des
+            théâtre ; l'attribut <att>who</att> est utilisé pour pointer vers un autre élément qui fournit des
             informations sur ce personnage. L'un et ou l'autre peuvent être utilisés.</p>
   </remarks>
   <listRef>
@@ -18008,6 +18067,16 @@ material</measure>
       <extent>ungefähr 10MB</extent>
     </egXML>
   </exemplum>
+  <exemplum versionDate="2023-02-03" xml:lang="de">
+    <p>Das <gi>measure</gi>-Element kann dazu verwendet werden, um normalisierte oder 
+      maschinenlesbare Versionen der Größen-Angaben bereitzustellen.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <extent>
+        <measure unit="MiB" quantity="4.2">Ungefähr vier Megabyte</measure>
+        <measure unit="pages" quantity="245">Textumfang 245 Seiten</measure>
+      </extent>
+    </egXML>
+  </exemplum>
   <exemplum versionDate="2010-02-26" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <extent>198 pages</extent>
@@ -18022,9 +18091,6 @@ material</measure>
       <extent>10片3.5吋磁碟片</extent>
     </egXML>
   </exemplum>
-  <remarks xml:lang="de" versionDate="2016-11-25">
-    <p>Das <gi>measure</gi>-Element kann dazu verwendet werden, um normalisierte oder maschinenlesbare Versionen der Größen-Angaben bereitzustellen.</p>
-  </remarks>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD23">2.2.3. Type and Extent of File</ref>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD2">2.2. The File Description</ref>
@@ -20355,9 +20421,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
     <memberOf key="att.global"/>
   </classes>
   <content>
-    
-      <elementRef key="tagUsage" minOccurs="1" maxOccurs="unbounded"/>
-    
+    <elementRef key="tagUsage" minOccurs="1" maxOccurs="unbounded"/>
   </content>
   <attList>
     <attDef ident="name" usage="req">
@@ -20370,7 +20434,7 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
         Namensraums an.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">el nombre formal completo del namespace concerniente.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">l'intero nome formale del namespace in questione.</desc>
-      <datatype><dataRef key="teidata.namespace"/></datatype>
+      <datatype minOccurs="0" maxOccurs="1"><dataRef key="teidata.namespace"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -23457,11 +23521,9 @@ should be supplied for the <att>scheme</att> attribute.</p>
   </classes>
   <content>
     <alternate>
-      <elementRef key="list"/>
-      <elementRef key="listChange"/>
-      
-        <elementRef key="change" minOccurs="1" maxOccurs="unbounded"/>
-      
+      <elementRef key="list" minOccurs="1" maxOccurs="unbounded"/>
+      <elementRef key="listChange" minOccurs="1" maxOccurs="unbounded"/>
+      <elementRef key="change" minOccurs="1" maxOccurs="unbounded"/>
     </alternate>
   </content>
   <exemplum xml:lang="en">
@@ -27209,48 +27271,13 @@ on a title page or in a dateline.</desc>
     <memberOf key="model.titlepagePart"/>
     <memberOf key="model.divWrapper"/>
     <memberOf key="model.pLike.front"/>
+    <memberOf key="att.datable"/>
+     
   </classes>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
-  <attList>
-    <attDef ident="when" usage="opt">
-      <gloss xml:lang="en" versionDate="2017-06-19">when</gloss>
-      <gloss versionDate="2017-06-19" xml:lang="de">wann</gloss>
-      <desc versionDate="2007-06-14" xml:lang="en">gives the value of the date in standard form, i.e. YYYY-MM-DD.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">표준형식으로 날짜의 값을 제시한다. 예, YYYY-MM-DD.</desc>
-      <desc versionDate="2008-04-06" xml:lang="es">proporciona el valor de una fecha en el formato estándar, es decir AAAA-MM-DD.</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該日付を標準形式、例えば、YYYY-MM-DDで示す。</desc>
-      <desc versionDate="2008-03-30" xml:lang="fr">donne la date dans une forme standard,
-c'est-à-dire. YYYY-MM-DD.</desc>
-      <desc versionDate="2007-11-06" xml:lang="it">assegna un valore alla data nel formato standard aaaa-mm-gg</desc>
-      <desc versionDate="2017-06-19" xml:lang="de">gibt den Wert des Datums in einer standardisierten Form an, z. B. YYYY-MM-DD.</desc>
-      <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
-      <remarks versionDate="2013-12-21" xml:lang="en">
-        <p>For simple dates, the <att>when</att> attribute should give
-          the Gregorian or proleptic Gregorian date in one of the formats specified in <ref target="#XSD2">XML
-      Schema Part 2: Datatypes Second Edition</ref>. </p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>Pour les dates dont la forme est simple, il est recommandé que l'attribut
-                            <att>when</att> donne la date dans le calendrier grégorien ou grégorien
-                        proleptique au format AAAA-MM-JJ spécifié par le standard <title>XML Schema
-                            Part 2</title>.</p>
-      </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p>
-	簡単な例は、属性<att>when</att>の値として、グレゴリオ暦を
-	<title>XML Schema Part 2</title>で定義された形式
-	(YYYY-MM-DD)で示す。
-	 </p>
-      </remarks>
-      <remarks versionDate="2017-06-19" xml:lang="de">
-        <p>Für einfache Datierungen sollte das <att>when</att>-Attribut ein gregorianisches oder
-          proleptisches gregorianisches Datum in dem spezifizierten Format <ref target="#XSD2">XML Schema
-            Part 2: Datatypes Second Edition</ref> enthalten.</p>
-      </remarks>
-    </attDef>
-  </attList>
+  
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <docImprint>Oxford, Clarendon Press, <docDate>1987</docDate>
@@ -28191,7 +28218,7 @@ the date of the entire document, not for any subset or part of it.</p>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">在文件中某一位置附上識別符碼，無論該位置是否符合一個文字性元素。</desc>
   <desc versionDate="2022-05-09" xml:lang="ja">テキスト中のある地点に対して識別子を付与する。テキスト要素と対応するかは問われない。</desc>
   <desc versionDate="2009-10-06" xml:lang="fr">attache un identifiant à un point du texte, que ce point corresponde ou non à un élément textuel.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">enlanza un indentificador con una posición al interno del texto, independientemente del hecho que esta sea o no a un elemento textual.</desc>
+  <desc versionDate="2022-06-30" xml:lang="es">enlanza un indentificador con una posición al interno del texto, independientemente del hecho que esta corresponda o no a un elemento textual.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">aggancia un indentificatore a una posizione all'interno del testo indipendentemente dal fatto che questa corrisponda o meno a un elemento testuale</desc>
   <desc versionDate="2017-06-19" xml:lang="de">fügt an einer Stelle im Text eine Kennung ein, unabhängig von der Textstruktur.</desc>
   <classes>

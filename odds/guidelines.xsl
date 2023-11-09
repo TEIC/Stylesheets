@@ -16,7 +16,7 @@
        * MAINTAINERs: Bear in mind that the code you are looking for may *
        * well be in TEI/P5/Utilities/guidelines.xsl.model instead.       *
        ******************************************************************* -->
-  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC" omit-xml-declaration="yes"/>
+  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" suppress-indentation="ul li" indent="yes" normalization-form="NFC" omit-xml-declaration="yes"/>
   <xsl:param name="directory">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
   <!-- 
@@ -785,7 +785,7 @@
   <xsl:template name="egXMLEndHook">
     <xsl:variable name="selfAnchor">
       <!-- Generate a link to myself so users can easily copy-and-paste a pointer to me -->
-      <a class="bookmarklink">
+      <a class="bookmarklink" title="link to this example">
         <xsl:attribute name="href">
           <xsl:text>#</xsl:text>
           <!-- Our current context node is an <egXML>, so find its ID: -->
