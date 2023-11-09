@@ -181,7 +181,7 @@
   <xsl:template mode="mml"
                  match="mml:mi[not(child::mml:mglyph)] |                        mml:mn[not(child::mml:mglyph)] |                        mml:mo[not(child::mml:mglyph)] |                        mml:ms[not(child::mml:mglyph)] |                        mml:mtext[not(child::mml:mglyph)]">
 
-    <!-- tokens with mglyphs as children are tranformed
+    <!-- tokens with mglyphs as children are transformed
 			 in a different manner than "normal" token elements.  
 			 Where normal token elements are token elements that
 			 contain only text -->
