@@ -63,8 +63,25 @@ of this software, even if advised of the possibility of such damage.</p>
   <xsl:variable name="filename" select="tokenize( base-uri(/),'/')[last()]"/>
   <xsl:param name="version_from_filename" select="replace( $filename, '^readme-([0-9aαbβ.-]+)\.xml$','$1')"/>
   <xsl:param name="vault" select="'https://www.tei-c.org/Vault/P5'"/>
-  <xsl:param name="docPath" select="'doc/tei-p5-doc/en/html'"/>
-  
+  <!--
+      Note on names of next 3 params:
+
+      There was originally just 1 param for this, $docPath. We
+      discovered the need to use just the initial portion of that path
+      in the generation of $testVersionedDocument (see [1]). It would
+      be perfectly reasonable to just hard-code that path or to chop
+      the $docPath param into two parts and just use the first part
+      for $testVersionedDocument and the concatentation of the two
+      parts for $tagdocStart. But I do not know that there is not some
+      routine that calls this program and tries to set $docPath as a
+      parameter, so I did not want to remove it. Thus it is generated
+      from the two pieces, but can still be overridden. (Note that if
+      it is overridden, the value of $docPath2 may not be what we want
+      in $tagdocStart.)  —Syd, 2021-10-02
+  -->
+  <xsl:param name="docPath1" select="'doc/tei-p5-doc'"/>
+  <xsl:param name="docPath2" select="'en/html'"/>
+  <xsl:param name="docPath" select="concat( $docPath1, '/', $docPath2 )"/>
   <!--
     The version # we grabbed from the filename might not have the patch level ".0" at the end.
     But the Guidelines we are trying to point to always have it. So here if we find only major-
@@ -74,7 +91,7 @@ of this software, even if advised of the possibility of such damage.</p>
                 select="replace( $version_from_filename, '^([0-9]+\.[0-9]+)([aαbβ]?)$', '$1.0$2')"/>
   <!-- $versionZero is true() iff the major number is '0'. -->
   <xsl:variable name="versionZero" select="substring-before( $version, '.') eq '0'" as="xs:boolean"/>
-  <xsl:variable name="testVersionedDocument" select="concat( $vault,'/',$version,'/VERSION')"/>
+  <xsl:variable name="testVersionedDocument" select="concat( $vault,'/',$version,'/',$docPath1,'/VERSION')"/>
   <xsl:variable name="tagdocStart" select="concat( $vault,'/',$version,'/',$docPath,'/ref-')"/>
   
   <xsl:template match="tei:gi | tei:name[ @type eq 'class']">
@@ -82,10 +99,10 @@ of this software, even if advised of the possibility of such damage.</p>
     <!-- If this is the first one, check veresion number and warn iff needed -->
     <xsl:if test="not( preceding::tei:gi | preceding::tei:name[ @type eq 'class'] )">
       <xsl:choose>
-        <xsl:when test="$version eq ''">
+        <xsl:when test="$version_from_filename eq ''">
           <xsl:message>WARNING: unable to parse version # from filename, so links will not work</xsl:message>
         </xsl:when>
-        <xsl:when test="not( doc-available( $testVersionedDocument ) )">
+        <xsl:when test="not( unparsed-text-available( $testVersionedDocument ) )">
           <xsl:message>INFO: file <xsl:value-of select="$testVersionedDocument"/> could not be read</xsl:message>
         </xsl:when>
         <xsl:when test="normalize-space( unparsed-text( $testVersionedDocument ) ) ne normalize-space( $version )">
