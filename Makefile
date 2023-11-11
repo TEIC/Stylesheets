@@ -33,7 +33,7 @@ DOCTARGETS= \
 	profiles/default/odt/from.xsl \
 	profiles/default/odt/to.xsl \
 	profiles/default/p4/from.xsl \
-	profiles/default/relaxng/to.xsl	
+	profiles/default/rng/to.xsl	
 
 PROFILEDOCTARGETS=\
 	profiles/enrich/docx/from.xsl \
