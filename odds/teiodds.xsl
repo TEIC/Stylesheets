@@ -1681,7 +1681,7 @@ select="$makeDecls"/></xsl:message>
     </xsl:variable>
     <xsl:variable name="glossAndDesc">
       <!-- This variable will hold the string value of the <gloss> and -->
-      <!-- <desc> of the constrcut we are currently dealing with, in   -->
+      <!-- <desc> of the construct we are currently dealing with, in   -->
       <!-- the language we are currently dealing with, so as to put it -->
       <!-- on the title= attribute when we output its name in an <a>.  -->
       <xsl:choose>
