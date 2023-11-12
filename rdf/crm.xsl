@@ -41,7 +41,7 @@
   </xsl:template>
 
   <xsl:template name="doit">
-      <xsl:variable name="rdf1">
+      <!--xsl:variable name="rdf1"-->
 	<rdf:RDF
 	    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
 	    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
@@ -49,12 +49,13 @@
 	  <xsl:call-template name="typology"/>
 	  <xsl:apply-templates/>
 	</rdf:RDF>
-      </xsl:variable>
-      <xsl:apply-templates select="$rdf1" mode="rdf2"/>
+      <!--/xsl:variable>
+      <xsl:apply-templates select="$rdf1" mode="rdf2"/-->
   </xsl:template>
 
 
   <!-- clean up pass -->
+  <!-- 'clean up' destroys the structure when a place is a property of another entity -->
 
   <xsl:template match="crm:*[crm:E53_Place]" mode="rdf2">
     <xsl:copy>
@@ -94,6 +95,7 @@
    </xsl:template>
 
    <!-- normal pass -->
+
   <xsl:template name="E31">
     <E31_Document xmlns="http://purl.org/NET/crm-owl#" 
 	rdf:about="{tei:makeID(.,'id')}">
@@ -115,7 +117,6 @@
     </xsl:choose>
   </xsl:template>
   
-
   <xsl:template name="teiname">
     <xsl:choose>
       <xsl:when test="@type='place'">
@@ -157,13 +158,28 @@
 	</E21_Person>
       </xsl:otherwise>
     </xsl:choose>
-
   </xsl:template>
 
-  <xsl:template name="E74">
-    <E74_Group xmlns="http://purl.org/NET/crm-owl#" rdf:about="{tei:makeID(.,'org')}">
-      <xsl:apply-templates/>
-    </E74_Group>
+  <xsl:template name="P74">
+    <P74_has_current_or_former_residence  xmlns="http://purl.org/NET/crm-owl#" >
+      <xsl:choose>
+	<xsl:when test="placeName">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <E53_Place rdf:about="{tei:makeID(.,'place')}">
+	    <P87_is_identified_by>
+	      <xsl:copy-of select="@xml:lang"/>
+	      <E48_Place_Name rdf:about="{tei:makeID(.,'placename')}">
+		<rdf:value>
+		  <xsl:value-of select="normalize-space(.)"/>
+		</rdf:value>
+	      </E48_Place_Name>
+	    </P87_is_identified_by>
+	  </E53_Place>
+	</xsl:otherwise>
+      </xsl:choose>
+    </P74_has_current_or_former_residence>
   </xsl:template>
 
   <xsl:template name="E5">
@@ -264,6 +280,16 @@
 	<P131_is_identified_by  xmlns="http://purl.org/NET/crm-owl#" >
 	  <xsl:copy-of select="@xml:lang"/>
 	  <E82_Actor_Appellation  rdf:about="{tei:makeID(.,'persname')}">
+	    <rdf:value>
+	      <xsl:value-of select="normalize-space(.)"/>
+	    </rdf:value>
+	  </E82_Actor_Appellation>
+	</P131_is_identified_by>
+      </xsl:when>
+      <xsl:when test="parent::org">
+	<P131_is_identified_by  xmlns="http://purl.org/NET/crm-owl#" >
+	  <xsl:copy-of select="@xml:lang"/>
+	  <E82_Actor_Appellation  rdf:about="{tei:makeID(.,'orgname')}">
 	    <rdf:value>
 	      <xsl:value-of select="normalize-space(.)"/>
 	    </rdf:value>
@@ -447,27 +473,11 @@
 	  rdf:resource="{tei:makeID(parent::*/*[local-name()=$next],'place')}"  xmlns="http://purl.org/NET/crm-owl#" />
     </xsl:if>
 </xsl:template>
-	      
-  <xsl:template name="P74">
-    <P74_has_current_or_former_residence  xmlns="http://purl.org/NET/crm-owl#" >
-      <xsl:choose>
-	<xsl:when test="placeName">
-	  <xsl:apply-templates/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <E53_Place rdf:about="{tei:makeID(.,'place')}">
-	    <P87_is_identified_by>
-	      <xsl:copy-of select="@xml:lang"/>
-	      <E48_Place_Name rdf:about="{tei:makeID(.,'placename')}">
-		<rdf:value>
-		  <xsl:value-of select="normalize-space(.)"/>
-		</rdf:value>
-	      </E48_Place_Name>
-	    </P87_is_identified_by>
-	  </E53_Place>
-	</xsl:otherwise>
-      </xsl:choose>
-    </P74_has_current_or_former_residence>
+
+  <xsl:template name="E74">
+    <E74_Group xmlns="http://purl.org/NET/crm-owl#" rdf:about="{tei:makeID(.,'org')}">
+      <xsl:apply-templates/>
+    </E74_Group>
   </xsl:template>
 
   <xsl:template name="E35">
@@ -521,8 +531,34 @@
       </R24i_was_created_through>
     </F30_Publication_Event>
   </xsl:template>
-
+	      
+  <xsl:template name="P76">
+    <P76_has_contact_point  xmlns="http://purl.org/NET/crm-owl#" >
+      <xsl:choose>
+	<xsl:when test="ancestor::state"/>	
+	<xsl:when test="ancestor::trait"/>
+	<xsl:when test="parent::p"/>
+	<xsl:otherwise>
+	  <E53_Place  xmlns="http://purl.org/NET/crm-owl#" >
+	    <xsl:attribute name="rdf:about" select="tei:makeID(.,'place')"/>
+	    <xsl:apply-templates select="*[not(self::place or self::listPlace)]"/>
+	    <xsl:for-each select="parent::place[1]">
+	      <P89_falls_within rdf:resource="{tei:makeID(.,'place')}"/>
+	    </xsl:for-each>
+	  </E53_Place>
+	</xsl:otherwise>
+      </xsl:choose>
+      <xsl:apply-templates select="place|listPlace"/>
+    </P76_has_contact_point>
+  </xsl:template>
+	
   <!-- general templates -->
+
+	<xsl:template match="@type">
+		<P55_has_type  xmlns="http://purl.org/NET/crm-owl#" >
+			<rdf:value><xsl:value-of select="."/></rdf:value>
+		</P55_has_type>
+	</xsl:template>
 
   <xsl:template name="calc-date-value">
     <rdf:value>
@@ -672,7 +708,5 @@
     </xsl:for-each>
   </xsl:function>
 
-
-  
 
 </xsl:stylesheet>

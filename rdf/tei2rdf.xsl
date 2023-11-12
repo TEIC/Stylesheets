@@ -5,7 +5,7 @@
    <XSL:import href="../tools/getfiles.xsl"/>
    <XSL:import href="crm.xsl"/>
    <XSL:param name="corpus">./</XSL:param>
-   <XSL:template match="*">
+   <XSL:template match="*" priority="-1">
       <XSL:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
    </XSL:template>
    <XSL:template match="text()|comment()|@*|processing-instruction()"/>
@@ -56,6 +56,12 @@
    </XSL:template>
    <XSL:template match="org">
       <XSL:call-template name="E74"/>
+   </XSL:template>
+   <XSL:template match="org/orgName">
+      <XSL:call-template name="E82"/>
+   </XSL:template>
+   <XSL:template match="org/place" priority="2">
+      <XSL:call-template name="P76"/>
    </XSL:template>
    <XSL:template match="person">
       <XSL:call-template name="E21"/>
