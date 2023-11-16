@@ -355,86 +355,7 @@ sch:pattern [
   "   "
 ]
 tei_att.datable.attributes =
-  tei_att.datable.w3c.attributes,
-  tei_att.datable.attribute.calendar,
-  tei_att.datable.attribute.period
-tei_att.datable.attribute.calendar =
-  
-  ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
-  attribute calendar {
-    list {
-      xsd:anyURI { pattern = "\S+" }+
-    }
-  }?
-sch:pattern [
-  id =
-    "foo-att.datable-calendar-calendar-check-deprecated-constraint-rule-4"
-  "\x{a}" ~
-  "      "
-  sch:rule [
-    context = "tei:*[@calendar]"
-    "\x{a}" ~
-    "         "
-    sch:assert [
-      test = "string-length( normalize-space(.) ) gt 0"
-      " @calendar indicates one or more\x{a}" ~
-      "            systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
-      "            but this "
-      sch:name [ ]
-      " element has no textual content."
-    ]
-    "\x{a}" ~
-    "      "
-  ]
-  "\x{a}" ~
-  "   "
-]
-sch:pattern [
-  id = "foo-att.datable-calendar-calendar-deprecated-constraint-rule-5"
-  "\x{a}" ~
-  "      "
-  sch:rule [
-    context =
-      "tei:*[@calendar][ not( self::tei:date | self::tei:time | self::tei:origDate ) ]"
-    "\x{a}" ~
-    "         "
-    sch:let [
-      name = "me_phrase"
-      value = "concat( 'Attribute calendar on ', local-name(.))"
-    ]
-    "\x{a}" ~
-    "         "
-    sch:assert [
-      test = "'2024-11-11' cast as xs:date ge current-date()"
-      "\x{a}" ~
-      "            "
-      sch:value-of [
-        select =
-          "concat( $me_phrase, ' construct is outdated (as of 2024-11-11); ODD processors may ignore it, and its use is no longer supported' )"
-      ]
-      "\x{a}" ~
-      "         "
-    ]
-    "\x{a}" ~
-    "         "
-    sch:report [
-      role = "nonfatal"
-      test = "@calendar"
-      "\x{a}" ~
-      "            "
-      sch:value-of [
-        select =
-          "concat( $me_phrase, ' becomes outdated on 2024-11-11' )"
-      ]
-      "\x{a}" ~
-      "         "
-    ]
-    "\x{a}" ~
-    "      "
-  ]
-  "\x{a}" ~
-  "   "
-]
+  tei_att.datable.w3c.attributes, tei_att.datable.attribute.period
 tei_att.datable.attribute.period =
   [
     a:documentation [
@@ -686,7 +607,7 @@ tei_att.global.source.attribute.source =
   }?
 sch:pattern [
   id =
-    "foo-att.global.source-source-only_1_ODD_source-constraint-rule-6"
+    "foo-att.global.source-source-only_1_ODD_source-constraint-rule-4"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -975,7 +896,7 @@ tei_att.measurement.attribute.commodity =
     }
   }?
 sch:pattern [
-  id = "foo-att.measurement-att-measurement-unitRef-constraint-rule-7"
+  id = "foo-att.measurement-att-measurement-unitRef-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1081,7 +1002,7 @@ tei_att.typed.attribute.subtype =
     xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 sch:pattern [
-  id = "foo-att.typed-subtypeTyped-constraint-rule-8"
+  id = "foo-att.typed-subtypeTyped-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1124,7 +1045,7 @@ tei_att.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "foo-att.pointing-targetLang-targetLang-constraint-rule-9"
+  id = "foo-att.pointing-targetLang-targetLang-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1245,7 +1166,7 @@ tei_att.spanning.attribute.spanTo =
   }?
 sch:pattern [
   id =
-    "foo-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-10"
+    "foo-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1302,7 +1223,7 @@ tei_att.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "foo-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-11"
+    "foo-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-9"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -2130,6 +2051,38 @@ tei_att.personal.attribute.sort =
   
   ## (sort) specifies the sort order of the name component in relation to others within the name.
   attribute sort { xsd:nonNegativeInteger }?
+tei_att.calendarSystem.attributes =
+  tei_att.calendarSystem.attribute.calendar
+tei_att.calendarSystem.attribute.calendar =
+  
+  ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+  attribute calendar {
+    list {
+      xsd:anyURI { pattern = "\S+" }+
+    }
+  }?
+sch:pattern [
+  id = "foo-att.calendarSystem-calendar-calendar-constraint-rule-10"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "tei:*[@calendar]"
+    "\x{a}" ~
+    "         "
+    sch:assert [
+      test = "string-length( normalize-space(.) ) gt 0"
+      " @calendar indicates one or more\x{a}" ~
+      "              systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+      "              but this "
+      sch:name [ ]
+      " element has no textual content."
+    ]
+    "\x{a}" ~
+    "      "
+  ]
+  "\x{a}" ~
+  "   "
+]
 tei_att.milestoneUnit.attributes = tei_att.milestoneUnit.attribute.unit
 tei_att.milestoneUnit.attribute.unit =
   
@@ -2194,7 +2147,7 @@ tei_p =
     tei_macro.paraContent
     >> sch:pattern [
          id =
-           "foo-p-abstractModel-structure-p-in-ab-or-p-constraint-report-7"
+           "foo-p-abstractModel-structure-p-in-ab-or-p-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2216,7 +2169,7 @@ tei_p =
        ]
     >> sch:pattern [
          id =
-           "foo-p-abstractModel-structure-p-in-l-or-lg-constraint-report-8"
+           "foo-p-abstractModel-structure-p-in-l-or-lg-constraint-report-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2405,7 +2358,7 @@ tei_desc =
     tei_macro.limitedContent
     >> sch:pattern [
          id =
-           "foo-desc-deprecationInfo-only-in-deprecated-constraint-rule-12"
+           "foo-desc-deprecationInfo-only-in-deprecated-constraint-rule-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2499,7 +2452,7 @@ tei_rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "foo-rt-target-rt-target-not-span-constraint-report-9"
+         id = "foo-rt-target-rt-target-not-span-constraint-report-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2523,7 +2476,7 @@ tei_rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "foo-rt-from-rt-from-constraint-assert-8"
+         id = "foo-rt-from-rt-from-constraint-assert-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2549,7 +2502,7 @@ tei_rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "foo-rt-to-rt-to-constraint-assert-9"
+         id = "foo-rt-to-rt-to-constraint-assert-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2741,6 +2694,35 @@ tei_name =
     tei_att.datable.attributes,
     tei_att.editLike.attributes,
     tei_att.typed.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id = "foo-name-calendar-calendar-check-name-constraint-rule-12"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_rs =
@@ -2869,6 +2851,7 @@ tei_date =
     tei_att.global.attributes,
     tei_att.canonical.attributes,
     tei_att.datable.attributes,
+    tei_att.calendarSystem.attributes,
     tei_att.editLike.attributes,
     tei_att.dimensions.attributes,
     tei_att.typed.attributes,
@@ -2881,6 +2864,7 @@ tei_time =
     (text | tei_model.gLike | tei_model.phrase | tei_model.global)*,
     tei_att.global.attributes,
     tei_att.datable.attributes,
+    tei_att.calendarSystem.attributes,
     tei_att.canonical.attributes,
     tei_att.editLike.attributes,
     tei_att.dimensions.attributes,
@@ -2917,7 +2901,7 @@ tei_ptr =
   element tei:ptr {
     empty
     >> sch:pattern [
-         id = "foo-ptr-ptrAtts-constraint-report-10"
+         id = "foo-ptr-ptrAtts-constraint-report-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2951,7 +2935,7 @@ tei_ref =
   element tei:ref {
     tei_macro.paraContent
     >> sch:pattern [
-         id = "foo-ref-refAtts-constraint-report-11"
+         id = "foo-ref-refAtts-constraint-report-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3324,6 +3308,36 @@ tei_author =
     tei_att.global.attributes,
     tei_att.naming.attributes,
     tei_att.datable.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-author-calendar-calendar-check-author-constraint-rule-14"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_editor =
@@ -3334,6 +3348,36 @@ tei_editor =
     tei_att.global.attributes,
     tei_att.naming.attributes,
     tei_att.datable.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-editor-calendar-calendar-check-editor-constraint-rule-15"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_respStmt =
@@ -3355,6 +3399,35 @@ tei_resp =
     tei_att.global.attributes,
     tei_att.canonical.attributes,
     tei_att.datable.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id = "foo-resp-calendar-calendar-check-resp-constraint-rule-16"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_title =
@@ -3372,6 +3445,36 @@ tei_title =
     attribute type {
       xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-title-calendar-calendar-check-title-constraint-rule-17"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     
     ## indicates the bibliographic level for a title, that is, whether it identifies an article, book, journal, series, or unpublished material.
     attribute level {
@@ -3401,6 +3504,36 @@ tei_meeting =
     tei_att.global.attributes,
     tei_att.datable.attributes,
     tei_att.canonical.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-meeting-calendar-calendar-check-meeting-constraint-rule-18"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_imprint =
@@ -3508,7 +3641,7 @@ tei_relatedItem =
   element tei:relatedItem {
     ((tei_model.biblLike | tei_model.ptrLike)?)
     >> sch:pattern [
-         id = "foo-relatedItem-targetorcontent1-constraint-report-12"
+         id = "foo-relatedItem-targetorcontent1-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3556,7 +3689,7 @@ tei_l =
       | tei_model.global)*)
     >> sch:pattern [
          id =
-           "foo-l-abstractModel-structure-l-in-l-constraint-report-13"
+           "foo-l-abstractModel-structure-l-in-l-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3598,7 +3731,7 @@ tei_lg =
       | tei_lg)*,
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-lg-atleast1oflggapl-constraint-assert-12"
+         id = "foo-lg-atleast1oflggapl-constraint-assert-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3619,7 +3752,7 @@ tei_lg =
        ]
     >> sch:pattern [
          id =
-           "foo-lg-abstractModel-structure-lg-in-l-constraint-report-14"
+           "foo-lg-abstractModel-structure-lg-in-l-constraint-report-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3818,6 +3951,36 @@ tei_sponsor =
     tei_att.global.attributes,
     tei_att.canonical.attributes,
     tei_att.datable.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-sponsor-calendar-calendar-check-sponsor-constraint-rule-19"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_funder =
@@ -3828,6 +3991,36 @@ tei_funder =
     tei_att.global.attributes,
     tei_att.canonical.attributes,
     tei_att.datable.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-funder-calendar-calendar-check-funder-constraint-rule-20"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_principal =
@@ -3838,6 +4031,36 @@ tei_principal =
     tei_att.global.attributes,
     tei_att.canonical.attributes,
     tei_att.datable.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-principal-calendar-calendar-check-principal-constraint-rule-21"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_editionStmt =
@@ -3941,6 +4164,35 @@ tei_idno =
         "OCLC"
       | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
     }?,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id = "foo-idno-calendar-calendar-check-idno-constraint-rule-22"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_availability =
@@ -3973,6 +4225,36 @@ tei_licence =
     tei_att.global.attributes,
     tei_att.pointing.attributes,
     tei_att.datable.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-licence-calendar-calendar-check-licence-constraint-rule-23"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_seriesStmt =
@@ -4057,7 +4339,7 @@ tei_projectDesc =
   }
 tei_samplingDecl =
   
-  ## (sampling declaration) contains a prose description of the rationale and methods used in sampling texts in the creation of a corpus or collection. [2.3.2. The Sampling Declaration 2.3. The Encoding Description 15.3.2. Declarable Elements]
+  ## (sampling declaration) contains a prose description of the rationale and methods used in selecting texts, or parts of a text, for inclusion in the resource. [2.3.2. The Sampling Declaration 2.3. The Encoding Description 15.3.2. Declarable Elements]
   element tei:samplingDecl {
     tei_model.pLike+,
     tei_att.global.attributes,
@@ -4135,7 +4417,7 @@ tei_quotation =
   element tei:quotation {
     (tei_model.pLike*)
     >> sch:pattern [
-         id = "foo-quotation-quotationContents-constraint-report-15"
+         id = "foo-quotation-quotationContents-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4389,7 +4671,7 @@ tei_citeStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "foo-citeStructure-match-citestructure-outer-match-constraint-rule-14"
+           "foo-citeStructure-match-citestructure-outer-match-constraint-rule-24"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4410,7 +4692,7 @@ tei_citeStructure =
        ]
     >> sch:pattern [
          id =
-           "foo-citeStructure-match-citestructure-inner-match-constraint-rule-15"
+           "foo-citeStructure-match-citestructure-inner-match-constraint-rule-25"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4518,6 +4800,7 @@ tei_taxonomy =
          (tei_category | tei_taxonomy)*))
      | (tei_model.biblLike, (tei_category | tei_taxonomy)*)),
     tei_att.global.attributes,
+    tei_att.datcat.attributes,
     empty
   }
 tei_category =
@@ -4527,6 +4810,7 @@ tei_category =
     ((tei_catDesc+ | (tei_model.descLike | tei_gloss)*),
      tei_category*),
     tei_att.global.attributes,
+    tei_att.datcat.attributes,
     empty
   }
 tei_catDesc =
@@ -4584,6 +4868,36 @@ tei_unitDecl =
     tei_att.canonical.attributes,
     tei_att.datable.attributes,
     tei_att.global.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-unitDecl-calendar-calendar-check-unitDecl-constraint-rule-26"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_unitDef =
@@ -4598,6 +4912,36 @@ tei_unitDef =
     tei_att.datable.attributes,
     tei_att.canonical.attributes,
     tei_att.typed.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-unitDef-calendar-calendar-check-unitDef-constraint-rule-27"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_conversion =
@@ -4609,6 +4953,36 @@ tei_conversion =
     tei_att.datable.attributes,
     tei_att.formula.attributes,
     tei_att.locatable.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-conversion-calendar-calendar-check-conversion-constraint-rule-28"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     [
       a:documentation [
         "indicates a source unit of measure that is to be converted into another unit indicated in "
@@ -4645,6 +5019,36 @@ tei_application =
     tei_att.global.attributes,
     tei_att.typed.attributes,
     tei_att.datable.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-application-calendar-calendar-check-application-constraint-rule-29"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     
     ## supplies an identifier for the application, independent of its version number or display name.
     attribute ident { xsd:Name },
@@ -4678,6 +5082,36 @@ tei_creation =
     (text | tei_model.limitedPhrase | tei_listChange)*,
     tei_att.global.attributes,
     tei_att.datable.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-creation-calendar-calendar-check-creation-constraint-rule-30"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     empty
   }
 tei_langUsage =
@@ -4699,7 +5133,7 @@ tei_language =
       a:documentation [
         "(identifier) Supplies a language code constructed as defined in "
         ns1:a [ href = "https://tools.ietf.org/html/bcp47" "BCP 47" ]
-        " which is used to identify the language documented by this element, and which is referenced by the global "
+        " which is used to identify the language documented by this element, and which may be referenced by the global "
         ns1:code [ "@xml:lang" ]
         " attribute."
       ]
@@ -4711,7 +5145,7 @@ tei_language =
          "")
     },
     
-    ## specifies the approximate percentage (by volume) of the text which uses this language.
+    ## specifies the approximate percentage of the text which uses this language.
     attribute usage { xsd:nonNegativeInteger }?,
     empty
   }
@@ -4872,6 +5306,36 @@ tei_change =
     tei_att.docStatus.attributes,
     tei_att.global.attributes,
     tei_att.typed.attributes,
+    (
+     ## indicates one or more systems or calendars to which the date represented by the content of this element belongs.
+     attribute calendar {
+       list {
+         xsd:anyURI { pattern = "\S+" }+
+       }
+     }?)
+    >> sch:pattern [
+         id =
+           "foo-change-calendar-calendar-check-change-constraint-rule-31"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:*[@calendar]"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "string-length( normalize-space(.) ) gt 0"
+             " @calendar indicates one or more\x{a}" ~
+             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "                        but this "
+             sch:name [ ]
+             " element has no textual content."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     
     ## (target) points to one or more elements that belong to this change.
     attribute target {
@@ -4924,6 +5388,14 @@ tei_TEI =
     >> sch:ns [
          prefix = "rna"
          uri = "http://relaxng.org/ns/compatibility/annotations/1.0"
+       ]
+    >> sch:ns [
+         prefix = "sch"
+         uri = "http://purl.oclc.org/dsdl/schematron"
+       ]
+    >> sch:ns [
+         prefix = "sch1x"
+         uri = "http://www.ascc.net/xml/schematron"
        ],
     tei_att.global.attributes,
     tei_att.typed.attributes,
@@ -5009,7 +5481,7 @@ tei_div =
       (tei_model.divBottom, tei_model.global*)*)?)
     >> sch:pattern [
          id =
-           "foo-div-abstractModel-structure-div-in-l-or-lg-constraint-report-16"
+           "foo-div-abstractModel-structure-div-in-l-or-lg-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5031,7 +5503,7 @@ tei_div =
        ]
     >> sch:pattern [
          id =
-           "foo-div-abstractModel-structure-div-in-ab-or-p-constraint-report-17"
+           "foo-div-abstractModel-structure-div-in-ab-or-p-constraint-report-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5386,6 +5858,7 @@ tei_docDate =
     tei_macro.phraseSeq,
     tei_att.global.attributes,
     tei_att.datable.attributes,
+    tei_att.calendarSystem.attributes,
     empty
   }
 tei_front =
@@ -5500,7 +5973,7 @@ tei_link =
   element tei:link {
     empty
     >> sch:pattern [
-         id = "foo-link-linkTargets3-constraint-assert-15"
+         id = "foo-link-linkTargets3-constraint-assert-31"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5541,7 +6014,7 @@ tei_ab =
     tei_macro.abContent
     >> sch:pattern [
          id =
-           "foo-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-18"
+           "foo-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5717,7 +6190,7 @@ tei_join =
   element tei:join {
     ((tei_model.descLike | tei_model.certLike)*)
     >> sch:pattern [
-         id = "foo-join-joinTargets3-constraint-assert-16"
+         id = "foo-join-joinTargets3-constraint-assert-32"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5865,7 +6338,7 @@ tei_standOff =
     (tei_model.standOffPart+)
     >> sch:pattern [
          id =
-           "foo-standOff-nested_standOff_should_be_typed-constraint-assert-17"
+           "foo-standOff-nested_standOff_should_be_typed-constraint-assert-33"
          "\x{a}" ~
          "            "
          sch:rule [
