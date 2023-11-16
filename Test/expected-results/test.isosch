@@ -9,6 +9,8 @@
    <ns prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
    <ns prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
    <ns prefix="rna" uri="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+   <ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
+   <ns prefix="sch1x" uri="http://www.ascc.net/xml/schematron"/>
    <!-- ********************* -->
    <!-- namespaces, implicit: -->
    <!-- ********************* -->
@@ -30,14 +32,7 @@
          <report test="@notAfter" role="nonfatal">The @to and @notAfter attributes cannot be used together.</report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-att.datable-calendar-calendar-4">
-      <rule context="tei:*[@calendar]">
-         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
-            systems or calendars to which the date represented by the content of this element belongs,
-            but this <name/> element has no textual content.</assert>
-      </rule>
-   </pattern>
-   <pattern id="schematron-constraint-test-att.global.source-source-only_1_ODD_source-5">
+   <pattern id="schematron-constraint-test-att.global.source-source-only_1_ODD_source-4">
       <rule context="tei:*[@source]">
          <let name="srcs" value="tokenize( normalize-space(@source),' ')"/>
          <report test="( self::tei:classRef               | self::tei:dataRef               | self::tei:elementRef               | self::tei:macroRef               | self::tei:moduleRef               | self::tei:schemaSpec )               and               $srcs[2]">
@@ -47,33 +42,40 @@
             </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-att.measurement-att-measurement-unitRef-6">
+   <pattern id="schematron-constraint-test-att.measurement-att-measurement-unitRef-5">
       <rule context="tei:*[@unitRef]">
          <report test="@unit" role="info">The @unit attribute may be unnecessary when @unitRef is present.</report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-att.typed-subtypeTyped-7">
+   <pattern id="schematron-constraint-test-att.typed-subtypeTyped-6">
       <rule context="tei:*[@subtype]">
          <assert test="@type">The <name/> element should not be categorized in detail with @subtype unless also categorized in general with @type</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-att.pointing-targetLang-targetLang-8">
+   <pattern id="schematron-constraint-test-att.pointing-targetLang-targetLang-7">
       <rule context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
          <assert test="@target">@targetLang should only be used on <name/> if @target is specified.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-att.spanning-spanTo-spanTo-points-to-following-9">
+   <pattern id="schematron-constraint-test-att.spanning-spanTo-spanTo-points-to-following-8">
       <rule context="tei:*[@spanTo]">
          <assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
 The element indicated by @spanTo (<value-of select="@spanTo"/>) must follow the current element <name/>
          </assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-att.styleDef-schemeVersion-schemeVersionRequiresScheme-10">
+   <pattern id="schematron-constraint-test-att.styleDef-schemeVersion-schemeVersionRequiresScheme-9">
       <rule context="tei:*[@schemeVersion]">
          <assert test="@scheme and not(@scheme = 'free')">
               @schemeVersion can only be used if @scheme is specified.
             </assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-att.calendarSystem-calendar-calendar-10">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+              systems or calendars to which the date represented by the content of this element belongs,
+              but this <name/> element has no textual content.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-test-p-abstractModel-structure-p-in-ab-or-p-11">
@@ -117,25 +119,67 @@ The element indicated by @spanTo (<value-of select="@spanTo"/>) must follow the 
             attribute of <name/> is required.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-ptr-ptrAtts-17">
+   <pattern id="schematron-constraint-test-name-calendar-calendar-check-name-17">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-ptr-ptrAtts-18">
       <rule context="tei:ptr">
          <report test="@target and @cRef">Only one of the
 attributes @target and @cRef may be supplied on <name/>.</report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-ref-refAtts-18">
+   <pattern id="schematron-constraint-test-ref-refAtts-19">
       <rule context="tei:ref">
          <report test="@target and @cRef">Only one of the
 	attributes @target' and @cRef' may be supplied on <name/>
          </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-list-gloss-list-must-have-labels-19">
+   <pattern id="schematron-constraint-test-list-gloss-list-must-have-labels-20">
       <rule context="tei:list[@type='gloss']">
          <assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-relatedItem-targetorcontent1-20">
+   <pattern id="schematron-constraint-test-author-calendar-calendar-check-author-21">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-editor-calendar-calendar-check-editor-22">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-resp-calendar-calendar-check-resp-23">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-title-calendar-calendar-check-title-24">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-meeting-calendar-calendar-check-meeting-25">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-relatedItem-targetorcontent1-26">
       <rule context="tei:relatedItem">
          <report test="@target and count( child::* ) &gt; 0">
 If the @target attribute on <name/> is used, the
@@ -144,51 +188,128 @@ relatedItem element must be empty</report>
         or a child element to indicate the related bibliographic item</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-l-abstractModel-structure-l-in-l-21">
+   <pattern id="schematron-constraint-test-l-abstractModel-structure-l-in-l-27">
       <rule context="tei:l">
          <report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
         Abstract model violation: Lines may not contain lines or lg elements.
       </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-lg-atleast1oflggapl-22">
+   <pattern id="schematron-constraint-test-lg-atleast1oflggapl-28">
       <rule context="tei:lg">
          <assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
         must contain at least one child l, lg, or gap element.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-lg-abstractModel-structure-lg-in-l-23">
+   <pattern id="schematron-constraint-test-lg-abstractModel-structure-lg-in-l-29">
       <rule context="tei:lg">
          <report test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
         Abstract model violation: Lines may not contain line groups.
       </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-quotation-quotationContents-24">
+   <pattern id="schematron-constraint-test-sponsor-calendar-calendar-check-sponsor-30">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-funder-calendar-calendar-check-funder-31">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-principal-calendar-calendar-check-principal-32">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-idno-calendar-calendar-check-idno-33">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-licence-calendar-calendar-check-licence-34">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-quotation-quotationContents-35">
       <rule context="tei:quotation">
          <report test="not(@marks) and not (tei:p)">
 On <name/>, either the @marks attribute should be used, or a paragraph of description provided</report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-citeStructure-match-citestructure-outer-match-25">
+   <pattern id="schematron-constraint-test-citeStructure-match-citestructure-outer-match-36">
       <rule context="tei:citeStructure[not(parent::tei:citeStructure)]">
          <assert test="starts-with(@match,'/')">An XPath in @match on the outer <name/> must start with '/'.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-citeStructure-match-citestructure-inner-match-26">
+   <pattern id="schematron-constraint-test-citeStructure-match-citestructure-inner-match-37">
       <rule context="tei:citeStructure[parent::tei:citeStructure]">
          <assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <name/>.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-facsimile-no_facsimile_text_nodes-27">
-      <rule context="tei:facsimile//tei:line | tei:facsimile//tei:zone">
-         <report test="child::text()[ normalize-space(.) ne '']">
-  	  A facsimile element represents a text with images, thus
-	  transcribed text should not be present within it.
-	</report>
+   <pattern id="schematron-constraint-test-unitDecl-calendar-calendar-check-unitDecl-38">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-path-pathmustnotbeclosed-28">
+   <pattern id="schematron-constraint-test-unitDef-calendar-calendar-check-unitDef-39">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-conversion-calendar-calendar-check-conversion-40">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-application-calendar-calendar-check-application-41">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-creation-calendar-calendar-check-creation-42">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-change-calendar-calendar-check-change-43">
+      <rule context="tei:*[@calendar]">
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <name/> element has no textual content.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-facsimile-no_facsimile_text_nodes-44">
+      <rule context="tei:facsimile//tei:line | tei:facsimile//tei:zone">
+         <report test="child::text()[ normalize-space(.) ne '']">
+          A facsimile element represents a text with images, thus
+          transcribed text should not be present within it.
+        </report>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-test-path-pathmustnotbeclosed-45">
       <rule context="tei:path[@points]">
          <let name="firstPair" value="tokenize( normalize-space( @points ), ' ')[1]"/>
          <let name="lastPair"
@@ -202,67 +323,172 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
           the zone element rather than the path element. </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-addSpan-addSpan-requires-spanTo-29">
+   <pattern id="schematron-constraint-test-addSpan-addSpan-requires-spanTo-46">
       <rule context="tei:addSpan">
          <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-damageSpan-damageSpan-requires-spanTo-31">
+   <pattern id="schematron-constraint-test-damageSpan-damageSpan-requires-spanTo-48">
       <rule context="tei:damageSpan">
          <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-delSpan-delSpan-requires-spanTo-33">
+   <pattern id="schematron-constraint-test-delSpan-delSpan-requires-spanTo-50">
       <rule context="tei:delSpan">
          <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-subst-substContents1-35">
+   <pattern id="schematron-constraint-test-subst-substContents1-52">
       <rule context="tei:subst">
          <assert test="child::tei:add and (child::tei:del or child::tei:surplus)">
             <name/> must have at least one child add and at least one child del or surplus</assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-div-abstractModel-structure-div-in-l-or-lg-38">
+   <pattern id="schematron-constraint-test-div-abstractModel-structure-div-in-l-or-lg-56">
       <rule context="tei:div">
          <report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
       </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-div-abstractModel-structure-div-in-ab-or-p-39">
+   <pattern id="schematron-constraint-test-div-abstractModel-structure-div-in-ab-or-p-57">
       <rule context="tei:div">
          <report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
         Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
       </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-link-linkTargets3-40">
+   <pattern id="schematron-constraint-test-link-linkTargets3-58">
       <rule context="tei:link">
          <assert test="contains(normalize-space(@target),' ')">You must supply at least two values for @target or  on <name/>
          </assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-ab-abstractModel-structure-ab-in-l-or-lg-41">
+   <pattern id="schematron-constraint-test-ab-abstractModel-structure-ab-in-l-or-lg-59">
       <rule context="tei:ab">
          <report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
         Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
       </report>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-join-joinTargets3-42">
+   <pattern id="schematron-constraint-test-join-joinTargets3-60">
       <rule context="tei:join">
          <assert test="contains(@target,' ')">
 You must supply at least two values for @target on <name/>
          </assert>
       </rule>
    </pattern>
-   <pattern id="schematron-constraint-test-standOff-nested_standOff_should_be_typed-43">
+   <pattern id="schematron-constraint-test-standOff-nested_standOff_should_be_typed-61">
       <rule context="tei:standOff">
          <assert test="@type or not(ancestor::tei:standOff)">This
       <name/> element must have a @type attribute, since it is
       nested inside a <name/>
          </assert>
+      </rule>
+   </pattern>
+   <!-- *********** -->
+   <!-- deprecated: -->
+   <!-- *********** -->
+   <pattern>
+      <rule context="tei:name">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the name element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:author">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the author element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:editor">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the editor element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:resp">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the resp element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:title">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the title element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:meeting">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the meeting element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:sponsor">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the sponsor element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:funder">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the funder element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:principal">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the principal element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:idno">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the idno element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:licence">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the licence element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:unitDecl">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the unitDecl element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:unitDef">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the unitDef element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:conversion">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the conversion element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:application">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the application element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:creation">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the creation element will be removed from the TEI on 2024-11-11.
+                </report>
+      </rule>
+   </pattern>
+   <pattern>
+      <rule context="tei:change">
+         <report test="@calendar" role="nonfatal">WARNING: use of deprecated attribute — @calendar of the change element will be removed from the TEI on 2024-11-11.
+                </report>
       </rule>
    </pattern>
 </schema>

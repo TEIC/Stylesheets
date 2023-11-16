@@ -325,20 +325,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:element>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-      <p>Process element att</p>
-      <p>
-        <p xmlns="http://www.w3.org/1999/xhtml"> special purpose </p>
-      </p>
-    </desc>
-  </doc>
-  <xsl:template match="tei:att">
-    <span>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:apply-templates/>
-    </span>
-  </xsl:template>
+  
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process gloss element</desc>
   </doc>
@@ -649,6 +637,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@type='catalogue'">
         <p>
           <dl>
+	    <xsl:apply-templates select="@xml:id"/>
             <xsl:call-template name="makeRendition">
               <xsl:with-param name="default">false</xsl:with-param>
             </xsl:call-template>
@@ -665,6 +654,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:variable>
         <p>
           <table>
+	    <xsl:apply-templates select="@xml:id"/>
             <xsl:call-template name="makeRendition">
               <xsl:with-param name="default">false</xsl:with-param>
             </xsl:call-template>
@@ -685,6 +675,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="tei:isGlossList(.)">
         <dl>
+	  <xsl:apply-templates select="@xml:id"/>
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>
           </xsl:call-template>
@@ -694,6 +685,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="tei:isGlossTable(.)">
         <table>
+	  <xsl:apply-templates select="@xml:id"/>
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>
           </xsl:call-template>
@@ -706,6 +698,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="@type='inline' or @type='runin'">
         <p>
+	  <xsl:apply-templates select="@xml:id"/>
           <xsl:apply-templates select="*[not(self::tei:head or self::tei:trailer)]"  mode="inline"/>
         </p>
       </xsl:when>
@@ -714,6 +707,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="{if (tei:isOrderedList(.)) then 'ol' else 'ul'}">
+	  <xsl:apply-templates select="@xml:id"/>
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>
           </xsl:call-template>
@@ -1787,6 +1781,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </xsl:element>
   </xsl:template>
+
+
   <xsl:template name="microdata"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
