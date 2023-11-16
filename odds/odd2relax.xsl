@@ -27,7 +27,7 @@
 Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
 
 2. http://www.opensource.org/licenses/BSD-2-Clause
-		
+                
 
 
 Redistribution and use in source and binary forms, with or without
@@ -73,12 +73,12 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:variable name="oddmode">dtd</xsl:variable>
   <xsl:variable name="filesuffix"/>
-   <!-- get list of output files -->
+  <!-- get list of output files -->
   <xsl:variable name="linkColor"/>
   <xsl:template match="tei:moduleSpec[@type='decls']"/>
   <xsl:template match="/">
     <xsl:variable name="resolvedClassatts">
-      <xsl:apply-templates  mode="classatts"/>
+      <xsl:apply-templates mode="classatts"/>
     </xsl:variable>
     <xsl:for-each select="$resolvedClassatts">
       <xsl:choose>
@@ -220,9 +220,23 @@ of this software, even if advised of the possibility of such damage.
         </root>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:for-each select="$pass2/root">
-      <xsl:apply-templates mode="pass3"/>
-    </xsl:for-each>
+    <xsl:variable name="pass3">
+      <xsl:for-each select="$pass2/root">
+        <xsl:apply-templates mode="pass3"/>
+      </xsl:for-each>
+    </xsl:variable>
+    <!-- The variable $pass3 is not really needed, but is left here to
+         make it easier to write debugging code. Remember, though,
+         that if you want to see what the intermediate stages look
+         like you cannot use <result-document>, because this template
+         is called from within a variable defintion. You can get
+         around this by outputing each intermediate stage ($pass1 &
+         $pass2) into the output file in addition to the final stage
+         ($pass3). This makes for great debugging, but also for a
+         useless output RELAX NG schema, of course.  You can see a
+         version of this in commit 522e84e from 2023-10-06.
+            — Syd, 2023-10-09 -->
+    <xsl:sequence select="$pass3"/>
   </xsl:template>
 
   <xsl:template match="tei:moduleSpec">
@@ -242,7 +256,7 @@ of this software, even if advised of the possibility of such damage.
                            <xsl:text>Schema generated </xsl:text>
                            <xsl:sequence select="tei:whatsTheDate()"/>
                            <xsl:call-template name="makeTEIVersion"/>
-			   <xsl:call-template name="copyright"/>
+                           <xsl:call-template name="copyright"/>
                            <xsl:sequence select="tei:makeDescription(., true(), true())"/>
                         </xsl:comment>
                         <xsl:call-template name="moduleSpec-body"/>
@@ -299,7 +313,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="key('MacroModule',@ident)">
       <xsl:choose>
         <xsl:when test="@predeclare='true'"/>
-        <!--	<xsl:when test="key('PredeclareMacros',@ident)"/>-->
+        <!--    <xsl:when test="key('PredeclareMacros',@ident)"/>-->
         <xsl:otherwise>
           <xsl:apply-templates mode="tangle" select="."/>
         </xsl:otherwise>
@@ -309,9 +323,9 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="copyright">
     <xsl:for-each
-	select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
+        select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
       <xsl:if test="count(tei:licence)&gt;1">
-	<xsl:text>This material is dual-licensed.&#10;</xsl:text>
+        <xsl:text>This material is dual-licensed.&#10;</xsl:text>
       </xsl:if>
       <xsl:apply-templates/>
     </xsl:for-each>
@@ -327,14 +341,20 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="NameList">
-<!-- walk over all the elementSpec elements and make list of 
-       elements -->
+    <!-- walk over all the elementSpec elements and make list of 
+         elements -->
     <xsl:for-each select="key('ELEMENTDOCS',1)">
-         <xsl:sort select="@ident"/>
-         <define xmlns="http://relaxng.org/ns/structure/1.0" combine="choice" name="{@ident}">
-            <notAllowed/>
-         </define>
-      </xsl:for-each>
+      <xsl:sort select="@ident"/>
+      <xsl:if test="@ident ne 'anyElement'">
+        <!-- Don't auto-generate a defition for an <anyElement>, those
+             definitions will be created when we actually hit
+             <anyElement> elements, as the @name of the <define> is
+             modified to be unique. -->
+        <define xmlns="http://relaxng.org/ns/structure/1.0" combine="choice" name="{@ident}">
+          <notAllowed/>
+        </define>
+      </xsl:if>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="predeclare-classes">
@@ -357,7 +377,10 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="apos">'</xsl:variable>
     <xsl:variable name="spec" select="ancestor::tei:elementSpec|ancestor::tei:macroSpec"/>
     <xsl:variable name="current" select="."/>
-    <xsl:variable name="id" select="concat('anyElement-',$spec/@ident)"/>
+    <xsl:variable name="disambiguator" as="xs:string">
+      <xsl:number level="any" format="{$anyElement_disambiguator_format}"/>
+    </xsl:variable>
+    <xsl:variable name="id" select="concat('anyElement_', $spec/@ident, $disambiguator )"/>
     <xsl:variable name="exclude">
       <xsl:choose>
         <xsl:when test="@exclude"><xsl:value-of select="@exclude"/></xsl:when>
@@ -404,8 +427,9 @@ of this software, even if advised of the possibility of such damage.
         </zeroOrMore>
       </element>
       <xsl:if test="@require and ancestor::tei:elementSpec">
-        <xsl:variable name="ns"><xsl:if
-          test="ancestor::tei:content//tei:*">, 'http://www.tei-c.org/ns/1.0'</xsl:if></xsl:variable>
+        <xsl:variable name="ns">
+          <xsl:if test="ancestor::tei:content//tei:*">, 'http://www.tei-c.org/ns/1.0'</xsl:if>
+        </xsl:variable>
         <xsl:variable name="computed-prefix">
           <xsl:for-each select="in-scope-prefixes($current)">
             <xsl:if test="$spec/@ns = namespace-uri-for-prefix(., $current)">
@@ -477,38 +501,32 @@ of this software, even if advised of the possibility of such damage.
 
 <!-- pass 2, clean up unused elements -->
   <xsl:template  match="rng:anyName[parent::rng:define]"
-		 mode='pass2'>
+                 mode='pass2'>
     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
       <choice>
-	<xsl:for-each select="key('EDEF',1)">	  
-	  <ref name="{@name}"/>
-	</xsl:for-each>
+        <xsl:for-each select="key('EDEF',1)">     
+          <ref name="{@name}"/>
+        </xsl:for-each>
       </choice>
     </zeroOrMore>
   </xsl:template>
 
-  <xsl:template match="processing-instruction()" mode="pass2">
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass2">
     <xsl:copy-of select="."/>
-  </xsl:template>
-
-  <xsl:template match="@*|text()|comment()" mode="pass2">
-      <xsl:copy-of select="."/>
   </xsl:template>
     
   <xsl:template match="*" mode="pass2">
-      <xsl:copy>
-         <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
-      </xsl:copy>
+    <xsl:copy>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+    </xsl:copy>
   </xsl:template>
 
   <xsl:template match="rng:define" mode="pass2">
     <xsl:choose>
-      <xsl:when test="key('REFED',@name) or 
-        key('REFED',substring-after(@name,$generalPrefix))">
+      <xsl:when test="key('REFED',@name) or key('REFED',substring-after(@name,$generalPrefix))">
         <define xmlns="http://relaxng.org/ns/structure/1.0" >
           <xsl:apply-templates  select="@*"    mode="pass2"/>
-          <xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
-            mode="pass2"/>
+          <xsl:apply-templates  select="*|processing-instruction()|comment()|text()" mode="pass2"/>
         </define>
       </xsl:when>
       <xsl:otherwise>
@@ -525,6 +543,7 @@ of this software, even if advised of the possibility of such damage.
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
       </xsl:when>
       <xsl:when test="key('DEFED',@name)">
+        <!-- THIS ONE is the <ref> that is supposed to be working for anyElement #631 -->
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:content[@autoPrefix='false']">
@@ -550,20 +569,20 @@ of this software, even if advised of the possibility of such damage.
     <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
       <xsl:apply-templates  select="@*"  mode="pass3"/>
       <xsl:variable name="Contents">
-	<xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
-			      mode="pass3"/>
+        <xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
+                              mode="pass3"/>
       </xsl:variable>
       <xsl:choose>
-	<xsl:when test="$Contents//rng:text or $Contents//rng:ref or
-			$Contents//rng:anyName or
-			$Contents//rng:attribute or
-			$Contents//rng:data or $Contents//rng:name or $Contents//rng:value">
-	  <xsl:copy-of select="$Contents"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:copy-of select="$Contents/a:*"/>
-	  <rng:empty/>
-	</xsl:otherwise>
+        <xsl:when test="$Contents//rng:text or $Contents//rng:ref or
+                        $Contents//rng:anyName or
+                        $Contents//rng:attribute or
+                        $Contents//rng:data or $Contents//rng:name or $Contents//rng:value">
+          <xsl:copy-of select="$Contents"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="$Contents/a:*"/>
+          <rng:empty/>
+        </xsl:otherwise>
       </xsl:choose>
     </xsl:element>
   </xsl:template>
@@ -585,7 +604,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:if>
         <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:otherwise>
-    </xsl:choose>			   
+    </xsl:choose>                          
   </xsl:template>
 
   <xsl:template match="rng:optional|rng:zeroOrMore|rng:oneOrMore"
@@ -626,7 +645,7 @@ of this software, even if advised of the possibility of such damage.
             mode="pass3"/>
         </xsl:element>
       </xsl:otherwise>
-    </xsl:choose>			   
+    </xsl:choose>                          
   </xsl:template>
 
   <xsl:template match="processing-instruction()" mode="pass3">
@@ -650,13 +669,13 @@ of this software, even if advised of the possibility of such damage.
     prefix -->
     <choice xmlns="http://relaxng.org/ns/structure/1.0">
       <xsl:for-each select="rng:ref">
-	  <xsl:variable name="name" select="if (key('DEFED',@name))
-	    then @name
-	    else if (key('DEFED',concat($generalPrefix,@name))) then
-	    concat($generalPrefix,@name) else ''"/>
-	    <xsl:if test="not($name='')">
-	      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$name}"/>
-	    </xsl:if>
+          <xsl:variable name="name" select="if (key('DEFED',@name))
+            then @name
+            else if (key('DEFED',concat($generalPrefix,@name))) then
+            concat($generalPrefix,@name) else ''"/>
+            <xsl:if test="not($name='')">
+              <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$name}"/>
+            </xsl:if>
       </xsl:for-each>
     </choice>
   </xsl:template>
