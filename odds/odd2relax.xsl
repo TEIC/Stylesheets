@@ -229,8 +229,8 @@ of this software, even if advised of the possibility of such damage.
          make it easier to write debugging code. Remember, though,
          that if you want to see what the intermediate stages look
          like you cannot use <result-document>, because this template
-         is called from within a variable defintion. You can get
-         around this by outputing each intermediate stage ($pass1 &
+         is called from within a variable definition. You can get
+         around this by outputting each intermediate stage ($pass1 &
          $pass2) into the output file in addition to the final stage
          ($pass3). This makes for great debugging, but also for a
          useless output RELAX NG schema, of course.  You can see a
@@ -346,7 +346,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:sort select="@ident"/>
       <xsl:if test="@ident ne 'anyElement'">
-        <!-- Don't auto-generate a defition for an <anyElement>, those
+        <!-- Don't auto-generate a definition for an <anyElement>, those
              definitions will be created when we actually hit
              <anyElement> elements, as the @name of the <define> is
              modified to be unique. -->

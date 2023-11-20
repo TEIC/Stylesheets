@@ -80,7 +80,7 @@
 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- collapse-lines:
      If true, output constructs spanning multiple lines will be
-     groupd into a single line unless it exceeds $line-width chars. -->
+     grouped into a single line unless it exceeds $line-width chars. -->
   <xsl:param name="collapse-lines" select="true ()"/>
    <!-- indent-width:
      The number of characters to indent at each indentation level -->
