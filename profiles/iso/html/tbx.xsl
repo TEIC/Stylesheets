@@ -11,7 +11,7 @@
 		xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
 		xmlns:rng="http://relaxng.org/ns/structure/1.0"
 		exclude-result-prefixes="tei html t a rng iso tbx
-					 cals teix" version="2.0">
+					 cals teix" version="3.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
 

@@ -12,7 +12,7 @@ XSL stylesheet to process TEI documents using ODD markup
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="tei"
-                version="2.0">
+                version="3.0">
   <xsl:output method="xml" indent="yes" encoding="utf-8"/>
   <xsl:param name="verbose"/>
   <xsl:param name="lang">es</xsl:param>

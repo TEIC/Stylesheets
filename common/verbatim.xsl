@@ -17,7 +17,7 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:dbk="http://docbook.org/ns/docbook"
     exclude-result-prefixes="a fo html i rng sch tei teix xi xs xsl m atom xlink xhtml dbk"
-    version="2.0">
+    version="3.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet dealing with elements from the core module. </p>

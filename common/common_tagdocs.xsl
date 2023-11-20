@@ -8,7 +8,7 @@
   xmlns:sch="http://purl.oclc.org/dsdl/schematron"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  exclude-result-prefixes="fo a tei html rng teix xs sch" version="2.0">
+  exclude-result-prefixes="fo a tei html rng teix xs sch" version="3.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet"
     type="stylesheet">
     <desc>

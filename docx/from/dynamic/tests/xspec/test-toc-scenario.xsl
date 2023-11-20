@@ -7,7 +7,7 @@
                 xmlns:x="http://www.jenitennison.com/xslt/xspec"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
-                version="2.0">
+                version="3.0">
    <xsl:import href="file:/usr/local/bin/xspec-v0.1/generate-tests-utils.xsl"/>
    <xsl:import href="file:/Users/amittelbach/EDV%20Dienstleistungen/Kunden/OUCS/TEIISO/workspace/Stylesheets/docx/from/dynamic/toc.xsl"/>
    <xsl:namespace-alias stylesheet-prefix="o" result-prefix="xsl"/>

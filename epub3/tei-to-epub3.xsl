@@ -8,7 +8,7 @@
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/"
                 xmlns:m="http://www.w3.org/1998/Math/MathML"
-		version="2.0" exclude-result-prefixes="#all"
+		version="3.0" exclude-result-prefixes="#all"
 		xpath-default-namespace="http://www.tei-c.org/ns/1.0"
 >
   <xsl:import href="../html/html.xsl"/>
