@@ -5,7 +5,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
     exclude-result-prefixes="tei html"
-    version="2.0">
+    version="3.0">
     <!-- import base conversion style -->
 
     <xsl:import href="../../../html/html.xsl"/>

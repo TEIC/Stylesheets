@@ -11,7 +11,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:iso="http://www.iso.org/ns/1.0"
 		xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-                version="2.0"
+                version="3.0"
                 exclude-result-prefixes="xlink xhtml dbk iso rng m tei teix atom">
     
     <xsl:import href="../../common/verbatim.xsl"/>

@@ -11,7 +11,7 @@
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 exclude-result-prefixes="tei html t a rng iso tbx cals teix"
-                version="2.0">
+                version="3.0">
    <xsl:import href="../../../html/html.xsl"/>
    <xsl:import href="../../../html/html_oddprocessing.xsl"/>
    <xsl:import href="../../../odds/teiodds.xsl"/>

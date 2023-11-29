@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XSL:stylesheet xmlns:XSL="http://www.w3.org/1999/XSL/Transform" version="2.0">
+<XSL:stylesheet xmlns:XSL="http://www.w3.org/1999/XSL/Transform" version="3.0">
    <XSL:template mode="pass2 #default" match="@place">
       <XSL:attribute name="place">
          <XSL:choose>

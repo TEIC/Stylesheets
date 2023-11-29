@@ -9,7 +9,7 @@
     exclude-result-prefixes="XSL xd xsi sch tei m" 
     xmlns="http://www.tei-c.org/ns/1.0"
     xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
-    version="2.0">
+    version="3.0">
 
 <doc scope="stylesheet" xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>

@@ -72,7 +72,7 @@
                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-               version="2.0"
+               version="3.0"
                exclude-result-prefixes="rng sch a">
   <xsl:param name="top"/>
 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->

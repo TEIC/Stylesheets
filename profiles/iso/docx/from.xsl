@@ -22,7 +22,7 @@
                 xmlns:custprops="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
                 xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                version="2.0"
+                version="3.0"
                 exclude-result-prefixes="a pic rel ve o teidocx r m v wp w10 w wne mml vt cals tbx iso custprops">
 
     <!-- import conversion style -->

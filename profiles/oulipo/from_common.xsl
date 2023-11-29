@@ -18,7 +18,7 @@
   xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
   xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
-  xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html" version="2.0"
+  xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html" version="3.0"
   exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx pic rel a         tei teidocx xs iso">
   <!-- import base conversion style -->
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet"

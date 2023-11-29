@@ -10,7 +10,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns="http://www.tei-c.org/ns/1.0"
 xmlns:html="http://www.tei-c.org/ns/1.0"
-version="2.0" exclude-result-prefixes="#all">
+version="3.0" exclude-result-prefixes="#all">
   <xsl:variable name="allowedtags">
     <address/>
     <blockquote/>

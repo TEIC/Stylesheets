@@ -5,7 +5,7 @@
     exclude-result-prefixes="XSL xd" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
-    version="2.0">
+    version="3.0">
 
 <xsl:import href="../html/html.xsl"/>
 
@@ -98,7 +98,7 @@ print &lt;&lt;END;
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="tei xsl"
-    version="2.0">
+    version="3.0">
 &lt;!-- XSLT stylesheet to generate HTML version of TEI document.
 Written by the TEI XSL generator (Sebastian Rahtz, sebastian.rahtz\@it.ox.ac.uk)
 Created on $today-->

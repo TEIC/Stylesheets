@@ -3,7 +3,7 @@
   exclude-result-prefixes="office style text table draw fo xlink dc
 			   meta number tei svg chart dr3d math form
 			   script ooo ooow oooc dom xforms xs xsd xsi"
-  office:version="1.0" version="2.0" 
+  office:version="1.0" version="3.0" 
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns="http://www.tei-c.org/ns/1.0"
   xmlns:tei="http://www.tei-c.org/ns/1.0"

@@ -14,7 +14,7 @@
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="2.0"
+                version="3.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml
 					 tei tbx">
 

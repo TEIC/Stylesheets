@@ -2,7 +2,7 @@
     xmlns="http://www.tei-c.org/ns/1.0"
     xpath-default-namespace="http://docbook.org/ns/docbook"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    version="2.0">
+    version="3.0">
 
 
 <xsl:import href="../../../docbook/docbooktotei.xsl"/>

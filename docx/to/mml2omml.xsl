@@ -4,7 +4,7 @@
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns="http://schemas.openxmlformats.org/officeDocument/2006/math"
                 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-                version="2.0"
+                version="3.0"
                 exclude-result-prefixes="mml m w">
   <xsl:output method="xml" encoding="UTF-8"/>
 

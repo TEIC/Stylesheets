@@ -1,7 +1,7 @@
 <xsl:stylesheet
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    version="2.0"
+    version="3.0"
     >
 <!-- cf http://www.bramstein.com/projects/xsltjson/ for better
 coverage -->

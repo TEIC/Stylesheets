@@ -3,7 +3,7 @@
 		xmlns:teix="http://www.tei-c.org/ns/Examples"
 		xmlns:smil="http://www.w3.org/ns/SMIL"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="2.0">
+                version="3.0">
   <xsl:import href="../common/functions.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
