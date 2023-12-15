@@ -1124,11 +1124,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:sequence select="tei:makeGloss(.,$langs)"/>
       <!-- now the description -->
       <!--
-	  Change, 2020-02-10 in response to #418:
-	  Only look at, count, or copy those <desc> elements that do
-	  NOT have a @type of "deprecationInfo". Note that we use
-	  not(@type eq 'dI') because using just @type ne 'dI' does not
-	  include those <desc>s that do not have @type at all.
+          Change, 2020-02-10 in response to #418:
+          Only look at, count, or copy those <desc> elements that do
+          NOT have a @type of "deprecationInfo". Note that we use
+          not(@type eq 'dI') because using just @type ne 'dI' does not
+          include those <desc>s that do not have @type at all.
       -->
       <xsl:choose>
         <xsl:when test="not(tei:desc[ not( @type eq 'deprecationInfo' ) ])"> </xsl:when>
@@ -1234,13 +1234,27 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:function name="tei:descOrGlossOutOfDate" as="xs:boolean">
     <xsl:param name="context"/>
-    <xsl:for-each select="$context">
-      <xsl:variable name="lang" select="tei:generateDocumentationLang(.)[1]"/>
-      <xsl:sequence select="tei:gloss[@xml:lang eq 'en']/@versionDate gt  tei:gloss[ @xml:lang eq $lang]/@versionDate
-			 or tei:desc[@xml:lang='en' and  not( @type eq 'deprecationInfo' )]/@versionDate
-			    gt
-			    tei:desc[@xml:lang eq $lang and  not( @type eq 'deprecationInfo' )]/@versionDate" />
-    </xsl:for-each>
+    <xsl:variable name="lang" select="tei:generateDocumentationLang($context)[1]"/>
+    <xsl:variable name="test_results" as="xs:boolean*">
+      <!-- first test <gloss> children without @type -->
+      <xsl:sequence select="$context/tei:gloss[ @xml:lang eq  'en' ]/@versionDate
+                         >  $context/tei:gloss[ @xml:lang eq $lang ]/@versionDate"/>
+      <!-- second test <desc> children wwithout @type -->
+      <xsl:sequence select="$context/tei:desc[ @xml:lang eq  'en' ]/@versionDate
+                         >  $context/tei:desc[ @xml:lang eq $lang ]/@versionDate"/>
+      <!-- next test <gloss> children with @type -->
+      <xsl:for-each select="distinct-values( $context/tei:gloss/@type )">
+        <xsl:sequence select="$context/tei:gloss[ @type eq . ][ @xml:lang eq  'en' ]/@versionDate
+                           >  $context/tei:gloss[ @type eq . ][ @xml:lang eq $lang ]/@versionDate"/>
+      </xsl:for-each>
+      <!-- last teset <desc> children with @type -->
+      <xsl:for-each select="distinct-values( $context/tei:desc/@type )">
+        <xsl:sequence select="$context/tei:desc[ @type eq . ][ @xml:lang eq  'en' ]/@versionDate
+                           >  $context/tei:desc[ @type eq . ][ @xml:lang eq $lang ]/@versionDate"/>
+      </xsl:for-each>
+    </xsl:variable>
+    <!-- if any one of the above is true, then something is amiss, return true. -->
+    <xsl:sequence select="$test_results = true()"/>
   </xsl:function>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
