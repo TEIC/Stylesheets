@@ -1237,11 +1237,11 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="lang" select="tei:generateDocumentationLang($context)[1]"/>
     <xsl:variable name="test_results" as="xs:boolean*">
       <!-- first test <gloss> children without @type -->
-      <xsl:sequence select="$context/tei:gloss[ @xml:lang eq  'en' ]/@versionDate
-                         >  $context/tei:gloss[ @xml:lang eq $lang ]/@versionDate"/>
+      <xsl:sequence select="$context/tei:gloss[ not(@type) ][ @xml:lang eq  'en' ]/@versionDate
+                         >  $context/tei:gloss[ not(@type) ][ @xml:lang eq $lang ]/@versionDate"/>
       <!-- second test <desc> children wwithout @type -->
-      <xsl:sequence select="$context/tei:desc[ @xml:lang eq  'en' ]/@versionDate
-                         >  $context/tei:desc[ @xml:lang eq $lang ]/@versionDate"/>
+      <xsl:sequence select="$context/tei:desc[ not(@type) ][ @xml:lang eq  'en' ]/@versionDate
+                         >  $context/tei:desc[ not(@type) ][ @xml:lang eq $lang ]/@versionDate"/>
       <!-- next test <gloss> children with @type -->
       <xsl:for-each select="distinct-values( $context/tei:gloss/@type )">
         <xsl:sequence select="$context/tei:gloss[ @type eq . ][ @xml:lang eq  'en' ]/@versionDate
