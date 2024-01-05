@@ -1235,22 +1235,31 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:descOrGlossOutOfDate" as="xs:boolean">
     <xsl:param name="context"/>
     <xsl:variable name="lang" select="tei:generateDocumentationLang($context)[1]"/>
+    <!--
+        Coding NOTE: The 4 tests that comprise $test_results currently
+        use “gt” the value operator rather than ‘>’ the general
+        operator. This is because we expect that there will ever only
+        be 1 sibling <gloss> or <desc> that has the same @type and
+        same @xml:lang. But we might be proven wrong, in which case
+        perhaps ‘>’ would have been better. (If you change it, change
+        this comment, too!)
+    -->
     <xsl:variable name="test_results" as="xs:boolean*">
       <!-- first test <gloss> children without @type -->
       <xsl:sequence select="$context/tei:gloss[ not(@type) ][ @xml:lang eq  'en' ]/@versionDate
-                         >  $context/tei:gloss[ not(@type) ][ @xml:lang eq $lang ]/@versionDate"/>
-      <!-- second test <desc> children wwithout @type -->
+                        gt  $context/tei:gloss[ not(@type) ][ @xml:lang eq $lang ]/@versionDate"/>
+      <!-- second test <desc> children without @type -->
       <xsl:sequence select="$context/tei:desc[ not(@type) ][ @xml:lang eq  'en' ]/@versionDate
-                         >  $context/tei:desc[ not(@type) ][ @xml:lang eq $lang ]/@versionDate"/>
+                        gt  $context/tei:desc[ not(@type) ][ @xml:lang eq $lang ]/@versionDate"/>
       <!-- next test <gloss> children with @type -->
       <xsl:for-each select="distinct-values( $context/tei:gloss/@type )">
         <xsl:sequence select="$context/tei:gloss[ @type eq . ][ @xml:lang eq  'en' ]/@versionDate
-                           >  $context/tei:gloss[ @type eq . ][ @xml:lang eq $lang ]/@versionDate"/>
+                          gt  $context/tei:gloss[ @type eq . ][ @xml:lang eq $lang ]/@versionDate"/>
       </xsl:for-each>
-      <!-- last teset <desc> children with @type -->
+      <!-- last test <desc> children with @type -->
       <xsl:for-each select="distinct-values( $context/tei:desc/@type )">
         <xsl:sequence select="$context/tei:desc[ @type eq . ][ @xml:lang eq  'en' ]/@versionDate
-                           >  $context/tei:desc[ @type eq . ][ @xml:lang eq $lang ]/@versionDate"/>
+                          gt  $context/tei:desc[ @type eq . ][ @xml:lang eq $lang ]/@versionDate"/>
       </xsl:for-each>
     </xsl:variable>
     <!-- if any one of the above is true, then something is amiss, return true. -->
