@@ -32,7 +32,7 @@ v0.4.3 - John's minor tweaks anf bugfixes: start para, ignored para, etc. some i
 -->
 <xsl:stylesheet xpath-default-namespace="http://www.tei-c.org/ns/1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-                version="2.0">
+                version="3.0">
 
   <xsl:param name="table-width">540</xsl:param>
 

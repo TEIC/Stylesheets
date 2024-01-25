@@ -15,7 +15,7 @@
 
                 exclude-result-prefixes="tei html t a rng iso tbx
 					 cals teix w"
-                version="2.0">
+                version="3.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
 

@@ -9,7 +9,7 @@
     xmlns:owl="http://www.w3.org/2002/07/owl#" 
     xmlns:xsd="http://www.w3.org/2001/XMLSchema#" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    version="2.0" 
+    version="3.0" 
     xpath-default-namespace="http://www.tei-c.org/ns/1.0" 
     exclude-result-prefixes="tei rdf rdfs owl xsd crm xsl xs">
   

@@ -6,7 +6,7 @@
                 xmlns:xj="http://xml.apache.org/xalan/java"
                 xmlns:loc="http://www.thaiopensource.com/ns/location"
                 xmlns:err="http://www.thaiopensource.com/ns/error"
-                version="2.0">
+                version="3.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
 

@@ -6,7 +6,7 @@
                 xmlns:loc="http://www.thaiopensource.com/ns/location"
                 xmlns:err="http://www.thaiopensource.com/ns/error"
                 xmlns:i="http://www.iso.org/ns/1.0"
-                version="2.0"
+                version="3.0"
                 i:dummy-for-xmlns=""
                 tei:dummy-for-xmlns="">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">

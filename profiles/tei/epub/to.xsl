@@ -10,7 +10,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl" version="2.0">
+    exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl" version="3.0">
 
   <xsl:import href="../../../epub/tei-to-epub.xsl"/>
   <xsl:import href="../../../odds/teiodds.xsl"/>

@@ -9,7 +9,7 @@
                 xmlns=     "http://purl.oclc.org/dsdl/schematron"
                 xmlns:xsl= "http://www.w3.org/1999/XSL/Transform"
                 xmlns:d=   "http://www.oxygenxml.com/ns/doc/xsl"
-                version="2.0"
+                version="3.0"
                 xpath-default-namespace="http://www.tei-c.org/ns/1.0"
                 exclude-result-prefixes="#all">
   <xsl:import href="../common/functions.xsl"/>

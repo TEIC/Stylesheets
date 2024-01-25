@@ -13,7 +13,7 @@
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 exclude-result-prefixes="fo a tei html rng sch xsi
 					 teix xs dcr"
-                version="2.0">
+                version="3.0">
   <xsl:import href="../common/verbatim.xsl"/>
   <xsl:import href="teiodds.xsl"/> 
   <xsl:import href="classatts.xsl"/>
