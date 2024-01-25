@@ -31,9 +31,9 @@
                 4. Remove any timestamps that are generated during processing, since
                    these will be different each time a test is run.
 
-		5. Remove the @version attribute of &lt;application> elements that have
-		   “tei” (case insensitive) in either their @xml:id or @ident attribute
-		   (per issue #646).
+                5. Replace the value of the @version attribute of any &lt;application>
+                   elements that have “tei” (case insensitive) in either their @xml:id
+                   or @ident attribute with a dummy value (per issue #646).
             </xd:p>
         </xd:desc>
     </xd:doc>
@@ -72,12 +72,12 @@
 <!--  And versions from <application>s we (probably) inserted. -->
     <xsl:template match="tei:application[ matches( string-join( ( @xml:id, '␝', @ident ) ), 'tei', 'i') ]">
         <!-- Note that any character legal in an XML attribute could
-	     be used to separate the @xml:id from the @ident, above,
-	     EXCEPT one of ‘t’, ‘T’, ‘e’, ‘E’, ‘i’, or ‘I’. -->
+             be used to separate the @xml:id from the @ident, above,
+             EXCEPT one of ‘t’, ‘T’, ‘e’, ‘E’, ‘i’, or ‘I’. -->
         <xsl:copy>
             <xsl:copy-of select="@* except @version"/>
-	    <xsl:attribute name="version" select="'9thisisaplaceholder88.777soisthis6666.55555thistoo4444.333lastone22'"/>
-	    <xsl:apply-templates select="node()"/>
+            <xsl:attribute name="version" select="'9thisisaplaceholder88.777soisthis6666.55555thistoo4444.333lastone22'"/>
+            <xsl:apply-templates select="node()"/>
         </xsl:copy>
     </xsl:template>
 
