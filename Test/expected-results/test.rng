@@ -4080,7 +4080,7 @@ Suggested values include: 1] full (full form); 2] pref (prefix); 3] suff (suffix
       </attribute>
     </optional>
   </define>
-  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.calendarSystem-calendar-calendar-constraint-rule-10">
+  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-10">
     <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@calendar]">
       <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
               systems or calendars to which the date represented by the content of this element belongs,
@@ -7865,7 +7865,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
   </define>
   <define name="surface">
     <element name="surface">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and transcriptions of the writing within them. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and, when using an embedded transcription approach, transcriptions of the writing within them. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]</a:documentation>
       <group>
         <zeroOrMore>
           <choice>

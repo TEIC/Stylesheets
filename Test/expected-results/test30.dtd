@@ -1875,7 +1875,7 @@ calendar CDATA  #IMPLIED >
 <!ATTLIST epigraph
  %Tatt.global.attributes; >
 <!--doc:(event) contains data relating to anything of significance that happens in time. [13.3.1. Basic Principles] -->
-<!ELEMENT event (((idno)*,(%model.headLike;)*,((%model.pLike;)+|(%model.labelLike;)+|(eventName)+),(%model.noteLike;|%model.biblLike;|linkGrp|link|idno|ptr)*,(event|listEvent)*,(%model.personLike;|listPerson)*,(%model.placeLike;|listPlace)*,(%model.objectLike;)*,(relation|listRelation)*))>
+<!ELEMENT event (((idno)*,(%model.headLike;)*,((%model.pLike;)+|(%model.labelLike;)+|(eventName)+),(%model.noteLike;|%model.biblLike;|linkGrp|link|idno|ptr)*,(%model.eventLike;)*,(%model.personLike;|listPerson)*,(%model.placeLike;|listPlace)*,(%model.objectLike;)*,(relation|listRelation)*))>
 <!ATTLIST event xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST event
  %Tatt.global.attributes;
@@ -2339,7 +2339,7 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.typed.attributes;
 ordered %teidata.truthValue;  "true"  >
 <!--doc:(list of events) contains a list of descriptions, each of which provides information about an identifiable event. [13.3.1. Basic Principles] -->
-<!ELEMENT listEvent (((%model.headLike;)*,(desc)*,(relation|listRelation)*,((event|listEvent)+,(relation|listRelation)*)+))>
+<!ELEMENT listEvent (((%model.headLike;)*,(desc)*,(relation|listRelation)*,((%model.eventLike;)+,(relation|listRelation)*)+))>
 <!ATTLIST listEvent xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST listEvent
  %Tatt.global.attributes;
@@ -3293,7 +3293,7 @@ calendar CDATA  #IMPLIED >
  %Tatt.editLike.attributes;
  %Tatt.dimensions.attributes;
 reason CDATA  #IMPLIED >
-<!--doc:defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and transcriptions of the writing within them. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription] -->
+<!--doc:defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and, when using an embedded transcription approach, transcriptions of the writing within them. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription] -->
 <!ELEMENT surface (((%model.global;|%model.labelLike;|%model.graphicLike;)*,((zone|line|path|surface|surfaceGrp),(%model.global;)*)*))>
 <!ATTLIST surface xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST surface

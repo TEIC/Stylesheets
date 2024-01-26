@@ -2352,7 +2352,7 @@ Tatt.calendarSystem.attribute.calendar =
   }?
 sch:pattern [
   id =
-    "testbasic-att.calendarSystem-calendar-calendar-constraint-rule-10"
+    "testbasic-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-10"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -6681,7 +6681,7 @@ Tevent =
       | Tlink
       | Tidno
       | Tptr)*,
-     (Tevent | TlistEvent)*,
+     Tmodel.eventLike*,
      (Tmodel.personLike | TlistPerson)*,
      (Tmodel.placeLike | TlistPlace)*,
      Tmodel.objectLike*,
@@ -7004,7 +7004,7 @@ TlistEvent =
     (Tmodel.headLike*,
      Tdesc*,
      (Trelation | TlistRelation)*,
-     ((Tevent | TlistEvent)+, (Trelation | TlistRelation)*)+),
+     (Tmodel.eventLike+, (Trelation | TlistRelation)*)+),
     Tatt.global.attributes,
     Tatt.typed.attributes,
     Tatt.declarable.attributes,
@@ -8152,7 +8152,7 @@ TsourceDoc =
   }
 Tsurface =
   
-  ## defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and transcriptions of the writing within them. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]
+  ## defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and, when using an embedded transcription approach, transcriptions of the writing within them. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]
   element surface {
     ((Tmodel.global | Tmodel.labelLike | Tmodel.graphicLike)*,
      ((Tzone | Tline | Tpath | Tsurface | TsurfaceGrp),
