@@ -58,6 +58,8 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
+  <xsl:import href="../odds/teiodds.xsl"/>
+  <xsl:import href="../odds/odd2relax.xsl"/>
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
   <xsl:param name="useNSPrefixes">true</xsl:param>
   <xsl:param name="spaceCharacter">&#160;</xsl:param>
@@ -710,9 +712,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text>="</xsl:text>
     <xsl:choose>
       <xsl:when test="$ref-link">
-        <xsl:call-template name="RefLinkAttributeValue">
-          <xsl:with-param name="content">
-            <xsl:apply-templates select="@value" mode="attributetext"/>
+        <xsl:call-template name="linkTogether">
+          <xsl:with-param name="name">
+            <xsl:apply-templates select="@value" mode="attributetext"/> <!-- is this right!!?? -->
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
