@@ -2141,7 +2141,7 @@ function click(d) {
       </div>
    </xsl:template>
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] arrangment of page as HTML divs <param name="currentID">currentID</param>
+      <desc>[html] arrangement of page as HTML divs <param name="currentID">currentID</param>
       </desc>
    </doc>
    <xsl:template name="bodyLayout">
