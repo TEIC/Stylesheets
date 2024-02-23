@@ -461,7 +461,7 @@ of this software, even if advised of the possibility of such damage.
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc> &lt;CAPTION&gt; belongs to nearest figure or table. Tables with multi-paragraph preceding
-          CAPTIONs or with follwing captions are wrapped in a figure and the first para becomes a &lt;head&gt;, 
+          CAPTIONs or with following captions are wrapped in a figure and the first para becomes a &lt;head&gt;,
           while subsequent ones become &lt;figDescs&gt;. A single preceding CAPTION paragraph becomes an 
           internal header. Figure captions become headers and figDescs in a similar way.</desc>
   </doc>
