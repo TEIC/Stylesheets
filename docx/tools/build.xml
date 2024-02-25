@@ -74,7 +74,7 @@
 	<!-- zip back together -->
 	<zip destfile="${targetFile}" basedir="${temp}" />
 
-	<!-- delete the working directory whith all its content -->
+	<!-- delete the working directory with all its content -->
 	<echo>remove working directory</echo>
 	<delete includeEmptyDirs="true" verbose="true">
 		<fileset dir="${temp}"/>
