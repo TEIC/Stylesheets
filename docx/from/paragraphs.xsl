@@ -77,7 +77,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:variable name="ust">\t</xsl:variable>
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Calls the named template paragraph-wp that can be overriden.</p>
+         <p>Calls the named template paragraph-wp that can be overridden.</p>
          <p>
             See comment at begin of document to understand why this template is calling
             a named template.
