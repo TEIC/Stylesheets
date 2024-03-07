@@ -345,11 +345,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="repeat_as_needed" as="element()+">
     <xsl:param name="repeatMe" as="element()+"/>
     <xsl:variable name="norMinMax" select="tei:norMinMax(.)" as="item()+"/>
-    <xsl:variable name="min" select="$norMinMax[1]"/>
-    <xsl:variable name="max" select="$norMinMax[2]"/>
-    <xsl:variable name="owe" select="$norMinMax[3]"/>
+    <xsl:variable name="min" select="$norMinMax[1]"/> <!-- minimum number of occurrences as an xs:integer -->
+    <xsl:variable name="max" select="$norMinMax[2]"/> <!-- maximum number of occurrences as an xs:integer, -1 for unbounded -->
+    <xsl:variable name="owe" select="$norMinMax[3]"/> <!-- occurrence wrapper element, as the string "optional", "zeroOrMore", or "oneOrMore" -->
     <xsl:choose>
-      <!-- Handle min=0 max=1, min=0 max=unbounded, and min=1 max=unbounded all in one feel swoop: -->
+      <!-- Handle min=0 max=1, min=0 max=unbounded, and min=1 max=unbounded all in one fell swoop: -->
       <xsl:when test="string-length($owe) ne 0">
         <xsl:element name="{$owe}" namespace="http://relaxng.org/ns/structure/1.0">
           <xsl:copy-of select="$repeatMe"/>
@@ -2326,7 +2326,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <!--
       Generate the local name of the RELAX NG element used to create
-      the requested range of occurences, iff it is one of the
+      the requested range of occurrences, iff it is one of the
       available possiblities. If not, use an empty text node (as a
       flag).
     -->
