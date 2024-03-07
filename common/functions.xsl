@@ -298,7 +298,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'sup')]">true</xsl:when>
+        <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'sub')]">true</xsl:when>
         <xsl:when test="ancestor-or-self::*[@rend][tei:match(@rend,'subscript')]">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
