@@ -13,7 +13,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     exclude-result-prefixes="a fo html i rng sch tei teix xi xs xsl" 
-    version="2.0">
+    version="3.0">
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../common/i18n.xsl"/>
   <xsl:import href="../common/functions.xsl"/>

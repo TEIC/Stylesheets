@@ -13,7 +13,7 @@
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   exclude-result-prefixes="#all"
-  version="2.0">
+  version="3.0">
     <xsl:import href="../../../epub3/tei-to-epub3.xsl"/>
   <xsl:output method="xml" encoding="utf-8" doctype-system=""
 	      indent="no" omit-xml-declaration="yes"/>

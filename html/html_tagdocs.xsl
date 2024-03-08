@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet  xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="html a fo rng tei teix" version="2.0">
+<xsl:stylesheet  xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"                 xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="html a fo rng tei teix xs" version="3.0">
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -71,6 +71,100 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>&gt;</xsl:text>
     </span>
   </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>Process element att</p>
+    </desc>
+  </doc>
+  <xsl:template match="tei:att">
+    <span>
+      <xsl:call-template name="makeRendition"/>
+      <!-- JT (2023-09-28): At present, att's delimiter (@)
+           is generated in CSS; if that changes, then the following
+           should be included to be consistent -->
+      <!--
+        <xsl:call-template name="makeDelimiter">
+         <xsl:with-param name="string" as="xs:string">@</xsl:with-param>
+       </xsl:call-template>
+      -->
+      <xsl:apply-templates/>
+    </span>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>Process element val</p>
+    </desc>
+  </doc>
+  <xsl:template match="tei:val">
+    <span>
+      <xsl:call-template name="makeRendition"/>
+      <xsl:call-template name="makeDelimiter">
+        <xsl:with-param name="string" as="xs:string">"</xsl:with-param>
+        <xsl:with-param name="classes" select="'start'"/>
+      </xsl:call-template>
+      <xsl:apply-templates/>
+      <xsl:call-template name="makeDelimiter">
+        <xsl:with-param name="string" as="xs:string">"</xsl:with-param>
+        <xsl:with-param name="classes" select="'end'"/>
+      </xsl:call-template>
+    </span>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>Process element tag</p>
+    </desc>
+  </doc>
+  <xsl:template match="tei:tag">
+    <xsl:variable name="delims" as="xs:string*">
+      <xsl:choose>
+        <xsl:when test="empty(@type)">
+          <xsl:sequence select="( '&lt;', '&gt;' )"/>
+        </xsl:when>
+        <xsl:when test="@type = 'start'">
+          <xsl:sequence select="( '&lt;', '&gt;' )"/>
+        </xsl:when>
+        <xsl:when test="@type = 'end'">
+          <xsl:sequence select="( '&lt;/', '&gt;' )"/>
+        </xsl:when>
+        <xsl:when test="@type eq 'empty'">
+          <xsl:sequence select="( '&lt;', '/&gt;' )"/>
+        </xsl:when>
+        <xsl:when test="@type eq 'pi'">
+          <xsl:sequence select="( '&lt;?', '?&gt;' )"/>
+        </xsl:when>
+        <xsl:when test="@type eq 'comment'">
+          <xsl:sequence select="( '&lt;!--', '--&gt;' )"/>
+        </xsl:when>
+        <xsl:when test="@type eq 'ms'">
+          <xsl:sequence select="( '&lt;[CDATA[', ']]&gt;' )"/>
+        </xsl:when>
+        <!--start, end, empty, pi, comment, and ms are the only
+            legal values (as of 4.6.0); if a different type
+            value is used, then this will break-->
+        <xsl:otherwise>
+          <xsl:message>Unhandled @type value of tei:tag: <xsl:value-of select="@type"/></xsl:message>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <span>
+      <xsl:attribute name="class" select="string-join( ( local-name(), @type, @scheme ),' ' )"/>
+      <xsl:call-template name="makeRendition">
+        <xsl:with-param name="default" select="'false'"/>
+      </xsl:call-template>
+      <xsl:call-template name="makeDelimiter">
+        <xsl:with-param name="string" select="$delims[1]" as="xs:string"/>
+        <xsl:with-param name="classes" select="'start'"/>
+      </xsl:call-template>
+      <xsl:apply-templates/>
+      <xsl:call-template name="makeDelimiter">
+        <xsl:with-param name="string" select="$delims[2]" as="xs:string"/>
+        <xsl:with-param name="classes" select="'end'"/>
+      </xsl:call-template>
+    </span>
+  </xsl:template>
+  
+  
 
 
 <xsl:template match="tei:specGrp">

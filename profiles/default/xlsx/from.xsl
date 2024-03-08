@@ -19,7 +19,7 @@
 		xmlns:html="http://www.w3.org/1999/xhtml"
 		xmlns:its="http://www.w3.org/2005/11/its"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
-                version="2.0"
+                version="3.0"
                 exclude-result-prefixes="ve o r m v wp html its w10 w wne mml tbx iso">
     <!-- import base conversion style -->
 

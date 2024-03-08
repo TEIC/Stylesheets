@@ -7,7 +7,7 @@
    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
    xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
    exclude-result-prefixes="a fo dbk xlink rng tei html
-					 teix its teidocx" version="2.0">
+					 teix its teidocx" version="3.0">
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet dealing with elements from the textstructure module, making HTML output. </p>
@@ -2141,7 +2141,7 @@ function click(d) {
       </div>
    </xsl:template>
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] arrangment of page as HTML divs <param name="currentID">currentID</param>
+      <desc>[html] arrangement of page as HTML divs <param name="currentID">currentID</param>
       </desc>
    </doc>
    <xsl:template name="bodyLayout">
@@ -2490,25 +2490,24 @@ function click(d) {
             <xsl:call-template name="copyrightStatement"/>
             <xsl:if test="$generationComment = 'true'">
                <xsl:comment>
-               <xsl:text>
-	  Generated </xsl:text>
-               <xsl:if test="not($masterFile = 'index')">
-                  <xsl:text>from </xsl:text>
-                  <xsl:value-of select="$masterFile"/>
-               </xsl:if>
-               <xsl:text> using XSLT stylesheets version </xsl:text>
-	       <xsl:value-of select="tei:stylesheetVersion(/)"/>
-	       based on <xsl:value-of select="$teixslHome"/>
-	       on <xsl:sequence select="tei:whatsTheDate()"/>.
-	       <xsl:choose>
-		 <xsl:when test="$useFixedDate = 'true'">
-		   <xsl:value-of select="system-property('xsl:product-name')"/>.
-		 </xsl:when>
-		 <xsl:otherwise>
-		   <xsl:value-of select="(system-property('xsl:product-name'), system-property('xsl:product-version'))" separator=" "/>.
-		 </xsl:otherwise>
-	       </xsl:choose>
-            </xsl:comment>
+		 <xsl:text>&#x0A; Generated </xsl:text>
+		 <xsl:if test="not($masterFile = 'index')">
+                   <xsl:text>from </xsl:text>
+                   <xsl:value-of select="$masterFile"/>
+		 </xsl:if>
+		 <xsl:text> using XSLT stylesheets version </xsl:text>
+		 <xsl:value-of select="tei:stylesheetVersion()"/>
+		 based on <xsl:value-of select="$teixslHome"/>
+		 on <xsl:sequence select="tei:whatsTheDate()"/>.
+		 <xsl:choose>
+		   <xsl:when test="$useFixedDate = 'true'">
+		     <xsl:value-of select="system-property('xsl:product-name')"/>.
+		   </xsl:when>
+		   <xsl:otherwise>
+		     <xsl:value-of select="(system-property('xsl:product-name'), system-property('xsl:product-version'))" separator=" "/>.
+		   </xsl:otherwise>
+		 </xsl:choose>
+               </xsl:comment>
             </xsl:if>
          </address>
       </div>

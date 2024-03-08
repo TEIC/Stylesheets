@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet version="2.0"
+<xsl:stylesheet version="3.0"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -16,7 +16,7 @@
        * MAINTAINERs: Bear in mind that the code you are looking for may *
        * well be in TEI/P5/Utilities/guidelines.xsl.model instead.       *
        ******************************************************************* -->
-  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC" omit-xml-declaration="yes"/>
+  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" suppress-indentation="ul li" indent="yes" normalization-form="NFC" omit-xml-declaration="yes"/>
   <xsl:param name="directory">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
   <!-- 

@@ -3,7 +3,7 @@
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    version="2.0">
+    version="3.0">
 
 
 <xsl:import href="../../../docbook/teitodocbook.xsl"/>

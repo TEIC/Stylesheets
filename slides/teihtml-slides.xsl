@@ -9,7 +9,7 @@
                 xmlns:m="http://www.w3.org/1998/Math/MathML"
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="tei xlink xhtml m"
-                version="2.0">
+                version="3.0">
   <xsl:import href="../html/html.xsl"/>
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>

@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns="http://www.tei-c.org/ns/1.0"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:html="http://www.w3.org/1999/xhtml"
-		version="2.0">
+		version="3.0">
   <xsl:output method="xml" omit-xml-declaration="yes"/>
   <xsl:key name="IDS" use="@id" match="*"/>
   <xsl:template match="/">

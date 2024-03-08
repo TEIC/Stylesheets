@@ -36,24 +36,19 @@ echo "  --profile=$profile    # which transformation profile to use"
 echo "  --lang=$lang    # which language to use "
 echo "  --oxygenlib=$oxygenlib    # where is oxygenlib"
 echo "  --splitLevel=$splitLevel        # splitting level "
-case $format in
-      teitorelaxng) ;;
-      teitornc) ;;
-      teitodtd) ;;
-      teitoxsd) ;;
-    *) 
-	echo "  --odd                # perform processing of ODD (if appropriate)"
-	echo "  --localsource=DIR    # where is local copy of source of TEI Guidelines"
-	echo "  --summaryDoc         # only make summary, when doing ODD processing"
-	echo "  --schema=NAME        # process the schemaSpec called NAME"
-	;;
+case "$to" in
+    dtd|html|html5|rnc|rng|xsd)
+        if [ $from != odd ]; then echo "  --odd                # perform processing of ODD (if appropriate)"; fi
+        echo "  --localsource=DIR    # where is local copy of source of TEI Guidelines"
+        echo "  --summaryDoc         # only make summary, when doing ODD processing"
+        echo "  --schema=NAME        # process the schemaSpec called NAME"
+        ;;
 esac
-
 case "$script" in
     teitoepub*) # could be teitoepub or teitoepub3
-echo "  --fileperpage        # create output files one per page "
-echo "  --nocompress	     # disable compression of epub output file"
-    ;;
+        echo "  --fileperpage        # create output files one per page "
+        echo "  --nocompress         # disable compression of epub output file"
+        ;;
 esac
 
 echo 
@@ -110,17 +105,8 @@ SAXONJAR=$APPHOME/lib/saxon10he.jar
 TRANGJAR=$APPHOME/lib/trang.jar
 from=`echo $script | sed 's/to.*//'`
 to=`echo $script | sed 's/.*to//'`
-if [ $to = "tei" ]
-then
-   direction=from
-   format=$from
-   outsuffix=.xml
-else
-   direction=to
-   format=$to
-   outsuffix=.$to
-fi
 
+if [ ! -f "$SAXONJAR" ] ; then die "Saxon jar file $SAXONJAR does not exist"; fi
 
 while test $# -gt 0; do
   case $1 in
@@ -147,28 +133,73 @@ while test $# -gt 0; do
     --summaryDoc)      summaryDoc="-DsummaryDoc=true";;
     --viewportwidth=*)   viewportwidth="-DviewPortWidth=`echo $1 | sed 's/.*=//'`";;
     --viewportheight=*)   viewportheight="-DviewPortHeight=`echo $1 | sed 's/.*=//'`";;
-    --nocompress)	nocompress="-DnoCompress=true";;
+    --nocompress)       nocompress="-DnoCompress=true";;
     --help)         usageMsg; exit 1;;
      *) if test "$1" = "${1#--}" ; then 
-	   break
-	else
-	   echo "WARNING: Unrecognized option '$1' ignored"
-	fi ;;
+           break
+        else
+           echo "WARNING: Unrecognized option '$1' ignored"
+        fi ;;
   esac
   shift
 done
 
-if [ $# -gt 2 ]
-then
-    echo Error: only two parameters \(input file and output file\) allowed: $*
+if [ $# -gt 2 ]; then
+    echo "Error: only one parameter (input file) or two parameters (input file and output file) allowed: $*"
     exit 1
 fi
 
-if test "$defaultAPPHOME" != "$APPHOME"
-then
-    if test "$profiledir" = "$defaultprofiledir"
-    then
-	profiledir=$APPHOME/profiles
+if [ $to = tei ]; then
+    direction=from
+    format=$from
+    outsuffix=.xml
+else
+    direction=to
+    format=$to
+    outsuffix=.$to
+fi
+if [ $from = odd ] ; then odd=true; fi
+
+infile=${1}
+indir=$(cd $(dirname ${1}); pwd) # This returns a full path where just $(dirname) might return just ‘.’
+infilename=$(basename ${1})
+if [ $# -eq 1 ]; then           # only 1 argument, output file is input with new extension
+    # strip off expected suffixes from input filename
+    infilebase=${infilename}
+    infilebase=${infilebase%.odd}
+    infilebase=${infilebase%.tei}
+    infilebase=${infilebase%.xml}
+    infilebase=${infilebase%.csv}
+    infilebase=${infilebase%.dbk}
+    infilebase=${infilebase%.docx}
+    infilebase=${infilebase%.html}
+    infilebase=${infilebase%.xhtml}
+    infilebase=${infilebase%.htm}
+    infilebase=${infilebase%.odt}
+    infilebase=${infilebase%.md}
+    infilebase=${infilebase%.wp}
+    infilebase=${infilebase%.xlsx}
+    # output goes in same dir as input
+    outdir=${indir}
+    # output filename is like input but with common prefix replaced with new one
+    outfilename=${infilebase}$outsuffix
+else                            # 2 arguments (if there were more then 2 we would have already aborted)
+    outfile=${2}
+    # output directory is the directory specified
+    outdir=`dirname "${outfile}"`
+    # Following line tries to create the output directory if it does not exist yet
+    outdir=`(mkdir -p ${outdir}; cd ${outdir}; pwd)`
+    # output filename is as specified
+    outfilename=`basename ${outfile}`
+fi
+
+if [ ${indir}/${infilename} = ${outdir}/${outfilename} ] ; then die "input and output files are the same"; fi
+
+if [ ! -f "${indir}/${infilename}" ] ; then die "Input file $infile does not exist"; fi
+
+if test "$defaultAPPHOME" != "$APPHOME" ; then
+    if test "$profiledir" = "$defaultprofiledir" ; then
+        profiledir=$APPHOME/profiles
     fi
 fi
 
@@ -203,60 +234,37 @@ else
   die "unable to get localsource from $TEISOURCE"
 fi
 
-in=${1:?"no input file supplied; for usage syntax $0 --help"}
-infile=`basename "$in"`
-D=`dirname "$in"`
-indir=`(cd $D; pwd)`
-if [ $# -eq 1 ]
-then
-   outfile=`basename "$1" .$from`$outsuffix
-   outdir=$indir
-else
-   outfile=`basename $2`
-   O=`dirname "$2"`
-   outdir=`(mkdir -p $O; cd $O; pwd)`
-fi
-if ! test -f "$indir/$infile"
-then 
-    die "Input file $infile does not exist"
-fi
-if ! test -f "$SAXONJAR"
-then 
-    die "Saxon jar file $SAXONJAR does not exist"
-fi
-if ! test -f "$APPHOME/$format/build-$direction.xml"
-then
+if ! test -f "$APPHOME/$format/build-$direction.xml"; then
     die "No support for $from to $to: ant task $APPHOME/$format/build-$direction.xml does not exist"
 fi
+
 case $format in
       rnc) ;;
       xsd) ;;
       *) if ! test -f "$profiledir/$profile/$format/$direction.xsl"
-	  then
-	  die "No support for profile $profile: $profiledir/$profile/$format/$direction.xsl does not exist"
-	 fi
-	  ;;
+          then
+          die "No support for profile $profile: $profiledir/$profile/$format/$direction.xsl does not exist"
+         fi
+          ;;
 esac
 
-echo Convert $infile to $outdir/$outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
+echo Convert ${indir}/${infilename} to ${outdir}/${outfilename} \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
 ant $antflag -f "$APPHOME/$format/build-$direction.xml" \
-	-lib "${SAXONJAR}" $debug \
+        -lib "${SAXONJAR}" $debug \
     $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress \
         -Dodd=$odd \
         -Dsaxon.jar="${SAXONJAR}" \
         -Dtrang.jar="${TRANGJAR}" \
         -Dverbose=$verbose \
-	-DinputFile="$indir/$infile" \
-	-DoutputFile="$outdir/$outfile" \
+        -DinputFile="${indir}/${infilename}" \
+        -DoutputFile="${outdir}/${outfilename}" \
         -Dprofiledir="$profiledir" \
         -Dprofile="$profile" \
-	-Dpublisher=$publisher \
-	-Duid=$uid \
+        -Dpublisher=$publisher \
+        -Duid=$uid \
         -DselectedSchema=$schema \
-	-Dlang=$lang \
-	-Dsubject=$subject \
-	-Dcoverimage=$cover \
-	-Doxygenlib=$oxygenlib \
-	-DdefaultSource=$defaultSource
-
-	
+        -Dlang=$lang \
+        -Dsubject=$subject \
+        -Dcoverimage=$cover \
+        -Doxygenlib=$oxygenlib \
+        -DdefaultSource=$defaultSource

@@ -12,7 +12,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="a fo html i rng sch xi xs xsl"
-    version="2.0">
+    version="3.0">
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="classatts.xsl"/>
   <xsl:import href="../common/functions.xsl"/>
@@ -78,12 +78,12 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:variable name="oddmode">dtd</xsl:variable>
   <xsl:variable name="filesuffix"/>
-   <!-- get list of output files -->
+  <!-- get list of output files -->
   <xsl:variable name="linkColor"/>
   <xsl:template match="tei:moduleSpec[@type='decls']"/>
   <xsl:template match="/">
     <xsl:variable name="resolvedClassatts">
-      <xsl:apply-templates  mode="classatts"/>
+      <xsl:apply-templates mode="classatts"/>
     </xsl:variable>
     <xsl:for-each select="$resolvedClassatts">
       <xsl:choose>
@@ -244,8 +244,8 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:if test="$BREAK-by-debugging">
       <!-- DEBUGGING ONLY output — If this output is generated, the
-           resulting schema will be useful for debugging, but will be
-           BROKEN! -->
+           resulting schema will be invalid RELAXNG and thus BROKEN;
+           however, it is very useful for debugging! -->
       <a:documentation> ========= above is pass4, next is pass3 ========= </a:documentation>
       <rng:div xml:id="pass3">
         <xsl:copy-of select="$pass3"/>
@@ -263,7 +263,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:copy-of select="/*"/>
       </rng:div>
     </xsl:if>
-</xsl:template>
+  </xsl:template>
 
   <xsl:template match="tei:moduleSpec">
       <xsl:if test="@ident and not(@mode='change' or @mode='replace' or   @mode='delete')">
@@ -367,14 +367,20 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="NameList">
-<!-- walk over all the elementSpec elements and make list of 
-       elements -->
+    <!-- walk over all the elementSpec elements and make list of 
+         elements -->
     <xsl:for-each select="key('ELEMENTDOCS',1)">
-         <xsl:sort select="@ident"/>
-         <define xmlns="http://relaxng.org/ns/structure/1.0" combine="choice" name="{@ident}">
-            <notAllowed/>
-         </define>
-      </xsl:for-each>
+      <xsl:sort select="@ident"/>
+      <xsl:if test="@ident ne 'anyElement'">
+        <!-- Don't auto-generate a definition for an <anyElement>, those
+             definitions will be created when we actually hit
+             <anyElement> elements, as the @name of the <define> is
+             modified to be unique. -->
+        <define xmlns="http://relaxng.org/ns/structure/1.0" combine="choice" name="{@ident}">
+          <notAllowed/>
+        </define>
+      </xsl:if>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="predeclare-classes">
@@ -397,7 +403,10 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="apos">'</xsl:variable>
     <xsl:variable name="spec" select="ancestor::tei:elementSpec|ancestor::tei:macroSpec"/>
     <xsl:variable name="current" select="."/>
-    <xsl:variable name="id" select="concat('anyElement-',$spec/@ident)"/>
+    <xsl:variable name="disambiguator" as="xs:string">
+      <xsl:number level="any" format="{$anyElement_disambiguator_format}"/>
+    </xsl:variable>
+    <xsl:variable name="id" select="concat('anyElement_', $spec/@ident, $disambiguator )"/>
     <xsl:variable name="exclude">
       <xsl:choose>
         <xsl:when test="@exclude"><xsl:value-of select="@exclude"/></xsl:when>
@@ -444,8 +453,9 @@ of this software, even if advised of the possibility of such damage.
         </zeroOrMore>
       </element>
       <xsl:if test="@require and ancestor::tei:elementSpec">
-        <xsl:variable name="ns"><xsl:if
-          test="ancestor::tei:content//tei:*">, 'http://www.tei-c.org/ns/1.0'</xsl:if></xsl:variable>
+        <xsl:variable name="ns">
+          <xsl:if test="ancestor::tei:content//tei:*">, 'http://www.tei-c.org/ns/1.0'</xsl:if>
+        </xsl:variable>
         <xsl:variable name="computed-prefix">
           <xsl:for-each select="in-scope-prefixes($current)">
             <xsl:if test="$spec/@ns = namespace-uri-for-prefix(., $current)">
@@ -528,22 +538,21 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass2">
-      <xsl:copy-of select="."/>
+    <xsl:copy-of select="."/>
   </xsl:template>
     
   <xsl:template match="*" mode="pass2">
-      <xsl:copy>
-         <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
-      </xsl:copy>
+    <xsl:copy>
+      <xsl:apply-templates mode="pass2" select="*|@*|processing-instruction()|comment()|text()"/>
+    </xsl:copy>
   </xsl:template>
 
   <xsl:template match="rng:define" mode="pass2">
     <xsl:choose>
-      <xsl:when test="key('REFED',@name) or 
-        key('REFED',substring-after(@name,$generalPrefix))">
+      <xsl:when test="key('REFED',@name) or key('REFED',substring-after(@name,$generalPrefix))">
         <define xmlns="http://relaxng.org/ns/structure/1.0" >
-          <xsl:apply-templates  select="@*" mode="pass2"/>
-          <xsl:apply-templates  select="*|processing-instruction()|comment()|text()" mode="pass2"/>
+          <xsl:apply-templates mode="pass2" select="@*"/>
+          <xsl:apply-templates mode="pass2" select="*|processing-instruction()|comment()|text()"/>
         </define>
       </xsl:when>
       <xsl:otherwise>
@@ -560,6 +569,7 @@ of this software, even if advised of the possibility of such damage.
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
       </xsl:when>
       <xsl:when test="key('DEFED',@name)">
+        <!-- THIS ONE is the <ref> that is supposed to be working for anyElement #631 -->
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:content[@autoPrefix='false']">
@@ -588,7 +598,7 @@ of this software, even if advised of the possibility of such damage.
     
   <xsl:template match="*" mode="pass3">
     <xsl:copy>
-      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+      <xsl:apply-templates mode="pass3" select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
   </xsl:template>
 
@@ -605,9 +615,9 @@ of this software, even if advised of the possibility of such damage.
   
   <xsl:template match="rng:list|rng:element" mode="pass4">
     <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
-      <xsl:apply-templates  select="@*" mode="pass4"/>
+      <xsl:apply-templates mode="pass4" select="@*"/>
       <xsl:variable name="Contents">
-        <xsl:apply-templates  select="*|processing-instruction()|comment()|text()" mode="pass4"/>
+        <xsl:apply-templates mode="pass4" select="*|processing-instruction()|comment()|text()"/>
       </xsl:variable>
       <xsl:choose>
         <xsl:when test="$Contents//rng:text or $Contents//rng:ref or
@@ -625,14 +635,14 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template match="rng:group[count(*) eq 1]" mode="pass4">
-    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass4"/>
+    <xsl:apply-templates mode="pass4" select="*|@*|processing-instruction()|comment()|text()"/>
   </xsl:template>
 
   <xsl:template match="rng:choice|rng:group" mode="pass4">
     <xsl:choose>
       <xsl:when test="rng:value|rng:name|.//rng:ref|.//rng:text|.//rng:data">
         <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
-          <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass4"/>
+          <xsl:apply-templates mode="pass4" select="*|@*|processing-instruction()|comment()|text()"/>
         </xsl:element>
       </xsl:when>
       <xsl:otherwise>
@@ -660,21 +670,21 @@ of this software, even if advised of the possibility of such damage.
               select="(ancestor::rng:element/@name,rng:ref/@name)"/> because it's repeated in following rule</xsl:message></xsl:if>
           </xsl:when>
           <xsl:when test="rng:zeroOrMore">
-            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass4"/>
+            <xsl:apply-templates mode="pass4" select="*|@*|processing-instruction()|comment()|text()"/>
           </xsl:when>
           <xsl:when test="rng:group[count(*)=1 and rng:zeroOrMore]">
-            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass4"/>
+            <xsl:apply-templates mode="pass4" select="*|@*|processing-instruction()|comment()|text()"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
-              <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass4"/>
+              <xsl:apply-templates mode="pass4" select="*|@*|processing-instruction()|comment()|text()"/>
             </xsl:element>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="{name()}" namespace="http://relaxng.org/ns/structure/1.0">
-          <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass4"/>
+          <xsl:apply-templates mode="pass4" select="*|@*|processing-instruction()|comment()|text()"/>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>                          
@@ -718,7 +728,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:choose>
           <xsl:when test="count(key('DEFED',@name))=1 or @combine='choice'">
             <xsl:copy>
-              <xsl:apply-templates select="@*|node()" mode="pass4"/>
+              <xsl:apply-templates mode="pass4" select="@*|node()"/>
             </xsl:copy>
           </xsl:when>
           <xsl:otherwise>
@@ -729,7 +739,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:variable>
             <xsl:if test="count(ancestor::rng:div) lt max($others/*)">
               <xsl:copy>
-                <xsl:apply-templates select="@*|node()" mode="pass4"/>
+                <xsl:apply-templates mode="pass4" select="@*|node()"/>
               </xsl:copy>
             </xsl:if>
           </xsl:otherwise>
@@ -749,7 +759,7 @@ of this software, even if advised of the possibility of such damage.
     
   <xsl:template match="*" mode="pass4">
       <xsl:copy>
-         <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass4"/>
+         <xsl:apply-templates mode="pass4" select="*|@*|processing-instruction()|comment()|text()"/>
       </xsl:copy>
   </xsl:template>
 

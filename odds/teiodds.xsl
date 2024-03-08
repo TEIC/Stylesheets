@@ -12,7 +12,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="#all"
-    version="2.0">
+    version="3.0">
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -190,6 +190,13 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:variable>
 
+  <xsl:variable name="anyElement_disambiguator_format" as="xs:string">
+    <!-- A string used as the xsl:number/@format to append to pattern names for <anyElement>s (thus to disambiguate them) -->
+    <xsl:variable name="zeroes" as="xs:string+">
+      <xsl:for-each select="1 to ( count( //tei:anyElement ) => xs:string() => string-length() )">0</xsl:for-each>
+    </xsl:variable>
+    <xsl:value-of select="concat('_', string-join( $zeroes ))"/>
+  </xsl:variable>
 
   <xsl:template match="processing-instruction()" mode="#default tangle">
     <xsl:choose>
@@ -329,12 +336,19 @@ of this software, even if advised of the possibility of such damage.
   
   <xsl:template match="tei:anyElement" mode="tangle">
     <xsl:variable name="spec" select="ancestor::tei:elementSpec|ancestor::tei:macroSpec"/>
-    <xsl:variable name="repeatMe" as="element()">
-      <rng:ref name="{concat('anyElement-',$spec/@ident)}"/>
+    <xsl:variable name="disambiguator" as="xs:string">
+      <xsl:number level="any" format="{$anyElement_disambiguator_format}"/>
     </xsl:variable>
-    <xsl:call-template name="repeat_as_needed">
-      <xsl:with-param name="repeatMe" select="$repeatMe" as="element()"/>
-    </xsl:call-template>
+    <xsl:variable name="id" select="concat('anyElement_', $spec/@ident, $disambiguator )"/>
+    <xsl:variable name="repeatMe" as="element()">
+      <rng:ref name="{$id}"/>
+    </xsl:variable>
+    <xsl:variable name="repeated_as_needed" as="element()*">
+      <xsl:call-template name="repeat_as_needed">
+        <xsl:with-param name="repeatMe" select="$repeatMe" as="element()"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:sequence select="$repeated_as_needed"/>
   </xsl:template>
 
   <!-- Given an element (presumably a RELAX NG element), generate the
@@ -1699,7 +1713,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <xsl:variable name="glossAndDesc">
       <!-- This variable will hold the string value of the <gloss> and -->
-      <!-- <desc> of the constrcut we are currently dealing with, in   -->
+      <!-- <desc> of the construct we are currently dealing with, in   -->
       <!-- the language we are currently dealing with, so as to put it -->
       <!-- on the title= attribute when we output its name in an <a>.  -->
       <xsl:choose>
@@ -2037,24 +2051,11 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-
   <xsl:function name="tei:message" as="xs:string">
     <xsl:param name="message"/>
     <xsl:message><xsl:copy-of select="$message"/></xsl:message>
     <xsl:text/>
   </xsl:function>
-
-  <xsl:function name="tei:uniqueName" as="xs:string">
-    <xsl:param name="e"/>
-    <xsl:for-each select="$e">
-      <xsl:sequence select="concat(
-        if (@ns='http://www.tei-c.org/ns/1.0') then ''
-        else if (@ns) then @ns
-        else if (ancestor::tei:schemaSpec/@ns) then
-        ancestor::tei:schemaSpec/@ns else '',@ident)"/>
-    </xsl:for-each>
-  </xsl:function>
-
 
   <xsl:template name="die">
     <xsl:param name="message"/>
@@ -2117,7 +2118,7 @@ of this software, even if advised of the possibility of such damage.
      </xsl:variable>
      <xsl:element name="{$group_or_list}" namespace="http://relaxng.org/ns/structure/1.0">
        <xsl:call-template name="repeat_as_needed">
-	 <xsl:with-param name="repeatMe" select="$repeatMe" as="element()+"/>
+         <xsl:with-param name="repeatMe" select="$repeatMe" as="element()+"/>
        </xsl:call-template>
      </xsl:element>
    </xsl:template>

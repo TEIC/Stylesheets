@@ -18,7 +18,7 @@
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
                 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-                version="2.0"
+                version="3.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
     <xsl:import href="docx/iso-functions.xsl"/>
     <xsl:import href="../../docx/check-docx-and-annotate.xsl"/>
