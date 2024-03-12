@@ -1195,9 +1195,9 @@
                   <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"/>
                   <!-- from d3noob’s block #8375092 January 11, 2014
 	    Interactive d3.js tree diagram
-	    This is a d3.js tree diagram that incldes an interactive element as used as an example in the book D3 Tips and Tricks.
+	    This is a d3.js tree diagram that includes an interactive element as used as an example in the book D3 Tips and Tricks.
 
-	    Any parent node can be clicked on to collapse the portion of the tree below it, on itself. Conversly, it can be clicked on again to regrow.
+	    Any parent node can be clicked on to collapse the portion of the tree below it, on itself. Conversely, it can be clicked on again to regrow.
 
 	    It is derived from the Mike Bostock Collapsible tree example but it is a slightly cut down version.
 	    -->
@@ -2141,7 +2141,7 @@ function click(d) {
       </div>
    </xsl:template>
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] arrangment of page as HTML divs <param name="currentID">currentID</param>
+      <desc>[html] arrangement of page as HTML divs <param name="currentID">currentID</param>
       </desc>
    </doc>
    <xsl:template name="bodyLayout">

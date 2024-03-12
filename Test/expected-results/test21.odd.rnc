@@ -2431,7 +2431,8 @@ att.calendarSystem.attribute.calendar =
     }
   }?
 sch:pattern [
-  id = "test21-att.calendarSystem-calendar-calendar-constraint-rule-10"
+  id =
+    "test21-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-10"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -5402,7 +5403,7 @@ event =
      model.headLike*,
      (model.pLike+ | model.labelLike+ | eventName+),
      (model.noteLike | model.biblLike | linkGrp | link | idno | ptr)*,
-     (event | listEvent)*,
+     model.eventLike*,
      (model.personLike | listPerson)*,
      (model.placeLike | listPlace)*,
      model.objectLike*,
@@ -5725,7 +5726,7 @@ listEvent =
     (model.headLike*,
      desc*,
      (relation | listRelation)*,
-     ((event | listEvent)+, (relation | listRelation)*)+),
+     (model.eventLike+, (relation | listRelation)*)+),
     att.global.attributes,
     att.typed.attributes,
     att.declarable.attributes,

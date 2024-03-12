@@ -169,7 +169,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process tei:abbr (abbrevation)</desc>
+      <desc>Process tei:abbr (abbreviation)</desc>
    </doc>
   <xsl:template match="tei:abbr">
     <xsl:choose>
