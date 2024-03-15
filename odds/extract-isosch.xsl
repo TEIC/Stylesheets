@@ -52,6 +52,8 @@ of this software, even if advised of the possibility of such damage.
       <d:p>Author: See AUTHORS</d:p>
       <d:p>Copyright: 2014, TEI Consortium</d:p>
       <d:p/>
+      <d:p>Modified 2024-01-13 by Syd Bauman:
+      Bug fix. Stop copying tei:constraint/@* onto &lt;sch:rule>.</d:p>
       <d:p>Modified 2018-09-25 by Syd Bauman:
       Bug fix. Handle sqf: namespace semi-intelligently.</d:p>
       <d:p>Modified 2016-07-22 by Syd Bauman &amp; Martin Holmes: ...</d:p>
@@ -337,7 +339,7 @@ of this software, even if advised of the possibility of such damage.
                 <!-- wrappers for them, making HERE the context. -->
                 <pattern id="{$patID}">
                   <rule context="{tei:generate-context(.)}">
-                    <xsl:apply-templates select="@* except @context | node()"/>
+                    <xsl:apply-templates select="node()"/>
                   </rule>
                 </pattern>
               </xsl:when>
