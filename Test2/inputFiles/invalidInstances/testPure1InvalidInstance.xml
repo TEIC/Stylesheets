@@ -153,7 +153,29 @@
         <head>Testing <att>preserveOrder</att> on <gi>sequence</gi></head>
         <p>This <choice><reg>test</reg><orig>Test</orig></choice> should be invalid, as the <gi>orig</gi> ought to appear before the <gi>reg</gi>.</p>
       </div>
-      
+
+      <div>
+	<head>One more test of <att>minOccurs</att> and
+	<att>maxOccurs</att> on <gi>sequence</gi> child of
+	<gi>alternate</gi></head>
+	<alt_of_seq_3-4/>	<!-- invalid, content is required -->
+	<alt_of_seq_3-4>	<!-- invalid, one and only 1 <orgName> child allowed -->
+	  <orgName/><orgName/>
+	</alt_of_seq_3-4>
+	<alt_of_seq_3-4>	<!-- invalid, 3–4 <emph>, <lb> pairs required -->
+	  <emph/><lb/>
+	  <emph/><lb/>
+	</alt_of_seq_3-4>
+	<alt_of_seq_3-4>	<!-- invalid, 3–4 <emph>, <lb> pairs required -->
+	  <emph/><lb/>
+	  <emph/><lb/>
+	  <emph/><lb/>
+	  <emph/><lb/>
+	  <emph/><lb/>
+	  <emph/><lb/>
+	</alt_of_seq_3-4>
+      </div>
+	
     </body>
   </text>
 </TEI>

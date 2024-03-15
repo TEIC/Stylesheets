@@ -39,53 +39,53 @@
       </div>
 
       <div>
-	<head>Test of <gi>dataRef</gi></head>
-	<p>I'm not about to try to work <gi>measureGrp</gi> into four
-	clever sentences, so:
-	<list>
-	  <label><att>corresp</att>: <gi>dataRef</gi> w/ <att>key</att></label>
-	  <item><measureGrp corresp="0"/> Should be
-	  valid, as <val>0</val> is a teidata.count
-	  (i.e., non-negative integer.)</item>
+        <head>Test of <gi>dataRef</gi></head>
+        <p>I'm not about to try to work <gi>measureGrp</gi> into four
+        clever sentences, so:
+        <list>
+          <label><att>corresp</att>: <gi>dataRef</gi> w/ <att>key</att></label>
+          <item><measureGrp corresp="0"/> Should be
+          valid, as <val>0</val> is a teidata.count
+          (i.e., non-negative integer.)</item>
 
-	  <label><att>select</att>: <gi>dataRef</gi> w/ <att>name</att></label>
-	  <item><measureGrp select="1"/> Should be valid, as
-	  <val>1</val> is a non-negative integer.</item>
+          <label><att>select</att>: <gi>dataRef</gi> w/ <att>name</att></label>
+          <item><measureGrp select="1"/> Should be valid, as
+          <val>1</val> is a non-negative integer.</item>
 
-	  <label><att>sameAs</att>: <gi>dataRef</gi> w/ <att>key</att> &amp; <att>restriction</att></label>
-	  <item><measureGrp sameAs="2"/> Should be
-	  valid, as <val>2</val> is a 1- or
-	  2-digit teidata.count (i.e., non-negative
-	  integer).</item>
+          <label><att>sameAs</att>: <gi>dataRef</gi> w/ <att>key</att> &amp; <att>restriction</att></label>
+          <item><measureGrp sameAs="2"/> Should be
+          valid, as <val>2</val> is a 1- or
+          2-digit teidata.count (i.e., non-negative
+          integer).</item>
 
-	  <label><att>copyOf</att>: <gi>dataRef</gi> w/ <att>name</att> &amp; <att>restriction</att></label>
-	  <item><measureGrp copyOf="34"/> Should be valid, as
-	  <val>34</val> is a 1- or 2-digit non-negative
-	  integer.</item>
-	</list>
-	</p>
+          <label><att>copyOf</att>: <gi>dataRef</gi> w/ <att>name</att> &amp; <att>restriction</att></label>
+          <item><measureGrp copyOf="34"/> Should be valid, as
+          <val>34</val> is a 1- or 2-digit non-negative
+          integer.</item>
+        </list>
+        </p>
       </div>
 
       <div>
-	<head>Testing content model and occurences of element refs</head>
-	<p>The following <gi>bibl</gi> should be valid. It
-	<emph>should</emph> be invalid if you add 2 more
-	<gi>publisher</gi> elements (for a total of 4), but is not.
-	See <ref
-	target="https://github.com/TEIC/Stylesheets/issues/354">354</ref>.
-	<bibl>
-	  <author>one</author>
-	  <author>two</author>
-	  <title xml:lang="es">uno</title>
-	  <title xml:lang="es">dos</title>
-	  <title xml:lang="es">tres</title>
-	  <title xml:lang="es">quatro</title>
-	  <title xml:lang="es">cinco</title>
-	  <publisher xml:lang="ja">ich</publisher>
-	  <publisher xml:lang="ja">ni</publisher>
-	  <date when="2019-01-05"/>
-	</bibl>
-	</p>
+        <head>Testing content model and occurences of element refs</head>
+        <p>The following <gi>bibl</gi> should be valid. It
+        <emph>should</emph> be invalid if you add 2 more
+        <gi>publisher</gi> elements (for a total of 4), but is not.
+        See <ref
+        target="https://github.com/TEIC/Stylesheets/issues/354">354</ref>.
+        <bibl>
+          <author>one</author>
+          <author>two</author>
+          <title xml:lang="es">uno</title>
+          <title xml:lang="es">dos</title>
+          <title xml:lang="es">tres</title>
+          <title xml:lang="es">quatro</title>
+          <title xml:lang="es">cinco</title>
+          <publisher xml:lang="ja">ich</publisher>
+          <publisher xml:lang="ja">ni</publisher>
+          <date when="2019-01-05"/>
+        </bibl>
+        </p>
       </div>
       
       <div>
@@ -111,6 +111,386 @@
           that <choice><orig>especial</orig><reg>special</reg></choice>
           <choice><corr>order</corr><sic>oder</sic></choice>.</p>
       </div>
+
+      <!-- Test @minOccurs and @maxOccurs on <alternate> -->
+      <div>
+	<head>Testing <att>minOccurs</att> and <att>maxOccurs</att> on <gi>alternate</gi></head>
+	<altGrp type="mins">
+	  <!-- ( persName | placeName | model.publicationStmtPart.detail)?, -->
+	  <gb type="min"/>
+	  <!--
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	  -->
+	  <gb type="min"/>
+	  <!-- ( model.publicationStmtPart.detail | name | rs)*, -->
+	  <gb type="min"/>
+	  <gb type="min"/>
+	  <!-- ( persName | placeName | model.publicationStmtPart.detail), -->
+	  <persName/>
+	  <gb type="min"/>
+	  <!--
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	  -->
+	  <orgName/>
+	  <gb type="min"/>
+	  <!-- ( model.publicationStmtPart.detail | name | rs)+, -->
+	  <name/>
+	  <gb type="min"/>
+	  <gb type="min"/>
+	  <!--
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	  -->
+	  <orgName/>
+	  <date type="model.publicationStmtPart.detail"/>
+	  <gb type="min"/>
+	  <!--
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs)*,
+	  -->
+	  <idno type="model.publicationStmtPart.detail"/>
+	  <rs/>
+	  <gb type="min"/>
+	  <gb type="min"/>
+	  <!--
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name),
+	  -->
+	  <orgName/>
+	  <pubPlace n="model.publicationStmtPart.detail"/>
+	  <name/>
+	  <orgName/>
+	  <gb type="min"/>
+	  <!--
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs)*),
+	  -->
+	  <rs/><name/><ptr/><rs/>
+	</altGrp>
+	<altGrp type="mids">
+	  <!-- ( persName | placeName | model.publicationStmtPart.detail)?, -->
+	  <persName/>
+	  <gb type="mid"/>
+	  <!--
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	  -->
+	  <orgName/><ptr/>
+	  <gb type="mid"/>
+	  <!-- ( model.publicationStmtPart.detail | name | rs)*, -->
+	  <rs/><name/><name/><ptr/>
+	  <gb type="mid"/>
+	  <gb type="mid"/>
+	  <!-- ( persName | placeName | model.publicationStmtPart.detail), -->
+	  <persName/>
+	  <gb type="mid"/>
+	  <!--
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	  -->
+	  <ptr/><orgName/>
+	  <gb type="mid"/>
+	  <!-- ( model.publicationStmtPart.detail | name | rs)+, -->
+	  <name/><ptr/><rs/><idno n="model.publicationStmtPart.detail"/>
+	  <gb type="mid"/>
+	  <gb type="mid"/>
+	  <!--
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	  -->
+	  <orgName/>
+	  <date type="model.publicationStmtPart.detail"/>
+	  <gb type="mid"/>
+	  <!--
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs)*,
+	  -->
+	  <idno type="model.publicationStmtPart.detail"/>
+	  <rs/>
+	  <ptr/><name/>
+	  <gb type="mid"/>
+	  <gb type="mid"/>
+	  <!--
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name),
+	  -->
+	  <orgName/>
+	  <pubPlace n="model.publicationStmtPart.detail"/>
+	  <name/>
+	  <orgName/>
+	  <gb type="mid"/>
+	  <!--
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs)*),
+	  -->
+	  <rs/><name/><ptr/><rs/><idno n="model.publicationStmtPart.detail"/><rs/>
+	</altGrp>
+	<altGrp type="mins">
+	  <!-- ( persName | placeName | model.publicationStmtPart.detail)?, -->
+	  <placeName/>
+	  <gb type="max"/>
+	  <!--
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	  -->
+	  <orgName/><ptr/><ref n="model.publicationStmtPart.detail"/><name/>
+	  <gb type="max"/>
+	  <!-- ( model.publicationStmtPart.detail | name | rs)*, -->
+	  <rs n="00"/><rs n="01"/><rs n="02"/><rs n="03"/><rs n="04"/><rs n="05"/><rs n="06"/><rs n="07"/><rs n="08"/><rs n="09"/>
+	  <rs n="10"/><rs n="11"/><rs n="12"/><rs n="13"/><rs n="14"/><rs n="15"/><rs n="16"/><rs n="17"/><rs n="18"/><rs n="19"/>
+	  <rs n="20"/><rs n="21"/><rs n="22"/><rs n="23"/><rs n="24"/><rs n="25"/><rs n="26"/><rs n="27"/><rs n="28"/><rs n="29"/>
+	  <rs n="30"/><rs n="31"/><rs n="32"/><rs n="33"/><rs n="34"/><rs n="35"/><rs n="36"/><rs n="37"/><rs n="38"/><rs n="39"/>
+	  <gb type="max"/>
+	  <gb type="max"/>
+	  <!-- ( persName | placeName | model.publicationStmtPart.detail), -->
+	  <placeName/>
+	  <gb type="max"/>
+	  <!--
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	  -->
+	  <ptr/><orgName/><ref n="model.publicationStmtPart.detail"/><name/>
+	  <gb type="max"/>
+	  <!-- ( model.publicationStmtPart.detail | name | rs)+, -->
+	  <rs n="00"/><name n="01"/><date n="02"/><idno n="03"/><ptr n="04"/><pubPlace n="05"/><ref n="06"/><rs n="07"/><name n="08"/><rs n="09"/>
+	  <rs n="10"/><name n="11"/><date n="12"/><idno n="13"/><ptr n="14"/><pubPlace n="15"/><ref n="16"/><rs n="17"/><name n="18"/><rs n="19"/>
+	  <rs n="20"/><name n="21"/><date n="22"/><idno n="23"/><ptr n="24"/><pubPlace n="25"/><ref n="26"/><rs n="27"/><name n="28"/><rs n="29"/>
+	  <gb type="max"/>
+	  <gb type="max"/>
+	  <!--
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	      ( orgName | model.publicationStmtPart.detail | name)?,
+	  -->
+	  <orgName/>
+	  <date type="model.publicationStmtPart.detail"/>
+	  <orgName/>
+	  <name/>
+	  <gb type="max"/>
+	  <!--
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs)*,
+	  -->
+	  <ptr/><name/><rs/><ptr/><rs/><name/><idno/>
+	  <name/><ptr/><ptr/><rs/><name/><rs/><date/>
+	  <gb type="max"/>
+	  <gb type="max"/>
+	  <!--
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name),
+	      ( orgName | model.publicationStmtPart.detail | name),
+	  -->
+	  <orgName/>
+	  <pubPlace n="model.publicationStmtPart.detail"/>
+	  <orgName/>
+	  <name/>
+	  <gb type="max"/>
+	  <!--
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs),
+	      ( model.publicationStmtPart.detail | name | rs)*),
+	  -->
+	  <rs n="00"/><ptr n="01"/><date n="02"/><idno n="03"/><ref n="04"/><pubPlace n="05"/><rs n="06"/><rs n="07"/><ptr n="08"/><rs n="09"/>
+	  <rs n="10"/><ptr n="11"/><date n="12"/><idno n="13"/><ref n="14"/><pubPlace n="15"/><rs n="16"/><rs n="17"/><ptr n="18"/><rs n="19"/>
+	  <rs n="20"/><ptr n="21"/><date n="22"/><idno n="23"/><ref n="24"/><pubPlace n="25"/><rs n="26"/><rs n="27"/><ptr n="28"/><rs n="29"/>
+	</altGrp>
+      </div>
+
+
+      <!-- Extra test of @minOccurs and @maxOccurs on sequence in alternate -->
+      <div>
+	<head>One more test of <att>minOccurs</att> and
+	<att>maxOccurs</att> on <gi>sequence</gi> child of
+	<gi>alternate</gi></head>
+	<alt_of_seq_3-4>
+	  <orgName/>
+	</alt_of_seq_3-4>
+	<alt_of_seq_3-4>
+	  <emph/><lb/>
+	  <emph/><lb/>
+	  <emph/><lb/>
+	</alt_of_seq_3-4>
+	<alt_of_seq_3-4>
+	  <emph/><lb/>
+	  <emph/><lb/>
+	  <emph/><lb/>
+	  <emph/><lb/>
+	</alt_of_seq_3-4>
+      </div>
+      
+      <div xmlns:tst1="http://www.tei-c.org/ns/testMin" xmlns:tst2="http://www.tei-c.org/ns/test_min"
+	   xmlns:svg="http://www.w3.org/2000/svg" xmlns:mods="http://www.loc.gov/mods/v3">
+           <head>Testing <att>minOccurs</att> and <att>maxOccurs</att> on <gi>anyElement</gi></head>
+           <ab n="mins">
+             <!-- plain, just for reference -->
+             <tst1:plain/>
+             <gb n="above matches 1 to 1"/>
+             <!-- min=0, max=various -->
+             <gb n="above matches 0 to 1"/>
+             <gb n="above matches 0 to 2"/>
+             <gb n="above matches 0 to 6"/>
+             <gb n="above matches 0 to ∞"/>
+             <!-- min=1, max=various -->
+             <mods:one_to_one/>
+             <gb n="above matches 1 to 1 MODS element"/>
+             <tst1:one_to_two/>
+             <gb n="above matches 1 to 2"/>
+             <tst2:one_to_six/>
+             <gb n="above matches 1 to 6"/>
+             <tst1:one_to_inf/>
+             <gb n="above matches 1 to ∞"/>
+             <!-- min=2, max=various -->
+             <tst2:two_to_two/> <tst1:two_to_two/>
+             <gb n="above matches 2 to 2"/>
+             <svg:two_to_six/> <svg:two_to_six/>
+             <gb n="above matches 2 to 6 SVG elements"/>
+             <tst2:two_to_inf/> <tst1:two_to_inf/>
+             <gb n="above matches 2 to ∞"/>
+             <!-- min=4, max=various -->
+             <tst2:four_to_six/> <tst1:four_to_six/>
+             <tst2:four_to_six/> <tst1:four_to_six/>
+             <gb n="above matches 4 to 6"/>
+             <tst2:four_to_inf/> <tst1:four_to_inf/>
+             <tst2:four_to_inf/> <tst1:four_to_inf/>
+             <gb n="above matches 4 to ∞"/>
+           </ab>
+
+           <ab xmlns:tst1="http://www.tei-c.org/ns/test_mid" xmlns:tst2="http://www.tei-c.org/ns/testMid" n="mids">
+             <!-- plain, just for reference -->
+             <tst2:plain/>
+             <gb n="above matches 1 to 1"/>
+             <!-- min=0, max=various -->
+             <tst1:zero_to_one/>
+             <gb n="above matches 0 to 1"/>
+             <tst2:zero_to_two/>
+             <gb n="above matches 0 to 2"/>
+             <tst1:zero_to_six/>
+             <tst2:zero_to_six/>
+             <tst1:zero_to_six/>
+             <gb n="above matches 0 to 6"/>
+             <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+             <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+             <gb n="above matches 0 to ∞"/>
+             <!-- min=1, max=various -->
+             <mods:one_to_one/>
+             <gb n="above matches 1 to 1 MODS element"/>
+             <tst1:one_to_two/>
+             <gb n="above matches 1 to 2"/>
+             <tst2:one_to_six/>
+             <tst1:one_to_six/>
+             <tst2:one_to_six/>
+             <gb n="above matches 1 to 6"/>
+             <tst1:one_to_inf/> <tst2:one_to_inf/>
+             <tst1:one_to_inf/> <tst2:one_to_inf/>
+             <gb n="above matches 1 to ∞"/>
+             <!-- min=2, max=various -->
+             <tst1:two_to_two/> <tst2:two_to_two/>
+             <gb n="above matches 2 to 2"/>
+             <svg:two_to_six/> <svg:two_to_six/>
+             <svg:two_to_six/> <svg:two_to_six/>
+             <gb n="above matches 2 to 6 SVG elements"/>
+             <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/>
+             <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/>
+             <gb n="above matches 2 to ∞"/>
+             <!-- min=4, max=various -->
+             <tst1:four_to_six/> <tst2:four_to_six/> <tst1:four_to_six/>
+             <tst2:four_to_six/> <tst1:four_to_six/>
+             <gb n="above matches 4 to 6"/>
+             <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
+             <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
+             <gb n="above matches 4 to ∞"/>
+           </ab>
+
+           <ab xmlns:tst1="http://www.tei-c.org/ns/test_max" xmlns:tst2="http://www.tei-c.org/ns/testMax" n="maxs">
+             <!-- plain, just for reference -->
+             <tst2:plain/>
+             <gb n="above matches 1 to 1"/>
+             <!-- min=0, max=various -->
+             <tst1:zero_to_one/>
+             <gb n="above matches 0 to 1"/>
+             <tst2:zero_to_two/> <tst1:zero_to_two/>
+             <gb n="above matches 0 to 2"/>
+             <tst2:zero_to_six/> <tst1:zero_to_six/> <tst2:zero_to_six/>
+             <tst1:zero_to_six/> <tst2:zero_to_six/> <tst1:zero_to_six/>
+             <gb n="above matches 0 to 6"/>
+             <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+             <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+             <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+             <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+             <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+             <tst2:zero_to_inf/> <tst1:zero_to_inf/> <tst2:zero_to_inf/> <tst1:zero_to_inf/>
+             <gb n="above matches 0 to ∞"/>
+             <!-- min=1, max=various -->
+             <mods:one_to_one/>
+             <gb n="above matches 1 to 1 MODS element"/>
+             <tst1:one_to_two/> <tst2:one_to_two/>
+             <gb n="above matches 1 to 2"/>
+             <tst1:one_to_six/> <tst2:one_to_six/> <tst1:one_to_six/>
+             <tst2:one_to_six/> <tst1:one_to_six/> <tst2:one_to_six/>
+             <gb n="above matches 1 to 6"/>
+             <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/>
+             <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/>
+             <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/> <tst2:one_to_inf/> <tst1:one_to_inf/>
+             <gb n="above matches 1 to ∞"/>
+             <!-- min=2, max=various -->
+             <tst2:two_to_two/> <tst1:two_to_two/>
+             <gb n="above matches 2 to 2"/>
+             <svg:two_to_six/> <svg:two_to_six/> <svg:two_to_six/>
+             <svg:two_to_six/> <svg:two_to_six/> <svg:two_to_six/>
+             <gb n="above matches 2 to 6 SVG elements"/>
+             <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/>
+             <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/>
+             <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/>
+             <tst2:two_to_inf/> <tst1:two_to_inf/> <tst2:two_to_inf/> <tst1:two_to_inf/>
+             <gb n="above matches 2 to ∞"/>
+             <!-- min=4, max=various -->
+             <tst2:four_to_six/> <tst1:four_to_six/> <tst2:four_to_six/>
+             <tst1:four_to_six/> <tst2:four_to_six/> <tst1:four_to_six/>
+             <gb n="above matches 4 to 6"/>
+             <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
+             <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
+             <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
+             <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/> <tst2:four_to_inf/> <tst1:four_to_inf/>
+             <gb n="above matches 4 to ∞"/>
+           </ab>
+
+      </div>
+
     </body>
   </text>
 </TEI>

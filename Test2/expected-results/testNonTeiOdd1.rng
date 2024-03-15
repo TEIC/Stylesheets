@@ -30,6 +30,7 @@
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Division of a document; used as the root for content blocks.) The core container element for a content block. This may also nest, to provide subsections.</a:documentation>
          <ref name="macro.divContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0"
                   id="nonTeiOdd-div-headingLevelMustMatchNesting-constraint-assert-1">
             <rule context="xh:div">
                <sch:assert xmlns="http://www.tei-c.org/ns/1.0"
@@ -166,6 +167,7 @@
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Image element. May be rendered inline or as a block, depending on where it appears in the document structure.</a:documentation>
          <empty/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0"
                   id="nonTeiOdd-img-imgWithoutCaptionNeedsAltAndTitle-constraint-assert-2">
             <rule context="xh:img">
                <sch:assert xmlns="http://www.tei-c.org/ns/1.0"
@@ -326,14 +328,12 @@
       <element name="tr" ns="http://www.w3.org/1999/xhtml">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">A table row.</a:documentation>
          <oneOrMore>
-            <group>
-               <zeroOrMore>
-                  <ref name="th"/>
-               </zeroOrMore>
-               <zeroOrMore>
-                  <ref name="td"/>
-               </zeroOrMore>
-            </group>
+            <zeroOrMore>
+               <ref name="th"/>
+            </zeroOrMore>
+            <zeroOrMore>
+               <ref name="td"/>
+            </zeroOrMore>
          </oneOrMore>
       </element>
    </define>
