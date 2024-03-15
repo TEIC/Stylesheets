@@ -36,8 +36,8 @@ echo "  --profile=$profile    # which transformation profile to use"
 echo "  --lang=$lang    # which language to use "
 echo "  --oxygenlib=$oxygenlib    # where is oxygenlib"
 echo "  --splitLevel=$splitLevel        # splitting level "
-case $format in
-    rng|rnc|dtd|xsd)
+case "$to" in
+    dtd|html|html5|rnc|rng|xsd)
         if [ $from != odd ]; then echo "  --odd                # perform processing of ODD (if appropriate)"; fi
         echo "  --localsource=DIR    # where is local copy of source of TEI Guidelines"
         echo "  --summaryDoc         # only make summary, when doing ODD processing"

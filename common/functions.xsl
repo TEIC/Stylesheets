@@ -1172,7 +1172,7 @@ of this software, even if advised of the possibility of such damage.
           The original code, which had separate templates for tei:valList[@type=open] and
           tei:valList[@type=semi], was very redundant. However, it may have been very clever
           in how it handled the case of multiple child <valList>s. Or, it may have obliviously
-          worked in that case, producing passable, if not ideal, outupt. Depends on your point
+          worked in that case, producing passable, if not ideal, output. Depends on your point
           of view, in part.
           I believe we reproduce what it did, whether you like it or not, by using '=' instead
           of 'eq' in the "if" comparison in the definition of $msg.
