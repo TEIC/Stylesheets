@@ -206,7 +206,7 @@ of this software, even if advised of the possibility of such damage.
 	&lt;!ENTITY % file.</xsl:text>
             <xsl:value-of select="@ident"/>
             <xsl:text> PUBLIC '-//TEI P5//ELEMENTS </xsl:text>
-            <xsl:sequence select="( tei:idno[@type eq 'FPI'], tei:altIdent[@type eq 'FPI'] )[1]"/>
+            <xsl:sequence select="tei:idno[@type eq 'FPI']"/>
             <xsl:text>//EN' '</xsl:text>
             <xsl:value-of select="@ident"/>
             <xsl:text>.dtd' &gt;
