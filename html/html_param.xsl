@@ -64,7 +64,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:param>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
-    <desc>which Javascript library to use for drawing trees</desc>
+    <desc>which JavaScript library to use for drawing trees</desc>
   </doc>
   <xsl:param name="treestyle">googlechart</xsl:param>
 
@@ -148,7 +148,7 @@ HTML width and height (in pixels) from supplied dimensions.</desc>
    </doc>
   <xsl:template name="bodyEndHook"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
-      <desc>[html] Hook where Javascript calls can be inserted  just after &lt;body&gt;</desc>
+      <desc>[html] Hook where JavaScript calls can be inserted  just after &lt;body&gt;</desc>
    </doc>
   <xsl:template name="bodyJavascriptHook"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
@@ -178,7 +178,7 @@ HTML width and height (in pixels) from supplied dimensions.</desc>
    </doc>
   <xsl:template name="figureHook"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
-      <desc>[html] Hook where extra Javascript functions can be defined</desc>
+      <desc>[html] Hook where extra JavaScript functions can be defined</desc>
    </doc>
   <xsl:template name="javascriptHook"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
