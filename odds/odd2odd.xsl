@@ -110,7 +110,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
   <xsl:key match="tei:moduleSpec" name="odd2odd-MODULES" use="@ident"/>
 
-
    <!-- all of these use a combination of @ident _and_ @ns (where
    present), in case of duplication of names across schemes -->
 
@@ -142,7 +141,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-REPLACE"    match="tei:elementSpec[@mode eq 'replace']" use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-REPLACE"    match="tei:macroSpec[@mode eq 'replace']"   use="tei:uniqueName(.)"/>
   <xsl:key name="odd2odd-REPLACEATT" match="tei:attDef[@mode eq 'replace']" use="concat(../../@ident,'_',@ident)"/>
-
 
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
@@ -194,7 +192,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:otherwise>true</xsl:otherwise>
       </xsl:choose>
   </xsl:function>
-
 
   <xsl:function name="tei:checkExclude" as="xs:boolean">
     <xsl:param name="ident"  as="xs:string"/>
@@ -346,7 +343,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="ODD">
     <xsl:for-each select="/*">
       <xsl:copy>
-              <xsl:attribute name="xml:base" select="document-uri(/)"/>
+        <xsl:attribute name="xml:base" select="document-uri(/)"/>
         <xsl:copy-of select="@*"/>
         <xsl:if test="$useVersionFromTEI='true'">
           <xsl:processing-instruction name="TEIVERSION">
@@ -1271,8 +1268,8 @@ of this software, even if advised of the possibility of such damage.
           <xsl:if test="$ORIGINAL/tei:attList">
             <attList xmlns="http://www.tei-c.org/ns/1.0">
               <xsl:call-template name="odd2odd-processAttributes">
-		<xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
-		<xsl:with-param name="objectName" select="$className"/>
+                <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
+                <xsl:with-param name="objectName" select="$className"/>
               </xsl:call-template>
             </attList>
           </xsl:if>
@@ -1642,7 +1639,7 @@ of this software, even if advised of the possibility of such damage.
                                  not(@ident=$ORIGINAL/tei:attList//tei:attDef/@ident)]"/>
     <!-- any direct attRef elements -->
     <xsl:apply-templates mode="justcopy"
-                           select="tei:attList/tei:attRef"/>
+                         select="tei:attList/tei:attRef"/>
     <!-- now look at each of the original object's attributes and see
     if we have an update -->
     <xsl:for-each select="$ORIGINAL/tei:attList">
@@ -1774,14 +1771,6 @@ of this software, even if advised of the possibility of such damage.
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
-          <xsl:when test="$New/tei:constraintSpec">
-            <xsl:apply-templates mode="justcopy" select="$New/tei:constraintSpec"/>
-          </xsl:when>
-          <xsl:when test="$Old/tei:constraintSpec">
-            <xsl:copy-of select="$Old/tei:constraintSpec"/>
-          </xsl:when>
-        </xsl:choose>
-        <xsl:choose>
           <xsl:when test="$New/tei:datatype">
             <xsl:apply-templates mode="justcopy" select="$New/tei:datatype"/>
           </xsl:when>
@@ -1790,7 +1779,14 @@ of this software, even if advised of the possibility of such damage.
           </xsl:when>
         </xsl:choose>
         <xsl:choose>
-          
+          <xsl:when test="$New/tei:constraintSpec">
+            <xsl:apply-templates mode="justcopy" select="$New/tei:constraintSpec"/>
+          </xsl:when>
+          <xsl:when test="$Old/tei:constraintSpec">
+            <xsl:copy-of select="$Old/tei:constraintSpec"/>
+          </xsl:when>
+        </xsl:choose>
+        <xsl:choose>
           <xsl:when test="$New/tei:defaultVal">
             <xsl:apply-templates mode="justcopy" select="$New/tei:defaultVal"/>
           </xsl:when>
