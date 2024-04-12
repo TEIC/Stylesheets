@@ -21,7 +21,7 @@ In particular, Stylesheets assume that you use `ant` version 1.9.x+. If for some
 
 It is helpful to have the TEI environment installed locally. Please refer to http://www.tei-c.org/Guidelines/P5/get.xml for hints on how to do that.
 
-It is also possible to avoid manual installation of additional tools, by resorting to the pre-built test environment in Docker described in http://teic.github.io/TCW/testing_and_building.html .
+It is also possible to avoid manual installation of additional tools, by resorting to the pre-built test environment in Docker described in https://teic.github.io/Documentation/TCW/testing_and_building.html .
 
 ## Usage
 The `bin/` directory contains several executable files, which can be run on Linux, OS X, or other Unix operating systems. These perform a variety of transformations and are very useful for, e.g., generating a schema from a TEI ODD. Some examples:
