@@ -1479,12 +1479,12 @@ function click(d) {
    </xsl:template>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] Javascript functions to be declared in HTML header</desc>
+      <desc>[html] JavaScript functions to be declared in HTML header</desc>
    </doc>
    <xsl:template name="includeJavascript"> </xsl:template>
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>[html] Write out some Javascript into the HTML</p>
+         <p>[html] Write out some JavaScript into the HTML</p>
          <p>Note that it does not have to commented if the output is XHTML</p>
          <param name="content">The code</param>
       </desc>

@@ -152,7 +152,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:variable name="file" select="normalize-space(.)"/>
           <xsl:variable name="name" select="tokenize($file,'/')[last()]"/>
           <xsl:if test="$verbose='true'">
-            <xsl:message>write Javascript file <xsl:value-of select="$name"/></xsl:message>
+            <xsl:message>write JavaScript file <xsl:value-of select="$name"/></xsl:message>
           </xsl:if>
           <xsl:result-document method="text" href="{concat($directory,'/OPS/',$name)}">
             <xsl:for-each select="unparsed-text($file)">
