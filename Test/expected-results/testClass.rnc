@@ -97,7 +97,7 @@ att.global.responsibility.attribute.cert =
   
   ## (certainty) signifies the degree of certainty associated with the intervention or interpretation.
   attribute cert {
-    xsd:double
+    xsd:double { minInclusive = "0" maxInclusive = "1" }
     | (
        ##
        "high"
@@ -615,7 +615,7 @@ model.divGenLike = notAllowed
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
          id =
-           "testClassRef-div-abstractModel-structure-div-in-l-or-lg-constraint-report-2"
+           "testClassRef-div-abstractModel-structure-div-in-l-or-lg-constraint-rule-3"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -626,8 +626,8 @@ model.divGenLike = notAllowed
              test =
                "(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
-             "      "
+             "          Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -637,7 +637,7 @@ model.divGenLike = notAllowed
        ]
     >> sch:pattern [
          id =
-           "testClassRef-div-abstractModel-structure-div-in-ab-or-p-constraint-report-3"
+           "testClassRef-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -648,8 +648,8 @@ model.divGenLike = notAllowed
              test =
                "(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
-             "      "
+             "          Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -671,7 +671,7 @@ p =
     macro.paraContent
     >> sch:pattern [
          id =
-           "testClassRef-p-abstractModel-structure-p-in-ab-or-p-constraint-report-4"
+           "testClassRef-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -680,10 +680,10 @@ p =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:ab or ancestor::tei:p) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"
+               "(ancestor::tei:ab or ancestor::tei:p) and                        not( ancestor::tei:floatingText                           | parent::tei:exemplum                           | parent::tei:item                           | parent::tei:note                           | parent::tei:q                           | parent::tei:quote                           | parent::tei:remarks                           | parent::tei:said                           | parent::tei:sp                           | parent::tei:stage                           | parent::tei:cell                           | parent::tei:figure )"
              "\x{a}" ~
-             "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
-             "      "
+             "          Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -693,7 +693,7 @@ p =
        ]
     >> sch:pattern [
          id =
-           "testClassRef-p-abstractModel-structure-p-in-l-or-lg-constraint-report-5"
+           "testClassRef-p-abstractModel-structure-p-in-l-or-lg-constraint-rule-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -702,10 +702,10 @@ p =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )"
+               "( ancestor::tei:l  or  ancestor::tei:lg ) and                        not( ancestor::tei:floatingText                           | parent::tei:figure                           | parent::tei:note )"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
-             "      "
+             "          Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "

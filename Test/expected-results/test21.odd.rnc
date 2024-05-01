@@ -125,7 +125,9 @@ att.ranging.attribute.confidence =
       ", or the proportion of observed values that fall within that range."
     ]
   ]
-  attribute confidence { xsd:double }?
+  attribute confidence {
+    xsd:double { minInclusive = "0" maxInclusive = "1" }
+  }?
 att.dimensions.attributes =
   att.ranging.attributes,
   att.dimensions.attribute.unit,
@@ -222,7 +224,7 @@ att.damaged.attribute.degree =
     ]
   ]
   attribute degree {
-    xsd:double
+    xsd:double { minInclusive = "0" maxInclusive = "1" }
     | (
        ##
        "high"
@@ -540,7 +542,7 @@ att.global.responsibility.attribute.cert =
   
   ## (certitude) donne le degré de certitude associée à l'intervention ou à l'interprétation.
   attribute cert {
-    xsd:double
+    xsd:double { minInclusive = "0" maxInclusive = "1" }
     | (
        ##
        "high"
@@ -2520,7 +2522,7 @@ p =
      }*)
     >> sch:pattern [
          id =
-           "test21-p-abstractModel-structure-p-in-ab-or-p-constraint-report-6"
+           "test21-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2529,10 +2531,10 @@ p =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:ab or ancestor::tei:p) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"
+               "(ancestor::tei:ab or ancestor::tei:p) and                        not( ancestor::tei:floatingText                           | parent::tei:exemplum                           | parent::tei:item                           | parent::tei:note                           | parent::tei:q                           | parent::tei:quote                           | parent::tei:remarks                           | parent::tei:said                           | parent::tei:sp                           | parent::tei:stage                           | parent::tei:cell                           | parent::tei:figure )"
              "\x{a}" ~
-             "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
-             "      "
+             "          Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -2542,7 +2544,7 @@ p =
        ]
     >> sch:pattern [
          id =
-           "test21-p-abstractModel-structure-p-in-l-or-lg-constraint-report-7"
+           "test21-p-abstractModel-structure-p-in-l-or-lg-constraint-rule-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2551,10 +2553,10 @@ p =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )"
+               "( ancestor::tei:l  or  ancestor::tei:lg ) and                        not( ancestor::tei:floatingText                           | parent::tei:figure                           | parent::tei:note )"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
-             "      "
+             "          Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -2745,7 +2747,7 @@ desc =
     macro.limitedContent
     >> sch:pattern [
          id =
-           "test21-desc-deprecationInfo-only-in-deprecated-constraint-rule-11"
+           "test21-desc-deprecationInfo-only-in-deprecated-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2833,7 +2835,7 @@ rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "test21-rt-target-rt-target-not-span-constraint-report-8"
+         id = "test21-rt-target-rt-target-not-span-constraint-rule-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2842,8 +2844,7 @@ rt =
            "               "
            sch:report [
              test = "../@from | ../@to"
-             "When target= is\x{a}" ~
-             "            present, neither from= nor to= should be."
+             "When target= is present, neither from= nor to= should be."
            ]
            "\x{a}" ~
            "            "
@@ -2857,7 +2858,7 @@ rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "test21-rt-from-rt-from-constraint-assert-7"
+         id = "test21-rt-from-rt-from-constraint-rule-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2866,8 +2867,7 @@ rt =
            "               "
            sch:assert [
              test = "../@to"
-             "When from= is present, the to=\x{a}" ~
-             "            attribute of "
+             "When from= is present, the to= attribute of "
              sch:name [ ]
              " is required."
            ]
@@ -2883,7 +2883,7 @@ rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "test21-rt-to-rt-to-constraint-assert-8"
+         id = "test21-rt-to-rt-to-constraint-rule-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2892,8 +2892,7 @@ rt =
            "               "
            sch:assert [
              test = "../@from"
-             "When to= is present, the from=\x{a}" ~
-             "            attribute of "
+             "When to= is present, the from= attribute of "
              sch:name [ ]
              " is required."
            ]
@@ -3082,7 +3081,7 @@ name =
      }?)
     >> sch:pattern [
          id =
-           "test21-name-calendar-calendar-check-name-constraint-rule-12"
+           "test21-name-calendar-calendar-check-name-constraint-rule-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3284,7 +3283,7 @@ ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "test21-ptr-ptrAtts-constraint-report-9"
+         id = "test21-ptr-ptrAtts-constraint-rule-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3293,8 +3292,7 @@ ptr =
            "               "
            sch:report [
              test = "@target and @cRef"
-             "Only one of the\x{a}" ~
-             "attributes @target and @cRef may be supplied on "
+             "Only one of the attributes @target and @cRef may be supplied on "
              sch:name [ ]
              "."
            ]
@@ -3328,7 +3326,7 @@ ref =
   element ref {
     macro.paraContent
     >> sch:pattern [
-         id = "test21-ref-refAtts-constraint-report-10"
+         id = "test21-ref-refAtts-constraint-rule-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3337,8 +3335,7 @@ ref =
            "               "
            sch:report [
              test = "@target and @cRef"
-             "Only one of the\x{a}" ~
-             "	attributes @target' and @cRef' may be supplied on "
+             "Only one of the attributes @target' and @cRef' may be supplied on "
              sch:name [ ]
              "\x{a}" ~
              "               "
@@ -3369,7 +3366,7 @@ ref =
      (model.divBottom, model.global*)*)
     >> sch:pattern [
          id =
-           "test21-list-gloss-list-must-have-labels-constraint-rule-13"
+           "test21-list-gloss-list-must-have-labels-constraint-rule-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3683,7 +3680,7 @@ author =
   element author {
     macro.phraseSeq
     >> sch:pattern [
-         id = "test21-author-calendar-check-author-constraint-rule-14"
+         id = "test21-author-calendar-check-author-constraint-rule-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3719,7 +3716,7 @@ author =
      }?)
     >> sch:pattern [
          id =
-           "test21-author-calendar-calendar-check-author-constraint-rule-15"
+           "test21-author-calendar-calendar-check-author-constraint-rule-22"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3748,7 +3745,7 @@ editor =
   element editor {
     macro.phraseSeq
     >> sch:pattern [
-         id = "test21-editor-calendar-check-editor-constraint-rule-16"
+         id = "test21-editor-calendar-check-editor-constraint-rule-23"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3796,7 +3793,7 @@ editor =
      }?)
     >> sch:pattern [
          id =
-           "test21-editor-calendar-calendar-check-editor-constraint-rule-17"
+           "test21-editor-calendar-calendar-check-editor-constraint-rule-24"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3846,7 +3843,7 @@ resp =
      }?)
     >> sch:pattern [
          id =
-           "test21-resp-calendar-calendar-check-resp-constraint-rule-18"
+           "test21-resp-calendar-calendar-check-resp-constraint-rule-25"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3875,7 +3872,7 @@ title =
   element title {
     ((text | hi)*)
     >> sch:pattern [
-         id = "test21-title-calendar-check-title-constraint-rule-19"
+         id = "test21-title-calendar-check-title-constraint-rule-26"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3909,7 +3906,7 @@ title =
      }?)
     >> sch:pattern [
          id =
-           "test21-title-calendar-calendar-check-title-constraint-rule-20"
+           "test21-title-calendar-calendar-check-title-constraint-rule-27"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3968,7 +3965,7 @@ meeting =
      }?)
     >> sch:pattern [
          id =
-           "test21-meeting-calendar-calendar-check-meeting-constraint-rule-21"
+           "test21-meeting-calendar-calendar-check-meeting-constraint-rule-28"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4086,7 +4083,7 @@ relatedItem =
   element relatedItem {
     ((model.biblLike | model.ptrLike)?)
     >> sch:pattern [
-         id = "test21-relatedItem-targetorcontent1-constraint-report-11"
+         id = "test21-relatedItem-targetorcontent1-constraint-rule-29"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4095,18 +4092,15 @@ relatedItem =
            "               "
            sch:report [
              test = "@target and count( child::* ) > 0"
-             "\x{a}" ~
              "If the @target attribute on "
              sch:name [ ]
-             " is used, the\x{a}" ~
-             "relatedItem element must be empty"
+             " is used, the relatedItem element must be empty"
            ]
            "\x{a}" ~
            "               "
            sch:assert [
              test = "@target or child::*"
-             "A relatedItem element should have either a 'target' attribute\x{a}" ~
-             "        or a child element to indicate the related bibliographic item"
+             "A relatedItem element should have either a @target attribute or a child element to indicate the related bibliographic item"
            ]
            "\x{a}" ~
            "            "
@@ -4130,7 +4124,7 @@ l =
     ((text | model.gLike | model.phrase | model.inter | model.global)*)
     >> sch:pattern [
          id =
-           "test21-l-abstractModel-structure-l-in-l-constraint-report-12"
+           "test21-l-abstractModel-structure-l-in-l-constraint-rule-30"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4140,9 +4134,7 @@ l =
            sch:report [
              test =
                "ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]"
-             "\x{a}" ~
-             "        Abstract model violation: Lines may not contain lines or lg elements.\x{a}" ~
-             "      "
+             "Abstract model violation: Lines may not contain lines or lg elements."
            ]
            "\x{a}" ~
            "            "
@@ -4172,7 +4164,7 @@ lg =
       | lg)*,
      (model.divBottom, model.global*)*)
     >> sch:pattern [
-         id = "test21-lg-atleast1oflggapl-constraint-assert-20"
+         id = "test21-lg-atleast1oflggapl-constraint-rule-31"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4182,8 +4174,7 @@ lg =
            sch:assert [
              test =
                "count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) > 0"
-             "An lg element\x{a}" ~
-             "        must contain at least one child l, lg, or gap element."
+             "An lg element must contain at least one child l, lg, or gap element."
            ]
            "\x{a}" ~
            "            "
@@ -4193,7 +4184,7 @@ lg =
        ]
     >> sch:pattern [
          id =
-           "test21-lg-abstractModel-structure-lg-in-l-constraint-report-13"
+           "test21-lg-abstractModel-structure-lg-in-l-constraint-rule-32"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4203,9 +4194,7 @@ lg =
            sch:report [
              test =
                "ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]"
-             "\x{a}" ~
-             "        Abstract model violation: Lines may not contain line groups.\x{a}" ~
-             "      "
+             "Abstract model violation: Lines may not contain line groups."
            ]
            "\x{a}" ~
            "            "
@@ -4575,7 +4564,7 @@ orgName =
      }?)
     >> sch:pattern [
          id =
-           "test21-orgName-calendar-calendar-check-orgName-constraint-rule-22"
+           "test21-orgName-calendar-calendar-check-orgName-constraint-rule-33"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4617,7 +4606,7 @@ persName =
      }?)
     >> sch:pattern [
          id =
-           "test21-persName-calendar-calendar-check-persName-constraint-rule-23"
+           "test21-persName-calendar-calendar-check-persName-constraint-rule-34"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4703,7 +4692,7 @@ placeName =
     macro.phraseSeq
     >> sch:pattern [
          id =
-           "test21-placeName-calendar-check-placeName-constraint-rule-24"
+           "test21-placeName-calendar-check-placeName-constraint-rule-35"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4741,7 +4730,7 @@ placeName =
      }?)
     >> sch:pattern [
          id =
-           "test21-placeName-calendar-calendar-check-placeName-constraint-rule-25"
+           "test21-placeName-calendar-calendar-check-placeName-constraint-rule-36"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4782,7 +4771,7 @@ bloc =
      }?)
     >> sch:pattern [
          id =
-           "test21-bloc-calendar-calendar-check-bloc-constraint-rule-26"
+           "test21-bloc-calendar-calendar-check-bloc-constraint-rule-37"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4823,7 +4812,7 @@ country =
      }?)
     >> sch:pattern [
          id =
-           "test21-country-calendar-calendar-check-country-constraint-rule-27"
+           "test21-country-calendar-calendar-check-country-constraint-rule-38"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4864,7 +4853,7 @@ region =
      }?)
     >> sch:pattern [
          id =
-           "test21-region-calendar-calendar-check-region-constraint-rule-28"
+           "test21-region-calendar-calendar-check-region-constraint-rule-39"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4905,7 +4894,7 @@ settlement =
      }?)
     >> sch:pattern [
          id =
-           "test21-settlement-calendar-calendar-check-settlement-constraint-rule-29"
+           "test21-settlement-calendar-calendar-check-settlement-constraint-rule-40"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4946,7 +4935,7 @@ district =
      }?)
     >> sch:pattern [
          id =
-           "test21-district-calendar-calendar-check-district-constraint-rule-30"
+           "test21-district-calendar-calendar-check-district-constraint-rule-41"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4989,7 +4978,7 @@ offset =
      }?)
     >> sch:pattern [
          id =
-           "test21-offset-calendar-calendar-check-offset-constraint-rule-31"
+           "test21-offset-calendar-calendar-check-offset-constraint-rule-42"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5031,7 +5020,7 @@ geogName =
      }?)
     >> sch:pattern [
          id =
-           "test21-geogName-calendar-calendar-check-geogName-constraint-rule-32"
+           "test21-geogName-calendar-calendar-check-geogName-constraint-rule-43"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5074,7 +5063,7 @@ geogFeat =
      }?)
     >> sch:pattern [
          id =
-           "test21-geogFeat-calendar-calendar-check-geogFeat-constraint-rule-33"
+           "test21-geogFeat-calendar-calendar-check-geogFeat-constraint-rule-44"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5134,7 +5123,7 @@ affiliation =
      }?)
     >> sch:pattern [
          id =
-           "test21-affiliation-calendar-calendar-check-affiliation-constraint-rule-34"
+           "test21-affiliation-calendar-calendar-check-affiliation-constraint-rule-45"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5182,7 +5171,7 @@ age =
      }?)
     >> sch:pattern [
          id =
-           "test21-age-calendar-calendar-check-age-constraint-rule-35"
+           "test21-age-calendar-calendar-check-age-constraint-rule-46"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5234,7 +5223,7 @@ birth =
      }?)
     >> sch:pattern [
          id =
-           "test21-birth-calendar-calendar-check-birth-constraint-rule-36"
+           "test21-birth-calendar-calendar-check-birth-constraint-rule-47"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5279,7 +5268,7 @@ climate =
      }?)
     >> sch:pattern [
          id =
-           "test21-climate-calendar-calendar-check-climate-constraint-rule-37"
+           "test21-climate-calendar-calendar-check-climate-constraint-rule-48"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5328,7 +5317,7 @@ death =
      }?)
     >> sch:pattern [
          id =
-           "test21-death-calendar-calendar-check-death-constraint-rule-38"
+           "test21-death-calendar-calendar-check-death-constraint-rule-49"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5376,7 +5365,7 @@ education =
      }?)
     >> sch:pattern [
          id =
-           "test21-education-calendar-calendar-check-education-constraint-rule-39"
+           "test21-education-calendar-calendar-check-education-constraint-rule-50"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5428,7 +5417,7 @@ event =
      }?)
     >> sch:pattern [
          id =
-           "test21-event-calendar-calendar-check-event-constraint-rule-40"
+           "test21-event-calendar-calendar-check-event-constraint-rule-51"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5476,7 +5465,7 @@ faith =
      }?)
     >> sch:pattern [
          id =
-           "test21-faith-calendar-calendar-check-faith-constraint-rule-41"
+           "test21-faith-calendar-calendar-check-faith-constraint-rule-52"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5517,7 +5506,7 @@ floruit =
      }?)
     >> sch:pattern [
          id =
-           "test21-floruit-calendar-calendar-check-floruit-constraint-rule-42"
+           "test21-floruit-calendar-calendar-check-floruit-constraint-rule-53"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5558,7 +5547,7 @@ gender =
      }?)
     >> sch:pattern [
          id =
-           "test21-gender-calendar-calendar-check-gender-constraint-rule-43"
+           "test21-gender-calendar-calendar-check-gender-constraint-rule-54"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5623,7 +5612,7 @@ langKnowledge =
      }?)
     >> sch:pattern [
          id =
-           "test21-langKnowledge-calendar-calendar-check-langKnowledge-constraint-rule-44"
+           "test21-langKnowledge-calendar-calendar-check-langKnowledge-constraint-rule-55"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5673,7 +5662,7 @@ langKnown =
      }?)
     >> sch:pattern [
          id =
-           "test21-langKnown-calendar-calendar-check-langKnown-constraint-rule-45"
+           "test21-langKnown-calendar-calendar-check-langKnown-constraint-rule-56"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5801,7 +5790,7 @@ location =
      }?)
     >> sch:pattern [
          id =
-           "test21-location-calendar-calendar-check-location-constraint-rule-46"
+           "test21-location-calendar-calendar-check-location-constraint-rule-57"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5849,7 +5838,7 @@ nationality =
      }?)
     >> sch:pattern [
          id =
-           "test21-nationality-calendar-calendar-check-nationality-constraint-rule-47"
+           "test21-nationality-calendar-calendar-check-nationality-constraint-rule-58"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5897,7 +5886,7 @@ occupation =
      }?)
     >> sch:pattern [
          id =
-           "test21-occupation-calendar-calendar-check-occupation-constraint-rule-48"
+           "test21-occupation-calendar-calendar-check-occupation-constraint-rule-59"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6115,7 +6104,7 @@ persPronouns =
      }?)
     >> sch:pattern [
          id =
-           "test21-persPronouns-calendar-calendar-check-persPronouns-constraint-rule-49"
+           "test21-persPronouns-calendar-calendar-check-persPronouns-constraint-rule-60"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6187,7 +6176,7 @@ population =
      }?)
     >> sch:pattern [
          id =
-           "test21-population-calendar-calendar-check-population-constraint-rule-50"
+           "test21-population-calendar-calendar-check-population-constraint-rule-61"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6216,7 +6205,7 @@ relation =
   element relation {
     (desc?)
     >> sch:pattern [
-         id = "test21-relation-reforkeyorname-constraint-assert-50"
+         id = "test21-relation-ref-or-key-or-name-constraint-rule-62"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6225,7 +6214,7 @@ relation =
            "               "
            sch:assert [
              test = "@ref or @key or @name"
-             "One of the attributes  'name', 'ref' or 'key' must be supplied"
+             "One of the attributes @name, @ref or @key must be supplied"
            ]
            "\x{a}" ~
            "            "
@@ -6234,7 +6223,7 @@ relation =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-relation-activemutual-constraint-report-14"
+         id = "test21-relation-active-mutual-constraint-rule-63"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6252,7 +6241,7 @@ relation =
          "         "
        ]
     >> sch:pattern [
-         id = "test21-relation-activepassive-constraint-report-15"
+         id = "test21-relation-active-passive-constraint-rule-64"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6261,7 +6250,7 @@ relation =
            "               "
            sch:report [
              test = "@passive and not(@active)"
-             "the attribute 'passive' may be supplied only if the attribute 'active' is supplied"
+             "the attribute @passive may be supplied only if the attribute @active is supplied"
            ]
            "\x{a}" ~
            "            "
@@ -6284,7 +6273,7 @@ relation =
      }?)
     >> sch:pattern [
          id =
-           "test21-relation-calendar-calendar-check-relation-constraint-rule-51"
+           "test21-relation-calendar-calendar-check-relation-constraint-rule-65"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6294,8 +6283,8 @@ relation =
            sch:assert [
              test = "string-length( normalize-space(.) ) gt 0"
              " @calendar indicates one or more\x{a}" ~
-             "                        systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
-             "                        but this "
+             "              systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
+             "              but this "
              sch:name [ ]
              " element has no textual content."
            ]
@@ -6358,7 +6347,7 @@ residence =
      }?)
     >> sch:pattern [
          id =
-           "test21-residence-calendar-calendar-check-residence-constraint-rule-52"
+           "test21-residence-calendar-calendar-check-residence-constraint-rule-66"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6399,7 +6388,7 @@ sex =
      }?)
     >> sch:pattern [
          id =
-           "test21-sex-calendar-calendar-check-sex-constraint-rule-53"
+           "test21-sex-calendar-calendar-check-sex-constraint-rule-67"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6454,7 +6443,7 @@ socecStatus =
      }?)
     >> sch:pattern [
          id =
-           "test21-socecStatus-calendar-calendar-check-socecStatus-constraint-rule-54"
+           "test21-socecStatus-calendar-calendar-check-socecStatus-constraint-rule-68"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6516,7 +6505,7 @@ state =
      }?)
     >> sch:pattern [
          id =
-           "test21-state-calendar-calendar-check-state-constraint-rule-55"
+           "test21-state-calendar-calendar-check-state-constraint-rule-69"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6561,7 +6550,7 @@ terrain =
      }?)
     >> sch:pattern [
          id =
-           "test21-terrain-calendar-calendar-check-terrain-constraint-rule-56"
+           "test21-terrain-calendar-calendar-check-terrain-constraint-rule-70"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6608,7 +6597,7 @@ trait =
      }?)
     >> sch:pattern [
          id =
-           "test21-trait-calendar-calendar-check-trait-constraint-rule-57"
+           "test21-trait-calendar-calendar-check-trait-constraint-rule-71"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6650,7 +6639,7 @@ objectName =
      }?)
     >> sch:pattern [
          id =
-           "test21-objectName-calendar-calendar-check-objectName-constraint-rule-58"
+           "test21-objectName-calendar-calendar-check-objectName-constraint-rule-72"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6817,7 +6806,7 @@ sponsor =
      }?)
     >> sch:pattern [
          id =
-           "test21-sponsor-calendar-calendar-check-sponsor-constraint-rule-59"
+           "test21-sponsor-calendar-calendar-check-sponsor-constraint-rule-73"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6857,7 +6846,7 @@ funder =
      }?)
     >> sch:pattern [
          id =
-           "test21-funder-calendar-calendar-check-funder-constraint-rule-60"
+           "test21-funder-calendar-calendar-check-funder-constraint-rule-74"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6897,7 +6886,7 @@ principal =
      }?)
     >> sch:pattern [
          id =
-           "test21-principal-calendar-calendar-check-principal-constraint-rule-61"
+           "test21-principal-calendar-calendar-check-principal-constraint-rule-75"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7026,7 +7015,7 @@ idno =
      }?)
     >> sch:pattern [
          id =
-           "test21-idno-calendar-calendar-check-idno-constraint-rule-62"
+           "test21-idno-calendar-calendar-check-idno-constraint-rule-76"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7088,7 +7077,7 @@ licence =
      }?)
     >> sch:pattern [
          id =
-           "test21-licence-calendar-calendar-check-licence-constraint-rule-63"
+           "test21-licence-calendar-calendar-check-licence-constraint-rule-77"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7265,7 +7254,7 @@ quotation =
   element quotation {
     (model.pLike*)
     >> sch:pattern [
-         id = "test21-quotation-quotationContents-constraint-report-16"
+         id = "test21-quotation-quotationContents-constraint-rule-78"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7273,11 +7262,12 @@ quotation =
            "\x{a}" ~
            "               "
            sch:report [
-             test = "not(@marks) and not (tei:p)"
+             test = "not( @marks )  and  not( tei:p )"
              "\x{a}" ~
-             "On "
+             "          On "
              sch:name [ ]
-             ", either the @marks attribute should be used, or a paragraph of description provided"
+             ", either the @marks attribute should be used, or a paragraph of description provided\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -7511,7 +7501,7 @@ citeStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "test21-citeStructure-match-citestructure-outer-match-constraint-rule-64"
+           "test21-citeStructure-match-citestructure-outer-match-constraint-rule-79"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7532,7 +7522,7 @@ citeStructure =
        ]
     >> sch:pattern [
          id =
-           "test21-citeStructure-match-citestructure-inner-match-constraint-rule-65"
+           "test21-citeStructure-match-citestructure-inner-match-constraint-rule-80"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7715,7 +7705,7 @@ unitDecl =
      }?)
     >> sch:pattern [
          id =
-           "test21-unitDecl-calendar-calendar-check-unitDecl-constraint-rule-66"
+           "test21-unitDecl-calendar-calendar-check-unitDecl-constraint-rule-81"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7756,7 +7746,7 @@ unitDef =
      }?)
     >> sch:pattern [
          id =
-           "test21-unitDef-calendar-calendar-check-unitDef-constraint-rule-67"
+           "test21-unitDef-calendar-calendar-check-unitDef-constraint-rule-82"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7797,7 +7787,7 @@ conversion =
      }?)
     >> sch:pattern [
          id =
-           "test21-conversion-calendar-calendar-check-conversion-constraint-rule-68"
+           "test21-conversion-calendar-calendar-check-conversion-constraint-rule-83"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7863,7 +7853,7 @@ application =
      }?)
     >> sch:pattern [
          id =
-           "test21-application-calendar-calendar-check-application-constraint-rule-69"
+           "test21-application-calendar-calendar-check-application-constraint-rule-84"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7935,7 +7925,7 @@ creation =
      }?)
     >> sch:pattern [
          id =
-           "test21-creation-calendar-calendar-check-creation-constraint-rule-70"
+           "test21-creation-calendar-calendar-check-creation-constraint-rule-85"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8142,7 +8132,7 @@ change =
      }?)
     >> sch:pattern [
          id =
-           "test21-change-calendar-calendar-check-change-constraint-rule-71"
+           "test21-change-calendar-calendar-check-change-constraint-rule-86"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8271,7 +8261,7 @@ link =
   element link {
     empty
     >> sch:pattern [
-         id = "test21-link-linkTargets3-constraint-assert-72"
+         id = "test21-link-linkTargets3-constraint-rule-87"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8312,7 +8302,7 @@ ab =
     macro.abContent
     >> sch:pattern [
          id =
-           "test21-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-17"
+           "test21-ab-abstractModel-structure-ab-in-l-or-lg-constraint-rule-88"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8323,8 +8313,8 @@ ab =
              test =
                "(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
-             "      "
+             "          Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -8514,7 +8504,7 @@ join =
   element join {
     ((model.descLike | model.certLike)*)
     >> sch:pattern [
-         id = "test21-join-joinTargets3-constraint-assert-73"
+         id = "test21-join-joinTargets3-constraint-rule-89"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8522,9 +8512,9 @@ join =
            "\x{a}" ~
            "               "
            sch:assert [
-             test = "contains(@target,' ')"
+             test = "contains( normalize-space( @target ),' ')"
              "\x{a}" ~
-             "You must supply at least two values for @target on "
+             "          You must supply at least two values for @target on "
              sch:name [ ]
              "\x{a}" ~
              "               "
@@ -8628,7 +8618,11 @@ alt =
       ]
     ]
     attribute weights {
-      list { xsd:double, xsd:double, xsd:double* }
+      list {
+        xsd:double { minInclusive = "0" maxInclusive = "1" },
+        xsd:double { minInclusive = "0" maxInclusive = "1" },
+        xsd:double { minInclusive = "0" maxInclusive = "1" }*
+      }
     }?,
     empty
   }
@@ -8664,7 +8658,7 @@ standOff =
     (model.standOffPart+)
     >> sch:pattern [
          id =
-           "test21-standOff-nested_standOff_should_be_typed-constraint-assert-74"
+           "test21-standOff-nested_standOff_should_be_typed-constraint-rule-90"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8674,10 +8668,10 @@ standOff =
            sch:assert [
              test = "@type or not(ancestor::tei:standOff)"
              "This\x{a}" ~
-             "      "
+             "        "
              sch:name [ ]
              " element must have a @type attribute, since it is\x{a}" ~
-             "      nested inside a "
+             "        nested inside a "
              sch:name [ ]
              "\x{a}" ~
              "               "
@@ -8845,7 +8839,7 @@ msDesc =
          | msPart
          | msFrag)*))
     >> sch:pattern [
-         id = "test21-msDesc-one_ms_singleton_max-constraint-rule-72"
+         id = "test21-msDesc-one_ms_singleton_max-constraint-rule-91"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8886,8 +8880,7 @@ catchwords =
   element catchwords {
     macro.phraseSeq
     >> sch:pattern [
-         id =
-           "test21-catchwords-catchword_in_msDesc-constraint-assert-75"
+         id = "test21-catchwords-catchword_in_msDesc-constraint-rule-92"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8915,7 +8908,7 @@ dimensions =
   element dimensions {
     ((dim | model.dimLike)*)
     >> sch:pattern [
-         id = "test21-dimensions-duplicateDim-constraint-report-19"
+         id = "test21-dimensions-duplicateDim-constraint-rule-93"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8923,32 +8916,32 @@ dimensions =
            "\x{a}" ~
            "               "
            sch:report [
-             test = "count(tei:width)> 1"
+             test = "count(tei:width) gt 1"
              "\x{a}" ~
-             "        The element "
+             "          The element "
              sch:name [ ]
              " may appear once only\x{a}" ~
-             "      "
+             "        "
            ]
            "\x{a}" ~
            "               "
            sch:report [
-             test = "count(tei:height)> 1"
+             test = "count(tei:height) gt 1"
              "\x{a}" ~
-             "        The element "
+             "          The element "
              sch:name [ ]
              " may appear once only\x{a}" ~
-             "      "
+             "        "
            ]
            "\x{a}" ~
            "               "
            sch:report [
-             test = "count(tei:depth)> 1"
+             test = "count(tei:depth) gt 1"
              "\x{a}" ~
-             "        The element "
+             "          The element "
              sch:name [ ]
              " may appear once only\x{a}" ~
-             "      "
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -9101,7 +9094,7 @@ origPlace =
      }?)
     >> sch:pattern [
          id =
-           "test21-origPlace-calendar-calendar-check-origPlace-constraint-rule-73"
+           "test21-origPlace-calendar-calendar-check-origPlace-constraint-rule-94"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -9130,7 +9123,7 @@ secFol =
   element secFol {
     macro.phraseSeq
     >> sch:pattern [
-         id = "test21-secFol-secFol_in_msDesc-constraint-assert-77"
+         id = "test21-secFol-secFol_in_msDesc-constraint-rule-95"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -9159,7 +9152,7 @@ signatures =
     macro.specialPara
     >> sch:pattern [
          id =
-           "test21-signatures-signatures_in_msDesc-constraint-assert-78"
+           "test21-signatures-signatures_in_msDesc-constraint-rule-96"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -9198,7 +9191,7 @@ stamp =
      }?)
     >> sch:pattern [
          id =
-           "test21-stamp-calendar-calendar-check-stamp-constraint-rule-74"
+           "test21-stamp-calendar-calendar-check-stamp-constraint-rule-97"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -9242,7 +9235,7 @@ msIdentifier =
       idno*),
      (msName | objectName | altIdentifier)*)
     >> sch:pattern [
-         id = "test21-msIdentifier-msId_minimal-constraint-report-22"
+         id = "test21-msIdentifier-msId_minimal-constraint-rule-98"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -9251,7 +9244,7 @@ msIdentifier =
            "               "
            sch:report [
              test =
-               "not(parent::tei:msPart) and (local-name(*[1])='idno' or local-name(*[1])='altIdentifier' or normalize-space(.)='')"
+               "not( parent::tei:msPart )                           and                           ( child::*[1]/self::idno  or  child::*[1]/self::altIdentifier  or  normalize-space(.) eq '')"
              "An msIdentifier must contain either a repository or location."
            ]
            "\x{a}" ~
@@ -9319,7 +9312,7 @@ altIdentifier =
      }?)
     >> sch:pattern [
          id =
-           "test21-altIdentifier-calendar-calendar-check-altIdentifier-constraint-rule-75"
+           "test21-altIdentifier-calendar-calendar-check-altIdentifier-constraint-rule-99"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -9655,7 +9648,7 @@ binding =
      }?)
     >> sch:pattern [
          id =
-           "test21-binding-calendar-calendar-check-binding-constraint-rule-76"
+           "test21-binding-calendar-calendar-check-binding-constraint-rule-100"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -9724,7 +9717,7 @@ seal =
      }?)
     >> sch:pattern [
          id =
-           "test21-seal-calendar-calendar-check-seal-constraint-rule-77"
+           "test21-seal-calendar-calendar-check-seal-constraint-rule-101"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -9792,7 +9785,7 @@ origin =
      }?)
     >> sch:pattern [
          id =
-           "test21-origin-calendar-calendar-check-origin-constraint-rule-78"
+           "test21-origin-calendar-calendar-check-origin-constraint-rule-102"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -9832,7 +9825,7 @@ provenance =
      }?)
     >> sch:pattern [
          id =
-           "test21-provenance-calendar-calendar-check-provenance-constraint-rule-79"
+           "test21-provenance-calendar-calendar-check-provenance-constraint-rule-103"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -9871,7 +9864,7 @@ acquisition =
      }?)
     >> sch:pattern [
          id =
-           "test21-acquisition-calendar-calendar-check-acquisition-constraint-rule-80"
+           "test21-acquisition-calendar-calendar-check-acquisition-constraint-rule-104"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -9950,7 +9943,7 @@ custEvent =
      }?)
     >> sch:pattern [
          id =
-           "test21-custEvent-calendar-calendar-check-custEvent-constraint-rule-81"
+           "test21-custEvent-calendar-calendar-check-custEvent-constraint-rule-105"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10094,7 +10087,7 @@ facsimile =
     (front?, (model.graphicLike | surface | surfaceGrp)+, back?)
     >> sch:pattern [
          id =
-           "test21-facsimile-no_facsimile_text_nodes-constraint-rule-82"
+           "test21-facsimile-no_facsimile_text_nodes-constraint-rule-106"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10203,7 +10196,7 @@ path =
   element path {
     empty
     >> sch:pattern [
-         id = "test21-path-pathmustnotbeclosed-constraint-rule-83"
+         id = "test21-path-pathmustnotbeclosed-constraint-rule-107"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10296,7 +10289,7 @@ addSpan =
     empty
     >> sch:pattern [
          id =
-           "test21-addSpan-addSpan-requires-spanTo-constraint-assert-87"
+           "test21-addSpan-addSpan-requires-spanTo-constraint-rule-108"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10317,7 +10310,7 @@ addSpan =
        ]
     >> sch:pattern [
          id =
-           "test21-addSpan-addSpan-requires-spanTo-fr-constraint-assert-88"
+           "test21-addSpan-addSpan-requires-spanTo-fr-constraint-rule-109"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10346,7 +10339,7 @@ addSpan =
     }
     >> sch:pattern [
          id =
-           "test21-addSpan-spanTo-spanTo-points-to-following-constraint-rule-84"
+           "test21-addSpan-spanTo-spanTo-points-to-following-constraint-rule-110"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10389,7 +10382,7 @@ damageSpan =
     empty
     >> sch:pattern [
          id =
-           "test21-damageSpan-damageSpan-requires-spanTo-constraint-assert-90"
+           "test21-damageSpan-damageSpan-requires-spanTo-constraint-rule-111"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10410,7 +10403,7 @@ damageSpan =
        ]
     >> sch:pattern [
          id =
-           "test21-damageSpan-damageSpan-requires-spanTo-fr-constraint-assert-91"
+           "test21-damageSpan-damageSpan-requires-spanTo-fr-constraint-rule-112"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10440,7 +10433,7 @@ delSpan =
     empty
     >> sch:pattern [
          id =
-           "test21-delSpan-delSpan-requires-spanTo-constraint-assert-92"
+           "test21-delSpan-delSpan-requires-spanTo-constraint-rule-113"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10461,7 +10454,7 @@ delSpan =
        ]
     >> sch:pattern [
          id =
-           "test21-delSpan-delSpan-requires-spanTo-fr-constraint-assert-93"
+           "test21-delSpan-delSpan-requires-spanTo-fr-constraint-rule-114"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10607,7 +10600,7 @@ subst =
   element subst {
     ((add | surplus | del | model.milestoneLike)+)
     >> sch:pattern [
-         id = "test21-subst-substContents1-constraint-assert-94"
+         id = "test21-subst-substContents1-constraint-rule-115"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10888,7 +10881,7 @@ group =
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
          id =
-           "test21-div-abstractModel-structure-div-in-l-or-lg-constraint-report-25"
+           "test21-div-abstractModel-structure-div-in-l-or-lg-constraint-rule-116"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10899,8 +10892,8 @@ group =
              test =
                "(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
-             "      "
+             "          Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -10910,7 +10903,7 @@ group =
        ]
     >> sch:pattern [
          id =
-           "test21-div-abstractModel-structure-div-in-ab-or-p-constraint-report-26"
+           "test21-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-117"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -10921,8 +10914,8 @@ group =
              test =
                "(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
-             "      "
+             "          Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "

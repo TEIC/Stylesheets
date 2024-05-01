@@ -5840,14 +5840,14 @@ used for transcribing extant documents.</desc>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STEC">1.3. The TEI Class System</ref>
   </listRef>
 </macroSpec><dataSpec module="tei" ident="teidata.certainty">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values expressing a degree of certainty.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">확실성 정도를 표현하는 속성 값의 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義表示正確度的屬性值範圍</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">確信度を示す属性値の程度を示す。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attribut exprimant un degré de certitude</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos que exprimen un grado de certeza.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi che esprimono un grado di certezza</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values expressing a degree of certainty.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">확실성 정도를 표현하는 속성 값의 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義表示正確度的屬性值範圍</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">確信度を示す属性値の程度を示す。</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attribut exprimant un degré de certitude</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos que exprimen un grado de certeza.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi che esprimono un grado di certezza</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
     <valList type="closed">
       <valItem ident="high"/>
       <valItem ident="medium"/>
@@ -5855,67 +5855,70 @@ used for transcribing extant documents.</desc>
       <valItem ident="unknown"/>
     </valList>
   </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2011-02-26" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2011-02-26" xml:lang="en">
     <p>Certainty may be expressed by one of the predefined symbolic values <val>high</val>,
     <val>medium</val>, or <val>low</val>. The value
     <val>unknown</val> should be used in cases where the encoder
     does not wish to assert an opinion about the matter. 
     </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
     <p> 確信度は、<val>high</val>、<val>medium</val>、<val>low</val>のうち の1つが選択される。より詳細に示したい場合には、 <ident type="datatype">teidata.probability</ident>を単独または追加と して使用することができる。 </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
     <p>Le degré de certitude peut être exprimé par l'une des valeurs symboliques prédéfinies
     <val>high</val>, <val>medium</val>, ou <val>low</val>. </p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.probability">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values expressing a probability.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">확률을 표현하는 속성 값의 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義表示可能性的屬性值範圍</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">出現度を示す属性値の範囲を定義する。 </desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attributs exprimant une
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values expressing a probability.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">확률을 표현하는 속성 값의 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義表示可能性的屬性值範圍</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">出現度を示す属性値の範囲を定義する。 </desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attributs exprimant une
     probabilité.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos que exprimen un
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos que exprimen un
     grado de probabilida.d</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi che esprimono
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi che esprimono
     una probabilità</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
-      <dataRef name="double"/>
-   </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2005-10-18" xml:lang="en">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
+    <dataRef name="double">
+      <dataFacet name="minInclusive" value="0"/>
+      <dataFacet name="maxInclusive" value="1"/>
+    </dataRef>
+  </content>
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2005-10-18" xml:lang="en">
       <p>Probability is expressed
        as a real number between 0 and 1;  0  representing <mentioned>certainly false</mentioned> and 1 representing <mentioned>certainly
         true</mentioned>.</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p>出現度は、0から1までの実数で表現される。0は <mentioned>確実に偽</mentioned>、1は、 <mentioned>確実に真</mentioned>を示す。 </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
       <p>Le degré de probabilité est exprimé
        par un nombre réel entre 0 et 1 ;
      0       représentant <mentioned>certainement faux</mentioned> et 1 <mentioned>certainement
         vrai</mentioned>.</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.numeric">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values used for numeric values.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">수치에 사용되는 속성 값의 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義用於數值的屬性值範圍</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">数値をとる属性値の範囲を定義する。 </desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attributs utilisées pour
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values used for numeric values.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">수치에 사용되는 속성 값의 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義用於數值的屬性值範圍</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">数値をとる属性値の範囲を定義する。 </desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attributs utilisées pour
     des valeurs numériques</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos para valores
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos para valores
     numéricos.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per
     valori numerici</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <alternate>
          <dataRef name="double"/>
          <dataRef name="token" restriction="(\-?[\d]+/\-?[\d]+)"/>
          <dataRef name="decimal"/>
       </alternate>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-06-01" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-06-01" xml:lang="en">
       <p>Any numeric value, represented as a decimal number, in floating point format, or as a ratio.</p>
       <p>To represent a floating point number, expressed in scientific notation, <soCalled>E
       notation</soCalled>, a variant of <soCalled>exponential notation</soCalled>, may be used. In
@@ -5928,7 +5931,7 @@ used for transcribing extant documents.</desc>
       character. Thus, the value represented in decimal notation as 0.5 might be represented as a
       ratio by the string 1/2.</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p> 10進数を作る数値。 </p>
       <p> また、IEEE倍精度浮動小数点(64bit長)をとることもできる。例えば、 ±10⁻³²³ から ±10³⁰⁸など。 </p>
       <p> 科学的数値を評点する際、<soCalled>指数表現</soCalled>は、属性値と して記述される。
@@ -5950,7 +5953,7 @@ used for transcribing extant documents.</desc>
       <p> 仮数部と指数部を分ける記号は<mentioned>e</mentioned>または <mentioned>E</mentioned>のどちらでもよいが、当ガイドラインでは
         <mentioned>E</mentioned>を使うことを推奨する。これは、他の規格との 整合性を保ち、数学における定数との混同を避けるためである。 </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-10-06" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-10-06" xml:lang="fr">
       <p> Toute valeur numérique, représentée en nombre décimal, notée en virgule flottante ou
       en fraction.</p>
       <p>Pour représenter un nombre en virgule flottante, exprimé en notation scientifique,
@@ -5966,8 +5969,8 @@ used for transcribing extant documents.</desc>
       représentée en fraction par la chaîne de caractères 1/2.</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.interval">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-13" xml:lang="en">defines attribute values used to express an interval value.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-13" xml:lang="en">defines attribute values used to express an interval value.</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <alternate>
          <dataRef name="float"/>
          <valList>
@@ -5977,48 +5980,48 @@ used for transcribing extant documents.</desc>
          </valList>
       </alternate>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-13" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-13" xml:lang="en">
       <p>Any value greater than zero or any one of the values
     <val>regular</val>, <val>irregular</val>, <val>unknown</val>.</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.count">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values used for a non-negative
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values used for a non-negative
 integer value used as a count.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">계산으로 사용된 음이 아닌 정수 값의 속성 값 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍，用於作為總數的非負整數值
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">계산으로 사용된 음이 아닌 정수 값의 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍，用於作為總數的非負整數值
 </desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">非負整数値を採る属性値の範囲を定義する。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">非負整数値を採る属性値の範囲を定義する。</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
   valeurs des attributs exprimant une valeur entière et non négative  utilisé pour des calculs.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos para números enteros no negativos usados como un cálculo.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per un numero intero non negativo impiegato come computo</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos para números enteros no negativos usados como un cálculo.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per un numero intero non negativo impiegato come computo</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef name="nonNegativeInteger"/>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2016-12-01" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2016-12-01" xml:lang="en">
       <p>Any positive integer value or zero is permitted</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p>非負整数値のみが許される。</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
       <p>Seules des valeurs positives entières sont autorisées.</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.temporal.w3c">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-04-08" xml:lang="en">defines the range of attribute values expressing a temporal
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-04-08" xml:lang="en">defines the range of attribute values expressing a temporal
   expression such as a date, a time, or a combination of them, that
   conform to the W3C <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>
   specification.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">날짜, 시간 또는 이들의 조합과 같은 시간 표현을 나타내는 속성 값 범위를 정의하며, 이는 W3C <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref> 명시를 따른다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義表示時間的屬性值範圍，如日期、時間或兩者的結合，依照W3C<ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>specification標準所定義。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">日付や時間などの時間表現をとる属性値の範囲を定義する。これは、W3Cの
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">날짜, 시간 또는 이들의 조합과 같은 시간 표현을 나타내는 속성 값 범위를 정의하며, 이는 W3C <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref> 명시를 따른다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義表示時間的屬性值範圍，如日期、時間或兩者的結合，依照W3C<ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>specification標準所定義。</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">日付や時間などの時間表現をとる属性値の範囲を定義する。これは、W3Cの
     <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>に従ったものになる。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attributs propre à
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attributs propre à
       exprimer une valeur temporelle comme une date, une période, ou une combinaison des deux
       conformément aux spécifications <ref target="#XSD2">XML Schema Part 2:
   Datatypes Second Edition</ref> du W3C.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos que expresan un valor temporal del tipo fecha, hora, o combinación de ambas, de acuerdo con la especificación de W3C <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos que expresan un valor temporal del tipo fecha, hora, o combinación de ambas, de acuerdo con la especificación de W3C <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>.</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <alternate>
          <dataRef name="date"/>
          <dataRef name="gYear"/>
@@ -6030,71 +6033,71 @@ integer value used as a count.</desc>
          <dataRef name="dateTime"/>
       </alternate>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-04-08" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-04-08" xml:lang="en">
       <p>If it is likely that the value used is to be compared with
     another, then a time zone indicator should always be included, and
     only the dateTime representation should be used.</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p>
     当該属性値が他の値と比較される場合、時間帯は必ず示されるべきである。
     またはdateTimeを使うべきである(訳注：この文は修正されるかもしれな
     い)。
     </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">
       <p>S'il est probable que la valeur utilisée doive être comparée à 
       d’autres, alors une indication de fuseau horaire sera  toujours incluse, et 
       seule la représentation de dateTime sera employée.
     </p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.duration.w3c">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values available for representation of a duration in time using W3C datatypes.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">W3C 데이터 유형을 사용해서 시간 지속을 나타내는 속성 값 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">以W3C datatypes標準格式來定義表示一段持續性時間的屬性值範圍</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">W3Cのデータ型を使い、時間幅を表現する当該属性値の範囲を定義する。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values available for representation of a duration in time using W3C datatypes.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">W3C 데이터 유형을 사용해서 시간 지속을 나타내는 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">以W3C datatypes標準格式來定義表示一段持續性時間的屬性值範圍</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">W3Cのデータ型を使い、時間幅を表現する当該属性値の範囲を定義する。</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
   valeurs d'attributs exprimant une durée temporaraire utilisant les types de données W3C</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos disponibles para la representación de un periodo de tiempo usando tipos de datos W3C</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos disponibles para la representación de un periodo de tiempo usando tipos de datos W3C</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef name="duration"/>
    </content>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <time dur="PT45M">forty-five minutes</time>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <date dur="P1DT12H">a day and a half</date>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <date dur="P7D">a week</date>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <time dur="PT45M">quarante-cinq minutes</time>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <date dur="P1DT12H">une journée et demie</date>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <date dur="P7D">une semaine</date>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="und">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="und">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <time dur="PT0.02S">20 ms</time>
       </egXML>
   </exemplum>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-04-20" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-04-20" xml:lang="en">
       <p>A duration is expressed as a sequence of number-letter pairs,
     preceded by the letter P; the letter gives the unit and may be Y
     (year), M (month), D (day), H (hour), M (minute), or S (second),
@@ -6109,7 +6112,7 @@ integer value used as a count.</desc>
       <p>For complete details, see the <ref target="https://www.w3.org/TR/2004/REC-xmlschema-2-20041028/#duration">W3C
     specification</ref>.</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p>
     時間幅は、先頭文字Pに続いて、数値-文字のペア列で示される。
     文字は単位を示している。Y(年)、M(月)、D(日)、H(時間)、M(分)、S(秒)
@@ -6126,7 +6129,7 @@ integer value used as a count.</desc>
     W3C specification</ref>を参照のこと。
     </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
       <p>Une durée est exprimée par une suite de paires alphanumériques, précédée par la lettre P ; la lettre donne l'unité et peut être Y
       (année), M (mois), D (jour), H (heure), M (minute), ou S (seconde),
       dans cet ordre. Les nombres sont des entiers non signés à l'exception du dernier, qui peut comporter une décimale (en utilisant soit 
@@ -6139,19 +6142,19 @@ integer value used as a count.</desc>
       specification</ref>.</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.truthValue">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-22" xml:lang="en">defines the range of attribute values used to express a truth
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-22" xml:lang="en">defines the range of attribute values used to express a truth
 value.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">진리값을 표현하는 속성 값 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍表示一個可能未知的真實值</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">真偽値を示す属性値の範囲を定義する。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">진리값을 표현하는 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍表示一個可能未知的真實值</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">真偽値を示す属性値の範囲を定義する。</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
   valeurs d'attributs exprimant la vérité d'une proposition.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos usados para expresar un valor cierto.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per esprimere un valore di verità</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos usados para expresar un valor cierto.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per esprimere un valore di verità</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef name="boolean"/>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-11-01" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-11-01" xml:lang="en">
       <p>The possible values of this datatype are <val>1</val> or
     <val>true</val>, or <val>0</val> or <val>false</val>.</p>
       <p>This datatype applies only for cases where uncertainty is
@@ -6160,14 +6163,14 @@ value.</desc>
     <val>inapplicable</val>, it should have the extended version of
     this datatype: <ident type="datatype">teidata.xTruthValue</ident>.</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p>
     曖昧な値が許されない場合に使われるデータ型になる。属性値が真偽値で
     ない場合、例えば"unknown"や"inapplicable"の場合には、当該データ型
     の拡張版であるteidata.xTruthValueを使うべきである。
     </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">
       <p>Ce type de données ne s'applique que dans les cas où l'incertitude est 
       inappropriée ; c’est-à-dire si l'attribut concerné peut avoir une valeur autre 
       que vrai ou faux, par ex. <val>inconnu</val>, ou <val>inapplicable</val>, il devrait  alors y
@@ -6175,20 +6178,20 @@ value.</desc>
     </p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.xTruthValue">
-  <gloss xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-07-04" xml:lang="en">extended truth value</gloss>
-  <gloss xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">확장 진리값</gloss>
-  <gloss xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW"/>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values used to express a truth value which may be unknown.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">알려지지 않을 수 있는 진리값을 표현하는 속성 값 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍表示一個可能未知的真實值</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">不明の場合もある真偽値をとる属性値の範囲を定義する。 </desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
+  <gloss xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-07-04" xml:lang="en">extended truth value</gloss>
+  <gloss xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">확장 진리값</gloss>
+  <gloss xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW"/>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values used to express a truth value which may be unknown.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">알려지지 않을 수 있는 진리값을 표현하는 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍表示一個可能未知的真實值</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">不明の場合もある真偽値をとる属性値の範囲を定義する。 </desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
   valeurs d'attributs exprimant une vérité potentiellement inconnue.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos usados para
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos usados para
     expresar un valor cierto potencialmente desconocido.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per
     esprimere un valore di verità potenzialmente sconosciuto</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <alternate>
          <dataRef name="boolean"/>
          <valList>
@@ -6197,31 +6200,31 @@ value.</desc>
          </valList>
       </alternate>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2010-10-29" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2010-10-29" xml:lang="en">
       <p>In cases where where uncertainty is inappropriate, use the
     datatype <ident type="datatype">teidata.TruthValue</ident>.</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p> 不明な場合がなければ、データ型teidata.TruthValueを使用する。 </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">
       <p>Dans le cas où l'incertitude n’est pas adaptée, employer plutot
     le type de données <ident>teidata.TruthValue</ident>.</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.language">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values used to identify a particular combination of human
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values used to identify a particular combination of human
     language and writing system.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">인간의 언어와 문자 체계의 특별한 조합을 식별하는 속성 값 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍標明人類語言與寫作系統的特殊結合</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">自然言語を示す属性値の範囲を定義する。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">인간의 언어와 문자 체계의 특별한 조합을 식별하는 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍標明人類語言與寫作系統的特殊結合</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">自然言語を示す属性値の範囲を定義する。</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
   valeurs d'attributs exprimant 
     une combinaison particulière du langage humain avec un système d'écriture.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos usados para
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos usados para
     identificar una combinación determinada de lenguaje y escritura humanos.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per
     identificare una determinata combinazione di linguaggio e sistema di scrittura umani</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <alternate>
          <dataRef name="language"/>
          <valList>
@@ -6229,7 +6232,7 @@ value.</desc>
          </valList>
       </alternate>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-06-29" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-06-29" xml:lang="en">
       <p>The values for this attribute are language <soCalled>tags</soCalled> as defined in <ref target="https://tools.ietf.org/html/bcp47">BCP 47</ref>. Currently BCP 47 comprises RFC 5646
       and RFC 4647; over time, other IETF documents may succeed these as the best current practice.</p>
       <p>A <soCalled>language tag</soCalled>, per BCP 47, is assembled from a sequence of components
@@ -6313,7 +6316,7 @@ value.</desc>
       <p>The W3C Internationalization Activity has published a useful introduction to BCP 47, <ref target="https://www.w3.org/International/articles/language-tags/Overview.en.php">Language
         tags in HTML and XML</ref>.</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p> 当該属性値は、 <ref target="https://tools.ietf.org/html/bcp47">BCP 47</ref>
       で定義されている言語<soCalled>タグ</soCalled>になる。 現行のBCPには、RFC4646とRFC4647の内容が含まれている。
       今後は、他のIETF文書も採用されるかもしれない。 </p>
@@ -6384,7 +6387,7 @@ value.</desc>
       <p> W3Cの国際化活動では、BCP 47の解説を以下に用意している。 <ref target="https://www.w3.org/International/articles/language-tags/Overview.en.php">
         HTMLとXMLで使用される言語タグ</ref>。</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-10-06" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-10-06" xml:lang="fr">
       <p>Les valeurs pour cet attribut sont les <soCalled>étiquettes</soCalled> de langue définies
         dans la norme <ref target="https://tools.ietf.org/html/bcp47">BCP 47</ref>. Actuellement, la norme BCP 47
       intègre les normes RFC 4646 et RFC 4647 ; à l'avenir, d'autres documents de l'IETF pourront leur succéder en
@@ -6474,66 +6477,66 @@ value.</desc>
         tags in HTML and XML</ref>.</p>
       
   </remarks>
-  <listRef xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <listRef xmlns:xi="http://www.w3.org/2001/XInclude">
       <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CH.html#CHSH">6.1. Language Identification</ref>
   </listRef>
 </dataSpec><dataSpec module="tei" ident="teidata.namespace">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-14" xml:lang="en">defines the range of attribute values used to indicate XML namespaces as defined by the W3C
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-14" xml:lang="en">defines the range of attribute values used to indicate XML namespaces as defined by the W3C
     <ref target="https://www.w3.org/TR/1999/REC-xml-names-19990114/">Namespaces in XML</ref>
     Technical Recommendation.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">W3C <ref target="https://www.w3.org/TR/1999/REC-xml-names-19990114/">Namespaces in XML</ref> 기술적 권고안에 의해
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">W3C <ref target="https://www.w3.org/TR/1999/REC-xml-names-19990114/">Namespaces in XML</ref> 기술적 권고안에 의해
     정의된 XML 이름공간을 나타내는 속성 값 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍指出XML名稱空間，由XML technical
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍指出XML名稱空間，由XML technical
     recommendation中的W3C名稱空間所定義。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">W3Cの<ref target="https://www.w3.org/TR/1999/REC-xml-names-19990114/">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">W3Cの<ref target="https://www.w3.org/TR/1999/REC-xml-names-19990114/">
     XML名前空間</ref>で定義されている名前空間を示す属性値の範囲を示す。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
   valeurs d'attributs exprimant une espace de noms XML tels qu'ils
   sont définis par le
       W3C.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos usados para
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos usados para
     indicar los nombres de los espacios en XML como establecen las recomendaciones técnicas del W3C
     para los <ptr target="https://www.w3.org/TR/1999/REC-xml-names-19990114/"/>
    </desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per
     indicare i nomi degli spazi in XML come stabilito dalle raccomandazioni tecniche del W3C per gli
     <ref target="https://www.w3.org/TR/1999/REC-xml-names-19990114/">spazi dei nomi in XML</ref>.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef restriction="\S+" name="anyURI"/>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-02-08" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-02-08" xml:lang="en">
       <p>The range of syntactically valid values is defined by <ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986 <title>Uniform Resource Identifier
           (URI): Generic Syntax</title>
          </ref>
       </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p> 当該データ値は、<ref target="https://www.ietf.org/rfc/rfc2396.txt">RFC 2396 <title>Uniform Resource
           Identifier (URI) Reference</title>
          </ref> に定義されている。 </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
       <p>La gamme des valeurs  syntaxiquement valides est définie par <ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986 <title>Uniform Resource Identifier
           (URI): Generic Syntax</title>
          </ref>.</p>
       
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.outputMeasurement">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-03-26" xml:lang="en">defines a range of values for use in specifying the size of an object that is intended for
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-03-26" xml:lang="en">defines a range of values for use in specifying the size of an object that is intended for
     display.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">웹에서 디스플레이 목적의 대상 크기를 명시하는 값의 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍說明預定呈現在網路上之物件大小</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">webページ上で表示する際の大きさを定義する値の範囲を定義する。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme de valeurs exprimant
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">웹에서 디스플레이 목적의 대상 크기를 명시하는 값의 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍說明預定呈現在網路上之物件大小</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">webページ上で表示する際の大きさを定義する値の範囲を定義する。</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme de valeurs exprimant
     les dimensions d'un objet destiné à être affiché</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define una gama de valores para emplearlos en la
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define una gama de valores para emplearlos en la
     especificación de las dimensiones de un objeto que se ha de incluir in la red.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce una gamma di valori da impiegare nello
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce una gamma di valori da impiegare nello
     specificare le dimensioni di un oggetto da inserire in rete</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef name="token" restriction="[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|ch|rem|vw|vh|vmin|vmax)"/>
    </content>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <figure>
             <head>The TEI Logo</head>
@@ -6544,7 +6547,7 @@ value.</desc>
          </figure>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <figure>
             <head>Le logo TEI</head>
@@ -6552,16 +6555,16 @@ value.</desc>
          </figure>
       </egXML>
   </exemplum>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-09-27" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-09-27" xml:lang="en">
       <p> These values map directly onto the values used by XSL-FO and CSS. For definitions of the
       units see those specifications; at the time of this writing the most complete list is in the
         <ref target="https://www.w3.org/TR/css-values-3/">CSS3 working draft</ref>.</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-09-27" xml:lang="ja">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-09-27" xml:lang="ja">
       <p> 当該値は、XSLFOやCSSで使用される値になる。詳細は各規格を参照のこと。 現時点で一番詳細なリストは、 <ref target="https://www.w3.org/TR/css-values-3/"> CSS3 working
       draft</ref>になる。 </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-09-27" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-09-27" xml:lang="fr">
       <p> Ces valeurs peuvent être reportées directement sur des valeurs utilisées par XSL-FO et CSS. Pour les
       définitions des unités, voir ces spécifications ; à ce jour la
       liste la plus complète est dans un
@@ -6636,21 +6639,21 @@ value.</desc>
     </p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.pointer">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-01-19" xml:lang="en">defines the range of attribute values used to provide a single
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-01-19" xml:lang="en">defines the range of attribute values used to provide a single
   URI, absolute or relative, pointing to some other
 resource, either within the current document or elsewhere.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">현 문서 또는 다른 곳 어디서든 다른 자원에 대한 단일 포인터를 제공하는 속성 값 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍提供單一指標，連結到其他位於目前文件或他處的資源</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">他の資源へのポインタをとる属性値の範囲を定義する。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-29" xml:lang="fr">définit la gamme des valeurs d'attributs utilisées
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">현 문서 또는 다른 곳 어디서든 다른 자원에 대한 단일 포인터를 제공하는 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍提供單一指標，連結到其他位於目前文件或他處的資源</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">他の資源へのポインタをとる属性値の範囲を定義する。</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-29" xml:lang="fr">définit la gamme des valeurs d'attributs utilisées
       pour fournir un pointeur URI unique sur une autre ressource, soit dans le document courant, soit
       dans un autre document</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define una gama de valores de atributos usados para proporcionar un indicador de cualquier recurso, bien en el documento corriente o en otro.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per indicare un unico puntatore rispetto a qualsiasi altra risorsa all'interno del documento corrente o altrove</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define una gama de valores de atributos usados para proporcionar un indicador de cualquier recurso, bien en el documento corriente o en otro.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per indicare un unico puntatore rispetto a qualsiasi altra risorsa all'interno del documento corrente o altrove</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef restriction="\S+" name="anyURI"/>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2011-12-12" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2011-12-12" xml:lang="en">
       <p>The range of syntactically valid values is defined by
     <ref target="https://www.ietf.org/rfc/rfc3986.txt"> RFC 3986</ref>
          <title>Uniform Resource Identifier (URI): Generic
@@ -6665,7 +6668,7 @@ resource, either within the current document or elsewhere.</desc>
     <code>http://xn--4gbrim.xn----rmckbbajlc6dj7bxne2c.xn--wgbh1c/</code>
       </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p>
     当該属性値は、
     <ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986
@@ -6674,7 +6677,7 @@ resource, either within the current document or elsewhere.</desc>
     に定義されている。
     </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
       <p>La gamme des valeurs valides syntaxiquement est définie par<ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986
       <title>Uniform Resource Identifier (URI): Generic
         Syntax</title>
@@ -6682,28 +6685,28 @@ resource, either within the current document or elsewhere.</desc>
       </p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.authority">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2020-02-12" xml:lang="en">defines attribute values which derive from an 
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2020-02-12" xml:lang="en">defines attribute values which derive from an 
     authority list, which may be an enumerated list defined in the document's schema, a list 
     or taxonomy elsewhere in the document, or an online taxonomy, gazetteer, or other authority.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
     <alternate>
       <dataRef key="teidata.enumerated"/>
       <dataRef key="teidata.pointer"/>
     </alternate>
   </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2020-02-12" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2020-02-12" xml:lang="en">
     <p>Attribute values with this datatype should either come from a value list in the attribute
       specification (<ident type="datatype">teidata.enumerated</ident>) or be a valid URI (<ident type="datatype">teidata.pointer</ident>).</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.version">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-11-20" xml:lang="en">defines the range of attribute values which may be used to
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-11-20" xml:lang="en">defines the range of attribute values which may be used to
   specify a TEI or Unicode version number.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">définit la gamme des valeurs d'attribut
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">définit la gamme des valeurs d'attribut
   exprimant un numéro de version TEI.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef name="token" restriction="[\d]+(\.[\d]+){0,2}"/>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2012-06-17" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2012-06-17" xml:lang="en">
       <p>The value of this attribute follows the pattern specified by
     the Unicode consortium for its version number (<ptr target="https://unicode.org/versions/"/>). A version number
     contains digits and fullstop characters only. The first number
@@ -6712,7 +6715,7 @@ resource, either within the current document or elsewhere.</desc>
     supplied.
 </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">
       <p>La valeur de cet attribut devrait suivre le format proposé par
     le Consortium Unicode pour identifier les versions (<ptr target="https://unicode.org/versions/"/>). Un numéro de version
     ne contient que des chiffres et des points. Le numéro
@@ -6722,28 +6725,28 @@ resource, either within the current document or elsewhere.</desc>
 </p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.versionNumber">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-14" xml:lang="en">defines the range of attribute values used for version numbers.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-14" xml:lang="en">defines the range of attribute values used for version numbers.</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef name="token" restriction="[\d]+[a-z]*[\d]*(\.[\d]+[a-z]*[\d]*){0,3}"/>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-14" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-14" xml:lang="en">
       <p/>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.replacement">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-14" xml:lang="en">defines attribute values which contain a replacement template.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-14" xml:lang="en">defines attribute values which contain a replacement template.</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <textNode/>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-14" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-14" xml:lang="en">
       <p/>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.xpath">
-<desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-14" xml:lang="en">defines attribute values
+<desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-14" xml:lang="en">defines attribute values
 which contain an XPath expression.</desc>
-<content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+<content xmlns:xi="http://www.w3.org/2001/XInclude">
   <textNode/>
 </content>
-<remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-14" xml:lang="en">
+<remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-14" xml:lang="en">
   <p>Any XPath expression using the syntax
   defined in <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/BIB.html#XSLT2">6.2. </ref>.</p>
   <p>When writing programs that evaluate XPath expressions,
@@ -6753,32 +6756,32 @@ which contain an XPath expression.</desc>
   OWASP</ref>.</p>
 </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.word">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-22" xml:lang="en">defines the range of attribute values expressed as a single
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-22" xml:lang="en">defines the range of attribute values expressed as a single
   word or token.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">단일 단어 또는 토큰으로 표현된 속성 값 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍表示一個單字或代號</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">いち単語またはトークンをとる属性値の範囲を定義する。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">단일 단어 또는 토큰으로 표현된 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍表示一個單字或代號</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">いち単語またはトークンをとる属性値の範囲を定義する。</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme des
   valeurs d'attributs exprimant un seul mot ou signe</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define una gama de valores de atributos expresados como una única palabra o señal.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi espressi come singola parola o singolo token</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define una gama de valores de atributos expresados como una única palabra o señal.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi espressi come singola parola o singolo token</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef name="token" restriction="[^\p{C}\p{Z}]+"/>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2005-10-18" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2005-10-18" xml:lang="en">
       <p>Attributes using this datatype must contain a single
     <soCalled>word</soCalled> which contains only letters, digits,
     punctuation characters, or symbols: thus it cannot include
     whitespace.</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p>
     当該データ型を使用する属性値は、ひとつの<soCalled>単語</soCalled>
     になる。単語とは、文字、数字、句読点などの記号から構成されている。
     空白文字は含むことができない。
     </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">
       <p>Les attributs employant ce type de données doivent contenir un 
       <soCalled>mot</soCalled> simple  ne contenant que des lettres, des chiffres, 
       des signes de ponctuation, ou des symboles : ils ne peuvent donc pas inclure 
@@ -6786,62 +6789,62 @@ which contain an XPath expression.</desc>
     </p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.text">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2012-06-17" xml:lang="en">defines the range of attribute values used to express some
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2012-06-17" xml:lang="en">defines the range of attribute values used to express some
   kind of identifying string as a single sequence
   of Unicode characters possibly including whitespace.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">définit la gamme des valeurs d'attributs 
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr" versionDate="2007-06-12">définit la gamme des valeurs d'attributs 
       exprimant une chaine de caracteres Unicode, y compris des
   espaces blancs.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef name="string"/>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2012-06-17" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2012-06-17" xml:lang="en">
       <p>Attributes using this datatype must contain a single
     <soCalled>token</soCalled> in which whitespace and other
     punctuation characters are permitted. </p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.name">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values expressed as an XML Name.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">XML 이름으로 표현되는 속성 값 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍以XML名稱或識別符碼表示</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">XML名前としてある属性値の範囲を定義する。 </desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-29" xml:lang="fr">définit la gamme des valeurs d'attribut exprimant
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values expressed as an XML Name.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">XML 이름으로 표현되는 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍以XML名稱或識別符碼表示</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">XML名前としてある属性値の範囲を定義する。 </desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-29" xml:lang="fr">définit la gamme des valeurs d'attribut exprimant
     un nom XML</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos expresados como
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos expresados como
     identificador o un nombre en XML.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi espressi come
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi espressi come
     identificatore o nome XML</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef name="Name"/>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">
       <p>Attributes using this datatype must contain a single word which follows the rules defining a
       legal XML name (see <ptr target="https://www.w3.org/TR/REC-xml/#dt-name"/>): for example they
       cannot include whitespace or begin with digits. </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p> 当該属性は、妥当なXML名前(詳細は <ptr target="https://www.w3.org/TR/REC-xml/#dt-name"/>を参照)である
       ひとつの単語をとる。例えば、空白文字を含まず、数字が先頭文字にこな いもの。 </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
       <p>Les attributs utilisant ce type de données doivent contenir un seul mot, qui suit les règles
       de définition d'un nom XML valide (voir <ptr target="https://www.w3.org/TR/REC-xml/#dt-name"/>) :
       par exemple ils ne peuvent contenir de blancs ou commencer par des chiffres. </p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.xmlName">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-13" xml:lang="en">defines attribute values which contain an XML name.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-13" xml:lang="en">defines attribute values which contain an XML name.</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef name="NCName"/>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-13" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2013-04-13" xml:lang="en">
       <p>The rules defining an XML name form a part of the XML Specification.</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.prefix">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2016-11-28" xml:lang="en">defines a range of values that may function as a URI scheme name.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2016-11-28" xml:lang="en">defines a range of values that may function as a URI scheme name.</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
     <dataRef name="token" restriction="[a-z][a-z0-9\+\.\-]*"/>
   </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2016-11-28" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2016-11-28" xml:lang="en">
     <p>This datatype is used to constrain a string of characters to
     one that can be used as a URI scheme name according to <ref target="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986</ref>, <ref target="https://tools.ietf.org/html/rfc3986#section-3.1">section
     3.1</ref>. Thus only the 26 lowercase letters a–z, the 10
@@ -6849,22 +6852,22 @@ which contain an XPath expression.</desc>
     permitted, and the value must start with a letter.</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.enumerated">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-22" xml:lang="en">defines the range of attribute values expressed as a single XML name taken from a list of
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-22" xml:lang="en">defines the range of attribute values expressed as a single XML name taken from a list of
     documented possibilities.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">기록된 확률의 목록으로부터 얻어진 단일 XML 이름으로 표현된 속성 값 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍以單字或代號呈現，該單字或代號出自於一份紀錄所有可能性的列表</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">符号化されている記述にある、ひつとのXML名前を示す属性値の範囲を定義する。</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme de
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">기록된 확률의 목록으로부터 얻어진 단일 XML 이름으로 표현된 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍以單字或代號呈現，該單字或代號出自於一份紀錄所有可能性的列表</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">符号化されている記述にある、ひつとのXML名前を示す属性値の範囲を定義する。</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme de
   valeurs des attributs exprimant un nom XML
     extrait d'une liste de possibilités documentées</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos expresados como
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos expresados como
     una única palabra o señal tomada de una lista de posibilidades documentadas.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi espressi come
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi espressi come
     singola parola o token tratto da una lista di possibilità attestate</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef key="teidata.word"/>
    </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2016-12-01" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2016-12-01" xml:lang="en">
     <p>Attributes using this datatype must contain a single
       <soCalled>word</soCalled> which contains only letters, digits,
       punctuation characters, or symbols: thus it cannot include
@@ -6872,12 +6875,12 @@ which contain an XPath expression.</desc>
       <p>Typically, the list of documented possibilities will be provided (or exemplified) by a value
       list in the associated attribute specification, expressed with a <gi>valList</gi> element.</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p> 当該データ型は、妥当なXML名前 (詳細は<ptr target="https://www.w3.org/TR/REC-xml/#dt-name"/>
       を参照のこと)である単語でなくてはならない。例えば、 属性値として空白文字、または数値で始まる名前をとることはできない。 </p>
       <p> 典型例は、可能な記述またはその例のリストが、要素<gi>valList</gi> 中に属性定義として示されている。 </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
       <p>Les attributs utilisant ce type de données doivent contenir un mot qui suit les règles de
       définition d'un nom XML valide (voir <ptr target="https://www.w3.org/TR/REC-xml/#dt-name"/>):
       par exemple ils ne peuvent pas contenir des blancs ni commencer par des chiffres. </p>
@@ -6886,46 +6889,47 @@ which contain an XPath expression.</desc>
       <gi>valList</gi>.</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.gender">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-17" xml:lang="en">defines the range of attribute values used to
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-17" xml:lang="en">defines the range of attribute values used to
     represent the gender of a person, persona, or character.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
     <dataRef key="teidata.enumerated"/>
   </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-08-27" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-08-27" xml:lang="en">
     <p>Values for attributes using this datatype may be defined locally by a project, or they may refer to an external standard.</p>
     <p>Values for this datatype should not be used to encode morphological gender (cf. <gi>gen</gi>,
         <att>msd</att> as defined in <ident type="class">att.linguistic</ident>, and <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/DI.html#DITPFO">9.3.1. Information on Written and Spoken Forms</ref>).</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.sex">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="en">defines the range of attribute values used to identify
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="en">defines the range of attribute values used to identify
     the sex of an organism.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">인간 또는 동물의 성을 식별하는 속성 값 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍用以識別人類或動物的性別</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">人間または動物の性を示す属性値の範囲を定義する。 </desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="fr">définit la gamme des valeurs d'attributs employés
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">인간 또는 동물의 성을 식별하는 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍用以識別人類或動物的性別</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">人間または動物の性を示す属性値の範囲を定義する。 </desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="fr">définit la gamme des valeurs d'attributs employés
     pour identifier le sexe d’un organisme.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="es">define la gama de valores de atributos usados para
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="es">define la gama de valores de atributos usados para
     identificar el sexo de un organismo.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="it">definisce una gamma di valori di attributi usati per
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-10" xml:lang="it">definisce una gamma di valori di attributi usati per
     identificare il sesso di un organismo.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
     <dataRef key="teidata.enumerated"/>
   </content>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-08-27" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-08-27" xml:lang="en">
     <p>Values for attributes using this datatype may be defined locally by a project, or they may refer to an external standard.</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-03" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2022-05-03" xml:lang="fr">
     <p>Les valeurs de cet attribut peuvent être définies localement par un projet ou peuvent faire
       référence à un standard externe.</p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.probCert">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines a range of attribute values which can be expressed either as a numeric probability or as a coded certainty value.</desc>
-<content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">  
-  <alternate><dataRef key="teidata.probability"/>
-  <dataRef key="teidata.certainty"/>
-  </alternate>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-10-18" xml:lang="en">defines a range of attribute values which can be expressed either as a numeric
+    probability or as a coded certainty value.</desc>
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
+    <alternate>
+      <dataRef key="teidata.probability"/>
+      <dataRef key="teidata.certainty"/>
+    </alternate>
   </content>
-  
 </dataSpec><classSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="atts" ident="att.formula">
   <desc versionDate="2019-06-25" xml:lang="en">provides attributes for defining a mathematical formula.</desc>
   <attList>
@@ -7200,53 +7204,53 @@ one initial.</desc>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDDATE">13.4. Dates</ref>
   </listRef>
 </classSpec><dataSpec module="tei" ident="teidata.duration.iso">
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-04-09" xml:lang="en">defines the range of attribute values available for representation of a duration in time
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-04-09" xml:lang="en">defines the range of attribute values available for representation of a duration in time
     using ISO 8601 standard formats</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">ISO 8601 표준 형식을 사용하여 시간의 지속을 나타내는 속성 값 범위를 정의한다.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">以ISO 8601標準格式定義表示一段持續性時間的屬性值範圍</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">ISO 8601にある標準形式を使い、時間幅を表現する当該属性値の範囲を定義 する。 </desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme de valeurs d'attributs exprimant une durée temporaraire utilisant le norme ISO 8601.</desc>
-  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos posibles para
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-12-20" xml:lang="ko">ISO 8601 표준 형식을 사용하여 시간의 지속을 나타내는 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-02" xml:lang="zh-TW">以ISO 8601標準格式定義表示一段持續性時間的屬性值範圍</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2008-04-05" xml:lang="ja">ISO 8601にある標準形式を使い、時間幅を表現する当該属性値の範囲を定義 する。 </desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-06-12" xml:lang="fr">définit la gamme de valeurs d'attributs exprimant une durée temporaraire utilisant le norme ISO 8601.</desc>
+  <desc xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos posibles para
     representar la duración en el tiempo usando formatos estàndards ISO 8601.</desc>
-  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <content xmlns:xi="http://www.w3.org/2001/XInclude">
       <dataRef name="token" restriction="[0-9.,DHMPRSTWYZ/:+\-]+"/>
    </content>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <time dur-iso="PT0,75H">three-quarters of an hour</time>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <date dur-iso="P1,5D">a day and a half</date>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <date dur-iso="P14D">a fortnight</date>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <time dur-iso="PT0,75H">trois quarts d'une heure</time>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <date dur-iso="P1,5D">une journee et demie</date>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="fr">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <date dur-iso="P14D">une quinzaine</date>
       </egXML>
   </exemplum>
-  <exemplum xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="und">
+  <exemplum xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="und">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <time dur-iso="PT0.02S">20 ms</time>
       </egXML>
   </exemplum>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-04-20" xml:lang="en">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2007-04-20" xml:lang="en">
       <p>A duration is expressed as a sequence of number-letter pairs, preceded by the letter P; the
       letter gives the unit and may be Y (year), M (month), D (day), H (hour), M (minute), or S
       (second), in that order. The numbers are all unsigned integers, except for the last, which may
@@ -7258,7 +7262,7 @@ one initial.</desc>
       <p>For complete details, see ISO 8601 <title>Data elements and interchange formats — Information
         interchange — Representation of dates and times</title>.</p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="ja" versionDate="2008-04-05">
       <p> 時間幅は、先頭文字Pに続いて、数値-文字のペア列で示される。 文字は単位を示している。Y(年)、M(月)、D(日)、H(時間)、M(分)、S(秒)
       の順番になる。数値は符号のない整数である。但し、最後に10進数の 表記記号(小数点を示す<code>.</code>または<code>,</code>。後者が望
         ましい)をとることはある。数値が<mentioned>0</mentioned>の場合、 数値-文字のペアは省略されることがある。 H(時間)、M(分)、
@@ -7266,7 +7270,7 @@ one initial.</desc>
       <p> 詳細については、ISO 8601<title>Data elements and interchange formats - Information interchange -
         Representation of dates and times</title>を参照のこと。 </p>
   </remarks>
-  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
+  <remarks xmlns:xi="http://www.w3.org/2001/XInclude" versionDate="2009-05-25" xml:lang="fr">
       <p>Une durée est exprimée par une suite de paires alphanumériques, précédée par la lettre P ;
       la lettre donne l'unité et peut être Y (année), M (mois), D (jour), H (heure), M (minute), ou
       S (seconde), dans cet ordre. Les nombres sont des entiers sans
@@ -7491,16 +7495,20 @@ Elements</ref>
   </content>
   <constraintSpec ident="abstractModel-structure-p-in-ab-or-p" scheme="schematron">
     <constraint>
-      <sch:report test="(ancestor::tei:ab or ancestor::tei:p) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )">
-        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
-      </sch:report>
+      <sch:rule context="tei:p">
+        <sch:report test="(ancestor::tei:ab or ancestor::tei:p) and                        not( ancestor::tei:floatingText                           | parent::tei:exemplum                           | parent::tei:item                           | parent::tei:note                           | parent::tei:q                           | parent::tei:quote                           | parent::tei:remarks                           | parent::tei:said                           | parent::tei:sp                           | parent::tei:stage                           | parent::tei:cell                           | parent::tei:figure )">
+          Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-p-in-l-or-lg" scheme="schematron">
     <constraint>
-      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
-        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
-      </sch:report>
+      <sch:rule context="tei:p">
+        <sch:report test="( ancestor::tei:l  or  ancestor::tei:lg ) and                        not( ancestor::tei:floatingText                           | parent::tei:figure                           | parent::tei:note )">
+          Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -8328,6 +8336,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
   <gloss versionDate="2009-01-06" xml:lang="fr">citation</gloss>
   <gloss versionDate="2007-11-06" xml:lang="it">citazione</gloss>
   <gloss versionDate="2016-11-24" xml:lang="de">Zitat mit Referenz</gloss>
+  <gloss versionDate="2024-02-28" xml:lang="ja">引用内容</gloss>
   <desc versionDate="2007-09-23" xml:lang="en">contains a quotation from some other document, together with a bibliographic reference to
     its source. In a dictionary it may contain an example text with at least one occurrence of the
     word form, used in the sense being described, or a translation of the headword, or an example.</desc>
@@ -8986,8 +8995,9 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
           <att>target</att> in combination with either
           <att>from</att> or <att>to</att>.</desc>
         <constraint>
-          <sch:report test="../@from | ../@to">When target= is
-            present, neither from= nor to= should be.</sch:report>
+          <sch:rule context="tei:rt/@target">
+            <sch:report test="../@from | ../@to">When target= is present, neither from= nor to= should be.</sch:report>
+          </sch:rule>
         </constraint>
       </constraintSpec>
       <remarks xml:lang="en" versionDate="2020-02-01">
@@ -9009,8 +9019,9 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
         <desc>Enforce the presence of <att>to</att> iff there
           is a <att>from</att>.</desc>
         <constraint>
-          <sch:assert test="../@to">When from= is present, the to=
-            attribute of <sch:name/> is required.</sch:assert>
+          <sch:rule context="tei:rt/@from">
+            <sch:assert test="../@to">When from= is present, the to= attribute of <sch:name/> is required.</sch:assert>
+          </sch:rule>
         </constraint>
       </constraintSpec>
     </attDef>
@@ -9026,8 +9037,9 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
         <desc>Enforce the presence of <att>from</att> iff there
           is a <att>to</att>.</desc>
         <constraint>
-          <sch:assert test="../@from">When to= is present, the from=
-            attribute of <sch:name/> is required.</sch:assert>
+          <sch:rule context="tei:rt/@to">
+            <sch:assert test="../@from">When to= is present, the from= attribute of <sch:name/> is required.</sch:assert>
+          </sch:rule>
         </constraint>
       </constraintSpec>
     </attDef>
@@ -9161,6 +9173,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
   <gloss versionDate="2007-05-04" xml:lang="es">corrección</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">correzione</gloss>
   <gloss versionDate="2016-11-24" xml:lang="de">Korrektur</gloss>  
+  <gloss versionDate="2024-02-28" xml:lang="ja">修正</gloss>
   <desc versionDate="2006-03-20" xml:lang="en">contains the correct form of a passage apparently erroneous in the copy text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">복사된 텍스트에서 오류로 보이는 단락의 정정 형식을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含文本中看似錯誤並加以更正過後的文字。</desc>
@@ -9325,18 +9338,13 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
     <p>Se Observa también que los elementos <gi>opción</gi> pueden ser uno mismo-jerarquía.</p>
     <p>Para una versión especializada de la <gi>opción</gi> para codificar los testimonios múltiples de un único trabajo, ver la sección <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/TC.html#TCAPLL">12.1. The Apparatus Entry, Readings, and Witnesses</ref>.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
+  <remarks xml:lang="ja" versionDate="2024-02-28">
     <p>
-            要素<gi>choice</gi>の子要素は全て、選択的な符号化方法を示している。
-            従って、それらは互いに排他的であるとするのが自然である。けれども、
-            並列的に符号化されていると考えられる場合もあるだろう。
-        </p>
-    <p>要素<gi>choice</gi>は、入れ子化できることにも注意して欲しい。
-        </p>
-    <p>
-            1つの作品にある複数の現存資料を要素<gi>choice</gi>符号化することに
-            ついては、<ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/TC.html#TCAPLL">12.1. The Apparatus Entry, Readings, and Witnesses</ref>を参照のこと。
-        </p>
+      <gi>choice</gi>要素の子要素は全て、同じ部分の異なる選択肢を示しているので、それらは択一的であるとするのが自然である。
+      けれども、テキストを完全に表現するには複数の選択肢を並列的に扱う必要がある場合もあるだろう。</p>
+      <p><gi>choice</gi>要素は、自らを入れ子にできることにも注意して欲しい。</p>
+      <p>符号化時にありうる選択肢ではなく、1つの作品にある複数の本文を記録する目的では、
+      <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/TC.html#TCAPLL">12.1. The Apparatus Entry, Readings, and Witnesses</ref>で扱われている<gi>app</gi>要素などが望ましい。</p>
   </remarks>
   <remarks xml:lang="de" versionDate="2016-11-24">
       <p>
@@ -9359,7 +9367,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
   <gloss versionDate="2005-01-14" xml:lang="en">regularization</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">정규화</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">一般化</gloss>
-  <gloss versionDate="2008-04-06" xml:lang="ja"/>
+  <gloss versionDate="2024-02-14" xml:lang="ja">規則化</gloss>
   <gloss versionDate="2009-01-06" xml:lang="fr">régularisation</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">regularización</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">regolarizzazione</gloss>
@@ -9367,7 +9375,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
   <desc versionDate="2005-01-14" xml:lang="en">contains a reading which has been regularized or normalized in some sense.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">어떤 면에서 정규화 또는 표준화된 해석을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">標誌一般化或規格化處理過的文字。</desc>
-  <desc versionDate="2008-04-06" xml:lang="ja">正規化された読みを示す。</desc>
+  <desc versionDate="2024-02-14" xml:lang="ja">規則化された読みを示す。</desc>
   <desc versionDate="2009-01-06" xml:lang="fr">contient une partie qui a été régularisée ou normalisée
         de façon quelconque</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una lectura que ha sido regularizada o
@@ -11933,7 +11941,7 @@ Measures</ref>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#CONAAB">3.6.5. Abbreviations and Their Expansions</ref>
   </listRef>
-</elementSpec><elementSpec module="core" ident="ptr">
+</elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="ptr">
   <gloss versionDate="2007-07-04" xml:lang="en">pointer</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">포인터</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -11960,8 +11968,9 @@ Measures</ref>
   <content><empty/></content>
   <constraintSpec scheme="schematron" ident="ptrAtts">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @cRef">Only one of the
-attributes @target and @cRef may be supplied on <name/>.</report>
+      <sch:rule context="tei:ptr">
+        <sch:report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on <sch:name/>.</sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="und">
@@ -11975,24 +11984,22 @@ attributes @target and @cRef may be supplied on <name/>.</report>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COXR">3.7. Simple Links and Cross-References</ref>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SAPT">16.1. Links</ref>
   </listRef>
-</elementSpec><elementSpec module="core" ident="ref">
+</elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="ref">
   <gloss versionDate="2007-07-04" xml:lang="en">reference</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">참조</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
   <gloss versionDate="2008-04-06" xml:lang="es">referencia</gloss>
   <gloss versionDate="2009-01-06" xml:lang="fr">référence</gloss>
   <gloss versionDate="2007-11-06" xml:lang="it">riferimento</gloss>
-    <gloss versionDate="2016-11-25" xml:lang="de">Referenz</gloss>
+  <gloss versionDate="2016-11-25" xml:lang="de">Referenz</gloss>
   <desc versionDate="2006-01-11" xml:lang="en">defines a reference to another location, possibly modified by additional text or comment.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">부가적인 텍스트 또는 해설로 수정될 수 있는, 다른 위치로 참조를 정의한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">標明與其他位置互相參照的符號，或許包含附加的文字或註解。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">他の場所への参照を定義する。多くは、追加テキストまたはコメントを含む。</desc>
   <desc versionDate="2009-01-06" xml:lang="fr">définit une référence vers un autre emplacement, la référence étant éventuellement modifiée ou complétée par un texte ou un commentaire.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">define una referencia a otra localización, posiblemente
-    modificada por un texto o comentario adicional.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">definisce un riferimento ad un'altra posizione, può
-    essere modificata da un commento o testo ulteriore</desc>
-    <desc versionDate="2016-11-25" xml:lang="de">definiert einen externen oder internen Verweis, der auch durch einen zusätzlichen Text oder Kommentar ergänzt werden kann.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">define una referencia a otra localización, posiblemente modificada por un texto o comentario adicional.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">definisce un riferimento ad un'altra posizione, può essere modificata da un commento o testo ulteriore</desc>
+  <desc versionDate="2016-11-25" xml:lang="de">definiert einen externen oder internen Verweis, der auch durch einen zusätzlichen Text oder Kommentar ergänzt werden kann.</desc>
   <classes>
     <memberOf key="att.cReferencing"/>
     <memberOf key="att.declaring"/>
@@ -12008,9 +12015,9 @@ attributes @target and @cRef may be supplied on <name/>.</report>
   </content>
   <constraintSpec scheme="schematron" ident="refAtts">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @cRef">Only one of the
-	attributes @target' and @cRef' may be supplied on <name/>
-         </report>
+      <sch:rule context="tei:ref">
+        <sch:report test="@target and @cRef">Only one of the attributes @target' and @cRef' may be supplied on <sch:name/></sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -12028,12 +12035,12 @@ attributes @target and @cRef may be supplied on <name/>.</report>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">Cf. tout particulièrement 
     <ref cRef="B1/234">le vers 234 du Livre I</ref>
-      </egXML>
+    </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.natcorp.ox.ac.uk/Texts/A02.xml#s2"> 關於第二行，</ref> 請參考 <ref>下列
-        <term>慣用語</term>
-         </ref>.</egXML>
+    <term>慣用語</term>
+    </ref>.</egXML>
   </exemplum>
   <remarks versionDate="2005-10-13" xml:lang="en">
     <p>The <att>target</att> and <att>cRef</att> attributes are mutually exclusive.</p>
@@ -12045,7 +12052,7 @@ attributes @target and @cRef may be supplied on <name/>.</report>
     <p> 属性<att>target</att>と<att>cRef</att>は、排他的に使用される。 </p>
   </remarks>
   <remarks xml:lang="de" versionDate="2016-11-25">
-      <p>Die <att>target</att> und <att>cRef</att>-Attribute schließen sich gegenseitig aus.</p>
+    <p>Die <att>target</att> und <att>cRef</att>-Attribute schließen sich gegenseitig aus.</p>
   </remarks>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COXR">3.7. Simple Links and Cross-References</ref>
@@ -15813,7 +15820,9 @@ epistemology, methodology and history of
   </listRef>
 </elementSpec><elementSpec module="core" ident="citedRange">
   <gloss versionDate="2012-12-13" xml:lang="en">cited range</gloss>
+  <gloss versionDate="2024-02-28" xml:lang="ja">引用範囲</gloss>
   <desc versionDate="2012-12-13" xml:lang="en">defines the range of cited content, often represented by pages or other units</desc>
+  <desc versionDate="2024-02-28" xml:lang="ja">しばしばページやその他の単位で表される、引用の範囲を定める。</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.pointing"/>
@@ -15842,7 +15851,9 @@ epistemology, methodology and history of
       an identical value. When no clear endpoint is provided, the <att>from</att> attribute may be
       used without <att>to</att>; for example a citation such as <q>p. 3ff</q> might be encoded
       <code>&lt;citedRange from="3"&gt;p. 3ff&lt;/citedRange&gt;</code>.</p>
-  </remarks> <listRef>
+  </remarks>
+  <remarks versionDate="2024-02-28" xml:lang="ja"><p>1頁だけ引用された時は、同一の値を伴う<att>from</att>と<att>to</att>の属性を用いる。引用の終わりが与えられていない場合は、<att>from</att>属性は、<att>to</att>なしで用いることが許されている。例えば、<q>p. 3ff</q>のような引用は<code>&lt;citedRange from="3"&gt;p. 3ff&lt;/citedRange&gt;</code>と符号化されうる。</p></remarks>
+  <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOB">3.12.2.5. Scopes and Ranges in Bibliographic Citations</ref>
   </listRef>
 </elementSpec><elementSpec module="core" ident="pubPlace">
@@ -16265,42 +16276,31 @@ epistemology, methodology and history of
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
   </listRef>
 </elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="relatedItem" module="core">
-  <desc versionDate="2007-03-19" xml:lang="en">contains or references some other bibliographic item which is related to the present one in
-    some specified manner, for example as a constituent or alternative version of it.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">구성물이나 대체 버전과 같이 현 항목과 특정 방식으로 관련된 다른 서지 항목을 명시적 방식에 따라
-    포함하거나 지시한다.</desc>
+  <desc versionDate="2007-03-19" xml:lang="en">contains or references some other bibliographic item which is related to the present one in some specified manner, for example as a constituent or alternative version of it.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">구성물이나 대체 버전과 같이 현 항목과 특정 방식으로 관련된 다른 서지 항목을 명시적 방식에 따라 포함하거나 지시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含或參照到其他書目項目，該些項目與目前的書目項目在某種程度上相關，例如作為其組成或者替代項目。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">当該内容と関連する書誌情報項目を示す、または参照する。例えば、構成要 素または他の版など。</desc>
-  <desc versionDate="2009-01-06" xml:lang="fr">contient ou référe à un autre élément bibliographique
-    ayant une relation quelconque avec l'objet décrit, par exemple comme faisant partie d'une version alternative de celui-ci, ou bien en étant une version alternative.</desc>
-  <desc versionDate="2007-11-06" xml:lang="it">contiene o si riferisce ad altra entità bibliografica
-    legata alla presente tramite una relazione specificata quale, per esempio, versione costitutiva
-    o alternativa</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene o refiere algún otro elemento bibliográfico que
-    se relaciona con el actual de alguna manera, por ejemplo como un versión complementaria o
-    alternativa de este.</desc>
-  <desc versionDate="2017-06-13" xml:lang="de">enthält oder verweist auf ein anderes bibliografisches Objekt, welches zu dem aktuellen in einer
-    bestimmten Beziehung steht, z. B. als Bestandteil oder Alternativfassung.</desc>
+  <desc versionDate="2009-01-06" xml:lang="fr">contient ou référe à un autre élément bibliographique ayant une relation quelconque avec l'objet décrit, par exemple comme faisant partie d'une version alternative de celui-ci, ou bien en étant une version alternative.</desc>
+  <desc versionDate="2007-11-06" xml:lang="it">contiene o si riferisce ad altra entità bibliografica legata alla presente tramite una relazione specificata quale, per esempio, versione costitutiva o alternativa</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene o refiere algún otro elemento bibliográfico que se relaciona con el actual de alguna manera, por ejemplo como un versión complementaria o alternativa de este.</desc>
+  <desc versionDate="2017-06-13" xml:lang="de">enthält oder verweist auf ein anderes bibliografisches Objekt, welches zu dem aktuellen in einer bestimmten Beziehung steht, z. B. als Bestandteil oder Alternativfassung.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.biblPart"/>
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="0">
-        <classRef key="model.biblLike"/>
-        <classRef key="model.ptrLike"/>
-      </alternate>
-    
+    <alternate minOccurs="0">
+      <classRef key="model.biblLike"/>
+      <classRef key="model.ptrLike"/>
+    </alternate>
   </content>
   <constraintSpec ident="targetorcontent1" scheme="schematron">
     <constraint>
-      <sch:report test="@target and count( child::* ) &gt; 0">
-If the @target attribute on <sch:name/> is used, the
-relatedItem element must be empty</sch:report>
-      <sch:assert test="@target or child::*">A relatedItem element should have either a 'target' attribute
-        or a child element to indicate the related bibliographic item</sch:assert>
+      <sch:rule context="tei:relatedItem">
+        <sch:report test="@target and count( child::* ) &gt; 0">If the @target attribute on <sch:name/> is used, the relatedItem element must be empty</sch:report>
+        <sch:assert test="@target or child::*">A relatedItem element should have either a @target attribute or a child element to indicate the related bibliographic item</sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
@@ -16392,9 +16392,9 @@ relatedItem element must be empty</sch:report>
   </content>
   <constraintSpec ident="abstractModel-structure-l-in-l" scheme="schematron">
     <constraint>
-      <sch:report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
-        Abstract model violation: Lines may not contain lines or lg elements.
-      </sch:report>
+      <sch:rule context="tei:l">
+        <sch:report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">Abstract model violation: Lines may not contain lines or lg elements.</sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="und">
@@ -16426,17 +16426,13 @@ relatedItem element must be empty</sch:report>
   <gloss versionDate="2007-05-04" xml:lang="es">grupo de versos</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">un gruppo di versi</gloss>
   <gloss versionDate="2017-06-13" xml:lang="de">Gruppe von Vers(zeil)en</gloss>
-  <desc versionDate="2012-04-17" xml:lang="en">contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain,
-        verse paragraph, etc.</desc>
+  <desc versionDate="2012-04-17" xml:lang="en">contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">예를 들어, 연, 후렴구, 운문 단락과 같이 형식적 단위로 기능하는 운문 행군을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含形式上視為一組的詩行，例如詩節、疊句、韻文段落等。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">形式単位としてある、ある韻文の行をまとまりを示す。例えば、連、リフレ イン、詩節など。</desc>
-  <desc versionDate="2009-01-06" xml:lang="fr">contient un groupe de vers fonctionnant comme une unité
-        formelle, par exemple une strophe, un refrain, un paragraphe en vers, etc.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene un grupo de versos que funcionan como una
-        unidad formal, p.ej. una estrofa, un refrán, un estribillo, etc.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene un gruppo di versi che costituiscono un'unità
-        formale, per esempio una stanza, un refrain, un paragrafo in versi, ecc.</desc>
+  <desc versionDate="2009-01-06" xml:lang="fr">contient un groupe de vers fonctionnant comme une unité formelle, par exemple une strophe, un refrain, un paragraphe en vers, etc.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene un grupo de versos que funcionan como una unidad formal, p.ej. una estrofa, un refrán, un estribillo, etc.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene un gruppo di versi che costituiscono un'unità formale, per esempio una stanza, un refrain, un paragrafo in versi, ecc.</desc>
   <desc versionDate="2017-06-13" xml:lang="de">enthält eine oder mehrere Verse bzw. Verszeilen, die zusammen eine formale Einheit (z. B. Strophe, Refrain) bilden.</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -16475,15 +16471,16 @@ relatedItem element must be empty</sch:report>
   </content>
   <constraintSpec scheme="schematron" ident="atleast1oflggapl">
     <constraint>
-      <sch:assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
-        must contain at least one child l, lg, or gap element.</sch:assert>
+      <sch:rule context="tei:lg">
+        <sch:assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element must contain at least one child l, lg, or gap element.</sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-lg-in-l" scheme="schematron">
     <constraint>
-      <sch:report test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
-        Abstract model violation: Lines may not contain line groups.
-      </sch:report>
+      <sch:rule context="tei:lg">
+        <sch:report test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">Abstract model violation: Lines may not contain line groups.</sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -16544,12 +16541,10 @@ relatedItem element must be empty</sch:report>
     </egXML>
   </exemplum>
   <remarks versionDate="2005-01-14" xml:lang="en">
-    <p rend="dataDesc">contains verse lines or nested line groups only, possibly prefixed by a
-            heading.</p>
+    <p rend="dataDesc">contains verse lines or nested line groups only, possibly prefixed by a heading.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p rend="dataDesc">ne contient que des vers ou des groupes de vers enchâssés,
-            éventuellement précédés d'un titre.</p>
+    <p rend="dataDesc">ne contient que des vers ou des groupes de vers enchâssés, éventuellement précédés d'un titre.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p rend="dataDesc"> 韻文の行または(普通は見出しが付く)入れ子化された行グループのみを示 す。 </p>
@@ -19892,6 +19887,7 @@ during the encoding of a text.</desc>
   <gloss versionDate="2006-10-18" xml:lang="de">Korrekturverfahren</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">principios de corrección</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">principi di correzione</gloss>
+  <gloss versionDate="2024-02-28" xml:lang="ja">修正の原則</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">states how and under what circumstances corrections have been made in the text.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">établit comment et dans quelles circonstances des
     corrections ont été apportées au texte.</desc>
@@ -20185,31 +20181,28 @@ during the encoding of a text.</desc>
   <gloss xml:lang="en" versionDate="2007-06-12">quotation</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">citation</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">specifies editorial practice adopted with respect to quotation marks in the original.</desc>
-  <desc versionDate="2009-01-05" xml:lang="fr">décrit la pratique éditoriale adoptée par rapport aux
-    guillements dans l’original.</desc>
+  <desc versionDate="2009-01-05" xml:lang="fr">décrit la pratique éditoriale adoptée par rapport aux guillements dans l’original.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">원본 인용 부호에 관해 채택한 편집 방식을 명시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">說明在編輯上是如何處理來源文件中的引文符號。</desc>
   <desc versionDate="2008-04-06" xml:lang="ja">元資料にあった引用をどのように編集したのかを示す。</desc>
-  <desc versionDate="2006-10-18" xml:lang="de">beschreibt die editorische Praxis bezüglich der
-    Anführungszeichen im Originaltext.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">indica las prácticas editoriales adoptadas respecto al
-    entrecomillado en el original.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">specifica le pratiche editoriali rispetto all'uso delle
-    virgolette nell'originale</desc>
+  <desc versionDate="2006-10-18" xml:lang="de">beschreibt die editorische Praxis bezüglich der Anführungszeichen im Originaltext.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">indica las prácticas editoriales adoptadas respecto al entrecomillado en el original.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">specifica le pratiche editoriali rispetto all'uso delle virgolette nell'originale</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.declarable"/>
     <memberOf key="model.editorialDeclPart"/>
   </classes>
   <content>
-    
-      <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
-    
+    <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
   </content>
   <constraintSpec ident="quotationContents" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="not(@marks) and not (tei:p)">
-On <name/>, either the @marks attribute should be used, or a paragraph of description provided</report>
+      <sch:rule context="tei:quotation">
+        <sch:report test="not( @marks )  and  not( tei:p )">
+          On <sch:name/>, either the @marks attribute should be used, or a paragraph of description provided
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
@@ -20262,8 +20255,6 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
         </valItem>
       </valList>
     </attDef>
-
-    
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -21155,7 +21146,7 @@ the target element</desc>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD5">2.3. The Encoding Description</ref>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54">2.3.6. The Reference System Declaration</ref>
   </listRef>
-</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="citeStructure">
+</elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" module="header" ident="citeStructure">
   <gloss versionDate="2020-02-03" xml:lang="en">citation structure</gloss>
   <desc versionDate="2020-02-03" xml:lang="en">declares a structure and method for citing the current document.</desc>
   <classes>
@@ -21192,16 +21183,16 @@ the target element</desc>
       </datatype>
       <constraintSpec ident="citestructure-outer-match" scheme="schematron">
         <constraint>
-          <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:citeStructure[not(parent::tei:citeStructure)]">
-            <assert test="starts-with(@match,'/')">An XPath in @match on the outer <name/> must start with '/'.</assert>
-          </rule>
+          <sch:rule context="tei:citeStructure[not(parent::tei:citeStructure)]">
+            <sch:assert test="starts-with(@match,'/')">An XPath in @match on the outer <sch:name/> must start with '/'.</sch:assert>
+          </sch:rule>
         </constraint>
       </constraintSpec>
       <constraintSpec ident="citestructure-inner-match" scheme="schematron">
         <constraint>
-          <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:citeStructure[parent::tei:citeStructure]">
-            <assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <name/>.</assert>
-          </rule>
+          <sch:rule context="tei:citeStructure[parent::tei:citeStructure]">
+            <sch:assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <sch:name/>.</sch:assert>
+          </sch:rule>
         </constraint>
       </constraintSpec>
     </attDef>
@@ -21529,7 +21520,8 @@ the target element</desc>
   <gloss versionDate="2009-01-05" xml:lang="fr">déclaration de classification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">분류 선언</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">分類宣告</gloss>
-    <gloss versionDate="2016-11-17" xml:lang="de">Angabe zur Klassifikation</gloss>
+  <gloss versionDate="2024-02-28" xml:lang="ja">分類法宣言</gloss>
+  <gloss versionDate="2016-11-17" xml:lang="de">Angabe zur Klassifikation</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">declaraciones de clasificación</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">dichiarazioni sulla ckassificazione</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains one or more taxonomies defining any classificatory
@@ -21537,8 +21529,8 @@ codes used elsewhere in the text.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">contient une ou plusieurs taxinomies définissant les codes de classification utilisés n’importe où dans le texte.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트 내 어디서든 사용될 수 있는 분류 부호를 정의하는 분류법을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一個或多個分類法，用來定義在文件中他處所使用之任何分類碼。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">当該テキスト中で使用されている分類コードを定義する、ひとつ以上の分類
-  法を示す。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">当該テキスト中で使用されている分類コードを定義する、
+    ひとつ以上の分類法を示す。</desc>
     <desc versionDate="2016-11-17" xml:lang="de">enthält eine oder mehrere Taxonomien, die im Text verwendete Klassifikationscodes definieren.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una o más taxonomías que definen cualquier código usado en algún punto del texto.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una o più tassonomie che definiscono un qualsiasi codice classificatorio usato in un'altra porzione del testo.</desc>
@@ -23308,6 +23300,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
   <gloss versionDate="2008-04-06" xml:lang="es">código de clasificación</gloss>
   <gloss versionDate="2016-11-24" xml:lang="de">Klassifikationscode</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">codice di clasificazione</gloss>
+  <gloss versionDate="2024-02-28" xml:lang="ja">分類コード</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains the classification code used for this text in some standard classification system.</desc>
   <desc versionDate="2009-04-22" xml:lang="fr">contient le code de classification attribué à ce texte en
     référence à un système standard de classification.</desc>
@@ -23334,7 +23327,7 @@ should be supplied for the <att>scheme</att> attribute.</p>
         taxinomie utilisée.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">사용하고 있는 분류 체계 또는 분류법을 표시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">說明使用中的分類系統或分類法。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該分類法を定義する。</desc>
+      <desc versionDate="2024-02-28" xml:lang="ja">用いられている分類体系を定義する<gi>taxonomy</gi>要素や他の資料などを指す。</desc>
         <desc versionDate="2016-11-24" xml:lang="de">benennt das verwendete Klassifikationssystem, definiert z. B. durch Verweis auf ein 
             <gi>taxonomy</gi>-Element oder eine andere Ressource</desc>
       <desc versionDate="2007-05-04" xml:lang="es">identifica el sistema de clasificación o taxonomía en
@@ -23795,19 +23788,19 @@ should be supplied for the <att>scheme</att> attribute.</p>
         </valItem>
         <valItem ident="transmitted">
           <desc versionDate="2015-02-09" xml:lang="en">information concerning the transmission of a message, i.e. between the dispatch and the next receipt, redirect or forwarding.</desc>
-        <desc versionDate="2022-06-02" xml:lang="ja">メッセージの転送に関する情報。発送者と次の受信者、転送等。
+          <desc versionDate="2024-03-07" xml:lang="ja">メッセージの伝達手段に関する情報。発信とその後の受信・転送等の間の情報。
 	    </desc>
 	      </valItem>
         <valItem ident="redirected">
           <desc versionDate="2015-02-09" xml:lang="en">information concerning the
 	  redirection of an unread message.</desc>
-		<desc versionDate="2022-06-02" xml:lang="ja">未読なままに転送されるメッセージに関する情報。
+          <desc versionDate="2024-03-07" xml:lang="ja">〔開封せずに〕未読のままに転送されるメッセージに関する情報。
 	    </desc>
         </valItem>
         <valItem ident="forwarded">
           <desc versionDate="2015-02-09" xml:lang="en">information concerning the
 	  forwarding of a message.</desc>
-		<desc versionDate="2022-06-02" xml:lang="ja">メッセージの転送に関する情報。
+          <desc versionDate="2024-03-07" xml:lang="ja">〔開封後の〕メッセージの転送に関する情報。
 	    </desc>
         </valItem>
       </valList>
@@ -25259,13 +25252,10 @@ during the evolution of the encoded representation of that text.</p>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트의 전면부, 본문, 후면부의 하위 구역을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">文本的正文前資訊、正文、及正文後資訊的分段。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">前付、本文、後付中のテキスト部分を示す。</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">contient une subdivision dans le texte préliminaire, dans le
-  corps d’un texte ou dans le texte postliminaire.</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">contient une subdivision dans le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.</desc>
   <desc versionDate="2017-06-13" xml:lang="de">enthält einen Unterabschnitt in Vorspann (front), Textkörper oder Nachspann (back) eines Textes.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene una subdivisión del paratexto inicial, del
-  cuerpo del texto o del paratexto final.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene una suddivisione del peritesto iniziale, del
-  corpo del testo, o del peritesto finale</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene una subdivisión del paratexto inicial, del cuerpo del texto o del paratexto final.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene una suddivisione del peritesto iniziale, del corpo del testo, o del peritesto finale</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.divLike"/>
@@ -25316,16 +25306,20 @@ during the evolution of the encoded representation of that text.</p>
   </content>
   <constraintSpec ident="abstractModel-structure-div-in-l-or-lg" scheme="schematron">
     <constraint>
-      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
-        Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
-      </sch:report>
+      <sch:rule context="tei:div">
+        <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
+          Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-div-in-ab-or-p" scheme="schematron">
     <constraint>
-      <sch:report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
-        Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
-      </sch:report>
+      <sch:rule context="tei:div">
+        <sch:report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
+          Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -26906,7 +26900,7 @@ Tubes formed by Lightning — House struck</p>
   <desc versionDate="2007-12-20" xml:lang="ko">구역의 마지막, 특히 편지의 종료부에 발문으로 나타나는 인사말, 날짜 표시란, 그리고 유사 구를 합하여
     모아 놓는다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集日期地點、署名、稱呼語、及其他在區段結尾出現的類似措辭，尤指信件結尾。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">挨拶文言、日付欄など、ある区分の終わり、特に手紙の終わりにある一連の 文言をまとめる。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">挨拶文言、日付欄など、ある区分の終わり、特に手紙の終わりにある一連の文言をまとめる。</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">regroupe une formule de politesse, une indication d'une
     date et d'autres expressions semblables figurant comme expression à la fin d’une division, en
     particulier à la fin d’une lettre.</desc>
@@ -28659,7 +28653,9 @@ reserved for the element likely to be used more often.</p>
   <content><empty/></content>
   <constraintSpec ident="linkTargets3" scheme="schematron">
     <constraint>
-      <sch:assert test="contains(normalize-space(@target),' ')">You must supply at least two values for @target or  on <sch:name/></sch:assert>
+      <sch:rule context="tei:link">
+        <sch:assert test="contains(normalize-space(@target),' ')">You must supply at least two values for @target or  on <sch:name/></sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -28830,9 +28826,11 @@ reserved for the element likely to be used more often.</p>
   </content>
   <constraintSpec ident="abstractModel-structure-ab-in-l-or-lg" scheme="schematron">
     <constraint>
-      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
-        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
-      </sch:report>
+      <sch:rule context="tei:ab">
+        <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
+          Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -29308,7 +29306,7 @@ reserved for the element likely to be used more often.</p>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SASYMP">16.4.2. Placing Synchronous Events in Time</ref>
   </listRef>
-</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" module="linking" ident="join">
+</elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" module="linking" ident="join">
   <gloss xml:lang="en" versionDate="2009-10-06">join</gloss>
   <gloss versionDate="2009-10-06" xml:lang="fr">jointure</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">identifies a possibly fragmented segment of text, by pointing at the possibly discontiguous elements which compose it.</desc>
@@ -29324,19 +29322,19 @@ reserved for the element likely to be used more often.</p>
     <memberOf key="att.typed"/>
     <memberOf key="model.global.meta"/>
   </classes>
-  <content>
-    
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.descLike"/>
-        <classRef key="model.certLike"/>
-      </alternate>
-    
+  <content>    
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <classRef key="model.descLike"/>
+      <classRef key="model.certLike"/>
+    </alternate>
   </content>
   <constraintSpec ident="joinTargets3" scheme="schematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="contains(@target,' ')">
-You must supply at least two values for @target on <name/>
-         </assert>
+      <sch:rule context="tei:join">
+        <sch:assert test="contains( normalize-space( @target ),' ')">
+          You must supply at least two values for @target on <sch:name/>
+        </sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
@@ -29869,12 +29867,8 @@ You must supply at least two values for @target on <name/>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SAAT">16.8. Alternation</ref>
   </listRef>
 </elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" ident="standOff" mode="add" module="linking">
-  <desc xml:lang="en" versionDate="2018-10-31">Functions as a
-  container element for linked data, contextual information, and
-  stand-off annotations embedded in a TEI document.</desc>
-	  <desc xml:lang="ja" versionDate="2023-07-29">
-		  リンクト・データや文脈情報、TEI文書に埋め込まれたスタンドオフ・アノテーションをコンテナ化する要素として機能する。
-		  </desc>
+  <desc xml:lang="en" versionDate="2018-10-31">Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document.</desc>
+  <desc xml:lang="ja" versionDate="2023-07-29">リンクト・データや文脈情報、TEI文書に埋め込まれたスタンドオフ・アノテーションをコンテナ化する要素として機能する。 </desc>
   <classes>
     <memberOf key="model.resource"/>
     <memberOf key="att.global"/>
@@ -29886,9 +29880,11 @@ You must supply at least two values for @target on <name/>
   </content>
   <constraintSpec ident="nested_standOff_should_be_typed" scheme="schematron" mode="add">
     <constraint>
-      <sch:assert test="@type or not(ancestor::tei:standOff)">This
-      <sch:name/> element must have a @type attribute, since it is
-      nested inside a <sch:name/></sch:assert>
+      <sch:rule context="tei:standOff">
+        <sch:assert test="@type or not(ancestor::tei:standOff)">This
+        <sch:name/> element must have a @type attribute, since it is
+        nested inside a <sch:name/></sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en" versionDate="2019-12-25">
@@ -29954,43 +29950,43 @@ You must supply at least two values for @target on <name/>
     information which is referred to from the main text.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#MLK01" valid="feasible">
       <TEI>
-	<teiHeader> <!-- ... --> </teiHeader>
-	<standOff>
-	  <listPlace>
-	    <place xml:id="LATL">
-	      <placeName>Atlanta</placeName>
-	      <location>
-		<region key="US-GA">Georgia</region>
-		<country key="USA">United States of America</country>
-		<geo>33.755 -84.39</geo>
-	      </location>
-	      <population when="1963" type="interpolatedCensus" quantity="489359" source="https://www.biggestuscities.com/city/atlanta-georgia"/>
-	    </place>
-	    <place xml:id="LBHM">
-	      <placeName>Birmingham</placeName>
-	      <location>
-		<region key="US-AL">Alabama</region>
-		<country key="USA">United States of America</country>
-		<geo>33.653333 -86.808889</geo>
-	      </location>
-	      <population when="1963" type="interpolatedCensus" quantity="332891" source="https://www.biggestuscities.com/city/birmingham-alabama"/>
-	    </place>
-	  </listPlace>
-	</standOff>
-	<text>
-	  <body>
-	    <!-- ... -->
-	    <p>Moreover, I am <choice><sic>congnizant</sic><corr>cognizant</corr></choice> of the interrelatedness of all communities and
-	    <lb/>states.  I cannot sit idly by in <placeName ref="#LATL">Atlanta</placeName> and not be concerned about what happens
-	    <lb/>in <placeName ref="#LBHM">Birmingham</placeName>.  <seg xml:id="FQ17">Injustice anywhere is a threat to justice everywhere.</seg>  We
-	    <lb/>are caught in an inescapable network of mutuality, tied in a single garment
-	    <lb/>of destiny.  Whatever affects one directly affects all indirectly. Never
-	    <lb/>again can we afford to live with the narrow, provincial <soCalled rendition="#Rqms">outside agitator</soCalled>
-	    <lb/>idea.  Anyone who lives inside the United States can never be considered
-	    <lb/>an outsider anywhere in this country.</p>
-	    <!-- ... -->
-	  </body>
-	</text>
+        <teiHeader> <!-- ... --> </teiHeader>
+        <standOff>
+          <listPlace>
+            <place xml:id="LATL">
+              <placeName>Atlanta</placeName>
+              <location>
+                <region key="US-GA">Georgia</region>
+                <country key="USA">United States of America</country>
+                <geo>33.755 -84.39</geo>
+              </location>
+              <population when="1963" type="interpolatedCensus" quantity="489359" source="https://www.biggestuscities.com/city/atlanta-georgia"/>
+            </place>
+            <place xml:id="LBHM">
+              <placeName>Birmingham</placeName>
+              <location>
+                <region key="US-AL">Alabama</region>
+                <country key="USA">United States of America</country>
+                <geo>33.653333 -86.808889</geo>
+              </location>
+              <population when="1963" type="interpolatedCensus" quantity="332891" source="https://www.biggestuscities.com/city/birmingham-alabama"/>
+            </place>
+          </listPlace>
+        </standOff>
+        <text>
+          <body>
+            <!-- ... -->
+            <p>Moreover, I am <choice><sic>congnizant</sic><corr>cognizant</corr></choice> of the interrelatedness of all communities and
+            <lb/>states.  I cannot sit idly by in <placeName ref="#LATL">Atlanta</placeName> and not be concerned about what happens
+            <lb/>in <placeName ref="#LBHM">Birmingham</placeName>.  <seg xml:id="FQ17">Injustice anywhere is a threat to justice everywhere.</seg>  We
+            <lb/>are caught in an inescapable network of mutuality, tied in a single garment
+            <lb/>of destiny.  Whatever affects one directly affects all indirectly. Never
+            <lb/>again can we afford to live with the narrow, provincial <soCalled rendition="#Rqms">outside agitator</soCalled>
+            <lb/>idea.  Anyone who lives inside the United States can never be considered
+            <lb/>an outsider anywhere in this country.</p>
+            <!-- ... -->
+          </body>
+        </text>
       </TEI>
     </egXML>
   </exemplum>
@@ -32142,7 +32138,7 @@ Out the window the body of a dead man suddenly slams into frame
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/DR.html#DROTH">7.3. Other Types of Performance Text</ref>
   </listRef>
 </elementSpec><elementSpec module="drama" ident="caption">
-  <gloss xml:lang="en" versionDate="2007-06-12">caption</gloss>
+  <gloss versionDate="2007-06-12" xml:lang="en">caption</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">sous-titre</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains the text of a caption or other text displayed as part of
 a film script or screenplay.</desc>
@@ -32205,10 +32201,10 @@ laughing affectedly and drinking champagne.</view>
   <remarks versionDate="2005-01-14" xml:lang="en">
     <p>A specialized form of stage direction.</p>
   </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
+  <remarks versionDate="2007-06-12" xml:lang="fr">
     <p>Forme particulière d'indication scénique.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
+  <remarks versionDate="2008-04-05" xml:lang="ja">
     <p>ト書きの特別な形。</p>
   </remarks>
   <listRef>

@@ -6715,8 +6715,8 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-04-17\" xml:lang=\"en\">contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain,\n        verse paragraph, etc.<\/desc>" ],
-        "shortDesc" : "(line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain,\n        verse paragraph, etc.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-04-17\" xml:lang=\"en\">contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc.<\/desc>" ],
+        "shortDesc" : "(line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">line group<\/gloss>" ],
         "altIdent" : 
@@ -9210,8 +9210,8 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-03-19\" xml:lang=\"en\">contains or references some other bibliographic item which is related to the present one in\n    some specified manner, for example as a constituent or alternative version of it.<\/desc>" ],
-        "shortDesc" : "contains or references some other bibliographic item which is related to the present one in\n    some specified manner, for example as a constituent or alternative version of it.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-03-19\" xml:lang=\"en\">contains or references some other bibliographic item which is related to the present one in some specified manner, for example as a constituent or alternative version of it.<\/desc>" ],
+        "shortDesc" : "contains or references some other bibliographic item which is related to the present one in some specified manner, for example as a constituent or alternative version of it.",
         "gloss" : 
         [  ],
         "altIdent" : 
@@ -10430,8 +10430,8 @@
         "type" : "elementSpec",
         "module" : "linking",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-10-31\">Functions as a\n  container element for linked data, contextual information, and\n  stand-off annotations embedded in a TEI document.<\/desc>" ],
-        "shortDesc" : "Functions as a\n  container element for linked data, contextual information, and\n  stand-off annotations embedded in a TEI document.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-10-31\">Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document.<\/desc>" ],
+        "shortDesc" : "Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document.",
         "gloss" : 
         [  ],
         "altIdent" : 
@@ -17874,8 +17874,8 @@
         "type" : "dataSpec",
         "module" : "tei",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-10-18\" xml:lang=\"en\">defines a range of attribute values which can be expressed either as a numeric probability or as a coded certainty value.<\/desc>" ],
-        "shortDesc" : "defines a range of attribute values which can be expressed either as a numeric probability or as a coded certainty value.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-10-18\" xml:lang=\"en\">defines a range of attribute values which can be expressed either as a numeric\n    probability or as a coded certainty value.<\/desc>" ],
+        "shortDesc" : "defines a range of attribute values which can be expressed either as a numeric\n    probability or as a coded certainty value.",
         "gloss" : 
         [  ],
         "altIdent" : 
@@ -17907,7 +17907,14 @@
         "content" : 
         [ 
           { "type" : "dataRef",
-            "name" : "double" } ] },
+            "name" : "double",
+            "dataFacet" : 
+            [ 
+              { "name" : "minInclusive",
+                "value" : "0" },
+              
+              { "name" : "maxInclusive",
+                "value" : "1" } ] } ] },
       
       { "ident" : "teidata.replacement",
         "ns" : "http:\/\/foo.foo\/foo",

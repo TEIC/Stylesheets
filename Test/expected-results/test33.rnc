@@ -130,7 +130,9 @@ tei_att.ranging.attribute.confidence =
       ", or the proportion of observed values that fall within that range."
     ]
   ]
-  attribute confidence { xsd:double }?
+  attribute confidence {
+    xsd:double { minInclusive = "0" maxInclusive = "1" }
+  }?
 tei_att.dimensions.attributes =
   tei_att.ranging.attributes,
   tei_att.dimensions.attribute.unit,
@@ -514,7 +516,7 @@ tei_att.global.responsibility.attribute.cert =
   
   ## (certainty) signifies the degree of certainty associated with the intervention or interpretation.
   attribute cert {
-    xsd:double
+    xsd:double { minInclusive = "0" maxInclusive = "1" }
     | (
        ##
        "high"
@@ -2148,7 +2150,7 @@ tei_p =
     tei_macro.paraContent
     >> sch:pattern [
          id =
-           "foo-p-abstractModel-structure-p-in-ab-or-p-constraint-report-6"
+           "foo-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2157,10 +2159,10 @@ tei_p =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:ab or ancestor::tei:p) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )"
+               "(ancestor::tei:ab or ancestor::tei:p) and                        not( ancestor::tei:floatingText                           | parent::tei:exemplum                           | parent::tei:item                           | parent::tei:note                           | parent::tei:q                           | parent::tei:quote                           | parent::tei:remarks                           | parent::tei:said                           | parent::tei:sp                           | parent::tei:stage                           | parent::tei:cell                           | parent::tei:figure )"
              "\x{a}" ~
-             "        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
-             "      "
+             "          Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -2170,7 +2172,7 @@ tei_p =
        ]
     >> sch:pattern [
          id =
-           "foo-p-abstractModel-structure-p-in-l-or-lg-constraint-report-7"
+           "foo-p-abstractModel-structure-p-in-l-or-lg-constraint-rule-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2179,10 +2181,10 @@ tei_p =
            "               "
            sch:report [
              test =
-               "(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )"
+               "( ancestor::tei:l  or  ancestor::tei:lg ) and                        not( ancestor::tei:floatingText                           | parent::tei:figure                           | parent::tei:note )"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
-             "      "
+             "          Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -2359,7 +2361,7 @@ tei_desc =
     tei_macro.limitedContent
     >> sch:pattern [
          id =
-           "foo-desc-deprecationInfo-only-in-deprecated-constraint-rule-11"
+           "foo-desc-deprecationInfo-only-in-deprecated-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2453,7 +2455,7 @@ tei_rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "foo-rt-target-rt-target-not-span-constraint-report-8"
+         id = "foo-rt-target-rt-target-not-span-constraint-rule-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2462,8 +2464,7 @@ tei_rt =
            "               "
            sch:report [
              test = "../@from | ../@to"
-             "When target= is\x{a}" ~
-             "            present, neither from= nor to= should be."
+             "When target= is present, neither from= nor to= should be."
            ]
            "\x{a}" ~
            "            "
@@ -2477,7 +2478,7 @@ tei_rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "foo-rt-from-rt-from-constraint-assert-7"
+         id = "foo-rt-from-rt-from-constraint-rule-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2486,8 +2487,7 @@ tei_rt =
            "               "
            sch:assert [
              test = "../@to"
-             "When from= is present, the to=\x{a}" ~
-             "            attribute of "
+             "When from= is present, the to= attribute of "
              sch:name [ ]
              " is required."
            ]
@@ -2503,7 +2503,7 @@ tei_rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "foo-rt-to-rt-to-constraint-assert-8"
+         id = "foo-rt-to-rt-to-constraint-rule-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2512,8 +2512,7 @@ tei_rt =
            "               "
            sch:assert [
              test = "../@from"
-             "When to= is present, the from=\x{a}" ~
-             "            attribute of "
+             "When to= is present, the from= attribute of "
              sch:name [ ]
              " is required."
            ]
@@ -2705,7 +2704,7 @@ tei_name =
        }
      }?)
     >> sch:pattern [
-         id = "foo-name-calendar-calendar-check-name-constraint-rule-12"
+         id = "foo-name-calendar-calendar-check-name-constraint-rule-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2904,7 +2903,7 @@ tei_ptr =
   element tei:ptr {
     empty
     >> sch:pattern [
-         id = "foo-ptr-ptrAtts-constraint-report-9"
+         id = "foo-ptr-ptrAtts-constraint-rule-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2913,8 +2912,7 @@ tei_ptr =
            "               "
            sch:report [
              test = "@target and @cRef"
-             "Only one of the\x{a}" ~
-             "attributes @target and @cRef may be supplied on "
+             "Only one of the attributes @target and @cRef may be supplied on "
              sch:name [ ]
              "."
            ]
@@ -2938,7 +2936,7 @@ tei_ref =
   element tei:ref {
     tei_macro.paraContent
     >> sch:pattern [
-         id = "foo-ref-refAtts-constraint-report-10"
+         id = "foo-ref-refAtts-constraint-rule-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2947,8 +2945,7 @@ tei_ref =
            "               "
            sch:report [
              test = "@target and @cRef"
-             "Only one of the\x{a}" ~
-             "	attributes @target' and @cRef' may be supplied on "
+             "Only one of the attributes @target' and @cRef' may be supplied on "
              sch:name [ ]
              "\x{a}" ~
              "               "
@@ -2978,7 +2975,7 @@ tei_list =
          (tei_label, tei_model.global*, tei_item, tei_model.global*)+)),
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-list-gloss-list-must-have-labels-constraint-rule-13"
+         id = "foo-list-gloss-list-must-have-labels-constraint-rule-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3320,7 +3317,7 @@ tei_author =
      }?)
     >> sch:pattern [
          id =
-           "foo-author-calendar-calendar-check-author-constraint-rule-14"
+           "foo-author-calendar-calendar-check-author-constraint-rule-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3360,7 +3357,7 @@ tei_editor =
      }?)
     >> sch:pattern [
          id =
-           "foo-editor-calendar-calendar-check-editor-constraint-rule-15"
+           "foo-editor-calendar-calendar-check-editor-constraint-rule-22"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3410,7 +3407,7 @@ tei_resp =
        }
      }?)
     >> sch:pattern [
-         id = "foo-resp-calendar-calendar-check-resp-constraint-rule-16"
+         id = "foo-resp-calendar-calendar-check-resp-constraint-rule-23"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3457,7 +3454,7 @@ tei_title =
      }?)
     >> sch:pattern [
          id =
-           "foo-title-calendar-calendar-check-title-constraint-rule-17"
+           "foo-title-calendar-calendar-check-title-constraint-rule-24"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3516,7 +3513,7 @@ tei_meeting =
      }?)
     >> sch:pattern [
          id =
-           "foo-meeting-calendar-calendar-check-meeting-constraint-rule-18"
+           "foo-meeting-calendar-calendar-check-meeting-constraint-rule-25"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3644,7 +3641,7 @@ tei_relatedItem =
   element tei:relatedItem {
     ((tei_model.biblLike | tei_model.ptrLike)?)
     >> sch:pattern [
-         id = "foo-relatedItem-targetorcontent1-constraint-report-11"
+         id = "foo-relatedItem-targetorcontent1-constraint-rule-26"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3653,18 +3650,15 @@ tei_relatedItem =
            "               "
            sch:report [
              test = "@target and count( child::* ) > 0"
-             "\x{a}" ~
              "If the @target attribute on "
              sch:name [ ]
-             " is used, the\x{a}" ~
-             "relatedItem element must be empty"
+             " is used, the relatedItem element must be empty"
            ]
            "\x{a}" ~
            "               "
            sch:assert [
              test = "@target or child::*"
-             "A relatedItem element should have either a 'target' attribute\x{a}" ~
-             "        or a child element to indicate the related bibliographic item"
+             "A relatedItem element should have either a @target attribute or a child element to indicate the related bibliographic item"
            ]
            "\x{a}" ~
            "            "
@@ -3691,8 +3685,7 @@ tei_l =
       | tei_model.inter
       | tei_model.global)*)
     >> sch:pattern [
-         id =
-           "foo-l-abstractModel-structure-l-in-l-constraint-report-12"
+         id = "foo-l-abstractModel-structure-l-in-l-constraint-rule-27"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3702,9 +3695,7 @@ tei_l =
            sch:report [
              test =
                "ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]"
-             "\x{a}" ~
-             "        Abstract model violation: Lines may not contain lines or lg elements.\x{a}" ~
-             "      "
+             "Abstract model violation: Lines may not contain lines or lg elements."
            ]
            "\x{a}" ~
            "            "
@@ -3734,7 +3725,7 @@ tei_lg =
       | tei_lg)*,
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-lg-atleast1oflggapl-constraint-assert-17"
+         id = "foo-lg-atleast1oflggapl-constraint-rule-28"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3744,8 +3735,7 @@ tei_lg =
            sch:assert [
              test =
                "count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) > 0"
-             "An lg element\x{a}" ~
-             "        must contain at least one child l, lg, or gap element."
+             "An lg element must contain at least one child l, lg, or gap element."
            ]
            "\x{a}" ~
            "            "
@@ -3755,7 +3745,7 @@ tei_lg =
        ]
     >> sch:pattern [
          id =
-           "foo-lg-abstractModel-structure-lg-in-l-constraint-report-13"
+           "foo-lg-abstractModel-structure-lg-in-l-constraint-rule-29"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3765,9 +3755,7 @@ tei_lg =
            sch:report [
              test =
                "ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]"
-             "\x{a}" ~
-             "        Abstract model violation: Lines may not contain line groups.\x{a}" ~
-             "      "
+             "Abstract model violation: Lines may not contain line groups."
            ]
            "\x{a}" ~
            "            "
@@ -3982,7 +3970,7 @@ tei_sponsor =
      }?)
     >> sch:pattern [
          id =
-           "foo-sponsor-calendar-calendar-check-sponsor-constraint-rule-19"
+           "foo-sponsor-calendar-calendar-check-sponsor-constraint-rule-30"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4022,7 +4010,7 @@ tei_funder =
      }?)
     >> sch:pattern [
          id =
-           "foo-funder-calendar-calendar-check-funder-constraint-rule-20"
+           "foo-funder-calendar-calendar-check-funder-constraint-rule-31"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4062,7 +4050,7 @@ tei_principal =
      }?)
     >> sch:pattern [
          id =
-           "foo-principal-calendar-calendar-check-principal-constraint-rule-21"
+           "foo-principal-calendar-calendar-check-principal-constraint-rule-32"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4194,7 +4182,7 @@ tei_idno =
        }
      }?)
     >> sch:pattern [
-         id = "foo-idno-calendar-calendar-check-idno-constraint-rule-22"
+         id = "foo-idno-calendar-calendar-check-idno-constraint-rule-33"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4256,7 +4244,7 @@ tei_licence =
      }?)
     >> sch:pattern [
          id =
-           "foo-licence-calendar-calendar-check-licence-constraint-rule-23"
+           "foo-licence-calendar-calendar-check-licence-constraint-rule-34"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4439,7 +4427,7 @@ tei_quotation =
   element tei:quotation {
     (tei_model.pLike*)
     >> sch:pattern [
-         id = "foo-quotation-quotationContents-constraint-report-14"
+         id = "foo-quotation-quotationContents-constraint-rule-35"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4447,11 +4435,12 @@ tei_quotation =
            "\x{a}" ~
            "               "
            sch:report [
-             test = "not(@marks) and not (tei:p)"
+             test = "not( @marks )  and  not( tei:p )"
              "\x{a}" ~
-             "On "
+             "          On "
              sch:name [ ]
-             ", either the @marks attribute should be used, or a paragraph of description provided"
+             ", either the @marks attribute should be used, or a paragraph of description provided\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -4693,7 +4682,7 @@ tei_citeStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "foo-citeStructure-match-citestructure-outer-match-constraint-rule-24"
+           "foo-citeStructure-match-citestructure-outer-match-constraint-rule-36"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4714,7 +4703,7 @@ tei_citeStructure =
        ]
     >> sch:pattern [
          id =
-           "foo-citeStructure-match-citestructure-inner-match-constraint-rule-25"
+           "foo-citeStructure-match-citestructure-inner-match-constraint-rule-37"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4899,7 +4888,7 @@ tei_unitDecl =
      }?)
     >> sch:pattern [
          id =
-           "foo-unitDecl-calendar-calendar-check-unitDecl-constraint-rule-26"
+           "foo-unitDecl-calendar-calendar-check-unitDecl-constraint-rule-38"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4943,7 +4932,7 @@ tei_unitDef =
      }?)
     >> sch:pattern [
          id =
-           "foo-unitDef-calendar-calendar-check-unitDef-constraint-rule-27"
+           "foo-unitDef-calendar-calendar-check-unitDef-constraint-rule-39"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4984,7 +4973,7 @@ tei_conversion =
      }?)
     >> sch:pattern [
          id =
-           "foo-conversion-calendar-calendar-check-conversion-constraint-rule-28"
+           "foo-conversion-calendar-calendar-check-conversion-constraint-rule-40"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5050,7 +5039,7 @@ tei_application =
      }?)
     >> sch:pattern [
          id =
-           "foo-application-calendar-calendar-check-application-constraint-rule-29"
+           "foo-application-calendar-calendar-check-application-constraint-rule-41"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5113,7 +5102,7 @@ tei_creation =
      }?)
     >> sch:pattern [
          id =
-           "foo-creation-calendar-calendar-check-creation-constraint-rule-30"
+           "foo-creation-calendar-calendar-check-creation-constraint-rule-42"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5337,7 +5326,7 @@ tei_change =
      }?)
     >> sch:pattern [
          id =
-           "foo-change-calendar-calendar-check-change-constraint-rule-31"
+           "foo-change-calendar-calendar-check-change-constraint-rule-43"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5503,7 +5492,7 @@ tei_div =
       (tei_model.divBottom, tei_model.global*)*)?)
     >> sch:pattern [
          id =
-           "foo-div-abstractModel-structure-div-in-l-or-lg-constraint-report-15"
+           "foo-div-abstractModel-structure-div-in-l-or-lg-constraint-rule-44"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5514,8 +5503,8 @@ tei_div =
              test =
                "(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
-             "      "
+             "          Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -5525,7 +5514,7 @@ tei_div =
        ]
     >> sch:pattern [
          id =
-           "foo-div-abstractModel-structure-div-in-ab-or-p-constraint-report-16"
+           "foo-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-45"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5536,8 +5525,8 @@ tei_div =
              test =
                "(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "        Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
-             "      "
+             "          Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -5995,7 +5984,7 @@ tei_link =
   element tei:link {
     empty
     >> sch:pattern [
-         id = "foo-link-linkTargets3-constraint-assert-31"
+         id = "foo-link-linkTargets3-constraint-rule-46"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6036,7 +6025,7 @@ tei_ab =
     tei_macro.abContent
     >> sch:pattern [
          id =
-           "foo-ab-abstractModel-structure-ab-in-l-or-lg-constraint-report-17"
+           "foo-ab-abstractModel-structure-ab-in-l-or-lg-constraint-rule-47"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6047,8 +6036,8 @@ tei_ab =
              test =
                "(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )"
              "\x{a}" ~
-             "        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
-             "      "
+             "          Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -6212,7 +6201,7 @@ tei_join =
   element tei:join {
     ((tei_model.descLike | tei_model.certLike)*)
     >> sch:pattern [
-         id = "foo-join-joinTargets3-constraint-assert-32"
+         id = "foo-join-joinTargets3-constraint-rule-48"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6220,9 +6209,9 @@ tei_join =
            "\x{a}" ~
            "               "
            sch:assert [
-             test = "contains(@target,' ')"
+             test = "contains( normalize-space( @target ),' ')"
              "\x{a}" ~
-             "You must supply at least two values for @target on "
+             "          You must supply at least two values for @target on "
              sch:name [ ]
              "\x{a}" ~
              "               "
@@ -6324,7 +6313,11 @@ tei_alt =
       ]
     ]
     attribute weights {
-      list { xsd:double, xsd:double, xsd:double* }
+      list {
+        xsd:double { minInclusive = "0" maxInclusive = "1" },
+        xsd:double { minInclusive = "0" maxInclusive = "1" },
+        xsd:double { minInclusive = "0" maxInclusive = "1" }*
+      }
     }?,
     empty
   }
@@ -6360,7 +6353,7 @@ tei_standOff =
     (tei_model.standOffPart+)
     >> sch:pattern [
          id =
-           "foo-standOff-nested_standOff_should_be_typed-constraint-assert-33"
+           "foo-standOff-nested_standOff_should_be_typed-constraint-rule-49"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6370,10 +6363,10 @@ tei_standOff =
            sch:assert [
              test = "@type or not(ancestor::tei:standOff)"
              "This\x{a}" ~
-             "      "
+             "        "
              sch:name [ ]
              " element must have a @type attribute, since it is\x{a}" ~
-             "      nested inside a "
+             "        nested inside a "
              sch:name [ ]
              "\x{a}" ~
              "               "
