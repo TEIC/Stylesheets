@@ -510,7 +510,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:elementSpec[@mode eq 'change']|tei:classSpec[@mode eq 'change']|tei:macroSpec[@mode eq 'change']|tei:dataSpec[@mode eq 'change']" mode="pass0">    
     <xsl:variable name="CURRENT_ID" select="generate-id(.)"/>
     <xsl:variable name="CHANGED_SPECS" select="key('odd2odd-CHANGE',tei:uniqueName(.))" 
-      as="element()+"/>    
+      as="element()*"/>    
     <xsl:choose>
       <xsl:when test="count($CHANGED_SPECS) gt 1">
         <xsl:if
