@@ -996,11 +996,11 @@
              a list of the tei:valList children of the elementSpec/content
              as part of the serialized content
              - 2024-05-06 -->
-        <xsl:for-each select="tei:valList[@type = 'closed']">
+        <!--<xsl:for-each select="tei:valList[@type = 'closed']">
           <xsl:sequence select="tei:i18n('Legal values are')"/>
           <xsl:text>:</xsl:text>
           <xsl:call-template name="valListItems"/>
-        </xsl:for-each>
+        </xsl:for-each>-->
       </xsl:element>
     </xsl:element>
   </xsl:template>
@@ -2955,6 +2955,32 @@
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
+  
+  <xsl:template name="contentsValList">
+    <xsl:sequence select="tei:i18n('Character data only')"/>
+    <xsl:text>. </xsl:text>
+    <xsl:choose>
+      <xsl:when test="@type = 'semi'">
+        <xsl:sequence select="tei:i18n('Suggested values include')"/>
+        <xsl:text>:</xsl:text>
+      </xsl:when>
+      <xsl:when test="@type = 'open'">
+        <xsl:sequence select="tei:i18n('Sample values include')"/>
+        <xsl:text>:</xsl:text>
+      </xsl:when>
+      <xsl:when test="@type = 'closed'">
+        <xsl:sequence select="tei:i18n('Legal values are')"/>
+        <xsl:text>:</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="tei:i18n('Sample values include')"/>
+        <xsl:text>:</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:call-template name="valListItems"/>
+    
+  </xsl:template>
+  
   <xsl:template name="generateChildren">
     <xsl:variable name="name" select="concat(@prefix, @ident)"/>
     <xsl:choose>
@@ -3000,27 +3026,7 @@
       </xsl:when>
       <xsl:when test="tei:content/tei:valList">
         <xsl:for-each select="tei:content/tei:valList">
-          <xsl:sequence select="tei:i18n('Character data only')"/>
-          <xsl:text>. </xsl:text>
-          <xsl:choose>
-            <xsl:when test="@type = 'semi'">
-              <xsl:sequence select="tei:i18n('Suggested values include')"/>
-              <xsl:text>:</xsl:text>
-            </xsl:when>
-            <xsl:when test="@type = 'open'">
-              <xsl:sequence select="tei:i18n('Sample values include')"/>
-              <xsl:text>:</xsl:text>
-            </xsl:when>
-            <xsl:when test="@type = 'closed'">
-              <xsl:sequence select="tei:i18n('Legal values are')"/>
-              <xsl:text>:</xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:sequence select="tei:i18n('Sample values include')"/>
-              <xsl:text>:</xsl:text>
-            </xsl:otherwise>
-          </xsl:choose>
-          <xsl:call-template name="valListItems"/>
+          <xsl:call-template name="contentsValList"/>
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
@@ -3046,6 +3052,11 @@
       <xsl:choose>
         <xsl:when test="$context = 'parents' and count(Element) = 0">
           <xsl:text>—</xsl:text>
+        </xsl:when>
+        <xsl:when test="count(Element = 0) and count(ValList) = 1">
+          <xsl:for-each select="ValList/*">
+            <xsl:call-template name="contentsValList"/>
+          </xsl:for-each>
         </xsl:when>
         <xsl:when test="Element[@type = 'TEXT'] and count(Element) = 1">
           <xsl:element namespace="{$outputNS}" name="{$segName}">
@@ -3165,6 +3176,11 @@
                   <xsl:when test="(rng:text or rng:data) and count(rng:*) = 1">
                     <Element prefix="{@prefix}" type="TEXT" module="~TEXT"/>
                   </xsl:when>
+                  <xsl:when test="tei:valList">
+                      <ValList>
+                        <xsl:sequence select="tei:valList"/>
+                      </ValList>
+                  </xsl:when>
                   <xsl:otherwise>
                     <xsl:call-template name="followRef"/>
                   </xsl:otherwise>
@@ -3176,6 +3192,11 @@
                 <xsl:choose>
                   <xsl:when test="(rng:text or rng:data) and count(rng:*) = 1">
                     <Element prefix="{@prefix}" type="TEXT" module="~TEXT"/>
+                  </xsl:when>
+                  <xsl:when test="tei:valList">
+                    <ValList>
+                      <xsl:sequence select="tei:valList"/>
+                    </ValList>
                   </xsl:when>
                   <xsl:otherwise>
                     <xsl:call-template name="followRef"/>
