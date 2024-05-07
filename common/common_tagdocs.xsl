@@ -926,11 +926,15 @@
             </PureODD>
           </xsl:with-param>
         </xsl:call-template>
-        <xsl:for-each select="tei:valList[@type='closed']">
+        <!-- It's unclear to me (JT) why this is here; it produces
+             a list of the tei:valList children of the elementSpec/content
+             as part of the serialized content
+             - 2024-05-06 -->
+<!--        <xsl:for-each select="tei:valList[@type='closed']">
           <xsl:sequence select="tei:i18n('Legal values are')"/>
           <xsl:text>:</xsl:text>
           <xsl:call-template name="valListItems"/>
-        </xsl:for-each>
+        </xsl:for-each>-->
       </xsl:element>
     </xsl:element>
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
@@ -988,6 +992,10 @@
           <xsl:with-param name="grammar"/>
           <xsl:with-param name="content" select="$content"/>
         </xsl:call-template>
+        <!-- It's unclear to me (JT) why this is here; it produces
+             a list of the tei:valList children of the elementSpec/content
+             as part of the serialized content
+             - 2024-05-06 -->
         <xsl:for-each select="tei:valList[@type = 'closed']">
           <xsl:sequence select="tei:i18n('Legal values are')"/>
           <xsl:text>:</xsl:text>
@@ -2989,6 +2997,31 @@
           </xsl:attribute>
           <xsl:sequence select="tei:i18n('Empty element')"/>
         </xsl:element>
+      </xsl:when>
+      <xsl:when test="tei:content/tei:valList">
+        <xsl:for-each select="tei:content/tei:valList">
+          <xsl:sequence select="tei:i18n('Character data only')"/>
+          <xsl:text>. </xsl:text>
+          <xsl:choose>
+            <xsl:when test="@type = 'semi'">
+              <xsl:sequence select="tei:i18n('Suggested values include')"/>
+              <xsl:text>:</xsl:text>
+            </xsl:when>
+            <xsl:when test="@type = 'open'">
+              <xsl:sequence select="tei:i18n('Sample values include')"/>
+              <xsl:text>:</xsl:text>
+            </xsl:when>
+            <xsl:when test="@type = 'closed'">
+              <xsl:sequence select="tei:i18n('Legal values are')"/>
+              <xsl:text>:</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:sequence select="tei:i18n('Sample values include')"/>
+              <xsl:text>:</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:call-template name="valListItems"/>
+        </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="Children">
