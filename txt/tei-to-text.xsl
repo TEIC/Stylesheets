@@ -158,7 +158,7 @@ of this software, even if advised of the possibility of such damage.
 per line, if requested by "oneword" parameter -->
 
 <!-- if makeCSV is requested, each word is in a line of a CSV file
-     by itself followed by its position within the hierachy of the XML
+     by itself followed by its position within the hierarchy of the XML
      document
 -->
   <xsl:function name="tei:escapeChars" as="xs:string">
