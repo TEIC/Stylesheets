@@ -3074,7 +3074,7 @@
                       </xsl:attribute>
                       <xsl:for-each-group select="current-group()" group-by="@name">
                         <xsl:sort select="@name"/>
-                        <xsl:variable name="me" select="concat(@prefix, @name)"/>
+                        <xsl:variable name="me" select="concat(tei:createSpecPrefix($here), @name)"/>
                         <xsl:variable name="display" select="@name"/>
                         <xsl:variable name="type" select="@type"/>
                         <xsl:for-each select="$here">
