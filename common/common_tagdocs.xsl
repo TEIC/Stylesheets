@@ -2292,7 +2292,7 @@
             <xsl:for-each select="key('CLASSMEMBERS', $this, $top )">
               <Item type="{local-name()}" ident="{@ident}">
                 <xsl:call-template name="linkTogether">
-                  <xsl:with-param name="name" select="concat(@prefix, @ident)"/>
+                  <xsl:with-param name="name" select="concat(tei:createSpecPrefix(.), @ident)"/>
                   <xsl:with-param name="reftext">
                     <xsl:value-of select="tei:createSpecName(.)"/>
                   </xsl:with-param>
