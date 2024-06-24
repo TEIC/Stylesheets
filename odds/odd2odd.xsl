@@ -1635,11 +1635,18 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
     <!-- class attributes are ones where there is no direct correspondence in
     the source for this element -->
-    <xsl:apply-templates mode="justcopy"
-                         select="tei:attList/tei:attDef[(@mode eq 'change'
-                                 or @mode eq 'delete'
-                                 or @mode eq 'replace') and
-                                 not(@ident=$ORIGINAL/tei:attList//tei:attDef/@ident)]"/>
+    <xsl:if test="$ORIGINAL/self::tei:elementSpec">
+      <xsl:apply-templates mode="justcopy"
+                           select="tei:attList/tei:attDef
+				   [
+				     (    @mode eq 'change'
+                                       or @mode eq 'delete'
+                                       or @mode eq 'replace'
+				     )
+				     and
+                                     not( @ident = $ORIGINAL/tei:attList//tei:attDef/@ident )
+				   ]"/>
+    </xsl:if>
     <!-- any direct attRef elements -->
     <xsl:apply-templates mode="justcopy"
                          select="tei:attList/tei:attRef"/>
