@@ -797,7 +797,7 @@
     </hi>
   </xsl:template>
   
-  <xsl:template match="tei:orgName">
+  <xsl:template match="tei:orgName[not(@rendition)]" priority="0">
     <xsl:apply-templates/>
   </xsl:template>
   
@@ -810,6 +810,14 @@
     </hi>
   </xsl:template>
   
+  <xsl:template match="*[@rendition]" priority="-.5">
+    <hi>
+      <xsl:apply-templates select="@*"/>
+      <xsl:call-template name="get.rendition"/>
+      <xsl:apply-templates/>
+    </hi>
+  </xsl:template>
+
   <!-- only highlight //title[@level = ('m', 'j')] -->
   <xsl:template match="tei:title[@level = ('m', 'j')]">
     <hi>
@@ -841,7 +849,7 @@
   </xsl:template>
       
   <!-- skip all other titles in the text -->
-  <xsl:template match="tei:text//tei:title[not(@level = ('a','u', 'm', 'j'))]">
+  <xsl:template match="tei:text//tei:title[not(@level = ('a','u', 'm', 'j'))][not(@rendition)]" priority="0">
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -850,7 +858,7 @@
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="tei:idno[not(ancestor::tei:teiHeader)][not(parent::tei:bibl)]">
+  <xsl:template match="tei:idno[not(ancestor::tei:teiHeader)][not(parent::tei:bibl)][not(@rendition)]">
     <xsl:apply-templates/>
   </xsl:template>
   
@@ -978,15 +986,15 @@
     </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="tei:text//tei:date" priority="0">
+  <xsl:template match="tei:text//tei:date[not(@rendition)]" priority="0">
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="tei:text//tei:email">
+  <xsl:template match="tei:text//tei:email[not(@rendition)]" priority="0">
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="tei:name">
+  <xsl:template match="tei:name[not(@rendition)]" priority="0">
     <xsl:apply-templates/>
   </xsl:template>
 
