@@ -985,6 +985,10 @@
   <xsl:template match="tei:text//tei:email">
     <xsl:apply-templates/>
   </xsl:template>
+  
+  <xsl:template match="tei:name">
+    <xsl:apply-templates/>
+  </xsl:template>
 
   <!-- ==== -->
   <!-- back -->
