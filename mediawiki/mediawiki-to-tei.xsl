@@ -33,7 +33,7 @@
       </sourceDesc>
        </fileDesc>
      </teiHeader>
-     <xsl:appy-templates select="text"/>
+     <xsl:apply-templates select="text"/>
    </TEI>
   </xsl:result-document>
 </xsl:for-each>
