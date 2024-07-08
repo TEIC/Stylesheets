@@ -1,3 +1,640 @@
+2024-07-08  helenasabel  <helena.b.sabel@gmail.com>
+
+	bump version
+
+	update of the p5 subset
+
+2024-07-07  Helena Bermúdez Sabel  <helena.b.sabel@gmail.com>
+
+	Merge pull request #690 from TEIC/issue_687_duplicate_deleted_attr
+	fix complex merging of attrs, #687
+
+2024-07-07  ebeshero  <ebbondar@gmail.com>
+
+	updating branch from dev
+
+2024-07-05  Helena Bermúdez Sabel  <helena.b.sabel@gmail.com>
+
+	P5subset update (#689)
+	* update p5subset and expected results
+
+2024-06-24  Syd Bauman  <s.bauman@northeastern.edu>
+
+	With @joeytakeda and @ebeshero, fix odd2odds so that it does not "justcopy" attDef elements that are not defined in the source class. This is a bit complicated, see @joeytakeda’s explanation in #687 itself.
+
+2024-06-24  trishaoconnor  <trishaoconnor88@gmail.com>
+
+	Merge pull request #681 from TEIC/iss678_duplicateIdents
+	Fix regression: duplicate idents in `*Spec`s
+
+2024-05-21  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Merge pull request #685 from gyulakalcso/patch-1
+	Update mediawiki-to-tei.xsl
+
+2024-05-16  Gyula Kalcsó  <38312965+gyulakalcso@users.noreply.github.com>
+
+	Update mediawiki-to-tei.xsl
+	correcting typo (appy -> apply) in row 36
+
+2024-05-14  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Merge pull request #684 from jbampton/fix-spelling
+	Fix typo in `tei-to-text.xsl`
+
+2024-05-11  John Bampton  <jbampton@gmail.com>
+
+	Fix typo in `tei-to-text.xsl`
+
+2024-05-06  Joey Takeda  <joeytakeda@users.noreply.github.com>
+
+	Relaxing cardinality restraint
+
+	Attempt to fix #678
+	Refining how the zero-th pass for ODD processing handles gathering up duplicate named specs
+
+2024-05-01  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Updated P5 subset: Initially with @trishaoconnor, updated p5subset to current version from TEI dev branch. This required reverting commit 61247e54d5412e5f1a2e46adb76ef92879c66b3a from TEI issue 2498, PR 2520, and lots of work, including discussion at SVF2F.
+
+2024-04-13  Joey Takeda  <joeytakeda@users.noreply.github.com>
+
+	Merge pull request #675 from TEIC/issue_319
+	Reverse order of `<constraintSpec>` and `<datatype>` in output of odd2odd when merging attributes
+
+2024-04-13  Elisa Beshero-Bondar  <ebeshero@users.noreply.github.com>
+
+	Merge pull request #676 from bansp/patch-3
+	link fix
+
+	Merge pull request #674 from jbampton/fix-spelling
+	Fix spelling
+
+2024-03-28  Piotr Banski  <bansp@users.noreply.github.com>
+
+	link fix
+
+2024-03-27  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Work on #319 point 2: @trishaoconnor and I found (what we think is) the spot in odd2odd.xsl that caused the output constraintSpec element to appear before the output datatype element, and swapped it with the immediately following constructor in the "odd2odd-mergeAttribute" template. This fixed the error in the output of running odd2odd.xsl on tei_simplePrint.odd, and all tests in both Test/ and Test2/ pass (except I do not have xelatex on my system).
+
+2024-03-23  John Bampton  <jbampton@gmail.com>
+
+	Fix spelling
+
+2024-03-16  trishaoconnor  <trishaoconnor88@gmail.com>
+
+	Corrected typo for issue ´#584´  (#670)
+	* Corrected typo from sup to sub
+
+2024-03-16  Elisa Beshero-Bondar  <ebeshero@users.noreply.github.com>
+
+	Merge pull request #633 from TEIC/sydb_627
+	make att.repeatable work for `<sequence>`, `<alternate>`, and `<anyElement>`
+
+2024-03-15  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #651 from TEIC/sydb_598
+	tidy up FPI generation
+
+2024-03-15  Syd Bauman  <s.bauman@northeastern.edu>
+
+	suck in latest from dev
+
+2024-03-15  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #672 from jbampton/fix-spelling
+	Fix spelling
+
+	Merge pull request #660 from TEIC/sydb_659_tei2schematron_attrs
+	Do not copy attrs from TEI constraint element to Schematron rule element
+
+2024-03-12  Syd Bauman  <s.bauman@northeastern.edu>
+
+	grab latest from dev
+
+2024-03-08  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Manual merge of dev to this branch PLUS various changes required to make it work after said merge.
+
+2024-03-08  John Bampton  <jbampton@gmail.com>
+
+	Fix spelling
+
+2024-03-08  John Bampton  <jbampton@users.noreply.github.com>
+
+	Fix spelling (#671)
+
+2024-03-07  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Comment changes, including spelling corrections
+
+2024-02-26  John Bampton  <jbampton@users.noreply.github.com>
+
+	Change XSLT 2.0 to 3.0 in the README (#667)
+
+	Fix spelling (#666)
+
+2024-02-23  John Bampton  <jbampton@users.noreply.github.com>
+
+	Fix spelling (#664)
+
+	Change the embedded XSLT version from `2.0` to `3.0` (#663)
+
+	Fix spelling (#662)
+
+2024-01-26  Raffaele Viglianti  <raffaeleviglianti@gmail.com>
+
+	Merge pull request #650 from TEIC/sydb_646
+	ignore `@version` of `<application>` when comparing in tests 
+
+2024-01-26  Helena Bermúdez Sabel  <helena.b.sabel@gmail.com>
+
+	Merge pull request #653 from TEIC/sydb_652_help_msg_omission
+	test $to, not $format; include HTML in kinds of outputs that might need ODD processing
+
+2024-01-26  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Updated P5 subset: Updated source/p5subset.xml from current dev version of TEI repo, and updated tests to match.
+
+2024-01-25  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Per suggestion @raffazizzi re-word comment
+
+	update w/ latest from dev after manual merge of debian-tei-xsl/debian/changelog
+
+	grab latest from dev
+
+	merged in latest from dev with manual merge of debian-tei-xsl/debian/changelog
+
+2024-01-25  Joey Takeda  <joeytakeda@users.noreply.github.com>
+	    Syd Bauman  <s.bauman@northeastern.edu>
+
+	Clean up CI files per #620 (#655)
+	* Removes .travis.yml
+	* Removes Slack notification from GH Actions jobs
+
+2024-01-14  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Do not copy attrs from TEI constraint element to Schematron rule element
+
+2024-01-05  Helena Bermúdez Sabel  <helena.b.sabel@gmail.com>
+
+	Merge pull request #654 from TEIC/sydb_645_checking_desc_and_gloss_out-of-date_based_on_lang_and_type
+	test multiple `<desc>` (or `<gloss>`) elements’ `@versionDate` at once
+
+2024-01-05  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Per Stylesheets group, revert to value operator, adding a comment to point out this fact. (And also fix some typos in comments).
+
+2024-01-04  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Oops — fix code to match comment: Test only those <gloss>s and <desc>s that actually do not have a type= attribute.
+
+2023-12-15  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Alter tei:descOrGlossOutOfDate() so that it will compare multiple elements; also test the desc or gloss elements based on type attribute
+
+2023-12-12  Syd Bauman  <s.bauman@northeastern.edu>
+
+	test 'to', not 'format', and include HTML in kinds of outputs that might require ODD processing
+
+2023-11-29  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Address #598: Only check for FPIs in ident elements, not altIdent elements
+
+2023-11-29  sabine seifert  <sabine.seifert@uni-potsdam.de>
+
+	Merge pull request #649 from TEIC/sydb_639
+	All XSLT 2.0 ⇒ 3.0
+
+2023-11-20  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Set application/@version to a placeholder value before comparing
+
+	All XSLT 2.0 ⇒ 3.0
+
+2023-11-20  trishaoconnor  <trishaoconnor88@gmail.com>
+
+	Merge pull request #644 from jbampton/fix-spelling
+	misc: fix spelling
+
+2023-11-16  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	updated expected results
+
+	upped version
+
+2023-11-16  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Fix weird merge issue.
+
+	Merge branch 'release-7.56.0' into dev
+
+	Revert test file.
+
+	More version changes.
+
+	More version number fixes.
+
+	Fix version number
+
+	Fix version number.
+
+	Fix another test.
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+2023-11-16  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Merge branch 'release-7.56.0' of github.com:TEIC/Stylesheets into release-7.56.0
+
+2023-11-16  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Fix tests.
+
+2023-11-16  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	confirmed version number
+
+2023-11-16  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+2023-11-16  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	updated p5subset
+
+2023-11-16  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+2023-11-13  John Bampton  <jbampton@gmail.com>
+
+	misc: fix spelling
+
+2023-11-13  martindholmes  <mholmes@uvic.ca>
+
+	Fixes for fallout from my previous fix for issue #534.
+
+2023-11-12  martindholmes  <mholmes@uvic.ca>
+
+	Fix for issue #534.
+
+2023-11-11  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	adjust folder name
+
+2023-11-10  Elisa Beshero-Bondar  <ebeshero@users.noreply.github.com>
+
+	Merge pull request #618 from TEIC/issue_567_val
+	Adding templates for val and tag to fix #567
+
+	Merge pull request #615 from TEIC/sydb_586
+	Make sure VERSION file is present before reading it.
+
+	Merge pull request #525 from TEIC/sydb_TEI-2070
+	Attempt to fix TEIC/TEI#2070:
+
+2023-11-09  Syd Bauman  <s.bauman@northeastern.edu>
+
+	1) re-insert missing “append .0” business (not sure what happened that it was not in what was already merged); 2) use unparsed-text-available() instead of doc-available() (duh\!)
+
+	concluding merge of dev
+
+	Ooops; missed a folder rename in #628
+
+	RIP, SPQR
+
+	... and a pointless manual merge
+
+2023-11-09  Raffaele Viglianti  <raffaeleviglianti@gmail.com>
+
+	Merge pull request #628 from TEIC/sydb_543_file_exts
+	delete file extension doubling
+
+	Merge pull request #638 from TEIC/sydb_TEI_2070
+	README creation improvements ala TEI ticket 2070
+
+	Merge pull request #632 from TEIC/sydb_631
+	Separate pattern for every instance of <anyElement> — fixes #631 (I hope)
+
+2023-11-09  Syd Bauman  <s.bauman@northeastern.edu>
+
+	manual merge of 1 file
+
+	As we have 3 approvals and all tests pass, merging
+
+	This is just a 'pull git@github.com:bwbohl/Stylesheets.git patch-1', really
+
+	not yet merged, so get latest from dev again
+
+2023-11-09  Raffaele Viglianti  <raffaeleviglianti@gmail.com>
+
+	Merge pull request #563 from TEIC/issue_424_experiment
+	fix processing of namespaces 
+
+2023-11-09  Syd Bauman  <s.bauman@northeastern.edu>
+
+	latest from dev
+
+	not sure what happened ...
+
+	manual merge of latest from dev
+
+2023-11-08  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #641 from TEIC/sydb_640
+	wrap new att lists in `<ul>` (where they were not so wrapped)
+
+2023-11-08  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Any latest from dev is mine!
+
+2023-11-08  martindholmes  <mholmes@uvic.ca>
+
+	With @sydb fix for issue #640.
+
+2023-11-05  Syd Bauman  <s.bauman@northeastern.edu>
+
+	This commit _seems_ to be working correctly: passes Test/, Test2/, the Guidelines test process, and the Guidelines build OK.
+
+	This state of repo is (I believe) not working as per my comment of 2023-10-15 on PR #633.
+
+2023-11-04  Syd Bauman  <s.bauman@northeastern.edu>
+
+	merge in lastest from dev
+
+	Remove import of classatts.xsl, as no longer needed after 7ed5111f.
+
+	Direct test instead of key fix as discussed on PR
+
+2023-10-29  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Simplify patching version number.
+
+	Update an expected results file in Test/.
+
+	An attempt at #640 fixing:  * template showAttClasses is called from 6 different places (all in common_tagdocs);  * generated debugging code for each of those places;  * found which 2 were causing problem (li element as child of td instead of child of ul);  * wrapped them in ul element.  * Note: deliberately left debugging PIs in place, but they should maybe be removed before merging into dev.
+
+2023-10-28  helenasabel  <helena.b.sabel@gmail.com>
+
+	updates id that causes tests to fail
+
+	merge 'dev'
+
+2023-10-27  martindholmes  <mholmes@uvic.ca>
+
+	Removing anonymously-named test file and integrating that test (for index elements to be ignored in TOC building) into testStructure1.
+
+2023-10-27  Syd Bauman  <s.bauman@northeastern.edu>
+
+	tweak a comment
+
+2023-10-27  Joey Takeda  <joeytakeda@users.noreply.github.com>
+
+	Merge branch 'dev' into issue_567_val
+
+2023-10-26  Helena Bermúdez Sabel  <helena.b.sabel@gmail.com>
+
+	Merge pull request #634 from TEIC/sydb_610
+	fix errors in docxtotei noticed by Stylesheets group
+
+2023-10-26  Syd Bauman  <s.bauman@northeastern.edu>
+
+	grab latest from dev
+
+2023-10-26  Helena Bermúdez Sabel  <helena.b.sabel@gmail.com>
+
+	Merge pull request #619 from TEIC/stylesheets_group_on_592
+	Presentation of list of attributes in the Guidelines
+
+2023-10-26  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Reproduce same fix @bwbohl made for elements to classes
+
+	Merge in latest from TEIC’s dev branch
+
+	Finally add comment to help future maintainers with debugging 3-pass RELAX NG pattern reduction code (which I wrote > 2 weeks ago).
+
+2023-10-23  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Tweak README builder for TEI ticket 2070
+
+2023-10-18  Joey Takeda  <joeytakeda@users.noreply.github.com>
+
+	For #592, update CSS
+	But note that this also will require a change in the GL's CSS in the TEI repo, I think
+
+	Update expected results
+
+	Merge branch 'dev' into stylesheets_group_on_592
+	Reverted Test/expected-results/test15.odd.html since there were many conflicts, and will address those next.
+
+2023-10-17  Patricia O CONNOR  <trishaoconnor88@gmail.com>
+
+	Update P5subset and tests
+
+2023-10-16  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Fix #635: (#636)
+	Added clause testing for type=deprecationInfo so we don't get 2+ nodes being tested on one side of 'gt'.
+
+2023-10-12  Syd Bauman  <s.bauman@northeastern.edu>
+
+	2 minor updates: 1) Apparently there are times when the 'c' variable in the template for elementRef|classRef|macroRef boils down to an empty sequence. 2) Handle the case when there is no <datatype> child of the <attDef> being processed.
+
+2023-10-10  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Minor fixes, and changes to tests to match: 2) Fix typo — function had "#teitodocx" where it meant "#docxtotei"
+
+	Convert commented-out debugging code to useful comment.
+
+2023-10-09  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Various minor things:  * Removed some debugging code  * Added tests (in Test2/testPure1) for sequence/@m[ia][nx]Occurs and alternate/@m[ia][nx]Occurs, including valid instance, but not invalid  * Updated tests (in Test/)
+
+2023-10-08  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Now have @minOccurs and @maxOccurs working on <sequence> (and thus <interleave>), too. Passes tests, so *may* be eligible to merge into dev, but not really ready, yet, as need to work on repeatability of <alternate>.
+
+	Still NOT ready to be merged into dev: In this commit I intended to comment out some debugging code (which renders output kinda useless, is it sticks the results of each pass into the output as RELAXNG <div> elements, rather than as comments) and update some tests. But I found to my horror that (despite message of previous 3 commits) tests were not passing. So lots of test updates, too. NB: One of the things that makes this ineligible for merging into dev is that the constraint for the <choice> element has changed from the incorrect, but workable '( model.choicePart | choice )+' to the incorrect and *not* workable '( model.choicePart | choice )+'. At the moment I have no idea why, but it does not really matter, as attacking minOccurs= and maxOccurs= on <alternate> and <sequence> is next.
+
+	Add a test with 2 <anyElement> elements.
+
+2023-10-07  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Code for supporting minOccurs= and maxOccurs= on <anyElement>, mostly untested because of #631. This comit is *not* ready for prime time.
+
+	remove some debugging code
+
+	Fix #631 (I hope): Generate a different RELAX NG pattern (and reference to it) for every occurence of an anyElement element, and update tests to match. (Previously we were trying to generate one for every content model in which an anyElement occurred, but were generation one for every content model in which an anyElement element occurred only once.)
+
+2023-10-04  Benjamin W. Bohl  <bohl@edirom.de>
+
+	Update odd2odd.xsl
+
+2023-10-01  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Oops, spoke too soon: was not passing Test/, just Test2/. Now passing both sets of tests.
+
+	Replace tei:minOmaxO() and both tei:generateIndicators() functions (one for RELAXNG, one for DTD) with a new function, tei:norMinMax(); should be no change to output; passes both Test/ and Test2/.
+
+2023-09-30  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Stop deleting 'test*.docx' files in the clean: target. I am not at all sure a) why they were being deleted, b) why their deletion did not cause problems before the change made in this branch.
+
+	Restoring files I inadvertently removed (I have no idea how)
+
+2023-09-30  trishaoconnor  <trishaoconnor88@gmail.com>
+
+	Merge pull request #608 from TEIC/sydb_607
+	Fix #607, I hope: remove erroneous bits of text from version URL 
+
+2023-09-30  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Ooops; forgot to add newly named TEI to RELAX NG symlink
+
+	Update tests to match changes to transformtei and symlinks
+
+	Re-work how filenames are handled for #543: I _think_ I have this working right, but more testing is in order.
+
+2023-09-29  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Grab whatever has happened on dev in past ~1.05 years
+
+2023-09-28  Joey Takeda  <joeytakeda@users.noreply.github.com>
+
+	Returning to this per Stylesheets meeting
+	Merging (manually) the helpful test file from PR #508. This branch now supercedes #508 and thus will also close #503
+
+2023-09-28  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Merge branch 'dev' into sydb_607
+
+2023-09-28  trishaoconnor  <trishaoconnor88@gmail.com>
+
+	Merge pull request #614 from jbampton/fix-spelling
+	Fix spelling
+
+2023-09-28  Helena Bermúdez Sabel  <helena.b.sabel@gmail.com>
+
+	Merge pull request #617 from TEIC/sydb_616
+	process `@xml:id` wherever the output of a <list> is generated
+
+2023-09-22  Helena Bermúdez Sabel  <helena.b.sabel@gmail.com>
+
+	Merge pull request #524 from fryske-akademy/dev
+	overridability for docxtotei
+
+2023-08-24  Joey Takeda  <joeytakeda@users.noreply.github.com>
+
+	Adding templates for val and tag to fix #567
+	* Template added to html/html_core.xsl for tag and val to transform them into spans
+	* Named template added to html/html_core.xsl to create a delimiter span to allow
+	  easier customization (i.e. to allow for a CSS only approach to start and end text)
+	* Reflect value of `@scheme` in tag's class
+
+2023-08-24  Syd Bauman  <s.bauman@northeastern.edu>
+
+	With Stylesheets Group alter test15 until the BLEEPing thing finally worked.
+
+	Pull in whatever has happened in dev
+
+2023-08-24  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+2023-07-30  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Process xml:id= wherever the output of a <list> is generated in an attempt to fix #616.
+
+2023-07-29  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Copy over latest p5subset, and fix tests accordingly.
+
+2023-07-28  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+2023-07-27  helenasabel  <helena.b.sabel@gmail.com>
+
+	Stylesheets group adds missing title attribute to close TEI ticket 2137
+
+2023-06-23  Joey Takeda  <joeytakeda@users.noreply.github.com>
+
+	Small adjustments for consistency
+
+2023-06-22  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Update an expected result for new HTML output
+
+	Stylesheets group (HBS, SB,& JT) fix the remaining bug from last month — we think this is structurally ready, still needs CSS
+
+2023-05-28  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Huh? Missed tests: I do not understand how these files were missed when I tested prior to previous commit, but fixing anyway ...
+
+2023-05-27  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Address #586:  * Update tei:stylesheetVersion() with a fix based on @eduarddrenth’s suggestion.  * Remove parameter from that function defintion, it was not being used.  * Remove parameter from the 1 call to tath function.  * Some whitespace, too.  * Fixed my e-mail addr in AUTHORS.  * Updated expected-results/ to match mildly different comment at the end.
+
+2023-05-26  John Bampton  <jbampton@users.noreply.github.com>
+
+	Fix spelling
+
+2023-05-25  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Stylesheets group works on #592: * Use ATTCLASSES key instead of CLASSES, as we are not playing with model classes * Use generic output elements instead of output-specific output elements
+
+2023-05-20  Elisa Beshero-Bondar  <ebeshero@users.noreply.github.com>
+
+	Merge pull request #611 from rvdb/dev
+
+2023-05-19  rvdb  <ron.vdbranden@gmail.com>
+
+	improvements for multilingual articles
+
+2023-05-02  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Oops, forgot one
+
+2023-05-01  Syd Bauman  <s.bauman@northeastern.edu>
+
+	More work on #607: Get output to pass tests:  * Update routine so that it deals with both “P5 Version …” and “Version …”  * Update Makefile so that test35.rnc has these comments stripped out correctly  * Update some expected results because of *slight* comment differences that should be ignored
+
+	Fix #607, I hope: With @trishaoconnor, change the "makeTEIVersion" template in odds/teiodds.xsl so that  a) it does not output the string "P5 Version&#x0A;" as part of the version URL; and  b) it outputs the version information on 1 line instead of two.
+
+2023-04-27  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Grab what has occurred in dev over past 6+ months
+
+2023-04-24  sabine seifert  <sabine.seifert@uni-potsdam.de>
+
+	Merge pull request #605 from TEIC/P5Update_seifert
+	P5 subset update 
+
+2023-04-24  helenasabel  <helena.b.sabel@gmail.com>
+
+	updated expected results (only white space issues)
+
+2023-04-24  sabine seifert  <seifertsabine@gmx.de>
+
+	Update p5subset.xml
+
+2023-04-04  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Increment version to our best guess of next release number (alpha)
+
+	Release 7.55.0
+
+	Update version # (and subset for its new version #) and change log for upcoming release
+
+	update p5subset before release (and update tests to match, after checking 'em)
+
+2023-04-04  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
 2023-04-04  Syd Bauman  <s.bauman@northeastern.edu>
 
 	update p5subset before release (and update tests to match, after checking 'em)
