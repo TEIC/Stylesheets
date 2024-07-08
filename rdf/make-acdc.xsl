@@ -5,7 +5,7 @@
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     exclude-result-prefixes="tei rdf"
-    version="2.0"
+    version="3.0"
 >
 
 
@@ -39,7 +39,7 @@
   <XSL:template match="/">
   
 
-  <xsl:stylesheet version="2.0"
+  <xsl:stylesheet version="3.0"
 		  xpath-default-namespace="http://www.tei-c.org/ns/1.0"
 		  xmlns:XSL="http://www.w3.org/1999/XSL/Transform">
 

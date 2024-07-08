@@ -4,7 +4,7 @@
 		xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 		xmlns="http://www.w3.org/1998/Math/MathML"
 		xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-		version="2.0"
+		version="3.0"
                 exclude-result-prefixes="m w">
 	<!-- %% Global Definitions -->
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
-    version="2.0"
+    version="3.0"
     xmlns:p="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties" 
     xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"    
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"

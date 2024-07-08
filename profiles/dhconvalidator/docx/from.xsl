@@ -22,7 +22,7 @@
                 xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
                 xmlns:dcterms="http://purl.org/dc/terms/"
-                version="2.0"
+                version="3.0"
                 exclude-result-prefixes="#all">
     <!-- import base conversion style -->
 

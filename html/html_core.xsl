@@ -11,7 +11,7 @@
 				xmlns:teix="http://www.tei-c.org/ns/Examples"
 				xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 				xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-				exclude-result-prefixes="#all" version="2.0">
+				exclude-result-prefixes="#all" version="3.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet dealing with elements from the core module, making

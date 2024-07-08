@@ -5,6 +5,16 @@
     
     "modules" : 
     [ 
+      { "ident" : "cmc",
+        "id" : "CMC",
+        "desc" : 
+        [  ],
+        "shortDesc" : "",
+        "gloss" : 
+        [  ],
+        "altIdent" : 
+        [  ] },
+      
       { "ident" : "core",
         "id" : "CO",
         "desc" : 
@@ -146,7 +156,8 @@
             "att.typed",
             "att.declaring",
             "att.fragmentable",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -173,7 +184,8 @@
             "model.choicePart" ],
           "atts" : 
           [ "att.global",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -332,7 +344,8 @@
             "att.transcriptional",
             "att.placement",
             "att.typed",
-            "att.dimensions" ],
+            "att.dimensions",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -383,7 +396,8 @@
           [ "model.addressLike",
             "model.publicationStmtPart.detail" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -426,7 +440,8 @@
           "atts" : 
           [ "att.global",
             "att.pointing",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -531,7 +546,8 @@
           [ "model.global.meta" ],
           "atts" : 
           [ "att.global",
-            "att.pointing.group" ],
+            "att.pointing.group",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -667,7 +683,8 @@
           [ "model.milestoneLike" ],
           "atts" : 
           [ "att.global",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1034,7 +1051,8 @@
             "model.titlepagePart",
             "model.pLike.front" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1361,7 +1379,8 @@
             "att.declarable",
             "att.typed",
             "att.sortable",
-            "att.docStatus" ],
+            "att.docStatus",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1417,7 +1436,8 @@
           [ "att.global",
             "att.declarable",
             "att.sortable",
-            "att.docStatus" ],
+            "att.docStatus",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1516,7 +1536,8 @@
             "att.declarable",
             "att.typed",
             "att.sortable",
-            "att.docStatus" ],
+            "att.docStatus",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1578,7 +1599,8 @@
           [ "att.global",
             "att.media",
             "att.timed",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1830,7 +1852,8 @@
             "model.titlepagePart",
             "model.pLike.front" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -2086,7 +2109,8 @@
             "att.typed",
             "att.edition",
             "att.spanning",
-            "att.breaking" ],
+            "att.breaking",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -2179,7 +2203,8 @@
         { "model" : 
           [ "model.pPart.editorial" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -2213,7 +2238,8 @@
           [ "model.quoteLike" ],
           "atts" : 
           [ "att.global",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -2400,8 +2426,8 @@
             "ns" : "",
             "usage" : "req",
             "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-02-03\" xml:lang=\"en\">supplies an XPath selection pattern using the\n        syntax defined in <ptr target=\"#XSLT3\"\/> which identifies a set of nodes which are \n        citable structural components. The expression may be absolute (beginning with <code>\/<\/code>) or relative. \n        <att>match<\/att> on a <gi>citeStructure<\/gi> without a <gi>citeStructure<\/gi> parent must be an absolute XPath. If it is\n        relative, its context is set by the <att>match<\/att> of the parent <gi>citeStructure<\/gi>. <\/desc>" ],
-            "shortDesc" : "(match) supplies an XPath selection pattern using the\n        syntax defined in  which identifies a set of nodes which are \n        citable structural components. The expression may be absolute (beginning with \/) or relative. \n        match on a citeStructure without a citeStructure parent must be an absolute XPath. If it is\n        relative, its context is set by the match of the parent citeStructure. ",
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-02-03\" xml:lang=\"en\">supplies an XPath selection pattern using the\n        syntax defined in <ptr target=\"#XSLT3\"\/> which identifies a set of nodes which are \n        citable structural components. The expression may be absolute (beginning with <code>\/<\/code>) or relative. \n        <att>match<\/att> on a <gi>citeStructure<\/gi> without a <gi>citeStructure<\/gi> parent must be an absolute XPath. If it is\n        relative, its context is set by the <att>match<\/att> of the parent <gi>citeStructure<\/gi>.<\/desc>" ],
+            "shortDesc" : "(match) supplies an XPath selection pattern using the\n        syntax defined in  which identifies a set of nodes which are \n        citable structural components. The expression may be absolute (beginning with \/) or relative. \n        match on a citeStructure without a citeStructure parent must be an absolute XPath. If it is\n        relative, its context is set by the match of the parent citeStructure.",
             "gloss" : 
             [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-02-03\" xml:lang=\"en\">match<\/gloss>" ],
             "altIdent" : 
@@ -2645,7 +2671,8 @@
           [ "model.divBottomPart" ],
           "atts" : 
           [ "att.global",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -2782,7 +2809,8 @@
           "atts" : 
           [ "att.global",
             "att.editLike",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -3158,7 +3186,8 @@
             "att.calendarSystem",
             "att.editLike",
             "att.dimensions",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -3197,7 +3226,8 @@
           [ "model.divWrapper",
             "model.pLike.front" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -3241,7 +3271,8 @@
           [ "att.global",
             "att.transcriptional",
             "att.typed",
-            "att.dimensions" ],
+            "att.dimensions",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -3268,7 +3299,8 @@
             "model.labelLike" ],
           "atts" : 
           [ "att.global",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -3322,7 +3354,8 @@
           [ "model.emphLike" ],
           "atts" : 
           [ "att.global",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -4486,7 +4519,8 @@
             "model.pLike.front" ],
           "atts" : 
           [ "att.global",
-            "att.canonical" ],
+            "att.canonical",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -4514,6 +4548,7 @@
             "model.pLike.front" ],
           "atts" : 
           [ "att.global",
+            "att.cmc",
             "att.datable",
             "att.calendarSystem" ],
           "unknown" : 
@@ -4842,7 +4877,8 @@
         { "model" : 
           [ "model.addressLike" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -4867,7 +4903,8 @@
         { "model" : 
           [ "model.emphLike" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -4927,7 +4964,8 @@
             "model.titlepagePart",
             "model.pLike.front" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -4962,7 +5000,8 @@
             "model.choicePart" ],
           "atts" : 
           [ "att.global",
-            "att.editLike" ],
+            "att.editLike",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5067,7 +5106,8 @@
           "atts" : 
           [ "att.global",
             "att.declaring",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5133,7 +5173,8 @@
         { "model" : 
           [ "model.emphLike" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5326,7 +5367,8 @@
           [ "att.global",
             "att.timed",
             "att.editLike",
-            "att.dimensions" ],
+            "att.dimensions",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5498,7 +5540,8 @@
             "att.typed",
             "att.spanning",
             "att.breaking",
-            "att.edition" ],
+            "att.edition",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5610,7 +5653,8 @@
             "att.declaring",
             "att.typed",
             "att.pointing",
-            "att.cReferencing" ],
+            "att.cReferencing",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5640,7 +5684,8 @@
             "att.media",
             "att.resourced",
             "att.declaring",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5768,7 +5813,8 @@
           [ "att.global",
             "att.typed",
             "att.placement",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5866,7 +5912,8 @@
           [ "model.hiLike" ],
           "atts" : 
           [ "att.global",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5979,7 +6026,8 @@
           [ "att.global",
             "att.sortable",
             "att.datable",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6030,8 +6078,8 @@
               [ 
                 { "ident" : "ISBN",
                   "desc" : 
-                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">International Standard Book Number: a 13- or\n            (if assigned prior to 2007) 10-digit identifying number assigned by the publishing\n            industry to a published book or similar item, registered with the <ref target=\"https:\/\/www.isbn-international.org\"> International ISBN Agency.<\/ref>\n          <\/desc>" ],
-                  "shortDesc" : "International Standard Book Number: a 13- or\n            (if assigned prior to 2007) 10-digit identifying number assigned by the publishing\n            industry to a published book or similar item, registered with the  International ISBN Agency.\n          ",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">International Standard Book Number: a 13- or\n            (if assigned prior to 2007) 10-digit identifying number assigned by the publishing\n            industry to a published book or similar item, registered with the <ref target=\"https:\/\/www.isbn-international.org\"> International ISBN Agency.<\/ref><\/desc>" ],
+                  "shortDesc" : "International Standard Book Number: a 13- or\n            (if assigned prior to 2007) 10-digit identifying number assigned by the publishing\n            industry to a published book or similar item, registered with the  International ISBN Agency.",
                   "gloss" : 
                   [  ],
                   "altIdent" : 
@@ -6206,7 +6254,8 @@
           [ "model.global.meta" ],
           "atts" : 
           [ "att.global",
-            "att.spanning" ],
+            "att.spanning",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6312,7 +6361,8 @@
           "atts" : 
           [ "att.global",
             "att.pointing",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6406,7 +6456,8 @@
           [ "model.global.meta" ],
           "atts" : 
           [ "att.global",
-            "att.pointing.group" ],
+            "att.pointing.group",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6530,7 +6581,8 @@
           [ "model.lLike" ],
           "atts" : 
           [ "att.global",
-            "att.fragmentable" ],
+            "att.fragmentable",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6574,7 +6626,8 @@
           [ "att.global",
             "att.typed",
             "att.placement",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6701,7 +6754,8 @@
             "att.typed",
             "att.edition",
             "att.spanning",
-            "att.breaking" ],
+            "att.breaking",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6715,8 +6769,8 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-04-17\" xml:lang=\"en\">contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain,\n        verse paragraph, etc.<\/desc>" ],
-        "shortDesc" : "(line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain,\n        verse paragraph, etc.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-04-17\" xml:lang=\"en\">contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc.<\/desc>" ],
+        "shortDesc" : "(line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">line group<\/gloss>" ],
         "altIdent" : 
@@ -6729,7 +6783,8 @@
           [ "att.global",
             "att.divLike",
             "att.typed",
-            "att.declaring" ],
+            "att.declaring",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6870,7 +6925,8 @@
           "atts" : 
           [ "att.global",
             "att.pointing",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6895,7 +6951,8 @@
           [ "model.global.meta" ],
           "atts" : 
           [ "att.global",
-            "att.pointing.group" ],
+            "att.pointing.group",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6938,7 +6995,8 @@
           "atts" : 
           [ "att.global",
             "att.sortable",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7152,7 +7210,8 @@
           [ "att.global",
             "att.sortable",
             "att.declarable",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7327,6 +7386,7 @@
           [ "att.global",
             "att.typed",
             "att.measurement",
+            "att.cmc",
             "att.ranging" ],
           "unknown" : 
           [  ] },
@@ -7373,7 +7433,8 @@
           "atts" : 
           [ "att.global",
             "att.measurement",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7413,7 +7474,8 @@
             "att.media",
             "att.resourced",
             "att.declaring",
-            "att.timed" ],
+            "att.timed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7457,7 +7519,8 @@
           "atts" : 
           [ "att.global",
             "att.datable",
-            "att.canonical" ],
+            "att.canonical",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7502,7 +7565,8 @@
         { "model" : 
           [ "model.emphLike" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7532,7 +7596,8 @@
             "att.typed",
             "att.edition",
             "att.spanning",
-            "att.breaking" ],
+            "att.breaking",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7758,7 +7823,8 @@
             "att.personal",
             "att.datable",
             "att.editLike",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7923,7 +7989,8 @@
             "att.pointing",
             "att.typed",
             "att.written",
-            "att.anchoring" ],
+            "att.anchoring",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7956,7 +8023,8 @@
             "att.pointing",
             "att.typed",
             "att.written",
-            "att.anchoring" ],
+            "att.anchoring",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8032,7 +8100,8 @@
           "atts" : 
           [ "att.global",
             "att.typed",
-            "att.ranging" ],
+            "att.ranging",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8136,7 +8205,8 @@
           [ "model.divTopPart" ],
           "atts" : 
           [ "att.global",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8193,7 +8263,8 @@
           [ "model.pPart.transcriptional",
             "model.choicePart" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8221,7 +8292,8 @@
           [ "att.global",
             "att.declaring",
             "att.fragmentable",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8250,7 +8322,8 @@
             "att.typed",
             "att.edition",
             "att.spanning",
-            "att.breaking" ],
+            "att.breaking",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8323,7 +8396,8 @@
           [ "model.divBottomPart" ],
           "atts" : 
           [ "att.global",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8535,7 +8609,8 @@
             "att.global",
             "att.internetMedia",
             "att.pointing",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8772,7 +8847,8 @@
             "model.common" ],
           "atts" : 
           [ "att.global",
-            "att.ascribed.directed" ],
+            "att.ascribed.directed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8993,19 +9069,21 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a phrase or passage attributed by the narrator or author to some agency external\n        to the text.<\/desc>" ],
-        "shortDesc" : "(quotation) contains a phrase or passage attributed by the narrator or author to some agency external\n        to the text.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a phrase or passage attributed by the narrator or author to some agency external to the text.<\/desc>" ],
+        "shortDesc" : "(quotation) contains a phrase or passage attributed by the narrator or author to some agency external to the text.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">quotation<\/gloss>" ],
         "altIdent" : 
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.quoteLike" ],
+          [ "model.quoteLike",
+            "model.biblPart" ],
           "atts" : 
           [ "att.global",
             "att.typed",
-            "att.notated" ],
+            "att.notated",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9062,7 +9140,8 @@
             "att.global",
             "att.internetMedia",
             "att.pointing",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9195,7 +9274,8 @@
           "atts" : 
           [ "att.global",
             "att.editLike",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9210,8 +9290,8 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-03-19\" xml:lang=\"en\">contains or references some other bibliographic item which is related to the present one in\n    some specified manner, for example as a constituent or alternative version of it.<\/desc>" ],
-        "shortDesc" : "contains or references some other bibliographic item which is related to the present one in\n    some specified manner, for example as a constituent or alternative version of it.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-03-19\" xml:lang=\"en\">contains or references some other bibliographic item which is related to the present one in some specified manner, for example as a constituent or alternative version of it.<\/desc>" ],
+        "shortDesc" : "contains or references some other bibliographic item which is related to the present one in some specified manner, for example as a constituent or alternative version of it.",
         "gloss" : 
         [  ],
         "altIdent" : 
@@ -9521,7 +9601,8 @@
           "atts" : 
           [ "att.global",
             "att.naming",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9634,7 +9715,8 @@
           [ "model.phrase" ],
           "atts" : 
           [ "att.global",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9668,7 +9750,8 @@
           [ "model.attributable" ],
           "atts" : 
           [ "att.global",
-            "att.ascribed.directed" ],
+            "att.ascribed.directed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9733,7 +9816,8 @@
           [ "model.divWrapper" ],
           "atts" : 
           [ "att.global",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9862,7 +9946,8 @@
             "att.segLike",
             "att.typed",
             "att.written",
-            "att.notated" ],
+            "att.notated",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10034,7 +10119,8 @@
           [ "model.pPart.transcriptional",
             "model.choicePart" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10061,7 +10147,8 @@
             "model.divTopPart" ],
           "atts" : 
           [ "att.global",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10086,7 +10173,8 @@
         { "model" : 
           [ "model.emphLike" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10101,8 +10189,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-12-09\" xml:lang=\"en\">describes the source(s) from which an electronic text was derived or generated, typically a\n    bibliographic description in the case of a digitized text, or a phrase such as \"born digital\"\n    for a text which has no previous existence.<\/desc>" ],
-        "shortDesc" : "(source description) describes the source(s) from which an electronic text was derived or generated, typically a\n    bibliographic description in the case of a digitized text, or a phrase such as \"born digital\"\n    for a text which has no previous existence.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-12-09\" xml:lang=\"en\">describes the source(s) from which an electronic text was derived or generated, typically a\n    bibliographic description in the case of a digitized text, or a phrase such as <q>born digital<\/q>\n    for a text which has no previous existence.<\/desc>" ],
+        "shortDesc" : "(source description) describes the source(s) from which an electronic text was derived or generated, typically a\n    bibliographic description in the case of a digitized text, or a phrase such as born digital\n    for a text which has no previous existence.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-07-04\" xml:lang=\"en\">source description<\/gloss>" ],
         "altIdent" : 
@@ -10312,7 +10400,8 @@
           [ "att.ascribed.directed",
             "att.global",
             "att.placement",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10430,8 +10519,8 @@
         "type" : "elementSpec",
         "module" : "linking",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-10-31\">Functions as a\n  container element for linked data, contextual information, and\n  stand-off annotations embedded in a TEI document.<\/desc>" ],
-        "shortDesc" : "Functions as a\n  container element for linked data, contextual information, and\n  stand-off annotations embedded in a TEI document.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-10-31\">Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document.<\/desc>" ],
+        "shortDesc" : "Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document.",
         "gloss" : 
         [  ],
         "altIdent" : 
@@ -10873,7 +10962,8 @@
             "att.typed",
             "att.canonical",
             "att.sortable",
-            "att.cReferencing" ],
+            "att.cReferencing",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -11074,7 +11164,8 @@
             "att.canonical",
             "att.editLike",
             "att.dimensions",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -11112,7 +11203,8 @@
         { "model" : 
           [ "model.global.meta" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -11247,7 +11339,8 @@
           [ "att.global",
             "att.typed",
             "att.canonical",
-            "att.datable" ],
+            "att.datable",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -11622,7 +11715,8 @@
           [ "att.global",
             "att.typed",
             "att.placement",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -11672,7 +11766,8 @@
           "atts" : 
           [ "att.global",
             "att.editLike",
-            "att.dimensions" ],
+            "att.dimensions",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -11816,7 +11911,8 @@
           "atts" : 
           [ "att.global",
             "att.typed",
-            "att.measurement" ],
+            "att.measurement",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -12099,7 +12195,8 @@
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.teiHeaderPart" ],
+          [ "model.teiHeaderPart",
+            "model.standOffPart" ],
           "atts" : 
           [ "att.global",
             "att.declarable",
@@ -12299,6 +12396,25 @@
           "classes" : 
           { "model" : 
             [  ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
+        
+        { "ident" : "model.cmc",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">includes the CMC-specific element <gi>post<\/gi> and\n        makes it available on the divPart level. This allows for\n        using (and combining) occurrences of <gi>post<\/gi>,\n        <gi>u<\/gi>, <gi>incident<\/gi>, and <gi>kinesic<\/gi> in one\n        and the same <gi>div<\/gi> in order to be able to represent\n        the combined use of written and spoken posts, utterances,\n        and nonverbal acts on the GUI of multimodal CMC\n        environments.<\/desc>" ],
+          "shortDesc" : "includes the CMC-specific element post and\n        makes it available on the divPart level. This allows for\n        using (and combining) occurrences of post,\n        u, incident, and kinesic in one\n        and the same div in order to be able to represent\n        the combined use of written and spoken posts, utterances,\n        and nonverbal acts on the GUI of multimodal CMC\n        environments.",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.common" ],
             "atts" : 
             [  ],
             "unknown" : 
@@ -14058,6 +14174,87 @@
                 "dataRef" : 
                 { "key" : "teidata.word" } } } ] },
         
+        { "ident" : "att.cmc",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">provides attributes categorizing how the element content was created in a CMC environment.<\/desc>" ],
+          "shortDesc" : "(computer-mediated communication) provides attributes categorizing how the element content was created in a CMC environment.",
+          "gloss" : 
+          [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2023-11-24\">computer-mediated communication<\/gloss>" ],
+          "altIdent" : 
+          [  ],
+          "attributes" : 
+          [ 
+            { "onElement" : false,
+              "ident" : "generatedBy",
+              "mode" : "add",
+              "ns" : "",
+              "usage" : "opt",
+              "desc" : 
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">categorizes how the content of an element was generated in a CMC environment.<\/desc>" ],
+              "shortDesc" : "(generated by) categorizes how the content of an element was generated in a CMC environment.",
+              "gloss" : 
+              [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">generated by<\/gloss>" ],
+              "altIdent" : 
+              [  ],
+              "valDesc" : 
+              [  ],
+              "datatype" : 
+              { "min" : "1",
+                "max" : "1",
+                "dataRef" : 
+                { "key" : "teidata.enumerated" } },
+              "valList" : 
+              { "type" : "semi",
+                "valItem" : 
+                [ 
+                  { "ident" : "human",
+                    "desc" : 
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">the content was\n          <soCalled>naturally<\/soCalled> typed or spoken by a human user<\/desc>" ],
+                    "shortDesc" : "the content was\n          naturally typed or spoken by a human user",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "template",
+                    "desc" : 
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">the content was\n          generated after a human user activated a template for its\n          insertion<\/desc>" ],
+                    "shortDesc" : "the content was\n          generated after a human user activated a template for its\n          insertion",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "system",
+                    "desc" : 
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">the content was\n          generated by the system, i.e. the CMC environment<\/desc>" ],
+                    "shortDesc" : "the content was\n          generated by the system, i.e. the CMC environment",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "bot",
+                    "desc" : 
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2024-05-17\">the content was\n          generated by a bot, i.e. a non-human agent, typically one\n          that is not part of the CMC environment itself<\/desc>" ],
+                    "shortDesc" : "the content was\n          generated by a bot, i.e. a non-human agent, typically one\n          that is not part of the CMC environment itself",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "unspecified",
+                    "desc" : 
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2024-05-17\">the content was\n          generated by an unknown or unspecified process<\/desc>" ],
+                    "shortDesc" : "the content was\n          generated by an unknown or unspecified process",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] } ] } } ] },
+        
         { "ident" : "att.datable",
           "ns" : "http:\/\/foo.foo\/foo",
           "type" : "classSpec",
@@ -15708,8 +15905,8 @@
               "ns" : "",
               "usage" : "def",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-09-27\" xml:lang=\"en\">describes the tint or type of ink, e.g. <mentioned>brown<\/mentioned>, or other\nwriting medium, e.g. <mentioned>pencil<\/mentioned>\n         <\/desc>" ],
-              "shortDesc" : "describes the tint or type of ink, e.g. brown, or other\nwriting medium, e.g. pencil\n         ",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-09-27\" xml:lang=\"en\">describes the tint or type of ink, e.g. <mentioned>brown<\/mentioned>, or other\nwriting medium, e.g. <mentioned>pencil<\/mentioned><\/desc>" ],
+              "shortDesc" : "describes the tint or type of ink, e.g. brown, or other\nwriting medium, e.g. pencil",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -17874,8 +18071,8 @@
         "type" : "dataSpec",
         "module" : "tei",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-10-18\" xml:lang=\"en\">defines a range of attribute values which can be expressed either as a numeric probability or as a coded certainty value.<\/desc>" ],
-        "shortDesc" : "defines a range of attribute values which can be expressed either as a numeric probability or as a coded certainty value.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-10-18\" xml:lang=\"en\">defines a range of attribute values which can be expressed either as a numeric\n    probability or as a coded certainty value.<\/desc>" ],
+        "shortDesc" : "defines a range of attribute values which can be expressed either as a numeric\n    probability or as a coded certainty value.",
         "gloss" : 
         [  ],
         "altIdent" : 
@@ -17907,7 +18104,14 @@
         "content" : 
         [ 
           { "type" : "dataRef",
-            "name" : "double" } ] },
+            "name" : "double",
+            "dataFacet" : 
+            [ 
+              { "name" : "minInclusive",
+                "value" : "0" },
+              
+              { "name" : "maxInclusive",
+                "value" : "1" } ] } ] },
       
       { "ident" : "teidata.replacement",
         "ns" : "http:\/\/foo.foo\/foo",

@@ -72,7 +72,7 @@
                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-               version="2.0"
+               version="3.0"
                exclude-result-prefixes="rng sch a">
   <xsl:param name="top"/>
 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -80,7 +80,7 @@
 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- collapse-lines:
      If true, output constructs spanning multiple lines will be
-     groupd into a single line unless it exceeds $line-width chars. -->
+     grouped into a single line unless it exceeds $line-width chars. -->
   <xsl:param name="collapse-lines" select="true ()"/>
    <!-- indent-width:
      The number of characters to indent at each indentation level -->

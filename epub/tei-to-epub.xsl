@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:smil="http://www.w3.org/ns/SMIL" xmlns:opf="http://www.idpf.org/2007/opf" xmlns:iso="http://www.iso.org/ns/1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/" version="2.0" exclude-result-prefixes="#all">
+<xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:smil="http://www.w3.org/ns/SMIL" xmlns:opf="http://www.idpf.org/2007/opf" xmlns:iso="http://www.iso.org/ns/1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/" version="3.0" exclude-result-prefixes="#all">
   <xsl:import href="../html/html.xsl"/>
   <xsl:import href="epub-common.xsl"/>
   <xsl:import href="epub-preflight.xsl"/>
@@ -152,7 +152,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:variable name="file" select="normalize-space(.)"/>
           <xsl:variable name="name" select="tokenize($file,'/')[last()]"/>
           <xsl:if test="$verbose='true'">
-            <xsl:message>write Javascript file <xsl:value-of select="$name"/></xsl:message>
+            <xsl:message>write JavaScript file <xsl:value-of select="$name"/></xsl:message>
           </xsl:if>
           <xsl:result-document method="text" href="{concat($directory,'/OPS/',$name)}">
             <xsl:for-each select="unparsed-text($file)">

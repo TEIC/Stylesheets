@@ -13,7 +13,7 @@
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   exclude-result-prefixes="tei html t a rng iso tbx
   cals xlink teix"
-  version="2.0">
+  version="3.0">
     <xsl:import href="../../../epub/tei-to-epub.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">

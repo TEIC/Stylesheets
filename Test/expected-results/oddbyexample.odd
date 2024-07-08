@@ -172,6 +172,15 @@
             <moduleRef key="header"
                        include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
             <!--Checking module gaiji-->
+            <classRef key="att.gaijiProp"/>
+            <classSpec ident="att.gaijiProp" type="atts" mode="change">
+               <attList>
+                  <attDef ident="name" mode="delete"/>
+                  <attDef ident="value" mode="delete"/>
+                  <attDef ident="version" mode="delete"/>
+                  <attDef ident="scheme" mode="delete"/>
+               </attList>
+            </classSpec>
             <!--Checking module verse-->
             <!--Checking module transcr-->
             <!--Checking module linking-->

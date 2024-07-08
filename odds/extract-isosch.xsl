@@ -9,7 +9,7 @@
                 xmlns=     "http://purl.oclc.org/dsdl/schematron"
                 xmlns:xsl= "http://www.w3.org/1999/XSL/Transform"
                 xmlns:d=   "http://www.oxygenxml.com/ns/doc/xsl"
-                version="2.0"
+                version="3.0"
                 xpath-default-namespace="http://www.tei-c.org/ns/1.0"
                 exclude-result-prefixes="#all">
   <xsl:import href="../common/functions.xsl"/>
@@ -52,6 +52,8 @@ of this software, even if advised of the possibility of such damage.
       <d:p>Author: See AUTHORS</d:p>
       <d:p>Copyright: 2014, TEI Consortium</d:p>
       <d:p/>
+      <d:p>Modified 2024-01-13 by Syd Bauman:
+      Bug fix. Stop copying tei:constraint/@* onto &lt;sch:rule>.</d:p>
       <d:p>Modified 2018-09-25 by Syd Bauman:
       Bug fix. Handle sqf: namespace semi-intelligently.</d:p>
       <d:p>Modified 2016-07-22 by Syd Bauman &amp; Martin Holmes: ...</d:p>
@@ -337,7 +339,7 @@ of this software, even if advised of the possibility of such damage.
                 <!-- wrappers for them, making HERE the context. -->
                 <pattern id="{$patID}">
                   <rule context="{tei:generate-context(.)}">
-                    <xsl:apply-templates select="@* except @context | node()"/>
+                    <xsl:apply-templates select="node()"/>
                   </rule>
                 </pattern>
               </xsl:when>

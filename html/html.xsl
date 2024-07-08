@@ -11,7 +11,7 @@
                 xmlns:m="http://www.w3.org/1998/Math/MathML"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="#all"
-                version="2.0">
+                version="3.0">
   <xsl:import href="../common/common.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>
   <xsl:import href="html_param.xsl"/>

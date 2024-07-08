@@ -4,7 +4,7 @@
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    version="2.0">
+    version="3.0">
   <xsl:import href="../common/functions.xsl"/>
 
  <xsl:strip-space elements="tei:additional tei:address tei:adminInfo
@@ -158,7 +158,7 @@ of this software, even if advised of the possibility of such damage.
 per line, if requested by "oneword" parameter -->
 
 <!-- if makeCSV is requested, each word is in a line of a CSV file
-     by itself followed by its position within the hierachy of the XML
+     by itself followed by its position within the hierarchy of the XML
      document
 -->
   <xsl:function name="tei:escapeChars" as="xs:string">

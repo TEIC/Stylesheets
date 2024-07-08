@@ -3,7 +3,7 @@
                 xmlns:tiff="http://ns.adobe.com/tiff/1.0/"
                 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="2.0">
+                version="3.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet dealing with elements from the core module. </p>
