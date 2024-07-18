@@ -166,7 +166,7 @@
                   <span xml:lang="en" lang="en" class="label">Schematron</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <div class="pre">&lt;s:report test="count(bob) !=1"&gt;Only one bob allowed&lt;/s:report&gt;</div>
+                  <div class="pre">&lt;sch:report test="count(bob) !=1"&gt;Only one bob allowed&lt;/sch:report&gt;</div>
                 </td>
               </tr>
               <tr>
@@ -1080,9 +1080,9 @@ element t4 { ( text |
                 </td>
                 <td class="wovenodd-col2">
                   <pre id="index.xml-eg-d32e835" class="pre_eg">
-element t5 { text | ( 
+element t5 { text | ( ( 
 <a class="link_ref" href="#TEI.bit" title="&lt;bit&gt;">bit</a>, 
-<a class="link_ref" href="#TEI.bob" title="&lt;bob&gt;">bob</a> )+ }
+<a class="link_ref" href="#TEI.bob" title="&lt;bob&gt;">bob</a> )+ ) }
 <a href="#index.xml-eg-d32e835" class="anchorlink">⚓</a>
 </pre>
                 </td>
@@ -1493,11 +1493,11 @@ element trait { empty }
       <address>
       <br />
       <!--
-          Generated from index.xml using 
-               based on http://www.tei-c.org/Stylesheets/
-               
-               SAXON HE 10.3.
-                 --></address>
+ Generated from index.xml using 
+                 based on http://www.tei-c.org/Stylesheets/
+                 
+                 SAXON HE 10.3.
+                   --></address>
     </div>
   </body>
 </html>

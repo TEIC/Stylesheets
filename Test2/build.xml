@@ -34,7 +34,7 @@
       
       - It's multilayered: for instance, a call to:
             test.rng
-        calls the symlink teitorelaxng, which calls the script transformtei, 
+        calls the symlink teitorng, which calls the script transformtei, 
         which calls ant passing a build-to or build-from file, which calls 
         Saxon....
         
@@ -105,7 +105,7 @@
       without special parameters. -->
     <fileset id="simpleTeiForHtmlFiles" dir="${inputDir}" includes="testP5ExTcp1.xml, 
         testRendition1.xml, testQuotations1.xml, testWhitespace1.xml, testBinaryObjects1.xml,
-        testCorpus1.xml, testMathML.xml, testStructure1.xml"/>
+        testCorpus1.xml, testMathML.xml, testStructure1.xml, test-382.xml, testPhrase.xml"/>
     
 <!--  HTML input files for conversion into TEI.  -->
     <fileset id="htmlInputFiles" dir="${inputDir}" includes="testHtmlInput1.html"/>

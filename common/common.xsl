@@ -6,7 +6,7 @@
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="tei fotex xsi sch fo"
-                version="2.0">
+                version="3.0">
   <xsl:import href="common_param.xsl"/>
   <xsl:import href="common_core.xsl"/>
   <xsl:import href="common_textstructure.xsl"/>

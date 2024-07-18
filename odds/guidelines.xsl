@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl" version="2.0">
-  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
-     omit-xml-declaration="yes"/>
+<xsl:stylesheet version="3.0"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:teix="http://www.tei-c.org/ns/Examples"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl"
+    >
+  <!-- *******************************************************************
+       * MAINTAINERs: Bear in mind that the code you are looking for may *
+       * well be in TEI/P5/Utilities/guidelines.xsl.model instead.       *
+       ******************************************************************* -->
+  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" suppress-indentation="ul li" indent="yes" normalization-form="NFC" omit-xml-declaration="yes"/>
   <xsl:param name="directory">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
+  <!-- 
+       The following is the character used for “link to this spot” icon.
+       The U+FE0E character added 2022-09-29 by Stylesheets
+       group to address Stylesheets issue 479:
+       https://github.com/TEIC/Stylesheets/issues/479
+  -->  
+  <xsl:variable name="anchorChar" as="xs:string" select="'&#x2693;&#xFE0E;'"/>
   <xsl:key name="EXAMPLES" match="teix:*[ancestor::teix:egXML]" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
   <xsl:key name="HEADS" match="tei:head" use="concat(@xml:lang,@corresp)"/>
   <xsl:key name="BACKLINKS" match="teix:egXML[@corresp]" use="substring(@corresp,2)"/>
@@ -288,48 +310,40 @@
         <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
       </xsl:variable>
       <xsl:result-document html-version="{$htmlVersion}"
-        normalization-form="{$normalizationForm}" encoding="{$outputEncoding}" href="{$outputDir}/examples-{$me}.html" method="{$outputMethod}" omit-xml-declaration="{$omitXMLDeclaration}">
+                           normalization-form="{$normalizationForm}"
+                           encoding="{$outputEncoding}"
+                           href="{$outputDir}/examples-{$me}.html"
+                           method="{$outputMethod}"
+                           omit-xml-declaration="{$omitXMLDeclaration}">
         <html>
-	  <xsl:variable name="pagetitle">
-	    <xsl:sequence select="tei:i18n('Example')"/>
-	    <xsl:text>: &lt;</xsl:text>
-	    <xsl:value-of select="$me"/>
-	    <xsl:text>&gt; </xsl:text>
-	    <xsl:sequence select="tei:makeGloss(.,$langs)"/>
-	  </xsl:variable>
-	  <xsl:sequence select="tei:htmlHead($pagetitle,10)"/>
+          <xsl:variable name="pagetitle">
+            <xsl:sequence select="tei:i18n('Example')"/>
+            <xsl:text>: &lt;</xsl:text>
+            <xsl:value-of select="$me"/>
+            <xsl:text>&gt; </xsl:text>
+            <xsl:sequence select="tei:makeGloss(.,$langs)"/>
+          </xsl:variable>
+          <xsl:sequence select="tei:htmlHead($pagetitle,10)"/>
           <body id="TOP">
             <xsl:call-template name="guidelinesTop">
-              <xsl:with-param name="name">
-                <xsl:sequence select="tei:i18n('Example')"/>
-                <xsl:text>: &lt;</xsl:text>
-                <xsl:value-of select="$me"/>
-                <xsl:text>&gt; </xsl:text>
-                <xsl:sequence select="tei:makeGloss(.,$langs)"/>
-              </xsl:with-param>
+              <xsl:with-param name="name" select="$pagetitle"/>
             </xsl:call-template>
             <div class="main-content">
               <xsl:call-template name="startDivHook"/>
-              <h3>
-                <xsl:sequence select="tei:i18n('Example')"/>
-                <xsl:text>: &lt;</xsl:text>
-                <xsl:value-of select="$me"/>
-                <xsl:text>&gt; </xsl:text>
-                <xsl:sequence select="tei:makeGloss(.,$langs)"/>
-              </h3>
+              <h3><xsl:sequence select="$pagetitle"/></h3>
               <p>These search results reproduce every example of the
-	      use of <xsl:text>&lt;</xsl:text>
-	      <xsl:value-of select="$me"/>
-	      <xsl:text>&gt;</xsl:text> in the Guidelines, including all localised
-	      and translated versions. In some cases, the examples have been drawn
-	      from discussion of other elements in the Guidelines and illustrating
-	      the use of <xsl:text>&lt;</xsl:text>
-	      <xsl:value-of select="$me"/>
-	      <xsl:text>&gt;</xsl:text>
-	      is not the main 
-	      focus of the passage in question. In other cases, examples may be direct 
-	      translations of each other, and hence identical from the perspective of 
-	      their encoding.</p>
+              use of <xsl:text>&lt;</xsl:text>
+              <xsl:value-of select="$me"/>
+              <xsl:text>&gt;</xsl:text> in the Guidelines, including all localised
+              and translated versions. In some cases, the examples have been drawn
+              from discussion of other elements in the Guidelines and illustrating
+              the use of <xsl:text>&lt;</xsl:text>
+              <xsl:value-of select="$me"/>
+              <xsl:text>&gt;</xsl:text>
+              is not the main 
+              focus of the passage in question. In other cases, examples may be direct 
+              translations of each other, and hence identical from the perspective of 
+              their encoding.</p>
               <xsl:variable name="items">
                 <xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:div">
                   <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
@@ -421,10 +435,10 @@
     </meta>
     <xsl:choose>
       <xsl:when test="$outputTarget='html5' or $outputTarget='epub3'">
-	<meta charset="{$outputEncoding}"/>
+        <meta charset="{$outputEncoding}"/>
       </xsl:when>
       <xsl:otherwise>
-	<meta http-equiv="Content-Type" content="text/html; charset={$outputEncoding}"/>
+        <meta http-equiv="Content-Type" content="text/html; charset={$outputEncoding}"/>
       </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -607,7 +621,7 @@
       </xsl:variable>
       <li>
         <xsl:choose>
-	  <xsl:when test="$outputTarget='epub' or $outputTarget='epub3'"/>
+          <xsl:when test="$outputTarget='epub' or $outputTarget='epub3'"/>
           <xsl:when test="not(ancestor::tei:div) and tei:div">
             <xsl:attribute name="class">
               <xsl:text>tocTree</xsl:text>
@@ -660,7 +674,7 @@
          $(".tocTree .showhide").click(function() {
           $(this).find(".tocShow,.tocHide").toggle();
           $(this).parent().find("ul.continuedtoc").toggle();
-	  });
+          });
         })
     </script>
     <xsl:call-template name="jsForOdds"/>
@@ -682,7 +696,7 @@
             <xsl:text>TEI: </xsl:text>
             <xsl:value-of select="tei:head[1]"/>
           </span>
-          <xsl:text>&#x2693;</xsl:text>
+          <xsl:sequence select="$anchorChar"/>
         </a>
       </span>
     </xsl:if>
@@ -771,43 +785,43 @@
   <xsl:template name="egXMLEndHook">
     <xsl:variable name="selfAnchor">
       <!-- Generate a link to myself so users can easily copy-and-paste a pointer to me -->
-      <a class="bookmarklink">
-	<xsl:attribute name="href">
-	  <xsl:text>#</xsl:text>
-	  <!-- Our current context node is an <egXML>, so find its ID: -->
-	  <xsl:apply-templates mode="ident" select="."/>
-	</xsl:attribute>
-	<xsl:text>&#x2693;</xsl:text>
+      <a class="bookmarklink" title="link to this example">
+        <xsl:attribute name="href">
+          <xsl:text>#</xsl:text>
+          <!-- Our current context node is an <egXML>, so find its ID: -->
+          <xsl:apply-templates mode="ident" select="."/>
+        </xsl:attribute>
+        <xsl:sequence select="$anchorChar"/>
       </a>
     </xsl:variable>
     <div style="float: right;">
       <xsl:choose>
-	<xsl:when test="@corresp and id(substring(@corresp,2))">
-	  <a>
-	    <xsl:attribute name="href">
-	      <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
-	    </xsl:attribute>
-	    <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
-	    <!--	  <span class="citLink">&#x270d;</span>-->
-	  </a>
-	  <xsl:text>&#160;</xsl:text>
-	</xsl:when>
-	<xsl:when test="@source and id(substring(@source,2))">
-	  <a>
-	    <xsl:attribute name="href">
-	      <xsl:apply-templates mode="generateLink" select="id(substring(@source,2))"/>
-	    </xsl:attribute>
-	    <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
-	    <!--	  <span class="citLink">&#x270d;</span>-->
-	  </a>
-	  <xsl:text>&#160;</xsl:text>
-	</xsl:when>
+        <xsl:when test="@corresp and id(substring(@corresp,2))">
+          <a>
+            <xsl:attribute name="href">
+              <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
+            </xsl:attribute>
+            <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
+            <!--          <span class="citLink">&#x270d;</span>-->
+          </a>
+          <xsl:text>&#160;</xsl:text>
+        </xsl:when>
+        <xsl:when test="@source and id(substring(@source,2))">
+          <a>
+            <xsl:attribute name="href">
+              <xsl:apply-templates mode="generateLink" select="id(substring(@source,2))"/>
+            </xsl:attribute>
+            <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
+            <!--          <span class="citLink">&#x270d;</span>-->
+          </a>
+          <xsl:text>&#160;</xsl:text>
+        </xsl:when>
       </xsl:choose>
       <xsl:for-each select="ancestor::tei:elementSpec">
-	<a href="examples-{@ident}.html">
-	  <xsl:sequence select="tei:i18n('Show all')"/>
-	</a>
-	<xsl:text>&#160;</xsl:text>
+        <a href="examples-{@ident}.html">
+          <xsl:sequence select="tei:i18n('Show all')"/>
+        </a>
+        <xsl:text>&#160;</xsl:text>
       </xsl:for-each>
       <xsl:sequence select="$selfAnchor"/>
     </div>
@@ -820,7 +834,7 @@
           <xsl:attribute name="href">
             <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
           </xsl:attribute>
-	  <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
+          <xsl:sequence select="lower-case( tei:i18n('biblioWords') )"/>
         </a>
       </div>
     </xsl:if>
@@ -865,47 +879,45 @@
         <hr/>
       </xsl:if>
       <xsl:for-each
-	  select="ancestor-or-self::TEI/teiHeader/fileDesc/publicationStmt/availability">
-	<div class="availability">
-	  <xsl:apply-templates/>
-	  <xsl:choose>
-	    <xsl:when test="count(licence)&gt;1">
-	      <ol>
-		<xsl:for-each select="licence">
-		  <li>
-		    <xsl:choose>
-		      <xsl:when test="@target">
-			<a href="{@target}"><xsl:value-of select="@target"/></a>
-		      </xsl:when>
-		      <xsl:otherwise>			
-			<xsl:apply-templates/>
-		      </xsl:otherwise>
-		    </xsl:choose>
-		  </li>
-		</xsl:for-each>
-	      </ol>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <div class="licence">
-		<xsl:for-each select="licence">
-		  <a href="{@target}">
-		    <xsl:apply-templates/>
-		  </a>
-		</xsl:for-each>
-	      </div>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</div>
+          select="ancestor-or-self::TEI/teiHeader/fileDesc/publicationStmt/availability">
+        <div class="availability">
+          <xsl:apply-templates/>
+          <xsl:choose>
+            <xsl:when test="count(licence)&gt;1">
+              <ol>
+                <xsl:for-each select="licence">
+                  <li>
+                    <xsl:choose>
+                      <xsl:when test="@target">
+                        <a href="{@target}"><xsl:value-of select="@target"/></a>
+                      </xsl:when>
+                      <xsl:otherwise>                   
+                        <xsl:apply-templates/>
+                      </xsl:otherwise>
+                    </xsl:choose>
+                  </li>
+                </xsl:for-each>
+              </ol>
+            </xsl:when>
+            <xsl:otherwise>
+              <div class="licence">
+                <xsl:for-each select="licence">
+                  <a href="{@target}">
+                    <xsl:apply-templates/>
+                  </a>
+                </xsl:for-each>
+              </div>
+            </xsl:otherwise>
+          </xsl:choose>
+        </div>
       </xsl:for-each>
       <address>
-	<br/>
+        <br/>
         <xsl:text>TEI Guidelines </xsl:text> 
-        <xsl:apply-templates
-	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+        <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
         <xsl:text>. This page generated on </xsl:text> 
-	<xsl:sequence select="tei:whatsTheDate()"/><xsl:text>.</xsl:text>
-
-    </address>
+        <xsl:sequence select="tei:whatsTheDate()"/><xsl:text>.</xsl:text>
+      </address>
     </div>
   </xsl:template>
 
@@ -933,9 +945,25 @@
       </div>
       <div id="searchbox" style="float:left;">
         <form action="http://www.google.com/search" method="get">
-          <fieldset><input style="color:#225588;" value="" maxlength="255" size="20" name="q" type="text"/>&#160;<select name="sitesearch"><option value="http://www.tei-c.org/">Entire site</option><option value="https://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/" selected="selected">P5 Guidelines
-	    <xsl:choose><xsl:when test="$documentationLanguage='en'"> — English</xsl:when><xsl:when test="$documentationLanguage='de'"> — Deutsch</xsl:when><xsl:when test="$documentationLanguage='es'"> — Español</xsl:when><xsl:when test="$documentationLanguage='it'"> — Italiano</xsl:when><xsl:when test="$documentationLanguage='fr'"> — Français</xsl:when><xsl:when test="$documentationLanguage='ja'"> — 日本語</xsl:when><xsl:when test="$documentationLanguage='kr'"> — 한국어</xsl:when><xsl:when test="$documentationLanguage='zh-TW'"> — 中文</xsl:when></xsl:choose>
-	    </option></select>&#160;<input style="font-size:100%; font-weight:bold;      color:#FFFFFF; background-color:#225588; height: 2em;" value="Search" type="submit"/></fieldset>
+          <fieldset>
+            <input style="color:#225588;" value="" maxlength="255" size="20" name="q" type="text"/>&#160;
+            <select name="sitesearch">
+              <option value="http://www.tei-c.org/">Entire site</option>
+              <option value="https://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/" selected="selected">P5 Guidelines
+              <xsl:choose>
+                <xsl:when test="$documentationLanguage='en'"> — English</xsl:when>
+                <xsl:when test="$documentationLanguage='de'"> — Deutsch</xsl:when>
+                <xsl:when test="$documentationLanguage='es'"> — Español</xsl:when>
+                <xsl:when test="$documentationLanguage='it'"> — Italiano</xsl:when>
+                <xsl:when test="$documentationLanguage='fr'"> — Français</xsl:when>
+                <xsl:when test="$documentationLanguage='ja'"> — 日本語</xsl:when>
+                <xsl:when test="$documentationLanguage='kr'"> — 한국어</xsl:when>
+                <xsl:when test="$documentationLanguage='zh-TW'"> — 中文</xsl:when>
+              </xsl:choose>
+              </option>
+              </select>&#160;
+              <input style="font-size:100%; font-weight:bold; color:#FFFFFF; background-color:#225588; height: 2em;" value="Search" type="submit"/>
+          </fieldset>
         </form>
       </div>
     </xsl:if>
@@ -994,9 +1022,9 @@
                 </xsl:call-template>
               </xsl:for-each>
               <xsl:text>/@</xsl:text>
-	      <xsl:for-each select="ancestor::tei:attDef">
-		<xsl:value-of select="(tei:altIdent|@ident)[last()]"/>
-	      </xsl:for-each>
+              <xsl:for-each select="ancestor::tei:attDef">
+                <xsl:value-of select="(tei:altIdent|@ident)[last()]"/>
+              </xsl:for-each>
               <xsl:call-template name="showSpace"/>
             </li>
           </xsl:for-each>
@@ -1004,8 +1032,6 @@
       </div>
     </xsl:if>
   </xsl:template>
-
-
 
   <!-- Addition by Martin Holmes 2012-07-15 for ticket http://purl.org/tei/fr/3511134    -->
   <xsl:template name="attDefHook">
@@ -1022,7 +1048,7 @@
               <xsl:text> </xsl:text>
               <xsl:value-of select="$attName"/>
             </span>
-            <xsl:text>&#x2693;</xsl:text>
+            <xsl:sequence select="$anchorChar"/>
           </a>
         </span>
       </xsl:when>

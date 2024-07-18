@@ -19,7 +19,7 @@
   <!-- This is the list of files we're going to process, expressed
        as a parameter, so that it can be overridden to process 
        a subset of files. -->
-  <property name="oddFileList" value="testSpecificationDescription.odd testPure1.odd testNonTeiOdd1.odd"/>
+  <property name="oddFileList" value="testSpecificationDescription.odd testPure1.odd testNonTeiOdd1.odd testAttValQuant.odd"/>
   
   <!--  Files for conversion from ODD to RNG.  -->
   <fileset id="oddToRngFiles" dir="${inputDir}" includes="${oddFileList}"/>
@@ -94,8 +94,9 @@
     <basename file="${inFile}" property="plainFileName" suffix=".odd"/>
     <property name="outFile" value="${outputDir}/${plainFileName}.rng"/>
     
-    <exec executable="${bin}/teitorelaxng" failonerror="true">
+    <exec executable="${bin}/teitorng" failonerror="true">
       <arg line="--localsource=${localsource}"/>
+      <arg line="--debug"/>
       <arg file="${inFile}"/>
       <arg file="${outFile}"/>
     </exec>
@@ -140,7 +141,7 @@
       <then>
         <echo message=""/>
         <echo message="Validating valid instance file ${validInstance} against ${outputDir}/${plainFileName}.rng."/>
-        <jing rngfile="${outputDir}/${plainFileName}.rng" file="${validInstance}"/>
+        <jing rngfile="${outputDir}/${plainFileName}.rng" file="${validInstance}" checkid="false"/>
       </then>
     </if>
     

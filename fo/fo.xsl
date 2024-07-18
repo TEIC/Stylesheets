@@ -8,7 +8,7 @@
     xmlns="http://www.w3.org/1999/XSL/Format"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="tei fotex m xs fo"
-    version="2.0">
+    version="3.0">
   <xsl:import href="../common/common.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>
   <xsl:import href="fo_param.xsl"/>

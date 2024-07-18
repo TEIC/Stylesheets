@@ -4,7 +4,7 @@
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns="http://schemas.openxmlformats.org/officeDocument/2006/math"
                 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-                version="2.0"
+                version="3.0"
                 exclude-result-prefixes="mml m w">
   <xsl:output method="xml" encoding="UTF-8"/>
 
@@ -181,7 +181,7 @@
   <xsl:template mode="mml"
                  match="mml:mi[not(child::mml:mglyph)] |                        mml:mn[not(child::mml:mglyph)] |                        mml:mo[not(child::mml:mglyph)] |                        mml:ms[not(child::mml:mglyph)] |                        mml:mtext[not(child::mml:mglyph)]">
 
-    <!-- tokens with mglyphs as children are tranformed
+    <!-- tokens with mglyphs as children are transformed
 			 in a different manner than "normal" token elements.  
 			 Where normal token elements are token elements that
 			 contain only text -->
@@ -497,7 +497,7 @@
          </xsl:choose>
       </xsl:variable>
 
-      <!--In order to determine the length of the run, we will find the number of nodes before the inital node in the run and
+      <!--In order to determine the length of the run, we will find the number of nodes before the initial node in the run and
 			the number of nodes before the first node that DOES NOT belong to the current run.  The number of nodes that will
 			be printed is One Less than the difference between the latter and the former-->
 
@@ -573,7 +573,7 @@
       <!--The beginning and ending of the current run has been established. Now we should open a run element-->
       <xsl:choose>
 
-        <!--If cndRun > 0, then there is a following diffrent prop, or non- Token, 
+        <!--If cndRun > 0, then there is a following different prop, or non- Token,
 						although there may or may not have been a preceding different prop, or non-
 						Token-->
         <xsl:when test="$cndRun &gt; 0">
@@ -1513,7 +1513,7 @@
 
   <!-- Note:  ndCur should only be an munder/mover MathML element.
   
-       ndCur should be interpretted as an m:bar if
+       ndCur should be interpreted as an m:bar if
           1)  its respective accent attribute is not true
           2)  its second child is an mml:mo
           3)  the character of the mml:mo is the correct under/over bar. -->
@@ -1585,7 +1585,7 @@
 
   <!-- Note:  ndCur should only be an mover MathML element.
   
-       ndCur should be interpretted as an m:acc if
+       ndCur should be interpreted as an m:acc if
           1)  its accent attribute is true
           2)  its second child is an mml:mo
           3)  there is only one character in the mml:mo -->

@@ -8,7 +8,7 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="a t tei fo rng xs"
-                version="2.0">
+                version="3.0">
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="classatts.xsl"/>
   <xsl:import href="../common/i18n.xsl"/>
@@ -206,7 +206,7 @@ of this software, even if advised of the possibility of such damage.
 	&lt;!ENTITY % file.</xsl:text>
             <xsl:value-of select="@ident"/>
             <xsl:text> PUBLIC '-//TEI P5//ELEMENTS </xsl:text>
-            <xsl:sequence select="( tei:idno[@type eq 'FPI'], tei:altIdent[@type eq 'FPI'] )[1]"/>
+            <xsl:sequence select="tei:idno[@type eq 'FPI']"/>
             <xsl:text>//EN' '</xsl:text>
             <xsl:value-of select="@ident"/>
             <xsl:text>.dtd' &gt;
@@ -1519,9 +1519,11 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
     </xsl:choose>
     <xsl:value-of select="tei:createSpecName(.)"/>
-    <xsl:variable name="datminOmaxO" select="tei:minOmaxO( tei:datatype/@minOccurs, tei:datatype/@maxOccurs )"/>
-    <xsl:variable name="datmin" select="$datminOmaxO[1]"/>
-    <xsl:variable name="datmax" select="$datminOmaxO[2]"/>
+    <xsl:variable name="datNorMinMax" select="if ( tei:datatype )
+					      then tei:norMinMax( tei:datatype )
+					      else ( 1, 1 )"/>
+    <xsl:variable name="datmin" select="$datNorMinMax[1]"/>
+    <xsl:variable name="datmax" select="$datNorMinMax[2]"/>
     <xsl:choose>
       <xsl:when test="( $datmax gt 1  or  $datmax eq -1 )  and  (
         tei:datatype/rng:ref/@name = ('data.enumerated','data.name')
@@ -1643,7 +1645,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:with-param name="sep">,</xsl:with-param>
             </xsl:call-template>
             <xsl:text>)</xsl:text>
-            <xsl:value-of select="tei:generateIndicators(., @minOccurs, @maxOccurs)"/>
+            <xsl:value-of select="tei:norMinMax(.)[4]"/>
           </xsl:otherwise>
         </xsl:choose>
       </token>
@@ -1654,7 +1656,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:text>(</xsl:text>
         <xsl:value-of select="$innards/*" separator=","/>
         <xsl:text>)</xsl:text>
-        <xsl:value-of select="tei:generateIndicators(., @minOccurs, @maxOccurs)"/>
+        <xsl:value-of select="tei:norMinMax(.)[4]"/>
       </xsl:when>
       <xsl:otherwise>
         <token>
@@ -1666,7 +1668,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:alternate">
     <token>
-      <xsl:variable name="suffix" select="tei:generateIndicators(.,@minOccurs,@maxOccurs)"/>
+      <xsl:variable name="suffix" select="tei:norMinMax(.)[4]"/>
       <xsl:text>(</xsl:text>
       <xsl:call-template name="innards"/>
       <xsl:text>)</xsl:text>
@@ -1685,16 +1687,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef|tei:dataRef[@key]">
     <xsl:variable name="except" select="@except"/>
     <xsl:variable name="include" select="@include"/>
-    <xsl:variable name="minOmaxO" select="tei:minOmaxO( @minOccurs, @maxOccurs )"/>
-    <xsl:variable name="min" select="$minOmaxO[1]"/>
-    <xsl:variable name="max" select="$minOmaxO[2]"/>
+    <xsl:variable name="norMinMax" select="tei:norMinMax(.)"/>
+    <xsl:variable name="min" select="$norMinMax[1]"/>
+    <xsl:variable name="max" select="$norMinMax[2]"/>
     <xsl:variable name="exists">
       <xsl:call-template name="checkClass">
         <xsl:with-param name="id" select="@key"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:variable name="suffix"
-		  select="tei:generateIndicators(.,@minOccurs,@maxOccurs)"/>
+    <xsl:variable name="suffix" select="tei:norMinMax(.)[4]"/>
     <xsl:variable name="ename">
       <xsl:choose>
         <xsl:when test="self::tei:classRef and $exists=''">
@@ -1854,9 +1855,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template match="tei:content/tei:classRef | tei:content//tei:sequence/tei:classRef" mode="preprocess">
-    <xsl:variable name="minOmaxO" select="tei:minOmaxO( @minOccurs, @maxOccurs )"/>
-    <xsl:variable name="min" select="$minOmaxO[1]"/>
-    <xsl:variable name="max" select="$minOmaxO[2]"/>
+    <xsl:variable name="norMinMax" select="tei:norMinMax(.)"/>
+    <xsl:variable name="min" select="$norMinMax[1]"/>
+    <xsl:variable name="max" select="$norMinMax[2]"/>
     <xsl:choose>
       <xsl:when test="$max eq -1">
         <xsl:copy-of select="."/>
@@ -1887,22 +1888,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="@* | text() | comment() | processing-instruction()" mode="preprocess">
     <xsl:copy-of select="."/>
   </xsl:template>
-
-  <xsl:function name="tei:generateIndicators">
-    <xsl:param name="context"/>
-    <xsl:param name="minOccurs"/>
-    <xsl:param name="maxOccurs"/>
-    <xsl:variable name="minOmaxO" select="tei:minOmaxO( $minOccurs, $maxOccurs )"/>
-    <xsl:variable name="min" select="$minOmaxO[1]"/>
-    <xsl:variable name="max" select="$minOmaxO[2]"/>
-    <xsl:choose>
-      <xsl:when test="$context/tei:textNode">*</xsl:when>
-      <xsl:when test="$min eq 0  and  $max eq  1">?</xsl:when>
-      <xsl:when test="$min eq 0  and  $max eq -1">*</xsl:when>
-      <xsl:when test="$min ge 1  and  $max eq -1">+</xsl:when>
-      <xsl:otherwise></xsl:otherwise>
-    </xsl:choose>
-  </xsl:function>
 
   <xsl:function name="tei:dtdcomment">
     <xsl:param name="text"/>

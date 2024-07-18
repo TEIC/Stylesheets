@@ -7,7 +7,7 @@
   xmlns:local="local"
   xmlns="http://www.tei-c.org/ns/1.0"
   exclude-result-prefixes="#all"
-  version="2.0">
+  version="3.0">
   
   <!-- This stylesheet module contains shared functions and templates for all jTEI conversions -->
   

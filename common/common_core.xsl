@@ -3,7 +3,7 @@
 		xmlns:tite="http://www.tei-c.org/ns/tite/1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="tei tite"
-                version="2.0">
+                version="3.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet dealing with elements from the core module. </p>
@@ -169,7 +169,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process tei:abbr (abbrevation)</desc>
+      <desc>Process tei:abbr (abbreviation)</desc>
    </doc>
   <xsl:template match="tei:abbr">
     <xsl:choose>
@@ -1171,6 +1171,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:*" mode="plain">
       <xsl:apply-templates mode="plain"/>
   </xsl:template>
+  <xsl:template match="tei:index" mode="plain"/>
   <xsl:template match="tei:note" mode="plain"/>
   <xsl:template match="tei:app" mode="plain"/>
   <xsl:template match="tei:pb" mode="plain"/>

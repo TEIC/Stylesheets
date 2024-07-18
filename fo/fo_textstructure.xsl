@@ -8,7 +8,7 @@
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="fotex a rng tei teix"
-                version="2.0">
+                version="3.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p>
@@ -114,7 +114,7 @@ of this software, even if advised of the possibility of such damage.
                      <xsl:call-template name="headers-footers-oneside-back"/>
                   </xsl:otherwise>
                </xsl:choose>
-              <!-- insert footNote Seperator -->
+              <!-- insert footNote Separator -->
               <static-content flow-name="xsl-footnote-separator">
                 <block>
                   <leader leader-pattern="rule" leader-length="100%" rule-style="solid" rule-thickness="0.5pt"/>
@@ -165,7 +165,7 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:call-template name="headers-footers-oneside"/>
 	     </xsl:otherwise>
 	   </xsl:choose>
-	   <!-- insert footNote Seperator -->
+	   <!-- insert footNote Separator -->
 	   <static-content flow-name="xsl-footnote-separator">
 	     <block>
 	       <leader leader-pattern="rule" leader-length="100%" rule-style="solid" rule-thickness="0.5pt"/>
@@ -398,7 +398,7 @@ of this software, even if advised of the possibility of such damage.
 		   <xsl:call-template name="headers-footers-oneside"/>
 		 </xsl:otherwise>
                </xsl:choose>
-	     <!-- insert footNote Seperator -->
+	     <!-- insert footNote Separator -->
 	     <static-content flow-name="xsl-footnote-separator">
 	       <block>
 	         <leader leader-pattern="rule" leader-length="100%" rule-style="solid" rule-thickness="0.5pt"/>

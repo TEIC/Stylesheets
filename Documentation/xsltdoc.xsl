@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xdt="http://www.pnp-software.com/XSLTdocTemplate" xmlns:util="http://www.pnp-software.com/util" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xd="http://www.pnp-software.com/XSLTdoc" exclude-result-prefixes="xdt util xd" version="2.0">
+<xsl:stylesheet xmlns:xdt="http://www.pnp-software.com/XSLTdocTemplate" xmlns:util="http://www.pnp-software.com/util" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xd="http://www.pnp-software.com/XSLTdoc" exclude-result-prefixes="xdt util xd" version="3.0">
   <xsl:import href="../xsltdoc/xsl/core.xsl"/>
   <xsl:include href="../xsltdoc/xsl/properties/author.xsl"/>
   <xsl:include href="../xsltdoc/xsl/properties/cvsId.xsl"/>

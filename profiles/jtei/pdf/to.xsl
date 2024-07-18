@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet version="2.0" xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+<xsl:stylesheet version="3.0" xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:exsl="http://exslt.org/common"
   xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:eg="http://www.tei-c.org/ns/Examples"
@@ -276,7 +276,7 @@
     <xsl:call-template name="article.title"/>
     <xsl:call-template name="body-metadata"/>
     <xsl:apply-templates select="/tei:TEI/tei:text/tei:front/tei:div[@type='abstract']"/>
-    <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass"/>
+    <xsl:call-template name="index"/>
     <xsl:call-template name="front.divs"/>
   </xsl:template>
   
@@ -309,11 +309,13 @@
       border-top="solid black 5px" border-bottom="solid black 3px" 
       padding-top="1cm" padding-bottom="1cm">
       <fo:block font-family="GentiumBookBasic" font-style="italic" font-size="24pt" line-height="1.2">
-        <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type = 'main'], /tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type = 'main')]">
+        <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type = 'main']">
           <xsl:apply-templates/>
-          <xsl:if test="position() != last()">
-            <xsl:text>: </xsl:text>
-          </xsl:if>
+        </xsl:for-each>
+      </fo:block>
+      <fo:block font-family="GentiumBookBasic" font-size="16pt" line-height="1.2">
+        <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type = 'main')]">
+          <xsl:apply-templates/>
         </xsl:for-each>
       </fo:block>
       <fo:block font-family="Roboto-medium,DejaVu" font-size="11pt" margin-top="1cm">
@@ -334,7 +336,7 @@
   <xsl:template match="tei:front/tei:div[@type = $div.types.front]">
     <fo:block>
       <fo:block xsl:use-attribute-sets="heading.properties" font-family="Roboto,DejaVu" font-size="13pt">
-        <xsl:value-of select="i18n:key(concat(@type, '-label'))"/>
+        <xsl:value-of select="i18n:key(concat(@type, '-label'), (@xml:lang,$jtei.lang)[1])"/>
       </fo:block>
       <xsl:apply-templates/>
     </fo:block>
@@ -1062,18 +1064,22 @@
     </xsl:if>
   </xsl:template>
   
-  <xsl:template match="tei:teiHeader/tei:profileDesc/tei:textClass">
-    <fo:block xsl:use-attribute-sets="back.font.properties">
-      <fo:block xsl:use-attribute-sets="heading.properties">
-        <xsl:value-of select="i18n:key('index-label')"/>
-      </fo:block>
-      <fo:block>
-        <fo:inline font-family="Roboto,DejaVu" font-size="9pt" font-weight="bold">
-          <xsl:value-of select="concat(i18n:key('keywords-label'), ': ')"/>
-        </fo:inline>
-        <xsl:value-of select="string-join(tei:keywords/tei:term, ', ')"/>
-      </fo:block>
-    </fo:block>
+  <xsl:template name="index">
+    <xsl:if test="tei:teiHeader/tei:profileDesc/tei:textClass">
+      <fo:block xsl:use-attribute-sets="back.font.properties">
+        <fo:block xsl:use-attribute-sets="heading.properties">
+          <xsl:value-of select="i18n:key('index-label')"/>
+        </fo:block>
+        <xsl:for-each select="tei:teiHeader/tei:profileDesc/tei:textClass">
+          <fo:block>
+            <fo:inline font-family="Roboto,DejaVu" font-size="9pt" font-weight="bold">
+              <xsl:value-of select="concat(i18n:key('keywords-label', (tei:keywords/@xml:lang, $jtei.lang)[1]), ': ')"/>
+            </fo:inline>
+            <xsl:value-of select="string-join(tei:keywords/tei:term, ', ')"/>
+          </fo:block>
+        </xsl:for-each>
+      </fo:block>      
+    </xsl:if>
   </xsl:template>
   
   <xsl:template name="authors">

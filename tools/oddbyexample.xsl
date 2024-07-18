@@ -10,7 +10,7 @@
   xmlns:n="www.example.com" xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns="http://www.tei-c.org/ns/1.0"
   exclude-result-prefixes="rng tei n"
-  xpath-default-namespace="http://www.tei-c.org/ns/1.0" version="2.0">
+  xpath-default-namespace="http://www.tei-c.org/ns/1.0" version="3.0">
   <!--
 This software is dual-licensed:
 

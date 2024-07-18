@@ -8,7 +8,7 @@
   xmlns:i18n="i18n"
   xmlns="http://www.tei-c.org/ns/1.0"
   exclude-result-prefixes="#all"
-  version="2.0">
+  version="3.0">
   
   <xsl:import href="../jtei.common.xsl"/>
   
@@ -161,18 +161,6 @@
       <xsl:value-of select="string-join((tei:forename, tei:nameLink, tei:surname)/normalize-space(), ' ')"></xsl:value-of>
     </xsl:copy>
   </xsl:template>
-  
-  <xsl:template match="tei:titleStmt/tei:title[@type='main']">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()"/>
-      <xsl:for-each select="parent::tei:titleStmt/tei:title[not(@type='main')]">
-        <xsl:text>: </xsl:text>
-        <xsl:apply-templates/>
-      </xsl:for-each>
-    </xsl:copy>
-  </xsl:template>
-  
-  <xsl:template match="tei:titleStmt/tei:title[not(@type='main')]"/>
   
   <!-- wrap other <author>|<editor> children in <s> -->
   <xsl:template match="tei:titleStmt/tei:author/*|tei:titleStmt/tei:editor/*" priority="-0.5">

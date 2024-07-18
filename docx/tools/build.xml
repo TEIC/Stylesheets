@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." name="fix template styles">
 	<!-- ANT script to prepare and clean up a template for the DOCX transformation 
-		to be used for creating a DOCX target file tranformed from a TEI XML document.
+		to be used for creating a DOCX target file transformed from a TEI XML document.
 	-->
   
   <!-- define the the saxon transformer or place it in the ant lib directory -->
   <property name = "saxon.jar" value=".../saxon10he.jar"/>
   
-	<!-- modfiy basedir, if necessary: -Dbasedir=... -->
+	<!-- modify basedir, if necessary: -Dbasedir=... -->
 	<echo>     basedir: ${basedir}</echo>
 	
 	<!-- profile, may be overwritten by external property: -Dprofile=default -->
@@ -74,7 +74,7 @@
 	<!-- zip back together -->
 	<zip destfile="${targetFile}" basedir="${temp}" />
 
-	<!-- delete the working directory whith all its content -->
+	<!-- delete the working directory with all its content -->
 	<echo>remove working directory</echo>
 	<delete includeEmptyDirs="true" verbose="true">
 		<fileset dir="${temp}"/>

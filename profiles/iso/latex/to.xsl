@@ -12,7 +12,7 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="xlink dbk rng tei teix xhtml a html  xs xsl"
-                version="2.0">
+                version="3.0">
    <xsl:import href="../../../latex/latex.xsl"/>
    <xsl:import href="../isoutils.xsl"/>
 

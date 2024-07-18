@@ -1,5 +1,5 @@
 <xsl:stylesheet
-    version="2.0"
+    version="3.0"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:tei="http://www.tei-c.org/ns/1.0"

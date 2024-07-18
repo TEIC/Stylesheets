@@ -5,7 +5,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="tei html"
-    version="2.0">
+    version="3.0">
     <!-- import base conversion style -->
 
     <xsl:import href="../../../html/html.xsl"/>
@@ -51,7 +51,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="yes" normalization-form="NFC"
+  <xsl:output method="xhtml" html-version="5.0" encoding="UTF-8" indent="no" normalization-form="NFC"
     omit-xml-declaration="yes"/>
     
     <xsl:template match="html:*">

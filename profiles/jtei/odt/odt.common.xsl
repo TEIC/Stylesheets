@@ -13,7 +13,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
-    exclude-result-prefixes="#all" version="2.0"
+    exclude-result-prefixes="#all" version="3.0"
     xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
     xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
     xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
@@ -670,35 +670,15 @@
         <xsl:apply-templates/>
     </xsl:template>
     
-    <xsl:template match="listBibl/bibl">
-        <text:p text:style-name="teiBiblioEntry">
-<!--          Let's see whether this bibl has the same 
-              authors as the previous one. -->
-            <xsl:variable name="authorOrEditor" select="child::*[1]/local-name()"/>
-            <xsl:choose>
-              <xsl:when test="$authorOrEditor = ('author', 'editor', 'orgName') and preceding-sibling::bibl">
-                <!--<xsl:comment><xsl:value-of select="local:getAuthorsOrEditors(., $authorOrEditor)"/></xsl:comment>-->
-                <xsl:choose>
-                  <xsl:when test="local:getAuthorsOrEditors(., $authorOrEditor) = local:getAuthorsOrEditors(preceding-sibling::bibl[1], $authorOrEditor)">
-<!--           The authors or editors for this bibl match those from the 
-               preceding one, so they should be rendered as a dash. -->
-                    <xsl:text>———</xsl:text>
-                    <xsl:apply-templates select="child::node()[not(local-name() = $authorOrEditor) or preceding-sibling::*[not(local-name() = $authorOrEditor)]]"/>
-                  </xsl:when>
-                  <xsl:otherwise><xsl:apply-templates/></xsl:otherwise>
-                </xsl:choose>
-              </xsl:when>
-              <xsl:otherwise><xsl:apply-templates/></xsl:otherwise>
-            </xsl:choose>
-        </text:p>
-    </xsl:template>
-  
-  <xsl:function name="local:getAuthorsOrEditors" as="xs:string?">
-    <xsl:param name="bibl" as="element(bibl)"/>
-    <xsl:param name="tagName"/>
-    <xsl:variable name="personList" select="for $e in $bibl/child::*[local-name() = $tagName][not(preceding-sibling::*) or not(preceding-sibling::*[local-name() != $tagName])] return $e"/>
-    <xsl:value-of select="normalize-space(string-join($personList, ' '))"/>
-  </xsl:function>
+  <xsl:template match="listBibl/bibl">
+    <xsl:variable name="dateOrTitle" select="(date|title)[1]"/>
+    <text:p text:style-name="teiBiblioEntry">
+      <xsl:call-template name="get.author.instance">
+        <xsl:with-param name="dateOrTitle" select="$dateOrTitle"/>
+      </xsl:call-template>
+      <xsl:apply-templates select="$dateOrTitle|node()[. >> ($dateOrTitle,current())[1]]"/>
+    </text:p>
+  </xsl:template>  
   
 <!--  Figures with egXML or eg. -->
   <xsl:template match="figure[teix:egXML or eg]">
@@ -768,21 +748,6 @@
           </xsl:for-each>
         </xsl:variable>
         <draw:image xlink:href="{$href}" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad"/>
-<!--        We are abandoning FODT for simplicity's sake. -->
-        
-       <!-- 
-          <xsl:choose>
-              <xsl:when test="$outputFormat = 'fodt'">
-                  <draw:image>
-                      <office:binary-data><xsl:value-of select="local:getGraphicAsBase64(resolve-uri(graphic/@url, base-uri(//TEI[1])))"/></office:binary-data>
-                  </draw:image>
-              </xsl:when>
-              <xsl:when test="$outputFormat = 'odt'">
-                  <draw:image xlink:href="Pictures/{tokenize($graphic/@url, '/')[last()]}" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad"/>
-              </xsl:when>
-          </xsl:choose>
-        -->
-        
     </draw:frame>
     </text:p>
     <!--        We have to deal with a figure captions manually and put them after the graphic. -->
@@ -880,23 +845,6 @@
         <xsl:sequence select="$tagName = ('lb', 'pb', 'cb') or xs:string($el) = ''"/>
     </xsl:function>
     
-    
-<!--   Processing of images. 
-      We have to pre-process images into base64 format so that we can 
-      embed them in the output file. This is done before processing anything
-      else.
-   -->
-  <xsl:function name="local:getGraphicAsBase64" as="xs:string">
-    <xsl:param name="graphicUrl" as="xs:string"/>
-      <xsl:message>Processing image <xsl:value-of select="$graphicUrl"/>...</xsl:message>
-<!--      Let's see if we can find the actual file. 
-         This is quite messy and not expected to
-         work on non-*nix file systems. -->
-      <xsl:variable name="filePath" select="replace(replace(resolve-uri($graphicUrl), '%20', ' '), 'file:', '')"/>
-      <xsl:message>File is deemed to be at: <xsl:value-of select="$filePath"/></xsl:message>
-      <xsl:value-of select="expath-file:read-binary($filePath)"/>
-  </xsl:function>
-  
 </xsl:stylesheet>
 
     

@@ -27,7 +27,7 @@
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
                 xmlns="http://www.tei-c.org/ns/1.0"
-                version="2.0"
+                version="3.0"
                 exclude-result-prefixes="a cp dc dcterms dcmitype fn prop iso m mml mo mv o pic r rel tbx tei teidocx v xs ve w10 w wne wp">
     
     
@@ -77,7 +77,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:variable name="ust">\t</xsl:variable>
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Calls the named template paragraph-wp that can be overriden.</p>
+         <p>Calls the named template paragraph-wp that can be overridden.</p>
          <p>
             See comment at begin of document to understand why this template is calling
             a named template.

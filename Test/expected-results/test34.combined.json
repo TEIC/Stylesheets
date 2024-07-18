@@ -5,6 +5,16 @@
     
     "modules" : 
     [ 
+      { "ident" : "cmc",
+        "id" : "CMC",
+        "desc" : 
+        [  ],
+        "shortDesc" : "",
+        "gloss" : 
+        [  ],
+        "altIdent" : 
+        [  ] },
+      
       { "ident" : "core",
         "id" : "CO",
         "desc" : 
@@ -132,8 +142,8 @@
         "type" : "elementSpec",
         "module" : "linking",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph.<\/desc>" ],
-        "shortDesc" : "(anonymous block) contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-08-11\" xml:lang=\"en\">contains any component-level unit of text, acting as a container for phrase or inter level elements analogous to, but without the same constraints as, a paragraph.<\/desc>" ],
+        "shortDesc" : "(anonymous block) contains any component-level unit of text, acting as a container for phrase or inter level elements analogous to, but without the same constraints as, a paragraph.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">anonymous block<\/gloss>" ],
         "altIdent" : 
@@ -146,7 +156,8 @@
             "att.typed",
             "att.declaring",
             "att.fragmentable",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -154,7 +165,7 @@
         "content" : 
         [ 
           { "type" : "macroRef",
-            "key" : "macro.paraContent" } ] },
+            "key" : "macro.abContent" } ] },
       
       { "ident" : "abbr",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -173,7 +184,8 @@
             "model.choicePart" ],
           "atts" : 
           [ "att.global",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -308,7 +320,10 @@
                 "key" : "model.pLike" },
               
               { "type" : "classRef",
-                "key" : "model.listLike" } ] } ] },
+                "key" : "model.listLike" },
+              
+              { "type" : "elementRef",
+                "key" : "listBibl" } ] } ] },
       
       { "ident" : "add",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -329,7 +344,8 @@
             "att.transcriptional",
             "att.placement",
             "att.typed",
-            "att.dimensions" ],
+            "att.dimensions",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -380,7 +396,8 @@
           [ "model.addressLike",
             "model.publicationStmtPart.detail" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -423,7 +440,8 @@
           "atts" : 
           [ "att.global",
             "att.pointing",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -528,7 +546,8 @@
           [ "model.global.meta" ],
           "atts" : 
           [ "att.global",
-            "att.pointing.group" ],
+            "att.pointing.group",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -664,7 +683,8 @@
           [ "model.milestoneLike" ],
           "atts" : 
           [ "att.global",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -934,6 +954,27 @@
         "attributes" : 
         [ 
           { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } },
+          
+          { "onElement" : true,
             "ident" : "ident",
             "mode" : "add",
             "ns" : "",
@@ -1010,7 +1051,8 @@
             "model.titlepagePart",
             "model.pLike.front" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1065,7 +1107,27 @@
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -1317,7 +1379,8 @@
             "att.declarable",
             "att.typed",
             "att.sortable",
-            "att.docStatus" ],
+            "att.docStatus",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1373,7 +1436,8 @@
           [ "att.global",
             "att.declarable",
             "att.sortable",
-            "att.docStatus" ],
+            "att.docStatus",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1472,7 +1536,8 @@
             "att.declarable",
             "att.typed",
             "att.sortable",
-            "att.docStatus" ],
+            "att.docStatus",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1534,7 +1599,8 @@
           [ "att.global",
             "att.media",
             "att.timed",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1786,7 +1852,8 @@
             "model.titlepagePart",
             "model.pLike.front" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1854,7 +1921,8 @@
           [  ],
           "atts" : 
           [ "att.global",
-            "att.pointing" ],
+            "att.pointing",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -1984,7 +2052,8 @@
         { "model" : 
           [  ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.datcat" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -2040,7 +2109,8 @@
             "att.typed",
             "att.edition",
             "att.spanning",
-            "att.breaking" ],
+            "att.breaking",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -2073,6 +2143,27 @@
           [  ] },
         "attributes" : 
         [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } },
+          
           { "onElement" : true,
             "ident" : "target",
             "mode" : "add",
@@ -2112,7 +2203,8 @@
         { "model" : 
           [ "model.pPart.editorial" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -2146,7 +2238,8 @@
           [ "model.quoteLike" ],
           "atts" : 
           [ "att.global",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -2333,8 +2426,8 @@
             "ns" : "",
             "usage" : "req",
             "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-02-03\" xml:lang=\"en\">supplies an XPath selection pattern using the\n        syntax defined in <ptr target=\"#XSLT3\"\/> which identifies a set of nodes which are \n        citable structural components. The expression may be absolute (beginning with <code>\/<\/code>) or relative. \n        <att>match<\/att> on a <gi>citeStructure<\/gi> without a <gi>citeStructure<\/gi> parent must be an absolute XPath. If it is\n        relative, its context is set by the <att>match<\/att> of the parent <gi>citeStructure<\/gi>. <\/desc>" ],
-            "shortDesc" : "(match) supplies an XPath selection pattern using the\n        syntax defined in  which identifies a set of nodes which are \n        citable structural components. The expression may be absolute (beginning with \/) or relative. \n        match on a citeStructure without a citeStructure parent must be an absolute XPath. If it is\n        relative, its context is set by the match of the parent citeStructure. ",
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-02-03\" xml:lang=\"en\">supplies an XPath selection pattern using the\n        syntax defined in <ptr target=\"#XSLT3\"\/> which identifies a set of nodes which are \n        citable structural components. The expression may be absolute (beginning with <code>\/<\/code>) or relative. \n        <att>match<\/att> on a <gi>citeStructure<\/gi> without a <gi>citeStructure<\/gi> parent must be an absolute XPath. If it is\n        relative, its context is set by the <att>match<\/att> of the parent <gi>citeStructure<\/gi>.<\/desc>" ],
+            "shortDesc" : "(match) supplies an XPath selection pattern using the\n        syntax defined in  which identifies a set of nodes which are \n        citable structural components. The expression may be absolute (beginning with \/) or relative. \n        match on a citeStructure without a citeStructure parent must be an absolute XPath. If it is\n        relative, its context is set by the match of the parent citeStructure.",
             "gloss" : 
             [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2020-02-03\" xml:lang=\"en\">match<\/gloss>" ],
             "altIdent" : 
@@ -2578,7 +2671,8 @@
           [ "model.divBottomPart" ],
           "atts" : 
           [ "att.global",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -2633,6 +2727,27 @@
           [  ] },
         "attributes" : 
         [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } },
+          
           { "onElement" : true,
             "ident" : "fromUnit",
             "mode" : "add",
@@ -2694,7 +2809,8 @@
           "atts" : 
           [ "att.global",
             "att.editLike",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -3012,7 +3128,27 @@
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "alternate",
@@ -3047,9 +3183,11 @@
           [ "att.global",
             "att.canonical",
             "att.datable",
+            "att.calendarSystem",
             "att.editLike",
             "att.dimensions",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -3088,7 +3226,8 @@
           [ "model.divWrapper",
             "model.pLike.front" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -3132,7 +3271,8 @@
           [ "att.global",
             "att.transcriptional",
             "att.typed",
-            "att.dimensions" ],
+            "att.dimensions",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -3159,7 +3299,8 @@
             "model.labelLike" ],
           "atts" : 
           [ "att.global",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -3213,7 +3354,8 @@
           [ "model.emphLike" ],
           "atts" : 
           [ "att.global",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -4377,7 +4519,8 @@
             "model.pLike.front" ],
           "atts" : 
           [ "att.global",
-            "att.canonical" ],
+            "att.canonical",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -4392,8 +4535,8 @@
         "type" : "elementSpec",
         "module" : "textstructure",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-12\" xml:lang=\"en\">contains the date of a document, as given\non a title page or in a dateline.<\/desc>" ],
-        "shortDesc" : "(document date) contains the date of a document, as given\non a title page or in a dateline.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-12\" xml:lang=\"en\">contains the date of a document, as given on a title page or in a dateline.<\/desc>" ],
+        "shortDesc" : "(document date) contains the date of a document, as given on a title page or in a dateline.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">document date<\/gloss>" ],
         "altIdent" : 
@@ -4404,30 +4547,14 @@
             "model.divWrapper",
             "model.pLike.front" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc",
+            "att.datable",
+            "att.calendarSystem" ],
           "unknown" : 
           [  ] },
         "attributes" : 
-        [ 
-          { "onElement" : true,
-            "ident" : "when",
-            "mode" : "add",
-            "ns" : "",
-            "usage" : "opt",
-            "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-06-14\" xml:lang=\"en\">gives the value of the date in standard form, i.e. YYYY-MM-DD.<\/desc>" ],
-            "shortDesc" : "(when) gives the value of the date in standard form, i.e. YYYY-MM-DD.",
-            "gloss" : 
-            [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2017-06-19\">when<\/gloss>" ],
-            "altIdent" : 
-            [  ],
-            "valDesc" : 
-            [  ],
-            "datatype" : 
-            { "min" : "1",
-              "max" : "1",
-              "dataRef" : 
-              { "key" : "teidata.temporal.w3c" } } } ],
+        [  ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -4637,7 +4764,27 @@
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -4730,7 +4877,8 @@
         { "model" : 
           [ "model.addressLike" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -4755,7 +4903,8 @@
         { "model" : 
           [ "model.emphLike" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -4815,7 +4964,8 @@
             "model.titlepagePart",
             "model.pLike.front" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -4850,7 +5000,8 @@
             "model.choicePart" ],
           "atts" : 
           [ "att.global",
-            "att.editLike" ],
+            "att.editLike",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -4865,8 +5016,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-01-07\" xml:lang=\"en\">describes the approximate size of a text stored on some carrier medium or of some other object, digital  or non-digital,  specified in any convenient units.<\/desc>" ],
-        "shortDesc" : "(extent) describes the approximate size of a text stored on some carrier medium or of some other object, digital  or non-digital,  specified in any convenient units.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-01-07\" xml:lang=\"en\">describes the approximate size of a text stored on some carrier medium or of some other object, digital  or non-digital, specified in any convenient units.<\/desc>" ],
+        "shortDesc" : "(extent) describes the approximate size of a text stored on some carrier medium or of some other object, digital  or non-digital, specified in any convenient units.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2007-06-12\">extent<\/gloss>" ],
         "altIdent" : 
@@ -4955,7 +5106,8 @@
           "atts" : 
           [ "att.global",
             "att.declaring",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5021,7 +5173,8 @@
         { "model" : 
           [ "model.emphLike" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5170,7 +5323,27 @@
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -5194,7 +5367,8 @@
           [ "att.global",
             "att.timed",
             "att.editLike",
-            "att.dimensions" ],
+            "att.dimensions",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5366,7 +5540,8 @@
             "att.typed",
             "att.spanning",
             "att.breaking",
-            "att.edition" ],
+            "att.edition",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5380,8 +5555,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-07-04\" xml:lang=\"en\">documents the notation and the datum used for geographic coordinates expressed as content of\n    the <gi>geo<\/gi> element elsewhere within the document.<\/desc>" ],
-        "shortDesc" : "(geographic coordinates declaration) documents the notation and the datum used for geographic coordinates expressed as content of\n    the geo element elsewhere within the document.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-07-04\" xml:lang=\"en\">documents the notation and the datum used for geographic coordinates expressed as content of the <gi>geo<\/gi> element elsewhere within the document.<\/desc>" ],
+        "shortDesc" : "(geographic coordinates declaration) documents the notation and the datum used for geographic coordinates expressed as content of the geo element elsewhere within the document.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-09-23\" xml:lang=\"en\">geographic coordinates declaration<\/gloss>" ],
         "altIdent" : 
@@ -5478,7 +5653,8 @@
             "att.declaring",
             "att.typed",
             "att.pointing",
-            "att.cReferencing" ],
+            "att.cReferencing",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5508,7 +5684,8 @@
             "att.media",
             "att.resourced",
             "att.declaring",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5636,7 +5813,8 @@
           [ "att.global",
             "att.typed",
             "att.placement",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5734,7 +5912,8 @@
           [ "model.hiLike" ],
           "atts" : 
           [ "att.global",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -5847,11 +6026,33 @@
           [ "att.global",
             "att.sortable",
             "att.datable",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
         [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } },
+          
           { "onElement" : true,
             "ident" : "type",
             "mode" : "change",
@@ -5877,8 +6078,8 @@
               [ 
                 { "ident" : "ISBN",
                   "desc" : 
-                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">International Standard Book Number: a 13- or\n            (if assigned prior to 2007) 10-digit identifying number assigned by the publishing\n            industry to a published book or similar item, registered with the <ref target=\"https:\/\/www.isbn-international.org\"> International ISBN Agency.<\/ref>\n          <\/desc>" ],
-                  "shortDesc" : "International Standard Book Number: a 13- or\n            (if assigned prior to 2007) 10-digit identifying number assigned by the publishing\n            industry to a published book or similar item, registered with the  International ISBN Agency.\n          ",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-07-02\" xml:lang=\"en\">International Standard Book Number: a 13- or\n            (if assigned prior to 2007) 10-digit identifying number assigned by the publishing\n            industry to a published book or similar item, registered with the <ref target=\"https:\/\/www.isbn-international.org\"> International ISBN Agency.<\/ref><\/desc>" ],
+                  "shortDesc" : "International Standard Book Number: a 13- or\n            (if assigned prior to 2007) 10-digit identifying number assigned by the publishing\n            industry to a published book or similar item, registered with the  International ISBN Agency.",
                   "gloss" : 
                   [  ],
                   "altIdent" : 
@@ -6053,7 +6254,8 @@
           [ "model.global.meta" ],
           "atts" : 
           [ "att.global",
-            "att.spanning" ],
+            "att.spanning",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6159,7 +6361,8 @@
           "atts" : 
           [ "att.global",
             "att.pointing",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6253,7 +6456,8 @@
           [ "model.global.meta" ],
           "atts" : 
           [ "att.global",
-            "att.pointing.group" ],
+            "att.pointing.group",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6377,7 +6581,8 @@
           [ "model.lLike" ],
           "atts" : 
           [ "att.global",
-            "att.fragmentable" ],
+            "att.fragmentable",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6421,7 +6626,8 @@
           [ "att.global",
             "att.typed",
             "att.placement",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6436,8 +6642,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-01-28\" xml:lang=\"en\">describes the languages, sublanguages, registers, dialects, etc.\nrepresented within a text.<\/desc>" ],
-        "shortDesc" : "(language usage) describes the languages, sublanguages, registers, dialects, etc.\nrepresented within a text.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-01-28\" xml:lang=\"en\">describes the languages, sublanguages, registers, dialects, etc. represented within a text.<\/desc>" ],
+        "shortDesc" : "(language usage) describes the languages, sublanguages, registers, dialects, etc. represented within a text.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">language usage<\/gloss>" ],
         "altIdent" : 
@@ -6491,8 +6697,8 @@
             "ns" : "",
             "usage" : "req",
             "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-07-08\" xml:lang=\"en\">Supplies a language code constructed as defined in <ref target=\"https:\/\/tools.ietf.org\/html\/bcp47\">BCP 47<\/ref> which is used to identify the\n        language documented by this element, and which is referenced by the global\n        <att>xml:lang<\/att> attribute.<\/desc>" ],
-            "shortDesc" : "(identifier) Supplies a language code constructed as defined in BCP 47 which is used to identify the\n        language documented by this element, and which is referenced by the global\n        xml:lang attribute.",
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-07-08\" xml:lang=\"en\">Supplies a language code constructed as defined in <ref target=\"https:\/\/tools.ietf.org\/html\/bcp47\">BCP 47<\/ref> which is used to identify the\n        language documented by this element, and which may be referenced by the global\n        <att>xml:lang<\/att> attribute.<\/desc>" ],
+            "shortDesc" : "(identifier) Supplies a language code constructed as defined in BCP 47 which is used to identify the\n        language documented by this element, and which may be referenced by the global\n        xml:lang attribute.",
             "gloss" : 
             [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-07-04\" xml:lang=\"en\">identifier<\/gloss>" ],
             "altIdent" : 
@@ -6511,8 +6717,8 @@
             "ns" : "",
             "usage" : "opt",
             "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">specifies the approximate percentage (by volume) of the text which uses this language.<\/desc>" ],
-            "shortDesc" : "specifies the approximate percentage (by volume) of the text which uses this language.",
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">specifies the approximate percentage of the text which uses this language.<\/desc>" ],
+            "shortDesc" : "specifies the approximate percentage of the text which uses this language.",
             "gloss" : 
             [  ],
             "altIdent" : 
@@ -6548,7 +6754,8 @@
             "att.typed",
             "att.edition",
             "att.spanning",
-            "att.breaking" ],
+            "att.breaking",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6562,20 +6769,22 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-04-17\" xml:lang=\"en\">contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain,\n        verse paragraph, etc.<\/desc>" ],
-        "shortDesc" : "(line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain,\n        verse paragraph, etc.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-04-17\" xml:lang=\"en\">contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc.<\/desc>" ],
+        "shortDesc" : "(line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">line group<\/gloss>" ],
         "altIdent" : 
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.divPart" ],
+          [ "model.divPart",
+            "model.paraPart" ],
           "atts" : 
           [ "att.global",
             "att.divLike",
             "att.typed",
-            "att.declaring" ],
+            "att.declaring",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6612,6 +6821,9 @@
                   { "type" : "classRef",
                     "key" : "model.labelLike" },
                   
+                  { "type" : "classRef",
+                    "key" : "model.pPart.transcriptional" },
+                  
                   { "type" : "elementRef",
                     "key" : "lg" } ] },
               
@@ -6628,6 +6840,9 @@
                   
                   { "type" : "classRef",
                     "key" : "model.labelLike" },
+                  
+                  { "type" : "classRef",
+                    "key" : "model.pPart.transcriptional" },
                   
                   { "type" : "classRef",
                     "key" : "model.global" },
@@ -6667,7 +6882,27 @@
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -6690,7 +6925,8 @@
           "atts" : 
           [ "att.global",
             "att.pointing",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6715,7 +6951,8 @@
           [ "model.global.meta" ],
           "atts" : 
           [ "att.global",
-            "att.pointing.group" ],
+            "att.pointing.group",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6758,7 +6995,8 @@
           "atts" : 
           [ "att.global",
             "att.sortable",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -6972,7 +7210,8 @@
           [ "att.global",
             "att.sortable",
             "att.declarable",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7134,8 +7373,8 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a word or phrase referring to some quantity of an object or commodity, usually\n        comprising a number, a unit, and a commodity name.<\/desc>" ],
-        "shortDesc" : "(measure) contains a word or phrase referring to some quantity of an object or commodity, usually\n        comprising a number, a unit, and a commodity name.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a word or phrase referring to some quantity\n    of an object or commodity, usually comprising a number, a unit, and a commodity name.<\/desc>" ],
+        "shortDesc" : "(measure) contains a word or phrase referring to some quantity\n    of an object or commodity, usually comprising a number, a unit, and a commodity name.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2009-01-06\">measure<\/gloss>" ],
         "altIdent" : 
@@ -7146,7 +7385,9 @@
           "atts" : 
           [ "att.global",
             "att.typed",
-            "att.measurement" ],
+            "att.measurement",
+            "att.cmc",
+            "att.ranging" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7157,8 +7398,8 @@
             "ns" : "",
             "usage" : "opt",
             "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-11-18\" xml:lang=\"en\">specifies the type of measurement in any convenient typology.<\/desc>" ],
-            "shortDesc" : "specifies the type of measurement in any convenient typology.",
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-11-18\" xml:lang=\"en\">specifies the type of measurement in any\n        convenient typology.<\/desc>" ],
+            "shortDesc" : "specifies the type of measurement in any\n        convenient typology.",
             "gloss" : 
             [  ],
             "altIdent" : 
@@ -7192,7 +7433,8 @@
           "atts" : 
           [ "att.global",
             "att.measurement",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7232,7 +7474,8 @@
             "att.media",
             "att.resourced",
             "att.declaring",
-            "att.timed" ],
+            "att.timed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7276,11 +7519,32 @@
           "atts" : 
           [ "att.global",
             "att.datable",
-            "att.canonical" ],
+            "att.canonical",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -7301,7 +7565,8 @@
         { "model" : 
           [ "model.emphLike" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7331,7 +7596,8 @@
             "att.typed",
             "att.edition",
             "att.spanning",
-            "att.breaking" ],
+            "att.breaking",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7557,11 +7823,32 @@
             "att.personal",
             "att.datable",
             "att.editLike",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -7602,7 +7889,7 @@
             "valDesc" : 
             [  ],
             "datatype" : 
-            { "min" : "1",
+            { "min" : "0",
               "max" : "1",
               "dataRef" : 
               { "key" : "teidata.namespace" } } } ],
@@ -7616,8 +7903,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">indicates the extent of normalization or regularization of the original source carried out\n    in converting it to electronic form.<\/desc>" ],
-        "shortDesc" : "(normalization) indicates the extent of normalization or regularization of the original source carried out\n    in converting it to electronic form.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">indicates the extent of normalization or regularization of the original source carried out in converting it to electronic form.<\/desc>" ],
+        "shortDesc" : "(normalization) indicates the extent of normalization or regularization of the original source carried out in converting it to electronic form.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2009-01-05\">normalization<\/gloss>" ],
         "altIdent" : 
@@ -7702,7 +7989,8 @@
             "att.pointing",
             "att.typed",
             "att.written",
-            "att.anchoring" ],
+            "att.anchoring",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7735,7 +8023,8 @@
             "att.pointing",
             "att.typed",
             "att.written",
-            "att.anchoring" ],
+            "att.anchoring",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7811,7 +8100,8 @@
           "atts" : 
           [ "att.global",
             "att.typed",
-            "att.ranging" ],
+            "att.ranging",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7915,7 +8205,8 @@
           [ "model.divTopPart" ],
           "atts" : 
           [ "att.global",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -7972,7 +8263,8 @@
           [ "model.pPart.transcriptional",
             "model.choicePart" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8000,7 +8292,8 @@
           [ "att.global",
             "att.declaring",
             "att.fragmentable",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8029,7 +8322,8 @@
             "att.typed",
             "att.edition",
             "att.spanning",
-            "att.breaking" ],
+            "att.breaking",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8102,7 +8396,8 @@
           [ "model.divBottomPart" ],
           "atts" : 
           [ "att.global",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8216,7 +8511,27 @@
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -8294,7 +8609,8 @@
             "att.global",
             "att.internetMedia",
             "att.pointing",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8531,7 +8847,8 @@
             "model.common" ],
           "atts" : 
           [ "att.global",
-            "att.ascribed.directed" ],
+            "att.ascribed.directed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8597,8 +8914,8 @@
                 
                 { "ident" : "foreign",
                   "desc" : 
-                  [  ],
-                  "shortDesc" : "(foreign) ",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2023-01-13\" xml:lang=\"en\">foreign words<\/desc>" ],
+                  "shortDesc" : "(foreign) foreign words",
                   "gloss" : 
                   [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2016-11-25\">foreign<\/gloss>" ],
                   "altIdent" : 
@@ -8752,19 +9069,21 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a phrase or passage attributed by the narrator or author to some agency external\n        to the text.<\/desc>" ],
-        "shortDesc" : "(quotation) contains a phrase or passage attributed by the narrator or author to some agency external\n        to the text.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a phrase or passage attributed by the narrator or author to some agency external to the text.<\/desc>" ],
+        "shortDesc" : "(quotation) contains a phrase or passage attributed by the narrator or author to some agency external to the text.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">quotation<\/gloss>" ],
         "altIdent" : 
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.quoteLike" ],
+          [ "model.quoteLike",
+            "model.biblPart" ],
           "atts" : 
           [ "att.global",
             "att.typed",
-            "att.notated" ],
+            "att.notated",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8821,7 +9140,8 @@
             "att.global",
             "att.internetMedia",
             "att.pointing",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8954,7 +9274,8 @@
           "atts" : 
           [ "att.global",
             "att.editLike",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -8969,8 +9290,8 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-03-19\" xml:lang=\"en\">contains or references some other bibliographic item which is related to the present one in\n    some specified manner, for example as a constituent or alternative version of it.<\/desc>" ],
-        "shortDesc" : "contains or references some other bibliographic item which is related to the present one in\n    some specified manner, for example as a constituent or alternative version of it.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-03-19\" xml:lang=\"en\">contains or references some other bibliographic item which is related to the present one in some specified manner, for example as a constituent or alternative version of it.<\/desc>" ],
+        "shortDesc" : "contains or references some other bibliographic item which is related to the present one in some specified manner, for example as a constituent or alternative version of it.",
         "gloss" : 
         [  ],
         "altIdent" : 
@@ -9142,7 +9463,27 @@
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -9260,7 +9601,8 @@
           "atts" : 
           [ "att.global",
             "att.naming",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9373,7 +9715,8 @@
           [ "model.phrase" ],
           "atts" : 
           [ "att.global",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9407,7 +9750,8 @@
           [ "model.attributable" ],
           "atts" : 
           [ "att.global",
-            "att.ascribed.directed" ],
+            "att.ascribed.directed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9472,7 +9816,8 @@
           [ "model.divWrapper" ],
           "atts" : 
           [ "att.global",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9487,8 +9832,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">contains a prose description of the rationale and methods used in sampling texts in the\n    creation of a corpus or collection.<\/desc>" ],
-        "shortDesc" : "(sampling declaration) contains a prose description of the rationale and methods used in sampling texts in the\n    creation of a corpus or collection.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2023-10-10\" xml:lang=\"en\">contains a prose description of the rationale and methods used in selecting texts, or parts of a text, for inclusion in the resource.<\/desc>" ],
+        "shortDesc" : "(sampling declaration) contains a prose description of the rationale and methods used in selecting texts, or parts of a text, for inclusion in the resource.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">sampling declaration<\/gloss>" ],
         "altIdent" : 
@@ -9601,7 +9946,8 @@
             "att.segLike",
             "att.typed",
             "att.written",
-            "att.notated" ],
+            "att.notated",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9773,7 +10119,8 @@
           [ "model.pPart.transcriptional",
             "model.choicePart" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9800,7 +10147,8 @@
             "model.divTopPart" ],
           "atts" : 
           [ "att.global",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9825,7 +10173,8 @@
         { "model" : 
           [ "model.emphLike" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -9840,8 +10189,8 @@
         "type" : "elementSpec",
         "module" : "header",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-12-09\" xml:lang=\"en\">describes the source(s) from which an electronic text was derived or generated, typically a\n    bibliographic description in the case of a digitized text, or a phrase such as \"born digital\"\n    for a text which has no previous existence.<\/desc>" ],
-        "shortDesc" : "(source description) describes the source(s) from which an electronic text was derived or generated, typically a\n    bibliographic description in the case of a digitized text, or a phrase such as \"born digital\"\n    for a text which has no previous existence.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-12-09\" xml:lang=\"en\">describes the source(s) from which an electronic text was derived or generated, typically a\n    bibliographic description in the case of a digitized text, or a phrase such as <q>born digital<\/q>\n    for a text which has no previous existence.<\/desc>" ],
+        "shortDesc" : "(source description) describes the source(s) from which an electronic text was derived or generated, typically a\n    bibliographic description in the case of a digitized text, or a phrase such as born digital\n    for a text which has no previous existence.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-07-04\" xml:lang=\"en\">source description<\/gloss>" ],
         "altIdent" : 
@@ -10007,7 +10356,27 @@
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "macroRef",
@@ -10031,7 +10400,8 @@
           [ "att.ascribed.directed",
             "att.global",
             "att.placement",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10149,8 +10519,8 @@
         "type" : "elementSpec",
         "module" : "linking",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-10-31\">Functions as a\n  container element for linked data, contextual information, and\n  stand-off annotations embedded in a TEI document.<\/desc>" ],
-        "shortDesc" : "Functions as a\n  container element for linked data, contextual information, and\n  stand-off annotations embedded in a TEI document.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-10-31\">Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document.<\/desc>" ],
+        "shortDesc" : "Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document.",
         "gloss" : 
         [  ],
         "altIdent" : 
@@ -10264,7 +10634,8 @@
         { "model" : 
           [  ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.datcat" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10400,7 +10771,8 @@
         { "model" : 
           [  ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.datcat" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10590,7 +10962,8 @@
             "att.typed",
             "att.canonical",
             "att.sortable",
-            "att.cReferencing" ],
+            "att.cReferencing",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10768,7 +11141,7 @@
         "content" : 
         [ 
           { "type" : "macroRef",
-            "key" : "macro.phraseSeq" } ] },
+            "key" : "macro.specialPara" } ] },
       
       { "ident" : "time",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -10787,10 +11160,12 @@
           "atts" : 
           [ "att.global",
             "att.datable",
+            "att.calendarSystem",
             "att.canonical",
             "att.editLike",
             "att.dimensions",
-            "att.typed" ],
+            "att.typed",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10828,7 +11203,8 @@
         { "model" : 
           [ "model.global.meta" ],
           "atts" : 
-          [ "att.global" ],
+          [ "att.global",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10963,11 +11339,33 @@
           [ "att.global",
             "att.typed",
             "att.canonical",
-            "att.datable" ],
+            "att.datable",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
         [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } },
+          
           { "onElement" : true,
             "ident" : "level",
             "mode" : "add",
@@ -11317,7 +11715,8 @@
           [ "att.global",
             "att.typed",
             "att.placement",
-            "att.written" ],
+            "att.written",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -11367,7 +11766,8 @@
           "atts" : 
           [ "att.global",
             "att.editLike",
-            "att.dimensions" ],
+            "att.dimensions",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -11425,18 +11825,18 @@
                 { "ident" : "background_noise",
                   "desc" : 
                   [  ],
-                  "shortDesc" : "(background_noise) ",
+                  "shortDesc" : "(background noise) ",
                   "gloss" : 
-                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-01-17\">background_noise<\/gloss>" ],
+                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-01-17\">background noise<\/gloss>" ],
                   "altIdent" : 
                   [  ] },
                 
                 { "ident" : "eccentric_ductus",
                   "desc" : 
                   [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-02-01\">\n            indicates illegibility due to an unusual, awkward, or\n            incompetent execution of a glyph or glyphs\n            \n          <\/desc>" ],
-                  "shortDesc" : "(eccentric_ductus) \n            indicates illegibility due to an unusual, awkward, or\n            incompetent execution of a glyph or glyphs\n            \n          ",
+                  "shortDesc" : "(eccentric ductus) \n            indicates illegibility due to an unusual, awkward, or\n            incompetent execution of a glyph or glyphs\n            \n          ",
                   "gloss" : 
-                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-01-17\">eccentric_ductus<\/gloss>" ],
+                  [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-01-17\">eccentric ductus<\/gloss>" ],
                   "altIdent" : 
                   [  ] } ] } },
           
@@ -11511,7 +11911,8 @@
           "atts" : 
           [ "att.global",
             "att.typed",
-            "att.measurement" ],
+            "att.measurement",
+            "att.cmc" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -11542,7 +11943,27 @@
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "elementRef",
@@ -11570,7 +11991,27 @@
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "calendar",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" type=\"deprecationInfo\" versionDate=\"2023-05-11\" xml:lang=\"en\">The <att>calendar<\/att> attribute will be removed from this element\n            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar<\/att> attribute\n            (unlike <att>datingMethod<\/att> defined in\n            <ident type=\"class\">att.datable.custom<\/ident>) defines the calendar system of the date\n            in the original material defined by the parent element, <emph>not<\/emph> the calendar to\n            which the date is normalized.<\/desc>",
+              "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.<\/desc>" ],
+            "shortDesc" : "indicates one or more systems or calendars to which the\n            date represented by the content of this element belongs.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.pointer" } } } ],
         "content" : 
         [ 
           { "type" : "alternate",
@@ -11754,7 +12195,8 @@
         [  ],
         "classes" : 
         { "model" : 
-          [ "model.teiHeaderPart" ],
+          [ "model.teiHeaderPart",
+            "model.standOffPart" ],
           "atts" : 
           [ "att.global",
             "att.declarable",
@@ -11938,14 +12380,7 @@
           "gloss" : 
           [  ],
           "altIdent" : 
-          [  ],
-          "classes" : 
-          { "model" : 
-            [  ],
-            "atts" : 
-            [  ],
-            "unknown" : 
-            [  ] } },
+          [  ] },
         
         { "ident" : "model.choicePart",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -11961,6 +12396,25 @@
           "classes" : 
           { "model" : 
             [  ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
+        
+        { "ident" : "model.cmc",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">includes the CMC-specific element <gi>post<\/gi> and\n        makes it available on the divPart level. This allows for\n        using (and combining) occurrences of <gi>post<\/gi>,\n        <gi>u<\/gi>, <gi>incident<\/gi>, and <gi>kinesic<\/gi> in one\n        and the same <gi>div<\/gi> in order to be able to represent\n        the combined use of written and spoken posts, utterances,\n        and nonverbal acts on the GUI of multimodal CMC\n        environments.<\/desc>" ],
+          "shortDesc" : "includes the CMC-specific element post and\n        makes it available on the divPart level. This allows for\n        using (and combining) occurrences of post,\n        u, incident, and kinesic in one\n        and the same div in order to be able to represent\n        the combined use of written and spoken posts, utterances,\n        and nonverbal acts on the GUI of multimodal CMC\n        environments.",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.common" ],
             "atts" : 
             [  ],
             "unknown" : 
@@ -12383,7 +12837,14 @@
           "gloss" : 
           [  ],
           "altIdent" : 
-          [  ] },
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.paraPart" ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
         
         { "ident" : "model.global",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12395,7 +12856,14 @@
           "gloss" : 
           [  ],
           "altIdent" : 
-          [  ] },
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.paraPart" ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
         
         { "ident" : "model.global.edit",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -12545,7 +13013,8 @@
           [  ],
           "classes" : 
           { "model" : 
-            [ "model.common" ],
+            [ "model.paraPart",
+              "model.common" ],
             "atts" : 
             [  ],
             "unknown" : 
@@ -12564,7 +13033,8 @@
           [  ],
           "classes" : 
           { "model" : 
-            [ "model.divPart" ],
+            [ "model.divPart",
+              "model.paraPart" ],
             "atts" : 
             [  ],
             "unknown" : 
@@ -12905,6 +13375,18 @@
             "unknown" : 
             [  ] } },
         
+        { "ident" : "model.paraPart",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-05-21\" xml:lang=\"en\">groups elements that may appear in paragraphs and similar elements<\/desc>" ],
+          "shortDesc" : "groups elements that may appear in paragraphs and similar elements",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ] },
+        
         { "ident" : "model.phrase",
           "ns" : "http:\/\/foo.foo\/foo",
           "type" : "classSpec",
@@ -12915,7 +13397,14 @@
           "gloss" : 
           [  ],
           "altIdent" : 
-          [  ] },
+          [  ],
+          "classes" : 
+          { "model" : 
+            [ "model.paraPart" ],
+            "atts" : 
+            [  ],
+            "unknown" : 
+            [  ] } },
         
         { "ident" : "model.phrase.xml",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -13411,6 +13900,39 @@
                 "dataRef" : 
                 { "key" : "teidata.text" } } } ] },
         
+        { "ident" : "att.calendarSystem",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2023-05-09\" xml:lang=\"en\">provides attributes for indicating calendar systems to which a date belongs.<\/desc>" ],
+          "shortDesc" : "provides attributes for indicating calendar systems to which a date belongs.",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ],
+          "attributes" : 
+          [ 
+            { "onElement" : false,
+              "ident" : "calendar",
+              "mode" : "add",
+              "ns" : "",
+              "usage" : "opt",
+              "desc" : 
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n        date represented by the content of this element belongs.<\/desc>" ],
+              "shortDesc" : "indicates one or more systems or calendars to which the\n        date represented by the content of this element belongs.",
+              "gloss" : 
+              [  ],
+              "altIdent" : 
+              [  ],
+              "valDesc" : 
+              [  ],
+              "datatype" : 
+              { "min" : "1",
+                "max" : "unbounded",
+                "dataRef" : 
+                { "key" : "teidata.pointer" } } } ] },
+        
         { "ident" : "att.canonical",
           "ns" : "http:\/\/foo.foo\/foo",
           "type" : "classSpec",
@@ -13652,6 +14174,87 @@
                 "dataRef" : 
                 { "key" : "teidata.word" } } } ] },
         
+        { "ident" : "att.cmc",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">provides attributes categorizing how the element content was created in a CMC environment.<\/desc>" ],
+          "shortDesc" : "(computer-mediated communication) provides attributes categorizing how the element content was created in a CMC environment.",
+          "gloss" : 
+          [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2023-11-24\">computer-mediated communication<\/gloss>" ],
+          "altIdent" : 
+          [  ],
+          "attributes" : 
+          [ 
+            { "onElement" : false,
+              "ident" : "generatedBy",
+              "mode" : "add",
+              "ns" : "",
+              "usage" : "opt",
+              "desc" : 
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">categorizes how the content of an element was generated in a CMC environment.<\/desc>" ],
+              "shortDesc" : "(generated by) categorizes how the content of an element was generated in a CMC environment.",
+              "gloss" : 
+              [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">generated by<\/gloss>" ],
+              "altIdent" : 
+              [  ],
+              "valDesc" : 
+              [  ],
+              "datatype" : 
+              { "min" : "1",
+                "max" : "1",
+                "dataRef" : 
+                { "key" : "teidata.enumerated" } },
+              "valList" : 
+              { "type" : "semi",
+                "valItem" : 
+                [ 
+                  { "ident" : "human",
+                    "desc" : 
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">the content was\n          <soCalled>naturally<\/soCalled> typed or spoken by a human user<\/desc>" ],
+                    "shortDesc" : "the content was\n          naturally typed or spoken by a human user",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "template",
+                    "desc" : 
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">the content was\n          generated after a human user activated a template for its\n          insertion<\/desc>" ],
+                    "shortDesc" : "the content was\n          generated after a human user activated a template for its\n          insertion",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "system",
+                    "desc" : 
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2021-09-07\">the content was\n          generated by the system, i.e. the CMC environment<\/desc>" ],
+                    "shortDesc" : "the content was\n          generated by the system, i.e. the CMC environment",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "bot",
+                    "desc" : 
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2024-05-17\">the content was\n          generated by a bot, i.e. a non-human agent, typically one\n          that is not part of the CMC environment itself<\/desc>" ],
+                    "shortDesc" : "the content was\n          generated by a bot, i.e. a non-human agent, typically one\n          that is not part of the CMC environment itself",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "unspecified",
+                    "desc" : 
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2024-05-17\">the content was\n          generated by an unknown or unspecified process<\/desc>" ],
+                    "shortDesc" : "the content was\n          generated by an unknown or unspecified process",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] } ] } } ] },
+        
         { "ident" : "att.datable",
           "ns" : "http:\/\/foo.foo\/foo",
           "type" : "classSpec",
@@ -13673,33 +14276,13 @@
           "attributes" : 
           [ 
             { "onElement" : false,
-              "ident" : "calendar",
-              "mode" : "add",
-              "ns" : "",
-              "usage" : "opt",
-              "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n        date represented by the content of this element belongs.<\/desc>" ],
-              "shortDesc" : "indicates one or more systems or calendars to which the\n        date represented by the content of this element belongs.",
-              "gloss" : 
-              [  ],
-              "altIdent" : 
-              [  ],
-              "valDesc" : 
-              [  ],
-              "datatype" : 
-              { "min" : "1",
-                "max" : "unbounded",
-                "dataRef" : 
-                { "key" : "teidata.pointer" } } },
-            
-            { "onElement" : false,
               "ident" : "period",
               "mode" : "add",
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-19\" xml:lang=\"en\">supplies pointers to one or more definitions of \n        named periods of time (typically <gi>category<\/gi>s or <gi>calendar<\/gi>s) within which the datable item is understood to have occurred.<\/desc>" ],
-              "shortDesc" : "supplies pointers to one or more definitions of \n        named periods of time (typically categorys or calendars) within which the datable item is understood to have occurred.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-19\" xml:lang=\"en\">supplies pointers to one or more definitions of \n        named periods of time (typically <gi>category<\/gi>s, <gi>date<\/gi>s or <gi>event<\/gi>s) within which the datable item is understood to have occurred.<\/desc>" ],
+              "shortDesc" : "supplies pointers to one or more definitions of \n        named periods of time (typically categorys, dates or events) within which the datable item is understood to have occurred.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -13717,8 +14300,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-22\" xml:lang=\"en\">provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n  <title ref=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/title>.<\/desc>" ],
-          "shortDesc" : "provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n  XML Schema Part 2: Datatypes Second Edition.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-22\" xml:lang=\"en\">provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n    <ref target=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/ref>.<\/desc>" ],
+          "shortDesc" : "provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n    XML Schema Part 2: Datatypes Second Edition.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -13830,8 +14413,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-08-22\" xml:lang=\"en\">provides attributes that are used to \n    align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 \n    standard and stored in the Web repository called ISOCat at <ptr target=\"http:\/\/www.isocat.org\/\"\/>.<\/desc>" ],
-          "shortDesc" : "provides attributes that are used to \n    align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 \n    standard and stored in the Web repository called ISOCat at .",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-09-17\" xml:lang=\"en\">provides attributes that are used to align XML\n    elements or attributes with the appropriate Data Categories (DCs) defined by an external \n    taxonomy, in this way establishing the identity of information containers and values, \n    and providing means of interpreting them.<\/desc>" ],
+          "shortDesc" : "provides attributes that are used to align XML\n    elements or attributes with the appropriate Data Categories (DCs) defined by an external \n    taxonomy, in this way establishing the identity of information containers and values, \n    and providing means of interpreting them.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -13841,11 +14424,11 @@
             { "onElement" : false,
               "ident" : "datcat",
               "mode" : "add",
-              "ns" : "http:\/\/www.isocat.org\/ns\/dcr",
+              "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-04-15\" xml:lang=\"en\">contains a PID (persistent identifier) that aligns the given element with the appropriate \n        Data Category (or categories) in ISOcat.<\/desc>" ],
-              "shortDesc" : "contains a PID (persistent identifier) that aligns the given element with the appropriate \n        Data Category (or categories) in ISOcat.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-09-17\" xml:lang=\"en\">provides a pointer to a definition of, and\/or general\n        information about, (a) an information container (element or attribute) or (b) a value of an\n        information container (element content or attribute value), by referencing an external\n        taxonomy or ontology. If <att>valueDatcat<\/att> is present in the immediate context, this attribute\n        takes on role (a), while <att>valueDatcat<\/att> performs role (b).<\/desc>" ],
+              "shortDesc" : "provides a pointer to a definition of, and\/or general\n        information about, (a) an information container (element or attribute) or (b) a value of an\n        information container (element content or attribute value), by referencing an external\n        taxonomy or ontology. If valueDatcat is present in the immediate context, this attribute\n        takes on role (a), while valueDatcat performs role (b).",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -13861,11 +14444,31 @@
             { "onElement" : false,
               "ident" : "valueDatcat",
               "mode" : "add",
-              "ns" : "http:\/\/www.isocat.org\/ns\/dcr",
+              "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-04-15\" xml:lang=\"en\">contains a PID (persistent identifier) that aligns the content of the given\n        element or the value of the given attribute with the appropriate simple Data\n        Category (or categories) in ISOcat.<\/desc>" ],
-              "shortDesc" : "contains a PID (persistent identifier) that aligns the content of the given\n        element or the value of the given attribute with the appropriate simple Data\n        Category (or categories) in ISOcat.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-09-17\" xml:lang=\"en\">provides a definition of, and\/or general\n        information about a value of an information container (element content or attribute value),\n        by reference to an external taxonomy or ontology. Used especially where a contrast with\n        <att>datcat<\/att> is needed.<\/desc>" ],
+              "shortDesc" : "provides a definition of, and\/or general\n        information about a value of an information container (element content or attribute value),\n        by reference to an external taxonomy or ontology. Used especially where a contrast with\n        datcat is needed.",
+              "gloss" : 
+              [  ],
+              "altIdent" : 
+              [  ],
+              "valDesc" : 
+              [  ],
+              "datatype" : 
+              { "min" : "1",
+                "max" : "unbounded",
+                "dataRef" : 
+                { "key" : "teidata.pointer" } } },
+            
+            { "onElement" : false,
+              "ident" : "targetDatcat",
+              "mode" : "add",
+              "ns" : "",
+              "usage" : "opt",
+              "desc" : 
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-09-17\" xml:lang=\"en\">provides a definition of, and\/or general\n        information about, information structure of an object referenced or modeled by the\n        containing element, by reference to an external taxonomy or ontology. This attribute has the\n        characteristics of the <att>datcat<\/att> attribute, except that it addresses not its containing\n        element, but an object that is being referenced or modeled by its containing element.<\/desc>" ],
+              "shortDesc" : "provides a definition of, and\/or general\n        information about, information structure of an object referenced or modeled by the\n        containing element, by reference to an external taxonomy or ontology. This attribute has the\n        characteristics of the datcat attribute, except that it addresses not its containing\n        element, but an object that is being referenced or modeled by its containing element.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -15302,8 +15905,8 @@
               "ns" : "",
               "usage" : "def",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-09-27\" xml:lang=\"en\">describes the tint or type of ink, e.g. <mentioned>brown<\/mentioned>, or other\nwriting medium, e.g. <mentioned>pencil<\/mentioned>\n         <\/desc>" ],
-              "shortDesc" : "describes the tint or type of ink, e.g. brown, or other\nwriting medium, e.g. pencil\n         ",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-09-27\" xml:lang=\"en\">describes the tint or type of ink, e.g. <mentioned>brown<\/mentioned>, or other\nwriting medium, e.g. <mentioned>pencil<\/mentioned><\/desc>" ],
+              "shortDesc" : "describes the tint or type of ink, e.g. brown, or other\nwriting medium, e.g. pencil",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -17135,6 +17738,15 @@
     [  ],
     "macros" : 
     [ 
+      { "ident" : "macro.abContent",
+        "module" : "tei",
+        "type" : "",
+        "desc" : 
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-10-14\" xml:lang=\"en\">defines the content of anonymous block elements.<\/desc>" ],
+        "shortDesc" : "(anonymous block content) defines the content of anonymous block elements.",
+        "gloss" : 
+        [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2022-05-21\" xml:lang=\"en\">anonymous block content<\/gloss>" ] },
+      
       { "ident" : "macro.limitedContent",
         "module" : "tei",
         "type" : "",
@@ -17357,7 +17969,7 @@
         [ 
           { "type" : "dataRef",
             "name" : "anyURI",
-            "restriction" : "\\S*" } ] },
+            "restriction" : "\\S+" } ] },
       
       { "ident" : "teidata.numeric",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -17402,7 +18014,7 @@
         [ 
           { "type" : "dataRef",
             "name" : "token",
-            "restriction" : "[\\-+]?\\d+(\\.\\d+)?(%|cm|mm|in|pt|pc|px|em|ex|gd|rem|vw|vh|vm)" } ] },
+            "restriction" : "[\\-+]?\\d+(\\.\\d+)?(%|cm|mm|in|pt|pc|px|em|ex|ch|rem|vw|vh|vmin|vmax)" } ] },
       
       { "ident" : "teidata.pattern",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -17459,8 +18071,8 @@
         "type" : "dataSpec",
         "module" : "tei",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-10-18\" xml:lang=\"en\">defines a range of attribute values which can be expressed either as a numeric probability or as a coded certainty value.<\/desc>" ],
-        "shortDesc" : "defines a range of attribute values which can be expressed either as a numeric probability or as a coded certainty value.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-10-18\" xml:lang=\"en\">defines a range of attribute values which can be expressed either as a numeric\n    probability or as a coded certainty value.<\/desc>" ],
+        "shortDesc" : "defines a range of attribute values which can be expressed either as a numeric\n    probability or as a coded certainty value.",
         "gloss" : 
         [  ],
         "altIdent" : 
@@ -17492,7 +18104,14 @@
         "content" : 
         [ 
           { "type" : "dataRef",
-            "name" : "double" } ] },
+            "name" : "double",
+            "dataFacet" : 
+            [ 
+              { "name" : "minInclusive",
+                "value" : "0" },
+              
+              { "name" : "maxInclusive",
+                "value" : "1" } ] } ] },
       
       { "ident" : "teidata.replacement",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -17514,7 +18133,7 @@
         "type" : "dataSpec",
         "module" : "tei",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-04-08\" xml:lang=\"en\">defines the range of attribute values expressing a temporal\n  expression such as a date, a time, or a combination of them, that\n  conform to the W3C <title ref=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/title>\n  specification.<\/desc>" ],
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-04-08\" xml:lang=\"en\">defines the range of attribute values expressing a temporal\n  expression such as a date, a time, or a combination of them, that\n  conform to the W3C <ref target=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/ref>\n  specification.<\/desc>" ],
         "shortDesc" : "defines the range of attribute values expressing a temporal\n  expression such as a date, a time, or a combination of them, that\n  conform to the W3C XML Schema Part 2: Datatypes Second Edition\n  specification.",
         "gloss" : 
         [  ],

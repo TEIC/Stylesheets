@@ -22,7 +22,7 @@
                 xmlns:custprops="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
                 xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
 		exclude-result-prefixes="a pic rel ve o teidocx r m v wp w10 w wne mml vt cals tbx iso custprops"
-		version="2.0">
+		version="3.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
 

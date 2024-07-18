@@ -13,7 +13,7 @@
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
-                version="2.0"
+                version="3.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx">
 
   <xsl:key name="RIDS" match="*[@r:id]" use="1"/>

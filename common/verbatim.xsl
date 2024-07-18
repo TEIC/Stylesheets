@@ -17,7 +17,7 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:dbk="http://docbook.org/ns/docbook"
     exclude-result-prefixes="a fo html i rng sch tei teix xi xs xsl m atom xlink xhtml dbk"
-    version="2.0">
+    version="3.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet dealing with elements from the core module. </p>
@@ -87,10 +87,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="$ns='http://earth.google.com/kml/2.1'">kml</xsl:when>
       <xsl:when test="$ns='http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0'">nvdl</xsl:when>
       <xsl:when test="$ns='http://purl.org/rss/1.0/modules/event/'">ev</xsl:when>
-      <xsl:when test="$ns='http://purl.oclc.org/dsdl/schematron'">s</xsl:when>
+      <xsl:when test="$ns='http://purl.oclc.org/dsdl/schematron'">sch</xsl:when>
+      <xsl:when test="$ns='http://www.ascc.net/xml/schematron'">sch_1.x</xsl:when>
       <xsl:when test="$ns='http://relaxng.org/ns/compatibility/annotations/1.0'">a</xsl:when>
       <xsl:when test="$ns='http://relaxng.org/ns/structure/1.0'">rng</xsl:when>
-      <xsl:when test="$ns='http://www.ascc.net/xml/schematron'">sch</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/1998/Math/MathML'">m</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/1999/XSL/Transform'">xsl</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/1999/xhtml'">xhtml</xsl:when>

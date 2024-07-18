@@ -1,33 +1,35 @@
-<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_customization.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?><?xml-model href="http://www.tei-c.org/release/xml/tei/Exemplars/tei_customization.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><TEI xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_customization.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/Exemplars/tei_customization.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns:sch="http://purl.oclc.org/dsdl/schematron"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
      xmlns="http://www.tei-c.org/ns/1.0"
      xml:lang="en"
      n="testPure1">
   <teiHeader>
-      <fileDesc>
-         <titleStmt>
-            <title>Test TEI Customization using Pure ODD</title>
-            <author>Martin Holmes</author>
-            <author>Syd Bauman</author>
-         </titleStmt>
-         <publicationStmt>
-            <p>Free for anyone for anything</p>
-         </publicationStmt>
-         <sourceDesc>
-            <p>Authored from scratch</p>
-         </sourceDesc>
-      </fileDesc>
+    <fileDesc>
+      <titleStmt>
+        <title>Test TEI Customization using Pure ODD</title>
+        <author>Martin Holmes</author>
+        <author>Syd Bauman</author>
+      </titleStmt>
+      <publicationStmt>
+        <p>Free for anyone for anything</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Authored from scratch</p>
+      </sourceDesc>
+    </fileDesc>
   </teiHeader>
   <text>
-      <body>
-	<p>Here is the TEI badge:
-	<graphic url="http://www.tei-c.org/wp-content/uploads/2016/11/I-use-TEI.png">
-	  <desc>The TEI Badge</desc>
-	</graphic>. It is here to test <gi>desc</gi> in <gi>graphic</gi> in an ODD per
-	<ptr target="https://github.com/TEIC/Stylesheets/issues/444"/>.
-	</p>
-         <schemaSpec start="TEI div" ident="testPure1" prefix="t_">
-            <desc>This file is intended as input for a conversion to
+    <body>
+      <p>Here is the TEI badge:
+      <graphic url="http://www.tei-c.org/wp-content/uploads/2016/11/I-use-TEI.png">
+        <desc>The TEI Badge</desc>
+        </graphic>. It is here to test <gi>desc</gi> in <gi>graphic</gi> in an ODD per
+        <ptr target="https://github.com/TEIC/Stylesheets/issues/444"/>.
+      </p>
+      <schemaSpec start="TEI div" ident="testPure1" prefix="t_">
+        <desc>This file is intended as input for a conversion to
         RNG and Schematron (and possibly other outputs) as part 
         of the modular Stylesheets test process. No source is 
         specified here, because the source p5subset.xml is controlled
@@ -39,212 +41,376 @@
         compliant schemas (for the most severe definition of 
         <soCalled>TEI-compliant</soCalled>).</desc>
         
-            <moduleRef key="tei"/>        
-            <moduleRef key="header"/>
-            <moduleRef key="core"/>
-            <moduleRef key="analysis"/>
-            <moduleRef key="linking"/>
-        
-        
-            <moduleRef key="textstructure" except="div1 div2 div3 div4 div5 div6 div7"/>
-        
-        
-            <moduleRef key="namesdates" include="persName placeName orgName"/>
-        
-        
-	           <elementRef key="gi"/>
-	           <elementRef key="att"/>
-	           <elementRef key="val"/>
+        <moduleRef key="tei"/>        
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="analysis"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="textstructure" except="div1 div2 div3 div4 div5 div6 div7"/>
+        <moduleRef key="namesdates" include="persName placeName orgName"/>
 
-	
-	           <elementSpec module="linking" ident="join" mode="delete"/>
-	           <elementSpec module="linking" ident="joinGrp" mode="delete"/>
+        <elementRef key="gi"/>
+        <elementRef key="att"/>
+        <elementRef key="val"/>
 
+        <elementSpec module="linking" ident="join" mode="delete"/>
+        <elementSpec module="linking" ident="joinGrp" mode="delete"/>
         
-            <classSpec ident="att.lexicographic" mode="delete" type="atts"/>
-
+        <classSpec ident="att.lexicographic" mode="delete" type="atts"/>
         
-            <classSpec ident="att.datable.custom" mode="delete" type="atts"/>
-            <classSpec ident="att.datable.iso" mode="delete" type="atts"/>
-
+        <classSpec ident="att.datable.custom" mode="delete" type="atts"/>
+        <classSpec ident="att.datable.iso" mode="delete" type="atts"/>
         
-            <classSpec ident="att.typed" type="atts" mode="change">
-               <attList>
-                  <attDef ident="subtype" mode="delete"/>
-               </attList>
-            </classSpec>
-
+        <classSpec ident="att.typed" type="atts" mode="change">
+          <attList>
+            <attDef ident="subtype" mode="delete"/>
+          </attList>
+        </classSpec>
         
-            <classSpec ident="att.global.linking" type="atts" mode="change">
-               <attList>
-	                 <attDef ident="synch" mode="delete"/>
-               </attList>
-            </classSpec>
-
+        <classSpec ident="att.global.linking" type="atts" mode="change">
+          <attList>
+            <attDef ident="synch" mode="delete"/>
+          </attList>
+        </classSpec>
         
-            <elementSpec module="core" ident="list" mode="change">
-               <classes mode="change">
-                  <memberOf key="att.typed" mode="delete"/>
-               </classes>
-            </elementSpec>
- 
+        <elementSpec module="core" ident="list" mode="change">
+          <classes mode="change">
+            <memberOf key="att.typed" mode="delete"/>
+          </classes>
+        </elementSpec>
         
-            <elementSpec module="core" ident="note" mode="change">
-               <attList>
-                  <attDef ident="anchored" mode="delete"/>
-               </attList>
-            </elementSpec>
+        <elementSpec module="core" ident="note" mode="change">
+          <attList>
+            <attDef ident="anchored" mode="delete"/>
+          </attList>
+        </elementSpec>
 
+        <elementSpec ident="title" mode="change" module="core">
+          <attList>
+            <attDef ident="type" mode="replace">
+              <datatype>
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+              <valList type="closed">
+                <valItem ident="LP">
+                  <gloss>long playing</gloss>
+                  <desc>12-inch vinyl</desc>
+                </valItem>
+                <valItem ident="single"/>
+                <valItem ident="eightTrack"/>
+                <valItem ident="cassette"/>
+                <valItem ident="CD">
+                  <gloss>compact disc</gloss>
+                </valItem>
+                <valItem ident="VCRtape"/>
+                <valItem ident="DVD"/>
+                <valItem ident="blueRay"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+
+        <?TEI winita?>
+
+        <elementSpec ident="measureGrp" mode="change" module="core">
+          <attList>
+            <attDef mode="change" ident="corresp">
+              <datatype minOccurs="1" maxOccurs="1">
+                <dataRef key="teidata.count"/>
+              </datatype>
+            </attDef>
+            <attDef mode="change" ident="select">
+              <datatype minOccurs="1" maxOccurs="1">
+                <dataRef name="nonNegativeInteger"/>
+              </datatype>
+            </attDef>
+            <!-- Council is currently divided on whether referencing a datatype using @key
+                 should be allowed or not; it's currently not allowed. -->
+            <!--<attDef mode="change" ident="sameAs">
+                <datatype minOccurs="1" maxOccurs="1">
+                <dataRef key="teidata.count" restriction="[0-9][0-9]?"/>
+                </datatype>
+                </attDef>-->
+            <attDef mode="change" ident="copyOf">
+              <datatype minOccurs="1" maxOccurs="1">
+                <dataRef name="nonNegativeInteger" restriction="[0-9][0-9]?"/>
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>          
         
-            <elementSpec ident="title" mode="change" module="core">
-               <attList>
-                  <attDef ident="type" mode="replace">
-                     <datatype>
-                        <dataRef key="teidata.enumerated"/>
-                     </datatype>
-                     <valList type="closed">
-                        <valItem ident="LP">
-                           <gloss>long playing</gloss>
-                           <desc>12-inch vinyl</desc>
-                        </valItem>
-                        <valItem ident="single"/>
-                        <valItem ident="eightTrack"/>
-                        <valItem ident="cassette"/>
-                        <valItem ident="CD">
-                           <gloss>compact disc</gloss>
-                        </valItem>
-                        <valItem ident="VCRtape"/>
-                        <valItem ident="DVD"/>
-                        <valItem ident="blueRay"/>
-                     </valList>
-                  </attDef>
-               </attList>
-            </elementSpec>
-
-	
-	           <?TEI winita?>
-
-	
-	           <elementSpec ident="measureGrp" mode="change" module="core">
-	              <attList>
-	                 <attDef mode="change" ident="corresp">
-	                    <datatype minOccurs="1" maxOccurs="1">
-		                      <dataRef key="teidata.count"/>
-	                    </datatype>
-	                 </attDef>
-	                 <attDef mode="change" ident="select">
-	                    <datatype minOccurs="1" maxOccurs="1">
-		                      <dataRef name="nonNegativeInteger"/>
-	                    </datatype>
-	                 </attDef>
-	                <!-- Council is currently divided on whether referencing a datatype using @key
-	                       should be allowed or not; it's currently not allowed. -->
-	                 <!--<attDef mode="change" ident="sameAs">
-	                    <datatype minOccurs="1" maxOccurs="1">
-		                      <dataRef key="teidata.count" restriction="[0-9][0-9]?"/>
-	                    </datatype>
-	                 </attDef>-->
-	                 <attDef mode="change" ident="copyOf">
-	                    <datatype minOccurs="1" maxOccurs="1">
-		                      <dataRef name="nonNegativeInteger" restriction="[0-9][0-9]?"/>
-	                    </datatype>
-	                 </attDef>
-	              </attList>
-	           </elementSpec>		
-
-	
-	           <elementSpec ident="bibl" mode="change" module="core">
-               <desc>A short bibliographic citation with nothing but author, title, and optional date</desc>
-               <content>
-                  <sequence>
-                     <elementRef key="author" minOccurs="2" maxOccurs="unbounded"/>
-                     <elementRef key="title" minOccurs="1" maxOccurs="8"/>
-	                    <elementRef key="publisher" minOccurs="0" maxOccurs="3"/>
-                     <elementRef key="date" minOccurs="0" maxOccurs="1"/>
-                  </sequence>
-               </content>
-            </elementSpec>
+        <elementSpec ident="bibl" mode="change" module="core">
+          <desc>A short bibliographic citation with nothing but author, title, and optional date</desc>
+          <content>
+            <sequence>
+              <elementRef key="author" minOccurs="2" maxOccurs="unbounded"/>
+              <elementRef key="title" minOccurs="1" maxOccurs="8"/>
+              <elementRef key="publisher" minOccurs="0" maxOccurs="3"/>
+              <elementRef key="date" minOccurs="0" maxOccurs="1"/>
+            </sequence>
+          </content>
+        </elementSpec>
+                
+        <elementSpec ident="biblStruct" module="core" mode="delete"/>
         
-	
-            <elementSpec ident="biblStruct" module="core" mode="delete"/>
+        <elementSpec ident="w" module="linking" mode="change">
+          <attList>
+            <attDef ident="ana" mode="change" usage="req"/>
+          </attList>
+        </elementSpec>
         
-	
-            <elementSpec ident="w" module="linking" mode="change">
-               <attList>
-                  <attDef ident="ana" mode="change" usage="req"/>
-               </attList>
-            </elementSpec>
+        <elementSpec ident="email" module="core" mode="change">
+          <content>
+            <valList type="closed">
+              <valItem ident="amourdecosmos@gmail.com">
+                <gloss>The email address of Amour de Cosmos.</gloss>
+              </valItem>
+              <valItem ident="thevenerablebede@gmail.com">
+                <gloss>The email address of The Venerable Bede.</gloss>
+              </valItem>
+            </valList>
+          </content>
+          <remarks>
+            <p>Our <gi>email</gi> element is only allowed to contain
+            one of two email addresses, so we try to constrain its
+            content model using a valList.</p>
+          </remarks>
+        </elementSpec>
+        
+        <elementSpec ident="linkGrp" module="linking" mode="change">
+          <constraintSpec scheme="schematron" ident="eight_is_enough">
+            <constraint>
+              <sch:report test="count(*)&gt;8">Too many links!</sch:report>
+            </constraint>
+          </constraintSpec>
+        </elementSpec>
+        
+        <!--elementSpec added by @joeytakeda for #241: Modify choice such that it can have:
+              * An abbr and expan (in any order, explicitly set by @preserveOrder="false")
+              * A corr and sic (in that specific order, explicitly set by @preserveOrder="true")
+              * An orig and reg (in that specific order, implicitly set by omitting @preserveOrder) 
+            Inspired by the example in TD for sequence and alternate:
+            https://www.tei-c.org/Vault/P5/4.2.2/doc/tei-p5-doc/en/html/TD.html#index-egXML-d53e153603
+        -->        
+        <elementSpec ident="choice" module="core" mode="change">
+          <content>
+            <alternate>
+              <sequence preserveOrder="false">
+                <elementRef key="abbr"/>
+                <elementRef key="expan"/>
+              </sequence>
+              <sequence preserveOrder="true">
+                <elementRef key="corr"/>
+                <elementRef key="sic"/>
+              </sequence>
+              <sequence>
+                <elementRef key="orig"/>
+                <elementRef key="reg"/>
+              </sequence>
+            </alternate>
+          </content>
+          <remarks>
+            <p>Our <gi>choice</gi> element is allowed to contain one of the following combinations:
+            <list>
+              <item><gi>abbr</gi> and <gi>expan</gi></item>
+              <item><gi>expan</gi> and <gi>abbr</gi></item>
+              <item><gi>corr</gi> and <gi>sic</gi></item>
+              <item><gi>orig</gi> and <gi>reg</gi></item>
+            </list>
+            </p>
+          </remarks>
+        </elementSpec>
 
-	
-            <elementSpec ident="email" module="core" mode="change">
-               <content>
-                  <valList type="closed">
-                     <valItem ident="amourdecosmos@gmail.com">
-                        <gloss>The email address of Amour de Cosmos.</gloss>
-                     </valItem>
-                     <valItem ident="thevenerablebede@gmail.com">
-                        <gloss>The email address of The Venerable Bede.</gloss>
-                     </valItem>
-                  </valList>
-               </content>
-	              <remarks>
-	                 <p>Our <gi>email</gi> element is only allowed to contain
-	    one of two email addresses, so we try to constrain its
-	    content model using a valList.</p>
-	              </remarks>
-            </elementSpec>
+        <!-- Test @minOccurs, @maxOccurs, and @preserveOrder=false on <sequence>  -->
+        <elementSpec ident="seriesStmt" mode="change" module="header">
+          <desc/>
+          <content>
+            <alternate>
+              <!-- min=0 -->
+              <sequence minOccurs="0" maxOccurs="1">
+                <elementRef key="label"/>
+                <elementRef key="said"/>
+                <elementRef key="pc"/>
+              </sequence>
+              <sequence minOccurs="0" maxOccurs="4">
+                <elementRef key="label"/>
+                <classRef key="model.biblPart" minOccurs="0"/>
+                <elementRef key="pc"/>
+              </sequence>
+              <sequence minOccurs="0" maxOccurs="unbounded">
+                <elementRef key="label"/>
+                <elementRef key="zone"/>
+                <elementRef key="pc"/>
+              </sequence>
+              <!-- min=1 -->
+              <sequence minOccurs="1" maxOccurs="1">
+                <elementRef key="label"/>
+                <elementRef key="orgName"/>
+                <elementRef key="pc"/>
+              </sequence>
+              <sequence minOccurs="1" maxOccurs="4">
+                <elementRef key="label"/>
+                <classRef key="model.orgPart" minOccurs="0"/>
+                <elementRef key="pc"/>
+              </sequence>
+              <sequence minOccurs="1" maxOccurs="unbounded">
+                <elementRef key="label"/>
+                <classRef key="model.objectLike"/>
+                <elementRef key="pc"/>
+              </sequence>
+              <!-- min=2 -->
+              <sequence minOccurs="2" maxOccurs="2">
+                <elementRef key="label"/>
+                <elementRef key="term"/>
+                <elementRef key="pc"/>
+              </sequence>
+              <sequence minOccurs="2" maxOccurs="4">
+                <elementRef key="label"/>
+                <classRef key="model.textDescPart" minOccurs="0"/>
+                <elementRef key="pc"/>
+              </sequence>
+              <sequence minOccurs="2" maxOccurs="unbounded">
+                <elementRef key="label"/>
+                <classRef key="model.teiHeaderPart"/>
+                <elementRef key="pc"/>
+              </sequence>
+              <!-- preserveOrder false -->
+              <sequence preserveOrder="false" minOccurs="2" maxOccurs="4">
+                <elementRef key="label"/>
+                <elementRef key="idno" minOccurs="0" maxOccurs="unbounded"/>
+                <elementRef key="pc"/>
+              </sequence>
 
-	
-	           <elementSpec ident="linkGrp" module="linking" mode="change">
-	              <constraintSpec scheme="schematron" ident="eight_is_enough">
-	                 <constraint>
-	                    <sch:report test="count(*)&gt;8">Too many links!</sch:report>
-	                 </constraint>
-	              </constraintSpec>
-	           </elementSpec>
-            
-            <!--elementSpec added by @joeytakeda for #241: Modify choice such that it can have:
-               
-               * An abbr and expan (in any order, explicitly set by @preserveOrder="false")
-               * A corr and sic (in that specific order, explicitly set by @preserveOrder="true")
-               * An orig and reg (in that specific order, implicitly set by omitting @preserveOrder) 
-               
-               Inspired by the example in TD for sequence and alternate:
-               https://www.tei-c.org/Vault/P5/4.2.2/doc/tei-p5-doc/en/html/TD.html#index-egXML-d53e153603
-            -->
-            
-            <elementSpec ident="choice" module="core" mode="change">
-               <content>
-                  <alternate>
-                     <sequence preserveOrder="false">
-                        <elementRef key="abbr"/>
-                        <elementRef key="expan"/>
-                     </sequence>
-                     <sequence preserveOrder="true">
-                        <elementRef key="corr"/>
-                        <elementRef key="sic"/>
-                     </sequence>
-                     <sequence>
-                        <elementRef key="orig"/>
-                        <elementRef key="reg"/>
-                     </sequence>
-                  </alternate>
-               </content>
-               <remarks>
-                  <p>Our <gi>choice</gi> element is allowed to contain one of the following combinations:
-                  <list>
-                     <item><gi>abbr</gi> and <gi>expan</gi></item>
-                     <item><gi>expan</gi> and <gi>abbr</gi></item>
-                     <item><gi>corr</gi> and <gi>sic</gi></item>
-                     <item><gi>orig</gi> and <gi>reg</gi></item>
-                  </list>
-                  </p>
-               </remarks>
-            </elementSpec>
+            </alternate>
+          </content>
+        </elementSpec>
 
-         </schemaSpec>
-      </body>
-      <back>
+        <!-- Test @minOccurs & @maxOccurs on <alternate>  -->
+        <elementSpec ident="altGrp" mode="change" module="header">
+          <desc/>
+          <content>
+            <sequence minOccurs="1" maxOccurs="1">
+              <alternate minOccurs="0" maxOccurs="1">
+                <elementRef key="persName"/>
+                <elementRef key="placeName"/>
+                <classRef key="model.publicationStmtPart.detail"/>
+              </alternate>
+              <elementRef key="gb"/>
+              <alternate minOccurs="0" maxOccurs="4">
+                <elementRef key="orgName"/>
+                <classRef key="model.publicationStmtPart.detail"/>
+                <elementRef key="name"/>
+              </alternate>
+              <elementRef key="gb"/>
+              <alternate minOccurs="0" maxOccurs="unbounded">
+                <classRef key="model.publicationStmtPart.detail"/>
+                <elementRef key="name"/>
+                <elementRef key="rs"/>
+              </alternate>
+              <elementRef key="gb"/>
+              <elementRef key="gb"/>
+              <alternate minOccurs="1" maxOccurs="1">
+                <elementRef key="persName"/>
+                <elementRef key="placeName"/>
+                <classRef key="model.publicationStmtPart.detail"/>
+              </alternate>
+              <elementRef key="gb"/>
+              <alternate minOccurs="1" maxOccurs="4">
+                <elementRef key="orgName"/>
+                <classRef key="model.publicationStmtPart.detail"/>
+                <elementRef key="name"/>
+              </alternate>
+              <elementRef key="gb"/>
+              <alternate minOccurs="1" maxOccurs="unbounded">
+                <classRef key="model.publicationStmtPart.detail"/>
+                <elementRef key="name"/>
+                <elementRef key="rs"/>
+              </alternate>
+              <elementRef key="gb"/>
+              <elementRef key="gb"/>
+              <alternate minOccurs="2" maxOccurs="4">
+                <elementRef key="orgName"/>
+                <classRef key="model.publicationStmtPart.detail"/>
+                <elementRef key="name"/>
+              </alternate>
+              <elementRef key="gb"/>
+              <alternate minOccurs="2" maxOccurs="unbounded">
+                <classRef key="model.publicationStmtPart.detail"/>
+                <elementRef key="name"/>
+                <elementRef key="rs"/>
+              </alternate>
+              <elementRef key="gb"/>
+              <elementRef key="gb"/>
+              <alternate minOccurs="4" maxOccurs="4">
+                <elementRef key="orgName"/>
+                <classRef key="model.publicationStmtPart.detail"/>
+                <elementRef key="name"/>
+              </alternate>
+              <elementRef key="gb"/>
+              <alternate minOccurs="4" maxOccurs="unbounded">
+                <classRef key="model.publicationStmtPart.detail"/>
+                <elementRef key="name"/>
+                <elementRef key="rs"/>
+              </alternate>
+            </sequence>
+          </content>
+        </elementSpec>
+
+        <elementSpec mode="add" ident="alt_of_seq_3-4">
+          <desc>test developed by Raff Viglianti 2023-10-12</desc>
+          <classes>
+            <memberOf key="model.pLike"/>
+          </classes>
+          <content>
+            <alternate>
+              <sequence minOccurs="3" maxOccurs="4">
+                <elementRef key="emph"/>
+                <elementRef key="lb"/>
+              </sequence>
+              <elementRef key="orgName"/>
+            </alternate>
+          </content>
+        </elementSpec>
+        
+        <!--
+            Change the content of <ab> just to test <anyElement> with
+            @minOccurs and @maxOccurs. The <gbl> elements are there to
+            “gather” the <anyElement>s into groups. — Syd, 2023-10-02
+        -->
+        <elementSpec ident="ab" module="linking" mode="change">
+          <content>
+            <!-- plain, just for reference -->
+            <anyElement                            />            <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <!-- min=0, max=various -->
+            <anyElement minOccurs="0" maxOccurs="1"/> <!--[1]--> <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <anyElement minOccurs="0" maxOccurs="2"/>            <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <anyElement minOccurs="0" maxOccurs="6"/>            <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <anyElement minOccurs="0" maxOccurs="unbounded"/>    <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <!-- min=1, max=various -->
+            <anyElement minOccurs="1" maxOccurs="1"
+                        require="http://www.loc.gov/mods/v3"/>   <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <anyElement minOccurs="1" maxOccurs="2"/>            <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <anyElement minOccurs="1" maxOccurs="6"/>            <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <anyElement minOccurs="1" maxOccurs="unbounded"/>    <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <!-- min=2, max=various -->
+            <anyElement minOccurs="2" maxOccurs="2"/>            <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <anyElement minOccurs="2" maxOccurs="6"
+                        require="http://www.w3.org/2000/svg"/>   <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <anyElement minOccurs="2" maxOccurs="unbounded"/>    <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <!-- min=4, max=various -->
+            <anyElement minOccurs="4" maxOccurs="6"/>            <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+            <anyElement minOccurs="4" maxOccurs="unbounded"/>    <elementRef key="gb" minOccurs="1" maxOccurs="1"/>
+          </content>
+          <!--
+              [1] I had except="tei:teiHeader" here on this
+                  <anyElement>, but found that @except has
+                  no effect on the output!  — Syd, 2024-03-08
+          -->
+        </elementSpec>
+
+      </schemaSpec>
+    </body>
+    <back>
     </back>
   </text>
 </TEI>

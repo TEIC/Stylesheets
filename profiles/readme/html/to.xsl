@@ -4,8 +4,9 @@
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
     exclude-result-prefixes="#all"
-    version="2.0">
+    version="3.0">
     <!-- import base conversion style -->
   
   <xsl:import href="../../../html/html.xsl"/>
@@ -60,36 +61,71 @@ of this software, even if advised of the possibility of such damage.</p>
       .../release/tei-p5-doc/share/doc/tei-p5-doc/
   -->
   <xsl:variable name="filename" select="tokenize( base-uri(/),'/')[last()]"/>
-  <xsl:param name="version" select="replace( $filename, '^readme-([0-9aαbβ.-]+)\.xml$','$1')"/>
+  <xsl:param name="version_from_filename" select="replace( $filename, '^readme-([0-9aαbβ.-]+)\.xml$','$1')"/>
   <xsl:param name="vault" select="'https://www.tei-c.org/Vault/P5'"/>
-  <xsl:param name="docPath" select="'doc/tei-p5-doc/en/html'"/>
-  <xsl:variable name="testVersionedDocument" select="concat( $vault,'/',$version,'/VERSION')"/>
+  <!--
+      Note on names of next 3 params:
+
+      There was originally just 1 param for this, $docPath. We
+      discovered the need to use just the initial portion of that path
+      in the generation of $testVersionedDocument (see [1]). It would
+      be perfectly reasonable to just hard-code that path or to chop
+      the $docPath param into two parts and just use the first part
+      for $testVersionedDocument and the concatentation of the two
+      parts for $tagdocStart. But I do not know that there is not some
+      routine that calls this program and tries to set $docPath as a
+      parameter, so I did not want to remove it. Thus it is generated
+      from the two pieces, but can still be overridden. (Note that if
+      it is overridden, the value of $docPath2 may not be what we want
+      in $tagdocStart.)  —Syd, 2021-10-02
+  -->
+  <xsl:param name="docPath1" select="'doc/tei-p5-doc'"/>
+  <xsl:param name="docPath2" select="'en/html'"/>
+  <xsl:param name="docPath" select="concat( $docPath1, '/', $docPath2 )"/>
+  <!--
+    The version # we grabbed from the filename might not have the patch level ".0" at the end.
+    But the Guidelines we are trying to point to always have it. So here if we find only major-
+    dot-minor (rather than major-dot-minor-dot-patch), we append a ".0".
+  -->
+  <xsl:variable name="version" as="xs:string"
+                select="replace( $version_from_filename, '^([0-9]+\.[0-9]+)([aαbβ]?)$', '$1.0$2')"/>
+  <!-- $versionZero is true() iff the major number is '0'. -->
+  <xsl:variable name="versionZero" select="substring-before( $version, '.') eq '0'" as="xs:boolean"/>
+  <xsl:variable name="testVersionedDocument" select="concat( $vault,'/',$version,'/',$docPath1,'/VERSION')"/>
   <xsl:variable name="tagdocStart" select="concat( $vault,'/',$version,'/',$docPath,'/ref-')"/>
   
-  <xsl:template match="tei:gi|tei:ident[@type eq 'class']">
+  <xsl:template match="tei:gi | tei:name[ @type eq 'class']">
     <xsl:variable name="class" select="if (@type) then @type else local-name(.)"/>
     <!-- If this is the first one, check veresion number and warn iff needed -->
-    <xsl:if test="not( preceding::tei:gi | preceding::tei:ident[@type eq 'class'] )">
+    <xsl:if test="not( preceding::tei:gi | preceding::tei:name[ @type eq 'class'] )">
       <xsl:choose>
-        <xsl:when test="$version eq ''">
+        <xsl:when test="$version_from_filename eq ''">
           <xsl:message>WARNING: unable to parse version # from filename, so links will not work</xsl:message>
         </xsl:when>
-        <xsl:when test="not( doc-available( $testVersionedDocument ) )">
-          <xsl:message>WARNING: file <xsl:value-of select="$testVersionedDocument"/> cannot be read, so links will probably be broken</xsl:message>
+        <xsl:when test="not( unparsed-text-available( $testVersionedDocument ) )">
+          <xsl:message>INFO: file <xsl:value-of select="$testVersionedDocument"/> could not be read</xsl:message>
         </xsl:when>
         <xsl:when test="normalize-space( unparsed-text( $testVersionedDocument ) ) ne normalize-space( $version )">
           <xsl:message>WARNING: supplied version (<xsl:value-of select="$version"/>) is not equal to content of <xsl:value-of select="$testVersionedDocument"/>.</xsl:message>
         </xsl:when>
+        <xsl:when test="substring-before( $version, '.') eq '0'">
+          <xsl:message>INFO: version number is &lt; 1.0.0, so not generating links for element &amp; class names.</xsl:message>
+        </xsl:when>
       </xsl:choose>
     </xsl:if>
     <xsl:choose>
-      <xsl:when test="@scheme = ('TEI','tei') or not(@scheme)">
+      <!-- if this is prior to release 1.0.0, do not even bother trying to generate a link, just highlight it … -->
+      <xsl:when test="$versionZero">
+        <span class="{$class}"><xsl:apply-templates/></span>
+      </xsl:when>
+      <!-- else if it is a TEI element or class, make it into a link … -->
+      <xsl:when test="@scheme = ('TEI','tei') or not( @scheme )">
         <xsl:variable name="content" select="normalize-space(.)"/>
         <xsl:variable name="tagdoc" select="concat( $tagdocStart, $content, '.html' )"/>
         <a class="{$class}" href="{$tagdoc}"><xsl:apply-templates/></a>
       </xsl:when>
+      <!-- else this is not a TEI scheme element or name, also no link, just highlight it -->
       <xsl:otherwise>
-        <!-- This is not a TEI scheme element or identifier -->
         <span class="{$class}"><xsl:apply-templates/></span>
       </xsl:otherwise>
     </xsl:choose>

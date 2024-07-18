@@ -27,7 +27,7 @@
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
                 xmlns="http://www.tei-c.org/ns/1.0"
-                version="2.0"
+                version="3.0"
                 exclude-result-prefixes="#all">
     
     
@@ -96,7 +96,11 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
 
-   <xsl:template name="processTextrun">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Creates appropriate elements from word style, calls basicStyles. When word style starts with "TEI " or "tei_" calls elementFromStyle.
+    </desc>
+  </doc>
+  <xsl:template name="processTextrun">
      <xsl:variable name="style">
        <xsl:value-of select="w:rPr/w:rStyle/@w:val"/>
      </xsl:variable>
@@ -128,27 +132,21 @@ of this software, even if advised of the possibility of such damage.
        </xsl:when>
        
        <xsl:when test="starts-with($style,'TEI ')">
-	 <xsl:element name="{substring($style,5)}">
-	   <xsl:call-template name="basicStyles">
-	     <xsl:with-param name="parented">true</xsl:with-param>
-	   </xsl:call-template>
-	 </xsl:element>
+         <xsl:call-template name="elementFromStyle">
+           <xsl:with-param name="style" select="substring($style,5)"/>
+         </xsl:call-template>
        </xsl:when>
 
        <xsl:when test="starts-with($style,'tei_')">
-	 <xsl:element name="{substring($style,5)}">
-	   <xsl:call-template name="basicStyles">
-	     <xsl:with-param name="parented">true</xsl:with-param>
-	   </xsl:call-template>
-	 </xsl:element>
+         <xsl:call-template name="elementFromStyle">
+           <xsl:with-param name="style" select="substring($style,5)"/>
+         </xsl:call-template>
        </xsl:when>
 
 	<xsl:when test="doc-available('../../names.xml') and doc('../../names.xml')//tei:gi[.=$style]">
-	  <xsl:element name="{$style}">
-	   <xsl:call-template name="basicStyles">
-	     <xsl:with-param name="parented">true</xsl:with-param>
-	   </xsl:call-template>
-	  </xsl:element>
+	  <xsl:call-template name="elementFromStyle">
+	    <xsl:with-param name="style" select="$style"/>
+	  </xsl:call-template>
 	</xsl:when>
        
        <xsl:when test="not($style='')">
@@ -166,12 +164,27 @@ of this software, even if advised of the possibility of such damage.
      </xsl:choose>
         
    </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Creates an element named $style and calls basicStyles with parented=true. $style is the word style name with prefix "TEI " or "tei_" stripped off.
+      Override this method if you need to, for example preprocess $style.
+    </desc>
+  </doc>
+  <xsl:template name="elementFromStyle">
+    <xsl:param name="style"/>
+    <xsl:element name="{$style}">
+      <xsl:call-template name="basicStyles">
+        <xsl:with-param name="parented">true</xsl:with-param>
+      </xsl:call-template>
+    </xsl:element>    
+  </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Look at the Word
       underlying basic formatting. We can ignore the run's font change if 
       a) it's not a special para AND the font is the ISO default, OR 
       b) the font for the run is the same as its parent paragraph.</desc>
+      Param parented is true when calling template created an element.
    </doc>
   <xsl:template name="basicStyles">
     <xsl:param name="parented">false</xsl:param>

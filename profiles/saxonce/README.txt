@@ -1,1 +1,1 @@
-For use with Saxon CE (XSLT processor in Javascript)
+For use with Saxon CE (XSLT processor in JavaScript)

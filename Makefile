@@ -4,7 +4,7 @@ SAXON=java -jar lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
 DOTSAXON=java -jar ../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE)
 DOTDOTSAXON=java -jar ../../lib/saxon10he.jar defaultSource=$(DEFAULTSOURCE) 
 SAXON_ARGS=-ext:on
-DIRS=bibtex cocoa common csv docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt p4 pdf profiles/default rdf relaxng rnc schematron simple slides tbx tcp lite tite tools txt html xsd xlsx pdf verbatimxml
+DIRS=bibtex cocoa common csv docx dtd docbook epub epub3 fo html wordpress markdown html5 json latex latex nlm odd odds odt p4 pdf profiles/default rdf rng rnc schematron simple slides tbx tcp lite tite tools txt html xsd xlsx pdf verbatimxml
 
 SCRIPTS=bin/*to*
 PREFIX=/usr
@@ -33,7 +33,7 @@ DOCTARGETS= \
 	profiles/default/odt/from.xsl \
 	profiles/default/odt/to.xsl \
 	profiles/default/p4/from.xsl \
-	profiles/default/relaxng/to.xsl	
+	profiles/default/rng/to.xsl	
 
 PROFILEDOCTARGETS=\
 	profiles/enrich/docx/from.xsl \

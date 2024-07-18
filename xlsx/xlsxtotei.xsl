@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" xmlns="http://www.tei-c.org/ns/1.0"
+<xsl:stylesheet version="3.0" xmlns="http://www.tei-c.org/ns/1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
   xmlns:rels="http://schemas.openxmlformats.org/package/2006/relationships"
@@ -155,7 +155,7 @@
       <xsl:for-each select="$sheet-document/sml:worksheet/sml:sheetData/sml:row">
         <row n="{position()}">
           <xsl:for-each select="sml:c">
-            <xsl:if test="preceding-sibling::sml:c">
+            <xsl:if test="position() eq 1  or  preceding-sibling::sml:c">
               <xsl:call-template name="insert-omitted-cells">
                 <xsl:with-param name="before" select="preceding-sibling::sml:c[1]"/>
                 <xsl:with-param name="after" select="."/>
@@ -210,13 +210,14 @@
 
     <xsl:variable name="before-column-number" select="tei-spreadsheet:column-number($before/@r)"/>
     <xsl:variable name="after-column-number" select="tei-spreadsheet:column-number($after/@r)"/>
+    <xsl:variable name="col_correction" select="if ( position() eq 1 ) then 0 else 1" as="xs:integer"/>
 
     <!--
     <x ba="{$before}" bc="{$before-column-number}"  aa="{$after}" ac="{$after-column-number}"/>
 -->
 
     <xsl:call-template name="empty-cells">
-      <xsl:with-param name="count" select="$after-column-number - $before-column-number - 1"/>
+      <xsl:with-param name="count" select="$after-column-number - $before-column-number - $col_correction"/>
     </xsl:call-template>
   </xsl:template>
 
