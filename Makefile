@@ -132,7 +132,6 @@ installxsl: build teioo.jar
 	(cd release/xsl; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
 	cp --preserve=timestamps bin/transformtei ${PREFIX}/bin
 	cp --preserve=timestamps source/p5subset.xml ${PREFIX}/source
-        # Shouldn't the "/usr" in the following line be ${PREFIX} ? —Syd & Martin, 2020-07-03
 	perl -p -i -e 's+^APPHOME=.*+APPHOME=${PREFIX}/share/xml/tei/stylesheet+' ${PREFIX}/bin/transformtei
 	chmod 755 ${PREFIX}/bin/transformtei
 	for i in $(SCRIPTS); do  (cd ${PREFIX}/bin; rm -f `basename $$i`;  ln -s transformtei `basename $$i`); done
