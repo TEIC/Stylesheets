@@ -116,7 +116,7 @@ of this software, even if advised of the possibility of such damage.
         is a direct child of <d:pre>&lt;schemaSpec</d:pre>.</d:p>
     </d:desc>
   </d:doc>
-  <xsl:output encoding="utf-8" indent="yes" method="xml"/>
+  <xsl:output encoding="UTF-8" indent="yes" method="xml"/>
   <xsl:param name="verbose" select="'false'"/>
   <xsl:param name="lang" select="'en'"/>
   <d:doc>
@@ -129,7 +129,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="teix-ns" select="'http://www.tei-c.org/ns/Examples'"/>
   <xsl:variable name="xsl-ns">http://www.w3.org/1999/XSL/Transform</xsl:variable>
   
-
+  <xsl:mode on-no-match="shallow-copy" name="copy"/>
+  <xsl:mode on-no-match="shallow-copy" name="NSdecoration"/>
+  
   <d:doc>
     <d:desc>Note on keys: should not really need the "[not(ancestor::teix:egXML)]"
     predicate on DEPRECATEDs and CONSTRAINTs, as the elements matched (tei:* and
@@ -170,12 +172,6 @@ of this software, even if advised of the possibility of such damage.
     <!-- from "schematron-extraction" to "copy". -->
   </xsl:template>
 
-  <xsl:template match="@*|node()" mode="copy">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="copy"/>
-    </xsl:copy>
-  </xsl:template>
-  
   <d:doc>
     <d:desc>First pass ... outermost element gets a new @xml:lang iff it doesn't
     have one already</d:desc>
@@ -183,7 +179,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="/*" mode="NSdecoration">
     <xsl:copy>
       <xsl:apply-templates select="@* except @xml:lang" mode="#current"/>
-      <xsl:attribute name="xml:lang" select="'en'"/>
+      <xsl:attribute name="xml:lang" select="$lang"/>
       <xsl:apply-templates select="@xml:lang" mode="#current"/>
       <xsl:apply-templates select="node()" mode="#current"/>
     </xsl:copy>
@@ -233,20 +229,12 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <d:doc>
-    <d:desc>First pass ... everything else just gets copied</d:desc>
-  </d:doc>
-  <xsl:template match="@*|node()" mode="NSdecoration">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="NSdecoration"/>
-    </xsl:copy>
-  </xsl:template>
-  
-  <d:doc>
     <d:desc>Second pass does most the work ...</d:desc>
   </d:doc>
   <xsl:template match="/" mode="schematron-extraction">
     <xsl:param name="decorated" as="element()"/>
-    <schema queryBinding="xslt2">
+    <xsl:variable name="qb" select="( //tei:constraintDec[ @scheme eq 'schematron']/@queryBinding, 'xslt2')[1]"/>
+    <schema queryBinding="{$qb}">
       <title>ISO Schematron rules</title>
       <xsl:comment> This file generated <xsl:sequence select="tei:whatsTheDate()"/> by 'extract-isosch.xsl'. </xsl:comment>
 
@@ -274,8 +262,8 @@ of this software, even if advised of the possibility of such damage.
         <!-- if desired, other NSs can be added manually here -->
       </xsl:variable>
       <xsl:variable name="NSs" select="distinct-values( $allNSs )"/>
-      <!-- For each pair (except those that are empty or are the XLS namespace) ... -->
-      <xsl:for-each select="$NSs[ not(. eq '␝')  and  not( contains( ., $xsl-ns ) ) ]">
+      <!-- For each pair (except those that are empty or are the XSL namespace) ... -->
+      <xsl:for-each select="$NSs[ not( . eq '␝'  or  contains( ., $xsl-ns ) ) ]">
         <xsl:sort/>
         <!-- ... parse out the prefix and the URI (using that never-occurs character) -->
         <xsl:variable name="nsp" select="substring-before( .,':␝')"/>
@@ -308,6 +296,14 @@ of this software, even if advised of the possibility of such damage.
           schema that does not perform the desired constraint tests properly.</xsl:message>
       </xsl:if>
 
+      <xsl:if test="$decorated//tei:constraintDecl[ @scheme eq 'schematron']">
+        <xsl:call-template name="blockComment">
+          <xsl:with-param name="content" select="'declarations:'"/>
+        </xsl:call-template>
+        <xsl:apply-templates mode="copy"
+                             select="//tei:constraintDecl[ @scheme eq 'schematron']/*[not(self::sch:ns)]"/>
+      </xsl:if>
+      
       <xsl:if test="key('CONSTRAINTs',1)">
         <xsl:call-template name="blockComment">
           <xsl:with-param name="content" select="'constraints:'"/>
