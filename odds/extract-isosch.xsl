@@ -233,7 +233,7 @@ of this software, even if advised of the possibility of such damage.
   </d:doc>
   <xsl:template match="/" mode="schematron-extraction">
     <xsl:param name="decorated" as="element()"/>
-    <xsl:variable name="qb" select="( //tei:constraintDec[ @scheme eq 'schematron']/@queryBinding, 'xslt2')[1]"/>
+    <xsl:variable name="qb" select="( //tei:constraintDecl[ @scheme eq 'schematron']/@queryBinding, 'xslt2')[1]"/>
     <schema queryBinding="{$qb}">
       <title>ISO Schematron rules</title>
       <xsl:comment> This file generated <xsl:sequence select="tei:whatsTheDate()"/> by 'extract-isosch.xsl'. </xsl:comment>
@@ -262,8 +262,9 @@ of this software, even if advised of the possibility of such damage.
         <!-- if desired, other NSs can be added manually here -->
       </xsl:variable>
       <xsl:variable name="NSs" select="distinct-values( $allNSs )"/>
-      <!-- For each pair (except those that are empty or are the XSL namespace) ... -->
-      <xsl:for-each select="$NSs[ not( . eq '␝'  or  contains( ., $xsl-ns ) ) ]">
+      <!-- For each pair (except those that were empty, and thus are
+           now just a single ␝ character, or those thata are the XSL namespace) ... -->
+      <xsl:for-each select="$NSs[ not( . eq '␝'  or  matches( ., '␝'||$xsl-ns||'$') ) ]">
         <xsl:sort/>
         <!-- ... parse out the prefix and the URI (using that never-occurs character) -->
         <xsl:variable name="nsp" select="substring-before( .,':␝')"/>
@@ -546,11 +547,11 @@ of this software, even if advised of the possibility of such damage.
         <xsl:number level="any"/>
       </xsl:variable>
       <xsl:value-of
-	  select="( $scheme,
-		   'constraint',
-		    ancestor-or-self::*[@ident]/@ident/translate( .,':',''),
-		    $num )"
-	  separator="-"/>
+          select="( $scheme,
+                   'constraint',
+                    ancestor-or-self::*[@ident]/@ident/translate( .,':',''),
+                    $num )"
+          separator="-"/>
     </xsl:for-each>
   </xsl:function>
   
