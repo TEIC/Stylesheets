@@ -1,20 +1,17 @@
-# Stylesheets
+# TEI XSLT Stylesheets
 
 [![GitHub release](https://img.shields.io/github/release/TEIC/Stylesheets.svg)](https://github.com/TEIC/Stylesheets/releases)
 [![Stylesheets Tests](https://github.com/TEIC/Stylesheets/actions/workflows/test.yml/badge.svg)](https://github.com/TEIC/Stylesheets/actions/workflows/test.yml)
 
-TEI XSL Stylesheets
-
 This is a family of XSLT 3.0 stylesheets to transform TEI XML documents to various formats, including XHTML, LaTeX, XSL Formatting Objects, ePub, plain text, RDF, JSON; and to/from Word OOXML (docx) and OpenOffice (odt).  They concentrate on the core TEI modules which are used for simple transcription and "born digital" writing. It is important to understand that they do _not_:
 
-*   cover all TEI elements and possible attribute values
-*   attempt to define a standard TEI processing or rendering model
+* cover all TEI elements and possible attribute values
+* attempt to define a standard TEI processing or rendering model
 
 and should not be treated as the definitive view of the TEI Consortium.
 
-For more information, see https://tei-c.org/tools/stylesheets/
-
 ## Prerequisites
+
 The package assumes that you have several additional tools installed. Their availability on your system can be verified by issuing the command `make check`.
 
 In particular, Stylesheets assume that you use `ant` version 1.9.x+. If for some reason, you need to use `ant` 1.8.x, you should remove all occurences of the attribute `@zip64Mode` from the file `common/teianttasks.xml`.
