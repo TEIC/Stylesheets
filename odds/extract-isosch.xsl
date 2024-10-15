@@ -254,16 +254,21 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="blockComment">
         <xsl:with-param name="content" select="'namespaces, implicit:'"/>
       </xsl:call-template>
-      <!-- Generate a sequence of all the prefix-URI pairs that we calculated in 1st pass, -->
-      <!-- separating each pair with a character we know will never occur inside (for easy -->
-      <!-- parsing later). -->
+      <!-- Generate a sequence of all the prefix-URI pairs that we
+           calculated in the 1st pass. For easy parsing later, we
+           separate each pair with a ‘␝’, which is a character we know
+           will never occur within either a namespace prefix or a
+           namespace URI (because it is not allowed in an xs:NCName,
+           and is not allowed in a URI (per RFC 3986), even though
+           xs:anyURI does not object to it). -->
       <xsl:variable name="allNSs" as="xs:string+">
         <xsl:sequence select="( $decorated//tei:*[@nsu]/concat( @nsp, '␝', @nsu ) )"/>
         <!-- if desired, other NSs can be added manually here -->
       </xsl:variable>
       <xsl:variable name="NSs" select="distinct-values( $allNSs )"/>
-      <!-- For each pair (except those that were empty, and thus are
-           now just a single ␝ character, or those thata are the XSL namespace) ... -->
+      <!-- For each pair (except those that were empty — and thus are
+           now just a single ‘␝’ character — or those that are the XSL
+           namespace) ... -->
       <xsl:for-each select="$NSs[ not( . eq '␝'  or  matches( ., '␝'||$xsl-ns||'$') ) ]">
         <xsl:sort/>
         <!-- ... parse out the prefix and the URI (using that never-occurs character) -->
