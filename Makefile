@@ -83,13 +83,23 @@ profiles:
 
 doc: oxygendoc linkcss
 	@echo BUILD Compile documentation
+        # Create the release directory in which to put this stuff
 	test -d release/xslcommon/doc/tei-xsl || mkdir -p release/xslcommon/doc/tei-xsl
-	$(SAXON) -o:Documentation/index.xml Documentation/teixsl.xml Documentation/param.xsl 
-	$(SAXON) -o:Documentation/style.xml Documentation/teixsl.xml  Documentation/paramform.xsl 
-	$(SAXON) -o:release/xslcommon/doc/tei-xsl/index.html Documentation/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
-	$(SAXON) -o:release/xslcommon/doc/tei-xsl/style.html Documentation/style.xml  profiles/default/html/to.xsl 
-	cp Documentation/*.png Documentation/teixsl.xml Documentation/style.xml release/xslcommon/doc/tei-xsl
-	cp VERSION tei.css ChangeLog LEGAL/LICENCE release/xslcommon/doc/tei-xsl
+        # Create the documentation index by inserting tables of the variables and templates into the various sections:
+	$(SAXON) -s:Documentation/teixsl.xml -xsl:Documentation/param.xsl -o:Documentation/index.xml
+        # Convert that index file into the main HTML documentation page (which uses tei.css):
+	$(SAXON) -s:Documentation/index.xml -xsl:profiles/tei/html5/to.xsl -o:release/xslcommon/doc/tei-xsl/index.html cssFile=tei.css
+        # Create the TEI Stylebear (style.html) using a two-step process:
+	$(SAXON) -s:Documentation/teixsl.xml -xsl:Documentation/paramform.xsl -o:Documentation/style.xml
+	$(SAXON) -s:Documentation/style.xml -xsl:profiles/default/html/to.xsl -o:release/xslcommon/doc/tei-xsl/style.html
+        # Copy the needed pieces into the target directory:
+	cp -p Documentation/*.png      \
+              Documentation/teixsl.xml \
+              Documentation/style.xml  \
+              VERSION tei.css          \
+              ChangeLog                \
+              LEGAL/LICENCE            \
+              release/xslcommon/doc/tei-xsl/
 
 oxygendoc:
         # when building Debian packages, the script runs under
