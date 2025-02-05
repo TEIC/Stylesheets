@@ -331,7 +331,7 @@ of this software, even if advised of the possibility of such damage.
   <xd:doc class="layout" type="string">
     <xd:desc>The initial part of a the URI of a DOI resolution service</xd:desc>
   </xd:doc>
-  <xsl:param name="DOIResolver" select="'http://dx.doi.org/'"/>
+  <xsl:param name="DOIResolver" select="'https://dx.doi.org/'"/>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
     <desc>Default spacing between paragraphs</desc>
