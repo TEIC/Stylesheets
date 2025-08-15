@@ -57,7 +57,7 @@ of this software, even if advised of the possibility of such damage.</p>
     corresponding .xml input files.
     Input: .../ReleaseNotes/readme*xml
     Output: the Makefile puts the .html files of the same name except with an
-      extension of '.html' intsead of '.xml' into 
+      extension of '.html' instead of '.xml' into
       .../release/tei-p5-doc/share/doc/tei-p5-doc/
   -->
   <xsl:variable name="filename" select="tokenize( base-uri(/),'/')[last()]"/>
@@ -71,7 +71,7 @@ of this software, even if advised of the possibility of such damage.</p>
       in the generation of $testVersionedDocument (see [1]). It would
       be perfectly reasonable to just hard-code that path or to chop
       the $docPath param into two parts and just use the first part
-      for $testVersionedDocument and the concatentation of the two
+      for $testVersionedDocument and the concatenation of the two
       parts for $tagdocStart. But I do not know that there is not some
       routine that calls this program and tries to set $docPath as a
       parameter, so I did not want to remove it. Thus it is generated
@@ -96,7 +96,7 @@ of this software, even if advised of the possibility of such damage.</p>
   
   <xsl:template match="tei:gi | tei:name[ @type eq 'class']">
     <xsl:variable name="class" select="if (@type) then @type else local-name(.)"/>
-    <!-- If this is the first one, check veresion number and warn iff needed -->
+    <!-- If this is the first one, check version number and warn iff needed -->
     <xsl:if test="not( preceding::tei:gi | preceding::tei:name[ @type eq 'class'] )">
       <xsl:choose>
         <xsl:when test="$version_from_filename eq ''">

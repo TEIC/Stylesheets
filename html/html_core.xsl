@@ -82,7 +82,15 @@ of this software, even if advised of the possibility of such damage.
           </xsl:if>
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>
-          </xsl:call-template>
+	  </xsl:call-template>
+	  <xsl:if test="@type">
+	    <xsl:attribute name="class">
+	      <xsl:sequence select="@type"/>
+	      <xsl:if test="@subtype">
+		<xsl:sequence select="' '||@subtype"/>
+	      </xsl:if>
+	    </xsl:attribute>
+	  </xsl:if>
           <xsl:apply-templates/>
         </div>
       </xsl:otherwise>
@@ -818,7 +826,7 @@ of this software, even if advised of the possibility of such damage.
                               tei:*[1]/tei:author/tei:forename
                               ,tei:*[1]/tei:editor/tei:forename
                               ,'')[1]))"/>
-            <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
+            <xsl:sort select="head(tei:monogr/tei:imprint/tei:date)"/>
             <li>
               <xsl:call-template name="makeAnchor"/>
               <xsl:apply-templates select="."/>

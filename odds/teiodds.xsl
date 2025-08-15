@@ -2001,8 +2001,13 @@ of this software, even if advised of the possibility of such damage.
   
   <xsl:template name="processSchematron">
     <xsl:choose>
-      <xsl:when test="self::sch:ns | self::sch:pattern">
+      <xsl:when test="self::sch:ns | self::sch:pattern[ not( @is-a ) ]">
         <xsl:apply-templates mode="justcopy" select="."/>
+      </xsl:when>
+      <xsl:when test="self::sch:pattern[ @is-a ]">
+	<xsl:if test="//sch:pattern[@abstract='true'][@id=current()/@is-a]">
+	  <xsl:apply-templates mode="justcopy" select="."/>
+	</xsl:if>	  
       </xsl:when>
       <xsl:when test="self::sch:rule[not(preceding-sibling::sch:rule)]">
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron">
@@ -2487,7 +2492,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:constraintDecl[ @scheme eq 'schematron']">
-    <xsl:apply-templates select="sch:*" mode="justcopy"/>
+    <xsl:apply-templates select="sch:*|xsl:*" mode="justcopy"/>
   </xsl:template>
   
   <xsl:template match="sch:*">

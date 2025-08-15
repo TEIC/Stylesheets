@@ -30,7 +30,7 @@
     <oddexpand in="${inputFile}" out="${inputFile}.processedodd"/>
     <buildgeneric type="relaxng" xsl="${profiledir}/${profile}/rng/to.xsl" in="${inputFile}.processedodd" out="${outputFile}.rng"/>
     <echo level="info">TRANG generate RNC from RELAXNG files</echo>
-    <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
+    <java classname="com.thaiopensource.relaxng.translate.Driver" fork="true">
       <classpath>
         <path refid="classpath"/>
         <pathelement location="${trang.jar}"/>

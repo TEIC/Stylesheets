@@ -331,7 +331,8 @@ ul.attList ul.classSpecAttDefs > li{
 }
 
 /* class name links should have a colon after */
-ul.attList a.link_odd + ul.classSpecAttDefs::before{
+ul.attList a.link_odd + ul.classSpecAttDefs::before,
+ul.attList li > .link_ref + ul.classSpecAttDefs::before{
     content: ": ";
     text-decoration: none;
 }

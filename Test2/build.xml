@@ -135,7 +135,7 @@
             uses Trang to convert the first to the second.
         </description>
         <echo level="info" message="Convert ${rngIn} to ${rncOut} using Trang."/>
-        <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
+        <java classname="com.thaiopensource.relaxng.translate.Driver" fork="true">
             <classpath location="${trang}"/>
             <arg value="-O"/>
             <arg value="rnc"/>

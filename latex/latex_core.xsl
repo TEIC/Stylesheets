@@ -454,7 +454,7 @@ of this software, even if advised of the possibility of such damage.
 			     |  tei:*/tei:editor//tei:surname
 			     |  tei:*/tei:editor/tei:name
 			     |  tei:*/tei:title)[1])"/>
-	   <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
+	   <xsl:sort select="head(tei:monogr/tei:imprint/tei:date)"/>
 	   <xsl:text>&#10;\bibitem[</xsl:text>
 	   <xsl:apply-templates select="." mode="xref"/>
 	   <xsl:text>]{</xsl:text>

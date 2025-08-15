@@ -2606,8 +2606,8 @@
         "type" : "elementSpec",
         "module" : "textstructure",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-04-06\" xml:lang=\"en\">groups together salutations, datelines, and similar phrases appearing as a final group at\n    the end of a division, especially of a letter.<\/desc>" ],
-        "shortDesc" : "(closer) groups together salutations, datelines, and similar phrases appearing as a final group at\n    the end of a division, especially of a letter.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-04-06\" xml:lang=\"en\">groups together salutations, datelines, bylines, and similar phrases appearing as a final group at\n    the end of a division, especially of a letter.<\/desc>" ],
+        "shortDesc" : "(closer) groups together salutations, datelines, bylines, and similar phrases appearing as a final group at\n    the end of a division, especially of a letter.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-06-12\" xml:lang=\"en\">closer<\/gloss>" ],
         "altIdent" : 
@@ -2634,6 +2634,9 @@
               
               { "type" : "classRef",
                 "key" : "model.gLike" },
+              
+              { "type" : "elementRef",
+                "key" : "byline" },
               
               { "type" : "elementRef",
                 "key" : "signed" },
@@ -5284,8 +5287,8 @@
                 
                 { "ident" : "editorial",
                   "desc" : 
-                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2017-02-06\" xml:lang=\"en\">for features omitted from\n\t  transcription due to editorial policy<\/desc>" ],
-                  "shortDesc" : "(editorial) for features omitted from\n\t  transcription due to editorial policy",
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2017-02-06\" xml:lang=\"en\">for features omitted from transcription due to editorial policy<\/desc>" ],
+                  "shortDesc" : "(editorial) for features omitted from transcription due to editorial policy",
                   "gloss" : 
                   [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-02-01\" xml:lang=\"en\">editorial<\/gloss>" ],
                   "altIdent" : 
@@ -5333,8 +5336,8 @@
             "ns" : "",
             "usage" : "opt",
             "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-08-03\" xml:lang=\"en\">in the case of text omitted because of damage, categorizes the cause of the damage, if\n        it can be identified.<\/desc>" ],
-            "shortDesc" : "(agent) in the case of text omitted because of damage, categorizes the cause of the damage, if\n        it can be identified.",
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-08-03\" xml:lang=\"en\">in the case of text omitted because of damage, categorizes the cause of the damage, if it can be identified.<\/desc>" ],
+            "shortDesc" : "(agent) in the case of text omitted because of damage, categorizes the cause of the damage, if it can be identified.",
             "gloss" : 
             [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2016-11-25\" xml:lang=\"en\">agent<\/gloss>" ],
             "altIdent" : 
@@ -10010,11 +10013,19 @@
             "maxOccurs" : "1",
             "content" : 
             [ 
-              { "type" : "classRef",
-                "key" : "model.global" },
+              { "type" : "alternate",
+                "minOccurs" : "0",
+                "maxOccurs" : "unbounded",
+                "content" : 
+                [ 
+                  { "type" : "classRef",
+                    "key" : "model.global" },
+                  
+                  { "type" : "classRef",
+                    "key" : "model.stageLike" } ] },
               
               { "type" : "sequence",
-                "minOccurs" : "0",
+                "minOccurs" : "1",
                 "maxOccurs" : "1",
                 "content" : 
                 [ 
@@ -13719,8 +13730,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-12-17\" xml:lang=\"en\">identifies the unit of information conveyed by the element, e.g. <val>columns<\/val>, <val>pages<\/val>, <val>volume<\/val>, <val>entry<\/val>.<\/desc>" ],
-              "shortDesc" : "identifies the unit of information conveyed by the element, e.g. columns, pages, volume, entry.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2025-03-31\" xml:lang=\"en\">identifies the unit of information conveyed by the element.<\/desc>" ],
+              "shortDesc" : "identifies the unit of information conveyed by the element.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -13774,8 +13785,8 @@
                   
                   { "ident" : "chapter",
                     "desc" : 
-                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-06-17\" xml:lang=\"en\">the element contains a chapter indication (number\n\t  and\/or title)<\/desc>" ],
-                    "shortDesc" : "(chapter) the element contains a chapter indication (number\n\t  and\/or title)",
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-06-17\" xml:lang=\"en\">the element contains a chapter indication (number and\/or title)<\/desc>" ],
+                    "shortDesc" : "(chapter) the element contains a chapter indication (number and\/or title)",
                     "gloss" : 
                     [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-11-06\" xml:lang=\"en\">chapter<\/gloss>" ],
                     "altIdent" : 
@@ -14828,8 +14839,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-01-11\" xml:lang=\"en\">provides attributes identifying the source edition from which\n  some encoded feature derives.<\/desc>" ],
-          "shortDesc" : "provides attributes identifying the source edition from which\n  some encoded feature derives.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-01-11\" xml:lang=\"en\">provides attributes identifying the source edition from which some encoded feature derives.<\/desc>" ],
+          "shortDesc" : "provides attributes identifying the source edition from which some encoded feature derives.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -15099,8 +15110,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-02-10\" xml:lang=\"en\">signals an intention about how white space should be \n      managed by  applications.<\/desc>" ],
-              "shortDesc" : "signals an intention about how white space should be \n      managed by  applications.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-02-10\" xml:lang=\"en\">signals an intention about how white space should be managed by applications.<\/desc>" ],
+              "shortDesc" : "signals an intention about how white space should be managed by applications.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -15234,9 +15245,9 @@
               "usage" : "opt",
               "desc" : 
               [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-10-10\" xml:lang=\"en\">points to the next element of a virtual aggregate of which the current element is part.<\/desc>" ],
-              "shortDesc" : "points to the next element of a virtual aggregate of which the current element is part.",
+              "shortDesc" : "(next) points to the next element of a virtual aggregate of which the current element is part.",
               "gloss" : 
-              [  ],
+              [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2025-02-06\" xml:lang=\"en\">next<\/gloss>" ],
               "altIdent" : 
               [  ],
               "valDesc" : 
@@ -17997,8 +18008,8 @@
         "type" : "dataSpec",
         "module" : "tei",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-04-14\" xml:lang=\"en\">defines attribute values\nwhich contain an XPath expression.<\/desc>" ],
-        "shortDesc" : "defines attribute values\nwhich contain an XPath expression.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-04-14\" xml:lang=\"en\">defines attribute values which contain an XPath expression.<\/desc>" ],
+        "shortDesc" : "defines attribute values which contain an XPath expression.",
         "gloss" : 
         [  ],
         "altIdent" : 

@@ -67,7 +67,8 @@ of this software, even if advised of the possibility of such damage.
       so English Schematron should be extracted.</d:p>
       <d:p>Modified 2016-06-18/26 by Syd Bauman:
         <d:ul>
-          <d:li>re-work how constraint processing is handled so that <d:b>//schemaSpec/constraintSpec/constraint[sch:* except ( sch:pattern, sch:rule ) ]</d:b>
+          <d:li>re-work how constraint processing is handled so that
+          <d:b>//schemaSpec/constraintSpec/constraint[sch:* except ( sch:pattern, sch:rule ) ]</d:b>
           gets processed such that the Schematron elements are copied over (they weren't being copied). This bug
           discovered by Elisa E. Beshero-Bondar.</d:li>
           <d:li>re-work how language processing is handled, just to make code more consistent and readable.</d:li>
@@ -469,11 +470,26 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="node()"/>
   </xsl:template>
 
-  <xsl:template match="tei:constraint/sch:pattern">
+  <xsl:template match="tei:constraint/sch:pattern[ @is-a ]">
+    <!--
+        This is an instance of an abstract pattern: only extract it if
+        the abstract pattern of which this is an instance is present
+        (it might not be, a customization may have removed it).
+    -->
+    <xsl:variable name="patID" select="tei:makePatternID(.)"/>
+    <!-- (Note that makePatternID() will use the @id of <pattern>, if there is one.) -->
+    <xsl:if test="//sch:pattern[@abstract='true'][@id=current()/@is-a]">
+      <pattern id="{$patID}">
+        <xsl:apply-templates select="@*|node()"/>
+      </pattern>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="tei:constraint/sch:pattern[ not( @is-a ) ]">
     <xsl:variable name="patID" select="tei:makePatternID(.)"/>
     <!-- (Note that makePatternID() will use the @id of <pattern>, if there is one.) -->
     <pattern id="{$patID}">
-      <xsl:apply-templates select="node()"/>
+      <xsl:apply-templates select="@*|node()"/>
     </pattern>
   </xsl:template>
 

@@ -51,7 +51,7 @@ case "$script" in
         ;;
 esac
 
-echo 
+echo
 echo "  Options, shown with defaults:"
 echo "  --saxonjar=$SAXONJAR  # location of Saxon jar file"
 echo "  --trangjar=$TRANGJAR  # location of trang jar file"
@@ -135,7 +135,7 @@ while test $# -gt 0; do
     --viewportheight=*)   viewportheight="-DviewPortHeight=`echo $1 | sed 's/.*=//'`";;
     --nocompress)       nocompress="-DnoCompress=true";;
     --help)         usageMsg; exit 1;;
-     *) if test "$1" = "${1#--}" ; then 
+     *) if test "$1" = "${1#--}" ; then
            break
         else
            echo "WARNING: Unrecognized option '$1' ignored"
@@ -160,9 +160,9 @@ else
 fi
 if [ $from = odd ] ; then odd=true; fi
 
-infile=${1}
-indir=$(cd $(dirname ${1}); pwd) # This returns a full path where just $(dirname) might return just ‘.’
-infilename=$(basename ${1})
+infile="$1"
+indir="$(cd "$(dirname "$1")"; pwd)" # This returns a full path where just $(dirname) might return just ‘.’
+infilename="$(basename "${1}")"
 if [ $# -eq 1 ]; then           # only 1 argument, output file is input with new extension
     # strip off expected suffixes from input filename
     infilebase=${infilename}
@@ -184,16 +184,16 @@ if [ $# -eq 1 ]; then           # only 1 argument, output file is input with new
     # output filename is like input but with common prefix replaced with new one
     outfilename=${infilebase}$outsuffix
 else                            # 2 arguments (if there were more then 2 we would have already aborted)
-    outfile=${2}
+    outfile="${2}"
     # output directory is the directory specified
-    outdir=`dirname "${outfile}"`
+    outdir="$(dirname "${outfile}")"
     # Following line tries to create the output directory if it does not exist yet
-    outdir=`(mkdir -p ${outdir}; cd ${outdir}; pwd)`
+    outdir="$(mkdir -p "${outdir}"; cd "${outdir}"; pwd)"
     # output filename is as specified
-    outfilename=`basename ${outfile}`
+    outfilename="$(basename "${outfile}")"
 fi
 
-if [ ${indir}/${infilename} = ${outdir}/${outfilename} ] ; then die "input and output files are the same"; fi
+if [ "${indir}"/"${infilename}" = "${outdir}"/"${outfilename}" ] ; then die "input and output files are the same"; fi
 
 if [ ! -f "${indir}/${infilename}" ] ; then die "Input file $infile does not exist"; fi
 
@@ -204,10 +204,10 @@ if test "$defaultAPPHOME" != "$APPHOME" ; then
 fi
 
 # **************************************** #
-# *** work out defaultSource parameter *** # 
+# *** work out defaultSource parameter *** #
 # ***  to pass to the XSL Stylesheets  *** #
-# **************************************** #  
-# case 1: no localsource set, we'll use the hard-coded values 
+# **************************************** #
+# case 1: no localsource set, we'll use the hard-coded values
 # for the source as set in the XSL Stylesheets
 if test "x$TEISOURCE" = "x"
 then
@@ -218,7 +218,7 @@ then
 # thus pointing at a remote resource
 elif [ "$TEISOURCE" != "${TEISOURCE#http}" ]
 then
-  echo "using remote resource $TEISOURCE as default source" 
+  echo "using remote resource $TEISOURCE as default source"
   defaultSource="\"$TEISOURCE\""
 
 # case 3: localsource is set and the local file exists
@@ -230,7 +230,7 @@ then
   echo "using local file $REALSOURCE as default source"
   defaultSource="\"$REALSOURCE\""
 # last case: exit with error
-else 
+else
   die "unable to get localsource from $TEISOURCE"
 fi
 

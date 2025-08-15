@@ -15,10 +15,10 @@
   
   <xsl:variable name="doc.root" select="/"/>
   
-  <!-- This parameter controls if footnotes are numbered continously throughout the document --> 
+  <!-- This parameter controls if footnotes are numbered continuously throughout the document -->
   <xsl:param name="footnote.number.continuous" select="true()"/>
   
-  <!-- This parameter controls if the footnote numbering format should be differentiated for foonotes occurring in tei:front (i), tei:body (1), or tei:back (a) -->
+  <!-- This parameter controls if the footnote numbering format should be differentiated for footnotes occurring in tei:front (i), tei:body (1), or tei:back (a) -->
   <xsl:param name="footnote.numberformat.differentiate" select="false()"/>
   
   <!-- This variable specifies the different footnote formats -->

@@ -1,1 +1,1 @@
-Assocation for Computing Machinery journals
+Association for Computing Machinery journals

@@ -439,7 +439,7 @@
   </xsl:template>
   
   <xsl:template match="tei:figure/tei:graphic">
-    <fo:external-graphic xsl:use-attribute-sets="imageblock.properties" content-height="scale-down-to-fit" scaling="uniform" src="{resolve-uri(@url, base-uri())}"/>
+    <fo:external-graphic xsl:use-attribute-sets="imageblock.properties" width="100%" content-width="scale-to-fit" content-height="scale-down-to-fit" scaling="uniform" src="{resolve-uri(@url, base-uri())}"/>
   </xsl:template>
   
   <xsl:template match="eg:egXML">
@@ -460,12 +460,14 @@
   </xsl:template>
 
   <xsl:template match="tei:eg">
+    <!-- strip leading blank lines, normalize tabs -->
+    <xsl:variable name="eg" select="replace(., '^(\s*\n+)', '') ! replace(., '\t', '    ')"/>
     <!-- determine maximal amount of preceding whitespace that can be stripped out -->
-    <xsl:variable name="stripIndent" select="min((for $line in tokenize(., '\n')[.] return string-length(replace($line, '^(\s+).*', '$1'))))"/>
-    <fo:block xsl:use-attribute-sets="egXML.properties monospace.properties">
-      <xsl:analyze-string select="." regex="\n">
+    <xsl:variable name="stripIndent" select="min((for $line in tokenize($eg, '\n')[.] return string-length(replace($line, '^(\s*).+', '$1'))))"/>
+    <fo:block xsl:use-attribute-sets="egXML.properties monospace.properties" linefeed-treatment="preserve">
+      <xsl:analyze-string select="$eg" regex="\n">
         <xsl:matching-substring>
-          <fo:block/>
+          <xsl:text>&#10;</xsl:text>
         </xsl:matching-substring>
         <xsl:non-matching-substring>
           <xsl:analyze-string select="if ($stripIndent > 0) then replace(., concat('^\s{', $stripIndent, '}'), '') else ." regex="\s">

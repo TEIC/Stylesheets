@@ -234,7 +234,7 @@ of this software, even if advised of the possibility of such damage.
        <xsl:apply-templates select="$pass1" mode="pass2"/>
      </xsl:variable>
 
-     <!-- ADDIOTIONAl PASSES: -->
+     <!-- ADDITIONAL PASSES: -->
      <!-- Massage TEI to make it better -->
      <xsl:variable name="pass3">
        <xsl:apply-templates select="$pass2" mode="pass3"/>
@@ -248,7 +248,7 @@ of this software, even if advised of the possibility of such damage.
 
    <!-- PASS1 fixes -->
 
-   <!-- Overwiting template from Stylesheets/docx/from/docxtotei.xsl:
+   <!-- Overwriting template from Stylesheets/docx/from/docxtotei.xsl:
 	Relax constraints and add more instructions -->
    <xsl:template match="w:instrText">
       <xsl:choose>
@@ -260,7 +260,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="contains(.,'MERGEFORMAT ')"/>
 	 <xsl:when test="contains(.,'SEQ')"/>
          <xsl:otherwise>
-	   <xsl:message>WARN: Instruction text ouput: '<xsl:value-of select="."/>'</xsl:message>
+	   <xsl:message>WARN: Instruction text output: '<xsl:value-of select="."/>'</xsl:message>
            <xsl:value-of select="."/>
          </xsl:otherwise>
       </xsl:choose>
@@ -410,7 +410,7 @@ of this software, even if advised of the possibility of such damage.
    <!-- FIX: original only takes care of captions that follow tables and figures 
 	but they can be before as well.
 	However, this can lead to errors if two images are one next to another:
-	We give priority to caption below and issue a warning if adjecent.
+	We give priority to caption below and issue a warning if adjacent.
    -->
    <xsl:template match="tei:table|tei:figure" mode="pass2">
      <xsl:copy>
@@ -443,10 +443,10 @@ of this software, even if advised of the possibility of such damage.
    <!-- Original template: -->
    <!--xsl:template match="tei:p[not(.//tei:pb) and normalize-space(.)='']" mode="pass2" priority="99"/-->
    <!-- Proposed fix
-	addes tei:graphic as otherwise they get zapped in "empty" paragraphs -->
+	adds tei:graphic as otherwise they get zapped in "empty" paragraphs -->
    <!--xsl:template match="tei:p[not(.//tei:pb) and not(.//tei:graphic) and normalize-space(.)='']" 
        mode="pass2" priority="99"/-->
-   <!-- Overriding template, has to be more complicated to override the origina one: -->
+   <!-- Overriding template, has to be more complicated to override the original one: -->
    <xsl:template match="tei:p[not(.//tei:pb) and normalize-space(.)='']" mode="pass2" priority="99">
      <!-- we also add tei:* for some fancy magic we do with such empty ps in pass3-->
      <xsl:if test=".//tei:graphic or starts-with(@rend,'tei:')">
@@ -465,7 +465,7 @@ of this software, even if advised of the possibility of such damage.
        mode="pass2" priority="101">
        <xsl:apply-templates mode="pass2"/>
    </xsl:template-->
-   <!-- Overriding template, has to be more complicated to override the origina one: -->
+   <!-- Overriding template, has to be more complicated to override the original one: -->
    <xsl:template match="tei:figure/tei:p[tei:graphic and count(*)=1]" mode="pass2" priority="101">
      <xsl:choose>
        <xsl:when test="normalize-space(.)='' and not(../tei:p[2])">
@@ -629,7 +629,7 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
 
    <!-- Dates inside a paragraph -->
-   <!-- Can't do it in pass2 as that one fiddles with adjecent tei:hi elements -->
+   <!-- Can't do it in pass2 as that one fiddles with adjacent tei:hi elements -->
    <xsl:template match="tei:hi[@rend = 'Date_Char']" mode="pass3">
      <date>
        <xsl:apply-templates mode="pass3"/>
@@ -676,9 +676,9 @@ of this software, even if advised of the possibility of such damage.
 
    <!-- Janus elements: del/add, abbr/expan, orig/reg, sic/corr
 	These are wrapped in subst or choice if they are adjacent
-	(but can have white-space betweet - otherwise it would be v. difficult to edit them in Word -->
+	(but can have white-space between - otherwise it would be v. difficult to edit them in Word -->
    
-   <!-- Procesing (add|del)+ which are wrapped in subst -->
+   <!-- Processing (add|del)+ which are wrapped in subst -->
    <xsl:template match="text()" mode="pass3">
      <xsl:choose>
        <xsl:when test="normalize-space(.)">
@@ -975,13 +975,13 @@ of this software, even if advised of the possibility of such damage.
    <!-- Zap phantom empty segs, a la <seg> </seg> -->
    <xsl:template match="tei:seg[normalize-space(.)='']" mode="pass4"/>
 
-   <!-- Simplify bizzare structure as e.g.
+   <!-- Simplify bizarre structure as e.g.
 	<hi rend="footnote_reference">
   	  <seg rend="bold">
 	    <note place="foot" xml:id="ftn8" n="8">...</note>
 	  </seg>
 	</hi>
-	(maybe this happes only with LibreOffice Writer?)   -->
+	(maybe this happens only with LibreOffice Writer?)   -->
    <xsl:template match="tei:hi[tei:match(@rend,'footnote_reference')][tei:seg/tei:note]" mode="pass4">
      <xsl:apply-templates select="tei:seg/tei:note" mode="pass4"/>
    </xsl:template>
@@ -1074,7 +1074,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:copy>
     </xsl:if>
   </xsl:template>
-  <!-- find id of left edge lb/pb if exists; carefull with whitespace on left -->
+  <!-- find id of left edge lb/pb if exists; careful with whitespace on left -->
   <xsl:template match="*" mode="left">
     <xsl:variable name="left" select="*[1][not(normalize-space(preceding-sibling::text())!='')]"/>
     <xsl:choose>
@@ -1086,7 +1086,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <!-- find id of right edge lb/pb if exists; carefull with whitespace on right -->
+  <!-- find id of right edge lb/pb if exists; careful with whitespace on right -->
   <xsl:template match="*" mode="right">
     <xsl:variable name="right" select="*[last()][not(normalize-space(following-sibling::text())!='')]"/>
     <xsl:choose>

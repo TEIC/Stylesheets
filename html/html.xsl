@@ -897,7 +897,7 @@ of this software, even if advised of the possibility of such damage.
         <!-- 2. we are a singleton -->
         <xsl:when test="parent::tei:body[count(*)=1] and not(tei:div or
                         tei:div2)">true</xsl:when>
-        <!-- 1. we have no proceding sections at top level -->
+        <!-- 1. we have no preceding sections at top level -->
         <xsl:when test="not(ancestor::tei:group) and parent::tei:body and
                         not(parent::tei:body/preceding-sibling::tei:front)
                         and not (preceding-sibling::*)">true</xsl:when>

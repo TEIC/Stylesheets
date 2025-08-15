@@ -82,7 +82,7 @@
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Helper template for the "elementSpec" template. The code has been moved here to make 
-      it accesible for the "attList" template.</desc>
+      it accessible for the "attList" template.</desc>
   </doc>
   <xsl:template name="process-attList-children" as="node()*">
     <xsl:param name="results" tunnel="yes" as="node()*"/>

@@ -1627,8 +1627,8 @@ scheme %teidata.pointer;  #REQUIRED >
  %Tatt.editLike.attributes;
  %Tatt.naming.attributes;
  %Tatt.typed.attributes; >
-<!--doc:(closer) groups together salutations, datelines, and similar phrases appearing as a final group at the end of a division, especially of a letter. [4.2.2. Openers and Closers 4.2. Elements Common to All Divisions] -->
-<!ELEMENT closer (#PCDATA|_DUMMY_model.gLike|signed|dateline|salute|%model.phrase;|%model.global;)*>
+<!--doc:(closer) groups together salutations, datelines, bylines, and similar phrases appearing as a final group at the end of a division, especially of a letter. [4.2.2. Openers and Closers 4.2. Elements Common to All Divisions] -->
+<!ELEMENT closer (#PCDATA|_DUMMY_model.gLike|byline|signed|dateline|salute|%model.phrase;|%model.global;)*>
 <!ATTLIST closer xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST closer
  %Tatt.global.attributes;
@@ -1907,7 +1907,7 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.cmc.attributes; >
 <!--doc:(event) contains data relating to anything of significance that happens in time. [14.3.1. Basic Principles] -->
-<!ELEMENT event (((idno)*,(%model.headLike;)*,((%model.pLike;)+|(%model.labelLike;)+|(eventName)+),(%model.noteLike;|%model.biblLike;|linkGrp|link|idno|ptr)*,(%model.eventLike;)*,(%model.personLike;|listPerson)*,(%model.placeLike;|listPlace)*,(%model.objectLike;)*,(relation|listRelation)*))>
+<!ELEMENT event (((idno)*,(%model.headLike;)*,((%model.pLike;)+|(%model.labelLike;)+|(eventName)+),(%model.noteLike;|%model.biblLike;|%model.ptrLike;|linkGrp|link|idno)*,(%model.eventLike;)*,(%model.personLike;|listPerson)*,(%model.placeLike;|listPlace)*,(%model.objectLike;)*,(relation|listRelation)*))>
 <!ATTLIST event xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST event
  %Tatt.global.attributes;
@@ -1946,7 +1946,7 @@ type %teidata.enumerated;  #IMPLIED >
 <!ATTLIST extent
  %Tatt.global.attributes; >
 <!--doc:contains a representation of some written source in the form of a set of images rather than as transcribed or encoded text. [12.1. Digital Facsimiles] -->
-<!ELEMENT facsimile (((front)?,(%model.graphicLike;|surface|surfaceGrp)+,(back)?))>
+<!ELEMENT facsimile (((front)?,((%model.graphicLike;|surface|surfaceGrp)+|(facsimile)+),(back)?))>
 <!ATTLIST facsimile xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST facsimile
  %Tatt.global.attributes;
@@ -2701,7 +2701,7 @@ code %teidata.pointer;  #IMPLIED >
  %Tatt.cmc.attributes;
  %Tatt.written.attributes; >
 <!--doc:(organization) provides information about an identifiable organization such as a business, a tribe, or any other grouping of people. [14.3.3. Organizational Data] -->
-<!ELEMENT org (((%model.headLike;)*,((%model.pLike;)*|(%model.labelLike;|%model.nameLike;|%model.placeLike;|%model.orgPart;|%model.milestoneLike;)*),(%model.noteLike;|%model.biblLike;|linkGrp|link|ptr)*,(%model.personLike;)*))>
+<!ELEMENT org (((%model.headLike;)*,((%model.pLike;)*|(%model.labelLike;|%model.nameLike;|%model.placeLike;|%model.orgPart;|%model.milestoneLike;)*),(%model.noteLike;|%model.biblLike;|%model.ptrLike;|linkGrp|link)*,(%model.personLike;)*))>
 <!ATTLIST org xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST org
  %Tatt.global.attributes;
@@ -2776,7 +2776,7 @@ Elements] -->
 evidence %teidata.enumerated;  #IMPLIED
 value NMTOKENS  #IMPLIED >
 <!--doc:(person) provides information about an identifiable individual, for example a participant in a language interaction, or a person referred to in a historical source. [14.3.2. The Person Element 16.2.2. The Participant Description] -->
-<!ELEMENT person ((%model.pLike;)+|(%model.personPart;|%model.global;|ptr)*)>
+<!ELEMENT person ((%model.pLike;)+|(%model.personPart;|%model.global;|%model.ptrLike;)*)>
 <!ATTLIST person xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST person
  %Tatt.global.attributes;
@@ -2809,7 +2809,7 @@ sex CDATA  #IMPLIED
 gender CDATA  #IMPLIED
 age %teidata.enumerated;  #IMPLIED >
 <!--doc:(place) contains data about a geographic location. [14.3.4. Places] -->
-<!ELEMENT place (((%model.headLike;)*,((%model.pLike;)*|(%model.labelLike;|%model.placeStateLike;|%model.eventLike;|name)*),(%model.noteLike;|%model.biblLike;|idno|ptr|linkGrp|link)*,(%model.placeLike;|listPlace)*))>
+<!ELEMENT place (((%model.headLike;)*,((%model.pLike;)*|(%model.labelLike;|%model.placeStateLike;|%model.eventLike;|name)*),(%model.noteLike;|%model.biblLike;|%model.ptrLike;|idno|linkGrp|link)*,(%model.placeLike;|listPlace)*))>
 <!ATTLIST place xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST place
  %Tatt.global.attributes;
@@ -3261,7 +3261,7 @@ code %teidata.pointer;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.declaring.attributes; >
 <!--doc:(speech) contains an individual speech in a performance text, or a passage presented as such in a prose or verse text. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.2. Speeches and Speakers] -->
-<!ELEMENT sp (((%model.global;)*,(speaker,(%model.global;)*)?,((lg|%model.lLike;|%model.pLike;|%model.listLike;|%model.stageLike;|%model.attributable;),((%model.global;)*|q))+))>
+<!ELEMENT sp (((%model.global;|%model.stageLike;)*,(speaker,(%model.global;)*),((lg|%model.lLike;|%model.pLike;|%model.listLike;|%model.stageLike;|%model.attributable;),((%model.global;)*|q))+))>
 <!ATTLIST sp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST sp
  %Tatt.global.attributes;
@@ -3406,7 +3406,7 @@ flipping %teidata.truthValue;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.dimensions.attributes;
  %Tatt.editLike.attributes;
-reason NMTOKENS  #IMPLIED >
+reason CDATA  #IMPLIED >
 <!--doc:(table) contains text displayed in tabular form, in rows and columns. [15.1.1. TEI Tables] -->
 <!ELEMENT table (((%model.headLike;|%model.global;)*,((row,(%model.global;)*)+|((%model.graphicLike;),(%model.global;)*)+),((%model.divBottom;),(%model.global;)*)*))>
 <!ATTLIST table xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -3633,5 +3633,5 @@ since %teidata.pointer;  #IMPLIED >
  %Tatt.coordinated.attributes;
  %Tatt.typed.attributes;
  %Tatt.written.attributes;
-rotate %teidata.count;  "0"  >
+rotate %teidata.numeric;  "0"  >
 <!-- end elements -->

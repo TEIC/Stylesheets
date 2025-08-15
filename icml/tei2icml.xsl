@@ -401,7 +401,7 @@ v0.4.3 - John's minor tweaks anf bugfixes: start para, ignored para, etc. some i
        footnote markup at the point in the text where the superscripted/boxed
        footnote anchor appears. 
 
-       Additionally, we must ignore the footnoe content paragraphs where they
+       Additionally, we must ignore the footnote content paragraphs where they
        actually appear in the document. -->
 
   <!-- == OpenOffice.org footnotes == -->
@@ -447,7 +447,7 @@ Problematic text starts with: <xsl:value-of select="."/>
 
 
   <!-- The hardcoded anchors that used to link the footnotes together should
-       also be omitted, as InDesign will generate auto-numbered foonote Markers. -->
+       also be omitted, as InDesign will generate auto-numbered footnote Markers. -->
   <xsl:template match="xhtml:*/xhtml:a[contains(@name, 'sdfootnote') or
                                        contains(@name, 'sdendnote')]"  
                 mode="character-style-range"/>
@@ -515,7 +515,7 @@ Problematic text starts with: <xsl:value-of select="."/>
   </xsl:template>              
 
   <!-- The hardcoded anchors that used to link the footnotes together should
-       also be omitted, as InDesign will generate auto-numbered foonote Markers. -->
+       also be omitted, as InDesign will generate auto-numbered footnote Markers. -->
   <xsl:template match="xhtml:*/xhtml:a[contains(@href, '#_ftnref')]"
                 mode="character-style-range"/>
 

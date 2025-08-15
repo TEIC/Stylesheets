@@ -2018,7 +2018,7 @@
                   <xsl:call-template name="makeExternalLink">
                     <xsl:with-param name="ptr" select="false()"/>
                     <xsl:with-param name="dest">
-                      <xsl:text>http://www.tei-c.org/Activities/Council/Working/tcw27.xml</xsl:text>
+                      <xsl:text>https://tei-c.org/documentation/tcw27/</xsl:text>
                     </xsl:with-param>
                   </xsl:call-template>
                 </xsl:for-each>
@@ -3219,7 +3219,7 @@
               <xsl:call-template name="makeExternalLink">
                 <xsl:with-param name="ptr" select="false()"/>
                 <xsl:with-param name="dest">
-                  <xsl:text>http://www.tei-c.org/Activities/Council/Working/tcw27.xml</xsl:text>
+                  <xsl:text>https://tei-c.org/documentation/tcw27/</xsl:text>
                 </xsl:with-param>
               </xsl:call-template>
             </xsl:for-each>
