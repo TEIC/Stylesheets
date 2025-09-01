@@ -2280,17 +2280,58 @@
     <xsl:param name="depth">1</xsl:param>
     <xsl:param name="me"/>
     <xsl:variable name="this" select="@ident"/>
+    <!-- JT NOTE AUG 31: CSS FOR THIS
+      
+      a + ul.showmembers_elementSpec {
+    display: flex;
+    list-style: none;
+    gap: 1ch;
+    padding: 0;
+}
+
+.showmembers_elementSpec > li {
+    display: inline;
+}
+
+li:has(ul) {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1ch;
+}
+
+ul.showmembers_classSpec {
+    /* display: block; */
+    width: 100%;
+}
+
+ul.showmembers_elementSpec {
+    display: inline;
+}
+
+a.link_odd_classSpec {
+    font-weight: bold;
+}
+
+a:has(+ul.showmembers_elementSpec).link_odd_classSpec:after {
+    content:  ": ";
+}
+
+li:has(ul):before {
+    /* content: "* "; */
+}
+-->
+    <!--TODO: Make this just the same as classSpec attList.-->
     <xsl:if test="not($this = $me) and key('CLASSMEMBERS', $this, $top )">
-      <xsl:element namespace="{$outputNS}" name="{$hiName}">
-        <xsl:attribute name="{$rendName}">
-          <xsl:text>showmembers</xsl:text>
-          <xsl:value-of select="$depth"/>
-        </xsl:attribute>
-        <xsl:if test="$depth > 1"> [</xsl:if>
-        <xsl:variable name="list">
-          <ClassList>
-            <xsl:for-each select="key('CLASSMEMBERS', $this, $top )">
-              <Item type="{local-name()}" ident="{@ident}">
+      
+        <xsl:for-each-group select="key('CLASSMEMBERS', $this, $top )" group-by="local-name()">
+          <xsl:sort select="current-grouping-key()" order="descending"/>
+          <xsl:element namespace="{$outputNS}" name="{$ulName}">
+            <xsl:attribute name="{$rendName}">
+              <xsl:text>showmembers_</xsl:text>
+              <xsl:value-of select="current-grouping-key()"/>
+            </xsl:attribute>
+            <xsl:for-each select="current-group()">
+              <xsl:element namespace="{$outputNS}" name="{$itemName}">
                 <xsl:call-template name="linkTogether">
                   <xsl:with-param name="name" select="concat(@prefix, @ident)"/>
                   <xsl:with-param name="reftext">
@@ -2306,20 +2347,10 @@
                     <xsl:value-of select="$depth + 1"/>
                   </xsl:with-param>
                 </xsl:call-template>
-              </Item>
+              </xsl:element>
             </xsl:for-each>
-          </ClassList>
-        </xsl:variable>
-        <xsl:for-each select="$list/ClassList/Item">
-          <xsl:sort select="@type"/>
-          <xsl:sort select="@ident"/>
-          <xsl:if test="position() > 1">
-            <xsl:call-template name="showSpaceBetweenItems"/>
-          </xsl:if>
-          <xsl:copy-of select="* | text()"/>
-        </xsl:for-each>
-        <xsl:if test="$depth > 1">] </xsl:if>
-      </xsl:element>
+          </xsl:element>
+        </xsl:for-each-group>
     </xsl:if>
   </xsl:template>
   <xsl:template name="generateParentsByAttribute">
