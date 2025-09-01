@@ -323,7 +323,9 @@ span.moduleSpecHead{
 ul.attList{}
 
 /* Display attList children as a inline list */
-ul.attList ul.classSpecAttDefs, 
+ul.attList ul.classSpecAttDefs,
+ul.classSpecList,
+ul.classSpecList ul.classSpecMembers_elementSpec > li,
 ul.attList ul.classSpecAttDefs > li{
     display:inline;
     margin:0;
@@ -332,14 +334,16 @@ ul.attList ul.classSpecAttDefs > li{
 
 /* class name links should have a colon after */
 ul.attList a.link_odd + ul.classSpecAttDefs::before,
-ul.attList li > .link_ref + ul.classSpecAttDefs::before{
+ul.attList li > .link_ref + ul.classSpecAttDefs::before,
+ul.classSpecList a.link_odd_classSpec + ul. + ul.classSpecMembers_elementSpec:before {
     content: ": ";
     text-decoration: none;
 }
 
 /* All classes and defined attributes (i.e. items in the lists)
    should be comma separated */
-ul.attList ul.classSpecAttDefs > li:not(:last-child)::after{
+ul.attList ul.classSpecAttDefs > li:not(:last-child)::after,
+ul.classSpecList ul.classSpecMembers_elementSpec > li:not(:last-child)::after{
     content: ", ";
 }
 

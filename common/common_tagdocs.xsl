@@ -2280,57 +2280,17 @@
     <xsl:param name="depth">1</xsl:param>
     <xsl:param name="me"/>
     <xsl:variable name="this" select="@ident"/>
-    <!-- JT NOTE AUG 31: CSS FOR THIS
-      
-      a + ul.showmembers_elementSpec {
-    display: flex;
-    list-style: none;
-    gap: 1ch;
-    padding: 0;
-}
-
-.showmembers_elementSpec > li {
-    display: inline;
-}
-
-li:has(ul) {
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 1ch;
-}
-
-ul.showmembers_classSpec {
-    /* display: block; */
-    width: 100%;
-}
-
-ul.showmembers_elementSpec {
-    display: inline;
-}
-
-a.link_odd_classSpec {
-    font-weight: bold;
-}
-
-a:has(+ul.showmembers_elementSpec).link_odd_classSpec:after {
-    content:  ": ";
-}
-
-li:has(ul):before {
-    /* content: "* "; */
-}
--->
-    <!--TODO: Make this just the same as classSpec attList.-->
     <xsl:if test="not($this = $me) and key('CLASSMEMBERS', $this, $top )">
-      
         <xsl:for-each-group select="key('CLASSMEMBERS', $this, $top )" group-by="local-name()">
           <xsl:sort select="current-grouping-key()" order="descending"/>
           <xsl:element namespace="{$outputNS}" name="{$ulName}">
-            <xsl:attribute name="{$rendName}">
-              <xsl:text>showmembers_</xsl:text>
-              <xsl:value-of select="current-grouping-key()"/>
+            <xsl:attribute name="{$rendName}" separator=" ">
+              <xsl:sequence select="'classSpecList'"/>
+              <xsl:sequence select="'showmembers_' || $depth"/>
+              <xsl:sequence select="'classSpecMembers_' || current-grouping-key()"/>
             </xsl:attribute>
             <xsl:for-each select="current-group()">
+              <xsl:sort select="@ident"/>
               <xsl:element namespace="{$outputNS}" name="{$itemName}">
                 <xsl:call-template name="linkTogether">
                   <xsl:with-param name="name" select="concat(@prefix, @ident)"/>
