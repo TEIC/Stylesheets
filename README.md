@@ -63,3 +63,7 @@ and tool-based projects such as
 [Anthologize](http://anthologize.org/), 
 [Versioning Machine](http://v-machine.org/), 
 and many more diverse projects.
+
+## Deleted profiles and transformations
+
+Some obsolete profiles and transformations have been removed. See DELETED.md for reasons, and details of the last release which included them.
