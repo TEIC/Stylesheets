@@ -283,7 +283,7 @@ group-starting-with="text()|ol|blockquote|div|p|br|ul"> -->
     </graphic>
   </xsl:template>
   <xsl:template match="ul|ol">
-    <list type="{if (self::ul) then 'ordered' else 'unordered'}">
+    <list rend="{if (self::ul) then 'bulleted' else 'numbered'}">
       <xsl:apply-templates/>
     </list>
   </xsl:template>

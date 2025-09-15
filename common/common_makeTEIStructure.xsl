@@ -129,7 +129,7 @@
           </list>
         </xsl:when>
         <xsl:when test="current-grouping-key()=2">
-          <list type="unordered">
+          <list rend="bulleted">
             <xsl:for-each select="current-group()">
               <xsl:element name="{@n}">
 		<xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="pass2"/>
@@ -138,7 +138,7 @@
           </list>
         </xsl:when>
         <xsl:when test="current-grouping-key()=3">
-          <list type="ordered">
+          <list rend="numbered">
             <xsl:for-each select="current-group()">
               <xsl:element name="{@n}">
 		<xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="pass2"/>
