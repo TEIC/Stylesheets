@@ -121,8 +121,6 @@ help:
 	@echo "  Only in $(AR)/: test_3.epub"
 	@echo "  Only in $(AR)/: test3.html"
 	@echo "  Only in $(AR)/: test4.html"
-	@echo "  Only in $(AR)/: testoucscoursesp5.xml"
-	@echo "  Only in $(AR)/: testoucscourses.xml.docx"
 	@echo "  Only in $(AR)/: test-pages.epub"
 	@echo "  Only in $(AR)/: test.processedodd"
 	@echo "  Only in $(AR)/: xml.tmp"
@@ -557,9 +555,6 @@ test-to-docx:
 	if [ $(DIFFNOW) -eq 1 ]; \
 		then diff  $(AR)/testnotes1.docx_document.xml $(ER)/testnotes1.docx_document.xml; \
 		else echo "==deferring: \` diff  $(AR)/testnotes1.docx_document.xml $(ER)/testnotes1.docx_document.xml \`"; fi
-
-	$(SAXON) testoucscourses.xml ../profiles/default/p4/from.xsl > $(AR)/testoucscoursesp5.xml
-	$(BINDIR)/teitodocx $(FLAGS) --profile=oucscourses $(AR)/testoucscoursesp5.xml $(AR)/testoucscourses.docx
 
 test-oddity: actual css
 	@echo "--------- Test/Makefile target=$@"
