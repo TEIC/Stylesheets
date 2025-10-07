@@ -376,7 +376,9 @@
             <xsl:if test="tei:content">
                 <j:array key="content">
                     <xsl:for-each select="tei:content">
-                        <xsl:call-template name="getContent"/>
+                        <xsl:call-template name="getContent">
+                            <xsl:with-param name="elements" select="*"/>
+                        </xsl:call-template>
                     </xsl:for-each>                    
                 </j:array>
             </xsl:if>
@@ -384,7 +386,8 @@
     </xsl:template>
     
     <xsl:template name="getContent">
-        <xsl:for-each select="*">
+        <xsl:param name="elements" select="*"/>
+        <xsl:for-each select="$elements">
             <j:map>
                 <xsl:choose>
                     <xsl:when test="self::tei:elementRef or self::tei:macroRef or self::tei:classRef">
@@ -396,7 +399,9 @@
                         <j:string key="minOccurs"><xsl:value-of select="if (@minOccurs) then @minOccurs else 1"/></j:string>
                         <j:string key="maxOccurs"><xsl:value-of select="if (@maxOccurs) then @maxOccurs else 1"/></j:string>
                         <j:array key="content">
-                            <xsl:call-template name="getContent"/>
+                            <xsl:call-template name="getContent">
+                                <xsl:with-param name="elements" select="*"/>
+                            </xsl:call-template>
                         </j:array>
                     </xsl:when>
                     <xsl:when test="self::tei:anyElement">
