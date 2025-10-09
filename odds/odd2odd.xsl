@@ -240,6 +240,9 @@ of this software, even if advised of the possibility of such damage.
           <xsl:value-of select="$currentDirectory"/>
           <xsl:value-of select="$loc"/>
         </xsl:when>
+        <xsl:when test="matches($currentDirectory, '^[A-Z]:\\')">
+          <xsl:value-of select="string-join(('file:///', translate($currentDirectory, '\', '/'), $loc), '/')"/>
+        </xsl:when>
         <xsl:when test="$currentDirectory=''">
           <xsl:value-of select="resolve-uri($loc,base-uri($top))"/>
         </xsl:when>
