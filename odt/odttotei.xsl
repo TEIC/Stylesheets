@@ -443,12 +443,12 @@ of this software, even if advised of the possibility of such damage.
         </list>
       </xsl:when>
       <xsl:when test="contains($style,'Number')">
-        <list type="ordered">
+        <list rend="numbered">
           <xsl:apply-templates/>
         </list>
       </xsl:when>
       <xsl:otherwise>
-        <list type="unordered">
+        <list rend="bulleted">
           <xsl:apply-templates/>
         </list>
       </xsl:otherwise>

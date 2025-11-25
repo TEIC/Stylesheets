@@ -646,7 +646,7 @@
   <!-- replace external <ptr/> with link, whose label = @target -->
   <xsl:template match="tei:ptr[not(@type)]|tei:ref[not(@type)]">
     <fo:basic-link external-destination="{@target}" border="dotted thin grey">
-      <xsl:apply-templates select="if (normalize-space()) then node() else @target"/>
+      <xsl:apply-templates select="if (normalize-space()) then node() else @target ! replace(., '&amp;', '&#8203;&amp;')"/>
     </fo:basic-link>
   </xsl:template>
   

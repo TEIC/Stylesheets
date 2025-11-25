@@ -371,7 +371,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:handNote">
     <xsl:if test="not(preceding-sibling::tei:handNote)">
       <xsl:variable name="Notes">
-        <tei:list type="ordered">
+        <tei:list rend="numbered">
           <xsl:for-each select="../tei:handNote">
             <tei:item>
               <xsl:copy-of select="*|text()"/>

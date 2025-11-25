@@ -819,11 +819,11 @@ end %teidata.pointer;  #IMPLIED'>
 <!ENTITY % model.divWrapper_sequenceOptional "meeting?, byline?, dateline?, argument?, epigraph?, salute?, docAuthor?, docDate?"> 
 <!ENTITY % model.divWrapper_sequenceOptionalRepeatable "meeting*, byline*, dateline*, argument*, epigraph*, salute*, docAuthor*, docDate*"> 
 <!ENTITY % model.divWrapper_sequenceRepeatable "meeting+, byline+, dateline+, argument+, epigraph+, salute+, docAuthor+, docDate+"> 
-<!ENTITY % model.divTopPart "%model.headLike; |opener |signed"> 
-<!ENTITY % model.divTopPart_sequence "%model.headLike;, opener, signed"> 
-<!ENTITY % model.divTopPart_sequenceOptional "%model.headLike;?, opener?, signed?"> 
-<!ENTITY % model.divTopPart_sequenceOptionalRepeatable "%model.headLike;*, opener*, signed*"> 
-<!ENTITY % model.divTopPart_sequenceRepeatable "%model.headLike;+, opener+, signed+"> 
+<!ENTITY % model.divTopPart "%model.headLike; |address |opener |signed"> 
+<!ENTITY % model.divTopPart_sequence "%model.headLike;, address, opener, signed"> 
+<!ENTITY % model.divTopPart_sequenceOptional "%model.headLike;?, address?, opener?, signed?"> 
+<!ENTITY % model.divTopPart_sequenceOptionalRepeatable "%model.headLike;*, address*, opener*, signed*"> 
+<!ENTITY % model.divTopPart_sequenceRepeatable "%model.headLike;+, address+, opener+, signed+"> 
 <!ENTITY % model.divTop "%model.divWrapper; |%model.divTopPart;"> 
 <!ENTITY % model.divTop_sequence "%model.divWrapper;, %model.divTopPart;"> 
 <!ENTITY % model.divTop_sequenceOptional "%model.divWrapper;?, %model.divTopPart;?"> 
@@ -839,11 +839,11 @@ end %teidata.pointer;  #IMPLIED'>
 <!ENTITY % model.pLike.front_sequenceOptional "head?, byline?, dateline?, argument?, epigraph?, docTitle?, titlePart?, docAuthor?, docEdition?, docImprint?, docDate?"> 
 <!ENTITY % model.pLike.front_sequenceOptionalRepeatable "head*, byline*, dateline*, argument*, epigraph*, docTitle*, titlePart*, docAuthor*, docEdition*, docImprint*, docDate*"> 
 <!ENTITY % model.pLike.front_sequenceRepeatable "head+, byline+, dateline+, argument+, epigraph+, docTitle+, titlePart+, docAuthor+, docEdition+, docImprint+, docDate+"> 
-<!ENTITY % model.divBottomPart "trailer |closer |signed |postscript"> 
-<!ENTITY % model.divBottomPart_sequence "trailer, closer, signed, postscript"> 
-<!ENTITY % model.divBottomPart_sequenceOptional "trailer?, closer?, signed?, postscript?"> 
-<!ENTITY % model.divBottomPart_sequenceOptionalRepeatable "trailer*, closer*, signed*, postscript*"> 
-<!ENTITY % model.divBottomPart_sequenceRepeatable "trailer+, closer+, signed+, postscript+"> 
+<!ENTITY % model.divBottomPart "address |trailer |closer |signed |postscript"> 
+<!ENTITY % model.divBottomPart_sequence "address, trailer, closer, signed, postscript"> 
+<!ENTITY % model.divBottomPart_sequenceOptional "address?, trailer?, closer?, signed?, postscript?"> 
+<!ENTITY % model.divBottomPart_sequenceOptionalRepeatable "address*, trailer*, closer*, signed*, postscript*"> 
+<!ENTITY % model.divBottomPart_sequenceRepeatable "address+, trailer+, closer+, signed+, postscript+"> 
 <!ENTITY % model.divBottom "%model.divWrapper; |%model.divBottomPart;"> 
 <!ENTITY % model.divBottom_sequence "%model.divWrapper;, %model.divBottomPart;"> 
 <!ENTITY % model.divBottom_sequenceOptional "%model.divWrapper;?, %model.divBottomPart;?"> 
@@ -3261,7 +3261,7 @@ code %teidata.pointer;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.declaring.attributes; >
 <!--doc:(speech) contains an individual speech in a performance text, or a passage presented as such in a prose or verse text. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.2. Speeches and Speakers] -->
-<!ELEMENT sp (((%model.global;|%model.stageLike;)*,(speaker,(%model.global;)*),((lg|%model.lLike;|%model.pLike;|%model.listLike;|%model.stageLike;|%model.attributable;),((%model.global;)*|q))+))>
+<!ELEMENT sp (((%model.global;)*,((%model.stageLike;),(%model.global;)*)*,(((speaker,(%model.global;)*),((lg|%model.lLike;|%model.pLike;|%model.listLike;|%model.attributable;|q|%model.stageLike;),(%model.global;)*))|((lg|%model.lLike;|%model.pLike;|%model.listLike;|%model.attributable;|q),(%model.global;)*)),((lg|%model.lLike;|%model.pLike;|%model.listLike;|%model.attributable;|q|%model.stageLike;),(%model.global;)*)*))>
 <!ATTLIST sp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST sp
  %Tatt.global.attributes;
