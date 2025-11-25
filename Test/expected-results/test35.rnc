@@ -374,41 +374,6 @@ tei_att.declarable.attribute.default =
       ## This element can only be selected explicitly, unless it is the only one of its kind, in which case it is selected if its parent is selected.
       "false"
   }?
-sch:pattern [
-  id = "declarable"
-  abstract = "true"
-  "\x{a}" ~
-  "      "
-  sch:rule [
-    context =
-      "$tde[ ancestor::tei:teiHeader                                  and                                  following-sibling::$tde                                  and                                  not( preceding-sibling::$tde ) ]"
-    "\x{a}" ~
-    "         "
-    sch:report [
-      test = "../child::$tde[ not( @xml:id ) ]"
-      "\x{a}" ~
-      "            When there is more than one "
-      sch:name [ ]
-      ", each must have an @xml:id\x{a}" ~
-      "          "
-    ]
-    "\x{a}" ~
-    "         "
-    sch:assert [
-      test =
-        "count( ../child::$tde[ normalize-space( @default ) = ('1','true') ] ) eq 1"
-      "\x{a}" ~
-      "            When there is more than one "
-      sch:name [ ]
-      ", one and only one must have a @default of 'true'.\x{a}" ~
-      "          "
-    ]
-    "\x{a}" ~
-    "      "
-  ]
-  "\x{a}" ~
-  "   "
-]
 tei_att.declaring.attributes = tei_att.declaring.attribute.decls
 tei_att.declaring.attribute.decls =
   
@@ -566,7 +531,7 @@ tei_att.global.source.attribute.source =
   }?
 sch:pattern [
   id =
-    "foo-att.global.source-source-only_1_ODD_source-constraint-rule-6"
+    "foo-att.global.source-source-only_1_ODD_source-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -707,7 +672,7 @@ tei_att.measurement.attribute.commodity =
     }
   }?
 sch:pattern [
-  id = "foo-att.measurement-att-measurement-unitRef-constraint-rule-7"
+  id = "foo-att.measurement-att-measurement-unitRef-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -802,7 +767,7 @@ tei_att.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "foo-att.pointing-targetLang-targetLang-constraint-rule-8"
+  id = "foo-att.pointing-targetLang-targetLang-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -934,7 +899,7 @@ tei_att.spanning.attribute.spanTo =
   }?
 sch:pattern [
   id =
-    "foo-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-9"
+    "foo-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -990,7 +955,7 @@ tei_att.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "foo-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-10"
+    "foo-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-9"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1024,7 +989,7 @@ tei_att.typed.attribute.subtype =
     xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 sch:pattern [
-  id = "foo-att.typed-subtypeTyped-constraint-rule-11"
+  id = "foo-att.typed-subtypeTyped-constraint-rule-10"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1847,7 +1812,8 @@ tei_model.divWrapper =
   | tei_salute
   | tei_docAuthor
   | tei_docDate
-tei_model.divTopPart = tei_model.headLike | tei_opener | tei_signed
+tei_model.divTopPart =
+  tei_model.headLike | tei_address | tei_opener | tei_signed
 tei_model.divTop = tei_model.divWrapper | tei_model.divTopPart
 tei_model.frontPart.drama = notAllowed
 tei_model.pLike.front =
@@ -1863,7 +1829,7 @@ tei_model.pLike.front =
   | tei_docImprint
   | tei_docDate
 tei_model.divBottomPart =
-  tei_trailer | tei_closer | tei_signed | tei_postscript
+  tei_address | tei_trailer | tei_closer | tei_signed | tei_postscript
 tei_model.divBottom = tei_model.divWrapper | tei_model.divBottomPart
 tei_model.titlepagePart =
   tei_graphic
@@ -2149,7 +2115,7 @@ tei_att.calendarSystem.attribute.calendar =
   }?
 sch:pattern [
   id =
-    "foo-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-12"
+    "foo-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-11"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -2234,7 +2200,7 @@ tei_p =
     tei_macro.paraContent
     >> sch:pattern [
          id =
-           "foo-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-13"
+           "foo-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2255,7 +2221,7 @@ tei_p =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-p-abstractModel-structure-p-in-l-constraint-rule-14"
+         id = "foo-p-abstractModel-structure-p-in-l-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2464,7 +2430,7 @@ tei_desc =
     tei_macro.limitedContent
     >> sch:pattern [
          id =
-           "foo-desc-deprecationInfo-only-in-deprecated-constraint-rule-15"
+           "foo-desc-deprecationInfo-only-in-deprecated-constraint-rule-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2560,7 +2526,7 @@ tei_rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "foo-rt-target-rt-target-not-span-constraint-rule-16"
+         id = "foo-rt-target-rt-target-not-span-constraint-rule-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2583,7 +2549,7 @@ tei_rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "foo-rt-from-rt-from-constraint-rule-17"
+         id = "foo-rt-from-rt-from-constraint-rule-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2608,7 +2574,7 @@ tei_rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "foo-rt-to-rt-to-constraint-rule-18"
+         id = "foo-rt-to-rt-to-constraint-rule-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3005,7 +2971,7 @@ tei_ptr =
   element tei:ptr {
     empty
     >> sch:pattern [
-         id = "foo-ptr-ptrAtts-constraint-rule-19"
+         id = "foo-ptr-ptrAtts-constraint-rule-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3039,7 +3005,7 @@ tei_ref =
   element tei:ref {
     tei_macro.paraContent
     >> sch:pattern [
-         id = "foo-ref-refAtts-constraint-rule-20"
+         id = "foo-ref-refAtts-constraint-rule-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3078,7 +3044,7 @@ tei_list =
          (tei_label, tei_model.global*, tei_item, tei_model.global*)+)),
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-list-gloss-list-must-have-labels-constraint-rule-21"
+         id = "foo-list-gloss-list-must-have-labels-constraint-rule-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3558,23 +3524,15 @@ tei_bibl =
   
   ## (bibliographic citation) contains a loosely-structured bibliographic citation of which the sub-components may or may not be explicitly tagged. [3.12.1. Methods of Encoding Bibliographic References and Lists of References 2.2.7. The Source Description 16.3.2. Declarable Elements]
   element tei:bibl {
-    ((text
-      | tei_model.gLike
-      | tei_model.highlighted
-      | tei_model.pPart.data
-      | tei_model.pPart.edit
-      | tei_model.segLike
-      | tei_model.ptrLike
-      | tei_model.biblPart
-      | tei_model.global)*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:bibl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (text
+     | tei_model.gLike
+     | tei_model.highlighted
+     | tei_model.pPart.data
+     | tei_model.pPart.edit
+     | tei_model.segLike
+     | tei_model.ptrLike
+     | tei_model.biblPart
+     | tei_model.global)*,
     tei_att.global.attributes,
     tei_att.canonical.attributes,
     tei_att.cmc.attributes,
@@ -3593,15 +3551,7 @@ tei_biblStruct =
      (tei_model.noteLike
       | tei_model.ptrLike
       | tei_relatedItem
-      | tei_citedRange)*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:biblStruct" ]
-         "\x{a}" ~
-         "         "
-       ],
+      | tei_citedRange)*),
     tei_att.global.attributes,
     tei_att.canonical.attributes,
     tei_att.cmc.attributes,
@@ -3618,15 +3568,7 @@ tei_listBibl =
     (tei_model.headLike*,
      tei_desc*,
      (tei_model.milestoneLike)*,
-     (tei_model.biblLike+, (tei_model.milestoneLike)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listBibl" ]
-         "\x{a}" ~
-         "         "
-       ],
+     (tei_model.biblLike+, (tei_model.milestoneLike)*)+),
     tei_att.global.attributes,
     tei_att.cmc.attributes,
     tei_att.declarable.attributes,
@@ -3640,7 +3582,7 @@ tei_relatedItem =
   element tei:relatedItem {
     ((tei_model.biblLike | tei_model.ptrLike)?)
     >> sch:pattern [
-         id = "foo-relatedItem-targetorcontent1-constraint-rule-22"
+         id = "foo-relatedItem-targetorcontent1-constraint-rule-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3684,7 +3626,7 @@ tei_l =
       | tei_model.inter
       | tei_model.global)*)
     >> sch:pattern [
-         id = "foo-l-abstractModel-structure-l-in-l-constraint-rule-23"
+         id = "foo-l-abstractModel-structure-l-in-l-constraint-rule-22"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3725,7 +3667,7 @@ tei_lg =
       | tei_lg)*,
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-lg-atleast1oflggapl-constraint-rule-24"
+         id = "foo-lg-atleast1oflggapl-constraint-rule-23"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3745,7 +3687,7 @@ tei_lg =
        ]
     >> sch:pattern [
          id =
-           "foo-lg-abstractModel-structure-lg-in-l-constraint-rule-25"
+           "foo-lg-abstractModel-structure-lg-in-l-constraint-rule-24"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3774,15 +3716,32 @@ tei_sp =
   
   ## (speech) contains an individual speech in a performance text, or a passage presented as such in a prose or verse text. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.2. Speeches and Speakers]
   element tei:sp {
-    ((tei_model.global | tei_model.stageLike)*,
-     (tei_speaker, tei_model.global*),
+    (tei_model.global*,
+     (tei_model.stageLike, tei_model.global*)*,
+     (((tei_speaker, tei_model.global*),
+       ((tei_lg
+         | tei_model.lLike
+         | tei_model.pLike
+         | tei_model.listLike
+         | tei_model.attributable
+         | tei_q
+         | tei_model.stageLike),
+        tei_model.global*))
+      | ((tei_lg
+          | tei_model.lLike
+          | tei_model.pLike
+          | tei_model.listLike
+          | tei_model.attributable
+          | tei_q),
+         tei_model.global*)),
      ((tei_lg
        | tei_model.lLike
        | tei_model.pLike
        | tei_model.listLike
-       | tei_model.stageLike
-       | tei_model.attributable),
-      (tei_model.global* | tei_q))+),
+       | tei_model.attributable
+       | tei_q
+       | tei_model.stageLike),
+      tei_model.global*)*),
     tei_att.global.attributes,
     tei_att.ascribed.directed.attributes,
     tei_att.placement.attributes,
@@ -3841,7 +3800,7 @@ tei_stage =
          | 
            ## more than one of the above
            "mixed"
-         | xsd:token { pattern = "[^\p{C}\p{Z}]+" })*
+         | xsd:token { pattern = "[^\p{C}\p{Z}]+" })+
       }
     }?,
     empty
@@ -4080,15 +4039,7 @@ tei_availability =
   
   ## (availability) supplies information about the availability of a text, for example any restrictions on its use or distribution, its copyright status, any licence applying to it, etc. [2.2.4. Publication, Distribution, Licensing, etc.]
   element tei:availability {
-    ((tei_model.availabilityPart | tei_model.pLike)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:availability" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (tei_model.availabilityPart | tei_model.pLike)+,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     
@@ -4123,15 +4074,7 @@ tei_seriesStmt =
     (tei_model.pLike+
      | (tei_title+,
         (tei_editor | tei_respStmt)*,
-        (tei_idno | tei_biblScope)*))
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:seriesStmt" ]
-         "\x{a}" ~
-         "         "
-       ],
+        (tei_idno | tei_biblScope)*)),
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     empty
@@ -4151,15 +4094,7 @@ tei_sourceDesc =
     (tei_model.pLike+
      | (tei_model.biblLike
         | tei_model.sourceDescPart
-        | tei_model.listLike)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:sourceDesc" ]
-         "\x{a}" ~
-         "         "
-       ],
+        | tei_model.listLike)+),
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     empty
@@ -4175,15 +4110,7 @@ tei_biblFull =
        tei_seriesStmt*,
        tei_notesStmt?),
       tei_sourceDesc*)
-     | (tei_fileDesc, tei_profileDesc))
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:biblFull" ]
-         "\x{a}" ~
-         "         "
-       ],
+     | (tei_fileDesc, tei_profileDesc)),
     tei_att.global.attributes,
     tei_att.canonical.attributes,
     tei_att.cmc.attributes,
@@ -4217,15 +4144,7 @@ tei_projectDesc =
   
   ## (project description) describes in detail the aim or purpose for which an electronic file was encoded, together with any other relevant information concerning the process by which it was assembled or collected. [2.3.1. The Project Description 2.3. The Encoding Description 16.3.2. Declarable Elements]
   element tei:projectDesc {
-    (tei_model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:projectDesc" ]
-         "\x{a}" ~
-         "         "
-       ],
+    tei_model.pLike+,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     empty
@@ -4234,15 +4153,7 @@ tei_samplingDecl =
   
   ## (sampling declaration) contains a prose description of the rationale and methods used in selecting texts, or parts of a text, for inclusion in the resource. [2.3.2. The Sampling Declaration 2.3. The Encoding Description 16.3.2. Declarable Elements]
   element tei:samplingDecl {
-    (tei_model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:samplingDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    tei_model.pLike+,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     empty
@@ -4251,15 +4162,7 @@ tei_editorialDecl =
   
   ## (editorial practice declaration) provides details of editorial principles and practices applied during the encoding of a text. [2.3.3. The Editorial Practices Declaration 2.3. The Encoding Description 16.3.2. Declarable Elements]
   element tei:editorialDecl {
-    ((tei_model.pLike | tei_model.editorialDeclPart)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:editorialDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (tei_model.pLike | tei_model.editorialDeclPart)+,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     empty
@@ -4268,15 +4171,7 @@ tei_correction =
   
   ## (correction principles) states how and under what circumstances corrections have been made in the text. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element tei:correction {
-    (tei_model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:correction" ]
-         "\x{a}" ~
-         "         "
-       ],
+    tei_model.pLike+,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     
@@ -4312,15 +4207,7 @@ tei_normalization =
   
   ## (normalization) indicates the extent of normalization or regularization of the original source carried out in converting it to electronic form. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element tei:normalization {
-    (tei_model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:normalization" ]
-         "\x{a}" ~
-         "         "
-       ],
+    tei_model.pLike+,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     
@@ -4342,15 +4229,7 @@ tei_quotation =
   element tei:quotation {
     (tei_model.pLike*)
     >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:quotation" ]
-         "\x{a}" ~
-         "         "
-       ]
-    >> sch:pattern [
-         id = "foo-quotation-quotationContents-constraint-rule-26"
+         id = "foo-quotation-quotationContents-constraint-rule-25"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4392,15 +4271,7 @@ tei_hyphenation =
   
   ## (hyphenation) summarizes the way in which hyphenation in a source text has been treated in an encoded version of it. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element tei:hyphenation {
-    (tei_model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:hyphenation" ]
-         "\x{a}" ~
-         "         "
-       ],
+    tei_model.pLike+,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     
@@ -4426,15 +4297,7 @@ tei_segmentation =
   
   ## (segmentation) describes the principles according to which the text has been segmented, for example into sentences, tone-units, graphemic strata, etc. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element tei:segmentation {
-    (tei_model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:segmentation" ]
-         "\x{a}" ~
-         "         "
-       ],
+    tei_model.pLike+,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     empty
@@ -4443,15 +4306,7 @@ tei_stdVals =
   
   ## (standard values) specifies the format used when standardized date or number values are supplied. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element tei:stdVals {
-    (tei_model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:stdVals" ]
-         "\x{a}" ~
-         "         "
-       ],
+    tei_model.pLike+,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     empty
@@ -4460,15 +4315,7 @@ tei_interpretation =
   
   ## (interpretation) describes the scope of any analytic or interpretive information added to the text in addition to the transcription. [2.3.3. The Editorial Practices Declaration]
   element tei:interpretation {
-    (tei_model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:interpretation" ]
-         "\x{a}" ~
-         "         "
-       ],
+    tei_model.pLike+,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     empty
@@ -4477,15 +4324,7 @@ tei_punctuation =
   
   ## specifies editorial practice adopted with respect to punctuation marks in the original. [2.3.3. The Editorial Practices Declaration 3.2. Treatment of Punctuation]
   element tei:punctuation {
-    (tei_model.pLike*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:punctuation" ]
-         "\x{a}" ~
-         "         "
-       ],
+    tei_model.pLike*,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     
@@ -4597,15 +4436,7 @@ tei_styleDefDecl =
   
   ## (style definition language declaration) specifies the name of the formal language in which style or renditional information is supplied elsewhere in the document. The specific version of the scheme may also be supplied. [2.3.5. The Default Style Definition Language Declaration]
   element tei:styleDefDecl {
-    (tei_model.pLike*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:styleDefDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    tei_model.pLike*,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     tei_att.styleDef.attributes,
@@ -4618,15 +4449,7 @@ tei_refsDecl =
     (tei_model.pLike+
      | tei_citeStructure+
      | tei_cRefPattern+
-     | tei_refState+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:refsDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+     | tei_refState+),
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     empty
@@ -4661,7 +4484,7 @@ tei_citeStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "foo-citeStructure-match-citestructure-outer-match-constraint-rule-27"
+           "foo-citeStructure-match-citestructure-outer-match-constraint-rule-26"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4682,7 +4505,7 @@ tei_citeStructure =
        ]
     >> sch:pattern [
          id =
-           "foo-citeStructure-match-citestructure-inner-match-constraint-rule-28"
+           "foo-citeStructure-match-citestructure-inner-match-constraint-rule-27"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4826,15 +4649,7 @@ tei_geoDecl =
     ]
   ]
   element tei:geoDecl {
-    tei_macro.phraseSeq
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:geoDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    tei_macro.phraseSeq,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     
@@ -4966,15 +4781,7 @@ tei_langUsage =
   
   ## (language usage) describes the languages, sublanguages, registers, dialects, etc. represented within a text. [2.4.2. Language Usage 2.4. The Profile Description 16.3.2. Declarable Elements]
   element tei:langUsage {
-    (tei_model.pLike+ | tei_language+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:langUsage" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (tei_model.pLike+ | tei_language+),
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     empty
@@ -5010,15 +4817,7 @@ tei_textClass =
   
   ## (text classification) groups information which describes the nature or topic of a text in terms of a standard classification scheme, thesaurus, etc. [2.4.3. The Text Classification]
   element tei:textClass {
-    ((tei_classCode | tei_catRef | tei_keywords)*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:textClass" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (tei_classCode | tei_catRef | tei_keywords)*,
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     empty
@@ -5098,15 +4897,7 @@ tei_correspDesc =
   
   ## (correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
   element tei:correspDesc {
-    (tei_model.correspDescPart+ | tei_model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:correspDesc" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (tei_model.correspDescPart+ | tei_model.pLike+),
     tei_att.global.attributes,
     tei_att.canonical.attributes,
     tei_att.declarable.attributes,
@@ -5154,15 +4945,7 @@ tei_xenoData =
   
   ## (non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]
   element tei:xenoData {
-    (text | anyElement_xenoData_1+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:xenoData" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (text | anyElement_xenoData_1+),
     tei_att.global.attributes,
     tei_att.declarable.attributes,
     tei_att.typed.attributes,
@@ -5315,7 +5098,7 @@ tei_div =
       (tei_model.divBottom, tei_model.global*)*)?)
     >> sch:pattern [
          id =
-           "foo-div-abstractModel-structure-div-in-l-constraint-rule-29"
+           "foo-div-abstractModel-structure-div-in-l-constraint-rule-28"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5336,7 +5119,7 @@ tei_div =
        ]
     >> sch:pattern [
          id =
-           "foo-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-30"
+           "foo-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-29"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5822,7 +5605,7 @@ tei_link =
   element tei:link {
     empty
     >> sch:pattern [
-         id = "foo-link-linkTargets3-constraint-rule-31"
+         id = "foo-link-linkTargets3-constraint-rule-30"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5865,7 +5648,7 @@ tei_ab =
     tei_macro.abContent
     >> sch:pattern [
          id =
-           "foo-ab-abstractModel-structure-ab-in-l-constraint-rule-32"
+           "foo-ab-abstractModel-structure-ab-in-l-constraint-rule-31"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6048,7 +5831,7 @@ tei_join =
   element tei:join {
     ((tei_model.descLike | tei_model.certLike)*)
     >> sch:pattern [
-         id = "foo-join-joinTargets3-constraint-rule-33"
+         id = "foo-join-joinTargets3-constraint-rule-32"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6204,7 +5987,7 @@ tei_standOff =
     (tei_model.standOffPart+)
     >> sch:pattern [
          id =
-           "foo-standOff-nested_standOff_should_be_typed-constraint-rule-34"
+           "foo-standOff-nested_standOff_should_be_typed-constraint-rule-33"
          "\x{a}" ~
          "            "
          sch:rule [

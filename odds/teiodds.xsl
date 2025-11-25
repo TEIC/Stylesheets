@@ -2243,11 +2243,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:variable name="count" select="$max - $min"/>
         <rng:group>
           <xsl:choose>
-            <xsl:when test="$min eq 0">
-              <rng:optional>
-                <xsl:copy-of select="$c"/>
-              </rng:optional>
-            </xsl:when>
+            <xsl:when test="$min eq 0"/>
             <xsl:otherwise>
               <xsl:for-each select="1 to min( ( $min, $maxint ) )">
                 <xsl:copy-of select="$c"/>

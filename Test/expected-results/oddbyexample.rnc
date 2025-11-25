@@ -7,9 +7,9 @@ namespace teix = "http://www.tei-c.org/ns/Examples"
 namespace xi = "http://www.w3.org/2001/XInclude"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# Schema generated from ODD source 2025-08-14T10:27:38Z. . 
-# TEI Edition: P5 Version 4.10.0a. Last updated on 13th August 2025, revision 73d59c946 
-# TEI Edition Location: https://www.tei-c.org/Vault/P5/4.10.0a/ 
+# Schema generated from ODD source 2025-10-07T16:49:40Z. . 
+# TEI Edition: P5 Version 4.11.0a. Last updated on 6th October 2025, revision 2d8eae701 
+# TEI Edition Location: https://www.tei-c.org/Vault/P5/4.11.0a/ 
 #
 
 #
@@ -214,41 +214,6 @@ att.declarable.attribute.default =
       ## This element can only be selected explicitly, unless it is the only one of its kind, in which case it is selected if its parent is selected.
       "false"
   }?
-sch:pattern [
-  id = "declarable"
-  abstract = "true"
-  "\x{a}" ~
-  "      "
-  sch:rule [
-    context =
-      "$tde[ ancestor::tei:teiHeader                                  and                                  following-sibling::$tde                                  and                                  not( preceding-sibling::$tde ) ]"
-    "\x{a}" ~
-    "         "
-    sch:report [
-      test = "../child::$tde[ not( @xml:id ) ]"
-      "\x{a}" ~
-      "            When there is more than one "
-      sch:name [ ]
-      ", each must have an @xml:id\x{a}" ~
-      "          "
-    ]
-    "\x{a}" ~
-    "         "
-    sch:assert [
-      test =
-        "count( ../child::$tde[ normalize-space( @default ) = ('1','true') ] ) eq 1"
-      "\x{a}" ~
-      "            When there is more than one "
-      sch:name [ ]
-      ", one and only one must have a @default of 'true'.\x{a}" ~
-      "          "
-    ]
-    "\x{a}" ~
-    "      "
-  ]
-  "\x{a}" ~
-  "   "
-]
 att.declaring.attributes = att.declaring.attribute.decls
 att.declaring.attribute.decls =
   
@@ -344,7 +309,7 @@ att.global.source.attribute.source =
   }?
 sch:pattern [
   id =
-    "oddbyexample-att.global.source-source-only_1_ODD_source-constraint-rule-6"
+    "oddbyexample-att.global.source-source-only_1_ODD_source-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -391,7 +356,7 @@ att.typed.attribute.subtype =
     xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 sch:pattern [
-  id = "oddbyexample-att.typed-subtypeTyped-constraint-rule-7"
+  id = "oddbyexample-att.typed-subtypeTyped-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -816,7 +781,7 @@ p =
     macro.paraContent
     >> sch:pattern [
          id =
-           "oddbyexample-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-8"
+           "oddbyexample-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -838,7 +803,7 @@ p =
        ]
     >> sch:pattern [
          id =
-           "oddbyexample-p-abstractModel-structure-p-in-l-constraint-rule-9"
+           "oddbyexample-p-abstractModel-structure-p-in-l-constraint-rule-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -954,15 +919,7 @@ sourceDesc =
   ## (source description) describes the source(s) from which an electronic text was derived or generated, typically a bibliographic description in the case of a digitized text, or a phrase such as born digital for a text which has no previous existence. [2.2.7. The Source Description]
   element sourceDesc {
     (model.pLike+
-     | (model.biblLike | model.sourceDescPart | model.listLike)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:sourceDesc" ]
-         "\x{a}" ~
-         "         "
-       ],
+     | (model.biblLike | model.sourceDescPart | model.listLike)+),
     att.global.attributes,
     att.declarable.attributes,
     empty

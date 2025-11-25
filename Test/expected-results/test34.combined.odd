@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:bar="http://blah.blah/bar" xmlns:blah="http://blah.blah/blah" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:base="file:/tei/Stylesheets/Test/test34.odd" xml:lang="en"><?TEIVERSION P5 Version 4.10.0a. Last updated on
-        13th August 2025, revision 73d59c946?>
+<?xml version="1.0" encoding="utf-8"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:bar="http://blah.blah/bar" xmlns:blah="http://blah.blah/blah" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:base="file:/home/syd/Documents/Stylesheets_gitHub/Test/test34.odd" xml:lang="en"><?TEIVERSION P5 Version 4.11.0a. Last updated on
+        6th October 2025, revision 2d8eae701?>
   <teiHeader><fileDesc>
       <titleStmt>
         <title>Namespace Test</title>
@@ -1164,21 +1164,28 @@ Elements</ref>
       <att>decls</att>.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos para los elementos contenidos en el encabezado que pueden ser seleccionados autónomamente mediante el atributo <att>decls</att> adecuado.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">individua attributi per gli elementi contenuti nell'intestazione che possono essere selezionati autonomamente grazie all'apposito attributo <att>decls</att></desc>
-  <constraintSpec ident="att-declarable" scheme="schematron" xml:lang="en">
-    <constraint>
-      <sch:pattern id="declarable" abstract="true">
-        
-        <sch:rule context="$tde[ ancestor::tei:teiHeader                                  and                                  following-sibling::$tde                                  and                                  not( preceding-sibling::$tde ) ]">
-          <sch:report test="../child::$tde[ not( @xml:id ) ]">
-            When there is more than one <sch:name/>, each must have an @xml:id
-          </sch:report>
-          <sch:assert test="count( ../child::$tde[ normalize-space( @default ) = ('1','true') ] ) eq 1">
-            When there is more than one <sch:name/>, one and only one must have a @default of 'true'.
-          </sch:assert>
-        </sch:rule>
-      </sch:pattern>
-    </constraint>
-  </constraintSpec>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <attList>
     <attDef ident="default" usage="opt">
       <desc versionDate="2005-10-10" xml:lang="en">indicates whether or not this element is selected by default when
@@ -10591,6 +10598,8 @@ concerned, as further discussed in section <ref target="https://www.tei-c.org/re
     <memberOf key="att.global"/>
     <memberOf key="att.cmc"/>
     <memberOf key="model.addressLike"/>
+    <memberOf key="model.divBottomPart"/>
+    <memberOf key="model.divTopPart"/>
     <memberOf key="model.publicationStmtPart.detail"/>
   </classes>
   <content>
@@ -10629,8 +10638,7 @@ concerned, as further discussed in section <ref target="https://www.tei-c.org/re
       <address>
         <addrLine>Centre d'Études Supérieures de la Renaissance</addrLine>
         <addrLine>59, rue Néricault-Destouches</addrLine>
-        <addrLine> 37013
-TOURS</addrLine>
+        <addrLine> 37013 TOURS</addrLine>
         <addrLine>France</addrLine>
       </address>
     </egXML>
@@ -10660,7 +10668,7 @@ TOURS</addrLine>
       <address>
         <addrLine>Computing Center, MC 135</addrLine>
         <addrLine>P.O. Box 6998</addrLine>
-        <addrLine>Chicago, IL  60680</addrLine>
+        <addrLine>Chicago, IL 60680</addrLine>
         <addrLine>USA</addrLine>
       </address>
     </egXML>
@@ -10668,32 +10676,26 @@ TOURS</addrLine>
   <exemplum xml:lang="mul">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-address-egXML-zn" source="#NONE">
       <address>
-           <country key="FR"/>
-             <settlement type="city">Lyon</settlement>
-              <postCode>69002</postCode>
-             <district type="arrondissement">IIème</district>
-             <district type="quartier">Perrache</district>
-             <street><num>30</num>, Cours de Verdun</street>
-         </address>
+        <country key="FR"/>
+        <settlement type="city">Lyon</settlement>
+        <postCode>69002</postCode>
+        <district type="arrondissement">IIème</district>
+        <district type="quartier">Perrache</district>
+        <street><num>30</num>, Cours de Verdun</street>
+      </address>
     </egXML>
   </exemplum>
   <remarks versionDate="2007-12-16" xml:lang="en">
-    <p rend="dataDesc">This element should be used for postal addresses only. Within it, the generic element <gi>addrLine</gi> may
-      be used as an alternative to any of the more specialized elements available from the <ident type="class">model.addrPart</ident> class, such as <gi>street</gi>, <gi>postCode</gi> etc.</p>
+    <p rend="dataDesc">This element should be used for postal addresses only. Within it, the generic element <gi>addrLine</gi> may be used as an alternative to any of the more specialized elements available from the <ident type="class">model.addrPart</ident> class, such as <gi>street</gi>, <gi>postCode</gi> etc.</p>
   </remarks>
   <remarks versionDate="2007-06-12" xml:lang="fr">
-    <p rend="dataDesc">Cet élément ne doit être utilisé que pour donner une adresse postale. A l'intérieur de cet élément,
-      l'élément générique <gi>addrLine</gi> peut être utilisé comme élément alternatif aux éléments plus spécialisés de la classe
-        <ident type="class">model.addrPart</ident> class, tels que <gi>street</gi>, <gi>postCode</gi> etc.</p>
+    <p rend="dataDesc">Cet élément ne doit être utilisé que pour donner une adresse postale. A l'intérieur de cet élément, l'élément générique <gi>addrLine</gi> peut être utilisé comme élément alternatif aux éléments plus spécialisés de la classe <ident type="class">model.addrPart</ident> class, tels que <gi>street</gi>, <gi>postCode</gi> etc.</p>
   </remarks>
   <remarks versionDate="2008-04-05" xml:lang="ja">
-    <p rend="dataDesc"> 当該要素は、郵便配達情報にのみ使用されるべきである。 子要素として要素<gi>addrLine</gi>は、クラスmodel.addrPartにある要
-      素の代わりとして、例えば、要素<gi>street</gi>や要素 <gi>postcode</gi>として使用することができる。 </p>
+    <p rend="dataDesc"> 当該要素は、郵便配達情報にのみ使用されるべきである。 子要素として要素<gi>addrLine</gi>は、クラスmodel.addrPartにある要 素の代わりとして、例えば、要素<gi>street</gi>や要素 <gi>postcode</gi>として使用することができる。 </p>
   </remarks>
   <remarks versionDate="2016-11-24" xml:lang="de">
-    <p rend="dataDesc">Dieses Element sollte ausschließlich für postalische Addressen verwendet werden. Innerhalb des Elements 
-          kann das generische <gi>addrLine</gi>-Element als Alternative zu den spezielleren Elementen aus der 
-          <ident type="class">model.addrPart</ident>-Klasse, wie <gi>street</gi> (Straße), <gi>postCode</gi> (Postleitzahl), etc. verwendet werden.</p>
+    <p rend="dataDesc">Dieses Element sollte ausschließlich für postalische Addressen verwendet werden. Innerhalb des Elements kann das generische <gi>addrLine</gi>-Element als Alternative zu den spezielleren Elementen aus der <ident type="class">model.addrPart</ident>-Klasse, wie<gi>street</gi> (Straße), <gi>postCode</gi> (Postleitzahl), etc. verwendet werden.</p>
   </remarks>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#CONAAD">3.6.2. Addresses</ref>
@@ -12539,7 +12541,7 @@ Measures</ref>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-item-egXML-fz" source="#fr-ex-Perec-vie">
-      <list type="unordered">
+      <list rend="bulleted">
         <head>Tentative d'inventaire de quelques-unes des choses qui ont été trouvées dans
               les escaliers au fil des ans.</head>
         <item>Plusieurs photos, dont celle d'une jeune fille de quinze<lb/> ans vêtue d'un slip
@@ -12747,7 +12749,7 @@ Measures</ref>
         des listes ordonnées.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-label-egXML-of" source="#fr-ex-ATILF"> L’unité mixte de
         recherche ATILF (Analyse et Traitement Informatique de la Langue Française) propose 3 types
-        de ressources : <list rend="runon" type="ordered"><label>(1)</label><item>Des ressources linguistiques publiées.</item><label>(2) </label><item>Des ressources linguistiques informatisées.</item><label>(3) </label><item>Des ressources linguistiques logicielles.</item></list>
+        de ressources : <list rend="runon numbered"><label>(1)</label><item>Des ressources linguistiques publiées.</item><label>(2) </label><item>Des ressources linguistiques informatisées.</item><label>(3) </label><item>Des ressources linguistiques logicielles.</item></list>
       </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
@@ -12805,7 +12807,7 @@ Measures</ref>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-label-egXML-te"> 有關本書的版權問題，我做出以下兩點聲明。<list rend="runon" type="ordered"><label>(1)</label><item>未經授權許可，請勿擅自複印。</item><label>(2) </label><item>歡迎學術引用本文，然請詳細標明出處。</item></list>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-label-egXML-te"> 有關本書的版權問題，我做出以下兩點聲明。<list rend="runon numbered"><label>(1)</label><item>未經授權許可，請勿擅自複印。</item><label>(2) </label><item>歡迎學術引用本文，然請詳細標明出處。</item></list>
       </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
@@ -12828,7 +12830,7 @@ Measures</ref>
       the <gi>label</gi> element is synonymous with the <att>n</att> attribute on the <gi>item</gi>
       element:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-label-egXML-dj" source="#GibAut">I will add two facts, which have seldom occurred
-      in the composition of six, or at least of five quartos. <list rend="runon" type="ordered"><label>(1)</label><item>My first rough manuscript, without any intermediate copy, has been sent to the press.</item><label>(2) </label><item>Not a sheet has been seen by any human eyes, excepting those of the author and the
+      in the composition of six, or at least of five quartos. <list rend="runon numbered"><label>(1)</label><item>My first rough manuscript, without any intermediate copy, has been sent to the press.</item><label>(2) </label><item>Not a sheet has been seen by any human eyes, excepting those of the author and the
           printer: the faults and the merits are exclusively my own.</item></list>
       </egXML>
   </exemplum>
@@ -12838,7 +12840,7 @@ Measures</ref>
       <title>Autobiographie</title>. In diesem Fall ist das <gi>label</gi>-Element gleichbedeutend
       mit dem <att>n</att>-Attribut des <gi>item</gi>-Elements:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-label-egXML-pr" source="#GibAut">I will add two facts, which have seldom occurred
-      in the composition of six, or at least of five quartos. <list rend="runon" type="ordered"><label>(1)</label><item>My first rough manuscript, without any intermediate copy, has been sent to the press.</item><label>(2) </label><item>Not a sheet has been seen by any human eyes, excepting those of the author and the
+      in the composition of six, or at least of five quartos. <list rend="runon numbered"><label>(1)</label><item>My first rough manuscript, without any intermediate copy, has been sent to the press.</item><label>(2) </label><item>Not a sheet has been seen by any human eyes, excepting those of the author and the
         printer: the faults and the merits are exclusively my own.</item></list>
     </egXML>
   </exemplum>
@@ -16350,30 +16352,62 @@ epistemology, methodology and history of
     <memberOf key="model.divPart"/>
   </classes>
   <content>
+    
+    
+    
     <sequence>
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.global" minOccurs="1" maxOccurs="1"/>
+      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      <sequence minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.stageLike" minOccurs="1" maxOccurs="1"/>
-      </alternate>
-      <sequence>
-        <elementRef key="speaker"/>
         <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
-      <sequence minOccurs="1" maxOccurs="unbounded">
-        <alternate>
+      <alternate minOccurs="1" maxOccurs="1">
+        <sequence minOccurs="1" maxOccurs="1">
+          <sequence minOccurs="1" maxOccurs="1">
+            <elementRef key="speaker" minOccurs="1" maxOccurs="1"/>
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+          </sequence>
+          <sequence minOccurs="1" maxOccurs="1">
+            <alternate minOccurs="1" maxOccurs="1">
+              <elementRef key="lg"/>
+              <classRef key="model.lLike"/>
+              <classRef key="model.pLike"/>
+              <classRef key="model.listLike"/>
+              <classRef key="model.attributable"/>
+              <elementRef key="q"/>
+              <classRef key="model.stageLike"/>
+            </alternate>
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+          </sequence>
+        </sequence>
+        <sequence minOccurs="1" maxOccurs="1">
+          <alternate minOccurs="1" maxOccurs="1">
+            <elementRef key="lg"/>
+            <classRef key="model.lLike"/>
+            <classRef key="model.pLike"/>
+            <classRef key="model.listLike"/>
+            <classRef key="model.attributable"/>
+            <elementRef key="q"/>
+          </alternate>
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+      </alternate>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <alternate minOccurs="1" maxOccurs="1">
           <elementRef key="lg"/>
           <classRef key="model.lLike"/>
           <classRef key="model.pLike"/>
           <classRef key="model.listLike"/>
-          <classRef key="model.stageLike"/>
           <classRef key="model.attributable"/>
-        </alternate>
-        <alternate>
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
           <elementRef key="q"/>
+          <classRef key="model.stageLike"/>
         </alternate>
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
     </sequence>
+    
+    
+    
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-sp-egXML-vc" source="#CODR-eg-296">

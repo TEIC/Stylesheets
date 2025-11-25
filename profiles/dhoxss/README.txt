@@ -1,1 +1,1 @@
-Oxford Digitial Humanities Summer School
+Oxford Digital Humanities Summer School

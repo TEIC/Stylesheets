@@ -443,7 +443,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:call-template>
         <xsl:call-template name="verbatim-makeIndent"/>
       </xsl:when>
-      <xsl:when test="preceding-sibling::node()[1]/self::text()"> </xsl:when>
+      <xsl:when test="preceding-sibling::node()[1]/self::text()">&#x20;</xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="verbatim-lineBreak">
           <xsl:with-param name="id">9</xsl:with-param>
@@ -486,11 +486,27 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>&gt;</xsl:text>
           </xsl:with-param>
         </xsl:call-template>
-        <xsl:apply-templates mode="verbatim">
-          <xsl:with-param name="highlight">
-            <xsl:value-of select="$highlight"/>
-          </xsl:with-param>
-        </xsl:apply-templates>
+	<xsl:choose>
+	  <!-- 
+	       If we are generating the woven Schematron for a tagdoc page,
+	       ignore comments. (Per Stylesheets #746.)
+	  -->
+	  <xsl:when test="ancestor::sch:*|ancestor::tei:constraintSpec[@scheme eq 'schematron']">
+	    <xsl:apply-templates select="comment()"/>
+	    <xsl:apply-templates select="node() except comment()" mode="verbatim">
+	      <xsl:with-param name="highlight">
+		<xsl:value-of select="$highlight"/>
+	      </xsl:with-param>
+	    </xsl:apply-templates>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:apply-templates mode="verbatim">
+	      <xsl:with-param name="highlight">
+		<xsl:value-of select="$highlight"/>
+	      </xsl:with-param>
+	    </xsl:apply-templates>
+	  </xsl:otherwise>
+	</xsl:choose>
         <xsl:choose>
           <xsl:when test="ancestor::*[@xml:space][1]/@xml:space = 'preserve'"/>
           <xsl:when test="child::node()[last()]/self::text()[normalize-space(.) = '']">

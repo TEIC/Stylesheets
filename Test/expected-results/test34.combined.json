@@ -393,6 +393,8 @@
         "classes" : 
         { "model" : 
           [ "model.addressLike",
+            "model.divBottomPart",
+            "model.divTopPart",
             "model.publicationStmtPart.detail" ],
           "atts" : 
           [ "att.global",
@@ -10013,30 +10015,108 @@
             "maxOccurs" : "1",
             "content" : 
             [ 
-              { "type" : "alternate",
+              { "type" : "classRef",
+                "key" : "model.global" },
+              
+              { "type" : "sequence",
                 "minOccurs" : "0",
                 "maxOccurs" : "unbounded",
                 "content" : 
                 [ 
                   { "type" : "classRef",
-                    "key" : "model.global" },
-                  
-                  { "type" : "classRef",
-                    "key" : "model.stageLike" } ] },
-              
-              { "type" : "sequence",
-                "minOccurs" : "1",
-                "maxOccurs" : "1",
-                "content" : 
-                [ 
-                  { "type" : "elementRef",
-                    "key" : "speaker" },
+                    "key" : "model.stageLike" },
                   
                   { "type" : "classRef",
                     "key" : "model.global" } ] },
               
-              { "type" : "sequence",
+              { "type" : "alternate",
                 "minOccurs" : "1",
+                "maxOccurs" : "1",
+                "content" : 
+                [ 
+                  { "type" : "sequence",
+                    "minOccurs" : "1",
+                    "maxOccurs" : "1",
+                    "content" : 
+                    [ 
+                      { "type" : "sequence",
+                        "minOccurs" : "1",
+                        "maxOccurs" : "1",
+                        "content" : 
+                        [ 
+                          { "type" : "elementRef",
+                            "key" : "speaker" },
+                          
+                          { "type" : "classRef",
+                            "key" : "model.global" } ] },
+                      
+                      { "type" : "sequence",
+                        "minOccurs" : "1",
+                        "maxOccurs" : "1",
+                        "content" : 
+                        [ 
+                          { "type" : "alternate",
+                            "minOccurs" : "1",
+                            "maxOccurs" : "1",
+                            "content" : 
+                            [ 
+                              { "type" : "elementRef",
+                                "key" : "lg" },
+                              
+                              { "type" : "classRef",
+                                "key" : "model.lLike" },
+                              
+                              { "type" : "classRef",
+                                "key" : "model.pLike" },
+                              
+                              { "type" : "classRef",
+                                "key" : "model.listLike" },
+                              
+                              { "type" : "classRef",
+                                "key" : "model.attributable" },
+                              
+                              { "type" : "elementRef",
+                                "key" : "q" },
+                              
+                              { "type" : "classRef",
+                                "key" : "model.stageLike" } ] },
+                          
+                          { "type" : "classRef",
+                            "key" : "model.global" } ] } ] },
+                  
+                  { "type" : "sequence",
+                    "minOccurs" : "1",
+                    "maxOccurs" : "1",
+                    "content" : 
+                    [ 
+                      { "type" : "alternate",
+                        "minOccurs" : "1",
+                        "maxOccurs" : "1",
+                        "content" : 
+                        [ 
+                          { "type" : "elementRef",
+                            "key" : "lg" },
+                          
+                          { "type" : "classRef",
+                            "key" : "model.lLike" },
+                          
+                          { "type" : "classRef",
+                            "key" : "model.pLike" },
+                          
+                          { "type" : "classRef",
+                            "key" : "model.listLike" },
+                          
+                          { "type" : "classRef",
+                            "key" : "model.attributable" },
+                          
+                          { "type" : "elementRef",
+                            "key" : "q" } ] },
+                      
+                      { "type" : "classRef",
+                        "key" : "model.global" } ] } ] },
+              
+              { "type" : "sequence",
+                "minOccurs" : "0",
                 "maxOccurs" : "unbounded",
                 "content" : 
                 [ 
@@ -10058,21 +10138,16 @@
                         "key" : "model.listLike" },
                       
                       { "type" : "classRef",
-                        "key" : "model.stageLike" },
-                      
-                      { "type" : "classRef",
-                        "key" : "model.attributable" } ] },
-                  
-                  { "type" : "alternate",
-                    "minOccurs" : "1",
-                    "maxOccurs" : "1",
-                    "content" : 
-                    [ 
-                      { "type" : "classRef",
-                        "key" : "model.global" },
+                        "key" : "model.attributable" },
                       
                       { "type" : "elementRef",
-                        "key" : "q" } ] } ] } ] } ] },
+                        "key" : "q" },
+                      
+                      { "type" : "classRef",
+                        "key" : "model.stageLike" } ] },
+                  
+                  { "type" : "classRef",
+                    "key" : "model.global" } ] } ] } ] },
       
       { "ident" : "speaker",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -10167,7 +10242,7 @@
             "valDesc" : 
             [  ],
             "datatype" : 
-            { "min" : "0",
+            { "min" : "1",
               "max" : "unbounded",
               "dataRef" : 
               { "key" : "teidata.enumerated" } },

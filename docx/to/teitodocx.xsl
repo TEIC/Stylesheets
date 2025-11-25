@@ -2940,7 +2940,7 @@ of this software, even if advised of the possibility of such damage.
     <!-- fake listPerson into an unordered list -->
   <xsl:template match="tei:listPerson">
       <xsl:variable name="mylist">
-         <tei:list type="unordered">
+         <tei:list rend="bulleted">
 	   <xsl:apply-templates/>
          </tei:list>
       </xsl:variable>
