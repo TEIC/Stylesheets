@@ -648,6 +648,7 @@ clean:
 	(cd ..; for i in css/*; do rm -f `basename $$i`;done)
 	rm -f teitopdf.result.* *~
 	rm -f dcr.tmp xml.tmp
+	rm -f test6.docx test.docx testnotes1.docx
 	rm -fr $(AR)/ charts/ embeddings/ media/ Pictures/
 	rm -f $(DIFFOUT)
 
