@@ -141,6 +141,15 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:macroSpec[@predeclare='true']" name="PredeclareAllMacros" use="1"/>
 
 
+  <!--
+      ******** Note for removing deprection on 2026-11-13 or thereafter ********
+      In ~½ dozen places herein you will find the construct “@name |
+      @key”. These unions work because 1 and only 1 of those two
+      attributes will ever be present on the <attRef> being
+      processed. Should be reduced to just @key after 2026-11-13.
+  -->
+
+  
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
       <xsl:when test="$defaultSource != ''">
@@ -394,14 +403,14 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tei:attRef" mode="tangle">  
+  <xsl:template match="tei:attRef" mode="tangle">
     <xsl:choose>
       <xsl:when test="key('IDENTS',@class)">
         <rng:ref name="{tei:generateAttRef(.,$generalPrefix)}"/>
       </xsl:when>
       <xsl:when test="@class"/>
       <xsl:otherwise>
-        <rng:ref name="{@name}"/>
+        <rng:ref name="{@name|@key}"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -522,8 +531,7 @@ of this software, even if advised of the possibility of such damage.
                   </xsl:for-each>
                   <xsl:for-each select="tei:attList//tei:attDef[not(@mode='delete')]">
                     <xsl:if test="not(starts-with(@ident,'xmlns'))">
-                      <rng:ref
-                        name="{$c}.attribute.{translate(@ident,':','')}"/>
+                      <rng:ref name="{$c}.attribute.{translate(@ident,':','')}"/>
                     </xsl:if>
                   </xsl:for-each>
                   <xsl:for-each select="tei:attList//tei:attRef">
@@ -533,7 +541,7 @@ of this software, even if advised of the possibility of such damage.
                       </xsl:when>
                       <xsl:when test="@class"/>
                       <xsl:otherwise>
-                        <rng:ref name="{@name}"/>
+			<rng:ref name="{@name|@key}"/>
                       </xsl:otherwise>
                     </xsl:choose>
                   </xsl:for-each>
@@ -2371,11 +2379,11 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
       </xsl:for-each>
       <xsl:choose>
-        <xsl:when test="not(@name)">
+        <xsl:when test="not(@name|@key)">
           <xsl:value-of select="concat(@class,'.attributes')"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="concat(@class,'.attribute.',translate(@name,':',''))"/>
+          <xsl:value-of select="concat(@class,'.attribute.',translate( (@name|@key),':',''))"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
