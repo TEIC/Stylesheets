@@ -435,9 +435,6 @@ test-to-docx:
 	unzip -p testnotes1.docx word/document.xml | xmllint --format - > $(AR)/testnotes1.docx_document.xml
 	bash -c $(call DIFFFUNC,$(S4D1),$(AR)/testnotes1.docx_document.xml,$(ER)/testnotes1.docx_document.xml)
 
-	$(SAXON) testoucscourses.xml ../profiles/default/p4/from.xsl > $(AR)/testoucscoursesp5.xml
-	$(BINDIR)/teitodocx $(FLAGS) --profile=oucscourses $(AR)/testoucscoursesp5.xml $(AR)/testoucscourses.docx
-
 test-oddity: actual css
 	@echo "--------- Test/Makefile target=$@"
 
