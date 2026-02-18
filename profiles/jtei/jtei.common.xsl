@@ -15,6 +15,8 @@
   
   <xsl:variable name="doc.root" select="/"/>
   
+  <xsl:variable name="note.pullable.punctuation.regex">^(\s*)([\p{P}-[\p{Ps}\p{Pe}—¿¡]]+)</xsl:variable>
+  
   <!-- This parameter controls if footnotes are numbered continuously throughout the document -->
   <xsl:param name="footnote.number.continuous" select="true()"/>
   
@@ -121,10 +123,10 @@
           or 
           following::node()[not(ancestor-or-self::tei:note
             [not(current() intersect descendant::*)])][1]/self::text()
-            [matches(., '^\s*[\p{P}-[.,\p{Ps}\p{Pe}—]]')]
+            [matches(., $note.pullable.punctuation.regex)]
         )
       ">
-        <xsl:value-of select="following::node()[not(ancestor-or-self::tei:note[not(current() intersect descendant::*)])][1]/self::text()[matches(., '^\s*[\p{P}-[\p{Ps}\p{Pe}—]]')]/replace(., '^\s*([\p{P}-[\p{Ps}\p{Pe}—]]+).*', '$1', 's')"/>
+        <xsl:value-of select="following::node()[not(ancestor-or-self::tei:note[not(current() intersect descendant::*)])][1]/self::text()[matches(., $note.pullable.punctuation.regex)]/replace(., $note.pullable.punctuation.regex || '.*', '$2', 's')"/>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -242,7 +244,7 @@
           </seg>
           <seg type="abstract.egXML.attribute.value">
             <xsl:text>="</xsl:text>
-            <xsl:value-of select="local:escapeEntitiesForEgXMLAttribute(.)"/>
+            <xsl:value-of select="replace(., '&amp;(\S)', '&#8203;&amp;$1') ! local:escapeEntitiesForEgXMLAttribute(.)"/>
             <xsl:text>"</xsl:text>
           </seg>
         </xsl:for-each>
@@ -318,7 +320,7 @@
   <!-- text() starting with punctuation, and following either an element for which smart quotes 
        or a footnote marker are being generated: skip starting punctuation (this is pulled into 
        the quotation marks or before the footnote) -->
-  <xsl:template match="text()[matches(., '^\s*[\p{P}-[\p{Ps}\p{Pe}—]]')]" mode="#all">
+  <xsl:template match="text()[matches(., $note.pullable.punctuation.regex)]" mode="#all">
     <xsl:choose>
       <!-- text following a valid "quotation element": skip starting comma or period -->
       <xsl:when test="
@@ -331,7 +333,7 @@
       </xsl:when>
       <!-- text following a valid footnote marker: skip all punctuation except dash -->
       <xsl:when test="self::text()[preceding::node()[1][ancestor::tei:note[not(current() intersect descendant::node())]]]">
-        <xsl:value-of select="replace(., '^(\s*)[\p{P}-[\p{Ps}\p{Pe}—]]+', '$1', 's')"/>
+        <xsl:value-of select="replace(., $note.pullable.punctuation.regex, '$1', 's')"/>
       </xsl:when>
       <!-- other text: just copy -->
       <xsl:otherwise>

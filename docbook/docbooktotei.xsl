@@ -324,7 +324,7 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template match="itemizedlist">
-  <list  type="unordered">
+  <list rend="bulleted">
     <xsl:apply-templates/>
   </list>
 </xsl:template>
@@ -369,7 +369,7 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template match="orderedlist">
-  <list  type="ordered">
+  <list rend="numbered">
     <xsl:apply-templates/>
   </list>
 </xsl:template>

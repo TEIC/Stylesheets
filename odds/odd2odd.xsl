@@ -92,7 +92,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:dataSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:macroSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:classSpec" use="@module"/>
-  <xsl:key name="odd2odd-ATTREFED" use="substring-before(@name,'.attribute.')" match="tei:attRef"/>
+  <xsl:key name="odd2odd-ATTREFED" use="substring-before( (@name|@key),'.attribute.')" match="tei:attRef"/>
+  <!-- Above union of @name & @key should be reduced to just @key after 2026-11-13 -->
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:elementSpec]"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:macroSpec and not(@name=ancestor::tei:macroSpec/@ident)]"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:datatype]"/>
@@ -1726,8 +1727,7 @@ of this software, even if advised of the possibility of such damage.
                                    ]"/>
     </xsl:if>
     <!-- any direct attRef elements -->
-    <xsl:apply-templates mode="justcopy"
-                         select="tei:attList/tei:attRef"/>
+    <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attRef"/>
     <!-- now look at each of the original object's attributes and see
     if we have an update -->
     <xsl:for-each select="$ORIGINAL/tei:attList">
@@ -1826,10 +1826,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
           <xsl:when test="$stripped='true'"/>
           <xsl:when test="$New/tei:equiv">
-            <xsl:apply-templates mode="justcopy"
-                                 select="$New/tei:equiv">
-                <xsl:with-param name="rend">replace</xsl:with-param>
-              </xsl:apply-templates>
+            <xsl:apply-templates mode="justcopy" select="$New/tei:equiv">
+              <xsl:with-param name="rend">replace</xsl:with-param>
+            </xsl:apply-templates>
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates mode="justcopy" select="$Old/tei:equiv"/>
@@ -1837,25 +1836,23 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="$New/tei:gloss">
-            <xsl:apply-templates mode="justcopy"
-                                 select="$New/tei:gloss">
-                <xsl:with-param name="rend">replace</xsl:with-param>
-              </xsl:apply-templates>
+            <xsl:apply-templates mode="justcopy" select="$New/tei:gloss">
+              <xsl:with-param name="rend">replace</xsl:with-param>
+            </xsl:apply-templates>
           </xsl:when>
           <xsl:otherwise>
-              <xsl:apply-templates mode="justcopy" select="$Old/tei:gloss"/>
+            <xsl:apply-templates mode="justcopy" select="$Old/tei:gloss"/>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="$stripped='true'"/>
           <xsl:when test="$New/tei:desc">
-            <xsl:apply-templates mode="justcopy"
-                                 select="$New/tei:desc">
-                <xsl:with-param name="rend">replace</xsl:with-param>
-              </xsl:apply-templates>
+            <xsl:apply-templates mode="justcopy" select="$New/tei:desc">
+              <xsl:with-param name="rend">replace</xsl:with-param>
+            </xsl:apply-templates>
           </xsl:when>
           <xsl:otherwise>
-              <xsl:apply-templates mode="justcopy" select="$Old/tei:desc"/>
+            <xsl:apply-templates mode="justcopy" select="$Old/tei:desc"/>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>

@@ -478,7 +478,7 @@ scope %teidata.enumerated;  #IMPLIED'>
  %Tatt.dimensions.attribute.precision;
  %Tatt.dimensions.attribute.scope;'> 
 <!ENTITY % Tatt.divLike.attribute.org '
-org (composite|uniform) "uniform" '>
+org (composite|parallel|uniform) "uniform" '>
 
 <!ENTITY % Tatt.divLike.attribute.sample '
 sample (initial|medial|final|unknown|complete) "complete" '>
@@ -819,11 +819,11 @@ end %teidata.pointer;  #IMPLIED'>
 <!ENTITY % model.divWrapper_sequenceOptional "meeting?, byline?, dateline?, argument?, epigraph?, salute?, docAuthor?, docDate?"> 
 <!ENTITY % model.divWrapper_sequenceOptionalRepeatable "meeting*, byline*, dateline*, argument*, epigraph*, salute*, docAuthor*, docDate*"> 
 <!ENTITY % model.divWrapper_sequenceRepeatable "meeting+, byline+, dateline+, argument+, epigraph+, salute+, docAuthor+, docDate+"> 
-<!ENTITY % model.divTopPart "%model.headLike; |opener |signed"> 
-<!ENTITY % model.divTopPart_sequence "%model.headLike;, opener, signed"> 
-<!ENTITY % model.divTopPart_sequenceOptional "%model.headLike;?, opener?, signed?"> 
-<!ENTITY % model.divTopPart_sequenceOptionalRepeatable "%model.headLike;*, opener*, signed*"> 
-<!ENTITY % model.divTopPart_sequenceRepeatable "%model.headLike;+, opener+, signed+"> 
+<!ENTITY % model.divTopPart "%model.headLike; |address |opener |signed"> 
+<!ENTITY % model.divTopPart_sequence "%model.headLike;, address, opener, signed"> 
+<!ENTITY % model.divTopPart_sequenceOptional "%model.headLike;?, address?, opener?, signed?"> 
+<!ENTITY % model.divTopPart_sequenceOptionalRepeatable "%model.headLike;*, address*, opener*, signed*"> 
+<!ENTITY % model.divTopPart_sequenceRepeatable "%model.headLike;+, address+, opener+, signed+"> 
 <!ENTITY % model.divTop "%model.divWrapper; |%model.divTopPart;"> 
 <!ENTITY % model.divTop_sequence "%model.divWrapper;, %model.divTopPart;"> 
 <!ENTITY % model.divTop_sequenceOptional "%model.divWrapper;?, %model.divTopPart;?"> 
@@ -839,11 +839,11 @@ end %teidata.pointer;  #IMPLIED'>
 <!ENTITY % model.pLike.front_sequenceOptional "head?, byline?, dateline?, argument?, epigraph?, docTitle?, titlePart?, docAuthor?, docEdition?, docImprint?, docDate?"> 
 <!ENTITY % model.pLike.front_sequenceOptionalRepeatable "head*, byline*, dateline*, argument*, epigraph*, docTitle*, titlePart*, docAuthor*, docEdition*, docImprint*, docDate*"> 
 <!ENTITY % model.pLike.front_sequenceRepeatable "head+, byline+, dateline+, argument+, epigraph+, docTitle+, titlePart+, docAuthor+, docEdition+, docImprint+, docDate+"> 
-<!ENTITY % model.divBottomPart "trailer |closer |signed |postscript"> 
-<!ENTITY % model.divBottomPart_sequence "trailer, closer, signed, postscript"> 
-<!ENTITY % model.divBottomPart_sequenceOptional "trailer?, closer?, signed?, postscript?"> 
-<!ENTITY % model.divBottomPart_sequenceOptionalRepeatable "trailer*, closer*, signed*, postscript*"> 
-<!ENTITY % model.divBottomPart_sequenceRepeatable "trailer+, closer+, signed+, postscript+"> 
+<!ENTITY % model.divBottomPart "address |trailer |closer |signed |postscript"> 
+<!ENTITY % model.divBottomPart_sequence "address, trailer, closer, signed, postscript"> 
+<!ENTITY % model.divBottomPart_sequenceOptional "address?, trailer?, closer?, signed?, postscript?"> 
+<!ENTITY % model.divBottomPart_sequenceOptionalRepeatable "address*, trailer*, closer*, signed*, postscript*"> 
+<!ENTITY % model.divBottomPart_sequenceRepeatable "address+, trailer+, closer+, signed+, postscript+"> 
 <!ENTITY % model.divBottom "%model.divWrapper; |%model.divBottomPart;"> 
 <!ENTITY % model.divBottom_sequence "%model.divWrapper;, %model.divBottomPart;"> 
 <!ENTITY % model.divBottom_sequenceOptional "%model.divWrapper;?, %model.divBottomPart;?"> 
@@ -1294,7 +1294,11 @@ type %teidata.enumerated;  #IMPLIED >
 <!ATTLIST address xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST address
  %Tatt.global.attributes;
- %Tatt.cmc.attributes; >
+ %Tatt.canonical.attributes;
+ %Tatt.cmc.attributes;
+ %Tatt.typed.attribute.subtype;
+type %teidata.enumerated;  #IMPLIED
+role NMTOKENS  #IMPLIED >
 <!--doc:(affiliation) contains an informal description of a person's present or past affiliation with some organization, for example an employer or sponsor. [16.2.2. The Participant Description] -->
 <!ELEMENT affiliation %macro.phraseSeq;>
 <!ATTLIST affiliation xmlns CDATA "http://www.tei-c.org/ns/1.0">
@@ -2255,7 +2259,7 @@ result %teidata.name;  #IMPLIED >
 <!ATTLIST keywords
  %Tatt.global.attributes;
 scheme %teidata.pointer;  #IMPLIED >
-<!--doc:(verse line) contains a single, possibly incomplete, line of verse. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.5. Speech Contents] -->
+<!--doc:(verse line) contains a single, possibly incomplete, line of verse. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.6. Speech Contents] -->
 <!ELEMENT l (#PCDATA|_DUMMY_model.gLike|%model.phrase;|%model.inter;|%model.global;)*>
 <!ATTLIST l xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST l
@@ -2305,7 +2309,7 @@ level %teidata.word;  #IMPLIED >
 ident %teidata.language;  #REQUIRED
 usage CDATA #IMPLIED >
 <!--doc:(line beginning) marks the beginning of a topographic line in some edition or version of a text. [3.11.3. Milestone
-Elements 7.2.5. Speech Contents] -->
+Elements 7.2.6. Speech Contents] -->
 <!ELEMENT lb  EMPTY>
 <!ATTLIST lb xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST lb
@@ -2315,7 +2319,7 @@ Elements 7.2.5. Speech Contents] -->
  %Tatt.edition.attributes;
  %Tatt.spanning.attributes;
  %Tatt.typed.attributes; >
-<!--doc:(line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.5. Speech Contents] -->
+<!--doc:(line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.6. Speech Contents] -->
 <!ELEMENT lg (((%model.divTop;|%model.global;)*,(%model.lLike;|%model.stageLike;|%model.labelLike;|%model.pPart.transcriptional;|lg),(%model.lLike;|%model.stageLike;|%model.labelLike;|%model.pPart.transcriptional;|%model.global;|lg)*,((%model.divBottom;),(%model.global;)*)*))>
 <!ATTLIST lg xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST lg
@@ -2726,7 +2730,7 @@ Normalization 13. Critical Apparatus] -->
 <!ATTLIST orig
  %Tatt.global.attributes;
  %Tatt.cmc.attributes; >
-<!--doc:(paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.5. Speech Contents] -->
+<!--doc:(paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.6. Speech Contents] -->
 <!ELEMENT p %macro.paraContent;>
 <!ATTLIST p xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST p
@@ -3160,7 +3164,7 @@ key %teidata.xmlName;  #IMPLIED >
  %Tatt.dimensions.attributes;
  %Tatt.editLike.attributes;
 reason NMTOKENS  #IMPLIED >
-<!--doc:(arbitrary segment) represents any segmentation of text below the chunk level. [17.3. Blocks, Segments, and Anchors 6.2. Components of the Verse Line 7.2.5. Speech Contents] -->
+<!--doc:(arbitrary segment) represents any segmentation of text below the chunk level. [17.3. Blocks, Segments, and Anchors 6.2. Components of the Verse Line 7.2.6. Speech Contents] -->
 <!ELEMENT seg %macro.paraContent;>
 <!ATTLIST seg xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST seg
@@ -3261,7 +3265,7 @@ code %teidata.pointer;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.declaring.attributes; >
 <!--doc:(speech) contains an individual speech in a performance text, or a passage presented as such in a prose or verse text. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.2. Speeches and Speakers] -->
-<!ELEMENT sp (((%model.global;|%model.stageLike;)*,(speaker,(%model.global;)*),((lg|%model.lLike;|%model.pLike;|%model.listLike;|%model.stageLike;|%model.attributable;),((%model.global;)*|q))+))>
+<!ELEMENT sp (%model.stageLike;|%model.global;|%model.lLike;|%model.pLike;|%model.listLike;|%model.attributable;|speaker|lg|q)*>
 <!ATTLIST sp xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST sp
  %Tatt.global.attributes;
@@ -3305,7 +3309,7 @@ dim (horizontal|vertical) #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.canonical.attributes;
  %Tatt.datable.attributes; >
-<!--doc:(stage direction) contains any kind of stage direction within a dramatic text or fragment. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.4. Stage Directions] -->
+<!--doc:(stage direction) contains any kind of stage direction within a dramatic text or fragment. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.5. Stage Directions] -->
 <!ELEMENT stage %macro.specialPara;>
 <!ATTLIST stage xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST stage

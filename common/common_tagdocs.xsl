@@ -2101,7 +2101,8 @@
         <!-- set a variable that contains all the <attDef> elements from Original that are children of the referenced <classSpec> -->
         <xsl:variable name="theseAttDefs" select="$Original//tei:classSpec[@ident = current-grouping-key()]/tei:attList/tei:attDef" as="element(tei:attDef)*"/>
         <!-- subset of those that have been deleted or over-ridden -->
-        <xsl:variable name="theUnusedAttDefs" select="$theseAttDefs[ not( @ident = current-group()/@name ) ]" as="element(tei:attDef)*"/>
+        <xsl:variable name="theUnusedAttDefs" as="element(tei:attDef)*"
+		      select="$theseAttDefs[ not( @ident = (current-group()/@name, current-group()/@key ) ) ]"/>
        
         <xsl:element namespace="{$outputNS}" name="{$ulName}">
           <xsl:attribute name="{$rendName}" select="'classSpecAttDefs'"/>
@@ -2119,7 +2120,10 @@
             <xsl:element namespace="{$outputNS}" name="{$itemName}">
               <xsl:element namespace="{$outputNS}" name="{$segName}">
                 <xsl:attribute name="{$rendName}">attribute</xsl:attribute>
-                <xsl:sequence select="concat('@', @name )"/>
+                <xsl:sequence select="concat('@', ( @name | @key ) )"/>
+		<!-- Above union works because only 1 of the attrs
+		     @name & @key will ever be present. Should be
+		     reduced to just @key after 2026-11-13 -->
               </xsl:element>
             </xsl:element>
           </xsl:for-each>

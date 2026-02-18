@@ -393,14 +393,186 @@
         "classes" : 
         { "model" : 
           [ "model.addressLike",
+            "model.divBottomPart",
+            "model.divTopPart",
             "model.publicationStmtPart.detail" ],
           "atts" : 
           [ "att.global",
-            "att.cmc" ],
+            "att.canonical",
+            "att.cmc",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
-        [  ],
+        [ 
+          { "onElement" : true,
+            "ident" : "type",
+            "mode" : "change",
+            "ns" : "",
+            "usage" : "def",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-13\" xml:lang=\"en\">characterizes the\n      address in some sense, using any convenient classification\n      scheme or typology.<\/desc>" ],
+            "shortDesc" : "characterizes the\n      address in some sense, using any convenient classification\n      scheme or typology.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            {  },
+            "valList" : 
+            { "type" : "semi",
+              "valItem" : 
+              [ 
+                { "ident" : "billing",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-13\" xml:lang=\"en\">the address to\n          which a bill for goods or services should be sent.<\/desc>" ],
+                  "shortDesc" : "the address to\n          which a bill for goods or services should be sent.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "delivery",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-13\" xml:lang=\"en\">the address to\n          which packages should be sent via a private delivery service.<\/desc>" ],
+                  "shortDesc" : "the address to\n          which packages should be sent via a private delivery service.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "mailing",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-13\" xml:lang=\"en\">the address to\n          which mail should be sent via a public postal service.<\/desc>" ],
+                  "shortDesc" : "the address to\n          which mail should be sent via a public postal service.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "military",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-15\" xml:lang=\"en\">the address to\n          which mail to deployed military personnel should be sent.<\/desc>" ],
+                  "shortDesc" : "the address to\n          which mail to deployed military personnel should be sent.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "physical",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-13\" xml:lang=\"en\">the address of\n          a building irrespective of where mail to its occupants\n          should be sent (for example, for the fire\n          department).<\/desc>" ],
+                  "shortDesc" : "the address of\n          a building irrespective of where mail to its occupants\n          should be sent (for example, for the fire\n          department).",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] } ] } },
+          
+          { "onElement" : true,
+            "ident" : "role",
+            "mode" : "add",
+            "ns" : "",
+            "usage" : "opt",
+            "desc" : 
+            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-02\" xml:lang=\"en\">specifies further information about the purpose of the address.<\/desc>" ],
+            "shortDesc" : "specifies further information about the purpose of the address.",
+            "gloss" : 
+            [  ],
+            "altIdent" : 
+            [  ],
+            "valDesc" : 
+            [  ],
+            "datatype" : 
+            { "min" : "1",
+              "max" : "unbounded",
+              "dataRef" : 
+              { "key" : "teidata.enumerated" } },
+            "valList" : 
+            { "type" : "open",
+              "valItem" : 
+              [ 
+                { "ident" : "sender",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-13\" xml:lang=\"en\">the address of\n          the sender of a piece of correspondence.<\/desc>" ],
+                  "shortDesc" : "the address of\n          the sender of a piece of correspondence.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "return",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-13\" xml:lang=\"en\">the address to\n          which undeliverable mail should be returned.<\/desc>" ],
+                  "shortDesc" : "the address to\n          which undeliverable mail should be returned.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "recipient ",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-13\" xml:lang=\"en\">the address of\n          the intended recipient of a piece of correspondence.<\/desc>" ],
+                  "shortDesc" : "the address of\n          the intended recipient of a piece of correspondence.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "work",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-15\" xml:lang=\"en\">the address to\n          which work-related mail should be sent, typically that of\n          the recipient’s employer.<\/desc>" ],
+                  "shortDesc" : "the address to\n          which work-related mail should be sent, typically that of\n          the recipient’s employer.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "home",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-15\" xml:lang=\"en\">the address to\n          which non-work-related mail should be sent, typically the\n          domicile of the recipient.<\/desc>" ],
+                  "shortDesc" : "the address to\n          which non-work-related mail should be sent, typically the\n          domicile of the recipient.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "start",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-13\" xml:lang=\"en\">the address of\n          the beginning of a route, for example of a race.<\/desc>" ],
+                  "shortDesc" : "the address of\n          the beginning of a route, for example of a race.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "finish",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-13\" xml:lang=\"en\">the address of\n          the end of a route, for example of a race.<\/desc>" ],
+                  "shortDesc" : "the address of\n          the end of a route, for example of a race.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "pickup",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-13\" xml:lang=\"en\">the address at\n          which a person or package is picked up, for example by a\n          taxi or delivery service.<\/desc>" ],
+                  "shortDesc" : "the address at\n          which a person or package is picked up, for example by a\n          taxi or delivery service.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] },
+                
+                { "ident" : "dropOff",
+                  "desc" : 
+                  [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-13\" xml:lang=\"en\">the address at\n          which a person or package is dropped off, for example by a\n          taxi or delivery service.<\/desc>" ],
+                  "shortDesc" : "the address at\n          which a person or package is dropped off, for example by a\n          taxi or delivery service.",
+                  "gloss" : 
+                  [  ],
+                  "altIdent" : 
+                  [  ] } ] } } ],
         "content" : 
         [ 
           { "type" : "sequence",
@@ -9988,8 +10160,8 @@
         "type" : "elementSpec",
         "module" : "core",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-12-27\" xml:lang=\"en\">contains an individual speech in a performance text, or a passage presented as such in a prose or\n    verse text.<\/desc>" ],
-        "shortDesc" : "(speech) contains an individual speech in a performance text, or a passage presented as such in a prose or\n    verse text.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-12-27\" xml:lang=\"en\">contains an individual speech in a performance text, or a passage presented as such in a prose or verse text.<\/desc>" ],
+        "shortDesc" : "(speech) contains an individual speech in a performance text, or a passage presented as such in a prose or verse text.",
         "gloss" : 
         [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-01-14\" xml:lang=\"en\">speech<\/gloss>" ],
         "altIdent" : 
@@ -10008,71 +10180,37 @@
         [  ],
         "content" : 
         [ 
-          { "type" : "sequence",
-            "minOccurs" : "1",
-            "maxOccurs" : "1",
+          { "type" : "alternate",
+            "minOccurs" : "0",
+            "maxOccurs" : "unbounded",
             "content" : 
             [ 
-              { "type" : "alternate",
-                "minOccurs" : "0",
-                "maxOccurs" : "unbounded",
-                "content" : 
-                [ 
-                  { "type" : "classRef",
-                    "key" : "model.global" },
-                  
-                  { "type" : "classRef",
-                    "key" : "model.stageLike" } ] },
+              { "type" : "classRef",
+                "key" : "model.stageLike" },
               
-              { "type" : "sequence",
-                "minOccurs" : "1",
-                "maxOccurs" : "1",
-                "content" : 
-                [ 
-                  { "type" : "elementRef",
-                    "key" : "speaker" },
-                  
-                  { "type" : "classRef",
-                    "key" : "model.global" } ] },
+              { "type" : "classRef",
+                "key" : "model.global" },
               
-              { "type" : "sequence",
-                "minOccurs" : "1",
-                "maxOccurs" : "unbounded",
-                "content" : 
-                [ 
-                  { "type" : "alternate",
-                    "minOccurs" : "1",
-                    "maxOccurs" : "1",
-                    "content" : 
-                    [ 
-                      { "type" : "elementRef",
-                        "key" : "lg" },
-                      
-                      { "type" : "classRef",
-                        "key" : "model.lLike" },
-                      
-                      { "type" : "classRef",
-                        "key" : "model.pLike" },
-                      
-                      { "type" : "classRef",
-                        "key" : "model.listLike" },
-                      
-                      { "type" : "classRef",
-                        "key" : "model.stageLike" },
-                      
-                      { "type" : "classRef",
-                        "key" : "model.attributable" } ] },
-                  
-                  { "type" : "alternate",
-                    "minOccurs" : "1",
-                    "maxOccurs" : "1",
-                    "content" : 
-                    [ 
-                      { "type" : "classRef",
-                        "key" : "model.global" },
-                      
-                      { "type" : "elementRef",
-                        "key" : "q" } ] } ] } ] } ] },
+              { "type" : "classRef",
+                "key" : "model.lLike" },
+              
+              { "type" : "classRef",
+                "key" : "model.pLike" },
+              
+              { "type" : "classRef",
+                "key" : "model.listLike" },
+              
+              { "type" : "classRef",
+                "key" : "model.attributable" },
+              
+              { "type" : "elementRef",
+                "key" : "speaker" },
+              
+              { "type" : "elementRef",
+                "key" : "lg" },
+              
+              { "type" : "elementRef",
+                "key" : "q" } ] } ] },
       
       { "ident" : "speaker",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -10167,7 +10305,7 @@
             "valDesc" : 
             [  ],
             "datatype" : 
-            { "min" : "0",
+            { "min" : "1",
               "max" : "unbounded",
               "dataRef" : 
               { "key" : "teidata.enumerated" } },
@@ -14503,6 +14641,15 @@
                     "altIdent" : 
                     [  ] },
                   
+                  { "ident" : "parallel",
+                    "desc" : 
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-01-19\" xml:lang=\"en\">the contents of this element are intended to represent simultaneous or side-by-side delivery.<\/desc>" ],
+                    "shortDesc" : "the contents of this element are intended to represent simultaneous or side-by-side delivery.",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
                   { "ident" : "uniform",
                     "desc" : 
                     [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-03-18\" xml:lang=\"en\">the immediate contents of this\n\t\t  element are regarded as forming a logical unit, to be\n\t\t  processed in sequence.<\/desc>" ],
@@ -15364,8 +15511,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-10-05\" xml:lang=\"en\">contains an expression in some formal style definition language\nwhich defines the rendering or presentation\nused for this element in the source text.<\/desc>" ],
-              "shortDesc" : "contains an expression in some formal style definition language\nwhich defines the rendering or presentation\nused for this element in the source text.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-10-05\" xml:lang=\"en\">contains an expression in some formal style definition language which defines the rendering or presentation used for this element in the source text.<\/desc>" ],
+              "shortDesc" : "contains an expression in some formal style definition language which defines the rendering or presentation used for this element in the source text.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -15384,8 +15531,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-09-22\" xml:lang=\"en\">points to a description of the rendering or presentation used for this element in the\n        source text.<\/desc>" ],
-              "shortDesc" : "points to a description of the rendering or presentation used for this element in the\n        source text.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-09-22\" xml:lang=\"en\">points to a description of the rendering or presentation used for this element in the source text.<\/desc>" ],
+              "shortDesc" : "points to a description of the rendering or presentation used for this element in the source text.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -15517,8 +15664,8 @@
               "ns" : "",
               "usage" : "def",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-09-28\" xml:lang=\"en\">gives a name or other identifier for the scribe\nbelieved to be responsible for this hand.<\/desc>" ],
-              "shortDesc" : "gives a name or other identifier for the scribe\nbelieved to be responsible for this hand.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-09-28\" xml:lang=\"en\">gives a name or other identifier for the scribe believed to be responsible for this hand.<\/desc>" ],
+              "shortDesc" : "gives a name or other identifier for the scribe believed to be responsible for this hand.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -15537,8 +15684,8 @@
               "ns" : "",
               "usage" : "def",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-09-28\" xml:lang=\"en\">points to a full description of the scribe concerned, typically supplied by a <gi>person<\/gi> element\n      elsewhere in the description.<\/desc>" ],
-              "shortDesc" : "points to a full description of the scribe concerned, typically supplied by a person element\n      elsewhere in the description.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-09-28\" xml:lang=\"en\">points to a full description of the scribe concerned, typically supplied by a <gi>person<\/gi> element elsewhere in the description.<\/desc>" ],
+              "shortDesc" : "points to a full description of the scribe concerned, typically supplied by a person element elsewhere in the description.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -15557,8 +15704,8 @@
               "ns" : "",
               "usage" : "def",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-02-01\" xml:lang=\"en\">characterizes the particular script or writing style used by\nthis hand, for example <mentioned>secretary<\/mentioned>, <mentioned>copperplate<\/mentioned>, <mentioned>Chancery<\/mentioned>, <mentioned>Italian<\/mentioned>, etc.<\/desc>" ],
-              "shortDesc" : "characterizes the particular script or writing style used by\nthis hand, for example secretary, copperplate, Chancery, Italian, etc.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-02-01\" xml:lang=\"en\">characterizes the particular script or writing style used by this hand, for example <mentioned>secretary<\/mentioned>, <mentioned>copperplate<\/mentioned>, <mentioned>Chancery<\/mentioned>, <mentioned>Italian<\/mentioned>, etc.<\/desc>" ],
+              "shortDesc" : "characterizes the particular script or writing style used by this hand, for example secretary, copperplate, Chancery, Italian, etc.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -15577,8 +15724,8 @@
               "ns" : "",
               "usage" : "def",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-09-28\" xml:lang=\"en\">points to a full description of the script or writing style used by\nthis hand, typically supplied by a <gi>scriptNote<\/gi> element\n      elsewhere in the description.<\/desc>" ],
-              "shortDesc" : "points to a full description of the script or writing style used by\nthis hand, typically supplied by a scriptNote element\n      elsewhere in the description.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2010-09-28\" xml:lang=\"en\">points to a full description of the script or writing style used by this hand, typically supplied by a <gi>scriptNote<\/gi> element elsewhere in the description.<\/desc>" ],
+              "shortDesc" : "points to a full description of the script or writing style used by this hand, typically supplied by a scriptNote element elsewhere in the description.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -15597,8 +15744,8 @@
               "ns" : "",
               "usage" : "def",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-09-27\" xml:lang=\"en\">describes the tint or type of ink, e.g. <mentioned>brown<\/mentioned>, or other\nwriting medium, e.g. <mentioned>pencil<\/mentioned>.<\/desc>" ],
-              "shortDesc" : "describes the tint or type of ink, e.g. brown, or other\nwriting medium, e.g. pencil.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-09-27\" xml:lang=\"en\">describes the tint or type of ink, e.g. <mentioned>brown<\/mentioned>, or other writing medium, e.g. <mentioned>pencil<\/mentioned>.<\/desc>" ],
+              "shortDesc" : "describes the tint or type of ink, e.g. brown, or other writing medium, e.g. pencil.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -15696,8 +15843,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-11-18\" xml:lang=\"en\">indicates the units used for the measurement, usually\n      using the standard symbol for the desired units.<\/desc>" ],
-              "shortDesc" : "(unit) indicates the units used for the measurement, usually\n      using the standard symbol for the desired units.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-11-18\" xml:lang=\"en\">indicates the units used for the measurement, usually using the standard symbol for the desired units.<\/desc>" ],
+              "shortDesc" : "(unit) indicates the units used for the measurement, usually using the standard symbol for the desired units.",
               "gloss" : 
               [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2009-05-28\" xml:lang=\"en\">unit<\/gloss>" ],
               "altIdent" : 
@@ -15910,8 +16057,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-11-18\" xml:lang=\"en\">specifies the number of the specified units that\n      comprise the measurement<\/desc>" ],
-              "shortDesc" : "(quantity) specifies the number of the specified units that\n      comprise the measurement",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-11-18\" xml:lang=\"en\">specifies the number of the specified units that comprise the measurement<\/desc>" ],
+              "shortDesc" : "(quantity) specifies the number of the specified units that comprise the measurement",
               "gloss" : 
               [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2009-05-28\" xml:lang=\"en\">quantity<\/gloss>" ],
               "altIdent" : 

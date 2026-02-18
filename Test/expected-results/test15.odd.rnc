@@ -368,41 +368,6 @@ att.declarable.attribute.default =
       ## This element can only be selected explicitly, unless it is the only one of its kind, in which case it is selected if its parent is selected.
       "false"
   }?
-sch:pattern [
-  id = "declarable"
-  abstract = "true"
-  "\x{a}" ~
-  "      "
-  sch:rule [
-    context =
-      "$tde[ ancestor::tei:teiHeader                                  and                                  following-sibling::$tde                                  and                                  not( preceding-sibling::$tde ) ]"
-    "\x{a}" ~
-    "         "
-    sch:report [
-      test = "../child::$tde[ not( @xml:id ) ]"
-      "\x{a}" ~
-      "            When there is more than one "
-      sch:name [ ]
-      ", each must have an @xml:id\x{a}" ~
-      "          "
-    ]
-    "\x{a}" ~
-    "         "
-    sch:assert [
-      test =
-        "count( ../child::$tde[ normalize-space( @default ) = ('1','true') ] ) eq 1"
-      "\x{a}" ~
-      "            When there is more than one "
-      sch:name [ ]
-      ", one and only one must have a @default of 'true'.\x{a}" ~
-      "          "
-    ]
-    "\x{a}" ~
-    "      "
-  ]
-  "\x{a}" ~
-  "   "
-]
 att.declaring.attributes = att.declaring.attribute.decls
 att.declaring.attribute.decls =
   
@@ -558,7 +523,7 @@ att.global.source.attribute.source =
   }?
 sch:pattern [
   id =
-    "test15-att.global.source-source-only_1_ODD_source-constraint-rule-6"
+    "test15-att.global.source-source-only_1_ODD_source-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -697,26 +662,6 @@ att.measurement.attribute.commodity =
       xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
-sch:pattern [
-  id =
-    "test15-att.measurement-att-measurement-unitRef-constraint-rule-7"
-  "\x{a}" ~
-  "      "
-  sch:rule [
-    context = "tei:*[@unitRef]"
-    "\x{a}" ~
-    "         "
-    sch:report [
-      test = "@unit"
-      role = "info"
-      "The @unit attribute may be unnecessary when @unitRef is present."
-    ]
-    "\x{a}" ~
-    "      "
-  ]
-  "\x{a}" ~
-  "   "
-]
 att.notated.attributes = att.notated.attribute.notation
 att.notated.attribute.notation =
   
@@ -794,7 +739,7 @@ att.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "test15-att.pointing-targetLang-targetLang-constraint-rule-8"
+  id = "test15-att.pointing-targetLang-targetLang-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -926,7 +871,7 @@ att.spanning.attribute.spanTo =
   }?
 sch:pattern [
   id =
-    "test15-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-9"
+    "test15-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -981,7 +926,7 @@ att.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "test15-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-10"
+    "test15-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1015,7 +960,7 @@ att.typed.attribute.subtype =
     xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 sch:pattern [
-  id = "test15-att.typed-subtypeTyped-constraint-rule-11"
+  id = "test15-att.typed-subtypeTyped-constraint-rule-9"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1155,6 +1100,9 @@ att.divLike.attribute.org =
     
     ## no claim is made about the sequence in which the immediate contents of this division are to be processed, or their inter-relationships.
     "composite"
+    | 
+      ## the contents of this element are intended to represent simultaneous or side-by-side delivery.
+      "parallel"
     | 
       ## the immediate contents of this element are regarded as forming a logical unit, to be processed in sequence.
       "uniform"
@@ -1872,7 +1820,7 @@ model.divWrapper =
   | salute
   | docAuthor
   | docDate
-model.divTopPart = model.headLike | opener | signed
+model.divTopPart = model.headLike | address | opener | signed
 model.divTop = model.divWrapper | model.divTopPart
 model.frontPart.drama = notAllowed
 model.pLike.front =
@@ -1887,7 +1835,7 @@ model.pLike.front =
   | docEdition
   | docImprint
   | docDate
-model.divBottomPart = trailer | closer | signed | postscript
+model.divBottomPart = address | trailer | closer | signed | postscript
 model.divBottom = model.divWrapper | model.divBottomPart
 model.titlepagePart =
   graphic
@@ -2175,7 +2123,7 @@ att.calendarSystem.attribute.calendar =
   }?
 sch:pattern [
   id =
-    "test15-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-12"
+    "test15-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-10"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -2255,12 +2203,12 @@ att.milestoneUnit.attribute.unit =
   }
 p =
   
-  ## (paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.5. Speech Contents]
+  ## (paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.6. Speech Contents]
   element para {
     macro.paraContent
     >> sch:pattern [
          id =
-           "test15-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-13"
+           "test15-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2282,7 +2230,7 @@ p =
        ]
     >> sch:pattern [
          id =
-           "test15-p-abstractModel-structure-p-in-l-constraint-rule-14"
+           "test15-p-abstractModel-structure-p-in-l-constraint-rule-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2482,7 +2430,7 @@ desc =
     macro.limitedContent
     >> sch:pattern [
          id =
-           "test15-desc-deprecationInfo-only-in-deprecated-constraint-rule-15"
+           "test15-desc-deprecationInfo-only-in-deprecated-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2575,7 +2523,7 @@ rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "test15-rt-target-rt-target-not-span-constraint-rule-16"
+         id = "test15-rt-target-rt-target-not-span-constraint-rule-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2598,7 +2546,7 @@ rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "test15-rt-from-rt-from-constraint-rule-17"
+         id = "test15-rt-from-rt-from-constraint-rule-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2623,7 +2571,7 @@ rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "test15-rt-to-rt-to-constraint-rule-18"
+         id = "test15-rt-to-rt-to-constraint-rule-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2848,7 +2796,38 @@ address =
   element address {
     (model.global*, (model.addrPart, model.global*)+),
     att.global.attributes,
+    att.canonical.attributes,
     att.cmc.attributes,
+    att.typed.attribute.subtype,
+    
+    ## characterizes the address in some sense, using any convenient classification scheme or typology.
+    ## Suggested values include: 1] billing; 2] delivery; 3] mailing; 4] military; 5] physical
+    attribute type {
+      
+      ## the address to which a bill for goods or services should be sent.
+      "billing"
+      | 
+        ## the address to which packages should be sent via a private delivery service.
+        "delivery"
+      | 
+        ## the address to which mail should be sent via a public postal service.
+        "mailing"
+      | 
+        ## the address to which mail to deployed military personnel should be sent.
+        "military"
+      | 
+        ## the address of a building irrespective of where mail to its occupants should be sent (for example, for the fire department).
+        "physical"
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    
+    ## specifies further information about the purpose of the address.
+    ## Sample values include: 1] sender; 2] return; 3] recipient ; 4] work; 5] home; 6] start; 7] finish; 8] pickup; 9] dropOff
+    attribute role {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
     empty
   }
 addrLine =
@@ -3007,7 +2986,7 @@ ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "test15-ptr-ptrAtts-constraint-rule-19"
+         id = "test15-ptr-ptrAtts-constraint-rule-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3041,7 +3020,7 @@ ref =
   element ref {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-ref-refAtts-constraint-rule-20"
+         id = "test15-ref-refAtts-constraint-rule-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3081,7 +3060,7 @@ ref =
      (model.divBottom, model.global*)*)
     >> sch:pattern [
          id =
-           "test15-list-gloss-list-must-have-labels-constraint-rule-21"
+           "test15-list-gloss-list-must-have-labels-constraint-rule-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3324,7 +3303,7 @@ pb =
 lb =
   
   ## (line beginning) marks the beginning of a topographic line in some edition or version of a text. [3.11.3. Milestone
-  ## Elements 7.2.5. Speech Contents]
+  ## Elements 7.2.6. Speech Contents]
   element lb {
     empty,
     att.global.attributes,
@@ -3535,23 +3514,15 @@ bibl =
   
   ## (bibliographic citation) contains a loosely-structured bibliographic citation of which the sub-components may or may not be explicitly tagged. [3.12.1. Methods of Encoding Bibliographic References and Lists of References 2.2.7. The Source Description 16.3.2. Declarable Elements]
   element bibl {
-    ((text
-      | model.gLike
-      | model.highlighted
-      | model.pPart.data
-      | model.pPart.edit
-      | model.segLike
-      | model.ptrLike
-      | model.biblPart
-      | model.global)*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:bibl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (text
+     | model.gLike
+     | model.highlighted
+     | model.pPart.data
+     | model.pPart.edit
+     | model.segLike
+     | model.ptrLike
+     | model.biblPart
+     | model.global)*,
     att.global.attributes,
     att.canonical.attributes,
     att.cmc.attributes,
@@ -3567,15 +3538,7 @@ biblStruct =
   element biblStruct {
     (analytic*,
      (monogr, series*)+,
-     (model.noteLike | model.ptrLike | relatedItem | citedRange)*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:biblStruct" ]
-         "\x{a}" ~
-         "         "
-       ],
+     (model.noteLike | model.ptrLike | relatedItem | citedRange)*),
     att.global.attributes,
     att.canonical.attributes,
     att.cmc.attributes,
@@ -3593,15 +3556,7 @@ listBibl =
      desc*,
      (model.milestoneLike | relation | listRelation)*,
      (model.biblLike+,
-      (model.milestoneLike | relation | listRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listBibl" ]
-         "\x{a}" ~
-         "         "
-       ],
+      (model.milestoneLike | relation | listRelation)*)+),
     att.global.attributes,
     att.cmc.attributes,
     att.declarable.attributes,
@@ -3615,7 +3570,7 @@ relatedItem =
   element relatedItem {
     ((model.biblLike | model.ptrLike)?)
     >> sch:pattern [
-         id = "test15-relatedItem-targetorcontent1-constraint-rule-22"
+         id = "test15-relatedItem-targetorcontent1-constraint-rule-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3651,12 +3606,12 @@ relatedItem =
   }
 l =
   
-  ## (verse line) contains a single, possibly incomplete, line of verse. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.5. Speech Contents]
+  ## (verse line) contains a single, possibly incomplete, line of verse. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.6. Speech Contents]
   element l {
     ((text | model.gLike | model.phrase | model.inter | model.global)*)
     >> sch:pattern [
          id =
-           "test15-l-abstractModel-structure-l-in-l-constraint-rule-23"
+           "test15-l-abstractModel-structure-l-in-l-constraint-rule-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3681,7 +3636,7 @@ l =
   }
 lg =
   
-  ## (line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.5. Speech Contents]
+  ## (line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.6. Speech Contents]
   element lg {
     ((model.divTop | model.global)*,
      (model.lLike
@@ -3697,7 +3652,7 @@ lg =
       | lg)*,
      (model.divBottom, model.global*)*)
     >> sch:pattern [
-         id = "test15-lg-atleast1oflggapl-constraint-rule-24"
+         id = "test15-lg-atleast1oflggapl-constraint-rule-22"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3717,7 +3672,7 @@ lg =
        ]
     >> sch:pattern [
          id =
-           "test15-lg-abstractModel-structure-lg-in-l-constraint-rule-25"
+           "test15-lg-abstractModel-structure-lg-in-l-constraint-rule-23"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3746,15 +3701,15 @@ sp =
   
   ## (speech) contains an individual speech in a performance text, or a passage presented as such in a prose or verse text. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.2. Speeches and Speakers]
   element sp {
-    ((model.global | model.stageLike)*,
-     (speaker, model.global*),
-     ((lg
-       | model.lLike
-       | model.pLike
-       | model.listLike
-       | model.stageLike
-       | model.attributable),
-      (model.global* | q))+),
+    (model.stageLike
+     | model.global
+     | model.lLike
+     | model.pLike
+     | model.listLike
+     | model.attributable
+     | speaker
+     | lg
+     | q)*,
     att.global.attributes,
     att.ascribed.directed.attributes,
     att.placement.attributes,
@@ -3773,7 +3728,7 @@ speaker =
   }
 stage =
   
-  ## (stage direction) contains any kind of stage direction within a dramatic text or fragment. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.4. Stage Directions]
+  ## (stage direction) contains any kind of stage direction within a dramatic text or fragment. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.5. Stage Directions]
   element stage {
     macro.specialPara,
     att.global.attributes,
@@ -3813,7 +3768,7 @@ stage =
          | 
            ## more than one of the above
            "mixed"
-         | xsd:token { pattern = "[^\p{C}\p{Z}]+" })*
+         | xsd:token { pattern = "[^\p{C}\p{Z}]+" })+
       }
     }?,
     empty
@@ -4066,15 +4021,7 @@ availability =
   
   ## (availability) supplies information about the availability of a text, for example any restrictions on its use or distribution, its copyright status, any licence applying to it, etc. [2.2.4. Publication, Distribution, Licensing, etc.]
   element availability {
-    ((model.availabilityPart | model.pLike)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:availability" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (model.availabilityPart | model.pLike)+,
     att.global.attributes,
     att.declarable.attributes,
     
@@ -4107,15 +4054,7 @@ seriesStmt =
   ## (series statement) groups information about the series, if any, to which a publication belongs. [2.2.5. The Series Statement 2.2. The File Description]
   element seriesStmt {
     (model.pLike+
-     | (title+, (editor | respStmt)*, (idno | biblScope)*))
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:seriesStmt" ]
-         "\x{a}" ~
-         "         "
-       ],
+     | (title+, (editor | respStmt)*, (idno | biblScope)*)),
     att.global.attributes,
     att.declarable.attributes,
     empty
@@ -4131,15 +4070,7 @@ sourceDesc =
   ## (source description) describes the source(s) from which an electronic text was derived or generated, typically a bibliographic description in the case of a digitized text, or a phrase such as born digital for a text which has no previous existence. [2.2.7. The Source Description]
   element sourceDesc {
     (model.pLike+
-     | (model.biblLike | model.sourceDescPart | model.listLike)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:sourceDesc" ]
-         "\x{a}" ~
-         "         "
-       ],
+     | (model.biblLike | model.sourceDescPart | model.listLike)+),
     att.global.attributes,
     att.declarable.attributes,
     empty
@@ -4155,15 +4086,7 @@ biblFull =
        seriesStmt*,
        notesStmt?),
       sourceDesc*)
-     | (fileDesc, profileDesc))
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:biblFull" ]
-         "\x{a}" ~
-         "         "
-       ],
+     | (fileDesc, profileDesc)),
     att.global.attributes,
     att.canonical.attributes,
     att.cmc.attributes,
@@ -4197,15 +4120,7 @@ projectDesc =
   
   ## (project description) describes in detail the aim or purpose for which an electronic file was encoded, together with any other relevant information concerning the process by which it was assembled or collected. [2.3.1. The Project Description 2.3. The Encoding Description 16.3.2. Declarable Elements]
   element projectDesc {
-    (model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:projectDesc" ]
-         "\x{a}" ~
-         "         "
-       ],
+    model.pLike+,
     att.global.attributes,
     att.declarable.attributes,
     empty
@@ -4214,15 +4129,7 @@ samplingDecl =
   
   ## (sampling declaration) contains a prose description of the rationale and methods used in selecting texts, or parts of a text, for inclusion in the resource. [2.3.2. The Sampling Declaration 2.3. The Encoding Description 16.3.2. Declarable Elements]
   element samplingDecl {
-    (model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:samplingDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    model.pLike+,
     att.global.attributes,
     att.declarable.attributes,
     empty
@@ -4231,15 +4138,7 @@ editorialDecl =
   
   ## (editorial practice declaration) provides details of editorial principles and practices applied during the encoding of a text. [2.3.3. The Editorial Practices Declaration 2.3. The Encoding Description 16.3.2. Declarable Elements]
   element editorialDecl {
-    ((model.pLike | model.editorialDeclPart)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:editorialDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (model.pLike | model.editorialDeclPart)+,
     att.global.attributes,
     att.declarable.attributes,
     empty
@@ -4248,15 +4147,7 @@ correction =
   
   ## (correction principles) states how and under what circumstances corrections have been made in the text. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element correction {
-    (model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:correction" ]
-         "\x{a}" ~
-         "         "
-       ],
+    model.pLike+,
     att.global.attributes,
     att.declarable.attributes,
     
@@ -4292,15 +4183,7 @@ normalization =
   
   ## (normalization) indicates the extent of normalization or regularization of the original source carried out in converting it to electronic form. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element normalization {
-    (model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:normalization" ]
-         "\x{a}" ~
-         "         "
-       ],
+    model.pLike+,
     att.global.attributes,
     att.declarable.attributes,
     
@@ -4322,15 +4205,7 @@ quotation =
   element quotation {
     (model.pLike*)
     >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:quotation" ]
-         "\x{a}" ~
-         "         "
-       ]
-    >> sch:pattern [
-         id = "test15-quotation-quotationContents-constraint-rule-26"
+         id = "test15-quotation-quotationContents-constraint-rule-24"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4372,15 +4247,7 @@ hyphenation =
   
   ## (hyphenation) summarizes the way in which hyphenation in a source text has been treated in an encoded version of it. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element hyphenation {
-    (model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:hyphenation" ]
-         "\x{a}" ~
-         "         "
-       ],
+    model.pLike+,
     att.global.attributes,
     att.declarable.attributes,
     
@@ -4406,15 +4273,7 @@ segmentation =
   
   ## (segmentation) describes the principles according to which the text has been segmented, for example into sentences, tone-units, graphemic strata, etc. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element segmentation {
-    (model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:segmentation" ]
-         "\x{a}" ~
-         "         "
-       ],
+    model.pLike+,
     att.global.attributes,
     att.declarable.attributes,
     empty
@@ -4423,15 +4282,7 @@ stdVals =
   
   ## (standard values) specifies the format used when standardized date or number values are supplied. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element stdVals {
-    (model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:stdVals" ]
-         "\x{a}" ~
-         "         "
-       ],
+    model.pLike+,
     att.global.attributes,
     att.declarable.attributes,
     empty
@@ -4440,15 +4291,7 @@ interpretation =
   
   ## (interpretation) describes the scope of any analytic or interpretive information added to the text in addition to the transcription. [2.3.3. The Editorial Practices Declaration]
   element interpretation {
-    (model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:interpretation" ]
-         "\x{a}" ~
-         "         "
-       ],
+    model.pLike+,
     att.global.attributes,
     att.declarable.attributes,
     empty
@@ -4457,15 +4300,7 @@ punctuation =
   
   ## specifies editorial practice adopted with respect to punctuation marks in the original. [2.3.3. The Editorial Practices Declaration 3.2. Treatment of Punctuation]
   element punctuation {
-    (model.pLike*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:punctuation" ]
-         "\x{a}" ~
-         "         "
-       ],
+    model.pLike*,
     att.global.attributes,
     att.declarable.attributes,
     
@@ -4577,15 +4412,7 @@ styleDefDecl =
   
   ## (style definition language declaration) specifies the name of the formal language in which style or renditional information is supplied elsewhere in the document. The specific version of the scheme may also be supplied. [2.3.5. The Default Style Definition Language Declaration]
   element styleDefDecl {
-    (model.pLike*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:styleDefDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    model.pLike*,
     att.global.attributes,
     att.declarable.attributes,
     att.styleDef.attributes,
@@ -4595,15 +4422,7 @@ refsDecl =
   
   ## (references declaration) specifies how canonical references are constructed for this text. [2.3.6.3. Milestone Method 2.3. The Encoding Description 2.3.6. The Reference System Declaration]
   element refsDecl {
-    (model.pLike+ | citeStructure+ | cRefPattern+ | refState+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:refsDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (model.pLike+ | citeStructure+ | cRefPattern+ | refState+),
     att.global.attributes,
     att.declarable.attributes,
     empty
@@ -4638,7 +4457,7 @@ citeStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "test15-citeStructure-match-citestructure-outer-match-constraint-rule-27"
+           "test15-citeStructure-match-citestructure-outer-match-constraint-rule-25"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4659,7 +4478,7 @@ citeStructure =
        ]
     >> sch:pattern [
          id =
-           "test15-citeStructure-match-citestructure-inner-match-constraint-rule-28"
+           "test15-citeStructure-match-citestructure-inner-match-constraint-rule-26"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4800,15 +4619,7 @@ geoDecl =
     ]
   ]
   element geoDecl {
-    macro.phraseSeq
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:geoDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    macro.phraseSeq,
     att.global.attributes,
     att.declarable.attributes,
     
@@ -4937,15 +4748,7 @@ langUsage =
   
   ## (language usage) describes the languages, sublanguages, registers, dialects, etc. represented within a text. [2.4.2. Language Usage 2.4. The Profile Description 16.3.2. Declarable Elements]
   element langUsage {
-    (model.pLike+ | language+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:langUsage" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (model.pLike+ | language+),
     att.global.attributes,
     att.declarable.attributes,
     empty
@@ -4981,15 +4784,7 @@ textClass =
   
   ## (text classification) groups information which describes the nature or topic of a text in terms of a standard classification scheme, thesaurus, etc. [2.4.3. The Text Classification]
   element textClass {
-    ((classCode | catRef | keywords)*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:textClass" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (classCode | catRef | keywords)*,
     att.global.attributes,
     att.declarable.attributes,
     empty
@@ -5067,15 +4862,7 @@ correspDesc =
   
   ## (correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
   element correspDesc {
-    (model.correspDescPart+ | model.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:correspDesc" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (model.correspDescPart+ | model.pLike+),
     att.global.attributes,
     att.canonical.attributes,
     att.declarable.attributes,
@@ -5123,15 +4910,7 @@ xenoData =
   
   ## (non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]
   element xenoData {
-    (text | anyElement_xenoData_1+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:xenoData" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (text | anyElement_xenoData_1+),
     att.global.attributes,
     att.declarable.attributes,
     att.typed.attributes,
@@ -5278,7 +5057,7 @@ floatingText =
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
          id =
-           "test15-div-abstractModel-structure-div-in-l-constraint-rule-29"
+           "test15-div-abstractModel-structure-div-in-l-constraint-rule-27"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5299,7 +5078,7 @@ floatingText =
        ]
     >> sch:pattern [
          id =
-           "test15-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-30"
+           "test15-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-28"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5765,7 +5544,7 @@ link =
   element link {
     empty
     >> sch:pattern [
-         id = "test15-link-linkTargets3-constraint-rule-31"
+         id = "test15-link-linkTargets3-constraint-rule-29"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5808,7 +5587,7 @@ ab =
     macro.abContent
     >> sch:pattern [
          id =
-           "test15-ab-abstractModel-structure-ab-in-l-constraint-rule-32"
+           "test15-ab-abstractModel-structure-ab-in-l-constraint-rule-30"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5848,7 +5627,7 @@ anchor =
   }
 seg =
   
-  ## (arbitrary segment) represents any segmentation of text below the chunk level. [17.3. Blocks, Segments, and Anchors 6.2. Components of the Verse Line 7.2.5. Speech Contents]
+  ## (arbitrary segment) represents any segmentation of text below the chunk level. [17.3. Blocks, Segments, and Anchors 6.2. Components of the Verse Line 7.2.6. Speech Contents]
   element seg {
     macro.paraContent,
     att.global.attributes,
@@ -5991,7 +5770,7 @@ join =
   element join {
     ((model.descLike | model.certLike)*)
     >> sch:pattern [
-         id = "test15-join-joinTargets3-constraint-rule-33"
+         id = "test15-join-joinTargets3-constraint-rule-31"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6144,33 +5923,7 @@ standOff =
   
   ## Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [17.10. The standOff Container]
   element standOff {
-    (model.standOffPart+)
-    >> sch:pattern [
-         id =
-           "test15-standOff-nested_standOff_should_be_typed-constraint-rule-34"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:standOff"
-           "\x{a}" ~
-           "               "
-           sch:assert [
-             test = "@type or not(ancestor::tei:standOff)"
-             "This\x{a}" ~
-             "        "
-             sch:name [ ]
-             " element must have a @type attribute, since it is\x{a}" ~
-             "        nested inside a "
-             sch:name [ ]
-             "\x{a}" ~
-             "               "
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ],
+    model.standOffPart+,
     att.global.attributes,
     att.declaring.attributes,
     att.typed.attributes,
@@ -7046,15 +6799,7 @@ listOrg =
     (model.headLike*,
      desc*,
      (relation | listRelation)*,
-     ((org | listOrg)+, (relation | listRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listOrg" ]
-         "\x{a}" ~
-         "         "
-       ],
+     ((org | listOrg)+, (relation | listRelation)*)+),
     att.global.attributes,
     att.cmc.attributes,
     att.declarable.attributes,
@@ -7069,15 +6814,7 @@ listEvent =
     (model.headLike*,
      desc*,
      (relation | listRelation)*,
-     (model.eventLike+, (relation | listRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listEvent" ]
-         "\x{a}" ~
-         "         "
-       ],
+     (model.eventLike+, (relation | listRelation)*)+),
     att.global.attributes,
     att.cmc.attributes,
     att.declarable.attributes,
@@ -7092,15 +6829,7 @@ listPerson =
     (model.headLike*,
      desc*,
      (relation | listRelation)*,
-     ((model.personLike | listPerson)+, (relation | listRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listPerson" ]
-         "\x{a}" ~
-         "         "
-       ],
+     ((model.personLike | listPerson)+, (relation | listRelation)*)+),
     att.global.attributes,
     att.cmc.attributes,
     att.declarable.attributes,
@@ -7115,15 +6844,7 @@ listPlace =
     (model.headLike*,
      desc*,
      (relation | listRelation)*,
-     ((model.placeLike | listPlace)+, (relation | listRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listPlace" ]
-         "\x{a}" ~
-         "         "
-       ],
+     ((model.placeLike | listPlace)+, (relation | listRelation)*)+),
     att.global.attributes,
     att.cmc.attributes,
     att.declarable.attributes,
@@ -7440,7 +7161,7 @@ relation =
   element relation {
     (desc?)
     >> sch:pattern [
-         id = "test15-relation-ref-or-key-or-name-constraint-rule-35"
+         id = "test15-relation-ref-or-key-or-name-constraint-rule-32"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7458,7 +7179,7 @@ relation =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-relation-active-mutual-constraint-rule-36"
+         id = "test15-relation-active-mutual-constraint-rule-33"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7476,7 +7197,7 @@ relation =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-relation-active-passive-constraint-rule-37"
+         id = "test15-relation-active-passive-constraint-rule-34"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7690,15 +7411,7 @@ listObject =
     (model.headLike*,
      desc*,
      (relation | listRelation)*,
-     (model.objectLike+, (relation | listRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listObject" ]
-         "\x{a}" ~
-         "         "
-       ],
+     (model.objectLike+, (relation | listRelation)*)+),
     att.global.attributes,
     att.cmc.attributes,
     att.declarable.attributes,
@@ -7738,15 +7451,7 @@ listNym =
     (model.headLike*,
      desc*,
      (relation | listRelation)*,
-     ((nym | listNym)+, (relation | listRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listNym" ]
-         "\x{a}" ~
-         "         "
-       ],
+     ((nym | listNym)+, (relation | listRelation)*)+),
     att.global.attributes,
     att.cmc.attributes,
     att.declarable.attributes,

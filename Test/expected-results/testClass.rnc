@@ -282,6 +282,9 @@ att.divLike.attribute.org =
     ## no claim is made about the sequence in which the immediate contents of this division are to be processed, or their inter-relationships.
     "composite"
     | 
+      ## the contents of this element are intended to represent simultaneous or side-by-side delivery.
+      "parallel"
+    | 
       ## the immediate contents of this element are regarded as forming a logical unit, to be processed in sequence.
       "uniform"
   }?
@@ -753,7 +756,7 @@ model.divGenLike = notAllowed
   }
 p =
   
-  ## (paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.5. Speech Contents]
+  ## (paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.6. Speech Contents]
   element p {
     macro.paraContent
     >> sch:pattern [

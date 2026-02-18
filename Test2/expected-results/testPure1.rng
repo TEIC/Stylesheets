@@ -765,20 +765,6 @@ Suggested values include: 1] human; 2] template; 3] system; 4] bot; 5] unspecifi
          </attribute>
       </optional>
    </define>
-   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                xmlns:xi="http://www.w3.org/2001/XInclude"
-                abstract="true">
-      <sch:rule context="$tde[ ancestor::tei:teiHeader                                  and                                  following-sibling::$tde                                  and                                  not( preceding-sibling::$tde ) ]">
-         <sch:report test="../child::$tde[ not( @xml:id ) ]">
-            When there is more than one <sch:name/>, each must have an @xml:id
-          </sch:report>
-         <sch:assert test="count( ../child::$tde[ normalize-space( @default ) = ('1','true') ] ) eq 1">
-            When there is more than one <sch:name/>, one and only one must have a @default of 'true'.
-          </sch:assert>
-      </sch:rule>
-   </sch:pattern>
    <define name="t_att.declaring.attributes">
       <ref name="t_att.declaring.attribute.decls"/>
    </define>
@@ -1180,15 +1166,6 @@ Suggested values include: 1] m (metre); 2] kg (kilogram); 3] s (second); 4] Hz (
          </attribute>
       </optional>
    </define>
-   <pattern xmlns="http://purl.oclc.org/dsdl/schematron">
-      <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
-                xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                xmlns:xi="http://www.w3.org/2001/XInclude"
-                context="tei:*[@unitRef]">
-         <sch:report test="@unit" role="info">The @unit attribute may be unnecessary when @unitRef is present.</sch:report>
-      </sch:rule>
-   </pattern>
    <define name="t_att.notated.attributes">
       <ref name="t_att.notated.attribute.notation"/>
    </define>
@@ -1665,6 +1642,8 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
             <choice>
                <value>composite</value>
                <a:documentation>no claim is made about the sequence in which the immediate contents of this division are to be processed, or their inter-relationships.</a:documentation>
+               <value>parallel</value>
+               <a:documentation>the contents of this element are intended to represent simultaneous or side-by-side delivery.</a:documentation>
                <value>uniform</value>
                <a:documentation>the immediate contents of this element are regarded as forming a logical unit, to be processed in sequence.</a:documentation>
             </choice>
@@ -3714,6 +3693,7 @@ Sample values include: 1] duplicate; 2] duplicate-partial; 3] excessStart; 4] ex
    <define name="t_model.divTopPart">
       <choice>
          <ref name="t_model.headLike"/>
+         <ref name="t_address"/>
          <ref name="t_opener"/>
          <ref name="t_signed"/>
       </choice>
@@ -3744,6 +3724,7 @@ Sample values include: 1] duplicate; 2] duplicate-partial; 3] excessStart; 4] ex
    </define>
    <define name="t_model.divBottomPart">
       <choice>
+         <ref name="t_address"/>
          <ref name="t_trailer"/>
          <ref name="t_closer"/>
          <ref name="t_signed"/>
@@ -4339,7 +4320,7 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
    </define>
    <define name="t_p">
       <element name="p">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.5. Speech Contents]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.6. Speech Contents]</a:documentation>
          <ref name="t_macro.paraContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -4962,7 +4943,42 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
             </oneOrMore>
          </group>
          <ref name="t_att.global.attributes"/>
+         <ref name="t_att.canonical.attributes"/>
          <ref name="t_att.cmc.attributes"/>
+         <optional>
+            <attribute name="type">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">characterizes the address in some sense, using any convenient classification scheme or typology.
+Suggested values include: 1] billing; 2] delivery; 3] mailing; 4] military; 5] physical</a:documentation>
+               <choice>
+                  <value>billing</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the address to which a bill for goods or services should be sent.</a:documentation>
+                  <value>delivery</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the address to which packages should be sent via a private delivery service.</a:documentation>
+                  <value>mailing</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the address to which mail should be sent via a public postal service.</a:documentation>
+                  <value>military</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the address to which mail to deployed military personnel should be sent.</a:documentation>
+                  <value>physical</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the address of a building irrespective of where mail to its occupants should be sent (for example, for the fire department).</a:documentation>
+                  <data type="token">
+                     <param name="pattern">[^\p{C}\p{Z}]+</param>
+                  </data>
+               </choice>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="role">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies further information about the purpose of the address.
+Sample values include: 1] sender; 2] return; 3] recipient ; 4] work; 5] home; 6] start; 7] finish; 8] pickup; 9] dropOff</a:documentation>
+               <list>
+                  <oneOrMore>
+                     <data type="token">
+                        <param name="pattern">[^\p{C}\p{Z}]+</param>
+                     </data>
+                  </oneOrMore>
+               </list>
+            </attribute>
+         </optional>
          <empty/>
       </element>
    </define>
@@ -5533,7 +5549,7 @@ Elements]</a:documentation>
    <define name="t_lb">
       <element name="lb">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(line beginning) marks the beginning of a topographic line in some edition or version of a text. [3.11.3. Milestone
-Elements 7.2.5. Speech Contents]</a:documentation>
+Elements 7.2.6. Speech Contents]</a:documentation>
          <empty/>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.breaking.attributes"/>
@@ -5802,30 +5818,21 @@ Elements]</a:documentation>
                   </optional>
                </optional>
             </group>
-            <group>
-               <optional>
-                  <ref name="t_publisher"/>
-               </optional>
-               <optional>
-                  <ref name="t_publisher"/>
+            <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+               <rng:group>
+                  <rng:ref name="t_publisher"/>
                   <optional>
-                     <ref name="t_publisher"/>
+                     <rng:ref name="t_publisher"/>
                      <optional>
-                        <ref name="t_publisher"/>
+                        <rng:ref name="t_publisher"/>
                      </optional>
                   </optional>
-               </optional>
-            </group>
+               </rng:group>
+            </rng:optional>
             <optional>
                <ref name="t_date"/>
             </optional>
          </group>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:bibl"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.canonical.attributes"/>
          <ref name="t_att.cmc.attributes"/>
@@ -5862,12 +5869,6 @@ Elements]</a:documentation>
                </zeroOrMore>
             </oneOrMore>
          </group>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:listBibl"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.cmc.attributes"/>
          <ref name="t_att.declarable.attributes"/>
@@ -5909,7 +5910,7 @@ Elements]</a:documentation>
    </define>
    <define name="t_l">
       <element name="l">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(verse line) contains a single, possibly incomplete, line of verse. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.5. Speech Contents]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(verse line) contains a single, possibly incomplete, line of verse. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.6. Speech Contents]</a:documentation>
          <zeroOrMore>
             <choice>
                <text/>
@@ -5935,7 +5936,7 @@ Elements]</a:documentation>
    </define>
    <define name="t_lg">
       <element name="lg">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.5. Speech Contents]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.6. Speech Contents]</a:documentation>
          <group>
             <zeroOrMore>
                <choice>
@@ -5994,36 +5995,19 @@ Elements]</a:documentation>
    <define name="t_sp">
       <element name="sp">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(speech) contains an individual speech in a performance text, or a passage presented as such in a prose or verse text. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.2. Speeches and Speakers]</a:documentation>
-         <group>
-            <zeroOrMore>
-               <choice>
-                  <ref name="t_model.global"/>
-                  <ref name="t_model.stageLike"/>
-               </choice>
-            </zeroOrMore>
-            <group>
+         <zeroOrMore>
+            <choice>
+               <ref name="t_model.stageLike"/>
+               <ref name="t_model.global"/>
+               <ref name="t_model.lLike"/>
+               <ref name="t_model.pLike"/>
+               <ref name="t_model.listLike"/>
+               <ref name="t_model.attributable"/>
                <ref name="t_speaker"/>
-               <zeroOrMore>
-                  <ref name="t_model.global"/>
-               </zeroOrMore>
-            </group>
-            <oneOrMore>
-               <choice>
-                  <ref name="t_lg"/>
-                  <ref name="t_model.lLike"/>
-                  <ref name="t_model.pLike"/>
-                  <ref name="t_model.listLike"/>
-                  <ref name="t_model.stageLike"/>
-                  <ref name="t_model.attributable"/>
-               </choice>
-               <choice>
-                  <zeroOrMore>
-                     <ref name="t_model.global"/>
-                  </zeroOrMore>
-                  <ref name="t_q"/>
-               </choice>
-            </oneOrMore>
-         </group>
+               <ref name="t_lg"/>
+               <ref name="t_q"/>
+            </choice>
+         </zeroOrMore>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.ascribed.directed.attributes"/>
          <ref name="t_att.placement.attributes"/>
@@ -6043,7 +6027,7 @@ Elements]</a:documentation>
    </define>
    <define name="t_stage">
       <element name="stage">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(stage direction) contains any kind of stage direction within a dramatic text or fragment. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.4. Stage Directions]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(stage direction) contains any kind of stage direction within a dramatic text or fragment. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.5. Stage Directions]</a:documentation>
          <ref name="t_macro.specialPara"/>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.ascribed.directed.attributes"/>
@@ -6055,7 +6039,7 @@ Elements]</a:documentation>
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the kind of stage direction.
 Suggested values include: 1] setting; 2] entrance; 3] exit; 4] business; 5] novelistic; 6] delivery; 7] modifier; 8] location; 9] mixed</a:documentation>
                <list>
-                  <zeroOrMore>
+                  <oneOrMore>
                      <choice>
                         <value>setting</value>
                         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes a setting.</a:documentation>
@@ -6079,7 +6063,7 @@ Suggested values include: 1] setting; 2] entrance; 3] exit; 4] business; 5] nove
                            <param name="pattern">[^\p{C}\p{Z}]+</param>
                         </data>
                      </choice>
-                  </zeroOrMore>
+                  </oneOrMore>
                </list>
             </attribute>
          </optional>
@@ -6409,13 +6393,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
                <ref name="t_model.pLike"/>
             </choice>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:availability"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <optional>
@@ -6609,13 +6586,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
                </optional>
             </group>
          </choice>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:seriesStmt"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <empty/>
@@ -6649,13 +6619,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
                </choice>
             </oneOrMore>
          </choice>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:sourceDesc"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <empty/>
@@ -6691,13 +6654,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
                <ref name="t_profileDesc"/>
             </group>
          </choice>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:biblFull"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.canonical.attributes"/>
          <ref name="t_att.cmc.attributes"/>
@@ -6744,13 +6700,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
          <oneOrMore>
             <ref name="t_model.pLike"/>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:projectDesc"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <empty/>
@@ -6762,13 +6711,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
          <oneOrMore>
             <ref name="t_model.pLike"/>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:samplingDecl"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <empty/>
@@ -6783,13 +6725,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
                <ref name="t_model.editorialDeclPart"/>
             </choice>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:editorialDecl"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <empty/>
@@ -6801,13 +6736,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
          <oneOrMore>
             <ref name="t_model.pLike"/>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:correction"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <optional>
@@ -6847,13 +6775,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
          <oneOrMore>
             <ref name="t_model.pLike"/>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:normalization"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <optional>
@@ -6878,13 +6799,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
          <zeroOrMore>
             <ref name="t_model.pLike"/>
          </zeroOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:quotation"/>
-         </sch:pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
@@ -6920,13 +6834,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
          <oneOrMore>
             <ref name="t_model.pLike"/>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:hyphenation"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <optional>
@@ -6955,13 +6862,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
          <oneOrMore>
             <ref name="t_model.pLike"/>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:segmentation"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <empty/>
@@ -6973,13 +6873,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
          <oneOrMore>
             <ref name="t_model.pLike"/>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:stdVals"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <empty/>
@@ -6991,13 +6884,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
          <oneOrMore>
             <ref name="t_model.pLike"/>
          </oneOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:interpretation"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <empty/>
@@ -7009,13 +6895,6 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
          <zeroOrMore>
             <ref name="t_model.pLike"/>
          </zeroOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:punctuation"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <optional>
@@ -7143,13 +7022,6 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
          <zeroOrMore>
             <ref name="t_model.pLike"/>
          </zeroOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:styleDefDecl"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <ref name="t_att.styleDef.attributes"/>
@@ -7173,13 +7045,6 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
                <ref name="t_refState"/>
             </oneOrMore>
          </choice>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:refsDecl"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <empty/>
@@ -7428,13 +7293,6 @@ Sample values include: 1] book; 2] chapter; 3] entry; 4] poem; 5] letter; 6] lin
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(geographic coordinates declaration) documents the notation and the datum used for geographic coordinates expressed as content of the <code xmlns="http://www.w3.org/1999/xhtml"
                   xmlns:rng="http://relaxng.org/ns/structure/1.0">&lt;geo&gt;</code> element elsewhere within the document. [2.3.8. The Geographic Coordinates Declaration]</a:documentation>
          <ref name="t_macro.phraseSeq"/>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:geoDecl"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <optional>
@@ -7614,13 +7472,6 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
                <ref name="t_language"/>
             </oneOrMore>
          </choice>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:langUsage"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <empty/>
@@ -7664,13 +7515,6 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
                <ref name="t_keywords"/>
             </choice>
          </zeroOrMore>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:textClass"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <empty/>
@@ -7764,13 +7608,6 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
                <ref name="t_model.pLike"/>
             </oneOrMore>
          </choice>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:correspDesc"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.canonical.attributes"/>
          <ref name="t_att.declarable.attributes"/>
@@ -7834,13 +7671,6 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                <ref name="anyElement_xenoData_01"/>
             </oneOrMore>
          </choice>
-         <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      is-a="declarable">
-            <sch:param name="tde" value="tei:xenoData"/>
-         </sch:pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declarable.attributes"/>
          <ref name="t_att.typed.attributes"/>
@@ -8611,7 +8441,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
    </define>
    <define name="t_seg">
       <element name="seg">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(arbitrary segment) represents any segmentation of text below the chunk level. [17.3. Blocks, Segments, and Anchors 6.2. Components of the Verse Line 7.2.5. Speech Contents]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(arbitrary segment) represents any segmentation of text below the chunk level. [17.3. Blocks, Segments, and Anchors 6.2. Components of the Verse Line 7.2.6. Speech Contents]</a:documentation>
          <ref name="t_macro.paraContent"/>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.cmc.attributes"/>
@@ -9024,18 +8854,6 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
          <oneOrMore>
             <ref name="t_model.standOffPart"/>
          </oneOrMore>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  xmlns:rng="http://relaxng.org/ns/structure/1.0">
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:xi="http://www.w3.org/2001/XInclude"
-                      context="tei:standOff">
-               <sch:assert test="@type or not(ancestor::tei:standOff)">This
-        <sch:name/> element must have a @type attribute, since it is
-        nested inside a <sch:name/>
-               </sch:assert>
-            </sch:rule>
-         </pattern>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.declaring.attributes"/>
          <ref name="t_att.typed.attributes"/>

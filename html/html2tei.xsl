@@ -111,12 +111,12 @@
   <xsl:template match="title">
 </xsl:template>
   <xsl:template match="ul">
-    <list type="unordered">
+    <list rend="bulleted">
       <xsl:apply-templates/>
     </list>
   </xsl:template>
   <xsl:template match="ol">
-    <list type="ordered">
+    <list rend="numbered">
       <xsl:apply-templates/>
     </list>
   </xsl:template>

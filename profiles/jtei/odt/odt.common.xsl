@@ -196,16 +196,23 @@
 <!--    However, the abstract does need a special header. Keywords are included after the abstract too. -->
     <xsl:template match="div[@type='abstract']">
       <xsl:variable name="current" select="."/>
-        <text:p text:style-name="teiHead1">
-          <xsl:value-of select="i18n:key(concat(@type, '-label'), (@xml:lang, $jtei.lang)[.][1])"/>
-        </text:p>
-        <xsl:apply-templates/>
+      <text:p text:style-name="teiHead1">
+	<!-- Note clever use of “[.]” predicate below, which weeds out
+	     occurrences of the empty string in the sequence to its
+	     left. Thus if there is an empty xml:lang= it will not be
+	     returned, rather the 1st (and only?) member of the
+	     jtei.lang sequence would be returned. -->
+        <xsl:value-of select="i18n:key(concat(@type, '-label'), (@xml:lang, $jtei.lang)[.][1])"/>
+      </text:p>
+      <xsl:apply-templates/>
       
 <!--    Add the keywords.  -->
       <xsl:if test="not(following-sibling::div[@type='abstract'])">
-        <text:p text:style-name="teiPara">
-          <xsl:value-of select="concat(i18n:key('keywords-label'), ': ')"/>
-          <xsl:value-of select="string-join(//textClass/keywords/term, ', ')"/></text:p>
+        <xsl:for-each select="//textClass/keywords">
+          <text:p text:style-name="teiPara">
+            <xsl:value-of select="concat(i18n:key('keywords-label', (@xml:lang, $jtei.lang)[.][1]), ': ')"/>
+          <xsl:value-of select="string-join(term, ', ')"/></text:p>
+        </xsl:for-each>
       </xsl:if>
     </xsl:template>
   

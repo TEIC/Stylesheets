@@ -373,41 +373,6 @@ Tatt.declarable.attribute.default =
       ## This element can only be selected explicitly, unless it is the only one of its kind, in which case it is selected if its parent is selected.
       "false"
   }?
-sch:pattern [
-  id = "declarable"
-  abstract = "true"
-  "\x{a}" ~
-  "      "
-  sch:rule [
-    context =
-      "$tde[ ancestor::tei:teiHeader                                  and                                  following-sibling::$tde                                  and                                  not( preceding-sibling::$tde ) ]"
-    "\x{a}" ~
-    "         "
-    sch:report [
-      test = "../child::$tde[ not( @xml:id ) ]"
-      "\x{a}" ~
-      "            When there is more than one "
-      sch:name [ ]
-      ", each must have an @xml:id\x{a}" ~
-      "          "
-    ]
-    "\x{a}" ~
-    "         "
-    sch:assert [
-      test =
-        "count( ../child::$tde[ normalize-space( @default ) = ('1','true') ] ) eq 1"
-      "\x{a}" ~
-      "            When there is more than one "
-      sch:name [ ]
-      ", one and only one must have a @default of 'true'.\x{a}" ~
-      "          "
-    ]
-    "\x{a}" ~
-    "      "
-  ]
-  "\x{a}" ~
-  "   "
-]
 Tatt.declaring.attributes = Tatt.declaring.attribute.decls
 Tatt.declaring.attribute.decls =
   
@@ -577,7 +542,7 @@ Tatt.global.source.attribute.source =
   }?
 sch:pattern [
   id =
-    "testbasic-att.global.source-source-only_1_ODD_source-constraint-rule-6"
+    "testbasic-att.global.source-source-only_1_ODD_source-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -716,26 +681,6 @@ Tatt.measurement.attribute.commodity =
       xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
     }
   }?
-sch:pattern [
-  id =
-    "testbasic-att.measurement-att-measurement-unitRef-constraint-rule-7"
-  "\x{a}" ~
-  "      "
-  sch:rule [
-    context = "tei:*[@unitRef]"
-    "\x{a}" ~
-    "         "
-    sch:report [
-      test = "@unit"
-      role = "info"
-      "The @unit attribute may be unnecessary when @unitRef is present."
-    ]
-    "\x{a}" ~
-    "      "
-  ]
-  "\x{a}" ~
-  "   "
-]
 Tatt.notated.attributes = Tatt.notated.attribute.notation
 Tatt.notated.attribute.notation =
   
@@ -813,7 +758,7 @@ Tatt.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "testbasic-att.pointing-targetLang-targetLang-constraint-rule-8"
+  id = "testbasic-att.pointing-targetLang-targetLang-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -945,7 +890,7 @@ Tatt.spanning.attribute.spanTo =
   }?
 sch:pattern [
   id =
-    "testbasic-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-9"
+    "testbasic-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1000,7 +945,7 @@ Tatt.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "testbasic-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-10"
+    "testbasic-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1034,7 +979,7 @@ Tatt.typed.attribute.subtype =
     xsd:token { pattern = "[^\p{C}\p{Z}]+" }
   }?
 sch:pattern [
-  id = "testbasic-att.typed-subtypeTyped-constraint-rule-11"
+  id = "testbasic-att.typed-subtypeTyped-constraint-rule-9"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1174,6 +1119,9 @@ Tatt.divLike.attribute.org =
     
     ## no claim is made about the sequence in which the immediate contents of this division are to be processed, or their inter-relationships.
     "composite"
+    | 
+      ## the contents of this element are intended to represent simultaneous or side-by-side delivery.
+      "parallel"
     | 
       ## the immediate contents of this element are regarded as forming a logical unit, to be processed in sequence.
       "uniform"
@@ -2109,7 +2057,7 @@ Tmodel.divWrapper =
   | Tsalute
   | TdocAuthor
   | TdocDate
-Tmodel.divTopPart = Tmodel.headLike | Topener | Tsigned
+Tmodel.divTopPart = Tmodel.headLike | Taddress | Topener | Tsigned
 Tmodel.divTop = Tmodel.divWrapper | Tmodel.divTopPart
 Tmodel.frontPart.drama = notAllowed
 Tmodel.pLike.front =
@@ -2124,7 +2072,8 @@ Tmodel.pLike.front =
   | TdocEdition
   | TdocImprint
   | TdocDate
-Tmodel.divBottomPart = Ttrailer | Tcloser | Tsigned | Tpostscript
+Tmodel.divBottomPart =
+  Taddress | Ttrailer | Tcloser | Tsigned | Tpostscript
 Tmodel.divBottom = Tmodel.divWrapper | Tmodel.divBottomPart
 Tmodel.titlepagePart =
   Tgraphic
@@ -2437,7 +2386,7 @@ Tatt.calendarSystem.attribute.calendar =
   }?
 sch:pattern [
   id =
-    "testbasic-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-12"
+    "testbasic-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-10"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -2517,12 +2466,12 @@ Tatt.milestoneUnit.attribute.unit =
   }
 Tp =
   
-  ## (paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.5. Speech Contents]
+  ## (paragraph) marks paragraphs in prose. [3.1. Paragraphs 7.2.6. Speech Contents]
   element p {
     Tmacro.paraContent
     >> sch:pattern [
          id =
-           "testbasic-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-13"
+           "testbasic-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2544,7 +2493,7 @@ Tp =
        ]
     >> sch:pattern [
          id =
-           "testbasic-p-abstractModel-structure-p-in-l-constraint-rule-14"
+           "testbasic-p-abstractModel-structure-p-in-l-constraint-rule-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2740,7 +2689,7 @@ Tdesc =
     Tmacro.limitedContent
     >> sch:pattern [
          id =
-           "testbasic-desc-deprecationInfo-only-in-deprecated-constraint-rule-15"
+           "testbasic-desc-deprecationInfo-only-in-deprecated-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2837,7 +2786,7 @@ Trt =
      }?)
     >> sch:pattern [
          id =
-           "testbasic-rt-target-rt-target-not-span-constraint-rule-16"
+           "testbasic-rt-target-rt-target-not-span-constraint-rule-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2860,7 +2809,7 @@ Trt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "testbasic-rt-from-rt-from-constraint-rule-17"
+         id = "testbasic-rt-from-rt-from-constraint-rule-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2885,7 +2834,7 @@ Trt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "testbasic-rt-to-rt-to-constraint-rule-18"
+         id = "testbasic-rt-to-rt-to-constraint-rule-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3116,7 +3065,38 @@ Taddress =
   element address {
     (Tmodel.global*, (Tmodel.addrPart, Tmodel.global*)+),
     Tatt.global.attributes,
+    Tatt.canonical.attributes,
     Tatt.cmc.attributes,
+    Tatt.typed.attribute.subtype,
+    
+    ## characterizes the address in some sense, using any convenient classification scheme or typology.
+    ## Suggested values include: 1] billing; 2] delivery; 3] mailing; 4] military; 5] physical
+    attribute type {
+      
+      ## the address to which a bill for goods or services should be sent.
+      "billing"
+      | 
+        ## the address to which packages should be sent via a private delivery service.
+        "delivery"
+      | 
+        ## the address to which mail should be sent via a public postal service.
+        "mailing"
+      | 
+        ## the address to which mail to deployed military personnel should be sent.
+        "military"
+      | 
+        ## the address of a building irrespective of where mail to its occupants should be sent (for example, for the fire department).
+        "physical"
+      | xsd:token { pattern = "[^\p{C}\p{Z}]+" }
+    }?,
+    
+    ## specifies further information about the purpose of the address.
+    ## Sample values include: 1] sender; 2] return; 3] recipient ; 4] work; 5] home; 6] start; 7] finish; 8] pickup; 9] dropOff
+    attribute role {
+      list {
+        xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+      }
+    }?,
     empty
   }
 TaddrLine =
@@ -3275,7 +3255,7 @@ Tptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "testbasic-ptr-ptrAtts-constraint-rule-19"
+         id = "testbasic-ptr-ptrAtts-constraint-rule-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3309,7 +3289,7 @@ Tref =
   element ref {
     Tmacro.paraContent
     >> sch:pattern [
-         id = "testbasic-ref-refAtts-constraint-rule-20"
+         id = "testbasic-ref-refAtts-constraint-rule-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3349,7 +3329,7 @@ Tlist =
      (Tmodel.divBottom, Tmodel.global*)*)
     >> sch:pattern [
          id =
-           "testbasic-list-gloss-list-must-have-labels-constraint-rule-21"
+           "testbasic-list-gloss-list-must-have-labels-constraint-rule-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3592,7 +3572,7 @@ Tpb =
 Tlb =
   
   ## (line beginning) marks the beginning of a topographic line in some edition or version of a text. [3.11.3. Milestone
-  ## Elements 7.2.5. Speech Contents]
+  ## Elements 7.2.6. Speech Contents]
   element lb {
     empty,
     Tatt.global.attributes,
@@ -3829,23 +3809,15 @@ Tbibl =
   
   ## (bibliographic citation) contains a loosely-structured bibliographic citation of which the sub-components may or may not be explicitly tagged. [3.12.1. Methods of Encoding Bibliographic References and Lists of References 2.2.7. The Source Description 16.3.2. Declarable Elements]
   element bibl {
-    ((text
-      | Tmodel.gLike
-      | Tmodel.highlighted
-      | Tmodel.pPart.data
-      | Tmodel.pPart.edit
-      | Tmodel.segLike
-      | Tmodel.ptrLike
-      | Tmodel.biblPart
-      | Tmodel.global)*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:bibl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (text
+     | Tmodel.gLike
+     | Tmodel.highlighted
+     | Tmodel.pPart.data
+     | Tmodel.pPart.edit
+     | Tmodel.segLike
+     | Tmodel.ptrLike
+     | Tmodel.biblPart
+     | Tmodel.global)*,
     Tatt.global.attributes,
     Tatt.canonical.attributes,
     Tatt.cmc.attributes,
@@ -3861,15 +3833,7 @@ TbiblStruct =
   element biblStruct {
     (Tanalytic*,
      (Tmonogr, Tseries*)+,
-     (Tmodel.noteLike | Tmodel.ptrLike | TrelatedItem | TcitedRange)*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:biblStruct" ]
-         "\x{a}" ~
-         "         "
-       ],
+     (Tmodel.noteLike | Tmodel.ptrLike | TrelatedItem | TcitedRange)*),
     Tatt.global.attributes,
     Tatt.canonical.attributes,
     Tatt.cmc.attributes,
@@ -3887,15 +3851,7 @@ TlistBibl =
      Tdesc*,
      (Tmodel.milestoneLike | Trelation | TlistRelation)*,
      (Tmodel.biblLike+,
-      (Tmodel.milestoneLike | Trelation | TlistRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listBibl" ]
-         "\x{a}" ~
-         "         "
-       ],
+      (Tmodel.milestoneLike | Trelation | TlistRelation)*)+),
     Tatt.global.attributes,
     Tatt.cmc.attributes,
     Tatt.declarable.attributes,
@@ -3910,7 +3866,7 @@ TrelatedItem =
     ((Tmodel.biblLike | Tmodel.ptrLike)?)
     >> sch:pattern [
          id =
-           "testbasic-relatedItem-targetorcontent1-constraint-rule-22"
+           "testbasic-relatedItem-targetorcontent1-constraint-rule-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3946,7 +3902,7 @@ TrelatedItem =
   }
 Tl =
   
-  ## (verse line) contains a single, possibly incomplete, line of verse. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.5. Speech Contents]
+  ## (verse line) contains a single, possibly incomplete, line of verse. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.6. Speech Contents]
   element l {
     ((text
       | Tmodel.gLike
@@ -3955,7 +3911,7 @@ Tl =
       | Tmodel.global)*)
     >> sch:pattern [
          id =
-           "testbasic-l-abstractModel-structure-l-in-l-constraint-rule-23"
+           "testbasic-l-abstractModel-structure-l-in-l-constraint-rule-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3980,7 +3936,7 @@ Tl =
   }
 Tlg =
   
-  ## (line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.5. Speech Contents]
+  ## (line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc. [3.13.1. Core Tags for Verse 3.13. Passages of Verse or Drama 7.2.6. Speech Contents]
   element lg {
     ((Tmodel.divTop | Tmodel.global)*,
      (Tmodel.lLike
@@ -3996,7 +3952,7 @@ Tlg =
       | Tlg)*,
      (Tmodel.divBottom, Tmodel.global*)*)
     >> sch:pattern [
-         id = "testbasic-lg-atleast1oflggapl-constraint-rule-24"
+         id = "testbasic-lg-atleast1oflggapl-constraint-rule-22"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4016,7 +3972,7 @@ Tlg =
        ]
     >> sch:pattern [
          id =
-           "testbasic-lg-abstractModel-structure-lg-in-l-constraint-rule-25"
+           "testbasic-lg-abstractModel-structure-lg-in-l-constraint-rule-23"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4045,15 +4001,15 @@ Tsp =
   
   ## (speech) contains an individual speech in a performance text, or a passage presented as such in a prose or verse text. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.2. Speeches and Speakers]
   element sp {
-    ((Tmodel.global | Tmodel.stageLike)*,
-     (Tspeaker, Tmodel.global*),
-     ((Tlg
-       | Tmodel.lLike
-       | Tmodel.pLike
-       | Tmodel.listLike
-       | Tmodel.stageLike
-       | Tmodel.attributable),
-      (Tmodel.global* | Tq))+),
+    (Tmodel.stageLike
+     | Tmodel.global
+     | Tmodel.lLike
+     | Tmodel.pLike
+     | Tmodel.listLike
+     | Tmodel.attributable
+     | Tspeaker
+     | Tlg
+     | Tq)*,
     Tatt.global.attributes,
     Tatt.ascribed.directed.attributes,
     Tatt.placement.attributes,
@@ -4072,7 +4028,7 @@ Tspeaker =
   }
 Tstage =
   
-  ## (stage direction) contains any kind of stage direction within a dramatic text or fragment. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.4. Stage Directions]
+  ## (stage direction) contains any kind of stage direction within a dramatic text or fragment. [3.13.2. Core Tags for Drama 3.13. Passages of Verse or Drama 7.2.5. Stage Directions]
   element stage {
     Tmacro.specialPara,
     Tatt.global.attributes,
@@ -4112,7 +4068,7 @@ Tstage =
          | 
            ## more than one of the above
            "mixed"
-         | xsd:token { pattern = "[^\p{C}\p{Z}]+" })*
+         | xsd:token { pattern = "[^\p{C}\p{Z}]+" })+
       }
     }?,
     empty
@@ -4365,15 +4321,7 @@ Tavailability =
   
   ## (availability) supplies information about the availability of a text, for example any restrictions on its use or distribution, its copyright status, any licence applying to it, etc. [2.2.4. Publication, Distribution, Licensing, etc.]
   element availability {
-    ((Tmodel.availabilityPart | Tmodel.pLike)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:availability" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (Tmodel.availabilityPart | Tmodel.pLike)+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     
@@ -4406,15 +4354,7 @@ TseriesStmt =
   ## (series statement) groups information about the series, if any, to which a publication belongs. [2.2.5. The Series Statement 2.2. The File Description]
   element seriesStmt {
     (Tmodel.pLike+
-     | (Ttitle+, (Teditor | TrespStmt)*, (Tidno | TbiblScope)*))
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:seriesStmt" ]
-         "\x{a}" ~
-         "         "
-       ],
+     | (Ttitle+, (Teditor | TrespStmt)*, (Tidno | TbiblScope)*)),
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -4430,15 +4370,7 @@ TsourceDesc =
   ## (source description) describes the source(s) from which an electronic text was derived or generated, typically a bibliographic description in the case of a digitized text, or a phrase such as born digital for a text which has no previous existence. [2.2.7. The Source Description]
   element sourceDesc {
     (Tmodel.pLike+
-     | (Tmodel.biblLike | Tmodel.sourceDescPart | Tmodel.listLike)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:sourceDesc" ]
-         "\x{a}" ~
-         "         "
-       ],
+     | (Tmodel.biblLike | Tmodel.sourceDescPart | Tmodel.listLike)+),
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -4454,15 +4386,7 @@ TbiblFull =
        TseriesStmt*,
        TnotesStmt?),
       TsourceDesc*)
-     | (TfileDesc, TprofileDesc))
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:biblFull" ]
-         "\x{a}" ~
-         "         "
-       ],
+     | (TfileDesc, TprofileDesc)),
     Tatt.global.attributes,
     Tatt.canonical.attributes,
     Tatt.cmc.attributes,
@@ -4496,15 +4420,7 @@ TprojectDesc =
   
   ## (project description) describes in detail the aim or purpose for which an electronic file was encoded, together with any other relevant information concerning the process by which it was assembled or collected. [2.3.1. The Project Description 2.3. The Encoding Description 16.3.2. Declarable Elements]
   element projectDesc {
-    (Tmodel.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:projectDesc" ]
-         "\x{a}" ~
-         "         "
-       ],
+    Tmodel.pLike+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -4513,15 +4429,7 @@ TsamplingDecl =
   
   ## (sampling declaration) contains a prose description of the rationale and methods used in selecting texts, or parts of a text, for inclusion in the resource. [2.3.2. The Sampling Declaration 2.3. The Encoding Description 16.3.2. Declarable Elements]
   element samplingDecl {
-    (Tmodel.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:samplingDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    Tmodel.pLike+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -4530,15 +4438,7 @@ TeditorialDecl =
   
   ## (editorial practice declaration) provides details of editorial principles and practices applied during the encoding of a text. [2.3.3. The Editorial Practices Declaration 2.3. The Encoding Description 16.3.2. Declarable Elements]
   element editorialDecl {
-    ((Tmodel.pLike | Tmodel.editorialDeclPart)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:editorialDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (Tmodel.pLike | Tmodel.editorialDeclPart)+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -4547,15 +4447,7 @@ Tcorrection =
   
   ## (correction principles) states how and under what circumstances corrections have been made in the text. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element correction {
-    (Tmodel.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:correction" ]
-         "\x{a}" ~
-         "         "
-       ],
+    Tmodel.pLike+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     
@@ -4591,15 +4483,7 @@ Tnormalization =
   
   ## (normalization) indicates the extent of normalization or regularization of the original source carried out in converting it to electronic form. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element normalization {
-    (Tmodel.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:normalization" ]
-         "\x{a}" ~
-         "         "
-       ],
+    Tmodel.pLike+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     
@@ -4621,15 +4505,7 @@ Tquotation =
   element quotation {
     (Tmodel.pLike*)
     >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:quotation" ]
-         "\x{a}" ~
-         "         "
-       ]
-    >> sch:pattern [
-         id = "testbasic-quotation-quotationContents-constraint-rule-26"
+         id = "testbasic-quotation-quotationContents-constraint-rule-24"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4671,15 +4547,7 @@ Thyphenation =
   
   ## (hyphenation) summarizes the way in which hyphenation in a source text has been treated in an encoded version of it. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element hyphenation {
-    (Tmodel.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:hyphenation" ]
-         "\x{a}" ~
-         "         "
-       ],
+    Tmodel.pLike+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     
@@ -4705,15 +4573,7 @@ Tsegmentation =
   
   ## (segmentation) describes the principles according to which the text has been segmented, for example into sentences, tone-units, graphemic strata, etc. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element segmentation {
-    (Tmodel.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:segmentation" ]
-         "\x{a}" ~
-         "         "
-       ],
+    Tmodel.pLike+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -4722,15 +4582,7 @@ TstdVals =
   
   ## (standard values) specifies the format used when standardized date or number values are supplied. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements]
   element stdVals {
-    (Tmodel.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:stdVals" ]
-         "\x{a}" ~
-         "         "
-       ],
+    Tmodel.pLike+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -4739,15 +4591,7 @@ Tinterpretation =
   
   ## (interpretation) describes the scope of any analytic or interpretive information added to the text in addition to the transcription. [2.3.3. The Editorial Practices Declaration]
   element interpretation {
-    (Tmodel.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:interpretation" ]
-         "\x{a}" ~
-         "         "
-       ],
+    Tmodel.pLike+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -4756,15 +4600,7 @@ Tpunctuation =
   
   ## specifies editorial practice adopted with respect to punctuation marks in the original. [2.3.3. The Editorial Practices Declaration 3.2. Treatment of Punctuation]
   element punctuation {
-    (Tmodel.pLike*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:punctuation" ]
-         "\x{a}" ~
-         "         "
-       ],
+    Tmodel.pLike*,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     
@@ -4876,15 +4712,7 @@ TstyleDefDecl =
   
   ## (style definition language declaration) specifies the name of the formal language in which style or renditional information is supplied elsewhere in the document. The specific version of the scheme may also be supplied. [2.3.5. The Default Style Definition Language Declaration]
   element styleDefDecl {
-    (Tmodel.pLike*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:styleDefDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    Tmodel.pLike*,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     Tatt.styleDef.attributes,
@@ -4894,15 +4722,7 @@ TrefsDecl =
   
   ## (references declaration) specifies how canonical references are constructed for this text. [2.3.6.3. Milestone Method 2.3. The Encoding Description 2.3.6. The Reference System Declaration]
   element refsDecl {
-    (Tmodel.pLike+ | TciteStructure+ | TcRefPattern+ | TrefState+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:refsDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (Tmodel.pLike+ | TciteStructure+ | TcRefPattern+ | TrefState+),
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -4937,7 +4757,7 @@ TciteStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "testbasic-citeStructure-match-citestructure-outer-match-constraint-rule-27"
+           "testbasic-citeStructure-match-citestructure-outer-match-constraint-rule-25"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4958,7 +4778,7 @@ TciteStructure =
        ]
     >> sch:pattern [
          id =
-           "testbasic-citeStructure-match-citestructure-inner-match-constraint-rule-28"
+           "testbasic-citeStructure-match-citestructure-inner-match-constraint-rule-26"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5099,15 +4919,7 @@ TgeoDecl =
     ]
   ]
   element geoDecl {
-    Tmacro.phraseSeq
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:geoDecl" ]
-         "\x{a}" ~
-         "         "
-       ],
+    Tmacro.phraseSeq,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     
@@ -5245,15 +5057,7 @@ TlangUsage =
   
   ## (language usage) describes the languages, sublanguages, registers, dialects, etc. represented within a text. [2.4.2. Language Usage 2.4. The Profile Description 16.3.2. Declarable Elements]
   element langUsage {
-    (Tmodel.pLike+ | Tlanguage+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:langUsage" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (Tmodel.pLike+ | Tlanguage+),
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -5289,15 +5093,7 @@ TtextClass =
   
   ## (text classification) groups information which describes the nature or topic of a text in terms of a standard classification scheme, thesaurus, etc. [2.4.3. The Text Classification]
   element textClass {
-    ((TclassCode | TcatRef | Tkeywords)*)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:textClass" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (TclassCode | TcatRef | Tkeywords)*,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -5375,15 +5171,7 @@ TcorrespDesc =
   
   ## (correspondence description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]
   element correspDesc {
-    (Tmodel.correspDescPart+ | Tmodel.pLike+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:correspDesc" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (Tmodel.correspDescPart+ | Tmodel.pLike+),
     Tatt.global.attributes,
     Tatt.canonical.attributes,
     Tatt.declarable.attributes,
@@ -5431,15 +5219,7 @@ TxenoData =
   
   ## (non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed. [2.5. Non-TEI Metadata]
   element xenoData {
-    (text | anyElement_xenoData_1+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:xenoData" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (text | anyElement_xenoData_1+),
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     Tatt.typed.attributes,
@@ -6156,15 +5936,7 @@ TlistOrg =
     (Tmodel.headLike*,
      Tdesc*,
      (Trelation | TlistRelation)*,
-     ((Torg | TlistOrg)+, (Trelation | TlistRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listOrg" ]
-         "\x{a}" ~
-         "         "
-       ],
+     ((Torg | TlistOrg)+, (Trelation | TlistRelation)*)+),
     Tatt.global.attributes,
     Tatt.cmc.attributes,
     Tatt.declarable.attributes,
@@ -6179,15 +5951,7 @@ TlistEvent =
     (Tmodel.headLike*,
      Tdesc*,
      (Trelation | TlistRelation)*,
-     (Tmodel.eventLike+, (Trelation | TlistRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listEvent" ]
-         "\x{a}" ~
-         "         "
-       ],
+     (Tmodel.eventLike+, (Trelation | TlistRelation)*)+),
     Tatt.global.attributes,
     Tatt.cmc.attributes,
     Tatt.declarable.attributes,
@@ -6203,15 +5967,7 @@ TlistPerson =
      Tdesc*,
      (Trelation | TlistRelation)*,
      ((Tmodel.personLike | TlistPerson)+,
-      (Trelation | TlistRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listPerson" ]
-         "\x{a}" ~
-         "         "
-       ],
+      (Trelation | TlistRelation)*)+),
     Tatt.global.attributes,
     Tatt.cmc.attributes,
     Tatt.declarable.attributes,
@@ -6226,15 +5982,7 @@ TlistPlace =
     (Tmodel.headLike*,
      Tdesc*,
      (Trelation | TlistRelation)*,
-     ((Tmodel.placeLike | TlistPlace)+, (Trelation | TlistRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listPlace" ]
-         "\x{a}" ~
-         "         "
-       ],
+     ((Tmodel.placeLike | TlistPlace)+, (Trelation | TlistRelation)*)+),
     Tatt.global.attributes,
     Tatt.cmc.attributes,
     Tatt.declarable.attributes,
@@ -6552,7 +6300,7 @@ Trelation =
   element relation {
     (Tdesc?)
     >> sch:pattern [
-         id = "testbasic-relation-ref-or-key-or-name-constraint-rule-29"
+         id = "testbasic-relation-ref-or-key-or-name-constraint-rule-27"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6570,7 +6318,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-active-mutual-constraint-rule-30"
+         id = "testbasic-relation-active-mutual-constraint-rule-28"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6588,7 +6336,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-active-passive-constraint-rule-31"
+         id = "testbasic-relation-active-passive-constraint-rule-29"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6802,15 +6550,7 @@ TlistObject =
     (Tmodel.headLike*,
      Tdesc*,
      (Trelation | TlistRelation)*,
-     (Tmodel.objectLike+, (Trelation | TlistRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listObject" ]
-         "\x{a}" ~
-         "         "
-       ],
+     (Tmodel.objectLike+, (Trelation | TlistRelation)*)+),
     Tatt.global.attributes,
     Tatt.cmc.attributes,
     Tatt.declarable.attributes,
@@ -6850,15 +6590,7 @@ TlistNym =
     (Tmodel.headLike*,
      Tdesc*,
      (Trelation | TlistRelation)*,
-     ((Tnym | TlistNym)+, (Trelation | TlistRelation)*)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:listNym" ]
-         "\x{a}" ~
-         "         "
-       ],
+     ((Tnym | TlistNym)+, (Trelation | TlistRelation)*)+),
     Tatt.global.attributes,
     Tatt.cmc.attributes,
     Tatt.declarable.attributes,
@@ -6962,7 +6694,7 @@ Tfacsimile =
      Tback?)
     >> sch:pattern [
          id =
-           "testbasic-facsimile-no_facsimile_text_nodes-constraint-rule-32"
+           "testbasic-facsimile-no_facsimile_text_nodes-constraint-rule-30"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7076,7 +6808,7 @@ Tpath =
   element path {
     empty
     >> sch:pattern [
-         id = "testbasic-path-pathmustnotbeclosed-constraint-rule-33"
+         id = "testbasic-path-pathmustnotbeclosed-constraint-rule-31"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7169,7 +6901,7 @@ TaddSpan =
     empty
     >> sch:pattern [
          id =
-           "testbasic-addSpan-addSpan-requires-spanTo-constraint-rule-34"
+           "testbasic-addSpan-addSpan-requires-spanTo-constraint-rule-32"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7190,7 +6922,7 @@ TaddSpan =
        ]
     >> sch:pattern [
          id =
-           "testbasic-addSpan-addSpan-requires-spanTo-fr-constraint-rule-35"
+           "testbasic-addSpan-addSpan-requires-spanTo-fr-constraint-rule-33"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7231,7 +6963,7 @@ TdamageSpan =
     empty
     >> sch:pattern [
          id =
-           "testbasic-damageSpan-damageSpan-requires-spanTo-constraint-rule-36"
+           "testbasic-damageSpan-damageSpan-requires-spanTo-constraint-rule-34"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7252,7 +6984,7 @@ TdamageSpan =
        ]
     >> sch:pattern [
          id =
-           "testbasic-damageSpan-damageSpan-requires-spanTo-fr-constraint-rule-37"
+           "testbasic-damageSpan-damageSpan-requires-spanTo-fr-constraint-rule-35"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7282,7 +7014,7 @@ TdelSpan =
     empty
     >> sch:pattern [
          id =
-           "testbasic-delSpan-delSpan-requires-spanTo-constraint-rule-38"
+           "testbasic-delSpan-delSpan-requires-spanTo-constraint-rule-36"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7303,7 +7035,7 @@ TdelSpan =
        ]
     >> sch:pattern [
          id =
-           "testbasic-delSpan-delSpan-requires-spanTo-fr-constraint-rule-39"
+           "testbasic-delSpan-delSpan-requires-spanTo-fr-constraint-rule-37"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7450,7 +7182,7 @@ Tsubst =
   element subst {
     ((Tadd | Tsurplus | Tdel | Tmodel.milestoneLike)+)
     >> sch:pattern [
-         id = "testbasic-subst-substContents1-constraint-rule-40"
+         id = "testbasic-subst-substContents1-constraint-rule-38"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7750,7 +7482,7 @@ Tlink =
   element link {
     empty
     >> sch:pattern [
-         id = "testbasic-link-linkTargets3-constraint-rule-41"
+         id = "testbasic-link-linkTargets3-constraint-rule-39"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7793,7 +7525,7 @@ Tab =
     Tmacro.abContent
     >> sch:pattern [
          id =
-           "testbasic-ab-abstractModel-structure-ab-in-l-constraint-rule-42"
+           "testbasic-ab-abstractModel-structure-ab-in-l-constraint-rule-40"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7833,7 +7565,7 @@ Tanchor =
   }
 Tseg =
   
-  ## (arbitrary segment) represents any segmentation of text below the chunk level. [17.3. Blocks, Segments, and Anchors 6.2. Components of the Verse Line 7.2.5. Speech Contents]
+  ## (arbitrary segment) represents any segmentation of text below the chunk level. [17.3. Blocks, Segments, and Anchors 6.2. Components of the Verse Line 7.2.6. Speech Contents]
   element seg {
     Tmacro.paraContent,
     Tatt.global.attributes,
@@ -7976,7 +7708,7 @@ Tjoin =
   element join {
     ((Tmodel.descLike | Tmodel.certLike)*)
     >> sch:pattern [
-         id = "testbasic-join-joinTargets3-constraint-rule-43"
+         id = "testbasic-join-joinTargets3-constraint-rule-41"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8129,33 +7861,7 @@ TstandOff =
   
   ## Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [17.10. The standOff Container]
   element standOff {
-    (Tmodel.standOffPart+)
-    >> sch:pattern [
-         id =
-           "testbasic-standOff-nested_standOff_should_be_typed-constraint-rule-44"
-         "\x{a}" ~
-         "            "
-         sch:rule [
-           context = "tei:standOff"
-           "\x{a}" ~
-           "               "
-           sch:assert [
-             test = "@type or not(ancestor::tei:standOff)"
-             "This\x{a}" ~
-             "        "
-             sch:name [ ]
-             " element must have a @type attribute, since it is\x{a}" ~
-             "        nested inside a "
-             sch:name [ ]
-             "\x{a}" ~
-             "               "
-           ]
-           "\x{a}" ~
-           "            "
-         ]
-         "\x{a}" ~
-         "         "
-       ],
+    Tmodel.standOffPart+,
     Tatt.global.attributes,
     Tatt.declaring.attributes,
     Tatt.typed.attributes,
@@ -8367,7 +8073,7 @@ Tdiv =
       (Tmodel.divBottom, Tmodel.global*)*)?)
     >> sch:pattern [
          id =
-           "testbasic-div-abstractModel-structure-div-in-l-constraint-rule-45"
+           "testbasic-div-abstractModel-structure-div-in-l-constraint-rule-42"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8388,7 +8094,7 @@ Tdiv =
        ]
     >> sch:pattern [
          id =
-           "testbasic-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-46"
+           "testbasic-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-43"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8791,15 +8497,7 @@ TsettingDesc =
   
   ## (setting description) describes the setting or settings within which a language interaction takes place, or other places otherwise referred to in a text, edition, or metadata. [16.2. Contextual Information 2.4. The Profile Description]
   element settingDesc {
-    ((Tplace | Tsetting)+)
-    >> sch:pattern [
-         is-a = "declarable"
-         "\x{a}" ~
-         "            "
-         sch:param [ name = "tde" value = "tei:settingDesc" ]
-         "\x{a}" ~
-         "         "
-       ],
+    (Tplace | Tsetting)+,
     Tatt.global.attributes,
     Tatt.declarable.attributes,
     empty
@@ -8813,7 +8511,7 @@ Tplatypus =
      ##
      attribute bill { "duck" }?)
     >> sch:pattern [
-         id = "testbasic-platypus-bill-silly-test-constraint-report-21"
+         id = "testbasic-platypus-bill-silly-test-constraint-report-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8855,7 +8553,7 @@ sch:ns [
 sch:ns [ prefix = "sch" uri = "http://purl.oclc.org/dsdl/schematron" ]
 sch:ns [ prefix = "sch1x" uri = "http://www.ascc.net/xml/schematron" ]
 sch:pattern [
-  id = "testbasic-outerconstraint-constraint-rule-47"
+  id = "testbasic-outerconstraint-constraint-rule-44"
   "\x{a}" ~
   "      "
   sch:rule [
