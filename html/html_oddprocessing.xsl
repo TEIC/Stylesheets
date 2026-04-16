@@ -942,7 +942,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="jsForOdds"/>
   </xsl:template>
   <xsl:template name="jsForOdds">
-    <script type="text/javascript">
+    <script>
       <xsl:comment>
         <xsl:text disable-output-escaping="yes">
 var displayXML=0;

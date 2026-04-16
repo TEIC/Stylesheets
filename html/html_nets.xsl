@@ -51,8 +51,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="$thistreestyle='googlechart'">
         <xsl:if test="not(preceding::tei:eTree or preceding::tei:forest)">
-          <script type="text/javascript" src="https://www.google.com/jsapi"/>
-          <script type="text/javascript">
+          <script src="https://www.google.com/jsapi"/>
+          <script>
 	google.setOnLoadCallback(drawCharts);
 	function drawCharts() {
 	<xsl:for-each select="key('TREES',1)"><xsl:variable name="TREEID" select="generate-id()"/><xsl:text>var data</xsl:text><xsl:value-of select="$TREEID"/><xsl:text>= new google.visualization.DataTable();
@@ -92,7 +92,7 @@ of this software, even if advised of the possibility of such damage.
 				  or self::tei:eLeaf]))"/>
             <xsl:variable name="TREEID" select="generate-id()"/>
             <div class="treediagram" style="width:{$treewidth} {@style}" id="viz{$TREEID}"/>
-            <script type="text/javascript">
+            <script>
 	      <xsl:choose>
 		<xsl:when test="$maxlabel &gt; 150">
 	      downoffset= 75;
@@ -148,7 +148,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:when test="not(ancestor::tei:eTree or ancestor::tei:forest)">
 	    <div  id="viz{$TREEID}"></div>
 	    <script src="dndTree.js"></script>
-            <script type="text/javascript">
+            <script>
 	      treeData = {<xsl:call-template name="treelabel"/>};
 	      dragndrop("#viz<xsl:value-of select="$TREEID"/>");
 	    </script>
@@ -181,7 +181,7 @@ of this software, even if advised of the possibility of such damage.
 				  or self::tei:eLeaf]))"/>
             <xsl:variable name="TREEID" select="generate-id()"/>
             <div class="treediagram" style="width:{$treewidth} {@style}" id="viz{$TREEID}"/>
-            <script type="text/javascript">
+            <script>
      treeData = {<xsl:call-template name="treelabel"/>};
      drawCollapsibleTree("#viz<xsl:value-of select="$TREEID"/>",<xsl:value-of select="$treewidth"/>,<xsl:value-of select="$treeheight"/>);
 

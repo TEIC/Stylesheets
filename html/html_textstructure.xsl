@@ -1140,8 +1140,8 @@
             <xsl:choose>
                <xsl:when test="count(key('TREES', 1)) = 0"/>
                <xsl:when test="$treestyle = 'googlechart'">
-                  <script type="text/javascript" src="https://www.google.com/jsapi"/>
-                  <script type="text/javascript">
+                  <script src="https://www.google.com/jsapi"/>
+                  <script>
                             google.load('visualization', '1', {
                                 packages:[ 'orgchart']
                             });
@@ -1149,7 +1149,7 @@
                </xsl:when>
                <xsl:when test="$treestyle = 'd3DragDropTree'">
                   <!-- from  http://www.robschmuecker.com/d3-js-drag-and-drop-zoomable-tree/ -->
-                  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"/>
+                  <script src="http://d3js.org/d3.v3.min.js"/>
                   <style type="text/css">
                      .node {
                          cursor: pointer;
@@ -1192,7 +1192,7 @@
                      }</style>
                </xsl:when>
                <xsl:when test="$treestyle = 'd3CollapsableTree'">
-                  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"/>
+                  <script src="http://d3js.org/d3.v3.min.js"/>
                   <!-- from d3noob’s block #8375092 January 11, 2014
 	    Interactive d3.js tree diagram
 	    This is a d3.js tree diagram that includes an interactive element as used as an example in the book D3 Tips and Tricks.
@@ -1355,8 +1355,8 @@ function click(d) {
 	  </script>
                </xsl:when>
                <xsl:when test="$treestyle = 'd3verticaltree'">
-                  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"/>
-                  <script type="text/javascript">
+                  <script src="http://d3js.org/d3.v3.min.js"/>
+                  <script>
                             var downoffset = 40;
                             var down2offset = 5;
                             var diagonal = d3.svg.diagonal().projection(function (d) {
@@ -1491,7 +1491,7 @@ function click(d) {
    </doc>
    <xsl:template name="writeJavascript">
       <xsl:param name="content"/>
-      <script type="text/javascript">
+      <script>
 	<xsl:value-of select="$content"/>
       </script>
    </xsl:template>
