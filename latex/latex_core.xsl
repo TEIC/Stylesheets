@@ -166,7 +166,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element emph</desc>
    </doc>
-  <xsl:template match="tei:emph">
+  <xsl:template match="tei:emph | tei:distinct">
       <xsl:text>\textit{</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>}</xsl:text>
