@@ -127,7 +127,8 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="contains(@w:instr,'INCLUDETEXT')"/><!-- from docm to docx conversion? -->
 	<xsl:when test="contains(@w:instr,'TEMPLATE')"/><!-- from docm to docx conversion? -->	
 	<xsl:otherwise>
-	  <xsl:message terminate="yes">fldSimple: unrecognized type <xsl:value-of select="@w:instr"/></xsl:message>
+	  <hi rend="error">fldSimple error: unrecognized type <xsl:value-of select="@w:instr"/></hi>
+	  <xsl:message>fldSimple error: unrecognized type <xsl:value-of select="@w:instr"/></xsl:message>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
