@@ -100,11 +100,11 @@
       <entry xml:id="dedication-label">
         <text xml:lang="de">Widmung</text>
         <text xml:lang="en">Dedication</text>
-        <text xml:lang="es">Dedicación</text>
+        <text xml:lang="es">Dedicatoria</text>
         <text xml:lang="fr">Dédicace</text>
         <text xml:lang="it">Dedizione</text>        
         <text xml:lang="nl">Opdracht</text>        
-        <text xml:lang="pt">Dedicação</text>
+        <text xml:lang="pt">Dedicatória</text>
       </entry>
       <entry xml:id="acknowledgements-label">
         <text xml:lang="de">Anerkennung</text>
@@ -207,7 +207,7 @@
   
   <xsl:function name="i18n:plural">
     <xsl:param name="string"/>
-    <xsl:copy-of select="key('plural-lookup', $string, $i18n-lookup)[@xml:lang=$jtei.lang]"/>
+    <xsl:copy-of select="key('plural-lookup', lower-case(normalize-space($string)), $i18n-lookup)[@xml:lang=$jtei.lang]"/>
   </xsl:function>
   
 </xsl:stylesheet>
