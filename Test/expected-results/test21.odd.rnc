@@ -542,9 +542,9 @@ sch:pattern [
         "(   self::tei:classRef                                 | self::tei:dataRef                                 | self::tei:elementRef                                 | self::tei:macroRef                                 | self::tei:moduleRef                                 | self::tei:schemaSpec )                                   and                                   $srcs[2]"
       "\x{a}" ~
       "              When used on a schema description element (like\x{a}" ~
-      "              "
+      "              <"
       sch:value-of [ select = "name(.)" ]
-      "), the @source attribute\x{a}" ~
+      ">), the @source attribute\x{a}" ~
       "              should have only 1 value. (This one has "
       sch:value-of [ select = "count($srcs)" ]
       ".)\x{a}" ~
@@ -884,9 +884,9 @@ sch:pattern [
       "\x{a}" ~
       "              The element indicated by @spanTo ("
       sch:value-of [ select = "@spanTo" ]
-      ") must follow the current "
+      ") must follow the current <"
       sch:name [ ]
-      " element \x{a}" ~
+      "> element.\x{a}" ~
       "            "
     ]
     "\x{a}" ~
@@ -975,9 +975,11 @@ sch:pattern [
     "         "
     sch:assert [
       test = "@type"
-      "The "
+      "\x{a}" ~
+      "          The <"
       sch:name [ ]
-      " element should not be categorized in detail with @subtype unless also categorized in general with @type"
+      "> element should not be categorized in detail with @subtype unless also categorized in general with @type.\x{a}" ~
+      "        "
     ]
     "\x{a}" ~
     "      "
@@ -3456,7 +3458,11 @@ ref =
            "               "
            sch:assert [
              test = "tei:label"
-             'The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element'
+             "\x{a}" ~
+             '          The content of a "gloss" list should include a sequence of\x{a}' ~
+             "          one or more pairs of a <label> element followed by an\x{a}" ~
+             "          <item> element.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -3980,13 +3986,13 @@ relatedItem =
              test = "@target and count( child::* ) > 0"
              "If the @target attribute on "
              sch:name [ ]
-             " is used, the relatedItem element must be empty"
+             " is used, the relatedItem element must be empty."
            ]
            "\x{a}" ~
            "               "
            sch:assert [
              test = "@target or child::*"
-             "A relatedItem element should have either a @target attribute or a child element to indicate the related bibliographic item"
+             "A relatedItem element should have either a @target attribute or a child element to indicate the related bibliographic item."
            ]
            "\x{a}" ~
            "            "
@@ -5301,7 +5307,7 @@ relation =
            "               "
            sch:assert [
              test = "@ref or @key or @name"
-             "One of the attributes @name, @ref or @key must be supplied"
+             "One of the attributes @name, @ref or @key must be supplied."
            ]
            "\x{a}" ~
            "            "
@@ -5319,7 +5325,7 @@ relation =
            "               "
            sch:report [
              test = "@active and @mutual"
-             "Only one of the attributes @active and @mutual may be supplied"
+             "Only one of the attributes @active and @mutual may be supplied."
            ]
            "\x{a}" ~
            "            "
@@ -5337,7 +5343,7 @@ relation =
            "               "
            sch:report [
              test = "@passive and not(@active)"
-             "the attribute @passive may be supplied only if the attribute @active is supplied"
+             "the attribute @passive may be supplied only if the attribute @active is supplied."
            ]
            "\x{a}" ~
            "            "
@@ -5970,9 +5976,9 @@ quotation =
            sch:report [
              test = "not( @marks )  and  not( tei:p )"
              "\x{a}" ~
-             "          On "
+             "          On <"
              sch:name [ ]
-             ", either the @marks attribute should be used, or a paragraph of description provided\x{a}" ~
+             ">, either the @marks attribute should be used, or a paragraph of description provided.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -6796,10 +6802,9 @@ link =
            "               "
            sch:assert [
              test = "contains(normalize-space(@target),' ')"
-             "You must supply at least two values for @target or  on "
+             "You must supply at least two values for @target on <"
              sch:name [ ]
-             "\x{a}" ~
-             "               "
+             ">."
            ]
            "\x{a}" ~
            "            "
@@ -7049,10 +7054,10 @@ join =
            sch:assert [
              test = "contains( normalize-space( @target ),' ')"
              "\x{a}" ~
-             "          You must supply at least two values for @target on "
+             "          You must supply at least two values for @target on <"
              sch:name [ ]
-             "\x{a}" ~
-             "               "
+             ">.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -7192,7 +7197,7 @@ altGrp =
   }
 standOff =
   
-  ## Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [17.10. The standOff Container]
+  ## functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [17.10. The standOff Container]
   element standOff {
     model.standOffPart+,
     att.global.attributes,
@@ -7427,9 +7432,9 @@ dimensions =
            sch:report [
              test = "count(tei:width) gt 1"
              "\x{a}" ~
-             "          The element "
+             "          The element <"
              sch:name [ ]
-             " may appear once only\x{a}" ~
+             "> may appear once only.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -7437,9 +7442,9 @@ dimensions =
            sch:report [
              test = "count(tei:height) gt 1"
              "\x{a}" ~
-             "          The element "
+             "          The element <"
              sch:name [ ]
-             " may appear once only\x{a}" ~
+             "> may appear once only.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -7447,9 +7452,9 @@ dimensions =
            sch:report [
              test = "count(tei:depth) gt 1"
              "\x{a}" ~
-             "          The element "
+             "          The element <"
              sch:name [ ]
-             " may appear once only\x{a}" ~
+             "> may appear once only.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -8602,9 +8607,9 @@ addSpan =
              "\x{a}" ~
              "              The element indicated by @spanTo ("
              sch:value-of [ select = "@spanTo" ]
-             ") must follow the current "
+             ") must follow the current <"
              sch:name [ ]
-             " element \x{a}" ~
+             "> element.\x{a}" ~
              "            "
            ]
            "\x{a}" ~
@@ -8861,9 +8866,9 @@ subst =
              test =
                "child::tei:add and (child::tei:del or child::tei:surplus)"
              "\x{a}" ~
-             "                  "
+             "        <"
              sch:name [ ]
-             " must have at least one child add and at least one child del or surplus"
+             "> must have at least one child <add> and at least one child <del> or <surplus>."
            ]
            "\x{a}" ~
            "            "
@@ -8916,7 +8921,7 @@ surplus =
   }
 secl =
   
-  ## (secluded text) Secluded. Marks text present in the source which the editor believes to be genuine but out of its original place (which is unknown). [12.3.1.7. Text Omitted from or Supplied in the Transcription]
+  ## (secluded text) marks text present in the source which the editor believes to be genuine but out of its original place (which is unknown). [12.3.1.7. Text Omitted from or Supplied in the Transcription]
   element secl {
     macro.paraContent,
     att.global.attributes,

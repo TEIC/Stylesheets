@@ -1007,7 +1007,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
          <sch:let name="srcs" value="tokenize( normalize-space(@source),' ')"/>
          <sch:report test="(   self::tei:classRef                                 | self::tei:dataRef                                 | self::tei:elementRef                                 | self::tei:macroRef                                 | self::tei:moduleRef                                 | self::tei:schemaSpec )                                   and                                   $srcs[2]">
               When used on a schema description element (like
-              <sch:value-of select="name(.)"/>), the @source attribute
+              &lt;<sch:value-of select="name(.)"/>&gt;), the @source attribute
               should have only 1 value. (This one has <sch:value-of select="count($srcs)"/>.)
             </sch:report>
       </sch:rule>
@@ -1425,7 +1425,7 @@ Suggested values include: 1] sole; 2] major; 3] minor</a:documentation>
                 xmlns:xi="http://www.w3.org/2001/XInclude"
                 context="tei:*[ starts-with( @spanTo, '#') ]">
          <sch:assert test="id( substring( @spanTo, 2 ) ) &gt;&gt; .">
-              The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current <sch:name/> element 
+              The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current &lt;<sch:name/>&gt; element.
             </sch:assert>
       </sch:rule>
    </pattern>
@@ -1491,7 +1491,9 @@ Suggested values include: 1] sole; 2] major; 3] minor</a:documentation>
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xi="http://www.w3.org/2001/XInclude"
                 context="tei:*[@subtype]">
-         <sch:assert test="@type">The <sch:name/> element should not be categorized in detail with @subtype unless also categorized in general with @type</sch:assert>
+         <sch:assert test="@type">
+          The &lt;<sch:name/>&gt; element should not be categorized in detail with @subtype unless also categorized in general with @type.
+        </sch:assert>
       </sch:rule>
    </pattern>
    <define name="t_att.written.attributes">
@@ -5308,7 +5310,11 @@ Sample values include: 1] suspension (suspension); 2] contraction (contraction);
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:list[@type='gloss']">
-               <sch:assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</sch:assert>
+               <sch:assert test="tei:label">
+          The content of a "gloss" list should include a sequence of
+          one or more pairs of a &lt;label&gt; element followed by an
+          &lt;item&gt; element.
+        </sch:assert>
             </sch:rule>
          </pattern>
          <ref name="t_att.global.attributes"/>
@@ -5892,8 +5898,8 @@ Elements]</a:documentation>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:relatedItem">
-               <sch:report test="@target and count( child::* ) &gt; 0">If the @target attribute on <sch:name/> is used, the relatedItem element must be empty</sch:report>
-               <sch:assert test="@target or child::*">A relatedItem element should have either a @target attribute or a child element to indicate the related bibliographic item</sch:assert>
+               <sch:report test="@target and count( child::* ) &gt; 0">If the @target attribute on <sch:name/> is used, the relatedItem element must be empty.</sch:report>
+               <sch:assert test="@target or child::*">A relatedItem element should have either a @target attribute or a child element to indicate the related bibliographic item.</sch:assert>
             </sch:rule>
          </pattern>
          <ref name="t_att.global.attributes"/>
@@ -6807,7 +6813,7 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
                       xmlns:xi="http://www.w3.org/2001/XInclude"
                       context="tei:quotation">
                <sch:report test="not( @marks )  and  not( tei:p )">
-          On <sch:name/>, either the @marks attribute should be used, or a paragraph of description provided
+          On &lt;<sch:name/>&gt;, either the @marks attribute should be used, or a paragraph of description provided.
         </sch:report>
             </sch:rule>
          </pattern>
@@ -7862,7 +7868,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:s">
-               <sch:report test="tei:s">You may not nest one s element within another: use seg instead</sch:report>
+               <sch:report test="tei:s">You may not nest one &lt;s&gt; element within another: use &lt;seg&gt; instead.</sch:report>
             </sch:rule>
          </pattern>
          <ref name="t_att.global.attributes"/>
@@ -8050,8 +8056,8 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:span">
                <sch:report test="@from and @target">
-          Only one of the attributes @target and @from may be supplied on <sch:name/>
-               </sch:report>
+          Only one of the attributes @target and @from may be supplied on &lt;<sch:name/>&gt;.
+        </sch:report>
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
@@ -8060,8 +8066,8 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:span">
                <sch:report test="@to and @target">
-          Only one of the attributes @target and @to may be supplied on <sch:name/>
-               </sch:report>
+          Only one of the attributes @target and @to may be supplied on &lt;<sch:name/>&gt;.
+        </sch:report>
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
@@ -8070,7 +8076,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:span">
                <sch:report test="@to and not(@from)">
-          If @to is supplied on <sch:name/>, @from must be supplied as well
+          If @to is supplied on &lt;<sch:name/>&gt;, @from must be supplied as well.
         </sch:report>
             </sch:rule>
          </pattern>
@@ -8080,7 +8086,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:span">
                <sch:report test="contains(normalize-space(@to),' ') or contains(normalize-space(@from),' ')">
-          The attributes @to and @from on <sch:name/> may each contain only a single value
+          The attributes @to and @from on &lt;<sch:name/>&gt; may each contain only a single value.
         </sch:report>
             </sch:rule>
          </pattern>
@@ -8260,8 +8266,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       xmlns:xi="http://www.w3.org/2001/XInclude"
                       context="tei:link">
-               <sch:assert test="contains(normalize-space(@target),' ')">You must supply at least two values for @target or  on <sch:name/>
-               </sch:assert>
+               <sch:assert test="contains(normalize-space(@target),' ')">You must supply at least two values for @target on &lt;<sch:name/>&gt;.</sch:assert>
             </sch:rule>
          </pattern>
          <ref name="t_att.global.attributes"/>
@@ -8851,7 +8856,7 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
    </define>
    <define name="t_standOff">
       <element name="standOff">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [17.10. The standOff Container]</a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [17.10. The standOff Container]</a:documentation>
          <oneOrMore>
             <ref name="t_model.standOffPart"/>
          </oneOrMore>

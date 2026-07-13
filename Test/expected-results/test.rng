@@ -669,7 +669,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
       <sch:let name="srcs" value="tokenize( normalize-space(@source),' ')"/>
       <sch:report test="(   self::tei:classRef                                 | self::tei:dataRef                                 | self::tei:elementRef                                 | self::tei:macroRef                                 | self::tei:moduleRef                                 | self::tei:schemaSpec )                                   and                                   $srcs[2]">
               When used on a schema description element (like
-              <sch:value-of select="name(.)"/>), the @source attribute
+              &lt;<sch:value-of select="name(.)"/>&gt;), the @source attribute
               should have only 1 value. (This one has <sch:value-of select="count($srcs)"/>.)
             </sch:report>
     </sch:rule>
@@ -1032,7 +1032,7 @@ Suggested values include: 1] sole; 2] major; 3] minor</a:documentation>
   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.spanning-spanTo-spanTo-points-to-following-constraint-rule-7">
     <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[ starts-with( @spanTo, '#') ]">
       <sch:assert test="id( substring( @spanTo, 2 ) ) &gt;&gt; .">
-              The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current <sch:name/> element 
+              The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current &lt;<sch:name/>&gt; element.
             </sch:assert>
     </sch:rule>
   </pattern>
@@ -1100,7 +1100,9 @@ Suggested values include: 1] sole; 2] major; 3] minor</a:documentation>
   </define>
   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.typed-subtypeTyped-constraint-rule-9">
     <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:*[@subtype]">
-      <sch:assert test="@type">The <sch:name/> element should not be categorized in detail with @subtype unless also categorized in general with @type</sch:assert>
+      <sch:assert test="@type">
+          The &lt;<sch:name/>&gt; element should not be categorized in detail with @subtype unless also categorized in general with @type.
+        </sch:assert>
     </sch:rule>
   </pattern>
   <define name="att.written.attributes">
@@ -5112,7 +5114,11 @@ Sample values include: 1] suspension (suspension); 2] contraction (contraction);
       </group>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0" id="test-list-gloss-list-must-have-labels-constraint-rule-19">
         <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:list[@type='gloss']">
-          <sch:assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</sch:assert>
+          <sch:assert test="tei:label">
+          The content of a "gloss" list should include a sequence of
+          one or more pairs of a &lt;label&gt; element followed by an
+          &lt;item&gt; element.
+        </sch:assert>
         </sch:rule>
       </pattern>
       <ref name="att.global.attributes"/>
@@ -5808,8 +5814,8 @@ Sample values include: 1] main; 2] sub (subordinate); 3] alt (alternate); 4] sho
       </optional>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0" id="test-relatedItem-targetorcontent1-constraint-rule-20">
         <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="tei:relatedItem">
-          <sch:report test="@target and count( child::* ) &gt; 0">If the @target attribute on <sch:name/> is used, the relatedItem element must be empty</sch:report>
-          <sch:assert test="@target or child::*">A relatedItem element should have either a @target attribute or a child element to indicate the related bibliographic item</sch:assert>
+          <sch:report test="@target and count( child::* ) &gt; 0">If the @target attribute on <sch:name/> is used, the relatedItem element must be empty.</sch:report>
+          <sch:assert test="@target or child::*">A relatedItem element should have either a @target attribute or a child element to indicate the related bibliographic item.</sch:assert>
         </sch:rule>
       </pattern>
       <ref name="att.global.attributes"/>
@@ -6561,7 +6567,7 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0" id="test-quotation-quotationContents-constraint-rule-24">
         <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:quotation">
           <sch:report test="not( @marks )  and  not( tei:p )">
-          On <sch:name/>, either the @marks attribute should be used, or a paragraph of description provided
+          On &lt;<sch:name/>&gt;, either the @marks attribute should be used, or a paragraph of description provided.
         </sch:report>
         </sch:rule>
       </pattern>
@@ -8031,7 +8037,8 @@ Sample values include: 1] header; 2] footer; 3] pageNum (page number); 4] lineNu
       </oneOrMore>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0" id="test-subst-substContents1-constraint-rule-35">
         <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:subst">
-          <sch:assert test="child::tei:add and (child::tei:del or child::tei:surplus)"><sch:name/> must have at least one child add and at least one child del or surplus</sch:assert>
+          <sch:assert test="child::tei:add and (child::tei:del or child::tei:surplus)">
+        &lt;<sch:name/>&gt; must have at least one child &lt;add&gt; and at least one child &lt;del&gt; or &lt;surplus&gt;.</sch:assert>
         </sch:rule>
       </pattern>
       <ref name="att.global.attributes"/>
@@ -8102,7 +8109,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum (page number); 4] lineNu
   </define>
   <define name="secl">
     <element name="secl">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(secluded text) Secluded. Marks text present in the source which the editor believes to be genuine but out of its original place (which is unknown). [12.3.1.7. Text Omitted from or Supplied in the Transcription]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(secluded text) marks text present in the source which the editor believes to be genuine but out of its original place (which is unknown). [12.3.1.7. Text Omitted from or Supplied in the Transcription]</a:documentation>
       <ref name="macro.paraContent"/>
       <ref name="att.global.attributes"/>
       <ref name="att.dimensions.attributes"/>
@@ -9997,8 +10004,7 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
       <empty/>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0" id="test-link-linkTargets3-constraint-rule-38">
         <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:link">
-          <sch:assert test="contains(normalize-space(@target),' ')">You must supply at least two values for @target or  on <sch:name/>
-               </sch:assert>
+          <sch:assert test="contains(normalize-space(@target),' ')">You must supply at least two values for @target on &lt;<sch:name/>&gt;.</sch:assert>
         </sch:rule>
       </pattern>
       <ref name="att.global.attributes"/>
@@ -10207,8 +10213,8 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0" id="test-join-joinTargets3-constraint-rule-40">
         <sch:rule xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" context="tei:join">
           <sch:assert test="contains( normalize-space( @target ),' ')">
-          You must supply at least two values for @target on <sch:name/>
-               </sch:assert>
+          You must supply at least two values for @target on &lt;<sch:name/>&gt;.
+        </sch:assert>
         </sch:rule>
       </pattern>
       <ref name="att.global.attributes"/>
@@ -10359,7 +10365,7 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
   </define>
   <define name="standOff">
     <element name="standOff">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [17.10. The standOff Container]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [17.10. The standOff Container]</a:documentation>
       <oneOrMore>
         <ref name="model.standOffPart"/>
       </oneOrMore>
