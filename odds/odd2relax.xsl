@@ -139,7 +139,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:with-param name="body">
         <grammar xmlns="http://relaxng.org/ns/structure/1.0"
           xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
           datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
           <xsl:attribute name="ns">
             <xsl:choose>
