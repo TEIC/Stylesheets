@@ -303,7 +303,7 @@
     <xsl:template match="tei:item|tei:biblStruct">
         <xsl:call-template name="newline"/>
         <xsl:choose>
-            <xsl:when test="tei:isOrderedList(..)">1.</xsl:when>
+            <xsl:when test="tei:isOrderedList(..)">1. </xsl:when>
             <xsl:otherwise xml:space="preserve">* </xsl:otherwise>
         </xsl:choose>
         <xsl:apply-templates/>
