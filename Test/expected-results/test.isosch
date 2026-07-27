@@ -42,7 +42,7 @@
    </pattern>
    <pattern id="schematron-constraint-targetLang-6">
       <rule context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
-         <assert test="@target">@targetLang should only be used on <name/> if @target is specified.</assert>
+         <assert test="@target">@targetLang should only be used on &lt;<name/>&gt; if @target is specified.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-spanTo-points-to-following-7">
@@ -52,7 +52,7 @@
    </pattern>
    <pattern id="schematron-constraint-schemeVersionRequiresScheme-8">
       <rule context="tei:*[@schemeVersion]">
-         <assert test="@scheme and not(@scheme = 'free')"> @schemeVersion can only be used if @scheme is specified.</assert>
+         <assert test="@scheme and not(@scheme eq 'free')"> @schemeVersion can only be used if @scheme is specified.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-subtypeTyped-9">
@@ -62,17 +62,17 @@
    </pattern>
    <pattern id="schematron-constraint-calendar_attr_on_empty_element-10">
       <rule context="tei:*[@calendar]">
-         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more systems or calendars to which the date represented by the content of this element belongs, but this <name/> element has no textual content.</assert>
+         <assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more systems or calendars to which the date represented by the content of this element belongs, but this &lt;<name/>&gt; element has no textual content.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-abstractModel-structure-p-in-ab-or-p-11">
       <rule context="tei:p">
-         <report test="(ancestor::tei:ab or ancestor::tei:p) and                        not( ancestor::tei:floatingText                           | parent::tei:exemplum                           | parent::tei:item                           | parent::tei:note                           | parent::tei:q                           | parent::tei:quote                           | parent::tei:remarks                           | parent::tei:said                           | parent::tei:sp                           | parent::tei:stage                           | parent::tei:cell                           | parent::tei:figure )"> Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.</report>
+         <report test="(ancestor::tei:ab or ancestor::tei:p) and                        not( ancestor::tei:floatingText                           | parent::tei:exemplum                           | parent::tei:item                           | parent::tei:note                           | parent::tei:q                           | parent::tei:quote                           | parent::tei:remarks                           | parent::tei:said                           | parent::tei:sp                           | parent::tei:stage                           | parent::tei:cell                           | parent::tei:figure )"> Abstract model violation: Paragraphs may not occur inside other paragraphs or &lt;ab&gt; elements.</report>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-abstractModel-structure-p-in-l-12">
       <rule context="tei:l//tei:p">
-         <assert test="ancestor::tei:floatingText | parent::tei:figure | parent::tei:note"> Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.</assert>
+         <assert test="ancestor::tei:floatingText | parent::tei:figure | parent::tei:note"> Abstract model violation: Metrical lines (&lt;l&gt; elements) may not contain higher-level structural elements such as &lt;div&gt;, &lt;p&gt;, or &lt;ab&gt;, unless &lt;p&gt; is a child of &lt;figure&gt; or &lt;note&gt;, or is a descendant of &lt;floatingText&gt;.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-deprecationInfo-only-in-deprecated-13">
@@ -82,27 +82,27 @@
    </pattern>
    <pattern id="schematron-constraint-rt-target-not-span-14">
       <rule context="tei:rt/@target">
-         <report test="../@from | ../@to">When target= is present, neither from= nor to= should be.</report>
+         <report test="../@from | ../@to">When @target is present, neither @from nor @to should be.</report>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-rt-from-15">
       <rule context="tei:rt/@from">
-         <assert test="../@to">When from= is present, the to= attribute of <name/> is required.</assert>
+         <assert test="../@to">When @from is present, the @to attribute of &lt;<name/>&gt; is required.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-rt-to-16">
       <rule context="tei:rt/@to">
-         <assert test="../@from">When to= is present, the from= attribute of <name/> is required.</assert>
+         <assert test="../@from">When @to is present, the @from attribute of &lt;<name/>&gt; is required.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-ptrAtts-17">
       <rule context="tei:ptr">
-         <report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on <name/>.</report>
+         <report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on &lt;<name/>&gt;.</report>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-refAtts-18">
       <rule context="tei:ref">
-         <report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on <name/>.</report>
+         <report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on &lt;<name/>&gt;.</report>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-gloss-list-must-have-labels-19">
@@ -118,12 +118,12 @@
    </pattern>
    <pattern id="schematron-constraint-abstractModel-structure-l-in-l-21">
       <rule context="tei:l">
-         <report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">Abstract model violation: Lines may not contain lines or lg elements.</report>
+         <report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">Abstract model violation: Metrical lines (&lt;l&gt; elements) may not contain &lt;l&gt; or &lt;lg&gt; elements.</report>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-atleast1oflggapl-22">
       <rule context="tei:lg">
-         <assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element must contain at least one child l, lg, or gap element.</assert>
+         <assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An &lt;lg&gt; element must contain at least one child &lt;l&gt;, &lt;lg&gt;, or &lt;gap&gt; element.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-abstractModel-structure-lg-in-l-23">
@@ -138,17 +138,17 @@
    </pattern>
    <pattern id="schematron-constraint-citestructure-outer-match-25">
       <rule context="tei:citeStructure[not(parent::tei:citeStructure)]">
-         <assert test="starts-with(@match,'/')">An XPath in @match on the outer <name/> must start with '/'.</assert>
+         <assert test="starts-with(@match,'/')">An XPath in @match on the outer &lt;<name/>&gt; must start with '/'.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-citestructure-inner-match-26">
       <rule context="tei:citeStructure[parent::tei:citeStructure]">
-         <assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <name/>.</assert>
+         <assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer &lt;<name/>&gt;.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-no_facsimile_text_nodes-27">
       <rule context="tei:facsimile//tei:line | tei:facsimile//tei:zone">
-         <report test="child::text()[ normalize-space(.) ne '']"> A facsimile element represents a text with images, thus transcribed text should not be present within it.</report>
+         <report test="child::text()[ normalize-space(.) ne '']"> A &lt;facsimile&gt; element represents a text with images, thus transcribed text should not be present within it.</report>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-pathmustnotbeclosed-28">
@@ -160,22 +160,22 @@
          <let name="firstY" value="xs:float( substring-after( $firstPair, ',') )"/>
          <let name="lastX" value="xs:float( substring-before( $lastPair, ',') )"/>
          <let name="lastY" value="xs:float( substring-after( $lastPair, ',') )"/>
-         <report test="$firstX eq $lastX and $firstY eq $lastY">The first and last elements of this path are the same. To specify a closed polygon, use the zone element rather than the path element.</report>
+         <report test="$firstX eq $lastX and $firstY eq $lastY">The first and last elements of this path are the same. To specify a closed polygon, use the &lt;zone&gt; element rather than the &lt;path&gt; element.</report>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-addSpan-requires-spanTo-29">
       <rule context="tei:addSpan">
-         <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
+         <assert test="@spanTo">The @spanTo attribute of &lt;<name/>&gt; is required.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-damageSpan-requires-spanTo-31">
       <rule context="tei:damageSpan">
-         <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
+         <assert test="@spanTo">The @spanTo attribute of &lt;<name/>&gt; is required.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-delSpan-requires-spanTo-33">
       <rule context="tei:delSpan">
-         <assert test="@spanTo">The @spanTo attribute of <name/> is required.</assert>
+         <assert test="@spanTo">The @spanTo attribute of &lt;<name/>&gt; is required.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-substContents1-35">
@@ -185,12 +185,12 @@
    </pattern>
    <pattern id="schematron-constraint-abstractModel-structure-div-in-l-36">
       <rule context="tei:l//tei:div">
-         <assert test="ancestor::tei:floatingText"> Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.</assert>
+         <assert test="ancestor::tei:floatingText"> Abstract model violation: Metrical lines (&lt;l&gt; elements) may not contain higher-level structural elements such as &lt;div&gt;, unless &lt;div&gt; is a descendant of &lt;floatingText&gt;.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-abstractModel-structure-div-in-ab-or-p-37">
       <rule context="tei:div">
-         <report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"> Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.</report>
+         <report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"> Abstract model violation: &lt;p&gt; and &lt;ab&gt; may not contain higher-level structural elements such as &lt;div&gt;, unless &lt;div&gt; is a descendant of &lt;floatingText&gt;.</report>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-linkTargets3-38">
@@ -200,7 +200,7 @@
    </pattern>
    <pattern id="schematron-constraint-abstractModel-structure-ab-in-l-39">
       <rule context="tei:l//tei:ab">
-         <assert test="ancestor::tei:floatingText | parent::tei:figure | parent::tei:note"> Abstract model violation: Metrical lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.</assert>
+         <assert test="ancestor::tei:floatingText | parent::tei:figure | parent::tei:note"> Abstract model violation: Metrical lines (&lt;l&gt; elements) may not contain higher-level divisions such as &lt;p&gt; or &lt;ab&gt;, unless &lt;ab&gt; is a child of &lt;figure&gt; or &lt;note&gt;, or is a descendant of &lt;floatingText&gt;.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-joinTargets3-40">

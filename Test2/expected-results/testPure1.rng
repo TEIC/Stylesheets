@@ -929,7 +929,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
    <define name="t_att.global.rendition.attribute.rendition">
       <optional>
          <attribute name="rendition">
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to a description of the rendering or presentation used for this element in the source text.</a:documentation>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(rendition reference) points to a description of the rendering or presentation used for this element in the source text.</a:documentation>
             <list>
                <oneOrMore>
                   <data type="anyURI">
@@ -1251,7 +1251,7 @@ Suggested values include: 1] top; 2] bottom; 3] margin; 4] opposite; 5] overleaf
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xi="http://www.w3.org/2001/XInclude"
                 context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
-         <sch:assert test="@target">@targetLang should only be used on <sch:name/> if @target is specified.</sch:assert>
+         <sch:assert test="@target">@targetLang should only be used on &lt;<sch:name/>&gt; if @target is specified.</sch:assert>
       </sch:rule>
    </pattern>
    <define name="t_att.pointing.attribute.target">
@@ -1467,7 +1467,7 @@ Suggested values include: 1] sole; 2] major; 3] minor</a:documentation>
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xi="http://www.w3.org/2001/XInclude"
                 context="tei:*[@schemeVersion]">
-         <sch:assert test="@scheme and not(@scheme = 'free')">
+         <sch:assert test="@scheme and not(@scheme eq 'free')">
               @schemeVersion can only be used if @scheme is specified.
             </sch:assert>
       </sch:rule>
@@ -4275,7 +4275,7 @@ Sample values include: 1] duplicate; 2] duplicate-partial; 3] excessStart; 4] ex
                 context="tei:*[@calendar]">
          <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
               systems or calendars to which the date represented by the content of this element belongs,
-              but this <sch:name/> element has no textual content.</sch:assert>
+              but this &lt;<sch:name/>&gt; element has no textual content.</sch:assert>
       </sch:rule>
    </pattern>
    <define name="t_att.milestoneUnit.attributes">
@@ -4330,7 +4330,7 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:p">
                <sch:report test="(ancestor::tei:ab or ancestor::tei:p) and                        not( ancestor::tei:floatingText                           | parent::tei:exemplum                           | parent::tei:item                           | parent::tei:note                           | parent::tei:q                           | parent::tei:quote                           | parent::tei:remarks                           | parent::tei:said                           | parent::tei:sp                           | parent::tei:stage                           | parent::tei:cell                           | parent::tei:figure )">
-          Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
+          Abstract model violation: Paragraphs may not occur inside other paragraphs or &lt;ab&gt; elements.
         </sch:report>
             </sch:rule>
          </pattern>
@@ -4340,7 +4340,7 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:l//tei:p">
                <sch:assert test="ancestor::tei:floatingText | parent::tei:figure | parent::tei:note">
-          Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
+          Abstract model violation: Metrical lines (&lt;l&gt; elements) may not contain higher-level structural elements such as &lt;div&gt;, &lt;p&gt;, or &lt;ab&gt;, unless &lt;p&gt; is a child of &lt;figure&gt; or &lt;note&gt;, or is a descendant of &lt;floatingText&gt;.
         </sch:assert>
             </sch:rule>
          </pattern>
@@ -4653,7 +4653,7 @@ Suggested values include: 1] deprecationInfo (deprecation information)</a:docume
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:rt/@target">
-               <sch:report test="../@from | ../@to">When target= is present, neither from= nor to= should be.</sch:report>
+               <sch:report test="../@from | ../@to">When @target is present, neither @from nor @to should be.</sch:report>
             </sch:rule>
          </pattern>
          <optional>
@@ -4669,7 +4669,7 @@ Suggested values include: 1] deprecationInfo (deprecation information)</a:docume
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:rt/@from">
-               <sch:assert test="../@to">When from= is present, the to= attribute of <sch:name/> is required.</sch:assert>
+               <sch:assert test="../@to">When @from is present, the @to attribute of &lt;<sch:name/>&gt; is required.</sch:assert>
             </sch:rule>
          </pattern>
          <optional>
@@ -4685,7 +4685,7 @@ Suggested values include: 1] deprecationInfo (deprecation information)</a:docume
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:rt/@to">
-               <sch:assert test="../@from">When to= is present, the from= attribute of <sch:name/> is required.</sch:assert>
+               <sch:assert test="../@from">When @to is present, the @from attribute of &lt;<sch:name/>&gt; is required.</sch:assert>
             </sch:rule>
          </pattern>
          <empty/>
@@ -5224,7 +5224,7 @@ Sample values include: 1] suspension (suspension); 2] contraction (contraction);
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:ptr">
-               <sch:report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on <sch:name/>.</sch:report>
+               <sch:report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on &lt;<sch:name/>&gt;.</sch:report>
             </sch:rule>
          </pattern>
          <ref name="t_att.global.attributes"/>
@@ -5246,7 +5246,7 @@ Sample values include: 1] suspension (suspension); 2] contraction (contraction);
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:ref">
-               <sch:report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on <sch:name/>.</sch:report>
+               <sch:report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on &lt;<sch:name/>&gt;.</sch:report>
             </sch:rule>
          </pattern>
          <ref name="t_att.global.attributes"/>
@@ -5932,7 +5932,7 @@ Elements]</a:documentation>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:l">
-               <sch:report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">Abstract model violation: Lines may not contain lines or lg elements.</sch:report>
+               <sch:report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">Abstract model violation: Metrical lines (&lt;l&gt; elements) may not contain &lt;l&gt; or &lt;lg&gt; elements.</sch:report>
             </sch:rule>
          </pattern>
          <ref name="t_att.global.attributes"/>
@@ -5980,7 +5980,7 @@ Elements]</a:documentation>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:lg">
-               <sch:assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element must contain at least one child l, lg, or gap element.</sch:assert>
+               <sch:assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An &lt;lg&gt; element must contain at least one child &lt;l&gt;, &lt;lg&gt;, or &lt;gap&gt; element.</sch:assert>
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
@@ -7096,7 +7096,7 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       xmlns:xi="http://www.w3.org/2001/XInclude"
                       context="tei:citeStructure[not(parent::tei:citeStructure)]">
-               <sch:assert test="starts-with(@match,'/')">An XPath in @match on the outer <sch:name/> must start with '/'.</sch:assert>
+               <sch:assert test="starts-with(@match,'/')">An XPath in @match on the outer &lt;<sch:name/>&gt; must start with '/'.</sch:assert>
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
@@ -7105,7 +7105,7 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       xmlns:xi="http://www.w3.org/2001/XInclude"
                       context="tei:citeStructure[parent::tei:citeStructure]">
-               <sch:assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <sch:name/>.</sch:assert>
+               <sch:assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer &lt;<sch:name/>&gt;.</sch:assert>
             </sch:rule>
          </pattern>
          <optional>
@@ -8422,7 +8422,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                       xmlns:xi="http://www.w3.org/2001/XInclude"
                       context="tei:l//tei:ab">
                <sch:assert test="ancestor::tei:floatingText | parent::tei:figure | parent::tei:note">
-          Abstract model violation: Metrical lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
+          Abstract model violation: Metrical lines (&lt;l&gt; elements) may not contain higher-level divisions such as &lt;p&gt; or &lt;ab&gt;, unless &lt;ab&gt; is a child of &lt;figure&gt; or &lt;note&gt;, or is a descendant of &lt;floatingText&gt;.
         </sch:assert>
             </sch:rule>
          </pattern>
@@ -9279,7 +9279,7 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:l//tei:div">
                <sch:assert test="ancestor::tei:floatingText">
-          Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
+          Abstract model violation: Metrical lines (&lt;l&gt; elements) may not contain higher-level structural elements such as &lt;div&gt;, unless &lt;div&gt; is a descendant of &lt;floatingText&gt;.
         </sch:assert>
             </sch:rule>
          </pattern>
@@ -9289,7 +9289,7 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:div">
                <sch:report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
-          Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
+          Abstract model violation: &lt;p&gt; and &lt;ab&gt; may not contain higher-level structural elements such as &lt;div&gt;, unless &lt;div&gt; is a descendant of &lt;floatingText&gt;.
         </sch:report>
             </sch:rule>
          </pattern>

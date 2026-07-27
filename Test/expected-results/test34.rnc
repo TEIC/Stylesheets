@@ -484,7 +484,7 @@ tei_att.global.rendition.attribute.style =
   attribute style { xsd:string }?
 tei_att.global.rendition.attribute.rendition =
   
-  ## points to a description of the rendering or presentation used for this element in the source text.
+  ## (rendition reference) points to a description of the rendering or presentation used for this element in the source text.
   attribute rendition {
     list {
       xsd:anyURI { pattern = "\S+" }+
@@ -757,9 +757,9 @@ sch:pattern [
     "         "
     sch:assert [
       test = "@target"
-      "@targetLang should only be used on "
+      "@targetLang should only be used on <"
       sch:name [ ]
-      " if @target is specified."
+      "> if @target is specified."
     ]
     "\x{a}" ~
     "      "
@@ -944,7 +944,7 @@ sch:pattern [
     "\x{a}" ~
     "         "
     sch:assert [
-      test = "@scheme and not(@scheme = 'free')"
+      test = "@scheme and not(@scheme eq 'free')"
       "\x{a}" ~
       "              @schemeVersion can only be used if @scheme is specified.\x{a}" ~
       "            "
@@ -2117,9 +2117,9 @@ sch:pattern [
       test = "string-length( normalize-space(.) ) gt 0"
       " @calendar indicates one or more\x{a}" ~
       "              systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
-      "              but this "
+      "              but this <"
       sch:name [ ]
-      " element has no textual content."
+      "> element has no textual content."
     ]
     "\x{a}" ~
     "      "
@@ -2202,7 +2202,7 @@ tei_p =
              test =
                "(ancestor::tei:ab or ancestor::tei:p) and                        not( ancestor::tei:floatingText                           | parent::tei:exemplum                           | parent::tei:item                           | parent::tei:note                           | parent::tei:q                           | parent::tei:quote                           | parent::tei:remarks                           | parent::tei:said                           | parent::tei:sp                           | parent::tei:stage                           | parent::tei:cell                           | parent::tei:figure )"
              "\x{a}" ~
-             "          Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
+             "          Abstract model violation: Paragraphs may not occur inside other paragraphs or <ab> elements.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -2223,7 +2223,7 @@ tei_p =
              test =
                "ancestor::tei:floatingText | parent::tei:figure | parent::tei:note"
              "\x{a}" ~
-             "          Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
+             "          Abstract model violation: Metrical lines (<l> elements) may not contain higher-level structural elements such as <div>, <p>, or <ab>, unless <p> is a child of <figure> or <note>, or is a descendant of <floatingText>.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -2528,7 +2528,7 @@ tei_rt =
            "               "
            sch:report [
              test = "../@from | ../@to"
-             "When target= is present, neither from= nor to= should be."
+             "When @target is present, neither @from nor @to should be."
            ]
            "\x{a}" ~
            "            "
@@ -2551,9 +2551,9 @@ tei_rt =
            "               "
            sch:assert [
              test = "../@to"
-             "When from= is present, the to= attribute of "
+             "When @from is present, the @to attribute of <"
              sch:name [ ]
-             " is required."
+             "> is required."
            ]
            "\x{a}" ~
            "            "
@@ -2576,9 +2576,9 @@ tei_rt =
            "               "
            sch:assert [
              test = "../@from"
-             "When to= is present, the from= attribute of "
+             "When @to is present, the @from attribute of <"
              sch:name [ ]
-             " is required."
+             "> is required."
            ]
            "\x{a}" ~
            "            "
@@ -3004,9 +3004,9 @@ tei_ptr =
            "               "
            sch:report [
              test = "@target and @cRef"
-             "Only one of the attributes @target and @cRef may be supplied on "
+             "Only one of the attributes @target and @cRef may be supplied on <"
              sch:name [ ]
-             "."
+             ">."
            ]
            "\x{a}" ~
            "            "
@@ -3038,9 +3038,9 @@ tei_ref =
            "               "
            sch:report [
              test = "@target and @cRef"
-             "Only one of the attributes @target and @cRef may be supplied on "
+             "Only one of the attributes @target and @cRef may be supplied on <"
              sch:name [ ]
-             "."
+             ">."
            ]
            "\x{a}" ~
            "            "
@@ -3664,7 +3664,7 @@ tei_l =
            sch:report [
              test =
                "ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]"
-             "Abstract model violation: Lines may not contain lines or lg elements."
+             "Abstract model violation: Metrical lines (<l> elements) may not contain <l> or <lg> elements."
            ]
            "\x{a}" ~
            "            "
@@ -3705,7 +3705,7 @@ tei_lg =
            sch:assert [
              test =
                "count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) > 0"
-             "An lg element must contain at least one child l, lg, or gap element."
+             "An <lg> element must contain at least one child <l>, <lg>, or <gap> element."
            ]
            "\x{a}" ~
            "            "
@@ -4523,9 +4523,9 @@ tei_citeStructure =
            "               "
            sch:assert [
              test = "starts-with(@match,'/')"
-             "An XPath in @match on the outer "
+             "An XPath in @match on the outer <"
              sch:name [ ]
-             " must start with '/'."
+             "> must start with '/'."
            ]
            "\x{a}" ~
            "            "
@@ -4544,9 +4544,9 @@ tei_citeStructure =
            "               "
            sch:assert [
              test = "not(starts-with(@match,'/'))"
-             "An XPath in @match must not start with '/' except on the outer "
+             "An XPath in @match must not start with '/' except on the outer <"
              sch:name [ ]
-             "."
+             ">."
            ]
            "\x{a}" ~
            "            "
@@ -5136,7 +5136,7 @@ tei_div =
            sch:assert [
              test = "ancestor::tei:floatingText"
              "\x{a}" ~
-             "          Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "          Abstract model violation: Metrical lines (<l> elements) may not contain higher-level structural elements such as <div>, unless <div> is a descendant of <floatingText>.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -5158,7 +5158,7 @@ tei_div =
              test =
                "(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "          Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "          Abstract model violation: <p> and <ab> may not contain higher-level structural elements such as <div>, unless <div> is a descendant of <floatingText>.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -5686,7 +5686,7 @@ tei_ab =
              test =
                "ancestor::tei:floatingText | parent::tei:figure | parent::tei:note"
              "\x{a}" ~
-             "          Abstract model violation: Metrical lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
+             "          Abstract model violation: Metrical lines (<l> elements) may not contain higher-level divisions such as <p> or <ab>, unless <ab> is a child of <figure> or <note>, or is a descendant of <floatingText>.\x{a}" ~
              "        "
            ]
            "\x{a}" ~

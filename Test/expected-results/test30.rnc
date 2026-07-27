@@ -496,7 +496,7 @@ Tatt.global.rendition.attribute.style =
   attribute style { xsd:string }?
 Tatt.global.rendition.attribute.rendition =
   
-  ## points to a description of the rendering or presentation used for this element in the source text.
+  ## (rendition reference) points to a description of the rendering or presentation used for this element in the source text.
   attribute rendition {
     list {
       xsd:anyURI { pattern = "\S+" }+
@@ -767,9 +767,9 @@ sch:pattern [
     "         "
     sch:assert [
       test = "@target"
-      "@targetLang should only be used on "
+      "@targetLang should only be used on <"
       sch:name [ ]
-      " if @target is specified."
+      "> if @target is specified."
     ]
     "\x{a}" ~
     "      "
@@ -953,7 +953,7 @@ sch:pattern [
     "\x{a}" ~
     "         "
     sch:assert [
-      test = "@scheme and not(@scheme = 'free')"
+      test = "@scheme and not(@scheme eq 'free')"
       "\x{a}" ~
       "              @schemeVersion can only be used if @scheme is specified.\x{a}" ~
       "            "
@@ -2399,9 +2399,9 @@ sch:pattern [
       test = "string-length( normalize-space(.) ) gt 0"
       " @calendar indicates one or more\x{a}" ~
       "              systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
-      "              but this "
+      "              but this <"
       sch:name [ ]
-      " element has no textual content."
+      "> element has no textual content."
     ]
     "\x{a}" ~
     "      "
@@ -2484,7 +2484,7 @@ Tp =
              test =
                "(ancestor::tei:ab or ancestor::tei:p) and                        not( ancestor::tei:floatingText                           | parent::tei:exemplum                           | parent::tei:item                           | parent::tei:note                           | parent::tei:q                           | parent::tei:quote                           | parent::tei:remarks                           | parent::tei:said                           | parent::tei:sp                           | parent::tei:stage                           | parent::tei:cell                           | parent::tei:figure )"
              "\x{a}" ~
-             "          Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
+             "          Abstract model violation: Paragraphs may not occur inside other paragraphs or <ab> elements.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -2506,7 +2506,7 @@ Tp =
              test =
                "ancestor::tei:floatingText | parent::tei:figure | parent::tei:note"
              "\x{a}" ~
-             "          Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
+             "          Abstract model violation: Metrical lines (<l> elements) may not contain higher-level structural elements such as <div>, <p>, or <ab>, unless <p> is a child of <figure> or <note>, or is a descendant of <floatingText>.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -2799,7 +2799,7 @@ Trt =
            "               "
            sch:report [
              test = "../@from | ../@to"
-             "When target= is present, neither from= nor to= should be."
+             "When @target is present, neither @from nor @to should be."
            ]
            "\x{a}" ~
            "            "
@@ -2822,9 +2822,9 @@ Trt =
            "               "
            sch:assert [
              test = "../@to"
-             "When from= is present, the to= attribute of "
+             "When @from is present, the @to attribute of <"
              sch:name [ ]
-             " is required."
+             "> is required."
            ]
            "\x{a}" ~
            "            "
@@ -2847,9 +2847,9 @@ Trt =
            "               "
            sch:assert [
              test = "../@from"
-             "When to= is present, the from= attribute of "
+             "When @to is present, the @from attribute of <"
              sch:name [ ]
-             " is required."
+             "> is required."
            ]
            "\x{a}" ~
            "            "
@@ -3268,9 +3268,9 @@ Tptr =
            "               "
            sch:report [
              test = "@target and @cRef"
-             "Only one of the attributes @target and @cRef may be supplied on "
+             "Only one of the attributes @target and @cRef may be supplied on <"
              sch:name [ ]
-             "."
+             ">."
            ]
            "\x{a}" ~
            "            "
@@ -3302,9 +3302,9 @@ Tref =
            "               "
            sch:report [
              test = "@target and @cRef"
-             "Only one of the attributes @target and @cRef may be supplied on "
+             "Only one of the attributes @target and @cRef may be supplied on <"
              sch:name [ ]
-             "."
+             ">."
            ]
            "\x{a}" ~
            "            "
@@ -3929,7 +3929,7 @@ Tl =
            sch:report [
              test =
                "ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]"
-             "Abstract model violation: Lines may not contain lines or lg elements."
+             "Abstract model violation: Metrical lines (<l> elements) may not contain <l> or <lg> elements."
            ]
            "\x{a}" ~
            "            "
@@ -3970,7 +3970,7 @@ Tlg =
            sch:assert [
              test =
                "count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) > 0"
-             "An lg element must contain at least one child l, lg, or gap element."
+             "An <lg> element must contain at least one child <l>, <lg>, or <gap> element."
            ]
            "\x{a}" ~
            "            "
@@ -4774,9 +4774,9 @@ TciteStructure =
            "               "
            sch:assert [
              test = "starts-with(@match,'/')"
-             "An XPath in @match on the outer "
+             "An XPath in @match on the outer <"
              sch:name [ ]
-             " must start with '/'."
+             "> must start with '/'."
            ]
            "\x{a}" ~
            "            "
@@ -4795,9 +4795,9 @@ TciteStructure =
            "               "
            sch:assert [
              test = "not(starts-with(@match,'/'))"
-             "An XPath in @match must not start with '/' except on the outer "
+             "An XPath in @match must not start with '/' except on the outer <"
              sch:name [ ]
-             "."
+             ">."
            ]
            "\x{a}" ~
            "            "
@@ -5735,6 +5735,7 @@ Tbirth =
     Tatt.datable.attributes,
     Tatt.dimensions.attributes,
     Tatt.editLike.attributes,
+    Tatt.locatable.attributes,
     Tatt.naming.attributes,
     Tatt.typed.attribute.subtype,
     
@@ -5770,6 +5771,7 @@ Tdeath =
     Tatt.datable.attributes,
     Tatt.dimensions.attributes,
     Tatt.editLike.attributes,
+    Tatt.locatable.attributes,
     Tatt.naming.attributes,
     Tatt.typed.attribute.subtype,
     
@@ -6681,7 +6683,7 @@ Tatt.coordinated.attribute.lry =
   }?
 Tatt.coordinated.attribute.points =
   
-  ## identifies a two dimensional area by means of a series of pairs of numbers, each of which gives the x,y coordinates of a point on a line enclosing the area.
+  ## identifies a two or three dimensional area by means of a series of pairs of numbers, each of which gives the x,y, or z coordinates of a point on a line enclosing the area.
   attribute points {
     list {
       xsd:token {
@@ -6721,7 +6723,7 @@ Tfacsimile =
            sch:report [
              test = "child::text()[ normalize-space(.) ne '']"
              "\x{a}" ~
-             "          A facsimile element represents a text with images, thus\x{a}" ~
+             "          A <facsimile> element represents a text with images, thus\x{a}" ~
              "          transcribed text should not be present within it.\x{a}" ~
              "        "
            ]
@@ -6746,7 +6748,7 @@ TsourceDoc =
   }
 Tsurface =
   
-  ## defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and, when using an embedded transcription approach, transcriptions of the writing within them. [12.1. Digital Facsimiles 12.2.2. Embedded Transcription]
+  ## defines a written surface as a two-dimensional or three-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and, when using an embedded transcription approach, transcriptions of the writing within them. [12.1. Digital Facsimiles 12.2.2. Embedded Transcription]
   element surface {
     ((Tmodel.global | Tmodel.labelLike | Tmodel.graphicLike)*,
      ((Tzone | Tline | Tpath | Tsurface | TsurfaceGrp),
@@ -6779,7 +6781,7 @@ TsurfaceGrp =
 Tzone =
   [
     a:documentation [
-      "defines any two-dimensional area within a "
+      "defines any two-dimensional or three-dimensional area within a "
       ns1:code [ "<surface>" ]
       " element. [12.1. Digital Facsimiles 12.2.2. Embedded Transcription]"
     ]
@@ -6873,7 +6875,7 @@ Tpath =
              test = "$firstX eq $lastX and $firstY eq $lastY"
              "The first and\x{a}" ~
              "          last elements of this path are the same. To specify a closed polygon, use\x{a}" ~
-             "          the zone element rather than the path element. "
+             "          the <zone> element rather than the <path> element. "
            ]
            "\x{a}" ~
            "            "
@@ -6930,9 +6932,9 @@ TaddSpan =
            "               "
            sch:assert [
              test = "@spanTo"
-             "The @spanTo attribute of "
+             "The @spanTo attribute of <"
              sch:name [ ]
-             " is required."
+             "> is required."
            ]
            "\x{a}" ~
            "            "
@@ -6992,9 +6994,9 @@ TdamageSpan =
            "               "
            sch:assert [
              test = "@spanTo"
-             "The @spanTo attribute of "
+             "The @spanTo attribute of <"
              sch:name [ ]
-             " is required."
+             "> is required."
            ]
            "\x{a}" ~
            "            "
@@ -7043,9 +7045,9 @@ TdelSpan =
            "               "
            sch:assert [
              test = "@spanTo"
-             "The @spanTo attribute of "
+             "The @spanTo attribute of <"
              sch:name [ ]
-             " is required."
+             "> is required."
            ]
            "\x{a}" ~
            "            "
@@ -7555,7 +7557,7 @@ Tab =
              test =
                "ancestor::tei:floatingText | parent::tei:figure | parent::tei:note"
              "\x{a}" ~
-             "          Abstract model violation: Metrical lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
+             "          Abstract model violation: Metrical lines (<l> elements) may not contain higher-level divisions such as <p> or <ab>, unless <ab> is a child of <figure> or <note>, or is a descendant of <floatingText>.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -8102,7 +8104,7 @@ Tdiv =
            sch:assert [
              test = "ancestor::tei:floatingText"
              "\x{a}" ~
-             "          Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "          Abstract model violation: Metrical lines (<l> elements) may not contain higher-level structural elements such as <div>, unless <div> is a descendant of <floatingText>.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -8124,7 +8126,7 @@ Tdiv =
              test =
                "(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "          Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "          Abstract model violation: <p> and <ab> may not contain higher-level structural elements such as <div>, unless <div> is a descendant of <floatingText>.\x{a}" ~
              "        "
            ]
            "\x{a}" ~

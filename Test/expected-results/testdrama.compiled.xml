@@ -610,15 +610,11 @@ Elements</ref>
     
   </attList>
 </classSpec><classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="atts" ident="att.datable.w3c" xml:id="DATABLEW3C">
-  <desc versionDate="2013-11-22" xml:lang="en">provides attributes for normalization of elements that contain
-  datable events  conforming to the W3C
-    <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>.</desc>
+  <desc versionDate="2013-11-22" xml:lang="en">provides attributes for normalization of elements that contain datable events  conforming to the W3C <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">W3C 데이터 유형을 사용하여 날짜가 명기된 사건을 포함하는 요소의 규격화를 위한 속성을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供用於元素規格化的屬性，這些元素包含以W3C datatypes所定義的日期明確之事件。</desc>
   <desc versionDate="2019-02-13" xml:lang="ja">W3Cの<ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>に準拠した年代測定可能なイベントを含む要素の正規化に関する属性を提供する。</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">fournit des attributs
-  pour la normalisation d'éléments qui contiennent des mentions
-  d'événements datés ou susceptibles de l'être.</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">fournit des attributs pour la normalisation d'éléments qui contiennent des mentions d'événements datés ou susceptibles de l'être.</desc>
   <desc versionDate="2007-11-06" xml:lang="it">indica degli attributi per la normalizzazione di elementi che contengono eventi databili utilizzando i tipi di dati del W3C.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos para la normalización de elementos que contienen eventos datables.</desc>
   <constraintSpec ident="att-datable-w3c-when" scheme="schematron" xml:lang="en">
@@ -644,12 +640,10 @@ Elements</ref>
   </constraintSpec>
   <attList>
     <attDef ident="when" usage="opt">
-      <desc versionDate="2008-07-23" xml:lang="en">supplies the value of the date or time in a standard form,
-        e.g. yyyy-mm-dd.</desc>
+      <desc versionDate="2008-07-23" xml:lang="en">supplies the value of the date or time in a standard form, e.g. yyyy-mm-dd.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">표준형식으로 날짜 또는 시간의 값을 제공한다.</desc>
       <desc versionDate="2019-03-28" xml:lang="ja">標準形式での日付や時刻を提供する。たとえば、yyyy-mm-dd</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">spécifie une date exacte pour un événement sous
-        une forme normalisée, par ex. aaaa-mm-jj.</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">spécifie une date exacte pour un événement sous une forme normalisée, par ex. aaaa-mm-jj.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica il valore di una data o di un orario in un formato standard.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona el valor de una fecha o una hora en un formato estandard.</desc>
       <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
@@ -689,19 +683,19 @@ Elements</ref>
         </egXML>
       </exemplum>
       <exemplum versionDate="2016-03-28" xml:lang="fr">
-	<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATABLEW3C-egXML-py" source="#fr-ex-Ormesson-douane">Shakespeare meurt dix jours plus tard, à Stratford-on-Avon,
-	  Warwickshire, dans l'Angleterre protestante et dans le
-	  calendrier julien, le
-	  <date calendar="#julian" when="--05-03">mardi 23 avril ancien style</date>,
-	  c'est-à-dire le
-	  <date calendar="#gregorian" when="--05-03">3 mai</date> dans
-	  le calendrier grégorien.</egXML>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATABLEW3C-egXML-py" source="#fr-ex-Ormesson-douane">Shakespeare meurt dix jours plus tard, à Stratford-on-Avon,
+          Warwickshire, dans l'Angleterre protestante et dans le
+          calendrier julien, le
+          <date calendar="#julian" when="--05-03">mardi 23 avril ancien style</date>,
+          c'est-à-dire le
+          <date calendar="#gregorian" when="--05-03">3 mai</date> dans
+          le calendrier grégorien.</egXML>
       </exemplum>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATABLEW3C-egXML-xp">This list begins in
           the year 1632, more precisely on Trinity Sunday, i.e. the Sunday after
           Pentecost, in that year the
-	  <date calendar="#julian" when="1632-06-06">27th of May (old style)</date>.</egXML>
+          <date calendar="#julian" when="1632-06-06">27th of May (old style)</date>.</egXML>
       </exemplum>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATABLEW3C-egXML-mh">
@@ -712,25 +706,21 @@ Elements</ref>
       </exemplum>
     </attDef>
     <attDef ident="notBefore" usage="opt">
-      <desc versionDate="2007-04-09" xml:lang="en">specifies the earliest possible date for the event in
-        standard form, e.g. yyyy-mm-dd.</desc>
+      <desc versionDate="2007-04-09" xml:lang="en">specifies the earliest possible date for the event in standard form, e.g. yyyy-mm-dd.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">yyyy-mm-dd와 같은 표준 형식으로 사건의 가능한 한 이른 날짜를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">以標準格式說明該事件可能發生的最早日期，例如年-月-日。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該事象の一番古い日付を、標準形式で示す。例えば、yyyy-mm-dd。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">spécifie la date la plus ancienne pour
-        l'événement sous une forme normalisée, par ex. aaaa-mm-jj.</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">spécifie la date la plus ancienne pour l'événement sous une forme normalisée, par ex. aaaa-mm-jj.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">specifica la prima data possibile per un evento nel formato standard aaaa-mm-gg.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica la fecha más temprana posible para un evento en un formato estándard, p.ej. aaaa-mm-dd.</desc>
       <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
     </attDef>
     <attDef ident="notAfter" usage="opt">
-      <desc versionDate="2007-04-09" xml:lang="en">specifies the latest possible date for the event in
-        standard form, e.g. yyyy-mm-dd.</desc>
+      <desc versionDate="2007-04-09" xml:lang="en">specifies the latest possible date for the event in standard form, e.g. yyyy-mm-dd.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">yyyy-mm-dd와 같은 표준 형식으로 사건의 가능한 한 나중 날짜를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">以標準形式標明該事件可能的最晚日期，例如年-月-日。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該事象の一番新しい日付を、標準形式で示す。例えば、yyyy-mm-dd。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">spécifie la date la plus récente possible pour
-        l'événement sous une forme normalisée, par ex. aaaa-mm-jj.</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">spécifie la date la plus récente possible pour l'événement sous une forme normalisée, par ex. aaaa-mm-jj.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">specifica l'ultima data possibile per un evento nel formato standard aaaa-mm-gg.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica la fecha más tardana posible para un evento en un formato estándard, p.ej. aaaa-mm-dd.</desc>
       <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
@@ -740,20 +730,17 @@ Elements</ref>
       <desc versionDate="2007-12-20" xml:lang="ko">표준 형식으로 기간의 시작 지점을 표시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">以標準格式表示該段時間的起始點。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">標準形で当該時間幅の始点を示す。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">indique le point de départ d'une période sous une
-        forme normalisée, par ex. aaaa-mm-jj.</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">indique le point de départ d'une période sous une forme normalisée, par ex. aaaa-mm-jj.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica l'inizio del periodo nel formato standard.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el punto de inicio del período en el formato estándard.</desc>
       <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
     </attDef>
     <attDef ident="to" usage="opt">
-      <desc versionDate="2008-02-10" xml:lang="en">indicates the ending point of the period in standard
-        form, e.g. yyyy-mm-dd.</desc>
+      <desc versionDate="2008-02-10" xml:lang="en">indicates the ending point of the period in standard form, e.g. yyyy-mm-dd.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">표준 형식으로 기간의 종료 지점을 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">以標準格式表示該段時間的結束點。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">標準形で当該時間幅の終点を示す。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">indique le terme de la période sous une forme
-        normalisée, par ex. aaaa-mm-jj.</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">indique le terme de la période sous une forme normalisée, par ex. aaaa-mm-jj.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica la fine del periodo nel formato standard.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el punto final de un periodo en formato estándard.</desc>
       <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
@@ -789,26 +776,26 @@ Elements</ref>
       <remarks ident="att.datable.w3c-remarks" versionDate="2019-03-28" xml:lang="ja">
         <p>
           この属性の値は、グレゴリオ暦を用い、<ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>で定義されるいずれかの標準形式で正規化された日付や時刻、あるいはその組み合わせである。時間の属性としてもっともよく使われる形式は、<code>yyyy-mm-dd</code>だが、<code>yyyy</code>、<code>--mm</code>、<code>---dd</code>、<code>yyyy-mm</code>、<code>--mm-dd</code>も用いてもよい。時間については、<code>hh:mm:ss</code>が用いられる。この形式は、紀元前1年を表現するのに<val>0000</val>という値を用いることは現在のところ許容していないことには注意されたい。代わりに<val>-0001</val>という値を用いる必要がある。
-	           </p>
+                   </p>
         <p>
-	属性<att>when</att>の値は、日付や時間またはその組み合わを、
+        属性<att>when</att>の値は、日付や時間またはその組み合わを、
           <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>に従って示される。
-	当該日付の値が、グレゴリオ暦またはそれ以前の前グレゴリオ暦シス
+        当該日付の値が、グレゴリオ暦またはそれ以前の前グレゴリオ暦シス
         テムの場合に真となる。
-	</p>
+        </p>
         <p>
-	現時点では、W3Cは年号の値として<val>0000</val>を認めていない。
-	この場合、一般的には、1BCE(紀元前1世紀)と記される。
-	現行W3Cのシステムを採用すれば、1BCEは<val>-0001</val>、2BCEは、
+        現時点では、W3Cは年号の値として<val>0000</val>を認めていない。
+        この場合、一般的には、1BCE(紀元前1世紀)と記される。
+        現行W3Cのシステムを採用すれば、1BCEは<val>-0001</val>、2BCEは、
         <val>-0002</val>と記される。
-	<quote>この背景には、XML Schema Working Groupが、値
+        <quote>この背景には、XML Schema Working Groupが、値
         <val>0000</val>を1BCE(閏年)の文字表記として、<val>-0001</val>
         を2BCEの文字表記として、<val>-0002</val>を3BCEの文字表記として
         利用したかったためである。
-	  </quote>
-	  従って、場合によっては、属性<att>when-iso</att>により紀元前
+          </quote>
+          従って、場合によっては、属性<att>when-iso</att>により紀元前
         を示した方が便利かもしれない。
-	  </p>
+          </p>
       </remarks>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#CONADA">3.6.4. Dates and Times</ref>
@@ -1655,12 +1642,16 @@ associated with a dated element, at the time indicated.</desc>
         <p>もし<att>style</att>と<att>rendition</att>の両方が一つの要素に現れる場合、<att>style</att>は<att>rendition</att>を上書きもしくは補完する。<att>style</att>は<att>rend</att>と同時に用いられるべきではない。後者は形式的なスタイル定義言語を採用しているわけではないから。</p></remarks>
     </attDef>
     <attDef ident="rendition" usage="opt">
+      <gloss versionDate="2025-09-15" xml:lang="en">rendition reference</gloss>
+      <gloss versionDate="2025-09-15" xml:lang="de">Darstellungsverweis</gloss>
+      <gloss versionDate="2026-07-25" xml:lang="fr">référence du rendu</gloss>
       <desc versionDate="2007-09-22" xml:lang="en">points to a description of the rendering or presentation used for this element in the source text.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">원본 텍스트에서 이 요소에 대해 사용된 모양과 제시에 대한 기술을 가리킨다.</desc>
       <desc versionDate="2008-04-06" xml:lang="es">indica una descripción de la representación o de la presentación empleada para este elemento en el texto original.</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該要素が示す表現が現れている、元資料のテキスト部分を示す。</desc>
       <desc versionDate="2008-03-30" xml:lang="fr">pointe vers une description du rendu ou de la présentation utilisés pour cet élément dans le texte source.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica una descrizione della resa o della presentazione utilizzate per tale elemento nel testo di partenza</desc>
+      <desc versionDate="2025-09-15" xml:lang="de">verweist auf eine Beschreibung der Darstellung oder Präsentation, die für dieses Element im Quelltext verwendet wurde.</desc>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="class-attr-global.rendition-egXML-as">
@@ -2655,7 +2646,7 @@ baby?</l></egXML>
       <constraintSpec ident="targetLang" scheme="schematron" xml:lang="en">
         <constraint>
           <sch:rule context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
-            <sch:assert test="@target">@targetLang should only be used on <sch:name/> if @target is specified.</sch:assert>
+            <sch:assert test="@target">@targetLang should only be used on &lt;<sch:name/>&gt; if @target is specified.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -2679,12 +2670,10 @@ baby?</l></egXML>
       also optionally be supplied for non-private-use codes, though
       these must remain consistent with their
       <choice><abbr>IETF</abbr><expan>Internet Engineering Task
-      Force</expan></choice> definitions.</p></remarks>
-      
+      Force</expan></choice> definitions.</p></remarks>      
       <remarks ident="att.pointing-attr.targetLang-remarks" versionDate="2024-08-08" xml:lang="ja"><p>
         値はBCP 47に準拠している必要がある。言語コードが<val>x-</val>で始まっていたり、<val>-x-</val>を含んでいたりする私的利用の値である場合、TEIヘッダーにおいて、そのコードを<att>ident</att>属性の値として持った<gi>language</gi>要素を記述しなければならない。私的利用にあたらないコードの記述をしてもよいが、<choice><abbr>IETF</abbr><expan>Internet Engineering Task Force</expan></choice>の定義に準拠したものでなくてはならない。
       </p></remarks>
-      
     </attDef>
     <attDef ident="target" usage="opt">
       <desc versionDate="2010-05-02" xml:lang="en">specifies the destination of the reference by supplying one or more URI References.</desc>
@@ -2692,10 +2681,8 @@ baby?</l></egXML>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">用一個或多個統一資源識別符參照 (URI References) 來說明參照所指位置。</desc>
       <desc versionDate="2024-08-08" xml:lang="ja">一つ以上のURI参照を与えることで、参照先を指定する。</desc>
       <desc versionDate="2009-01-06" xml:lang="fr">précise la cible de la référence en donnant une ou plusieurs références URI</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica la destinación de una referencia
-        proporcionando una o más referencias URI.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica la destinazione di un riferimento, fornendo
-        uno o più riferimenti URI</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">especifica la destinación de una referencia proporcionando una o más referencias URI.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">specifica la destinazione di un riferimento, fornendo uno o più riferimenti URI</desc>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <remarks ident="att.pointing-attr.target-remarks" versionDate="2007-01-21" xml:lang="en"><p>One or more syntactically valid URI references, separated by whitespace. Because
         whitespace is used to separate URIs, no whitespace is permitted inside a single URI. If a
@@ -2713,8 +2700,7 @@ baby?</l></egXML>
     <attDef ident="evaluate" usage="opt">
       <gloss versionDate="2009-05-28" xml:lang="en">evaluate</gloss>
       <gloss versionDate="2009-05-28" xml:lang="fr">évalué</gloss>
-      <desc versionDate="2005-10-10" xml:lang="en">specifies the intended meaning when the target of a
-      pointer is itself a pointer.</desc>
+      <desc versionDate="2005-10-10" xml:lang="en">specifies the intended meaning when the target of a pointer is itself a pointer.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">포인터의 대상이 포인터일 때 의도된 의미를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">若指標的目標本身為指標，則在此說明其用意。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該ポインタの参照先がポインタである場合、その意図を示す。</desc>
@@ -2724,33 +2710,27 @@ baby?</l></egXML>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="all">
-          <desc versionDate="2007-06-27" xml:lang="en">if the element pointed to is itself a pointer, then
-	  the target of that pointer will be taken, and so on, until
-	  an element is found which is not a pointer.</desc>
+          <desc versionDate="2007-06-27" xml:lang="en">if the element pointed to is itself a pointer, then the target of that pointer will be taken, and so on, until an element is found which is not a pointer.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">만약 지시되는 요소가 포인터라면, 포인터의 대상은 포인터가 아닌 요소가 발견될 때까지 계속 연결된다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">若指向的元素本身為指標，則該指標的目標會被移除，依此類推，直到找到一個非指標的元素為止。</desc>
           <desc versionDate="2008-04-06" xml:lang="es">si el elemento que señala a sí mismo es un indicador, entonces el target de ese indicador será tomado, y así sucesivamente, hasta que se encuentre un elemento que no sea un indicador.</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">参照先の要素がポインターである場合、そのポインターの参照先へ
-	  と展開する。これを、参照先がポインターでなくなるまで続ける。</desc>
+          と展開する。これを、参照先がポインターでなくなるまで続ける。</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">si l'élément pointé est lui-même un pointeur, alors on prendra la cible de ce pointeur, et ainsi de suite jusqu'à trouver un élément qui n'est pas un pointeur.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">se l'elemento puntato è esso stesso un puntatore, allora sarà presa la destinazione di quel puntatore e così via fino a trovare un elemento che non è un puntatore.</desc>
         </valItem>
         <valItem ident="one">
-          <desc versionDate="2007-06-27" xml:lang="en">if the element pointed to is itself a pointer, then
-	  its target (whether a pointer or not) is taken as the target
-	  of this pointer.</desc>
+          <desc versionDate="2007-06-27" xml:lang="en">if the element pointed to is itself a pointer, then its target (whether a pointer or not) is taken as the target of this pointer.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">지시된 요소가 포인터라면, 그 대상(포인터이든지 아니든지)은 이 포인터의 대상으로 취급된다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">若指向的元素本身為指標，則該指標的目標(無論是否為指標)會作為這項指標的目標。</desc>
           <desc versionDate="2008-04-06" xml:lang="es">si el elemento que señala a sí mismo es un puntero, entonces el target (puntero o no) se toma como el target de este puntero.</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">参照先の要素がポインターである場合、(そのポインターの参照先
-	  がどうであれ)そのポインターが参照先になる。</desc>
+          がどうであれ)そのポインターが参照先になる。</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">si l'élément pointé est lui-même un pointeur, alors sa cible (qui est ou non un pointeur) devient la cible retenue.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">se l'elemento puntato è esso stesso un puntatore, allora la sua destinazione (che sia un puntatore o meno) è presa come destinazione del puntatore.</desc>
         </valItem>
         <valItem ident="none">
-          <desc versionDate="2007-06-27" xml:lang="en">no further evaluation of targets is carried out
-	  beyond that needed to find the element specified in the
-	  pointer's target.</desc>
+          <desc versionDate="2007-06-27" xml:lang="en">no further evaluation of targets is carried out beyond that needed to find the element specified in the pointer's target.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">포인터의 대상에서 명시된 요소를 발견할 필요가 없을 때 더 이상의 대상에 대한 평가는 수행되지 않는다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">尋找指標的目標元素時，未對目標進行不必要的延伸評估。</desc>
           <desc versionDate="2008-04-06" xml:lang="es">no se realiza ninguna otra evaluación de los targets más allá de la necesaria para encontrar el elemento especificado en el target del puntero.</desc>
@@ -2771,9 +2751,9 @@ baby?</l></egXML>
       </remarks>
       <remarks ident="att.pointing-attr.evaluate-remarks" versionDate="2008-04-05" xml:lang="ja">
         <p>
-	値がない場合、ソフトウェア側がポインター連鎖の扱いを決める(恐
-	  らく利用者が指示を元に行われる)。
-	  </p>
+        値がない場合、ソフトウェア側がポインター連鎖の扱いを決める(恐
+          らく利用者が指示を元に行われる)。
+          </p>
       </remarks>
     </attDef>
   </attList>
@@ -3006,18 +2986,15 @@ baby?</l></egXML>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHAD">12.3.1.4. Additions and Deletions</ref>
   </listRef>
 </classSpec><classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="atts" ident="att.styleDef">
-  <desc versionDate="2015-02-15" xml:lang="en">provides attributes to specify the name of a formal definition
-  language used to provide formatting or rendition information.</desc>
+  <desc versionDate="2015-02-15" xml:lang="en">provides attributes to specify the name of a formal definition language used to provide formatting or rendition information.</desc>
   <attList>
     <attDef ident="scheme">
       <desc versionDate="2012-10-06" xml:lang="en">identifies the language used to describe the rendition.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">모양을 기술하는 언어를 식별한다.</desc>
-      <desc versionDate="2008-04-06" xml:lang="es">identifica el lenguaje usado para describir la
-        interpretación.</desc>
+      <desc versionDate="2008-04-06" xml:lang="es">identifica el lenguaje usado para describir la interpretación.</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該描出を解説する言語を特定する。</desc>
       <desc versionDate="2008-03-30" xml:lang="fr">identifie la langue employée pour décrire le rendu.</desc>
-      <desc versionDate="2007-11-06" xml:lang="it">identifica la lingua utilizzata per descrivere la
-        resa</desc>
+      <desc versionDate="2007-11-06" xml:lang="it">identifica la lingua utilizzata per descrivere la resa</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="css">
@@ -3031,11 +3008,9 @@ baby?</l></egXML>
         <valItem ident="xslfo">
           <desc versionDate="2012-10-06" xml:lang="en">Extensible Stylesheet Language Formatting Objects</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">확장가능 스타일시트 언어</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">Objetos extensibles del formato del lenguaje de
-            Stylesheet</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">Objetos extensibles del formato del lenguaje de Stylesheet</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">XSL-FO</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">langage XSL (Extensible Stylesheet )Formatting
-            Objects</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">langage XSL (Extensible Stylesheet )Formatting Objects</desc>
           <desc versionDate="2007-11-06" xml:lang="it">linguaggio XSL-FO.</desc>
         </valItem>
         <valItem ident="free">
@@ -3049,18 +3024,14 @@ baby?</l></egXML>
         <valItem ident="other">
           <desc versionDate="2012-10-06" xml:lang="en">A user-defined rendition description language</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">사용자 정의 해석 기술 언어</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">Un idioma descriptivo de interpretación definido
-            por el usario.</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">Un idioma descriptivo de interpretación definido por el usario.</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">利用者が決めた、描出記述言語。</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">langue de description de l'interprétation définie
-            par l'utilisateur</desc>
-          <desc versionDate="2007-11-06" xml:lang="it">linguaggio di descrizione della resa definito
-            dall'utente</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">langue de description de l'interprétation définie par l'utilisateur</desc>
+          <desc versionDate="2007-11-06" xml:lang="it">linguaggio di descrizione della resa definito dall'utente</desc>
         </valItem>
       </valList>
       <remarks ident="att.styleDef-attr.scheme-remarks" versionDate="2013-04-11" xml:lang="en">
-        <p>
-If no value for the @scheme attribute is provided, then the default assumption should be that CSS is in use.  </p>
+        <p>If no value for the @scheme attribute is provided, then the default assumption should be that CSS is in use.</p>
       </remarks>
     </attDef>
     <attDef ident="schemeVersion" usage="opt">
@@ -3069,7 +3040,7 @@ If no value for the @scheme attribute is provided, then the default assumption s
       <constraintSpec ident="schemeVersionRequiresScheme" scheme="schematron" xml:lang="en">
         <constraint>
           <sch:rule context="tei:*[@schemeVersion]">
-            <sch:assert test="@scheme and not(@scheme = 'free')">
+            <sch:assert test="@scheme and not(@scheme eq 'free')">
               @schemeVersion can only be used if @scheme is specified.
             </sch:assert>
           </sch:rule>
@@ -3077,7 +3048,7 @@ If no value for the @scheme attribute is provided, then the default assumption s
       </constraintSpec>
       <remarks ident="att.styleDef-attr.schemeVersion-remarks" versionDate="2013-04-12" xml:lang="en">
         <p>If <att>schemeVersion</att> is used, then <att>scheme</att> should also appear, with a value
-      other than <val>free</val>.</p>
+          other than <val>free</val>.</p>
       </remarks>
     </attDef>
   </attList>
@@ -7254,17 +7225,13 @@ one initial.</desc>
   <desc versionDate="2023-05-09" xml:lang="it">assegna attributi per indicare i sistemi o calendari ai quali appartiene una data.</desc>
   <attList>
     <attDef ident="calendar" usage="opt">
-      <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
-        date represented by the content of this element belongs.</desc>
+      <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the date represented by the content of this element belongs.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
       <desc versionDate="2019-02-03" xml:lang="ja">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
-        appartient la date exprimée dans le contenu de l'élément.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
-        una fecha.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
-        appartiene.</desc>
+      <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel appartient la date exprimée dans le contenu de l'élément.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra una fecha.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data appartiene.</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
@@ -7273,7 +7240,7 @@ one initial.</desc>
           <sch:rule context="tei:*[@calendar]">
             <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
               systems or calendars to which the date represented by the content of this element belongs,
-              but this <sch:name/> element has no textual content.</sch:assert>
+              but this &lt;<sch:name/>&gt; element has no textual content.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -7616,7 +7583,7 @@ Elements</ref>
     <constraint>
       <sch:rule context="tei:p">
         <sch:report test="(ancestor::tei:ab or ancestor::tei:p) and                        not( ancestor::tei:floatingText                           | parent::tei:exemplum                           | parent::tei:item                           | parent::tei:note                           | parent::tei:q                           | parent::tei:quote                           | parent::tei:remarks                           | parent::tei:said                           | parent::tei:sp                           | parent::tei:stage                           | parent::tei:cell                           | parent::tei:figure )">
-          Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
+          Abstract model violation: Paragraphs may not occur inside other paragraphs or &lt;ab&gt; elements.
         </sch:report>
       </sch:rule>
     </constraint>
@@ -7625,7 +7592,7 @@ Elements</ref>
     <constraint>
       <sch:rule context="tei:l//tei:p">
         <sch:assert test="ancestor::tei:floatingText | parent::tei:figure | parent::tei:note">
-          Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
+          Abstract model violation: Metrical lines (&lt;l&gt; elements) may not contain higher-level structural elements such as &lt;div&gt;, &lt;p&gt;, or &lt;ab&gt;, unless &lt;p&gt; is a child of &lt;figure&gt; or &lt;note&gt;, or is a descendant of &lt;floatingText&gt;.
         </sch:assert>
       </sch:rule>
     </constraint>
@@ -9130,7 +9097,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
           <att>from</att> or <att>to</att>.</desc>
         <constraint>
           <sch:rule context="tei:rt/@target">
-            <sch:report test="../@from | ../@to">When target= is present, neither from= nor to= should be.</sch:report>
+            <sch:report test="../@from | ../@to">When @target is present, neither @from nor @to should be.</sch:report>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -9154,7 +9121,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
           is a <att>from</att>.</desc>
         <constraint>
           <sch:rule context="tei:rt/@from">
-            <sch:assert test="../@to">When from= is present, the to= attribute of <sch:name/> is required.</sch:assert>
+            <sch:assert test="../@to">When @from is present, the @to attribute of &lt;<sch:name/>&gt; is required.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -9172,7 +9139,7 @@ Ce ne seroyt que bon que nous rendissiez noz cloches...</egXML>
           is a <att>to</att>.</desc>
         <constraint>
           <sch:rule context="tei:rt/@to">
-            <sch:assert test="../@from">When to= is present, the from= attribute of <sch:name/> is required.</sch:assert>
+            <sch:assert test="../@from">When @to is present, the @from attribute of &lt;<sch:name/>&gt; is required.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -12168,7 +12135,7 @@ Measures</ref>
   <constraintSpec scheme="schematron" ident="ptrAtts" xml:lang="en">
     <constraint>
       <sch:rule context="tei:ptr">
-        <sch:report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on <sch:name/>.</sch:report>
+        <sch:report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on &lt;<sch:name/>&gt;.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -12228,7 +12195,7 @@ Measures</ref>
   <constraintSpec scheme="schematron" ident="refAtts" xml:lang="en">
     <constraint>
       <sch:rule context="tei:ref">
-        <sch:report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on <sch:name/>.</sch:report>
+        <sch:report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on &lt;<sch:name/>&gt;.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -16313,7 +16280,7 @@ epistemology, methodology and history of
   <constraintSpec ident="abstractModel-structure-l-in-l" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:rule context="tei:l">
-        <sch:report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">Abstract model violation: Lines may not contain lines or lg elements.</sch:report>
+        <sch:report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">Abstract model violation: Metrical lines (&lt;l&gt; elements) may not contain &lt;l&gt; or &lt;lg&gt; elements.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -16393,7 +16360,7 @@ epistemology, methodology and history of
   <constraintSpec scheme="schematron" ident="atleast1oflggapl" xml:lang="en">
     <constraint>
       <sch:rule context="tei:lg">
-        <sch:assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element must contain at least one child l, lg, or gap element.</sch:assert>
+        <sch:assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An &lt;lg&gt; element must contain at least one child &lt;l&gt;, &lt;lg&gt;, or &lt;gap&gt; element.</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -16711,6 +16678,7 @@ epistemology, methodology and history of
     <memberOf key="att.global"/>
     <memberOf key="att.ascribed.directed"/>
     <memberOf key="att.cmc"/>
+    <memberOf key="att.performed"/>
     <memberOf key="att.placement"/>
     <memberOf key="att.written"/>
     <memberOf key="model.stageLike"/>
@@ -20989,14 +20957,14 @@ the target element</desc>
       <constraintSpec ident="citestructure-outer-match" scheme="schematron" xml:lang="en">
         <constraint>
           <sch:rule context="tei:citeStructure[not(parent::tei:citeStructure)]">
-            <sch:assert test="starts-with(@match,'/')">An XPath in @match on the outer <sch:name/> must start with '/'.</sch:assert>
+            <sch:assert test="starts-with(@match,'/')">An XPath in @match on the outer &lt;<sch:name/>&gt; must start with '/'.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
       <constraintSpec ident="citestructure-inner-match" scheme="schematron" xml:lang="en">
         <constraint>
           <sch:rule context="tei:citeStructure[parent::tei:citeStructure]">
-            <sch:assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <sch:name/>.</sch:assert>
+            <sch:assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer &lt;<sch:name/>&gt;.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -22181,10 +22149,12 @@ codes used elsewhere in the text.</desc>
         </application>
       </appInfo>
     </egXML>
-    <p>This example shows an appInfo element documenting the fact that version 1.5 of the Image
-      Markup Tool1 application has an interest in two parts of a document which was last saved on
-      June 6 2006. The parts concerned are accessible at the URLs given as target for the two
-        <gi>ptr</gi> elements. </p>
+    <p>This example shows an <gi>appInfo</gi> element documenting the
+    fact that version 1.5 of the Image Markup Tool application has an
+    interest in two parts of a document which was last saved on 06
+    June 2006. The parts concerned are accessible at the URLs given as
+    the <att>target</att> attributes of the two <gi>ptr</gi>
+    elements.</p>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-application-egXML-ox" source="#NONE">
@@ -24904,7 +24874,7 @@ during the evolution of the encoded representation of that text.</p>
     <constraint>
       <sch:rule context="tei:l//tei:div">
         <sch:assert test="ancestor::tei:floatingText">
-          Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
+          Abstract model violation: Metrical lines (&lt;l&gt; elements) may not contain higher-level structural elements such as &lt;div&gt;, unless &lt;div&gt; is a descendant of &lt;floatingText&gt;.
         </sch:assert>
       </sch:rule>
     </constraint>
@@ -24913,7 +24883,7 @@ during the evolution of the encoded representation of that text.</p>
     <constraint>
       <sch:rule context="tei:div">
         <sch:report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
-          Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
+          Abstract model violation: &lt;p&gt; and &lt;ab&gt; may not contain higher-level structural elements such as &lt;div&gt;, unless &lt;div&gt; is a descendant of &lt;floatingText&gt;.
         </sch:report>
       </sch:rule>
     </constraint>
@@ -28407,7 +28377,7 @@ reserved for the element likely to be used more often.</p>
     <constraint>
       <sch:rule context="tei:l//tei:ab">
         <sch:assert test="ancestor::tei:floatingText | parent::tei:figure | parent::tei:note">
-          Abstract model violation: Metrical lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
+          Abstract model violation: Metrical lines (&lt;l&gt; elements) may not contain higher-level divisions such as &lt;p&gt; or &lt;ab&gt;, unless &lt;ab&gt; is a child of &lt;figure&gt; or &lt;note&gt;, or is a descendant of &lt;floatingText&gt;.
         </sch:assert>
       </sch:rule>
     </constraint>
@@ -29823,7 +29793,30 @@ reserved for the element likely to be used more often.</p>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SASOstdf">17.10. The standOff Container</ref>
   </listRef>
-</elementSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="drama" xml:id="gi-set" ident="set">
+</elementSpec><classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="drama" type="atts" ident="att.performed">
+  <desc versionDate="2026-03-03" xml:lang="en">provides attributes to specify performance-based information.</desc>
+  <attList>
+    <attDef ident="perf" usage="opt">
+      <gloss versionDate="2007-07-04" xml:lang="en">performance</gloss>
+      <gloss versionDate="2007-12-20" xml:lang="ko">연기</gloss>
+      <gloss versionDate="2008-04-06" xml:lang="es">función</gloss>
+      <gloss versionDate="2008-03-30" xml:lang="fr">jeu</gloss>
+      <gloss versionDate="2007-11-06" xml:lang="it">rappresentazione</gloss>
+      <desc versionDate="2026-03-03" xml:lang="en">identifies the performance or performances in which this element occurred.</desc>
+      
+      <desc versionDate="2007-12-20" xml:lang="ko">명시된 대로 이동할 때의 연기를 명시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指明這項舞台動作出現在哪些演出中。</desc>
+      <desc versionDate="2008-04-06" xml:lang="es">identifica la puesta en escena en la cual este movimiento se produjo según lo especificado.</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該動きの演技を示す。</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">identifie la ou les représentations au cours desquelles s'est effectué le déplacement décrit.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica la rappresentazione o le rappresentazioni in cui il movimento è stato eseguito così come specificato.</desc>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
+      <remarks versionDate="2026-07-05" ident="att.performed-attr.perf-remarks" xml:lang="en">
+        <p>The <att>perf</att> attribute contains one or more pointers to a canonical description of the performance, typically described by a <gi>performance</gi> or <gi>event</gi> element.</p>
+      </remarks>
+    </attDef>
+  </attList>
+</classSpec><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="drama" xml:id="gi-set" ident="set">
   <gloss versionDate="2007-07-04" xml:lang="en">setting</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">배경</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -30356,6 +30349,7 @@ reserved for the element likely to be used more often.</p>
   <desc versionDate="2007-01-21" xml:lang="it">contiene un unico elenco dei personaggio le dramatis personae.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.performed"/>
     <memberOf key="model.frontPart.drama"/>
     <memberOf key="model.inter"/>
     <memberOf key="model.standOffPart"/>
@@ -30745,10 +30739,10 @@ elements within a cast list.</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">dans une distribution, catégorie qui rassemble un ou
       plusieurs personnages.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">raggruppa uno o più elementi individuali castItem in una lista dei personaggi.</desc>
-  
   <classes>
     <memberOf key="att.global"/>
-    </classes>
+    <memberOf key="att.performed"/>
+  </classes>
   <content>
     <sequence>
       
@@ -30864,7 +30858,9 @@ either a single role or a list of non-speaking roles.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una singola voce all'interno della lista dei personaggi, descrive o un ruolo o una lista di ruoli privi di battute.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.performed"/>
     <memberOf key="att.typed"/>
+ 
   </classes>
   <content>
       <alternate minOccurs="0" maxOccurs="unbounded">
@@ -30965,6 +30961,7 @@ either a single role or a list of non-speaking roles.</desc>
     personaggi.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.performed"/>
     <memberOf key="model.castItemPart"/>
   </classes>
   <content>
@@ -31065,6 +31062,7 @@ either a single role or a list of non-speaking roles.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.canonical"/>
+    <memberOf key="att.performed"/>
     <memberOf key="model.castItemPart"/>
   </classes>
   <content>
@@ -31288,6 +31286,7 @@ young man would present to his lady love. It makes me blush!
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.ascribed.directed"/>
+    <memberOf key="att.performed"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.stageLike"/>
   </classes>
@@ -31405,26 +31404,7 @@ young man would present to his lady love. It makes me blush!
           要となるだろう。符号化システムに関する詳細な記録は、ヘダー内で示 されるべきである。 </p>
       </remarks>
     </attDef>
-    <attDef ident="perf" usage="opt">
-      <gloss versionDate="2007-07-04" xml:lang="en">performance</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">연기</gloss>
-      <gloss versionDate="2008-04-06" xml:lang="es">función</gloss>
-      <gloss versionDate="2008-03-30" xml:lang="fr">jeu</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">rappresentazione</gloss>
-      <desc versionDate="2013-12-21" xml:lang="en">identifies the
-      performance or performances in which this movement occurred as
-      specified by pointing to one or more <gi>performance</gi> elements.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">명시된 대로 이동할 때의 연기를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指明這項舞台動作出現在哪些演出中。</desc>
-      <desc versionDate="2008-04-06" xml:lang="es">identifica la puesta en escena en la cual este
-        movimiento se produjo según lo especificado.</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該動きの演技を示す。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">identifie la ou les représentations au cours
-        desquelles s'est effectué le déplacement décrit.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica la rappresentazione o le rappresentazioni in
-        cui il movimento è stato eseguito così come specificato.</desc>
-      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
-    </attDef>
+   
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-move-egXML-vi">
@@ -31491,6 +31471,7 @@ dialogue.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">descrive il contenuto visivo di una parte della sceneggiatura, rispetto a ciò che lo spettatore vede, di solito indipendentemente dai dialoghi.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.performed"/>
     <memberOf key="model.stageLike"/>
   </classes>
   <content>
@@ -31609,6 +31590,7 @@ house, a <hi>man</hi> opens the front door of
   <desc versionDate="2007-01-21" xml:lang="it">descrive un particolare angolatura o punto di vista in una sceneggiatura.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.performed"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.stageLike"/>
   </classes>
@@ -31654,6 +31636,7 @@ Out the window the body of a dead man suddenly slams into frame
     descritti in una sceneggiatura o di un copione radiofonico.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.performed"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.stageLike"/>
   </classes>
@@ -31786,6 +31769,7 @@ a film script or screenplay.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene il testo di una leggenda o altro testo facente parte di un copione o di una sceneggiatura.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.performed"/>
     <memberOf key="model.stageLike"/>
   </classes>
   <content>
@@ -31864,6 +31848,7 @@ meant for the actors.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">descrive particolari indicazioni di scena non indirizzate agli attori.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.performed"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.stageLike"/>
   </classes>
@@ -31920,25 +31905,7 @@ meant for the actors.</desc>
         </valItem>
       </valList>
     </attDef>
-    <attDef ident="perf" usage="opt">
-      <gloss versionDate="2007-07-04" xml:lang="en">performance</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">연기</gloss>
-      <gloss versionDate="2008-04-06" xml:lang="es">función</gloss>
-      <gloss versionDate="2008-03-30" xml:lang="fr">jeu</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">rappresentazione</gloss>
-      <desc versionDate="2013-11-20" xml:lang="en">points to one or
-      more <gi>performance</gi> elements documenting the performance or performances to which this
-technical direction applies.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">이러한 전문적 지시를 적용하는 연기를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該技術性舞台指示適用於哪些演出中。</desc>
-      <desc versionDate="2008-04-06" xml:lang="es">identifica la función o funciones para las cuales  se aplica esta dirección técnica.</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該ト書きの対象となる演技を特定する。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">identifie la ou les représentations auxquelles
-          s'appliquent ces indications techniques.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">identifica la messa in scena o le messe in scena a cui si applicano le indicazioni tecniche.</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
-
-    </attDef>
+   
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-tech-egXML-kx">
