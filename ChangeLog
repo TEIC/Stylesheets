@@ -1,3 +1,244 @@
+2026-07-28  martindholmes  <mholmes@uvic.ca>
+
+	Setting release VERSION ahead of release tomorrow.
+
+2026-07-27  martinascholger  <martina.scholger@uni-graz.at>
+
+	update p5 subset
+
+2026-07-14  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Revert "Merge pull request #811 from TEIC/sydb_800_no_magic_xlink"
+	This reverts commit 64d01bc762e3b384841d79c32a6471a09b7aff49, reversing
+	changes made to f4a39d54d354759cd271fec743994db6a0fd9968.
+
+2026-07-14  Elisa Beshero-Bondar  <ebeshero@users.noreply.github.com>
+
+	Merge pull request #811 from TEIC/sydb_800_no_magic_xlink
+	remove magical xlink namespace binding
+
+2026-07-13  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Update p5subset to 4.12.0a, last updated on 2026-07-11, revision ba33d320c
+
+2026-07-08  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Removed the magic binding of the prefix "xlink:" to the namespace "http://www.w3.org/1999/xlink", and updated expected results to match.
+
+2026-06-23  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Update to p5subset to current TEI dev branch’s version
+
+2026-05-03  trishaoconnor  <trishaoconnor88@gmail.com>
+
+	update p5 subset
+
+	update p5 subset
+
+2026-04-10  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Update source (P5subset) to 4.12.0a, 74536339d of 2026-03-12
+
+2026-02-18  trishaoconnor  <trishaoconnor88@gmail.com>
+
+	Update version number for next release
+
+	update version number
+
+2026-02-17  trishaoconnor  <trishaoconnor88@gmail.com>
+
+	Update of Test1
+
+2026-02-17  helenasabel  <helena.b.sabel@gmail.com>
+
+	update P5subset and ONLY test2
+
+2026-02-11  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Update gitignore and Makefile (#793)
+	* exclude various files and directories
+
+	that get temporarily created during `make test`
+
+	* delete temporary files
+
+	which are created during `make test`
+
+2026-02-11  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Process the new key= attr of attRef, in addition to now deprecated name= attr.
+
+2026-02-10  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Finish update of p5subset
+
+2026-02-09  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Update p5subset to 4.11.0a last updated 2026-02-09, rev 4f0f1d253.
+
+2026-01-29  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #797 from rvdb/jTEI-egSplitLongAttributeValues
+	jTEI: split long attribute values inside eg:egXML
+
+2026-01-27  rvdb  <ron.vdbranden@gmail.com>
+
+	small regex simplification
+
+2026-01-12  ElliBleeker  <elli.bleeker@gmail.com>
+
+	updated p5 subset
+
+2026-01-09  rvdb  <ron.vdbranden@gmail.com>
+
+	jTEI: split long attribute values inside eg:egXML
+
+2025-12-11  root  <trishaoconnor88@gmail.com>
+
+	update p5 subset
+
+2025-11-25  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #787 from rvdb/jTEI-notePunctuationRefinements
+	don't put footnote markers before Spanish inverted question and exclamation marks
+
+	Per Stylesheets mtg of today, this looks good!
+
+2025-11-25  Joey Takeda  <joeytakeda@users.noreply.github.com>
+
+	Merge pull request #788 from TEIC/sydb_better_Test_deferred_diffing
+	improve Test/ process — optionally move comparisons to end of Makefile itself
+
+2025-11-25  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Add useful msg at end
+
+2025-11-19  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Improve access to temp output file per suggestion @martindholmes and @helenasabel
+
+	Ooops; forgot to mention DIFFSWITCHES not used yet.
+
+	First crack; seems to work, although output is still kinda ugly
+
+2025-11-18  martinascholger  <martina.scholger@uni-graz.at>
+
+	updated p5 subset with @syd
+
+2025-11-05  rvdb  <ron.vdbranden@gmail.com>
+
+	- excluded Spanish inverted question and exclamation marks from being moved before a footnote marker - refactored regex for matching punctuation that needs to appear before footnote markers into a variable for easier maintenance
+
+2025-10-28  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Based on whether we are processing Schematron or not, avoid comments
+
+	Per Stylesheets group, add an explanatory comment
+
+2025-10-28  Helena Bermúdez Sabel  <helena.b.sabel@gmail.com>
+
+	Merge pull request #779 from rvdb/jTEI-ODTFixMultiKeywordLists
+	ODT: improved presentation of multilingual keyword lists in different languages
+
+2025-10-24  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #785 from rvdb/jTEI-splitLongURLSinPDF
+	jTEI: split long urls in pdf
+
+2025-10-22  rvdb  <ron.vdbranden@gmail.com>
+
+	added zero-width space before &amp; in URLs that are displayed in the running text, in order to create break-points for the XSL-FO formatter
+
+	Merge remote-tracking branch 'upstream/dev' into dev
+
+2025-10-09  Patricia O Connor  <trishaoconnor88@gmail.com>
+
+	Merge pull request #745 from rettinghaus/update_lists
+	fix #734: Update lists
+
+2025-10-08  Klaus Rettinghaus  <klaus.rettinghaus@gmail.com>
+
+	fix tests
+
+	updated test files
+
+	update test2 files
+
+	update docs
+
+	update list types to use rend
+
+2025-10-08  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Missed one
+
+2025-10-07  Syd Bauman  <s.bauman@northeastern.edu>
+
+	update P5 subset
+
+2025-10-02  rvdb  <ron.vdbranden@gmail.com>
+
+	Revert "improved presentation of multilingual keyword lists in different languages"
+	This reverts commit eeaf51eb8564bb937c29b3ab9b932d2c39765f5c.
+
+	improved presentation of multilingual keyword lists in different languages
+
+	Revert "improved presentation of multilingual keyword lists in different languages"
+	This reverts commit eeaf51eb8564bb937c29b3ab9b932d2c39765f5c.
+
+	improved presentation of multilingual keyword lists in different languages
+
+2025-09-29  Patricia O Connor  <trishaoconnor88@gmail.com>
+
+	Merge pull request #774 from TEIC/sydb_773_min_0_max_2_or_more
+	fix for `@minOccurs` of 0 and `@maxOccurs` of 2 or more (but not "unbounded")
+
+2025-09-23  Patricia O Connor  <trishaoconnor88@gmail.com>
+
+	Merge pull request #760 from jbampton/fix-typos
+	misc: fix spelling
+
+	Merge pull request #768 from TEIC/sydb_438_rm_superflous_file
+	Remove extraneous file 
+
+2025-09-23  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Revert spelling corrrections that are in other people’s files.
+
+2025-09-23  Patricia O Connor  <trishaoconnor88@gmail.com>
+
+	Merge pull request #775 from TEIC/issue-187-unused-file
+	Deletion of unused file per issue #187.
+
+2025-09-15  Martin Holmes  <mholmes@uvic.ca>
+
+	Deletion of unused file per issue #187.
+
+2025-09-05  Syd Bauman  <s.bauman@northeastern.edu>
+
+	A proposed fix for #773. I am quite confident it fixes the problem identified in that issue, but does it break anything else?
+
+2025-09-04  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Grab latest from dev
+
+2025-08-15  ElliBleeker  <elli.bleeker@gmail.com>
+
+	increment version number
+
+	Update changelog
+
+2025-08-15  Syd Bauman  <s.bauman@northeastern.edu>
+
+	Remove extraneous file noticed by @peterstadler
+
+2025-08-14  ElliBleeker  <elli.bleeker@gmail.com>
+
+	update p5 subset with HBS
+
+2025-08-14  helenasabel  <helena.b.sabel@gmail.com>
+
+	adjust version number in preparation for release
 2025-08-14  ElliBleeker  <elli.bleeker@gmail.com>
 
 	update p5 subset with HBS
