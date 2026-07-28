@@ -484,7 +484,7 @@ tei_att.global.rendition.attribute.style =
   attribute style { xsd:string }?
 tei_att.global.rendition.attribute.rendition =
   
-  ## points to a description of the rendering or presentation used for this element in the source text.
+  ## (rendition reference) points to a description of the rendering or presentation used for this element in the source text.
   attribute rendition {
     list {
       xsd:anyURI { pattern = "\S+" }+
@@ -549,9 +549,9 @@ sch:pattern [
         "(   self::tei:classRef                                 | self::tei:dataRef                                 | self::tei:elementRef                                 | self::tei:macroRef                                 | self::tei:moduleRef                                 | self::tei:schemaSpec )                                   and                                   $srcs[2]"
       "\x{a}" ~
       "              When used on a schema description element (like\x{a}" ~
-      "              "
+      "              <"
       sch:value-of [ select = "name(.)" ]
-      "), the @source attribute\x{a}" ~
+      ">), the @source attribute\x{a}" ~
       "              should have only 1 value. (This one has "
       sch:value-of [ select = "count($srcs)" ]
       ".)\x{a}" ~
@@ -757,9 +757,9 @@ sch:pattern [
     "         "
     sch:assert [
       test = "@target"
-      "@targetLang should only be used on "
+      "@targetLang should only be used on <"
       sch:name [ ]
-      " if @target is specified."
+      "> if @target is specified."
     ]
     "\x{a}" ~
     "      "
@@ -890,11 +890,11 @@ sch:pattern [
     sch:assert [
       test = "id( substring( @spanTo, 2 ) ) >> ."
       "\x{a}" ~
-      "	      The element indicated by @spanTo ("
+      "              The element indicated by @spanTo ("
       sch:value-of [ select = "@spanTo" ]
-      ") must follow the current "
+      ") must follow the current <"
       sch:name [ ]
-      " element \x{a}" ~
+      "> element.\x{a}" ~
       "            "
     ]
     "\x{a}" ~
@@ -944,7 +944,7 @@ sch:pattern [
     "\x{a}" ~
     "         "
     sch:assert [
-      test = "@scheme and not(@scheme = 'free')"
+      test = "@scheme and not(@scheme eq 'free')"
       "\x{a}" ~
       "              @schemeVersion can only be used if @scheme is specified.\x{a}" ~
       "            "
@@ -979,9 +979,11 @@ sch:pattern [
     "         "
     sch:assert [
       test = "@type"
-      "The "
+      "\x{a}" ~
+      "          The <"
       sch:name [ ]
-      " element should not be categorized in detail with @subtype unless also categorized in general with @type"
+      "> element should not be categorized in detail with @subtype unless also categorized in general with @type.\x{a}" ~
+      "        "
     ]
     "\x{a}" ~
     "      "
@@ -2115,9 +2117,9 @@ sch:pattern [
       test = "string-length( normalize-space(.) ) gt 0"
       " @calendar indicates one or more\x{a}" ~
       "              systems or calendars to which the date represented by the content of this element belongs,\x{a}" ~
-      "              but this "
+      "              but this <"
       sch:name [ ]
-      " element has no textual content."
+      "> element has no textual content."
     ]
     "\x{a}" ~
     "      "
@@ -2200,7 +2202,7 @@ tei_p =
              test =
                "(ancestor::tei:ab or ancestor::tei:p) and                        not( ancestor::tei:floatingText                           | parent::tei:exemplum                           | parent::tei:item                           | parent::tei:note                           | parent::tei:q                           | parent::tei:quote                           | parent::tei:remarks                           | parent::tei:said                           | parent::tei:sp                           | parent::tei:stage                           | parent::tei:cell                           | parent::tei:figure )"
              "\x{a}" ~
-             "          Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.\x{a}" ~
+             "          Abstract model violation: Paragraphs may not occur inside other paragraphs or <ab> elements.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -2221,7 +2223,7 @@ tei_p =
              test =
                "ancestor::tei:floatingText | parent::tei:figure | parent::tei:note"
              "\x{a}" ~
-             "          Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
+             "          Abstract model violation: Metrical lines (<l> elements) may not contain higher-level structural elements such as <div>, <p>, or <ab>, unless <p> is a child of <figure> or <note>, or is a descendant of <floatingText>.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -2342,6 +2344,7 @@ tei_q =
     tei_att.global.attributes,
     tei_att.ascribed.directed.attributes,
     tei_att.cmc.attributes,
+    tei_att.typed.attribute.subtype,
     
     ## (type) may be used to indicate whether the offset passage is spoken or thought, or to characterize it more finely.
     ## Suggested values include: 1] spoken (spoken); 2] thought (thought); 3] written (written); 4] soCalled (so called); 5] foreign (foreign); 6] distinct (distinct); 7] term; 8] emph (emph); 9] mentioned (mentioned)
@@ -2463,6 +2466,7 @@ tei_gloss =
     tei_att.cReferencing.attributes,
     tei_att.cmc.attributes,
     tei_att.declaring.attributes,
+    tei_att.placement.attributes,
     tei_att.pointing.attributes,
     tei_att.typed.attributes,
     empty
@@ -2524,7 +2528,7 @@ tei_rt =
            "               "
            sch:report [
              test = "../@from | ../@to"
-             "When target= is present, neither from= nor to= should be."
+             "When @target is present, neither @from nor @to should be."
            ]
            "\x{a}" ~
            "            "
@@ -2547,9 +2551,9 @@ tei_rt =
            "               "
            sch:assert [
              test = "../@to"
-             "When from= is present, the to= attribute of "
+             "When @from is present, the @to attribute of <"
              sch:name [ ]
-             " is required."
+             "> is required."
            ]
            "\x{a}" ~
            "            "
@@ -2572,9 +2576,9 @@ tei_rt =
            "               "
            sch:assert [
              test = "../@from"
-             "When to= is present, the from= attribute of "
+             "When @to is present, the @from attribute of <"
              sch:name [ ]
-             " is required."
+             "> is required."
            ]
            "\x{a}" ~
            "            "
@@ -3000,9 +3004,9 @@ tei_ptr =
            "               "
            sch:report [
              test = "@target and @cRef"
-             "Only one of the attributes @target and @cRef may be supplied on "
+             "Only one of the attributes @target and @cRef may be supplied on <"
              sch:name [ ]
-             "."
+             ">."
            ]
            "\x{a}" ~
            "            "
@@ -3034,9 +3038,9 @@ tei_ref =
            "               "
            sch:report [
              test = "@target and @cRef"
-             "Only one of the attributes @target and @cRef may be supplied on "
+             "Only one of the attributes @target and @cRef may be supplied on <"
              sch:name [ ]
-             "."
+             ">."
            ]
            "\x{a}" ~
            "            "
@@ -3073,7 +3077,11 @@ tei_list =
            "               "
            sch:assert [
              test = "tei:label"
-             'The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element'
+             "\x{a}" ~
+             '          The content of a "gloss" list should include a sequence of\x{a}' ~
+             "          one or more pairs of a <label> element followed by an\x{a}" ~
+             "          <item> element.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -3613,13 +3621,13 @@ tei_relatedItem =
              test = "@target and count( child::* ) > 0"
              "If the @target attribute on "
              sch:name [ ]
-             " is used, the relatedItem element must be empty"
+             " is used, the relatedItem element must be empty."
            ]
            "\x{a}" ~
            "               "
            sch:assert [
              test = "@target or child::*"
-             "A relatedItem element should have either a @target attribute or a child element to indicate the related bibliographic item"
+             "A relatedItem element should have either a @target attribute or a child element to indicate the related bibliographic item."
            ]
            "\x{a}" ~
            "            "
@@ -3656,7 +3664,7 @@ tei_l =
            sch:report [
              test =
                "ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]"
-             "Abstract model violation: Lines may not contain lines or lg elements."
+             "Abstract model violation: Metrical lines (<l> elements) may not contain <l> or <lg> elements."
            ]
            "\x{a}" ~
            "            "
@@ -3697,7 +3705,7 @@ tei_lg =
            sch:assert [
              test =
                "count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) > 0"
-             "An lg element must contain at least one child l, lg, or gap element."
+             "An <lg> element must contain at least one child <l>, <lg>, or <gap> element."
            ]
            "\x{a}" ~
            "            "
@@ -4261,9 +4269,9 @@ tei_quotation =
            sch:report [
              test = "not( @marks )  and  not( tei:p )"
              "\x{a}" ~
-             "          On "
+             "          On <"
              sch:name [ ]
-             ", either the @marks attribute should be used, or a paragraph of description provided\x{a}" ~
+             ">, either the @marks attribute should be used, or a paragraph of description provided.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -4515,9 +4523,9 @@ tei_citeStructure =
            "               "
            sch:assert [
              test = "starts-with(@match,'/')"
-             "An XPath in @match on the outer "
+             "An XPath in @match on the outer <"
              sch:name [ ]
-             " must start with '/'."
+             "> must start with '/'."
            ]
            "\x{a}" ~
            "            "
@@ -4536,9 +4544,9 @@ tei_citeStructure =
            "               "
            sch:assert [
              test = "not(starts-with(@match,'/'))"
-             "An XPath in @match must not start with '/' except on the outer "
+             "An XPath in @match must not start with '/' except on the outer <"
              sch:name [ ]
-             "."
+             ">."
            ]
            "\x{a}" ~
            "            "
@@ -5128,7 +5136,7 @@ tei_div =
            sch:assert [
              test = "ancestor::tei:floatingText"
              "\x{a}" ~
-             "          Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "          Abstract model violation: Metrical lines (<l> elements) may not contain higher-level structural elements such as <div>, unless <div> is a descendant of <floatingText>.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -5150,7 +5158,7 @@ tei_div =
              test =
                "(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)"
              "\x{a}" ~
-             "          Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.\x{a}" ~
+             "          Abstract model violation: <p> and <ab> may not contain higher-level structural elements such as <div>, unless <div> is a descendant of <floatingText>.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -5634,10 +5642,9 @@ tei_link =
            "               "
            sch:assert [
              test = "contains(normalize-space(@target),' ')"
-             "You must supply at least two values for @target or  on "
+             "You must supply at least two values for @target on <"
              sch:name [ ]
-             "\x{a}" ~
-             "               "
+             ">."
            ]
            "\x{a}" ~
            "            "
@@ -5679,7 +5686,7 @@ tei_ab =
              test =
                "ancestor::tei:floatingText | parent::tei:figure | parent::tei:note"
              "\x{a}" ~
-             "          Abstract model violation: Metrical lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.\x{a}" ~
+             "          Abstract model violation: Metrical lines (<l> elements) may not contain higher-level divisions such as <p> or <ab>, unless <ab> is a child of <figure> or <note>, or is a descendant of <floatingText>.\x{a}" ~
              "        "
            ]
            "\x{a}" ~
@@ -5861,10 +5868,10 @@ tei_join =
            sch:assert [
              test = "contains( normalize-space( @target ),' ')"
              "\x{a}" ~
-             "          You must supply at least two values for @target on "
+             "          You must supply at least two values for @target on <"
              sch:name [ ]
-             "\x{a}" ~
-             "               "
+             ">.\x{a}" ~
+             "        "
            ]
            "\x{a}" ~
            "            "
@@ -6002,7 +6009,7 @@ tei_altGrp =
   }
 tei_standOff =
   
-  ## Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [17.10. The standOff Container]
+  ## functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [17.10. The standOff Container]
   element standOff {
     tei_model.standOffPart+,
     tei_att.global.attributes,

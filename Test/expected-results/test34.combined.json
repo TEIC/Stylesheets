@@ -5696,6 +5696,7 @@
             "att.cReferencing",
             "att.cmc",
             "att.declaring",
+            "att.placement",
             "att.pointing",
             "att.typed" ],
           "unknown" : 
@@ -8792,14 +8793,15 @@
           "atts" : 
           [ "att.global",
             "att.ascribed.directed",
-            "att.cmc" ],
+            "att.cmc",
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
         [ 
           { "onElement" : true,
             "ident" : "type",
-            "mode" : "add",
+            "mode" : "replace",
             "ns" : "",
             "usage" : "opt",
             "desc" : 
@@ -10403,8 +10405,8 @@
         "type" : "elementSpec",
         "module" : "linking",
         "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-10-31\">Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document.<\/desc>" ],
-        "shortDesc" : "Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document.",
+        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" xml:lang=\"en\" versionDate=\"2018-10-31\">functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document.<\/desc>" ],
+        "shortDesc" : "functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document.",
         "gloss" : 
         [  ],
         "altIdent" : 
@@ -13742,8 +13744,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the\n        date represented by the content of this element belongs.<\/desc>" ],
-              "shortDesc" : "indicates one or more systems or calendars to which the\n        date represented by the content of this element belongs.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2021-04-26\" xml:lang=\"en\">indicates one or more systems or calendars to which the date represented by the content of this element belongs.<\/desc>" ],
+              "shortDesc" : "indicates one or more systems or calendars to which the date represented by the content of this element belongs.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -14123,8 +14125,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-22\" xml:lang=\"en\">provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n    <ref target=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/ref>.<\/desc>" ],
-          "shortDesc" : "provides attributes for normalization of elements that contain\n  datable events  conforming to the W3C\n    XML Schema Part 2: Datatypes Second Edition.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2013-11-22\" xml:lang=\"en\">provides attributes for normalization of elements that contain datable events  conforming to the W3C <ref target=\"#XSD2\">XML Schema Part 2: Datatypes Second Edition<\/ref>.<\/desc>" ],
+          "shortDesc" : "provides attributes for normalization of elements that contain datable events  conforming to the W3C XML Schema Part 2: Datatypes Second Edition.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -14137,8 +14139,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-07-23\" xml:lang=\"en\">supplies the value of the date or time in a standard form,\n        e.g. yyyy-mm-dd.<\/desc>" ],
-              "shortDesc" : "supplies the value of the date or time in a standard form,\n        e.g. yyyy-mm-dd.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-07-23\" xml:lang=\"en\">supplies the value of the date or time in a standard form, e.g. yyyy-mm-dd.<\/desc>" ],
+              "shortDesc" : "supplies the value of the date or time in a standard form, e.g. yyyy-mm-dd.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -14157,8 +14159,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-04-09\" xml:lang=\"en\">specifies the earliest possible date for the event in\n        standard form, e.g. yyyy-mm-dd.<\/desc>" ],
-              "shortDesc" : "specifies the earliest possible date for the event in\n        standard form, e.g. yyyy-mm-dd.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-04-09\" xml:lang=\"en\">specifies the earliest possible date for the event in standard form, e.g. yyyy-mm-dd.<\/desc>" ],
+              "shortDesc" : "specifies the earliest possible date for the event in standard form, e.g. yyyy-mm-dd.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -14177,8 +14179,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-04-09\" xml:lang=\"en\">specifies the latest possible date for the event in\n        standard form, e.g. yyyy-mm-dd.<\/desc>" ],
-              "shortDesc" : "specifies the latest possible date for the event in\n        standard form, e.g. yyyy-mm-dd.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-04-09\" xml:lang=\"en\">specifies the latest possible date for the event in standard form, e.g. yyyy-mm-dd.<\/desc>" ],
+              "shortDesc" : "specifies the latest possible date for the event in standard form, e.g. yyyy-mm-dd.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -14217,8 +14219,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-02-10\" xml:lang=\"en\">indicates the ending point of the period in standard\n        form, e.g. yyyy-mm-dd.<\/desc>" ],
-              "shortDesc" : "indicates the ending point of the period in standard\n        form, e.g. yyyy-mm-dd.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-02-10\" xml:lang=\"en\">indicates the ending point of the period in standard form, e.g. yyyy-mm-dd.<\/desc>" ],
+              "shortDesc" : "indicates the ending point of the period in standard form, e.g. yyyy-mm-dd.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -14505,8 +14507,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-09-10\" xml:lang=\"en\">indicates the size of the object concerned using a project-specific vocabulary combining\n        quantity and units in a single string of words.<\/desc>" ],
-              "shortDesc" : "indicates the size of the object concerned using a project-specific vocabulary combining\n        quantity and units in a single string of words.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-09-10\" xml:lang=\"en\">indicates the size of the object concerned using a project-specific vocabulary combining quantity and units in a single string of words.<\/desc>" ],
+              "shortDesc" : "indicates the size of the object concerned using a project-specific vocabulary combining quantity and units in a single string of words.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -14545,8 +14547,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-09-10\" xml:lang=\"en\">where the measurement summarizes more than one observation, specifies the applicability\n        of this measurement.<\/desc>" ],
-              "shortDesc" : "where the measurement summarizes more than one observation, specifies the applicability\n        of this measurement.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2008-09-10\" xml:lang=\"en\">where the measurement summarizes more than one observation, specifies the applicability of this measurement.<\/desc>" ],
+              "shortDesc" : "where the measurement summarizes more than one observation, specifies the applicability of this measurement.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -15532,9 +15534,9 @@
               "usage" : "opt",
               "desc" : 
               [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-09-22\" xml:lang=\"en\">points to a description of the rendering or presentation used for this element in the source text.<\/desc>" ],
-              "shortDesc" : "points to a description of the rendering or presentation used for this element in the source text.",
+              "shortDesc" : "(rendition reference) points to a description of the rendering or presentation used for this element in the source text.",
               "gloss" : 
-              [  ],
+              [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2025-09-15\" xml:lang=\"en\">rendition reference<\/gloss>" ],
               "altIdent" : 
               [  ],
               "valDesc" : 
@@ -16763,8 +16765,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-10-10\" xml:lang=\"en\">specifies the intended meaning when the target of a\n      pointer is itself a pointer.<\/desc>" ],
-              "shortDesc" : "(evaluate) specifies the intended meaning when the target of a\n      pointer is itself a pointer.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-10-10\" xml:lang=\"en\">specifies the intended meaning when the target of a pointer is itself a pointer.<\/desc>" ],
+              "shortDesc" : "(evaluate) specifies the intended meaning when the target of a pointer is itself a pointer.",
               "gloss" : 
               [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2009-05-28\" xml:lang=\"en\">evaluate<\/gloss>" ],
               "altIdent" : 
@@ -16782,8 +16784,8 @@
                 [ 
                   { "ident" : "all",
                     "desc" : 
-                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-06-27\" xml:lang=\"en\">if the element pointed to is itself a pointer, then\n\t  the target of that pointer will be taken, and so on, until\n\t  an element is found which is not a pointer.<\/desc>" ],
-                    "shortDesc" : "if the element pointed to is itself a pointer, then\n\t  the target of that pointer will be taken, and so on, until\n\t  an element is found which is not a pointer.",
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-06-27\" xml:lang=\"en\">if the element pointed to is itself a pointer, then the target of that pointer will be taken, and so on, until an element is found which is not a pointer.<\/desc>" ],
+                    "shortDesc" : "if the element pointed to is itself a pointer, then the target of that pointer will be taken, and so on, until an element is found which is not a pointer.",
                     "gloss" : 
                     [  ],
                     "altIdent" : 
@@ -16791,8 +16793,8 @@
                   
                   { "ident" : "one",
                     "desc" : 
-                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-06-27\" xml:lang=\"en\">if the element pointed to is itself a pointer, then\n\t  its target (whether a pointer or not) is taken as the target\n\t  of this pointer.<\/desc>" ],
-                    "shortDesc" : "if the element pointed to is itself a pointer, then\n\t  its target (whether a pointer or not) is taken as the target\n\t  of this pointer.",
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-06-27\" xml:lang=\"en\">if the element pointed to is itself a pointer, then its target (whether a pointer or not) is taken as the target of this pointer.<\/desc>" ],
+                    "shortDesc" : "if the element pointed to is itself a pointer, then its target (whether a pointer or not) is taken as the target of this pointer.",
                     "gloss" : 
                     [  ],
                     "altIdent" : 
@@ -16800,8 +16802,8 @@
                   
                   { "ident" : "none",
                     "desc" : 
-                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-06-27\" xml:lang=\"en\">no further evaluation of targets is carried out\n\t  beyond that needed to find the element specified in the\n\t  pointer's target.<\/desc>" ],
-                    "shortDesc" : "no further evaluation of targets is carried out\n\t  beyond that needed to find the element specified in the\n\t  pointer's target.",
+                    [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-06-27\" xml:lang=\"en\">no further evaluation of targets is carried out beyond that needed to find the element specified in the pointer's target.<\/desc>" ],
+                    "shortDesc" : "no further evaluation of targets is carried out beyond that needed to find the element specified in the pointer's target.",
                     "gloss" : 
                     [  ],
                     "altIdent" : 
@@ -17189,8 +17191,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2015-02-15\" xml:lang=\"en\">provides attributes to specify the name of a formal definition\n  language used to provide formatting or rendition information.<\/desc>" ],
-          "shortDesc" : "provides attributes to specify the name of a formal definition\n  language used to provide formatting or rendition information.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2015-02-15\" xml:lang=\"en\">provides attributes to specify the name of a formal definition language used to provide formatting or rendition information.<\/desc>" ],
+          "shortDesc" : "provides attributes to specify the name of a formal definition language used to provide formatting or rendition information.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -17512,8 +17514,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-10-10\" xml:lang=\"en\">characterizes the element in some sense, using any convenient\n classification scheme or typology.<\/desc>" ],
-              "shortDesc" : "characterizes the element in some sense, using any convenient\n classification scheme or typology.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-10-10\" xml:lang=\"en\">characterizes the element in some sense, using any convenient classification scheme or typology.<\/desc>" ],
+              "shortDesc" : "characterizes the element in some sense, using any convenient classification scheme or typology.",
               "gloss" : 
               [  ],
               "altIdent" : 

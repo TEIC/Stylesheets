@@ -1486,6 +1486,7 @@ encoding CDATA  #IMPLIED >
  %Tatt.datable.attributes;
  %Tatt.dimensions.attributes;
  %Tatt.editLike.attributes;
+ %Tatt.locatable.attributes;
  %Tatt.naming.attributes;
  %Tatt.typed.attribute.subtype;
 type %teidata.enumerated;  #IMPLIED >
@@ -1742,6 +1743,7 @@ type %teidata.enumerated;  #IMPLIED >
  %Tatt.datable.attributes;
  %Tatt.dimensions.attributes;
  %Tatt.editLike.attributes;
+ %Tatt.locatable.attributes;
  %Tatt.naming.attributes;
  %Tatt.typed.attribute.subtype;
 type %teidata.enumerated;  #IMPLIED >
@@ -2125,6 +2127,7 @@ datum %teidata.enumerated;  "WGS84"  >
  %Tatt.cReferencing.attributes;
  %Tatt.cmc.attributes;
  %Tatt.declaring.attributes;
+ %Tatt.placement.attributes;
  %Tatt.pointing.attributes;
  %Tatt.typed.attributes; >
 <!--doc:(graphic) indicates the location of a graphic or illustration, either forming part of a text, or providing an image of it. [3.10. Graphics and Other Non-textual Components 12.1. Digital Facsimiles] -->
@@ -2709,6 +2712,7 @@ code %teidata.pointer;  #IMPLIED >
 <!ATTLIST org xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST org
  %Tatt.global.attributes;
+ %Tatt.datable.attributes;
  %Tatt.editLike.attributes;
  %Tatt.sortable.attributes;
  %Tatt.typed.attributes;
@@ -2784,6 +2788,7 @@ value NMTOKENS  #IMPLIED >
 <!ATTLIST person xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST person
  %Tatt.global.attributes;
+ %Tatt.datable.attributes;
  %Tatt.editLike.attributes;
  %Tatt.sortable.attributes;
 role NMTOKENS  #IMPLIED
@@ -2796,7 +2801,7 @@ age %teidata.enumerated;  #IMPLIED >
 <!ATTLIST personGrp
  %Tatt.global.attributes;
  %Tatt.sortable.attributes;
-role %teidata.enumerated;  #IMPLIED
+role NMTOKENS  #IMPLIED
 sex CDATA  #IMPLIED
 gender CDATA  #IMPLIED
 age %teidata.enumerated;  #IMPLIED
@@ -2817,6 +2822,7 @@ age %teidata.enumerated;  #IMPLIED >
 <!ATTLIST place xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST place
  %Tatt.global.attributes;
+ %Tatt.datable.attributes;
  %Tatt.editLike.attributes;
  %Tatt.sortable.attributes;
  %Tatt.typed.attributes; >
@@ -2932,6 +2938,7 @@ placement (internal|external) #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.ascribed.directed.attributes;
  %Tatt.cmc.attributes;
+ %Tatt.typed.attribute.subtype;
 type %teidata.enumerated;  #IMPLIED >
 <!--doc:(quotation) specifies editorial practice adopted with respect to quotation marks in the original. [2.3.3. The Editorial Practices Declaration 16.3.2. Declarable Elements] -->
 <!ELEMENT quotation (%model.pLike;)*>
@@ -3156,7 +3163,7 @@ key %teidata.xmlName;  #IMPLIED >
 <!ATTLIST scriptNote
  %Tatt.global.attributes;
  %Tatt.handFeatures.attributes; >
-<!--doc:(secluded text) Secluded. Marks text present in the source which the editor believes to be genuine but out of its original place (which is unknown). [12.3.1.7. Text Omitted from or Supplied in the Transcription] -->
+<!--doc:(secluded text) marks text present in the source which the editor believes to be genuine but out of its original place (which is unknown). [12.3.1.7. Text Omitted from or Supplied in the Transcription] -->
 <!ELEMENT secl %macro.paraContent;>
 <!ATTLIST secl xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST secl
@@ -3319,7 +3326,7 @@ dim (horizontal|vertical) #IMPLIED >
  %Tatt.placement.attributes;
  %Tatt.written.attributes;
 type NMTOKENS  #IMPLIED >
-<!--doc:Functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [17.10. The standOff Container] -->
+<!--doc:functions as a container element for linked data, contextual information, and stand-off annotations embedded in a TEI document. [17.10. The standOff Container] -->
 <!ELEMENT standOff (%model.standOffPart;)+>
 <!ATTLIST standOff xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST standOff
@@ -3378,7 +3385,7 @@ type NMTOKENS  #IMPLIED >
  %Tatt.dimensions.attributes;
  %Tatt.editLike.attributes;
 reason NMTOKENS  #IMPLIED >
-<!--doc:defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and, when using an embedded transcription approach, transcriptions of the writing within them. [12.1. Digital Facsimiles 12.2.2. Embedded Transcription] -->
+<!--doc:defines a written surface as a two-dimensional or three-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and, when using an embedded transcription approach, transcriptions of the writing within them. [12.1. Digital Facsimiles 12.2.2. Embedded Transcription] -->
 <!ELEMENT surface (((%model.global;|%model.labelLike;|%model.graphicLike;)*,((zone|line|path|surface|surfaceGrp),(%model.global;)*)*))>
 <!ATTLIST surface xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST surface
@@ -3629,7 +3636,7 @@ since %teidata.pointer;  #IMPLIED >
  %Tatt.global.attributes;
  %Tatt.declarable.attributes;
  %Tatt.typed.attributes; >
-<!--doc:defines any two-dimensional area within a surface element. [12.1. Digital Facsimiles 12.2.2. Embedded Transcription] -->
+<!--doc:defines any two-dimensional or three-dimensional area within a surface element. [12.1. Digital Facsimiles 12.2.2. Embedded Transcription] -->
 <!ELEMENT zone (#PCDATA|_DUMMY_model.gLike|%model.graphicLike;|%model.global;|surface|%model.linePart;)*>
 <!ATTLIST zone xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST zone
