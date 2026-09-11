@@ -105,13 +105,13 @@ ImageDescriptionCamera directionSVG, JPEG, GIF or PNG formatAll pictures were ta
 # Lists
 
 Various sorts of list are legal within paragraphs, and you can reference [items in lists](#birds)... 
-1.Dogs
+1. Dogs
 
-1.Zebras
+1. Zebras
 
-1.Birds
+1. Birds
 
-1.Cats
+1. Cats
 
 100
 * first item 
