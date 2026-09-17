@@ -258,16 +258,25 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template match="tei:editor|tei:author">
      <xsl:choose>
        <xsl:when test="ancestor::tei:bibl">
-	 <xsl:apply-templates select="if (tei:surname) then * else node()"/>
+	 <xsl:apply-templates select="node()"/>
        </xsl:when>
        <xsl:when test="self::tei:author and not(following-sibling::tei:author)">
-	 <xsl:apply-templates select="if (tei:surname) then * else node()"/>
+	 <xsl:apply-templates select="node()"/>
 	 <xsl:call-template name="makeText">
-	   <xsl:with-param name="letters">. </xsl:with-param>
+          <xsl:with-param name="letters">
+            <xsl:choose>
+              <xsl:when test="not(ends-with(., '.')) and (if (child::*) then *[last()][not(ends-with(., '.'))] else true())">
+                <xsl:text>. </xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text> </xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:with-param>
 	 </xsl:call-template>
        </xsl:when>
        <xsl:when test="self::tei:editor and not(following-sibling::tei:editor)">
-	 <xsl:apply-templates select="if (tei:surname) then * else node()"/>
+	 <xsl:apply-templates select="node()"/>
 	 <xsl:call-template name="makeText">
 	   <xsl:with-param name="letters">
 	   <xsl:value-of select="if (preceding-sibling::tei:editor) then
@@ -276,7 +285,7 @@ of this software, even if advised of the possibility of such damage.
 	 </xsl:call-template>
        </xsl:when>
        <xsl:otherwise>
-	 <xsl:apply-templates select="if (tei:surname) then * else node()"/>
+	 <xsl:apply-templates select="node()"/>
 	 <xsl:call-template name="makeText">
 	   <xsl:with-param name="letters">, </xsl:with-param>
 	 </xsl:call-template>
@@ -318,9 +327,14 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:choose>
 	   <xsl:when test="ancestor::tei:biblStruct and not(preceding-sibling::tei:author)">
 	     <xsl:apply-templates/>
-	     <xsl:if test="not(ends-with(.,'.'))">
-	       <xsl:text>. </xsl:text>
-	     </xsl:if>
+	     <xsl:choose>
+	       <xsl:when test="not(ends-with(., '.')) and (if (child::*) then *[last()][not(ends-with(., '.'))] else true())">
+	         <xsl:text>. </xsl:text>
+	       </xsl:when>
+	       <xsl:otherwise>
+	         <xsl:text> </xsl:text>
+	       </xsl:otherwise>
+	     </xsl:choose>
 	   </xsl:when>
 	   <xsl:otherwise>
 	     <xsl:if test="not(self::tei:author[3])">
@@ -336,9 +350,14 @@ of this software, even if advised of the possibility of such damage.
 		 <xsl:apply-templates/>
 	       </xsl:otherwise>
 	     </xsl:choose>
-	     <xsl:if test="not(ends-with(.,'.'))">
-	       <xsl:text>. </xsl:text>
-	     </xsl:if>
+	     <xsl:choose>
+	       <xsl:when test="not(ends-with(., '.')) and (if (child::*) then *[last()][not(ends-with(., '.'))] else true())">
+	         <xsl:text>. </xsl:text>
+	       </xsl:when>
+	       <xsl:otherwise>
+	         <xsl:text> </xsl:text>
+	       </xsl:otherwise>
+	     </xsl:choose>
 	   </xsl:otherwise>
 	 </xsl:choose>
 	 <xsl:text> </xsl:text>
@@ -1238,31 +1257,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="lineBreakAsPara">
     <xsl:text> </xsl:text>
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process forename</desc>
-   </doc>
-  <xsl:template match="tei:forename">
-    <xsl:choose>
-      <xsl:when test="parent::*/tei:surname"/>
-      <xsl:otherwise>
-	<xsl:apply-templates/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process surname</desc>
-   </doc>
-  <xsl:template match="tei:surname">
-    <xsl:if test="parent::*/tei:forename">
-      <xsl:for-each select="parent::*/tei:forename">
-	<xsl:apply-templates/>
-	<xsl:text> </xsl:text>
-      </xsl:for-each>
-    </xsl:if>
-    <xsl:apply-templates/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
