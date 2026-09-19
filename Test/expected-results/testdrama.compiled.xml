@@ -1553,6 +1553,31 @@ associated with a dated element, at the time indicated.</desc>
       <remarks ident="att.fragmentable-attr.part-remarks" versionDate="2019-06-08" xml:lang="ja"><p><val>I</val>、<val>M</val>、または<val>F</val>という値は、要素の再構成方法が明らかな場合にのみ使用する。</p></remarks>
     </attDef>
   </attList>
+</classSpec><classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" ident="att.global.editorialStatus" predeclare="true" module="tei" type="atts">
+  <desc versionDate="2026-08-17" xml:lang="en">provides attributes to indicate the editorial status of the encoding of elements. They may be used to track encoding workflows and their stages.</desc>
+  <attList>
+    <attDef ident="edStatus">
+      <gloss versionDate="2026-08-16" xml:lang="en">editorial status</gloss>
+      <desc versionDate="2026-08-16" xml:lang="en">documents the editorial status of the element bearing this attribute.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.enumerated"/></datatype>
+      <valList type="open">
+        <valItem ident="draft"/>
+        <valItem ident="candidate"/>
+        <valItem ident="expired"/>
+        <valItem ident="frozen"/>
+        <valItem ident="proposed"/>
+        <valItem ident="proofed"/>
+        <valItem ident="submitted"/>
+        <valItem ident="unfinished"/>
+        <valItem ident="unpublished"/>
+        <valItem ident="published"/>
+        <valItem ident="cross-checked"/>
+        <valItem ident="approved"/>
+        <valItem ident="cleared"/>
+        <valItem ident="deprecated"/>
+      </valList>
+    </attDef>
+  </attList>
 </classSpec><classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" predeclare="true" module="tei" type="atts" xml:id="class-attr-global.rendition" ident="att.global.rendition">
   <desc versionDate="2014-12-02" xml:lang="en">provides rendering attributes common to all elements in the TEI encoding scheme.</desc>
   <desc versionDate="2019-07-21" xml:lang="ja">TEIの符号化スキーマにおけるすべての要素に共通するレンダリング属性を提供する。</desc>
@@ -1813,7 +1838,7 @@ associated with a dated element, at the time indicated.</desc>
   </exemplum>
   
   <listRef>
-    <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STGAso">1.3.1.1.4. Sources, certainty, and responsibility</ref>
+    <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STGAso">1.3.1.1.4. Sources, certainty, responsibility, and editorial status</ref>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COED">3.5. Simple Editorial Changes</ref>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHHR">12.3.2.2. Hand, Responsibility, and Certainty Attributes</ref>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/AI.html#AISP">18.3. Spans and Interpretations</ref>
@@ -1916,7 +1941,7 @@ associated with a dated element, at the time indicated.</desc>
     <p>Create a schema using components taken from the file <ident>mycompiledODD.xml</ident>.</p>
   </exemplum>
   <listRef>
-    <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STGAso">1.3.1.1.4. Sources, certainty, and responsibility</ref>
+    <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STGAso">1.3.1.1.4. Sources, certainty, responsibility, and editorial status</ref>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COHQQ">3.3.3. Quotation</ref>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/TS.html#TSBAWR">8.3.4. Writing</ref>
   </listRef>
@@ -3609,9 +3634,9 @@ l'échantillon inconnue</desc>
   <classes>
     
     
+    <memberOf key="att.global.editorialStatus"/>
     
-    <memberOf key="att.global.linking"/>
-    
+    <memberOf key="att.global.linking"/>    
     <memberOf key="att.global.rendition"/>
     <memberOf key="att.global.responsibility"/>
     <memberOf key="att.global.source"/>
@@ -4811,15 +4836,27 @@ Elements</ref>
   <desc versionDate="2007-12-20" xml:lang="ko">ODD 문서에서 마크업 언어로 선언을 생성하는 요소를 모아 놓는다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集的元素使ODD文件內某些標記語言中產生宣告。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">ODD文書で使用される要素の宣言を生成する要素をまとめる。</desc>
-  <desc versionDate="2009-05-27" xml:lang="fr">regroupe les éléments qui, dans des documents ODD,
-    génèrent des déclarations dans un langage d'encodage.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos que generan declaraciones en un lenguaje
-    de codificación dado en documentos aislados</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che generano dichiarazioni in un dato
-    linguaggio di codifica in documenti isolati</desc>
+  <desc versionDate="2009-05-27" xml:lang="fr">regroupe les éléments qui, dans des documents ODD, génèrent des déclarations dans un langage d'encodage.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos que generan declaraciones en un lenguaje de codificación dado en documentos aislados</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che generano dichiarazioni in un dato linguaggio di codifica in documenti isolati</desc>
   <classes>
     <memberOf key="model.inter"/>
   </classes>
+  <constraintSpec scheme="schematron" ident="avoid_oddDecls_in_silly_places" xml:lang="en">
+    
+    
+    <constraint>
+      <sch:pattern id="oddDecls_in_specGrp_or_schemaSpec" abstract="true">
+        <sch:rule context="$toe">
+          <sch:assert test="ancestor::tei:specGrp | ancestor::tei:schemaSpec | ancestor::tei:egXML">
+            DEPRECATION WARNING: Sometime after 2028-03-09 the &lt;<sch:value-of select="name(.)"/>&gt;
+            element will no longer be allowed as a child of &lt;<sch:value-of select="name(..)"/>&gt;;
+            it will need to be a descendant of either a &lt;specGrp&gt; or a &lt;schemaSpec&gt;.
+          </sch:assert>
+        </sch:rule>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
 </classSpec><classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" module="tei" type="model" ident="model.phrase.xml">
   <desc versionDate="2007-10-03" xml:lang="en">groups phrase-level elements used to encode XML constructs such as element names, attribute
     names, and attribute values.</desc>
@@ -10546,6 +10583,7 @@ concerned, as further discussed in section <ref target="https://www.tei-c.org/re
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.cmc"/>
+    <memberOf key="att.datable"/>
     <memberOf key="att.naming"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.nameLike"/>
@@ -10558,6 +10596,16 @@ concerned, as further discussed in section <ref target="https://www.tei-c.org/re
             to him one day, <q>have you heard that <rs type="place">Netherfield Park</rs> is let at
                 last?</q>
       </egXML>
+  </exemplum>
+  <exemplum xml:lang="en" versionDate="2026-08-16">
+    <p>The following example is a transcript of a fictional
+      <soCalled>question</soCalled> in a Jeopardy-like game.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-rs-egXML-en">
+      <ab type="answer">It has been known as <rs from="1931-04-11" to="1973-04-04">the tallest building in the world</rs> and the
+        <rs from="1973-04-04" to="1973-09-09">third tallest building in
+          the world</rs>, but never the 2nd tallest building in the world.</ab>
+      <ab type="question">What is the <name>Empire State Building</name>?</ab>
+    </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-rs-egXML-zh" source="#fr-ex-Ollagnier_Main">
@@ -10572,6 +10620,11 @@ concerned, as further discussed in section <ref target="https://www.tei-c.org/re
     </q>一天，<rs type="person">班納特太太</rs> 對她的丈夫說：<q>你聽說過<rs type="place">尼日斐花園</rs> 終於租出去了嗎?</q>
       </egXML>
   </exemplum>
+  <remarks ident="rs-remarks" versionDate="2026-08-16" xml:lang="en">
+    <p>A dating attribute on a referring string is used to assert when the encoded
+      word or phrase was used to refer to the entity in question, rather than when
+      the entity existed.</p>
+  </remarks>
   <listRef>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPER">14.2.1. Personal Names</ref>
     <ref target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#CONARS">3.6.1. Referring Strings</ref>
@@ -21565,10 +21618,10 @@ codes used elsewhere in the text.</desc>
           <category xml:id="feetNumber">
             <catDesc>Number of feet</catDesc>
             <category xml:id="pentameter">
-              <catDesc>&gt;Pentameter</catDesc>
+              <catDesc>Pentameter</catDesc>
             </category>
             <category xml:id="tetrameter">
-              <catDesc>&gt;Tetrameter</catDesc>
+              <catDesc>Tetrameter</catDesc>
             </category>
           </category>
         </category>

@@ -222,6 +222,7 @@
                     <a class="link_odd_elementSpec" itemprop="ref" href="#TEI.pb" title="pb (inicio de página) marca el inicio de una nueva página de un texto en un documento paginado. [3.11.3. Milestone Elements]">pb</a>
                     <a class="link_odd_elementSpec" itemprop="ref" href="#TEI.persName" title="persName (nombre propio de persona) contiene un nombre propio o un sintagma identificable como un nombre propio que se refiere ...">persName</a>
                     <a class="link_odd_elementSpec" itemprop="ref" href="#TEI.persPronouns" title="persPronouns (personal pronouns) indicates the personal pronouns used or assumed to be used by the individual being described. ...">persPronouns</a>
+                    <a class="link_odd_elementSpec" itemprop="ref" href="#TEI.person" title="person (person) proporciona información relativa a un individuo específico p.ej. un participante de una interacción verbal o un...">person</a>
                     <a class="link_odd_elementSpec" itemprop="ref" href="#TEI.place" title="place (place) contiene los datos sobre una localización geográfica [14.3.4. Places]">place</a>
                     <a class="link_odd_elementSpec" itemprop="ref" href="#TEI.placeName" title="placeName (place name) contiene la indicación absoluta o relativa de un nombre de lugar. [14.2.3. Place Names]">placeName</a>
                     <a class="link_odd_elementSpec" itemprop="ref" href="#TEI.population" title="population (population) contiene la información sobre la población de un lugar. [14.3.4.3. States Traits and Events]">population</a>
@@ -422,6 +423,14 @@
                       </ul>
                       <ul class="classSpecMemberOfs" itemprop="list">
                         <li class="classSpecItem" itemprop="item">
+                          <a class="link_ref" itemprop="ref" href="#TEI.att.global.editorialStatus" title="att.global.editorialStatus provides attributes to indicate the editorial status of the encoding of elements. They may be used t...">att.global.editorialStatus</a>
+                          <ul class="classSpecAttDefs" itemprop="list">
+                            <li class="item" itemprop="item">
+                              <span class="attribute" itemprop="hi">@edStatus</span>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="classSpecItem" itemprop="item">
                           <a class="link_ref" itemprop="ref" href="#TEI.att.global.linking" title="att.global.linking define un conjunto de atributos para hipertexto u otro vínculo habilitado para todos los elementos cuando se...">att.global.linking</a>
                           <ul class="classSpecAttDefs" itemprop="list">
                             <li class="item" itemprop="item">
@@ -476,7 +485,7 @@
                           </ul>
                         </li>
                         <li class="classSpecItem" itemprop="item">
-                          <a class="link_ref" itemprop="ref" href="#TEI.att.global.source" title="att.global.source provides attributes used by elements to point to an external source. [1.3.1.1.4. Sources certainty and respon...">att.global.source</a>
+                          <a class="link_ref" itemprop="ref" href="#TEI.att.global.source" title="att.global.source provides attributes used by elements to point to an external source. [1.3.1.1.4. Sources certainty responsibi...">att.global.source</a>
                           <ul class="classSpecAttDefs" itemprop="list">
                             <li class="item" itemprop="item">
                               <span class="attribute" itemprop="hi">@source</span>
@@ -783,7 +792,7 @@
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Content model</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre id="index.xml-eg-d33e1352" class="pre_eg cdata">
+                  <pre id="index.xml-eg-d33e1363" class="pre_eg cdata">
 &lt;content&gt;
  &lt;sequence minOccurs="1" maxOccurs="1"&gt;
   &lt;alternate minOccurs="0"
@@ -835,7 +844,7 @@
  &lt;/sequence&gt;
 &lt;/content&gt;
     
-<a href="#index.xml-eg-d33e1352" class="anchorlink">⚓</a>
+<a href="#index.xml-eg-d33e1363" class="anchorlink">⚓</a>
 </pre>
                 </td>
               </tr>
@@ -844,7 +853,7 @@
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Declaración</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre id="index.xml-eg-d33e1359" class="pre_eg">
+                  <pre id="index.xml-eg-d33e1370" class="pre_eg">
 element div
 {
    
@@ -888,7 +897,7 @@ element div
       )
    )
 }
-<a href="#index.xml-eg-d33e1359" class="anchorlink">⚓</a>
+<a href="#index.xml-eg-d33e1370" class="anchorlink">⚓</a>
 </pre>
                 </td>
               </tr>
@@ -942,6 +951,14 @@ element div
                         </li>
                       </ul>
                       <ul class="classSpecMemberOfs" itemprop="list">
+                        <li class="classSpecItem" itemprop="item">
+                          <a class="link_ref" itemprop="ref" href="#TEI.att.global.editorialStatus" title="att.global.editorialStatus provides attributes to indicate the editorial status of the encoding of elements. They may be used t...">att.global.editorialStatus</a>
+                          <ul class="classSpecAttDefs" itemprop="list">
+                            <li class="item" itemprop="item">
+                              <span class="attribute" itemprop="hi">@edStatus</span>
+                            </li>
+                          </ul>
+                        </li>
                         <li class="classSpecItem" itemprop="item">
                           <a class="link_ref" itemprop="ref" href="#TEI.att.global.linking" title="att.global.linking define un conjunto de atributos para hipertexto u otro vínculo habilitado para todos los elementos cuando se...">att.global.linking</a>
                           <ul class="classSpecAttDefs" itemprop="list">
@@ -997,7 +1014,7 @@ element div
                           </ul>
                         </li>
                         <li class="classSpecItem" itemprop="item">
-                          <a class="link_ref" itemprop="ref" href="#TEI.att.global.source" title="att.global.source provides attributes used by elements to point to an external source. [1.3.1.1.4. Sources certainty and respon...">att.global.source</a>
+                          <a class="link_ref" itemprop="ref" href="#TEI.att.global.source" title="att.global.source provides attributes used by elements to point to an external source. [1.3.1.1.4. Sources certainty responsibi...">att.global.source</a>
                           <ul class="classSpecAttDefs" itemprop="list">
                             <li class="item" itemprop="item">
                               <span class="attribute" itemprop="hi">@source</span>
@@ -1357,12 +1374,12 @@ element div
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Content model</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre id="index.xml-eg-d33e2399" class="pre_eg cdata">
+                  <pre id="index.xml-eg-d33e2417" class="pre_eg cdata">
 &lt;content&gt;
  &lt;macroRef key="macro.paraContent"/&gt;
 &lt;/content&gt;
     
-<a href="#index.xml-eg-d33e2399" class="anchorlink">⚓</a>
+<a href="#index.xml-eg-d33e2417" class="anchorlink">⚓</a>
 </pre>
                 </td>
               </tr>
@@ -1371,7 +1388,7 @@ element div
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Declaración</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre id="index.xml-eg-d33e2406" class="pre_eg">
+                  <pre id="index.xml-eg-d33e2424" class="pre_eg">
 element para
 {
    
@@ -1387,7 +1404,7 @@ element para
    
 <a class="link_ref" itemprop="ref" href="#TEI.macro.paraContent" title="macro.paraContent (contenido del párrafo) define el contenido de párrafos y elementos similares. [1.3. The TEI Class System]">macro.paraContent</a>
 }
-<a href="#index.xml-eg-d33e2406" class="anchorlink">⚓</a>
+<a href="#index.xml-eg-d33e2424" class="anchorlink">⚓</a>
 </pre>
                 </td>
               </tr>
@@ -1440,6 +1457,14 @@ element para
                         </li>
                       </ul>
                       <ul class="classSpecMemberOfs" itemprop="list">
+                        <li class="classSpecItem" itemprop="item">
+                          <a class="link_ref" itemprop="ref" href="#TEI.att.global.editorialStatus" title="att.global.editorialStatus provides attributes to indicate the editorial status of the encoding of elements. They may be used t...">att.global.editorialStatus</a>
+                          <ul class="classSpecAttDefs" itemprop="list">
+                            <li class="item" itemprop="item">
+                              <span class="attribute" itemprop="hi">@edStatus</span>
+                            </li>
+                          </ul>
+                        </li>
                         <li class="classSpecItem" itemprop="item">
                           <a class="link_ref" itemprop="ref" href="#TEI.att.global.linking" title="att.global.linking define un conjunto de atributos para hipertexto u otro vínculo habilitado para todos los elementos cuando se...">att.global.linking</a>
                           <ul class="classSpecAttDefs" itemprop="list">
@@ -1495,7 +1520,7 @@ element para
                           </ul>
                         </li>
                         <li class="classSpecItem" itemprop="item">
-                          <a class="link_ref" itemprop="ref" href="#TEI.att.global.source" title="att.global.source provides attributes used by elements to point to an external source. [1.3.1.1.4. Sources certainty and respon...">att.global.source</a>
+                          <a class="link_ref" itemprop="ref" href="#TEI.att.global.source" title="att.global.source provides attributes used by elements to point to an external source. [1.3.1.1.4. Sources certainty responsibi...">att.global.source</a>
                           <ul class="classSpecAttDefs" itemprop="list">
                             <li class="item" itemprop="item">
                               <span class="attribute" itemprop="hi">@source</span>
@@ -2013,12 +2038,12 @@ element para
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Content model</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre id="index.xml-eg-d33e3823" class="pre_eg cdata">
+                  <pre id="index.xml-eg-d33e3848" class="pre_eg cdata">
 &lt;content&gt;
  &lt;macroRef key="macro.specialPara"/&gt;
 &lt;/content&gt;
     
-<a href="#index.xml-eg-d33e3823" class="anchorlink">⚓</a>
+<a href="#index.xml-eg-d33e3848" class="anchorlink">⚓</a>
 </pre>
                 </td>
               </tr>
@@ -2027,7 +2052,7 @@ element para
                   <span xml:lang="es" lang="es" class="label" itemprop="hi">Declaración</span>
                 </td>
                 <td class="wovenodd-col2">
-                  <pre id="index.xml-eg-d33e3830" class="pre_eg">
+                  <pre id="index.xml-eg-d33e3855" class="pre_eg">
 element q
 {
    
@@ -2053,7 +2078,7 @@ element q
    
 <a class="link_ref" itemprop="ref" href="#TEI.macro.specialPara" title="macro.specialPara (contenido de párrafo especial) define el modelo de contenido de elementos tipo notas o entradas de lista que...">macro.specialPara</a>
 }
-<a href="#index.xml-eg-d33e3830" class="anchorlink">⚓</a>
+<a href="#index.xml-eg-d33e3855" class="anchorlink">⚓</a>
 </pre>
                 </td>
               </tr>
@@ -2447,6 +2472,13 @@ element q
               <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STGA">1.3.1.1. Global Attributes</a>]</td>
             </tr>
             <tr itemprop="row">
+              <td id="TEI.att.global.editorialStatus">
+              <span class="hi" itemprop="hi">
+                <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/es/html/ref-att.global.editorialStatus.html">att.global.editorialStatus</a>
+              </span>: 
+              <span xml:lang="en" lang="en" itemprop="seg">provides attributes to indicate the editorial status of the encoding of elements. They may be used to track encoding workflows and their stages.</span></td>
+            </tr>
+            <tr itemprop="row">
               <td id="TEI.att.global.linking">
               <span class="hi" itemprop="hi">
                 <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/es/html/ref-att.global.linking.html">att.global.linking</a>
@@ -2468,7 +2500,7 @@ element q
                 <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/es/html/ref-att.global.responsibility.html">att.global.responsibility</a>
               </span>: 
               <span xml:lang="en" lang="en" itemprop="seg">provides attributes indicating the agent responsible for some aspect of the text, the markup or something asserted by the markup, and the degree of certainty associated with it.</span>[
-              <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STGAso">1.3.1.1.4. Sources, certainty, and responsibility</a>
+              <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STGAso">1.3.1.1.4. Sources, certainty, responsibility, and editorial status</a>
               <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COED">3.5. Simple Editorial Changes</a>
               <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHHR">12.3.2.2. Hand, Responsibility, and Certainty Attributes</a>
               <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/AI.html#AISP">18.3. Spans and Interpretations</a>
@@ -2480,7 +2512,7 @@ element q
                 <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/es/html/ref-att.global.source.html">att.global.source</a>
               </span>: 
               <span xml:lang="en" lang="en" itemprop="seg">provides attributes used by elements to point to an external source.</span>[
-              <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STGAso">1.3.1.1.4. Sources, certainty, and responsibility</a>
+              <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STGAso">1.3.1.1.4. Sources, certainty, responsibility, and editorial status</a>
               <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COHQQ">3.3.3. Quotation</a>
               <a class="link_ref" itemprop="ref" href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/TS.html#TSBAWR">8.3.4. Writing</a>]</td>
             </tr>

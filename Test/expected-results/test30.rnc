@@ -464,6 +464,17 @@ Tatt.fragmentable.attribute.part =
       ## (final) this is the final part of a fragmented element
       "F"
   }?
+Tatt.global.editorialStatus.attributes =
+  Tatt.global.editorialStatus.attribute.edStatus
+Tatt.global.editorialStatus.attribute.edStatus =
+  
+  ## (editorial status) documents the editorial status of the element bearing this attribute.
+  ## Sample values include: 1] draft; 2] candidate; 3] expired; 4] frozen; 5] proposed; 6] proofed; 7] submitted; 8] unfinished; 9] unpublished; 10] published; 11] cross-checked; 12] approved; 13] cleared; 14] deprecated
+  attribute edStatus {
+    list {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+    }
+  }?
 Tatt.global.rendition.attributes =
   Tatt.global.rendition.attribute.rend,
   Tatt.global.rendition.attribute.style,
@@ -1761,6 +1772,34 @@ Tmodel.oddDecl_sequence = empty
 Tmodel.oddDecl_sequenceOptional = empty
 Tmodel.oddDecl_sequenceOptionalRepeatable = empty
 Tmodel.oddDecl_sequenceRepeatable = notAllowed
+sch:pattern [
+  id = "oddDecls_in_specGrp_or_schemaSpec"
+  abstract = "true"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "$toe"
+    "\x{a}" ~
+    "         "
+    sch:assert [
+      test =
+        "ancestor::tei:specGrp | ancestor::tei:schemaSpec | ancestor::tei:egXML"
+      "\x{a}" ~
+      "            DEPRECATION WARNING: Sometime after 2028-03-09 the <"
+      sch:value-of [ select = "name(.)" ]
+      ">\x{a}" ~
+      "            element will no longer be allowed as a child of <"
+      sch:value-of [ select = "name(..)" ]
+      ">;\x{a}" ~
+      "            it will need to be a descendant of either a <specGrp> or a <schemaSpec>.\x{a}" ~
+      "          "
+    ]
+    "\x{a}" ~
+    "      "
+  ]
+  "\x{a}" ~
+  "   "
+]
 Tmodel.phrase.xml = notAllowed
 Tmodel.phrase.xml_alternation = notAllowed
 Tmodel.phrase.xml_sequence = empty
@@ -2388,7 +2427,7 @@ Tatt.calendarSystem.attribute.calendar =
   }?
 sch:pattern [
   id =
-    "testbasic-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-10"
+    "testbasic-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-11"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -2473,7 +2512,7 @@ Tp =
     Tmacro.paraContent
     >> sch:pattern [
          id =
-           "testbasic-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-11"
+           "testbasic-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2495,7 +2534,7 @@ Tp =
        ]
     >> sch:pattern [
          id =
-           "testbasic-p-abstractModel-structure-p-in-l-constraint-rule-12"
+           "testbasic-p-abstractModel-structure-p-in-l-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2692,7 +2731,7 @@ Tdesc =
     Tmacro.limitedContent
     >> sch:pattern [
          id =
-           "testbasic-desc-deprecationInfo-only-in-deprecated-constraint-rule-13"
+           "testbasic-desc-deprecationInfo-only-in-deprecated-constraint-rule-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2790,7 +2829,7 @@ Trt =
      }?)
     >> sch:pattern [
          id =
-           "testbasic-rt-target-rt-target-not-span-constraint-rule-14"
+           "testbasic-rt-target-rt-target-not-span-constraint-rule-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2813,7 +2852,7 @@ Trt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "testbasic-rt-from-rt-from-constraint-rule-15"
+         id = "testbasic-rt-from-rt-from-constraint-rule-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2838,7 +2877,7 @@ Trt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "testbasic-rt-to-rt-to-constraint-rule-16"
+         id = "testbasic-rt-to-rt-to-constraint-rule-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3053,6 +3092,7 @@ Trs =
     Tmacro.phraseSeq,
     Tatt.global.attributes,
     Tatt.cmc.attributes,
+    Tatt.datable.attributes,
     Tatt.naming.attributes,
     Tatt.typed.attributes,
     empty
@@ -3259,7 +3299,7 @@ Tptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "testbasic-ptr-ptrAtts-constraint-rule-17"
+         id = "testbasic-ptr-ptrAtts-constraint-rule-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3293,7 +3333,7 @@ Tref =
   element ref {
     Tmacro.paraContent
     >> sch:pattern [
-         id = "testbasic-ref-refAtts-constraint-rule-18"
+         id = "testbasic-ref-refAtts-constraint-rule-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3333,7 +3373,7 @@ Tlist =
      (Tmodel.divBottom, Tmodel.global*)*)
     >> sch:pattern [
          id =
-           "testbasic-list-gloss-list-must-have-labels-constraint-rule-19"
+           "testbasic-list-gloss-list-must-have-labels-constraint-rule-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3874,7 +3914,7 @@ TrelatedItem =
     ((Tmodel.biblLike | Tmodel.ptrLike)?)
     >> sch:pattern [
          id =
-           "testbasic-relatedItem-targetorcontent1-constraint-rule-20"
+           "testbasic-relatedItem-targetorcontent1-constraint-rule-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3919,7 +3959,7 @@ Tl =
       | Tmodel.global)*)
     >> sch:pattern [
          id =
-           "testbasic-l-abstractModel-structure-l-in-l-constraint-rule-21"
+           "testbasic-l-abstractModel-structure-l-in-l-constraint-rule-22"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3960,7 +4000,7 @@ Tlg =
       | Tlg)*,
      (Tmodel.divBottom, Tmodel.global*)*)
     >> sch:pattern [
-         id = "testbasic-lg-atleast1oflggapl-constraint-rule-22"
+         id = "testbasic-lg-atleast1oflggapl-constraint-rule-23"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3980,7 +4020,7 @@ Tlg =
        ]
     >> sch:pattern [
          id =
-           "testbasic-lg-abstractModel-structure-lg-in-l-constraint-rule-23"
+           "testbasic-lg-abstractModel-structure-lg-in-l-constraint-rule-24"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4513,7 +4553,7 @@ Tquotation =
   element quotation {
     (Tmodel.pLike*)
     >> sch:pattern [
-         id = "testbasic-quotation-quotationContents-constraint-rule-24"
+         id = "testbasic-quotation-quotationContents-constraint-rule-25"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4765,7 +4805,7 @@ TciteStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "testbasic-citeStructure-match-citestructure-outer-match-constraint-rule-25"
+           "testbasic-citeStructure-match-citestructure-outer-match-constraint-rule-26"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4786,7 +4826,7 @@ TciteStructure =
        ]
     >> sch:pattern [
          id =
-           "testbasic-citeStructure-match-citestructure-inner-match-constraint-rule-26"
+           "testbasic-citeStructure-match-citestructure-inner-match-constraint-rule-27"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6128,6 +6168,7 @@ Tperson =
     Tatt.datable.attributes,
     Tatt.editLike.attributes,
     Tatt.sortable.attributes,
+    Tatt.typed.attributes,
     
     ## specifies a primary role or classification for the person.
     attribute role {
@@ -6315,7 +6356,7 @@ Trelation =
   element relation {
     (Tdesc?)
     >> sch:pattern [
-         id = "testbasic-relation-ref-or-key-or-name-constraint-rule-27"
+         id = "testbasic-relation-ref-or-key-or-name-constraint-rule-28"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6333,7 +6374,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-active-mutual-constraint-rule-28"
+         id = "testbasic-relation-active-mutual-constraint-rule-29"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6351,7 +6392,7 @@ Trelation =
          "         "
        ]
     >> sch:pattern [
-         id = "testbasic-relation-active-passive-constraint-rule-29"
+         id = "testbasic-relation-active-passive-constraint-rule-30"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6713,7 +6754,7 @@ Tfacsimile =
      Tback?)
     >> sch:pattern [
          id =
-           "testbasic-facsimile-no_facsimile_text_nodes-constraint-rule-30"
+           "testbasic-facsimile-no_facsimile_text_nodes-constraint-rule-31"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6827,7 +6868,7 @@ Tpath =
   element path {
     empty
     >> sch:pattern [
-         id = "testbasic-path-pathmustnotbeclosed-constraint-rule-31"
+         id = "testbasic-path-pathmustnotbeclosed-constraint-rule-32"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6923,7 +6964,7 @@ TaddSpan =
     empty
     >> sch:pattern [
          id =
-           "testbasic-addSpan-addSpan-requires-spanTo-constraint-rule-32"
+           "testbasic-addSpan-addSpan-requires-spanTo-constraint-rule-33"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6944,7 +6985,7 @@ TaddSpan =
        ]
     >> sch:pattern [
          id =
-           "testbasic-addSpan-addSpan-requires-spanTo-fr-constraint-rule-33"
+           "testbasic-addSpan-addSpan-requires-spanTo-fr-constraint-rule-34"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6985,7 +7026,7 @@ TdamageSpan =
     empty
     >> sch:pattern [
          id =
-           "testbasic-damageSpan-damageSpan-requires-spanTo-constraint-rule-34"
+           "testbasic-damageSpan-damageSpan-requires-spanTo-constraint-rule-35"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7006,7 +7047,7 @@ TdamageSpan =
        ]
     >> sch:pattern [
          id =
-           "testbasic-damageSpan-damageSpan-requires-spanTo-fr-constraint-rule-35"
+           "testbasic-damageSpan-damageSpan-requires-spanTo-fr-constraint-rule-36"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7036,7 +7077,7 @@ TdelSpan =
     empty
     >> sch:pattern [
          id =
-           "testbasic-delSpan-delSpan-requires-spanTo-constraint-rule-36"
+           "testbasic-delSpan-delSpan-requires-spanTo-constraint-rule-37"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7057,7 +7098,7 @@ TdelSpan =
        ]
     >> sch:pattern [
          id =
-           "testbasic-delSpan-delSpan-requires-spanTo-fr-constraint-rule-37"
+           "testbasic-delSpan-delSpan-requires-spanTo-fr-constraint-rule-38"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7142,7 +7183,7 @@ Tam =
   element am {
     (text | Tmodel.gLike | Tmodel.pPart.transcriptional)*,
     Tatt.global.attributes,
-    Tatt.editLike.attributes,
+    Tatt.transcriptional.attributes,
     Tatt.typed.attributes,
     empty
   }
@@ -7167,6 +7208,7 @@ Tspace =
     Tatt.global.attribute.xmlbase,
     Tatt.global.attribute.xmlspace,
     Tatt.global.change.attribute.change,
+    Tatt.global.editorialStatus.attribute.edStatus,
     Tatt.global.facs.attribute.facs,
     Tatt.global.linking.attribute.sameAs,
     Tatt.global.linking.attribute.copyOf,
@@ -7204,7 +7246,7 @@ Tsubst =
   element subst {
     ((Tadd | Tsurplus | Tdel | Tmodel.milestoneLike)+)
     >> sch:pattern [
-         id = "testbasic-subst-substContents1-constraint-rule-38"
+         id = "testbasic-subst-substContents1-constraint-rule-39"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7504,7 +7546,7 @@ Tlink =
   element link {
     empty
     >> sch:pattern [
-         id = "testbasic-link-linkTargets3-constraint-rule-39"
+         id = "testbasic-link-linkTargets3-constraint-rule-40"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7546,7 +7588,7 @@ Tab =
     Tmacro.abContent
     >> sch:pattern [
          id =
-           "testbasic-ab-abstractModel-structure-ab-in-l-constraint-rule-40"
+           "testbasic-ab-abstractModel-structure-ab-in-l-constraint-rule-41"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7729,7 +7771,7 @@ Tjoin =
   element join {
     ((Tmodel.descLike | Tmodel.certLike)*)
     >> sch:pattern [
-         id = "testbasic-join-joinTargets3-constraint-rule-41"
+         id = "testbasic-join-joinTargets3-constraint-rule-42"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -7929,6 +7971,7 @@ Tannotation =
     Tatt.global.attribute.xmlbase,
     Tatt.global.attribute.xmlspace,
     Tatt.global.change.attribute.change,
+    Tatt.global.editorialStatus.attribute.edStatus,
     Tatt.global.facs.attribute.facs,
     Tatt.global.linking.attribute.sameAs,
     Tatt.global.linking.attribute.copyOf,
@@ -8094,7 +8137,7 @@ Tdiv =
       (Tmodel.divBottom, Tmodel.global*)*)?)
     >> sch:pattern [
          id =
-           "testbasic-div-abstractModel-structure-div-in-l-constraint-rule-42"
+           "testbasic-div-abstractModel-structure-div-in-l-constraint-rule-43"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8115,7 +8158,7 @@ Tdiv =
        ]
     >> sch:pattern [
          id =
-           "testbasic-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-43"
+           "testbasic-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-44"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -8458,6 +8501,7 @@ Tatt.global.linking.attribute.select =
   }?
 Tatt.global.attributes =
   Tatt.global.change.attributes,
+  Tatt.global.editorialStatus.attributes,
   Tatt.global.facs.attributes,
   Tatt.global.linking.attributes,
   Tatt.global.rendition.attributes,
@@ -8574,7 +8618,7 @@ sch:ns [
 sch:ns [ prefix = "sch" uri = "http://purl.oclc.org/dsdl/schematron" ]
 sch:ns [ prefix = "sch1x" uri = "http://www.ascc.net/xml/schematron" ]
 sch:pattern [
-  id = "testbasic-outerconstraint-constraint-rule-44"
+  id = "testbasic-outerconstraint-constraint-rule-45"
   "\x{a}" ~
   "      "
   sch:rule [

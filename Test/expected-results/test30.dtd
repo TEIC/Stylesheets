@@ -66,6 +66,10 @@
 
 <!-- predeclared classes -->
 
+<!ENTITY % Tatt.global.editorialStatus.attribute.edStatus '
+edStatus NMTOKENS  #IMPLIED'>
+<!ENTITY % Tatt.global.editorialStatus.attributes '
+ %Tatt.global.editorialStatus.attribute.edStatus;'> 
 <!ENTITY % Tatt.global.rendition.attribute.rend '
 rend (bold|boxed|center|italic|underline) #IMPLIED'>
 
@@ -329,6 +333,10 @@ edRef CDATA  #IMPLIED'>
 part (Y|N|I|M|F) "N" '>
 <!ENTITY % Tatt.fragmentable.attributes '
  %Tatt.fragmentable.attribute.part;'> 
+<!ENTITY % Tatt.global.editorialStatus.attribute.edStatus '
+edStatus NMTOKENS  #IMPLIED'>
+<!ENTITY % Tatt.global.editorialStatus.attributes '
+ %Tatt.global.editorialStatus.attribute.edStatus;'> 
 <!ENTITY % Tatt.global.rendition.attribute.rend '
 rend (bold|boxed|center|italic|underline) #IMPLIED'>
 
@@ -1194,7 +1202,7 @@ xml:base %teidata.pointer;  #IMPLIED'>
 
 <!ENTITY % Tatt.global.attribute.xmlspace '
 xml:space (default|preserve) #IMPLIED'>
-<!ENTITY % Tatt.global.attributes '%Tatt.global.change.attributes;%Tatt.global.facs.attributes;%Tatt.global.linking.attributes;%Tatt.global.rendition.attributes;%Tatt.global.responsibility.attributes;%Tatt.global.source.attributes;
+<!ENTITY % Tatt.global.attributes '%Tatt.global.change.attributes;%Tatt.global.editorialStatus.attributes;%Tatt.global.facs.attributes;%Tatt.global.linking.attributes;%Tatt.global.rendition.attributes;%Tatt.global.responsibility.attributes;%Tatt.global.source.attributes;
  %Tatt.global.attribute.xmlid;
  %Tatt.global.attribute.xmllang;
  %Tatt.global.attribute.xmlbase;
@@ -1346,7 +1354,7 @@ mode (excl|incl) "excl"  >
 <!ATTLIST am xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST am
  %Tatt.global.attributes;
- %Tatt.editLike.attributes;
+ %Tatt.transcriptional.attributes;
  %Tatt.typed.attributes; >
 <!--doc:(analytic level) contains bibliographic elements describing an item (e.g. an article or poem) published within a monograph or journal and not as an independent publication. [3.12.2.1. Analytic, Monographic, and Series Levels] -->
 <!ELEMENT analytic (author|editor|respStmt|title|%model.ptrLike;|date|textLang|idno|availability)*>
@@ -1368,6 +1376,7 @@ mode (excl|incl) "excl"  >
  %Tatt.global.attribute.xmlbase;
  %Tatt.global.attribute.xmlspace;
  %Tatt.global.change.attribute.change;
+ %Tatt.global.editorialStatus.attribute.edStatus;
  %Tatt.global.facs.attribute.facs;
  %Tatt.global.linking.attribute.sameAs;
  %Tatt.global.linking.attribute.copyOf;
@@ -2791,6 +2800,7 @@ value NMTOKENS  #IMPLIED >
  %Tatt.datable.attributes;
  %Tatt.editLike.attributes;
  %Tatt.sortable.attributes;
+ %Tatt.typed.attributes;
 role NMTOKENS  #IMPLIED
 sex CDATA  #IMPLIED
 gender CDATA  #IMPLIED
@@ -3108,6 +3118,7 @@ type %teidata.enumerated;  #IMPLIED >
 <!ATTLIST rs
  %Tatt.global.attributes;
  %Tatt.cmc.attributes;
+ %Tatt.datable.attributes;
  %Tatt.naming.attributes;
  %Tatt.typed.attributes; >
 <!--doc:(ruby text) contains a ruby text, an annotation closely associated with a passage of the main text. [3.4.2. Ruby Annotations] -->
@@ -3288,6 +3299,7 @@ code %teidata.pointer;  #IMPLIED >
  %Tatt.global.attribute.xmlbase;
  %Tatt.global.attribute.xmlspace;
  %Tatt.global.change.attribute.change;
+ %Tatt.global.editorialStatus.attribute.edStatus;
  %Tatt.global.facs.attribute.facs;
  %Tatt.global.linking.attribute.sameAs;
  %Tatt.global.linking.attribute.copyOf;

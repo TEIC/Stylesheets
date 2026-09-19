@@ -6,8 +6,8 @@
         <title>The TEI Guidelines</title>
       </titleStmt>
       <editionStmt>
-        <edition>P5 <ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.12.0.html">4.12.0a</ref>. Last updated on
-        <date when="2026-07-27">27th July 2026</date>, revision <ref target="https://github.com/TEIC/TEI/commit/497393620">497393620</ref></edition>
+        <edition>P5 <ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.13.0.html">4.13.0a</ref>. Last updated on
+        <date when="2026-09-11">11th September 2026</date>, revision <ref target="https://github.com/TEIC/TEI/commit/884f8dd3c">884f8dd3c</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -160,7 +160,7 @@ Instance</head></div>
 <div xml:id="STGAid"><head>Element Identifiers and Labels</head></div>
 <div xml:id="STGAla"><head>Language Indicators</head></div>
 <div xml:id="STGAre"><head>Rendition Indicators</head></div>
-<div xml:id="STGAso"><head>Sources, certainty, and responsibility</head></div>
+<div xml:id="STGAso"><head>Sources, certainty, responsibility, and editorial status</head></div>
 <div xml:id="STGAba"><head>Evaluation of Links</head></div>
 <div xml:id="STGAxs"><head>XML Whitespace</head></div>
 <div xml:id="STGAothers"><head>Other Globally Available Attributes</head>
@@ -1900,6 +1900,32 @@ associated with a dated element, at the time indicated.</desc>
         be reconstituted.</p>
       </remarks>
       <remarks ident="att.fragmentable-attr.part-remarks" versionDate="2019-06-08" xml:lang="ja"><p><val>I</val>、<val>M</val>、または<val>F</val>という値は、要素の再構成方法が明らかな場合にのみ使用する。</p></remarks>
+    </attDef>
+  </attList>
+</classSpec>
+<classSpec ident="att.global.editorialStatus" predeclare="true" module="tei" type="atts">
+  <desc versionDate="2026-08-17" xml:lang="en">provides attributes to indicate the editorial status of the encoding of elements. They may be used to track encoding workflows and their stages.</desc>
+  <attList>
+    <attDef ident="edStatus">
+      <gloss versionDate="2026-08-16" xml:lang="en">editorial status</gloss>
+      <desc versionDate="2026-08-16" xml:lang="en">documents the editorial status of the element bearing this attribute.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.enumerated"/></datatype>
+      <valList type="open">
+        <valItem ident="draft"/>
+        <valItem ident="candidate"/>
+        <valItem ident="expired"/>
+        <valItem ident="frozen"/>
+        <valItem ident="proposed"/>
+        <valItem ident="proofed"/>
+        <valItem ident="submitted"/>
+        <valItem ident="unfinished"/>
+        <valItem ident="unpublished"/>
+        <valItem ident="published"/>
+        <valItem ident="cross-checked"/>
+        <valItem ident="approved"/>
+        <valItem ident="cleared"/>
+        <valItem ident="deprecated"/>
+      </valList>
     </attDef>
   </attList>
 </classSpec>
@@ -4630,9 +4656,9 @@ l'échantillon inconnue</desc>
   <classes>
     <memberOf key="att.global.analytic"/>
     <memberOf key="att.global.change"/>
+    <memberOf key="att.global.editorialStatus"/>
     <memberOf key="att.global.facs"/>
-    <memberOf key="att.global.linking"/>
-    
+    <memberOf key="att.global.linking"/>    
     <memberOf key="att.global.rendition"/>
     <memberOf key="att.global.responsibility"/>
     <memberOf key="att.global.source"/>
@@ -6064,15 +6090,38 @@ elements used to represent reference systems.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">ODD 문서에서 마크업 언어로 선언을 생성하는 요소를 모아 놓는다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集的元素使ODD文件內某些標記語言中產生宣告。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">ODD文書で使用される要素の宣言を生成する要素をまとめる。</desc>
-  <desc versionDate="2009-05-27" xml:lang="fr">regroupe les éléments qui, dans des documents ODD,
-    génèrent des déclarations dans un langage d'encodage.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos que generan declaraciones en un lenguaje
-    de codificación dado en documentos aislados</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che generano dichiarazioni in un dato
-    linguaggio di codifica in documenti isolati</desc>
+  <desc versionDate="2009-05-27" xml:lang="fr">regroupe les éléments qui, dans des documents ODD, génèrent des déclarations dans un langage d'encodage.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos que generan declaraciones en un lenguaje de codificación dado en documentos aislados</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che generano dichiarazioni in un dato linguaggio di codifica in documenti isolati</desc>
   <classes>
     <memberOf key="model.inter"/>
   </classes>
+  <constraintSpec scheme="schematron" ident="avoid_oddDecls_in_silly_places" xml:lang="en">
+    <!-- 
+         The <egXML> referred to in the constraint below is, of
+         course, in the teix: namespace, not the tei: namespace.
+         However, at the point in the processing pipeline when we want
+         to test this the content of <egXML>s have been extracted and
+         put in the TEI namespace for testing.
+         At least, that's what I think is going on. —Syd, 2026-01-03
+    -->
+    <!--
+        Note-to-maintainers: to reference the name of the current
+        element you could use <sch:value-of select="'$toe'"/> rather
+        than <sch:value-of select="name(.)"/>.
+    -->
+    <constraint>
+      <sch:pattern id="oddDecls_in_specGrp_or_schemaSpec" abstract="true">
+        <sch:rule context="$toe">
+          <sch:assert test="ancestor::tei:specGrp | ancestor::tei:schemaSpec | ancestor::tei:egXML">
+            DEPRECATION WARNING: Sometime after 2028-03-09 the &lt;<sch:value-of select="name(.)"/>&gt;
+            element will no longer be allowed as a child of &lt;<sch:value-of select="name(..)"/>&gt;;
+            it will need to be a descendant of either a &lt;specGrp&gt; or a &lt;schemaSpec&gt;.
+          </sch:assert>
+        </sch:rule>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
 </classSpec>
 <classSpec module="tei" type="model" xml:id="ODDREF" ident="model.oddRef">
   <desc versionDate="2005-10-10" xml:lang="en">groups elements which reference declarations in some markup language in ODD documents.</desc>
@@ -13207,10 +13256,10 @@ codes used elsewhere in the text.</desc>
           <category xml:id="feetNumber">
             <catDesc>Number of feet</catDesc>
             <category xml:id="pentameter">
-              <catDesc>&gt;Pentameter</catDesc>
+              <catDesc>Pentameter</catDesc>
             </category>
             <category xml:id="tetrameter">
-              <catDesc>&gt;Tetrameter</catDesc>
+              <catDesc>Tetrameter</catDesc>
             </category>
           </category>
         </category>
@@ -18822,6 +18871,7 @@ concerned, as further discussed in section <ptr target="#PHDH"/>.</p>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.cmc"/>
+    <memberOf key="att.datable"/>
     <memberOf key="att.naming"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.nameLike"/>
@@ -18834,6 +18884,16 @@ concerned, as further discussed in section <ptr target="#PHDH"/>.</p>
             to him one day, <q>have you heard that <rs type="place">Netherfield Park</rs> is let at
                 last?</q>
       </egXML>
+  </exemplum>
+  <exemplum xml:lang="en" versionDate="2026-08-16">
+    <p>The following example is a transcript of a fictional
+      <soCalled>question</soCalled> in a Jeopardy-like game.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-rs-egXML-en">
+      <ab type="answer">It has been known as <rs from="1931-04-11" to="1973-04-04">the tallest building in the world</rs> and the
+        <rs from="1973-04-04" to="1973-09-09">third tallest building in
+          the world</rs>, but never the 2nd tallest building in the world.</ab>
+      <ab type="question">What is the <name>Empire State Building</name>?</ab>
+    </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-rs-egXML-zh" source="#fr-ex-Ollagnier_Main">
@@ -18848,6 +18908,11 @@ concerned, as further discussed in section <ptr target="#PHDH"/>.</p>
     </q>一天，<rs type="person">班納特太太</rs> 對她的丈夫說：<q>你聽說過<rs type="place">尼日斐花園</rs> 終於租出去了嗎?</q>
       </egXML>
   </exemplum>
+  <remarks ident="rs-remarks" versionDate="2026-08-16" xml:lang="en">
+    <p>A dating attribute on a referring string is used to assert when the encoded
+      word or phrase was used to refer to the entity in question, rather than when
+      the entity existed.</p>
+  </remarks>
   <listRef>
     <ptr target="#NDPER"/>
     <ptr target="#CONARS"/>
@@ -36056,8 +36121,185 @@ very loudly.</p>
     <ptr target="#CMCcmcpost"/>
   </listRef>
 </elementSpec></div></div>
-<div type="div1" xml:id="DI" n="12"><head>Dictionaries</head>
+<div xmlns:xi="http://www.w3.org/2001/XInclude" type="div1" xml:id="DI" n="12"><head>Dictionaries</head>
 <div type="div2" xml:id="DIBO"><head>Dictionary Body and Overall Structure</head>
+<classSpec module="dictionaries" xml:id="DIGLOBAL" type="atts" ident="att.lexicographic">
+  <desc versionDate="2018-09-08" xml:lang="en">provides a set of attributes for specifying standard and normalized values, grammatical functions, alternate or equivalent forms, and information about composite parts.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">사전용 기본 태그 세트의 요소에서 이용 가능한 전반적 속성들의 집합을 정의한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">定義一組全域屬性值，可用於字典的基礎標籤組之元素上。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">辞書向けのタグ集合にある要素に付与可能な、グローバル属性を定義する。</desc>
+  <desc versionDate="2009-05-28" xml:lang="fr">définit un ensemble d'attributs globaux disponibles pour les éléments appartenant à l'ensemble des balises de base dédié aux dictionnaires.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">define el conjunto de  atributos globales posibles para los elementos del conjunto de etiquetas base para diccionarios</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">definisce un insieme di attributi globali disponibili per gli elementi dell'insieme base di marcatori per i dizionari.</desc>
+  <classes>
+    
+    <memberOf key="att.datcat"/>
+    <memberOf key="att.lexicographic.normalized"/>
+  </classes>
+  <attList>
+    <attDef ident="expand" usage="opt">
+      <gloss versionDate="2009-05-28" xml:lang="en">expand</gloss>
+      <gloss versionDate="2009-05-28" xml:lang="fr">développé</gloss>
+      <desc versionDate="2005-10-10" xml:lang="en">gives an expanded form of information presented more concisely in the dictionary.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">사전에서 더 간결하게 제시된 정보의 확장형을 제시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一形式擴充的資訊，其以較簡潔的方式呈現於字典中</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">辞書中では簡易表記されているものの完全記述を示す。</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">donne une forme développée de l'information présentée de manière plus concise dans le dictionnaire.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">proporciona de manera expandida la información presentada brevemente en el diccionario</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">fornisce la forma estesa dellel informazioni presentate in modo più coinciso nel dizionario.</desc>
+    <datatype>  <!--      <textNode/> see stylesheets issue #236 --> 
+      <dataRef key="teidata.text"/>
+     </datatype> 
+      <exemplum xml:lang="und">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DIGLOBAL-egXML-ez" source="#NONE">
+          <gramGrp>
+            <pos expand="noun">n</pos>
+          </gramGrp>
+        </egXML>
+      </exemplum>
+      <exemplum versionDate="2016-05-24" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DIGLOBAL-egXML-ey" source="#NONE">
+          <gramGrp>
+            <pos expand="nom">n.</pos>
+          </gramGrp>
+        </egXML>
+      </exemplum>
+    </attDef>
+    <attDef ident="split" usage="opt">
+      <gloss versionDate="2009-05-28" xml:lang="en">split</gloss>
+      <gloss versionDate="2009-05-28" xml:lang="fr">graphies distinctes</gloss>
+      <desc versionDate="2005-10-10" xml:lang="en">gives the list of split values for a merged form.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">통합형에 대한 분리 값의 목록을 제시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一合併形式的split值列表</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">構成部分をリストで示す。</desc>
+      <desc versionDate="2009-05-28" xml:lang="fr">donne la liste des valeurs distinctes d'une forme fusionnée.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">proporciona una lista de valores de abertura para una forma fusionada</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">fornisce la lista dei valori suddivisi di una forma unita.</desc>
+      <datatype><dataRef key="teidata.text"/></datatype>
+    </attDef>
+    <attDef ident="value" usage="opt">
+      <gloss versionDate="2009-05-28" xml:lang="en">value</gloss>
+      <gloss versionDate="2009-05-28" xml:lang="fr">valeur</gloss>
+      <desc versionDate="2005-10-10" xml:lang="en">gives a value which lacks any realization in the printed source text.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">인쇄된 원본 텍스트에서 누락된 값을 제시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一個尚未在書面來源文件中呈現的屬性值</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">印刷されているテキスト上では欠如している情報を示す。</desc>
+      <desc versionDate="2009-05-28" xml:lang="fr">indique une valeur qui manque à un quelconque fragment du texte source imprimé.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">proporciona un valor que carece de cualquier realización en el texto fuente impreso</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">fornisce un valore privo di qualsiasi realizzazione nel testo di origine a mezzo stampa.</desc>
+      <datatype><dataRef key="teidata.text"/></datatype>
+    </attDef>
+    <attDef ident="location" usage="opt">
+      <gloss versionDate="2009-05-28" xml:lang="en">location</gloss>
+      <gloss versionDate="2009-05-28" xml:lang="fr">localisation</gloss>
+      <desc versionDate="2013-12-08" xml:lang="en">indicates an <gi>anchor</gi> element typically elsewhere in the document, but possibly in another document, 
+                which is the original location of this component.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">문서의 다른 위치에서 이 성분의 원본 위치를 지시하는 <gi>anchor</gi> 요소에 대한 참조를 제공한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">參照到文件中的元素<gi>anchor</gi>，指出此元件的原文位置。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該要素の元の場所を特定する要素<gi>anchor</gi>への参照を示す。</desc>
+      <desc versionDate="2009-05-28" xml:lang="fr">fournit une référence à un élément <gi>anchor</gi> se trouvant ailleurs dans le document TEI, pour indiquer la localisation de ce composant.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">proporciona una referencia a un elemento <gi>anchor</gi> que aparece en algún punto del documento indicando la localización original de ese componente.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">fornisce un riferimento per un elemento <gi>anchor</gi> in una altra porzione del documento indicando la localizzazione origiraria del componente.</desc>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
+    </attDef>
+    <attDef ident="mergedIn" usage="opt">
+      <gloss versionDate="2020-12-20" xml:lang="en">merged into</gloss>
+      <gloss versionDate="2009-05-28" xml:lang="fr">fusionné</gloss>
+      <desc versionDate="2007-07-04" xml:lang="en">gives a reference to another element, where the original appears as a merged form.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">다른 요소에 대한 참조를 제시하며, 여기서 원본은 통합형이다.</desc>
+      <desc versionDate="2008-04-06" xml:lang="es">proporciona una referencia a otro elemento, donde el original aparece como una forma combinada.</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">元データが統合されて出現している、ある要素への参照を示す。</desc>
+      <desc versionDate="2008-03-30" xml:lang="fr">donne une référence à un autre élément, où
+l'original apparaît comme une forme fusionnée.</desc>
+      <desc versionDate="2007-11-06" xml:lang="it">fa riferimento a un altro elemento, laddove quello originale si presenti come forma risultanteda una fusione.</desc>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
+    </attDef>
+    <attDef ident="opt" usage="opt">
+      <gloss versionDate="2007-07-04" xml:lang="en">optional</gloss>
+      <gloss versionDate="2007-12-20" xml:lang="ko">수의적</gloss>
+      <gloss versionDate="2008-04-06" xml:lang="es">facultativo</gloss>
+      <gloss versionDate="2009-05-28" xml:lang="fr">facultatif</gloss>
+      <gloss versionDate="2007-11-06" xml:lang="it">facoltativo</gloss>
+      <desc versionDate="2005-10-10" xml:lang="en">indicates whether the element is optional or not.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">요소가 수의적인지 아닌지를 나타낸다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該元素是否必備</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該要素が選択的かどうかを示す。</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">indique si l'élément est facultatif ou pas.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica si el elemento es opcional o no.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica se l'elemento è opzionale o meno.</desc>
+      <datatype><dataRef key="teidata.truthValue"/></datatype>
+      <defaultVal>false</defaultVal>
+    </attDef>
+  </attList>
+  <listRef>
+    <ptr target="#DIEN" type="div3"/>
+  </listRef>
+</classSpec>
+<classSpec module="tei" type="atts" ident="att.partials">
+  <desc versionDate="2016-06-29" xml:lang="en">provides attributes for describing the extent of lexical references for a dictionary term.</desc>
+  <desc versionDate="2023-08-24" xml:lang="ja">辞書用語の語彙参照の範囲を記述する属性を提供する。</desc>
+  <attList>
+    <attDef ident="extent" usage="opt">
+      <desc versionDate="2016-06-29" xml:lang="en">indicates whether the pronunciation or orthography applies to all or part of a word.</desc>
+      <desc versionDate="2016-06-29" xml:lang="fr">indique si la prononciation ou orthographie se rapporte au mot entier ou seulement à une partie.</desc>
+      <!-- <desc versionDate="2007-12-20" xml:lang="ko">발음이 전체 단어 또는 부분에 대한 것인지를 표시한다.</desc>
+    <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該發音為完整或部分發音。</desc>
+    <desc versionDate="2023-08-24" xml:lang="ja">発音または正書法が単語の全部または一部に適用されるかどうかを示す。</desc>
+    <desc versionDate="2007-05-04" xml:lang="es">indica si se trata de la pronunciación de la palabra completa o de una parte.</desc>
+    <desc versionDate="2007-01-21" xml:lang="it">indica se la pronuncia riguarda l'intera parola o una sua parte.</desc> -->
+    <datatype><dataRef key="teidata.enumerated"/></datatype>
+    <valList type="semi">
+      <valItem ident="full">
+        <gloss versionDate="2005-01-14" xml:lang="en">full form</gloss>
+        <gloss versionDate="2007-06-12" xml:lang="fr">forme pleine</gloss>
+        <gloss versionDate="2007-11-06" xml:lang="it">forma completa</gloss>
+        <gloss versionDate="2007-05-04" xml:lang="es">forma completa</gloss>
+        <gloss versionDate="2023-08-24" xml:lang="ja">完全形</gloss>
+      </valItem>
+      <valItem ident="pref">
+        <gloss versionDate="2005-01-14" xml:lang="en">prefix</gloss>
+        <gloss versionDate="2007-06-12" xml:lang="fr">préfixe</gloss>
+        <gloss versionDate="2007-11-06" xml:lang="it">prefisso</gloss>
+        <gloss versionDate="2007-05-04" xml:lang="es">prefijo</gloss>
+        <gloss versionDate="2023-08-24" xml:lang="ja">接頭辞</gloss>
+      </valItem>
+      <valItem ident="suff">
+        <gloss versionDate="2005-01-14" xml:lang="en">suffix</gloss>
+        <gloss versionDate="2007-06-12" xml:lang="fr">suffixe</gloss>
+        <gloss versionDate="2007-11-06" xml:lang="it">suffisso</gloss>
+        <gloss versionDate="2007-05-04" xml:lang="es">sufijo</gloss>
+        <gloss versionDate="2023-08-24" xml:lang="ja">接尾辞</gloss>
+      </valItem>
+      <valItem ident="inf">
+        <gloss versionDate="2016-06-29" xml:lang="en">infix</gloss>
+        <gloss versionDate="2016-06-29" xml:lang="fr">infixe</gloss>
+        <gloss versionDate="2016-06-29" xml:lang="it">infisso</gloss>
+        <gloss versionDate="2016-06-29" xml:lang="es">infijteio</gloss>
+        <gloss versionDate="2023-08-24" xml:lang="ja">接中辞</gloss>
+      </valItem>
+      <valItem ident="part">
+        <gloss versionDate="2005-01-14" xml:lang="en">partial</gloss>
+        <gloss versionDate="2007-06-12" xml:lang="fr">partiel</gloss>
+        <gloss versionDate="2007-11-06" xml:lang="it">parziale</gloss>
+        <gloss versionDate="2007-05-04" xml:lang="es">parcial</gloss>
+        <gloss versionDate="2023-08-24" xml:lang="ja">一部分</gloss>
+      </valItem>
+    </valList>
+    <remarks ident="att.partials-attr.extent-remarks" versionDate="2016-06-29" xml:lang="en">
+      <p>
+        This attribute is optional, and no default value is specified, so it can be omitted if this information is not necessary.
+        <!-- 2005-01-14 [Merge this and similar attributes into a class <term>partials</term>? -Ed.] -->
+      </p>
+    </remarks>
+    <remarks ident="att.partials-attr.extent-remarks" versionDate="2023-08-24" xml:lang="ja">
+      <p>
+      この属性はオプションであり、デフォルト値は指定されていないため、この情報が不要な場合は省略することができる。
+      </p>
+    </remarks>
+    </attDef>
+  
+  </attList>
+</classSpec>
 <classSpec module="dictionaries" xml:id="COMPDICT" type="model" ident="model.entryLike" predeclare="true">
   <desc versionDate="2007-10-03" xml:lang="en">groups elements structurally analogous to paragraphs within dictionaries.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">사전 내에서 문단과 구조적으로 유사한 요소들을 모아 놓는다.</desc>
@@ -36238,183 +36480,6 @@ very loudly.</p>
     <ptr target="#DIBO"/>
     <ptr target="#DIEN"/>
   </listRef>
-</classSpec>
-<classSpec module="dictionaries" xml:id="DIGLOBAL" type="atts" ident="att.lexicographic">
-  <desc versionDate="2018-09-08" xml:lang="en">provides a set of attributes for specifying standard and normalized values, grammatical functions, alternate or equivalent forms, and information about composite parts.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">사전용 기본 태그 세트의 요소에서 이용 가능한 전반적 속성들의 집합을 정의한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">定義一組全域屬性值，可用於字典的基礎標籤組之元素上。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">辞書向けのタグ集合にある要素に付与可能な、グローバル属性を定義する。</desc>
-  <desc versionDate="2009-05-28" xml:lang="fr">définit un ensemble d'attributs globaux disponibles pour les éléments appartenant à l'ensemble des balises de base dédié aux dictionnaires.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">define el conjunto de  atributos globales posibles para los elementos del conjunto de etiquetas base para diccionarios</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">definisce un insieme di attributi globali disponibili per gli elementi dell'insieme base di marcatori per i dizionari.</desc>
-  <classes>
-    
-    <memberOf key="att.datcat"/>
-    <memberOf key="att.lexicographic.normalized"/>
-  </classes>
-  <attList>
-    <attDef ident="expand" usage="opt">
-      <gloss versionDate="2009-05-28" xml:lang="en">expand</gloss>
-      <gloss versionDate="2009-05-28" xml:lang="fr">développé</gloss>
-      <desc versionDate="2005-10-10" xml:lang="en">gives an expanded form of information presented more concisely in the dictionary.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">사전에서 더 간결하게 제시된 정보의 확장형을 제시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一形式擴充的資訊，其以較簡潔的方式呈現於字典中</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">辞書中では簡易表記されているものの完全記述を示す。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">donne une forme développée de l'information présentée de manière plus concise dans le dictionnaire.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">proporciona de manera expandida la información presentada brevemente en el diccionario</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">fornisce la forma estesa dellel informazioni presentate in modo più coinciso nel dizionario.</desc>
-    <datatype>  <!--      <textNode/> see stylesheets issue #236 --> 
-      <dataRef key="teidata.text"/>
-     </datatype> 
-      <exemplum xml:lang="und">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DIGLOBAL-egXML-ez" source="#NONE">
-          <gramGrp>
-            <pos expand="noun">n</pos>
-          </gramGrp>
-        </egXML>
-      </exemplum>
-      <exemplum versionDate="2016-05-24" xml:lang="fr">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DIGLOBAL-egXML-ey" source="#NONE">
-          <gramGrp>
-            <pos expand="nom">n.</pos>
-          </gramGrp>
-        </egXML>
-      </exemplum>
-    </attDef>
-    <attDef ident="split" usage="opt">
-      <gloss versionDate="2009-05-28" xml:lang="en">split</gloss>
-      <gloss versionDate="2009-05-28" xml:lang="fr">graphies distinctes</gloss>
-      <desc versionDate="2005-10-10" xml:lang="en">gives the list of split values for a merged form.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">통합형에 대한 분리 값의 목록을 제시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一合併形式的split值列表</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">構成部分をリストで示す。</desc>
-      <desc versionDate="2009-05-28" xml:lang="fr">donne la liste des valeurs distinctes d'une forme fusionnée.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">proporciona una lista de valores de abertura para una forma fusionada</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">fornisce la lista dei valori suddivisi di una forma unita.</desc>
-      <datatype><dataRef key="teidata.text"/></datatype>
-    </attDef>
-    <attDef ident="value" usage="opt">
-      <gloss versionDate="2009-05-28" xml:lang="en">value</gloss>
-      <gloss versionDate="2009-05-28" xml:lang="fr">valeur</gloss>
-      <desc versionDate="2005-10-10" xml:lang="en">gives a value which lacks any realization in the printed source text.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">인쇄된 원본 텍스트에서 누락된 값을 제시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一個尚未在書面來源文件中呈現的屬性值</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">印刷されているテキスト上では欠如している情報を示す。</desc>
-      <desc versionDate="2009-05-28" xml:lang="fr">indique une valeur qui manque à un quelconque fragment du texte source imprimé.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">proporciona un valor que carece de cualquier realización en el texto fuente impreso</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">fornisce un valore privo di qualsiasi realizzazione nel testo di origine a mezzo stampa.</desc>
-      <datatype><dataRef key="teidata.text"/></datatype>
-    </attDef>
-    <attDef ident="location" usage="opt">
-      <gloss versionDate="2009-05-28" xml:lang="en">location</gloss>
-      <gloss versionDate="2009-05-28" xml:lang="fr">localisation</gloss>
-      <desc versionDate="2013-12-08" xml:lang="en">indicates an <gi>anchor</gi> element typically elsewhere in the document, but possibly in another document, 
-                which is the original location of this component.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">문서의 다른 위치에서 이 성분의 원본 위치를 지시하는 <gi>anchor</gi> 요소에 대한 참조를 제공한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">參照到文件中的元素<gi>anchor</gi>，指出此元件的原文位置。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該要素の元の場所を特定する要素<gi>anchor</gi>への参照を示す。</desc>
-      <desc versionDate="2009-05-28" xml:lang="fr">fournit une référence à un élément <gi>anchor</gi> se trouvant ailleurs dans le document TEI, pour indiquer la localisation de ce composant.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">proporciona una referencia a un elemento <gi>anchor</gi> que aparece en algún punto del documento indicando la localización original de ese componente.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">fornisce un riferimento per un elemento <gi>anchor</gi> in una altra porzione del documento indicando la localizzazione origiraria del componente.</desc>
-      <datatype><dataRef key="teidata.pointer"/></datatype>
-    </attDef>
-    <attDef ident="mergedIn" usage="opt">
-      <gloss versionDate="2020-12-20" xml:lang="en">merged into</gloss>
-      <gloss versionDate="2009-05-28" xml:lang="fr">fusionné</gloss>
-      <desc versionDate="2007-07-04" xml:lang="en">gives a reference to another element, where the original appears as a merged form.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">다른 요소에 대한 참조를 제시하며, 여기서 원본은 통합형이다.</desc>
-      <desc versionDate="2008-04-06" xml:lang="es">proporciona una referencia a otro elemento, donde el original aparece como una forma combinada.</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">元データが統合されて出現している、ある要素への参照を示す。</desc>
-      <desc versionDate="2008-03-30" xml:lang="fr">donne une référence à un autre élément, où
-l'original apparaît comme une forme fusionnée.</desc>
-      <desc versionDate="2007-11-06" xml:lang="it">fa riferimento a un altro elemento, laddove quello originale si presenti come forma risultanteda una fusione.</desc>
-      <datatype><dataRef key="teidata.pointer"/></datatype>
-    </attDef>
-    <attDef ident="opt" usage="opt">
-      <gloss versionDate="2007-07-04" xml:lang="en">optional</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">수의적</gloss>
-      <gloss versionDate="2008-04-06" xml:lang="es">facultativo</gloss>
-      <gloss versionDate="2009-05-28" xml:lang="fr">facultatif</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">facoltativo</gloss>
-      <desc versionDate="2005-10-10" xml:lang="en">indicates whether the element is optional or not.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">요소가 수의적인지 아닌지를 나타낸다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該元素是否必備</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該要素が選択的かどうかを示す。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">indique si l'élément est facultatif ou pas.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica si el elemento es opcional o no.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica se l'elemento è opzionale o meno.</desc>
-      <datatype><dataRef key="teidata.truthValue"/></datatype>
-      <defaultVal>false</defaultVal>
-    </attDef>
-  </attList>
-  <listRef>
-    <ptr target="#DIEN" type="div3"/>
-  </listRef>
-</classSpec>
-<classSpec module="tei" type="atts" ident="att.partials">
-  <desc versionDate="2016-06-29" xml:lang="en">provides attributes for describing the extent of lexical references for a dictionary term.</desc>
-  <desc versionDate="2023-08-24" xml:lang="ja">辞書用語の語彙参照の範囲を記述する属性を提供する。</desc>
-  <attList>
-    <attDef ident="extent" usage="opt">
-      <desc versionDate="2016-06-29" xml:lang="en">indicates whether the pronunciation or orthography applies to all or part of a word.</desc>
-      <desc versionDate="2016-06-29" xml:lang="fr">indique si la prononciation ou orthographie se rapporte au mot entier ou seulement à une partie.</desc>
-      <!-- <desc versionDate="2007-12-20" xml:lang="ko">발음이 전체 단어 또는 부분에 대한 것인지를 표시한다.</desc>
-    <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該發音為完整或部分發音。</desc>
-    <desc versionDate="2023-08-24" xml:lang="ja">発音または正書法が単語の全部または一部に適用されるかどうかを示す。</desc>
-    <desc versionDate="2007-05-04" xml:lang="es">indica si se trata de la pronunciación de la palabra completa o de una parte.</desc>
-    <desc versionDate="2007-01-21" xml:lang="it">indica se la pronuncia riguarda l'intera parola o una sua parte.</desc> -->
-    <datatype><dataRef key="teidata.enumerated"/></datatype>
-    <valList type="semi">
-      <valItem ident="full">
-        <gloss versionDate="2005-01-14" xml:lang="en">full form</gloss>
-        <gloss versionDate="2007-06-12" xml:lang="fr">forme pleine</gloss>
-        <gloss versionDate="2007-11-06" xml:lang="it">forma completa</gloss>
-        <gloss versionDate="2007-05-04" xml:lang="es">forma completa</gloss>
-        <gloss versionDate="2023-08-24" xml:lang="ja">完全形</gloss>
-      </valItem>
-      <valItem ident="pref">
-        <gloss versionDate="2005-01-14" xml:lang="en">prefix</gloss>
-        <gloss versionDate="2007-06-12" xml:lang="fr">préfixe</gloss>
-        <gloss versionDate="2007-11-06" xml:lang="it">prefisso</gloss>
-        <gloss versionDate="2007-05-04" xml:lang="es">prefijo</gloss>
-        <gloss versionDate="2023-08-24" xml:lang="ja">接頭辞</gloss>
-      </valItem>
-      <valItem ident="suff">
-        <gloss versionDate="2005-01-14" xml:lang="en">suffix</gloss>
-        <gloss versionDate="2007-06-12" xml:lang="fr">suffixe</gloss>
-        <gloss versionDate="2007-11-06" xml:lang="it">suffisso</gloss>
-        <gloss versionDate="2007-05-04" xml:lang="es">sufijo</gloss>
-        <gloss versionDate="2023-08-24" xml:lang="ja">接尾辞</gloss>
-      </valItem>
-      <valItem ident="inf">
-        <gloss versionDate="2016-06-29" xml:lang="en">infix</gloss>
-        <gloss versionDate="2016-06-29" xml:lang="fr">infixe</gloss>
-        <gloss versionDate="2016-06-29" xml:lang="it">infisso</gloss>
-        <gloss versionDate="2016-06-29" xml:lang="es">infijteio</gloss>
-        <gloss versionDate="2023-08-24" xml:lang="ja">接中辞</gloss>
-      </valItem>
-      <valItem ident="part">
-        <gloss versionDate="2005-01-14" xml:lang="en">partial</gloss>
-        <gloss versionDate="2007-06-12" xml:lang="fr">partiel</gloss>
-        <gloss versionDate="2007-11-06" xml:lang="it">parziale</gloss>
-        <gloss versionDate="2007-05-04" xml:lang="es">parcial</gloss>
-        <gloss versionDate="2023-08-24" xml:lang="ja">一部分</gloss>
-      </valItem>
-    </valList>
-    <remarks ident="att.partials-attr.extent-remarks" versionDate="2016-06-29" xml:lang="en">
-      <p>
-        This attribute is optional, and no default value is specified, so it can be omitted if this information is not necessary.
-        <!-- 2005-01-14 [Merge this and similar attributes into a class <term>partials</term>? -Ed.] -->
-      </p>
-    </remarks>
-    <remarks ident="att.partials-attr.extent-remarks" versionDate="2023-08-24" xml:lang="ja">
-      <p>
-      この属性はオプションであり、デフォルト値は指定されていないため、この情報が不要な場合は省略することができる。
-      </p>
-    </remarks>
-    </attDef>
-  
-  </attList>
 </classSpec></div>
 <div type="div2" xml:id="DIEN"><head>The Structure of Dictionary Entries</head>
 <div type="div3" xml:id="DIENHI"><head>Hierarchical Levels</head>
@@ -46732,7 +46797,7 @@ autre), soit pour indiquer un changement dans la main, comme un changement d'éc
   <desc versionDate="2007-11-06" xml:lang="it">contiene una sequenza di lettere o segni presenti in un'abbreviazione e omessi o sostituiti nella forma estesa dell'abreviazione stessa.</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="att.editLike"/>
+    <memberOf key="att.transcriptional"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.choicePart"/>
     <memberOf key="model.pPart.editorial"/>
@@ -48406,6 +48471,7 @@ referred to by a single sigil.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.sortable"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
     <alternate minOccurs="0" maxOccurs="unbounded">
@@ -52098,6 +52164,7 @@ raiders and saved the town from capture.</desc>
     <memberOf key="att.datable"/>
     <memberOf key="att.editLike"/>
     <memberOf key="att.sortable"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.personLike"/>
   </classes>
   <content>
@@ -55144,7 +55211,7 @@ purposes.</p>
       <desc xml:lang="pt" versionDate="2018-07-09">Tabelas, fórmulas, e figuras</desc>
       <desc xml:lang="ja" versionDate="2018-07-09">図表式モジュール</desc>
     </moduleSpec></div></div>
-<div type="div1" xml:id="CC" n="23"><head>Language Corpora</head>
+<div xmlns:xi="http://www.w3.org/2001/XInclude" type="div1" xml:id="CC" n="23"><head>Language Corpora</head>
 <div type="div2" xml:id="CCDEF"><head>Varieties of Composite Text</head></div>
 <div type="div2" xml:id="CCAH"><head>Contextual Information</head>
 <elementSpec module="corpus" xml:id="gi-textDesc" ident="textDesc">
@@ -63938,7 +64005,7 @@ trees (triangles).</p>
 <div type="div2" xml:id="NHVE"><head>Fragmentation and Reconstitution of Virtual Elements</head></div>
 <div type="div2" xml:id="NHSO"><head>Stand-off Markup</head></div>
 <div type="div2" xml:id="NHNX"><head>Non-XML-based Approaches</head></div></div>
-<div type="div1" xml:id="CE" n="17"><head>Certainty, Precision, and Responsibility</head>
+<div xmlns:xi="http://www.w3.org/2001/XInclude" type="div1" xml:id="CE" n="17"><head>Certainty, Precision, and Responsibility</head>
 <div type="div2" xml:id="CECERT"><head>Levels of Certainty</head>
 <div type="div3" xml:id="CECENO"><head>Using Notes to Record Uncertainty</head></div>
 <div type="div3" xml:id="CECECE"><head>Structured Indications of Uncertainty</head>
@@ -65877,15 +65944,11 @@ processor should signal an error. </p>
   <gloss versionDate="2008-04-06" xml:lang="es">especificación de módulo</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">spécification de module</gloss>
   <gloss versionDate="2007-11-06" xml:lang="it">specifica del modulo</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">documents the structure, content, and purpose of a single
-module, i.e. a named and externally visible group of declarations.</desc>
+  <desc versionDate="2005-01-14" xml:lang="en">documents the structure, content, and purpose of a single module, i.e. a named and externally visible group of declarations.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">하나의 모듈에 대한 구조, 내용 및 목적을 기록한다. 즉, 선언의 이름과 외부적으로 가시적인 그룹</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">記錄單一模組的結構、內容、以及用途，例如：一個已命名且外部明確的宣告組。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">いちモジュールの構造、内容、目的を記録する。例えば、外部から名前で参
-  照可能な宣言集合などである。</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">documente la structure, le contenu et les
-                        fonctions d'un module, i.e. d'un groupe de déclarations nommé et 
-                        visible extérieurement.</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">いちモジュールの構造、内容、目的を記録する。例えば、外部から名前で参 照可能な宣言集合などである。</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">documente la structure, le contenu et les fonctions d'un module, i.e. d'un groupe de déclarations nommé et visible extérieurement.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">documenta la estructura, el contenido y la finalidad de un único módulo, es decir, un grupo de declaraciones específicamente indicado y visible externamente.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">documenta struttura, contenuto e scopo di un unico modulo, cioè un gruppo di dichiarazioni specificamente indicato ed esternamente visibile.</desc>
   <classes>
@@ -65896,14 +65959,14 @@ module, i.e. a named and externally visible group of declarations.</desc>
   </classes>
   <content>
     <sequence>      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.identEquiv"/>
-          <elementRef key="idno"/>
-          <classRef key="model.descLike"/>
-        </alternate>
-        <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-        <elementRef key="remarks" minOccurs="0"/>
-        <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.identEquiv"/>
+        <elementRef key="idno"/>
+        <classRef key="model.descLike"/>
+      </alternate>
+      <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="remarks" minOccurs="0"/>
+      <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
   <exemplum xml:lang="en">
@@ -65934,7 +65997,7 @@ module, i.e. a named and externally visible group of declarations.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.docStatus"/>
-    <memberOf key="att.identified"/>
+    <memberOf key="att.identified"/> <!-- except @mode removed -->
     <memberOf key="att.namespaceable"/>
     <memberOf key="model.encodingDescPart"/>
     <memberOf key="model.frontPart"/>
@@ -65955,6 +66018,7 @@ module, i.e. a named and externally visible group of declarations.</desc>
     </sequence>
   </content>
   <attList>
+    <attDef ident="mode" mode="delete"/>
     <attDef ident="start" usage="opt">
       <desc versionDate="2010-05-14" xml:lang="en">specifies entry points to the schema, i.e. which patterns may be used as the root of documents conforming to it.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">스키마에서 표제 항목 지점을 명시한다. 즉, 어떤 요소가 해당 문서의 뿌리로 사용되는 것이 허용되었는지를 명시한다.</desc>
@@ -66135,18 +66199,16 @@ module, i.e. a named and externally visible group of declarations.</desc>
   <gloss versionDate="2007-06-12" xml:lang="fr">groupe de spécifications</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">grupo de instrucciones</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">gruppo di istruzioni</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">contains any convenient grouping of specifications for use within
-  the current module.</desc>
+  <desc versionDate="2005-01-14" xml:lang="en">contains any convenient grouping of specifications for use within the current module.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">현 모듈 내에서 사용에 대한 명시를 다양한 방법의 그룹화를 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含在現有模組中的細節使用說明群組。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">当該モジュール中にある規定をまとめる。</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">contient tout regroupement approprié de
-			spécifications pour une utilisation dans le module en question.</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">contient tout regroupement approprié de spécifications pour une utilisation dans le module en question.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene cualquier agrupación funcional de instrucciones para el uso al interno del módulo corriente</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene un qualsiasi raggruppamento funzionale di istruzioni per l'uso all'interno del modulo corrente.</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="model.oddDecl"/>
+    <memberOf key="model.inter"/>
   </classes>
   <content>
     <alternate minOccurs="0" maxOccurs="unbounded">
@@ -66244,34 +66306,35 @@ contains specifications for the elements
   <gloss versionDate="2007-06-12" xml:lang="fr">référence à un groupe de spécifications</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">referencia a un grupo de instrucciones</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">riferimento a gruppo di istruzioni</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">indicates that the declarations contained by the <gi>specGrp</gi> referenced should be
-    inserted at this point.</desc>
+  <desc versionDate="2005-01-14" xml:lang="en">indicates that the declarations contained by the <gi>specGrp</gi> referenced should be inserted at this point.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">참조된 <gi>specGrp</gi>에 의해 포함된 선언은 이 지점에서 삽입되어야함을 나타낸다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">指出被參照的元素<gi>specGrp</gi>中的宣告應在此插入。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">要素<gi>specGrp</gi>により含まれる宣言が、この場所に挿入されるべきこ とを示す。</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">indique que les déclarations contenues dans l'élément
-      <gi>specGrp</gi>référencé doivent être insérées à cet endroit.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">indica el punto en el que deben inserirse las
-    declaraciones contenidas en el <gi>specGrp</gi> indicado.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">indica il punto in cui devono essere inserite le
-    dichiarazioni contenute nello <gi>specGrp</gi> indicato</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">indique que les déclarations contenues dans l'élément <gi>specGrp</gi>référencé doivent être insérées à cet endroit.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">indica el punto en el que deben inserirse las declaraciones contenidas en el <gi>specGrp</gi> indicado.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">indica il punto in cui devono essere inserite le dichiarazioni contenute nello <gi>specGrp</gi> indicato</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="model.oddDecl"/>
+    <memberOf key="model.inter"/>
+    <memberOf key="model.oddRef"/>
   </classes>
   <content><empty/></content>
+  <constraintSpec scheme="schematron" ident="specGrpRef_in_specGrp_or_schemaSpec" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="oddDecls_in_specGrp_or_schemaSpec">
+        <sch:param name="toe" value="tei:specGrpRef"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="target" usage="req">
       <desc versionDate="2005-01-14" xml:lang="en">points at the specification group which logically belongs here.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">여기에 국부적으로 소속된 명시 그룹을 가리킨다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指向照理屬於此位置的說明群組。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">論理的にはこの場素にある規定グループを参照する。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers l'élément <gi>specGrp</gi> qui doit
-        logiquement être référencé à cet endroit.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica el grupo de instrucciones que por lógica
-        corresponde a ese punto en cuestión.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica il gruppo di istruzioni che per logica
-        corrisponde al punto in questione</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">pointe vers l'élément <gi>specGrp</gi> qui doit logiquement être référencé à cet endroit.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica el grupo de instrucciones que por lógica corresponde a ese punto en cuestión.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica il gruppo di istruzioni che per logica corrisponde al punto in questione</desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
     </attDef>
   </attList>
@@ -66406,6 +66469,13 @@ contains specifications for the elements
       <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="elementSpec_in_specGrp_or_schemaSpec" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="oddDecls_in_specGrp_or_schemaSpec">
+        <sch:param name="toe" value="tei:elementSpec"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <constraintSpec scheme="schematron" ident="child-constraint-based-on-mode" xml:lang="en">
     <!-- 
          This constraint specification is much like the
@@ -66520,7 +66590,7 @@ contains specifications for the elements
     <ptr target="#TD"/>
   </listRef>
 </elementSpec>
-<elementSpec module="tagdocs" xml:id="gi-classSpec" ident="classSpec">
+<elementSpec module="tagdocs" ident="classSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">class specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">부류 명시</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -66528,17 +66598,11 @@ contains specifications for the elements
   <gloss versionDate="2007-06-12" xml:lang="fr">spécification de classe</gloss>
   <gloss versionDate="2007-11-06" xml:lang="it">indicazione di classe</gloss>
   <gloss versionDate="2024-02-28" xml:lang="ja">クラス仕様</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">contains reference information for a TEI element class; 
-that is a group of 
-  elements which appear together in  content models, or 
-  which share some common attribute, or both.</desc>
+  <desc versionDate="2005-01-14" xml:lang="en">contains reference information for a TEI element class; that is a group of elements which appear together in  content models, or which share some common attribute, or both.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">TEI 요소 부류에 대한 참조 정보를 포함한다; 이것은 내용 모델에서 함께 나타나거나, 공통 속성을 공유하거나, 이 둘을 포괄하는 요소들의 그룹이다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一個TEI元素集的參照資訊；元素集是一群在內容模組中同時出現、或共用某些屬性、或兩者皆包括的元素。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">TEI要素クラスにおける参照情報を示す。内容モデルに出現する要素のまと
-  まり、共通する属性のまとまり、またはその両方。</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">contient des informations de référence pour une
-			classe d'éléments  TEI, c'est-à-dire un groupe d'éléments qui figurent ensemble
-			dans des modèles de contenu ou qui partagent un attribut commun, ou qui ont l'un et l'autre.</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">TEI要素クラスにおける参照情報を示す。内容モデルに出現する要素のまと まり、共通する属性のまとまり、またはその両方。</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">contient des informations de référence pour une classe d'éléments  TEI, c'est-à-dire un groupe d'éléments qui figurent ensemble dans des modèles de contenu ou qui partagent un attribut commun, ou qui ont l'un et l'autre.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene informaciones relativas a una clase de elementos TEI, es decir, a un grupo de elementos que aparecen juntos en modelos de contenido, o que tienen algunos atributos en común, o ambas cosas.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene informazioni relative a una classe di elementi TEI, cioè un gruppo di elementi che compaiono insieme in modelli di contenuto, oppure che hanno alcuni attributi in comune, o entrambe le cose.</desc>
   <classes>
@@ -66561,6 +66625,13 @@ that is a group of
         <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="classSpec_in_specGrp_or_schemaSpec" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="oddDecls_in_specGrp_or_schemaSpec">
+        <sch:param name="toe" value="tei:classSpec"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="type" mode="change" usage="req">
       <desc versionDate="2005-10-05" xml:lang="en">indicates whether this is a model class or an attribute class</desc>
@@ -66583,8 +66654,7 @@ that is a group of
           <desc versionDate="2007-12-20" xml:lang="ko">이 부류의 원소는 동일 내용 모델에서 나타난다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素集的元素出現在相同的內容模組中</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">内容モデルクラス。</desc>
-          <desc versionDate="2007-06-12" xml:lang="fr">les membres de cette classe
-							figurent dans les mêmes modèles de contenu</desc>
+          <desc versionDate="2007-06-12" xml:lang="fr">les membres de cette classe figurent dans les mêmes modèles de contenu</desc>
           <desc versionDate="2007-05-04" xml:lang="es">los miembros de esta clase aparecen en los mismos modelos de contenido.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">i membri di questa classe compaiono negli stessi modelli di contenuto.</desc>
         </valItem>
@@ -66599,24 +66669,18 @@ that is a group of
           <desc versionDate="2007-12-20" xml:lang="ko">이 부류의 원소는 공통 속성을 공유한다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素集的元素有共用的屬性</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">属性クラス。</desc>
-          <desc versionDate="2007-06-12" xml:lang="fr">les membres de cette classe
-							partagent des attributs communs</desc>
+          <desc versionDate="2007-06-12" xml:lang="fr">les membres de cette classe partagent des attributs communs</desc>
           <desc versionDate="2007-05-04" xml:lang="es">los miembros de esta clase tienen algunos atributos comunes.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">i membri di questa classe hanno alcuni attributi in comune.</desc>
         </valItem>
       </valList>
     </attDef>
     <attDef ident="generate" usage="opt">
-      <desc versionDate="2007-10-23" xml:lang="en">indicates which alternation and sequence instantiations
-	of a model class may be referenced. By default, all variations
-	are permitted.</desc>
+      <desc versionDate="2007-10-23" xml:lang="en">indicates which alternation and sequence instantiations of a model class may be referenced. By default, all variations are permitted.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">모델 부류의 교체 및 일련의 인스턴스 생성이 참조될 수 있음을 나타낸다. 기본적으로 모든 변이형이 허용된다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">說明應該建立結構元素集的哪些替換及順序作業實例。在預設的情形下，會提供所有的變數。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">モデルクラスのインスタンスとしてある選択肢を示す。デフォルトでは、
-      あらゆるものが可能である。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">donne les règles régissant  dans une
-					instance TEI  l'ordre et l'alternance des éléments définis par la classe. Par
-					défaut, toutes les variations sont données.</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">モデルクラスのインスタンスとしてある選択肢を示す。デフォルトでは、 あらゆるものが可能である。</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">donne les règles régissant  dans une instance TEI  l'ordre et l'alternance des éléments définis par la classe. Par défaut, toutes les variations sont données.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica que alternancia y que tipos de secuencia se establecen para una clase de modelos; por defecto se indican todas las variaciones.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica quale alternanza e quali tipi di sequenza stabilire per una classe di modelli; di norma sono indicate tutte le variazioni.</desc>
       <datatype maxOccurs="5"><dataRef key="teidata.enumerated"/></datatype>
@@ -66626,8 +66690,7 @@ that is a group of
           <desc versionDate="2007-12-20" xml:lang="ko">부류의 원소들은 선택가능 항목이다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素集的元素是替換元素</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">当該クラスの構成要素は、選択的である。</desc>
-          <desc versionDate="2007-06-12" xml:lang="fr">les membres de la classe
-							constituent des alternatives</desc>
+          <desc versionDate="2007-06-12" xml:lang="fr">les membres de la classe constituent des alternatives</desc>
           <desc versionDate="2007-05-04" xml:lang="es">los miembros de las clase estan en relación de alternancia.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">i membri della classe sono in relatione di alternanza.</desc>
         </valItem>
@@ -66636,31 +66699,26 @@ that is a group of
           <desc versionDate="2007-12-20" xml:lang="ko">부류의 원소는 차례대로 제시된다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素集的元素會依序呈現</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">当該クラスの構成要素は、リストとしてある。</desc>
-          <desc versionDate="2007-06-12" xml:lang="fr">les membres de la classe doivent
-							tous être donnés dans l'ordre indiqué</desc>
+          <desc versionDate="2007-06-12" xml:lang="fr">les membres de la classe doivent tous être donnés dans l'ordre indiqué</desc>
           <desc versionDate="2007-05-04" xml:lang="es">los miembros de las clase se indican en secuencia.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">i membri della classe devono essere indicati in sequenza.</desc>
         </valItem>
         <valItem ident="sequenceOptional">
           <desc versionDate="2007-04-15" xml:lang="en">members of the class may be provided, in sequence,
-	    but are optional</desc>
+            but are optional</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">부류의 원소는 차례대로 제시될 수 있지만 수의적이다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素集的元素可依序呈現，但非必須</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">当該クラスの構成要素は、リストから選択される。</desc>
-          <desc versionDate="2007-06-12" xml:lang="fr">les membres de la classe peuvent
-							être donnés, dans l'ordre indiqué, mais sont facultatifs</desc>
+          <desc versionDate="2007-06-12" xml:lang="fr">les membres de la classe peuvent être donnés, dans l'ordre indiqué, mais sont facultatifs</desc>
           <desc versionDate="2007-05-04" xml:lang="es">los miembros de la clase pueden proporcionarse en modo de secuencia pero son opcionales.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">i membri della classe possono essere indicati in sequenza ma sono facoltativi.</desc>
         </valItem>
         <valItem ident="sequenceOptionalRepeatable">
-          <desc versionDate="2007-04-15" xml:lang="en">members of the class may be provided one or more
-	    times, in sequence, but are optional.</desc>
+          <desc versionDate="2007-04-15" xml:lang="en">members of the class may be provided one or more times, in sequence, but are optional.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">부류의 원소들은 한 번 이상 그리고 차례대로 제시될 수 있지만 수의적이다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素集的元素可一次或多次依序呈現，但非必須</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">当該クラスの構成要素は、リストから1つ以上が選択される。</desc>
-          <desc versionDate="2007-06-12" xml:lang="fr">les membres de la classe peuvent
-							être donnés une ou plusieurs fois, dans l'ordre indiqué, mais sont
-							facultatifs</desc>
+          <desc versionDate="2007-06-12" xml:lang="fr">les membres de la classe peuvent être donnés une ou plusieurs fois, dans l'ordre indiqué, mais sont facultatifs</desc>
           <desc versionDate="2007-05-04" xml:lang="es">los miembros de la clase pueden indicarse una o más ocasiones en secuencia, pero son opcionales.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">i membri della classe possono essere indicati una o più volte in sequenza ma sono facoltativi.</desc>
         </valItem>
@@ -66669,8 +66727,7 @@ that is a group of
           <desc versionDate="2007-12-20" xml:lang="ko">부류의 원소들은 차례대로 한 번 이상 제시될 수 있다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素集的元素可一次或多次依序呈現</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">当該クラスの構成要素は、リストから1つ以上が選択される。</desc>
-          <desc versionDate="2007-06-12" xml:lang="fr">les membres de la classe doivent
-							être donnés au moins une fois, dans l'ordre indiqué.</desc>
+          <desc versionDate="2007-06-12" xml:lang="fr">les membres de la classe doivent être donnés au moins une fois, dans l'ordre indiqué.</desc>
           <desc versionDate="2007-05-04" xml:lang="es">miembros de la clase pueden ser indicados una o más veces en secuencia.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">i membri della classe possono essere indicati una o più volte in sequenza.</desc>
         </valItem>
@@ -66686,9 +66743,10 @@ that is a group of
         </classes>
         <remarks>
           <p>The principles on which segmentation is carried out, and
-any special codes or attribute values used, should be defined explicitly
-in the <gi>segmentation</gi> element of the <gi>encodingDesc</gi> within
-the associated TEI header.</p>
+            any special codes or attribute values used, should be
+            defined explicitly in the <gi>segmentation</gi> element of
+            the <gi>encodingDesc</gi> within the associated TEI
+            header.</p>
         </remarks>
       </classSpec>
     </egXML>
@@ -66755,6 +66813,13 @@ the associated TEI header.</p>
       <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="dataSpec_in_specGrp_or_schemaSpec" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="oddDecls_in_specGrp_or_schemaSpec">
+        <sch:param name="toe" value="tei:dataSpec"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <constraintSpec scheme="schematron" ident="no_elements_in_data_content" xml:lang="en">
     <constraint>
       <sch:rule role="warn" context="tei:dataSpec/tei:content">
@@ -66817,6 +66882,13 @@ the associated TEI header.</p>
       <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="macroSpec_in_specGrp_or_schemaSpec" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="oddDecls_in_specGrp_or_schemaSpec">
+        <sch:param name="toe" value="tei:macroSpec"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-macroSpec-egXML-hw" source="#UND">
       <macroSpec module="tei" ident="macro.phraseSeq">
@@ -68138,6 +68210,13 @@ déclaration de même nom dans la définition courante.</desc>
   <content>
     <textNode/>
   </content>
+  <constraintSpec scheme="schematron" ident="outputRendition_in_specGrp_or_schemaSpec" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="oddDecls_in_specGrp_or_schemaSpec">
+        <sch:param name="toe" value="tei:outputRendition"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="scope">
       <desc versionDate="2016-02-05" xml:lang="en">provides a way of defining
@@ -68686,13 +68765,6 @@ déclaration de même nom dans la définition courante.</desc>
   <content>
     <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
   </content>
-  <constraintSpec ident="sequencechilden" scheme="schematron" xml:lang="en">
-    <constraint>
-      <sch:rule context="tei:sequence">
-        <sch:assert test="count(*) gt 1">The &lt;sequence&gt; element must have at least two child elements.</sch:assert>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <attList>
     <attDef ident="preserveOrder" validUntil="2027-05-06">
       <desc type="deprecationInfo" versionDate="2024-03-15" xml:lang="en">The <att>preserveOrder</att> on <gi>sequence</gi> has been deprecated. The <gi>interleave</gi> element should be used to denote unordered constructs.</desc>
@@ -68747,13 +68819,6 @@ déclaration de même nom dans la définition courante.</desc>
       -->
     </alternate>
   </content>
-  <constraintSpec ident="alternatechilden" scheme="schematron" xml:lang="en">
-    <constraint>
-      <sch:rule context="tei:alternate">
-        <sch:assert test="count(*) gt 1">The alternate element must have at least two child elements.</sch:assert>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-alternate-egXML-eg" xml:lang="en" source="#UND"><content>
       <alternate>
@@ -68779,13 +68844,6 @@ déclaration de même nom dans la définition courante.</desc>
   <content>
     <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
   </content>
-  <constraintSpec ident="interleavechilden" scheme="schematron" xml:lang="en">
-    <constraint>
-      <sch:rule context="tei:interleave">
-        <sch:assert test="count(*) gt 1">The &lt;interleave&gt; element must have at least two child elements.</sch:assert>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#UND">
       <content>
@@ -68805,18 +68863,21 @@ déclaration de même nom dans la définition courante.</desc>
     <gi>note</gi> element, in any order.</p>
     <p>To express this content model in a DTD, the original schema
     language for XML, one might use
-    <eg xml:space="preserve">(   persName
-      | ( persName, note )
-      | ( persName, ( placeName | location ) ) 
-      | ( note, persName )
-      | ( ( placeName | location ), persName )
-      | ( persName, note, ( placeName | location ) )
-      | ( persName, ( placeName | location ), note )
-      | ( note, persName, ( placeName | location ) )
-      | ( note, ( placeName | location ), persName )
-      | ( ( placeName | location ), note, persName )
-      | ( ( placeName | location ), persName, note )
-    )</eg></p>
+    <eg xml:space="preserve">( ( location,  (   ( note,                   persName? ) | ( persName, note?                     ) )? )
+| ( note,      ( ( ( location | placeName ), persName? ) | ( persName, ( location | placeName )? ) )? )
+| ( persName,  ( ( ( location | placeName ), note?     ) | ( note,     ( location | placeName )? ) )? )
+| ( placeName, (   ( note,                   persName? ) | ( persName, note?                     ) )? )
+)</eg></p>
+<!-- also deterministic, aka non-ambiguous; and more what I would
+     probably write, but a bit less easy to make sense of:
+(
+  ( persName, ( ( ( placeName | location ), note? ) | ( note, ( placeName | location )? ) )? )
+|
+  ( ( placeName | location ), ( ( note, persName? ) | ( persName, note? ) )? )
+|
+  ( note, ( ( ( placeName | location ), persName? ) | ( persName, ( placeName | location )? ) )? )
+)
+ — Syd, 2026-08-15 -->
   </exemplum>
   <remarks ident="interleave-remarks" xml:lang="en" versionDate="2025-05-18">
     <p>If an ODD file makes use of this element, current processing
@@ -68981,6 +69042,13 @@ déclaration de même nom dans la définition courante.</desc>
       <elementRef key="constraint" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="constraintSpec_in_specGrp_or_schemaSpec" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="oddDecls_in_specGrp_or_schemaSpec">
+        <sch:param name="toe" value="tei:constraintSpec"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <constraintSpec scheme="schematron" ident="empty-based-on-mode" xml:lang="en">
     <!-- 
          This constraint specification is much like the
@@ -70308,14 +70376,16 @@ an attribute may take, additional to the information carried by the
   </classes>
   <content><empty/></content>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-empty-egXML-rz" source="#UND">
-      <content>
-        <alternate minOccurs="0" maxOccurs="unbounded">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-empty-egXML-sz" source="#UND">
+      <elementSpec module="core" ident="milestone">
+        <!-- [...] -->
+        <content>
           <empty/>
-          <elementRef key="hi"/>
-        </alternate>
-      </content>
+        </content>
+        <!-- [...] -->
+      </elementSpec>
     </egXML>
+    <p>This example is an abbreviated form of the specification for <gi>milestone</gi>.</p>
   </exemplum>
   <listRef>
     <ptr target="#TD"/>
@@ -70497,7 +70567,7 @@ an attribute may take, additional to the information carried by the
          (or <teiCorpus); and
       2) in a file that has at least one <moduleSpec> or <moduleRef>,
          because if there are no <moduleSpec>s nor <moduleRef>s, there
-         cannot be one that is refered to by this @module attribute.
+         cannot be one that is referred to by this @module attribute.
       The result of (1) is that we ignore the various sub-files that
       make up P5 (and other similar cases); the result of (2) is that
       we ignore most customization files. The good news is that
@@ -70516,7 +70586,7 @@ an attribute may take, additional to the information carried by the
   </constraintSpec>
   <attList>
     <attDef ident="ident" usage="req">
-      <desc versionDate="2012-12-27" xml:lang="en">supplies the identifier by which this element may be referenced.</desc>
+      <desc versionDate="2026-05-06" xml:lang="en">supplies the identifier by which this ODD specification element may be referenced.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이 요소가 참조된 확인소를 제공한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">提供被參照的元素的識別符號。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該要素を参照する識別子を示す。</desc>
@@ -70524,6 +70594,9 @@ an attribute may take, additional to the information carried by the
       <desc versionDate="2007-05-04" xml:lang="es">proporciona el identificador utilizado para indicar un elemento.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica l'identificatore utilizzato per indicare l'elemento.</desc>
       <datatype><dataRef key="teidata.name"/></datatype>
+      <remarks ident="ident-remarks" versionDate="2026-08-17" xml:lang="en"><p>
+        When <att>ident</att> is on <gi>elementSpec.</gi> or <gi>attDef</gi> the attribute will also define the local name of the XML construct being defined, unless an <gi>altIdent</gi> or <att>prefix</att> is provided.
+      </p></remarks>
     </attDef>
     <attDef ident="predeclare" usage="opt">
       <desc versionDate="2012-12-27" xml:lang="en">says whether this object should be predeclared in the
@@ -71428,7 +71501,8 @@ an attribute may take, additional to the information carried by the
 <bibl xml:id="RFC4151"><!-- This <bibl> is a stub that is actually a <biblStruct> in the source --></bibl></div></div></div>
 <div type="div1" xml:id="DEPRECATIONS"><head>Deprecations</head>
 <div><head>Items Scheduled to be Removed</head></div>
-<div><head>Item Scheduled to become Required</head></div></div>
+<div><head>Item Scheduled to become Required</head></div>
+<div><head>Other Items</head></div></div>
 <div xml:id="PREFS"><head>Prefatory Notes</head>
 <div xml:id="p5pf01"><head>Prefatory Note (November 2007)</head></div>
 <div xml:id="p4pf02"><head>Prefatory Note (March 2002)</head></div>

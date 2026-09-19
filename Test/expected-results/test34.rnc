@@ -466,6 +466,17 @@ tei_att.fragmentable.attribute.part =
       ## (final) this is the final part of a fragmented element
       "F"
   }?
+tei_att.global.editorialStatus.attributes =
+  tei_att.global.editorialStatus.attribute.edStatus
+tei_att.global.editorialStatus.attribute.edStatus =
+  
+  ## (editorial status) documents the editorial status of the element bearing this attribute.
+  ## Sample values include: 1] draft; 2] candidate; 3] expired; 4] frozen; 5] proposed; 6] proofed; 7] submitted; 8] unfinished; 9] unpublished; 10] published; 11] cross-checked; 12] approved; 13] cleared; 14] deprecated
+  attribute edStatus {
+    list {
+      xsd:token { pattern = "[^\p{C}\p{Z}]+" }+
+    }
+  }?
 tei_att.global.rendition.attributes =
   tei_att.global.rendition.attribute.rend,
   tei_att.global.rendition.attribute.style,
@@ -1139,6 +1150,7 @@ tei_att.divLike.attribute.sample =
       "complete"
   }?
 tei_att.global.attributes =
+  tei_att.global.editorialStatus.attributes,
   tei_att.global.linking.attributes,
   tei_att.global.rendition.attributes,
   tei_att.global.responsibility.attributes,
@@ -1657,6 +1669,34 @@ tei_model.oddDecl_sequence = empty
 tei_model.oddDecl_sequenceOptional = empty
 tei_model.oddDecl_sequenceOptionalRepeatable = empty
 tei_model.oddDecl_sequenceRepeatable = notAllowed
+sch:pattern [
+  id = "oddDecls_in_specGrp_or_schemaSpec"
+  abstract = "true"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "$toe"
+    "\x{a}" ~
+    "         "
+    sch:assert [
+      test =
+        "ancestor::tei:specGrp | ancestor::tei:schemaSpec | ancestor::tei:egXML"
+      "\x{a}" ~
+      "            DEPRECATION WARNING: Sometime after 2028-03-09 the <"
+      sch:value-of [ select = "name(.)" ]
+      ">\x{a}" ~
+      "            element will no longer be allowed as a child of <"
+      sch:value-of [ select = "name(..)" ]
+      ">;\x{a}" ~
+      "            it will need to be a descendant of either a <specGrp> or a <schemaSpec>.\x{a}" ~
+      "          "
+    ]
+    "\x{a}" ~
+    "      "
+  ]
+  "\x{a}" ~
+  "   "
+]
 tei_model.phrase.xml = notAllowed
 tei_model.phrase.xml_alternation = notAllowed
 tei_model.phrase.xml_sequence = empty
@@ -2106,7 +2146,7 @@ tei_att.calendarSystem.attribute.calendar =
   }?
 sch:pattern [
   id =
-    "foo-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-10"
+    "foo-att.calendarSystem-calendar-calendar_attr_on_empty_element-constraint-rule-11"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -2191,7 +2231,7 @@ tei_p =
     tei_macro.paraContent
     >> sch:pattern [
          id =
-           "foo-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-11"
+           "foo-p-abstractModel-structure-p-in-ab-or-p-constraint-rule-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2212,7 +2252,7 @@ tei_p =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-p-abstractModel-structure-p-in-l-constraint-rule-12"
+         id = "foo-p-abstractModel-structure-p-in-l-constraint-rule-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2422,7 +2462,7 @@ tei_desc =
     tei_macro.limitedContent
     >> sch:pattern [
          id =
-           "foo-desc-deprecationInfo-only-in-deprecated-constraint-rule-13"
+           "foo-desc-deprecationInfo-only-in-deprecated-constraint-rule-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2519,7 +2559,7 @@ tei_rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "foo-rt-target-rt-target-not-span-constraint-rule-14"
+         id = "foo-rt-target-rt-target-not-span-constraint-rule-15"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2542,7 +2582,7 @@ tei_rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "foo-rt-from-rt-from-constraint-rule-15"
+         id = "foo-rt-from-rt-from-constraint-rule-16"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2567,7 +2607,7 @@ tei_rt =
        xsd:anyURI { pattern = "\S+" }
      }?)
     >> sch:pattern [
-         id = "foo-rt-to-rt-to-constraint-rule-16"
+         id = "foo-rt-to-rt-to-constraint-rule-17"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2782,6 +2822,7 @@ tei_rs =
     tei_macro.phraseSeq,
     tei_att.global.attributes,
     tei_att.cmc.attributes,
+    tei_att.datable.attributes,
     tei_att.naming.attributes,
     tei_att.typed.attributes,
     empty
@@ -2995,7 +3036,7 @@ tei_ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "foo-ptr-ptrAtts-constraint-rule-17"
+         id = "foo-ptr-ptrAtts-constraint-rule-18"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3029,7 +3070,7 @@ tei_ref =
   element ref {
     tei_macro.paraContent
     >> sch:pattern [
-         id = "foo-ref-refAtts-constraint-rule-18"
+         id = "foo-ref-refAtts-constraint-rule-19"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3068,7 +3109,7 @@ tei_list =
          (tei_label, tei_model.global*, tei_item, tei_model.global*)+)),
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-list-gloss-list-must-have-labels-constraint-rule-19"
+         id = "foo-list-gloss-list-must-have-labels-constraint-rule-20"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3610,7 +3651,7 @@ tei_relatedItem =
   element relatedItem {
     ((tei_model.biblLike | tei_model.ptrLike)?)
     >> sch:pattern [
-         id = "foo-relatedItem-targetorcontent1-constraint-rule-20"
+         id = "foo-relatedItem-targetorcontent1-constraint-rule-21"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3654,7 +3695,7 @@ tei_l =
       | tei_model.inter
       | tei_model.global)*)
     >> sch:pattern [
-         id = "foo-l-abstractModel-structure-l-in-l-constraint-rule-21"
+         id = "foo-l-abstractModel-structure-l-in-l-constraint-rule-22"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3695,7 +3736,7 @@ tei_lg =
       | tei_lg)*,
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-lg-atleast1oflggapl-constraint-rule-22"
+         id = "foo-lg-atleast1oflggapl-constraint-rule-23"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3715,7 +3756,7 @@ tei_lg =
        ]
     >> sch:pattern [
          id =
-           "foo-lg-abstractModel-structure-lg-in-l-constraint-rule-23"
+           "foo-lg-abstractModel-structure-lg-in-l-constraint-rule-24"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4259,7 +4300,7 @@ tei_quotation =
   element quotation {
     (tei_model.pLike*)
     >> sch:pattern [
-         id = "foo-quotation-quotationContents-constraint-rule-24"
+         id = "foo-quotation-quotationContents-constraint-rule-25"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4514,7 +4555,7 @@ tei_citeStructure =
     attribute match { text }
     >> sch:pattern [
          id =
-           "foo-citeStructure-match-citestructure-outer-match-constraint-rule-25"
+           "foo-citeStructure-match-citestructure-outer-match-constraint-rule-26"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4535,7 +4576,7 @@ tei_citeStructure =
        ]
     >> sch:pattern [
          id =
-           "foo-citeStructure-match-citestructure-inner-match-constraint-rule-26"
+           "foo-citeStructure-match-citestructure-inner-match-constraint-rule-27"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5126,7 +5167,7 @@ tei_div =
       (tei_model.divBottom, tei_model.global*)*)?)
     >> sch:pattern [
          id =
-           "foo-div-abstractModel-structure-div-in-l-constraint-rule-27"
+           "foo-div-abstractModel-structure-div-in-l-constraint-rule-28"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5147,7 +5188,7 @@ tei_div =
        ]
     >> sch:pattern [
          id =
-           "foo-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-28"
+           "foo-div-abstractModel-structure-div-in-ab-or-p-constraint-rule-29"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5633,7 +5674,7 @@ tei_link =
   element link {
     empty
     >> sch:pattern [
-         id = "foo-link-linkTargets3-constraint-rule-29"
+         id = "foo-link-linkTargets3-constraint-rule-30"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5675,7 +5716,7 @@ tei_ab =
     tei_macro.abContent
     >> sch:pattern [
          id =
-           "foo-ab-abstractModel-structure-ab-in-l-constraint-rule-30"
+           "foo-ab-abstractModel-structure-ab-in-l-constraint-rule-31"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -5858,7 +5899,7 @@ tei_join =
   element join {
     ((tei_model.descLike | tei_model.certLike)*)
     >> sch:pattern [
-         id = "foo-join-joinTargets3-constraint-rule-31"
+         id = "foo-join-joinTargets3-constraint-rule-32"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -6058,6 +6099,7 @@ tei_annotation =
     tei_att.global.attribute.xmllang,
     tei_att.global.attribute.xmlbase,
     tei_att.global.attribute.xmlspace,
+    tei_att.global.editorialStatus.attribute.edStatus,
     tei_att.global.linking.attribute.corresp,
     tei_att.global.linking.attribute.synch,
     tei_att.global.linking.attribute.sameAs,

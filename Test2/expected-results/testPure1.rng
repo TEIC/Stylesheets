@@ -899,6 +899,24 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
          </attribute>
       </optional>
    </define>
+   <define name="t_att.global.editorialStatus.attributes">
+      <ref name="t_att.global.editorialStatus.attribute.edStatus"/>
+   </define>
+   <define name="t_att.global.editorialStatus.attribute.edStatus">
+      <optional>
+         <attribute name="edStatus">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(editorial status) documents the editorial status of the element bearing this attribute.
+Sample values include: 1] draft; 2] candidate; 3] expired; 4] frozen; 5] proposed; 6] proofed; 7] submitted; 8] unfinished; 9] unpublished; 10] published; 11] cross-checked; 12] approved; 13] cleared; 14] deprecated</a:documentation>
+            <list>
+               <oneOrMore>
+                  <data type="token">
+                     <param name="pattern">[^\p{C}\p{Z}]+</param>
+                  </data>
+               </oneOrMore>
+            </list>
+         </attribute>
+      </optional>
+   </define>
    <define name="t_att.global.rendition.attributes">
       <ref name="t_att.global.rendition.attribute.rend"/>
       <ref name="t_att.global.rendition.attribute.style"/>
@@ -1675,6 +1693,7 @@ Sample values include: 1] all; 2] most; 3] range</a:documentation>
    </define>
    <define name="t_att.global.attributes">
       <ref name="t_att.global.analytic.attributes"/>
+      <ref name="t_att.global.editorialStatus.attributes"/>
       <ref name="t_att.global.linking.attributes"/>
       <ref name="t_att.global.rendition.attributes"/>
       <ref name="t_att.global.responsibility.attributes"/>
@@ -3066,6 +3085,19 @@ Sample values include: 1] duplicate; 2] duplicate-partial; 3] excessStart; 4] ex
    <define name="t_model.oddDecl_sequenceRepeatable">
       <notAllowed/>
    </define>
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                xmlns:xi="http://www.w3.org/2001/XInclude"
+                abstract="true">
+      <sch:rule context="$toe">
+         <sch:assert test="ancestor::tei:specGrp | ancestor::tei:schemaSpec | ancestor::tei:egXML">
+            DEPRECATION WARNING: Sometime after 2028-03-09 the &lt;<sch:value-of select="name(.)"/>&gt;
+            element will no longer be allowed as a child of &lt;<sch:value-of select="name(..)"/>&gt;;
+            it will need to be a descendant of either a &lt;specGrp&gt; or a &lt;schemaSpec&gt;.
+          </sch:assert>
+      </sch:rule>
+   </sch:pattern>
    <define name="t_model.phrase.xml">
       <choice>
          <ref name="t_gi"/>
@@ -4912,6 +4944,7 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
          <ref name="t_macro.phraseSeq"/>
          <ref name="t_att.global.attributes"/>
          <ref name="t_att.cmc.attributes"/>
+         <ref name="t_att.datable.attributes"/>
          <ref name="t_att.naming.attributes"/>
          <ref name="t_att.typed.attributes"/>
          <empty/>
@@ -5095,6 +5128,7 @@ Measures]</a:documentation>
          <ref name="t_att.global.attribute.xmlbase"/>
          <ref name="t_att.global.attribute.xmlspace"/>
          <ref name="t_att.global.analytic.attribute.ana"/>
+         <ref name="t_att.global.editorialStatus.attribute.edStatus"/>
          <ref name="t_att.global.linking.attribute.sameAs"/>
          <ref name="t_att.global.linking.attribute.next"/>
          <ref name="t_att.global.linking.attribute.prev"/>
@@ -7926,6 +7960,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <ref name="t_att.global.attribute.xmllang"/>
          <ref name="t_att.global.attribute.xmlbase"/>
          <ref name="t_att.global.attribute.xmlspace"/>
+         <ref name="t_att.global.editorialStatus.attribute.edStatus"/>
          <ref name="t_att.global.linking.attribute.corresp"/>
          <ref name="t_att.global.linking.attribute.sameAs"/>
          <ref name="t_att.global.linking.attribute.copyOf"/>
@@ -8918,6 +8953,7 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
          <ref name="t_att.global.attribute.xmlbase"/>
          <ref name="t_att.global.attribute.xmlspace"/>
          <ref name="t_att.global.analytic.attribute.ana"/>
+         <ref name="t_att.global.editorialStatus.attribute.edStatus"/>
          <ref name="t_att.global.linking.attribute.corresp"/>
          <ref name="t_att.global.linking.attribute.sameAs"/>
          <ref name="t_att.global.linking.attribute.copyOf"/>

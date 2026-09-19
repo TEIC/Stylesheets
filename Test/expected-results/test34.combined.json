@@ -9530,6 +9530,7 @@
           "atts" : 
           [ "att.global",
             "att.cmc",
+            "att.datable",
             "att.naming",
             "att.typed" ],
           "unknown" : 
@@ -15165,7 +15166,8 @@
           { "model" : 
             [  ],
             "atts" : 
-            [ "att.global.linking",
+            [ "att.global.editorialStatus",
+              "att.global.linking",
               "att.global.rendition",
               "att.global.responsibility",
               "att.global.source" ],
@@ -15289,6 +15291,168 @@
                     "desc" : 
                     [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2012-09-07\" xml:lang=\"en\">indicates the intent that applications preserve all white space<\/desc>" ],
                     "shortDesc" : "indicates the intent that applications preserve all white space",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] } ] } } ] },
+        
+        { "ident" : "att.global.editorialStatus",
+          "ns" : "http:\/\/foo.foo\/foo",
+          "type" : "classSpec",
+          "module" : "tei",
+          "desc" : 
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-08-17\" xml:lang=\"en\">provides attributes to indicate the editorial status of the encoding of elements. They may be used to track encoding workflows and their stages.<\/desc>" ],
+          "shortDesc" : "provides attributes to indicate the editorial status of the encoding of elements. They may be used to track encoding workflows and their stages.",
+          "gloss" : 
+          [  ],
+          "altIdent" : 
+          [  ],
+          "attributes" : 
+          [ 
+            { "onElement" : false,
+              "ident" : "edStatus",
+              "mode" : "add",
+              "ns" : "",
+              "usage" : "def",
+              "desc" : 
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-08-16\" xml:lang=\"en\">documents the editorial status of the element bearing this attribute.<\/desc>" ],
+              "shortDesc" : "(editorial status) documents the editorial status of the element bearing this attribute.",
+              "gloss" : 
+              [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2026-08-16\" xml:lang=\"en\">editorial status<\/gloss>" ],
+              "altIdent" : 
+              [  ],
+              "valDesc" : 
+              [  ],
+              "datatype" : 
+              { "min" : "1",
+                "max" : "unbounded",
+                "dataRef" : 
+                { "key" : "teidata.enumerated" } },
+              "valList" : 
+              { "type" : "open",
+                "valItem" : 
+                [ 
+                  { "ident" : "draft",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "candidate",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "expired",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "frozen",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "proposed",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "proofed",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "submitted",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "unfinished",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "unpublished",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "published",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "cross-checked",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "approved",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "cleared",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
+                    "gloss" : 
+                    [  ],
+                    "altIdent" : 
+                    [  ] },
+                  
+                  { "ident" : "deprecated",
+                    "desc" : 
+                    [  ],
+                    "shortDesc" : "",
                     "gloss" : 
                     [  ],
                     "altIdent" : 
