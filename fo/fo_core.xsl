@@ -399,7 +399,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>list bibl</desc>
    </doc>
   <xsl:template match="tei:list|tei:listBibl">
-      <xsl:if test="child::tei:head">
+      <xsl:if test="tei:head">
          <block font-style="italic" text-align="start" space-before.optimum="4pt">
             <xsl:for-each select="tei:head">
                <xsl:apply-templates/>

@@ -95,7 +95,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
     <xsl:variable name="name" select="tei:createSpecName(.)"/>
     <xsl:choose>
-      <xsl:when test="self::tei:classSpec and not(@ident='att.global') and         count(key('CLASSMEMBERS',@ident))=0">
+      <xsl:when test="self::tei:classSpec and not(@ident='att.global') and         empty(key('CLASSMEMBERS',@ident))">
         <xsl:if test="$verbose='true'">
           <xsl:message> class <xsl:value-of select="@ident"/> omitted as it has no members
       </xsl:message>
@@ -1043,132 +1043,132 @@ function showByMod() {
         <xsl:sequence select="tei:i18n('Sorted alphabetically')"/>
       </span>
       <ul class="index">
-        <xsl:if test="count(key($Key,'a'))&gt;0">
+        <xsl:if test="exists(key($Key,'a'))">
           <li>
             <a onclick="hideallExcept('element-a');" href="#">a</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'b'))&gt;0">
+        <xsl:if test="exists(key($Key,'b'))">
           <li>
             <a onclick="hideallExcept('element-b');" href="#">b</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'c'))&gt;0">
+        <xsl:if test="exists(key($Key,'c'))">
           <li>
             <a onclick="hideallExcept('element-c');" href="#">c</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'d'))&gt;0">
+        <xsl:if test="exists(key($Key,'d'))">
           <li>
             <a onclick="hideallExcept('element-d');" href="#">d</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'e'))&gt;0">
+        <xsl:if test="exists(key($Key,'e'))">
           <li>
             <a onclick="hideallExcept('element-e');" href="#">e</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'f'))&gt;0">
+        <xsl:if test="exists(key($Key,'f'))">
           <li>
             <a onclick="hideallExcept('element-f');" href="#">f</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'g'))&gt;0">
+        <xsl:if test="exists(key($Key,'g'))">
           <li>
             <a onclick="hideallExcept('element-g');" href="#">g</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'h'))&gt;0">
+        <xsl:if test="exists(key($Key,'h'))">
           <li>
             <a onclick="hideallExcept('element-h');" href="#">h</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'i'))&gt;0">
+        <xsl:if test="exists(key($Key,'i'))">
           <li>
             <a onclick="hideallExcept('element-i');" href="#">i</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'j'))&gt;0">
+        <xsl:if test="exists(key($Key,'j'))">
           <li>
             <a onclick="hideallExcept('element-j');" href="#">j</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'k'))&gt;0">
+        <xsl:if test="exists(key($Key,'k'))">
           <li>
             <a onclick="hideallExcept('element-k');" href="#">k</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'l'))&gt;0">
+        <xsl:if test="exists(key($Key,'l'))">
           <li>
             <a onclick="hideallExcept('element-l');" href="#">l</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'m'))&gt;0">
+        <xsl:if test="exists(key($Key,'m'))">
           <li>
             <a onclick="hideallExcept('element-m');" href="#">m</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'n'))&gt;0">
+        <xsl:if test="exists(key($Key,'n'))">
           <li>
             <a onclick="hideallExcept('element-n');" href="#">n</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'o'))&gt;0">
+        <xsl:if test="exists(key($Key,'o'))">
           <li>
             <a onclick="hideallExcept('element-o');" href="#">o</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'p'))&gt;0">
+        <xsl:if test="exists(key($Key,'p'))">
           <li>
             <a onclick="hideallExcept('element-p');" href="#">p</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'q'))&gt;0">
+        <xsl:if test="exists(key($Key,'q'))">
           <li>
             <a onclick="hideallExcept('element-q');" href="#">q</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'r'))&gt;0">
+        <xsl:if test="exists(key($Key,'r'))">
           <li>
             <a onclick="hideallExcept('element-r');" href="#">r</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'s'))&gt;0">
+        <xsl:if test="exists(key($Key,'s'))">
           <li>
             <a onclick="hideallExcept('element-s');" href="#">s</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'t'))&gt;0">
+        <xsl:if test="exists(key($Key,'t'))">
           <li>
             <a onclick="hideallExcept('element-t');" href="#">t</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'u'))&gt;0">
+        <xsl:if test="exists(key($Key,'u'))">
           <li>
             <a onclick="hideallExcept('element-u');" href="#">u</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'v'))&gt;0">
+        <xsl:if test="exists(key($Key,'v'))">
           <li>
             <a onclick="hideallExcept('element-v');" href="#">v</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'w'))&gt;0">
+        <xsl:if test="exists(key($Key,'w'))">
           <li>
             <a onclick="hideallExcept('element-w');" href="#">w</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'x'))&gt;0">
+        <xsl:if test="exists(key($Key,'x'))">
           <li>
             <a onclick="hideallExcept('element-x');" href="#">x</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'y'))&gt;0">
+        <xsl:if test="exists(key($Key,'y'))">
           <li>
             <a onclick="hideallExcept('element-y');" href="#">y</a>
           </li>
         </xsl:if>
-        <xsl:if test="count(key($Key,'z'))&gt;0">
+        <xsl:if test="exists(key($Key,'z'))">
           <li>
             <a onclick="hideallExcept('element-z');" href="#">z</a>
           </li>

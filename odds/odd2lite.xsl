@@ -241,7 +241,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:message>
       </xsl:if>
       <xsl:choose>
-         <xsl:when test="self::tei:classSpec and  count(key('CLASSMEMBERS',@ident))=0">
+         <xsl:when test="self::tei:classSpec and  empty(key('CLASSMEMBERS',@ident))">
             <xsl:if test="$verbose='true'">
                <xsl:message> class <xsl:value-of select="@ident"/> omitted as it has no members
           </xsl:message>

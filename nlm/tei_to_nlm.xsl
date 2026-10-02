@@ -265,7 +265,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exist="http://exist.sourc
       <xsl:if test="count($frags) gt 1">
         <month><xsl:value-of select="$frags[2]" /></month>
       </xsl:if>
-      <xsl:if test="count($frags) gt 0">
+      <xsl:if test="exists($frags)">
         <year><xsl:value-of select="$frags[1]" /></year>
       </xsl:if>
     </xsl:element>
@@ -276,7 +276,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exist="http://exist.sourc
   <xsl:template match="div">
     <xsl:element name="sec">
 <!-- If there's no title tag, we have to add an empty one. -->
-      <xsl:if test="not(child::head)"><title></title></xsl:if>
+      <xsl:if test="not(head)"><title></title></xsl:if>
       <xsl:apply-templates />
     </xsl:element>
   </xsl:template>
@@ -486,7 +486,7 @@ be given the recommended @ref-type. -->
   <xsl:template match="note">
     <xsl:element name="fn">
       <xsl:choose>
-        <xsl:when test="not(child::p)">
+        <xsl:when test="not(p)">
           <xsl:element name="p">
             <xsl:apply-templates />
           </xsl:element>

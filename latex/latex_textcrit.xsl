@@ -67,7 +67,7 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:template match="tei:lg">
       <xsl:choose>
-	<xsl:when test="count(key('APP',1))&gt;0">
+	<xsl:when test="exists(key('APP',1))">
 	  <xsl:variable name="c" select="(count(tei:l)+1) div 2"/>
 	  <xsl:text>\setstanzaindents{1,1,0}</xsl:text>
 	  <xsl:text>\setcounter{stanzaindentsrepetition}{</xsl:text>

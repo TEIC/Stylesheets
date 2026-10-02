@@ -726,7 +726,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates/>
             <xsl:choose>
               <xsl:when test="count(following-sibling::tei:editor)=1">
-                <xsl:if test="count(preceding-sibling::tei:editor)&gt;=1">
+                <xsl:if test="exists(preceding-sibling::tei:editor)">
                   <xsl:text>, </xsl:text>
                 </xsl:if>
                 <xsl:value-of select="tei:i18n('and')"/>

@@ -479,7 +479,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="child::node()">
+      <xsl:when test="node()">
         <xsl:call-template name="Element">
           <xsl:with-param name="content">
             <xsl:copy-of select="$eContents"/>
@@ -509,26 +509,26 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:choose>
         <xsl:choose>
           <xsl:when test="ancestor::*[@xml:space][1]/@xml:space = 'preserve'"/>
-          <xsl:when test="child::node()[last()]/self::text()[normalize-space(.) = '']">
+          <xsl:when test="node()[last()]/self::text()[normalize-space(.) = '']">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">3</xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="verbatim-makeIndent"/>
           </xsl:when>
           <!-- Don't insert a linebreak for mixed content?? -->
-          <xsl:when test="child::node()[last()]/self::text() and child::node()[1]/self::text()"/>
+          <xsl:when test="node()[last()]/self::text() and node()[1]/self::text()"/>
           <xsl:when test="not(parent::*) or parent::teix:egXML or parent::PureODD">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">23</xsl:with-param>
             </xsl:call-template>
           </xsl:when>
-          <xsl:when test="child::node()[last()]/self::comment()">
+          <xsl:when test="node()[last()]/self::comment()">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">4</xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="verbatim-makeIndent"/>
           </xsl:when>
-          <xsl:when test="child::node()[last()]/self::*">
+          <xsl:when test="node()[last()]/self::*">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">5</xsl:with-param>
             </xsl:call-template>

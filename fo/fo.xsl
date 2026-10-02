@@ -338,7 +338,7 @@ of this software, even if advised of the possibility of such damage.
              <xsl:call-template name="generateTableID"/>
 	   </xsl:variable>
            <xsl:choose>
-               <xsl:when test="count($tableSpecs/Info/TableSpec[$no=@xml:id]) &gt; 0">
+               <xsl:when test="exists($tableSpecs/Info/TableSpec[$no=@xml:id])">
                   <xsl:for-each select="$tableSpecs/Info/TableSpec[$no=@xml:id]/table-column">
                      <xsl:copy-of select="."/>
                   </xsl:for-each>

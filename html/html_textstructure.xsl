@@ -129,7 +129,7 @@
                <xsl:when test="$requestedID = 'prelim___'">
                   <xsl:apply-templates/>
                </xsl:when>
-               <xsl:when test="count(id($requestedID)) &gt; 0">
+               <xsl:when test="exists(id($requestedID))">
                   <xsl:for-each select="id($requestedID)">
                      <xsl:call-template name="writeDiv"/>
                   </xsl:for-each>
@@ -1138,7 +1138,7 @@
             </xsl:call-template>
 
             <xsl:choose>
-               <xsl:when test="count(key('TREES', 1)) = 0"/>
+               <xsl:when test="empty(key('TREES', 1))"/>
                <xsl:when test="$treestyle = 'googlechart'">
                   <script type="text/javascript" src="https://www.google.com/jsapi"/>
                   <script type="text/javascript">
@@ -1510,7 +1510,7 @@ function click(d) {
          </xsl:when>
          <xsl:otherwise>
             <xsl:choose>
-               <xsl:when test="count(id($currentID)) &gt; 0">
+               <xsl:when test="exists(id($currentID))">
                   <xsl:for-each select="id($currentID)">
                      <xsl:call-template name="linkListContents">
                         <xsl:with-param name="style" select="'toclist'"/>
@@ -1644,7 +1644,7 @@ function click(d) {
          </xsl:when>
          <xsl:otherwise>
             <xsl:choose>
-               <xsl:when test="count(id($currentID)) &gt; 0">
+               <xsl:when test="exists(id($currentID))">
                   <xsl:for-each select="id($currentID)">
                      <h2>
                         <xsl:apply-templates mode="xref" select="."/>
@@ -2021,7 +2021,7 @@ function click(d) {
                      <xsl:when test="$currentID = 'current'">
                         <xsl:apply-templates mode="xref" select="."/>
                      </xsl:when>
-                     <xsl:when test="count(id($currentID)) &gt; 0">
+                     <xsl:when test="exists(id($currentID))">
                         <xsl:for-each select="id($currentID)">
                            <xsl:apply-templates mode="xref" select="."/>
                         </xsl:for-each>
@@ -2595,7 +2595,7 @@ function click(d) {
    </doc>
    <xsl:template name="subtoc">
       <xsl:if
-         test="child::tei:div | tei:div1 | tei:div2 | tei:div3 | tei:div4 | tei:div5 | tei:div6">
+         test="tei:div | tei:div1 | tei:div2 | tei:div3 | tei:div4 | tei:div5 | tei:div6">
          <xsl:variable name="parent">
             <xsl:choose>
                <xsl:when test="ancestor::tei:div">

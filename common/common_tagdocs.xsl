@@ -725,7 +725,7 @@
             </xsl:choose>
           </a>
         </xsl:variable>
-        <xsl:if test="count($myatts/a/*) > 0">
+        <xsl:if test="exists($myatts/a/*)">
           <xsl:element namespace="{$outputNS}" name="{$rowName}">
             <xsl:element namespace="{$outputNS}" name="{$cellName}">
               <xsl:attribute name="{$rendName}">
@@ -774,7 +774,7 @@
             <xsl:with-param name="showElements">false</xsl:with-param>
           </xsl:call-template>
         </xsl:variable>
-        <xsl:if test="count($memberclasses/*/*) > 0">
+        <xsl:if test="exists($memberclasses/*/*)">
           <xsl:element namespace="{$outputNS}" name="{$rowName}">
             <xsl:element namespace="{$outputNS}" name="{$cellName}">
               <xsl:attribute name="{$rendName}">
@@ -2192,7 +2192,7 @@
           </xsl:for-each>
         </xsl:for-each>
       </xsl:variable>
-      <xsl:if test="count($Parents/*) > 0">
+      <xsl:if test="exists($Parents/*)">
         <xsl:for-each-group select="$Parents/*" group-by="@name">
           <xsl:sort select="@name"/>
           <xsl:variable name="name" select="concat(@prefix, @name)"/>
@@ -2352,7 +2352,7 @@
         </xsl:for-each>
       </PattList>
     </xsl:variable>
-    <xsl:if test="count($list/PattList/Item) > 0">
+    <xsl:if test="exists($list/PattList/Item)">
       <xsl:element namespace="{$outputNS}" name="{$segName}">
         <xsl:attribute name="{$langAttributeName}">
           <xsl:value-of select="$documentationLanguage"/>
@@ -2395,7 +2395,7 @@
         </xsl:for-each>
       </PattList>
     </xsl:variable>
-    <xsl:if test="count($list2/PattList/Item) > 0">
+    <xsl:if test="exists($list2/PattList/Item)">
       <xsl:element namespace="{$outputNS}" name="{$segName}">
         <xsl:attribute name="{$langAttributeName}">
           <xsl:value-of select="$documentationLanguage"/>
@@ -3015,7 +3015,7 @@
     <xsl:variable name="here" select="."/>
     <xsl:for-each select="$List">
       <xsl:choose>
-        <xsl:when test="$context = 'parents' and count(Element) = 0">
+        <xsl:when test="$context = 'parents' and empty(Element)">
           <xsl:text>—</xsl:text>
         </xsl:when>
         <xsl:when test="Element[@type = 'TEXT'] and count(Element) = 1">
@@ -3026,7 +3026,7 @@
             <xsl:sequence select="tei:i18n('Character data only')"/>
           </xsl:element>
         </xsl:when>
-        <xsl:when test="count(Element) = 0">
+        <xsl:when test="empty(Element)">
           <xsl:element namespace="{$outputNS}" name="{$segName}">
             <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>

@@ -80,7 +80,7 @@ of this software, even if advised of the possibility of such damage.
     <!-- write out comments -->
     <xsl:template name="write-docxfile-comments-file">
 
-      <xsl:if test="count(key('COMMENTS',1))&gt;0">
+      <xsl:if test="exists(key('COMMENTS',1))">
 	<xsl:if test="$debug='true'">
 	  <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'word/comments.xml')"/>
 	  </xsl:message>

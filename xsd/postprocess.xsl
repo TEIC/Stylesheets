@@ -100,11 +100,11 @@
     <xsl:choose>
       <xsl:when test="xs:element and preceding-sibling::*[1]/self::xs:element[not(current()/xs:element/@ref except
         @ref)] 
-        and count(xs:group) = 0
+        and empty(xs:group)
         and count(xs:element) le 2"/>
       <xsl:when test="xs:group and preceding-sibling::*[1]/self::xs:group[not(current()/xs:group/@ref except
         @ref)]
-        and count(xs:element) = 0
+        and empty(xs:element)
         and count(xs:group) le 2"/>
       <xsl:otherwise>
         <xsl:copy>

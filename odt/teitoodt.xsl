@@ -186,7 +186,7 @@ of this software, even if advised of the possibility of such damage.
         <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="meta.xml"/>
         <manifest:file-entry manifest:media-type="" manifest:full-path="Thumbnails/thumbnail.png"/>
         <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="settings.xml"/>
-        <xsl:if test="count(key('GRAPHICS',1))&gt;0">
+        <xsl:if test="exists(key('GRAPHICS',1))">
           <xsl:for-each select="key('GRAPHICS',1)">
             <manifest:file-entry>
             <xsl:variable name="imagetype" select="tokenize(@url,'\.')[last()]"/>
@@ -202,7 +202,7 @@ of this software, even if advised of the possibility of such damage.
             </manifest:file-entry>
           </xsl:for-each>
         </xsl:if>
-        <xsl:if test="count(key('PB',1))&gt;0">
+        <xsl:if test="exists(key('PB',1))">
           <xsl:for-each select="key('PB',1)">
             <manifest:file-entry>
               <xsl:variable name="imagetype" select="tokenize(@facs,'\.')[last()]"/>

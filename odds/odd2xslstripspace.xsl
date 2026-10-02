@@ -177,7 +177,7 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:choose>
 		  <xsl:when test="Element[@type='TEXT'] and
 				  count(Element)=1"/>
-		  <xsl:when test="count(Element)=0"/>
+		  <xsl:when test="empty(Element)"/>
 		  <xsl:when test="Element[@type='TEXT']"/>
 		  <xsl:otherwise>
 		    <xsl:value-of select="$id"/>

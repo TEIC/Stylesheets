@@ -34,7 +34,7 @@
             </xsl:message>
 	           <xsl:for-each select="document('styles.xml',/)">
 	              <xsl:choose>
-	                 <xsl:when test="count(key('S',$v))=0">
+	                 <xsl:when test="empty(key('S',$v))">
 	                    <xsl:message>ERROR: no entry for <xsl:value-of select="$v"/>
                      </xsl:message>
 	                 </xsl:when>
@@ -56,7 +56,7 @@
 	 </xsl:variable>
 	 <xsl:for-each select="document('_rels/document.xml.rels',/)">
 	   <xsl:choose>
-	     <xsl:when test="count(key('R',$i))=0">
+	     <xsl:when test="empty(key('R',$i))">
 	       <xsl:message>ERROR: no entry for <xsl:value-of select="$i"/>
 	       </xsl:message>
 	     </xsl:when>

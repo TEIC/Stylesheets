@@ -86,7 +86,7 @@
   <xsl:template name="FNonGlyphToken">
       <xsl:param name="ndCur" select="."/>
       <xsl:choose>
-         <xsl:when test="$ndCur/self::mml:mi[not(child::mml:mglyph)] |                        $ndCur/self::mml:mn[not(child::mml:mglyph)] |                        $ndCur/self::mml:mo[not(child::mml:mglyph)] |                        $ndCur/self::mml:ms[not(child::mml:mglyph)] |                        $ndCur/self::mml:mtext[not(child::mml:mglyph)]">1</xsl:when>
+         <xsl:when test="$ndCur/self::mml:mi[not(mml:mglyph)] |                        $ndCur/self::mml:mn[not(mml:mglyph)] |                        $ndCur/self::mml:mo[not(mml:mglyph)] |                        $ndCur/self::mml:ms[not(mml:mglyph)] |                        $ndCur/self::mml:mtext[not(mml:mglyph)]">1</xsl:when>
          <xsl:otherwise>0</xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -107,7 +107,7 @@
          </xsl:call-template>
       </xsl:variable>
       <xsl:choose>
-         <xsl:when test="count($ndCur/preceding-sibling::*)=0             or $fPrecSibNonGlyphToken=0">1</xsl:when>
+         <xsl:when test="empty($ndCur/preceding-sibling::*)             or $fPrecSibNonGlyphToken=0">1</xsl:when>
          <xsl:otherwise>0</xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -125,7 +125,7 @@
 
       <xsl:variable name="fNary">
          <xsl:call-template name="isNary">
-            <xsl:with-param name="ndCur" select="$ndCur/preceding-sibling::*[1]/child::*[1]"/>
+            <xsl:with-param name="ndCur" select="$ndCur/preceding-sibling::*[1]/*[1]"/>
          </xsl:call-template>
       </xsl:variable>
       <xsl:choose>
@@ -179,7 +179,7 @@
       </xsl:if>
   </xsl:template>
   <xsl:template mode="mml"
-                 match="mml:mi[not(child::mml:mglyph)] |                        mml:mn[not(child::mml:mglyph)] |                        mml:mo[not(child::mml:mglyph)] |                        mml:ms[not(child::mml:mglyph)] |                        mml:mtext[not(child::mml:mglyph)]">
+                 match="mml:mi[not(mml:mglyph)] |                        mml:mn[not(mml:mglyph)] |                        mml:mo[not(mml:mglyph)] |                        mml:ms[not(mml:mglyph)] |                        mml:mtext[not(mml:mglyph)]">
 
     <!-- tokens with mglyphs as children are transformed
 			 in a different manner than "normal" token elements.  
@@ -560,7 +560,7 @@
 					 The font family matches the current font family.
 					 ) // end of not().-->
     <xsl:variable name="nndBeforeLim"
-                    select="count($ndTokenFirst/following-sibling::*      [(not(self::mml:mi) and not(self::mml:mn) and not(self::mml:mo) and not(self::mml:ms) and not(self::mml:mtext))      or      (self::mml:mi[child::mml:mglyph] or self::mml:mn[child::mml:mglyph] or self::mml:mo[child::mml:mglyph] or self::mml:ms[child::mml:mglyph] or self::mml:mtext[child::mml:mglyph])      or      (($fNdTokenFirstIsMText=1 and not(self::mml:mtext)) or ($fNdTokenFirstIsMText=0 and self::mml:mtext))      or        not(       ((($sFontCur=@mathvariant or $sFontCur=@mml:mathvariant)        or        ($sFontCur='normal'         and ((@mathvariant='normal' or @mml:mathvariant='normal')            or (((not(@mathvariant) or @mathvariant='') and (not(@mml:mathvariant) or @mml:mathvariant=''))              and (                     ((@fontstyle='normal' or @mml:fontstyle='normal') and (not(@fontweight='bold') and not(@mml:fontweight='bold')))                     or (self::mml:mi and string-length(normalize-space(.)) &gt; 1)                    )               )           )        )        or        ($sFontCur='italic'          and ((@mathvariant='italic' or @mml:mathvariant='italic')            or (((not(@mathvariant) or @mathvariant='') and (not(@mml:mathvariant) or @mml:mathvariant=''))             and (                     ((@fontstyle='italic' or @mml:fontstyle='italic') and (not(@fontweight='bold') and not(@mml:fontweight='bold')))                    or                  (self::mml:mn                  or self::mml:mo                 or (self::mml:mi and string-length(normalize-space(.)) &lt;= 1))                    )               )           )        )         or        ($sFontCur='bold'         and ((@mathvariant='bold' or @mml:mathvariant='bold')            or (((not(@mathvariant) or @mathvariant='') and (not(@mml:mathvariant) or @mml:mathvariant=''))                and (                     ((@fontweight='bold' or @mml:fontweight='bold')                     and ((@fontstyle='normal' or @mml:fontstyle='normal') or (self::mml:mi and string-length(normalize-space(.)) &lt;= 1))                    )               )             )             )        )         or        (($sFontCur='bi' or $sFontCur='bold-italic')         and (            (@mathvariant='bold-italic' or @mml:mathvariant='bold-italic')            or (((not(@mathvariant) or @mathvariant='') and (not(@mml:mathvariant) or @mml:mathvariant=''))             and (                ((@fontweight='bold' or @mml:fontweight='bold') and (@fontstyle='italic' or @mml:fontstyle='italic'))                or ((@fontweight='bold' or @mml:fontweight='bold')                   and (self::mml:mn                       or self::mml:mo                     or (self::mml:mi and string-length(normalize-space(.)) &lt;= 1)))                    )               )           )        )               or               (($sFontCur=''                   and (                      ((not(@mathvariant) or @mathvariant='')                         and (not(@mml:mathvariant) or @mml:mathvariant='')                         and (not(@fontstyle) or @fontstyle='')                         and (not(@mml:fontstyle) or @mml:fontstyle='')                         and (not(@fontweight)or @fontweight='')                         and (not(@mml:fontweight) or @mml:fontweight='')                 )                        or                          (@mathvariant='italic' or @mml:mathvariant='italic')                         or (                            ((not(@mathvariant) or @mathvariant='') and (not(@mml:mathvariant) or @mml:mathvariant=''))                                and (                                   (((@fontweight='normal' or @mml:fontweight='normal')                                    and (@fontstyle='italic' or @mml:fontstyle='italic'))                                   )                                   or                                   ((not(@fontweight) or @fontweight='') and (not(@mml:fontweight) or @mml:fontweight=''))                                    and (@fontstyle='italic' or @mml:fontstyle='italic')                                   or                                   ((not(@fontweight) or @fontweight='') and (not(@mml:fontweight) or @mml:fontweight=''))                                    and (not(@fontstyle) or @fontstyle='')                                    and (not(@mml:fontstyle) or @mml:fontstyle=''))                             )                 )                ))        or               ($sFontCur='normal'                 and ((self::mml:mi                       and (not(@mathvariant) or @mathvariant='')                   and (not(@mml:mathvariant) or @mml:mathvariant)                   and (not(@fontstyle) or @fontstyle='')                    and (not(@mml:fontstyle) or @mml:fontstyle='')                   and (not(@fontweight) or @fontweight='')                    and (not(@mml:fontweight) or @mml:fontweight='')                   and (string-length(normalize-space(.)) &gt; 1)                   )                  or ((self::mml:ms or self::mml:mtext)                    and (not(@mathvariant) or @mathvariant='')                   and (not(@mml:mathvariant) or @mml:mathvariant)                   and (not(@fontstyle) or @fontstyle)                   and (not(@fontstyle) or @fontstyle='')                   and (not(@fontweight) or @fontweight)                   and (not(@mml:fontweight) or @mml:fontweight='')                   )                  )               )           )       and             (($font-family = @font-family or $font-family = @mml:font-family)               or (($font-family='' or not($font-family))                and (not(@font-family) or @font-family='')                and (not(@mml:font-family) or @mml:font-family='')               )              )      ))      ][1]/preceding-sibling::*)"/>
+                    select="count($ndTokenFirst/following-sibling::*      [(not(self::mml:mi) and not(self::mml:mn) and not(self::mml:mo) and not(self::mml:ms) and not(self::mml:mtext))      or      (self::mml:mi[mml:mglyph] or self::mml:mn[mml:mglyph] or self::mml:mo[mml:mglyph] or self::mml:ms[mml:mglyph] or self::mml:mtext[mml:mglyph])      or      (($fNdTokenFirstIsMText=1 and not(self::mml:mtext)) or ($fNdTokenFirstIsMText=0 and self::mml:mtext))      or        not(       ((($sFontCur=@mathvariant or $sFontCur=@mml:mathvariant)        or        ($sFontCur='normal'         and ((@mathvariant='normal' or @mml:mathvariant='normal')            or (((not(@mathvariant) or @mathvariant='') and (not(@mml:mathvariant) or @mml:mathvariant=''))              and (                     ((@fontstyle='normal' or @mml:fontstyle='normal') and (not(@fontweight='bold') and not(@mml:fontweight='bold')))                     or (self::mml:mi and string-length(normalize-space(.)) &gt; 1)                    )               )           )        )        or        ($sFontCur='italic'          and ((@mathvariant='italic' or @mml:mathvariant='italic')            or (((not(@mathvariant) or @mathvariant='') and (not(@mml:mathvariant) or @mml:mathvariant=''))             and (                     ((@fontstyle='italic' or @mml:fontstyle='italic') and (not(@fontweight='bold') and not(@mml:fontweight='bold')))                    or                  (self::mml:mn                  or self::mml:mo                 or (self::mml:mi and string-length(normalize-space(.)) &lt;= 1))                    )               )           )        )         or        ($sFontCur='bold'         and ((@mathvariant='bold' or @mml:mathvariant='bold')            or (((not(@mathvariant) or @mathvariant='') and (not(@mml:mathvariant) or @mml:mathvariant=''))                and (                     ((@fontweight='bold' or @mml:fontweight='bold')                     and ((@fontstyle='normal' or @mml:fontstyle='normal') or (self::mml:mi and string-length(normalize-space(.)) &lt;= 1))                    )               )             )             )        )         or        (($sFontCur='bi' or $sFontCur='bold-italic')         and (            (@mathvariant='bold-italic' or @mml:mathvariant='bold-italic')            or (((not(@mathvariant) or @mathvariant='') and (not(@mml:mathvariant) or @mml:mathvariant=''))             and (                ((@fontweight='bold' or @mml:fontweight='bold') and (@fontstyle='italic' or @mml:fontstyle='italic'))                or ((@fontweight='bold' or @mml:fontweight='bold')                   and (self::mml:mn                       or self::mml:mo                     or (self::mml:mi and string-length(normalize-space(.)) &lt;= 1)))                    )               )           )        )               or               (($sFontCur=''                   and (                      ((not(@mathvariant) or @mathvariant='')                         and (not(@mml:mathvariant) or @mml:mathvariant='')                         and (not(@fontstyle) or @fontstyle='')                         and (not(@mml:fontstyle) or @mml:fontstyle='')                         and (not(@fontweight)or @fontweight='')                         and (not(@mml:fontweight) or @mml:fontweight='')                 )                        or                          (@mathvariant='italic' or @mml:mathvariant='italic')                         or (                            ((not(@mathvariant) or @mathvariant='') and (not(@mml:mathvariant) or @mml:mathvariant=''))                                and (                                   (((@fontweight='normal' or @mml:fontweight='normal')                                    and (@fontstyle='italic' or @mml:fontstyle='italic'))                                   )                                   or                                   ((not(@fontweight) or @fontweight='') and (not(@mml:fontweight) or @mml:fontweight=''))                                    and (@fontstyle='italic' or @mml:fontstyle='italic')                                   or                                   ((not(@fontweight) or @fontweight='') and (not(@mml:fontweight) or @mml:fontweight=''))                                    and (not(@fontstyle) or @fontstyle='')                                    and (not(@mml:fontstyle) or @mml:fontstyle=''))                             )                 )                ))        or               ($sFontCur='normal'                 and ((self::mml:mi                       and (not(@mathvariant) or @mathvariant='')                   and (not(@mml:mathvariant) or @mml:mathvariant)                   and (not(@fontstyle) or @fontstyle='')                    and (not(@mml:fontstyle) or @mml:fontstyle='')                   and (not(@fontweight) or @fontweight='')                    and (not(@mml:fontweight) or @mml:fontweight='')                   and (string-length(normalize-space(.)) &gt; 1)                   )                  or ((self::mml:ms or self::mml:mtext)                    and (not(@mathvariant) or @mathvariant='')                   and (not(@mml:mathvariant) or @mml:mathvariant)                   and (not(@fontstyle) or @fontstyle)                   and (not(@fontstyle) or @fontstyle='')                   and (not(@fontweight) or @fontweight)                   and (not(@mml:fontweight) or @mml:fontweight='')                   )                  )               )           )       and             (($font-family = @font-family or $font-family = @mml:font-family)               or (($font-family='' or not($font-family))                and (not(@font-family) or @font-family='')                and (not(@mml:font-family) or @mml:font-family='')               )              )      ))      ][1]/preceding-sibling::*)"/>
 
       <xsl:variable name="cndRun" select="$nndBeforeLim - $nndBeforeFirst"/>
 
@@ -693,7 +693,7 @@
 
       <!--The run was terminated by an mi, mn, mo, ms, or mtext with different properties, 
 				therefore, call-template CreateRunWithSameProp, using cndRun+1 node as new start node-->
-    <xsl:if test="$nndBeforeLim!=0             and ($ndTokenFirst/following-sibling::*[$cndRun]/self::mml:mi or             $ndTokenFirst/following-sibling::*[$cndRun]/self::mml:mn or            $ndTokenFirst/following-sibling::*[$cndRun]/self::mml:mo or            $ndTokenFirst/following-sibling::*[$cndRun]/self::mml:ms or                 $ndTokenFirst/following-sibling::*[$cndRun]/self::mml:mtext)              and (count($ndTokenFirst/following-sibling::*[$cndRun]/mml:mglyph) = 0)">
+    <xsl:if test="$nndBeforeLim!=0             and ($ndTokenFirst/following-sibling::*[$cndRun]/self::mml:mi or             $ndTokenFirst/following-sibling::*[$cndRun]/self::mml:mn or            $ndTokenFirst/following-sibling::*[$cndRun]/self::mml:mo or            $ndTokenFirst/following-sibling::*[$cndRun]/self::mml:ms or                 $ndTokenFirst/following-sibling::*[$cndRun]/self::mml:mtext)              and (empty($ndTokenFirst/following-sibling::*[$cndRun]/mml:mglyph))">
          <xsl:call-template name="CreateRunWithSameProp">
             <xsl:with-param name="mathbackground">
                <xsl:choose>
@@ -1131,11 +1131,11 @@
          </fPr>
          <num>
             <xsl:call-template name="CreateArgProp"/>
-            <xsl:apply-templates mode="mml" select="child::*[1]"/>
+            <xsl:apply-templates mode="mml" select="*[1]"/>
          </num>
          <den>
             <xsl:call-template name="CreateArgProp"/>
-            <xsl:apply-templates mode="mml" select="child::*[2]"/>
+            <xsl:apply-templates mode="mml" select="*[2]"/>
          </den>
       </f>
   </xsl:template>
@@ -1297,7 +1297,7 @@
   <!-- %%Template: CreateArgProp
 	-->
   <xsl:template name="CreateArgProp">
-      <xsl:if test="not(count(ancestor-or-self::mml:mstyle[@scriptlevel='0' or @scriptlevel='1' or @scriptlevel='2'])=0)                   or not(count(ancestor-or-self::mml:mstyle[@mml:scriptlevel='0' or @mml:scriptlevel='1' or @mml:scriptlevel='2'])=0)">
+      <xsl:if test="not(empty(ancestor-or-self::mml:mstyle[@scriptlevel='0' or @scriptlevel='1' or @scriptlevel='2']))                   or not(empty(ancestor-or-self::mml:mstyle[@mml:scriptlevel='0' or @mml:scriptlevel='1' or @mml:scriptlevel='2']))">
          <argPr>
             <scrLvl>
                <xsl:attribute name="m:val">
@@ -1326,11 +1326,11 @@
          </radPr>
          <deg>
             <xsl:call-template name="CreateArgProp"/>
-            <xsl:apply-templates mode="mml" select="child::*[2]"/>
+            <xsl:apply-templates mode="mml" select="*[2]"/>
          </deg>
          <e>
             <xsl:call-template name="CreateArgProp"/>
-            <xsl:apply-templates mode="mml" select="child::*[1]"/>
+            <xsl:apply-templates mode="mml" select="*[1]"/>
          </e>
       </rad>
   </xsl:template>
@@ -1436,10 +1436,10 @@
 
       <func>
          <fName>
-            <xsl:apply-templates mode="mml" select="$ndCur/child::*[1]"/>
+            <xsl:apply-templates mode="mml" select="$ndCur/*[1]"/>
          </fName>
          <e>
-            <xsl:apply-templates mode="mml" select="$ndCur/child::*[3]"/>
+            <xsl:apply-templates mode="mml" select="$ndCur/*[3]"/>
          </e>
       </func>
   </xsl:template>
@@ -1558,9 +1558,9 @@
 
       <xsl:choose>
       <!-- The script is unaccented and the second child is an mo -->
-      <xsl:when test="$fAccent = 0                        and $ndCur/child::*[2]/self::mml:mo">
+      <xsl:when test="$fAccent = 0                        and $ndCur/*[2]/self::mml:mo">
             <xsl:variable name="sOperator">
-               <xsl:value-of select="$ndCur/child::*[2]"/>
+               <xsl:value-of select="$ndCur/*[2]"/>
             </xsl:variable>
             <xsl:choose>
           <!-- Should we write an underbar? -->
@@ -1611,9 +1611,9 @@
 
       <xsl:choose>
       <!-- The script is accented and the second child is an mo -->
-      <xsl:when test="$fAccent = 1                        and $ndCur/child::*[2] = mml:mo">
+      <xsl:when test="$fAccent = 1                        and $ndCur/*[2] = mml:mo">
             <xsl:variable name="sOperator">
-               <xsl:value-of select="$ndCur/child::*[2]"/>
+               <xsl:value-of select="$ndCur/*[2]"/>
             </xsl:variable>
             <xsl:choose>
           <!-- There is only one operator, this is a valid Omml accent! -->
@@ -1683,9 +1683,9 @@
       </xsl:variable>
 
       <xsl:choose>
-         <xsl:when test="$fAccentFalse=1                       and $ndCur[self::mml:munder or self::mml:mover]                        and count($ndCur/child::*)=2                        and (($ndCur/child::*[1][self::mml:mrow] and $ndCur/child::*[2][self::mml:mo])                              or ($ndCur/child::*[1][self::mml:mo] and $ndCur/child::*[2][self::mml:mrow]))">
+         <xsl:when test="$fAccentFalse=1                       and $ndCur[self::mml:munder or self::mml:mover]                        and count($ndCur/*)=2                        and (($ndCur/*[1][self::mml:mrow] and $ndCur/*[2][self::mml:mo])                              or ($ndCur/*[1][self::mml:mo] and $ndCur/*[2][self::mml:mrow]))">
             <xsl:variable name="sOperator">
-               <xsl:value-of select="$ndCur/child::mml:mo"/>
+               <xsl:value-of select="$ndCur/mml:mo"/>
             </xsl:variable>
             <xsl:choose>
                <xsl:when test="string-length($sOperator) &lt;= 1">1</xsl:when>
@@ -1703,7 +1703,7 @@
   <xsl:template mode="mml" match="mml:munder">
       <xsl:variable name="fNary">
          <xsl:call-template name="isNary">
-            <xsl:with-param name="ndCur" select="child::*[1]"/>
+            <xsl:with-param name="ndCur" select="*[1]"/>
          </xsl:call-template>
       </xsl:variable>
       <xsl:choose>
@@ -1711,13 +1711,13 @@
             <nary>
                <xsl:call-template name="CreateNaryProp">
                   <xsl:with-param name="chr">
-                     <xsl:value-of select="normalize-space(child::*[1])"/>
+                     <xsl:value-of select="normalize-space(*[1])"/>
                   </xsl:with-param>
                   <xsl:with-param name="sMathmlType" select="'munder'"/>
                </xsl:call-template>
                <sub>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[2]"/>
+                  <xsl:apply-templates mode="mml" select="*[2]"/>
                </sub>
                <sup>
                   <xsl:call-template name="CreateArgProp"/>
@@ -1745,7 +1745,7 @@
                      </barPr>
                      <e>
                         <xsl:call-template name="CreateArgProp"/>
-                        <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                        <xsl:apply-templates mode="mml" select="*[1]"/>
                      </e>
                   </bar>
                </xsl:when>
@@ -1765,7 +1765,7 @@
                               </xsl:with-param>
                               <xsl:with-param name="pos">
                                  <xsl:choose>
-                                    <xsl:when test="child::*[1][self::mml:mrow]">bot</xsl:when>
+                                    <xsl:when test="*[1][self::mml:mrow]">bot</xsl:when>
                                     <xsl:otherwise>top</xsl:otherwise>
                                  </xsl:choose>
                               </xsl:with-param>
@@ -1781,11 +1781,11 @@
                 <limLow>
                            <e>
                               <xsl:call-template name="CreateArgProp"/>
-                              <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                              <xsl:apply-templates mode="mml" select="*[1]"/>
                            </e>
                            <lim>
                               <xsl:call-template name="CreateArgProp"/>
-                              <xsl:apply-templates mode="mml" select="child::*[2]"/>
+                              <xsl:apply-templates mode="mml" select="*[2]"/>
                            </lim>
                         </limLow>
                      </xsl:otherwise>
@@ -1828,7 +1828,7 @@
   <xsl:template mode="mml" match="mml:mover">
       <xsl:variable name="fNary">
          <xsl:call-template name="isNary">
-            <xsl:with-param name="ndCur" select="child::*[1]"/>
+            <xsl:with-param name="ndCur" select="*[1]"/>
          </xsl:call-template>
       </xsl:variable>
       <xsl:choose>
@@ -1836,7 +1836,7 @@
             <nary>
                <xsl:call-template name="CreateNaryProp">
                   <xsl:with-param name="chr">
-                     <xsl:value-of select="normalize-space(child::*[1])"/>
+                     <xsl:value-of select="normalize-space(*[1])"/>
                   </xsl:with-param>
                   <xsl:with-param name="sMathmlType" select="'mover'"/>
                </xsl:call-template>
@@ -1845,7 +1845,7 @@
                </sub>
                <sup>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[2]"/>
+                  <xsl:apply-templates mode="mml" select="*[2]"/>
                </sup>
                <e>
                   <xsl:call-template name="CreateArgProp"/>
@@ -1872,7 +1872,7 @@
                      </barPr>
                      <e>
                         <xsl:call-template name="CreateArgProp"/>
-                        <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                        <xsl:apply-templates mode="mml" select="*[1]"/>
                      </e>
                   </bar>
                </xsl:when>
@@ -1889,13 +1889,13 @@
                            <accPr>
                               <chr>
                                  <xsl:attribute name="m:val">
-                                    <xsl:value-of select="child::*[2]"/>
+                                    <xsl:value-of select="*[2]"/>
                                  </xsl:attribute>
                               </chr>
                            </accPr>
                            <e>
                               <xsl:call-template name="CreateArgProp"/>
-                              <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                              <xsl:apply-templates mode="mml" select="*[1]"/>
                            </e>
                         </acc>
                      </xsl:when>
@@ -1916,7 +1916,7 @@
                                     </xsl:with-param>
                                     <xsl:with-param name="pos">
                                        <xsl:choose>
-                                          <xsl:when test="child::*[1][self::mml:mrow]">top</xsl:when>
+                                          <xsl:when test="*[1][self::mml:mrow]">top</xsl:when>
                                           <xsl:otherwise>bot</xsl:otherwise>
                                        </xsl:choose>
                                     </xsl:with-param>
@@ -1932,11 +1932,11 @@
                     <limUpp>
                                  <e>
                                     <xsl:call-template name="CreateArgProp"/>
-                                    <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                                    <xsl:apply-templates mode="mml" select="*[1]"/>
                                  </e>
                                  <lim>
                                     <xsl:call-template name="CreateArgProp"/>
-                                    <xsl:apply-templates mode="mml" select="child::*[2]"/>
+                                    <xsl:apply-templates mode="mml" select="*[2]"/>
                                  </lim>
                               </limUpp>
                            </xsl:otherwise>
@@ -1955,7 +1955,7 @@
   <xsl:template mode="mml" match="mml:munderover">
       <xsl:variable name="fNary">
          <xsl:call-template name="isNary">
-            <xsl:with-param name="ndCur" select="child::*[1]"/>
+            <xsl:with-param name="ndCur" select="*[1]"/>
          </xsl:call-template>
       </xsl:variable>
       <xsl:choose>
@@ -1963,17 +1963,17 @@
             <nary>
                <xsl:call-template name="CreateNaryProp">
                   <xsl:with-param name="chr">
-                     <xsl:value-of select="normalize-space(child::*[1])"/>
+                     <xsl:value-of select="normalize-space(*[1])"/>
                   </xsl:with-param>
                   <xsl:with-param name="sMathmlType" select="'munderover'"/>
                </xsl:call-template>
                <sub>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[2]"/>
+                  <xsl:apply-templates mode="mml" select="*[2]"/>
                </sub>
                <sup>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[3]"/>
+                  <xsl:apply-templates mode="mml" select="*[3]"/>
                </sup>
                <e>
                   <xsl:call-template name="CreateArgProp"/>
@@ -1990,17 +1990,17 @@
                   <limLow>
                      <e>
                         <xsl:call-template name="CreateArgProp"/>
-                        <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                        <xsl:apply-templates mode="mml" select="*[1]"/>
                      </e>
                      <lim>
                         <xsl:call-template name="CreateArgProp"/>
-                        <xsl:apply-templates mode="mml" select="child::*[2]"/>
+                        <xsl:apply-templates mode="mml" select="*[2]"/>
                      </lim>
                   </limLow>
                </e>
                <lim>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[3]"/>
+                  <xsl:apply-templates mode="mml" select="*[3]"/>
                </lim>
             </limUpp>
          </xsl:otherwise>
@@ -2196,7 +2196,7 @@
   <xsl:template mode="mml" match="mml:msub">
       <xsl:variable name="fNary">
          <xsl:call-template name="isNary">
-            <xsl:with-param name="ndCur" select="child::*[1]"/>
+            <xsl:with-param name="ndCur" select="*[1]"/>
          </xsl:call-template>
       </xsl:variable>
       <xsl:choose>
@@ -2204,13 +2204,13 @@
             <nary>
                <xsl:call-template name="CreateNaryProp">
                   <xsl:with-param name="chr">
-                     <xsl:value-of select="normalize-space(child::*[1])"/>
+                     <xsl:value-of select="normalize-space(*[1])"/>
                   </xsl:with-param>
                   <xsl:with-param name="sMathmlType" select="'msub'"/>
                </xsl:call-template>
                <sub>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[2]"/>
+                  <xsl:apply-templates mode="mml" select="*[2]"/>
                </sub>
                <sup>
                   <xsl:call-template name="CreateArgProp"/>
@@ -2227,11 +2227,11 @@
             <sSub>
                <e>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                  <xsl:apply-templates mode="mml" select="*[1]"/>
                </e>
                <sub>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[2]"/>
+                  <xsl:apply-templates mode="mml" select="*[2]"/>
                </sub>
             </sSub>
          </xsl:otherwise>
@@ -2243,7 +2243,7 @@
   <xsl:template mode="mml" match="mml:msup">
       <xsl:variable name="fNary">
          <xsl:call-template name="isNary">
-            <xsl:with-param name="ndCur" select="child::*[1]"/>
+            <xsl:with-param name="ndCur" select="*[1]"/>
          </xsl:call-template>
       </xsl:variable>
       <xsl:choose>
@@ -2251,7 +2251,7 @@
             <nary>
                <xsl:call-template name="CreateNaryProp">
                   <xsl:with-param name="chr">
-                     <xsl:value-of select="normalize-space(child::*[1])"/>
+                     <xsl:value-of select="normalize-space(*[1])"/>
                   </xsl:with-param>
                   <xsl:with-param name="sMathmlType" select="'msup'"/>
                </xsl:call-template>
@@ -2260,7 +2260,7 @@
                </sub>
                <sup>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[2]"/>
+                  <xsl:apply-templates mode="mml" select="*[2]"/>
                </sup>
                <e>
                   <xsl:call-template name="CreateArgProp"/>
@@ -2274,11 +2274,11 @@
             <sSup>
                <e>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                  <xsl:apply-templates mode="mml" select="*[1]"/>
                </e>
                <sup>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[2]"/>
+                  <xsl:apply-templates mode="mml" select="*[2]"/>
                </sup>
             </sSup>
          </xsl:otherwise>
@@ -2290,7 +2290,7 @@
   <xsl:template mode="mml" match="mml:msubsup">
       <xsl:variable name="fNary">
          <xsl:call-template name="isNary">
-            <xsl:with-param name="ndCur" select="child::*[1]"/>
+            <xsl:with-param name="ndCur" select="*[1]"/>
          </xsl:call-template>
       </xsl:variable>
       <xsl:choose>
@@ -2298,17 +2298,17 @@
             <nary>
                <xsl:call-template name="CreateNaryProp">
                   <xsl:with-param name="chr">
-                     <xsl:value-of select="normalize-space(child::*[1])"/>
+                     <xsl:value-of select="normalize-space(*[1])"/>
                   </xsl:with-param>
                   <xsl:with-param name="sMathmlType" select="'msubsup'"/>
                </xsl:call-template>
                <sub>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[2]"/>
+                  <xsl:apply-templates mode="mml" select="*[2]"/>
                </sub>
                <sup>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[3]"/>
+                  <xsl:apply-templates mode="mml" select="*[3]"/>
                </sup>
                <e>
                   <xsl:call-template name="CreateArgProp"/>
@@ -2322,15 +2322,15 @@
             <sSubSup>
                <e>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                  <xsl:apply-templates mode="mml" select="*[1]"/>
                </e>
                <sub>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[2]"/>
+                  <xsl:apply-templates mode="mml" select="*[2]"/>
                </sub>
                <sup>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[3]"/>
+                  <xsl:apply-templates mode="mml" select="*[3]"/>
                </sup>
             </sSubSup>
          </xsl:otherwise>
@@ -2409,7 +2409,7 @@
                   <sSubSup>
                      <e>
                         <xsl:call-template name="CreateArgProp"/>
-                        <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                        <xsl:apply-templates mode="mml" select="*[1]"/>
                      </e>
 
                      <!-- Every child except the first is a script.  Do the split -->
@@ -2423,7 +2423,7 @@
                   <sSub>
                      <e>
                         <xsl:call-template name="CreateArgProp"/>
-                        <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                        <xsl:apply-templates mode="mml" select="*[1]"/>
                      </e>
 
                      <!-- No prescripts and no super scripts, therefore, it's a sub. -->
@@ -2437,7 +2437,7 @@
                   <sSup>
                      <e>
                         <xsl:call-template name="CreateArgProp"/>
-                        <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                        <xsl:apply-templates mode="mml" select="*[1]"/>
                      </e>
 
                      <!-- No prescripts and no sub scripts, therefore, it's a sup. -->
@@ -2456,7 +2456,7 @@
         <sPre>
                <e>
                   <xsl:call-template name="CreateArgProp"/>
-                  <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                  <xsl:apply-templates mode="mml" select="*[1]"/>
                </e>
 
                <!-- The prescripts come after the mml:mprescript and if we get here
@@ -2482,7 +2482,7 @@
                         <sSubSup>
                            <e>
                               <xsl:call-template name="CreateArgProp"/>
-                              <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                              <xsl:apply-templates mode="mml" select="*[1]"/>
                            </e>
 
                            <!-- scripts come before the mml:mprescript but after the first child, so their
@@ -2498,7 +2498,7 @@
                         <sSub>
                            <e>
                               <xsl:call-template name="CreateArgProp"/>
-                              <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                              <xsl:apply-templates mode="mml" select="*[1]"/>
                            </e>
 
                            <!-- We have prescripts but no super scripts, therefore, do a sub 
@@ -2513,7 +2513,7 @@
                         <sSup>
                            <e>
                               <xsl:call-template name="CreateArgProp"/>
-                              <xsl:apply-templates mode="mml" select="child::*[1]"/>
+                              <xsl:apply-templates mode="mml" select="*[1]"/>
                            </e>
 
                            <!-- We have prescripts but no sub scripts, therefore, do a sub 
@@ -2562,7 +2562,7 @@
 			 and (not($ndCur/@rowlines) or $ndCur/@rowlines='' or $ndCur/@rowlines='none')                       
 			 and (not($ndCur/@mml:rowlines) or $ndCur/@mml:rowlines='' or $ndCur/@mml:rowlines='none')               
 			 and not($ndCur/mml:mtr[count(mml:mtd) &gt; 1])            
-			 and not($ndCur/mml:mtr[count(mml:mtd) &lt; 1])
+			 and not($ndCur/mml:mtr[empty(mml:mtd)])
 			 and not($ndCur/mml:mlabeledtr)">1</xsl:when>
          <xsl:otherwise>0</xsl:otherwise>
       </xsl:choose>
@@ -2602,7 +2602,7 @@
       <xsl:param name="ndCur" select="."/>
 
       <xsl:choose>
-         <xsl:when test="count($ndCur/preceding-sibling::*[descendant-or-self::mml:maligngroup                                                 or descendant-or-self::mml:malignmark]) &gt; 0">1</xsl:when>
+         <xsl:when test="exists($ndCur/preceding-sibling::*[descendant-or-self::mml:maligngroup                                                 or descendant-or-self::mml:malignmark])">1</xsl:when>
          <xsl:when test="not($ndCur/parent::mml:mtd)">
             <xsl:call-template name="FFirstAlignAlreadyFound">
                <xsl:with-param name="ndCur" select="$ndCur/parent::*"/>
@@ -2924,7 +2924,7 @@
       <xsl:call-template name="CreateMglyph"/>
   </xsl:template>
   <xsl:template mode="mml"
-                 match="mml:mi[child::mml:mglyph] |                        mml:mn[child::mml:mglyph] |                        mml:mo[child::mml:mglyph] |                        mml:ms[child::mml:mglyph] |                        mml:mtext[child::mml:mglyph]">
+                 match="mml:mi[mml:mglyph] |                        mml:mn[mml:mglyph] |                        mml:mo[mml:mglyph] |                        mml:ms[mml:mglyph] |                        mml:mtext[mml:mglyph]">
       <xsl:if test="string-length(normalize-space(.)) &gt; 0">
          <r>
             <xsl:call-template name="CreateRunProp">
@@ -3028,7 +3028,7 @@
             </t>
          </r>
       </xsl:if>
-      <xsl:for-each select="child::mml:mglyph">
+      <xsl:for-each select="mml:mglyph">
          <xsl:call-template name="CreateMglyph">
             <xsl:with-param name="ndCur" select="."/>
          </xsl:call-template>
@@ -3445,7 +3445,7 @@
               </mml:mphantom>
 
             This test is used to allow roundtripping smashed invisible phantoms. -->
-      <xsl:when test="count($ndCur/child::*)=1 and count($ndCur/mml:mpadded)=1">
+      <xsl:when test="count($ndCur/*)=1 and count($ndCur/mml:mpadded)=1">
             <xsl:variable name="sLowerCaseWidth">
                <xsl:choose>
                   <xsl:when test="$ndCur/mml:mpadded/@width">
@@ -3510,7 +3510,7 @@
 
   <xsl:template mode="mml" match="mml:mpadded">
       <xsl:choose>
-         <xsl:when test="count(parent::mml:mphantom)=1 and count(preceding-sibling::*)=0 and count(following-sibling::*)=0">
+         <xsl:when test="count(parent::mml:mphantom)=1 and empty(preceding-sibling::*) and empty(following-sibling::*)">
         <!-- This mpadded is inside an mphantom that has already setup phantom attributes, therefore, just apply templates -->
         <xsl:apply-templates mode="mml"/>
          </xsl:when>

@@ -649,7 +649,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="numcols">
       <xsl:choose>
         <xsl:when
-          test="child::table:table-column/@table:number-columns-repeated">
+          test="table:table-column/@table:number-columns-repeated">
           <xsl:value-of
             select="number(table:table-column/@table:number-columns-repeated+1)"
           />
@@ -899,20 +899,20 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="id.attribute.literal">
-    <xsl:if test="child::text:reference-mark-start">
+    <xsl:if test="text:reference-mark-start">
       <xsl:text> xml:id=&quot;</xsl:text>
 	<xsl:text>id_</xsl:text>
-        <xsl:value-of select="child::text:reference-mark-start/@text:style-name"
+        <xsl:value-of select="text:reference-mark-start/@text:style-name"
         />
 	<xsl:text>&quot;</xsl:text>
     </xsl:if>
   </xsl:template>
 
   <xsl:template name="id.attribute">
-    <xsl:if test="child::text:reference-mark-start">
+    <xsl:if test="text:reference-mark-start">
       <xsl:attribute name="xml:id">
 	<xsl:text>id_</xsl:text>
-        <xsl:value-of select="child::text:reference-mark-start/@text:style-name"
+        <xsl:value-of select="text:reference-mark-start/@text:style-name"
         />
       </xsl:attribute>
     </xsl:if>

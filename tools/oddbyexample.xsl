@@ -447,7 +447,7 @@ valList
                   <xsl:variable name="m" select="current-grouping-key()"/>
                   <xsl:choose>
                     <xsl:when test="$m='tei'"/>
-                    <xsl:when test="count(current-group()/*)=0"/>
+                    <xsl:when test="empty(current-group()/*)"/>
                     <xsl:otherwise>
                  <xsl:comment>Checking module <xsl:value-of select="$m"/></xsl:comment>
 

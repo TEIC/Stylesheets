@@ -232,7 +232,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text> </xsl:text>
       <xsl:value-of select="local-name(.)"/>="<xsl:value-of select="."/>"</xsl:for-each>
     <xsl:choose>
-      <xsl:when test="child::node()">
+      <xsl:when test="node()">
         <xsl:text>&gt;</xsl:text>
         <xsl:apply-templates mode="literal"/>
         <xsl:if test="node()[last()]/self::rng:*">
@@ -446,7 +446,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:attList" mode="tangle">
     <xsl:param name="element"/>
     <xsl:choose>
-      <xsl:when test="count(*)=0"/>
+      <xsl:when test="empty(*)"/>
       <xsl:when test="@org='group' and         parent::tei:attList[@org='choice']">
         <rng:group>
           <xsl:apply-templates mode="tangle" select="tei:*">
@@ -699,7 +699,7 @@ of this software, even if advised of the possibility of such damage.
                   </xsl:if>
                </xsl:when>
 -->
-          <xsl:when test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
+          <xsl:when test="exists(key('CLASSMEMBERS',$thisClass))">
             <xsl:if test="$verbose='true'">
               <xsl:message> .... ... generate model <xsl:value-of select="$thisClass"/>
                 <xsl:value-of select="$suffix"/> (<xsl:value-of select="$type"/>) </xsl:message>
@@ -1073,7 +1073,7 @@ of this software, even if advised of the possibility of such damage.
       </TEMPTREE>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="count($Contents/TEMPTREE/*)=0">
+      <xsl:when test="empty($Contents/TEMPTREE/*)">
         <rng:empty/>
       </xsl:when>
       <xsl:otherwise>

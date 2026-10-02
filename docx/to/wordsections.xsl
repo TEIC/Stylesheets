@@ -86,7 +86,7 @@ of this software, even if advised of the possibility of such damage.
             <w:sectPr>
 	      <xsl:for-each select="tei:footer">
 		<xsl:variable name="ref" select="@ref"/>
-		<xsl:if test="count(key('FOOTERS',$ref))&gt;0">
+		<xsl:if test="exists(key('FOOTERS',$ref))">
 		  <xsl:variable name="footernum">
 		    <xsl:for-each select="key('FOOTERS',$ref)">
 		      <xsl:number level="any"/>
@@ -98,7 +98,7 @@ of this software, even if advised of the possibility of such damage.
 	      
 	      <xsl:for-each select="tei:header">
 		<xsl:variable name="ref" select="@ref"/>
-		<xsl:if test="count(key('HEADERS',$ref))&gt;0">
+		<xsl:if test="exists(key('HEADERS',$ref))">
 		  <xsl:variable name="headernum">
 		    <xsl:for-each select="key('HEADERS',$ref)">
 		      <xsl:number level="any"/>

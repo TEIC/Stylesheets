@@ -140,7 +140,7 @@ of this software, even if advised of the possibility of such damage.
 			<xsl:text>list of element names</xsl:text>
                         </xsl:with-param>
 		    </xsl:call-template>
-		    <xsl:if test="$parameterize='true' and count(key('NSELEMENTS',1))&gt;0">
+		    <xsl:if test="$parameterize='true' and exists(key('NSELEMENTS',1))">
 		      <xsl:text>&lt;!ENTITY % NS '</xsl:text>
 		      <xsl:value-of select="$nsPrefix"/>
 		      <xsl:text>' &gt;&#10;</xsl:text>
@@ -367,7 +367,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
   <xsl:template name="schemaSpecBody">
-      <xsl:if test="$parameterize='true' and count(key('NSELEMENTS',1))&gt;0">
+      <xsl:if test="$parameterize='true' and exists(key('NSELEMENTS',1))">
          <xsl:text>&lt;!ENTITY % NS '</xsl:text>
          <xsl:value-of select="$nsPrefix"/>
          <xsl:text>' &gt;&#10;</xsl:text>
@@ -981,7 +981,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="@depend"/>;[ <xsl:call-template name="macroBody"/>
             <xsl:text>&#10;]]&gt;</xsl:text>
          </xsl:when>
-         <xsl:when test="@depend and count(key('ElementModule',@depend))=0">
+         <xsl:when test="@depend and empty(key('ElementModule',@depend))">
             <xsl:if test="$verbose='true'">
                <xsl:message>Dependency on <xsl:value-of select="@depend"/>, but not used in
 						this schema </xsl:message>
@@ -1003,7 +1003,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:value-of select="@depend"/>;[ <xsl:call-template name="dataBody"/>
         <xsl:text>&#10;]]&gt;</xsl:text>
       </xsl:when>
-      <xsl:when test="@depend and count(key('ElementModule',@depend))=0">
+      <xsl:when test="@depend and empty(key('ElementModule',@depend))">
         <xsl:if test="$verbose='true'">
           <xsl:message>Dependency on <xsl:value-of select="@depend"/>, but not used in
             this schema </xsl:message>

@@ -554,7 +554,7 @@ of this software, even if advised of the possibility of such damage.
         to copy it over) OR there are one or more <constraintDecl>s
         whose contents we need to preserve for future use …
     -->
-    <xsl:if test="child::tei:encodingDesc  or  count( $constraintDecls ) gt 0">
+    <xsl:if test="tei:encodingDesc  or  exists($constraintDecls)">
       <!-- … output an <encodingDesc> … -->
       <tei:encodingDesc>
         <!-- … with any attributes the original <encodingDesc> (if any) had … -->
@@ -574,7 +574,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:variable name="distinct-queryBindings" as="xs:string*"
                             select="distinct-values( $queryBindings )"/>
               <xsl:choose>
-                <xsl:when test="count( $distinct-queryBindings ) eq 0">xslt2</xsl:when>
+                <xsl:when test="empty($distinct-queryBindings)">xslt2</xsl:when>
                 <xsl:when test="count( $distinct-queryBindings ) eq 1"><xsl:sequence select="$distinct-queryBindings"/></xsl:when>
                 <xsl:otherwise>
                   <xsl:variable name="queryBinding" select="($constraintDecls[ @scheme eq $this_scheme ]/@queryBinding)[last()]"/>
