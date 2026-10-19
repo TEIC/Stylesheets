@@ -341,11 +341,11 @@ of this software, even if advised of the possibility of such damage.
         <xsl:copy-of select="$not_declared_NSs"/>
       </xsl:if>
       
-      <xsl:if test="key('KEYs', 1, $root )[ ( for $L in $langs return lang($L) ) = true() ]">
+      <xsl:if test="key('KEYs', 1, $root )">
         <xsl:call-template name="blockComment">
           <xsl:with-param name="content" select="'keys:'"/>
         </xsl:call-template>
-        <xsl:for-each select="key('KEYs', 1, $root )[ ( for $L in $langs return lang($L) ) = true() ]">
+        <xsl:for-each select="key('KEYs', 1, $root )">
           <xsl:apply-templates select="."/>
         </xsl:for-each>
       </xsl:if>
