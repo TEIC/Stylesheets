@@ -7540,7 +7540,10 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
          <optional>
             <attribute name="usage">
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the approximate percentage of the text which uses this language.</a:documentation>
-               <data type="nonNegativeInteger"/>
+               <data type="decimal">
+                  <param name="maxInclusive">100.0</param>
+                  <param name="minInclusive">0.0</param>
+               </data>
             </attribute>
          </optional>
          <empty/>
@@ -9665,9 +9668,10 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
             <zeroOrMore>
                <choice>
                   <ref name="t_model.frontPart"/>
+                  <ref name="t_model.global"/>
+                  <ref name="t_model.listLike"/>
                   <ref name="t_model.pLike"/>
                   <ref name="t_model.pLike.front"/>
-                  <ref name="t_model.global"/>
                </choice>
             </zeroOrMore>
             <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -9718,45 +9722,45 @@ Suggested values include: 1] main (main); 2] sub (subordinate); 3] alt (alternat
             <zeroOrMore>
                <choice>
                   <ref name="t_model.frontPart"/>
-                  <ref name="t_model.pLike.front"/>
-                  <ref name="t_model.pLike"/>
-                  <ref name="t_model.listLike"/>
                   <ref name="t_model.global"/>
+                  <ref name="t_model.listLike"/>
+                  <ref name="t_model.pLike"/>
+                  <ref name="t_model.pLike.front"/>
                </choice>
             </zeroOrMore>
-            <optional>
-               <choice>
-                  <group>
-                     <ref name="t_model.div1Like"/>
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="t_model.frontPart"/>
-                           <ref name="t_model.div1Like"/>
-                           <ref name="t_model.global"/>
-                        </choice>
-                     </zeroOrMore>
-                  </group>
-                  <group>
-                     <ref name="t_model.divLike"/>
-                     <zeroOrMore>
-                        <choice>
-                           <ref name="t_model.frontPart"/>
-                           <ref name="t_model.divLike"/>
-                           <ref name="t_model.global"/>
-                        </choice>
-                     </zeroOrMore>
-                  </group>
-               </choice>
-            </optional>
             <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
                <rng:group>
-                  <rng:ref name="t_model.divBottomPart"/>
-                  <rng:zeroOrMore>
-                     <rng:choice>
-                        <rng:ref name="t_model.divBottomPart"/>
-                        <rng:ref name="t_model.global"/>
-                     </rng:choice>
-                  </rng:zeroOrMore>
+                  <rng:choice>
+                     <group>
+                        <rng:ref name="t_model.div1Like"/>
+                        <rng:zeroOrMore>
+                           <rng:choice>
+                              <rng:ref name="t_model.div1Like"/>
+                              <rng:ref name="t_model.frontPart"/>
+                              <rng:ref name="t_model.global"/>
+                           </rng:choice>
+                        </rng:zeroOrMore>
+                     </group>
+                     <group>
+                        <rng:ref name="t_model.divLike"/>
+                        <rng:zeroOrMore>
+                           <rng:choice>
+                              <rng:ref name="t_model.divLike"/>
+                              <rng:ref name="t_model.frontPart"/>
+                              <rng:ref name="t_model.global"/>
+                           </rng:choice>
+                        </rng:zeroOrMore>
+                     </group>
+                  </rng:choice>
+                  <optional>
+                     <rng:ref name="t_model.divBottom"/>
+                     <rng:zeroOrMore>
+                        <rng:choice>
+                           <rng:ref name="t_model.divBottom"/>
+                           <rng:ref name="t_model.global"/>
+                        </rng:choice>
+                     </rng:zeroOrMore>
+                  </optional>
                </rng:group>
             </rng:optional>
          </group>

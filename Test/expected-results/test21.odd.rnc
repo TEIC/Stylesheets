@@ -6588,7 +6588,9 @@ language =
     },
     
     ## précise approximativement le pourcentage du volume de texte utilisant cette langue.
-    attribute usage { xsd:nonNegativeInteger }?,
+    attribute usage {
+      xsd:decimal { maxInclusive = "100.0" minInclusive = "0.0" }
+    }?,
     empty
   }
 textClass =
@@ -9556,9 +9558,10 @@ front =
   ## (texte préliminaire) contient tout ce qui est au début du document, avant le corps du texte : page de titre, dédicaces, préfaces, etc. [4.6. Title Pages 4. Default Text Structure]
   element front {
     ((model.frontPart
+      | model.global
+      | model.listLike
       | model.pLike
-      | model.pLike.front
-      | model.global)*,
+      | model.pLike.front)*,
      (((model.div1Like,
         (model.div1Like | model.frontPart | model.global)*)
        | (model.divLike,
@@ -9573,15 +9576,15 @@ back =
   ## (texte annexe) contient tout supplément placé après la partie principale d'un texte : appendice, etc. [4.7. Back Matter 4. Default Text Structure]
   element back {
     ((model.frontPart
-      | model.pLike.front
-      | model.pLike
+      | model.global
       | model.listLike
-      | model.global)*,
-     ((model.div1Like,
-       (model.frontPart | model.div1Like | model.global)*)
-      | (model.divLike,
-         (model.frontPart | model.divLike | model.global)*))?,
-     (model.divBottomPart, (model.divBottomPart | model.global)*)?),
+      | model.pLike
+      | model.pLike.front)*,
+     (((model.div1Like,
+        (model.div1Like | model.frontPart | model.global)*)
+       | (model.divLike,
+          (model.divLike | model.frontPart | model.global)*)),
+      (model.divBottom, (model.divBottom | model.global)*)?)?),
     att.magical.attributes,
     att.global.attributes,
     att.declaring.attributes,

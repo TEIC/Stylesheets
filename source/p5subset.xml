@@ -7,7 +7,7 @@
       </titleStmt>
       <editionStmt>
         <edition>P5 <ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.13.0.html">4.13.0a</ref>. Last updated on
-        <date when="2026-09-11">11th September 2026</date>, revision <ref target="https://github.com/TEIC/TEI/commit/884f8dd3c">884f8dd3c</ref></edition>
+        <date when="2026-11-04">4th November 2026</date>, revision <ref target="https://github.com/TEIC/TEI/commit/438e939fd">438e939fd</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -14404,8 +14404,7 @@ elements of  <gi>profileDesc</gi> unless these are documenting multiple texts.</
       <gloss versionDate="2008-04-06" xml:lang="es">identificador</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">identificateur</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">identificatore</gloss>
-        <gloss versionDate="2016-11-17" xml:lang="de">Identifikator</gloss>
-<!--  NOTE (MDH 2016-04-24): This @versionDate is clearly wrong; we updated from ISO 3066 to BCP 47 around 2010 or 2011.  -->
+      <gloss versionDate="2016-11-17" xml:lang="de">Identifikator</gloss>
       <desc versionDate="2007-07-08" xml:lang="en">Supplies a language code constructed as defined in <ref target="https://tools.ietf.org/html/bcp47">BCP 47</ref> which is used to identify the
         language documented by this element, and which may be referenced by the global
         <att>xml:lang</att> attribute.</desc>
@@ -14444,7 +14443,12 @@ elements of  <gi>profileDesc</gi> unless these are documenting multiple texts.</
         texto que usa esa lengua.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica la percentuale approsimativa (per volume)
         di testo che usa questa lingua.</desc>
-      <datatype><dataRef name="nonNegativeInteger"/></datatype>
+      <datatype>
+         <dataRef name="decimal">
+          <dataFacet name="maxInclusive" value="100.0"/>
+          <dataFacet name="minInclusive" value="0.0"/>
+        </dataRef>
+      </datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -29374,21 +29378,15 @@ reserved for the element likely to be used more often.</p>
   </classes>
   <content>
     <sequence>
-      <!-- 
-           we start with allowing a group of mixed-up p-like elements.
-           when we are done with them, we can start considering
-           div-like elements, and the things that
-           can occur after them.
-      -->
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.frontPart"/>
+        <classRef key="model.global"/>
+        <classRef key="model.listLike"/>
         <classRef key="model.pLike"/>
         <classRef key="model.pLike.front"/>
-        <classRef key="model.global"/>
       </alternate>
       <sequence minOccurs="0">
         <alternate>
-          <!-- 1. has a div1Like, after optional front parts -->
           <sequence>
             <classRef key="model.div1Like"/>
             <alternate minOccurs="0" maxOccurs="unbounded">
@@ -29397,7 +29395,6 @@ reserved for the element likely to be used more often.</p>
               <classRef key="model.global"/>
             </alternate>
           </sequence>
-          <!-- 1. has a divLike, after optional front parts -->
           <sequence>
             <classRef key="model.divLike"/>
             <alternate minOccurs="0" maxOccurs="unbounded">
@@ -29407,7 +29404,6 @@ reserved for the element likely to be used more often.</p>
             </alternate>
           </sequence>
         </alternate>
-        <!-- and some bottoms, mebbe -->
         <sequence minOccurs="0">
           <classRef key="model.divBottom"/>
           <alternate minOccurs="0" maxOccurs="unbounded">
@@ -29626,35 +29622,37 @@ reserved for the element likely to be used more often.</p>
     <sequence>
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.frontPart"/>
-        <classRef key="model.pLike.front"/>
-        <classRef key="model.pLike"/>
-        <classRef key="model.listLike"/>
         <classRef key="model.global"/>
-      </alternate>
-      <alternate minOccurs="0">
-        <sequence>
-          <classRef key="model.div1Like"/>
-          <alternate minOccurs="0" maxOccurs="unbounded">
-            <classRef key="model.frontPart"/>
-            <classRef key="model.div1Like"/>
-            <classRef key="model.global"/>
-          </alternate>
-        </sequence>
-        <sequence>
-          <classRef key="model.divLike"/>
-          <alternate minOccurs="0" maxOccurs="unbounded">
-            <classRef key="model.frontPart"/>
-            <classRef key="model.divLike"/>
-            <classRef key="model.global"/>
-          </alternate>
-        </sequence>
+        <classRef key="model.listLike"/>
+        <classRef key="model.pLike"/>
+        <classRef key="model.pLike.front"/>
       </alternate>
       <sequence minOccurs="0">
-        <classRef key="model.divBottomPart"/>
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.divBottomPart"/>
-          <classRef key="model.global"/>
+        <alternate>
+          <sequence>
+            <classRef key="model.div1Like"/>
+            <alternate minOccurs="0" maxOccurs="unbounded">
+              <classRef key="model.div1Like"/>
+              <classRef key="model.frontPart"/>
+              <classRef key="model.global"/>
+            </alternate>
+          </sequence>
+          <sequence>
+            <classRef key="model.divLike"/>
+            <alternate minOccurs="0" maxOccurs="unbounded">
+              <classRef key="model.divLike"/>
+              <classRef key="model.frontPart"/>
+              <classRef key="model.global"/>
+            </alternate>
+          </sequence>
         </alternate>
+        <sequence minOccurs="0">
+          <classRef key="model.divBottom"/>
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <classRef key="model.divBottom"/>
+            <classRef key="model.global"/>
+          </alternate>
+        </sequence>
       </sequence>
     </sequence>
   </content>
@@ -65969,6 +65967,15 @@ processor should signal an error. </p>
       <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec ident="specs-without-module-att-deprecated" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:rule context="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec">
+        <sch:assert test="@module" role="warning">
+          The @module attribute will be required on <sch:name/> and other *Spec elements after 2028-06-30.
+        </sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="MODULESPEC-egXML-mo">
       <moduleSpec ident="namesdates">
@@ -66803,10 +66810,7 @@ contains specifications for the elements
         <classRef key="model.identSynonyms"/>
         <classRef key="model.descLike"/>
       </alternate> 
-      <alternate minOccurs="0" maxOccurs="1">
-        <elementRef key="content"/> 
-        <elementRef key="valList"/> 
-      </alternate>
+      <elementRef key="content" minOccurs="0" maxOccurs="1"/> 
       <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
       <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
       <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
@@ -66872,10 +66876,7 @@ contains specifications for the elements
         <classRef key="model.identSynonyms"/>
         <classRef key="model.descLike"/>
       </alternate>
-      <alternate minOccurs="0" maxOccurs="1">
-        <elementRef key="content"/>
-        <elementRef key="valList"/>
-      </alternate>
+      <elementRef key="content" minOccurs="0" maxOccurs="1"/>
       <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
       <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
       <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
@@ -66920,6 +66921,33 @@ portion of an ODD document.</desc>
       d'une partie traduisible d'un document ODD.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos utilizados para indicar el estatus de un fragmento traducibile de un documento aislado.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi utilizzati per indicare lo status di una porzione traducibile di un documento isolato.</desc>
+  <constraintSpec mode="add" ident="only-one-each-lang" scheme="schematron" xml:lang="en">
+    <!-- Added per ticket https://github.com/TEIC/TEI/issues/2729 -->
+    <desc xml:lang="en" versionDate="2026-08-21">
+      This constraint requires that there be only one of any sibling
+      element type from att.translatable with a given <att>type</att>
+      for any given natural language. Note that to determine natural
+      language we simply compare <att>xml:lang</att> values, such that
+      <val>fr-CA</val> and <val>fr-FR</val> would be considered
+      different languages.
+      <!-- We may want to be smarter about this in the future. -->
+    </desc>
+    <!--
+        We would prefer to be able to say “a member of
+        att.translatable”, but there is currently no way
+        to do that, so we just enumerate them.
+    -->
+    <constraint>
+      <sch:rule context="  tei:elementSpec/tei:desc                          | tei:elementSpec/tei:gloss                          | tei:elementSpec/tei:remarks                          | tei:classSpec/tei:desc                          | tei:classSpec/tei:gloss                          | tei:classSpec/tei:remarks                          | tei:macroSpec/tei:desc                          | tei:macroSpec/tei:gloss                          | tei:macroSpec/tei:remarks                          | tei:attDef/tei:desc                          | tei:attDef/tei:gloss                          | tei:attDef/tei:remarks                          | tei:valItem/tei:desc                          | tei:valItem/tei:gloss                          | tei:valItem/tei:remarks                          | tei:moduleSpec/tei:desc                          | tei:moduleSpec/tei:gloss                          | tei:moduleSpec/tei:remarks                          ">
+        <sch:let name="myGI" value="name(.)"/>
+        <sch:let name="noType" value="not( @type )"/>
+        <sch:let name="myType" value="normalize-space( @type )"/>
+        <sch:let name="lang" value="normalize-space( ancestor-or-self::*[@xml:lang][1]/@xml:lang )"/>
+        <sch:report test="preceding-sibling::*[ name(.) eq $myGI ]                                               [ ( not( @type) and $noType )  or  normalize-space( @type ) eq $myType ]                                               [ normalize-space( ancestor-or-self::*[@xml:lang][1]/@xml:lang ) eq $lang ]">
+        The sibling &lt;<sch:value-of select="$myGI"/>&gt; children of a &lt;<sch:value-of select="name(..)"/>&gt; should each have a different @xml:lang; this one duplicates the "<sch:value-of select="$lang"/>" of a preceding sibling.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="versionDate" usage="opt">
       <desc versionDate="2012-05-23" xml:lang="en">specifies the date on which the source text was extracted and sent to the translator</desc>
@@ -69135,7 +69163,7 @@ déclaration de même nom dans la définition courante.</desc>
           <sch:rule context="tei:constraintSpec[ @mode = ('add','replace')  or  not( @mode ) ]">
             <sch:assert test="@scheme">
             The @scheme attribute of &lt;constraintSpec&gt; is required when the @mode is
-            <sch:value-of select="if (@mode) then concat('&quot;',@mode,'&quot;') else 'not specified'"/>
+            <sch:value-of select="if (@mode) then concat('&#34;',@mode,'&#34;') else 'not specified'"/>
             (here on "<sch:value-of select="@ident"/>").</sch:assert>
           </sch:rule>
         </constraint>

@@ -5134,7 +5134,9 @@ Tlanguage =
     },
     
     ## specifies the approximate percentage of the text which uses this language.
-    attribute usage { xsd:nonNegativeInteger }?,
+    attribute usage {
+      xsd:decimal { maxInclusive = "100.0" minInclusive = "0.0" }
+    }?,
     empty
   }
 TtextClass =
@@ -8436,9 +8438,10 @@ Tfront =
   ## (front matter) contains any prefatory matter (headers, abstracts, title page, prefaces, dedications, etc.) found at the start of a document, before the main body. [4.6. Title Pages 4. Default Text Structure]
   element front {
     ((Tmodel.frontPart
+      | Tmodel.global
+      | Tmodel.listLike
       | Tmodel.pLike
-      | Tmodel.pLike.front
-      | Tmodel.global)*,
+      | Tmodel.pLike.front)*,
      (((Tmodel.div1Like,
         (Tmodel.div1Like | Tmodel.frontPart | Tmodel.global)*)
        | (Tmodel.divLike,
@@ -8453,15 +8456,15 @@ Tback =
   ## (back matter) contains any appendixes, etc. following the main part of a text. [4.7. Back Matter 4. Default Text Structure]
   element back {
     ((Tmodel.frontPart
-      | Tmodel.pLike.front
-      | Tmodel.pLike
+      | Tmodel.global
       | Tmodel.listLike
-      | Tmodel.global)*,
-     ((Tmodel.div1Like,
-       (Tmodel.frontPart | Tmodel.div1Like | Tmodel.global)*)
-      | (Tmodel.divLike,
-         (Tmodel.frontPart | Tmodel.divLike | Tmodel.global)*))?,
-     (Tmodel.divBottomPart, (Tmodel.divBottomPart | Tmodel.global)*)?),
+      | Tmodel.pLike
+      | Tmodel.pLike.front)*,
+     (((Tmodel.div1Like,
+        (Tmodel.div1Like | Tmodel.frontPart | Tmodel.global)*)
+       | (Tmodel.divLike,
+          (Tmodel.divLike | Tmodel.frontPart | Tmodel.global)*)),
+      (Tmodel.divBottom, (Tmodel.divBottom | Tmodel.global)*)?)?),
     Tatt.global.attributes,
     Tatt.declaring.attributes,
     empty
