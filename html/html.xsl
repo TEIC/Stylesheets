@@ -742,12 +742,38 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates mode="generateLink"
                                  select="ancestor::tei:floatingText/ancestor::tei:*[starts-with(local-name(),'div')][1]"/>
           </xsl:when>
+          <!-- Begin copied section; see note [1] -->
+          <xsl:when test="ancestor::tei:elementSpec and not($STDOUT='true')">
+            <xsl:sequence select="concat('ref-',ancestor::tei:elementSpec/@ident,$standardSuffix,'#',$ident)"/>
+          </xsl:when>
+          <xsl:when test="ancestor::tei:classSpec and not($STDOUT='true')">
+            <xsl:sequence select="concat('ref-',ancestor::tei:classSpec/@ident,$standardSuffix,'#',$ident)"/>
+          </xsl:when>
+          <xsl:when test="ancestor::tei:dataSpec and not($STDOUT='true')">
+            <xsl:sequence select="concat('ref-',ancestor::tei:dataSpec/@ident,$standardSuffix,'#',$ident)"/>
+          </xsl:when>
+          <xsl:when test="ancestor::tei:macroSpec and not($STDOUT='true')">
+            <xsl:sequence select="concat('ref-',ancestor::tei:macroSpec/@ident,$standardSuffix,'#',$ident)"/>
+          </xsl:when>
+          <xsl:when test="not ($STDOUT='true') and ancestor::tei:back and not($splitBackmatter='true')">
+            <xsl:value-of select="concat($masterFile,$standardSuffix,'#',$ident)"/>
+          </xsl:when>
+          <xsl:when test="not($STDOUT='true') and ancestor::tei:front and not($splitFrontmatter='true')">
+            <xsl:value-of select="concat($masterFile,$standardSuffix,'#',$ident)"/>
+          </xsl:when>
+          <!-- end copied section; see note [1] -->
+          <!--
+              note [1]:
+              This section was copied directly from the template
+              for tei:* in mode "generateLink" by Syd, per Claude’s
+              suggestion to Raff on 2026-11-10.
+          -->
           <xsl:otherwise>
             <xsl:apply-templates mode="generateLink"
                                  select="ancestor::tei:*[starts-with(local-name(),'div')][1]"/>
           </xsl:otherwise>
         </xsl:choose>
-        </xsl:variable>
+      </xsl:variable>
 
       <xsl:choose>
          <xsl:when test="starts-with($file,'#')">
