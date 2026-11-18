@@ -92,8 +92,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:dataSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:macroSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS_NONELEMENT" match="tei:classSpec" use="@module"/>
-  <xsl:key name="odd2odd-ATTREFED" use="substring-before( (@name|@key),'.attribute.')" match="tei:attRef"/>
-  <!-- Above union of @name & @key should be reduced to just @key after 2026-11-13 -->
+  <xsl:key name="odd2odd-ATTREFED" use="substring-before( @key, '.attribute.')" match="tei:attRef"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:elementSpec]"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:macroSpec and not(@name=ancestor::tei:macroSpec/@ident)]"/>
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:datatype]"/>

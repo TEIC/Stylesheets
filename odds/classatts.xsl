@@ -195,7 +195,7 @@
             </xsl:for-each>
           </xsl:when>
           <xsl:otherwise>
-            <attRef class="{ancestor::classSpec/@ident}" name="{@ident}"/>
+            <attRef class="{ancestor::classSpec/@ident}" key="{@ident}"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
