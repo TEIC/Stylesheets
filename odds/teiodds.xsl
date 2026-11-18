@@ -439,7 +439,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="count(*)=0"/>
       <xsl:when test="@org='group' and         parent::tei:attList[@org='choice']">
         <rng:group>
-          <xsl:apply-templates mode="tangle" select="tei:*">
+          <xsl:apply-templates mode="tangle" select="tei:* | rng:ref">
             <xsl:with-param name="element" select="$element"/>
           </xsl:apply-templates>
         </rng:group>
@@ -447,7 +447,7 @@ of this software, even if advised of the possibility of such damage.
 
       <xsl:when test="@org='choice'">
         <rng:choice>
-          <xsl:apply-templates mode="tangle" select="tei:*">
+          <xsl:apply-templates mode="tangle" select="tei:* | rng:ref">
             <xsl:with-param name="element" select="$element"/>
           </xsl:apply-templates>
         </rng:choice>
@@ -524,6 +524,7 @@ of this software, even if advised of the possibility of such damage.
                       <rng:ref name="{$c}.attribute.{translate(@ident,':','')}"/>
                     </xsl:if>
                   </xsl:for-each>
+                  <xsl:apply-templates select="tei:attList//rng:ref"/> <!-- Copy over any RELAX NG references directly -->
                   <xsl:for-each select="tei:attList//tei:attRef">
                     <xsl:choose>
                       <xsl:when test="key('LOCALIDENTS',@class)">
