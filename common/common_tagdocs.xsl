@@ -2102,7 +2102,7 @@
         <xsl:variable name="theseAttDefs" select="$Original//tei:classSpec[@ident = current-grouping-key()]/tei:attList/tei:attDef" as="element(tei:attDef)*"/>
         <!-- subset of those that have been deleted or over-ridden -->
         <xsl:variable name="theUnusedAttDefs" as="element(tei:attDef)*"
-		      select="$theseAttDefs[ not( @ident = current-group()/@key ) ]"/>
+                      select="$theseAttDefs[ not( @ident = current-group()/@key ) ]"/>
        
         <xsl:element namespace="{$outputNS}" name="{$ulName}">
           <xsl:attribute name="{$rendName}" select="'classSpecAttDefs'"/>
@@ -3116,7 +3116,8 @@
     <xsl:for-each
       select=".//rng:ref | .//tei:elementRef | .//tei:classRef | .//tei:macroRef | .//tei:dataRef">
       <xsl:if test="not(starts-with(@name, 'any') or starts-with(@name, 'macro.any') or starts-with(@key, 'macro.any') or @name = 'AnyThing')">
-        <xsl:variable name="Name" select="replace( @key, '_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)', '')"/>
+        <xsl:variable name="Name"
+                      select="replace( @name | @key, '_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)', '')"/>
         <xsl:variable name="except" select="@except"/>
         <xsl:variable name="include" select="@include"/>
         <xsl:for-each select="key('IDENTS', $Name)">
