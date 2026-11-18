@@ -416,7 +416,7 @@
         <!-- MDH tweaked this again 2016-12-29 to deal with remaining
              rng:data elements not yet PURE-ified. -->
         <xsl:call-template name="showElement">
-          <xsl:with-param name="name" select="( dataRef/@key!string(), dataRef/@name!string(), rng:data/@type!string(), '')[1]"/>
+          <xsl:with-param name="name" select="( tei:dataRef/@key!string(), tei:dataRef/@name!string(), rng:data/@type!string(), '')[1]"/>
         </xsl:call-template>
         <xsl:if test="1 != ( $minOccurs, $maxOccurs )">
           <xsl:text> </xsl:text>
