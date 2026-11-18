@@ -1672,6 +1672,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:apply-templates mode="justcopy" select="tei:attDef"/>
                 <xsl:apply-templates mode="justcopy" select="tei:attRef"/>
                 <xsl:apply-templates mode="justcopy" select="tei:attList"/>
+                <xsl:apply-templates mode="justcopy" select="rng:ref"/>
               </xsl:copy>
             </xsl:for-each>
           </xsl:when>
@@ -1679,6 +1680,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attDef"/>
             <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attRef"/>
             <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attList"/>
+            <xsl:apply-templates mode="justcopy" select="rng:ref"/>
           </xsl:otherwise>
         </xsl:choose>
       </attList>
@@ -1727,6 +1729,8 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
     <!-- any direct attRef elements -->
     <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attRef"/>
+    <!-- any direct rng:ref elements -->
+    <xsl:apply-templates mode="justcopy" select="tei:attList/rng:ref"/>
     <!-- now look at each of the original object's attributes and see
     if we have an update -->
     <xsl:for-each select="$ORIGINAL/tei:attList">

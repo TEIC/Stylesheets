@@ -2127,6 +2127,12 @@
         </xsl:element>
       </xsl:element>
     </xsl:for-each-group>
+    <xsl:for-each select=".//rng:ref[not(tei:match(@rend, 'none'))]">
+      <xsl:element namespace="{$outputNS}" name="{$itemName}">
+        <xsl:attribute name="{$rendName}" select="'attRefItem'"/>
+        <xsl:sequence select="@name||': a RELAX NG pattern imported directly'"/>
+      </xsl:element>
+    </xsl:for-each>
   </xsl:template>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2139,7 +2145,7 @@
     <xsl:variable name="attribute_list_items">
       <xsl:processing-instruction name="DEBUG"> calling showAttClasses 06 </xsl:processing-instruction>
       <xsl:call-template name="showAttClasses"/>
-      <xsl:if test=".//tei:attRef">
+      <xsl:if test=".//tei:attRef | .//rng:ref">
         <xsl:call-template name="showAttRefs"/>
       </xsl:if>
     </xsl:variable>
