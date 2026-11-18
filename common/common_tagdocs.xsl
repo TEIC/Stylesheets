@@ -412,11 +412,11 @@
     
         <!-- we assume that datatype contains only a single dataRef -->
         <!-- (I don't like the above assumption, but I just tested, -->
-        <!-- and as of now (2016-11-15) it's true for P5. -Syd)     -->
+        <!-- and as of now (2016-11-15) it's true for P5. —Syd)     -->
         <!-- MDH tweaked this again 2016-12-29 to deal with remaining
              rng:data elements not yet PURE-ified. -->
         <xsl:call-template name="showElement">
-          <xsl:with-param name="name" select="if (tei:dataRef/@key) then tei:dataRef/@key else if (tei:dataRef/@name) then tei:dataRef/@name else if (rng:data/@type) then rng:data/@type else ''"/>
+          <xsl:with-param name="name" select="( dataRef/@key!string(), dataRef/@name!string(), rng:data/@type!string(), '')[1]"/>
         </xsl:call-template>
         <xsl:if test="1 != ( $minOccurs, $maxOccurs )">
           <xsl:text> </xsl:text>
@@ -2102,7 +2102,7 @@
         <xsl:variable name="theseAttDefs" select="$Original//tei:classSpec[@ident = current-grouping-key()]/tei:attList/tei:attDef" as="element(tei:attDef)*"/>
         <!-- subset of those that have been deleted or over-ridden -->
         <xsl:variable name="theUnusedAttDefs" as="element(tei:attDef)*"
-		      select="$theseAttDefs[ not( @ident = (current-group()/@name, current-group()/@key ) ) ]"/>
+		      select="$theseAttDefs[ not( @ident = current-group()/@key ) ]"/>
        
         <xsl:element namespace="{$outputNS}" name="{$ulName}">
           <xsl:attribute name="{$rendName}" select="'classSpecAttDefs'"/>
@@ -2120,10 +2120,7 @@
             <xsl:element namespace="{$outputNS}" name="{$itemName}">
               <xsl:element namespace="{$outputNS}" name="{$segName}">
                 <xsl:attribute name="{$rendName}">attribute</xsl:attribute>
-                <xsl:sequence select="concat('@', ( @name | @key ) )"/>
-		<!-- Above union works because only 1 of the attrs
-		     @name & @key will ever be present. Should be
-		     reduced to just @key after 2026-11-13 -->
+                <xsl:sequence select="concat('@', @key )"/>
               </xsl:element>
             </xsl:element>
           </xsl:for-each>
@@ -3107,7 +3104,7 @@
     <!-- 
       Note that the @prefix being specified on the <Element> elements
       we generate are mostly empty, as the current node when we are
-      called is a <tei:content> which does not have an @prefix.
+      called is a <tei:content> which does not have a @prefix.
       — Stylesheets group, 2020-03-17
     -->
     <xsl:if test=".//rng:text or .//rng:data or .//tei:textNode">
@@ -3118,10 +3115,8 @@
     </xsl:for-each>
     <xsl:for-each
       select=".//rng:ref | .//tei:elementRef | .//tei:classRef | .//tei:macroRef | .//tei:dataRef">
-      <xsl:if
-        test="not(starts-with(@name, 'any') or starts-with(@name, 'macro.any') or starts-with(@key, 'macro.any') or @name = 'AnyThing')">
-        <xsl:variable name="Name"
-          select="replace(@name | @key, '_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)', '')"/>
+      <xsl:if test="not(starts-with(@name, 'any') or starts-with(@name, 'macro.any') or starts-with(@key, 'macro.any') or @name = 'AnyThing')">
+        <xsl:variable name="Name" select="replace( @key, '_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)', '')"/>
         <xsl:variable name="except" select="@except"/>
         <xsl:variable name="include" select="@include"/>
         <xsl:for-each select="key('IDENTS', $Name)">

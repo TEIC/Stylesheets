@@ -140,16 +140,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:macroSpec[@predeclare='true']" name="PredeclareMacrosModule" use="@module"/>
   <xsl:key match="tei:macroSpec[@predeclare='true']" name="PredeclareAllMacros" use="1"/>
 
-
-  <!--
-      ******** Note for removing deprection on 2026-11-13 or thereafter ********
-      In ~½ dozen places herein you will find the construct “@name |
-      @key”. These unions work because 1 and only 1 of those two
-      attributes will ever be present on the <attRef> being
-      processed. Should be reduced to just @key after 2026-11-13.
-  -->
-
-  
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
       <xsl:when test="$defaultSource != ''">
@@ -410,7 +400,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="@class"/>
       <xsl:otherwise>
-        <rng:ref name="{@name|@key}"/>
+        <rng:ref name="{@key}"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -541,14 +531,13 @@ of this software, even if advised of the possibility of such damage.
                       </xsl:when>
                       <xsl:when test="@class"/>
                       <xsl:otherwise>
-			<rng:ref name="{@name|@key}"/>
+                        <rng:ref name="{@key}"/>
                       </xsl:otherwise>
                     </xsl:choose>
                   </xsl:for-each>
                 </ROOT>
               </xsl:variable>
-              <rng:define
-                name="{$c}.attributes">
+              <rng:define name="{$c}.attributes">
                 <xsl:for-each select="$contents/ROOT">
                   <xsl:apply-templates mode="justcopy"/>
                   <xsl:if test="not($contents/ROOT/*)">
@@ -2013,9 +2002,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates mode="justcopy" select="."/>
       </xsl:when>
       <xsl:when test="self::sch:pattern[ @is-a ]">
-	<xsl:if test="//sch:pattern[@abstract='true'][@id=current()/@is-a]">
-	  <xsl:apply-templates mode="justcopy" select="."/>
-	</xsl:if>	  
+        <xsl:if test="//sch:pattern[@abstract='true'][@id=current()/@is-a]">
+          <xsl:apply-templates mode="justcopy" select="."/>
+        </xsl:if>         
       </xsl:when>
       <xsl:when test="self::sch:rule[not(preceding-sibling::sch:rule)]">
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron">
@@ -2379,11 +2368,11 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
       </xsl:for-each>
       <xsl:choose>
-        <xsl:when test="not(@name|@key)">
-          <xsl:value-of select="concat(@class,'.attributes')"/>
+        <xsl:when test="not( @key )">
+          <xsl:value-of select="@class||'.attributes'"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="concat(@class,'.attribute.',translate( (@name|@key),':',''))"/>
+          <xsl:value-of select="@class||'.attribute.'||translate( @key, ':', '')"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
