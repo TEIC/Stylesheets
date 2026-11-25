@@ -7793,6 +7793,37 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <empty/>
       </element>
    </define>
+   <define name="t_att.linguistic.dependency.attributes">
+      <ref name="t_att.linguistic.dependency.attribute.depN"/>
+      <ref name="t_att.linguistic.dependency.attribute.depR"/>
+      <ref name="t_att.linguistic.dependency.attribute.depE"/>
+   </define>
+   <define name="t_att.linguistic.dependency.attribute.depN">
+      <optional>
+         <attribute name="depN">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(token index) encodes the token index or index range of a word-level element in a syntactic dependency relation.</a:documentation>
+            <data type="token">
+               <param name="pattern">[^\p{C}\p{Z}]+</param>
+            </data>
+         </attribute>
+      </optional>
+   </define>
+   <define name="t_att.linguistic.dependency.attribute.depR">
+      <optional>
+         <attribute name="depR">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(syntactic dependency relation) encodes a dependency relation between the element bearing this attribute and its syntactic head in terms of a pair consisting of the head’s token index and the type of the dependency relation.</a:documentation>
+            <data type="string"/>
+         </attribute>
+      </optional>
+   </define>
+   <define name="t_att.linguistic.dependency.attribute.depE">
+      <optional>
+         <attribute name="depE">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(enhanced syntactic dependency relations) encodes enhanced syntactic dependency relations between the element bearing this attribute and its syntactic heads in terms of a list of pairs each consisting of the head’s token index and the type of the dependency relation.</a:documentation>
+            <data type="string"/>
+         </attribute>
+      </optional>
+   </define>
    <define name="t_att.lexicographic.normalized.attributes">
       <ref name="t_att.lexicographic.normalized.attribute.norm"/>
       <ref name="t_att.lexicographic.normalized.attribute.orig"/>
@@ -7815,6 +7846,7 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
    </define>
    <define name="t_att.linguistic.attributes">
       <ref name="t_att.lexicographic.normalized.attributes"/>
+      <ref name="t_att.linguistic.dependency.attributes"/>
       <ref name="t_att.linguistic.attribute.lemma"/>
       <ref name="t_att.linguistic.attribute.lemmaRef"/>
       <ref name="t_att.linguistic.attribute.pos"/>
@@ -7843,7 +7875,13 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
       <optional>
          <attribute name="pos">
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(part of speech) indicates the part of speech assigned to a token (i.e. information on whether it is a noun, adjective, or verb), usually according to some official reference vocabulary (e.g. for German: STTS, for English: CLAWS, for Polish: NKJP, etc.).</a:documentation>
-            <data type="string"/>
+            <list>
+               <oneOrMore>
+                  <data type="token">
+                     <param name="pattern">[^\p{C}\p{Z}]+</param>
+                  </data>
+               </oneOrMore>
+            </list>
          </attribute>
       </optional>
    </define>

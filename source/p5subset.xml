@@ -7,7 +7,7 @@
       </titleStmt>
       <editionStmt>
         <edition>P5 <ref target="#ABTEI4">Version</ref> <ref target="../../readme-4.13.0.html">4.13.0a</ref>. Last updated on
-        <date when="2026-11-04">4th November 2026</date>, revision <ref target="https://github.com/TEIC/TEI/commit/438e939fd">438e939fd</ref></edition>
+        <date when="2026-11-24">24th November 2026</date>, revision <ref target="https://github.com/TEIC/TEI/commit/8c3cb3ef6">8c3cb3ef6</ref></edition>
       </editionStmt>
       <publicationStmt>
         <distributor>TEI Consortium</distributor>
@@ -59261,6 +59261,190 @@ etc. as appropriate.</p>
     <ptr target="#AILALW"/>
   </listRef>
 </elementSpec>
+<classSpec module="analysis" xml:id="ATTLINGDEP" type="atts" ident="att.linguistic.dependency">
+  <desc versionDate="2025-12-02" xml:lang="en">provides attributes for
+    annotating dependency relations between word-level elements.</desc>
+  <classes/>
+  <attList>
+    <attDef ident="depN" usage="opt">
+      <gloss versionDate="2025-12-02" xml:lang="en">token index</gloss>
+      <desc versionDate="2025-12-02" xml:lang="en">encodes the token index or index
+        range of a word-level element in a syntactic dependency relation.</desc>
+      <datatype><dataRef key="teidata.word"/></datatype>
+      <remarks xml:lang="en" ident="att.linguistic.dependency.depN-remarks" versionDate="2025-12-02">
+        <p>The value of <att>depN</att> is usually an integer or a hyphen-separated range of
+          integers; for special cases one may also use specific notations like <val>5.1</val> (cf.
+          the example below).</p>
+      </remarks>
+    </attDef>
+    <attDef ident="depR" usage="opt">
+      <gloss versionDate="2025-12-02" xml:lang="en">syntactic dependency relation</gloss>
+      <desc versionDate="2025-12-02" xml:lang="en">encodes a dependency relation
+        between the element bearing this attribute and its syntactic head in
+        terms of a pair consisting of the head’s token index and <!-- a label
+        for --> the type of the dependency relation.</desc>
+      <datatype><dataRef key="teidata.text"/></datatype>
+      <remarks ident="att.linguistic.dependency.depR-remarks" versionDate="2025-12-02" xml:lang="en">
+        <p>The value of <att>depR</att> should use a colon to separate the head’s token index
+          from<!-- the label for --> the type of the dependency relation.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="depE" usage="opt">
+      <gloss versionDate="2025-12-02" xml:lang="en">enhanced syntactic dependency relations</gloss>
+      <desc versionDate="2025-12-02" xml:lang="en">encodes enhanced syntactic
+        dependency relations between the element bearing this attribute and its
+        syntactic heads in terms of a list of pairs each consisting of the
+        head’s token index and <!-- a label for --> the type of the dependency
+        relation.</desc>
+      <datatype><dataRef key="teidata.text"/></datatype>
+      <remarks ident="att.linguistic.dependency.depE-remarks" versionDate="2025-12-02" xml:lang="en">
+        <p>The value of <att>depE</att> should use a colon to separate the head’s token index from
+          <!-- the label for --> the type of the dependency relation, and a pipe symbol as a
+          list-item separator.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <p>Universal Dependency (UD) annotation of the English sentence <q>She buys
+    books.</q>:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <s>
+        <w depN="1" depR="2:nsubj" pos="PRON" lemma="she">She</w>
+        <w depN="2" depR="0:root" pos="VERB" lemma="buy">buys</w>
+        <w depN="3" depR="2:obj" pos="NOUN" lemma="book" join="right">books</w>
+        <pc depN="4" depR="2:punct" pos="PUNCT" lemma=".">.</pc>
+      </s>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>Universal Dependency (UD) annotation of the English sentence <q>She buys and sells books.</q>.</p>
+    <p>Note that the value of <att>pos</att> is a list, in this case used for two kinds of tagsets: universal 
+      (<soCalled>UPOS</soCalled> in table <ptr target="#tab-conllu-serialisation"/>) and language-particular (<soCalled>XPOS</soCalled>).</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <s>
+        <w depN="1" depR="2:nsubj" depE="2:nsubj|4:nsubj" pos="PRON PRP" msd="Case=Nom|Gender=Fem|Number=Sing|Person=3|PronType=Prs" lemma="she">She</w>
+        <w depN="2" depR="0:root" depE="0:root" pos="VERB VBZ" msd="Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin" lemma="buy">buys</w>
+        <w depN="3" depR="4:cc" depE="4:cc" pos="CCONJ CC" lemma="and">and</w>
+        <w depN="4" depR="2:conj" depE="0:root|2:conj" pos="VERB VBZ" msd="Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin" lemma="sell">sells</w>
+        <w depN="5" depR="2:obj" depE="2:obj|4:obj" pos="NOUN NNS" msd="Number=Plur" lemma="book" join="right">books</w>
+        <pc depN="6" depR="2:punct" depE="2:punct" pos="PUNCT ." lemma=".">.</pc>
+      </s>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>Universal Dependency (UD) annotation of the English sentence
+      <q>She likes coffee and he tea.</q>:</p>
+    <p>This gapping example shows the difference between basic dependency
+      relations, here with an elided (absent) second occurrence of
+      <mentioned>likes</mentioned>, and expanded dependency relations, here
+      featuring an empty syntactic atom (with token index <val>5.1</val>). (For
+      the representation of empty nodes in UD, cf.
+      <ptr target="https://universaldependencies.org/format.html#words-tokens-and-empty-nodes"/>.)</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <s>
+        <w depN="1" depR="2:nsubj" depE="2:nsubj" pos="PRON" lemma="she">She</w>
+        <w depN="2" depR="0:root" depE="0:root" pos="VERB" lemma="like">likes</w>
+        <w depN="3" depR="2:obj" depE="2:obj" pos="NOUN" lemma="coffee">coffee</w>
+        <w depN="4" depR="5:cc" depE="5.1:cc" pos="CCONJ" lemma="and">and</w>
+        <w depN="5" depR="2:conj" depE="5.1:nsubj" pos="PRON" lemma="he">he</w>
+        <w depN="5.1" depE="2:conj" pos="VERB" lemma="like">likes</w>
+        <w depN="6" depR="5:orphan" depE="5.1:obj" pos="NOUN" lemma="tea" join="right">tea</w>
+        <pc depN="7" depR="2:punct" depE="5.1:punct" pos="PUNCT" lemma=".">.</pc>
+      </s>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>Universal Dependency (UD) annotation of the German noun phrase <q xml:lang="de">ein Hotel zum Wohlfühlen</q>.</p>
+    <p>This example illustrates the handling of a surface word form like
+      <mentioned>zum</mentioned> (with token index range <val>3-4</val>) which
+      is analysed here as a contraction of the syntactic atoms <mentioned>zu</mentioned>
+      and <mentioned>dem</mentioned> (with token indices <val>3</val> and
+      <val>4</val>). (For the handling of index ranges in UD, cf.
+      <ptr target="https://universaldependencies.org/format.html#words-tokens-and-empty-nodes"/>.)</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <phr>
+        <w depN="1" depR="2:det" pos="DET" lemma="eine">ein</w>
+        <w depN="2" depR="0:root" pos="NOUN" lemma="Hotel">Hotel</w>
+        <w depN="3-4" type="surface">zum</w>
+        <w depN="3" depR="5:case" pos="ADP" lemma="zu">zu</w>
+        <w depN="4" depR="5:det" pos="DET" lemma="die">dem</w>
+        <w depN="5" depR="2:nmod" pos="NOUN" lemma="Wohlfühlen">Wohlfühlen</w>
+      </phr>
+    </egXML>
+  </exemplum>
+  <remarks ident="att.linguistic.dependency-remarks" xml:lang="en" versionDate="2025-12-02">
+    <p>In the UD examples above, a <att>depR</att> value of <val>0:root</val> by
+      convention refers to an unrepresented, <soCalled>virtual</soCalled>, root
+      node. (For discussion, cf. section <ptr target="#AILADEP"/>.)</p>
+    <p>The following table summarises the serialisation choices for UD’s CoNLL-U format in TEI XML.
+      <table cols="3" xml:id="tab-conllu-serialisation">
+        <row role="label">
+          <cell>CoNLL-U column</cell>
+          <cell>TEI representation</cell>
+          <cell>TEI class</cell>
+        </row>
+        <row>
+          <cell><code>ID</code></cell>
+          <cell><att>depN</att></cell>
+          <cell><ident type="class">att.linguistic.dependency</ident></cell>
+        </row>
+        <row>
+          <cell><code>FORM</code></cell>
+          <cell><gi>w</gi> or <gi>pc</gi> content</cell>
+          <cell><ident type="class">model.segLike</ident></cell>
+        </row>
+        <row>
+          <cell><code>LEMMA</code></cell>
+          <cell><att>lemma</att></cell>
+          <cell><ident type="class">att.linguistic</ident></cell>
+        </row>
+        <row>
+          <cell><code>UPOS</code></cell>
+          <cell><att>pos</att></cell>
+          <cell><ident type="class">att.linguistic</ident></cell>
+        </row>
+        <row>
+          <cell><code>XPOS</code></cell>
+          <cell>additional list item in <att>pos</att></cell>
+          <cell><ident type="class">att.linguistic</ident></cell>
+        </row>
+        <row>
+          <cell><code>FEATS</code></cell>
+          <cell><att>msd</att></cell>
+          <cell><ident type="class">att.linguistic</ident></cell>
+        </row>
+        <row>
+          <cell><code>HEAD</code></cell>
+          <cell><att>depR</att>, part before <code>:</code></cell>
+          <cell><ident type="class">att.linguistic.dependency</ident></cell>
+        </row>
+        <row>
+          <cell><code>DEPREL</code></cell>
+          <cell><att>depR</att>, part after <code>:</code></cell>
+          <cell><ident type="class">att.linguistic.dependency</ident></cell>
+        </row>
+        <row>
+          <cell><code>DEPS</code></cell>
+          <cell><att>depE</att></cell>
+          <cell><ident type="class">att.linguistic.dependency</ident></cell>
+        </row>
+        <row>
+          <cell><code>SpaceAfter=No</code> in <code>MISC</code></cell>
+          <cell><att>join</att> with value <val>right</val></cell>
+          <cell><ident type="class">att.linguistic</ident></cell>
+        </row>
+      </table>
+    </p>
+   <p>The syntax of the <code>FEATS</code> and <code>DEPS</code> columns, with
+     pipe-separated list values, can be used as-is for the values of
+     <att>msd</att> and <att>depE</att>. The syntax of the items in
+     <att>depE</att> values, with a colon separating the head’s token index and
+     the type of the dependency relations, should also be used for <att>depR</att>.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#AILADEP"/>
+  </listRef>
+</classSpec>
 <classSpec module="analysis" xml:id="ATTNORM" type="atts" ident="att.lexicographic.normalized">
   <desc versionDate="2021-08-22" xml:lang="en">provides attributes for usage within word-level elements in the analysis module and within lexicographic microstructure in the dictionaries module.</desc>
   <classes/>
@@ -59391,8 +59575,9 @@ etc. as appropriate.</p>
 </classSpec>
 <classSpec module="analysis" xml:id="ATTLING" type="atts" ident="att.linguistic">
   <desc versionDate="2017-03-24" xml:lang="en">provides a set of attributes concerning linguistic features of tokens, for usage within token-level elements, specifically <gi>w</gi> and <gi>pc</gi> in the analysis module.</desc>
-  <classes>    
+  <classes>
     <memberOf key="att.lexicographic.normalized"/>
+    <memberOf key="att.linguistic.dependency"/>
   </classes>
   <attList>
     <attDef ident="lemma" usage="opt">
@@ -59439,10 +59624,10 @@ etc. as appropriate.</p>
       </exemplum>
     </attDef>
     <attDef ident="pos" usage="opt">
-      <desc versionDate="2017-03-24" xml:lang="en">(part of speech) indicates the part of speech assigned to a token 
-        (i.e. information on whether it is a noun, adjective, or verb), usually according to some official reference 
+      <desc versionDate="2017-03-24" xml:lang="en">(part of speech) indicates the part of speech assigned to a token
+        (i.e. information on whether it is a noun, adjective, or verb), usually according to some official reference
         vocabulary (e.g. for German: STTS, for English: CLAWS, for Polish: NKJP, etc.).</desc>
-      <datatype><dataRef key="teidata.text"/></datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.enumerated"/></datatype>
       <exemplum xml:lang="en">
         <p>The German sentence <q>Wir fahren in den Urlaub.</q> tagged with the Stuttgart-Tuebingen-Tagset (STTS).</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ATTLING-egXML-hd">
@@ -59477,6 +59662,21 @@ etc. as appropriate.</p>
             <pc pos="!">!</pc>
           </p>
         </egXML>
+      </exemplum>
+      <exemplum xml:lang="en">
+      <p>Some approaches (such as Universal Dependencies) use concurrent POS markup,
+      with POS tags from different POS tagsets. In such applications, the concurrent
+      POS tags can be given as a space-separated list in the <att>pos</att> value.</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ATTLING-egXML-vii">
+        <p>
+          <w pos="PRON PRP" lemma="she">She</w>
+          <w pos="VERB VBZ" lemma="buy">buys</w>
+          <w pos="CCONJ CC" lemma="and">and</w>
+          <w pos="VERB VBZ" lemma="sell">sells</w>
+          <w pos="NOUN NNS" lemma="book">books</w>
+          <pc pos="PUNCT ." lemma=".">.</pc>
+        </p>
+      </egXML>
       </exemplum>
     </attDef>
     <attDef ident="msd" usage="opt">
@@ -59561,12 +59761,11 @@ etc. as appropriate.</p>
     <p>These attributes make it possible to encode simple language corpora and to add a layer of
       linguistic information to any tokenized resource. See section <ptr target="#AILALW"/> for
       discussion.</p>
-      <p>These guidelines provide no semantic basis or suggested
-      precedence when both <att>lemma</att> and <att>lemmaRef</att> are
-      provided. For this reason simultaneous use of both is not
-      recommended for interchange unless documentation explaining the
-      use is provided, probably in an ODD customization.</p>
-  </remarks>
+    <p>These guidelines provide no semantic basis or suggested precedence when both <att>lemma</att>
+      and <att>lemmaRef</att> are provided. For this reason simultaneous use of both is not
+      recommended for interchange unless documentation explaining the use is provided, probably in
+      an ODD customization.</p>
+      </remarks>
   <listRef>
     <ptr target="#AILALW"/>
   </listRef>
@@ -59942,6 +60141,7 @@ interpretive framework -->
 <div type="div2" xml:id="AILA"><head>Linguistic Annotation</head>
 <div type="div3" xml:id="AILAGD"><head>Linguistic Annotation by Means of Generic TEI Devices</head></div>
 <div type="div3" xml:id="AILALW"><head>Lightweight Linguistic Annotation</head></div>
+<div type="div3" xml:id="AILADEP"><head>Syntactic Dependency Relations between Word-level Elements</head></div>
 <div type="div3" xml:id="AILASP"><head>Spoken Text</head></div></div>
 <div><head>Module for Analysis and Interpretation</head>
 <moduleSpec xml:id="DAI" ident="analysis">
@@ -69274,12 +69474,13 @@ déclaration de même nom dans la définition courante.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene la documentazione relativa agli attributi associati all'elemento in questione sotto forma di una serie di elementi attDef.</desc>
   <classes>
     <memberOf key="att.global"/>
-    </classes>
+  </classes>
   <content>
     <alternate minOccurs="1" maxOccurs="unbounded">
       <elementRef key="attRef"/>
       <elementRef key="attDef"/>
       <elementRef key="attList"/>
+      <anyElement require="http://relaxng.org/ns/structure/1.0" except="rng:choice rng:element rng:attribute rng:div rng:except rng:anyName                           rng:data rng:define rng:empty rng:externalRef rng:grammar rng:group                           rng:include rng:interleave rng:list rng:mixed rng:name                           rng:notAllowed rng:nsName rng:oneOrMore rng:optional rng:param                           rng:parentRef rng:start rng:text rng:value rng:zeroOrMore"/>
     </alternate>
   </content>
   <constraintSpec ident="no_duplicate_attrs" scheme="schematron" xml:lang="en">
@@ -69312,7 +69513,7 @@ déclaration de même nom dans la définition courante.</desc>
             </attList>
             The sequence should be ('klaatu','bodsworth','rugglesby','').
         -->
-        <sch:let name="nsidents" value="for $ad in $defs return                    if ( $ad[                           parent::tei:attList[ @org eq 'choice']                           and                           preceding-sibling::tei:attDef[                             @ident eq $ad/@ident                             and                             ( @ns, $notanamespace )[1] eq ( $ad/@ns, $notanamespace )[1]                             ]                           ]                       )                    then ''                    else normalize-space( if ($ad/@ns) then 'Q{'||$ad/@ns||'}'||$ad/@ident else $ad/@ident )                  "/>
+        <sch:let name="nsidents" value="for $ad in $defs return                                           if (                                             $ad[                                               parent::tei:attList[ @org eq 'choice']                                               and                                               preceding-sibling::tei:attDef[                                                 @ident eq $ad/@ident                                                 and                                                 ( @ns, $notanamespace )[1] eq ( $ad/@ns, $notanamespace )[1]                                               ]                                             ]                                           )                                         then ''                                         else normalize-space( if ($ad/@ns) then 'Q{'||$ad/@ns||'}'||$ad/@ident else $ad/@ident )                                         "/>
         <!-- get a sequence of any that occur 2+ times: -->
         <sch:let name="dups" value="for $a in $nsidents return ( $nsidents[ . eq $a ][2] )"/>
         <!-- remove any duplicates from the list of duplicates (-: -->
@@ -69325,6 +69526,22 @@ déclaration de même nom dans la définition courante.</desc>
           Within the attribute list defined in "<sch:value-of select="ancestor::*[@ident][1]/@ident"/>",
           the following attributes have been defined multiple times: <sch:value-of select="$distinct_dups"/>.
         </sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="anyElement_workaround_only_rngRef" scheme="schematron" xml:lang="en">
+    <desc>The intent is for the content model of <gi>attList</gi> to
+    allow only <gi>attDef</gi>, <gi>attList</gi>, <gi>attRef</gi>, and
+    <gi>rng:ref</gi> as children of <gi>attList</gi>. However, the current
+    TEI Stylesheets <!-- 7.62.0a --> do not process the
+    <att>except</att> attribute of the <gi>anyElement</gi>
+    properly. This constraint is a workaround for that problem, and
+    should be deleted in its entirety once that problem is fixed.</desc>
+    <constraint>
+      <sch:rule context="tei:attList">
+        <sch:report test="rng:*[ not( self::rng:ref )]">
+          error: element "<sch:value-of select="name(.)"/> not allowed here; expected element "attDef", "attList", "attDef", or "rng:ref".
+        </sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -69615,16 +69832,6 @@ déclaration de même nom dans la définition courante.</desc>
       <datatype><dataRef key="teidata.name"/></datatype>
     </attDef>
     <attList org="choice">
-      <attDef ident="name" validUntil="2026-11-13">
-        <desc versionDate="2025-12-30" xml:lang="en">the identifier (<att>ident</att>) of the attribute being referred to</desc>
-        <desc type="deprecationInfo" xml:lang="en" versionDate="2025-12-30">
-          The <att>key</att> attribute is preferred over
-          <att>name</att>, as the attribute being referred to is
-          referenced by its <att>ident</att>, not its name (which
-          might be different).
-        </desc>
-        <datatype><dataRef key="teidata.name"/></datatype>
-      </attDef>
       <attDef ident="key">
         <desc versionDate="2025-12-30" xml:lang="en">the identifier (<att>ident</att>) of the attribute being referred to</desc>
         <datatype><dataRef key="teidata.name"/></datatype>
