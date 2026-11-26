@@ -82,7 +82,7 @@ of this software, even if advised of the possibility of such damage.</p>
     <xsl:variable name="cellname">
       <xsl:choose>
         <xsl:when test="parent::tei:row[tei:match(@rend,'thead')]">th</xsl:when>
-        <xsl:when test="parent::tei:row[@role='label' and not(preceding::tei:row)]">th</xsl:when>
+        <xsl:when test="parent::tei:row[@role eq 'label'  and  not(preceding-sibling::tei:row)]">th</xsl:when>
         <xsl:otherwise>td</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -336,14 +336,14 @@ of this software, even if advised of the possibility of such damage.</p>
               <xsl:apply-templates select="tei:row[not(tei:match(@rend,'thead'))]"/>
             </tbody>
           </xsl:when>
-          <xsl:when test="tei:row[@role='label' and not(preceding::tei:row)]">
+          <xsl:when test="tei:row[@role eq 'label'  and  not(preceding-sibling::tei:row)]">
             <thead>
               <xsl:apply-templates
-                  select="tei:row[@role='label' and not(preceding::tei:row)]"/>
+                  select="tei:row[@role eq 'label'  and  not(preceding-sibling::tei:row)]"/>
             </thead>
             <tbody>
               <xsl:apply-templates
-                  select="tei:row[not(@role='label' and not(preceding::tei:row))]"/>
+                  select="tei:row[not(@role eq 'label'  and  not(preceding-sibling::tei:row))]"/>
             </tbody>
           </xsl:when>
           <xsl:otherwise>
