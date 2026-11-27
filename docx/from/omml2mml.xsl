@@ -274,21 +274,21 @@
 
 		<xsl:variable name="fZeroWid">
 			      <xsl:choose>
-				        <xsl:when test="count(m:phantPr[last()]/m:zeroWid[last()]) = 0">0</xsl:when>
+				        <xsl:when test="empty(m:phantPr[last()]/m:zeroWid[last()])">0</xsl:when>
 				        <xsl:when test="$sLowerCaseZeroWidVal = 'off'">0</xsl:when>
 				        <xsl:otherwise>1</xsl:otherwise>
 			      </xsl:choose>
 		    </xsl:variable>
 		    <xsl:variable name="fZeroAsc">
 			      <xsl:choose>
-				        <xsl:when test="count(m:phantPr[last()]/m:zeroAsc[last()]) = 0">0</xsl:when>
+				        <xsl:when test="empty(m:phantPr[last()]/m:zeroAsc[last()])">0</xsl:when>
 				        <xsl:when test="$sLowerCaseZeroAscVal = 'off'">0</xsl:when>
 				        <xsl:otherwise>1</xsl:otherwise>
 			      </xsl:choose>
 		    </xsl:variable>
 		    <xsl:variable name="fZeroDesc">
 			      <xsl:choose>
-				        <xsl:when test="count(m:phantPr[last()]/m:zeroDesc[last()]) = 0">0</xsl:when>
+				        <xsl:when test="empty(m:phantPr[last()]/m:zeroDesc[last()])">0</xsl:when>
 				        <xsl:when test="$sLowerCaseZeroDescVal = 'off'">0</xsl:when>
 				        <xsl:otherwise>1</xsl:otherwise>
 			      </xsl:choose>
@@ -393,7 +393,7 @@
 	<xsl:template match="m:nary">
 		    <xsl:variable name="sLowerCaseSubHide">
 			      <xsl:choose>
-				        <xsl:when test="count(m:naryPr[last()]/m:subHide) = 0">
+				        <xsl:when test="empty(m:naryPr[last()]/m:subHide)">
 					          <xsl:text>off</xsl:text>
 				        </xsl:when>
 				        <xsl:otherwise>
@@ -403,7 +403,7 @@
 		    </xsl:variable>
 		    <xsl:variable name="sLowerCaseSupHide">
 			      <xsl:choose>
-				        <xsl:when test="count(m:naryPr[last()]/m:supHide) = 0">
+				        <xsl:when test="empty(m:naryPr[last()]/m:supHide)">
 					          <xsl:text>off</xsl:text>
 				        </xsl:when>
 				        <xsl:otherwise>
@@ -416,7 +416,7 @@
 		    </xsl:variable>
 		    <xsl:variable name="fLimLocSubSup">
 			      <xsl:choose>
-				        <xsl:when test="count(m:naryPr[last()]/m:limLoc)=0 or $sLowerCaseLimLoc='subsup'">1</xsl:when>
+				        <xsl:when test="empty(m:naryPr[last()]/m:limLoc) or $sLowerCaseLimLoc='subsup'">1</xsl:when>
 				        <xsl:otherwise>0</xsl:otherwise>
 			      </xsl:choose>
 		    </xsl:variable>
@@ -888,19 +888,19 @@
 
 	  <xsl:template match="m:r">
 		    <xsl:variable name="sLowerCaseNor"
-                    select="translate(child::m:rPr[last()]/m:nor/@m:val, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',                                                                           'abcdefghijklmnopqrstuvwxyz')"/>
+                    select="translate(m:rPr[last()]/m:nor/@m:val, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',                                                                           'abcdefghijklmnopqrstuvwxyz')"/>
 		    <xsl:variable name="sLowerCaseLit"
-                    select="translate(child::m:rPr[child::m:lit][last()]/@m:val, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',                                                                           'abcdefghijklmnopqrstuvwxyz')"/>
+                    select="translate(m:rPr[m:lit][last()]/@m:val, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',                                                                           'abcdefghijklmnopqrstuvwxyz')"/>
 
 		    <xsl:variable name="fNor">
 			      <xsl:choose>
-				        <xsl:when test="$sLowerCaseNor='off' or count(child::m:rPr[last()]/m:nor) = 0">0</xsl:when>
+				        <xsl:when test="$sLowerCaseNor='off' or empty(m:rPr[last()]/m:nor)">0</xsl:when>
 				        <xsl:otherwise>1</xsl:otherwise>
 			      </xsl:choose>
 		    </xsl:variable>
 		    <xsl:variable name="fLit">
 			      <xsl:choose>
-				        <xsl:when test="not(child::m:rPr[child::m:lit][last()]) or $sLowerCaseLit='off'">0</xsl:when>
+				        <xsl:when test="not(m:rPr[m:lit][last()]) or $sLowerCaseLit='off'">0</xsl:when>
 				        <xsl:otherwise>1</xsl:otherwise>
 			      </xsl:choose>
 		    </xsl:variable>
@@ -1089,7 +1089,7 @@
 				        <xsl:apply-templates select="$ndCur"/>
 			      </xsl:otherwise>
 		    </xsl:choose>
-		    <xsl:if test="count($ndCur/following-sibling::*) &gt; 0">
+		    <xsl:if test="exists($ndCur/following-sibling::*)">
 			      <xsl:variable name="cAmp">
 				        <xsl:call-template name="CountAmp">
 					          <xsl:with-param name="sAllMt" select="$sAllMt"/>

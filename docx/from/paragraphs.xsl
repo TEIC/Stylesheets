@@ -154,7 +154,7 @@ of this software, even if advised of the possibility of such damage.
 				<xsl:if test="$styleprop/w:rPr/w:u/@w:val = 'single'">
 					<xsl:text>text-decoration: underline; </xsl:text>
 				</xsl:if>
-				<xsl:if test="count($styleprop/w:pPr[w:jc])>0">
+				<xsl:if test="exists($styleprop/w:pPr[w:jc])">
 					<xsl:text>text-align: </xsl:text>
 					<xsl:value-of select="tei:justification($styleprop/w:pPr/w:jc)"/>
 					<xsl:text>; </xsl:text>

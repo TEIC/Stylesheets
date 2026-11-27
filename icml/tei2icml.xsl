@@ -197,10 +197,10 @@ v0.4.3 - John's minor tweaks anf bugfixes: start para, ignored para, etc. some i
         <Br/>
         <Table HeaderRowCount="0" FooterRowCount="0" AppliedTableStyle="TableStyle/$ID/[Basic Table]" TableDirection="LeftToRightDirection">
           <xsl:attribute name="BodyRowCount">
-            <xsl:value-of select="count(child::xhtml:tr)"/>
+            <xsl:value-of select="count(xhtml:tr)"/>
           </xsl:attribute>
           <xsl:attribute name="ColumnCount">
-            <xsl:value-of select="count(child::xhtml:tr[3]/xhtml:td)"/>
+            <xsl:value-of select="count(xhtml:tr[3]/xhtml:td)"/>
           </xsl:attribute>
           <xsl:variable name="columnWidth" select="$table-width div count(xhtml:tr[3]/xhtml:td)"/>
           <xsl:for-each select="xhtml:tr[3]/xhtml:td">

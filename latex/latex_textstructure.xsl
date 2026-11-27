@@ -155,12 +155,12 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="not(ancestor::tei:floatingText) and not(preceding::tei:body) and preceding::tei:front">
          <xsl:text>\mainmatter </xsl:text>
       </xsl:if>
-      <xsl:if test="count(key('APP',1))&gt;0">
+      <xsl:if test="exists(key('APP',1))">
 \beginnumbering
 \def\endstanzaextra{\pstart\centering---------\skipnumbering\pend}
 </xsl:if>
       <xsl:apply-templates/>
-      <xsl:if test="count(key('APP',1))&gt;0">
+      <xsl:if test="exists(key('APP',1))">
 \endnumbering
 </xsl:if>
   </xsl:template>

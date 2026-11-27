@@ -266,13 +266,13 @@
         <xsl:variable name="altText" as="xs:string" select="xs:string((
       parent::tei:figure/tei:figDesc[1],
       parent::tei:figure/tei:head[1],
-      child::tei:desc[1],
+      tei:desc[1],
       'graphic'
       )[1])"/>
         <xsl:variable name="titleText" as="xs:string" select="xs:string((
       parent::tei:figure/tei:head[1],
       parent::tei:figure/figDesc[1],
-      child::tei:desc[1],
+      tei:desc[1],
       'graphic'
       )[1])"/>
         <xsl:variable name="dim" as="xs:string*">

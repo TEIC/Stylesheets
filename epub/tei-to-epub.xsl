@@ -296,7 +296,7 @@ height: </xsl:text>
                     <xsl:variable name="target">
                       <xsl:apply-templates select="." mode="ident"/>
                     </xsl:variable>
-                    <xsl:if test="count(key('objectOnPage',$page))&gt;0">
+                    <xsl:if test="exists(key('objectOnPage',$page))">
                       <item id="{$target}-audio" href="{$target}-overlay.smil" media-type="application/smil+xml"/>
                       <xsl:result-document href="{concat($directory,'/OPS/',$target,'-overlay.smil')}" method="xml">
                         <smil xmlns="http://www.w3.org/ns/SMIL" version="3.0" profile="http://www.ipdf.org/epub/30/profile/content/">

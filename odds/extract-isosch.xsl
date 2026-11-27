@@ -140,7 +140,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <xsl:variable name="distinct_constraint_languages" select="distinct-values( $constraint_languages )"/>
     <xsl:choose>
-      <xsl:when test="count( $distinct_constraint_languages ) eq 0">
+      <xsl:when test="empty($distinct_constraint_languages)">
         <xsl:message terminate="yes">Internal fatal ERROR: Unable to determine the language (i.e., @xml:lang) of any constraints.</xsl:message>
       </xsl:when>
       <xsl:when test="count( $distinct_constraint_languages ) eq 1">
@@ -334,7 +334,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:if>
         </xsl:for-each>
       </xsl:variable>
-      <xsl:if test="count( $not_declared_NSs ) gt 0">
+      <xsl:if test="exists($not_declared_NSs)">
         <xsl:call-template name="blockComment">
           <xsl:with-param name="content" select="'namespaces, implicit:'"/>
         </xsl:call-template>

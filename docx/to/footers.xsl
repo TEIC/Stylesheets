@@ -80,7 +80,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     <xsl:template name="write-docxfile-footer-files">
         <xsl:choose>
-            <xsl:when test="count(key('ALLFOOTERS',1))=0  and doc-available($defaultHeaderFooterFile)">
+            <xsl:when test="empty(key('ALLFOOTERS',1))  and doc-available($defaultHeaderFooterFile)">
                 <xsl:for-each select="doc($defaultHeaderFooterFile)">
                     <xsl:call-template name="write-docxfile-specific-footer-file"/>
                 </xsl:for-each>

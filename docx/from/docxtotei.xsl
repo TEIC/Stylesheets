@@ -499,7 +499,7 @@ of this software, even if advised of the possibility of such damage.
 
    <xsl:template match="w:hyperlink">
      <!-- hyperlinks that do not contain any children should *probably* be omitted as in Word they result in nothing visible at all -->
-     <xsl:if test="child::node()">
+     <xsl:if test="node()">
        <xsl:variable name="target">
          <xsl:variable name="rid" select="@r:id"/>
          <xsl:choose>

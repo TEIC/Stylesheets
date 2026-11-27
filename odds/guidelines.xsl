@@ -346,7 +346,7 @@
               their encoding.</p>
               <xsl:variable name="items">
                 <xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:div">
-                  <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
+                  <xsl:if test="exists(key('EXAMPLES',concat(@xml:id,$me)))">
                     <li>
                       <a href="#{@xml:id}">
                         <xsl:call-template name="header"/>
@@ -355,13 +355,13 @@
                   </xsl:if>
                 </xsl:for-each>
               </xsl:variable>
-              <xsl:if test="count($items/html:li)&gt;0">
+              <xsl:if test="exists($items/html:li)">
                 <ul>
                   <xsl:copy-of select="$items/html:li"/>
                 </ul>
               </xsl:if>
               <xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:div">
-                <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
+                <xsl:if test="exists(key('EXAMPLES',concat(@xml:id,$me)))">
                   <h4 id="{@xml:id}">
                     <xsl:call-template name="header"/>
                   </h4>
@@ -456,7 +456,7 @@
           </xsl:attribute>
         </xsl:if>
         <xsl:choose>
-          <xsl:when test="not(parent::tei:div) and child::tei:div">
+          <xsl:when test="not(parent::tei:div) and tei:div">
             <xsl:attribute name="class">
               <xsl:text>miniTOC miniTOC_left</xsl:text>
             </xsl:attribute>
@@ -975,7 +975,7 @@
   </xsl:template>
   <xsl:template name="generateParentsByAttribute">
     <xsl:variable name="this" select="@ident"/>
-    <xsl:if test="count(key('REFSTO-CLASS',$this))&gt;0">
+    <xsl:if test="exists(key('REFSTO-CLASS',$this))">
       <div>
         <xsl:sequence select="tei:i18n('Class')"/>
         <xsl:text>: </xsl:text>
@@ -1002,7 +1002,7 @@
         </ul>
       </div>
     </xsl:if>
-    <xsl:if test="count(key('REFSTO-ELEMENT',$this))&gt;0">
+    <xsl:if test="exists(key('REFSTO-ELEMENT',$this))">
       <div>
         <xsl:sequence select="tei:i18n('Element')"/>
         <xsl:text>: </xsl:text>

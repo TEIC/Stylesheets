@@ -1499,7 +1499,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="text()"/>
       <br/>
       <xsl:apply-templates select="tei:biblStruct"/>
-      <xsl:if test="child::tei:note"><br/>See: <xsl:apply-templates select="child::tei:note"/></xsl:if>
+      <xsl:if test="tei:note"><br/>See: <xsl:apply-templates select="tei:note"/></xsl:if>
     </p>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1520,7 +1520,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
         <xsl:choose>
-          <xsl:when test="count(id($currentID))&gt;0">
+          <xsl:when test="exists(id($currentID))">
             <xsl:for-each select="id($currentID)">
               <xsl:call-template name="printNotes"/>
             </xsl:for-each>

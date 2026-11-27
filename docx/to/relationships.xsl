@@ -133,7 +133,7 @@ of this software, even if advised of the possibility of such damage.
 
         <!-- our headers and footers -->
         <xsl:choose>
-          <xsl:when test="count(key('ALLHEADERS',1))=0 and count(key('ALLFOOTERS',1))=0">
+          <xsl:when test="empty(key('ALLHEADERS',1)) and empty(key('ALLFOOTERS',1))">
             <xsl:for-each select="doc($defaultHeaderFooterFile)">
               <xsl:call-template name="writeRelationshipsHeadersAndFooters"/>
             </xsl:for-each>

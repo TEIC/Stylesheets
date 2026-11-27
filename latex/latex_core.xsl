@@ -584,7 +584,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:apply-templates/>
 	  <xsl:text>}</xsl:text>
 	</xsl:when>
-	<xsl:when test="count(key('APP',1))&gt;0">
+	<xsl:when test="exists(key('APP',1))">
 	  <xsl:text>\footnote{</xsl:text>
 	  <xsl:apply-templates/>
 	  <xsl:text>}</xsl:text>
@@ -605,7 +605,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="parent::tei:note and not(preceding-sibling::tei:p)">
       </xsl:when>
-      <xsl:when test="count(key('APP',1))&gt;0">
+      <xsl:when test="exists(key('APP',1))">
 	<xsl:text>\pstart&#10;</xsl:text>
       </xsl:when>
       <xsl:otherwise>
@@ -617,7 +617,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="numberParagraph"/>
     </xsl:if>
     <xsl:apply-templates/>
-    <xsl:if test="count(key('APP',1))&gt;0">
+    <xsl:if test="exists(key('APP',1))">
 	<xsl:text>&#10;\pend&#10;</xsl:text>
     </xsl:if>
   </xsl:template>
